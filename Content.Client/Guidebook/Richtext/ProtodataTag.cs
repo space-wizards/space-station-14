@@ -21,7 +21,14 @@ namespace Content.Client.Guidebook.RichText;
 /// </remarks>
 public sealed class ProtodataTag : IMarkupTag
 {
+    [Dependency] private readonly ILogManager _logMan = default!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
+
     public string Name => "protodata";
+    private ISawmill Log => _log ??= _logMan.GetSawmill("protodata_tag");
+    private ISawmill? _log;
+
+    private const string BadSyntaxMessage = "Bad syntax: \"{0}\". Use \"Prototype.Component.Field[:Format]\"";
 
     public string TextBefore(MarkupNode node)
     {
@@ -29,22 +36,38 @@ public sealed class ProtodataTag : IMarkupTag
         if (!node.Value.TryGetString(out var command))
             return "";
 
-        var guidebookData = IoCManager.Resolve<IEntityManager>().System<GuidebookDataSystem>();
+        var guidebookData = _entMan.System<GuidebookDataSystem>();
 
         // Split the ID and the format string
         var parts = command.Split(':');
-        DebugTools.Assert(parts.Length > 0 && parts.Length < 3, "Incorrect protodata format. Use Prototype.Component.Field or Prototype.Component.Field:Format");
+        if (parts.Length < 1 || parts.Length > 2)
+        {
+            Log.Error(BadSyntaxMessage, command);
+            return "???";
+        }
+        var id = parts[0];
+        var format = parts.TryGetValue(1, out var f) ? f : string.Empty;
 
         // Split the ID into Prototype, Component, and Field
-        var idParts = parts[0].Split('.');
-        DebugTools.Assert(idParts.Length == 3, "Incorrect protodata format. Use Prototype.Component.Field or Prototype.Component.Field:Format");
+        var idParts = id.Split('.');
+        if (idParts.Length != 3)
+        {
+            Log.Error(BadSyntaxMessage, command);
+            return "???";
+        }
+        var prototype = idParts[0];
+        var component = idParts[1];
+        var member = idParts[2];
 
         // Try to get the value
-        if (!guidebookData.TryGetValue(idParts[0], idParts[1], idParts[2], out var value))
-            return "";
+        if (!guidebookData.TryGetValue(prototype, component, member, out var value))
+        {
+            Log.Error($"Failed to find protodata for {component}.{member} in {prototype}");
+            return "???";
+        }
 
         // If we have a format string and a formattable value, format it as requested
-        if (parts.Length > 1 && value is IFormattable formattable)
+        if (!string.IsNullOrEmpty(format) && value is IFormattable formattable)
             return formattable.ToString(parts[1], CultureInfo.CurrentCulture);
 
         // No format string given, so just use default ToString
