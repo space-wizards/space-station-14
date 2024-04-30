@@ -60,12 +60,3 @@
   id: RedScarf
   storage:
     back: ClothingNeckScarfStripedRed
-    
-- type: loadout
-  id: ZebraScarf
-  equipment: ZebraScarf
-
-- type: startingGear
-  id: ZebraScarf
-  storage:
-    back: ClothingNeckScarfStripedZebra
