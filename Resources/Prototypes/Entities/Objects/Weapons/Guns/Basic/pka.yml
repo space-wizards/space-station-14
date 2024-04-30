@@ -34,22 +34,22 @@
       sprite: Objects/Weapons/Guns/Basic/kinetic_burster.rsi
       state: storage
   - type: Gun
-    fireRate: 6
-    selectedMode: FullAuto
+    fireRate: 12
+    selectedMode: Burst
     availableModes:
     - SemiAuto
-    - FullAuto
+    - Burst
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/kinetic_burster.ogg
   - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 8
-    rechargeCount: 5
+    rechargeCooldown: 10
+    rechargeCount: 3
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
   - type: BasicEntityAmmoProvider
     proto: BulletKineticBurst
-    capacity: 5
-    count: 5
+    capacity: 9
+    count: 9
   - type: Clothing
     sprite: Objects/Weapons/Guns/Basic/kinetic_burster.rsi
     quickEquip: false
