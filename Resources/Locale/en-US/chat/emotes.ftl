@@ -44,6 +44,7 @@ chat-emote-msg-clap = claps!
 chat-emote-msg-snap = snaps fingers
 chat-emote-msg-salute = salute
 chat-emote-msg-deathgasp = seizes up and falls limp, {POSS-ADJ($entity)} eyes dead and lifeless...
+chat-emote-msg-deathgasp-monkey = lets out a faint chimper as {SUBJECT($entity)} collapses and stops moving...
 chat-emote-msg-buzz = buzz!
 chat-emote-msg-chirp = chirps!
 chat-emote-msg-beep = beeps.
