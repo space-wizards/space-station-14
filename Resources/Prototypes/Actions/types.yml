@@ -41,7 +41,7 @@
   components:
   - type: InstantAction
     icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-    iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+    iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
     event: !type:ToggleActionEvent
 
 - type: entity
@@ -91,7 +91,6 @@
       sprite: Objects/Magic/magicactions.rsi
       state: gib
     event: !type:ActivateImplantEvent
-
 
 - type: entity
   id: ActionActivateFreedomImplant
@@ -170,6 +169,21 @@
       sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
       state: icon
     event: !type:UseDnaScramblerImplantEvent
+
+- type: entity
+  id: ActionMorphGeras
+  name: Morph into Geras
+  description:  Morphs you into a Geras - a miniature version of you which allows you to move fast, at the cost of your inventory.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    useDelay: 10 # prevent spam
+    priority: -20
+    icon:
+      sprite: Mobs/Aliens/slimes.rsi
+      state: blue_adult_slime
+    event: !type:MorphIntoGeras
 
 - type: entity
   id: ActionToggleSuitPiece
