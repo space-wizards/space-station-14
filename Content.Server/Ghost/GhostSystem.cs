@@ -382,6 +382,7 @@ namespace Content.Server.Ghost
 
             if (!spawnPosition.Value.IsValid(EntityManager))
             {
+                Log.Warning($"No spawn valid ghost spawn position found for {mind.Comp.CharacterName} \"{ToPrettyString(mind)}\"");
                 _minds.TransferTo(mind.Owner, null, createGhost: false, mind: mind.Comp);
                 return null;
             }
