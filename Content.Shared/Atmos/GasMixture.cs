@@ -224,8 +224,6 @@ namespace Content.Shared.Atmos
             // TODO add fixed-length-array serializer
 
             // The arrays MUST have a specific length.
-
-            //TODO: re-enable this when the sandbox actually behaves
             Array.Resize(ref Moles, Atmospherics.AdjustedNumberOfGases);
         }
 
