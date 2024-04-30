@@ -407,6 +407,13 @@
   - MimeMask
   - MimeMaskSad
   - MimeMaskScared
+  
+- type: loadoutGroup
+  id: MimeNeck
+  name: loadout-group-mime-neck
+  minLimit: 0
+  loadouts:
+  - MimeScarf
 
 - type: loadoutGroup
   id: MimeJumpsuit
@@ -500,6 +507,14 @@
   minLimit: 0
   loadouts:
   - CargoTechnicianHead
+  
+- type: loadoutGroup
+  id: CargoTechnicianNeck
+  name: loadout-group-cargo-technician-neck
+  minLimit: 0
+  loadouts:
+  - BrownScarf
+  - OrangeScarf
 
 - type: loadoutGroup
   id: CargoTechnicianJumpsuit
@@ -529,6 +544,14 @@
   loadouts:
   - BlackShoes
   - CargoWinterBoots
+
+- type: loadoutGroup
+  id: SalvageSpecialistNeck
+  name: loadout-group-salvage-specialist-neck
+  minLimit: 0
+  loadouts:
+  - OrangeScarf
+  - PurpleScarf
 
 - type: loadoutGroup
   id: SalvageSpecialistBackpack
@@ -617,6 +640,13 @@
   - SeniorEngineerBeret
 
 - type: loadoutGroup
+  id: StationEngineerNeck
+  name: loadout-group-station-engineer-neck
+  minLimit: 0
+  loadouts:
+  - OrangeScarf
+
+- type: loadoutGroup
   id: StationEngineerJumpsuit
   name: loadout-group-station-engineer-jumpsuit
   loadouts:
@@ -655,6 +685,13 @@
   loadouts:
   - StationEngineerPDA
   - SeniorEngineerPDA
+
+- type: loadoutGroup
+  id: AtmosphericTechnicianNeck
+  name: loadout-group-atmospheric-technician-neck
+  minLimit: 0
+  loadouts:
+  - LightBlueScarf
 
 - type: loadoutGroup
   id: AtmosphericTechnicianJumpsuit
@@ -747,6 +784,7 @@
   minLimit: 0
   loadouts:
   - ScientistTie
+  - PurpleScarf
 
 - type: loadoutGroup
   id: ScientistJumpsuit
@@ -854,6 +892,13 @@
   - WardenBeret
 
 - type: loadoutGroup
+  id: WardenNeck
+  name: loadout-group-warden-neck
+  minLimit: 0
+  loadouts:
+  - RedScarf
+
+- type: loadoutGroup
   id: WardenJumpsuit
   name: loadout-group-warden-jumpsuit
   loadouts:
@@ -875,6 +920,13 @@
   - SecurityHelmet
   - SecurityBeret
   - SecurityHat
+
+- type: loadoutGroup
+  id: SecurityNeck
+  name: loadout-group-security-neck
+  minLimit: 0
+  loadouts:
+  - RedScarf
 
 - type: loadoutGroup
   id: SecurityJumpsuit
@@ -938,6 +990,7 @@
   minLimit: 0
   loadouts:
   - DetectiveTie
+  - RedScarf
 
 - type: loadoutGroup
   id: DetectiveJumpsuit
@@ -1030,6 +1083,13 @@
   - NurseHat
 
 - type: loadoutGroup
+  id: MedicalDoctorNeck
+  name: loadout-group-medical-doctor-neck
+  minLimit: 0
+  loadouts:
+  - LightBlueScarf
+
+- type: loadoutGroup
   id: MedicalDoctorJumpsuit
   name: loadout-group-medical-doctor-jumpsuit
   loadouts:
@@ -1095,6 +1155,13 @@
   - WhiteJumpskirt
 
 - type: loadoutGroup
+  id: ChemistNeck
+  name: loadout-group-chemist-neck
+  minLimit: 0
+  loadouts:
+  - LightBlueScarf
+
+- type: loadoutGroup
   id: ChemistJumpsuit
   name: loadout-group-chemist-jumpsuit
   loadouts:
@@ -1124,6 +1191,14 @@
   minLimit: 0
   loadouts:
   - ParamedicHead
+  
+- type: loadoutGroup
+  id: ParamedicNeck
+  name: loadout-group-paramedic-neck
+  minLimit: 0
+  loadouts:
+  - BlueScarf
+  - LightBlueScarf
 
 - type: loadoutGroup
   id: ParamedicJumpsuit

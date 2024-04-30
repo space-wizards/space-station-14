@@ -128,6 +128,7 @@
   groups:
   - MimeHead
   - MimeMask
+  - MimeNeck
   - MimeJumpsuit
   - MimeBackpack
   - MimeOuterClothing
@@ -159,6 +160,7 @@
   id: JobCargoTechnician
   groups:
   - CargoTechnicianHead
+  - CargoTechnicianNeck
   - CargoTechnicianJumpsuit
   - CargoTechnicianBackpack
   - CargoTechnicianOuterClothing
@@ -169,6 +171,7 @@
 - type: roleLoadout
   id: JobSalvageSpecialist
   groups:
+  - SalvageSpecialistNeck
   - SalvageSpecialistBackpack
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
@@ -198,6 +201,7 @@
   id: JobStationEngineer
   groups:
   - StationEngineerHead
+  - StationEngineerNeck
   - StationEngineerJumpsuit
   - StationEngineerBackpack
   - StationEngineerOuterClothing
@@ -208,6 +212,7 @@
 - type: roleLoadout
   id: JobAtmosphericTechnician
   groups:
+  - AtmosphericTechnicianNeck
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianOuterClothing
@@ -267,6 +272,7 @@
   id: JobWarden
   groups:
   - WardenHead
+  - WardenNeck
   - WardenJumpsuit
   - SecurityBackpack
   - SecurityBelt
@@ -278,6 +284,7 @@
   id: JobSecurityOfficer
   groups:
   - SecurityHead
+  - SecurityNeck
   - SecurityJumpsuit
   - SecurityBackpack
   - SecurityOuterClothing
@@ -324,6 +331,7 @@
   groups:
   - MedicalDoctorHead
   - MedicalMask
+  - MedicalDoctorNeck
   - MedicalDoctorJumpsuit
   - MedicalGloves
   - MedicalBackpack
@@ -345,6 +353,7 @@
   id: JobChemist
   groups:
   - MedicalMask
+  - ChemistNeck
   - ChemistJumpsuit
   - MedicalGloves
   - ChemistBackpack
@@ -357,6 +366,7 @@
   groups:
   - ParamedicHead
   - MedicalMask
+  - ParamedicNeck
   - ParamedicJumpsuit
   - MedicalGloves
   - ParamedicBackpack

@@ -27,6 +27,15 @@
   equipment:
     neck: ClothingNeckTieDet
 
+- type: loadout
+  id: RedScarf
+  equipment: RedScarf
+
+- type: startingGear
+  id: RedScarf
+  equipment:
+    neck: ClothingNeckScarfStripedRed
+
 # Jumpsuit
 - type: loadout
   id: DetectiveJumpsuit

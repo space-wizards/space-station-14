@@ -1,3 +1,22 @@
+# Neck
+- type: loadout
+  id: BrownScarf
+  equipment: BrownScarf
+
+- type: startingGear
+  id: BrownScarf
+  equipment:
+    neck: ClothingNeckScarfStripedBrown
+    
+- type: loadout
+  id: PurpleScarf
+  equipment: PurpleScarf
+
+- type: startingGear
+  id: PurpleScarf
+  equipment:
+    neck: ClothingNeckScarfStripedPurple
+
 # Back
 - type: loadout
   id: SalvageSpecialistBackpack

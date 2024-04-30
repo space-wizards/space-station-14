@@ -40,6 +40,17 @@
   id: SecurityBeret
   equipment:
     head: ClothingHeadHatBeretSecurity
+    
+# Neck
+
+- type: loadout
+  id: RedScarf
+  equipment: RedScarf
+
+- type: startingGear
+  id: RedScarf
+  equipment:
+    neck: ClothingNeckScarfStripedRed
 
 # Jumpsuit
 - type: loadout

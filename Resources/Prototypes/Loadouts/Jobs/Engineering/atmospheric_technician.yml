@@ -1,3 +1,13 @@
+# Neck
+- type: loadout
+  id: LightBlueScarf
+  equipment: LightBlueScarf
+
+- type: startingGear
+  id: LightBlueScarf
+  equipment:
+    neck: ClothingNeckScarfStripedLightBlue
+
 # Jumpsuit
 - type: loadout
   id: AtmosphericTechnicianJumpsuit
