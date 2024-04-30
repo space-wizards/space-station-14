@@ -1,3 +1,12 @@
+- type: loadoutEffectGroup
+  id: MasterChef
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChef
+      time: 36000 #10 hrs
+
 # Head
 - type: loadout
   id: ChefHead
@@ -7,6 +16,19 @@
   id: ChefHead
   equipment:
     head: ClothingHeadHatChef
+
+- type: loadout
+  id: ChefMasterHead
+  equipment: ChefMasterHead
+
+- type: startingGear
+  id: ChefMasterHead
+  equipment:
+    head: ClothingHeadHatMasterChef 
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterChef
+
 
 # Mask
 - type: loadout

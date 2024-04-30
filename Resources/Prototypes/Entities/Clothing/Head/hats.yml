@@ -258,6 +258,20 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatMasterChef
+  name: master chef's hat
+  description: "It's a hat used by chefs to keep hair out of your food. This one is very tall."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/chefhat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/chefhat.rsi
+  - type: Storage
+    grid:
+    - 0,0,0,2
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatFedoraBrown
   name: brown fedora
   description: It's a brown fedora.
