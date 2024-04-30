@@ -365,24 +365,25 @@ namespace Content.Server.Ghost
             return ghostBoo.Handled;
         }
 
-        public void SpawnGhost(EntityUid uid, Entity<MindComponent> mind, EntityCoordinates spawnPosition)
+        public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityCoordinates spawnPosition)
         {
+            if (!Resolve(mind, ref mind.Comp))
+                return null;
+
             if (!spawnPosition.IsValid(EntityManager))
             {
-                // This should be an error, if it didn't cause tests to start erroring when they delete a player.
-                Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.Comp.CharacterName} was deleted, and no applicable spawn location is available.");
                 _minds.TransferTo(mind.Owner, null, createGhost: false, mind: mind.Comp);
-                return;
+                return null;
             }
 
             var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition);
             var ghostComponent = Comp<GhostComponent>(ghost);
             SetCanReturnToBody(ghostComponent, false);
 
-            // Log these to make sure they're not causing the GameTicker round restart bugs...
-            Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.Comp.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
+            Log.Debug($"Spawned ghost \"{ToPrettyString(ghost)}\" for {mind.Comp.CharacterName}.");
             _metaData.SetEntityName(ghost, mind.Comp.CharacterName ?? string.Empty);
             _minds.TransferTo(mind.Owner, ghost, mind: mind.Comp);
+            return ghost;
         }
     }
 }

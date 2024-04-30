@@ -75,7 +75,13 @@ public sealed class MindSystem : SharedMindSystem
         if (!_transform.TryGetMapOrGridCoordinates(uid, out var spawnPosition))
             return;
 
-        _ghosts.SpawnGhost(uid, (mindId, mind), spawnPosition.Value);
+        var ghost = _ghosts.SpawnGhost((mindId, mind), spawnPosition.Value);
+        if (ghost != null)
+            // Log these to make sure they're not causing the GameTicker round restart bugs...
+            Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
+        else
+            // This should be an error, if it didn't cause tests to start erroring when they delete a player.
+            Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
     }
 
     public override bool TryGetMind(NetUserId user, [NotNullWhen(true)] out EntityUid? mindId, [NotNullWhen(true)] out MindComponent? mind)
