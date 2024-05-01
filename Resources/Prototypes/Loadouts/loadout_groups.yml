@@ -239,7 +239,7 @@
   loadouts:
   - LawyerNeck
 
-  - type: loadoutGroup
+- type: loadoutGroup
   id: LawyerBackpack
   name: loadout-group-lawyer-backpack
   loadouts:
