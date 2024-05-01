@@ -17,6 +17,9 @@
     quickEquip: false
     slots:
     - Belt
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 250
   - type: Tag
     tags:
     - AppraisalTool

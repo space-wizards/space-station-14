@@ -129,11 +129,14 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
-    speechSounds: Pai
+    speechSounds: Borg
   - type: Vocal
     sounds:
       Unsexed: UnisexSilicon
   - type: UnblockableSpeech
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBorg
   - type: Construction
     graph: Cyborg
     containers:
@@ -206,6 +209,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - FootstepSound
     - CanPilot
   - type: Emoting
   - type: GuideHelp
@@ -235,23 +239,28 @@
   parent: BaseBorgChassis
   abstract: true
   components:
-    - type: NpcFactionMember
-      factions:
-        - Syndicate
-    - type: Access
-      tags:
-       - NuclearOperative
-       - SyndicateAgent
-    - type: AccessReader
-      access: [["SyndicateAgent"], ["NuclearOperative"]]
-    - type: SiliconLawProvider
-      laws: SyndicateStatic
-    - type: IntrinsicRadioTransmitter
-      channels:
-        - Binary
-        - Syndicate
-    - type: ActiveRadio
-      channels:
-        - Syndicate
-    - type: ShowSyndicateIcons
-    - type: MovementAlwaysTouching
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: Access
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
+  - type: AccessReader
+    access: [["SyndicateAgent"], ["NuclearOperative"]]
+  - type: SiliconLawProvider
+    laws: SyndicateStatic
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Syndicate
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: ShowSyndicateIcons
+  - type: MovementAlwaysTouching
+  - type: Speech
+    speechSounds: SyndieBorg
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSiliconSyndicate
