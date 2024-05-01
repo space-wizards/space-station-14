@@ -411,10 +411,10 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Blunt: 9
-        Structural: 35
+        Blunt: 8.5
+        Structural: 25
   - type: TimedDespawn
-    lifetime: 0.2
+    lifetime: 0.15
 
 - type: entity
   id: BulletKineticShuttle
