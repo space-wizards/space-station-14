@@ -34,19 +34,19 @@
     - Revolutionary
     - RampingStationEventScheduler
 
-- type: gamePreset
-  id: AllAtOnceWizard
-  alias:
-  - magicalallatonce
-  name: all-at-once-wizard-title
-  description: all-at-once-wizard-description
-  showInVote: false
-  rules:
-    - Nukeops
-    - Traitor
-    - Revolutionary
-    - Wizard
-    - RampingStationEventScheduler
+#- type: gamePreset
+#  id: AllAtOnceWizard
+#  alias:
+#  - magicalallatonce
+#  name: all-at-once-wizard-title
+#  description: all-at-once-wizard-description
+#  showInVote: false
+#  rules:
+#    - Nukeops
+#    - Traitor
+#    - Revolutionary
+#    - Wizard
+#    - RampingStationEventScheduler
 
 - type: gamePreset
   id: Extended
@@ -150,18 +150,18 @@
     - BasicStationEventScheduler
     - BasicRoundstartVariation
 
-- type: gamePreset
-  id: Wizard
-  alias:
-    - wizard
-  name: wizard-title
-  description: wizard-description
-  showInVote: false
-  rules:
-    - Wizard
-    - SubGamemodesRule
-    - BasicStationEventScheduler
-    - BasicRoundstartVariation
+#- type: gamePreset
+#  id: Wizard
+#  alias:
+#    - wizard
+#  name: wizard-title
+#  description: wizard-description
+#  showInVote: false
+#  rules:
+#    - Wizard
+#    - SubGamemodesRule
+#    - BasicStationEventScheduler
+#    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Revolutionary
