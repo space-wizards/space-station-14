@@ -507,6 +507,7 @@ public sealed class NukeSystem : EntitySystem
 
         component.PlayedNukeSong = false;
         _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.DisarmSound));
+        _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.DisarmAnnouncer));
         _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
 
         // disable sound and reset it
