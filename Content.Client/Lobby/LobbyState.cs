@@ -25,14 +25,9 @@ namespace Content.Client.Lobby
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
-        [ViewVariables] private CharacterSetupGui? _characterSetup;
 
         private ClientGameTicker _gameTicker = default!;
         private ContentAudioSystem _contentAudioSystem = default!;
@@ -53,32 +48,10 @@ namespace Content.Client.Lobby
             _gameTicker = _entityManager.System<ClientGameTicker>();
             _contentAudioSystem = _entityManager.System<ContentAudioSystem>();
             _contentAudioSystem.LobbySoundtrackChanged += UpdateLobbySoundtrackInfo;
-            _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
-                _prototypeManager, _configurationManager);
-            LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
 
-            _lobby.CharacterSetupState.AddChild(_characterSetup);
             chatController.SetMainChat(true);
 
             _voteManager.SetPopupContainer(_lobby.VoteContainer);
-
-            _characterSetup.CloseButton.OnPressed += _ =>
-            {
-                // Reset sliders etc.
-                _characterSetup?.UpdateControls();
-
-                var controller = _userInterfaceManager.GetUIController<LobbyUIController>();
-                controller.SetClothes(true);
-                controller.UpdateProfile();
-                _lobby.SwitchState(LobbyGui.LobbyGuiState.Default);
-            };
-
-            _characterSetup.SaveButton.OnPressed += _ =>
-            {
-                _characterSetup.Save();
-                _userInterfaceManager.GetUIController<LobbyUIController>().ReloadProfile();
-            };
-
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
             _lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
             UpdateLobbyUi();
@@ -108,9 +81,6 @@ namespace Content.Client.Lobby
             _lobby!.ReadyButton.OnToggled -= OnReadyToggled;
 
             _lobby = null;
-
-            _characterSetup?.Dispose();
-            _characterSetup = null;
         }
 
         private void OnSetupPressed(BaseButton.ButtonEventArgs args)
