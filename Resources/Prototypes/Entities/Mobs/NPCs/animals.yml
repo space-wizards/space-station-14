@@ -1155,6 +1155,8 @@
     templateId: monkey
     speciesId: monkey
   - type: InventorySlots
+  - type: Deathgasp
+    prototype: MonkeyDeathgasp
   - type: Cuffable
   - type: RotationVisuals
     defaultRotation: 90
