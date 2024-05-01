@@ -1240,11 +1240,11 @@
   name: invisible wall
   components:
     - type: Sprite
-      sprite: Structures/Magic/inviswall.rsi
-      state: inviswall
+      sprite: Structures/Magic/forcewall.rsi
+      state: forcewall
     - type: Icon
-      sprite: Structures/Magic/inviswall.rsi
-      state: inviswall
+      sprite: Structures/Magic/forcewall.rsi
+      state: forcewall
 
 - type: entity
   parent: BaseWall
