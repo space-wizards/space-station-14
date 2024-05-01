@@ -10,6 +10,7 @@ ghost-gui-toggle-hearing-popup-off = You can now only hear radio and nearby mess
 
 ghost-target-window-title = Ghost Warp
 ghost-target-window-current-button = Warp: {$name}
+ghost-target-window-warp-to-most-followed = Warp to Most Followed
 
 ghost-roles-window-title = Ghost Roles
 ghost-roles-window-request-role-button = Request
