@@ -1,5 +1,5 @@
 - type: loadoutEffectGroup
-  id: MasterChef
+  id: HeadChef
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
@@ -18,16 +18,16 @@
     head: ClothingHeadHatChef
 
 - type: loadout
-  id: ChefMasterHead
-  equipment: ChefMasterHead
+  id: ChefHeadHat
+  equipment: ChefHeadHat
 
 - type: startingGear
-  id: ChefMasterHead
+  id: ChefHeadHat
   equipment:
-    head: ClothingHeadHatMasterChef 
+    head: ClothingHeadHatHeadChef 
   effects:
   - !type:GroupLoadoutEffect
-    proto: MasterChef
+    proto: HeadChef
 
 
 # Mask
