@@ -16,5 +16,12 @@ public sealed partial class TypingIndicatorComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<TypingIndicatorPrototype>))]
-    public string Prototype = SharedTypingIndicatorSystem.InitialIndicatorId;
+    public string Prototype = "default";
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool Override = false;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("overrideIndicator", customTypeSerializer: typeof(PrototypeIdSerializer<TypingIndicatorPrototype>))]
+    public string OverrideIndicator = "default";
 }
