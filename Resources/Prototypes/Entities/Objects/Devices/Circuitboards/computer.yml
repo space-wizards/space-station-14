@@ -261,8 +261,36 @@
   name: crew monitoring computer board
   description: A computer printed circuit board for a crew monitoring console.
   components:
-    - type: ComputerBoard
-      prototype: ComputerCrewMonitoring
+  - type: ComputerBoard
+    prototype: ComputerCrewMonitoring
+  - type: PAIExpansionCard
+    key: enum.CrewMonitoringUIKey.Key
+    interface:
+      type: CrewMonitoringBoundUserInterface
+      requireInputValidation: false
+    action: ActionPAIOpenCrewMonitor
+    components:
+    - type: CrewMonitoringConsole
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: CrewMonitor
+    - type: WirelessNetworkConnection
+      range: 500
+    - type: StationLimitedNetwork
+
+- type: entity
+  noSpawn: true
+  parent: ActionPAIBase
+  id: ActionPAIOpenCrewMonitor
+  name: Open Crew Monitor
+  description: Monitor the crew's vitals.
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/pai-expansions.rsi
+      state: crew_monitor
+    event: !type:OpenUiActionEvent
+      key: enum.CrewMonitoringUIKey.Key
 
 - type: entity
   parent: BaseComputerCircuitboard

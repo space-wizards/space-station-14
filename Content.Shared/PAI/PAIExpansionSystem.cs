@@ -77,7 +77,7 @@ public sealed class PAIExpansionSystem : EntitySystem
 
         var card = Comp<PAIExpansionCardComponent>(args.Entity);
 
-        _ui.AddUi(ent.Owner, card.Key, card.Interface);
+        _ui.SetUi(ent.Owner, card.Key, card.Interface);
         _actions.AddAction(ent, ref card.ActionEntity, card.Action, ent);
         EntityManager.AddComponents(ent, card.Components);
     }
