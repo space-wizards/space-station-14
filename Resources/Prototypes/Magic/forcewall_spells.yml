@@ -32,5 +32,5 @@
       sprite: Structures/Walls/solid.rsi
       state: reinf_construct-0
     event: !type:InstantSpawnSpellEvent
-      prototype: WallMimeBlockade
+      prototype: WallCobblebrick
       posData: !type:TargetInFront
