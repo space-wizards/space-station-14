@@ -63,13 +63,13 @@ public sealed partial class MeleeWeaponSystem
         switch (arcComponent.Animation)
         {
             case WeaponArcAnimation.Slash:
-                arcComponent.User = user;
+                EnsureComp<WeaponEffectFollowComponent>(animationUid).User = user;
                 _animation.Play(animationUid, GetSlashAnimation(sprite, angle, spriteRotation), SlashAnimationKey);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.065f, 0.065f + 0.05f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.Thrust:
-                arcComponent.User = user;
+                EnsureComp<WeaponEffectFollowComponent>(animationUid).User = user;
                 _animation.Play(animationUid, GetThrustAnimation(sprite, distance, spriteRotation), ThrustAnimationKey);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
@@ -208,12 +208,10 @@ public sealed partial class MeleeWeaponSystem
     /// </summary>
     void UpdateEffects(float frameTime)
     {
-        var arcQuery = EntityQueryEnumerator<TransformComponent, WeaponArcVisualsComponent>();
-        while(arcQuery.MoveNext(out var uid, out var xform, out var arcComponent))
+        var arcQuery = EntityQueryEnumerator<WeaponEffectFollowComponent, TransformComponent>();
+        while (arcQuery.MoveNext(out var uid, out var followComponent, out var xform))
         {
-            if (arcComponent.User == null)
-                continue;
-            var userPos = TransformSystem.GetWorldPosition(arcComponent.User.Value);
+            var userPos = TransformSystem.GetWorldPosition(followComponent.User);
             TransformSystem.SetWorldPosition(xform, userPos);
         }
     }
