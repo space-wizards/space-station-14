@@ -75,7 +75,7 @@
   groups:
   - LawyerNeck
   - LawyerJumpsuit
-  - CommonBackpack
+  - LawyerBackpack
   - Glasses
   - Trinkets
 
