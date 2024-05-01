@@ -37,6 +37,7 @@
   - type: Tag
     tags:
     - FootstepSound
+    - DoorBumpOpener
   - type: Butcherable
     butcheringType: Knife
     spawned:
