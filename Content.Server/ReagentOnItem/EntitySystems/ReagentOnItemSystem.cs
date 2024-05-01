@@ -24,7 +24,7 @@ public sealed class ReagentOnItemSystem : EntitySystem
     ///     that cannot stick to the floor.
     /// </summary>
     /// <returns> False if there is no solution or if entity isn't an item and true otherwise. </returns>
-    public bool AddReagentToItem(EntityUid item, Solution reagentMixture)
+    public bool ApplyReagentEffectToItem(EntityUid item, Solution reagentMixture)
     {
         if (reagentMixture.Volume <= 0 || !HasComp<ItemComponent>(item))
             return false;
@@ -65,8 +65,8 @@ public sealed class ReagentOnItemSystem : EntitySystem
         _puddle.TrySpillAt(item, reagentMixture, out var _, false);
 
         return true;
-
     }
+
     /// <summary>
     ///     Convert the reagent to stacks and add them to the component. 
     ///     Will put any extra reagent that couldn't be applied in the spill pool.
@@ -82,5 +82,4 @@ public sealed class ReagentOnItemSystem : EntitySystem
             spillPool.AddReagent(reagent, total - comp.MaxStacks);
         }
     }
-
 }

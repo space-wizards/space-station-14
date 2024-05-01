@@ -52,7 +52,6 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
         {
             _popup.PopupEntity(Loc.GetString("space-glue-on-item-hand-stuck", ("target", Identity.Entity(entity, EntityManager))), args.User, args.User, PopupType.MediumCaution);
         }
-
     }
 
     /// <summary>
@@ -84,13 +83,9 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
 
         if (howSticky <= .33)
             args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-low"));
-
         else if (howSticky <= .66)
             args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-med"));
-
         else
             args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-high"));
-
     }
-
 }

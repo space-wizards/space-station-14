@@ -50,8 +50,8 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
 
     private void OnUtilityVerb(Entity<ApplyReagentToItemComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess || args.Target is not { Valid: true } target ||
-        _openable.IsClosed(entity))
+        if (!args.CanInteract || !args.CanAccess || args.Target is not { Valid: true } target
+            || _openable.IsClosed(entity))
             return;
 
         var user = args.User;
@@ -73,18 +73,18 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
     /// </summary>
     private bool TryToApplyReagent(Entity<ApplyReagentToItemComponent> entity, EntityUid target, EntityUid actor)
     {
-
         if (!HasComp<ItemComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("apply-reagent-not-item-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
             return false;
         }
 
-        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solComp, out var solution))
+        if (HasComp<ItemComponent>(target)
+            && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solComp, out var solution))
         {
             var reagent = _solutionContainer.SplitSolution(solComp.Value, entity.Comp.AmountConsumedOnUse);
 
-            if (_reagentOnItem.AddReagentToItem(target, reagent))
+            if (_reagentOnItem.ApplyReagentEffectToItem(target, reagent))
             {
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} tried to apply reagent to {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
                 _audio.PlayPvs(entity.Comp.OnSqueezeNoise, entity.Owner);

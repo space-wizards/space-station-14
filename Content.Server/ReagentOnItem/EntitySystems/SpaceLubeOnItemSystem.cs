@@ -26,9 +26,8 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
 
     private void OnHandPickUp(EntityUid uid, SpaceLubeOnItemComponent component, ContainerGettingInsertedAttemptEvent args)
     {
-        _inventory.TryGetSlotEntity(args.Container.Owner, "gloves", out var gloves);
-
-        if (HasComp<NonStickSurfaceComponent>(gloves))
+        if (_inventory.TryGetSlotEntity(args.Container.Owner, "gloves", out var gloves)
+            && HasComp<NonStickSurfaceComponent>(gloves))
             return;
 
         if (component.EffectStacks < 1)
@@ -40,7 +39,7 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
         var randDouble = _random.NextDouble();
         if (randDouble > 1 - component.ChanceToDecreaseReagentOnGrab)
         {
-            component.EffectStacks = component.EffectStacks - 1;
+            component.EffectStacks -= 1;
         }
 
         args.Cancel();

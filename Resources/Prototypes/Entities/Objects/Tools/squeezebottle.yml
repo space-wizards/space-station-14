@@ -14,14 +14,14 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/squeeze_bottle.rsi
     layers:
-      - state: body
-      - state: cap_closed_red
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-        visible: false
-      - state: front
-        map: [ "enum.SolutionContainerLayers.Overlay" ]
+    - state: body
+    - state: cap_closed_red
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: Appearance
   - type: SolutionContainerManager
     solutions:
@@ -50,18 +50,18 @@
       drink:
         maxVol: 30
         reagents:
-          - ReagentId: SpaceGlue
-            Quantity: 30
+        - ReagentId: SpaceGlue
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/squeeze_bottle.rsi
     layers:
-      - state: body
-      - state: cap_closed_orange
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-      - state: front
-        map: [ "enum.SolutionContainerLayers.Overlay" ]
+    - state: body
+    - state: cap_closed_orange
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+    - state: front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
@@ -80,18 +80,18 @@
       drink:
         maxVol: 30
         reagents:
-          - ReagentId: SpaceLube
-            Quantity: 30
+        - ReagentId: SpaceLube
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/squeeze_bottle.rsi
     layers:
-      - state: body
-      - state: cap_closed_blue
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-      - state: front
-        map: [ "enum.SolutionContainerLayers.Overlay" ]
+    - state: body
+    - state: cap_closed_blue
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+    - state: front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
@@ -113,14 +113,14 @@
       drink:
         maxVol: 100
         reagents:
-          - ReagentId: SpaceGlue
-            Quantity: 100
+        - ReagentId: SpaceGlue
+          Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/crazy_glue_bottle.rsi
     layers:
-      - state: body_crazy
-      - state: cap_closed_crazy
-        map: ["enum.OpenableVisuals.Layer"]
+    - state: body_crazy
+    - state: cap_closed_crazy
+      map: ["enum.OpenableVisuals.Layer"]
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:

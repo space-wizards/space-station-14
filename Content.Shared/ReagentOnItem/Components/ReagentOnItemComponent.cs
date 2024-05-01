@@ -14,7 +14,7 @@ public abstract partial class ReagentOnItemComponent : Component
     public FixedPoint2 EffectStacks;
 
     /// <summary>
-    ///     This is the maxium stacks that the component can have.
+    ///     This is the maximum stacks that the component can have.
     /// </summary>
     [DataField]
     public FixedPoint2 MaxStacks = 15;
