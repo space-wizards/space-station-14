@@ -1705,7 +1705,7 @@
   icon: { sprite:  Objects/Weapons/Melee/cane.rsi, state: cane}
   productEntity: CaneSheathFilled
   cost:
-    Telecrystal: 5
+    Telecrystal: 6
   categories:
   - UplinkJob
   conditions:
