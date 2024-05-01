@@ -8,17 +8,19 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Preferences.UI
+namespace Content.Client.Lobby.UI
 {
+    /// <summary>
+    /// Holds the entire character setup GUI, from character picks to individual character editing.
+    /// </summary>
     [GenerateTypedNameReferences]
     public sealed partial class CharacterSetupGui : Control
     {
         private readonly IClientPreferencesManager _preferencesManager;
         private readonly IEntityManager _entManager;
-        private IPrototypeManager _protomanager;
+        private readonly IPrototypeManager _protomanager;
 
         private readonly Button _createNewCharacterButton;
 

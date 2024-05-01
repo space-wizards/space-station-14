@@ -19,6 +19,7 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Module;
 using Content.Client.Guidebook;
+using Content.Client.Lobby;
 using Content.Client.Replay;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Players.PlayTimeTracking;

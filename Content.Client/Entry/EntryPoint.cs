@@ -10,6 +10,7 @@ using Content.Client.Info;
 using Content.Client.Input;
 using Content.Client.IoC;
 using Content.Client.Launcher;
+using Content.Client.Lobby;
 using Content.Client.MainMenu;
 using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;

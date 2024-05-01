@@ -3,8 +3,6 @@ using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
-using Content.Client.Preferences;
-using Content.Client.Preferences.UI;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.Voting;
 using Robust.Client;
@@ -12,8 +10,6 @@ using Robust.Client.Console;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 

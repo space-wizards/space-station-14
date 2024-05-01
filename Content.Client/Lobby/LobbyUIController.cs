@@ -2,15 +2,13 @@ using System.Linq;
 using Content.Client.Humanoid;
 using Content.Client.Inventory;
 using Content.Client.Lobby.UI;
-using Content.Client.Preferences;
-using Content.Client.Preferences.UI;
 using Content.Client.Station;
 using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
+using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
-using Content.Shared.Preferences.Loadouts.Effects;
 using Content.Shared.Roles;
 using Robust.Client.ResourceManagement;
 using Robust.Client.State;
@@ -19,6 +17,7 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby;
 
@@ -33,29 +32,23 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
     [UISystemDependency] private readonly ClientInventorySystem _inventory = default!;
     [UISystemDependency] private readonly StationSpawningSystem _spawn = default!;
 
+    private CharacterSetupGui? _characterSetup;
+    private HumanoidProfileEditor? _profileEditor;
+
+    /// <summary>
+    /// This is the characher preview panel in the chat. This should only update if their character updates.
+    /// </summary>
     private LobbyCharacterPreviewPanel? _previewPanel;
 
-    private bool _showClothes = true;
-
-    /*
-     * Each character profile has its own dummy. There is also a dummy for the lobby screen + character editor
-     * that is shared too.
-     */
-
     /// <summary>
-    /// Preview dummy for role gear.
+    /// This is the modified profile currently being edited.
     /// </summary>
-    private EntityUid? _previewDummy;
-
-    /// <summary>
-    /// If we currently have a job prototype selected.
-    /// </summary>
-    private JobPrototype? _dummyJob;
-
-    // TODO: Load the species directly and don't update entity ever.
-    public event Action<EntityUid>? PreviewDummyUpdated;
-
     private HumanoidCharacterProfile? _profile;
+
+    /// <summary>
+    /// Should we show clothes on the preview dummy.
+    /// </summary>
+    private bool _showClothes = true;
 
     public override void Initialize()
     {
@@ -65,23 +58,71 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
 
     private void PreferencesDataLoaded()
     {
-        UpdateProfile();
+        ReloadCharacterSetup();
     }
 
     public void OnStateEntered(LobbyState state)
     {
+        ReloadCharacterSetup();
     }
 
     public void OnStateExited(LobbyState state)
     {
+        // TODO: Attach preview dummy to the profile editor
         EntityManager.DeleteEntity(_previewDummy);
         _previewDummy = null;
+
+        _profileEditor?.Dispose();
+        _characterSetup?.Dispose();
+        _previewPanel?.Dispose();
+
+        _characterSetup = null;
+        _profileEditor = null;
+        _previewPanel = null;
     }
 
-    public void SetPreviewPanel(LobbyCharacterPreviewPanel? panel)
+    /// <summary>
+    /// Reloads every single character setup control.
+    /// </summary>
+    private void ReloadCharacterSetup()
     {
-        _previewPanel = panel;
-        ReloadProfile();
+        RefreshLobbyPreview();
+        var (characterGui, profileEditor) = EnsureGui();
+        characterGui.ReloadCharacterPickers();
+        // TODO: Profile editor thing
+    }
+
+    /// <summary>
+    /// Refreshes the character preview in the lobby chat.
+    /// </summary>
+    private void RefreshLobbyPreview()
+    {
+        _previewPanel?.Dispose();
+        _previewPanel = new LobbyCharacterPreviewPanel();
+        // Get selected character, load it, then set it
+        var character = _preferencesManager.Preferences?.SelectedCharacter;
+
+        if (character == null)
+            return;
+
+        var dummy = LoadProfileEntity((HumanoidCharacterProfile) character);
+        _previewPanel.SetSprite(dummy);
+    }
+
+    private void SaveProfile()
+    {
+        DebugTools.Assert(_profile != null);
+
+        if (_profile == null)
+            return;
+
+        var selected = _preferencesManager.Preferences?.SelectedCharacterIndex;
+
+        if (selected == null)
+            return;
+
+        _preferencesManager.UpdateCharacter(_profile, selected.Value);
+        ReloadCharacterSetup();
     }
 
     public void SetClothes(bool value)
@@ -286,5 +327,79 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
     public EntityUid? GetPreviewDummy()
     {
         return _previewDummy;
+    }
+
+    private (CharacterSetupGui, HumanoidProfileEditor) EnsureGui()
+    {
+        if (_characterSetup != null && _profileEditor != null)
+            return (_characterSetup, _profileEditor);
+
+        _profileEditor = new HumanoidProfileEditor(_preferencesManager, _prototypeManager, _configurationManager);
+        _characterSetup = new CharacterSetupGui(EntityManager, _prototypeManager, _resourceCache, _preferencesManager, _profileEditor);
+
+        _characterSetup.CloseButton.OnPressed += _ =>
+        {
+            // Reset sliders etc.
+            _characterSetup?.UpdateControls();
+
+            SetClothes(true);
+            UpdateProfile();
+            _lobby.SwitchState(LobbyGui.LobbyGuiState.Default);
+        };
+
+        _characterSetup.SaveButton.OnPressed += _ =>
+        {
+            SaveProfile();
+        };
+
+        _characterSetup.SelectCharacter += args =>
+        {
+            _preferencesManager.SelectCharacter(args);
+            ReloadCharacterSetup();
+        };
+
+        _characterSetup.DeleteCharacter += args =>
+        {
+            _preferencesManager.DeleteCharacter(args);
+            _characterSetup.ReloadCharacterPickers();
+        };
+
+        _lobby.CharacterSetupState.AddChild(_characterSetup);
+
+        return (_characterSetup, _profileEditor);
+    }
+
+    /// <summary>
+    /// Loads the profile onto a dummy entity.
+    /// </summary>
+    public EntityUid LoadProfileEntity(HumanoidCharacterProfile? humanoid)
+    {
+        EntityUid dummyEnt;
+
+        if (humanoid is not null)
+        {
+            var dummy = _prototypeManager.Index<SpeciesPrototype>(humanoid.Species).DollPrototype;
+            dummyEnt = EntityManager.SpawnEntity(dummy, MapCoordinates.Nullspace);
+        }
+        else
+        {
+            dummyEnt = EntityManager.SpawnEntity(_prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
+        }
+
+        _humanoid.LoadProfile(dummyEnt, humanoid);
+
+        if (humanoid != null)
+        {
+            var job = GetPreferredJob(humanoid);
+            GiveDummyJobClothes(dummyEnt, humanoid, job);
+
+            if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
+            {
+                var loadout = humanoid.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), humanoid.Species, EntityManager, _prototypeManager);
+                GiveDummyLoadout(dummyEnt, loadout);
+            }
+        }
+
+        return dummyEnt;
     }
 }

@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Client.Humanoid;
-using Content.Client.Lobby;
 using Content.Shared.Clothing;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
@@ -12,7 +11,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Preferences.UI;
+namespace Content.Client.Lobby.UI;
 
 /// <summary>
 /// Holds character data on the side of the setup GUI.

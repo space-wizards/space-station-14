@@ -2,14 +2,13 @@ using System.Numerics;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
-using Content.Shared.Preferences.Loadouts.Effects;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Preferences.UI;
+namespace Content.Client.Lobby.UI;
 
 public sealed class JobPrioritySelector : RequirementsSelector<JobPrototype>
 {

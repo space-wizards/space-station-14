@@ -2,7 +2,7 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.Preferences.UI;
+namespace Content.Client.Lobby.UI;
 
 public sealed class AntagPreferenceSelector : RequirementsSelector<AntagPrototype>
 {

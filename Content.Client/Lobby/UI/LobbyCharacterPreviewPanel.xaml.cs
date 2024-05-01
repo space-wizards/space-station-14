@@ -15,7 +15,6 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     public LobbyCharacterPreviewPanel()
     {
         RobustXamlLoader.Load(this);
-        UserInterfaceManager.GetUIController<LobbyUIController>().SetPreviewPanel(this);
     }
 
     public void SetLoaded(bool value)
@@ -26,7 +25,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
 
     public void SetSummaryText(string value)
     {
-        Summary.Text = string.Empty;
+        Summary.Text = value;
     }
 
     public void SetSprite(EntityUid uid)

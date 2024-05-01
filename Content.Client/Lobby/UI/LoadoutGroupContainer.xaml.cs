@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Preferences.UI;
+namespace Content.Client.Lobby.UI;
 
 [GenerateTypedNameReferences]
 public sealed partial class LoadoutGroupContainer : BoxContainer
