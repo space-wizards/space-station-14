@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Fix some items becomes bigger after turning in trash.
-    type: Fix
-  id: 6006
-  time: '2024-02-22T11:28:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25461
 - author: ps3moira
   changes:
   - message: Added Large Wooden floors
@@ -3861,3 +3854,10 @@
   id: 6505
   time: '2024-05-01T15:24:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27581
+- author: FungiFellow
+  changes:
+  - message: Grilles now take Structural Damage
+    type: Tweak
+  id: 6506
+  time: '2024-05-01T22:23:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27596
