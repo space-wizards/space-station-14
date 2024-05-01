@@ -12,6 +12,7 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
     /// </summary>
     [ValidatePrototypeId<TypingIndicatorPrototype>]
     public const string InitialIndicatorId = "default";
+    private string _originalIndicator = "default";
 
     public override void Initialize()
     {
@@ -25,6 +26,7 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
         if (!TryComp<TypingIndicatorComponent>(args.Wearer, out var indicator))
             return;
 
+        _originalIndicator = indicator.Prototype;
         indicator.Prototype = component.Prototype;
     }
 
@@ -33,6 +35,6 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
         if (!TryComp<TypingIndicatorComponent>(args.Wearer, out var indicator))
             return;
 
-        indicator.Prototype = SharedTypingIndicatorSystem.InitialIndicatorId;
+        indicator.Prototype = _originalIndicator;
     }
 }
