@@ -44,7 +44,7 @@
   - type: Projectile
     damage:
       types:
-        Heat: 25
+        Heat: 20
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
