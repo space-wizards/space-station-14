@@ -8,6 +8,8 @@ using Content.Server.CartridgeLoader;
 using Content.Server.Radio.Components;
 using Robust.Shared.Containers;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
+
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -43,7 +45,7 @@ public sealed class MessagesServerSystem : EntitySystem
     {
         var mapId = Transform(uid).MapID;
 
-        if (EntityManager.IsPowered(uid))
+        if (this.IsPowered(uid, EntityManager))
             return;
 
         var query = EntityManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();

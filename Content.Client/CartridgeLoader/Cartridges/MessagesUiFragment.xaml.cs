@@ -35,8 +35,8 @@ public sealed partial class MessagesUiFragment : BoxContainer
     public void UpdateState(MessagesUiStateMode mode, List<(string, int?)>? contents, string? name)
     {
         MessageContainer.DisposeAllChildren();
-        OverContainer.Orphan(Input);
-        OverContainer.Orphan(HeaderBox);
+        Input.Orphan();
+        HeaderBox.Orphan();
 
         if (contents == null) return;
         if (mode == MessagesUiStateMode.Chat)
