@@ -98,3 +98,28 @@
   id: LawyerNeck
   equipment:
     neck: ClothingNeckLawyerbadge
+
+# Backpack
+- type: loadout
+  id: LawyerBackpack
+  equipment: LawyerBackpack
+
+- type: startingGear
+  id: LawyerBackpack
+    back: ClothingBackpackLawyerFilled
+
+- type: loadout
+  id: LawyerSatchel
+  equipment: LawyerSatchel
+
+- type: startingGear
+  id: LawyerSatchel
+    back: ClothingBackpackSatchelLawyerFilled
+
+- type: loadout
+  id: LawyerDuffel
+  equipment: LawyerDuffel
+
+- type: startingGear
+  id: LawyerDuffel
+    back: ClothingBackpackDuffelLawyerFilled
