@@ -20,15 +20,14 @@
 - type: loadout
   id: ChefHeadHat
   equipment: ChefHeadHat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HeadChef
 
 - type: startingGear
   id: ChefHeadHat
   equipment:
     head: ClothingHeadHatHeadChef 
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: HeadChef
-
 
 # Mask
 - type: loadout
