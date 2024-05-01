@@ -25,6 +25,12 @@
         Blunt: 3
   - type: UseDelay
     delay: 1
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/cane.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
 
 - type: entity
   name: cane blade
