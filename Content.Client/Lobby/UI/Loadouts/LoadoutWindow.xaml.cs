@@ -5,7 +5,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Lobby.UI;
+namespace Content.Client.Lobby.UI.Loadouts;
 
 [GenerateTypedNameReferences]
 public sealed partial class LoadoutWindow : FancyWindow
@@ -39,13 +39,6 @@ public sealed partial class LoadoutWindow : FancyWindow
                 OnLoadoutUnpressed?.Invoke(group, args);
             };
         }
-    }
-
-    public override void Close()
-    {
-        base.Close();
-        var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
-        controller.SetDummyJob(null);
     }
 
     public void RefreshLoadouts(RoleLoadout loadout, ICommonSession session, IDependencyCollection collection)

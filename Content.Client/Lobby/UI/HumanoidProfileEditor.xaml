@@ -19,7 +19,7 @@
                                         <LineEdit Name="NameEdit" MinSize="270 0" VerticalAlignment="Center" Margin="5 0 0 0" />
                                         <Button Name="NameRandomize" Text="{Loc 'humanoid-profile-editor-name-random-button'}" />
                                     </BoxContainer>
-                                    <Button Name="RandomizeEverything" HorizontalAlignment="Center"
+                                    <Button Name="RandomizeEverythingButton" HorizontalAlignment="Center"
                                             HorizontalExpand="False" MaxWidth="256"
                                             Text="{Loc 'humanoid-profile-editor-randomize-everything-button'}" />
                                     <RichTextLabel Name="WarningLabel" HorizontalExpand="False"

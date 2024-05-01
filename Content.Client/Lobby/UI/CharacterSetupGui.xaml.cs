@@ -71,6 +71,7 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public void ReloadCharacterPickers()
         {
+            _createNewCharacterButton.Orphan();
             Characters.DisposeAllChildren();
 
             var numberOfFullSlots = 0;
@@ -78,7 +79,9 @@ namespace Content.Client.Lobby.UI
             Characters.DisposeAllChildren();
 
             if (!_preferencesManager.ServerDataLoaded)
+            {
                 return;
+            }
 
             _createNewCharacterButton.ToolTip =
                 Loc.GetString("character-setup-gui-create-new-character-button-tooltip",

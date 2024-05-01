@@ -1,4 +1,4 @@
-namespace Content.Client.Lobby.UI;
+namespace Content.Client.Lobby;
 
 public sealed partial class LobbyUIController
 {

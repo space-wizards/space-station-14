@@ -24,7 +24,7 @@ namespace Content.Shared.Preferences
     /// </summary>
     [DataDefinition]
     [Serializable, NetSerializable]
-    public sealed partial class HumanoidCharacterProfile : ICharacterProfile
+    public sealed partial class HumanoidCharacterProfile : ICharacterProfile, IEquatable<HumanoidCharacterProfile>
     {
         public const int MaxNameLength = 32;
         public const int MaxDescLength = 512;
@@ -82,7 +82,11 @@ namespace Content.Shared.Preferences
 
         /// <summary>Copy constructor</summary>
         private HumanoidCharacterProfile(HumanoidCharacterProfile other)
-            : this(other, new Dictionary<string, JobPriority>(other.JobPriorities), new List<string>(other.AntagPreferences), new List<string>(other.TraitPreferences), new Dictionary<string, RoleLoadout>(other.Loadouts))
+            : this(other,
+                new Dictionary<string, JobPriority>(other.JobPriorities),
+                new List<string>(other.AntagPreferences),
+                new List<string>(other.TraitPreferences),
+                new Dictionary<string, RoleLoadout>(other.Loadouts))
         {
         }
 
@@ -538,27 +542,26 @@ namespace Content.Shared.Preferences
 
         public override bool Equals(object? obj)
         {
-            return obj is HumanoidCharacterProfile other && MemberwiseEquals(other);
+            return ReferenceEquals(this, obj) || obj is HumanoidCharacterProfile other && Equals(other);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(
-                HashCode.Combine(
-                    Name,
-                    Species,
-                    Age,
-                    Sex,
-                    Gender,
-                    Appearance
-                ),
-                SpawnPriority,
-                PreferenceUnavailable,
-                _jobPriorities,
-                _antagPreferences,
-                _traitPreferences,
-                _loadouts
-            );
+            var hashCode = new HashCode();
+            hashCode.Add(_jobPriorities);
+            hashCode.Add(_antagPreferences);
+            hashCode.Add(_traitPreferences);
+            hashCode.Add(_loadouts);
+            hashCode.Add(Name);
+            hashCode.Add(FlavorText);
+            hashCode.Add(Species);
+            hashCode.Add(Age);
+            hashCode.Add((int)Sex);
+            hashCode.Add((int)Gender);
+            hashCode.Add(Appearance);
+            hashCode.Add((int)SpawnPriority);
+            hashCode.Add((int)PreferenceUnavailable);
+            return hashCode.ToHashCode();
         }
 
         public void SetLoadout(RoleLoadout loadout)
@@ -593,6 +596,30 @@ namespace Content.Shared.Preferences
 
             loadout.SetDefault(protoManager);
             return loadout;
+        }
+
+        public HumanoidCharacterProfile Clone()
+        {
+            return new HumanoidCharacterProfile(this);
+        }
+
+        public bool Equals(HumanoidCharacterProfile? other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Name == other.Name &&
+                   FlavorText == other.FlavorText &&
+                   Species == other.Species &&
+                   Age == other.Age &&
+                   Sex == other.Sex &&
+                   Gender == other.Gender &&
+                   SpawnPriority == other.SpawnPriority &&
+                   PreferenceUnavailable == other.PreferenceUnavailable &&
+                   _jobPriorities.SequenceEqual(other._jobPriorities) &&
+                   _antagPreferences.SequenceEqual(other._antagPreferences) &&
+                   Appearance.Equals(other.Appearance) &&
+                   _traitPreferences.SequenceEqual(other._traitPreferences) &&
+                   _loadouts.Equals(other._loadouts);
         }
     }
 }

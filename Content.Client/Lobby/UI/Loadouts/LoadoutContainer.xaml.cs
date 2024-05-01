@@ -8,7 +8,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Lobby.UI;
+namespace Content.Client.Lobby.UI.Loadouts;
 
 [GenerateTypedNameReferences]
 public sealed partial class LoadoutContainer : BoxContainer
