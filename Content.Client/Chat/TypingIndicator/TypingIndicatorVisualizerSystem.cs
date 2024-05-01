@@ -14,11 +14,9 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
         if (args.Sprite == null)
             return;
 
-        string currentIndicator;
+        var currentIndicator = component.Prototype;
         if (component.OverrideIndicator != null)
             currentIndicator = component.OverrideIndicator;
-        else
-            currentIndicator = component.Prototype;
 
         if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(currentIndicator, out var proto))
         {
