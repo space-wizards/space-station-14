@@ -244,20 +244,20 @@
   categories:
   - WizardItems
 
-- type: listing
-  id: WizardApprenticeList
-  name: Apprenticeship Contract
-  description: Send a request to the Wizard Federation asking to recieve an apprentice
-  productEntity: WizardApprenticeContract
-  cost:
-    Magipoints: 3
-  categories:
-  - WizardItems
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-  - !type:StoreWhitelistCondition
-    whitelist:
-      tags:
-      - WizardNonApprentice
+#- type: listing
+#  id: WizardApprenticeList
+#  name: Apprenticeship Contract
+#  description: Send a request to the Wizard Federation asking to recieve an apprentice
+#  productEntity: WizardApprenticeContract
+#  cost:
+#    Magipoints: 3
+#  categories:
+#  - WizardItems
+#  conditions:
+#  - !type:ListingLimitedStockCondition
+#    stock: 1
+#  - !type:StoreWhitelistCondition
+#    whitelist:
+#      tags:
+#      - WizardNonApprentice
 
