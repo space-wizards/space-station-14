@@ -123,12 +123,3 @@ chatsan-replacement-44 = to be fair
 
 chatsan-word-44 = kys
 chatsan-replacement-44 = Kill yourself
-
-chatsan-word-45 = hmeisterfrfr
-chatsan-replacement-45 = Hmeister, is a cool guy, and i believe that by me typing this specifc chatsan into the ss14 chat, am respecting that idea and believe he is cool. now bye bye my H'chum, play the game (p.s. nuke codes are 551957.)
-
-chatsan-word-46 = Ronstation
-chatsan-replacement-46 = Goobstation
-
-chatsan-word-47 = Ron
-chatsan-replacement-47 = Goob
