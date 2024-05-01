@@ -19,10 +19,10 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.DiskConsoleUiKey.Key
-      type: DiskConsoleBoundUserInterface
-    - key: enum.ResearchClientUiKey.Key
-      type: ResearchClientBoundUserInterface
+      enum.DiskConsoleUiKey.Key:
+        type: DiskConsoleBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
   - type: ExtensionCableReceiver
   - type: Computer
     board: TechDiskComputerCircuitboard

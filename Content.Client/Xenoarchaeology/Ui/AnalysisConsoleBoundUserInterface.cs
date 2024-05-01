@@ -39,6 +39,14 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
         {
             SendMessage(new AnalysisConsoleExtractButtonPressedMessage());
         };
+        _consoleMenu.OnUpBiasButtonPressed += () =>
+        {
+            SendMessage(new AnalysisConsoleBiasButtonPressedMessage(false));
+        };
+        _consoleMenu.OnDownBiasButtonPressed += () =>
+        {
+            SendMessage(new AnalysisConsoleBiasButtonPressedMessage(true));
+        };
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -47,7 +55,7 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
 
         switch (state)
         {
-            case AnalysisConsoleScanUpdateState msg:
+            case AnalysisConsoleUpdateState msg:
                 _consoleMenu?.SetButtonsDisabled(msg);
                 _consoleMenu?.UpdateInformationDisplay(msg);
                 _consoleMenu?.UpdateProgressBar(msg);
