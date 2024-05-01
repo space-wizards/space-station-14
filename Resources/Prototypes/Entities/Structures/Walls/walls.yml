@@ -1235,10 +1235,23 @@
       state: forcewall
 
 - type: entity
-  parent: WallForce
+  parent: WallInvisible
   id: WallMimeBlockade
   name: invisible wall
   components:
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          mask:
+          - FullTileMask
+          layer:
+          - WallLayer
+          density: 1000
     - type: Sprite
       sprite: Structures/Magic/forcewall.rsi
       state: forcewall
