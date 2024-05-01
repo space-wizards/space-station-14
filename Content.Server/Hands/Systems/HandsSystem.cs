@@ -93,8 +93,8 @@ namespace Content.Server.Hands.Systems
             if (TryComp(uid, out PullerComponent? puller) && TryComp(puller.Pulling, out PullableComponent? pullable))
                 _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
 
-            var offsetRandomCoordinates = _transformSystem.GetMoverCoordinates(args.Target).Offset(_random.NextVector2(1, 1));
-            ThrowHeldItem(uid, offsetRandomCoordinates);
+            var offsetRandomCoordinates = _transformSystem.GetMoverCoordinates(args.Target).Offset(_random.NextVector2(1f, 1.5f));
+            ThrowHeldItem(args.Target, offsetRandomCoordinates);
 
             args.PopupPrefix = "disarm-action-";
 
