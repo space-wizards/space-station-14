@@ -44,6 +44,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override void Initialize()
         {
@@ -379,6 +380,11 @@ namespace Content.Server.Ghost
                 return null;
 
             spawnPosition ??= _ticker.GetObserverSpawnPoint();
+
+            // Don't spawn ghost if the map is being deleted
+            var mapUid = spawnPosition.Value.GetMapUid(EntityManager);
+            if (mapUid == null || TerminatingOrDeleted(mapUid.Value))
+                return null;
 
             if (!spawnPosition.Value.IsValid(EntityManager))
             {
