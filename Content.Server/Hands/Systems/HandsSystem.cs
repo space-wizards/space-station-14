@@ -94,7 +94,8 @@ namespace Content.Server.Hands.Systems
                 _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
 
             var offsetRandomCoordinates = _transformSystem.GetMoverCoordinates(args.Target).Offset(_random.NextVector2(1f, 1.5f));
-            ThrowHeldItem(args.Target, offsetRandomCoordinates);
+            if (!ThrowHeldItem(args.Target, offsetRandomCoordinates))
+                return;
 
             args.PopupPrefix = "disarm-action-";
 
