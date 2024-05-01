@@ -1161,6 +1161,13 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: spiky2
 - type: marking
+  id: HumanHairSpookyLong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: spookylong
+- type: marking
   id: HumanHairSwept
   bodyPart: Hair
   markingCategory: Hair

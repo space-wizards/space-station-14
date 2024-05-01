@@ -1,4 +1,4 @@
-
+/*
 using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Administration.Commands;
@@ -297,7 +297,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
                  EnsureComp<GhostRoleMobSpawnerComponent>(spawnPoint);
                  ghostRole.RoleName = Loc.GetString(name);
                  ghostRole.RoleDescription = "wip";
-             }*/
+             }*//*
         }
     }
 
@@ -396,3 +396,4 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
 
 }
 
+*/
