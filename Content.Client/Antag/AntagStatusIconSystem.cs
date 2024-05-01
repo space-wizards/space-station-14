@@ -22,6 +22,7 @@ public sealed class AntagStatusIconSystem : SharedStatusIconSystem
         SubscribeLocalEvent<RevolutionaryComponent, GetStatusIconsEvent>(GetRevIcon);
         SubscribeLocalEvent<ZombieComponent, GetStatusIconsEvent>(GetIcon);
         SubscribeLocalEvent<HeadRevolutionaryComponent, GetStatusIconsEvent>(GetIcon);
+        SubscribeLocalEvent<InitialInfectedComponent, GetStatusIconsEvent>(GetIcon);
     }
 
     /// <summary>

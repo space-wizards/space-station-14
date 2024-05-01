@@ -2,7 +2,9 @@
   id: CuraDrobeInventory
   startingInventory:
     BooksBag: 2
+    BriefcaseBrown: 2
     HandLabeler: 2
+    Cane: 3
     ClothingEyesGlasses: 2
     ClothingEyesGlassesJamjar: 2
     ClothingNeckScarfStripedGreen: 2
@@ -12,4 +14,4 @@
     ClothingUniformJumpskirtLibrarian: 3
     ClothingShoesBootsLaceup: 2
     ClothingHeadsetService: 2
-    
+

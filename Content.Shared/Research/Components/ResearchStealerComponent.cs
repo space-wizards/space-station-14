@@ -14,4 +14,16 @@ public sealed partial class ResearchStealerComponent : Component
     /// </summary>
     [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan Delay = TimeSpan.FromSeconds(20);
+
+    /// <summary>
+    /// The minimum number of technologies that will be stolen
+    /// </summary>
+    [DataField]
+    public int MinToSteal = 4;
+
+    /// <summary>
+    /// The maximum number of technologies that will be stolen
+    /// </summary>
+    [DataField]
+    public int MaxToSteal = 8;
 }

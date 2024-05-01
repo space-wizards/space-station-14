@@ -50,7 +50,7 @@ namespace Content.Server.Labels
         /// <param name="text">intended label text (null to remove)</param>
         /// <param name="label">label component for resolve</param>
         /// <param name="metadata">metadata component for resolve</param>
-        public void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null)
+        public override void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null)
         {
             if (!Resolve(uid, ref metadata))
                 return;
@@ -84,10 +84,7 @@ namespace Content.Server.Labels
         {
             _itemSlotsSystem.AddItemSlot(uid, ContainerName, component.LabelSlot);
 
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-                return;
-
-            _appearance.SetData(uid, PaperLabelVisuals.HasLabel, false, appearance);
+            UpdateAppearance((uid, component));
         }
 
         private void OnComponentRemove(EntityUid uid, PaperLabelComponent component, ComponentRemove args)
@@ -131,10 +128,18 @@ namespace Content.Server.Labels
             if (args.Container.ID != label.LabelSlot.ID)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            UpdateAppearance((uid, label));
+        }
+
+        private void UpdateAppearance(Entity<PaperLabelComponent, AppearanceComponent?> ent)
+        {
+            if (!Resolve(ent, ref ent.Comp2, false))
                 return;
 
-            _appearance.SetData(uid, PaperLabelVisuals.HasLabel, label.LabelSlot.HasItem, appearance);
+            var slot = ent.Comp1.LabelSlot;
+            _appearance.SetData(ent, PaperLabelVisuals.HasLabel, slot.HasItem, ent.Comp2);
+            if (TryComp<PaperLabelTypeComponent>(slot.Item, out var type))
+                _appearance.SetData(ent, PaperLabelVisuals.LabelType, type.PaperType, ent.Comp2);
         }
     }
 }

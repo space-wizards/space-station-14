@@ -72,7 +72,7 @@
     Medicine:
       effects:
       - !type:ModifyBloodLevel
-        condition:
+        conditions:
         - !type:OrganType
           type: Arachnid
           shouldHave: true
@@ -163,7 +163,7 @@
     Medicine:
       effects:
       - !type:ModifyBloodLevel
-        condition:
+        conditions:
         - !type:OrganType
           type: Arachnid
           shouldHave: false

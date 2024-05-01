@@ -1,0 +1,15 @@
+- type: messagePack
+  id: BlockGameGoodbyes
+  messages:
+  - thankyou-block-game-1
+  - thankyou-block-game-2
+  - thankyou-block-game-3
+  - thankyou-block-game-4
+  - thankyou-block-game-5
+  - thankyou-block-game-6
+  - thankyou-block-game-7
+  - thankyou-block-game-8
+  - thankyou-block-game-9
+  - thankyou-block-game-10
+  - thankyou-block-game-11
+  - thankyou-block-game-12

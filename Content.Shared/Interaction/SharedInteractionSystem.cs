@@ -15,10 +15,10 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Pulling;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -60,7 +60,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+        [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -76,8 +76,11 @@ namespace Content.Shared.Interaction
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
             SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
+
             SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
+
             SubscribeLocalEvent<UnremoveableComponent, ContainerGettingRemovedAttemptEvent>(OnRemoveAttempt);
             SubscribeLocalEvent<UnremoveableComponent, GotUnequippedEvent>(OnUnequip);
             SubscribeLocalEvent<UnremoveableComponent, GotUnequippedHandEvent>(OnUnequipHand);
@@ -108,7 +111,9 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void OnBoundInterfaceInteractAttempt(BoundUserInterfaceMessageAttempt ev)
         {
-            if (ev.Sender.AttachedEntity is not { } user || !_actionBlockerSystem.CanInteract(user, ev.Target))
+            var user = ev.Actor;
+
+            if (!_actionBlockerSystem.CanInteract(user, ev.Target))
             {
                 ev.Cancel();
                 return;
@@ -185,10 +190,10 @@ namespace Content.Shared.Interaction
             if (!InRangeUnobstructed(userEntity.Value, uid, popup: true))
                 return false;
 
-            if (!TryComp(uid, out SharedPullableComponent? pull))
+            if (!TryComp(uid, out PullableComponent? pull))
                 return false;
 
-            _pullSystem.TogglePull(userEntity.Value, pull);
+            _pullSystem.TogglePull(uid, userEntity.Value, pull);
             return false;
         }
 
@@ -459,7 +464,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             if (!HasComp<NoRotateOnInteractComponent>(user))
-                _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
+                _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager, _transform));
 
             return true;
         }
@@ -612,7 +617,7 @@ namespace Content.Shared.Interaction
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
             var inRange = true;
             MapCoordinates originPos = default;
-            var targetPos = otherCoordinates.ToMap(EntityManager);
+            var targetPos = otherCoordinates.ToMap(EntityManager, _transform);
             Angle targetRot = default;
 
             // So essentially:
@@ -682,7 +687,7 @@ namespace Content.Shared.Interaction
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                _popupSystem.PopupEntity(message, origin, origin);
+                _popupSystem.PopupClient(message, origin, origin);
             }
 
             return inRange;
@@ -785,7 +790,7 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null,
             bool popup = false)
         {
-            return InRangeUnobstructed(origin, other.ToMap(EntityManager), range, collisionMask, predicate, popup);
+            return InRangeUnobstructed(origin, other.ToMap(EntityManager, _transform), range, collisionMask, predicate, popup);
         }
 
         /// <summary>
@@ -973,8 +978,8 @@ namespace Content.Shared.Interaction
                 return false;
 
             DoContactInteraction(user, used, activateMsg);
-            if (delayComponent != null)
-                _useDelay.TryResetDelay((used, delayComponent));
+            // Still need to call this even without checkUseDelay in case this gets relayed from Activate.
+            _useDelay.TryResetDelay(used, component: delayComponent);
             if (!activateMsg.WasLogged)
                 _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
@@ -1144,6 +1149,21 @@ namespace Content.Shared.Interaction
 
             RaiseLocalEvent(uidA, new ContactInteractionEvent(uidB.Value));
             RaiseLocalEvent(uidB.Value, new ContactInteractionEvent(uidA));
+        }
+
+        private void HandleUserInterfaceRangeCheck(ref BoundUserInterfaceCheckRangeEvent ev)
+        {
+            if (ev.Result == BoundUserInterfaceRangeResult.Fail)
+                return;
+
+            if (InRangeUnobstructed(ev.Actor, ev.Target, ev.Data.InteractionRange))
+            {
+                ev.Result = BoundUserInterfaceRangeResult.Pass;
+            }
+            else
+            {
+                ev.Result = BoundUserInterfaceRangeResult.Fail;
+            }
         }
     }
 

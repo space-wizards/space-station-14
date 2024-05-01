@@ -50,8 +50,10 @@ public sealed class PresetIdCardSystem : EntitySystem
 
         var station = _stationSystem.GetOwningStation(uid);
         var extended = false;
-        if (station != null)
-            extended = Comp<StationJobsComponent>(station.Value).ExtendedAccess;
+
+        // Station not guaranteed to have jobs (e.g. nukie outpost).
+        if (TryComp(station, out StationJobsComponent? stationJobs))
+            extended = stationJobs.ExtendedAccess;
 
         SetupIdAccess(uid, id, extended);
         SetupIdName(uid, id);

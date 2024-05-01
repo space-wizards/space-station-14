@@ -17,9 +17,6 @@ public sealed partial class WaggingComponent : Component
     [DataField]
     public EntityUid? ActionEntity;
 
-    [DataField]
-    public ProtoId<EmotePrototype> EmoteId = "WagTail";
-
     /// <summary>
     /// Suffix to add to get the animated marking.
     /// </summary>
