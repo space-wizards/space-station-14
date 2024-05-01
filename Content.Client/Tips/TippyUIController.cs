@@ -23,13 +23,9 @@ namespace Content.Client.Tips;
 
 public sealed class TippyUIController : UIController
 {
-    [Dependency] private readonly IStateManager _state = default!;
-    [Dependency] private readonly IConsoleHost _conHost = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IResourceCache _resCache = default!;
     [UISystemDependency] private readonly AudioSystem _audio = default!;
-    [UISystemDependency] private readonly EntityManager _entSys = default!;
 
     public const float Padding = 50;
     public static Angle WaddleRotation = Angle.FromDegrees(10);
@@ -44,11 +40,12 @@ public sealed class TippyUIController : UIController
     {
         base.Initialize();
         UIManager.OnScreenChanged += OnScreenChanged;
+        SubscribeNetworkEvent<TippyEvent>(OnTippyEvent);
     }
 
-    public void AddMessage(TippyEvent ev)
+    private void OnTippyEvent(TippyEvent msg, EntitySessionEventArgs args)
     {
-        _queuedMessages.Enqueue(ev);
+        _queuedMessages.Enqueue(msg);
     }
 
     public override void FrameUpdate(FrameEventArgs args)
@@ -146,7 +143,7 @@ public sealed class TippyUIController : UIController
                     return;
                 if (!EntityManager.HasComponent<PaperVisualsComponent>(_entity))
                 {
-                    var paper = EntityManager.AddComponent<PaperVisualsComponent>(_entity); 
+                    var paper = EntityManager.AddComponent<PaperVisualsComponent>(_entity);
                     paper.BackgroundImagePath = "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png";
                     paper.BackgroundPatchMargin = new(16f, 16f, 16f, 16f);
                     paper.BackgroundModulate = new(255, 255, 204);

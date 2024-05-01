@@ -64,6 +64,15 @@
     state: frills_hood_secondary
 
 - type: marking
+  id: LizardFrillsNeckfull
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: frills_neckfull
+
+- type: marking
   id: LizardHornsAngler
   bodyPart: HeadTop
   markingCategory: HeadTop
