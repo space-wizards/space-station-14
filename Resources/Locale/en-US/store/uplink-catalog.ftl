@@ -290,8 +290,8 @@ uplink-disposable-turret-desc = Looks and functions like a normal electrical too
 uplink-cluster-banana-peel-name = Cluster Banana
 uplink-cluster-banana-peel-desc = Splits into 6 explosive banana peels after being thrown, the peels detonate automatically after 20 seconds if nobody slips on them.
 
-uplink-cane-blade-name = Cane Blade
-uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
+uplink-cane-blade-name = Wizard's Cane
+uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed, enchanted to shoot fireballs when wielded.
 
 # Armor
 uplink-chameleon-name = Chameleon Kit
