@@ -17,7 +17,6 @@
     storedRotation: -90
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
-    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
       enum.HealthAnalyzerUiKey.Key:

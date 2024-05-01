@@ -57,6 +57,7 @@
   tier: 1
   cost: 5000
   recipeUnlocks:
+  - MagazineShotgunBeanbag
   - ShellTranquilizer 
   - BoxBeanbag 
   - WeaponDisabler
@@ -174,6 +175,7 @@
   cost: 15000
   recipeUnlocks:
   - WeaponAdvancedLaser
+  - PortableRecharger
 
 - type: technology
   id: ExperimentalBatteryAmmo

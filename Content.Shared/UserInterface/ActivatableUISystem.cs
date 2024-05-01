@@ -3,11 +3,11 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.UserInterface;
 
@@ -17,23 +17,31 @@ public sealed partial class ActivatableUISystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+
+    private readonly List<EntityUid> _toClose = new();
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ActivatableUIComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>(OnHandDeselected);
-        SubscribeLocalEvent<ActivatableUIComponent, GotUnequippedHandEvent>((uid, aui, _) => CloseAll(uid, aui));
-        // *THIS IS A BLATANT WORKAROUND!* RATIONALE: Microwaves need it
-        SubscribeLocalEvent<ActivatableUIComponent, EntParentChangedMessage>(OnParentChanged);
+        SubscribeLocalEvent<ActivatableUIComponent, GotUnequippedHandEvent>(OnHandUnequipped);
         SubscribeLocalEvent<ActivatableUIComponent, BoundUIClosedEvent>(OnUIClose);
+        SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(GetActivationVerb);
+        SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<Verb>>(GetVerb);
+
+        // TODO ActivatableUI
+        // Add UI-user component, and listen for user container changes.
+        // I.e., should lose a computer UI if a player gets shut into a locker.
+        SubscribeLocalEvent<ActivatableUIComponent, EntGotInsertedIntoContainerMessage>(OnGotInserted);
+        SubscribeLocalEvent<ActivatableUIComponent, EntGotRemovedFromContainerMessage>(OnGotRemoved);
+
         SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
-
-        SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
-
         SubscribeLocalEvent<UserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
 
         InitializePower();
@@ -59,25 +67,54 @@ public sealed partial class ActivatableUISystem : EntitySystem
         args.Handled = _uiSystem.TryToggleUi(uid, args.Key, args.Performer);
     }
 
-    private void AddOpenUiVerb(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)
+
+    private void GetActivationVerb(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)
+    {
+        if (component.VerbOnly || !ShouldAddVerb(uid, component, args))
+            return;
+
+        args.Verbs.Add(new ActivationVerb
+        {
+            // TODO VERBS add "open UI" icon
+            Act = () => InteractUI(args.User, uid, component),
+            Text = Loc.GetString(component.VerbText)
+        });
+    }
+
+    private void GetVerb(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<Verb> args)
+    {
+        if (!component.VerbOnly || !ShouldAddVerb(uid, component, args))
+            return;
+
+        args.Verbs.Add(new Verb
+        {
+            // TODO VERBS add "open UI" icon
+            Act = () => InteractUI(args.User, uid, component),
+            Text = Loc.GetString(component.VerbText)
+        });
+    }
+
+    private bool ShouldAddVerb<T>(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<T> args) where T : Verb
     {
         if (!args.CanAccess)
-            return;
+            return false;
 
-        if (component.RequireHands && args.Hands == null)
-            return;
+        if (component.RequireHands)
+        {
+            if (args.Hands == null)
+                return false;
 
-        if (component.InHandsOnly && args.Using != uid)
-            return;
+            if (component.InHandsOnly)
+            {
+                if (!_hands.IsHolding(args.User, uid, out var hand, args.Hands))
+                    return false;
 
-        if (!args.CanInteract && (!component.AllowSpectator || !HasComp<GhostComponent>(args.User)))
-            return;
+                if (component.RequireActiveHand && args.Hands.ActiveHand != hand)
+                    return false;
+            }
+        }
 
-        ActivationVerb verb = new();
-        verb.Act = () => InteractUI(args.User, uid, component);
-        verb.Text = Loc.GetString(component.VerbText);
-        // TODO VERBS add "open UI" icon?
-        args.Verbs.Add(verb);
+        return args.CanInteract || component.AllowSpectator && HasComp<GhostComponent>(args.User);
     }
 
     private void OnActivate(EntityUid uid, ActivatableUIComponent component, ActivateInWorldEvent args)
@@ -85,24 +122,10 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (component.InHandsOnly)
+        if (component.VerbOnly)
             return;
 
-        if (component.AllowedItems != null)
-            return;
-
-        args.Handled = InteractUI(args.User, uid, component);
-    }
-
-    private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (component.RightClickOnly)
-            return;
-
-        if (component.AllowedItems != null)
+        if (component.RequiredItems != null)
             return;
 
         args.Handled = InteractUI(args.User, uid, component);
@@ -110,15 +133,19 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, ActivatableUIComponent component, InteractUsingEvent args)
     {
-        if (args.Handled) return;
-        if (component.AllowedItems == null) return;
-        if (!component.AllowedItems.IsValid(args.Used, EntityManager)) return;
-        args.Handled = InteractUI(args.User, uid, component);
-    }
+        if (args.Handled)
+            return;
 
-    private void OnParentChanged(EntityUid uid, ActivatableUIComponent aui, ref EntParentChangedMessage args)
-    {
-        CloseAll(uid, aui);
+        if (component.VerbOnly)
+            return;
+
+        if (component.RequiredItems == null)
+            return;
+
+        if (!component.RequiredItems.IsValid(args.Used, EntityManager))
+            return;
+
+        args.Handled = InteractUI(args.User, uid, component);
     }
 
     private void OnUIClose(EntityUid uid, ActivatableUIComponent component, BoundUIClosedEvent args)
@@ -148,22 +175,33 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!_blockerSystem.CanInteract(user, uiEntity) && (!aui.AllowSpectator || !HasComp<GhostComponent>(user)))
             return false;
 
-        if (aui.RequireHands && !HasComp<HandsComponent>(user))
-            return false;
+        if (aui.RequireHands)
+        {
+            if (!TryComp(user, out HandsComponent? hands))
+                return false;
+
+            if (aui.InHandsOnly)
+            {
+                if (!_hands.IsHolding(user, uiEntity, out var hand, hands))
+                    return false;
+
+                if (aui.RequireActiveHand && hands.ActiveHand != hand)
+                    return false;
+            }
+        }
 
         if (aui.AdminOnly && !_adminManager.IsAdmin(user))
             return false;
 
         if (aui.SingleUser && aui.CurrentSingleUser != null && user != aui.CurrentSingleUser)
         {
-            string message = Loc.GetString("machine-already-in-use", ("machine", uiEntity));
+            var message = Loc.GetString("machine-already-in-use", ("machine", uiEntity));
             _popupSystem.PopupEntity(message, uiEntity, user);
 
-            // If we get here, supposedly, the object is in use.
-            // Check with BUI that it's ACTUALLY in use just in case.
-            // Since this could brick the object if it goes wrong.
             if (_uiSystem.IsUiOpen(uiEntity, aui.Key))
-                return false;
+                return true;
+
+            Log.Error($"Activatable UI has user without being opened? Entity: {ToPrettyString(uiEntity)}. User: {aui.CurrentSingleUser}, Key: {aui.Key}");
         }
 
         // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
@@ -199,26 +237,77 @@ public sealed partial class ActivatableUISystem : EntitySystem
             return;
 
         aui.CurrentSingleUser = user;
+        Dirty(uid, aui);
 
         RaiseLocalEvent(uid, new ActivatableUIPlayerChangedEvent());
     }
 
     public void CloseAll(EntityUid uid, ActivatableUIComponent? aui = null)
     {
-        if (!Resolve(uid, ref aui, false) || aui.Key == null)
+        if (!Resolve(uid, ref aui, false))
             return;
+
+        if (aui.Key == null)
+        {
+            Log.Error($"Encountered null key in activatable ui on entity {ToPrettyString(uid)}");
+            return;
+        }
 
         _uiSystem.CloseUi(uid, aui.Key);
     }
 
-    private void OnHandDeselected(EntityUid uid, ActivatableUIComponent? aui, HandDeselectedEvent args)
+    private void OnHandDeselected(Entity<ActivatableUIComponent> ent, ref HandDeselectedEvent args)
     {
-        if (!Resolve(uid, ref aui, false))
+        if (ent.Comp.RequireHands && ent.Comp.InHandsOnly && ent.Comp.RequireActiveHand)
+            CloseAll(ent, ent);
+    }
+
+    private void OnHandUnequipped(Entity<ActivatableUIComponent> ent, ref GotUnequippedHandEvent args)
+    {
+        if (ent.Comp.RequireHands && ent.Comp.InHandsOnly)
+            CloseAll(ent, ent);
+    }
+
+    private void OnGotInserted(Entity<ActivatableUIComponent> ent, ref EntGotInsertedIntoContainerMessage args)
+    {
+        CheckAccess((ent, ent));
+    }
+
+    private void OnGotRemoved(Entity<ActivatableUIComponent> ent, ref EntGotRemovedFromContainerMessage args)
+    {
+        CheckAccess((ent, ent));
+    }
+
+    public void CheckAccess(Entity<ActivatableUIComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (!aui.CloseOnHandDeselect)
+        if (ent.Comp.Key == null)
+        {
+            Log.Error($"Encountered null key in activatable ui on entity {ToPrettyString(ent)}");
             return;
+        }
 
-        CloseAll(uid, aui);
+        foreach (var user in _uiSystem.GetActors(ent.Owner, ent.Comp.Key))
+        {
+            if (!_container.IsInSameOrParentContainer(user, ent)
+                && !_interaction.CanAccessViaStorage(user, ent))
+            {
+                _toClose.Add(user);
+                continue;
+
+            }
+
+            if (!_interaction.InRangeUnobstructed(user, ent))
+                _toClose.Add(user);
+        }
+
+        foreach (var user in _toClose)
+        {
+            _uiSystem.CloseUi(ent.Owner, ent.Comp.Key, user);
+        }
+
+        _toClose.Clear();
     }
 }
