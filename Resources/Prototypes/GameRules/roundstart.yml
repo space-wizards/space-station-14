@@ -134,13 +134,6 @@
         prototype: Nukeops
 
 - type: entity
-  id: Pirates
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: PiratesRule
-
-- type: entity
   id: Traitor
   parent: BaseGameRule
   noSpawn: true

@@ -179581,7 +179581,7 @@ entities:
     - type: Transform
       pos: 45.517193,-35.503773
       parent: 2
-- proto: WeaponPistolMk58Nonlethal
+- proto: WeaponPistolMk58
   entities:
   - uid: 22247
     components:
