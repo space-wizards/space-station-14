@@ -109,6 +109,7 @@
     minAngle: 1
     maxAngle: 2
     selectedMode: SemiAuto
+    examinable: false
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
   - type: RechargeBasicEntityAmmo
