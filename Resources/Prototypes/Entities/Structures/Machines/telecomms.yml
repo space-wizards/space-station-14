@@ -96,12 +96,7 @@
         map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ApcPowerReceiver
     powerLoad: 200
-    priority: Low
   - type: ExtensionCableReceiver
-  - type: WiresPanel
-  - type: Wires
-    layoutId: rndserver
-  - type: WiresVisuals
   - type: Destructible
     thresholds:
     - trigger:

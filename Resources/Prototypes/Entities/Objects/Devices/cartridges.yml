@@ -49,7 +49,7 @@
     programName: messages-program-name
     icon:
       sprite:  Objects/Misc/books.rsi
-      state: book6
+      state: book_icon
   - type: MessagesCartridge
 
 - type: entity
@@ -67,7 +67,7 @@
     programName: messages-program-name
     icon:
       sprite:  Objects/Misc/books.rsi
-      state: book6
+      state: book_icon
   - type: MessagesCartridge
     encryptionKey: Syndicate
 
