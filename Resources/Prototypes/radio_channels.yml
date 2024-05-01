@@ -106,6 +106,6 @@
 - type: radioChannel
   id: Bugged2
   name: chat-radio-bugged2
-#  keycode: '9'
+  keycode: '9'
   frequency: 1952
   color: "#8f4a4b" # same as syndicate because thats funnier.
