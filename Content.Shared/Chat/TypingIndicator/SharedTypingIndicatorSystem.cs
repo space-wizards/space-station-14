@@ -18,7 +18,6 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
     {
         if (!TryComp<TypingIndicatorComponent>(args.Wearer, out var indicator))
             return;
-        indicator.Override = true;
         indicator.OverrideIndicator = component.Prototype;
     }
 
@@ -26,8 +25,6 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
     {
         if (!TryComp<TypingIndicatorComponent>(args.Wearer, out var indicator))
             return;
-
-        indicator.Override = false;
-        indicator.OverrideIndicator = "";
+        indicator.OverrideIndicator = null;
     }
 }

@@ -15,14 +15,10 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
             return;
 
         string currentIndicator;
-        if (component.Override == true)
-        {
+        if (component.OverrideIndicator != null)
             currentIndicator = component.OverrideIndicator;
-        }
         else
-        {
             currentIndicator = component.Prototype;
-        }
 
         if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(currentIndicator, out var proto))
         {
