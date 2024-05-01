@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Radio jammer now uses 3 times less power.
-    type: Tweak
-  id: 6002
-  time: '2024-02-22T07:32:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25432
-- author: metalgearsloth
-  changes:
-  - message: Added handheld crew monitor back just for CMO.
-    type: Add
-  id: 6003
-  time: '2024-02-22T11:00:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25439
 - author: DrMelon
   changes:
   - message: Fixed incorrect job-specific Uplink items being given on occasion.
@@ -3859,3 +3845,18 @@
   id: 6501
   time: '2024-04-30T06:49:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27521
+- author: ERORR404V1
+  changes:
+  - message: Added chameleon projector in thief toolbox!
+    type: Add
+  id: 6502
+  time: '2024-04-30T12:14:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27491
+- author: DamnFeds
+  changes:
+  - message: honkbot now uses a happy honk meal instead of box of hugs and clown's
+      rubber stamp. Honk!
+    type: Tweak
+  id: 6503
+  time: '2024-05-01T03:27:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27535
