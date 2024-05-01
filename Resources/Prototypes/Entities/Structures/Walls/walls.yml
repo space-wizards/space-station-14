@@ -1257,8 +1257,9 @@
             - WallLayer
     - type: Airtight
     - type: Sprite
-      sprite: Structures/Magic/inviswall.rsi
-      state: inviswall
+      sprite: Structures/Magic/forcewall.rsi
+      state: forcewall
+      visible: false
     - type: Icon
       sprite: Structures/Magic/inviswall.rsi
       state: inviswall
