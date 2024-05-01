@@ -82,8 +82,8 @@ public sealed partial class RequirementsSelector : BoxContainer
             icon.SetPositionFirst();
         }
 
-        AddChild(_options);
-        AddChild(_lockStripe);
+        OptionsContainer.AddChild(_options);
+        OptionsContainer.AddChild(_lockStripe);
     }
 
     public void LockRequirements(FormattedMessage requirements)

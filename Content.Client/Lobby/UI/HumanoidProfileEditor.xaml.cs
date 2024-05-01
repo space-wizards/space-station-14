@@ -79,7 +79,7 @@ namespace Content.Client.Lobby.UI
 
         private List<SpeciesPrototype> _species = new();
 
-        private Dictionary<string, RequirementsSelector> _jobPriorities = new();
+        private List<(string, RequirementsSelector)> _jobPriorities = new();
 
         private readonly Dictionary<string, BoxContainer> _jobCategories;
 
@@ -460,7 +460,7 @@ namespace Content.Client.Lobby.UI
                     selector.PreferenceChanged += preference =>
                     {
                         Profile = Profile?.WithTraitPreference(trait.ID, preference);
-                        ReloadPreview();
+                        SetDirty();
                     };
 
                     TraitsList.AddChild(selector);
@@ -513,6 +513,11 @@ namespace Content.Client.Lobby.UI
         {
             AntagList.DisposeAllChildren();
             var loadoutGroup = new ButtonGroup();
+            var items = new[]
+            {
+                ("humanoid-profile-editor-antag-preference-yes-button", 0),
+                ("humanoid-profile-editor-antag-preference-no-button", 1)
+            };
 
             foreach (var antag in _prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => Loc.GetString(a.Name)))
             {
@@ -529,14 +534,10 @@ namespace Content.Client.Lobby.UI
                     Margin = new Thickness(3f, 3f, 3f, 0f),
                 };
 
-                var items = new[]
-                {
-                    ("humanoid-profile-editor-antag-preference-yes-button", 0),
-                    ("humanoid-profile-editor-antag-preference-no-button", 1)
-                };
                 var title = Loc.GetString(antag.Name);
                 var description = Loc.GetString(antag.Objective);
                 selector.Setup(items, title, 250, description);
+                selector.Select(Profile?.AntagPreferences.Contains(antag.ID) == true ? 0 : 1);
 
                 if (!_requirements.CheckRoleTime(antag.Requirements, out var reason))
                 {
@@ -573,7 +574,7 @@ namespace Content.Client.Lobby.UI
         private void SetDirty()
         {
             // If it equals default then reset the button.
-            if (_preferencesManager.Preferences?.SelectedCharacter?.Equals(Profile) == true)
+            if (Profile == null || _preferencesManager.Preferences?.SelectedCharacter.MemberwiseEquals(Profile) == true)
             {
                 IsDirty = false;
                 return;
@@ -692,6 +693,7 @@ namespace Content.Client.Lobby.UI
         {
             JobList.DisposeAllChildren();
             _jobCategories.Clear();
+            _jobPriorities.Clear();
             var firstCategory = true;
 
             var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>().ToArray();
@@ -700,10 +702,10 @@ namespace Content.Client.Lobby.UI
 
             var items = new[]
             {
-                ("humanoid-profile-editor-job-priority-high-button", (int) JobPriority.High),
-                ("humanoid-profile-editor-job-priority-medium-button", (int) JobPriority.Medium),
-                ("humanoid-profile-editor-job-priority-low-button", (int) JobPriority.Low),
                 ("humanoid-profile-editor-job-priority-never-button", (int) JobPriority.Never),
+                ("humanoid-profile-editor-job-priority-low-button", (int) JobPriority.Low),
+                ("humanoid-profile-editor-job-priority-medium-button", (int) JobPriority.Medium),
+                ("humanoid-profile-editor-job-priority-high-button", (int) JobPriority.High),
             };
 
             foreach (var department in departments)
@@ -761,7 +763,6 @@ namespace Content.Client.Lobby.UI
                     var jobContainer = new BoxContainer()
                     {
                         Orientation = LayoutOrientation.Horizontal,
-                        HorizontalExpand = true,
                     };
 
                     var selector = new RequirementsSelector()
@@ -776,7 +777,6 @@ namespace Content.Client.Lobby.UI
                     };
                     var jobIcon = _prototypeManager.Index<StatusIconPrototype>(job.Icon);
                     icon.Texture = jobIcon.Icon.Frame0();
-
                     selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon);
 
                     if (!_requirements.IsAllowed(job, out var reason))
@@ -788,18 +788,18 @@ namespace Content.Client.Lobby.UI
                         selector.UnlockRequirements();
                     }
 
-                    selector.OnSelected += priority =>
+                    selector.OnSelected += selectedPrio =>
                     {
-                        Profile = Profile?.WithJobPriority(job.ID, (JobPriority) priority);
+                        Profile = Profile?.WithJobPriority(job.ID, (JobPriority) selectedPrio);
 
                         foreach (var (jobId, other) in _jobPriorities)
                         {
                             // Sync other selectors with the same job in case of multiple department jobs
                             if (jobId == job.ID)
                             {
-                                other.Select(priority);
+                                other.Select(selectedPrio);
                             }
-                            else if ((JobPriority) priority == JobPriority.High && (JobPriority) other.Selected == JobPriority.High)
+                            else if ((JobPriority) selectedPrio == JobPriority.High && (JobPriority) other.Selected == JobPriority.High)
                             {
                                 // Lower any other high priorities to medium.
                                 other.Select((int) JobPriority.Medium);
@@ -818,6 +818,7 @@ namespace Content.Client.Lobby.UI
                         VerticalAlignment = VAlignment.Center,
                         Group = jobLoadoutGroup,
                         ToggleMode = true,
+                        Margin = new Thickness(3f, 3f, 0f, 0f),
                     };
 
                     var collection = IoCManager.Instance!;
@@ -856,15 +857,13 @@ namespace Content.Client.Lobby.UI
                         };
                     }
 
+                    _jobPriorities.Add((job.ID, selector));
                     jobContainer.AddChild(selector);
                     jobContainer.AddChild(loadoutWindowBtn);
                     category.AddChild(jobContainer);
                 }
             }
 
-            // TODO: Need a generic data structure for locked controls
-            // TODO: Need a generic container for the thing
-            // TODO: Need to decouple loadouts from it entirely.
             UpdateJobPriorities();
         }
 
@@ -892,6 +891,7 @@ namespace Content.Client.Lobby.UI
             _loadoutWindow.OnLoadoutPressed += (loadoutGroup, loadoutProto) =>
             {
                 roleLoadout.AddLoadout(loadoutGroup, loadoutProto, _prototypeManager);
+                _loadoutWindow.RefreshLoadouts(roleLoadout, session, collection);
                 Profile = Profile?.WithLoadout(roleLoadout);
                 SetDirty();
                 ReloadPreview();
@@ -900,6 +900,7 @@ namespace Content.Client.Lobby.UI
             _loadoutWindow.OnLoadoutUnpressed += (loadoutGroup, loadoutProto) =>
             {
                 roleLoadout.RemoveLoadout(loadoutGroup, loadoutProto, _prototypeManager);
+                _loadoutWindow.RefreshLoadouts(roleLoadout, session, collection);
                 Profile = Profile?.WithLoadout(roleLoadout);
                 SetDirty();
                 ReloadPreview();
@@ -911,6 +912,7 @@ namespace Content.Client.Lobby.UI
             _loadoutWindow.OnClose += () =>
             {
                 JobOverride = null;
+                SetDirty();
                 ReloadPreview();
             };
         }

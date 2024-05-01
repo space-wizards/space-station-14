@@ -9,7 +9,7 @@ namespace Content.Shared.Humanoid;
 
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance
+public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, IEquatable<HumanoidCharacterAppearance>
 {
     public HumanoidCharacterAppearance(string hairStyleId,
         Color hairColor,
@@ -26,6 +26,13 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance
         EyeColor = ClampColor(eyeColor);
         SkinColor = ClampColor(skinColor);
         Markings = markings;
+    }
+
+    public HumanoidCharacterAppearance(HumanoidCharacterAppearance other)
+    {
+        // TODO: Up to here, finish this + cloning and humanoidcharacterappearance cleanup
+        // Then need to go and test lobby + fix the loadout buttons and shit.
+        HairStyleId
     }
 
     [DataField("hair")]
@@ -244,5 +251,33 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance
         if (!SkinColor.Equals(other.SkinColor)) return false;
         if (!Markings.SequenceEqual(other.Markings)) return false;
         return true;
+    }
+
+    public bool Equals(HumanoidCharacterAppearance? other)
+    {
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return HairStyleId == other.HairStyleId &&
+               HairColor.Equals(other.HairColor) &&
+               FacialHairStyleId == other.FacialHairStyleId &&
+               FacialHairColor.Equals(other.FacialHairColor) &&
+               EyeColor.Equals(other.EyeColor) &&
+               SkinColor.Equals(other.SkinColor) &&
+               Markings.SequenceEqual(other.Markings);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return ReferenceEquals(this, obj) || obj is HumanoidCharacterAppearance other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(HairStyleId, HairColor, FacialHairStyleId, FacialHairColor, EyeColor, SkinColor, Markings);
+    }
+
+    public HumanoidCharacterAppearance Clone()
+    {
+        return new HumanoidCharacterAppearance(HairStyleId, HairColor, FacialHairStyleId, FacialHairColor, EyeColor, SkinColor, new List<Marking>(Markings));
     }
 }
