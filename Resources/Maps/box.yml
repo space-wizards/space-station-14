@@ -55,12 +55,13 @@ entities:
     - type: MetaData
     - type: Transform
     - type: Map
+      mapPaused: True
     - type: PhysicsMap
+    - type: GridTree
+    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
-    - type: GridTree
-    - type: MovedGrids
   - uid: 5691
     components:
     - type: MetaData
@@ -11540,7 +11541,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -295.63562
+      secondsUntilStateChange: -354.4333
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -69689,6 +69690,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 12.5,33.5
       parent: 8364
+  - uid: 9627
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -3.5,13.5
+      parent: 8364
   - uid: 14307
     components:
     - type: Transform
@@ -69935,12 +69942,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -9.5,-26.5
-      parent: 8364
-  - uid: 9627
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -3.5,13.5
       parent: 8364
   - uid: 19297
     components:
