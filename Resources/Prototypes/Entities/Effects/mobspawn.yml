@@ -107,6 +107,7 @@
     - FoodOnionRed
     - FoodWatermelon
     - FoodGatfruit
+    - MobTomatoKiller
     rarePrototypes:
     - MobLuminousEntity
     - MobLuminousObject

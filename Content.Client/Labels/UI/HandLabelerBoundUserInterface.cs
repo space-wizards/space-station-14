@@ -1,4 +1,5 @@
 using Content.Shared.Labels;
+using Content.Shared.Labels.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Labels.UI
@@ -8,11 +9,14 @@ namespace Content.Client.Labels.UI
     /// </summary>
     public sealed class HandLabelerBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         [ViewVariables]
         private HandLabelerWindow? _window;
 
         public HandLabelerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+            IoCManager.InjectDependencies(this);
         }
 
         protected override void Open()
@@ -27,24 +31,25 @@ namespace Content.Client.Labels.UI
 
             _window.OnClose += Close;
             _window.OnLabelChanged += OnLabelChanged;
+            Reload();
         }
 
         private void OnLabelChanged(string newLabel)
         {
-            SendMessage(new HandLabelerLabelChangedMessage(newLabel));
-        }
-
-        /// <summary>
-        /// Update the UI state based on server-sent info
-        /// </summary>
-        /// <param name="state"></param>
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-            if (_window == null || state is not HandLabelerBoundUserInterfaceState cast)
+            // Focus moment
+            if (_entManager.TryGetComponent(Owner, out HandLabelerComponent? labeler) &&
+                labeler.AssignedLabel.Equals(newLabel))
                 return;
 
-            _window.SetCurrentLabel(cast.CurrentLabel);
+            SendPredictedMessage(new HandLabelerLabelChangedMessage(newLabel));
+        }
+
+        public void Reload()
+        {
+            if (_window == null || !_entManager.TryGetComponent(Owner, out HandLabelerComponent? component))
+                return;
+
+            _window.SetCurrentLabel(component.AssignedLabel);
         }
 
         protected override void Dispose(bool disposing)

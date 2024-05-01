@@ -30,8 +30,8 @@
     singleUser: true
   - type: UserInterface
     interfaces:
-    - key: enum.NavMapBeaconUiKey.Key
-      type: NavMapBeaconBoundUserInterface
+      enum.NavMapBeaconUiKey.Key:
+        type: NavMapBeaconBoundUserInterface
   - type: Item
     size: Small
   - type: SubFloorHide
