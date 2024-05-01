@@ -1235,7 +1235,7 @@
       state: forcewall
 
 - type: entity
-  parent: WallInvisible
+  parent: BaseStructure
   id: WallMimeBlockade
   name: invisible wall
   components:
@@ -1252,12 +1252,18 @@
           layer:
           - WallLayer
           density: 1000
+    - type: TimedDespawn
+      lifetime: 15
+    - type: Tag
+      tags:
+        - Wall
+    - type: Airtight
     - type: Sprite
-      sprite: Structures/Magic/forcewall.rsi
-      state: forcewall
+      sprite: Structures/Walls/vault.rsi
+      state: alienvault
     - type: Icon
-      sprite: Structures/Magic/forcewall.rsi
-      state: forcewall
+      sprite: Structures/Walls/vault.rsi
+      state: alienvault
 
 - type: entity
   parent: BaseWall
