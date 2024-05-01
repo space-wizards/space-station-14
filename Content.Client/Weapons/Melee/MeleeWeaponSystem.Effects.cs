@@ -55,7 +55,6 @@ public sealed partial class MeleeWeaponSystem
             if (meleeWeaponComponent.SwingLeft)
                 angle *= -1;
         }
-        sprite.NoRotation = true;
         sprite.Rotation = localPos.ToWorldAngle();
         var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);
 
@@ -64,23 +63,22 @@ public sealed partial class MeleeWeaponSystem
         switch (arcComponent.Animation)
         {
             case WeaponArcAnimation.Slash:
+                arcComponent.User = user;
                 _animation.Play(animationUid, GetSlashAnimation(sprite, angle, spriteRotation), SlashAnimationKey);
-                TransformSystem.SetParent(animationUid, xform, user, userXform);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.065f, 0.065f + 0.05f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.Thrust:
+                arcComponent.User = user;
                 _animation.Play(animationUid, GetThrustAnimation(sprite, distance, spriteRotation), ThrustAnimationKey);
-                TransformSystem.SetParent(animationUid, xform, user, userXform);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.None:
                 var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform);
-                TransformSystem.AttachToGridOrMap(animationUid, xform);
                 var worldPos = mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos);
                 var newLocalPos = TransformSystem.GetInvWorldMatrix(xform.ParentUid).Transform(worldPos);
-                TransformSystem.SetLocalPositionNoLerp(xform, newLocalPos);
+                TransformSystem.SetLocalPositionNoLerp(animationUid, newLocalPos, xform);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
                 break;
@@ -98,7 +96,6 @@ public sealed partial class MeleeWeaponSystem
         var endRotationOffset = endRotation.RotateVec(new Vector2(0f, -1f));
         startRotation += spriteRotation;
         endRotation += spriteRotation;
-        sprite.NoRotation = true;
 
         return new Animation()
         {
@@ -204,5 +201,20 @@ public sealed partial class MeleeWeaponSystem
                 }
             }
         };
+    }
+
+    /// <summary>
+    /// Updates the effect positions to follow the user
+    /// </summary>
+    void UpdateEffects(float frameTime)
+    {
+        var arcQuery = EntityQueryEnumerator<TransformComponent, WeaponArcVisualsComponent>();
+        while(arcQuery.MoveNext(out var uid, out var xform, out var arcComponent))
+        {
+            if (arcComponent.User == null)
+                continue;
+            var userPos = TransformSystem.GetWorldPosition(arcComponent.User.Value);
+            TransformSystem.SetWorldPosition(xform, userPos);
+        }
     }
 }

@@ -81,8 +81,8 @@
   - type: ExtensionCableProvider
   - type: UserInterface
     interfaces:
-    - key: enum.ApcUiKey.Key
-      type: ApcBoundUserInterface
+      enum.ApcUiKey.Key:
+        type: ApcBoundUserInterface
   - type: ActivatableUI
     inHandsOnly: false
     singleUser: true

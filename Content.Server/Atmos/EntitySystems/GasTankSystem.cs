@@ -75,7 +75,7 @@ namespace Content.Server.Atmos.EntitySystems
         public void UpdateUserInterface(Entity<GasTankComponent> ent, bool initialUpdate = false)
         {
             var (owner, component) = ent;
-            _ui.TrySetUiState(owner, SharedGasTankUiKey.Key,
+            _ui.SetUiState(owner, SharedGasTankUiKey.Key,
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = component.Air?.Pressure ?? 0,

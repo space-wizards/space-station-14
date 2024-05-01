@@ -52,6 +52,6 @@
     key: enum.GatewayUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.GatewayUiKey.Key
-      type: GatewayBoundUserInterface
+      enum.GatewayUiKey.Key:
+        type: GatewayBoundUserInterface
   - type: Gateway
