@@ -105,7 +105,6 @@
   - type: GunRequiresWield
   - type: Gun
     fireRate: 0.5
-    selectedMode: SemiAuto
     angleDecay: 2
     minAngle: 1
     maxAngle: 2
