@@ -327,9 +327,15 @@
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload
-      - WeaponLaserCarbine
+      - HoloprojectorSecurity
+      - PortableRecharger
+      - TelescopicShield
+      - Truncheon
       - WeaponAdvancedLaser
+      - WeaponDisabler
+      - WeaponDisablerSMG
       - WeaponLaserCannon
+      - WeaponLaserCarbine
       - WeaponXrayCannon
 
 - type: entity
@@ -461,6 +467,12 @@
       - MassMediaCircuitboard
       - ReagentGrinderIndustrialMachineCircuitboard
       - JukeboxCircuitBoard
+  - type: EmagLatheRecipes
+    emagDynamicRecipes:
+      - ShuttleGunDusterCircuitboard
+      - ShuttleGunFriendshipCircuitboard
+      - ShuttleGunPerforatorCircuitboard
+      - ShuttleGunSvalinnMachineGunCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
