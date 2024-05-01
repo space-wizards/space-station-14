@@ -20,7 +20,13 @@
     fadeOutBehaviourID: fade_out
     litSound:
       path: /Audio/Items/Flare/flare_on.ogg
-    loopedSound: /Audio/Items/Flare/flare_burn.ogg
+    loopedSound:
+      path: /Audio/Items/Flare/flare_burn.ogg
+      params:
+        loop: true
+        volume: -10
+        maxDistance: 5
+
   - type: Sprite
     sprite: Objects/Misc/flare.rsi
     layers:
