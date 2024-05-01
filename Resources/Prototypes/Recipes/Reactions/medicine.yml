@@ -558,6 +558,19 @@
     Insuzine: 3
 
 - type: reaction
+  id: Opporozidone
+  minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
+  reactants:
+    Cognizine: 
+      amount: 1
+    Plasma:
+      amount: 2
+    Doxarubixadone:
+      amount: 1
+  products:
+    Opporozidone: 3
+
+- type: reaction
   id: Necrosol
   impact: Medium
   minTemp: 370
@@ -582,7 +595,7 @@
     Sigynate:
       amount: 2
   products:
-    Aloxadone: 4
+      Aloxadone: 4
 
 - type: reaction
   id: Psicodine

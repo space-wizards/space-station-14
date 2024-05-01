@@ -13,7 +13,6 @@ admin-smite-stomach-removal-self = Your stomach feels hollow...
 admin-smite-run-walk-swap-prompt = You have to press shift to run!
 admin-smite-super-speed-prompt = You move at mach 0.8!
 admin-smite-lung-removal-self = You can't breathe!
-admin-smite-terminate-prompt = I'll be back
 
 ## Smite names
 

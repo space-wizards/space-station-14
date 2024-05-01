@@ -165,12 +165,32 @@ namespace Content.Server.GameTicking
 
             var gridIds = _map.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
 
-            _metaData.SetEntityName(_mapManager.GetMapEntityId(targetMapId), "Station map");
+            _metaData.SetEntityName(_mapManager.GetMapEntityId(targetMapId), $"station map - {map.MapName}");
 
             var gridUids = gridIds.ToList();
             RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, gridUids, stationName));
 
             return gridUids;
+        }
+
+        public int ReadyPlayerCount()
+        {
+            var total = 0;
+            foreach (var (userId, status) in _playerGameStatuses)
+            {
+                if (LobbyEnabled && status == PlayerGameStatus.NotReadyToPlay)
+                    continue;
+
+                if (!_playerManager.TryGetSessionById(userId, out _))
+                    continue;
+
+                if (_banManager.GetRoleBans(userId) == null)
+                    continue;
+
+                total++;
+            }
+
+            return total;
         }
 
         public void StartRound(bool force = false)
@@ -228,6 +248,8 @@ namespace Content.Server.GameTicking
                 readyPlayerProfiles.Add(userId, profile);
             }
 
+            DebugTools.AssertEqual(readyPlayers.Count, ReadyPlayerCount());
+
             // Just in case it hasn't been loaded previously we'll try loading it.
             LoadMaps();
 
@@ -245,7 +267,10 @@ namespace Content.Server.GameTicking
             var origReadyPlayers = readyPlayers.ToArray();
 
             if (!StartPreset(origReadyPlayers, force))
+            {
+                _startingRound = false;
                 return;
+            }
 
             // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
             _mapManager.DoMapInitialize(DefaultMap);
