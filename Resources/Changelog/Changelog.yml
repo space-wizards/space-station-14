@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ps3moira
-  changes:
-  - message: Added Large Wooden floors
-    type: Add
-  id: 6007
-  time: '2024-02-22T11:59:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25462
 - author: Whisper
   changes:
   - message: Fixed reagent slime ghost role description.
@@ -3861,3 +3854,10 @@
   id: 6506
   time: '2024-05-01T22:23:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27596
+- author: lzk228
+  changes:
+  - message: Immovable rod announce now happens at the end of event.
+    type: Tweak
+  id: 6507
+  time: '2024-05-01T22:26:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27587
