@@ -224,4 +224,4 @@
       interactSuccessString: petting-success-reptile
       interactFailureString: petting-failure-generic
       interactSuccessSound:
-        path: /Audio/Misc/skibidi.ogg
+        path: /Audio/Misc/skibidi.wav
