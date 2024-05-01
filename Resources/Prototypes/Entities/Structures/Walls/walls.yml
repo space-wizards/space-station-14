@@ -1235,31 +1235,13 @@
       state: forcewall
 
 - type: entity
+  parent: WallForce
   id: WallMimeBlockade
   name: invisible wall
   components:
-    - type: TimedDespawn
-      lifetime: 20
-    - type: Tag
-      tags:
-        - Wall
-    - type: Physics
-      bodyType: Static
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-          mask:
-            - FullTileMask
-          layer:
-            - WallLayer
-    - type: Airtight
     - type: Sprite
-      sprite: Structures/Magic/forcewall.rsi
-      state: forcewall
-      visible: false
+      sprite: Structures/Magic/inviswall.rsi
+      state: inviswall
     - type: Icon
       sprite: Structures/Magic/inviswall.rsi
       state: inviswall

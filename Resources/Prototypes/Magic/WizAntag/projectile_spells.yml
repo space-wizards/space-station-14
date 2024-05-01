@@ -68,7 +68,8 @@
   noSpawn: true
   components:
   - type: WorldTargetAction
-    cooldown: 2
+    useDelay: 5
+    cooldown: 100
     charges: 2
     renewCharges: true
     itemIconStyle: BigAction
