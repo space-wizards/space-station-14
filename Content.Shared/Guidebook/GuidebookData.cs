@@ -14,6 +14,7 @@ public sealed partial class GuidebookData
     /// <summary>
     /// Total number of data values stored.
     /// </summary>
+    [DataField]
     public int Count { get; private set; }
 
     /// <summary>
@@ -22,6 +23,7 @@ public sealed partial class GuidebookData
     /// <remarks>
     /// Structured as PrototypeName, ComponentName, FieldName, Value
     /// </remarks>
+    [DataField]
     public Dictionary<string, Dictionary<string, Dictionary<string, object?>>> Data = [];
 
     /// <summary>
