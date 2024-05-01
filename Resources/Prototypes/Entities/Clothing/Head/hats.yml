@@ -257,7 +257,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHatChef
   id: ClothingHeadHatHeadChef
   name: head chef's hat
   description: "It's a hat used by chefs who have truly mastered their craft. This one is very tall."
