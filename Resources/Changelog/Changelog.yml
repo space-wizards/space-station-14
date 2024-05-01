@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DrMelon
-  changes:
-  - message: Fixed incorrect job-specific Uplink items being given on occasion.
-    type: Fix
-  id: 6004
-  time: '2024-02-22T11:03:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23179
 - author: liltenhead
   changes:
   - message: Changed the syndicate assault borg to have a red flashlight.
@@ -3860,3 +3853,11 @@
   id: 6503
   time: '2024-05-01T03:27:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27535
+- author: Plykiya
+  changes:
+  - message: Inserting telecrystals no longer announces to everyone around you that
+      you inserted it.
+    type: Tweak
+  id: 6504
+  time: '2024-05-01T15:17:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27585
