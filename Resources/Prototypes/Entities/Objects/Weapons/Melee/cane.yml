@@ -109,11 +109,9 @@
     angleDecay: 2
     minAngle: 1
     maxAngle: 2
-    availableModes:
-    - SemiAuto
+    selectedMode: SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
-  - type: AmmoCounter
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 0.75
     rechargeSound:
