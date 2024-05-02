@@ -2,18 +2,24 @@
   id: PirateGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitPirate
-    back: ClothingBackpackPirateFilled
+    back: ClothingBackpackSatchelLeather
     head: ClothingHeadBandBlack
     shoes: ClothingShoesBootsLaceup
     id: PiratePDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
+  storage:
+    back:
+    - BoxSurvival
+    - Cutlass
+    - WeaponRevolverPirate
+    - ClothingEyesEyepatch
 
 - type: startingGear
   id: PirateCaptainGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitPirate
-    back: ClothingBackpackPirateFilled
+    back: ClothingBackpackSatchelLeather
     head: ClothingHeadHatPirate
     shoes: ClothingShoesBootsLaceup
     id: PiratePDA
@@ -21,15 +27,27 @@
     pocket1: AppraisalTool
     pocket2: EnergyCutlass
     outerClothing: ClothingOuterCoatPirate
+  storage:
+    back:
+    - BoxSurvival
+    - Cutlass
+    - WeaponRevolverPirate
+    - ClothingEyesEyepatch
 
 - type: startingGear
   id: PirateFirstmateGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitPirate
-    back: ClothingBackpackPirateFilled
+    back: ClothingBackpackSatchelLeather
     head: ClothingHeadHatPirateTricord
     shoes: ClothingShoesBootsLaceup
     id: PiratePDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
     outerClothing: ClothingOuterCoatGentle
+  storage:
+    back:
+    - BoxSurvival
+    - Cutlass
+    - WeaponRevolverPirate
+    - ClothingEyesEyepatch
