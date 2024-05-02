@@ -357,8 +357,9 @@ namespace Content.Server.GameTicking
                 var query = AllEntityQuery<MapGridComponent>();
                 while (query.MoveNext(out var uid, out var grid))
                 {
-                    if (!metaQuery.TryGetComponent(uid, out var meta) ||
-                        meta.EntityPaused)
+                    if (!metaQuery.TryGetComponent(uid, out var meta)
+                        || meta.EntityPaused
+                        || TerminatingOrDeleted(uid))
                     {
                         continue;
                     }
@@ -396,8 +397,9 @@ namespace Content.Server.GameTicking
             {
                 var mapUid = _mapManager.GetMapEntityId(map);
 
-                if (!metaQuery.TryGetComponent(mapUid, out var meta) ||
-                    meta.EntityPaused)
+                if (!metaQuery.TryGetComponent(mapUid, out var meta)
+                    || meta.EntityPaused
+                    || TerminatingOrDeleted(mapUid))
                 {
                     continue;
                 }
