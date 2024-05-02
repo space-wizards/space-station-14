@@ -52,6 +52,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+        UpdateEffects(frameTime);
 
         if (!Timing.IsFirstTimePredicted)
             return;

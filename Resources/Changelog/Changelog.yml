@@ -1,53 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Radio jammer now uses 3 times less power.
-    type: Tweak
-  id: 6002
-  time: '2024-02-22T07:32:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25432
-- author: metalgearsloth
-  changes:
-  - message: Added handheld crew monitor back just for CMO.
-    type: Add
-  id: 6003
-  time: '2024-02-22T11:00:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25439
-- author: DrMelon
-  changes:
-  - message: Fixed incorrect job-specific Uplink items being given on occasion.
-    type: Fix
-  id: 6004
-  time: '2024-02-22T11:03:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23179
-- author: liltenhead
-  changes:
-  - message: Changed the syndicate assault borg to have a red flashlight.
-    type: Tweak
-  id: 6005
-  time: '2024-02-22T11:15:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25465
-- author: lzk228
-  changes:
-  - message: Fix some items becomes bigger after turning in trash.
-    type: Fix
-  id: 6006
-  time: '2024-02-22T11:28:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25461
-- author: ps3moira
-  changes:
-  - message: Added Large Wooden floors
-    type: Add
-  id: 6007
-  time: '2024-02-22T11:59:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25462
-- author: Whisper
-  changes:
-  - message: Fixed reagent slime ghost role description.
-    type: Fix
-  id: 6008
-  time: '2024-02-22T12:18:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25466
 - author: lzk228
   changes:
   - message: Galoshes are added to the Janidrobe.
@@ -3859,3 +3810,54 @@
   id: 6501
   time: '2024-04-30T06:49:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27521
+- author: ERORR404V1
+  changes:
+  - message: Added chameleon projector in thief toolbox!
+    type: Add
+  id: 6502
+  time: '2024-04-30T12:14:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27491
+- author: DamnFeds
+  changes:
+  - message: honkbot now uses a happy honk meal instead of box of hugs and clown's
+      rubber stamp. Honk!
+    type: Tweak
+  id: 6503
+  time: '2024-05-01T03:27:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27535
+- author: Plykiya
+  changes:
+  - message: Inserting telecrystals no longer announces to everyone around you that
+      you inserted it.
+    type: Tweak
+  id: 6504
+  time: '2024-05-01T15:17:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27585
+- author: Dezzzix
+  changes:
+  - message: Goldschlager empty bottle renamed to Gildlager empty bottle
+    type: Tweak
+  id: 6505
+  time: '2024-05-01T15:24:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27581
+- author: FungiFellow
+  changes:
+  - message: Grilles now take Structural Damage
+    type: Tweak
+  id: 6506
+  time: '2024-05-01T22:23:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27596
+- author: lzk228
+  changes:
+  - message: Immovable rod announce now happens at the end of event.
+    type: Tweak
+  id: 6507
+  time: '2024-05-01T22:26:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27587
+- author: metalgearsloth
+  changes:
+  - message: Fix server performance dropping significantly.
+    type: Fix
+  id: 6508
+  time: '2024-05-02T00:18:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27528

@@ -56,35 +56,40 @@ public abstract class SharedNavMapSystem : EntitySystem
         return new Vector2i(x, y);
     }
 
-    public NavMapChunk SetAllEdgesForChunkTile(NavMapChunk chunk, Vector2i tile)
+    public void SetAllEdgesForChunkTile(NavMapChunk chunk, Vector2i tile, NavMapChunkType chunkType)
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
         var flag = (ushort) GetFlag(relative);
+        var data = chunk.EnsureType(chunkType);
 
-        foreach (var (direction, _) in chunk.TileData)
-            chunk.TileData[direction] |= flag;
-
-        return chunk;
+        foreach (var direction in data.Keys)
+        {
+            data[direction] |= flag;
+        }
     }
 
-    public NavMapChunk UnsetAllEdgesForChunkTile(NavMapChunk chunk, Vector2i tile)
+    public void UnsetAllEdgesForChunkTile(NavMapChunk chunk, Vector2i tile, NavMapChunkType chunkType)
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
         var flag = (ushort) GetFlag(relative);
         var invFlag = (ushort) ~flag;
 
-        foreach (var (direction, _) in chunk.TileData)
-            chunk.TileData[direction] &= invFlag;
+        var data = chunk.EnsureType(chunkType);
 
-        return chunk;
+        foreach (var direction in data.Keys)
+        {
+            data[direction] &= invFlag;
+        }
     }
 
     public ushort GetCombinedEdgesForChunk(Dictionary<AtmosDirection, ushort> tile)
     {
         ushort combined = 0;
 
-        foreach (var kvp in tile)
-            combined |= kvp.Value;
+        foreach (var value in tile.Values)
+        {
+            combined |= value;
+        }
 
         return combined;
     }
@@ -93,9 +98,9 @@ public abstract class SharedNavMapSystem : EntitySystem
     {
         var flag = (ushort) GetFlag(tile);
 
-        foreach (var kvp in tileData)
+        foreach (var value in tileData.Values)
         {
-            if ((kvp.Value & flag) == 0)
+            if ((value & flag) == 0)
                 return false;
         }
 
@@ -140,20 +145,33 @@ public abstract class SharedNavMapSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
     {
-        var chunks = new Dictionary<(NavMapChunkType, Vector2i), Dictionary<AtmosDirection, ushort>>();
+        var chunks = new Dictionary<Vector2i, Dictionary<AtmosDirection, ushort>?[]>();
         var beacons = new HashSet<NavMapBeacon>();
 
         // Should this be a full component state or a delta-state?
         if (args.FromTick <= component.CreationTick)
         {
-            foreach (var ((category, origin), chunk) in component.Chunks)
+            foreach (var (origin, chunk) in component.Chunks)
             {
-                var chunkDatum = new Dictionary<AtmosDirection, ushort>(chunk.TileData.Count);
+                var sentChunk = new Dictionary<AtmosDirection, ushort>[NavMapComponent.Categories];
+                chunks.Add(origin, sentChunk);
 
-                foreach (var (direction, tileData) in chunk.TileData)
-                    chunkDatum[direction] = tileData;
+                foreach (var value in Enum.GetValues<NavMapChunkType>())
+                {
+                    ref var data = ref chunk.TileData[(int) value];
 
-                chunks.Add((category, origin), chunkDatum);
+                    if (data == null)
+                        continue;
+
+                    var chunkDatum = new Dictionary<AtmosDirection, ushort>(data.Count);
+
+                    foreach (var (direction, tileData) in data)
+                    {
+                        chunkDatum[direction] = tileData;
+                    }
+
+                    sentChunk[(int) value] = chunkDatum;
+                }
             }
 
             var beaconQuery = AllEntityQuery<NavMapBeaconComponent, TransformComponent>();
@@ -173,17 +191,31 @@ public abstract class SharedNavMapSystem : EntitySystem
             return;
         }
 
-        foreach (var ((category, origin), chunk) in component.Chunks)
+        foreach (var (origin, chunk) in component.Chunks)
         {
             if (chunk.LastUpdate < args.FromTick)
                 continue;
 
-            var chunkDatum = new Dictionary<AtmosDirection, ushort>(chunk.TileData.Count);
+            var sentChunk = new Dictionary<AtmosDirection, ushort>[NavMapComponent.Categories];
+            chunks.Add(origin, sentChunk);
 
-            foreach (var (direction, tileData) in chunk.TileData)
-                chunkDatum[direction] = tileData;
+            foreach (var value in Enum.GetValues<NavMapChunkType>())
+            {
+                ref var data = ref chunk.TileData[(int) value];
 
-            chunks.Add((category, origin), chunkDatum);
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+                if (data == null)
+                    continue;
+
+                var chunkDatum = new Dictionary<AtmosDirection, ushort>(data.Count);
+
+                foreach (var (direction, tileData) in data)
+                {
+                    chunkDatum[direction] = tileData;
+                }
+
+                sentChunk[(int) value] = chunkDatum;
+            }
         }
 
         foreach (var beacon in component.Beacons)
@@ -208,14 +240,14 @@ public abstract class SharedNavMapSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class NavMapComponentState : ComponentState, IComponentDeltaState
     {
-        public Dictionary<(NavMapChunkType, Vector2i), Dictionary<AtmosDirection, ushort>> Chunks = new();
+        public Dictionary<Vector2i, Dictionary<AtmosDirection, ushort>?[]> Chunks = new();
         public HashSet<NavMapBeacon> Beacons = new();
 
         // Required to infer deleted/missing chunks for delta states
-        public HashSet<(NavMapChunkType, Vector2i)>? AllChunks;
+        public HashSet<Vector2i>? AllChunks;
         public HashSet<NavMapBeacon>? AllBeacons;
 
-        public NavMapComponentState(Dictionary<(NavMapChunkType, Vector2i), Dictionary<AtmosDirection, ushort>> chunks, HashSet<NavMapBeacon> beacons)
+        public NavMapComponentState(Dictionary<Vector2i, Dictionary<AtmosDirection, ushort>?[]> chunks, HashSet<NavMapBeacon> beacons)
         {
             Chunks = chunks;
             Beacons = beacons;
@@ -237,7 +269,13 @@ public abstract class SharedNavMapSystem : EntitySystem
             }
 
             foreach (var (chunk, data) in Chunks)
-                state.Chunks[chunk] = new(data);
+            {
+                for (var i = 0; i < NavMapComponent.Categories; i++)
+                {
+                    var chunkData = data[i];
+                    state.Chunks[chunk][i] = chunkData == null ? chunkData : new(chunkData);
+                }
+            }
 
             // Update beacons
             foreach (var beacon in state.Beacons)
@@ -247,7 +285,9 @@ public abstract class SharedNavMapSystem : EntitySystem
             }
 
             foreach (var beacon in Beacons)
+            {
                 state.Beacons.Add(beacon);
+            }
         }
 
         public IComponentState CreateNewFullState(IComponentState fullState)
@@ -256,25 +296,45 @@ public abstract class SharedNavMapSystem : EntitySystem
             var state = (NavMapComponentState) fullState;
             DebugTools.Assert(state.FullState);
 
-            var chunks = new Dictionary<(NavMapChunkType, Vector2i), Dictionary<AtmosDirection, ushort>>();
+            var chunks = new Dictionary<Vector2i, Dictionary<AtmosDirection, ushort>?[]>();
             var beacons = new HashSet<NavMapBeacon>();
 
             foreach (var (chunk, data) in Chunks)
-                chunks[chunk] = new(data);
+            {
+                for (var i = 0; i < NavMapComponent.Categories; i++)
+                {
+                    var chunkData = data[i];
+                    state.Chunks[chunk][i] = chunkData == null ? chunkData : new(chunkData);
+                }
+            }
 
             foreach (var (chunk, data) in state.Chunks)
             {
                 if (AllChunks!.Contains(chunk))
-                    chunks.TryAdd(chunk, new(data));
+                {
+                    var copied = new Dictionary<AtmosDirection, ushort>?[NavMapComponent.Categories];
+
+                    for (var i = 0; i < NavMapComponent.Categories; i++)
+                    {
+                        var chunkData = data[i];
+                        copied[i] = chunkData == null ? chunkData : new(chunkData);
+                    }
+
+                    chunks.TryAdd(chunk, copied);
+                }
             }
 
             foreach (var beacon in Beacons)
+            {
                 beacons.Add(new NavMapBeacon(beacon.NetEnt, beacon.Color, beacon.Text, beacon.Position));
+            }
 
             foreach (var beacon in state.Beacons)
             {
                 if (AllBeacons!.Contains(beacon))
+                {
                     beacons.Add(new NavMapBeacon(beacon.NetEnt, beacon.Color, beacon.Text, beacon.Position));
+                }
             }
 
             return new NavMapComponentState(chunks, beacons);

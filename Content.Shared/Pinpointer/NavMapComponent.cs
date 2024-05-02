@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Atmos;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -11,6 +12,8 @@ namespace Content.Shared.Pinpointer;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NavMapComponent : Component
 {
+    public const int Categories = 4;
+
     /*
      * Don't need DataFields as this can be reconstructed
      */
@@ -19,7 +22,7 @@ public sealed partial class NavMapComponent : Component
     /// Bitmasks that represent chunked tiles.
     /// </summary>
     [ViewVariables]
-    public Dictionary<(NavMapChunkType, Vector2i), NavMapChunk> Chunks = new();
+    public Dictionary<Vector2i, NavMapChunk> Chunks = new();
 
     /// <summary>
     /// List of station beacons.
@@ -37,10 +40,11 @@ public sealed class NavMapChunk
     public readonly Vector2i Origin;
 
     /// <summary>
-    /// Bitmask for tiles, 1 for occupied and 0 for empty. There is a bitmask for each cardinal direction,
+    /// Array with each entry corresponding to a <see cref="NavMapChunkType"/>.
+    /// Uses a bitmask for tiles, 1 for occupied and 0 for empty. There is a bitmask for each cardinal direction,
     /// representing each edge of the tile, in case the entities inside it do not entirely fill it
     /// </summary>
-    public Dictionary<AtmosDirection, ushort> TileData;
+    public Dictionary<AtmosDirection, ushort>?[] TileData;
 
     /// <summary>
     /// The last game tick that the chunk was updated
@@ -51,14 +55,27 @@ public sealed class NavMapChunk
     public NavMapChunk(Vector2i origin)
     {
         Origin = origin;
+        TileData = new Dictionary<AtmosDirection, ushort>?[NavMapComponent.Categories];
+    }
 
-        TileData = new()
+    public Dictionary<AtmosDirection, ushort> EnsureType(NavMapChunkType chunkType)
+    {
+        var data = TileData[(int) chunkType];
+
+        if (data == null)
         {
-            [AtmosDirection.North] = 0,
-            [AtmosDirection.East] = 0,
-            [AtmosDirection.South] = 0,
-            [AtmosDirection.West] = 0,
-        };
+            data = new Dictionary<AtmosDirection, ushort>()
+            {
+                [AtmosDirection.North] = 0,
+                [AtmosDirection.East] = 0,
+                [AtmosDirection.South] = 0,
+                [AtmosDirection.West] = 0,
+            };
+
+            TileData[(int) chunkType] = data;
+        }
+
+        return data;
     }
 }
 
@@ -68,4 +85,5 @@ public enum NavMapChunkType : byte
     Floor,
     Wall,
     Airlock,
+    // Update the categories const if you update this.
 }

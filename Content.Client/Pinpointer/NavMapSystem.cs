@@ -1,3 +1,4 @@
+using Content.Shared.Atmos;
 using Content.Shared.Pinpointer;
 using Robust.Shared.GameStates;
 
@@ -31,7 +32,6 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
                     component.Beacons.Remove(beacon);
             }
         }
-
         else
         {
             foreach (var index in component.Chunks.Keys)
@@ -47,17 +47,26 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             }
         }
 
-        foreach (var ((category, origin), chunk) in state.Chunks)
+        foreach (var (origin, chunk) in state.Chunks)
         {
             var newChunk = new NavMapChunk(origin);
 
-            foreach (var (atmosDirection, value) in chunk)
-                newChunk.TileData[atmosDirection] = value;
+            for (var i = 0; i < NavMapComponent.Categories; i++)
+            {
+                var newData = chunk[i];
 
-            component.Chunks[(category, origin)] = newChunk;
+                if (newData == null)
+                    continue;
+
+                newChunk.TileData[i] = new(newData);
+            }
+
+            component.Chunks[origin] = newChunk;
         }
 
         foreach (var beacon in state.Beacons)
+        {
             component.Beacons.Add(beacon);
+        }
     }
 }
