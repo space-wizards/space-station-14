@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Linq;
+using Content.IntegrationTests.Pair;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Players;
@@ -41,6 +42,8 @@ public sealed class GhostRoleTests
         var server = pair.Server;
         var client = pair.Client;
 
+        var mapData = await pair.CreateTestMap();
+
         var entMan = server.ResolveDependency<IEntityManager>();
         var sPlayerMan = server.ResolveDependency<Robust.Server.Player.IPlayerManager>();
         var conHost = client.ResolveDependency<IConsoleHost>();
@@ -52,7 +55,7 @@ public sealed class GhostRoleTests
         EntityUid originalMob = default;
         await server.WaitPost(() =>
         {
-            originalMob = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
+            originalMob = entMan.SpawnEntity(null, mapData.GridCoords);
             mindSystem.TransferTo(originalMindId, originalMob, true);
         });
 
@@ -75,7 +78,7 @@ public sealed class GhostRoleTests
 
         // Spawn ghost takeover entity.
         EntityUid ghostRole = default;
-        await server.WaitPost(() => ghostRole = entMan.SpawnEntity("GhostRoleTestEntity", MapCoordinates.Nullspace));
+        await server.WaitPost(() => ghostRole = entMan.SpawnEntity("GhostRoleTestEntity", mapData.GridCoords));
 
         // Take the ghost role
         await server.WaitPost(() =>
