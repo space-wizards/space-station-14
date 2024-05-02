@@ -130,34 +130,3 @@ liar-word-replacement-42 = good
 
 liar-word-42 = want
 liar-word-replacement-42 = "don't want"
-
-liar-word-43 = help
-liar-word-replacement-43 = hurt
-
-liar-word-44 = hurt
-liar-word-replacement-44 = help
-
-liar-word-45 = help
-liar-word-replacement-45 = hurting
-
-liar-word-46 = hurt
-liar-word-replacement-46 = helping
-
-liar-word-47 = repair
-liar-word-replacement-47 = break
-
-liar-word-48 = break
-liar-word-replacement-48 = repair
-
-liar-word-49 = repairing
-liar-word-replacement-49 = breaking
-
-liar-word-50 = breaking
-liar-word-replacement-50 = repairing
-
-liar-word-51 = cold
-liar-word-replacement-51 = hot
-
-liar-word-52 = hot
-liar-word-replacement-52 = cold
-
