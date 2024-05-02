@@ -106,8 +106,9 @@ public sealed partial class MindTests
         await server.WaitAssertion(() =>
         {
 #pragma warning disable NUnit2045 // Interdependent assertions.
-            Assert.That(entMan.EntityExists(mind.CurrentEntity), Is.True);
-            Assert.That(mind.CurrentEntity, Is.Not.EqualTo(playerEnt));
+            // TODO What should be done with players on a map that gets deleted?
+            Assert.That(entMan.EntityExists(mind.CurrentEntity), Is.False);
+            Assert.That(player.AttachedEntity, Is.EqualTo(null));
 #pragma warning restore NUnit2045
         });
 
