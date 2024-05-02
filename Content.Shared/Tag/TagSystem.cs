@@ -541,7 +541,15 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(TagComponent component, params string[] ids)
     {
-        return HasAnyTag(component, ids.AsEnumerable());
+        foreach (var id in ids)
+        {
+            AssertValidTag(id);
+
+            if (component.Tags.Contains(id))
+                return true;
+        }
+
+        return false;
     }
 
 
