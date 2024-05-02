@@ -52,10 +52,16 @@ public sealed class NavMapChunk
     [NonSerialized]
     public GameTick LastUpdate;
 
-    public NavMapChunk(Vector2i origin)
+    public NavMapChunk(Vector2i origin, NavMapChunk chunk)
     {
         Origin = origin;
         TileData = new Dictionary<AtmosDirection, ushort>?[NavMapComponent.Categories];
+
+        for (var i = 0; i < NavMapComponent.Categories; i++)
+        {
+            var existing = chunk.TileData[i];
+            TileData[i] = existing == null ? null : new Dictionary<AtmosDirection, ushort>(existing);
+        }
     }
 
     public Dictionary<AtmosDirection, ushort> EnsureType(NavMapChunkType chunkType)

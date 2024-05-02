@@ -49,19 +49,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
         foreach (var (origin, chunk) in state.Chunks)
         {
-            var newChunk = new NavMapChunk(origin);
-
-            for (var i = 0; i < NavMapComponent.Categories; i++)
-            {
-                var newData = chunk[i];
-
-                if (newData == null)
-                    continue;
-
-                newChunk.TileData[i] = new(newData);
-            }
-
-            component.Chunks[origin] = newChunk;
+            component.Chunks[origin] = new NavMapChunk(origin, chunk);
         }
 
         foreach (var beacon in state.Beacons)
