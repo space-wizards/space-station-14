@@ -18,6 +18,7 @@
 
 - type: startingGear
   id: ResearchAssistantGear
+  loadout: ResearchAssistant
   equipment:
     shoes: ClothingShoesColorWhite
     id: ResearchAssistantPDA

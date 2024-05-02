@@ -21,6 +21,7 @@
 
 - type: startingGear
   id: TechnicalAssistantGear
+  loadout: TechnicalAssistant
   equipment:
     shoes: ClothingShoesBootsWork
     id: TechnicalAssistantPDA

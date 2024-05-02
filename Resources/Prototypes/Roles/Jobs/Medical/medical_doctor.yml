@@ -18,6 +18,7 @@
 
 - type: startingGear
   id: DoctorGear
+  loadout: MedicalDoctor
   equipment:
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled

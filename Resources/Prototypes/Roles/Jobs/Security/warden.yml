@@ -26,6 +26,7 @@
 
 - type: startingGear
   id: WardenGear
+  loadout: Warden
   equipment:
     eyes: ClothingEyesGlassesSecurity
     id: WardenPDA

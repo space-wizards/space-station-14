@@ -20,6 +20,7 @@
 
 - type: startingGear
   id: SalvageSpecialistGear
+  loadout: SalvageSpecialist
   equipment:
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
     id: SalvagePDA

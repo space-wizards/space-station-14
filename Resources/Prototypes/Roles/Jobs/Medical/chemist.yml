@@ -17,6 +17,7 @@
 
 - type: startingGear
   id: ChemistGear
+  loadout: Chemist
   equipment:
     id: ChemistryPDA
     ears: ClothingHeadsetMedical

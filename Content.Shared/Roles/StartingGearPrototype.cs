@@ -1,4 +1,5 @@
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Roles
@@ -6,6 +7,12 @@ namespace Content.Shared.Roles
     [Prototype("startingGear")]
     public sealed partial class StartingGearPrototype : IPrototype
     {
+        /// <summary>
+        /// The related loadout that this starting gear has.
+        /// </summary>
+        [DataField]
+        public string Loadout = string.Empty;
+
         [DataField]
         public Dictionary<string, EntProtoId> Equipment = new();
 

@@ -8,10 +8,14 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
+using Content.Shared.Clothing;
 using Robust.Shared.Console;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Linq;
+using Content.Server.Station.Systems;
 
 namespace Content.Server.Administration.Commands
 {
@@ -92,28 +96,60 @@ namespace Content.Server.Administration.Commands
             }
 
             var invSystem = entityManager.System<InventorySystem>();
-            if (invSystem.TryGetSlots(target, out var slots))
+
+            if (!invSystem.TryGetSlots(target, out var slots))
+                return false;
+
+            foreach (var slot in slots)
+                invSystem.TryUnequip(target, slot.Name, true, true, false, inventoryComponent);
+
+            if (startingGear.Loadout != string.Empty)
             {
-                foreach (var slot in slots)
+                var jobLoadout = LoadoutSystem.GetJobPrototype(startingGear.Loadout);
+
+                if (prototypeManager.TryIndex(jobLoadout, out RoleLoadoutPrototype? roleProto))
                 {
-                    invSystem.TryUnequip(target, slot.Name, true, true, false, inventoryComponent);
-                    var gearStr = startingGear.GetGear(slot.Name);
-                    if (gearStr == string.Empty)
+                    RoleLoadout? loadout = null;
+                    profile?.Loadouts.TryGetValue(jobLoadout, out loadout);
+
+                    // Set to default if not present
+                    if (loadout == null)
                     {
-                        continue;
-                    }
-                    var equipmentEntity = entityManager.SpawnEntity(gearStr, entityManager.GetComponent<TransformComponent>(target).Coordinates);
-                    if (slot.Name == "id" &&
-                        entityManager.TryGetComponent(equipmentEntity, out PdaComponent? pdaComponent) &&
-                        entityManager.TryGetComponent<IdCardComponent>(pdaComponent.ContainedId, out var id))
-                    {
-                        id.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
+                        loadout = new RoleLoadout(jobLoadout);
+                        loadout.SetDefault(prototypeManager);
                     }
 
-                    invSystem.TryEquip(target, equipmentEntity, slot.Name, silent: true, force: true, inventory: inventoryComponent);
+                    // Order loadout selections by the order they appear on the prototype.
+                    foreach (var group in loadout.SelectedLoadouts.OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
+                    {
+                        foreach (var items in group.Value)
+                        {
+                            if (!prototypeManager.TryIndex(items.Prototype, out var loadoutProto))
+                                continue;
 
-                    onEquipped?.Invoke(target, equipmentEntity);
+                            if (!prototypeManager.TryIndex(loadoutProto.Equipment, out var loadoutGear))
+                                continue;
+
+                            foreach (var slot in slots)
+                            {
+                                var gearStr = loadoutGear.GetGear(slot.Name);
+                                if (gearStr == string.Empty)
+                                    continue;
+
+                                SpawnAndEquip(target, gearStr, slot, entityManager, invSystem, inventoryComponent, onEquipped);
+                            }
+                        }
+                    }
                 }
+            }
+
+            foreach (var slot in slots)
+            {
+                var gearStr = startingGear.GetGear(slot.Name);
+                if (gearStr == string.Empty)
+                    continue;
+
+                SpawnAndEquip(target, gearStr, slot, entityManager, invSystem, inventoryComponent, onEquipped);
             }
 
             if (entityManager.TryGetComponent(target, out HandsComponent? handsComponent))
@@ -128,6 +164,21 @@ namespace Content.Server.Administration.Commands
             }
 
             return true;
+        }
+
+        public static void SpawnAndEquip(EntityUid target, string gearStr, SlotDefinition slot, IEntityManager entityManager, InventorySystem invSystem, InventoryComponent inventoryComponent, Action<EntityUid, EntityUid>? onEquipped = null)
+        {
+            var equipmentEntity = entityManager.SpawnEntity(gearStr, entityManager.GetComponent<TransformComponent>(target).Coordinates);
+            if (slot.Name == "id" &&
+                entityManager.TryGetComponent(equipmentEntity, out PdaComponent? pdaComponent) &&
+                entityManager.TryGetComponent<IdCardComponent>(pdaComponent.ContainedId, out var id))
+            {
+                id.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
+            }
+
+            invSystem.TryEquip(target, equipmentEntity, slot.Name, silent: true, force: true, inventory: inventoryComponent);
+
+            onEquipped?.Invoke(target, equipmentEntity);
         }
     }
 }

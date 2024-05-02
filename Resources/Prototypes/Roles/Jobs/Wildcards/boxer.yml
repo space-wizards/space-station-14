@@ -12,6 +12,7 @@
 
 - type: startingGear
   id: BoxerGear
+  loadout: Boxer
   equipment:
     id: BoxerPDA
     ears: ClothingHeadsetService

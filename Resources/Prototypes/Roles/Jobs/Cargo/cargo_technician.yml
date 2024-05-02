@@ -14,6 +14,7 @@
 
 - type: startingGear
   id: CargoTechGear
+  loadout: CargoTechnician
   equipment:
     id: CargoPDA
     ears: ClothingHeadsetCargo

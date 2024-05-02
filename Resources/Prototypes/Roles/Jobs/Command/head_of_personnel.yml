@@ -58,6 +58,7 @@
 
 - type: startingGear
   id: HoPGear
+  loadout: HeadOfPersonnel
   equipment:
     shoes: ClothingShoesColorBrown
     id: HoPPDA

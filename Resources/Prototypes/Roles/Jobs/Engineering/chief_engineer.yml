@@ -39,6 +39,7 @@
 
 - type: startingGear
   id: ChiefEngineerGear
+  loadout: ChiefEngineer
   equipment:
     id: CEPDA
     eyes: ClothingEyesGlassesMeson

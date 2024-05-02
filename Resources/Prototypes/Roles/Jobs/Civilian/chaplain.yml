@@ -16,6 +16,7 @@
 
 - type: startingGear
   id: ChaplainGear
+  loadout: Chaplain
   equipment:
     shoes: ClothingShoesColorBlack
     id: ChaplainPDA

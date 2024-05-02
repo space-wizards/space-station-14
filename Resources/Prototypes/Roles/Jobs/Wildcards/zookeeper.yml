@@ -12,6 +12,7 @@
 
 - type: startingGear
   id: ZookeeperGear
+  loadout: Zookeeper
   equipment:
     jumpsuit: ClothingUniformJumpsuitSafari
     head: ClothingHeadSafari

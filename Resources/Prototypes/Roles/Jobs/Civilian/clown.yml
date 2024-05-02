@@ -27,6 +27,7 @@
 
 - type: startingGear
   id: ClownGear
+  loadout: Clown
   equipment:
     mask: ClothingMaskClown
     pocket1: BikeHorn

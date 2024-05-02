@@ -41,6 +41,7 @@
 
 - type: startingGear
   id: HoSGear
+  loadout: HeadOfSecurity
   equipment:
     eyes: ClothingEyesGlassesSecurity
     id: HoSPDA

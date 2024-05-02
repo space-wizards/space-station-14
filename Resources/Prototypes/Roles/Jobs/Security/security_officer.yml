@@ -24,6 +24,7 @@
 
 - type: startingGear
   id: SecurityOfficerGear
+  loadout: SecurityOfficer
   equipment:
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
