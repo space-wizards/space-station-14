@@ -41,30 +41,22 @@ public sealed partial class CharacterPickerButton : ContainerButton
         AddStyleClass(StyleClassButton);
         ToggleMode = true;
         Group = group;
+        var description = profile.Name;
 
-        var humanoid = profile as HumanoidCharacterProfile;
-        if (humanoid is not null)
-        {
-            var dummy = prototypeManager.Index<SpeciesPrototype>(humanoid.Species).DollPrototype;
-            _previewDummy = entityManager.SpawnEntity(dummy, MapCoordinates.Nullspace);
-        }
-        else
+        if (profile is not HumanoidCharacterProfile humanoid)
         {
             _previewDummy = entityManager.SpawnEntity(prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
         }
-
-        entityManager.System<HumanoidAppearanceSystem>().LoadProfile(_previewDummy, (HumanoidCharacterProfile)profile);
-
-        if (humanoid != null)
+        else
         {
-            var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
-            var job = controller.GetPreferredJob(humanoid);
-            controller.GiveDummyJobClothes(_previewDummy, humanoid, job);
+            _previewDummy = UserInterfaceManager.GetUIController<LobbyUIController>()
+                .LoadProfileEntity(humanoid, null, true);
 
-            if (prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
+            var highPriorityJob = humanoid.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
+            if (highPriorityJob != null)
             {
-                var loadout = humanoid.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), humanoid.Species, entityManager, prototypeManager);
-                controller.GiveDummyLoadout(_previewDummy, loadout);
+                var jobName = prototypeManager.Index<JobPrototype>(highPriorityJob).LocalizedName;
+                description = $"{description}\n{jobName}";
             }
         }
 
@@ -72,16 +64,6 @@ public sealed partial class CharacterPickerButton : ContainerButton
         DeleteButton.Visible = !isSelected;
 
         View.SetEntity(_previewDummy);
-
-        var description = profile.Name;
-
-        var highPriorityJob = humanoid?.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
-        if (highPriorityJob != null)
-        {
-            var jobName = prototypeManager.Index<JobPrototype>(highPriorityJob).LocalizedName;
-            description = $"{description}\n{jobName}";
-        }
-
         DescriptionLabel.Text = description;
 
         ConfirmDeleteButton.OnPressed += _ =>
