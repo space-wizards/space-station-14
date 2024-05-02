@@ -1422,7 +1422,7 @@ namespace Content.Client.Lobby.UI
 
         private async void ImportProfile()
         {
-            if (_exporting || CharacterSlot == null)
+            if (_exporting || CharacterSlot == null || Profile == null)
                 return;
 
             StartExport();
@@ -1437,8 +1437,10 @@ namespace Content.Client.Lobby.UI
             try
             {
                 var profile = _entManager.System<HumanoidAppearanceSystem>().FromStream(file, _playerManager.LocalSession!);
+                var oldProfile = Profile;
                 SetProfile(profile, CharacterSlot);
-                SetDirty();
+
+                IsDirty = !profile.MemberwiseEquals(oldProfile);
             }
             catch (Exception exc)
             {

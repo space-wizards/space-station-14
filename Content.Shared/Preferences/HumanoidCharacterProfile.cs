@@ -44,6 +44,7 @@ namespace Content.Shared.Preferences
 
         public IReadOnlyDictionary<string, RoleLoadout> Loadouts => _loadouts;
 
+        [DataField]
         private Dictionary<string, RoleLoadout> _loadouts = new();
 
         [DataField]

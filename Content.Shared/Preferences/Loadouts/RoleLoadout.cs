@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Random;
 using Robust.Shared.Collections;
@@ -12,11 +13,13 @@ namespace Content.Shared.Preferences.Loadouts;
 /// <summary>
 /// Contains all of the selected data for a role's loadout.
 /// </summary>
-[Serializable, NetSerializable]
-public sealed class RoleLoadout
+[Serializable, NetSerializable, DataDefinition]
+public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
 {
-    public readonly ProtoId<RoleLoadoutPrototype> Role;
+    [DataField]
+    public ProtoId<RoleLoadoutPrototype> Role;
 
+    [DataField]
     public Dictionary<ProtoId<LoadoutGroupPrototype>, List<Loadout>> SelectedLoadouts = new();
 
     /*
@@ -257,5 +260,22 @@ public sealed class RoleLoadout
         }
 
         return false;
+    }
+
+    public bool Equals(RoleLoadout? other)
+    {
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Role.Equals(other.Role) && SelectedLoadouts.SequenceEqual(other.SelectedLoadouts) && Points == other.Points;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return ReferenceEquals(this, obj) || obj is RoleLoadout other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Role, SelectedLoadouts, Points);
     }
 }

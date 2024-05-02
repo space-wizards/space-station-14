@@ -6,8 +6,9 @@ namespace Content.Shared.Preferences.Loadouts;
 /// <summary>
 /// Specifies the selected prototype and custom data for a loadout.
 /// </summary>
-[Serializable, NetSerializable]
-public sealed class Loadout
+[Serializable, NetSerializable, DataDefinition]
+public sealed partial class Loadout
 {
+    [DataField]
     public ProtoId<LoadoutPrototype> Prototype;
 }
