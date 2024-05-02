@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Remove executions pending code rewrite.
-    type: Remove
-  id: 6017
-  time: '2024-02-25T11:36:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25555
 - author: Krunk
   changes:
   - message: Candy bowls function properly again!
@@ -3860,3 +3853,11 @@
   id: 6516
   time: '2024-05-02T17:09:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27628
+- author: ElectroJr
+  changes:
+  - message: Fixed various interactions not prioritizing opening a UI. No more trying
+      to eat mission critical faxes.
+    type: Fix
+  id: 6517
+  time: '2024-05-02T23:37:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27631
