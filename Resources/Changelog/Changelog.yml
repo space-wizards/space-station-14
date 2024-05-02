@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PolterTzi
-  changes:
-  - message: Cargo ordering multiple crates in one order should work now.
-    type: Fix
-  id: 6016
-  time: '2024-02-25T07:36:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25518
 - author: metalgearsloth
   changes:
   - message: Remove executions pending code rewrite.
@@ -3860,3 +3853,10 @@
   id: 6515
   time: '2024-05-02T16:17:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27626
+- author: deltanedas
+  changes:
+  - message: "Ducky slippers now make you waddle. \U0001F986\U0001F986"
+    type: Tweak
+  id: 6516
+  time: '2024-05-02T17:09:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27628
