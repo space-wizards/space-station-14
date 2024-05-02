@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Fixed reagent slime ghost role description.
-    type: Fix
-  id: 6008
-  time: '2024-02-22T12:18:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25466
-- author: lzk228
-  changes:
-  - message: Galoshes are added to the Janidrobe.
-    type: Tweak
-  - message: Galoshes now make you slower.
-    type: Tweak
-  id: 6009
-  time: '2024-02-23T01:05:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25484
-- author: PJB3005
-  changes:
-  - message: sorting of departments and jobs has been made consistent in various menus.
-    type: Tweak
-  id: 6010
-  time: '2024-02-23T04:04:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25486
 - author: liltenhead
   changes:
   - message: Changed emergency welder's fuel count from 25 -> 50
@@ -3861,3 +3838,26 @@
   id: 6507
   time: '2024-05-01T22:26:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27587
+- author: metalgearsloth
+  changes:
+  - message: Fix server performance dropping significantly.
+    type: Fix
+  id: 6508
+  time: '2024-05-02T00:18:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27528
+- author: metalgearsloth
+  changes:
+  - message: Fix muzzle flash rotations.
+    type: Fix
+  - message: Fix large client performance drop.
+    type: Fix
+  id: 6509
+  time: '2024-05-02T02:40:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27533
+- author: ElectroJr
+  changes:
+  - message: Fix gas analyzers not opening their UI when used in-hand.
+    type: Fix
+  id: 6510
+  time: '2024-05-02T06:00:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27610
