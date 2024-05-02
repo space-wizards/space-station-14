@@ -11,22 +11,16 @@ public sealed partial class SpeciesLoadoutEffect : LoadoutEffect
     [DataField(required: true)]
     public List<ProtoId<SpeciesPrototype>> Species = new();
 
-    public override bool Validate(RoleLoadout loadout, ICommonSession session, IDependencyCollection collection,
+    public override bool Validate(HumanoidCharacterProfile profile, RoleLoadout loadout, ICommonSession session, IDependencyCollection collection,
         [NotNullWhen(false)] out FormattedMessage? reason)
     {
-        if (loadout.Species == null)
+        if (Species.Contains(profile.Species))
         {
             reason = null;
             return true;
         }
 
-        if (Species.Contains(loadout.Species.Value))
-        {
-            reason = null;
-            return true;
-        }
-
-        reason = FormattedMessage.FromUnformatted("loadout-group-species-restriction");
+        reason = FormattedMessage.FromUnformatted(Loc.GetString("loadout-group-species-restriction"));
         return false;
     }
 }

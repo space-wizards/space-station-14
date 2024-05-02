@@ -29,11 +29,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
-using Robust.Shared.Serialization.Markdown;
-using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Lobby.UI
@@ -47,7 +43,6 @@ namespace Content.Client.Lobby.UI
         private readonly IFileDialogManager _dialogManager;
         private readonly IPlayerManager _playerManager;
         private readonly IPrototypeManager _prototypeManager;
-        private readonly ISerializationManager _serManager;
         private readonly MarkingManager _markingManager;
         private readonly JobRequirementsManager _requirements;
         private readonly LobbyUIController _controller;
@@ -110,7 +105,6 @@ namespace Content.Client.Lobby.UI
             ILogManager logManager,
             IPlayerManager playerManager,
             IPrototypeManager prototypeManager,
-            ISerializationManager serManager,
             JobRequirementsManager requirements,
             MarkingManager markings)
         {
@@ -121,7 +115,6 @@ namespace Content.Client.Lobby.UI
             _dialogManager = dialogManager;
             _playerManager = playerManager;
             _prototypeManager = prototypeManager;
-            _serManager = serManager;
             _markingManager = markings;
             _preferencesManager = preferencesManager;
             _requirements = requirements;
@@ -873,7 +866,7 @@ namespace Content.Client.Lobby.UI
 
                             if (loadout == null)
                             {
-                                loadout = new RoleLoadout(roleLoadoutProto.ID, Profile?.Species);
+                                loadout = new RoleLoadout(roleLoadoutProto.ID);
                                 loadout.SetDefault(_prototypeManager);
                             }
 
@@ -897,13 +890,13 @@ namespace Content.Client.Lobby.UI
             _loadoutWindow = null;
             var collection = IoCManager.Instance;
 
-            if (collection == null || _playerManager.LocalSession == null)
+            if (collection == null || _playerManager.LocalSession == null || Profile == null)
                 return;
 
             JobOverride = jobProto;
             var session = _playerManager.LocalSession;
 
-            _loadoutWindow = new LoadoutWindow(roleLoadout, roleLoadoutProto, _playerManager.LocalSession, collection)
+            _loadoutWindow = new LoadoutWindow(Profile, roleLoadout, roleLoadoutProto, _playerManager.LocalSession, collection)
             {
                 Title = jobProto?.ID + "-loadout",
             };
@@ -1082,6 +1075,10 @@ namespace Content.Client.Lobby.UI
             Profile = Profile?.WithSpecies(newSpecies);
             OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
             Markings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
+            // In case there's job restrictions for the species
+            RefreshJobs();
+            // In case there's species restrictions for loadouts
+            RefreshLoadouts();
             UpdateSexControls(); // update sex for new species
             UpdateSpeciesGuidebookIcon();
             SetDirty();

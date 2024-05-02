@@ -491,7 +491,7 @@ namespace Content.Shared.Preferences
                     continue;
                 }
 
-                loadouts.EnsureValid(session, collection);
+                loadouts.EnsureValid(this, session, collection);
             }
 
             foreach (var value in toRemove)
@@ -567,7 +567,7 @@ namespace Content.Shared.Preferences
         {
             if (!_loadouts.TryGetValue(id, out var loadout))
             {
-                loadout = new RoleLoadout(id, species);
+                loadout = new RoleLoadout(id);
                 loadout.SetDefault(protoManager, force: true);
             }
 

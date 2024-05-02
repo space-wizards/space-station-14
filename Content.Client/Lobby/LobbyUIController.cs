@@ -36,7 +36,6 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
-    [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly JobRequirementsManager _requirements = default!;
     [Dependency] private readonly MarkingManager _markings = default!;
@@ -114,7 +113,8 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
             }
 
             if (obj.WasModified<LoadoutPrototype>() ||
-                obj.WasModified<LoadoutGroupPrototype>())
+                obj.WasModified<LoadoutGroupPrototype>() ||
+                obj.WasModified<RoleLoadoutPrototype>())
             {
                 _profileEditor.RefreshLoadouts();
             }
@@ -226,7 +226,6 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
             _logManager,
             _playerManager,
             _prototypeManager,
-            _serManager,
             _requirements,
             _markings);
 

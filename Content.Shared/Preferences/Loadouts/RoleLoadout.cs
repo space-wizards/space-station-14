@@ -15,11 +15,6 @@ namespace Content.Shared.Preferences.Loadouts;
 [Serializable, NetSerializable]
 public sealed class RoleLoadout
 {
-    /// <summary>
-    /// Species associated with the profile.
-    /// </summary>
-    public readonly ProtoId<SpeciesPrototype>? Species;
-
     public readonly ProtoId<RoleLoadoutPrototype> Role;
 
     public Dictionary<ProtoId<LoadoutGroupPrototype>, List<Loadout>> SelectedLoadouts = new();
@@ -30,15 +25,14 @@ public sealed class RoleLoadout
 
     public int? Points;
 
-    public RoleLoadout(ProtoId<RoleLoadoutPrototype> role, ProtoId<SpeciesPrototype>? species)
+    public RoleLoadout(ProtoId<RoleLoadoutPrototype> role)
     {
         Role = role;
-        Species = species;
     }
 
     public RoleLoadout Clone()
     {
-        var weh = new RoleLoadout(Role, Species);
+        var weh = new RoleLoadout(Role);
 
         foreach (var selected in SelectedLoadouts)
         {
@@ -51,7 +45,7 @@ public sealed class RoleLoadout
     /// <summary>
     /// Ensures all prototypes exist and effects can be applied.
     /// </summary>
-    public void EnsureValid(ICommonSession session, IDependencyCollection collection)
+    public void EnsureValid(HumanoidCharacterProfile profile, ICommonSession session, IDependencyCollection collection)
     {
         var groupRemove = new ValueList<string>();
         var protoManager = collection.Resolve<IPrototypeManager>();
@@ -88,7 +82,7 @@ public sealed class RoleLoadout
                 }
 
                 // Validate the loadout can be applied (e.g. points).
-                if (!IsValid(session, loadout.Prototype, collection, out _))
+                if (!IsValid(profile, session, loadout.Prototype, collection, out _))
                 {
                     loadouts.RemoveAt(i);
                     continue;
@@ -174,7 +168,7 @@ public sealed class RoleLoadout
     /// <summary>
     /// Returns whether a loadout is valid or not.
     /// </summary>
-    public bool IsValid(ICommonSession session, ProtoId<LoadoutPrototype> loadout, IDependencyCollection collection, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool IsValid(HumanoidCharacterProfile profile, ICommonSession session, ProtoId<LoadoutPrototype> loadout, IDependencyCollection collection, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
@@ -187,7 +181,7 @@ public sealed class RoleLoadout
             return false;
         }
 
-        if (!protoManager.TryIndex(Role, out var roleProto))
+        if (!protoManager.HasIndex(Role))
         {
             reason = FormattedMessage.FromUnformatted("loadouts-prototype-missing");
             return false;
@@ -197,7 +191,7 @@ public sealed class RoleLoadout
 
         foreach (var effect in loadoutProto.Effects)
         {
-            valid = valid && effect.Validate(this, session, collection, out reason);
+            valid = valid && effect.Validate(profile, this, session, collection, out reason);
         }
 
         return valid;
