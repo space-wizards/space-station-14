@@ -53,6 +53,11 @@
   - !type:GroupLoadoutEffect
     proto: SeniorEngineering
 
+- type: startingGear
+  id: EngineeringBeret
+  equipment:
+    head: ClothingHeadHatBeretEngineering
+
 # Jumpsuit
 - type: loadout
   id: StationEngineerJumpsuit
