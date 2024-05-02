@@ -22,8 +22,6 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    //[Dependency] private readonly IEntityManager _entManager = default!;
-
 
     public override void Initialize()
     {
@@ -90,13 +88,16 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         return null;
     }
 
-    //helper function to get name of a given user from the cart's dictionary
-    private static string GetName(MessagesCartridgeComponent component, int key)
+    //helper function to get name of a given user
+    private static string GetName(int key)
     {
-        if (!(component.NameDict.ContainsKey(key)))
-            component.NameDict[key] = "???";
+        return "LAZY RETURN PLEASE ADD IDENTITY SUPPORT, FLESH YOU GIT";
+    }
 
-        return component.NameDict[key];
+    //helper function to get messages id of a given cart
+    private static int GetUserUid(MessagesCartridgeComponent component)
+    {
+        return -1;
     }
 
     //Updates the ui state of a given cartridge
@@ -104,20 +105,6 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     {
         if (TryComp(Transform(uid).ParentUid, out CartridgeLoaderComponent? _))
             UpdateUiState(uid, Transform(uid).ParentUid, component);
-    }
-
-    //Function that updates the name and id of the user to match the id card
-    public bool UpdateName(EntityUid uid, MessagesCartridgeComponent component)
-    {
-        if (component.ConnectedId == null || !(TryComp(component.ConnectedId, out IdCardComponent? idCardComponent)))
-            return false;
-
-        component.UserUid = component.ConnectedId.Value.Id;
-        string? fullName = idCardComponent.FullName;
-        fullName ??= "???";
-        component.UserName = $"{fullName} ({idCardComponent.JobTitle})";
-
-        return true;
     }
 
     private void UpdateUiState(EntityUid uid, EntityUid loaderUid, MessagesCartridgeComponent? component)
@@ -178,7 +165,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
             state = new MessagesUiState(MessagesUiStateMode.Chat, formattedMessageList, GetName(component, component.ChatUid.Value));
         }
-        _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
+        _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, state);
     }
 
     //function that receives the message and notifies the user

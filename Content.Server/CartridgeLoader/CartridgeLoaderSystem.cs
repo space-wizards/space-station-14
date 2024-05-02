@@ -20,8 +20,6 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly PdaSystem _pda = default!;
-    [Dependency] private readonly MessagesCartridgeSystem _messagesCartridgeSystem = default!;
-
 
     public override void Initialize()
     {
@@ -335,28 +333,6 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
     protected override void OnItemInserted(EntityUid uid, CartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID == PdaComponent.PdaIdSlotId) //Very ugly hardcoded thing to update messager app when ID card is inserted. <Todo> find some better way to do this.
-        {
-            if ((TryComp(uid, out ContainerManagerComponent? cont)))
-            {
-                if (TryGetProgram<MessagesCartridgeComponent>(uid, out var programUid, out var messagesCartridgeComponent, false, loader, cont))
-                {
-                    if (TryComp(uid, out PdaComponent? _) && programUid is EntityUid realProgramUid)
-                    {
-                        if (TryComp(args.Entity, out IdCardComponent? _))
-                        {
-                            messagesCartridgeComponent.ConnectedId = args.Entity;
-                            messagesCartridgeComponent.UserUid = args.Entity.Id;
-                            if (_messagesCartridgeSystem.GetActiveServer(messagesCartridgeComponent, Transform(uid).MapID) is var (_, server))
-                            {
-                                _messagesCartridgeSystem.PullFromServer(realProgramUid, messagesCartridgeComponent, server);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         if (args.Container.ID != InstalledContainerId && args.Container.ID != loader.CartridgeSlot.ID)
             return;
 
@@ -366,19 +342,6 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
     protected override void OnItemRemoved(EntityUid uid, CartridgeLoaderComponent loader, EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID == PdaComponent.PdaIdSlotId)
-        {
-            if (TryComp(uid, out ContainerManagerComponent? cont))
-            {
-                if (TryGetProgram<MessagesCartridgeComponent>(uid, out _, out var messagesCartridgeComponent, false, loader, cont))
-                {
-                    messagesCartridgeComponent.ConnectedId = null;
-                    messagesCartridgeComponent.UserUid = null;
-                    messagesCartridgeComponent.UserName = null;
-                }
-            }
-        }
-
         if (args.Container.ID != InstalledContainerId && args.Container.ID != loader.CartridgeSlot.ID)
             return;
 
