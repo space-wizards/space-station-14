@@ -7,7 +7,7 @@
   - type: InputMover
   - type: MobMover
   - type: Loadout
-    prototypes: [PassengerGear]
+    prototypes: [LimitedPassengerGear]
   - type: NpcFactionMember
     factions:
     - NanoTrasen
@@ -22,7 +22,7 @@
         - Syndicate
     - type: Loadout
       prototypes:
-        - SalvageSpecialistGear
+        - LimitedSalvageSpecialistGear
     - type: InputMover
     - type: MobMover
     - type: HTN
@@ -40,7 +40,7 @@
       - Syndicate
   - type: Loadout
     prototypes:
-      - PirateGear
+      - LimitedPirateGear
   - type: InputMover
   - type: MobMover
   - type: HTN

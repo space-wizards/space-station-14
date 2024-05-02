@@ -11,3 +11,10 @@
   antagonist: true
   setPreference: false
   objective: roles-antag-rev-objective
+
+- type: startingGear
+  id: HeadRevGear
+  storage:
+    back:
+    - Flash
+    - ClothingEyesGlassesSunglasses
