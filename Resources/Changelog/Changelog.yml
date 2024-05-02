@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArchPigeon
-  changes:
-  - message: Removed the ability for command or any antag-safe role to be initial
-      infected in zombie mode
-    type: Remove
-  id: 6015
-  time: '2024-02-25T02:40:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25529
 - author: PolterTzi
   changes:
   - message: Cargo ordering multiple crates in one order should work now.
@@ -3861,3 +3853,10 @@
   id: 6514
   time: '2024-05-02T14:49:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27619
+- author: Lamrr
+  changes:
+  - message: Wine and beer bottles can now be inserted into the booze dispenser.
+    type: Fix
+  id: 6515
+  time: '2024-05-02T16:17:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27626
