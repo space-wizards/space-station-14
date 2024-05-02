@@ -1,24 +1,4 @@
 - type: entity
-  parent: ClothingBackpack
-  id: ClothingBackpackFilled
-  noSpawn: true
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackClown
-  id: ClothingBackpackClownFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxHug
-      - id: RubberStampClown
-      - id: CrayonRainbow
-
-- type: entity
   noSpawn: true
   parent: ClothingBackpackSecurity
   id: ClothingBackpackSecurityFilled
@@ -177,63 +157,12 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackHydroponics
-  id: ClothingBackpackHydroponicsFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackMime
-  id: ClothingBackpackMimeFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-      - id: RubberStampMime
-
-- type: entity
-  noSpawn: true
   parent: ClothingBackpackChemistry
   id: ClothingBackpackChemistryFilled
   components:
   - type: StorageFill
     contents:
       - id: BoxSurvivalMedical
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpack
-  id: ClothingBackpackChaplainFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-      - id: Bible
-      - id: RubberStampChaplain
-  
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpack
-  id: ClothingBackpackLawyerFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-      - id: RubberStampLawyer
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpack
-  id: ClothingBackpackMusicianFilled
-  components:
-    - type: StorageFill
-      contents:
-        - id: BoxSurvival
-        - id: AcousticGuitarInstrument
-        - id: SaxophoneInstrument
 
 - type: entity
   noSpawn: true

@@ -1,15 +1,6 @@
 - type: entity
   noSpawn: true
   parent: ClothingBackpackSatchel
-  id: ClothingBackpackSatchelFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelTools
   components:
   - type: StorageFill
@@ -21,15 +12,6 @@
       - id: Wirecutter
       - id: Welder
       - id: Multitool
-
-- type: entity
-  parent: ClothingBackpackSatchelClown
-  id: ClothingBackpackSatchelClownFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxHug
-      - id: RubberStampClown
 
 - type: entity
   noSpawn: true
@@ -177,53 +159,12 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackSatchelHydroponics
-  id: ClothingBackpackSatchelHydroponicsFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-
-- type: entity
-  noSpawn: true
   parent: ClothingBackpackSatchelChemistry
   id: ClothingBackpackSatchelChemistryFilled
   components:
   - type: StorageFill
     contents:
       - id: BoxSurvivalMedical
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackSatchel
-  id: ClothingBackpackSatchelChaplainFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-      - id: Bible
-      - id: RubberStampChaplain
-  
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackSatchel
-  id: ClothingBackpackSatchelLawyerFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-      - id: RubberStampLawyer
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackSatchel
-  id: ClothingBackpackSatchelMusicianFilled
-  components:
-    - type: StorageFill
-      contents:
-        - id: BoxSurvival
-        - id: AcousticGuitarInstrument
-        - id: SaxophoneInstrument
 
 - type: entity
   noSpawn: true
@@ -247,16 +188,6 @@
       - id: Lighter
       - id: CigPackBlack
       - id: HandLabeler
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackSatchelMime
-  id: ClothingBackpackSatchelMimeFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-      - id: RubberStampMime
 
 - type: entity
   noSpawn: true

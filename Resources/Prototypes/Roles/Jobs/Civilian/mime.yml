@@ -28,6 +28,10 @@
     pocket2: Paper
     id: MimePDA
     ears: ClothingHeadsetService
+  storage:
+    back:
+    - BoxSurvival
+    - RubberStampMime
 
 - type: entity
   id: ActionMimeInvisibleWall

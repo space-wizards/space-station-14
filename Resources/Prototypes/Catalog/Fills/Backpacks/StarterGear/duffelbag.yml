@@ -1,24 +1,5 @@
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackDuffel
-  id: ClothingBackpackDuffelFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackDuffelClown
-  id: ClothingBackpackDuffelClownFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxHug
-      - id: RubberStampClown
-
-- type: entity
-  noSpawn: true
   parent: ClothingBackpackDuffelSecurity
   id: ClothingBackpackDuffelSecurityFilled
   components:
@@ -164,15 +145,6 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackDuffelHydroponics
-  id: ClothingBackpackDuffelHydroponicsFilled
-  components:
-    - type: StorageFill
-      contents:
-        - id: BoxSurvival
-
-- type: entity
-  noSpawn: true
   parent: ClothingBackpackDuffelMime
   id: ClothingBackpackDuffelMimeFilled
   components:
@@ -189,38 +161,6 @@
   - type: StorageFill
     contents:
       - id: BoxSurvivalMedical
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackDuffel
-  id: ClothingBackpackDuffelChaplainFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-      - id: Bible
-      - id: RubberStampChaplain
-  
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackDuffel
-  id: ClothingBackpackDuffelLawyerFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-      - id: RubberStampLawyer
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackDuffel
-  id: ClothingBackpackDuffelMusicianFilled
-  components:
-    - type: StorageFill
-      contents:
-        - id: BoxSurvival
-        - id: AcousticGuitarInstrument
-        - id: SaxophoneInstrument
 
 - type: entity
   noSpawn: true

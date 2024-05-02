@@ -75,7 +75,7 @@
   groups:
   - LawyerNeck
   - LawyerJumpsuit
-  - LawyerBackpack
+  - CommonBackpack
   - Glasses
   - Trinkets
 
@@ -86,7 +86,7 @@
   - ChaplainMask
   - ChaplainNeck
   - ChaplainJumpsuit
-  - ChaplainBackpack
+  - CommonBackpack
   - ChaplainOuterClothing
   - Glasses
   - Trinkets
