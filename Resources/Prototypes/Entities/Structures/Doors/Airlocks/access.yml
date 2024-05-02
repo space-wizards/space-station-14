@@ -236,6 +236,16 @@
       board: [ DoorElectronicsChemistry ]
 
 - type: entity
+  parent: AirlockMedical
+  id: AirlockMedicalMorgueLocked
+  suffix: Morgue, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMorgue ]
+
+
+- type: entity
   parent: AirlockScience
   id: AirlockScienceLocked
   suffix: Science, Locked

@@ -23,6 +23,7 @@ public static class FaxConstants
 
     public const string FaxNameData = "fax_data_name";
     public const string FaxPaperNameData = "fax_data_title";
+    public const string FaxPaperLabelData = "fax_data_label";
     public const string FaxPaperPrototypeData = "fax_data_prototype";
     public const string FaxPaperContentData = "fax_data_content";
     public const string FaxPaperStampStateData = "fax_data_stamp_state";
