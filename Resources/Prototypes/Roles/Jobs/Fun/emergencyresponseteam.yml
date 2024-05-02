@@ -433,7 +433,7 @@
   id: ERTJanitorGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTJanitor
-    back: ClothingBackpackERTJanitorFilled
+    back: ClothingBackpackERTJanitor
     shoes: ClothingShoesGaloshes
     head: ClothingHeadHelmetERTJanitor
     gloves: ClothingHandsGlovesColorPurple
@@ -456,7 +456,7 @@
   id: ERTJanitorGearEVA
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTJanitor
-    back: ClothingBackpackERTJanitorFilled
+    back: ClothingBackpackERTJanitor
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskGasERT
     gloves: ClothingHandsGlovesColorPurple
