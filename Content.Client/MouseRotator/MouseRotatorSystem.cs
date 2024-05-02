@@ -1,4 +1,4 @@
-﻿using Content.Shared.MouseRotator;
+using Content.Shared.MouseRotator;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -14,7 +14,7 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public override void Update(float frameTime)
     {
@@ -28,8 +28,6 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
         if (player == null || !TryComp<MouseRotatorComponent>(player, out var rotator))
             return;
 
-        var xform = Transform(player.Value);
-
         // Get mouse loc and convert to angle based on player location
         var coords = _input.MouseScreenPosition;
         var mapPos = _eye.PixelToMap(coords);
@@ -37,9 +35,8 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
         if (mapPos.MapId == MapId.Nullspace)
             return;
 
-        var angle = (mapPos.Position - xform.MapPosition.Position).ToWorldAngle();
-
-        var curRot = _transform.GetWorldRotation(xform);
+        var angle = (mapPos.Position - _transformSystem.GetMapCoordinates(player.Value).Position).ToWorldAngle();
+        var curRot = _transformSystem.GetWorldRotation(player.Value);
 
         // 4-dir handling is separate --
         // only raise event if the cardinal direction has changed
