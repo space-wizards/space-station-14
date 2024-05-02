@@ -25,7 +25,7 @@
   components:
   - type: InstantAction
     priority: -1
-    useDelay: 20
+    useDelay: 30
     itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/forcewall.ogg
@@ -34,5 +34,4 @@
       state: reinf_construct-0
     event: !type:InstantSpawnSpellEvent
       prototype: WallMimeBlockade
-      preventCollide: false
       posData: !type:TargetInFront
