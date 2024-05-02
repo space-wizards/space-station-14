@@ -1748,8 +1748,7 @@
   - !type:BuyerJobCondition
     whitelist:
     - Clown
-
-- type: listing
+    
   id: UplinkCaneBlade
   name: uplink-cane-blade-name
   description: uplink-cane-blade-desc
