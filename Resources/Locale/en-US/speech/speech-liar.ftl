@@ -99,3 +99,16 @@ liar-word-replacement-32 = didn't
 
 liar-word-33 = didn't
 liar-word-replacement-33 = did
+
+liar-word-34 = ye
+liar-word-34-2 = ya
+liar-word-replacement-34 = na
+
+liar-word-35 = na
+liar-word-replacement-35 = ye
+
+liar-word-36 = yuh
+liar-word-replacement-36 = nuh
+
+liar-word-37 = nuh
+liar-word-replacement-37 = yuh
