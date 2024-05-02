@@ -22,6 +22,7 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby;
@@ -30,12 +31,15 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
 {
     [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly MarkingManager _markings = default!;
+    [Dependency] private readonly IFileDialogManager _dialogManager = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly JobRequirementsManager _requirements = default!;
+    [Dependency] private readonly MarkingManager _markings = default!;
     [UISystemDependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [UISystemDependency] private readonly ClientInventorySystem _inventory = default!;
     [UISystemDependency] private readonly StationSpawningSystem _spawn = default!;
@@ -218,8 +222,11 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
             _preferencesManager,
             _configurationManager,
             EntityManager,
+            _dialogManager,
+            _logManager,
             _playerManager,
             _prototypeManager,
+            _serManager,
             _requirements,
             _markings);
 

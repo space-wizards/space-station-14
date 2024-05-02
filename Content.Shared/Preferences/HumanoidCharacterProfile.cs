@@ -5,7 +5,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences.Loadouts;
-using Content.Shared.Preferences.Loadouts.Effects;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
 using Robust.Shared.Collections;
@@ -29,6 +28,7 @@ namespace Content.Shared.Preferences
         public const int MaxNameLength = 32;
         public const int MaxDescLength = 512;
 
+        [DataField]
         private Dictionary<string, JobPriority> _jobPriorities = new()
         {
             {
@@ -36,15 +36,23 @@ namespace Content.Shared.Preferences
             }
         };
 
+        [DataField]
         private HashSet<string> _antagPreferences = new();
+
+        [DataField]
         private HashSet<string> _traitPreferences = new();
 
         public IReadOnlyDictionary<string, RoleLoadout> Loadouts => _loadouts;
 
         private Dictionary<string, RoleLoadout> _loadouts = new();
 
+        [DataField]
         public string Name { get; set; } = "John Doe";
+
+        [DataField]
         public string FlavorText { get; set; } = string.Empty;
+
+        [DataField]
         public string Species { get; set; } = SharedHumanoidAppearanceSystem.DefaultSpecies;
 
         [DataField]
@@ -61,11 +69,13 @@ namespace Content.Shared.Preferences
         [DataField]
         public HumanoidCharacterAppearance Appearance { get; set; } = new();
 
+        [DataField]
         public SpawnPriorityPreference SpawnPriority { get; private set; } = SpawnPriorityPreference.None;
         public IReadOnlyDictionary<string, JobPriority> JobPriorities => _jobPriorities;
         public IReadOnlySet<string> AntagPreferences => _antagPreferences;
         public IReadOnlySet<string> TraitPreferences => _traitPreferences;
 
+        [DataField]
         public PreferenceUnavailableMode PreferenceUnavailable { get; private set; } =
             PreferenceUnavailableMode.SpawnAsOverflow;
 
@@ -185,8 +195,10 @@ namespace Content.Shared.Preferences
             {
                 Name = name,
                 Sex = sex,
+                Age = age,
                 Gender = gender,
                 Species = species,
+                Appearance = HumanoidCharacterAppearance.Random(species, sex),
             };
         }
 

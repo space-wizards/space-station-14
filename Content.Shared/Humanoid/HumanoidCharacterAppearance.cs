@@ -11,6 +11,27 @@ namespace Content.Shared.Humanoid;
 [Serializable, NetSerializable]
 public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, IEquatable<HumanoidCharacterAppearance>
 {
+    [DataField("hair")]
+    public string HairStyleId { get; set; } = HairStyles.DefaultHairStyle;
+
+    [DataField]
+    public Color HairColor { get; set; } = Color.Black;
+
+    [DataField("facialHair")]
+    public string FacialHairStyleId { get; set; } = HairStyles.DefaultFacialHairStyle;
+
+    [DataField]
+    public Color FacialHairColor { get; set; } = Color.Black;
+
+    [DataField]
+    public Color EyeColor { get; set; } = Color.Black;
+
+    [DataField]
+    public Color SkinColor { get; set; } = Humanoid.SkinColor.ValidHumanSkinTone;
+
+    [DataField]
+    public List<Marking> Markings { get; set; } = new();
+
     public HumanoidCharacterAppearance(string hairStyleId,
         Color hairColor,
         string facialHairStyleId,
@@ -33,27 +54,6 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
     {
 
     }
-
-    [DataField("hair")]
-    public string HairStyleId { get; private set; }
-
-    [DataField("hairColor")]
-    public Color HairColor { get; private set; }
-
-    [DataField("facialHair")]
-    public string FacialHairStyleId { get; private set; }
-
-    [DataField("facialHairColor")]
-    public Color FacialHairColor { get; private set; }
-
-    [DataField("eyeColor")]
-    public Color EyeColor { get; private set; }
-
-    [DataField("skinColor")]
-    public Color SkinColor { get; private set; }
-
-    [DataField("markings")]
-    public List<Marking> Markings { get; private set; }
 
     public HumanoidCharacterAppearance WithHairStyleName(string newName)
     {
@@ -88,18 +88,6 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
     public HumanoidCharacterAppearance WithMarkings(List<Marking> newMarkings)
     {
         return new(HairStyleId, HairColor, FacialHairStyleId, FacialHairColor, EyeColor, SkinColor, newMarkings);
-    }
-
-    public HumanoidCharacterAppearance() : this(
-        HairStyles.DefaultHairStyle,
-        Color.Black,
-        HairStyles.DefaultFacialHairStyle,
-        Color.Black,
-        Color.Black,
-        Humanoid.SkinColor.ValidHumanSkinTone,
-        new ()
-    )
-    {
     }
 
     public static HumanoidCharacterAppearance DefaultWithSpecies(string species)

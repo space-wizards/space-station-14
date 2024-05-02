@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using Content.Shared.Decals;
 using Content.Shared.Examine;
@@ -7,7 +8,12 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Preferences;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown;
+using Robust.Shared.Utility;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Humanoid;
 
@@ -24,6 +30,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
 
     [ValidatePrototypeId<SpeciesPrototype>]
@@ -35,6 +42,36 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HumanoidAppearanceComponent, ExaminedEvent>(OnExamined);
+    }
+
+    public DataNode ToDataNode(HumanoidCharacterProfile profile)
+    {
+        var export = new HumanoidProfileExport()
+        {
+            Profile = profile,
+        };
+
+        var dataNode = _serManager.WriteValue(export, alwaysWrite: true, notNullableOverride: true);
+        return dataNode;
+    }
+
+    public HumanoidCharacterProfile FromStream(Stream stream, ICommonSession session)
+    {
+        using var reader = new StreamReader(stream, EncodingHelpers.UTF8);
+        var yamlStream = new YamlStream();
+        yamlStream.Load(reader);
+
+        var root = yamlStream.Documents[0].RootNode;
+        var export = _serManager.Read<HumanoidProfileExport>(root.ToDataNode(), notNullableOverride: true);
+
+        /*
+         * Add custom handling here for forks / version numbers if you care.
+         */
+
+        var profile = export.Profile;
+        var collection = IoCManager.Instance;
+        profile.EnsureValid(session, collection!);
+        return profile;
     }
 
     private void OnInit(EntityUid uid, HumanoidAppearanceComponent humanoid, ComponentInit args)

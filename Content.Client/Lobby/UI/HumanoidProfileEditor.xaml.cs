@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using Content.Client.Guidebook;
@@ -27,9 +28,12 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown;
+using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Utility;
+using YamlDotNet.RepresentationModel;
 using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Lobby.UI
@@ -40,8 +44,10 @@ namespace Content.Client.Lobby.UI
         private readonly IClientPreferencesManager _preferencesManager;
         private readonly IConfigurationManager _cfgManager;
         private readonly IEntityManager _entManager;
+        private readonly IFileDialogManager _dialogManager;
         private readonly IPlayerManager _playerManager;
         private readonly IPrototypeManager _prototypeManager;
+        private readonly ISerializationManager _serManager;
         private readonly MarkingManager _markingManager;
         private readonly JobRequirementsManager _requirements;
         private readonly LobbyUIController _controller;
@@ -51,6 +57,8 @@ namespace Content.Client.Lobby.UI
 
         // One at a time.
         private LoadoutWindow? _loadoutWindow;
+
+        private bool _exporting;
 
         /// <summary>
         /// If we're attempting to save.
@@ -92,24 +100,42 @@ namespace Content.Client.Lobby.UI
         [ValidatePrototypeId<GuideEntryPrototype>]
         private const string DefaultSpeciesGuidebook = "Species";
 
+        private ISawmill _sawmill;
+
         public HumanoidProfileEditor(
             IClientPreferencesManager preferencesManager,
             IConfigurationManager configurationManager,
             IEntityManager entManager,
+            IFileDialogManager dialogManager,
+            ILogManager logManager,
             IPlayerManager playerManager,
             IPrototypeManager prototypeManager,
+            ISerializationManager serManager,
             JobRequirementsManager requirements,
             MarkingManager markings)
         {
             RobustXamlLoader.Load(this);
+            _sawmill = logManager.GetSawmill("profile.editor");
             _cfgManager = configurationManager;
             _entManager = entManager;
+            _dialogManager = dialogManager;
             _playerManager = playerManager;
             _prototypeManager = prototypeManager;
+            _serManager = serManager;
             _markingManager = markings;
             _preferencesManager = preferencesManager;
             _requirements = requirements;
             _controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+
+            ImportButton.OnPressed += args =>
+            {
+                ImportProfile();
+            };
+
+            ExportButton.OnPressed += args =>
+            {
+                ExportProfile();
+            };
 
             ResetButton.OnPressed += args =>
             {
@@ -517,7 +543,6 @@ namespace Content.Client.Lobby.UI
         public void RefreshAntags()
         {
             AntagList.DisposeAllChildren();
-            var loadoutGroup = new ButtonGroup();
             var items = new[]
             {
                 ("humanoid-profile-editor-antag-preference-yes-button", 0),
@@ -568,7 +593,6 @@ namespace Content.Client.Lobby.UI
                     Disabled = true,
                     Text = Loc.GetString("loadout-window"),
                     HorizontalAlignment = HAlignment.Right,
-                    Group = loadoutGroup,
                     Margin = new Thickness(3f, 0f, 0f, 0f),
                 });
 
@@ -704,7 +728,6 @@ namespace Content.Client.Lobby.UI
 
             var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>().ToArray();
             Array.Sort(departments, DepartmentUIComparer.Instance);
-            var jobLoadoutGroup = new ButtonGroup();
 
             var items = new[]
             {
@@ -826,8 +849,6 @@ namespace Content.Client.Lobby.UI
                         Text = Loc.GetString("loadout-window"),
                         HorizontalAlignment = HAlignment.Right,
                         VerticalAlignment = VAlignment.Center,
-                        Group = jobLoadoutGroup,
-                        ToggleMode = true,
                         Margin = new Thickness(3f, 3f, 0f, 0f),
                     };
 
@@ -844,13 +865,6 @@ namespace Content.Client.Lobby.UI
                     {
                         loadoutWindowBtn.OnPressed += args =>
                         {
-                            if (!args.Button.Pressed)
-                            {
-                                _loadoutWindow?.Dispose();
-                                _loadoutWindow = null;
-                                return;
-                            }
-
                             RoleLoadout? loadout = null;
 
                             // Clone so we don't modify the underlying loadout.
@@ -891,7 +905,7 @@ namespace Content.Client.Lobby.UI
 
             _loadoutWindow = new LoadoutWindow(roleLoadout, roleLoadoutProto, _playerManager.LocalSession, collection)
             {
-                Title = jobProto + "-loadout",
+                Title = jobProto?.ID + "-loadout",
             };
 
             // Refresh the buttons etc.
@@ -1407,6 +1421,81 @@ namespace Content.Client.Lobby.UI
             var name = HumanoidCharacterProfile.GetName(Profile.Species, Profile.Gender);
             SetName(name);
             UpdateNameEdit();
+        }
+
+        private async void ImportProfile()
+        {
+            if (_exporting || CharacterSlot == null)
+                return;
+
+            StartExport();
+            await using var file = await _dialogManager.OpenFile(new FileDialogFilters(new FileDialogFilters.Group("yml")));
+
+            if (file == null)
+            {
+                EndExport();
+                return;
+            }
+
+            try
+            {
+                var profile = _entManager.System<HumanoidAppearanceSystem>().FromStream(file, _playerManager.LocalSession!);
+                SetProfile(profile, CharacterSlot);
+                SetDirty();
+            }
+            catch (Exception exc)
+            {
+                _sawmill.Error($"Error when importing profile\n{exc.StackTrace}");
+            }
+            finally
+            {
+                EndExport();
+            }
+        }
+
+        private async void ExportProfile()
+        {
+            if (Profile == null || _exporting)
+                return;
+
+            StartExport();
+            var file = await _dialogManager.SaveFile(new FileDialogFilters(new FileDialogFilters.Group("yml")));
+
+            if (file == null)
+            {
+                EndExport();
+                return;
+            }
+
+            try
+            {
+                var dataNode = _entManager.System<HumanoidAppearanceSystem>().ToDataNode(Profile);
+                await using var writer = new StreamWriter(file.Value.fileStream);
+                dataNode.Write(writer);
+            }
+            catch (Exception exc)
+            {
+                _sawmill.Error($"Error when exporting profile\n{exc.StackTrace}");
+            }
+            finally
+            {
+                await file.Value.fileStream.DisposeAsync();
+                EndExport();
+            }
+        }
+
+        private void StartExport()
+        {
+            _exporting = true;
+            ImportButton.Disabled = true;
+            ExportButton.Disabled = true;
+        }
+
+        private void EndExport()
+        {
+            _exporting = false;
+            ImportButton.Disabled = false;
+            ExportButton.Disabled = false;
         }
     }
 }
