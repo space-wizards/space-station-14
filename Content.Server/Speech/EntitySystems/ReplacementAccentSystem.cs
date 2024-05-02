@@ -26,7 +26,7 @@ namespace Content.Server.Speech.EntitySystems
         {
             if (!_random.Prob(component.ReplacementChance))
                 return;
-            
+
             args.Message = ApplyReplacements(args.Message, component.Accent);
         }
 

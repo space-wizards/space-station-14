@@ -34,11 +34,11 @@ liar-word-replacement-11 = isnt
 liar-word-12 = will
 liar-word-replacement-12 = wont
 
-liar-word-12 = go
-liar-word-replacement-12 = dont go
+liar-word-12 = not
+liar-word-replacement-12 = ""
 
-liar-word-13 = dont go
-liar-word-replacement-13 = go
+liar-word-13 = dont
+liar-word-replacement-13 = ""
 
 liar-word-14 = can
 liar-word-replacement-14 = cant
@@ -49,11 +49,11 @@ liar-word-replacement-15 = can
 liar-word-16 = should
 liar-word-replacement-16 = shouldnt
 
-liar-word-17 = do
-liar-word-replacement-17 = dont
+liar-word-17 = dead
+liar-word-replacement-17 = alive
 
-liar-word-18 = dont
-liar-word-replacement-18 = do
+liar-word-18 = alive
+liar-word-replacement-18 = dead
 
 liar-word-19 = does
 liar-word-replacement-19 = doesnt
@@ -89,7 +89,7 @@ liar-word-29 = do
 liar-word-replacement-29 = "don't"
 
 liar-word-30 = "don't"
-liar-word-replacement-30 = do
+liar-word-replacement-30 = ""
 
 liar-word-31 = does
 liar-word-replacement-31 = "doesn't"
@@ -112,3 +112,21 @@ liar-word-replacement-36 = nuh
 
 liar-word-37 = nuh
 liar-word-replacement-37 = yuh
+
+liar-word-38 = love
+liar-word-replacement-38 = hate
+
+liar-word-39 = hate
+liar-word-replacement-39 = love
+
+liar-word-40 = like
+liar-word-replacement-40 = don't like
+
+liar-word-41 = good
+liar-word-replacement-41 = bad
+
+liar-word-42 = bad
+liar-word-replacement-42 = good
+
+liar-word-42 = want
+liar-word-replacement-42 = "don't want"
