@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: liltenhead
-  changes:
-  - message: Changed emergency welder's fuel count from 25 -> 50
-    type: Tweak
-  id: 6011
-  time: '2024-02-23T06:53:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25483
 - author: Vasilis
   changes:
   - message: Fixed a bug where the centcom official/any job that is not supposed to
@@ -3861,3 +3854,11 @@
   id: 6510
   time: '2024-05-02T06:00:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27610
+- author: Plykiya
+  changes:
+  - message: Disarming a player now causes them to throw the disarmed item away from
+      them.
+    type: Tweak
+  id: 6511
+  time: '2024-05-02T12:32:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27589
