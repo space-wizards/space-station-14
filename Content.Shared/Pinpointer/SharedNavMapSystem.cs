@@ -56,11 +56,11 @@ public abstract class SharedNavMapSystem : EntitySystem
 
     public NavMapChunkType GetEntityType(EntityUid uid)
     {
-        if (_tagSystem.HasAnyTag(uid, _wallTags))
-            return NavMapChunkType.Wall;
-
         if (_doorQuery.HasComp(uid))
             return  NavMapChunkType.Airlock;
+
+        if (_tagSystem.HasAnyTag(uid, _wallTags))
+            return NavMapChunkType.Wall;
 
         return NavMapChunkType.Invalid;
     }
