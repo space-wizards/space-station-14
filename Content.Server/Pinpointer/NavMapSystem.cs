@@ -110,7 +110,6 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
 
         var chunk = EnsureChunk(navMap, chunkOrigin);
-        chunk.EnsureType(NavMapChunkType.Floor);
 
         // This could be easily replaced in the future to accommodate diagonal tiles
         if (ev.NewTile.IsSpace(_tileDefManager))
@@ -119,16 +118,10 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             SetAllEdgesForChunkTile(chunk, tile, NavMapChunkType.Floor);
 
         if (!PruneEmpty((ev.NewTile.GridUid, navMap), chunk))
-            DirtyChunk((ev.NewTile.GridUid, navMap), chunk);
-    }
-
-    private void DirtyChunk(Entity<NavMapComponent> entity, NavMapChunk chunk)
-    {
-        if (chunk.LastUpdate == _gameTiming.CurTick)
-            return;
-
-        chunk.LastUpdate = _gameTiming.CurTick;
-        Dirty(entity);
+        {
+            chunk.LastUpdate = _gameTiming.CurTick;
+            Dirty(ev.NewTile.GridUid, navMap);
+        }
     }
 
     private void OnAirtightChange(ref AirtightChanged args)
@@ -149,7 +142,10 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
         var chunk = RefreshTileEntityContents(gridUid, navMap, mapGrid, chunkOrigin, args.Position.Tile);
         if (!PruneEmpty((gridUid, navMap), chunk))
-            DirtyChunk((gridUid, navMap), chunk);
+        {
+            chunk.LastUpdate = _gameTiming.CurTick;
+            Dirty(gridUid, navMap);
+        }
     }
 
     #endregion
@@ -244,7 +240,6 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             chunk.LastUpdate = _gameTiming.CurTick;
 
             // Refresh the floor tile
-            chunk.EnsureType(NavMapChunkType.Floor);
             SetAllEdgesForChunkTile(chunk, tile, NavMapChunkType.Floor);
 
             // Refresh the contents of the tile
@@ -283,11 +278,9 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             var category = GetAssociatedEntityChunkType(ent.Value);
             var data = chunk.EnsureType(category);
 
-            var directions = airtight.AirBlockedDirection;
-
             foreach (var direction in data.Keys)
             {
-                if ((direction & directions) > 0)
+                if ((direction & airtight.AirBlockedDirection) > 0)
                 {
                     data[direction] |= flag;
                 }

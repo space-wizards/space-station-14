@@ -149,6 +149,13 @@ namespace Content.Server.Atmos.EntitySystems
         }
     }
 
+    /// <summary>
+    /// Raised upon the airtight status being changed via anchoring, movement, etc.
+    /// </summary>
+    /// <param name="Entity"></param>
+    /// <param name="Airtight"></param>
+    /// <param name="AirBlockedChanged">Whether the <see cref="AirtightComponent.AirBlocked"/> changed</param>
+    /// <param name="Position"></param>
     [ByRefEvent]
     public readonly record struct AirtightChanged(EntityUid Entity, AirtightComponent Airtight, bool AirBlockedChanged, (EntityUid Grid, Vector2i Tile) Position);
 }
