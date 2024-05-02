@@ -391,15 +391,6 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackCargo
-  id: ClothingBackpackCargoFilled
-  components:
-    - type: StorageFill
-      contents:
-        - id: BoxSurvival
-
-- type: entity
-  noSpawn: true
   parent: ClothingBackpackSalvage
   id: ClothingBackpackSalvageFilled
   components:

@@ -139,17 +139,6 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackSatchelCargo
-  id: ClothingBackpackSatchelQuartermasterFilled
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvival
-      - id: Flash
-      #- id: TelescopicBaton
-
-- type: entity
-  noSpawn: true
   parent: ClothingBackpackSatchelSecurity
   id: ClothingBackpackSatchelHOSFilled
   components:
@@ -258,24 +247,6 @@
       - id: Lighter
       - id: CigPackBlack
       - id: HandLabeler
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackSatchelCargo
-  id: ClothingBackpackSatchelCargoFilled
-  components:
-    - type: StorageFill
-      contents:
-        - id: BoxSurvival
-
-- type: entity
-  noSpawn: true
-  parent: ClothingBackpackSatchelSalvage
-  id: ClothingBackpackSatchelSalvageFilled
-  components:
-    - type: StorageFill
-      contents:
-        - id: BoxSurvival
 
 - type: entity
   noSpawn: true
