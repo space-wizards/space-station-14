@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client.Animations;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee;
 using Robust.Client.Animations;
@@ -59,17 +60,20 @@ public sealed partial class MeleeWeaponSystem
         var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);
 
         var xform = _xformQuery.GetComponent(animationUid);
+        TrackUserComponent track;
 
         switch (arcComponent.Animation)
         {
             case WeaponArcAnimation.Slash:
-                arcComponent.User = user;
+                track = EnsureComp<TrackUserComponent>(animationUid);
+                track.User = user;
                 _animation.Play(animationUid, GetSlashAnimation(sprite, angle, spriteRotation), SlashAnimationKey);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.065f, 0.065f + 0.05f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.Thrust:
-                arcComponent.User = user;
+                track = EnsureComp<TrackUserComponent>(animationUid);
+                track.User = user;
                 _animation.Play(animationUid, GetThrustAnimation(sprite, distance, spriteRotation), ThrustAnimationKey);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
@@ -206,15 +210,23 @@ public sealed partial class MeleeWeaponSystem
     /// <summary>
     /// Updates the effect positions to follow the user
     /// </summary>
-    void UpdateEffects(float frameTime)
+    private void UpdateEffects()
     {
-        var arcQuery = EntityQueryEnumerator<TransformComponent, WeaponArcVisualsComponent>();
-        while(arcQuery.MoveNext(out var uid, out var xform, out var arcComponent))
+        var query = EntityQueryEnumerator<TrackUserComponent, TransformComponent>();
+        while (query.MoveNext(out var arcComponent, out var xform))
         {
             if (arcComponent.User == null)
                 continue;
-            var userPos = TransformSystem.GetWorldPosition(arcComponent.User.Value);
-            TransformSystem.SetWorldPosition(xform, userPos);
+
+            Vector2 targetPos = TransformSystem.GetWorldPosition(arcComponent.User.Value);
+
+            if (arcComponent.Offset != Vector2.Zero)
+            {
+                var entRotation = TransformSystem.GetWorldRotation(xform);
+                targetPos += entRotation.RotateVec(arcComponent.Offset);
+            }
+
+            TransformSystem.SetWorldPosition(xform, targetPos);
         }
     }
 }
