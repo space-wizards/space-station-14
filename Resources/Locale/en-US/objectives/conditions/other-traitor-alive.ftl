@@ -1,1 +1,2 @@
 objective-condition-other-traitor-alive-title = Ensure fellow traitor {$targetName}, {CAPITALIZE($job)} stays alive.
+objective-condition-other-bloodbrother-alive-title = Ensure your blood brothers are alive and doing well.

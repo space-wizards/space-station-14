@@ -18,6 +18,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly ThiefRuleSystem _thief = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
+    [Dependency] private readonly BloodBrotherRuleSystem _bloodbroRule = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
@@ -55,6 +56,23 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-traitor"),
         };
         args.Verbs.Add(traitor);
+
+        Verb bloodBrother = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-bloodbrother"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "BloodBrother"),
+            Act = () =>
+            {
+                if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
+                    return;
+
+                _bloodbroRule.MakeBloodBrother(session);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-bloodbrother"),
+        };
+        args.Verbs.Add(bloodBrother);
 
         Verb zombie = new()
         {

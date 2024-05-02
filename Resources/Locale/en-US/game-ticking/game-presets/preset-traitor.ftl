@@ -41,3 +41,13 @@ traitor-role-codewords-short =
     The codewords are:
     {$codewords}.
 traitor-role-uplink-code-short = Your uplink code is {$code}. Set it as your PDA ringtone to access uplink.
+
+# BloodBrotherRole
+bloodbrother-role-greeting =
+    You are a syndicate agent.
+    Your objectives and codewords are listed in the character menu.
+    You have no uplink, but a partner in crime to help you do your objectives.
+    You will be able to recognise him out of the crowd very easily.
+    Your objectives are shared.
+    Help each other complete this mission.
+    Death to Nanotrasen!

@@ -41,6 +41,15 @@
     RandomTraitorAliveObjective: 1
     RandomTraitorProgressObjective: 1
 
+# Blood brother groups
+- type: weightedRandom
+  id: BloodBrotherEscapeObjectiveGroups
+  weights:
+    EscapeShuttleObjective: 1
+- type: weightedRandom
+  id: BloodBrotherKeepAliveObjectiveGroups
+  weights: 
+
 #Thief groups
 - type: weightedRandom
   id: ThiefObjectiveGroups
