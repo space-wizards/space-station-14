@@ -55,8 +55,8 @@ public enum NavMapChunkType : byte
 {
     // Values represent bit shift offsets when retrieving data in the tile array.
     Invalid  = byte.MaxValue,
-    Floor = SharedNavMapSystem.Directions, // I believe floors have directional information for diagonal tiles?
-    Wall = 2 * SharedNavMapSystem.Directions,
-    Airlock = 3 * SharedNavMapSystem.Directions,
+    Floor = 0, // I believe floors have directional information for diagonal tiles?
+    Wall = SharedNavMapSystem.Directions,
+    Airlock = 2 * SharedNavMapSystem.Directions,
 }
 

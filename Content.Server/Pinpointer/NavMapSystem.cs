@@ -40,7 +40,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
     {
         base.Initialize();
 
-        var categories = Enum.GetNames(typeof(NavMapChunkType)).Length - 1; // -1 due to length.
+        var categories = Enum.GetNames(typeof(NavMapChunkType)).Length - 1; // -1 due to "Invalid" entry.
         if (Categories != categories)
             throw new Exception($"{nameof(Categories)} must be equal to the number of chunk types");
 
