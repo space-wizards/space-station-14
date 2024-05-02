@@ -1,3 +1,4 @@
+#nullable enable
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Shared.Ghost;
@@ -77,7 +78,7 @@ public sealed partial class MindTests
         await using var pair = await SetupPair(dirty: true);
         var server = pair.Server;
         var testMap = await pair.CreateTestMap();
-        var coordinates = testMap.GridCoords;
+        var testMap2 = await pair.CreateTestMap();
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
@@ -91,7 +92,7 @@ public sealed partial class MindTests
         MindComponent mind = default!;
         await server.WaitAssertion(() =>
         {
-            playerEnt = entMan.SpawnEntity(null, coordinates);
+            playerEnt = entMan.SpawnEntity(null, testMap.GridCoords);
             mindId = player.ContentData()!.Mind!.Value;
             mind = entMan.GetComponent<MindComponent>(mindId);
             mindSystem.TransferTo(mindId, playerEnt);
@@ -106,9 +107,13 @@ public sealed partial class MindTests
         await server.WaitAssertion(() =>
         {
 #pragma warning disable NUnit2045 // Interdependent assertions.
-            // TODO What should be done with players on a map that gets deleted?
-            Assert.That(entMan.EntityExists(mind.CurrentEntity), Is.False);
-            Assert.That(player.AttachedEntity, Is.EqualTo(null));
+            // Spawn ghost on the second map
+            Assert.That(entMan.EntityExists(mind.CurrentEntity), Is.True);
+            Assert.That(mind.CurrentEntity, Is.Not.EqualTo(playerEnt));
+            Assert.That(entMan.HasComponent<GhostComponent>(mind.CurrentEntity));
+            var transform = entMan.GetComponent<TransformComponent>(mind.CurrentEntity.Value);
+            Assert.That(transform.MapID, Is.Not.EqualTo(MapId.Nullspace));
+            Assert.That(transform.MapID, Is.Not.EqualTo(testMap.MapId));
 #pragma warning restore NUnit2045
         });
 

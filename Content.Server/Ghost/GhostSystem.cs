@@ -379,16 +379,17 @@ namespace Content.Server.Ghost
             if (!Resolve(mind, ref mind.Comp))
                 return null;
 
-            spawnPosition ??= _ticker.GetObserverSpawnPoint();
-
-            // Don't spawn ghost if the map is being deleted
-            var mapUid = spawnPosition.Value.GetMapUid(EntityManager);
+            // Test if the map is being deleted
+            var mapUid = spawnPosition?.GetMapUid(EntityManager);
             if (mapUid == null || TerminatingOrDeleted(mapUid.Value))
-                return null;
+                spawnPosition = null;
+
+            spawnPosition ??= _ticker.GetObserverSpawnPoint();
 
             if (!spawnPosition.Value.IsValid(EntityManager))
             {
-                Log.Warning($"No spawn valid ghost spawn position found for {mind.Comp.CharacterName} \"{ToPrettyString(mind)}\"");
+                Log.Warning($"No spawn valid ghost spawn position found for {mind.Comp.CharacterName}"
+                    + " \"{ToPrettyString(mind)}\"");
                 _minds.TransferTo(mind.Owner, null, createGhost: false, mind: mind.Comp);
                 return null;
             }
