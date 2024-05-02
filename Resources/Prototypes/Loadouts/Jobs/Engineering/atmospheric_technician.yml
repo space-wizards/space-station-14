@@ -18,15 +18,7 @@
       department: Engineering
       time: 216000 # 60 hrs
 
-# Head
-- type: loadout
-  id: SeniorEngineerBeret
-  equipment: EngineeringBeret
 
-- type: startingGear
-  id: EngineeringBeret
-  equipment:
-    head: ClothingHeadHatBeretEngineering
 
 # Jumpsuit
 - type: loadout
@@ -56,30 +48,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitAtmosCasual
     
-- type: loadout
-  id: SeniorEngineerJumpsuit
-  equipment: SeniorEngineerJumpsuit
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorAtmos
-
-- type: startingGear
-  id: SeniorEngineerJumpsuit
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitSeniorEngineer
-
-- type: loadout
-  id: SeniorEngineerJumpskirt
-  equipment: SeniorEngineerJumpskirt
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorAtmos
-
-- type: startingGear
-  id: SeniorEngineerJumpskirt
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtSeniorEngineer
-
 # Back
 - type: loadout
   id: AtmosphericTechnicianBackpack
