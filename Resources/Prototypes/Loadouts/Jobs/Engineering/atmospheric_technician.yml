@@ -1,6 +1,6 @@
 # Senior times
 - type: loadoutEffectGroup
-  id: SeniorEngineering
+  id: SeniorAtmos
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
@@ -61,7 +61,7 @@
   equipment: SeniorEngineerJumpsuit
   effects:
   - !type:GroupLoadoutEffect
-    proto: SeniorEngineering
+    proto: SeniorAtmos
 
 - type: startingGear
   id: SeniorEngineerJumpsuit
@@ -73,7 +73,7 @@
   equipment: SeniorEngineerJumpskirt
   effects:
   - !type:GroupLoadoutEffect
-    proto: SeniorEngineering
+    proto: SeniorAtmos
 
 - type: startingGear
   id: SeniorEngineerJumpskirt
