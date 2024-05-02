@@ -5,11 +5,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Traitor.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(BloodBrotherSystem))]
 public sealed partial class BloodBrotherComponent : Component, IAntagStatusIconComponent
 {
     /// <summary>
-    /// The status icon prototype displayed for revolutionaries
+    /// The status icon prototype displayed for blood brothers
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "BloodBrotherFaction";

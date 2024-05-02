@@ -153,6 +153,17 @@
       mindComponents:
       - type: TraitorRole
         prototype: Traitor
+  - type: AntagSelection
+    selectionTime: PrePlayerSpawn
+    definitions:
+    - prefRoles: [ BloodBrother ]
+      min: 2
+      max: 3
+      playerRatio: 10
+      lateJoinAdditional: true
+      mindComponents:
+      - type: BloodBrotherRole
+        prototype: BloodBrother
 
 - type: entity
   id: Revolutionary

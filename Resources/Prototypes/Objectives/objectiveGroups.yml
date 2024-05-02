@@ -44,12 +44,21 @@
 
 # Blood brother groups
 - type: weightedRandom
-  id: BloodBrotherEscapeObjectiveGroups
+  id: BloodBrotherObjectiveGroups
+  weights:
+    TraitorObjectiveGroupSteal: 1
+    TraitorObjectiveGroupKill: 1
+    #HijackShuttleObjective: 0.02 # for the sake of it
+
+- type: weightedRandom
+  id: BloodBrotherEscapeObjectiveGroup
   weights:
     EscapeShuttleObjective: 1
 - type: weightedRandom
-  id: BloodBrotherKeepAliveObjectiveGroups
-  weights: 
+  id: BloodBrotherAliveObjectiveGroup
+  weights:
+    BloodbrotherAliveObjective: 1
+    
 
 #Thief groups
 - type: weightedRandom

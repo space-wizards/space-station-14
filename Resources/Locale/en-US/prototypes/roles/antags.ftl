@@ -1,8 +1,8 @@
 roles-antag-syndicate-agent-name = Syndicate agent
 roles-antag-syndicate-agent-objective = Complete your objectives without being caught.
 
-roles-antag-syndicate-bloodbro-name = Blood brother
-roles-antag-syndicate-bloodbro-objective = Help each other complete common objectives.
+roles-antag-syndicate-bloodbrother-name = Blood brother
+roles-antag-syndicate-bloodbrother-objective = Work with a random person to complete your objectives.
 
 roles-antag-initial-infected-name = Initial Infected
 roles-antag-initial-infected-objective = Once you turn, infect as many other crew members as possible.

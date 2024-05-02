@@ -12,6 +12,8 @@ using Content.Shared.Traitor.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Server.Objectives.Components;
 using Content.Server.NPC.Systems;
+using Content.Shared.GameTicking;
+using Content.Shared.NPC.Systems;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -25,11 +27,25 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly ChatManager _chatManager = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFactionSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<BloodBrotherRuleComponent, AfterAntagEntitySelectedEvent>(AfterAntagSelected);
+        SubscribeLocalEvent<BloodBrotherRuleComponent, RoundEndMessageEvent>(OnRoundEnd);
+    }
+
+    private void AfterAntagSelected(Entity<BloodBrotherRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
+    {
+        if (args.Session == null) return;
+
+        MakeBloodBrother(args.Session);
+    }
+    private void OnRoundEnd(Entity<BloodBrotherRuleComponent> ent, ref RoundEndMessageEvent args)
+    {
+        BloodBrotherRuleComponent.CommonObjectives.Clear();
     }
 
     public bool MakeBloodBrother(ICommonSession sesh)
@@ -42,16 +58,11 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
             return false;
 
         var traitorRule = EntityQuery<TraitorRuleComponent>().FirstOrDefault();
+
         if (traitorRule == null)
-        {
-            GameTicker.StartGameRule("Traitor", out var ruleEntity);
-            traitorRule = Comp<TraitorRuleComponent>(ruleEntity);
-        }
+            traitorRule = Comp<TraitorRuleComponent>(GameTicker.AddGameRule("Traitor"));
 
         _roleSystem.MindAddRole(mindId, new BloodBrotherComponent());
-        _npcFaction.RemoveFaction(mindId, "NanoTrasen", false);
-        _npcFaction.AddFaction(mindId, "Syndicate");
-        _npcFaction.AddFaction(mindId, "BloodBrother");
 
         if (_mindSystem.TryGetSession(mindId, out var session))
         {
@@ -60,29 +71,45 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
             _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", traitorRule.Codewords))));
         }
 
+        _npcFactionSystem.RemoveFaction(mindId, "Nanotrasen", false);
+        _npcFactionSystem.AddFaction(mindId, "Syndicate");
+        _npcFactionSystem.AddFaction(mindId, "BloodBrother");
+
         // roll absolutely random objectives with no difficulty tweaks
-        // because nothing can stop real brotherhood
-        for (int i = 0; i < _bloodBroRule.MaxObjectives; i++)
-            RollObjective(mindId, mind);
+        // because no hijacks can stop real brotherhood
+        if (BloodBrotherRuleComponent.CommonObjectives.Count > 0)
+            foreach (var objective in BloodBrotherRuleComponent.CommonObjectives)
+                _mindSystem.AddObjective(mindId, mind, objective);
 
+        for (int i = 0; i < _bloodBroRule.MaxObjectives / _bloodBroRule.NumberOfAntags; i++)
+            BloodBrotherRuleComponent.CommonObjectives.Add(RollObjective(mindId, mind));
 
+        var aliveObj = _objectives.GetRandomObjective(mindId, mind, "BloodbrotherAliveObjective");
+        if (aliveObj != null)
+            _mindSystem.AddObjective(mindId, mind, (EntityUid) aliveObj);
 
         return true;
     }
-    private void RollObjective(EntityUid id, MindComponent mind)
+    private EntityUid RollObjective(EntityUid id, MindComponent mind)
     {
         var objective = _objectives.GetRandomObjective(id, mind, "TraitorObjectiveGroups");
 
         if (objective == null)
-            return;
+        {
+            // NEVER STOP ON ROLLING
+            return RollObjective(id, mind);
+        }
 
         var target = Comp<TargetObjectiveComponent>(objective.Value).Target;
 
         // if objective targeted towards another bloodbro we roll another
         if (target != null && Comp<BloodBrotherComponent>((EntityUid) target) != null)
-            RollObjective(id, mind);
+        {
+            return RollObjective(id, mind);
+        }
 
         _mindSystem.AddObjective(id, mind, (EntityUid) objective);
+        return (EntityUid)objective;
     }
     public List<(EntityUid Id, MindComponent Mind)> GetOtherBroMindsAliveAndConnected(MindComponent ourMind)
     {
