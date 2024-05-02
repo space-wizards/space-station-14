@@ -133,3 +133,5 @@
       - id: ToyFigurineHamlet
         prob: 0.20
         orGroup: SpacemenFig
+    sound:
+      path: /Audio/Effects/unwrap.ogg
