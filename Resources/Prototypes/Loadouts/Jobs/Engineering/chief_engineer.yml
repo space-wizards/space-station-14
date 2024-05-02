@@ -68,34 +68,6 @@
   equipment:
     neck: ClothingNeckMantleCE
 
-# Back
-- type: loadout
-  id: ChiefEngineerBackpack
-  equipment: ChiefEngineerBackpack
-
-- type: startingGear
-  id: ChiefEngineerBackpack
-  equipment:
-    back: ClothingBackpackChiefEngineerFilled
-
-- type: loadout
-  id: ChiefEngineerSatchel
-  equipment: ChiefEngineerSatchel
-
-- type: startingGear
-  id: ChiefEngineerSatchel
-  equipment:
-    back: ClothingBackpackSatchelChiefEngineerFilled
-
-- type: loadout
-  id: ChiefEngineerDuffel
-  equipment: ChiefEngineerDuffel
-
-- type: startingGear
-  id: ChiefEngineerDuffel
-  equipment:
-    back: ClothingBackpackDuffelChiefEngineerFilled
-
 # OuterClothing
 - type: loadout
   id: ChiefEngineerWintercoat

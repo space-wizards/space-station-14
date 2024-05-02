@@ -21,3 +21,4 @@
   storage:
     back:
     - BoxSurvival
+    - BookRandom
