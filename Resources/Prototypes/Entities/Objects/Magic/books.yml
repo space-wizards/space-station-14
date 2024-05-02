@@ -440,7 +440,7 @@
 - type: entity
   id: MimerySpellbook
   name: Guide to Advanced Mimery Volume 1
-  description: A guide on how to hone your mime skills. Focuses on invisible walls.
+  description: A guide on how to improve your mimery. Focuses on invisible walls.
   parent: BaseSpellbook
   components:
    - type: Sprite
@@ -456,7 +456,7 @@
 - type: entity
   id: Mimery2Spellbook
   name: Guide to Advanced Mimery Volume 2
-  description: A guide on how to hone your mime skills. Focuses on finger guns.
+  description: A guide on how to improve your mimery. Focuses on finger guns.
   parent: BaseSpellbook
   components:
    - type: Sprite

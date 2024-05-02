@@ -71,10 +71,7 @@
     priority: -1
     targetingIndicator: false
     repeat: true
-    useDelay: 2.5
-    charges: 2
-    maxCharges: 2
-    renewCharges: true
+    useDelay: 1.5
     itemIconStyle: BigAction
     checkCanAccess: false
     range: 60
