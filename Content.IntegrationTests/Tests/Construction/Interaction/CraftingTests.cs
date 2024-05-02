@@ -56,7 +56,7 @@ public sealed class CraftingTests : InteractionTest
 
         // Player's hands should be full of the remaining rods, except those dropped during the failed crafting attempt.
         // Spear and left over stacks should be on the floor.
-        await AssertEntityLookup((Rod, 2), (Cable, 8), (ShardGlass, 2), (Spear, 1));
+        await AssertEntityLookup((Rod, 2), (Cable, 7), (ShardGlass, 2), (Spear, 1));
     }
 
     // The following is wrapped in an if DEBUG. This is because of cursed state handling bugs. Tests don't (de)serialize
@@ -100,7 +100,7 @@ public sealed class CraftingTests : InteractionTest
             Assert.That(sys.IsEntityInContainer(rods), Is.False);
             Assert.That(sys.IsEntityInContainer(wires), Is.False);
             Assert.That(rodStack, Has.Count.EqualTo(8));
-            Assert.That(wireStack, Has.Count.EqualTo(8));
+            Assert.That(wireStack, Has.Count.EqualTo(7));
 
             await FindEntity(Spear, shouldSucceed: false);
         });

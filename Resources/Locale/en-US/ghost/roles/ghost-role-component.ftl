@@ -68,7 +68,7 @@ ghost-role-information-salvage-shark-name = Space sharkminnow on salvage wreck
 ghost-role-information-salvage-shark-description = Help the younger fellow carp protect their prey. Smell the blood!
 
 ghost-role-information-willow-name = Willow the kangaroo
-ghost-role-information-willow-description = You're a kangaroo named willow! willow likes to box.
+ghost-role-information-willow-description = You're a kangaroo named willow! Willow likes to box.
 
 ghost-role-information-space-tick-name = Space tick
 ghost-role-information-space-tick-description = Wreak havoc on the station!
@@ -83,7 +83,7 @@ ghost-role-information-jonkbot-name = Jonkbot
 ghost-role-information-jonkbot-description = An artificial being of pure evil.
 
 ghost-role-information-mimebot-name = Mimebot
-ghost-role-information-mimebot-description = A Mimebot, act like a mime but dont act like a greytider.
+ghost-role-information-mimebot-description = A Mimebot, act like a mime but don't act like a greytider.
 
 ghost-role-information-taxibot-name = TaxiBot
 ghost-role-information-taxibot-description = Drive the station crew to their destination.
@@ -162,19 +162,22 @@ ghost-role-information-cerberus-description = Obey your master. Spread chaos.
 ghost-role-information-cerberus-rules = You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
 
 ghost-role-information-ert-leader-name = ERT Leader
-ghost-role-information-ert-leader-description = Lead a team of specialists to resolve the stations issues.
+ghost-role-information-ert-leader-description = Lead a team of specialists to resolve the station's issues.
+
+ghost-role-information-ert-chaplain-name = ERT Chaplain
+ghost-role-information-ert-chaplain-description = Assist with mourning to resolve the station's crew moral issues.
 
 ghost-role-information-ert-janitor-name = ERT Janitor
-ghost-role-information-ert-janitor-description = Assist with custodial efforts to resolve the stations issues.
+ghost-role-information-ert-janitor-description = Assist with custodial efforts to resolve the station's issues.
 
 ghost-role-information-ert-engineer-name = ERT Engineer
-ghost-role-information-ert-engineer-description = Assist with engineering efforts to resolve the stations issues.
+ghost-role-information-ert-engineer-description = Assist with engineering efforts to resolve the station's issues.
 
 ghost-role-information-ert-security-name = ERT Security
-ghost-role-information-ert-security-description = Assist with security efforts to resolve the stations issues.
+ghost-role-information-ert-security-description = Assist with security efforts to resolve the station's issues.
 
 ghost-role-information-ert-medical-name = ERT Medical
-ghost-role-information-ert-medical-description = Assist with medical efforts to resolve the stations issues.
+ghost-role-information-ert-medical-description = Assist with medical efforts to resolve the station's issues.
 
 ghost-role-information-cburn-agent-name = CBURN Agent
 ghost-role-information-cburn-agent-description = A highly trained CentCom agent, capable of dealing with various threats.
@@ -209,10 +212,6 @@ ghost-role-information-BreadDog-name = BreadDog
 ghost-role-information-BreadDog-description = You are the chef's favorite child. You're a living bread dog.
 ghost-role-information-BreadDog-rules = You're an edible dog made of bread. Your task is to find your place in this world where everything wants to eat you.
 
-ghost-role-information-exterminator-name = Exterminator
-ghost-role-information-exterminator-description = You been been sent back in time to terminate a target with high importance to the future.
-ghost-role-information-exterminator-rules = You are an antagonist and may kill anyone that tries to stop you, but killing the target is always your top priority.
-
 ghost-role-information-space-ninja-name = Space Ninja
 ghost-role-information-space-ninja-description = Use stealth and deception to sabotage the station.
 ghost-role-information-space-ninja-rules = You are an elite mercenary of the Spider Clan. You aren't required to follow your objectives, yet your NINJA HONOR demands you try.
@@ -224,3 +223,12 @@ ghost-role-information-syndicate-reinforcement-rules = Normal syndicate antagoni
 ghost-role-information-syndicate-monkey-reinforcement-name = Syndicate Monkey Agent
 ghost-role-information-syndicate-monkey-reinforcement-description = Someone needs reinforcements. You, a trained monkey, will help them.
 ghost-role-information-syndicate-monkey-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+
+ghost-role-information-syndicate-kobold-reinforcement-name = Syndicate Kobold Agent
+ghost-role-information-syndicate-kobold-reinforcement-description = Someone needs reinforcements. You, a trained kobold, will help them.
+ghost-role-information-syndicate-kobold-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+
+ghost-role-information-artifact-name = Sentient Artifact
+ghost-role-information-artifact-description =
+      Enact your eldritch whims.
+      Forcibly activate your nodes for good or for evil.

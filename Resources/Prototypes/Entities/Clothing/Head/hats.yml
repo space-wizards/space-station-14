@@ -27,6 +27,23 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretFrench
+  name: French beret
+  description: A French beret, "vive la France".
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_french.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_french.rsi
+  - type: AddAccentClothing
+    accent: FrenchAccent
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBeretSecurity
   name: security beret
   description: A stylish clothing option for security officers.
@@ -141,7 +158,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretBrigmedic
-  name: medical beret
+  name: brigmedical beret
   description: White beret, looks like a cream pie on the head.
   components:
   - type: Sprite
@@ -228,7 +245,7 @@
     - 0,0,0,0
   - type: UserInterface
     interfaces:
-      - key: enum.StorageUiKey.Key
+      enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
   - type: ContainerContainer
     containers:
@@ -363,6 +380,14 @@
     sprite: Clothing/Head/Hats/plaguedoctor.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/plaguedoctor.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - ClothMade
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   parent: ClothingHeadBase
@@ -454,17 +479,30 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseFoldable]
   id: ClothingHeadHatUshanka
   name: ushanka
   description: "Perfect for winter in Siberia, da?"
   components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/ushanka.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/ushanka.rsi
+  - type: Appearance
   - type: AddAccentClothing
     accent: RussianAccent
+  - type: Foldable
+    canFoldInsideContainer: true
+  - type: FoldableClothing
+    foldedEquippedPrefix: up
+    foldedHeldPrefix: up
+  - type: Sprite
+    sprite: Clothing/Head/Hats/ushanka.rsi
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+    - state: icon-up
+      map: ["foldedLayer"]
+      visible: false
+
 
 - type: entity
   parent: ClothingHeadBase
@@ -500,6 +538,13 @@
     sprite: Clothing/Head/Hats/witch.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/witch.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - ClothMade
+  - type: HideLayerClothing
+    slots:
+    - Hair
 
 - type: entity
   parent: ClothingHeadBase
@@ -765,8 +810,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatMagician
-  name: magician's top hat.
-  description: "A magician's top hat."
+  name: magician's tophat
+  description: "A magician's tophat."
   components:
   - type: Icon
     sprite: Clothing/Head/Hats/magician.rsi
@@ -783,13 +828,14 @@
   - type: Item
     size: Small
     sprite: Clothing/Head/Hats/magician.rsi
+    storedRotation: 0
   - type: Storage
     grid:
     - 0,0,0,0
   - type: UserInterface
     interfaces:
-      - key: enum.StorageUiKey.Key
-        type: StorageBoundUserInterface
+        enum.StorageUiKey.Key:
+          type: StorageBoundUserInterface
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -850,7 +896,6 @@
     sprite: Clothing/Head/Hats/party_red.rsi
   - type: Tag
     tags:
-      - DroneUsable
       - WhitelistChameleon
       - HamsterWearable
 
@@ -901,6 +946,9 @@
   name: grey flatcap
   description: Fashionable for both the working class and old man Jenkins.
   components:
+  - type: Tag
+    tags:
+    - BrimFlatcapGrey
   - type: Sprite
     sprite: Clothing/Head/Hats/greyflatcap.rsi
   - type: Clothing
@@ -912,6 +960,9 @@
   name: brown flatcap
   description: Stupid clown! You made me look bad!
   components:
+  - type: Tag
+    tags:
+    - BrimFlatcapBrown
   - type: Sprite
     sprite: Clothing/Head/Hats/brownflatcap.rsi
   - type: Clothing
@@ -930,7 +981,7 @@
     - type: AddAccentClothing
       accent: ReplacementAccent
       replacement: cowboy
-      
+
 - type: entity
   parent: ClothingHeadHatCowboyBrown
   id: ClothingHeadHatCowboyBlack
@@ -940,7 +991,7 @@
       sprite: Clothing/Head/Hats/cowboyhatblack.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/cowboyhatblack.rsi
-      
+
 - type: entity
   parent: ClothingHeadHatCowboyBrown
   id: ClothingHeadHatCowboyGrey
@@ -950,7 +1001,7 @@
       sprite: Clothing/Head/Hats/cowboyhatgrey.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/cowboyhatgrey.rsi
-      
+
 - type: entity
   parent: ClothingHeadHatCowboyBrown
   id: ClothingHeadHatCowboyRed
@@ -960,7 +1011,7 @@
       sprite: Clothing/Head/Hats/cowboyhatred.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/cowboyhatred.rsi
-      
+
 - type: entity
   parent: ClothingHeadHatCowboyBrown
   id: ClothingHeadHatCowboyWhite
@@ -970,7 +1021,7 @@
       sprite: Clothing/Head/Hats/cowboyhatwhite.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/cowboyhatwhite.rsi
-      
+
 - type: entity
   parent: ClothingHeadHatCowboyBrown
   id: ClothingHeadHatCowboyBountyHunter
@@ -1025,3 +1076,13 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretMedic
+  name: medical beret
+  description: White beret that encourages you to be clean.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_medic.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_medic.rsi

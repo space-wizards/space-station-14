@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
@@ -57,8 +58,7 @@ namespace Content.Server.StationEvents
         /// </summary>
         private void ResetTimer(BasicStationEventSchedulerComponent component)
         {
-            // 5 - 25 minutes. TG does 3-10 but that's pretty frequent
-            component.TimeUntilNextEvent = _random.Next(300, 1500);
+            component.TimeUntilNextEvent = _random.Next(3 * 60, 10 * 60);
         }
     }
 

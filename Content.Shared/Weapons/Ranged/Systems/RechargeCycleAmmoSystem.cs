@@ -25,7 +25,7 @@ public sealed class RechargeCycleAmmoSystem : EntitySystem
             return;
 
         _gun.UpdateBasicEntityAmmoCount(uid, basic.Count.Value + 1, basic);
-        Dirty(basic);
+        Dirty(uid, basic);
         args.Handled = true;
     }
 }

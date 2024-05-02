@@ -12,8 +12,6 @@
     damage:
       types:
         Blunt: 4
-  - type: CanPenetrate
-    penetrationLayer: MobLayer
   - type: StaminaDamageOnCollide
     damage: 55
   - type: TimedDespawn
@@ -33,8 +31,6 @@
     damage:
       types:
         Piercing: 45
-  - type: CanPenetrate
-    penetrationLayer: MobLayer
   - type: TimedDespawn
     lifetime: 0.25
 
@@ -53,10 +49,8 @@
       types:
         Blunt: 1
         Heat: 2
-  - type: CanPenetrate
-    penetrationLayer: MobLayer
   - type: IgniteOnCollide
-    fireStacks: 3
+    fireStacks: 1
     count: 10
   - type: TimedDespawn
     lifetime: 0.25

@@ -95,12 +95,12 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (component.StripDelay == null)
             return;
 
-        var (time, stealth) = _strippable.GetStripTimeModifiers(user, wearer, (float) component.StripDelay.Value.TotalSeconds);
+        var (time, stealth) = _strippable.GetStripTimeModifiers(user, wearer, component.StripDelay.Value);
 
         var args = new DoAfterArgs(EntityManager, user, time, new ToggleClothingDoAfterEvent(), item, wearer, item)
         {
             BreakOnDamage = true,
-            BreakOnTargetMove = true,
+            BreakOnMove = true,
             // This should just re-use the BUI range checks & cancel the do after if the BUI closes. But that is all
             // server-side at the moment.
             // TODO BUI REFACTOR.
@@ -170,12 +170,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         // "outside" of the container or not. This means that if a hardsuit takes too much damage, the helmet will also
         // automatically be deleted.
 
-        // remove action.
-        if (_actionsSystem.TryGetActionData(component.ActionEntity, out var action) &&
-            action.AttachedEntity != null)
-        {
-            _actionsSystem.RemoveAction(action.AttachedEntity.Value, component.ActionEntity);
-        }
+        _actionsSystem.RemoveAction(component.ActionEntity);
 
         if (component.ClothingUid != null && !_netMan.IsClient)
             QueueDel(component.ClothingUid.Value);
@@ -199,13 +194,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (toggleComp.LifeStage > ComponentLifeStage.Running)
             return;
 
-        // remove action.
-        if (_actionsSystem.TryGetActionData(toggleComp.ActionEntity, out var action) &&
-            action.AttachedEntity != null)
-        {
-            _actionsSystem.RemoveAction(action.AttachedEntity.Value, toggleComp.ActionEntity);
-        }
-
+        _actionsSystem.RemoveAction(toggleComp.ActionEntity);
         RemComp(component.AttachedUid, toggleComp);
     }
 

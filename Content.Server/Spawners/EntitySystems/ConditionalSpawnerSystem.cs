@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Spawners.Components;
 using JetBrains.Annotations;
@@ -73,7 +74,7 @@ namespace Content.Server.Spawners.EntitySystems
 
             if (component.Prototypes.Count == 0)
             {
-                Logger.Warning($"Prototype list in ConditionalSpawnComponent is empty! Entity: {ToPrettyString(uid)}");
+                Log.Warning($"Prototype list in ConditionalSpawnComponent is empty! Entity: {ToPrettyString(uid)}");
                 return;
             }
 
@@ -94,7 +95,7 @@ namespace Content.Server.Spawners.EntitySystems
 
             if (component.Prototypes.Count == 0)
             {
-                Logger.Warning($"Prototype list in RandomSpawnerComponent is empty! Entity: {ToPrettyString(uid)}");
+                Log.Warning($"Prototype list in RandomSpawnerComponent is empty! Entity: {ToPrettyString(uid)}");
                 return;
             }
 

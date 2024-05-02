@@ -42,7 +42,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             var entManager = IoCManager.Resolve<IEntityManager>();
             var xformSystem = entManager.System<SharedTransformSystem>();
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-            var player = playerManager.LocalPlayer?.ControlledEntity;
+            var player = playerManager.LocalEntity;
 
             var currentMap = MapId.Nullspace;
             var position = Vector2.Zero;
