@@ -14,11 +14,11 @@
     - type: ActivatableUI
       inHandsOnly: true
       singleUser: true
-      closeOnHandDeselect: false
+      requireActiveHand: false
       key: enum.WarDeclaratorUiKey.Key
     - type: UserInterface
       interfaces:
-        - key: enum.WarDeclaratorUiKey.Key
+        enum.WarDeclaratorUiKey.Key:
           type: WarDeclaratorBoundUserInterface
     - type: WarDeclarator
       message: war-declarator-default-message

@@ -1,3 +1,4 @@
+/*
 using Content.Server.GameTicking.Rules;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
@@ -41,7 +42,7 @@ public sealed partial class WizardRuleComponent : Component
     /* No wizard outpost prototype ATM, commenting out for now
     [DataField]
     public ProtoId<GameMapPrototype> OutpostMapPrototype = "WizardOutpost";
-    */
+    *//*
 
     [DataField]
     public EntProtoId SpawnPointProto = "SpawnPointWizards";
@@ -54,3 +55,4 @@ public sealed partial class WizardRuleComponent : Component
 
 
 }
+*/

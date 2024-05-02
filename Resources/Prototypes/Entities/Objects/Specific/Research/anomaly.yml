@@ -9,11 +9,11 @@
     state: icon
   - type: ActivatableUI
     key: enum.AnomalyScannerUiKey.Key
-    closeOnHandDeselect: false
+    requireActiveHand: false
     inHandsOnly: true
   - type: UserInterface
     interfaces:
-      - key: enum.AnomalyScannerUiKey.Key
+      enum.AnomalyScannerUiKey.Key:
         type: AnomalyScannerBoundUserInterface
   - type: AnomalyScanner
   - type: GuideHelp

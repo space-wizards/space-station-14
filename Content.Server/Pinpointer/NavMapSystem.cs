@@ -155,9 +155,6 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
     private void OnConfigureMessage(Entity<ConfigurableNavMapBeaconComponent> ent, ref NavMapBeaconConfigureBuiMessage args)
     {
-        if (args.Session.AttachedEntity is not { } user)
-            return;
-
         if (!TryComp<NavMapBeaconComponent>(ent, out var beacon))
             return;
 
@@ -167,7 +164,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             return;
 
         _adminLog.Add(LogType.Action, LogImpact.Medium,
-            $"{ToPrettyString(user):player} configured NavMapBeacon \'{ToPrettyString(ent):entity}\' with text \'{args.Text}\', color {args.Color.ToHexNoAlpha()}, and {(args.Enabled ? "enabled" : "disabled")} it.");
+            $"{ToPrettyString(args.Actor):player} configured NavMapBeacon \'{ToPrettyString(ent):entity}\' with text \'{args.Text}\', color {args.Color.ToHexNoAlpha()}, and {(args.Enabled ? "enabled" : "disabled")} it.");
 
         if (TryComp<WarpPointComponent>(ent, out var warpPoint))
         {

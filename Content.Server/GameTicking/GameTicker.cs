@@ -133,6 +133,7 @@ namespace Content.Server.GameTicking
                 return;
             base.Update(frameTime);
             UpdateRoundFlow(frameTime);
+            UpdateGameRules();
         }
     }
 }
