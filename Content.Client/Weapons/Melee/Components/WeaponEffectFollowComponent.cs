@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Content.Client.Weapons.Melee.Components;
 
 /// <summary>
@@ -11,4 +13,8 @@ public sealed partial class WeaponEffectFollowComponent : Component
     ///  The user to follow; whoever is using the weapon.
     /// </summary>
     public EntityUid User;
+    /// <summary>
+    ///  
+    /// </summary>
+    public Vector2 WorldspaceOffset;
 }

@@ -212,7 +212,7 @@ public sealed partial class MeleeWeaponSystem
         while (arcQuery.MoveNext(out var uid, out var followComponent, out var xform))
         {
             var userPos = TransformSystem.GetWorldPosition(followComponent.User);
-            TransformSystem.SetWorldPosition(xform, userPos);
+            TransformSystem.SetWorldPosition(xform, userPos + followComponent.WorldspaceOffset);
         }
     }
 }

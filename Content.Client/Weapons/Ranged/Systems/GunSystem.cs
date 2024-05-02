@@ -263,14 +263,14 @@ public sealed partial class GunSystem : SharedGunSystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
-        EntityCoordinates coordinates;
+        if (!TryComp<TransformComponent>(uid, out var xform))
+            return;
 
+        EntityCoordinates coordinates;
         if (message.MatchRotation)
             coordinates = new EntityCoordinates(uid, Vector2.Zero);
-        else if (TryComp<TransformComponent>(uid, out var xform))
-            coordinates = xform.Coordinates;
         else
-            return;
+            coordinates = xform.Coordinates;
 
         if (!coordinates.IsValid(EntityManager))
             return;
@@ -281,6 +281,13 @@ public sealed partial class GunSystem : SharedGunSystem
         TransformSystem.SetLocalPositionRotation(effectXform,
             effectXform.LocalPosition + new Vector2(0f, -0.5f),
             effectXform.LocalRotation - MathF.PI / 2);
+
+        // deparent the effect now that we've placed the effect where we want it
+        TransformSystem.AttachToGridOrMap(ent, effectXform);
+        // but still follow the translation of gun (`uid`)
+        EnsureComp<Melee.Components.WeaponEffectFollowComponent>(ent, out var followComponent);
+        followComponent.User = uid;
+        followComponent.WorldspaceOffset = TransformSystem.GetWorldPosition(effectXform) - TransformSystem.GetWorldPosition(xform);
 
         var lifetime = 0.4f;
 
