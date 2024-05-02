@@ -184,7 +184,7 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
             return;
         }
 
-        var dummy = LoadProfileEntity(humanoid, null);
+        var dummy = LoadProfileEntity(humanoid, null, true);
         PreviewPanel.SetSprite(dummy);
         PreviewPanel.SetSummaryText(humanoid.Summary);
     }
@@ -247,8 +247,10 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
 
         _characterSetup.DeleteCharacter += args =>
         {
+            _preferencesManager.DeleteCharacter(args);
+
             // Reload everything
-            if (EditedProfile?.Equals(args) == true)
+            if (EditedSlot == args)
             {
                 ReloadCharacterSetup();
             }
@@ -257,8 +259,6 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
                 // Only need to reload character pickers
                 _characterSetup?.ReloadCharacterPickers();
             }
-
-            _preferencesManager.DeleteCharacter(args);
         };
 
         if (_stateManager.CurrentState is LobbyState lobby)
@@ -378,7 +378,7 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
     /// <summary>
     /// Loads the profile onto a dummy entity.
     /// </summary>
-    public EntityUid LoadProfileEntity(HumanoidCharacterProfile? humanoid, JobPrototype? job)
+    public EntityUid LoadProfileEntity(HumanoidCharacterProfile? humanoid, JobPrototype? job, bool jobClothes)
     {
         EntityUid dummyEnt;
 
@@ -394,7 +394,7 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
 
         _humanoid.LoadProfile(dummyEnt, humanoid);
 
-        if (humanoid != null)
+        if (humanoid != null && jobClothes)
         {
             job ??= GetPreferredJob(humanoid);
             GiveDummyJobClothes(dummyEnt, humanoid, job);

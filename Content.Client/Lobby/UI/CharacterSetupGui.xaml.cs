@@ -24,8 +24,8 @@ namespace Content.Client.Lobby.UI
 
         private readonly Button _createNewCharacterButton;
 
-        public event Action<ICharacterProfile>? SelectCharacter;
-        public event Action<ICharacterProfile>? DeleteCharacter;
+        public event Action<int>? SelectCharacter;
+        public event Action<int>? DeleteCharacter;
 
         public CharacterSetupGui(
             IEntityManager entManager,
@@ -57,6 +57,7 @@ namespace Content.Client.Lobby.UI
             _createNewCharacterButton.OnPressed += args =>
             {
                 preferencesManager.CreateCharacter(HumanoidCharacterProfile.Random());
+                ReloadCharacterPickers();
                 args.Event.Handle();
             };
 
@@ -76,7 +77,6 @@ namespace Content.Client.Lobby.UI
 
             var numberOfFullSlots = 0;
             var characterButtonsGroup = new ButtonGroup();
-            Characters.DisposeAllChildren();
 
             if (!_preferencesManager.ServerDataLoaded)
             {
@@ -102,12 +102,12 @@ namespace Content.Client.Lobby.UI
 
                 characterPickerButton.OnPressed += args =>
                 {
-                    SelectCharacter?.Invoke(character);
+                    SelectCharacter?.Invoke(slot);
                 };
 
                 characterPickerButton.OnDeletePressed += () =>
                 {
-                    DeleteCharacter?.Invoke(character);
+                    DeleteCharacter?.Invoke(slot);
                 };
             }
 

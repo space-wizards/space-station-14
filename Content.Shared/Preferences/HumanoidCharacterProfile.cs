@@ -29,7 +29,7 @@ namespace Content.Shared.Preferences
         public const int MaxNameLength = 32;
         public const int MaxDescLength = 512;
 
-        private Dictionary<string, JobPriority> _jobPriorities = new Dictionary<string, JobPriority>
+        private Dictionary<string, JobPriority> _jobPriorities = new()
         {
             {
                 SharedGameTicker.FallbackOverflowJob, JobPriority.High
@@ -43,23 +43,23 @@ namespace Content.Shared.Preferences
 
         private Dictionary<string, RoleLoadout> _loadouts = new();
 
-        public string Name { get; private set; } = "John Doe";
-        public string FlavorText { get; private set; } = string.Empty;
-        public string Species { get; private set; } = SharedHumanoidAppearanceSystem.DefaultSpecies;
+        public string Name { get; set; } = "John Doe";
+        public string FlavorText { get; set; } = string.Empty;
+        public string Species { get; set; } = SharedHumanoidAppearanceSystem.DefaultSpecies;
 
-        [DataField("age")]
-        public int Age { get; private set; } = 18;
+        [DataField]
+        public int Age { get; set; } = 18;
 
-        [DataField("sex")]
+        [DataField]
         public Sex Sex { get; private set; } = Sex.Male;
 
-        [DataField("gender")]
+        [DataField]
         public Gender Gender { get; private set; } = Gender.Male;
 
         public ICharacterAppearance CharacterAppearance => Appearance;
 
-        [DataField("appearance")]
-        public HumanoidCharacterAppearance Appearance { get; private set; } = new();
+        [DataField]
+        public HumanoidCharacterAppearance Appearance { get; set; } = new();
 
         public SpawnPriorityPreference SpawnPriority { get; private set; } = SpawnPriorityPreference.None;
         public IReadOnlyDictionary<string, JobPriority> JobPriorities => _jobPriorities;
@@ -69,8 +69,7 @@ namespace Content.Shared.Preferences
         public PreferenceUnavailableMode PreferenceUnavailable { get; private set; } =
             PreferenceUnavailableMode.SpawnAsOverflow;
 
-        // What in the lord is happening here.
-        private HumanoidCharacterProfile(
+        public HumanoidCharacterProfile(
             string name,
             string flavortext,
             string species,
@@ -101,7 +100,7 @@ namespace Content.Shared.Preferences
         }
 
         /// <summary>Copy constructor</summary>
-        private HumanoidCharacterProfile(HumanoidCharacterProfile other)
+        public HumanoidCharacterProfile(HumanoidCharacterProfile other)
             : this(other.Name,
                 other.FlavorText,
                 other.Species,
@@ -109,9 +108,11 @@ namespace Content.Shared.Preferences
                 other.Sex,
                 other.Gender,
                 other.Appearance.Clone(),
+                other.SpawnPriority,
                 new Dictionary<string, JobPriority>(other.JobPriorities),
-                new List<string>(other.AntagPreferences),
-                new List<string>(other.TraitPreferences),
+                other.PreferenceUnavailable,
+                new HashSet<string>(other.AntagPreferences),
+                new HashSet<string>(other.TraitPreferences),
                 new Dictionary<string, RoleLoadout>(other.Loadouts))
         {
         }
@@ -321,6 +322,7 @@ namespace Content.Shared.Preferences
             if (Age != other.Age) return false;
             if (Sex != other.Sex) return false;
             if (Gender != other.Gender) return false;
+            if (Species != other.Species) return false;
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (SpawnPriority != other.SpawnPriority) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;

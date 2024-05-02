@@ -111,6 +111,11 @@ namespace Content.Client.Lobby.UI
             _requirements = requirements;
             _controller = UserInterfaceManager.GetUIController<LobbyUIController>();
 
+            ResetButton.OnPressed += args =>
+            {
+                SetProfile((HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter, _preferencesManager.Preferences?.SelectedCharacterIndex);
+            };
+
             SaveButton.OnPressed += args =>
             {
                 Save?.Invoke();
@@ -603,10 +608,10 @@ namespace Content.Client.Lobby.UI
             _entManager.DeleteEntity(PreviewDummy);
             PreviewDummy = EntityUid.Invalid;
 
-            if (Profile == null || !_prototypeManager.TryIndex(Profile.Species, out SpeciesPrototype? speciesProto))
+            if (Profile == null || !_prototypeManager.HasIndex<SpeciesPrototype>(Profile.Species))
                 return;
 
-            PreviewDummy = _controller.LoadProfileEntity(Profile, JobOverride);
+            PreviewDummy = _controller.LoadProfileEntity(Profile, JobOverride, ShowClothes.Pressed);
             SpriteView.SetEntity(PreviewDummy);
         }
 
@@ -628,6 +633,7 @@ namespace Content.Client.Lobby.UI
             Profile = profile?.Clone();
             CharacterSlot = slot;
             IsDirty = false;
+            JobOverride = null;
 
             UpdateNameEdit();
             UpdateFlavorTextEdit();
@@ -790,7 +796,8 @@ namespace Content.Client.Lobby.UI
 
                     selector.OnSelected += selectedPrio =>
                     {
-                        Profile = Profile?.WithJobPriority(job.ID, (JobPriority) selectedPrio);
+                        var selectedJobPrio = (JobPriority) selectedPrio;
+                        Profile = Profile?.WithJobPriority(job.ID, selectedJobPrio);
 
                         foreach (var (jobId, other) in _jobPriorities)
                         {
@@ -799,13 +806,16 @@ namespace Content.Client.Lobby.UI
                             {
                                 other.Select(selectedPrio);
                             }
-                            else if ((JobPriority) selectedPrio == JobPriority.High && (JobPriority) other.Selected == JobPriority.High)
+                            else if (selectedJobPrio == JobPriority.High && (JobPriority) other.Selected == JobPriority.High)
                             {
                                 // Lower any other high priorities to medium.
                                 other.Select((int) JobPriority.Medium);
                                 Profile = Profile?.WithJobPriority(jobId, JobPriority.Medium);
                             }
                         }
+
+                        // TODO: Only reload on high change (either to or from).
+                        ReloadPreview();
 
                         UpdateJobPriorities();
                         SetDirty();
@@ -1376,6 +1386,7 @@ namespace Content.Client.Lobby.UI
         private void UpdateSaveButton()
         {
             SaveButton.Disabled = Profile is null || !IsDirty;
+            ResetButton.Disabled = Profile is null || !IsDirty;
         }
 
         private void SetPreviewRotation(Direction direction)

@@ -37,12 +37,17 @@
                             <Button Text="{Loc 'humanoid-profile-editor-import-button'}" Disabled="True"
                                     ToolTip="{Loc 'generic-not-yet-implemented'}" />
                             <Button Text="{Loc 'humanoid-profile-editor-export-button'}" Disabled="True"
-                                    ToolTip="{Loc 'generic-not-yet-implemented'}" />
+                                    ToolTip="{Loc 'generic-not-yet-implemented'}"
+                                    HorizontalAlignment="Right"/>
                         </BoxContainer>
                     </ui:HighlightedContainer>
                     <!-- Save -->
                     <ui:HighlightedContainer>
-                        <Button Name="SaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}" HorizontalAlignment="Center" />
+                        <BoxContainer Orientation="Horizontal">
+                            <Button Name="SaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}" />
+                            <Button Name="ResetButton" Disabled="True" Text="{Loc 'humanoid-profile-editor-reset-button'}"
+                                    HorizontalAlignment="Right" />
+                        </BoxContainer>
                     </ui:HighlightedContainer>
                 </BoxContainer>
             </BoxContainer>

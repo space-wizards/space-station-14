@@ -28,11 +28,10 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         Markings = markings;
     }
 
-    public HumanoidCharacterAppearance(HumanoidCharacterAppearance other)
+    public HumanoidCharacterAppearance(HumanoidCharacterAppearance other) :
+        this(other.HairStyleId, other.HairColor, other.FacialHairStyleId, other.FacialHairColor, other.EyeColor, other.SkinColor, new(other.Markings))
     {
-        // TODO: Up to here, finish this + cloning and humanoidcharacterappearance cleanup
-        // Then need to go and test lobby + fix the loadout buttons and shit.
-        HairStyleId
+
     }
 
     [DataField("hair")]
@@ -278,6 +277,6 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
 
     public HumanoidCharacterAppearance Clone()
     {
-        return new HumanoidCharacterAppearance(HairStyleId, HairColor, FacialHairStyleId, FacialHairColor, EyeColor, SkinColor, new List<Marking>(Markings));
+        return new(this);
     }
 }
