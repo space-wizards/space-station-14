@@ -204,7 +204,7 @@ public sealed partial class PowerMonitoringConsoleNavMapControl : NavMapControl
 
                 var chunkMask = chunk.PowerCableData[cableIdx];
 
-                for (var chunkIdx = 0; chunkIdx < ArraySize; chunkIdx++)
+                for (var chunkIdx = 0; chunkIdx < ChunkSize * ChunkSize; chunkIdx++)
                 {
                     var value = 1 << chunkIdx;
                     var mask = chunkMask & value;

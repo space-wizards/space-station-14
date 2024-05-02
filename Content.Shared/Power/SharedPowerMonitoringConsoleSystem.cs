@@ -6,9 +6,8 @@ namespace Content.Shared.Power;
 [UsedImplicitly]
 public abstract class SharedPowerMonitoringConsoleSystem : EntitySystem
 {
-    // Chunk size is limited as we require ArraySize <= 32 (number of bits in an int)
+    // Chunk size is limited as we require ChunkSize^2 <= 32 (number of bits in an int)
     public const int ChunkSize = 5;
-    public const int ArraySize = ChunkSize * ChunkSize;
 
     /// <summary>
     /// Converts the chunk's tile into a bitflag for the slot.
