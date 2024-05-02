@@ -50,5 +50,11 @@ namespace Content.Shared.Throwing
         /// </summary>
         [DataField]
         public Vector2? OriginalScale = null;
+
+        /// <summary>
+        ///     If the events on collision will actually be raised
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        public bool HitEvents = true;
     }
 }
