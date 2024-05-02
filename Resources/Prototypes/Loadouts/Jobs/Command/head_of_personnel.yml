@@ -58,33 +58,6 @@
 
 # Back
 - type: loadout
-  id: HoPBackpack
-  equipment: HoPBackpack
-
-- type: startingGear
-  id: HoPBackpack
-  equipment:
-    back: ClothingBackpackHOPFilled
-
-- type: loadout
-  id: HoPSatchel
-  equipment: HoPSatchel
-
-- type: startingGear
-  id: HoPSatchel
-  equipment:
-    back: ClothingBackpackSatchelHOPFilled
-
-- type: loadout
-  id: HoPDuffel
-  equipment: HoPDuffel
-
-- type: startingGear
-  id: HoPDuffel
-  equipment:
-    back: ClothingBackpackDuffelHOPFilled
-
-- type: loadout
   id: HoPBackpackIan
   equipment: HoPBackpackIan
   effects:
@@ -94,7 +67,7 @@
 - type: startingGear
   id: HoPBackpackIan
   equipment:
-    back: ClothingBackpackHOPIanFilled
+    back: ClothingBackpackIan
 
 # Outerclothing
 - type: loadout
