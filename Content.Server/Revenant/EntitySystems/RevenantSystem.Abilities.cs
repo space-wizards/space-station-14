@@ -15,6 +15,7 @@ using Content.Shared.Bed.Sleep;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Revenant.Components;
+using Content.Shared.Physics;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
@@ -132,6 +133,12 @@ public sealed partial class RevenantSystem
         if (TryComp<MobStateComponent>(target, out var mobstate) && mobstate.CurrentState == MobState.Alive && !HasComp<SleepingComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("revenant-soul-too-powerful"), target, uid);
+            return;
+        }
+
+        if(_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)
+        {
+            _popup.PopupEntity(Loc.GetString("revenant-in-solid"), uid, uid);
             return;
         }
 
