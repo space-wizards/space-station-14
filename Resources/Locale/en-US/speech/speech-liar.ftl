@@ -62,7 +62,7 @@ liar-word-20 = did
 liar-word-replacement-20 = didnt
 
 liar-word-21 = didnt
-liar-word-replacement-21 = did
+liar-word-replacement-21 = ""
 
 liar-word-22 = nothing
 liar-word-replacement-22 = something
