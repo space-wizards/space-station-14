@@ -19,65 +19,59 @@ liar-word-replacement-6 = yep
 liar-word-7 = sure
 liar-word-replacement-7 = nah
 
-liar-word-8 = nah
-liar-word-replacement-8 = sure
+liar-word-8 = was
+liar-word-replacement-8 = wasnt
 
-liar-word-9 = absolutely
-liar-word-replacement-9 = not at all
+liar-word-9 = wasnt
+liar-word-replacement-9 = was
 
-liar-word-10 = not at all
-liar-word-replacement-10 = absolutely
+liar-word-10 = was
+liar-word-replacement-10 = wasnt
 
-liar-word-11 = definitely
-liar-word-replacement-11 = no way
+liar-word-11 = is
+liar-word-replacement-11 = isnt
 
-liar-word-12 = no way
-liar-word-replacement-12 = definitely
+liar-word-12 = will
+liar-word-replacement-12 = wont
 
-liar-word-13 = of course
-liar-word-replacement-13 = nope
+liar-word-12 = go
+liar-word-replacement-12 = dont go
 
-liar-word-14 = nope
-liar-word-replacement-14 = of course
+liar-word-13 = dont go
+liar-word-replacement-13 = go
 
-liar-word-15 = certainly
-liar-word-replacement-15 = nope
+liar-word-14 = can
+liar-word-replacement-14 = cant
 
-liar-word-16 = nope
-liar-word-replacement-16 = certainly
+liar-word-15 = cant
+liar-word-replacement-15 = can
 
-liar-word-17 = undoubtedly
-liar-word-replacement-17 = doubtfully
+liar-word-16 = should
+liar-word-replacement-16 = shouldnt
 
-liar-word-18 = doubtfully
-liar-word-replacement-18 = undoubtedly
+liar-word-17 = do
+liar-word-replacement-17 = dont
 
-liar-word-19 = sure thing
-liar-word-replacement-19 = no way
+liar-word-18 = dont
+liar-word-replacement-18 = do
 
-liar-word-20 = no way
-liar-word-replacement-20 = sure thing
+liar-word-19 = does
+liar-word-replacement-19 = doesnt
 
-liar-word-21 = absolutely
-liar-word-replacement-21 = not a chance
+liar-word-20 = did
+liar-word-replacement-20 = didnt
 
-liar-word-22 = not a chance
-liar-word-replacement-22 = absolutely
+liar-word-21 = didnt
+liar-word-replacement-21 = did
 
-liar-word-23 = for sure
-liar-word-replacement-23 = no chance
+liar-word-22 = nothing
+liar-word-replacement-22 = something
 
-liar-word-24 = no chance
-liar-word-replacement-24 = for sure
+liar-word-23 = something
+liar-word-replacement-23 = nothing
 
-liar-word-25 = yup
-liar-word-replacement-25 = nope
+liar-word-24 = somebody
+liar-word-replacement-24 = nobody
 
-liar-word-26 = nope
-liar-word-replacement-26 = yup
-
-liar-word-27 = affirmative
-liar-word-replacement-27 = negative
-
-liar-word-28 = negative
-liar-word-replacement-28 = affirmative
+liar-word-25 = nobody
+liar-word-replacement-25 = somebody
