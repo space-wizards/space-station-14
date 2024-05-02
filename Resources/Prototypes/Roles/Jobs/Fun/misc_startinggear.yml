@@ -209,16 +209,23 @@
 
 # Limited Gear
 - type: startingGear
+  id: LimitedPassengerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+    shoes: ClothingShoesColorBlack
+
+- type: startingGear
   id: LimitedSalvageSpecialistGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
     shoes: ClothingShoesBootsSalvage
 
 - type: startingGear
-  id: LimitedPassengerGear
+  id: LimitedCargoTechGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorGrey
-    shoes: ClothingShoesColorBlack
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
+    shoes: ClothingShoesBootsSalvage
+    pocket1: AppraisalTool
 
 - type: startingGear
   id: LimitedPirateGear

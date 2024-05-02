@@ -91,8 +91,6 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                         _storage.Insert(slotEnt.Value, ent, out _, storageComp: storage, playSound: false);
                     }
                 }
-                else
-                    return;
             }
         }
     }
