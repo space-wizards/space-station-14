@@ -61,7 +61,6 @@ public sealed class TagSystem : EntitySystem
         args.State = new TagComponentState(tags);
     }
 
-    [Conditional("DEBUG")]
     private void AssertValidTag(string id)
     {
         DebugTools.Assert(_proto.HasIndex<TagPrototype>(id), $"Unknown tag: {id}");
