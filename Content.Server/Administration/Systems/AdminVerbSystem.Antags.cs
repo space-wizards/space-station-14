@@ -44,8 +44,10 @@ public sealed partial class AdminVerbSystem
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
 
-        if (!HasComp<MindContainerComponent>(args.Target))
+        if (!HasComp<MindContainerComponent>(args.Target) || !TryComp<ActorComponent>(args.Target, out var targetActor))
             return;
+
+        var targetPlayer = targetActor.PlayerSession;
 
         Verb traitor = new()
         {
@@ -54,7 +56,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Structures/Wallmounts/posters.rsi"), "poster5_contraband"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<TraitorRuleComponent>(player, DefaultTraitorRule);
+                _antag.ForceMakeAntag<TraitorRuleComponent>(targetPlayer, DefaultTraitorRule);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-traitor"),
@@ -83,7 +85,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Wallmounts/signs.rsi"), "radiation"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<NukeopsRuleComponent>(player, DefaultNukeOpRule);
+                _antag.ForceMakeAntag<NukeopsRuleComponent>(targetPlayer, DefaultNukeOpRule);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-nuclear-operative"),
@@ -112,7 +114,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "HeadRevolutionary"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<RevolutionaryRuleComponent>(player, DefaultRevsRule);
+                _antag.ForceMakeAntag<RevolutionaryRuleComponent>(targetPlayer, DefaultRevsRule);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-head-rev"),
@@ -126,7 +128,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Clothing/Hands/Gloves/Color/black.rsi"), "icon"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<ThiefRuleComponent>(player, DefaultThiefRule);
+                _antag.ForceMakeAntag<ThiefRuleComponent>(targetPlayer, DefaultThiefRule);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-thief"),

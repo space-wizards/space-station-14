@@ -199,6 +199,8 @@
       prob: 0.02
     - id: MobMouse2
       prob: 0.02
+    - id: MobMouseCancer
+      prob: 0.001
     specialEntries:
     - id: SpawnPointGhostRatKing
       prob: 0.005
@@ -282,19 +284,6 @@
     doorToggleChancePerSecond: 0.001
 
 - type: entity
-  parent: BaseGameRule
-  id: TerminatorSpawn
-  noSpawn: true
-  components:
-  - type: StationEvent
-    weight: 8
-    duration: 1
-    earliestStart: 30
-    minimumPlayers: 20
-  - type: RandomSpawnRule
-    prototype: SpawnPointGhostTerminator
-
-- type: entity
   id: VentClog
   parent: BaseGameRule
   noSpawn: true
@@ -332,6 +321,8 @@
       prob: 0.02
     - id: MobMouse2
       prob: 0.02
+    - id: MobMouseCancer
+      prob: 0.001
 
 - type: entity
   id: SlimesSpawn
@@ -485,11 +476,11 @@
   noSpawn: true
   components:
   - type: StationEvent
-    startAnnouncement: station-event-immovable-rod-start-announcement
-    startAudio:
+    endAnnouncement: station-event-immovable-rod-start-announcement
+    endAudio:
       path: /Audio/Announcements/attention.ogg
     weight: 5
-    duration: 1
+    duration: 25
     earliestStart: 45
     minimumPlayers: 20
   - type: ImmovableRodRule

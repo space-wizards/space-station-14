@@ -121,8 +121,8 @@ uplink-agent-id-card-desc = A modified ID card that can copy accesses from other
 uplink-black-jetpack-name = Black Jetpack
 uplink-black-jetpack-desc = A black jetpack. It allows you to fly around in space. Refills not included, use your fuel wisely.
 
-uplink-reinforcement-radio-monkey-name = Monkey Reinforcement Teleporter
-uplink-reinforcement-radio-monkey-desc =  Call in a trained monkey to assist you. Comes with a single syndicate cigarette.
+uplink-reinforcement-radio-ancestor-name = Genetic Ancestor Reinforcement Teleporter
+uplink-reinforcement-radio-ancestor-desc =  Call in a trained ancestor of your choosing to assist you. Comes with a single syndicate cigarette.
 
 uplink-reinforcement-radio-name = Reinforcement Teleporter
 uplink-reinforcement-radio-desc =  Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
@@ -156,6 +156,9 @@ uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio co
 
 uplink-syndicate-weapon-module-name = Weapon Cyborg Module
 uplink-syndicate-weapon-module-desc = This module will give a cyborg advanced laser and machete
+
+uplink-syndicate-martyr-module-name = Martyr Cyborg Module
+uplink-syndicate-martyr-module-desc = Turn your emagged borg friend into a walking bomb with just this module. Make sure they're loyal to your cause, results may vary.
 
 uplink-singularity-beacon-name = Singularity Beacon
 uplink-singularity-beacon-desc = A device that attracts singularities. Has to be anchored and powered. Causes singularities to grow when consumed.
@@ -286,6 +289,9 @@ uplink-disposable-turret-desc = Looks and functions like a normal electrical too
 
 uplink-cluster-banana-peel-name = Cluster Banana
 uplink-cluster-banana-peel-desc = Splits into 6 explosive banana peels after being thrown, the peels detonate automatically after 20 seconds if nobody slips on them.
+
+uplink-cane-blade-name = Cane Blade
+uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
 
 # Armor
 uplink-chameleon-name = Chameleon Kit

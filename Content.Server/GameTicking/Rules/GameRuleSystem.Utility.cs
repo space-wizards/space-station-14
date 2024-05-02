@@ -17,6 +17,14 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
     }
 
     /// <summary>
+    /// Queries all gamerules, regardless of if they're active or not.
+    /// </summary>
+    protected EntityQueryEnumerator<T, GameRuleComponent> QueryAllRules()
+    {
+        return EntityQueryEnumerator<T, GameRuleComponent>();
+    }
+
+    /// <summary>
     ///     Utility function for finding a random event-eligible station entity
     /// </summary>
     protected bool TryGetRandomStation([NotNullWhen(true)] out EntityUid? station, Func<EntityUid, bool>? filter = null)

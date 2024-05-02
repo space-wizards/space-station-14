@@ -35,7 +35,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
-    [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
@@ -133,7 +132,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (!TryGetNextAvailableDefinition((uid, antag), out var def))
                 continue;
 
-            MakeAntag((uid, antag), args.Player, def.Value);
+            if (TryMakeAntag((uid, antag), args.Player, def.Value))
+                break;
         }
     }
 
@@ -219,6 +219,21 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     }
 
     /// <summary>
+    /// Tries to makes a given player into the specified antagonist.
+    /// </summary>
+    public bool TryMakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false)
+    {
+        if (!IsSessionValid(ent, session, def) ||
+            !IsEntityValid(session?.AttachedEntity, def))
+        {
+            return false;
+        }
+
+        MakeAntag(ent, session, def, ignoreSpawner);
+        return true;
+    }
+
+    /// <summary>
     /// Makes a given player into the specified antagonist.
     /// </summary>
     public void MakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false)
@@ -262,7 +277,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         {
             var playerXform = Transform(player);
             var pos = RobustRandom.Pick(getPosEv.Coordinates);
-            var mapEnt = _map.GetMap(pos.MapId);
             _transform.SetMapCoordinates((player, playerXform), pos);
         }
 
@@ -291,8 +305,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 _mind.SetUserId(curMind.Value, session.UserId);
             }
 
-            EntityManager.AddComponents(curMind.Value, def.MindComponents);
             _mind.TransferTo(curMind.Value, antagEnt, ghostCheckOverride: true);
+            _role.MindAddRoles(curMind.Value, def.MindComponents);
             ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
         }
 
@@ -310,42 +324,45 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// </summary>
     public AntagSelectionPlayerPool GetPlayerPool(Entity<AntagSelectionComponent> ent, List<ICommonSession> sessions, AntagSelectionDefinition def)
     {
-        var primaryList = new List<ICommonSession>();
-        var secondaryList = new List<ICommonSession>();
-        var fallbackList = new List<ICommonSession>();
-        var rawList = new List<ICommonSession>();
+        var preferredList = new List<ICommonSession>();
+        var secondBestList = new List<ICommonSession>();
+        var unwantedList = new List<ICommonSession>();
+        var invalidList = new List<ICommonSession>();
         foreach (var session in sessions)
         {
             if (!IsSessionValid(ent, session, def) ||
                 !IsEntityValid(session.AttachedEntity, def))
             {
-                rawList.Add(session);
+                invalidList.Add(session);
                 continue;
             }
 
             var pref = (HumanoidCharacterProfile) _pref.GetPreferences(session.UserId).SelectedCharacter;
-            if (def.PrefRoles.Count == 0 || pref.AntagPreferences.Any(p => def.PrefRoles.Contains(p)))
+            if (def.PrefRoles.Count != 0 && pref.AntagPreferences.Any(p => def.PrefRoles.Contains(p)))
             {
-                primaryList.Add(session);
+                preferredList.Add(session);
             }
-            else if (def.PrefRoles.Count == 0 || pref.AntagPreferences.Any(p => def.FallbackRoles.Contains(p)))
+            else if (def.FallbackRoles.Count != 0 && pref.AntagPreferences.Any(p => def.FallbackRoles.Contains(p)))
             {
-                secondaryList.Add(session);
+                secondBestList.Add(session);
             }
             else
             {
-                fallbackList.Add(session);
+                unwantedList.Add(session);
             }
         }
 
-        return new AntagSelectionPlayerPool(primaryList, secondaryList, fallbackList, rawList);
+        return new AntagSelectionPlayerPool(new() { preferredList, secondBestList, unwantedList, invalidList });
     }
 
     /// <summary>
     /// Checks if a given session is valid for an antagonist.
     /// </summary>
-    public bool IsSessionValid(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def, EntityUid? mind = null)
+    public bool IsSessionValid(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, EntityUid? mind = null)
     {
+        if (session == null)
+            return true;
+
         mind ??= session.GetMind();
 
         if (session.Status is SessionStatus.Disconnected or SessionStatus.Zombie)

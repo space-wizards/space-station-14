@@ -25,6 +25,8 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterSuitBomb
@@ -63,6 +65,8 @@
     sprintModifier: 0.7
   - type: HeldSpeedModifier
   - type: GroupExamine
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -70,26 +74,28 @@
   name: atmos fire suit
   description: An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame.
   components:
-    - type: Sprite
-      sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
-    - type: Clothing
-      sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
-    - type: PressureProtection
-      highPressureMultiplier: 0.02
-      lowPressureMultiplier: 1000
-    - type: TemperatureProtection
-      coefficient: 0.001
-    - type: Armor
-      modifiers:
-        coefficients:
-          Slash: 0.9
-          Heat: 0.3
-          Cold: 0.2
-    - type: ClothingSpeedModifier
-      walkModifier: 0.8
-      sprintModifier: 0.8
-    - type: HeldSpeedModifier
-    - type: GroupExamine
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.3
+        Cold: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
+  - type: GroupExamine
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing]
@@ -113,7 +119,9 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
-      
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
+
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterSuitSpaceNinja
@@ -164,6 +172,8 @@
     sprite: Clothing/OuterClothing/Suits/chicken.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/chicken.rsi
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBase
@@ -189,6 +199,8 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBase
@@ -210,6 +222,8 @@
   - type: Construction
     graph: ClothingOuterSuitIan
     node: suit
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBase

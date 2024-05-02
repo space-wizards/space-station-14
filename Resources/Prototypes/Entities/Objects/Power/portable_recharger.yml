@@ -1,0 +1,38 @@
+- type: entity
+  parent: Clothing
+  id: PortableRecharger
+  name: portable recharger
+  description: High-tech recharger adapted for portability
+  components:
+  - type: Item
+    size: Huge
+  - type: Sprite
+    sprite: Objects/Power/portable_recharger.rsi
+    state: charging
+  - type: Clothing
+    equippedPrefix: charging
+    quickEquip: false
+    slots:
+    - back
+  - type: Charger
+    slotId: charger_slot
+    portable: true
+  - type: PowerChargerVisuals
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+  - type: StaticPrice
+    price: 500
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: ContainerContainer
+    containers:
+      charger_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      charger_slot:
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - HitscanBatteryAmmoProvider
+          - ProjectileBatteryAmmoProvider
