@@ -68,9 +68,12 @@
   noSpawn: true
   components:
   - type: WorldTargetAction
-    useDelay: 5
-    cooldown: 100
+    priority: -1
+    targetingIndicator: false
+    repeat: true
+    useDelay: 2.5
     charges: 2
+    maxCharges: 2
     renewCharges: true
     itemIconStyle: BigAction
     checkCanAccess: false

@@ -24,6 +24,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    priority: -1
     useDelay: 20
     itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier
@@ -32,5 +33,6 @@
       sprite: Structures/Walls/solid.rsi
       state: reinf_construct-0
     event: !type:InstantSpawnSpellEvent
-      prototype: WallCobblebrick
+      prototype: WallMimeBlockade
+      preventCollide: false
       posData: !type:TargetInFront

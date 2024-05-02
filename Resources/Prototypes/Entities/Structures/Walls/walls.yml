@@ -1235,18 +1235,12 @@
       state: forcewall
 
 - type: entity
-  parent: BaseWall
+  parent: WallInvisible
   id: WallMimeBlockade
   name: invisible wall
   components:
     - type: TimedDespawn
-      lifetime: 15
-    - type: Sprite
-      sprite: Structures/Walls/vault.rsi
-      state: alienvault
-    - type: Icon
-      sprite: Structures/Walls/vault.rsi
-      state: alienvault
+      lifetime: 20
 
 - type: entity
   parent: BaseWall
