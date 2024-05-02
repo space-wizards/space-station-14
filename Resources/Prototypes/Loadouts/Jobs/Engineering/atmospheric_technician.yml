@@ -22,9 +22,6 @@
 - type: loadout
   id: SeniorEngineerBeret
   equipment: EngineeringBeret
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorEngineering
 
 - type: startingGear
   id: EngineeringBeret
