@@ -651,7 +651,6 @@
   name: loadout-group-atmospheric-technician-head
   loadouts:
   - SeniorEngineerBeret
-  - EngineeringBeret
 
 - type: loadoutGroup
   id: AtmosphericTechnicianJumpsuit
