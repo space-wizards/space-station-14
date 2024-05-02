@@ -26,7 +26,7 @@ public sealed class GhostRoleTests
 ";
 
     /// <summary>
-    /// This is a simple test that just checks if a player can take a ghost roll and then regain control of their
+    /// This is a simple test that just checks if a player can take a ghost role and then regain control of their
     /// original entity without encountering errors.
     /// </summary>
     [Test]
@@ -34,6 +34,7 @@ public sealed class GhostRoleTests
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
+            Dirty = true,
             DummyTicker = false,
             Connected = true
         });
@@ -69,7 +70,7 @@ public sealed class GhostRoleTests
         Assert.That(entMan.HasComponent<GhostComponent>(ghost));
         Assert.That(ghost, Is.Not.EqualTo(originalMob));
         Assert.That(session.ContentData()?.Mind, Is.EqualTo(originalMindId));
-        Assert.That(originalMind.OwnedEntity, Is.EqualTo(originalMob));
+        Assert.That(originalMind.OwnedEntity, Is.EqualTo(originalMob), $"Original mob: {originalMob}, Ghost: {ghost}");
         Assert.That(originalMind.VisitingEntity, Is.EqualTo(ghost));
 
         // Spawn ghost takeover entity.
