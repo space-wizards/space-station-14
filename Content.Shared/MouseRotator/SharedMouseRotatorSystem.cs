@@ -1,4 +1,4 @@
-﻿using Content.Shared.Interaction;
+using Content.Shared.Interaction;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.MouseRotator;
@@ -49,10 +49,14 @@ public abstract class SharedMouseRotatorSystem : EntitySystem
 
     private void OnRequestRotation(RequestMouseRotatorRotationEvent msg, EntitySessionEventArgs args)
     {
-        if (args.SenderSession.AttachedEntity is not { } ent
-            || !TryComp<MouseRotatorComponent>(ent, out var rotator) || rotator.Simple4DirMode)
+        if (args.SenderSession.AttachedEntity is not { } ent)
+            return;
+
+        var rotator = EnsureComp<MouseRotatorComponent>(ent);
+
+        if (rotator.Simple4DirMode)
         {
-            Log.Error($"User {args.SenderSession.Name} ({args.SenderSession.UserId}) tried setting local rotation directly without a valid mouse rotator component attached!");
+            Log.Error($"User {args.SenderSession.Name} ({args.SenderSession.UserId}) tried setting local rotation when in 4-dir rotation mode!");
             return;
         }
 
@@ -62,10 +66,14 @@ public abstract class SharedMouseRotatorSystem : EntitySystem
 
     private void OnRequestSimpleRotation(RequestMouseRotatorRotationSimpleEvent ev, EntitySessionEventArgs args)
     {
-        if (args.SenderSession.AttachedEntity is not { } ent
-            || !TryComp<MouseRotatorComponent>(ent, out var rotator) || !rotator.Simple4DirMode)
+        if (args.SenderSession.AttachedEntity is not { } ent)
+            return;
+
+        var rotator = EnsureComp<MouseRotatorComponent>(ent);
+
+        if (!rotator.Simple4DirMode)
         {
-            Log.Error($"User {args.SenderSession.Name} ({args.SenderSession.UserId}) tried setting 4-dir rotation directly without a valid mouse rotator component attached!");
+            Log.Error($"User {args.SenderSession.Name} ({args.SenderSession.UserId}) tried setting 4-dir rotation when not in 4-dir rotation mode!");
             return;
         }
 
