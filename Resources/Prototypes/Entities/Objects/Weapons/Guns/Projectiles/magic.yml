@@ -290,4 +290,39 @@
   - type: Electrified
     requirePower: false
 
-  
+- type: entity
+  id: ProjectileFingerGun
+  name: silent bullet
+  description: Pew pew!
+  parent: BaseBullet
+  components:
+    - type: FlyBySound
+    - type: Sprite
+      netsync: false
+      noRot: false
+    - type: Projectile
+      impactEffect: BulletImpactEffect
+      damage:
+        types:
+          Piercing: 20
+      soundHit:
+        path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    - type: StaminaDamageOnCollide
+      damage: 25
+    - type: TimedDespawn
+      lifetime: 10
+    - type: SolutionContainerManager
+      solutions:
+        ammo:
+          reagents:
+          - ReagentId: MuteToxin
+            Quantity: 20
+    - type: RefillableSolution
+      solution: ammo
+    - type: DrainableSolution
+      solution: ammo
+    - type: SolutionInjectOnProjectileHit
+      transferAmount: 20
+      solution: ammo
+    - type: InjectableSolution
+      solution: ammo

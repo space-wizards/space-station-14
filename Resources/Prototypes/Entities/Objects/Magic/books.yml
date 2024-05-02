@@ -436,3 +436,35 @@
       ActionExplosionRune: -1
       ActionIgniteRune: -1
       ActionStunRune: -1
+
+- type: entity
+  id: MimerySpellbook
+  name: Guide to Advanced Mimery Volume 1
+  description: A guide on how to improve your mimery. Focuses on invisible walls.
+  parent: BaseSpellbook
+  components:
+   - type: Sprite
+     sprite: Objects/Misc/books.rsi
+     layers:
+     - state: mime_book
+   - type: Spellbook
+     learnPermanently: true
+     learnTime: 4
+     spells:
+       MimeBlockade: -1
+
+- type: entity
+  id: Mimery2Spellbook
+  name: Guide to Advanced Mimery Volume 2
+  description: A guide on how to improve your mimery. Focuses on finger guns.
+  parent: BaseSpellbook
+  components:
+   - type: Sprite
+     sprite: Objects/Misc/books.rsi
+     layers:
+     - state: mime_book2
+   - type: Spellbook
+     learnPermanently: true
+     learnTime: 8
+     spells:
+       MimeGun: -1

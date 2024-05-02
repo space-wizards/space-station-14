@@ -1235,6 +1235,14 @@
       state: forcewall
 
 - type: entity
+  parent: WallInvisible
+  id: WallMimeBlockade
+  name: invisible wall
+  components:
+    - type: TimedDespawn
+      lifetime: 20
+
+- type: entity
   parent: BaseWall
   id: WallCobblebrick
   name: cobblestone brick wall
