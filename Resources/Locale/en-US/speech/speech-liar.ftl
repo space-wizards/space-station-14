@@ -75,3 +75,27 @@ liar-word-replacement-24 = nobody
 
 liar-word-25 = nobody
 liar-word-replacement-25 = somebody
+
+liar-word-26 = can
+liar-word-replacement-26 = can't
+
+liar-word-27 = can't
+liar-word-replacement-27 = can
+
+liar-word-28 = should
+liar-word-replacement-28 = shouldn't
+
+liar-word-29 = do
+liar-word-replacement-29 = don't
+
+liar-word-30 = don't
+liar-word-replacement-30 = do
+
+liar-word-31 = does
+liar-word-replacement-31 = doesn't
+
+liar-word-32 = did
+liar-word-replacement-32 = didn't
+
+liar-word-33 = didn't
+liar-word-replacement-33 = did
