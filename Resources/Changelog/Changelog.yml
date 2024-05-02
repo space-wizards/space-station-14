@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Galoshes are added to the Janidrobe.
-    type: Tweak
-  - message: Galoshes now make you slower.
-    type: Tweak
-  id: 6009
-  time: '2024-02-23T01:05:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25484
 - author: PJB3005
   changes:
   - message: sorting of departments and jobs has been made consistent in various menus.
@@ -3861,3 +3852,12 @@
   id: 6508
   time: '2024-05-02T00:18:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27528
+- author: metalgearsloth
+  changes:
+  - message: Fix muzzle flash rotations.
+    type: Fix
+  - message: Fix large client performance drop.
+    type: Fix
+  id: 6509
+  time: '2024-05-02T02:40:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27533
