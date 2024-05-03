@@ -1,4 +1,5 @@
 using Content.Server.Shuttles.Systems;
+using Content.Shared.Procedural;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -14,39 +15,62 @@ public sealed partial class GridSpawnComponent : Component
     /// Dictionary of groups where each group will have entries selected.
     /// String is just an identifier to make yaml easier.
     /// </summary>
-    [DataField(required: true)] public Dictionary<string, GridSpawnGroup> Groups = new();
+    [DataField(required: true)] public Dictionary<string, IGridSpawnGroup> Groups = new();
 }
 
 [DataRecord]
-public record struct GridSpawnGroup
+public record struct DungeonSpawnGroup() : IGridSpawnGroup
 {
-    public List<ResPath> Paths = new();
-    public int MinCount = 1;
-    public int MaxCount = 1;
+    /// <summary>
+    /// Prototypes we can choose from to spawn.
+    /// </summary>
+    public List<ProtoId<DungeonConfigPrototype>> Protos = new();
+
+    public int MinCount { get; set; } = 1;
+    public int MaxCount { get; set; } = 1;
+    public ComponentRegistry AddComponents { get; set; } = new();
+    public bool Hide { get; set; } = false;
+    public bool NameGrid { get; set; } = false;
+    public bool StationGrid { get; set; } = false;
+}
+
+public interface IGridSpawnGroup
+{
+    int MinCount { get; set; }
+    int MaxCount { get; set; }
 
     /// <summary>
     /// Components to be added to any spawned grids.
     /// </summary>
-    public ComponentRegistry AddComponents = new();
+    public ComponentRegistry AddComponents { get; set; }
 
     /// <summary>
     /// Hide the IFF label of the grid.
     /// </summary>
-    public bool Hide = false;
+    public bool Hide { get; set; }
 
     /// <summary>
     /// Should we set the metadata name of a grid. Useful for admin purposes.
     /// </summary>
-    public bool NameGrid = false;
+    public bool NameGrid { get; set; }
 
     /// <summary>
     /// Should we add this to the station's grids (if possible / relevant).
     /// </summary>
-    public bool StationGrid = true;
+    public bool StationGrid { get; set; }
+}
 
-    public GridSpawnGroup()
-    {
-    }
+[DataRecord]
+public record struct GridSpawnGroup() : IGridSpawnGroup
+{
+    public List<ResPath> Paths;
+
+    public int MinCount { get; set; } = 1;
+    public int MaxCount { get; set; } = 1;
+    public ComponentRegistry AddComponents { get; set; } = new();
+    public bool Hide { get; set; } = false;
+    public bool NameGrid { get; set; } = true;
+    public bool StationGrid { get; set; } = true;
 }
 
 
