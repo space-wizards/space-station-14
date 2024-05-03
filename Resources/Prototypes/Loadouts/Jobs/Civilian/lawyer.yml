@@ -1,3 +1,77 @@
+#Head
+- type: loadout
+  id: LawyerHatBowlerHat
+  equipment: LawyerHatBowlerHat
+
+- type: startingGear
+  id: LawyerHatBowlerHat
+  equipment:
+    head: ClothingHeadHatBowlerHat
+
+- type: loadout
+  id: LawyerHatOutlawHat
+  equipment: LawyerHatOutlawHat
+
+- type: startingGear
+  id: LawyerHatOutlawHat
+  equipment:
+    head: ClothingHeadHatOutlawHat
+
+- type: loadout
+  id: LawyerHatTophat
+  equipment: LawyerHatTophat
+
+- type: startingGear
+  id: LawyerHatTophat
+  equipment:
+    head: ClothingHeadHatTophat
+
+#Gloves
+- type: loadout
+  id: LawyerGlovesColorWhite
+  equipment: LawyerGlovesColorWhite
+
+- type: startingGear
+  id: LawyerGlovesColorWhite
+  equipment:
+    gloves: ClothingHandsGlovesColorWhite
+
+- type: loadout
+  id: LawyerGlovesColorGray
+  equipment: LawyerGlovesColorGray
+
+- type: startingGear
+  id: LawyerGlovesColorGray
+  equipment:
+    gloves: ClothingHandsGlovesColorGray
+
+- type: loadout
+  id: LawyerGlovesColorBlack
+  equipment: LawyerGlovesColorBlack
+
+- type: startingGear
+  id: LawyerGlovesColorBlack
+  equipment:
+    gloves: ClothingHandsGlovesColorBlack
+
+- type: loadout
+  id: LawyerGlovesColorRed
+  equipment: LawyerGlovesColorRed
+
+- type: startingGear
+  id: LawyerGlovesColorRed
+  equipment:
+    gloves: ClothingHandsGlovesColorRed
+
+- type: loadout
+  id: LawyerGlovesColorBlue
+  equipment: LawyerGlovesColorBlue
+
+- type: startingGear
+  id: LawyerGlovesColorBlue
+  equipment:
+    gloves: ClothingHandsGlovesColorBlue
+
 # Jumpsuit
 - type: loadout
   id: LawyerJumpsuit

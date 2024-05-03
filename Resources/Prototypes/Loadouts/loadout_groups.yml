@@ -218,6 +218,15 @@
   - CuratorJumpskirt
 
 - type: loadoutGroup
+  id: LawyerHead
+  name: loadout-group-lawyer-head
+  minLimit: 0
+  loadouts:
+  - LawyerHatBowlerHat
+  - LawyerHatOutlawHat
+  - LawyerHatTophat
+
+- type: loadoutGroup
   id: LawyerJumpsuit
   name: loadout-group-lawyer-jumpsuit
   loadouts:
@@ -246,6 +255,17 @@
   - LawyerBackpack
   - LawyerSatchel
   - LawyerDuffel
+
+- type: loadoutGroup
+  id: LawyerGloves
+  name: loadout-group-lawyer-gloves
+  minLimit: 0
+  loadouts:
+  - LawyerGlovesColorWhite
+  - LawyerGlovesColorGray
+  - LawyerGlovesColorBlack
+  - LawyerGlovesColorRed
+  - LawyerGlovesColorBlue
 
 - type: loadoutGroup
   id: ChaplainHead

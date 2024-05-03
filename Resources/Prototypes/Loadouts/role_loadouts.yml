@@ -73,9 +73,11 @@
 - type: roleLoadout
   id: JobLawyer
   groups:
+  - LawyerHead
   - LawyerNeck
   - LawyerJumpsuit
   - LawyerBackpack
+  - LawyerGloves
   - Glasses
   - Trinkets
 

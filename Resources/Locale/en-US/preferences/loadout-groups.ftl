@@ -34,9 +34,11 @@ loadout-group-chef-outerclothing = Chef outer clothing
 
 loadout-group-librarian-jumpsuit = Librarian jumpsuit
 
+loadout-group-lawyer-head = Lawyer head
 loadout-group-lawyer-jumpsuit = Lawyer jumpsuit
 loadout-group-lawyer-neck = Lawyer neck
 loadout-group-lawyer-backpack = Lawyer backpack
+loadout-group-lawyer-gloves = Lawyer gloves
 
 loadout-group-chaplain-head = Chaplain head
 loadout-group-chaplain-mask = Chaplain mask
