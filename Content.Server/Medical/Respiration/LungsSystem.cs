@@ -6,6 +6,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Body.Events;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Medical.Blood.Systems;
 using Content.Shared.Medical.Respiration.Components;
@@ -16,8 +17,9 @@ namespace Content.Server.Medical.Respiration;
 
 public sealed class LungsSystem : SharedLungsSystem
 {
-    [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private AtmosphereSystem _atmosSystem = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
 
     public override void Initialize()
     {
@@ -38,25 +40,27 @@ public sealed class LungsSystem : SharedLungsSystem
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<LungsComponent, LungsGasComponent, SolutionContainerManagerComponent>();
-        while (query.MoveNext(out var uid, out var lungsComp, out var lungsGasComp, out var _))
+        var query = EntityQueryEnumerator<LungsComponent, SolutionContainerManagerComponent>();
+        while (query.MoveNext(out var uid, out var lungsComp, out var _))
         {
             if (GameTiming.CurTime >= lungsComp.NextPhasedUpdate)
             {
-                UpdateBreathability(uid, lungsComp, lungsGasComp,
+                var lungs = (uid, lungsComp);
+                UpdateBreathability(lungs,
                     _atmosSystem.GetContainingMixture(lungsComp.SolutionOwnerEntity, excite: true));
                 var attempt = new BreathAttemptEvent((uid, lungsComp));
                 RaiseLocalEvent(uid, ref attempt);
                 if (!attempt.Canceled)
-                    BreathCycle(uid, lungsComp, lungsGasComp);
-                SetNextPhaseDelay(uid, lungsComp);
+                    BreathCycle(lungs);
+                SetNextPhaseDelay(lungs);
             }
 
             if (GameTiming.CurTime >= lungsComp.NextUpdate)
             {
-                UpdateBreathability(uid, lungsComp, lungsGasComp,
+                var lungs = (uid, lungsComp);
+                UpdateBreathability(lungs,
                     _atmosSystem.GetContainingMixture(lungsComp.SolutionOwnerEntity, excite: true));
-                AbsorbGases(lungsComp, lungsGasComp);
+                AbsorbGases(lungs);
                 lungsComp.NextUpdate = GameTiming.CurTime + lungsComp.UpdateRate;
             }
         }
@@ -65,7 +69,6 @@ public sealed class LungsSystem : SharedLungsSystem
 
     private void OnLungsMapInit(EntityUid uid, LungsComponent lungsComp, ref MapInitEvent args)
     {
-        var gasComp = AddComp<LungsGasComponent>(uid);
         var targetEnt = uid;
 
         if (!lungsComp.UsesBodySolutions)
@@ -96,7 +99,7 @@ public sealed class LungsSystem : SharedLungsSystem
             lungsComp.CachedWasteGasData.Add(((Gas)sbyte.Parse(gas.ID), gas.Reagent, maxAbsorption));
         }
 
-        gasComp.ContainedGas.Volume = lungsComp.TargetLungVolume;
+        lungsComp.ContainedGas.Volume = lungsComp.TargetLungVolume;
 
         // //setup initial contained gas, so you immediately don't start suffocating
         // //TODO: override this when using internals so that vox don't eat shit when they spawn
@@ -123,42 +126,42 @@ public sealed class LungsSystem : SharedLungsSystem
         Dirty(lungs);
     }
 
-    private void SetNextPhaseDelay(EntityUid uid, LungsComponent lungsComp)
+    private void SetNextPhaseDelay(Entity<LungsComponent> lungs)
     {
-        lungsComp.Phase = lungsComp.Phase switch
+        lungs.Comp.Phase = lungs.Comp.Phase switch
         {
             BreathingPhase.Hold or BreathingPhase.Pause => BreathingPhase.Inhale,
             BreathingPhase.Inhale => BreathingPhase.Exhale,
             BreathingPhase.Exhale => BreathingPhase.Pause,
             BreathingPhase.Suffocating => BreathingPhase.Suffocating,
-            _ => lungsComp.Phase
+            _ => lungs.Comp.Phase
         };
-        lungsComp.NextPhasedUpdate = GameTiming.CurTime + lungsComp.NextPhaseDelay;
-        Dirty(uid, lungsComp);
+        lungs.Comp.NextPhasedUpdate = GameTiming.CurTime + lungs.Comp.NextPhaseDelay;
+        Dirty(lungs);
     }
 
-    private void BreathCycle(EntityUid uid, LungsComponent lungsComp, LungsGasComponent gasComp)
+    private void BreathCycle(Entity<LungsComponent> lungs)
     {
-        var extGas = _atmosSystem.GetContainingMixture(lungsComp.SolutionOwnerEntity, excite: true);
-        switch (lungsComp.Phase)
+        var extGas = _atmosSystem.GetContainingMixture(lungs.Comp.SolutionOwnerEntity, excite: true);
+        switch (lungs.Comp.Phase)
         {
             case BreathingPhase.Inhale:
             {
-                UpdateLungGasVolume(gasComp, lungsComp, lungsComp.TargetLungVolume + lungsComp.TidalVolume);
+                UpdateLungGasVolume(lungs, lungs.Comp.TargetLungVolume + lungs.Comp.TidalVolume);
                 break;
             }
             case BreathingPhase.Exhale:
             {
-                UpdateLungGasVolume(gasComp, lungsComp, lungsComp.TargetLungVolume - lungsComp.TidalVolume);
+                UpdateLungGasVolume(lungs, lungs.Comp.TargetLungVolume - lungs.Comp.TidalVolume);
                 break;
             }
             case BreathingPhase.Suffocating:
             {
-                Log.Debug($"{ToPrettyString(lungsComp.SolutionOwnerEntity)} is suffocating!");
+                Log.Debug($"{ToPrettyString(lungs.Comp.SolutionOwnerEntity)} is suffocating!");
                 return;
             }
         }
-        EqualizeLungPressure(gasComp, lungsComp, extGas);
+        EqualizeLungPressure(lungs, extGas);
     }
 
     /// <summary>
@@ -167,89 +170,99 @@ public sealed class LungsSystem : SharedLungsSystem
     /// </summary>
     /// <param name="gasComp">lung gas mixture holder component</param>
     /// <param name="extGas">External atmospheric gas mixture, this is null when in space</param>
-    private void EqualizeLungPressure(LungsGasComponent gasComp, LungsComponent lungsComp, GasMixture? extGas)
+    private void EqualizeLungPressure(Entity<LungsComponent> lungs, GasMixture? extGas)
     {
         if (extGas == null)
             return;
-        if (gasComp.ContainedGas.Pressure > extGas.Pressure)
+        if (lungs.Comp.ContainedGas.Pressure > extGas.Pressure)
         {
-            _atmosSystem.ReleaseGasTo(gasComp.ContainedGas, extGas, gasComp.ContainedGas.Pressure);
+            _atmosSystem.ReleaseGasTo(lungs.Comp.ContainedGas, extGas, lungs.Comp.ContainedGas.Pressure);
         }
-        if (gasComp.ContainedGas.Pressure < extGas.Pressure)
+        if (lungs.Comp.ContainedGas.Pressure < extGas.Pressure)
         {
-            _atmosSystem.ReleaseGasTo(extGas, gasComp.ContainedGas, extGas.Pressure);
+            _atmosSystem.ReleaseGasTo(extGas, lungs.Comp.ContainedGas, extGas.Pressure);
         }
+        Dirty(lungs);
     }
 
-    private void AbsorbGases(LungsComponent lungsComp, LungsGasComponent gasComp)
+    private void AbsorbGases(Entity<LungsComponent> lungs)
     {
         //Do not try to absorb gases if there are none there
-        if (lungsComp.CanBreathe || gasComp.ContainedGas.Volume == 0)
+        if (!lungs.Comp.CanBreathe || lungs.Comp.ContainedGas.Volume == 0)
             return;
-
-        var scalingFactor = 1 / (float)lungsComp.NextUpdate.TotalSeconds;
+        var scalingFactor = 1;
 
         var absorbSolEnt =
-            new Entity<SolutionComponent>(lungsComp.CachedAbsorptionSolutionEnt, Comp<SolutionComponent>(lungsComp.CachedAbsorptionSolutionEnt));
+            new Entity<SolutionComponent>(lungs.Comp.CachedAbsorptionSolutionEnt, Comp<SolutionComponent>(lungs.Comp.CachedAbsorptionSolutionEnt));
         var wasteSolEnt =
-            new Entity<SolutionComponent>(lungsComp.CachedWasteSolutionEnt, Comp<SolutionComponent>(lungsComp.CachedWasteSolutionEnt));
+            new Entity<SolutionComponent>(lungs.Comp.CachedWasteSolutionEnt, Comp<SolutionComponent>(lungs.Comp.CachedWasteSolutionEnt));
         var absorbedSolution = absorbSolEnt.Comp.Solution;
         var wasteSolution = wasteSolEnt.Comp.Solution;
 
-        foreach (var (gas, reagent, maxAbsorption) in lungsComp.CachedAbsorbedGasData)
+        foreach (var (gas, reagent, maxAbsorption) in lungs.Comp.CachedAbsorbedGasData)
         {
-            var oldGasMols = gasComp.ContainedGas[(int) gas];
+            var oldGasMols = lungs.Comp.ContainedGas[(int) gas];
             if (oldGasMols <= 0)
                 continue;
 
             //factor in the timescale so that the max absorption rate is always per second.
             var adjustedMaxAbsorption = maxAbsorption * scalingFactor;
 
-            var reagentSaturation = absorbedSolution.GetReagent(new ReagentId(reagent, null)).Quantity.Float()/absorbedSolution.Volume.Float();
+            var reagentSaturation = _solutionContainerSystem.GetReagentConcentration(absorbSolEnt, 250, new ReagentId(reagent, null));
             if (reagentSaturation >= adjustedMaxAbsorption)
-                continue;
+                continue; //TODO: rewrite this so that max blood concentration will never exceed gas concentration
             var absorptionPercentage = adjustedMaxAbsorption - reagentSaturation;
             var gasMols = oldGasMols* absorptionPercentage;
-            absorbedSolution.AddReagent(GetReagentUnitsFromMol(gasMols, reagent));
-            gasComp.ContainedGas.SetMoles(gas, oldGasMols-gasMols);
+            absorbedSolution.AddReagent(GetReagentUnitsFromMol(gasMols, lungs.Comp.ContainedGas.Pressure,
+                lungs.Comp.ContainedGas.Temperature, reagent));
+            lungs.Comp.ContainedGas.SetMoles(gas, oldGasMols-gasMols);
         }
 
-        foreach (var (gas, reagent, maxRelease) in lungsComp.CachedWasteGasData)
+        foreach (var (gas, reagent, maxRelease) in lungs.Comp.CachedWasteGasData)
         {
-            var oldGasMols = gasComp.ContainedGas[(int) gas];
+            var oldGasMols = lungs.Comp.ContainedGas[(int) gas];
             var adjustedMaxRelease = maxRelease * scalingFactor;
 
+            if (wasteSolution.Volume <= 0)
+                continue;
+
             //make sure we calculate the max concentration to release into the lungs
-            var wasteConcentration = wasteSolution.GetReagent(new(reagent, null)).Quantity.Float() / wasteSolution.Volume.Float();
+            var wasteConcentration = _solutionContainerSystem.GetReagentConcentration(wasteSolEnt, 250, new ReagentId(reagent, null));
             wasteConcentration = MathF.Min(wasteConcentration, adjustedMaxRelease);
-            var gasMolCreated = GetMolsOfReagent(wasteSolution, reagent) * wasteConcentration - oldGasMols;
+            if (wasteConcentration <= 0)
+                return;
+            var gasMolCreated = GetMolsOfReagent(wasteSolution, reagent, lungs.Comp.ContainedGas.Pressure,
+                lungs.Comp.ContainedGas.Temperature) * wasteConcentration - oldGasMols;
             if (gasMolCreated <= 0)
                 continue;
 
-            gasComp.ContainedGas.AdjustMoles(gas, gasMolCreated);
-            wasteSolution.RemoveReagent(GetReagentUnitsFromMol(gasMolCreated, reagent));
+            lungs.Comp.ContainedGas.AdjustMoles(gas, gasMolCreated);
+            wasteSolution.RemoveReagent(GetReagentUnitsFromMol(gasMolCreated, lungs.Comp.ContainedGas.Pressure,
+                lungs.Comp.ContainedGas.Temperature, reagent));
         }
 
         _solutionContainerSystem.UpdateChemicals(absorbSolEnt);
         _solutionContainerSystem.UpdateChemicals(wasteSolEnt);
+
+        Dirty(lungs);
     }
 
-    private void UpdateBreathability(EntityUid uid, LungsComponent lungsComp, LungsGasComponent gasComp, GasMixture? extGas)
+    private void UpdateBreathability(Entity<LungsComponent> lungs, GasMixture? extGas)
     {
-        var breathable = HasBreathableAtmosphere(uid, extGas);
-        if (breathable && lungsComp.CanBreathe || !breathable && !lungsComp.CanBreathe)
+        var breathable = HasBreathableAtmosphere(lungs, extGas);
+        if (breathable && lungs.Comp.CanBreathe || !breathable && !lungs.Comp.CanBreathe)
             return; //no updating needed
         if (breathable)
         {
-            Log.Debug($"{ToPrettyString(lungsComp.SolutionOwnerEntity)} is breathing again!");
-            lungsComp.Phase = BreathingPhase.Inhale;
-            UpdateLungGasVolume(gasComp, lungsComp, lungsComp.TargetLungVolume + lungsComp.TidalVolume, true);
+            Log.Debug($"{ToPrettyString(lungs.Comp.SolutionOwnerEntity)} is breathing again!");
+            lungs.Comp.Phase = BreathingPhase.Inhale;
+            UpdateLungGasVolume(lungs, lungs.Comp.TargetLungVolume + lungs.Comp.TidalVolume, true);
             return;
         }
-        Log.Debug($"{ToPrettyString(lungsComp.SolutionOwnerEntity)} started suffocating!");
-        lungsComp.Phase = BreathingPhase.Suffocating;
-        EmptyLungs(gasComp, extGas);
-        UpdateLungGasVolume(gasComp, lungsComp, 0, true);
+        Log.Debug($"{ToPrettyString(lungs.Comp.SolutionOwnerEntity)} started suffocating!");
+        lungs.Comp.Phase = BreathingPhase.Suffocating;
+        EmptyLungs(lungs, extGas);
+        UpdateLungGasVolume(lungs, 0, true);
 
     }
 
@@ -274,32 +287,33 @@ public sealed class LungsSystem : SharedLungsSystem
     }
 
 
-    private void EmptyLungs(LungsGasComponent gasComp, GasMixture? externalGas)
+    private void EmptyLungs(Entity<LungsComponent> lungs, GasMixture? externalGas)
     {
-        _atmosSystem.ReleaseGasTo(gasComp.ContainedGas, externalGas, gasComp.ContainedGas.Volume);
-        gasComp.ContainedGas = new();
+        _atmosSystem.ReleaseGasTo(lungs.Comp.ContainedGas, externalGas, lungs.Comp.ContainedGas.Volume);
+        lungs.Comp.ContainedGas = new();
     }
 
-    private ReagentQuantity GetReagentUnitsFromMol(float gasMols, string reagentId)
+    private ReagentQuantity GetReagentUnitsFromMol(float gasMols, float pressure, float temp, string reagentId)
     {
-        return new(reagentId, Shared.Chemistry.Constants.LiquidRUFromMoles(gasMols), null);
+        return new(reagentId, Atmospherics.MolsToVolume(gasMols, pressure, temp), null);
     }
 
 
-    private float GetMolsOfReagent(Solution solution, string reagentId)
+    private float GetMolsOfReagent(Solution solution, string reagentId, float pressure, float temp)
     {
-        var reagentAmount = solution.GetReagent(new (reagentId, null)).Quantity;
-        return Shared.Chemistry.Constants.LiquidMolesFromRU(reagentAmount);
+        var reagentVolume = solution.GetReagent(new (reagentId, null)).Quantity;
+        return Atmospherics.VolumeToMols(reagentVolume.Float(), pressure, temp);
     }
 
-    private void UpdateLungGasVolume(LungsGasComponent gasComp,LungsComponent lungsComp, float newVolume, bool force = false)
+    private void UpdateLungGasVolume(Entity<LungsComponent> lungs, float newVolume, bool force = false)
     {
         if (force)
         {
-            gasComp.ContainedGas.Volume = MathF.Min(newVolume, lungsComp.TotalVolume);
+            lungs.Comp.ContainedGas.Volume = MathF.Min(newVolume, lungs.Comp.TotalVolume);
             return;
         }
-        gasComp.ContainedGas.Volume = Math.Clamp(newVolume, lungsComp.ResidualVolume, lungsComp.TotalVolume);
+        lungs.Comp.ContainedGas.Volume = Math.Clamp(newVolume, lungs.Comp.ResidualVolume, lungs.Comp.TotalVolume);
+        Dirty(lungs);
     }
 
 

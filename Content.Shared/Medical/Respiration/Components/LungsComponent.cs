@@ -90,6 +90,9 @@ public sealed partial class LungsComponent : Component
     [DataField, AutoNetworkedField]
     public float TidalVolume = 0.5f;
 
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public GasMixture ContainedGas = new();
+
     /// <summary>
     /// What type of respiration does this respirator use
     /// </summary>
