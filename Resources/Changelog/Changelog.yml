@@ -1,135 +1,4 @@
 ﻿Entries:
-- author: DrMelon
-  changes:
-  - message: Fixed incorrect job-specific Uplink items being given on occasion.
-    type: Fix
-  id: 6004
-  time: '2024-02-22T11:03:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23179
-- author: liltenhead
-  changes:
-  - message: Changed the syndicate assault borg to have a red flashlight.
-    type: Tweak
-  id: 6005
-  time: '2024-02-22T11:15:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25465
-- author: lzk228
-  changes:
-  - message: Fix some items becomes bigger after turning in trash.
-    type: Fix
-  id: 6006
-  time: '2024-02-22T11:28:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25461
-- author: ps3moira
-  changes:
-  - message: Added Large Wooden floors
-    type: Add
-  id: 6007
-  time: '2024-02-22T11:59:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25462
-- author: Whisper
-  changes:
-  - message: Fixed reagent slime ghost role description.
-    type: Fix
-  id: 6008
-  time: '2024-02-22T12:18:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25466
-- author: lzk228
-  changes:
-  - message: Galoshes are added to the Janidrobe.
-    type: Tweak
-  - message: Galoshes now make you slower.
-    type: Tweak
-  id: 6009
-  time: '2024-02-23T01:05:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25484
-- author: PJB3005
-  changes:
-  - message: sorting of departments and jobs has been made consistent in various menus.
-    type: Tweak
-  id: 6010
-  time: '2024-02-23T04:04:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25486
-- author: liltenhead
-  changes:
-  - message: Changed emergency welder's fuel count from 25 -> 50
-    type: Tweak
-  id: 6011
-  time: '2024-02-23T06:53:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25483
-- author: Vasilis
-  changes:
-  - message: Fixed a bug where the centcom official/any job that is not supposed to
-      have a preference option appeared anyway.
-    type: Fix
-  id: 6012
-  time: '2024-02-23T13:19:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25496
-- author: Erisfiregamer1
-  changes:
-  - message: Fixed a typo when forcefeeding someone.
-    type: Fix
-  id: 6013
-  time: '2024-02-24T01:45:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25512
-- author: Beck Thompson
-  changes:
-  - message: The Fire Extinguishers safety can now only be toggled when in range.
-    type: Fix
-  id: 6014
-  time: '2024-02-25T02:29:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25534
-- author: ArchPigeon
-  changes:
-  - message: Removed the ability for command or any antag-safe role to be initial
-      infected in zombie mode
-    type: Remove
-  id: 6015
-  time: '2024-02-25T02:40:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25529
-- author: PolterTzi
-  changes:
-  - message: Cargo ordering multiple crates in one order should work now.
-    type: Fix
-  id: 6016
-  time: '2024-02-25T07:36:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25518
-- author: metalgearsloth
-  changes:
-  - message: Remove executions pending code rewrite.
-    type: Remove
-  id: 6017
-  time: '2024-02-25T11:36:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25555
-- author: Krunk
-  changes:
-  - message: Candy bowls function properly again!
-    type: Fix
-  id: 6018
-  time: '2024-02-25T13:08:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25514
-- author: Whisper
-  changes:
-  - message: Added juice that makes you Weh! Juice a lizard plushie today!
-    type: Add
-  id: 6019
-  time: '2024-02-25T13:54:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25132
-- author: wafehling
-  changes:
-  - message: Secret mode has become more secret, with the 4th option Survival added
-      to the rotation.
-    type: Tweak
-  id: 6020
-  time: '2024-02-25T21:15:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25568
-- author: Tayrtahn
-  changes:
-  - message: Added a live preview display to reagent dispensers.
-    type: Add
-  id: 6021
-  time: '2024-02-25T23:03:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25391
 - author: Krunk
   changes:
   - message: Fixed grid inventory occasionally messing with your item rotation.
@@ -3860,3 +3729,141 @@
   id: 6503
   time: '2024-05-01T03:27:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27535
+- author: Plykiya
+  changes:
+  - message: Inserting telecrystals no longer announces to everyone around you that
+      you inserted it.
+    type: Tweak
+  id: 6504
+  time: '2024-05-01T15:17:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27585
+- author: Dezzzix
+  changes:
+  - message: Goldschlager empty bottle renamed to Gildlager empty bottle
+    type: Tweak
+  id: 6505
+  time: '2024-05-01T15:24:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27581
+- author: FungiFellow
+  changes:
+  - message: Grilles now take Structural Damage
+    type: Tweak
+  id: 6506
+  time: '2024-05-01T22:23:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27596
+- author: lzk228
+  changes:
+  - message: Immovable rod announce now happens at the end of event.
+    type: Tweak
+  id: 6507
+  time: '2024-05-01T22:26:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27587
+- author: metalgearsloth
+  changes:
+  - message: Fix server performance dropping significantly.
+    type: Fix
+  id: 6508
+  time: '2024-05-02T00:18:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27528
+- author: metalgearsloth
+  changes:
+  - message: Fix muzzle flash rotations.
+    type: Fix
+  - message: Fix large client performance drop.
+    type: Fix
+  id: 6509
+  time: '2024-05-02T02:40:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27533
+- author: ElectroJr
+  changes:
+  - message: Fix gas analyzers not opening their UI when used in-hand.
+    type: Fix
+  id: 6510
+  time: '2024-05-02T06:00:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27610
+- author: Plykiya
+  changes:
+  - message: Disarming a player now causes them to throw the disarmed item away from
+      them.
+    type: Tweak
+  id: 6511
+  time: '2024-05-02T12:32:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27589
+- author: fujiwaranao
+  changes:
+  - message: Renault now has additional fox noises.
+    type: Add
+  id: 6512
+  time: '2024-05-02T12:35:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27578
+- author: Doc-Michael
+  changes:
+  - message: CMO's Lab coat is now more resistant to chemical spills and minor cuts
+    type: Tweak
+  id: 6513
+  time: '2024-05-02T12:37:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27551
+- author: Vasilis
+  changes:
+  - message: Removed airtight flaps from the construction menu.
+    type: Remove
+  id: 6514
+  time: '2024-05-02T14:49:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27619
+- author: Lamrr
+  changes:
+  - message: Wine and beer bottles can now be inserted into the booze dispenser.
+    type: Fix
+  id: 6515
+  time: '2024-05-02T16:17:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27626
+- author: deltanedas
+  changes:
+  - message: "Ducky slippers now make you waddle. \U0001F986\U0001F986"
+    type: Tweak
+  id: 6516
+  time: '2024-05-02T17:09:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27628
+- author: ElectroJr
+  changes:
+  - message: Fixed various interactions not prioritizing opening a UI. No more trying
+      to eat mission critical faxes.
+    type: Fix
+  id: 6517
+  time: '2024-05-02T23:37:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27631
+- author: Plykiya
+  changes:
+  - message: Blast grenades have had their manufacturing cost tripled.
+    type: Tweak
+  - message: Blast grenades are now part of the Basic Shuttle Armament research and
+      can be printed at the secfab.
+    type: Tweak
+  id: 6518
+  time: '2024-05-03T00:03:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27580
+- author: Vasilis, Dutch-VanDerLinde
+  changes:
+  - message: A new event has been added, syndicate sleeper agents, which raises the
+      alert level and selects 1-2 players to be traitors rarely throughout the round.
+    type: Add
+  id: 6519
+  time: '2024-05-03T00:13:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27501
+- author: Errant
+  changes:
+  - message: Space Ninjas now automatically turn their internals on when they spawn.
+    type: Tweak
+  id: 6520
+  time: '2024-05-03T01:24:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25083
+- author: Hanzdegloker
+  changes:
+  - message: Added 6 new energy drink based mixed drinks.
+    type: Add
+  - message: Added Red Bool energy drink back to the soda dispenser and gave it a
+      new canned sprite.
+    type: Add
+  id: 6521
+  time: '2024-05-03T06:57:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27597
