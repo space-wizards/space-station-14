@@ -121,6 +121,30 @@
         volume: 12
 
 - type: entity
+  name: Self Destruct
+  description: Go out on your own terms!
+  parent: GrenadeBase
+  id: SelfDestructSeq
+  noSpawn: true
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Minibomb
+    totalIntensity: 400
+    intensitySlope: 30
+    maxIntensity: 125
+    canCreateVacuum: true
+  - type: OnUseTimerTrigger
+    delay: 4.5
+    beepSound:
+      path: /Audio/Effects/Grenades/SelfDestruct/SDS_Charge2.ogg
+      params:
+        volume: 30
+    initialBeepDelay: 0
+    beepInterval: 16
+
+
+- type: entity
   name: supermatter grenade
   description: Grenade that simulates delamination of the supermatter engine, pulling things in a heap and exploding after some time.
   parent: GrenadeBase

@@ -17,7 +17,6 @@
   - type: ActivatableUIRequiresPowerCell
   - type: ActivatableUI
     key: enum.CrewMonitoringUIKey.Key
-    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
       enum.CrewMonitoringUIKey.Key:
