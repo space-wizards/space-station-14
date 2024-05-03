@@ -127,14 +127,10 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                     TryComp(slotEnt, out StorageComponent? storage))
                 {
                     foreach (var ent in entProtos)
-                    {
                         ents.Add(Spawn(ent, coords));
-                    }
 
                     foreach (var ent in ents)
-                    {
                         _storage.Insert(slotEnt.Value, ent, out _, storageComp: storage, playSound: false);
-                    }
                 }
             }
         }
