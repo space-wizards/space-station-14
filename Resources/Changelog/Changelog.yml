@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Krunk
-  changes:
-  - message: Candy bowls function properly again!
-    type: Fix
-  id: 6018
-  time: '2024-02-25T13:08:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25514
 - author: Whisper
   changes:
   - message: Added juice that makes you Weh! Juice a lizard plushie today!
@@ -3861,3 +3854,13 @@
   id: 6517
   time: '2024-05-02T23:37:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27631
+- author: Plykiya
+  changes:
+  - message: Blast grenades have had their manufacturing cost tripled.
+    type: Tweak
+  - message: Blast grenades are now part of the Basic Shuttle Armament research and
+      can be printed at the secfab.
+    type: Tweak
+  id: 6518
+  time: '2024-05-03T00:03:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27580
