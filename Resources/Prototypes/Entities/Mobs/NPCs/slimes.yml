@@ -147,6 +147,16 @@
   noSpawn: true
   components:
   # they portable...
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 5 # +.5 from normal movement speed
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      80: Dead # weak af tho
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
   - type: MultiHandedItem
   - type: Item
     size: Huge
