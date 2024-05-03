@@ -1050,7 +1050,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         out bool existed,
         [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEntity,
         FixedPoint2 maxVol = default,
-        Solution? prototype = null)
+        Solution? prototype = null
+        )
     {
         existed = true;
         solutionEntity = null;
@@ -1061,11 +1062,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (!Resolve(uid, ref container, logMissing: false))
         {
             existed = false;
-            if (NetManager.IsClient)
-                return false;
-
             container = AddComp<SolutionContainerManagerComponent>(uid);
             container.Containers.Add(name);
+            if (NetManager.IsClient)
+                return false;
         }
         else if (!existed)
         {
@@ -1073,13 +1073,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             Dirty(uid, container);
         }
 
-        if (NetManager.IsClient)
-            return false;
-
         var needsInit = false;
         SolutionComponent solutionComp;
         if (solutionSlot.ContainedEntity is not { } solutionId)
         {
+            if (NetManager.IsClient)
+                return false;
             prototype ??= new() { MaxVolume = maxVol };
             prototype.Name = name;
             (solutionId, solutionComp, _) = SpawnSolutionUninitialized(solutionSlot, name, maxVol, prototype);
