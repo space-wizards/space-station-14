@@ -1,7 +1,5 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Pinpointer;
 using Content.Server.Popups;
-using Content.Server.Radio.EntitySystems;
 using Content.Server.Singularity.Events;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
@@ -14,7 +12,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -26,8 +23,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly TagSystem _tags = default!;
-    [Dependency] private readonly NavMapSystem _navMap = default!;
-    [Dependency] private readonly RadioSystem _radio = default!;
+    [Dependency] private readonly ContainmentAlarmSystem _alarm = default!;
+    
 
     public override void Initialize()
     {
@@ -36,6 +33,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ReAnchorEvent>(OnReanchorEvent);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
@@ -84,6 +82,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         else
             args.PushMarkup(Loc.GetString("comp-containment-off"));
+
+        if (HasComp<ContainmentAlarmComponent>(uid))
+            args.PushMarkup(Loc.GetString("comp-containment-alert-field-alarm"));
     }
 
     private void OnInteract(Entity<ContainmentFieldGeneratorComponent> generator, ref InteractHandEvent args)
@@ -104,6 +105,22 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TurnOff(generator);
         }
         args.Handled = true;
+    }
+
+    private void OnInteractUsing(Entity<ContainmentFieldGeneratorComponent> generator, ref InteractUsingEvent args)
+    {
+        if(args.Handled)
+            return;
+
+        if(!HasComp<ContainmentAlarmComponent>(generator) && _tags.HasTag(args.Used, "ContainmentFieldAlarmUpgrade"))
+        {
+            AddComp<ContainmentAlarmComponent>(generator);
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-alarm-upgrade-success"), args.User, args.User);
+            QueueDel(args.Used);
+        }
+        else
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-alarm-upgrade-fail"), args.User, args.User);
+
     }
 
     private void OnAnchorChanged(Entity<ContainmentFieldGeneratorComponent> generator, ref AnchorStateChangedEvent args)
@@ -204,7 +221,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TryGenerateFieldConnection(dir, generator, genXForm);
             }
         }
-        component.LowPowerAlerted = false;
+        if (TryComp<ContainmentAlarmComponent>(generator.Owner, out var alarm))
+            _alarm.ResetAlarm(generator.Owner, alarm);
         ChangePowerVisualizer(power, generator);
     }
 
@@ -213,19 +231,22 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         var component = generator.Comp;
         component.PowerBuffer -= power;
 
-        var posText = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString(generator.Owner));        
+        if(component.Connections.Count != 0)
+        {
+            bool brokenLink = false;
+            if (component.PowerBuffer < component.PowerMinimum)
+            {
+                RemoveConnections(generator);
+                brokenLink = true;
+            }
 
-        if (component.PowerBuffer < component.PowerMinimum && component.Connections.Count != 0)
-        {
-            RemoveConnections(generator);
-            var message = Loc.GetString("comp-containment-alert-field-link-broken", ("location", posText));
-            _radio.SendRadioMessage(generator, message, component.AnnouncementChannel, generator, escapeMarkup: false);
-        }
-        else if (!component.LowPowerAlerted && component.PowerBuffer <= component.PowerMinimum * 2 && component.Connections.Count != 0)
-        {
-            var message = Loc.GetString("comp-containment-alert-field-losing-power", ("location", posText));
-            _radio.SendRadioMessage(generator, message, component.AnnouncementChannel, generator, escapeMarkup: false);
-            component.LowPowerAlerted = true;
+            if (TryComp<ContainmentAlarmComponent>(generator.Owner, out var alarm))
+            {
+                if (brokenLink)
+                    _alarm.BroadcastContainmentBreak(generator.Owner, alarm);
+                else
+                    _alarm.UpdateAlertLevel(generator.Owner, alarm, component.PowerBuffer);
+            }
         }
 
         ChangePowerVisualizer(power, generator);

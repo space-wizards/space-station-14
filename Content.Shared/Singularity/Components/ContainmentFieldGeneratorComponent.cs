@@ -102,17 +102,6 @@ public sealed partial class ContainmentFieldGeneratorComponent : Component
     [DataField("createdField", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string CreatedField = "ContainmentField";
 
-    /// <summary>
-    /// The radio channel that the field announcements are broadcast to.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<RadioChannelPrototype> AnnouncementChannel = "Engineering";
-
-    /// <summary>
-    /// Has this generator sent a low power message already?
-    /// </summary>
-    [ViewVariables]
-    public bool LowPowerAlerted = false;
 }
 
 [Serializable, NetSerializable]
