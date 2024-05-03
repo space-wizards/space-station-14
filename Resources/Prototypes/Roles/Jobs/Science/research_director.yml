@@ -31,7 +31,6 @@
 
 - type: startingGear
   id: ResearchDirectorGear
-  loadout: ResearchDirector
   equipment:
     id: RnDPDA
     ears: ClothingHeadsetRD

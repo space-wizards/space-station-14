@@ -20,7 +20,6 @@
 
 - type: startingGear
   id: MimeGear
-  loadout: Mime
   equipment:
     belt: ClothingBeltSuspenders
     gloves: ClothingHandsGlovesColorWhite

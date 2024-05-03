@@ -34,7 +34,6 @@
 
 - type: startingGear
   id: CaptainGear
-  loadout: Captain
   equipment:
     shoes: ClothingShoesBootsLaceup
     eyes: ClothingEyesGlassesSunglasses

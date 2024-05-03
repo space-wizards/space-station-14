@@ -16,7 +16,6 @@
 
 - type: startingGear
   id: ScientistGear
-  loadout: Scientist
   equipment:
     ears: ClothingHeadsetScience
   storage:

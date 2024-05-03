@@ -40,7 +40,6 @@
 
 - type: startingGear
   id: CMOGear
-  loadout: ChiefMedicalOfficer
   equipment:
     id: CMOPDA
     ears: ClothingHeadsetCMO

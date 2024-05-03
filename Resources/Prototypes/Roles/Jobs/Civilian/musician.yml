@@ -16,7 +16,6 @@
 
 - type: startingGear
   id: MusicianGear
-  loadout: Musician
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
     eyes: ClothingEyesGlassesSunglasses

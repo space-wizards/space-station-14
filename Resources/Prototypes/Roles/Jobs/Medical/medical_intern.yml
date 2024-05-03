@@ -18,7 +18,6 @@
 
 - type: startingGear
   id: MedicalInternGear
-  loadout: MedicalIntern
   equipment:
     shoes: ClothingShoesColorWhite
     id: MedicalInternPDA

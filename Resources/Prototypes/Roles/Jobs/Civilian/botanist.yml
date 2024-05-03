@@ -16,7 +16,6 @@
 
 - type: startingGear
   id: BotanistGear
-  loadout: Botanist
   equipment:
     shoes: ClothingShoesColorBrown
     id: BotanistPDA

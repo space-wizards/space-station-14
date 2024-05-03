@@ -19,7 +19,6 @@
 
 - type: startingGear
   id: StationEngineerGear
-  loadout: StationEngineer
   equipment:
     eyes: ClothingEyesGlassesMeson
     belt: ClothingBeltUtilityEngineering

@@ -23,7 +23,6 @@
 
 - type: startingGear
   id: DetectiveGear
-  loadout: Detective
   equipment:
     eyes: ClothingEyesGlassesSecurity
     id: DetectivePDA

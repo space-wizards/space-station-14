@@ -17,7 +17,6 @@
 
 - type: startingGear
   id: ServiceWorkerGear
-  loadout: ServiceWorker
   equipment:
     shoes: ClothingShoesColorBlack
     id: ServiceWorkerPDA

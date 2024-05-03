@@ -17,7 +17,6 @@
 
 - type: startingGear
   id: LawyerGear
-  loadout: Lawyer
   equipment:
     shoes: ClothingShoesBootsLaceup
     id: LawyerPDA

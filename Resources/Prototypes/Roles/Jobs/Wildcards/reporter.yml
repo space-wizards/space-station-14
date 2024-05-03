@@ -12,7 +12,6 @@
 
 - type: startingGear
   id: ReporterGear
-  loadout: Reporter
   equipment:
     shoes: ClothingShoesColorWhite
     id: ReporterPDA

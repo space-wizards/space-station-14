@@ -18,7 +18,6 @@
 
 - type: startingGear
   id: AtmosphericTechnicianGear
-  loadout: AtmosphericTechnician
   equipment:
     eyes: ClothingEyesGlassesMeson
     id: AtmosPDA

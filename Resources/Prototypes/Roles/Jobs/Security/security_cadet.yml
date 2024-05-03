@@ -27,7 +27,6 @@
 
 - type: startingGear
   id: SecurityCadetGear
-  loadout: SecurityCadet
   equipment:
     shoes: ClothingShoesBootsCombatFilled
     outerClothing: ClothingOuterArmorBasic
