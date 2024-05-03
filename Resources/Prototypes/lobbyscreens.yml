@@ -37,3 +37,25 @@
 - type: lobbyBackground
   id: mime
   background: /Textures/LobbyScreens/mime.webp
+  
+- type: lobbyBackground
+  id: breakingchem
+  background: /Textures/LobbyScreens/breakingchem.webp
+
+- type: lobbyBackground
+  id: clown
+  background: /Textures/LobbyScreens/clown.webp
+  
+- type: lobbyBackground
+  id: monkeyops 
+  background: /Textures/LobbyScreens/monkeyops.webp
+  
+- type: lobbyBackground
+  id: command
+  background: /Textures/LobbyScreens/command.webp
+
+- type: lobbyBackground
+  id: combine
+  background: /Textures/LobbyScreens/combine.webp
+  
+ 
