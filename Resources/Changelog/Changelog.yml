@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: wafehling
-  changes:
-  - message: Secret mode has become more secret, with the 4th option Survival added
-      to the rotation.
-    type: Tweak
-  id: 6020
-  time: '2024-02-25T21:15:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25568
 - author: Tayrtahn
   changes:
   - message: Added a live preview display to reagent dispensers.
@@ -3865,3 +3857,10 @@
   id: 6519
   time: '2024-05-03T00:13:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27501
+- author: Errant
+  changes:
+  - message: Space Ninjas now automatically turn their internals on when they spawn.
+    type: Tweak
+  id: 6520
+  time: '2024-05-03T01:24:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25083
