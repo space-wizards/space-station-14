@@ -12,16 +12,10 @@ namespace Content.Server.Atmos.Components
         /// <summary>
         /// Tool is functional only in allowed slots
         /// </summary>
-        [DataField("allowedSlots")]
+        [DataField]
         public SlotFlags AllowedSlots = SlotFlags.MASK | SlotFlags.HEAD;
         public bool IsFunctional;
-        public EntityUid? ConnectedInternalsEntity;
 
-        /// <summary>
-        /// Tool will automatically turn on internals when it is next equipped
-        /// This feature will turn itself off after the first time it's used
-        /// </summary>
-        [DataField]
-        public bool AutomaticActivation = false;
+        public EntityUid? ConnectedInternalsEntity;
     }
 }

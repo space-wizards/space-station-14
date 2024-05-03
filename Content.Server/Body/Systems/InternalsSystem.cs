@@ -8,6 +8,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Internals;
 using Content.Shared.Inventory;
+using Content.Shared.Roles;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
@@ -23,31 +24,29 @@ public sealed class InternalsSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
-    public const SlotFlags InventorySlots = SlotFlags.POCKET | SlotFlags.BELT;
+    private EntityQuery<InternalsComponent> _internalsQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _internalsQuery = GetEntityQuery<InternalsComponent>();
 
         SubscribeLocalEvent<InternalsComponent, InhaleLocationEvent>(OnInhaleLocation);
         SubscribeLocalEvent<InternalsComponent, ComponentStartup>(OnInternalsStartup);
         SubscribeLocalEvent<InternalsComponent, ComponentShutdown>(OnInternalsShutdown);
         SubscribeLocalEvent<InternalsComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
         SubscribeLocalEvent<InternalsComponent, InternalsDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<BreathToolComponent, ConnectedBreathToolEvent>(OnBreathMaskConnected);
+
+        SubscribeLocalEvent<StartingGearEquippedEvent>(OnStartingGear);
     }
 
-    private void OnBreathMaskConnected(EntityUid uid, BreathToolComponent comp, ConnectedBreathToolEvent args)
+    private void OnStartingGear(ref StartingGearEquippedEvent ev)
     {
-        if (!comp.AutomaticActivation)
+        if (!_internalsQuery.TryComp(ev.Entity, out var internals) || internals.BreathToolEntity == null)
             return;
 
-        if (TryComp<InternalsComponent>(args.User, out var internalsComp) &&
-                !AreInternalsWorking(internalsComp))
-                ToggleInternals(args.User , args.User , false, internalsComp);
-
-        // this is currently only used for roundstart activation, so we turn the feature off afterwards
-        comp.AutomaticActivation = false;
+        ToggleInternals(ev.Entity, ev.Entity, force: false, internals);
     }
 
     private void OnGetInteractionVerbs(
@@ -185,9 +184,6 @@ public sealed class InternalsSystem : EntitySystem
         }
 
         ent.Comp.BreathToolEntity = toolEntity;
-
-        var connected = new ConnectedBreathToolEvent(toolEntity, ent, ent);
-        RaiseLocalEvent(toolEntity, ref connected);
         _alerts.ShowAlert(ent, AlertType.Internals, GetSeverity(ent));
     }
 
@@ -279,12 +275,3 @@ public sealed class InternalsSystem : EntitySystem
         return null;
     }
 }
-
-/// <summary>
-/// Raised on a breathing mask entity after it was equipped on a mob and successfully connected to the mob's InternalsComponent
-/// </summary>
-/// <param name="Mask">The mask that was equipped</param>
-/// <param name="User">The mob that just equipped the mask</param>
-/// <param name="IntComp">The mob's component</param>
-[ByRefEvent]
-public readonly record struct ConnectedBreathToolEvent (EntityUid Mask,  EntityUid User, InternalsComponent IntComp );
