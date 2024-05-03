@@ -1,5 +1,7 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Pinpointer;
 using Content.Server.Popups;
+using Content.Server.Radio.EntitySystems;
 using Content.Server.Singularity.Events;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
@@ -12,6 +14,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -23,6 +26,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly NavMapSystem _navMap = default!;
+    [Dependency] private readonly RadioSystem _radio = default!;
 
     public override void Initialize()
     {
@@ -199,7 +204,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TryGenerateFieldConnection(dir, generator, genXForm);
             }
         }
-
+        component.LowPowerAlerted = false;
         ChangePowerVisualizer(power, generator);
     }
 
@@ -208,9 +213,19 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         var component = generator.Comp;
         component.PowerBuffer -= power;
 
+        var posText = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString(generator.Owner));        
+
         if (component.PowerBuffer < component.PowerMinimum && component.Connections.Count != 0)
         {
             RemoveConnections(generator);
+            var message = Loc.GetString("comp-containment-alert-field-link-broken", ("location", posText));
+            _radio.SendRadioMessage(generator, message, component.AnnouncementChannel, generator, escapeMarkup: false);
+        }
+        else if (!component.LowPowerAlerted && component.PowerBuffer < component.PowerMinimum * 2 && component.Connections.Count != 0)
+        {
+            var message = Loc.GetString("comp-containment-alert-field-losing-power", ("location", posText));
+            _radio.SendRadioMessage(generator, message, component.AnnouncementChannel, generator, escapeMarkup: false);
+            component.LowPowerAlerted = true;
         }
 
         ChangePowerVisualizer(power, generator);
