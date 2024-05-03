@@ -165,7 +165,6 @@
     emagStaticRecipes:
       - BoxLethalshot
       - BoxShotgunFlare
-      - GrenadeBlast
       - MagazineBoxLightRifle
       - MagazineBoxMagnum
       - MagazineBoxPistol
@@ -183,7 +182,6 @@
       - ShellTranquilizer
       - SpeedLoaderMagnum
       - SpeedLoaderMagnumEmpty
-
 
 - type: entity
   id: AutolatheHyperConvection
@@ -721,6 +719,7 @@
       - BoxShotgunUranium
       - ExplosivePayload
       - FlashPayload
+      - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
@@ -741,6 +740,7 @@
       - MagazineRifleUranium
       - MagazineShotgunBeanbag
       - MagazineShotgunIncendiary
+      - PortableRecharger
       - PowerCageHigh
       - PowerCageMedium
       - PowerCageSmall
@@ -763,14 +763,6 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
-      - PowerCageSmall
-      - PowerCageMedium
-      - PowerCageHigh
-      - ShuttleGunSvalinnMachineGunCircuitboard
-      - ShuttleGunPerforatorCircuitboard
-      - ShuttleGunFriendshipCircuitboard
-      - ShuttleGunDusterCircuitboard
-      - PortableRecharger
   - type: MaterialStorage
     whitelist:
       tags:

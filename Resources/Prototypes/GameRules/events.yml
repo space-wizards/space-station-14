@@ -455,6 +455,31 @@
         prototype: Nukeops
 
 - type: entity
+  id: SleeperAgentsRule
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    earliestStart: 25
+    weight: 15
+    minimumPlayers: 15
+    reoccurrenceDelay: 60
+    startAnnouncement: station-event-communication-interception
+    startAudio:
+      path: /Audio/Announcements/intercept.ogg
+  - type: AlertLevelInterceptionRule
+  - type: TraitorRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      min: 1
+      max: 2
+      playerRatio: 10
+      mindComponents:
+      - type: TraitorRole
+        prototype: Traitor
+
+- type: entity
   id: MassHallucinations
   parent: BaseGameRule
   noSpawn: true
@@ -476,11 +501,11 @@
   noSpawn: true
   components:
   - type: StationEvent
-    startAnnouncement: station-event-immovable-rod-start-announcement
-    startAudio:
+    endAnnouncement: station-event-immovable-rod-start-announcement
+    endAudio:
       path: /Audio/Announcements/attention.ogg
     weight: 5
-    duration: 1
+    duration: 25
     earliestStart: 45
     minimumPlayers: 20
   - type: ImmovableRodRule
