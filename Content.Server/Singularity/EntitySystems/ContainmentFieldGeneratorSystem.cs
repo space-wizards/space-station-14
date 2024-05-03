@@ -112,7 +112,10 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if(args.Handled)
             return;
 
-        if(!HasComp<ContainmentAlarmComponent>(generator) && _tags.HasTag(args.Used, "ContainmentFieldAlarmUpgrade"))
+        if (!_tags.HasTag(args.Used, "ContainmentFieldAlarmUpgrade"))
+            return;
+
+        if(!HasComp<ContainmentAlarmComponent>(generator))
         {
             AddComp<ContainmentAlarmComponent>(generator);
             _popupSystem.PopupEntity(Loc.GetString("comp-containment-alarm-upgrade-success"), args.User, args.User);
