@@ -179,53 +179,6 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             profile = HumanoidCharacterProfile.RandomWithSpecies(speciesId);
         }
 
-        if (prototype?.StartingGear != null)
-        {
-            var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
-            EquipStartingGear(entity.Value, startingGear, raiseEvent: false);
-        }
-
-        // Run loadouts after so stuff like storage loadouts can get
-        var jobLoadout = LoadoutSystem.GetJobPrototype(prototype?.ID);
-
-        if (_prototypeManager.TryIndex(jobLoadout, out RoleLoadoutPrototype? roleProto))
-        {
-            RoleLoadout? loadout = null;
-            profile?.Loadouts.TryGetValue(jobLoadout, out loadout);
-
-            // Set to default if not present
-            if (loadout == null)
-            {
-                loadout = new RoleLoadout(jobLoadout);
-                loadout.SetDefault(_prototypeManager);
-            }
-
-            // Order loadout selections by the order they appear on the prototype.
-            foreach (var group in loadout.SelectedLoadouts.OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
-            {
-                foreach (var items in group.Value)
-                {
-                    if (!_prototypeManager.TryIndex(items.Prototype, out var loadoutProto))
-                    {
-                        Log.Error($"Unable to find loadout prototype for {items.Prototype}");
-                        continue;
-                    }
-
-                    if (!_prototypeManager.TryIndex(loadoutProto.Equipment, out var startingGear))
-                    {
-                        Log.Error($"Unable to find starting gear {loadoutProto.Equipment} for loadout {loadoutProto}");
-                        continue;
-                    }
-
-                    // Handle any extra data here.
-                    EquipStartingGear(entity.Value, startingGear, raiseEvent: false);
-                }
-            }
-        }
-
-        var gearEquippedEv = new StartingGearEquippedEvent(entity.Value);
-        RaiseLocalEvent(entity.Value, ref gearEquippedEv, true);
-
         if (profile != null)
         {
             if (prototype != null)
@@ -238,6 +191,20 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
                 AddComp<DetailExaminableComponent>(entity.Value).Content = profile.FlavorText;
             }
         }
+
+        // Run loadouts after so stuff like storage loadouts can get
+        var jobLoadout = LoadoutSystem.GetLoadoutPrototype(prototype?.ID);
+        if (profile != null)
+            EquipLoadout(entity.Value, jobLoadout, profile);
+
+        if (prototype?.StartingGear != null)
+        {
+            var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
+            EquipStartingGear(entity.Value, startingGear, raiseEvent: false);
+        }
+
+        var gearEquippedEv = new StartingGearEquippedEvent(entity.Value);
+        RaiseLocalEvent(entity.Value, ref gearEquippedEv, true);
 
         DoJobSpecials(job, entity.Value);
         _identity.QueueIdentityUpdate(entity.Value);
@@ -293,6 +260,50 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
         if (pdaComponent != null)
             _pdaSystem.SetOwner(idUid.Value, pdaComponent, characterName);
+    }
+
+    /// <summary>
+    /// Equips a loadout onto a mob.
+    /// </summary>
+    /// <param name="entity">Mob that equips the loadout.</param>
+    /// <param name="loadoutProto">Loadout prototype to equip.</param>
+    /// <param name="profile">The humanoid character profile of the equipped entity.</param>
+    public void EquipLoadout(EntityUid entity, ProtoId<RoleLoadoutPrototype> roleProtoID, HumanoidCharacterProfile profile)
+    {
+        if (_prototypeManager.TryIndex(roleProtoID, out RoleLoadoutPrototype? roleProto))
+        {
+            RoleLoadout? loadout = null;
+            profile?.Loadouts.TryGetValue(roleProtoID, out loadout);
+
+            // Set to default if not present
+            if (loadout == null)
+            {
+                loadout = new RoleLoadout(roleProtoID);
+                loadout.SetDefault(_prototypeManager);
+            }
+
+            // Order loadout selections by the order they appear on the prototype.
+            foreach (var group in loadout.SelectedLoadouts.OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
+            {
+                foreach (var items in group.Value)
+                {
+                    if (!_prototypeManager.TryIndex(items.Prototype, out var loadoutProto))
+                    {
+                        Log.Error($"Unable to find loadout prototype for {items.Prototype}");
+                        continue;
+                    }
+
+                    if (!_prototypeManager.TryIndex(loadoutProto.Equipment, out var startingGear))
+                    {
+                        Log.Error($"Unable to find starting gear {loadoutProto.Equipment} for loadout {loadoutProto}");
+                        continue;
+                    }
+
+                    // Handle any extra data here.
+                    EquipStartingGear(entity, startingGear);
+                }
+            }
+        }
     }
 
 

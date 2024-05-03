@@ -497,7 +497,7 @@ namespace Content.Client.Preferences.UI
                 RoleLoadout? loadout = null;
 
                 // Clone so we don't modify the underlying loadout.
-                Profile?.Loadouts.TryGetValue(LoadoutSystem.GetJobPrototype(antag.ID), out loadout);
+                Profile?.Loadouts.TryGetValue(LoadoutSystem.GetLoadoutPrototype(antag.ID), out loadout);
                 loadout = loadout?.Clone();
 
                 var selector = new AntagPreferenceSelector(loadout, antag, btnGroup)
@@ -592,7 +592,7 @@ namespace Content.Client.Preferences.UI
                     RoleLoadout? loadout = null;
 
                     // Clone so we don't modify the underlying loadout.
-                    Profile?.Loadouts.TryGetValue(LoadoutSystem.GetJobPrototype(job.ID), out loadout);
+                    Profile?.Loadouts.TryGetValue(LoadoutSystem.GetLoadoutPrototype(job.ID), out loadout);
                     loadout = loadout?.Clone();
                     var selector = new JobPrioritySelector(loadout, job, jobLoadoutGroup, _prototypeManager)
                     {

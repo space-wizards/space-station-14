@@ -183,9 +183,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         var job = _dummyJob ?? GetPreferredJob(profile);
         GiveDummyJobClothes(dummy, profile, job);
 
-        if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
+        if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetLoadoutPrototype(job.ID)))
         {
-            var loadout = profile.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), EntityManager, _prototypeManager);
+            var loadout = profile.GetLoadoutOrDefault(LoadoutSystem.GetLoadoutPrototype(job.ID), EntityManager, _prototypeManager);
             GiveDummyLoadout(dummy, loadout);
         }
     }

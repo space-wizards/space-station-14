@@ -112,7 +112,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         var protoManager = collection.Resolve<IPrototypeManager>();
 
         // If no loadout found then disabled button
-        if (!protoManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(Proto.ID)))
+        if (!protoManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetLoadoutPrototype(Proto.ID)))
         {
             loadoutWindowBtn.Disabled = true;
         }
@@ -128,7 +128,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                 if (args.Button.Pressed)
                 {
                     // We only create a loadout when necessary to avoid unnecessary DB entries.
-                    _loadout ??= new RoleLoadout(LoadoutSystem.GetJobPrototype(Proto.ID));
+                    _loadout ??= new RoleLoadout(LoadoutSystem.GetLoadoutPrototype(Proto.ID));
                     _loadout.SetDefault(protoManager);
 
                     _loadoutWindow = new LoadoutWindow(_loadout, protoManager.Index(_loadout.Role), session, collection)

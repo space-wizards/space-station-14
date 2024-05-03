@@ -151,7 +151,7 @@ public partial struct AntagSelectionDefinition()
     /// The loadout that's equipped to the player.
     /// </summary>
     [DataField]
-    public string? Loadout;
+    public ProtoId<RoleLoadoutPrototype>? Loadout;
 
     /// <summary>
     /// A briefing shown to the player.

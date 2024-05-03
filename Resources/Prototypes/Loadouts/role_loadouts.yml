@@ -1,6 +1,6 @@
 # Command
 - type: roleLoadout
-  id: JobCaptain
+  id: LoadoutCaptain
   groups:
   - CaptainHead
   - CaptainNeck
@@ -10,7 +10,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobHeadOfPersonnel
+  id: LoadoutHeadOfPersonnel
   groups:
   - HoPHead
   - HoPNeck
@@ -22,7 +22,7 @@
 
 # Civilian
 - type: roleLoadout
-  id: JobPassenger
+  id: LoadoutPassenger
   groups:
   - PassengerJumpsuit
   - CommonBackpack
@@ -34,7 +34,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobBartender
+  id: LoadoutBartender
   groups:
   - BartenderHead
   - BartenderJumpsuit
@@ -44,7 +44,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobServiceWorker
+  id: LoadoutServiceWorker
   groups:
   - BartenderJumpsuit
   - CommonBackpack
@@ -52,7 +52,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobChef
+  id: LoadoutChef
   groups:
   - ChefHead
   - ChefMask
@@ -63,7 +63,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobLibrarian
+  id: LoadoutLibrarian
   groups:
   - LibrarianJumpsuit
   - CommonBackpack
@@ -71,7 +71,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobLawyer
+  id: LoadoutLawyer
   groups:
   - LawyerNeck
   - LawyerJumpsuit
@@ -80,7 +80,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobChaplain
+  id: LoadoutChaplain
   groups:
   - ChaplainHead
   - ChaplainMask
@@ -92,7 +92,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobJanitor
+  id: LoadoutJanitor
   groups:
   - JanitorHead
   - JanitorJumpsuit
@@ -103,7 +103,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobBotanist
+  id: LoadoutBotanist
   groups:
   - BotanistHead
   - BotanistJumpsuit
@@ -113,7 +113,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobClown
+  id: LoadoutClown
   groups:
   - ClownHead
   - ClownJumpsuit
@@ -124,7 +124,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobMime
+  id: LoadoutMime
   groups:
   - MimeHead
   - MimeMask
@@ -135,7 +135,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobMusician
+  id: LoadoutMusician
   groups:
   - MusicianBackpack
   - MusicianOuterClothing
@@ -144,7 +144,7 @@
 
 # Cargo
 - type: roleLoadout
-  id: JobQuartermaster
+  id: LoadoutQuartermaster
   groups:
   - QuartermasterHead
   - QuartermasterNeck
@@ -156,7 +156,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobCargoTechnician
+  id: LoadoutCargoTechnician
   groups:
   - CargoTechnicianHead
   - CargoTechnicianJumpsuit
@@ -167,7 +167,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobSalvageSpecialist
+  id: LoadoutSalvageSpecialist
   groups:
   - SalvageSpecialistBackpack
   - SalvageSpecialistOuterClothing
@@ -177,7 +177,7 @@
 
 # Engineering
 - type: roleLoadout
-  id: JobChiefEngineer
+  id: LoadoutChiefEngineer
   groups:
   - ChiefEngineerHead
   - ChiefEngineerJumpsuit
@@ -188,14 +188,14 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobTechnicalAssistant
+  id: LoadoutTechnicalAssistant
   groups:
   - TechnicalAssistantJumpsuit
   - StationEngineerBackpack
   - Trinkets
 
 - type: roleLoadout
-  id: JobStationEngineer
+  id: LoadoutStationEngineer
   groups:
   - StationEngineerHead
   - StationEngineerJumpsuit
@@ -206,7 +206,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobAtmosphericTechnician
+  id: LoadoutAtmosphericTechnician
   groups:
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianBackpack
@@ -216,7 +216,7 @@
 
 # Science
 - type: roleLoadout
-  id: JobResearchDirector
+  id: LoadoutResearchDirector
   groups:
   - ResearchDirectorHead
   - ResearchDirectorNeck
@@ -229,7 +229,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobScientist
+  id: LoadoutScientist
   groups:
   - ScientistHead
   - ScientistNeck
@@ -243,7 +243,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobResearchAssistant
+  id: LoadoutResearchAssistant
   groups:
   - ResearchAssistantJumpsuit
   - ScientistBackpack
@@ -252,7 +252,7 @@
 
 # Security
 - type: roleLoadout
-  id: JobHeadOfSecurity
+  id: LoadoutHeadOfSecurity
   groups:
   - HeadofSecurityHead
   - HeadofSecurityNeck
@@ -264,7 +264,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobWarden
+  id: LoadoutWarden
   groups:
   - WardenHead
   - WardenJumpsuit
@@ -275,7 +275,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobSecurityOfficer
+  id: LoadoutSecurityOfficer
   groups:
   - SecurityHead
   - SecurityJumpsuit
@@ -287,7 +287,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobDetective
+  id: LoadoutDetective
   groups:
   - DetectiveHead
   - DetectiveNeck
@@ -298,7 +298,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobSecurityCadet
+  id: LoadoutSecurityCadet
   groups:
   - SecurityCadetJumpsuit
   - SecurityBackpack
@@ -306,7 +306,7 @@
 
 # Medical
 - type: roleLoadout
-  id: JobChiefMedicalOfficer
+  id: LoadoutChiefMedicalOfficer
   groups:
   - ChiefMedicalOfficerHead
   - MedicalMask
@@ -320,7 +320,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobMedicalDoctor
+  id: LoadoutMedicalDoctor
   groups:
   - MedicalDoctorHead
   - MedicalMask
@@ -334,7 +334,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobMedicalIntern
+  id: LoadoutMedicalIntern
   groups:
   - MedicalInternJumpsuit
   - MedicalBackpack
@@ -342,7 +342,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobChemist
+  id: LoadoutChemist
   groups:
   - MedicalMask
   - ChemistJumpsuit
@@ -353,7 +353,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobParamedic
+  id: LoadoutParamedic
   groups:
   - ParamedicHead
   - MedicalMask
@@ -367,14 +367,14 @@
 
 # Wildcards
 - type: roleLoadout
-  id: JobZookeeper
+  id: LoadoutZookeeper
   groups:
   - CommonBackpack
   - Glasses
   - Trinkets
 
 - type: roleLoadout
-  id: JobReporter
+  id: LoadoutReporter
   groups:
   - ReporterJumpsuit
   - CommonBackpack
@@ -382,14 +382,14 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobPsychologist
+  id: LoadoutPsychologist
   groups:
   - MedicalBackpack
   - Glasses
   - Trinkets
 
 - type: roleLoadout
-  id: JobBoxer
+  id: LoadoutBoxer
   groups:
   - BoxerJumpsuit
   - BoxerGloves

@@ -26,12 +26,12 @@ public sealed class LoadoutSystem : EntitySystem
         SubscribeLocalEvent<LoadoutComponent, MapInitEvent>(OnMapInit);
     }
 
-    public static string GetJobPrototype(string? loadout)
+    public static string GetLoadoutPrototype(string? loadout)
     {
         if (string.IsNullOrEmpty(loadout))
             return string.Empty;
 
-        return "Job" + loadout;
+        return "Loadout" + loadout;
     }
 
     /// <summary>

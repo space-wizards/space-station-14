@@ -299,7 +299,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (session != null)
         {
-            var antagLoadout = LoadoutSystem.GetJobPrototype(def.Loadout);
+            var antagLoadout = LoadoutSystem.GetLoadoutPrototype(def.Loadout);
             var pref = (HumanoidCharacterProfile) _pref.GetPreferences(session.UserId).SelectedCharacter;
             _stationSpawning.EquipLoadout(player, antagLoadout, pref);
 
