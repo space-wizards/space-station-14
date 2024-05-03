@@ -2529,7 +2529,7 @@ entities:
             0: 65391
           -13,-2:
             0: 34943
-            5: 12288
+            3: 12288
           -12,-1:
             0: 65535
           -13,-1:
@@ -2598,8 +2598,8 @@ entities:
             0: 305
           -13,0:
             0: 34952
-            3: 48
-            4: 12288
+            4: 48
+            5: 12288
           -12,1:
             0: 30576
           -13,1:
@@ -2662,8 +2662,8 @@ entities:
             2: 3140
           -14,0:
             0: 13107
-            3: 128
-            4: 32768
+            4: 128
+            5: 32768
           -14,1:
             0: 243
           -14,-1:
@@ -2683,7 +2683,7 @@ entities:
             2: 4352
           -14,-2:
             0: 13311
-            5: 32768
+            3: 32768
           -14,-4:
             2: 4573
             0: 32768
@@ -2745,6 +2745,21 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
+          - 0
+          - 0
+          - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
           - 6666.982
           - 0
           - 0
@@ -2764,21 +2779,6 @@ entities:
           - 6666.982
           - 0
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 6666.982
           - 0
           - 0
           - 0
@@ -3414,7 +3414,7 @@ entities:
       pos: -28.5,14.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -26051.205
+      secondsUntilStateChange: -29682.248
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -3916,7 +3916,7 @@ entities:
       pos: -13.5,-8.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -5278.263
+      secondsUntilStateChange: -8909.306
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4353,7 +4353,7 @@ entities:
       pos: -13.5,2.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -3075.5679
+      secondsUntilStateChange: -6706.6104
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4703,6 +4703,83 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 22.5,34.5
+      parent: 30
+- proto: AtmosFixBlockerMarker
+  entities:
+  - uid: 4894
+    components:
+    - type: Transform
+      pos: -52.5,-2.5
+      parent: 30
+  - uid: 5073
+    components:
+    - type: Transform
+      pos: -51.5,-2.5
+      parent: 30
+  - uid: 7385
+    components:
+    - type: Transform
+      pos: -50.5,-2.5
+      parent: 30
+  - uid: 8490
+    components:
+    - type: Transform
+      pos: -50.5,-0.5
+      parent: 30
+  - uid: 8491
+    components:
+    - type: Transform
+      pos: -51.5,-0.5
+      parent: 30
+  - uid: 8492
+    components:
+    - type: Transform
+      pos: -52.5,-0.5
+      parent: 30
+  - uid: 8493
+    components:
+    - type: Transform
+      pos: -50.5,-16.5
+      parent: 30
+  - uid: 8494
+    components:
+    - type: Transform
+      pos: -49.5,-16.5
+      parent: 30
+  - uid: 8495
+    components:
+    - type: Transform
+      pos: -48.5,-16.5
+      parent: 30
+  - uid: 8496
+    components:
+    - type: Transform
+      pos: -48.5,-17.5
+      parent: 30
+  - uid: 8497
+    components:
+    - type: Transform
+      pos: -49.5,-17.5
+      parent: 30
+  - uid: 8498
+    components:
+    - type: Transform
+      pos: -50.5,-17.5
+      parent: 30
+  - uid: 8499
+    components:
+    - type: Transform
+      pos: -50.5,-18.5
+      parent: 30
+  - uid: 8500
+    components:
+    - type: Transform
+      pos: -49.5,-18.5
+      parent: 30
+  - uid: 8501
+    components:
+    - type: Transform
+      pos: -48.5,-18.5
       parent: 30
 - proto: AtmosFixFreezerMarker
   entities:
@@ -5137,12 +5214,6 @@ entities:
       canCollide: False
 - proto: BedsheetRD
   entities:
-  - uid: 5073
-    components:
-    - type: Transform
-      parent: 4710
-    - type: Physics
-      canCollide: False
   - uid: 8644
     components:
     - type: Transform
@@ -19761,7 +19832,7 @@ entities:
   - uid: 7813
     components:
     - type: Transform
-      pos: -43.83667,-19.57328
+      pos: -43.886566,-19.623947
       parent: 30
 - proto: ClothingOuterRobesJudge
   entities:
@@ -23975,11 +24046,6 @@ entities:
       parent: 30
 - proto: FireAxeCabinetFilled
   entities:
-  - uid: 602
-    components:
-    - type: Transform
-      pos: 33.5,4.5
-      parent: 30
   - uid: 746
     components:
     - type: Transform
@@ -38436,10 +38502,10 @@ entities:
       parent: 30
 - proto: GunSafeLaserCarbine
   entities:
-  - uid: 7385
+  - uid: 3579
     components:
     - type: Transform
-      pos: 9.5,21.5
+      pos: 8.5,21.5
       parent: 30
 - proto: GunSafeRifleLecter
   entities:
@@ -39145,22 +39211,11 @@ entities:
       parent: 30
 - proto: LockerResearchDirectorFilled
   entities:
-  - uid: 4710
+  - uid: 602
     components:
     - type: Transform
       pos: -22.5,-8.5
       parent: 30
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 5073
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerSalvageSpecialistFilledHardsuit
   entities:
   - uid: 4055
@@ -39218,13 +39273,6 @@ entities:
     components:
     - type: Transform
       pos: 10.5,18.5
-      parent: 30
-- proto: LockerWardenFilledHardsuit
-  entities:
-  - uid: 3579
-    components:
-    - type: Transform
-      pos: 12.5,13.5
       parent: 30
 - proto: LockerWeldingSuppliesFilled
   entities:
@@ -39902,7 +39950,7 @@ entities:
   - uid: 8487
     components:
     - type: Transform
-      pos: -51.594696,11.302238
+      pos: -51.583397,11.406776
       parent: 30
 - proto: PinpointerNuclear
   entities:
@@ -42813,6 +42861,11 @@ entities:
     - type: Transform
       pos: -28.5,-20.5
       parent: 30
+  - uid: 4710
+    components:
+    - type: Transform
+      pos: 2.5,19.5
+      parent: 30
   - uid: 6107
     components:
     - type: Transform
@@ -43822,11 +43875,6 @@ entities:
     components:
     - type: Transform
       pos: -27.5,-8.5
-      parent: 30
-  - uid: 4894
-    components:
-    - type: Transform
-      pos: 2.5,19.5
       parent: 30
   - uid: 5027
     components:
