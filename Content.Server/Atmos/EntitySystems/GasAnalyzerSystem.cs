@@ -95,9 +95,9 @@ namespace Content.Server.Atmos.EntitySystems
             component.Enabled = true;
             Dirty(uid, component);
             UpdateAppearance(uid, component);
-            if (!HasComp<ActiveGasAnalyzerComponent>(uid))
-                AddComp<ActiveGasAnalyzerComponent>(uid);
+            EnsureComp<ActiveGasAnalyzerComponent>(uid);
             UpdateAnalyzer(uid, component);
+            OpenUserInterface(uid, user, component);
         }
 
         /// <summary>

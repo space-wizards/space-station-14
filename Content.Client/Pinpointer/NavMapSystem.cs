@@ -1,4 +1,3 @@
-using Content.Shared.Atmos;
 using Content.Shared.Pinpointer;
 using Robust.Shared.GameStates;
 
@@ -25,12 +24,6 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
                 if (!state.AllChunks!.Contains(index))
                     component.Chunks.Remove(index);
             }
-
-            foreach (var beacon in component.Beacons)
-            {
-                if (!state.AllBeacons!.Contains(beacon))
-                    component.Beacons.Remove(beacon);
-            }
         }
         else
         {
@@ -39,34 +32,19 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
                 if (!state.Chunks.ContainsKey(index))
                     component.Chunks.Remove(index);
             }
-
-            foreach (var beacon in component.Beacons)
-            {
-                if (!state.Beacons.Contains(beacon))
-                    component.Beacons.Remove(beacon);
-            }
         }
 
         foreach (var (origin, chunk) in state.Chunks)
         {
             var newChunk = new NavMapChunk(origin);
-
-            for (var i = 0; i < NavMapComponent.Categories; i++)
-            {
-                var newData = chunk[i];
-
-                if (newData == null)
-                    continue;
-
-                newChunk.TileData[i] = new(newData);
-            }
-
+            Array.Copy(chunk, newChunk.TileData, chunk.Length);
             component.Chunks[origin] = newChunk;
         }
 
-        foreach (var beacon in state.Beacons)
+        component.Beacons.Clear();
+        foreach (var (nuid, beacon) in state.Beacons)
         {
-            component.Beacons.Add(beacon);
+            component.Beacons[nuid] = beacon;
         }
     }
 }
