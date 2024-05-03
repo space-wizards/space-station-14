@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Huge flora anomaly nerf
-    type: Tweak
-  id: 6024
-  time: '2024-02-25T23:41:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25499
 - author: OctoRocket
   changes:
   - message: Removed the hands requirement to read paper.
@@ -3872,3 +3865,10 @@
   id: 6523
   time: '2024-05-03T17:26:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27308
+- author: nikthechampiongr
+  changes:
+  - message: Ninjas will no longer be pointed to random wreckage in space.
+    type: Fix
+  id: 6524
+  time: '2024-05-03T20:23:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27552
