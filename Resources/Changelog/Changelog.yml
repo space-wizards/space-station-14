@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Added a live preview display to reagent dispensers.
-    type: Add
-  id: 6021
-  time: '2024-02-25T23:03:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25391
-- author: Krunk
-  changes:
-  - message: Fixed grid inventory occasionally messing with your item rotation.
-    type: Fix
-  id: 6022
-  time: '2024-02-25T23:24:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25510
-- author: Ubaser
-  changes:
-  - message: Satchels no longer have darkened space representing a gap, and is instead
-      transparent.
-    type: Tweak
-  id: 6023
-  time: '2024-02-25T23:24:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25147
 - author: TheShuEd
   changes:
   - message: Huge flora anomaly nerf
@@ -3864,3 +3842,33 @@
   id: 6520
   time: '2024-05-03T01:24:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25083
+- author: Hanzdegloker
+  changes:
+  - message: Added 6 new energy drink based mixed drinks.
+    type: Add
+  - message: Added Red Bool energy drink back to the soda dispenser and gave it a
+      new canned sprite.
+    type: Add
+  id: 6521
+  time: '2024-05-03T06:57:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27597
+- author: DuskyJay
+  changes:
+  - message: Allowed EMP implants to be used while stunned or cuffed.
+    type: Tweak
+  id: 6522
+  time: '2024-05-03T07:51:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27644
+- author: Just-a-Unity-Dev
+  changes:
+  - message: Fixed Geras not having their speed buff.
+    type: Fix
+  - message: Geras are no longer immune to other AI mobs.
+    type: Fix
+  - message: Slimes can no longer morph into a Geras when zombified.
+    type: Fix
+  - message: Lowered the Geras death threshold.
+    type: Tweak
+  id: 6523
+  time: '2024-05-03T17:26:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27308
