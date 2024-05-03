@@ -9,6 +9,8 @@ using System.Numerics;
 using Content.Shared.Explosion.Components;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
+using Content.Shared.Explosion.Components.OnTrigger;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -28,7 +30,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         SubscribeLocalEvent<ClusterGrenadeComponent, ComponentInit>(OnClugInit);
         SubscribeLocalEvent<ClusterGrenadeComponent, ComponentStartup>(OnClugStartup);
         SubscribeLocalEvent<ClusterGrenadeComponent, InteractUsingEvent>(OnClugUsing);
-        SubscribeLocalEvent<ClusterGrenadeComponent, TriggerEvent>(OnClugTrigger);
+        SubscribeLocalEvent<ClusterOnTriggerComponent, TriggerEvent>(HandleClusterTrigger);
     }
 
     private void OnClugInit(EntityUid uid, ClusterGrenadeComponent component, ComponentInit args)
@@ -41,7 +43,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         var component = clug.Comp;
         if (component.FillPrototype != null)
         {
-            component.UnspawnedCount = Math.Max(0, component.MaxGrenades - component.GrenadesContainer.ContainedEntities.Count);
+            component.UnspawnedCount = Math.Max(0, component.Capacity - component.GrenadesContainer.ContainedEntities.Count);
             UpdateAppearance(clug);
         }
     }
@@ -54,7 +56,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         var component = clug.Comp;
 
         // TODO: Should use whitelist.
-        if (component.GrenadesContainer.ContainedEntities.Count >= component.MaxGrenades ||
+        if (component.GrenadesContainer.ContainedEntities.Count >= component.Capacity ||
             !HasComp<FlashOnTriggerComponent>(args.Used))
             return;
 
@@ -63,88 +65,86 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnClugTrigger(Entity<ClusterGrenadeComponent> clug, ref TriggerEvent args)
+    private void HandleClusterTrigger(EntityUid uid, ClusterOnTriggerComponent component, ref TriggerEvent args)
     {
-        var component = clug.Comp;
-        component.CountDown = true;
-        args.Handled = true;
+        SplitClusterGrenade(uid);
     }
 
-    public override void Update(float frameTime)
+    private void SplitClusterGrenade(EntityUid uid)
     {
-        base.Update(frameTime);
-        var query = EntityQueryEnumerator<ClusterGrenadeComponent>();
+        if (!TryComp<ClusterGrenadeComponent>(uid, out var clugComponent))
+            return;
 
-        while (query.MoveNext(out var uid, out var clug))
+        var grenadesInserted = clugComponent.GrenadesContainer.ContainedEntities.Count + clugComponent.UnspawnedCount;
+        var thrownCount = 0;
+        var segmentAngle = 360 / grenadesInserted;
+        var extraGrenadeDelay = 0f;
+
+        while (TryGetGrenade(uid, clugComponent, out var grenade))
         {
-            if (clug.CountDown && clug.UnspawnedCount > 0)
+            Logger.Debug($"got grenade {grenade}");
+            var angleMin = segmentAngle * thrownCount;
+            var angleMax = segmentAngle * (thrownCount + 1);
+            var angle = Angle.FromDegrees(_random.Next(angleMin, angleMax));
+            if (clugComponent.RandomAngle)
+                angle = _random.NextAngle();
+            thrownCount++;
+
+            switch (clugComponent.GrenadeType)
             {
-                var grenadesInserted = clug.GrenadesContainer.ContainedEntities.Count + clug.UnspawnedCount;
-                var thrownCount = 0;
-                var segmentAngle = 360 / grenadesInserted;
-                var grenadeDelay = 0f;
-
-                while (TryGetGrenade(uid, clug, out var grenade))
-                {
-                    // var distance = random.NextFloat() * _throwDistance;
-                    var angleMin = segmentAngle * thrownCount;
-                    var angleMax = segmentAngle * (thrownCount + 1);
-                    var angle = Angle.FromDegrees(_random.Next(angleMin, angleMax));
-                    if (clug.RandomAngle)
-                        angle = _random.NextAngle();
-                    thrownCount++;
-
-                    switch (clug.GrenadeType)
-                    {
-                        case GrenadeType.Shoot:
-                            ShootProjectile(grenade, angle, clug, uid);
-                            break;
-                        case GrenadeType.Throw:
-                            ThrowGrenade(grenade, angle, clug);
-                            break;
-                    }
-
-                    // give an active timer trigger to the contained grenades when they get launched
-                    if (clug.TriggerGrenades)
-                    {
-                        grenadeDelay += _random.NextFloat(clug.GrenadeTriggerIntervalMin, clug.GrenadeTriggerIntervalMax);
-                        var grenadeTimer = EnsureComp<ActiveTimerTriggerComponent>(grenade);
-                        grenadeTimer.TimeRemaining = (clug.BaseTriggerDelay + grenadeDelay);
-                        var ev = new ActiveTimerTriggerEvent(grenade, uid);
-                        RaiseLocalEvent(uid, ref ev);
-                    }
-                }
-                // delete the empty shell of the clusterbomb
-                Del(uid);
+                case GrenadeType.Shoot:
+                    // using grenade uid as the "gun" because using clug uid throws error due to it being deleted
+                    ShootProjectile(grenade, angle, grenade, clugComponent); 
+                    break;
+                case GrenadeType.Throw:
+                    // using grenade uid as the "thrower" because using clug uid throws error due to it being deleted
+                    ThrowGrenade(grenade, angle, grenade, clugComponent); 
+                    break;
             }
+
+            // currently if I uncomment this section, it successfully goes through the code and whatnot
+            // but after finishing up, the engine will proceed for a bit and then throw a
+            // "Collection was modified; enumeration may not execute" error
+            /*if (clugComponent.TriggerGrenades)
+            {
+                grenadeDelay += _random.NextFloat(clugComponent.GrenadeTriggerIntervalMin, clugComponent.GrenadeTriggerIntervalMax);
+                var grenadeTimer = EnsureComp<ActiveTimerTriggerComponent>(grenade);
+                grenadeTimer.TimeRemaining = (clugComponent.BaseTriggerDelay + grenadeDelay);
+                var ev = new ActiveTimerTriggerEvent(grenade, uid);
+                RaiseLocalEvent(uid, ref ev);
+            }*/
         }
     }
 
-    private void ShootProjectile(EntityUid grenade, Angle angle, ClusterGrenadeComponent clug, EntityUid clugUid)
+    private void ShootProjectile(EntityUid grenade, Angle angle, EntityUid uid, ClusterGrenadeComponent clug)
     {
-        var direction = angle.ToVec().Normalized();
+        Vector2 direction;
+        var velocity = new Vector2(clug.Velocity, clug.Velocity);
 
         if (clug.RandomSpread)
             direction = _random.NextVector2().Normalized();
+        else
+            direction = angle.ToVec().Normalized();
 
-        _gun.ShootProjectile(grenade, direction, Vector2.One.Normalized(), clugUid);
+
+        _gun.ShootProjectile(grenade, direction, velocity, uid);
 
     }
 
-    private void ThrowGrenade(EntityUid grenade, Angle angle, ClusterGrenadeComponent clug)
+    private void ThrowGrenade(EntityUid grenade, Angle angle, EntityUid uid, ClusterGrenadeComponent clug)
     {
-        var direction = angle.ToVec().Normalized() * clug.Distance;
+        Vector2 direction;
 
         if (clug.RandomSpread)
             direction = angle.ToVec().Normalized() * _random.NextFloat(clug.MinSpreadDistance, clug.MaxSpreadDistance);
+        else
+            direction = angle.ToVec().Normalized() * clug.Distance;
 
-        _throwingSystem.TryThrow(grenade, direction, clug.Velocity);
+        _throwingSystem.TryThrow(grenade, direction, clug.Velocity, uid);
     }
 
     private bool TryGetGrenade(EntityUid clugUid, ClusterGrenadeComponent component, out EntityUid grenade)
     {
-        grenade = default;
-
         if (component.UnspawnedCount > 0)
         {
             component.UnspawnedCount--;
@@ -163,6 +163,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
             return true;
         }
 
+        grenade = default;
         return false;
     }
 

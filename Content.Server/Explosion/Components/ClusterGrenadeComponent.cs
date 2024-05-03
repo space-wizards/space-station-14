@@ -12,7 +12,7 @@ namespace Content.Server.Explosion.Components
         /// <summary>
         ///     What we fill our prototype with if we want to pre-spawn with grenades.
         /// </summary>
-        [DataField("fillPrototype")]
+        [DataField]
         public EntProtoId? FillPrototype;
 
         /// <summary>
@@ -23,95 +23,89 @@ namespace Content.Server.Explosion.Components
         /// <summary>
         ///     Maximum grenades in the container.
         /// </summary>
-        [DataField("maxGrenadesCount")]
-        public int MaxGrenades = 3;
+        [DataField]
+        public int Capacity = 3;
 
         /// <summary>
         ///     Maximum delay in seconds between individual grenade triggers
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("grenadeTriggerIntervalMax")]
+        [DataField]
         public float GrenadeTriggerIntervalMax = 0f;
 
         /// <summary>
         ///     Minimum delay in seconds between individual grenade triggers
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("grenadeTriggerIntervalMin")]
+        [DataField]
         public float GrenadeTriggerIntervalMin = 0f;
 
         /// <summary>
         ///     Minimum delay in seconds before any grenades start to be triggered.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("baseTriggerDelay")]
+        [DataField]
         public float BaseTriggerDelay = 1.0f;
 
         /// <summary>
         ///     Decides if grenades trigger after getting launched
         /// </summary>
-        [DataField("triggerGrenades")]
+        [DataField]
         public bool TriggerGrenades = true;
 
         /// <summary>
         ///     Does the cluster grenade shoot or throw
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("grenadeType")]
-        public Enum GrenadeType = Components.GrenadeType.Throw;
+        [DataField]
+        public GrenadeType GrenadeType = GrenadeType.Throw;
 
         /// <summary>
         ///     The speed at which grenades get thrown
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("velocity")]
+        [DataField]
         public float Velocity = 5;
 
         /// <summary>
         ///     Should the spread be random
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("randomSpread")]
+        [DataField]
         public bool RandomSpread = false;
 
         /// <summary>
         ///     Should the angle be random
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("randomAngle")]
+        [DataField]
         public bool RandomAngle = false;
 
         /// <summary>
         ///     Static distance grenades will be thrown to.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("distance")]
+        [DataField]
         public float Distance = 1f;
 
         /// <summary>
         ///     Max distance grenades should randomly be thrown to.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("maxSpreadDistance")]
+        [DataField]
         public float MaxSpreadDistance = 2.5f;
 
         /// <summary>
         ///     Minimal distance grenades should randomly be thrown to.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("minSpreadDistance")]
+        [DataField]
         public float MinSpreadDistance = 0f;
-
-        /// <summary>
-        ///     This is the end.
-        /// </summary>
-        public bool CountDown;
     }
+}
 
-    public enum GrenadeType
-    {
-        Throw,
-        Shoot
-    }
-
+public enum GrenadeType : byte
+{
+    Throw,
+    Shoot
 }
