@@ -10,7 +10,7 @@ comp-containment-disconnected = The containment field generator light fades away
 comp-containment-anchor-warning = You cannot unanchor the containment field generator while it's on or connected!
 comp-containment-toggle-warning = You cannot turn the generator off while it's connected.
 
-comp-containment-alert-field-link-broken = Containment field connection {$location} has broken.
-comp-containment-alert-field-losing-power = Containment field generator {$location} will soon not have enough power to maintain any connections.
+comp-containment-alert-field-link-broken = Containment field connection has severed {$location}.
+comp-containment-alert-field-losing-power = Containment field generator is losing power {$location}.
 
 comp-field-vaporized = The {$entity} hits the field and vaporizes into nothing!
