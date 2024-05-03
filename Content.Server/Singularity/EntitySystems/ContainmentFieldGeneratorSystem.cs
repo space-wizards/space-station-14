@@ -221,7 +221,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             var message = Loc.GetString("comp-containment-alert-field-link-broken", ("location", posText));
             _radio.SendRadioMessage(generator, message, component.AnnouncementChannel, generator, escapeMarkup: false);
         }
-        else if (!component.LowPowerAlerted && component.PowerBuffer < component.PowerMinimum * 2 && component.Connections.Count != 0)
+        else if (!component.LowPowerAlerted && component.PowerBuffer <= component.PowerMinimum * 2 && component.Connections.Count != 0)
         {
             var message = Loc.GetString("comp-containment-alert-field-losing-power", ("location", posText));
             _radio.SendRadioMessage(generator, message, component.AnnouncementChannel, generator, escapeMarkup: false);
