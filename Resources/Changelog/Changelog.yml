@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Krunk
-  changes:
-  - message: Fixed grid inventory occasionally messing with your item rotation.
-    type: Fix
-  id: 6022
-  time: '2024-02-25T23:24:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25510
 - author: Ubaser
   changes:
   - message: Satchels no longer have darkened space representing a gap, and is instead
@@ -3867,3 +3860,10 @@
   id: 6521
   time: '2024-05-03T06:57:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27597
+- author: DuskyJay
+  changes:
+  - message: Allowed EMP implants to be used while stunned or cuffed.
+    type: Tweak
+  id: 6522
+  time: '2024-05-03T07:51:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27644
