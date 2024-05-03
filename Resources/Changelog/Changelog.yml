@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Added juice that makes you Weh! Juice a lizard plushie today!
-    type: Add
-  id: 6019
-  time: '2024-02-25T13:54:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25132
 - author: wafehling
   changes:
   - message: Secret mode has become more secret, with the 4th option Survival added
@@ -3864,3 +3857,11 @@
   id: 6518
   time: '2024-05-03T00:03:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27580
+- author: Vasilis, Dutch-VanDerLinde
+  changes:
+  - message: A new event has been added, syndicate sleeper agents, which raises the
+      alert level and selects 1-2 players to be traitors rarely throughout the round.
+    type: Add
+  id: 6519
+  time: '2024-05-03T00:13:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27501
