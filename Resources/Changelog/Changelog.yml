@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Satchels no longer have darkened space representing a gap, and is instead
-      transparent.
-    type: Tweak
-  id: 6023
-  time: '2024-02-25T23:24:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25147
 - author: TheShuEd
   changes:
   - message: Huge flora anomaly nerf
@@ -3867,3 +3859,16 @@
   id: 6522
   time: '2024-05-03T07:51:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27644
+- author: Just-a-Unity-Dev
+  changes:
+  - message: Fixed Geras not having their speed buff.
+    type: Fix
+  - message: Geras are no longer immune to other AI mobs.
+    type: Fix
+  - message: Slimes can no longer morph into a Geras when zombified.
+    type: Fix
+  - message: Lowered the Geras death threshold.
+    type: Tweak
+  id: 6523
+  time: '2024-05-03T17:26:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27308
