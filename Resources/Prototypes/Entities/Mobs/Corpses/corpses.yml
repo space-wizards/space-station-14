@@ -34,8 +34,8 @@
   components:
   - type: Loadout
     prototypes:
-    - LimitedCargoTechGear
-    - LimitedSalvageSpecialistGear
+    - CargoTechGear
+    - SalvageSpecialistGear
 
 - type: entity
   parent: SalvageHumanCorpse

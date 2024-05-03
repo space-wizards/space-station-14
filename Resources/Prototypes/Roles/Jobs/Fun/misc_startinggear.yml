@@ -221,13 +221,6 @@
     shoes: ClothingShoesBootsSalvage
 
 - type: startingGear
-  id: LimitedCargoTechGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
-    shoes: ClothingShoesBootsSalvage
-    pocket1: AppraisalTool
-
-- type: startingGear
   id: LimitedPirateGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitPirate
