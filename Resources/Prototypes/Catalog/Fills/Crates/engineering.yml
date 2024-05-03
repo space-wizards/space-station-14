@@ -194,3 +194,14 @@
     contents:
     - id: WeaponParticleDecelerator
       amount: 3
+
+- type: entity
+  id: CrateContainmentAlarms
+  parent: CrateEngineeringSecure
+  name: containment field generator alarm crate
+  description: A crate containing 4 containment field generator alarm upgrades.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ContainmentFieldGenUpgrade
+      amount: 4
