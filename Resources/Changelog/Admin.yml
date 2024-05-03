@@ -152,5 +152,54 @@ Entries:
   id: 20
   time: '2024-04-09T15:25:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26771
+- author: Aexxie
+  changes:
+  - message: Removed the bartender's roundstart incendiary shells on Meta.
+    type: Remove
+  id: 21
+  time: '2024-04-20T01:06:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27142
+- author: nikthechampiongr
+  changes:
+  - message: Banpanel default values for ban severities, whether a server ban should
+      be applied with hwid/ip,  whether to use last available details, and whether
+      to erase the player on ban can now be configured through a Cvar.
+    type: Tweak
+  id: 22
+  time: '2024-04-20T16:18:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27168
+- author: EmoGarbage404
+  changes:
+  - message: Fixed antag status being broken in overlay and UI.
+    type: Fix
+  id: 23
+  time: '2024-04-26T00:25:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27319
+- author: Errant
+  changes:
+  - message: When spawning vox for admemes, they should be given/spawned in a nitrogen-filled
+      space if possible. If they must be placed in normal air, an alternate vox prototype
+      now comes with breathing gear and N2 tank already equipped, but the internals
+      must be turned on via right click and even if you do this instantly they will
+      still probably take ~4 poison damage from the air, so heal them afterwards.
+    type: Add
+  id: 24
+  time: '2024-04-27T10:33:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26705
+- author: Tainakov
+  changes:
+  - message: +Adminchat flag is added. Now to gain access to the admin chat you will
+      need this flag.
+    type: Add
+  id: 25
+  time: '2024-04-27T11:17:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26930
+- author: Titian3
+  changes:
+  - message: Added admin playtime tracking and included it in overall playtime tracking.
+    type: Add
+  id: 26
+  time: '2024-05-02T06:23:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24945
 Name: Admin
 Order: 1

@@ -1,0 +1,145 @@
+- type: marking
+  id: VoxBeak
+  bodyPart: Snout
+  markingCategory: Snout
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: beak
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
+  id: VoxLArmScales
+  bodyPart: LArm
+  markingCategory: Arms
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: l_arm
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
+  id: VoxLLegScales
+  bodyPart: LLeg
+  markingCategory: Legs
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: l_leg
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
+  id: VoxRArmScales
+  bodyPart: RArm
+  markingCategory: Arms
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: r_arm
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
+  id: VoxRLegScales
+  bodyPart: RLeg
+  markingCategory: Legs
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: r_leg
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
+  id: VoxRHandScales
+  bodyPart: RHand
+  markingCategory: Arms
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: r_hand
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
+  id: VoxLHandScales
+  bodyPart: LHand
+  markingCategory: Arms
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: l_hand
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
+  id: VoxLFootScales
+  bodyPart: LFoot
+  markingCategory: Legs
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: l_foot
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
+  id: VoxRFootScales
+  bodyPart: RFoot
+  markingCategory: Legs
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: r_foot
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
+  id: VoxTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Vox]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    # Ideally this should use the normal tail sprite and apply an actual mask over it, not just use a butchered sprite
+    state: tail_stenciled

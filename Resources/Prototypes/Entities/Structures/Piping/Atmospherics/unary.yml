@@ -239,8 +239,8 @@
     - type: AtmosDevice
     - type: UserInterface
       interfaces:
-      - key: enum.ThermomachineUiKey.Key
-        type: GasThermomachineBoundUserInterface
+        enum.ThermomachineUiKey.Key:
+          type: GasThermomachineBoundUserInterface
     - type: ActivatableUI
       inHandsOnly: false
       key: enum.ThermomachineUiKey.Key
@@ -457,7 +457,8 @@
     solutions:
       tank:
         maxVol: 400
-        canMix: true
+  - type: MixableSolution
+    solution: tank
   - type: DrainableSolution
     solution: tank
   - type: ExaminableSolution
