@@ -179,7 +179,6 @@
       - MagazineRifleEmpty
       - MagazineShotgun
       - MagazineShotgunEmpty
-      - ShellTranquilizer
       - SpeedLoaderMagnum
       - SpeedLoaderMagnumEmpty
 
@@ -326,6 +325,7 @@
       - PowerCageHigh
       - PowerCageMedium
       - PowerCageSmall
+      - ShellTranquilizer
       - SpeedLoaderMagnumIncendiary
       - SpeedLoaderMagnumUranium
       - TelescopicShield
