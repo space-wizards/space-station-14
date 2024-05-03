@@ -41,3 +41,7 @@
 - type: lobbyBackground
   id: TerminalStation
   background: /Textures/LobbyScreens/terminalstation.webp
+
+- type: lobbyBackground
+  id: Hazard
+  background: /Textures/LobbyScreens/hazard.webp

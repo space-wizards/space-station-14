@@ -42,3 +42,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "aserovich on discord"
   source: "https://github.com/space-wizards/space-station-14"
+
+- files: ["hazard.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "anomaly_il_ on discord"
+  source: "https://github.com/space-syndicate/space-station-14"
