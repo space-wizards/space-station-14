@@ -7,7 +7,10 @@
   components:
   - type: Item
     size: Tiny
+  - type: Sprite
+    sprite: Objects/Fun/whistles.rsi
   - type: Clothing
+    sprite: Objects/Fun/whistles.rsi
     quickEquip: false
     slots: neck
   - type: UseDelay
@@ -16,7 +19,14 @@
     sound:
       collection: BaseWhistle
   - type: Whistle
-    distance: 5
+    distance: 3
+
+- type: entity
+  parent: BaseWhistle
+  id: Whistle
+  components:
+  - type: Sprite
+    icon: whistle
 
 - type: entity
   parent: BaseWhistle
@@ -24,10 +34,11 @@
   description: Sound of it make you feel fear.
   components:
   - type: Sprite
-    sprite: Objects/Fun/whistle.rsi
-    state: securityWhistle
-  - type: Item
-    sprite: Objects/Fun/whistle.rsi
+    icon: sec
+  - type: Clothing
+    equippedPrefix: sec
+  - type: Whistle
+    distance: 5
 
 - type: entity
   parent: BaseWhistle
@@ -36,13 +47,9 @@
   description: A whistle used by Syndicate commanders to draw attention. Avanti!
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/whistles.rsi
-    state: icon
+    icon: trench
   - type: Clothing
-    sprite: Clothing/Neck/Misc/whistles.rsi
-    quickEquip: False
-    slots:
-    - neck
+    equippedPrefix: trench
   - type: EmitSoundOnUse
     sound:
       collection: TrenchWhistle
