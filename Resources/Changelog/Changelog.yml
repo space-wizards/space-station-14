@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Self-uncuff damage has been removed, but attempting to self-uncuff now
-      has a cooldown instead.
-    type: Tweak
-  id: 6026
-  time: '2024-02-26T02:41:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25161
 - author: deltanedas
   changes:
   - message: Traitors can now be asked to steal the CMO's Handheld Crew Monitor.
@@ -3873,3 +3865,10 @@
   id: 6525
   time: '2024-05-04T00:03:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27654
+- author: TheShuEd
+  changes:
+  - message: Added Train station!
+    type: Add
+  id: 6526
+  time: '2024-05-04T11:10:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27534
