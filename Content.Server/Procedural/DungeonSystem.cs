@@ -11,6 +11,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Robust.Server.GameObjects;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -192,7 +193,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             Log,
             DungeonJobTime,
             EntityManager,
-            _mapManager,
             _prototype,
             _tileDefManager,
             _anchorable,
@@ -212,7 +212,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         _dungeonJobQueue.EnqueueJob(job);
     }
 
-    public async Task<Dungeon> GenerateDungeonAsync(
+    public async Task<ValueList<Dungeon>> GenerateDungeonAsync(
         DungeonConfigPrototype gen,
         EntityUid gridUid,
         MapGridComponent grid,
@@ -224,7 +224,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             Log,
             DungeonJobTime,
             EntityManager,
-            _mapManager,
             _prototype,
             _tileDefManager,
             _anchorable,
@@ -249,7 +248,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             throw job.Exception;
         }
 
-        return job.Result!;
+        return job.Result;
     }
 
     public Angle GetDungeonRotation(int seed)

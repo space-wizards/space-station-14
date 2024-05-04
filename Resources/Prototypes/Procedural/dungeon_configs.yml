@@ -323,14 +323,6 @@
         NorthWest: BrickTileWhiteInnerNw
         NorthEast: BrickTileWhiteInnerNe
 
-# todo: Add a biome dungeon generator
-# Add corridor first gens that place rooms on top
-# Add a worm corridor gen (place subsequent corridors somewhere randomly along the path)
-# Place room entrances on ends of corridors touching a tile
-# Remove all room tiles from corridors
-# Fix paths up and try to reconnect all corridor tiles
-# Add a postgen step to spread rooms out, though it shouldn't spread into corridor exteriors
-
 - type: dungeonConfig
   id: Haunted
   generator: !type:PrefabDunGen

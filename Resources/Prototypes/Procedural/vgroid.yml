@@ -1,0 +1,32 @@
+- type: dungeonConfig
+  id: VGRoid
+  # Floor generation
+  generator: !type:GroupDunGen
+    configs:
+    - VGRoidBlob
+  # Everything else
+  #postGeneration:
+  # Generate biome
+  #- !type:BiomePostGen
+  #  biomeTemplate: Asteroid
+
+  # Generate ore veins
+  #- !type:MarkerLayerPostGen
+  #  markerTemplate: AsteroidOre
+
+# Configs
+- type: dungeonConfig
+  id: VGRoidBlob
+  generator: !type:NoiseDunGen
+    tileCap: 1500
+    capStd: 32
+    iterations: 3
+    layers:
+    - tile: FloorAsteroidSand
+      threshold: 0.30
+      noise:
+        frequency: 0.020
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2

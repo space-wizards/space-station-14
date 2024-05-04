@@ -18,22 +18,6 @@ public sealed partial class GridSpawnComponent : Component
     [DataField(required: true)] public Dictionary<string, IGridSpawnGroup> Groups = new();
 }
 
-[DataRecord]
-public record struct DungeonSpawnGroup() : IGridSpawnGroup
-{
-    /// <summary>
-    /// Prototypes we can choose from to spawn.
-    /// </summary>
-    public List<ProtoId<DungeonConfigPrototype>> Protos = new();
-
-    public int MinCount { get; set; } = 1;
-    public int MaxCount { get; set; } = 1;
-    public ComponentRegistry AddComponents { get; set; } = new();
-    public bool Hide { get; set; } = false;
-    public bool NameGrid { get; set; } = false;
-    public bool StationGrid { get; set; } = false;
-}
-
 public interface IGridSpawnGroup
 {
     int MinCount { get; set; }
@@ -61,9 +45,25 @@ public interface IGridSpawnGroup
 }
 
 [DataRecord]
-public record struct GridSpawnGroup() : IGridSpawnGroup
+public sealed class DungeonSpawnGroup : IGridSpawnGroup
 {
-    public List<ResPath> Paths;
+    /// <summary>
+    /// Prototypes we can choose from to spawn.
+    /// </summary>
+    public List<ProtoId<DungeonConfigPrototype>> Protos = new();
+
+    public int MinCount { get; set; } = 1;
+    public int MaxCount { get; set; } = 1;
+    public ComponentRegistry AddComponents { get; set; } = new();
+    public bool Hide { get; set; } = false;
+    public bool NameGrid { get; set; } = false;
+    public bool StationGrid { get; set; } = false;
+}
+
+[DataRecord]
+public sealed class GridSpawnGroup : IGridSpawnGroup
+{
+    public List<ResPath> Paths = new();
 
     public int MinCount { get; set; } = 1;
     public int MaxCount { get; set; } = 1;
