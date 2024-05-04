@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: OctoRocket
-  changes:
-  - message: Removed the hands requirement to read paper.
-    type: Tweak
-  id: 6025
-  time: '2024-02-26T02:40:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25580
 - author: SlamBamActionman
   changes:
   - message: Self-uncuff damage has been removed, but attempting to self-uncuff now
@@ -3872,3 +3865,11 @@
   id: 6524
   time: '2024-05-03T20:23:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27552
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Fixed nuclear operatives, zombies, and head revolutionary round end summaries
+      not showing.
+    type: Fix
+  id: 6525
+  time: '2024-05-04T00:03:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27654
