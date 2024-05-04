@@ -63,12 +63,12 @@
     locPrefix: silicon
   - type: UserInterface
     interfaces:
-    - key: enum.SiliconLawsUiKey.Key
-      type: SiliconLawBoundUserInterface
-    - key: enum.BorgUiKey.Key
-      type: BorgBoundUserInterface
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+      enum.BorgUiKey.Key:
+        type: BorgBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
@@ -129,11 +129,14 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
-    speechSounds: Pai
+    speechSounds: Borg
   - type: Vocal
     sounds:
       Unsexed: UnisexSilicon
   - type: UnblockableSpeech
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBorg
   - type: Construction
     graph: Cyborg
     containers:
@@ -205,13 +208,14 @@
   - type: StandingState
   - type: Tag
     tags:
-    - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
+    - FootstepSound
     - CanPilot
   - type: Emoting
   - type: GuideHelp
     guides:
       - Cyborgs
+  - type: StepTriggerImmune
 
 - type: entity
   id: BaseBorgChassisNT
@@ -235,23 +239,28 @@
   parent: BaseBorgChassis
   abstract: true
   components:
-    - type: NpcFactionMember
-      factions:
-        - Syndicate
-    - type: Access
-      tags:
-       - NuclearOperative
-       - SyndicateAgent
-    - type: AccessReader
-      access: [["SyndicateAgent"], ["NuclearOperative"]]
-    - type: SiliconLawProvider
-      laws: SyndicateStatic
-    - type: IntrinsicRadioTransmitter
-      channels:
-        - Binary
-        - Syndicate
-    - type: ActiveRadio
-      channels:
-        - Syndicate
-    - type: ShowSyndicateIcons
-    - type: MovementAlwaysTouching
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: Access
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
+  - type: AccessReader
+    access: [["SyndicateAgent"], ["NuclearOperative"]]
+  - type: SiliconLawProvider
+    laws: SyndicateStatic
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Syndicate
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: ShowSyndicateIcons
+  - type: MovementAlwaysTouching
+  - type: Speech
+    speechSounds: SyndieBorg
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSiliconSyndicate

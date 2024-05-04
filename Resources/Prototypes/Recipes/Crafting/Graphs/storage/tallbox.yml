@@ -19,8 +19,6 @@
       conditions:
       - !type:StorageWelded
         welded: false
-      - !type:Locked
-        locked: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1

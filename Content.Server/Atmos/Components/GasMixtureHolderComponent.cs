@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Atmos.Components
+﻿using Content.Shared.Atmos;
+
+namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     public sealed partial class GasMixtureHolderComponent : Component, IGasMixtureHolder
