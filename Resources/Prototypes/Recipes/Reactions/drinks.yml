@@ -87,6 +87,16 @@
     B52: 3
 
 - type: reaction
+  id: BudgetInsulsDrink
+  reactants:
+    Tequila:
+      amount: 1
+    VodkaRedBool:
+      amount: 2
+  products:
+    BudgetInsulsDrink: 3
+
+- type: reaction
   id: BlueHawaiian
   reactants:
     CoconutRum:
@@ -517,6 +527,16 @@
     IcedTea: 3
 
 - type: reaction
+  id: IrishBool
+  reactants:
+    EnergyDrink:
+      amount: 1
+    IrishCarBomb:
+      amount: 1
+  products:
+    IrishBool: 2
+
+- type: reaction
   id: IrishCarBomb
   reactants:
     Ale:
@@ -795,6 +815,18 @@
     RoyRogers: 3
 
 - type: reaction
+  id: Rubberneck
+  reactants:
+    EnergyDrink:
+      amount: 2
+    Moonshine:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Rubberneck: 4
+
+- type: reaction
   id: Sbiten
   reactants:
     Vodka:
@@ -944,6 +976,16 @@
     VodkaMartini: 3
 
 - type: reaction
+  id: VodkaRedBool
+  reactants:
+    Vodka:
+      amount: 1
+    EnergyDrink:
+      amount: 2
+  products:
+    VodkaRedBool: 3
+
+- type: reaction
   id: VodkaTonic
   reactants:
     Vodka:
@@ -964,6 +1006,18 @@
     WhiskeyCola: 3
 
 - type: reaction
+  id: WatermelonWakeup
+  reactants:
+    JuiceWatermelon:
+      amount: 1
+    Whiskey:
+      amount: 1
+    EnergyDrink:
+      amount: 1
+  products:
+    WatermelonWakeup: 3
+
+- type: reaction
   id: WhiteRussian
   reactants:
     BlackRussian:
@@ -982,6 +1036,16 @@
       amount: 1
   products:
     WhiskeySoda: 3
+
+- type: reaction
+  id: XenoBasher
+  reactants:
+    ManlyDorf:
+      amount: 2
+    EnergyDrink:
+      amount: 1
+  products:
+    XenoBasher: 3
 
 - type: reaction
   id: HotRamen
