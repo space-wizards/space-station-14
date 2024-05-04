@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MACMAN2003
-  changes:
-  - message: You can now make LED light tubes and LED light bulbs at an autolathe.
-    type: Add
-  id: 6028
-  time: '2024-02-26T22:58:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25616
 - author: botanySupremist
   changes:
   - message: Fixed a few small typos in ghost role information.
@@ -3874,3 +3867,11 @@
   id: 6527
   time: '2024-05-04T11:11:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27618
+- author: Tyzemol
+  changes:
+  - message: Fixed NPCs being able to see and attack you hiding in closed lockers
+      and crates
+    type: Fix
+  id: 6528
+  time: '2024-05-04T19:57:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27677
