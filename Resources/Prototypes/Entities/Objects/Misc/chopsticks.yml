@@ -23,9 +23,8 @@
   - type: SpawnItemsOnUse
     items:
       - id: ChopSticks
+    sound:
+      path: /Audio/Effects/chopstickbreak.ogg
   - type: Sprite
     sprite: Objects/Misc/chopstick.rsi
     state: paired
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Effects/chopstickbreak.ogg
