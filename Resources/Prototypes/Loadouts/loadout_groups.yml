@@ -223,7 +223,6 @@
   minLimit: 0
   loadouts:
   - LawyerHatBowlerHat
-  - LawyerHatOutlawHat
   - LawyerHatTophat
 
 - type: loadoutGroup

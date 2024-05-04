@@ -9,15 +9,6 @@
     head: ClothingHeadHatBowlerHat
 
 - type: loadout
-  id: LawyerHatOutlawHat
-  equipment: LawyerHatOutlawHat
-
-- type: startingGear
-  id: LawyerHatOutlawHat
-  equipment:
-    head: ClothingHeadHatOutlawHat
-
-- type: loadout
   id: LawyerHatTophat
   equipment: LawyerHatTophat
 
