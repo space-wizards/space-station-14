@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: botanySupremist
-  changes:
-  - message: Fixed a few small typos in ghost role information.
-    type: Fix
-  id: 6029
-  time: '2024-02-26T22:58:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25613
 - author: Whisper
   changes:
   - message: Juice that makes you Weh can be found in; anomalies, Artifacts, random
@@ -3875,3 +3868,10 @@
   id: 6528
   time: '2024-05-04T19:57:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27677
+- author: Blackern5000
+  changes:
+  - message: Security belts can now hold more items that security commonly uses.
+    type: Tweak
+  id: 6529
+  time: '2024-05-04T20:00:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27674
