@@ -324,13 +324,15 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     public AntagSelectionPlayerPool GetPlayerPool(Entity<AntagSelectionComponent> ent, List<ICommonSession> sessions, AntagSelectionDefinition def)
     {
         var preferredList = new List<ICommonSession>();
-        var secondBestList = new List<ICommonSession>();
+        var fallbackList = new List<ICommonSession>();
         var unwantedList = new List<ICommonSession>();
+        var invalidList = new List<ICommonSession>();
         foreach (var session in sessions)
         {
             if (!IsSessionValid(ent, session, def) ||
                 !IsEntityValid(session.AttachedEntity, def))
             {
+                invalidList.Add(session);
                 continue;
             }
 
@@ -341,7 +343,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             }
             else if (def.FallbackRoles.Count != 0 && pref.AntagPreferences.Any(p => def.FallbackRoles.Contains(p)))
             {
-                secondBestList.Add(session);
+                fallbackList.Add(session);
             }
             else
             {
@@ -349,7 +351,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             }
         }
 
-        return new AntagSelectionPlayerPool(new() { preferredList, secondBestList, unwantedList });
+        return new AntagSelectionPlayerPool(new() { preferredList, fallbackList, unwantedList, invalidList });
     }
 
     /// <summary>
