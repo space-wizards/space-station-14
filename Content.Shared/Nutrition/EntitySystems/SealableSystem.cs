@@ -11,7 +11,7 @@ public sealed partial class SealableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SealableComponent, ExaminedEvent>(OnExamined, after: new[] { typeof(SharedOpenableSystem) });
+        SubscribeLocalEvent<SealableComponent, ExaminedEvent>(OnExamined, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<SealableComponent, OpenableOpenedEvent>(OnOpened);
     }
 

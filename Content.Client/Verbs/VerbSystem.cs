@@ -166,28 +166,22 @@ namespace Content.Client.Verbs
         }
 
         /// <summary>
-        ///     Asks the server to send back a list of server-side verbs, for the given verb type.
-        /// </summary>
-        public SortedSet<Verb> GetVerbs(EntityUid target, EntityUid user, Type type, bool force = false)
-        {
-            return GetVerbs(GetNetEntity(target), user, new List<Type>() { type }, force);
-        }
-
-        /// <summary>
         ///     Ask the server to send back a list of server-side verbs, and for now return an incomplete list of verbs
         ///     (only those defined locally).
         /// </summary>
-        public SortedSet<Verb> GetVerbs(NetEntity target, EntityUid user, List<Type> verbTypes,
-            bool force = false)
+        public SortedSet<Verb> GetVerbs(NetEntity target, EntityUid user, List<Type> verbTypes, out List<VerbCategory> extraCategories, bool force = false)
         {
             if (!target.IsClientSide())
                 RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes, adminRequest: force));
 
             // Some admin menu interactions will try get verbs for entities that have not yet been sent to the player.
             if (!TryGetEntity(target, out var local))
+            {
+                extraCategories = new();
                 return new();
+            }
 
-            return GetLocalVerbs(local.Value, user, verbTypes, force);
+            return GetLocalVerbs(local.Value, user, verbTypes, out extraCategories, force);
         }
 
 
