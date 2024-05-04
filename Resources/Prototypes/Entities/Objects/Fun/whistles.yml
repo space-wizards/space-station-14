@@ -6,6 +6,7 @@
   description: Someone forgot to turn off kettle?
   components:
   - type: Item
+    sprite: Objects/Fun/whistles.rsi
     size: Tiny
   - type: Sprite
     sprite: Objects/Fun/whistles.rsi
