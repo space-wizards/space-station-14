@@ -10,14 +10,14 @@ public sealed partial class GhostRoleRaffleSettings
     /// The initial duration of a raffle in seconds. This is the countdown timer's value when the raffle starts.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("initialDuration", required: true)]
+    [DataField(required: true)]
     public uint InitialDuration { get; set; }
 
     /// <summary>
     /// When the raffle is joined by a player, the countdown timer is extended by this value in seconds.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("joinExtendsDurationBy", required: true)]
+    [DataField(required: true)]
     public uint JoinExtendsDurationBy { get; set; }
 
     /// <summary>
@@ -25,6 +25,6 @@ public sealed partial class GhostRoleRaffleSettings
     /// duration, even if extended by joiners. Must be greater than or equal to <see cref="InitialDuration"/>.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("maxDuration", required: true)]
+    [DataField(required: true)]
     public uint MaxDuration { get; set; }
 }

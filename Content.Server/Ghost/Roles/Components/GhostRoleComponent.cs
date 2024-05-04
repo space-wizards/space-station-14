@@ -92,7 +92,6 @@ namespace Content.Server.Ghost.Roles.Components
         /// <summary>
         /// If set, ghost role is raffled, otherwise it is first-come-first-serve.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
         [DataField("raffle")]
         public GhostRoleRaffleConfig? RaffleConfig { get; set; }
     }

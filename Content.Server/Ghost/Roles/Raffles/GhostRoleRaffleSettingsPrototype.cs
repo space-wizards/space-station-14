@@ -9,7 +9,6 @@ namespace Content.Server.Ghost.Roles.Raffles;
 public sealed class GhostRoleRaffleSettingsPrototype : IPrototype
 {
     /// <inheritdoc />
-    [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
 
@@ -17,6 +16,6 @@ public sealed class GhostRoleRaffleSettingsPrototype : IPrototype
     /// The settings for a ghost role raffle.
     /// </summary>
     /// <seealso cref="GhostRoleRaffleSettings"/>
-    [DataField("settings", required: true)]
+    [DataField(required: true)]
     public GhostRoleRaffleSettings Settings { get; private set; } = new();
 }

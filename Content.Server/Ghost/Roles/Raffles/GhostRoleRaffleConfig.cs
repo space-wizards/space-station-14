@@ -17,7 +17,6 @@ public sealed partial class GhostRoleRaffleConfig
     /// <summary>
     /// Specifies the raffle settings to use.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
     [DataField("settings", required: true)]
     public ProtoId<GhostRoleRaffleSettingsPrototype> Settings { get; set; } = "default";
 
@@ -31,7 +30,6 @@ public sealed partial class GhostRoleRaffleConfig
     /// <summary>
     /// Sets which <see cref="IGhostRoleRaffleDecider"/> is used.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
     [DataField("decider")]
     public ProtoId<GhostRoleRaffleDeciderPrototype> Decider { get; set; } = "default";
 }

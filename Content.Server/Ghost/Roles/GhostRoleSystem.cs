@@ -180,6 +180,9 @@ namespace Content.Server.Ghost.Roles
             UpdateRaffles(frameTime);
         }
 
+        /// <summary>
+        /// Handles sending count update for the ghost role button in ghost UI, if ghost role count changed.
+        /// </summary>
         private void UpdateGhostRoleCount()
         {
             if (!_needsUpdateGhostRoleCount)
@@ -193,6 +196,9 @@ namespace Content.Server.Ghost.Roles
             }
         }
 
+        /// <summary>
+        /// Handles ghost role raffle logic.
+        /// </summary>
         private void UpdateRaffles(float frameTime)
         {
             var query = EntityQueryEnumerator<GhostRoleRaffleComponent, MetaDataComponent>();
@@ -228,7 +234,7 @@ namespace Content.Server.Ghost.Roles
                 }
 
                 var foundWinner = false;
-                var deciderPrototype = _prototypeManager.Index(ghostRole.RaffleConfig.Decider);
+                var deciderPrototype = _prototype.Index(ghostRole.RaffleConfig.Decider);
 
                 // use the ghost role's chosen winner picker to find a winner
                 deciderPrototype.Decider.PickWinner(
@@ -337,7 +343,7 @@ namespace Content.Server.Ghost.Roles
                 return; // should, realistically, never be reached but you never know
 
             var settings = config.SettingsOverride
-                           ?? _prototypeManager.Index<GhostRoleRaffleSettingsPrototype>(config.Settings).Settings;
+                           ?? _prototype.Index<GhostRoleRaffleSettingsPrototype>(config.Settings).Settings;
 
             if (settings.MaxDuration < settings.InitialDuration)
             {
@@ -362,11 +368,12 @@ namespace Content.Server.Ghost.Roles
         }
 
         /// <summary>
-        ///
+        /// Joins the given player onto a ghost role raffle, or creates it if it doesn't exist.
         /// </summary>
-        /// <param name="player"></param>
-        /// <param name="identifier"></param>
-        public void JoinRaffle(ICommonSession player, uint identifier)
+        /// <param name="player">The player.</param>
+        /// <param name="identifier">The ID that represents the ghost role or ghost role raffle.
+        /// (A raffle will have the same ID as the ghost role it's for.)</param>
+        private void JoinRaffle(ICommonSession player, uint identifier)
         {
             if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
                 return;
@@ -397,6 +404,9 @@ namespace Content.Server.Ghost.Roles
             UpdateAllEui();
         }
 
+        /// <summary>
+        /// Makes the given player leave the raffle corresponding to the given ID.
+        /// </summary>
         public void LeaveRaffle(ICommonSession player, uint identifier)
         {
             if (!_ghostRoleRaffles.TryGetValue(identifier, out var raffleEnt))
@@ -414,6 +424,9 @@ namespace Content.Server.Ghost.Roles
             // (raffle ending because all players left is handled in update())
         }
 
+        /// <summary>
+        /// Makes the given player leave all ghost role raffles.
+        /// </summary>
         public void LeaveAllRaffles(ICommonSession player)
         {
             var shouldUpdateEui = false;
@@ -448,6 +461,10 @@ namespace Content.Server.Ghost.Roles
             }
         }
 
+        /// <summary>
+        /// Attempts having the player take over the ghost role with the corresponding ID. Does not start a raffle.
+        /// </summary>
+        /// <returns>True if takeover was successful, otherwise false.</returns>
         public bool Takeover(ICommonSession player, uint identifier)
         {
             if (!_ghostRoles.TryGetValue(identifier, out var role))

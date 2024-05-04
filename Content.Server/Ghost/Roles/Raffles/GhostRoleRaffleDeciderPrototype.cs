@@ -9,7 +9,6 @@ namespace Content.Server.Ghost.Roles.Raffles;
 public sealed class GhostRoleRaffleDeciderPrototype : IPrototype
 {
     /// <inheritdoc />
-    [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
 

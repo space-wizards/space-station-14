@@ -8,12 +8,11 @@ namespace Content.Server.Ghost.Roles.Raffles;
 /// <summary>
 /// Chooses the winner of a ghost role raffle entirely randomly, without any weighting.
 /// </summary>
-[UsedImplicitly]
+[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public sealed partial class RngGhostRoleRaffleDecider : IGhostRoleRaffleDecider
 {
     public void PickWinner(IEnumerable<ICommonSession> candidates, Func<ICommonSession, bool> tryTakeover)
     {
-        // TODO: deciders should be able to access DI. surely there is a better way than this...?
         var random = IoCManager.Resolve<IRobustRandom>();
 
         var choices = candidates.ToList();
