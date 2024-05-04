@@ -116,7 +116,7 @@ namespace Content.Shared.Maps
         /// <summary>
         /// Allows you to hide some tiles from the UI menu list of tiles.
         /// </summary>
-        [DataField] public bool Hidden { get; } = false;
+        [DataField] public bool EditorHidden { get; } = false;
 
         public void AssignTileId(ushort id)
         {
