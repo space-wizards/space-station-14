@@ -938,6 +938,27 @@
     base: solid
 
 - type: entity
+  parent: WallSolid
+  id: WallSolidChitin
+  name: solid chitin
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/xeno.rsi
+  - type: Icon
+    sprite: Structures/Walls/xeno.rsi
+
+- type: entity
+  parent: WallReinforced
+  id: WallReinforcedChitin
+  name: reinforced chitin
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/xeno.rsi
+  - type: Icon
+    sprite: Structures/Walls/xeno.rsi
+    state: rgeneric
+
+- type: entity
   parent: BaseWall
   id: WallUranium
   name: uranium wall
