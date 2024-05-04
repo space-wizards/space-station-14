@@ -187,7 +187,7 @@
     containers:
       toggleable-clothing: !type:ContainerSlot {}
   - type: TypingIndicatorClothing
-    proto: moth
+    overrideIndicator: moth
 
 - type: entity
   parent: ClothingNeckBase
@@ -198,7 +198,7 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/void.rsi
   - type: TypingIndicatorClothing
-    proto: alien
+    overrideIndicator: alien
 
 - type: entity
   parent: ClothingNeckBase

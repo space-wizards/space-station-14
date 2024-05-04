@@ -30,7 +30,7 @@
     speechVerb: Vox
     speechSounds: Vox
   - type: TypingIndicator
-    proto: vox
+    defaultTypingIndicator: vox
   - type: Vocal
     sounds:
       Male: UnisexVox

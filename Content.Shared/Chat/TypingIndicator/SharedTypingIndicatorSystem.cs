@@ -18,13 +18,13 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
     {
         if (!TryComp<TypingIndicatorComponent>(args.Wearer, out var indicator))
             return;
-        indicator.OverrideIndicator = component.Prototype;
+        indicator.TypingIndicatorOverrideList.Insert(0, component.OverrideIndicator);
     }
 
     private void OnGotUnequipped(EntityUid uid, TypingIndicatorClothingComponent component, ClothingGotUnequippedEvent args)
     {
         if (!TryComp<TypingIndicatorComponent>(args.Wearer, out var indicator))
             return;
-        indicator.OverrideIndicator = null;
+        indicator.TypingIndicatorOverrideList.Remove(component.OverrideIndicator);
     }
 }

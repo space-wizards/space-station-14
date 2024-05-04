@@ -78,7 +78,7 @@
     - type: Speech
       speechVerb: Robotic
     - type: TypingIndicator
-      proto: guardian
+      defaultTypingIndicator: guardian
     - type: Pullable
     - type: MeleeWeapon
       hidden: false

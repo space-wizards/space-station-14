@@ -215,7 +215,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/cardborg_h.rsi
   - type: TypingIndicatorClothing
-    proto: robot
+    overrideIndicator: robot
   - type: IdentityBlocker
   - type: IngestionBlocker
 

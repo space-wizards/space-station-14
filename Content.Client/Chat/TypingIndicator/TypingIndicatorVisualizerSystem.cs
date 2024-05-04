@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chat.TypingIndicator;
+﻿using System.Linq;
+using Content.Shared.Chat.TypingIndicator;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
@@ -14,9 +15,9 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
         if (args.Sprite == null)
             return;
 
-        string currentIndicator = component.Prototype;
-        if (component.OverrideIndicator != null)
-            currentIndicator = component.OverrideIndicator;
+        string currentIndicator = component.DefaultTypingIndicator;
+        if (component.TypingIndicatorOverrideList.Count > 0)
+            currentIndicator = component.TypingIndicatorOverrideList.First();
 
         if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(currentIndicator, out var proto))
         {

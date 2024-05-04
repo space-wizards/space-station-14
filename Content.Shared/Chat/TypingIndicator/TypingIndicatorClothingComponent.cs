@@ -1,5 +1,5 @@
 ﻿using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chat.TypingIndicator;
 
@@ -7,7 +7,10 @@ namespace Content.Shared.Chat.TypingIndicator;
 [Access(typeof(SharedTypingIndicatorSystem))]
 public sealed partial class TypingIndicatorClothingComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<TypingIndicatorPrototype>))]
-    public string Prototype = default!;
+    /// <summary>
+    ///     The indicator that the clothing wearer will use when the clothing is equipped.
+    ///     If two pices of clothing both have OverrideIndicators, the most recent one will be displayed.
+    /// </summary>
+    [DataField]
+    public ProtoId<TypingIndicatorPrototype> OverrideIndicator;
 }

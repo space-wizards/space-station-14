@@ -270,7 +270,7 @@
       Female: UnisexArachnid
       Unsexed: UnisexArachnid
   - type: TypingIndicator
-    proto: spider
+    defaultTypingIndicator: spider
 
 - type: entity
   id: MobSpiderSpaceSalvage

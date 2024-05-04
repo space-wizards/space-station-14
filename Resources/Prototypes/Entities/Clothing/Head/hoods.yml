@@ -224,6 +224,8 @@
     slots:
     - Hair
     - Snout
+  - type: TypingIndicatorClothing
+    overrideIndicator: moth
 
 #Winter Coat Hoods
 - type: entity

@@ -15,12 +15,13 @@ public sealed partial class TypingIndicatorComponent : Component
     /// <summary>
     ///     Prototype id that store all visual info about typing indicator.
     /// </summary>
-    [DataField("proto")]
-    public ProtoId<TypingIndicatorPrototype> Prototype = "default";
+    [DataField]
+    public ProtoId<TypingIndicatorPrototype> DefaultTypingIndicator = "default";
 
     /// <summary>
-    ///     summery
+    ///     A list of all indicators that override the default one. E.g if you put on
+    ///     a moth mask the list would have both the lawyer and the moth indicator.
     /// </summary>
     [DataField]
-    public ProtoId<TypingIndicatorPrototype>? OverrideIndicator;
+    public List<ProtoId<TypingIndicatorPrototype>> TypingIndicatorOverrideList = new List<ProtoId<TypingIndicatorPrototype>>();
 }
