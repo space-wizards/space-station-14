@@ -310,7 +310,9 @@
   speciesRestriction: [Reptilian]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: horns_floppy_kobold_ears
+    state: horns_floppy_kobold_ears_primary
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_floppy_kobold_ears_secondary
 
 - type: marking
   id: LizardChestUnderbelly
