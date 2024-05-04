@@ -501,11 +501,11 @@
   noSpawn: true
   components:
   - type: StationEvent
-    endAnnouncement: station-event-immovable-rod-start-announcement
-    endAudio:
+    startAnnouncement: station-event-immovable-rod-start-announcement
+    startAudio:
       path: /Audio/Announcements/attention.ogg
     weight: 5
-    duration: 25
+    duration: 1
     earliestStart: 45
     minimumPlayers: 20
   - type: ImmovableRodRule
