@@ -13,6 +13,7 @@
   naming: First
   sexes:
   - Unsexed
+  startingGear: VoxGear
 
 - type: speciesBaseSprites
   id: MobVoxSprites
@@ -155,3 +156,9 @@
   baseSprite:
     sprite: Mobs/Species/Vox/parts.rsi
     state: r_foot
+
+- type: startingGear
+  id: VoxGear
+  equipment:
+    mask: ClothingMaskBreath
+    pocket1: DoubleEmergencyNitrogenTankFilled

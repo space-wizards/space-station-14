@@ -1,3 +1,4 @@
+using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -120,6 +121,9 @@ public sealed partial class SpeciesPrototype : IPrototype
     /// </summary>
     [DataField]
     public int MaxAge = 120;
+
+    [DataField]
+    public ProtoId<StartingGearPrototype>? StartingGear;
 }
 
 public enum SpeciesNaming : byte

@@ -1,7 +1,9 @@
 using Content.Server.Humanoid.Components;
 using Content.Server.RandomMetadata;
+using Content.Server.Station.Systems;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
@@ -16,6 +18,7 @@ public sealed class RandomHumanoidSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
 
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
 
@@ -41,6 +44,12 @@ public sealed class RandomHumanoidSystem : EntitySystem
         var profile = HumanoidCharacterProfile.Random(prototype.SpeciesBlacklist);
         var speciesProto = _prototypeManager.Index<SpeciesPrototype>(profile.Species);
         var humanoid = EntityManager.CreateEntityUninitialized(speciesProto.Prototype, coordinates);
+
+        if (speciesProto.StartingGear != null)
+        {
+            var startingGear = _prototypeManager.Index<StartingGearPrototype>(speciesProto.StartingGear);
+            _stationSpawning.EquipStartingGear(humanoid, startingGear, raiseEvent: false);
+        }
 
         _metaData.SetEntityName(humanoid, prototype.RandomizeName ? profile.Name : name);
 

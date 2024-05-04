@@ -185,6 +185,12 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             EquipStartingGear(entity.Value, startingGear, raiseEvent: false);
         }
 
+        if (species.StartingGear != null)
+        {
+            var startingGear = _prototypeManager.Index<StartingGearPrototype>(species.StartingGear);
+            EquipStartingGear(entity.Value, startingGear, raiseEvent: false);
+        }
+
         // Run loadouts after so stuff like storage loadouts can get
         var jobLoadout = LoadoutSystem.GetJobPrototype(prototype?.ID);
 
