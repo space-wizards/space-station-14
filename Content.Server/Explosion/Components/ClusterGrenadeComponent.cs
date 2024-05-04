@@ -48,10 +48,10 @@ namespace Content.Server.Explosion.Components
         public float BaseTriggerDelay = 1.0f;
 
         /// <summary>
-        ///     Decides if grenades trigger after getting launched
+        ///     If the contents of the cluster can trigger, enable to activate their timers
         /// </summary>
         [DataField]
-        public bool TriggerGrenades = true;
+        public bool ActivateContentTimers = false;
 
         /// <summary>
         ///     Does the cluster grenade shoot or throw

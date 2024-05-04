@@ -11,7 +11,7 @@
   - type: ClusterGrenadeVisuals
     state: base
   - type: ClusterOnTrigger
-  - type: DeleteOnTrigger
+#  - type: DeleteOnTrigger
   - type: ClusterGrenade
   - type: OnUseTimerTrigger
     delay: 3.5
@@ -32,11 +32,12 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ClusterOnTrigger
-  - type: DeleteOnTrigger
+#  - type: DeleteOnTrigger
   - type: ClusterGrenade
     fillPrototype: GrenadeFlashBang
     distance: 7
     velocity: 7
+    activateContentTimers: true
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
@@ -65,11 +66,12 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ClusterOnTrigger
-  - type: DeleteOnTrigger
+#  - type: DeleteOnTrigger
   - type: ClusterGrenade
     fillPrototype: ExGrenade
     velocity: 3.5
     distance: 5
+    activateContentTimers: true
   - type: OnUseTimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
@@ -95,7 +97,7 @@
     state: produce
   - type: Appearance
   - type: ClusterOnTrigger
-  - type: DeleteOnTrigger
+#  - type: DeleteOnTrigger
   - type: ClusterGrenade
     fillPrototype: TrashBananaPeelExplosive
     capacity: 6
@@ -134,7 +136,7 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ClusterOnTrigger
-  - type: DeleteOnTrigger
+#  - type: DeleteOnTrigger
   - type: ClusterGrenade
     fillPrototype: PelletClusterRubber
     capacity: 30
@@ -165,7 +167,7 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ClusterOnTrigger
-  - type: DeleteOnTrigger
+#  - type: DeleteOnTrigger
   - type: ClusterGrenade
     fillPrototype: PelletClusterIncendiary
     capacity: 30
@@ -196,7 +198,7 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ClusterOnTrigger
-  - type: DeleteOnTrigger
+#  - type: DeleteOnTrigger
   - type: ClusterGrenade
     fillPrototype: PelletClusterLethal
     capacity: 30
@@ -227,12 +229,10 @@
     - state: syndie-4
   - type: Appearance
   - type: ClusterOnTrigger
-  - type: DeleteOnTrigger
+#  - type: DeleteOnTrigger
   - type: ClusterGrenade
     fillPrototype: SoapletSyndie
     capacity: 30
-    grenadeTriggerIntervalMax: 0
-    grenadeTriggerIntervalMin: 0
     baseTriggerDelay: 60
     randomSpread: true
     velocity: 3

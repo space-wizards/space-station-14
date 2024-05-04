@@ -80,9 +80,12 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         var segmentAngle = 360 / grenadesInserted;
         var extraGrenadeDelay = 0f;
 
-        while (TryGetGrenade(uid, clugComponent, out var grenade))
+        for (var i = 0; i < grenadesInserted; i++)
         {
-            Logger.Debug($"got grenade {grenade}");
+            // needed so that if you toss a cluster into a trash can, the grenades spawn inside the trash can
+            if (!TrySpawnNextTo(clugComponent.FillPrototype, uid, out var grenade))
+                return;
+            Logger.Debug($"got grenade {grenade.Value}");
             var angleMin = segmentAngle * thrownCount;
             var angleMax = segmentAngle * (thrownCount + 1);
             var angle = Angle.FromDegrees(_random.Next(angleMin, angleMax));
@@ -90,30 +93,34 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                 angle = _random.NextAngle();
             thrownCount++;
 
+            // why the fuck is this code only breaking cluster bananas and clusterslips? it's not making any adjustments to any component
             switch (clugComponent.GrenadeType)
             {
                 case GrenadeType.Shoot:
                     // using grenade uid as the "gun" because using clug uid throws error due to it being deleted
-                    ShootProjectile(grenade, angle, grenade, clugComponent); 
+                    ShootProjectile(grenade.Value, angle, grenade.Value, clugComponent);
                     break;
                 case GrenadeType.Throw:
                     // using grenade uid as the "thrower" because using clug uid throws error due to it being deleted
-                    ThrowGrenade(grenade, angle, grenade, clugComponent); 
+                    ThrowGrenade(grenade.Value, angle, grenade.Value, clugComponent);
                     break;
             }
+        }
 
+        /*foreach (var grenade in grenades)
+        {
             // currently if I uncomment this section, it successfully goes through the code and whatnot
             // but after finishing up, the engine will proceed for a bit and then throw a
             // "Collection was modified; enumeration may not execute" error
-            /*if (clugComponent.TriggerGrenades)
+            if (clugComponent.ActivateContentTimers)
             {
-                grenadeDelay += _random.NextFloat(clugComponent.GrenadeTriggerIntervalMin, clugComponent.GrenadeTriggerIntervalMax);
+                extraGrenadeDelay += _random.NextFloat(clugComponent.GrenadeTriggerIntervalMin, clugComponent.GrenadeTriggerIntervalMax);
                 var grenadeTimer = EnsureComp<ActiveTimerTriggerComponent>(grenade);
-                grenadeTimer.TimeRemaining = (clugComponent.BaseTriggerDelay + grenadeDelay);
+                grenadeTimer.TimeRemaining = (clugComponent.BaseTriggerDelay + extraGrenadeDelay);
                 var ev = new ActiveTimerTriggerEvent(grenade, uid);
-                RaiseLocalEvent(uid, ref ev);
-            }*/
-        }
+                RaiseLocalEvent(grenade, ref ev);
+            }
+        }*/
     }
 
     private void ShootProjectile(EntityUid grenade, Angle angle, EntityUid uid, ClusterGrenadeComponent clug)
@@ -141,30 +148,6 @@ public sealed class ClusterGrenadeSystem : EntitySystem
             direction = angle.ToVec().Normalized() * clug.Distance;
 
         _throwingSystem.TryThrow(grenade, direction, clug.Velocity, uid);
-    }
-
-    private bool TryGetGrenade(EntityUid clugUid, ClusterGrenadeComponent component, out EntityUid grenade)
-    {
-        if (component.UnspawnedCount > 0)
-        {
-            component.UnspawnedCount--;
-            grenade = Spawn(component.FillPrototype, _transformSystem.GetMapCoordinates(clugUid));
-            return true;
-        }
-
-        if (component.GrenadesContainer.ContainedEntities.Count > 0)
-        {
-            grenade = component.GrenadesContainer.ContainedEntities[0];
-
-            // This shouldn't happen but you never know.
-            if (!_containerSystem.Remove(grenade, component.GrenadesContainer))
-                return false;
-
-            return true;
-        }
-
-        grenade = default;
-        return false;
     }
 
     private void UpdateAppearance(Entity<ClusterGrenadeComponent> clug)
