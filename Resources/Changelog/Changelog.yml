@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Traitors can now be asked to steal the CMO's Handheld Crew Monitor.
-    type: Tweak
-  id: 6027
-  time: '2024-02-26T03:40:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25563
 - author: MACMAN2003
   changes:
   - message: You can now make LED light tubes and LED light bulbs at an autolathe.
@@ -3872,3 +3865,12 @@
   id: 6526
   time: '2024-05-04T11:10:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27534
+- author: TheShuEd
+  changes:
+  - message: "Added Pathological Liar trait accent. The accent has a 15% chance of\
+      \ inverting your message to the opposite. Replacing \u201CYes\u201D with \u201C\
+      No\u201D, \u201CCan\u201D with \u201Ccan't\u201D and so on."
+    type: Add
+  id: 6527
+  time: '2024-05-04T11:11:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27618
