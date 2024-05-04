@@ -34,7 +34,7 @@
   id: SecurityWhistle
   description: Sound of it make you feel fear.
   components:
-  - type: Item
+  - type: Sprite
     icon: sec
   - type: Clothing
     equippedPrefix: sec
@@ -47,7 +47,7 @@
   name: trench whistle
   description: A whistle used by Syndicate commanders to draw attention. Avanti!
   components:
-  - type: Item
+  - type: Sprite
     icon: trench
   - type: Clothing
     equippedPrefix: trench
