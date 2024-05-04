@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: GasPipeBase
   parent: BaseItem
@@ -101,6 +101,14 @@
   - type: Construction
     graph: GasPipe
     node: straight
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 8
+    soundHit:
+      collection: MetalThud # this NEEDS to changed to the metal pipe falling sound effect on april first every year
 
 - type: entity
   parent: GasPipeBase
@@ -120,6 +128,14 @@
   - type: Construction
     graph: GasPipe
     node: bend
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 6
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   parent: GasPipeBase
@@ -139,6 +155,14 @@
   - type: Construction
     graph: GasPipe
     node: tjunction
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    attackRate: 0.75
+    damage:
+      types:
+        Blunt: 10
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   parent: GasPipeBase
@@ -160,6 +184,14 @@
   - type: Construction
     graph: GasPipe
     node: fourway
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    attackRate: 0.5
+    damage:
+      types:
+        Blunt: 14
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   id: GasPipeBroken
