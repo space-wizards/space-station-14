@@ -113,6 +113,11 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("indestructible")] public bool Indestructible = false;
 
+        /// <summary>
+        /// Allows you to hide some tiles from the UI menu list of tiles.
+        /// </summary>
+        bool Hidden { get; } = false;
+
         public void AssignTileId(ushort id)
         {
             TileId = id;
