@@ -34,7 +34,7 @@ namespace Content.Server.Speech.Components
         public string Accent = default!;
 
         /// <summary>
-        /// allows you to substitute words, not always, but with some chance
+        /// Allows you to substitute words, not always, but with some chance
         /// </summary>
         [DataField]
         public float ReplacementChance = 1f;
