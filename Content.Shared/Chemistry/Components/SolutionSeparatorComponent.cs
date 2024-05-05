@@ -8,7 +8,7 @@ namespace Content.Shared.Chemistry.Components;
 /// so it will pour out reagent by reagent and not all mixed up.
 /// </summary>
 /// <seealso cref="SharedSolutionContainerMixerSystem"/>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class SolutionSeparatorComponent : Component
 {
 }
