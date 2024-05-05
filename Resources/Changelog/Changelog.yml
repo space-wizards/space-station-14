@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: QuietlyWhisper
-  changes:
-  - message: Handcuff and handcuff replacements are faster to escape. You can allow
-      your teammates to uncuff themselves!
-    type: Tweak
-  id: 6033
-  time: '2024-02-26T23:05:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25601
 - author: PoorMansDreams
   changes:
   - message: New lobby art (of horror)
@@ -3874,3 +3866,10 @@
   id: 6532
   time: '2024-05-05T23:30:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27694
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Chemical analysis goggles now show the scanned solution's temperature.
+    type: Tweak
+  id: 6533
+  time: '2024-05-05T23:32:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27693
