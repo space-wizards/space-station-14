@@ -2861,7 +2861,7 @@
       - DoorBumpOpener
   - type: MovementAlwaysTouching
   - type: PressureImmunity
-  - type: NoClothingStepTriggerImmune
+  - type: ClothingStepTriggerImmune
   - type: Insulated
   - type: InteractionPopup
     successChance: 0.7
