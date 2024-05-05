@@ -87,42 +87,53 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
     /// <summary>
     /// Gets the relevant dungeon, running recursively as relevant.
     /// </summary>
-    /// <param name="dungen"></param>
-    /// <param name="seed"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    private async Task<ValueList<Dungeon>> GetDungeon(Vector2i position, IDunGen dungen, int seed)
+    private async Task<ValueList<Dungeon>> GetDungeon(
+        Vector2i position,
+        DungeonConfigPrototype config,
+        IDunGen dungen,
+        HashSet<Vector2i> reservedTiles,
+        int seed)
     {
         Dungeon dungeon;
         var dungeons = new ValueList<Dungeon>();
         var rand = new Random(seed);
 
-        switch (dungen)
-        {
-            case GroupDunGen group:
-                for (var i = 0; i < group.Configs.Count; i++)
-                {
-                    var config = _prototype.Index(group.Configs[i]);
-                    position = (_position + rand.NextVector2(config.MinOffset, config.MaxOffset)).Floored();
-                    dungeons.AddRange(await GetDungeon(position, config.Generator, rand.Next()));
-                }
+        var count = rand.Next(config.MinCount, config.MaxCount);
 
-                break;
-            case NoiseDistanceDunGen distance:
-                dungeon = await GenerateNoiseDistanceDungeon(position, distance,  seed);
-                dungeons.Add(dungeon);
-                break;
-            case NoiseDunGen noise:
-                dungeon = await GenerateNoiseDungeon(position, noise, seed);
-                dungeons.Add(dungeon);
-                break;
-            case PrefabDunGen prefab:
-                dungeon = await GeneratePrefabDungeon(position, prefab, seed);
-                dungeons.Add(dungeon);
-                DebugTools.Assert(dungeon.RoomExteriorTiles.Count > 0);
-                break;
-            default:
-                throw new NotImplementedException();
+        for (var i = 0; i < count; i++)
+        {
+            switch (dungen)
+            {
+                case GroupDunGen group:
+                    for (var j = 0; j < group.Configs.Count; j++)
+                    {
+                        var groupConfig = _prototype.Index(group.Configs[j]);
+                        position = (_position + rand.NextVector2(config.MinOffset, config.MaxOffset)).Floored();
+                        dungeons.AddRange(await GetDungeon(position, groupConfig, config.Generator, reservedTiles, rand.Next()));
+                    }
+
+                    break;
+                case NoiseDistanceDunGen distance:
+                    dungeon = await GenerateNoiseDistanceDungeon(position, distance, reservedTiles, seed);
+                    dungeons.Add(dungeon);
+                    break;
+                case NoiseDunGen noise:
+                    dungeon = await GenerateNoiseDungeon(position, noise, reservedTiles, seed);
+                    dungeons.Add(dungeon);
+                    break;
+                case PrefabDunGen prefab:
+                    dungeon = await GeneratePrefabDungeon(position, prefab, reservedTiles, seed);
+                    dungeons.Add(dungeon);
+                    DebugTools.Assert(dungeon.RoomExteriorTiles.Count > 0);
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            if (config.ReserveTiles)
+            {
+                reservedTiles.UnionWith(dungeons[^1].AllTiles);
+            }
         }
 
         return dungeons;
@@ -135,7 +146,10 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
         var random = new Random(_seed);
         var position = (_position + random.NextVector2(_gen.MinOffset, _gen.MaxOffset)).Floored();
 
-        var dungeons = await GetDungeon(position, _gen.Generator, _seed);
+        // Tiles we can no longer generate on due to being reserved elsewhere.
+        var reservedTiles = new HashSet<Vector2i>();
+
+        var dungeons = await GetDungeon(position, _gen, _gen.Generator, reservedTiles, _seed);
         // To make it slightly more deterministic treat this RNG as separate ig.
 
         foreach (var dungeon in dungeons)

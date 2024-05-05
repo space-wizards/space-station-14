@@ -13,7 +13,7 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonJob
 {
-    private async Task<Dungeon> GenerateNoiseDungeon(Vector2i position, NoiseDunGen dungen, int seed)
+    private async Task<Dungeon> GenerateNoiseDungeon(Vector2i position, NoiseDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
     {
         var rand = new Random(seed);
         var tiles = new List<(Vector2i, Tile)>();
@@ -81,9 +81,14 @@ public sealed partial class DungeonJob
                     if (value < layer.Threshold)
                         continue;
 
-                    roomArea = roomArea.UnionTile(node);
                     foundNoise = true;
                     noiseFill = true;
+
+                    // Still want the tile to gen as normal but can't do anything with it.
+                    if (reservedTiles.Contains(node))
+                        break;
+
+                    roomArea = roomArea.UnionTile(node);
                     var tileDef = _tileDefManager[layer.Tile];
                     var variant = _tile.PickVariant((ContentTileDefinition) tileDef, rand);
                     var adjusted = matrix.Transform(node + _grid.TileSizeHalfVector).Floored();
@@ -136,12 +141,6 @@ public sealed partial class DungeonJob
 
         _maps.SetTiles(_gridUid, _grid, tiles);
         var dungeon = new Dungeon(rooms);
-
-        foreach (var tile in tiles)
-        {
-            dungeon.RoomTiles.Add(tile.Item1);
-        }
-
         return dungeon;
     }
 }

@@ -12,6 +12,12 @@
     configs:
     - VGRoidBlob
     - VGRoidSmaller
+    - VGRoidExteriorDungeons
+    - VGRoidInteriorDungeons
+    - VGRoidLargePaths
+    - VGRoidSmallPaths
+    - VGRoidOres
+    - VGRoidFill
 
 # Configs
 - type: dungeonConfig
@@ -49,35 +55,35 @@
         lacunarity: 1.5
         gain: 0.5
 
-#- type: dungeonConfig
-#  id: VGRoidDonuts
-#  generator: !type:NoiseDunGen
-#    tileCap: 30000
-#    capStd: 128
-#    iterations: 20
-#    layers:
-#    - tile: FloorAsteroidSand
-#      threshold: 0.05
-#      noise:
-#        frequency: 0.010
-#        noiseType: OpenSimplex2
-#        fractalType: PingPong
-#        octaves: 2
-#        lacunarity: 5
-#        gain: 0.1
-#
-#- type: dungeonConfig
-#  id: VGRoidWebs
-#  generator: !type:NoiseDunGen
-#    tileCap: 30000
-#    capStd: 128
-#    iterations: 10
-#    layers:
-#    - tile: FloorAsteroidSand
-#      threshold: 0.05
-#      noise:
-#        frequency: 0.010
-#        noiseType: OpenSimplex2
-#        fractalType: Ridged
-#        octaves: 5
-#        lacunarity: 5
+- type: dungeonConfig
+  id: VGRoidExteriorDungeons
+  minCount: 1
+  maxCount: 3
+  generator: !type:ExteriorDunGen
+    proto: Experiment
+  # TODO:
+  # Need to cleanup dungeon initialisation a bit
+  # Need to make sure alltiles is accurate.
+  # Need a way to reserve tiles so dungeons don't overlap.
+  # - Need a thing to run it N times
+  # - Need a config to place it on the grid exterior
+  # Need a way to share snowylabs shit with the base dungeon
+  # Maybe put a thing on dungeonconfigprototype for tile configs / decal configs
+
+- type: dungeonConfig
+  id: VGRoidInteriorDungeons
+  minCount: 3
+  maxCount: 5
+  # Just randomly spawn these in bounds, doesn't really matter if they go out.
+
+- type: dungeonConfig
+  id: VGRoidLargePaths
+
+- type: dungeonConfig
+  id: VGRoidSmallPaths
+
+- type: dungeonConfig
+  id: VGRoidOres
+
+- type: dungeonConfig
+  id: VGRoidFill

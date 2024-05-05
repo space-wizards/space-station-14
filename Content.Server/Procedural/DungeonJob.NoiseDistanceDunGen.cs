@@ -17,7 +17,7 @@ public sealed partial class DungeonJob
      * https://old.reddit.com/r/proceduralgeneration/comments/kaen7h/new_video_on_procedural_island_noise_generation/gfjmgen/ also has more variations
      */
 
-    private async Task<Dungeon> GenerateNoiseDistanceDungeon(Vector2i position, NoiseDistanceDunGen dungen, int seed)
+    private async Task<Dungeon> GenerateNoiseDistanceDungeon(Vector2i position, NoiseDistanceDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
     {
         var rand = new Random(seed);
         var tiles = new List<(Vector2i, Tile)>();
@@ -40,6 +40,9 @@ public sealed partial class DungeonJob
             for (var y = area.Bottom; y <= area.Top; y++)
             {
                 var node = new Vector2i(x, y);
+
+                if (reservedTiles.Contains(node))
+                    continue;
 
                 foreach (var layer in dungen.Layers)
                 {
