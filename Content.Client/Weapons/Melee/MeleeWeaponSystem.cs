@@ -43,6 +43,12 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         UpdatesOutsidePrediction = true;
     }
 
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+        UpdateEffects();
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -50,7 +56,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
-        var entityNull = _player.LocalPlayer?.ControlledEntity;
+        var entityNull = _player.LocalEntity;
 
         if (entityNull == null)
             return;

@@ -17,9 +17,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Maps;
-using Content.Shared.Mobs;
 using Content.Shared.Popups;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
@@ -32,6 +30,8 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
+using PullerComponent = Content.Shared.Movement.Pulling.Components.PullerComponent;
 
 namespace Content.Server.Electrocution;
 
@@ -62,9 +62,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [ValidatePrototypeId<DamageTypePrototype>]
     private const string DamageType = "Shock";
 
-    // Yes, this is absurdly small for a reason.
-    private const float ElectrifiedScalePerWatt = 1E-6f;
-
+    // Multiply and shift the log scale for shock damage.
     private const float RecursiveDamageMultiplier = 0.75f;
     private const float RecursiveTimeMultiplier = 0.8f;
 
@@ -99,29 +97,18 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private void UpdateElectrocutions(float frameTime)
     {
         var query = EntityQueryEnumerator<ElectrocutionComponent, PowerConsumerComponent>();
-        while (query.MoveNext(out var uid, out var electrocution, out var consumer))
+        while (query.MoveNext(out var uid, out var electrocution, out _))
         {
             var timePassed = Math.Min(frameTime, electrocution.TimeLeft);
 
             electrocution.TimeLeft -= timePassed;
-            electrocution.AccumulatedDamage += electrocution.BaseDamage * (consumer.ReceivedPower / consumer.DrawRate) * timePassed;
 
             if (!MathHelper.CloseTo(electrocution.TimeLeft, 0))
                 continue;
 
-            if (EntityManager.EntityExists(electrocution.Electrocuting))
-            {
-                // TODO: damage should be scaled by shock damage multiplier
-                // TODO: better paralyze/jitter timing
-                var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), (int) electrocution.AccumulatedDamage);
+            // We tried damage scaling based on power in the past and it really wasn't good.
+            // Various scaling types didn't fix tiders and HV grilles instantly critting players.
 
-                var actual = _damageable.TryChangeDamage(electrocution.Electrocuting, damage, origin: electrocution.Source);
-                if (actual != null)
-                {
-                    _adminLogger.Add(LogType.Electrocution,
-                        $"{ToPrettyString(electrocution.Electrocuting):entity} received {actual.GetTotal():damage} powered electrocution damage from {ToPrettyString(electrocution.Source):source}");
-                }
-            }
             QueueDel(uid);
         }
     }
@@ -199,7 +186,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!_meleeWeapon.GetDamage(args.Used, args.User).Any())
             return;
 
-        DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false, 1);
+        DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false);
     }
 
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
@@ -224,6 +211,9 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
 
         if (!IsPowered(uid, electrified, transform))
+            return false;
+
+        if (!_random.Prob(electrified.Probability))
             return false;
 
         EnsureComp<ActivatedElectrifiedComponent>(uid);
@@ -254,17 +244,15 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         var node = PoweredNode(uid, electrified, nodeContainer);
-        if (node?.NodeGroup is not IBasePowerNet powerNet)
+        if (node?.NodeGroup is not IBasePowerNet)
             return false;
 
-        var net = powerNet.NetworkNode;
-        var supp = net.LastCombinedSupply;
-
-        if (supp <= 0f)
-            return false;
-
-        // Initial damage scales off of the available supply on the principle that the victim has shorted the entire powernet through their body.
-        var damageScale = supp * ElectrifiedScalePerWatt;
+        var (damageScalar, timeScalar) = node.NodeGroupID switch
+        {
+            NodeGroupID.HVPower => (electrified.HighVoltageDamageMultiplier, electrified.HighVoltageTimeMultiplier),
+            NodeGroupID.MVPower => (electrified.MediumVoltageDamageMultiplier, electrified.MediumVoltageTimeMultiplier),
+            _ => (1f, 1f)
+        };
 
         {
             var lastRet = true;
@@ -275,8 +263,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     entity,
                     uid,
                     node,
-                    (int) (electrified.ShockDamage * damageScale * MathF.Pow(RecursiveDamageMultiplier, depth)),
-                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Min(1f + MathF.Log2(1f + damageScale), 3f) * MathF.Pow(RecursiveTimeMultiplier, depth)),
+                    (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth) * damageScalar),
+                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth) * timeScalar),
                     true,
                     electrified.SiemensCoefficient);
             }
@@ -295,7 +283,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         {
             if (id != null &&
                 _nodeContainer.TryGetNode<Node>(nodeContainer, id, out var tryNode) &&
-                tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: > 0 } })
+                tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedMaxSupply: > 0 } })
             {
                 return tryNode;
             }
@@ -465,14 +453,14 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         all.Add((entity, depth));
         visited.Add(entity);
 
-        if (TryComp<SharedPullableComponent>(entity, out var pullable) &&
+        if (TryComp<PullableComponent>(entity, out var pullable) &&
             pullable.Puller is { Valid: true } pullerId &&
             !visited.Contains(pullerId))
         {
             GetChainedElectrocutionTargetsRecurse(pullerId, depth + 1, visited, all);
         }
 
-        if (TryComp<SharedPullerComponent>(entity, out var puller) &&
+        if (TryComp<PullerComponent>(entity, out var puller) &&
             puller.Pulling is { Valid: true } pullingId &&
             !visited.Contains(pullingId))
         {

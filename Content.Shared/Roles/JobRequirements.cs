@@ -96,7 +96,7 @@ namespace Content.Shared.Roles
         /// </summary>
         public static bool TryRequirementMet(
             JobRequirement requirement,
-            Dictionary<string, TimeSpan> playTimes,
+            IReadOnlyDictionary<string, TimeSpan> playTimes,
             [NotNullWhen(false)] out FormattedMessage? reason,
             IEntityManager entManager,
             IPrototypeManager prototypes)
@@ -162,7 +162,7 @@ namespace Content.Shared.Roles
                             return true;
 
                         reason = FormattedMessage.FromMarkup(Loc.GetString(
-                              "role-timer-overall-insufficient", 
+                              "role-timer-overall-insufficient",
                               ("time", Math.Ceiling(overallDiff))));
                         return false;
                     }

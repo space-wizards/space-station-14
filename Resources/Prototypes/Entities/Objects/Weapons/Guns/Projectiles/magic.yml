@@ -5,15 +5,45 @@
   parent: BulletRocket
   noSpawn: true
   components:
+  - type: PointLight
+    color: "#E25822"
+    radius: 2.0
+    energy: 5.0
+  - type: Projectile
+    damage:
+      types:
+        Heat: 10
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
     - state: fireball
+      shader: unshaded
   - type: Explosive
     explosionType: Default
     maxIntensity: 40
     intensitySlope: 6
     totalIntensity: 200
+    maxTileBreak: 0
+  - type: IgnitionSource
+    temperature: 400
+    ignited: true
+  - type: IgniteOnCollide
+    fireStacks: 0.35
+
+- type: entity
+  id: ProjectileAnomalyFireball
+  name: fireball
+  description: Hovering blob of flame.
+  parent: ProjectileFireball
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 30
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 0.1
+    totalIntensity: 0.3
     maxTileBreak: 0
 
 - type: entity

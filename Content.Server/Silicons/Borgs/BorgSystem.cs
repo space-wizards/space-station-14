@@ -1,9 +1,9 @@
-﻿using Content.Server.Actions;
+using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Database;
@@ -14,6 +14,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Pointing;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Roles;
@@ -67,6 +68,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         SubscribeLocalEvent<BorgChassisComponent, GetCharactedDeadIcEvent>(OnGetDeadIC);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
+        SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
 
         InitializeModules();
         InitializeMMI();
@@ -242,6 +244,11 @@ public sealed partial class BorgSystem : SharedBorgSystem
         _mind.TransferTo(mindId, containerEnt, mind: mind);
     }
 
+    private void OnBrainPointAttempt(EntityUid uid, BorgBrainComponent component, PointAttemptEvent args)
+    {
+        args.Cancel();
+    }
+
     private void UpdateBatteryAlert(EntityUid uid, PowerCellSlotComponent? slotComponent = null)
     {
         if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery, slotComponent))
@@ -274,7 +281,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         component.Activated = true;
         InstallAllModules(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 
@@ -288,7 +295,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         component.Activated = false;
         DisableAllModules(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 

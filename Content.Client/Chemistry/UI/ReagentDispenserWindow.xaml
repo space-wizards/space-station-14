@@ -32,19 +32,22 @@
                     StyleClasses="OpenLeft"/>
         </BoxContainer>
         <Control MinSize="0 10"/>
-        <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" MinSize="0 160">
-            <PanelContainer VerticalExpand="True"
-                            SizeFlagsStretchRatio="6"
-                            MinSize="0 150">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1b1b1e" />
-                </PanelContainer.PanelOverride>
-                <BoxContainer Name="ContainerInfo"
-                              Orientation="Vertical"
-                              HorizontalExpand="True">
-                    <Label Text="{Loc 'reagent-dispenser-window-no-container-loaded-text'}"/>
-                </BoxContainer>
-            </PanelContainer>
-        </ScrollContainer>
+        <BoxContainer Orientation="Horizontal">
+            <SpriteView Name="View" Scale="4 4" MinSize="150 150"/>
+            <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" MinSize="0 160">
+                <PanelContainer VerticalExpand="True"
+                                SizeFlagsStretchRatio="6"
+                                MinSize="0 150">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1b1b1e" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Name="ContainerInfo"
+                                Orientation="Vertical"
+                                HorizontalExpand="True">
+                        <Label Text="{Loc 'reagent-dispenser-window-no-container-loaded-text'}"/>
+                    </BoxContainer>
+                </PanelContainer>
+            </ScrollContainer>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

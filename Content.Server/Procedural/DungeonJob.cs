@@ -4,6 +4,7 @@ using Content.Server.Construction;
 using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Decals;
 using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Content.Shared.Procedural.PostGeneration;
@@ -27,6 +28,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
     private readonly DecalSystem _decals;
     private readonly DungeonSystem _dungeon;
     private readonly EntityLookupSystem _lookup;
+    private readonly TileSystem _tile;
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _transform;
     private EntityQuery<TagComponent> _tagQuery;
@@ -51,6 +53,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
         DecalSystem decals,
         DungeonSystem dungeon,
         EntityLookupSystem lookup,
+        TileSystem tile,
         SharedTransformSystem transform,
         DungeonConfigPrototype gen,
         MapGridComponent grid,
@@ -69,6 +72,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
         _decals = decals;
         _dungeon = dungeon;
         _lookup = lookup;
+        _tile = tile;
         _maps = _entManager.System<SharedMapSystem>();
         _transform = transform;
         _tagQuery = _entManager.GetEntityQuery<TagComponent>();
@@ -122,6 +126,9 @@ public sealed partial class DungeonJob : Job<Dungeon>
                 case CornerClutterPostGen clutter:
                     await PostGen(clutter, dungeon, _gridUid, _grid, random);
                     break;
+                case CorridorClutterPostGen corClutter:
+                    await PostGen(corClutter, dungeon, _gridUid, _grid, random);
+                    break;
                 case CorridorPostGen cordor:
                     await PostGen(cordor, dungeon, _gridUid, _grid, random);
                     break;
@@ -154,6 +161,9 @@ public sealed partial class DungeonJob : Job<Dungeon>
                     break;
                 case WallMountPostGen wall:
                     await PostGen(wall, dungeon, _gridUid, _grid, random);
+                    break;
+                case WormCorridorPostGen worm:
+                    await PostGen(worm, dungeon, _gridUid, _grid, random);
                     break;
                 default:
                     throw new NotImplementedException();

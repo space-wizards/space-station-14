@@ -475,7 +475,6 @@
   - sprite: Structures/Piping/Atmospherics/vent.rsi
     state: vent_off
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -497,7 +496,6 @@
   - sprite: Structures/Piping/Atmospherics/vent.rsi
     state: vent_off
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -519,7 +517,6 @@
   - sprite: Structures/Piping/Atmospherics/scrubber.rsi
     state: scrub_off
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -541,7 +538,6 @@
   - sprite: Structures/Piping/Atmospherics/outletinjector.rsi
     state: injector
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 # ATMOS BINARY
@@ -564,7 +560,6 @@
   - sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpPressure
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -586,7 +581,6 @@
   - sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpVolume
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -608,7 +602,6 @@
   - sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpPassiveGate
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -630,7 +623,6 @@
   - sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpManualValve
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -652,7 +644,6 @@
   - sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpSignalValve
   conditions:
-  - !type:TileNotBlocked {}
   - !type:NoUnstackableInTile
 
 - type: construction
@@ -674,7 +665,6 @@
   - sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
     state: gasCanisterPort
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -695,8 +685,6 @@
     state: pipeStraight
   - sprite: Structures/Piping/Atmospherics/vent.rsi
     state: vent_off
-  conditions:
-    - !type:TileNotBlocked {}
 
 - type: construction
   id: HeatExchanger
@@ -711,8 +699,6 @@
   icon:
     sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
     state: heStraight
-  conditions:
-    - !type:TileNotBlocked {}
 
 # ATMOS TRINARY
 - type: construction
@@ -730,7 +716,6 @@
     state: gasFilter
   mirror: GasFilterFlipped
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -749,7 +734,6 @@
     state: gasFilterF
   mirror: GasFilter
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -767,7 +751,6 @@
     state: gasMixer
   mirror: GasMixerFlipped
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -786,7 +769,6 @@
     state: gasMixerF
   mirror: GasMixer
   conditions:
-    - !type:TileNotBlocked
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -803,7 +785,6 @@
     sprite: Structures/Piping/Atmospherics/pneumaticvalve.rsi
     state: off
   conditions:
-    - !type:TileNotBlocked
     - !type:NoUnstackableInTile
 
 # INTERCOM

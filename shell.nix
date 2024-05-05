@@ -1,8 +1,9 @@
-{ pkgs ? import (builtins.fetchTarball {
+{ pkgs ? (let lock = builtins.fromJSON (builtins.readFile ./flake.lock);
+in import (builtins.fetchTarball {
   url =
-    "https://github.com/NixOS/nixpkgs/archive/cda0e75a0bd7cf05bd3e40658c163e4f8f376b7b.tar.gz";
-  sha256 = "sha256-Toz3HEHeq6Esr5uDOMel8BiGSa94gj+og3Yz4YEgjYI=";
-}) { } }:
+    "https://github.com/NixOS/nixpkgs/archive/${lock.nodes.nixpkgs.locked.rev}.tar.gz";
+  sha256 = lock.nodes.nixpkgs.locked.narHash;
+}) { }) }:
 
 let
   dependencies = with pkgs; [
@@ -41,6 +42,7 @@ let
     dbus
     at-spi2-core
     cups
+    python3
   ];
 in pkgs.mkShell {
   name = "space-station-14-devshell";

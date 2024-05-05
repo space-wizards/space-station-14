@@ -1,12 +1,14 @@
 using Content.Server.Access.Components;
 using Content.Server.Popups;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.StatusIcon;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
+using Content.Shared.Roles;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Access.Systems
 {
@@ -46,7 +48,7 @@ namespace Content.Server.Access.Systems
                 return;
             }
 
-            Dirty(access);
+            Dirty(uid, access);
 
             if (addedLength == 1)
             {
@@ -59,14 +61,14 @@ namespace Content.Server.Access.Systems
 
         private void AfterUIOpen(EntityUid uid, AgentIDCardComponent component, AfterActivatableUIOpenEvent args)
         {
-            if (!_uiSystem.TryGetUi(uid, AgentIDCardUiKey.Key, out var ui))
+            if (!_uiSystem.HasUi(uid, AgentIDCardUiKey.Key))
                 return;
 
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.JobTitle ?? "", component.Icons);
-            _uiSystem.SetUiState(ui, state, args.Session);
+            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.JobTitle ?? "", idCard.JobIcon ?? "", component.Icons);
+            _uiSystem.SetUiState(uid, AgentIDCardUiKey.Key, state);
         }
 
         private void OnJobChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardJobChangedMessage args)
@@ -92,12 +94,30 @@ namespace Content.Server.Access.Systems
                 return;
             }
 
-            if (!_prototypeManager.TryIndex<StatusIconPrototype>(args.JobIcon, out var jobIcon))
+            if (!_prototypeManager.TryIndex<StatusIconPrototype>(args.JobIconId, out var jobIcon))
             {
                 return;
             }
 
             _cardSystem.TryChangeJobIcon(uid, jobIcon, idCard);
+
+            if (TryFindJobProtoFromIcon(jobIcon, out var job))
+                _cardSystem.TryChangeJobDepartment(uid, job, idCard);
+        }
+
+        private bool TryFindJobProtoFromIcon(StatusIconPrototype jobIcon, [NotNullWhen(true)] out JobPrototype? job)
+        {
+            foreach (var jobPrototype in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+            {
+                if(jobPrototype.Icon == jobIcon.ID)
+                {
+                    job = jobPrototype;
+                    return true;
+                }
+            }
+
+            job = null;
+            return false;
         }
     }
 }

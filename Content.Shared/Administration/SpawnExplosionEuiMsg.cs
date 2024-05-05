@@ -2,6 +2,7 @@ using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 using Robust.Shared.Map;
 using Content.Shared.Explosion;
+using Content.Shared.Explosion.Components;
 
 namespace Content.Shared.Administration;
 

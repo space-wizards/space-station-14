@@ -21,6 +21,7 @@ using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Content.Shared.Decals.DecalGridComponent;
+using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumerator;
 
 namespace Content.Server.Decals
 {
@@ -70,7 +71,7 @@ namespace Content.Server.Decals
             SubscribeNetworkEvent<RequestDecalRemovalEvent>(OnDecalRemovalRequest);
             SubscribeLocalEvent<PostGridSplitEvent>(OnGridSplit);
 
-            _conf.OnValueChanged(CVars.NetPVS, OnPvsToggle, true);
+            Subs.CVar(_conf, CVars.NetPVS, OnPvsToggle, true);
         }
 
         private void OnPvsToggle(bool value)
@@ -88,10 +89,11 @@ namespace Content.Server.Decals
                 playerData.Clear();
             }
 
-            foreach (var (grid, meta) in EntityQuery<DecalGridComponent, MetaDataComponent>(true))
+            var query = EntityQueryEnumerator<DecalGridComponent, MetaDataComponent>();
+            while (query.MoveNext(out var uid, out var grid, out var meta))
             {
                 grid.ForceTick = _timing.CurTick;
-                Dirty(grid, meta);
+                Dirty(uid, grid, meta);
             }
         }
 
@@ -104,7 +106,7 @@ namespace Content.Server.Decals
                 return;
 
             // Transfer decals over to the new grid.
-            var enumerator = MapManager.GetGrid(ev.Grid).GetAllTilesEnumerator();
+            var enumerator = Comp<MapGridComponent>(ev.Grid).GetAllTilesEnumerator();
 
             var oldChunkCollection = oldComp.ChunkCollection.ChunkCollection;
             var chunkCollection = newComp.ChunkCollection.ChunkCollection;
@@ -153,7 +155,6 @@ namespace Content.Server.Decals
             base.Shutdown();
 
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
-            _conf.UnsubValueChanged(CVars.NetPVS, OnPvsToggle);
         }
 
         private void OnTileChanged(ref TileChangedEvent args)

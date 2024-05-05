@@ -194,3 +194,20 @@
   id: FootstepSticky
   files:
   - /Audio/Effects/Footsteps/meatslap.ogg
+
+- type: soundCollection
+  id: FootstepSpurs
+  files:
+  - /Audio/Effects/Footsteps/spurs1.ogg
+  - /Audio/Effects/Footsteps/spurs2.ogg
+  - /Audio/Effects/Footsteps/spurs3.ogg
+
+- type: soundCollection
+  id: FootstepBorg
+  files:
+  - /Audio/Effects/Footsteps/borgwalk1.ogg
+
+- type: soundCollection
+  id: FootstepHoverBorg
+  files:
+  - /Audio/Effects/Footsteps/borgwalk2.ogg

@@ -112,11 +112,36 @@ public sealed class AccessReaderSystem : EntitySystem
         return false;
     }
 
+    public bool GetMainAccessReader(EntityUid uid, [NotNullWhen(true)] out AccessReaderComponent? component)
+    {
+        component = null;
+        if (!TryComp(uid, out AccessReaderComponent? accessReader))
+            return false;
+
+        component = accessReader;
+
+        if (component.ContainerAccessProvider == null)
+            return true;
+
+        if (!_containerSystem.TryGetContainer(uid, component.ContainerAccessProvider, out var container))
+            return true;
+
+        foreach (var entity in container.ContainedEntities)
+        {
+            if (TryComp(entity, out AccessReaderComponent? containedReader))
+            {
+                component = containedReader;
+                return true;
+            }
+        }
+        return true;
+    }
+
     /// <summary>
     /// Check whether the given access permissions satisfy an access reader's requirements.
     /// </summary>
     public bool IsAllowed(
-        ICollection<string> access,
+        ICollection<ProtoId<AccessLevelPrototype>> access,
         ICollection<StationRecordKey> stationKeys,
         EntityUid target,
         AccessReaderComponent reader)
@@ -142,7 +167,7 @@ public sealed class AccessReaderSystem : EntitySystem
         return false;
     }
 
-    private bool IsAllowedInternal(ICollection<string> access, ICollection<StationRecordKey> stationKeys, AccessReaderComponent reader)
+    private bool IsAllowedInternal(ICollection<ProtoId<AccessLevelPrototype>> access, ICollection<StationRecordKey> stationKeys, AccessReaderComponent reader)
     {
         return !reader.Enabled
                || AreAccessTagsAllowed(access, reader)
@@ -154,7 +179,7 @@ public sealed class AccessReaderSystem : EntitySystem
     /// </summary>
     /// <param name="accessTags">A list of access tags</param>
     /// <param name="reader">An access reader to check against</param>
-    public bool AreAccessTagsAllowed(ICollection<string> accessTags, AccessReaderComponent reader)
+    public bool AreAccessTagsAllowed(ICollection<ProtoId<AccessLevelPrototype>> accessTags, AccessReaderComponent reader)
     {
         if (reader.DenyTags.Overlaps(accessTags))
         {
@@ -218,9 +243,9 @@ public sealed class AccessReaderSystem : EntitySystem
     /// </summary>
     /// <param name="uid">The entity that is being searched.</param>
     /// <param name="items">All of the items to search for access. If none are passed in, <see cref="FindPotentialAccessItems"/> will be used.</param>
-    public ICollection<string> FindAccessTags(EntityUid uid, HashSet<EntityUid>? items = null)
+    public ICollection<ProtoId<AccessLevelPrototype>> FindAccessTags(EntityUid uid, HashSet<EntityUid>? items = null)
     {
-        HashSet<string>? tags = null;
+        HashSet<ProtoId<AccessLevelPrototype>>? tags = null;
         var owned = false;
 
         items ??= FindPotentialAccessItems(uid);
@@ -230,7 +255,7 @@ public sealed class AccessReaderSystem : EntitySystem
             FindAccessTagsItem(ent, ref tags, ref owned);
         }
 
-        return (ICollection<string>?) tags ?? Array.Empty<string>();
+        return (ICollection<ProtoId<AccessLevelPrototype>>?) tags ?? Array.Empty<ProtoId<AccessLevelPrototype>>();
     }
 
     /// <summary>
@@ -260,7 +285,7 @@ public sealed class AccessReaderSystem : EntitySystem
     ///     This version merges into a set or replaces the set.
     ///     If owned is false, the existing tag-set "isn't ours" and can't be merged with (is read-only).
     /// </summary>
-    private void FindAccessTagsItem(EntityUid uid, ref HashSet<string>? tags, ref bool owned)
+    private void FindAccessTagsItem(EntityUid uid, ref HashSet<ProtoId<AccessLevelPrototype>>? tags, ref bool owned)
     {
         if (!FindAccessTagsItem(uid, out var targetTags))
         {
@@ -286,6 +311,17 @@ public sealed class AccessReaderSystem : EntitySystem
         }
     }
 
+    public void SetAccesses(EntityUid uid, AccessReaderComponent component, List<ProtoId<AccessLevelPrototype>> accesses)
+    {
+        component.AccessLists.Clear();
+        foreach (var access in accesses)
+        {
+            component.AccessLists.Add(new HashSet<ProtoId<AccessLevelPrototype>>(){access});
+        }
+        Dirty(uid, component);
+        RaiseLocalEvent(uid, new AccessReaderConfigurationChangedEvent());
+    }
+
     public bool FindAccessItemsInventory(EntityUid uid, out HashSet<EntityUid> items)
     {
         items = new();
@@ -308,7 +344,7 @@ public sealed class AccessReaderSystem : EntitySystem
     ///     Try to find <see cref="AccessComponent"/> on this item
     ///     or inside this item (if it's pda)
     /// </summary>
-    private bool FindAccessTagsItem(EntityUid uid, out HashSet<string> tags)
+    private bool FindAccessTagsItem(EntityUid uid, out HashSet<ProtoId<AccessLevelPrototype>> tags)
     {
         tags = new();
         var ev = new GetAccessTagsEvent(tags, _prototype);
