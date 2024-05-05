@@ -35404,19 +35404,6 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#0055CCFF'
-  - uid: 6088
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -62.5,1.5
-      parent: 30
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 6101
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
   - uid: 6191
     components:
     - type: Transform
@@ -36055,19 +36042,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -38.5,-0.5
       parent: 30
-    - type: AtmosPipeColor
-      color: '#990000FF'
-  - uid: 6089
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -62.5,2.5
-      parent: 30
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 6101
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 6267
