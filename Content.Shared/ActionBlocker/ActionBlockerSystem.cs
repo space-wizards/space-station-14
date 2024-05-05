@@ -169,8 +169,16 @@ namespace Content.Shared.ActionBlocker
 
         public bool CanAttack(EntityUid uid, EntityUid? target = null, Entity<MeleeWeaponComponent>? weapon = null, bool disarm = false)
         {
+            // If target is in a container can we attack
+            if (target != null && _container.IsEntityInContainer(target.Value))
+            {
+                return false;
+            }
+
             _container.TryGetOuterContainer(uid, Transform(uid), out var outerContainer);
-            if (target != null &&  target != outerContainer?.Owner && _container.IsEntityInContainer(uid))
+
+            // If we're in a container can we attack the target.
+            if (target != null && target != outerContainer?.Owner && _container.IsEntityInContainer(uid))
             {
                 var containerEv = new CanAttackFromContainerEvent(uid, target);
                 RaiseLocalEvent(uid, containerEv);
