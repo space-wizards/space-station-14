@@ -151,7 +151,6 @@ public partial class InventorySystem : EntitySystem
             slotDefinitions = null;
             return false;
         }
-
         slotDefinitions = inv.Slots;
         return true;
     }
