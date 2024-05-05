@@ -103,7 +103,7 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
 
             _solution.UpdateChemicals(soln.Value, true, reactionMixer);
             var mixerMixedEvent = new SolutionContainerMixerMixedEvent(soln.Value);
-            RaiseLocalEvent(container.Owner, ref mixerMixedEvent, true);
+            RaiseLocalEvent(container.Owner, ref mixerMixedEvent);
         }
     }
 
