@@ -74,7 +74,10 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             foreach (var raffleProto in raffleProtos)
             {
                 _rafflePrototypes.Add(raffleProto);
-                RaffleButton.AddItem(raffleProto.ID, idx++);
+                var s = raffleProto.Settings;
+                var label =
+                    $"{raffleProto.ID} (initial {s.InitialDuration}s, max {s.MaxDuration}s, join adds {s.JoinExtendsDurationBy}s)";
+                RaffleButton.AddItem(label, idx++);
             }
 
             MakeButton.OnPressed += OnMakeButtonPressed;
