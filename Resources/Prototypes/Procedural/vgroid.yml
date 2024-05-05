@@ -11,13 +11,13 @@
   generator: !type:GroupDunGen
     configs:
     - VGRoidBlob
-    - VGRoidSmaller
     - VGRoidExteriorDungeons
-    - VGRoidInteriorDungeons
-    - VGRoidLargePaths
-    - VGRoidSmallPaths
-    - VGRoidOres
-    - VGRoidFill
+    - VGRoidSmaller
+    #- VGRoidInteriorDungeons
+    #- VGRoidLargePaths
+    #- VGRoidSmallPaths
+    #- VGRoidOres
+    #- VGRoidFill
 
 # Configs
 - type: dungeonConfig
@@ -59,6 +59,7 @@
   id: VGRoidExteriorDungeons
   minCount: 1
   maxCount: 3
+  reserveTiles: true
   generator: !type:ExteriorDunGen
     proto: Experiment
   # TODO:
@@ -70,20 +71,20 @@
   # Need a way to share snowylabs shit with the base dungeon
   # Maybe put a thing on dungeonconfigprototype for tile configs / decal configs
 
-- type: dungeonConfig
-  id: VGRoidInteriorDungeons
-  minCount: 3
-  maxCount: 5
-  # Just randomly spawn these in bounds, doesn't really matter if they go out.
-
-- type: dungeonConfig
-  id: VGRoidLargePaths
-
-- type: dungeonConfig
-  id: VGRoidSmallPaths
-
-- type: dungeonConfig
-  id: VGRoidOres
-
-- type: dungeonConfig
-  id: VGRoidFill
+#- type: dungeonConfig
+#  id: VGRoidInteriorDungeons
+#  minCount: 3
+#  maxCount: 5
+#  # Just randomly spawn these in bounds, doesn't really matter if they go out.
+#
+#- type: dungeonConfig
+#  id: VGRoidLargePaths
+#
+#- type: dungeonConfig
+#  id: VGRoidSmallPaths
+#
+#- type: dungeonConfig
+#  id: VGRoidOres
+#
+#- type: dungeonConfig
+#  id: VGRoidFill

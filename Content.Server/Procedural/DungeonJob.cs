@@ -21,6 +21,8 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
 {
+    public bool TimeSlice = true;
+
     private readonly IEntityManager _entManager;
     private readonly IPrototypeManager _prototype;
     private readonly ITileDefinitionManager _tileDefManager;
@@ -94,7 +96,6 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
         HashSet<Vector2i> reservedTiles,
         int seed)
     {
-        Dungeon dungeon;
         var dungeons = new ValueList<Dungeon>();
         var rand = new Random(seed);
 
@@ -102,14 +103,19 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
 
         for (var i = 0; i < count; i++)
         {
+            Dungeon? dungeon = null;
+
             switch (dungen)
             {
+                case ExteriorDunGen exterior:
+                    dungeons.AddRange(await GenerateExteriorDungeon(position, exterior, reservedTiles, seed));
+                    break;
                 case GroupDunGen group:
                     for (var j = 0; j < group.Configs.Count; j++)
                     {
                         var groupConfig = _prototype.Index(group.Configs[j]);
-                        position = (_position + rand.NextVector2(config.MinOffset, config.MaxOffset)).Floored();
-                        dungeons.AddRange(await GetDungeon(position, groupConfig, config.Generator, reservedTiles, rand.Next()));
+                        position = (_position + rand.NextVector2(groupConfig.MinOffset, groupConfig.MaxOffset)).Floored();
+                        dungeons.AddRange(await GetDungeon(position, groupConfig, groupConfig.Generator, reservedTiles, rand.Next()));
                     }
 
                     break;
@@ -134,6 +140,17 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
             {
                 reservedTiles.UnionWith(dungeons[^1].AllTiles);
             }
+
+            if (dungeon != null)
+            {
+                // Run postgen on the dungeon.
+                await PostGen(dungeon, config, rand);
+            }
+
+            if (count > 1)
+            {
+                seed = rand.Next();
+            }
         }
 
         return dungeons;
@@ -155,74 +172,6 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
         foreach (var dungeon in dungeons)
         {
             DebugTools.Assert(dungeon.RoomTiles.Count > 0);
-
-            foreach (var post in _gen.PostGeneration)
-            {
-                _sawmill.Debug($"Doing postgen {post.GetType()} for {_gen.ID} with seed {_seed}");
-
-                // If there's a way to just call the methods directly for the love of god tell me.
-                switch (post)
-                {
-                    case AutoCablingPostGen cabling:
-                        await PostGen(cabling, dungeon, _gridUid, _grid, random);
-                        break;
-                    case BiomePostGen biome:
-                        await PostGen(biome, dungeon, _gridUid, _grid, random);
-                        break;
-                    case BoundaryWallPostGen boundary:
-                        await PostGen(boundary, dungeon, _gridUid, _grid, random);
-                        break;
-                    case CornerClutterPostGen clutter:
-                        await PostGen(clutter, dungeon, _gridUid, _grid, random);
-                        break;
-                    case CorridorClutterPostGen corClutter:
-                        await PostGen(corClutter, dungeon, _gridUid, _grid, random);
-                        break;
-                    case CorridorPostGen cordor:
-                        await PostGen(cordor, dungeon, _gridUid, _grid, random);
-                        break;
-                    case CorridorDecalSkirtingPostGen decks:
-                        await PostGen(decks, dungeon, _gridUid, _grid, random);
-                        break;
-                    case EntranceFlankPostGen flank:
-                        await PostGen(flank, dungeon, _gridUid, _grid, random);
-                        break;
-                    case JunctionPostGen junc:
-                        await PostGen(junc, dungeon, _gridUid, _grid, random);
-                        break;
-                    case MiddleConnectionPostGen dordor:
-                        await PostGen(dordor, dungeon, _gridUid, _grid, random);
-                        break;
-                    case DungeonEntrancePostGen entrance:
-                        await PostGen(entrance, dungeon, _gridUid, _grid, random);
-                        break;
-                    case ExternalWindowPostGen externalWindow:
-                        await PostGen(externalWindow, dungeon, _gridUid, _grid, random);
-                        break;
-                    case InternalWindowPostGen internalWindow:
-                        await PostGen(internalWindow, dungeon, _gridUid, _grid, random);
-                        break;
-                    case BiomeMarkerLayerPostGen markerPost:
-                        await PostGen(markerPost, dungeon, _gridUid, _grid, random);
-                        break;
-                    case RoomEntrancePostGen rEntrance:
-                        await PostGen(rEntrance, dungeon, _gridUid, _grid, random);
-                        break;
-                    case WallMountPostGen wall:
-                        await PostGen(wall, dungeon, _gridUid, _grid, random);
-                        break;
-                    case WormCorridorPostGen worm:
-                        await PostGen(worm, dungeon, _gridUid, _grid, random);
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
-
-            await SuspendIfOutOfTime();
-
-            if (!ValidateResume())
-                break;
-            }
         }
 
         // Defer splitting so they don't get spammed and so we don't have to worry about tracking the grid along the way.
@@ -231,11 +180,93 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
         return dungeons;
     }
 
+    private async Task PostGen(Dungeon dungeon, DungeonConfigPrototype config, Random random)
+    {
+        foreach (var post in config.PostGeneration)
+        {
+            _sawmill.Debug($"Doing postgen {post.GetType()} for {_gen.ID} with seed {_seed}");
+
+            // If there's a way to just call the methods directly for the love of god tell me.
+            switch (post)
+            {
+                case AutoCablingPostGen cabling:
+                    await PostGen(cabling, dungeon, _gridUid, _grid, random);
+                    break;
+                case BiomePostGen biome:
+                    await PostGen(biome, dungeon, _gridUid, _grid, random);
+                    break;
+                case BoundaryWallPostGen boundary:
+                    await PostGen(boundary, dungeon, _gridUid, _grid, random);
+                    break;
+                case CornerClutterPostGen clutter:
+                    await PostGen(clutter, dungeon, _gridUid, _grid, random);
+                    break;
+                case CorridorClutterPostGen corClutter:
+                    await PostGen(corClutter, dungeon, _gridUid, _grid, random);
+                    break;
+                case CorridorPostGen cordor:
+                    await PostGen(cordor, dungeon, _gridUid, _grid, random);
+                    break;
+                case CorridorDecalSkirtingPostGen decks:
+                    await PostGen(decks, dungeon, _gridUid, _grid, random);
+                    break;
+                case EntranceFlankPostGen flank:
+                    await PostGen(flank, dungeon, _gridUid, _grid, random);
+                    break;
+                case JunctionPostGen junc:
+                    await PostGen(junc, dungeon, _gridUid, _grid, random);
+                    break;
+                case MiddleConnectionPostGen dordor:
+                    await PostGen(dordor, dungeon, _gridUid, _grid, random);
+                    break;
+                case DungeonEntrancePostGen entrance:
+                    await PostGen(entrance, dungeon, _gridUid, _grid, random);
+                    break;
+                case ExternalWindowPostGen externalWindow:
+                    await PostGen(externalWindow, dungeon, _gridUid, _grid, random);
+                    break;
+                case InternalWindowPostGen internalWindow:
+                    await PostGen(internalWindow, dungeon, _gridUid, _grid, random);
+                    break;
+                case BiomeMarkerLayerPostGen markerPost:
+                    await PostGen(markerPost, dungeon, _gridUid, _grid, random);
+                    break;
+                case RoomEntrancePostGen rEntrance:
+                    await PostGen(rEntrance, dungeon, _gridUid, _grid, random);
+                    break;
+                case WallMountPostGen wall:
+                    await PostGen(wall, dungeon, _gridUid, _grid, random);
+                    break;
+                case WormCorridorPostGen worm:
+                    await PostGen(worm, dungeon, _gridUid, _grid, random);
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+        await SuspendDungeon();
+
+        if (!ValidateResume())
+            break;
+        }
+    }
+
     private bool ValidateResume()
     {
         if (_entManager.Deleted(_gridUid))
             return false;
 
         return true;
+    }
+
+    /// <summary>
+    /// Wrapper around <see cref="Job{T}.SuspendIfOutOfTime"/>
+    /// </summary>
+    private async Task SuspendDungeon()
+    {
+        if (!TimeSlice)
+            return;
+
+        await SuspendIfOutOfTime();
     }
 }

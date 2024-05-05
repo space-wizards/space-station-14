@@ -58,7 +58,7 @@ public sealed partial class DungeonJob
                 DebugTools.Assert(xform.Comp.Anchored);
             }
 
-            await SuspendIfOutOfTime();
+            await SuspendDungeon();
             ValidateResume();
         }
 
@@ -94,13 +94,13 @@ public sealed partial class DungeonJob
                 bounds = bounds.UnionTile(tile);
             }
 
-            await SuspendIfOutOfTime();
+            await SuspendDungeon();
             ValidateResume();
 
             biomeSystem.GetMarkerNodes(gridUid, biomeComp, grid, markerTemplate, true, bounds, count,
                 random, out var spawnSet, out var existing, false);
 
-            await SuspendIfOutOfTime();
+            await SuspendDungeon();
             ValidateResume();
 
             foreach (var ent in existing)
@@ -108,7 +108,7 @@ public sealed partial class DungeonJob
                 _entManager.DeleteEntity(ent);
             }
 
-            await SuspendIfOutOfTime();
+            await SuspendDungeon();
             ValidateResume();
 
             foreach (var (node, mask) in spawnSet)
@@ -130,7 +130,7 @@ public sealed partial class DungeonJob
                 if (!xform.Comp.Anchored)
                     _transform.AnchorEntity(ent, xform);
 
-                await SuspendIfOutOfTime();
+                await SuspendDungeon();
                 ValidateResume();
             }
         }

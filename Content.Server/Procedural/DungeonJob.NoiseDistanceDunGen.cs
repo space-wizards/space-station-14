@@ -41,9 +41,6 @@ public sealed partial class DungeonJob
             {
                 var node = new Vector2i(x, y);
 
-                if (reservedTiles.Contains(node))
-                    continue;
-
                 foreach (var layer in dungen.Layers)
                 {
                     var value = layer.Noise.GetNoise(node.X, node.Y);
@@ -66,13 +63,19 @@ public sealed partial class DungeonJob
                     var variant = _tile.PickVariant((ContentTileDefinition) tileDef, rand);
                     var adjusted = matrix.Transform(node + _grid.TileSizeHalfVector).Floored();
 
+                    // Do this down here because noise has a much higher chance of failing than reserved tiles.
+                    if (reservedTiles.Contains(adjusted))
+                    {
+                        break;
+                    }
+
                     tiles.Add((adjusted, new Tile(tileDef.TileId, variant: variant)));
                     roomTiles.Add(adjusted);
                     break;
                 }
             }
 
-            await SuspendIfOutOfTime();
+            await SuspendDungeon();
         }
 
         var room = new DungeonRoom(roomTiles, area.Center, area, new HashSet<Vector2i>());
@@ -83,15 +86,7 @@ public sealed partial class DungeonJob
             room,
         });
 
-        await SuspendIfOutOfTime();
-
-        foreach (var tile in tiles)
-        {
-            dungeon.RoomTiles.Add(tile.Item1);
-        }
-
-        await SuspendIfOutOfTime();
-
+        await SuspendDungeon();
         return dungeon;
     }
 

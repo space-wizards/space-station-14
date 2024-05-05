@@ -108,7 +108,7 @@ public sealed partial class DungeonJob
                 costSoFar[startNode] = 0f;
                 var count = 0;
 
-                await SuspendIfOutOfTime();
+                await SuspendDungeon();
                 if (!ValidateResume())
                     return;
 

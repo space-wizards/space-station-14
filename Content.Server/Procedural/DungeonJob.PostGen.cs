@@ -68,7 +68,7 @@ public sealed partial class DungeonJob
         }
 
         // Iterating them all might be expensive.
-        await SuspendIfOutOfTime();
+        await SuspendDungeon();
 
         if (!ValidateResume())
             return;
@@ -255,7 +255,7 @@ public sealed partial class DungeonJob
 
             if (i % 20 == 0)
             {
-                await SuspendIfOutOfTime();
+                await SuspendDungeon();
 
                 if (!ValidateResume())
                     return;
@@ -611,7 +611,7 @@ public sealed partial class DungeonJob
             if (index > 20)
             {
                 index -= 20;
-                await SuspendIfOutOfTime();
+                await SuspendDungeon();
 
                 if (!ValidateResume())
                     return;
@@ -699,7 +699,7 @@ public sealed partial class DungeonJob
 
                 if (validTiles.Count > 0)
                 {
-                    await SuspendIfOutOfTime();
+                    await SuspendDungeon();
 
                     if (!ValidateResume())
                         return;
@@ -752,7 +752,7 @@ public sealed partial class DungeonJob
         }
 
         var edges = _dungeon.MinimumSpanningTree(entrances, random);
-        await SuspendIfOutOfTime();
+        await SuspendDungeon();
 
         if (!ValidateResume())
             return;
@@ -1042,7 +1042,7 @@ public sealed partial class DungeonJob
 
                 if (isValid)
                 {
-                    await SuspendIfOutOfTime();
+                    await SuspendDungeon();
 
                     if (!ValidateResume())
                         return;
@@ -1170,7 +1170,7 @@ public sealed partial class DungeonJob
                 conns.Add(otherRoom);
                 var otherConns = roomConnections.GetOrNew(otherRoom);
                 otherConns.Add(room);
-                await SuspendIfOutOfTime();
+                await SuspendDungeon();
 
                 if (!ValidateResume())
                     return;
@@ -1245,7 +1245,7 @@ public sealed partial class DungeonJob
             if (count > 20)
             {
                 count -= 20;
-                await SuspendIfOutOfTime();
+                await SuspendDungeon();
 
                 if (!ValidateResume())
                     return;

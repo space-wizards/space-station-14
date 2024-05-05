@@ -5,6 +5,8 @@ namespace Content.Shared.Procedural;
 /// </summary>
 public sealed class Dungeon
 {
+    public static Dungeon Empty = new Dungeon();
+
     private List<DungeonRoom> _rooms;
     private HashSet<Vector2i> _allTiles = new();
 
@@ -31,11 +33,12 @@ public sealed class Dungeon
 
     public Dungeon(List<DungeonRoom> rooms)
     {
+        // This reftype is mine now.
         _rooms = rooms;
 
         foreach (var room in _rooms)
         {
-            AddRoom(room);
+            InternalAddRoom(room);
         }
 
         RefreshAllTiles();
@@ -51,13 +54,37 @@ public sealed class Dungeon
         _allTiles.UnionWith(Entrances);
     }
 
+    public void Rebuild()
+    {
+        _allTiles.Clear();
+
+        RoomTiles.Clear();
+        RoomExteriorTiles.Clear();
+        CorridorTiles.Clear();
+        CorridorExteriorTiles.Clear();
+        Entrances.Clear();
+
+        foreach (var room in _rooms)
+        {
+            InternalAddRoom(room, false);
+        }
+
+        RefreshAllTiles();
+    }
+
     public void AddRoom(DungeonRoom room)
     {
         _rooms.Add(room);
+        InternalAddRoom(room);
+    }
 
+    private void InternalAddRoom(DungeonRoom room, bool refreshAll = true)
+    {
         Entrances.UnionWith(room.Entrances);
         RoomTiles.UnionWith(room.Tiles);
         RoomExteriorTiles.UnionWith(room.Exterior);
-        RefreshAllTiles();
+
+        if (refreshAll)
+            RefreshAllTiles();
     }
 }

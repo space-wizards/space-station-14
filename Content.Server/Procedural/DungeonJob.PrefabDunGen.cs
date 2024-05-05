@@ -265,8 +265,10 @@ public sealed partial class DungeonJob
 
                 dungeon.AddRoom(new DungeonRoom(roomTiles, center, mapBounds!.Value, exterior));
 
-                await SuspendIfOutOfTime();
-                ValidateResume();
+                await SuspendDungeon();
+
+                if (!ValidateResume())
+                    return Dungeon.Empty;
             }
         }
 
@@ -284,6 +286,8 @@ public sealed partial class DungeonJob
             dungeonCenter += room.Center;
             SetDungeonEntrance(dungeon, room, reservedTiles, random);
         }
+
+        dungeon.Rebuild();
 
         return dungeon;
     }
