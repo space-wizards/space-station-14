@@ -263,7 +263,9 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
     private bool ValidateResume()
     {
         if (_entManager.Deleted(_gridUid))
+        {
             return false;
+        }
 
         return true;
     }

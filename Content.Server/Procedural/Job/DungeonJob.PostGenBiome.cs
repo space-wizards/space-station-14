@@ -116,11 +116,11 @@ public sealed partial class DungeonJob
                 }
 
                 _entManager.DeleteEntity(ent);
-            }
 
-            await SuspendDungeon();
-            if (!ValidateResume())
-                return;
+                await SuspendDungeon();
+                if (!ValidateResume())
+                    return;
+            }
 
             foreach (var (node, mask) in spawnSet)
             {
