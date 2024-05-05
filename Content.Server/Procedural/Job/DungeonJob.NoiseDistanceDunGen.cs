@@ -4,9 +4,8 @@ using Content.Shared.Procedural;
 using Content.Shared.Procedural.Distance;
 using Content.Shared.Procedural.DungeonGenerators;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 
-namespace Content.Server.Procedural;
+namespace Content.Server.Procedural.Job;
 
 public sealed partial class DungeonJob
 {

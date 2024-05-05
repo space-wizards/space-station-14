@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
@@ -9,7 +8,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Procedural;
+namespace Content.Server.Procedural.Job;
 
 public sealed partial class DungeonJob
 {

@@ -1,7 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Construction;
-using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Decals;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Maps;
@@ -9,15 +7,17 @@ using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Content.Shared.Procedural.PostGeneration;
 using Content.Shared.Tag;
+using JetBrains.Annotations;
 using Robust.Server.Physics;
 using Robust.Shared.Collections;
+using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Procedural;
+namespace Content.Server.Procedural.Job;
 
 public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
 {
@@ -35,6 +35,7 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _transform;
 
+    private EntityQuery<TransformComponent> _xformQuery;
     private EntityQuery<TagComponent> _tagQuery;
 
     private readonly DungeonConfigPrototype _gen;
@@ -77,6 +78,8 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
         _tile = tile;
         _maps = _entManager.System<SharedMapSystem>();
         _transform = transform;
+
+        _xformQuery = _entManager.GetEntityQuery<TransformComponent>();
         _tagQuery = _entManager.GetEntityQuery<TagComponent>();
 
         _gen = gen;
@@ -109,6 +112,9 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
             {
                 case ExteriorDunGen exterior:
                     dungeons.AddRange(await GenerateExteriorDungeon(position, exterior, reservedTiles, seed));
+                    break;
+                case FillGridDunGen fill:
+                    await GenerateFillDungeon(fill, reservedTiles);
                     break;
                 case GroupDunGen group:
                     for (var j = 0; j < group.Configs.Count; j++)
@@ -144,7 +150,7 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
             if (dungeon != null)
             {
                 // Run postgen on the dungeon.
-                await PostGen(dungeon, config, rand);
+                await PostGen(dungeon, config, reservedTiles, rand);
             }
 
             if (count > 1)
@@ -180,38 +186,40 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
         return dungeons;
     }
 
-    private async Task PostGen(Dungeon dungeon, DungeonConfigPrototype config, Random random)
+    private async Task PostGen(Dungeon dungeon, DungeonConfigPrototype config, HashSet<Vector2i> reservedTiles, Random random)
     {
         foreach (var post in config.PostGeneration)
         {
             _sawmill.Debug($"Doing postgen {post.GetType()} for {_gen.ID} with seed {_seed}");
 
             // If there's a way to just call the methods directly for the love of god tell me.
+            // Some of these don't care about reservedtiles because they only operate on dungeon tiles (which should
+            // never be reserved)
             switch (post)
             {
                 case AutoCablingPostGen cabling:
-                    await PostGen(cabling, dungeon, _gridUid, _grid, random);
+                    await PostGen(cabling, dungeon, reservedTiles, random);
                     break;
                 case BiomePostGen biome:
-                    await PostGen(biome, dungeon, _gridUid, _grid, random);
+                    await PostGen(biome, dungeon, random);
                     break;
                 case BoundaryWallPostGen boundary:
-                    await PostGen(boundary, dungeon, _gridUid, _grid, random);
+                    await PostGen(boundary, dungeon, random);
                     break;
                 case CornerClutterPostGen clutter:
-                    await PostGen(clutter, dungeon, _gridUid, _grid, random);
+                    await PostGen(clutter, dungeon, random);
                     break;
                 case CorridorClutterPostGen corClutter:
-                    await PostGen(corClutter, dungeon, _gridUid, _grid, random);
+                    await PostGen(corClutter, dungeon, random);
                     break;
                 case CorridorPostGen cordor:
-                    await PostGen(cordor, dungeon, _gridUid, _grid, random);
+                    await PostGen(cordor, dungeon, reservedTiles, random);
                     break;
                 case CorridorDecalSkirtingPostGen decks:
-                    await PostGen(decks, dungeon, _gridUid, _grid, random);
+                    await PostGen(decks, dungeon);
                     break;
                 case EntranceFlankPostGen flank:
-                    await PostGen(flank, dungeon, _gridUid, _grid, random);
+                    await PostGen(flank, dungeon, reservedTiles, random);
                     break;
                 case JunctionPostGen junc:
                     await PostGen(junc, dungeon, _gridUid, _grid, random);
@@ -220,7 +228,7 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
                     await PostGen(dordor, dungeon, _gridUid, _grid, random);
                     break;
                 case DungeonEntrancePostGen entrance:
-                    await PostGen(entrance, dungeon, _gridUid, _grid, random);
+                    await PostGen(entrance, dungeon, random);
                     break;
                 case ExternalWindowPostGen externalWindow:
                     await PostGen(externalWindow, dungeon, _gridUid, _grid, random);
@@ -229,7 +237,7 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
                     await PostGen(internalWindow, dungeon, _gridUid, _grid, random);
                     break;
                 case BiomeMarkerLayerPostGen markerPost:
-                    await PostGen(markerPost, dungeon, _gridUid, _grid, random);
+                    await PostGen(markerPost, dungeon, reservedTiles, random);
                     break;
                 case RoomEntrancePostGen rEntrance:
                     await PostGen(rEntrance, dungeon, _gridUid, _grid, random);
@@ -251,6 +259,7 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
         }
     }
 
+    [Pure]
     private bool ValidateResume()
     {
         if (_entManager.Deleted(_gridUid))

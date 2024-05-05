@@ -5,7 +5,7 @@ using Content.Shared.Procedural.DungeonGenerators;
 using Robust.Shared.Collections;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Procedural;
+namespace Content.Server.Procedural.Job;
 
 public sealed partial class DungeonJob
 {

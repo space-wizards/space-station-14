@@ -4,6 +4,7 @@ using Content.Server.Construction;
 using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
+using Content.Server.Procedural.Job;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.GameTicking;

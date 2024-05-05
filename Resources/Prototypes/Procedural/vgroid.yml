@@ -17,7 +17,7 @@
     #- VGRoidLargePaths
     #- VGRoidSmallPaths
     #- VGRoidOres
-    #- VGRoidFill
+    - VGRoidFill
 
 # Configs
 - type: dungeonConfig
@@ -85,6 +85,8 @@
 #
 #- type: dungeonConfig
 #  id: VGRoidOres
-#
-#- type: dungeonConfig
-#  id: VGRoidFill
+
+- type: dungeonConfig
+  id: VGRoidFill
+  generator: !type:FillGridDunGen
+    proto: AsteroidRock

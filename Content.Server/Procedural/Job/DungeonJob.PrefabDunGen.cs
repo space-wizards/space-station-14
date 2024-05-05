@@ -1,14 +1,12 @@
 using System.Numerics;
 using System.Threading.Tasks;
-using Content.Shared.Decals;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Procedural;
+namespace Content.Server.Procedural.Job;
 
 public sealed partial class DungeonJob
 {
