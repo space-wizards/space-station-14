@@ -5,6 +5,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -93,6 +94,11 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     private void OnEmbedThrowDoHit(EntityUid uid, EmbeddableProjectileComponent component, ThrowDoHitEvent args)
     {
         if (!component.EmbedOnThrow)
+            return;
+
+        // If an entity pulled, it won't be embedded.
+        TryComp<PullableComponent>(uid, out var pullable);
+        if (pullable?.BeingPulled ?? false)
             return;
 
         Embed(uid, args.Target, null, component);
