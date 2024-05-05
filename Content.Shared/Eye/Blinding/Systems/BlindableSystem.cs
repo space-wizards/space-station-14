@@ -64,7 +64,7 @@ public sealed class BlindableSystem : EntitySystem
         blindable.Comp.EyeDamage += amount;
         UpdateEyeDamage(blindable, true);
     }
-    public void UpdateEyeDamage(Entity<BlindableComponent?> blindable, bool isDamageChanged)
+    private void UpdateEyeDamage(Entity<BlindableComponent?> blindable, bool isDamageChanged)
     {
         if (!Resolve(blindable, ref blindable.Comp, false))
             return;

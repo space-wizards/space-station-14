@@ -24,10 +24,8 @@ public sealed partial class BlindableComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("EyeDamage"), AutoNetworkedField]
     public int EyeDamage = 0;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
     public const int MaxDamage = 9;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
     public int MinDamage = 0;
 
     /// <description>

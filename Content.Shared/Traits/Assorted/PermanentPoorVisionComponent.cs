@@ -9,6 +9,6 @@ namespace Content.Shared.Traits.Assorted;
 public sealed partial class PermanentPoorVisionComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField]
-    public int MinDamage = 0;
+    public int ShortSightedness = 0;
 }
 

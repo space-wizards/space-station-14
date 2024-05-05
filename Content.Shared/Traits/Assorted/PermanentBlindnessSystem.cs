@@ -18,7 +18,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<PermanentBlindnessComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<PermanentBlindnessComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PermanentBlindnessComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<PermanentBlindnessComponent, ExaminedEvent>(OnExamined);
     }
@@ -36,7 +36,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
         _blinding.UpdateIsBlind(blindness.Owner);
     }
 
-    private void OnStartup(Entity<PermanentBlindnessComponent> blindness, ref ComponentStartup args)
+    private void OnMapInit(Entity<PermanentBlindnessComponent> blindness, ref MapInitEvent args)
     {
         if (!_entityManager.TryGetComponent<BlindableComponent>(blindness, out var blindable))
             return;
