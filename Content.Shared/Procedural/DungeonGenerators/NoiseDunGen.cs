@@ -1,8 +1,5 @@
-using Content.Shared.Maps;
+using Content.Shared.Procedural.Distance;
 using Robust.Shared.Noise;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Procedural.DungeonGenerators;
 

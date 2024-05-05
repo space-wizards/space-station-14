@@ -1,3 +1,10 @@
+# Okay so my general thought is this:
+# 1. Generate the large mass
+# 2. Generate smaller masses offset
+# 3. Generate N normal dungeons around the larger mass, preferably near the border
+# 4. Generate large paths / small paths around the place
+# 5. Spawn ores + fill the rest and the normal stuff
+
 - type: dungeonConfig
   id: VGRoid
   # Floor generation
@@ -18,15 +25,51 @@
 - type: dungeonConfig
   id: VGRoidBlob
   generator: !type:NoiseDunGen
-    tileCap: 1500
-    capStd: 32
-    iterations: 3
+    tileCap: 50000
+    capStd: 0
+    iterations: 20
+    distanceConfig: !type:DunGenEuclideanSquaredDistance
+      size: 256, 256
     layers:
     - tile: FloorAsteroidSand
-      threshold: 0.30
+      threshold: 0.50
       noise:
         frequency: 0.020
         noiseType: OpenSimplex2
         fractalType: FBm
-        octaves: 2
+        octaves: 5
         lacunarity: 2
+        gain: 0.5
+
+- type: dungeonConfig
+  id: VGRoidDonuts
+  generator: !type:NoiseDunGen
+    tileCap: 30000
+    capStd: 128
+    iterations: 20
+    layers:
+    - tile: FloorAsteroidSand
+      threshold: 0.05
+      noise:
+        frequency: 0.010
+        noiseType: OpenSimplex2
+        fractalType: PingPong
+        octaves: 2
+        lacunarity: 5
+        gain: 0.1
+
+- type: dungeonConfig
+  id: VGRoidWebs
+  generator: !type:NoiseDunGen
+    tileCap: 30000
+    capStd: 128
+    iterations: 10
+    layers:
+    - tile: FloorAsteroidSand
+      threshold: 0.05
+      noise:
+        frequency: 0.010
+        noiseType: OpenSimplex2
+        fractalType: Ridged
+        octaves: 5
+        lacunarity: 5

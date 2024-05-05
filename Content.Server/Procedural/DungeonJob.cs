@@ -108,6 +108,10 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
                 }
 
                 break;
+            case NoiseDistanceDunGen distance:
+                dungeon = await GenerateNoiseDistanceDungeon(distance, _gridUid, _grid, seed);
+                dungeons.Add(dungeon);
+                break;
             case NoiseDunGen noise:
                 dungeon = await GenerateNoiseDungeon(noise, _gridUid, _grid, seed);
                 dungeons.Add(dungeon);
