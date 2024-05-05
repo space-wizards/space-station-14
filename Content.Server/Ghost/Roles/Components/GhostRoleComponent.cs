@@ -93,6 +93,7 @@ namespace Content.Server.Ghost.Roles.Components
         /// If set, ghost role is raffled, otherwise it is first-come-first-serve.
         /// </summary>
         [DataField("raffle")]
+        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public GhostRoleRaffleConfig? RaffleConfig { get; set; }
     }
 }

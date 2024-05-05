@@ -1,5 +1,5 @@
-﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+﻿using Content.Shared.Ghost.Roles.Raffles;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Ghost.Roles.Raffles;
 
