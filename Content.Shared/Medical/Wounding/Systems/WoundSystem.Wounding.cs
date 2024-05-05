@@ -79,8 +79,6 @@ public sealed partial class WoundSystem
         {
             // Assumption: Since this wound is unique, then any other wound we are looking for is also unique.
             // So we don't need to try to get the meta component for other wounds that are not unique.
-            // This will lead to a false positive if both meta comps have no associated prototype but if that happens
-            // something else has gone horribly wrong anyways.
             if (otherWound.Comp.Unique &&
                 TryComp<MetaDataComponent>(otherWound.Owner, out var otherMeta) &&
                 otherMeta.EntityPrototype?.ID == woundProto)
