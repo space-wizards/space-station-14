@@ -224,7 +224,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 {
                     if (TryComp<EntityStorageComponent>(container.Owner, out var storageComponent))
                     {
-                        if (storageComponent is { Open: false })
+                        if (storageComponent is { Open: false } && _weldable.IsWelded(container.Owner))
                         {
                             return 0.0f;
                         }
