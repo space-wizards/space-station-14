@@ -117,11 +117,8 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
         {
             base.Dispose(disposing);
 
-            if (_spriteViewEntity != default)
-            {
+            if (!_entityManager.Deleted(_spriteViewEntity))
                 _entityManager.QueueDeleteEntity(_spriteViewEntity);
-                _spriteViewEntity = default;
-            }
         }
     }
 
