@@ -2978,9 +2978,6 @@ entities:
       pos: -59.5,3.5
       parent: 30
     - type: DeviceList
-      devices:
-      - 6089
-      - 6088
   - uid: 6648
     components:
     - type: Transform
