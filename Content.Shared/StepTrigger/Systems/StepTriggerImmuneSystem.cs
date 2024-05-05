@@ -1,7 +1,6 @@
-﻿using Content.Shared.Examine;
+using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.StepTrigger.Components;
-using Content.Shared.Tag;
 
 namespace Content.Shared.StepTrigger.Systems;
 
@@ -12,19 +11,13 @@ public sealed class StepTriggerImmuneSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<StepTriggerImmuneComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
-        SubscribeLocalEvent<ClothingRequiredStepTriggerComponent, StepTriggerAttemptEvent>(OnStepTriggerClothingAttempt);
+        SubscribeLocalEvent<ClothingRequiredStepTriggerComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
         SubscribeLocalEvent<ClothingRequiredStepTriggerComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnStepTriggerAttempt(Entity<StepTriggerImmuneComponent> ent, ref StepTriggerAttemptEvent args)
+    private void OnStepTriggerAttempt(EntityUid uid, ClothingRequiredStepTriggerComponent component, ref StepTriggerAttemptEvent args)
     {
-        args.Cancelled = true;
-    }
-
-    private void OnStepTriggerClothingAttempt(EntityUid uid, ClothingRequiredStepTriggerComponent component, ref StepTriggerAttemptEvent args)
-    {
-        if (_inventory.TryGetInventoryEntity<ClothingRequiredStepTriggerImmuneComponent>(args.Tripper, out _))
+        if (HasComp<StepTriggerImmuneComponent>(args.Tripper) || _inventory.TryGetInventoryEntity<ClothingRequiredStepTriggerImmuneComponent>(args.Tripper, out _))
         {
             args.Cancelled = true;
         }
