@@ -12,14 +12,14 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonJob
 {
-    private async Task<Dungeon> GeneratePrefabDungeon(PrefabDunGen prefab, EntityUid gridUid, MapGridComponent grid, int seed)
+    private async Task<Dungeon> GeneratePrefabDungeon(Vector2i position, PrefabDunGen prefab, int seed)
     {
         var random = new Random(seed);
         var preset = prefab.Presets[random.Next(prefab.Presets.Count)];
         var gen = _prototype.Index<DungeonPresetPrototype>(preset);
 
         var dungeonRotation = _dungeon.GetDungeonRotation(seed);
-        var dungeonTransform = Matrix3.CreateTransform(_position, dungeonRotation);
+        var dungeonTransform = Matrix3.CreateTransform(position, dungeonRotation);
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
 
         foreach (var pack in _prototype.EnumeratePrototypes<DungeonRoomPackPrototype>())
@@ -182,12 +182,12 @@ public sealed partial class DungeonJob
                         {
                             for (var y = roomSize.Bottom; y < roomSize.Top; y++)
                             {
-                                var index = matty.Transform(new Vector2(x, y) + grid.TileSizeHalfVector - packCenter).Floored();
+                                var index = matty.Transform(new Vector2(x, y) + _grid.TileSizeHalfVector - packCenter).Floored();
                                 tiles.Add((index, new Tile(_tileDefManager["FloorPlanetGrass"].TileId)));
                             }
                         }
 
-                        grid.SetTiles(tiles);
+                        _grid.SetTiles(tiles);
                         tiles.Clear();
                         _sawmill.Error($"Unable to find room variant for {roomDimensions}, leaving empty.");
                         continue;
@@ -215,12 +215,12 @@ public sealed partial class DungeonJob
                 Matrix3.Multiply(matty, dungeonTransform, out var dungeonMatty);
 
                 // The expensive bit yippy.
-                _dungeon.SpawnRoom(gridUid, grid, dungeonMatty, room);
+                _dungeon.SpawnRoom(_gridUid, _grid, dungeonMatty, room);
 
-                var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
+                var roomCenter = (room.Offset + room.Size / 2f) * _grid.TileSize;
                 var roomTiles = new HashSet<Vector2i>(room.Size.X * room.Size.Y);
                 var exterior = new HashSet<Vector2i>(room.Size.X * 2 + room.Size.Y * 2);
-                var tileOffset = -roomCenter + grid.TileSizeHalfVector;
+                var tileOffset = -roomCenter + _grid.TileSizeHalfVector;
                 Box2i? mapBounds = null;
 
                 for (var x = -1; x <= room.Size.X; x++)
@@ -249,7 +249,7 @@ public sealed partial class DungeonJob
                         roomTiles.Add(tileIndex);
 
                         mapBounds = mapBounds?.Union(tileIndex) ?? new Box2i(tileIndex, tileIndex);
-                        center += tilePos + grid.TileSizeHalfVector;
+                        center += tilePos + _grid.TileSizeHalfVector;
                     }
                 }
 

@@ -4,18 +4,30 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural;
 
-[Prototype("dungeonConfig")]
+[Prototype]
 public sealed partial class DungeonConfigPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField("generator", required: true)]
+    [DataField(required: true)]
     public IDunGen Generator = default!;
 
     /// <summary>
     /// Ran after the main dungeon is created.
     /// </summary>
-    [DataField("postGeneration")]
+    [DataField]
     public List<IPostDunGen> PostGeneration = new();
+
+    /// <summary>
+    /// Minimum amount we can offset the dungeon by.
+    /// </summary>
+    [DataField]
+    public int MinOffset;
+
+    /// <summary>
+    /// Maximum amount we can offset the dungeon by.
+    /// </summary>
+    [DataField]
+    public int MaxOffset;
 }

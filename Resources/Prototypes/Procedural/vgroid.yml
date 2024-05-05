@@ -11,30 +11,20 @@
   generator: !type:GroupDunGen
     configs:
     - VGRoidBlob
-  # Everything else
-  #postGeneration:
-  # Generate biome
-  #- !type:BiomePostGen
-  #  biomeTemplate: Asteroid
-
-  # Generate ore veins
-  #- !type:MarkerLayerPostGen
-  #  markerTemplate: AsteroidOre
+    - VGRoidSmaller
 
 # Configs
 - type: dungeonConfig
   id: VGRoidBlob
-  generator: !type:NoiseDunGen
-    tileCap: 50000
-    capStd: 0
-    iterations: 20
+  generator: !type:NoiseDistanceDunGen
+    size: 384, 384
     distanceConfig: !type:DunGenEuclideanSquaredDistance
-      size: 256, 256
+      blendWeight: 0.80
     layers:
     - tile: FloorAsteroidSand
       threshold: 0.50
       noise:
-        frequency: 0.020
+        frequency: 0.010
         noiseType: OpenSimplex2
         fractalType: FBm
         octaves: 5
@@ -42,34 +32,52 @@
         gain: 0.5
 
 - type: dungeonConfig
-  id: VGRoidDonuts
-  generator: !type:NoiseDunGen
-    tileCap: 30000
-    capStd: 128
-    iterations: 20
+  id: VGRoidSmaller
+  minOffset: 100
+  maxOffset: 150
+  generator: !type:NoiseDistanceDunGen
+    size: 256, 256
+    distanceConfig: !type:DunGenEuclideanSquaredDistance
     layers:
     - tile: FloorAsteroidSand
-      threshold: 0.05
+      threshold: 0.50
       noise:
-        frequency: 0.010
+        frequency: 0.040
         noiseType: OpenSimplex2
-        fractalType: PingPong
-        octaves: 2
-        lacunarity: 5
-        gain: 0.1
-
-- type: dungeonConfig
-  id: VGRoidWebs
-  generator: !type:NoiseDunGen
-    tileCap: 30000
-    capStd: 128
-    iterations: 10
-    layers:
-    - tile: FloorAsteroidSand
-      threshold: 0.05
-      noise:
-        frequency: 0.010
-        noiseType: OpenSimplex2
-        fractalType: Ridged
+        fractalType: FBm
         octaves: 5
-        lacunarity: 5
+        lacunarity: 1.5
+        gain: 0.5
+
+#- type: dungeonConfig
+#  id: VGRoidDonuts
+#  generator: !type:NoiseDunGen
+#    tileCap: 30000
+#    capStd: 128
+#    iterations: 20
+#    layers:
+#    - tile: FloorAsteroidSand
+#      threshold: 0.05
+#      noise:
+#        frequency: 0.010
+#        noiseType: OpenSimplex2
+#        fractalType: PingPong
+#        octaves: 2
+#        lacunarity: 5
+#        gain: 0.1
+#
+#- type: dungeonConfig
+#  id: VGRoidWebs
+#  generator: !type:NoiseDunGen
+#    tileCap: 30000
+#    capStd: 128
+#    iterations: 10
+#    layers:
+#    - tile: FloorAsteroidSand
+#      threshold: 0.05
+#      noise:
+#        frequency: 0.010
+#        noiseType: OpenSimplex2
+#        fractalType: Ridged
+#        octaves: 5
+#        lacunarity: 5

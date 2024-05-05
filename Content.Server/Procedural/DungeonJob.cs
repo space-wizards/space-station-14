@@ -14,6 +14,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
@@ -90,34 +91,33 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
     /// <param name="seed"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    private async Task<ValueList<Dungeon>> GetDungeon(IDunGen dungen, int seed)
+    private async Task<ValueList<Dungeon>> GetDungeon(Vector2i position, IDunGen dungen, int seed)
     {
         Dungeon dungeon;
         var dungeons = new ValueList<Dungeon>();
+        var rand = new Random(seed);
 
         switch (dungen)
         {
             case GroupDunGen group:
-                var rand = new Random(seed);
-
                 for (var i = 0; i < group.Configs.Count; i++)
                 {
                     var config = _prototype.Index(group.Configs[i]);
-                    dungeons.AddRange(await GetDungeon(config.Generator, seed));
-                    seed = rand.Next();
+                    position = (_position + rand.NextVector2(config.MinOffset, config.MaxOffset)).Floored();
+                    dungeons.AddRange(await GetDungeon(position, config.Generator, rand.Next()));
                 }
 
                 break;
             case NoiseDistanceDunGen distance:
-                dungeon = await GenerateNoiseDistanceDungeon(distance, _gridUid, _grid, seed);
+                dungeon = await GenerateNoiseDistanceDungeon(position, distance,  seed);
                 dungeons.Add(dungeon);
                 break;
             case NoiseDunGen noise:
-                dungeon = await GenerateNoiseDungeon(noise, _gridUid, _grid, seed);
+                dungeon = await GenerateNoiseDungeon(position, noise, seed);
                 dungeons.Add(dungeon);
                 break;
             case PrefabDunGen prefab:
-                dungeon = await GeneratePrefabDungeon(prefab, _gridUid, _grid, seed);
+                dungeon = await GeneratePrefabDungeon(position, prefab, seed);
                 dungeons.Add(dungeon);
                 DebugTools.Assert(dungeon.RoomExteriorTiles.Count > 0);
                 break;
@@ -132,10 +132,11 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
     {
         _sawmill.Info($"Generating dungeon {_gen.ID} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
         _grid.CanSplit = false;
-
-        var dungeons = await GetDungeon(_gen.Generator, _seed);
-        // To make it slightly more deterministic treat this RNG as separate ig.
         var random = new Random(_seed);
+        var position = (_position + random.NextVector2(_gen.MinOffset, _gen.MaxOffset)).Floored();
+
+        var dungeons = await GetDungeon(position, _gen.Generator, _seed);
+        // To make it slightly more deterministic treat this RNG as separate ig.
 
         foreach (var dungeon in dungeons)
         {

@@ -7,8 +7,8 @@ namespace Content.Shared.Procedural.Distance;
 public partial interface IDunGenDistance
 {
     /// <summary>
-    /// How large the dungeon is allowed to be in terms of x,y.
+    /// How much to blend between the original noise value and the adjusted one.
     /// </summary>
-    public Vector2i Size { get; }
+    float BlendWeight { get; }
 }
 
