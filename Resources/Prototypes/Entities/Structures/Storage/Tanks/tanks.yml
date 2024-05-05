@@ -2,7 +2,7 @@
 
 - type: entity
   id: WeldingFuelTank
-  parent: StorageTank
+  parent: [StorageTank, StructureWheeled]
   name: fuel tank
   description: A fuel tank. It's used to store high amounts of fuel.
   suffix: Empty
@@ -48,7 +48,7 @@
           Quantity: 1500
 
 - type: entity
-  parent: WeldingFuelTank
+  parent: [StorageTankBig, WeldingFuelTank] # StorageTankBig must come first, or else the desnity won't get inherited.
   id: WeldingFuelTankHighCapacity
   name: high-capacity fuel tank
   description: A highly pressurized fuel tank made to hold gargantuan amounts of welding fuel.
@@ -81,7 +81,7 @@
 
 - type: entity
   id: WaterTank
-  parent: StorageTank
+  parent: [StorageTank, StructureWheeled]
   name: water tank
   description: A water tank. It's used to store high amounts of water.
   suffix: Empty
@@ -115,7 +115,7 @@
           Quantity: 1500
 
 - type: entity
-  parent: WaterTankFull
+  parent: StorageTank
   id: WaterCooler
   name: water cooler
   description: Seems like a good place to stand and waste time. It has a stock of paper cups on the side.
@@ -127,6 +127,7 @@
       - state: watercooler-2-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
+  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: watercooler-2-
@@ -157,14 +158,20 @@
       - FitsInDispenser
       tags:
       - Trash
+  - type: ExaminableSolution
+    solution: tank
+  - type: StaticPrice
+    price: 500
 
 - type: entity
-  parent: StorageTank
+  parent: [StorageTankBig, WaterTank]
   id: WaterTankHighCapacity
   name: high-capacity water tank
   description: A highly pressurized water tank made to hold gargantuan amounts of water.
   suffix: Full
   components:
+  - type: StaticPrice
+    price: 2500
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     layers:
@@ -192,7 +199,7 @@
 
 - type: entity
   id: GenericTank
-  parent: StorageTank
+  parent: [StorageTank, StructureWheeled]
   suffix: Empty
   components:
     - type: StaticPrice

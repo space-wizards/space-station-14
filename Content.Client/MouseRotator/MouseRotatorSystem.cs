@@ -49,7 +49,7 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
             if (angleDir == curRot.GetCardinalDir())
                 return;
 
-            RaisePredictiveEvent(new  RequestMouseRotatorRotationSimpleEvent()
+            RaisePredictiveEvent(new RequestMouseRotatorRotationSimpleEvent()
             {
                 Direction = angleDir,
             });

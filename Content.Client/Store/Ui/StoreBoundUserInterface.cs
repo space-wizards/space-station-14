@@ -17,7 +17,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     private string _windowName = Loc.GetString("store-ui-default-title");
 
     [ViewVariables]
-    private string _search = "";
+    private string _search = string.Empty;
 
     [ViewVariables]
     private HashSet<ListingData> _listings = new();
@@ -44,17 +44,12 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         _menu.OnCategoryButtonPressed += (_, category) =>
         {
             _menu.CurrentCategory = category;
-            SendMessage(new StoreRequestUpdateInterfaceMessage());
+            _menu?.UpdateListing();
         };
 
         _menu.OnWithdrawAttempt += (_, type, amount) =>
         {
             SendMessage(new StoreRequestWithdrawMessage(type, amount));
-        };
-
-        _menu.OnRefreshButtonPressed += (_) =>
-        {
-            SendMessage(new StoreRequestUpdateInterfaceMessage());
         };
 
         _menu.SearchTextUpdated += (_, search) =>

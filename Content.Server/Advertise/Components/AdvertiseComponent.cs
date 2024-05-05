@@ -1,7 +1,6 @@
 using Content.Server.Advertise.EntitySystems;
 using Content.Shared.Advertise;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Advertise.Components;
 
@@ -26,6 +25,14 @@ public sealed partial class AdvertiseComponent : Component
     public int MaximumWait { get; private set; } = 10 * 60;
 
     /// <summary>
+    /// If true, the delay before the first advertisement (at MapInit) will ignore <see cref="MinimumWait"/>
+    /// and instead be rolled between 0 and <see cref="MaximumWait"/>. This only applies to the initial delay;
+    /// <see cref="MinimumWait"/> will be respected after that.
+    /// </summary>
+    [DataField]
+    public bool Prewarm = true;
+
+    /// <summary>
     /// The identifier for the advertisements pack prototype.
     /// </summary>
     [DataField(required: true)]
@@ -37,9 +44,4 @@ public sealed partial class AdvertiseComponent : Component
     [DataField]
     public TimeSpan NextAdvertisementTime { get; set; } = TimeSpan.Zero;
 
-    /// <summary>
-    /// Whether the entity will say advertisements or not.
-    /// </summary>
-    [DataField]
-    public bool Enabled { get; set; } = true;
 }

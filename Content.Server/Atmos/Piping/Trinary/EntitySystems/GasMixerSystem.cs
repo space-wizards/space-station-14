@@ -134,7 +134,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             DirtyUI(uid, mixer);
             UpdateAppearance(uid, mixer);
-            _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
+            _userInterfaceSystem.CloseUi(uid, GasFilterUiKey.Key);
         }
 
         private void OnMixerActivate(EntityUid uid, GasMixerComponent mixer, ActivateInWorldEvent args)
@@ -144,7 +144,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             if (Transform(uid).Anchored)
             {
-                _userInterfaceSystem.TryOpen(uid, GasMixerUiKey.Key, actor.PlayerSession);
+                _userInterfaceSystem.OpenUi(uid, GasMixerUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, mixer);
             }
             else
@@ -160,7 +160,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!Resolve(uid, ref mixer))
                 return;
 
-            _userInterfaceSystem.TrySetUiState(uid, GasMixerUiKey.Key,
+            _userInterfaceSystem.SetUiState(uid, GasMixerUiKey.Key,
                 new GasMixerBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(uid).EntityName, mixer.TargetPressure, mixer.Enabled, mixer.InletOneConcentration));
         }
 
@@ -176,7 +176,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             mixer.Enabled = args.Enabled;
             _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
-                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
+                $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, mixer);
             UpdateAppearance(uid, mixer);
         }
@@ -185,7 +185,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             mixer.TargetPressure = Math.Clamp(args.Pressure, 0f, mixer.MaxTargetPressure);
             _adminLogger.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
-                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the pressure on {ToPrettyString(uid):device} to {args.Pressure}kPa");
+                $"{ToPrettyString(args.Actor):player} set the pressure on {ToPrettyString(uid):device} to {args.Pressure}kPa");
             DirtyUI(uid, mixer);
         }
 
@@ -196,7 +196,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             mixer.InletOneConcentration = nodeOne;
             mixer.InletTwoConcentration = 1.0f - mixer.InletOneConcentration;
             _adminLogger.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
-                $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the ratio on {EntityManager.ToPrettyString(uid):device} to {mixer.InletOneConcentration}:{mixer.InletTwoConcentration}");
+                $"{EntityManager.ToPrettyString(args.Actor):player} set the ratio on {EntityManager.ToPrettyString(uid):device} to {mixer.InletOneConcentration}:{mixer.InletTwoConcentration}");
             DirtyUI(uid, mixer);
         }
 
@@ -205,19 +205,31 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         /// </summary>
         private void OnMixerAnalyzed(EntityUid uid, GasMixerComponent component, GasAnalyzerScanEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
+            args.GasMixtures ??= new List<(string, GasMixture?)>();
 
-            var gasMixDict = new Dictionary<string, GasMixture?>();
+            // multiply by volume fraction to make sure to send only the gas inside the analyzed pipe element, not the whole pipe system
+            if (_nodeContainer.TryGetNode(uid, component.InletOneName, out PipeNode? inletOne) && inletOne.Air.Volume != 0f)
+            {
+                var inletOneAirLocal = inletOne.Air.Clone();
+                inletOneAirLocal.Multiply(inletOne.Volume / inletOne.Air.Volume);
+                inletOneAirLocal.Volume = inletOne.Volume;
+                args.GasMixtures.Add(($"{inletOne.CurrentPipeDirection} {Loc.GetString("gas-analyzer-window-text-inlet")}", inletOneAirLocal));
+            }
+            if (_nodeContainer.TryGetNode(uid, component.InletTwoName, out PipeNode? inletTwo) && inletTwo.Air.Volume != 0f)
+            {
+                var inletTwoAirLocal = inletTwo.Air.Clone();
+                inletTwoAirLocal.Multiply(inletTwo.Volume / inletTwo.Air.Volume);
+                inletTwoAirLocal.Volume = inletTwo.Volume;
+                args.GasMixtures.Add(($"{inletTwo.CurrentPipeDirection} {Loc.GetString("gas-analyzer-window-text-inlet")}", inletTwoAirLocal));
+            }
+            if (_nodeContainer.TryGetNode(uid, component.OutletName, out PipeNode? outlet) && outlet.Air.Volume != 0f)
+            {
+                var outletAirLocal = outlet.Air.Clone();
+                outletAirLocal.Multiply(outlet.Volume / outlet.Air.Volume);
+                outletAirLocal.Volume = outlet.Volume;
+                args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-outlet"), outletAirLocal));
+            }
 
-            if(_nodeContainer.TryGetNode(nodeContainer, component.InletOneName, out PipeNode? inletOne))
-                gasMixDict.Add($"{inletOne.CurrentPipeDirection} {Loc.GetString("gas-analyzer-window-text-inlet")}", inletOne.Air);
-            if(_nodeContainer.TryGetNode(nodeContainer, component.InletTwoName, out PipeNode? inletTwo))
-                gasMixDict.Add($"{inletTwo.CurrentPipeDirection} {Loc.GetString("gas-analyzer-window-text-inlet")}", inletTwo.Air);
-            if(_nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet))
-                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-outlet"), outlet.Air);
-
-            args.GasMixtures = gasMixDict;
             args.DeviceFlipped = inletOne != null && inletTwo != null && inletOne.CurrentPipeDirection.ToDirection() == inletTwo.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
         }
     }

@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Client.Actions;
-using Content.Client.GameTicking.Managers;
 using Content.Client.Message;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
@@ -11,7 +10,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Store.Ui;
 
@@ -22,9 +20,6 @@ public sealed partial class StoreMenu : DefaultWindow
     
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-    private readonly ClientGameTicker _gameTicker;
 
     private StoreWithdrawWindow? _withdrawWindow;
 
@@ -32,21 +27,19 @@ public sealed partial class StoreMenu : DefaultWindow
     public event Action<BaseButton.ButtonEventArgs, ListingData>? OnListingButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string, int>? OnWithdrawAttempt;
-    public event Action<BaseButton.ButtonEventArgs>? OnRefreshButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnRefundAttempt;
 
-    public Dictionary<string, FixedPoint2> Balance = new();
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance = new();
     public string CurrentCategory = string.Empty;
+
+    private List<ListingData> _cachedListings = new();
 
     public StoreMenu(string name)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
-
         WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
-        RefreshButton.OnButtonDown += OnRefreshButtonDown;
         RefundButton.OnButtonDown += OnRefundButtonDown;
         SearchBar.OnTextChanged += _ => SearchTextUpdated?.Invoke(this, SearchBar.Text);
 
@@ -54,12 +47,12 @@ public sealed partial class StoreMenu : DefaultWindow
             Window.Title = name;
     }
 
-    public void UpdateBalance(Dictionary<string, FixedPoint2> balance)
+    public void UpdateBalance(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance)
     {
         Balance = balance;
 
         var currency = balance.ToDictionary(type =>
-            (type.Key, type.Value), type => _prototypeManager.Index<CurrencyPrototype>(type.Key));
+            (type.Key, type.Value), type => _prototypeManager.Index(type.Key));
 
         var balanceStr = string.Empty;
         foreach (var ((_, amount), proto) in currency)
@@ -82,7 +75,13 @@ public sealed partial class StoreMenu : DefaultWindow
 
     public void UpdateListing(List<ListingData> listings, List<StoreDiscountData> discounts)
     {
-        var sorted = listings.OrderBy(l => l.Priority).ThenBy(l => l.Cost.Values.Sum());
+        _cachedListings = listings;
+        UpdateListing();
+    }
+
+    public void UpdateListing()
+    {
+        var sorted = _cachedListings.OrderBy(l => l.Priority).ThenBy(l => l.Cost.Values.Sum());
 
         // should probably chunk these out instead. to-do if this clogs the internet tubes.
         // maybe read clients prototypes instead?
@@ -104,12 +103,6 @@ public sealed partial class StoreMenu : DefaultWindow
     public void SetFooterVisibility(bool visible)
     {
         TraitorFooter.Visible = visible;
-    }
-
-
-    private void OnRefreshButtonDown(BaseButton.ButtonEventArgs args)
-    {
-        OnRefreshButtonPressed?.Invoke(args);
     }
 
     private void OnWithdrawButtonDown(BaseButton.ButtonEventArgs args)
@@ -139,10 +132,8 @@ public sealed partial class StoreMenu : DefaultWindow
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
-        var listingName = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager);
-        var listingDesc = ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listing, _prototypeManager);
         var listingPrice = listing.Cost;
-        var canBuy = CanBuyListing(Balance, listingPrice, discountData);
+        var hasBalance = CanBuyListing(Balance, listingPrice, discountData);
 
         var spriteSys = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
 
@@ -172,7 +163,7 @@ public sealed partial class StoreMenu : DefaultWindow
             canBuy = false;
         }
 
-        var newListing = new StoreListingControl(listingName, listingDesc, listingInStock, discount, canBuy, texture);
+        var newListing = new StoreListingControl(listing, GetListingPriceString(listing), discount, hasBalance, texture);
         newListing.StoreItemBuyButton.OnButtonDown += args
             => OnListingButtonPressed?.Invoke(args, listing);
 
@@ -271,7 +262,7 @@ public sealed partial class StoreMenu : DefaultWindow
         {
             foreach (var cat in listing.Categories)
             {
-                var proto = _prototypeManager.Index<StoreCategoryPrototype>(cat);
+                var proto = _prototypeManager.Index(cat);
                 if (!allCategories.Contains(proto))
                     allCategories.Add(proto);
             }
@@ -297,12 +288,17 @@ public sealed partial class StoreMenu : DefaultWindow
         if (allCategories.Count < 1)
             return;
 
+        var group = new ButtonGroup();
         foreach (var proto in allCategories)
         {
             var catButton = new StoreCategoryButton
             {
                 Text = Loc.GetString(proto.Name),
-                Id = proto.ID
+                Id = proto.ID,
+                Pressed = proto.ID == CurrentCategory,
+                Group = group,
+                ToggleMode = true,
+                StyleClasses = { "OpenBoth" }
             };
 
             catButton.OnPressed += args => OnCategoryButtonPressed?.Invoke(args, catButton.Id);
@@ -318,7 +314,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
     public void UpdateRefund(bool allowRefund)
     {
-        RefundButton.Disabled = !allowRefund;
+        RefundButton.Visible = allowRefund;
     }
 
     private sealed class StoreCategoryButton : Button

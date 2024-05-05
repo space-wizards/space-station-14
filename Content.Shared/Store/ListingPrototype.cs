@@ -27,8 +27,8 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// The name of the listing. If empty, uses the entity's name (if present)
     /// </summary>
-    [DataField("name")]
-    public string Name = string.Empty;
+    [DataField]
+    public string? Name;
 
     /// <summary>
     /// Discount category for listing item. This marker describes chance of how often will item be discounted.
@@ -45,51 +45,51 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// The description of the listing. If empty, uses the entity's description (if present)
     /// </summary>
-    [DataField("description")]
-    public string Description = string.Empty;
+    [DataField]
+    public string? Description;
 
     /// <summary>
     /// The categories that this listing applies to. Used for filtering a listing for a store.
     /// </summary>
-    [DataField("categories", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<StoreCategoryPrototype>))]
-    public List<string> Categories = new();
+    [DataField]
+    public List<ProtoId<StoreCategoryPrototype>> Categories = new();
 
     /// <summary>
     /// The cost of the listing. String represents the currency type while the FixedPoint2 represents the amount of that currency.
     /// </summary>
-    [DataField("cost", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
-    public Dictionary<string, FixedPoint2> Cost = new();
+    [DataField]
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Cost = new();
 
     /// <summary>
-    /// Specific customizeable conditions that determine whether or not the listing can be purchased.
+    /// Specific customizable conditions that determine whether or not the listing can be purchased.
     /// </summary>
     [NonSerialized]
-    [DataField("conditions", serverOnly: true)]
+    [DataField(serverOnly: true)]
     public List<ListingCondition>? Conditions;
 
     /// <summary>
     /// The icon for the listing. If null, uses the icon for the entity or action.
     /// </summary>
-    [DataField("icon")]
+    [DataField]
     public SpriteSpecifier? Icon;
 
     /// <summary>
     /// The priority for what order the listings will show up in on the menu.
     /// </summary>
-    [DataField("priority")]
-    public int Priority = 0;
+    [DataField]
+    public int Priority;
 
     /// <summary>
     /// The entity that is given when the listing is purchased.
     /// </summary>
-    [DataField("productEntity", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? ProductEntity;
+    [DataField]
+    public EntProtoId? ProductEntity;
 
     /// <summary>
     /// The action that is given when the listing is purchased.
     /// </summary>
-    [DataField("productAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? ProductAction;
+    [DataField]
+    public EntProtoId? ProductAction;
 
     /// <summary>
     ///     The listing ID of the related upgrade listing. Can be used to link a <see cref="ProductAction"/> to an
@@ -108,7 +108,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// The event that is broadcast when the listing is purchased.
     /// </summary>
-    [DataField("productEvent")]
+    [DataField]
     public object? ProductEvent;
 
     [DataField]
@@ -117,13 +117,14 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// used internally for tracking how many times an item was purchased.
     /// </summary>
-    public int PurchaseAmount = 0;
+    [DataField]
+    public int PurchaseAmount;
 
     /// <summary>
     /// Used to delay purchase of some items.
     /// </summary>
-    [DataField("restockTime")]
-    public int RestockTime;
+    [DataField]
+    public TimeSpan RestockTime = TimeSpan.Zero;
 
     public bool Equals(ListingData? listing)
     {

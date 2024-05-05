@@ -143,8 +143,8 @@
     key: enum.DisposalTaggerUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.DisposalTaggerUiKey.Key
-      type: DisposalTaggerBoundUserInterface
+      enum.DisposalTaggerUiKey.Key:
+        type: DisposalTaggerBoundUserInterface
   - type: Construction
     graph: DisposalPipe
     node: tagger
@@ -219,8 +219,8 @@
     key: enum.DisposalRouterUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.DisposalRouterUiKey.Key
-      type: DisposalRouterBoundUserInterface
+      enum.DisposalRouterUiKey.Key:
+        type: DisposalRouterBoundUserInterface
   - type: Fixtures
     fixtures:
       fix1:
