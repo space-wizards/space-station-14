@@ -3,6 +3,7 @@
   startingInventory:
     HandheldHealthAnalyzer: 3
     Brutepack: 5
+    Tourniquet: 5
     Ointment: 5
     Bloodpack: 5
     EpinephrineChemistryBottle: 3

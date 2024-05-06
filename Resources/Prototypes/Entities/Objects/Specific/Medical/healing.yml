@@ -246,15 +246,21 @@
         - Biological
       damage:
         groups:
-          Brute: 5 # Tourniquets HURT!
+          Brute: -1
         types:
-          Asphyxiation: 5 # Essentially Stopping all blood reaching a part of your body
-      bloodlossModifier: -10 # Tourniquets stop bleeding
+          Asphyxiation: 2 # Essentially Stopping all blood reaching a part of your body
+      bloodlossModifier: -10
       delay: 0.5
       healingBeginSound:
         path: "/Audio/Items/Medical/brutepack_begin.ogg"
       healingEndSound:
         path: "/Audio/Items/Medical/brutepack_end.ogg"
+    - type: Stack
+      stackType: tourniquet
+      count: 5
+    - type: StackPrice
+      price: 10
+
 
 - type: entity
   name: roll of gauze

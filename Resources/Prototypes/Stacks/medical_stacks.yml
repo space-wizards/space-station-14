@@ -39,6 +39,14 @@
   itemSize: 1
 
 - type: stack
+  id: tourniquet
+  name: tourniquet
+  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: tourniquet }
+  spawn: tourniquet
+  maxCount: 5
+  itemSize: 1
+
+- type: stack
   id: MedicatedSuture
   name: medicated-suture
   icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: medicated-suture }
