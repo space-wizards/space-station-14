@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Macrobomb implant price reduced 20->13 TC.
-    type: Tweak
-  id: 6032
-  time: '2024-02-26T23:04:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25585
-- author: QuietlyWhisper
-  changes:
-  - message: Handcuff and handcuff replacements are faster to escape. You can allow
-      your teammates to uncuff themselves!
-    type: Tweak
-  id: 6033
-  time: '2024-02-26T23:05:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25601
-- author: PoorMansDreams
-  changes:
-  - message: New lobby art (of horror)
-    type: Add
-  id: 6034
-  time: '2024-02-26T23:06:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25455
 - author: TheShuEd
   changes:
   - message: Carpets can now be printed at the uniform printer.
@@ -3874,3 +3852,24 @@
   id: 6531
   time: '2024-05-05T14:42:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27676
+- author: Killerqu00
+  changes:
+  - message: Welding masks can now be put on utility belts.
+    type: Tweak
+  id: 6532
+  time: '2024-05-05T23:30:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27694
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Chemical analysis goggles now show the scanned solution's temperature.
+    type: Tweak
+  id: 6533
+  time: '2024-05-05T23:32:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27693
+- author: Allen
+  changes:
+  - message: Added new icons for the emote wheel
+    type: Add
+  id: 6534
+  time: '2024-05-06T01:12:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27541
