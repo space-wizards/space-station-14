@@ -1,11 +1,8 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
-<<<<<<< HEAD
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-=======
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
->>>>>>> master
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Body.Components
 {
