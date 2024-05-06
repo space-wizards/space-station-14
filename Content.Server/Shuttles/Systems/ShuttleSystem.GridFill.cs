@@ -67,7 +67,8 @@ public sealed partial class ShuttleSystem
 
         var mapId = _mapManager.CreateMap();
 
-        if (_loader.TryLoad(mapId, component.Path?.ToString(), out var ent) && ent.Count > 0)
+        string? path = component.Path?.ToString();
+        if (path != null && _loader.TryLoad(mapId, path, out var ent) && ent.Count > 0)
         {
             if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
             {
@@ -82,9 +83,6 @@ public sealed partial class ShuttleSystem
 
     private void GridSpawns(EntityUid uid, GridSpawnComponent component)
     {
-        if (component.Groups != null)
-            return;
-
         if (!_cfg.GetCVar(CCVars.GridFill))
             return;
 
@@ -103,77 +101,80 @@ public sealed partial class ShuttleSystem
         var valid = true;
         var paths = new List<ResPath>();
 
-        foreach (var group in component.Groups.Values)
+        if (component.Groups != null)
         {
-            if (group.Paths.Count == 0)
+            foreach (var group in component.Groups.Values)
             {
-                Log.Error($"Found no paths for GridSpawn");
-                continue;
-            }
-
-            var count = _random.Next(group.MinCount, group.MaxCount);
-            paths.Clear();
-
-            for (var i = 0; i < count; i++)
-            {
-                // Round-robin so we try to avoid dupes where possible.
-                if (paths.Count == 0)
+                if (group.Paths.Count == 0)
                 {
-                    paths.AddRange(group.Paths);
-                    _random.Shuffle(paths);
+                    Log.Error($"Found no paths for GridSpawn");
+                    continue;
                 }
 
-                var path = paths[^1];
-                paths.RemoveAt(paths.Count - 1);
+                var count = _random.Next(group.MinCount, group.MaxCount);
+                paths.Clear();
 
-                if (_loader.TryLoad(mapId, path.ToString(), out var ent) && ent.Count == 1)
+                for (var i = 0; i < count; i++)
                 {
-                    if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
+                    // Round-robin so we try to avoid dupes where possible.
+                    if (paths.Count == 0)
                     {
-                        TryFTLProximity(ent[0], targetGrid.Value);
+                        paths.AddRange(group.Paths);
+                        _random.Shuffle(paths);
+                    }
+
+                    var path = paths[^1];
+                    paths.RemoveAt(paths.Count - 1);
+
+                    if (_loader.TryLoad(mapId, path.ToString(), out var ent) && ent.Count == 1)
+                    {
+                        if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
+                        {
+                            TryFTLProximity(ent[0], targetGrid.Value);
+                        }
+                        else
+                        {
+                            valid = false;
+                        }
+
+                        if (group.Hide)
+                        {
+                            var iffComp = EnsureComp<IFFComponent>(ent[0]);
+                            iffComp.Flags |= IFFFlags.HideLabel;
+                            Dirty(ent[0], iffComp);
+                        }
+
+                        if (group.StationGrid)
+                        {
+                            _station.AddGridToStation(uid, ent[0]);
+                        }
+
+                        if (group.NameGrid)
+                        {
+                            var name = path.FilenameWithoutExtension;
+                            _metadata.SetEntityName(ent[0], name);
+                        }
+
+                        foreach (var compReg in group.AddComponents.Values)
+                        {
+                            var compType = compReg.Component.GetType();
+
+                            if (HasComp(ent[0], compType))
+                                continue;
+
+                            var comp = _factory.GetComponent(compType);
+                            AddComp(ent[0], comp, true);
+                        }
                     }
                     else
                     {
                         valid = false;
                     }
 
-                    if (group.Hide)
+                    if (!valid)
                     {
-                        var iffComp = EnsureComp<IFFComponent>(ent[0]);
-                        iffComp.Flags |= IFFFlags.HideLabel;
-                        Dirty(ent[0], iffComp);
+                        Log.Error($"Error loading gridspawn for {ToPrettyString(uid)} / {path}");
                     }
-
-                    if (group.StationGrid)
-                    {
-                        _station.AddGridToStation(uid, ent[0]);
-                    }
-
-                    if (group.NameGrid)
-                    {
-                        var name = path.FilenameWithoutExtension;
-                        _metadata.SetEntityName(ent[0], name);
-                    }
-
-                    foreach (var compReg in group.AddComponents.Values)
-                    {
-                        var compType = compReg.Component.GetType();
-
-                        if (HasComp(ent[0], compType))
-                            continue;
-
-                        var comp = _factory.GetComponent(compType);
-                        AddComp(ent[0], comp, true);
-                    }
-                }
-                else
-                {
-                    valid = false;
-                }
-
-                if (!valid)
-                {
-                    Log.Error($"Error loading gridspawn for {ToPrettyString(uid)} / {path}");
                 }
             }
         }

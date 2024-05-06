@@ -8,27 +8,6 @@
     Europa:
       stationProto: StandardNanotrasenStation
       components:
-      - type: StationCargoShuttle
-        path: null
-      - type: GridSpawn
-        groups:
-          trade: null
-          mining: null
-          ruins:
-            hide: true
-            nameGrid: true
-            minCount: 2
-            maxCount: 2
-            stationGrid: false
-            paths:
-            - /Maps/Ruins/biodome_satellite.yml
-            - /Maps/Ruins/derelict.yml
-            - /Maps/Ruins/djstation.yml
-            - /Maps/Ruins/old_ai_sat.yml
-            - /Maps/Ruins/relaystation.yml
-            - /Maps/Ruins/syndicate_dropship.yml
-            - /Maps/Ruins/whiteship_ancient.yml
-            - /Maps/Ruins/whiteship_bluespacejumper.yml
       - type: StationBiome
         biome: Snow
       - type: StationRandomTransform
