@@ -148,7 +148,7 @@ namespace Content.IntegrationTests.Tests
                             continue;
 
                         ItemComponent? entryItem = null;
-                        server.Post(() =>
+                        await server.WaitPost(() =>
                         {
                             fillItem.TryGetComponent("Item", out entryItem);
                         });

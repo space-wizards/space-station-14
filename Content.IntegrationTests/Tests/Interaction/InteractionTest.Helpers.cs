@@ -667,7 +667,7 @@ public abstract partial class InteractionTest
         LookupFlags flags = LookupFlags.Uncontained | LookupFlags.Contained,
         bool shouldSucceed = true)
     {
-        spec.ConvertToStack(ProtoMan, Factory, Server);
+        await spec.ConvertToStack(ProtoMan, Factory, Server);
 
         var entities = await DoEntityLookup(flags);
         foreach (var uid in entities)

@@ -55,7 +55,7 @@ public abstract partial class InteractionTest
         /// <summary>
         /// Convert applicable entity prototypes into stack prototypes.
         /// </summary>
-        public void ConvertToStack(IPrototypeManager protoMan, IComponentFactory factory, ServerIntegrationInstance server)
+        public async Task ConvertToStack(IPrototypeManager protoMan, IComponentFactory factory, ServerIntegrationInstance server)
         {
             if (Converted)
                 return;
@@ -75,7 +75,7 @@ public abstract partial class InteractionTest
             }
 
             StackComponent? stack = null;
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 entProto.TryGetComponent(factory.GetComponentName(typeof(StackComponent)), out stack);
             });
