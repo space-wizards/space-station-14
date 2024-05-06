@@ -17,5 +17,5 @@ public sealed partial class MobReplacementRuleComponent : Component
     /// Chance per-entity.
     /// </summary>
     [DataField]
-    public float Chance = 0.001f;
+    public float Chance = 0.004f;
 }
