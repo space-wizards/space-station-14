@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Added a new T2 industrial technology "Space Scanning"! It includes a
-      mass scanner console board, a Borg GPS module, and a new handheld mass scanner.
-    type: Add
-  - message: GPS borg module now have handheld mass scanner.
-    type: Add
-  id: 6038
-  time: '2024-02-26T23:19:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25526
 - author: Sphiral
   changes:
   - message: NT has finally perfected methods for infusing Plasma/Uranium into Glass!
@@ -3866,3 +3856,12 @@
   id: 6537
   time: '2024-05-06T08:17:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27717
+- author: mirrorcult
+  changes:
+  - message: Event weights have been tweaked across the board, and some events removed
+      (such as false alarm) to hopefully allow for a more interesting and varied slate
+      of random occurrences per round.
+    type: Add
+  id: 6538
+  time: '2024-05-06T10:10:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27721
