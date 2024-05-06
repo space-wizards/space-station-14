@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PoorMansDreams
-  changes:
-  - message: New lobby art (of horror)
-    type: Add
-  id: 6034
-  time: '2024-02-26T23:06:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25455
 - author: TheShuEd
   changes:
   - message: Carpets can now be printed at the uniform printer.
@@ -3873,3 +3866,10 @@
   id: 6533
   time: '2024-05-05T23:32:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27693
+- author: Allen
+  changes:
+  - message: Added new icons for the emote wheel
+    type: Add
+  id: 6534
+  time: '2024-05-06T01:12:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27541
