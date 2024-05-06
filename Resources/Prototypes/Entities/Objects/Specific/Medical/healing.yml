@@ -256,7 +256,7 @@
       healingEndSound:
         path: "/Audio/Items/Medical/brutepack_end.ogg"
     - type: Stack
-      stackType: tourniquet
+      stackType: Tourniquet
       count: 5
     - type: StackPrice
       price: 10
