@@ -1308,6 +1308,8 @@
     makeSentient: true
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SyndicateOperativeGearMonkey]
@@ -1510,8 +1512,6 @@
     allowMovement: true
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
-    raffle:
-      settings: default
   - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
@@ -2294,6 +2294,8 @@
       makeSentient: true
       name: ghost-role-information-giant-spider-name
       description: ghost-role-information-giant-spider-description
+      raffle:
+        settings: short
     - type: GhostTakeoverAvailable
 
 - type: entity
@@ -2818,6 +2820,8 @@
     allowMovement: true
     description: ghost-role-information-SyndiCat-description
     rules: ghost-role-information-SyndiCat-rules
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: AutoImplant
     implants:
