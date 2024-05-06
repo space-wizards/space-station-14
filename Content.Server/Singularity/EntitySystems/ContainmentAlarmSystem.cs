@@ -26,16 +26,21 @@ namespace Content.Server.Singularity.EntitySystems
         /// <param name="uid"></param>
         /// <param name="alarm"></param>
         /// <param name="currentPower"></param>
-        public void UpdateAlertLevel(EntityUid uid, ContainmentAlarmComponent alarm, int currentPower)
+        public void UpdateAlertLevel(Entity<ContainmentAlarmComponent?> ent, int currentPower)
         {
+            if (!Resolve(ent, ref ent.Comp))
+                return;
+
+            var alarm = ent.Comp;
+
             if(alarm.LastAlertPowerLevel == -1 || alarm.LastAlertPowerLevel - currentPower >= alarm.PowerIntervalBetweenAlerts)
             {
                 //Alert territory
-                var posText = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString(uid));
+                var posText = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString(ent.Owner));
                 var channel = currentPower <= alarm.EmergencyThreshold ? alarm.EmergencyAnnouncementChannel : alarm.AnnouncementChannel;
                 var powerText = (double)currentPower / alarm.PowerCap;
                 var message = Loc.GetString("comp-containment-alert-field-losing-power", ("location", posText), ("power", powerText));
-                _radio.SendRadioMessage(uid, message, channel, uid, escapeMarkup: false);
+                _radio.SendRadioMessage(ent, message, channel, ent, escapeMarkup: false);
                 alarm.LastAlertPowerLevel = currentPower;
             }
         }
@@ -45,11 +50,16 @@ namespace Content.Server.Singularity.EntitySystems
         /// <param name="uid"></param>
         /// <param name="alarm"></param>
 
-        public void BroadcastContainmentBreak(EntityUid uid, ContainmentAlarmComponent alarm)
+        public void BroadcastContainmentBreak(Entity<ContainmentAlarmComponent?> ent)
         {
-            var posText = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString(uid));
+            if (!Resolve(ent, ref ent.Comp))
+                return;
+
+            var alarm = ent.Comp;
+
+            var posText = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString(ent.Owner));
             var message = Loc.GetString("comp-containment-alert-field-link-broken", ("location", posText));
-            _radio.SendRadioMessage(uid, message, alarm.EmergencyAnnouncementChannel, uid, escapeMarkup: false);
+            _radio.SendRadioMessage(ent, message, alarm.EmergencyAnnouncementChannel, ent, escapeMarkup: false);
         }
     }
 }
