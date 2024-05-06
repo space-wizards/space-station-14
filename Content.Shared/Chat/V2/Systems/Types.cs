@@ -1,9 +1,8 @@
-﻿using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Chat.V2.Repository;
+namespace Content.Shared.Chat.V2.Systems;
 
 /// <summary>
 /// The record associated with a specific chat event.

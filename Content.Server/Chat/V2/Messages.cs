@@ -69,13 +69,13 @@ public sealed class LoocCreatedEvent(EntityUid speaker, string message) : IChatE
 public sealed class RadioCreatedEvent(
     EntityUid speaker,
     string message,
-    RadioChannelPrototype channel)
+    string channel)
     : IChatEvent
 {
     public uint Id { get; set; }
     public EntityUid Sender { get; set; } = speaker;
     public string Message { get; set; } = message;
-    public RadioChannelPrototype Channel = channel;
+    public string Channel = channel;
     public MessageType Type => MessageType.Radio;
 }
 
@@ -92,3 +92,50 @@ public sealed class WhisperCreatedEvent(EntityUid speaker, string message, float
     public float MaxRange = maxRange;
 }
 
+/// <summary>
+/// Notifies that a chat message needs validating.
+/// </summary>
+/// <param name="attemptEvent">The chat message to validate</param>
+public sealed class ChatValidationEvent<T>(T attemptEvent) where T : ChatAttemptEvent
+{
+    public readonly T Event = attemptEvent;
+    public string Reason = "";
+
+    public bool IsCancelled { get; private set; }
+
+    public void Cancel(string reason)
+    {
+        if (IsCancelled)
+        {
+            return;
+        }
+
+        IsCancelled = true;
+        Reason = reason;
+    }
+}
+
+/// <summary>
+/// Notifies that a chat message needs sanitizing. If, after this message is processed, IsCancelled is true, the message
+/// should be discarded with a failure response. Otherwise, if ChatMessageSanitized is non-null, ChatMessageSanitized
+/// should be used instead of the non-sanitized message.
+/// </summary>
+/// <param name="attemptEvent">The chat message to sanitize.</param>
+[ByRefEvent]
+public sealed class ChatSanitizationEvent<T>(T attemptEvent) where T : ChatAttemptEvent
+{
+    public string ChatMessageRaw = attemptEvent.Message;
+    public bool IsCancelled;
+    public string? ChatMessageSanitized { get; private set; }
+
+    // Commits the sanitized message string to the event. If a message string has already been input, this is a no-op.
+    public void Sanitize(string inMessage)
+    {
+        if (ChatMessageSanitized != null)
+        {
+            return;
+        }
+
+        ChatMessageSanitized = inMessage;
+    }
+}
