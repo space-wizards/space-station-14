@@ -70,7 +70,7 @@
     layoutId: Vending
   - type: Anchorable
   - type: TypingIndicator
-    defaultTypingIndicator: robot
+    typingIndicatorOverrideList: [robot]
   - type: Speech
     speechVerb: Robotic
     speechSounds: Vending
