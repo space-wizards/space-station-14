@@ -1123,9 +1123,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         Dirty(uid, container);
         return solution;
     }
-
-
-
+    
     private Entity<SolutionComponent, ContainedSolutionComponent> SpawnSolutionUninitialized(ContainerSlot container, string name, FixedPoint2 maxVol, Solution prototype)
     {
         var coords = new EntityCoordinates(container.Owner, Vector2.Zero);
