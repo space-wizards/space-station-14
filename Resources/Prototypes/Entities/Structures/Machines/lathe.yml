@@ -54,7 +54,7 @@
   id: Autolathe
   parent: BaseLathe
   name: autolathe
-  description: It produces items using metal and glass.
+  description: It produces basic items using metal and glass.
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
@@ -206,7 +206,7 @@
   id: Protolathe
   parent: BaseLathe
   name: protolathe
-  description: Converts raw materials into useful objects.
+  description: Converts raw materials into advanced items.
   components:
   - type: Sprite
     sprite: Structures/Machines/protolathe.rsi
