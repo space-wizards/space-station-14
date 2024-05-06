@@ -126,6 +126,7 @@ public abstract class SharedAirlockSystem : EntitySystem
     public void ToggleEmergencyAccess(EntityUid uid, AirlockComponent component)
     {
         component.EmergencyAccess = !component.EmergencyAccess;
+        Dirty(uid, component); // This only runs on the server apparently so we need this.
         UpdateEmergencyLightStatus(uid, component);
     }
 

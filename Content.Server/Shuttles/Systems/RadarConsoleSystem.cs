@@ -12,6 +12,7 @@ namespace Content.Server.Shuttles.Systems;
 
 public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
 {
+    [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
@@ -38,12 +39,21 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
             angle = Angle.Zero;
         }
 
-        if (_uiSystem.TryGetUi(uid, RadarConsoleUiKey.Key, out var bui))
-            _uiSystem.SetUiState(bui, new RadarConsoleBoundInterfaceState(
-                component.MaxRange,
-                GetNetCoordinates(coordinates),
-                angle,
-                new List<DockingInterfaceState>()
-            ));
+        if (_uiSystem.HasUi(uid, RadarConsoleUiKey.Key))
+        {
+            NavInterfaceState state;
+            var docks = _console.GetAllDocks();
+
+            if (coordinates != null && angle != null)
+            {
+                state = _console.GetNavState(uid, docks, coordinates.Value, angle.Value);
+            }
+            else
+            {
+                state = _console.GetNavState(uid, docks);
+            }
+
+            _uiSystem.SetUiState(uid, RadarConsoleUiKey.Key, new NavBoundUserInterfaceState(state));
+        }
     }
 }

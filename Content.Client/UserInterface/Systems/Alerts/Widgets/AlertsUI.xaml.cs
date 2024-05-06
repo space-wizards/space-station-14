@@ -92,11 +92,13 @@ public sealed partial class AlertsUI : UIWidget
             {
                 // key is the same, simply update the existing control severity / cooldown
                 existingAlertControl.SetSeverity(alertState.Severity);
-                existingAlertControl.Cooldown = alertState.Cooldown;
+                if (alertState.ShowCooldown)
+                    existingAlertControl.Cooldown = alertState.Cooldown;
             }
             else
             {
-                if (existingAlertControl != null) AlertContainer.Children.Remove(existingAlertControl);
+                if (existingAlertControl != null)
+                    AlertContainer.Children.Remove(existingAlertControl);
 
                 // this is a new alert + alert key or just a different alert with the same
                 // key, create the control and add it in the appropriate order
@@ -133,9 +135,13 @@ public sealed partial class AlertsUI : UIWidget
 
     private AlertControl CreateAlertControl(AlertPrototype alert, AlertState alertState)
     {
+        (TimeSpan, TimeSpan)? cooldown = null;
+        if (alertState.ShowCooldown)
+            cooldown = alertState.Cooldown;
+
         var alertControl = new AlertControl(alert, alertState.Severity)
         {
-            Cooldown = alertState.Cooldown
+            Cooldown = cooldown
         };
         alertControl.OnPressed += AlertControlPressed;
         return alertControl;

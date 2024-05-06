@@ -84,6 +84,7 @@
     quickEquip: false
     slots:
     - Belt
+    - suitStorage
 
 - type: entity
   id: BaseWeaponPowerCellSmall
@@ -227,7 +228,7 @@
   name: practice laser rifle
   parent: WeaponLaserCarbine
   id: WeaponLaserCarbinePractice
-  description: This modified laser rifle fires harmless beams in the 40-watt range, for target practice.
+  description: This modified laser rifle fires nearly harmless beams in the 40-watt range, for target practice.
   components:
   - type: HitscanBatteryAmmoProvider
     proto: RedLaserPractice
@@ -487,7 +488,7 @@
   name: practice disabler
   parent: WeaponDisabler
   id: WeaponDisablerPractice
-  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse. This one has been undertuned for cadets.
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse. This one has been undertuned for cadets making it mostly harmless.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
@@ -578,6 +579,7 @@
     tags:
     - HighRiskItem
     - Sidearm
+    - WeaponAntiqueLaser
   - type: StaticPrice
     price: 750
   - type: StealTarget
@@ -641,6 +643,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
   - type: Gun
+    projectileSpeed: 4
     fireRate: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
@@ -654,6 +657,8 @@
     - proto: AnomalousParticleEpsilonStrong
       fireCost: 100
     - proto: AnomalousParticleZetaStrong
+      fireCost: 100
+    - proto: AnomalousParticleSigmaStrong
       fireCost: 100
   - type: Construction
     graph: UpgradeWeaponPistolCHIMP
@@ -676,6 +681,8 @@
     - proto: AnomalousParticleOmegaStrong
       fireCost: 100
     - proto: AnomalousParticleZetaStrong
+      fireCost: 100
+    - proto: AnomalousParticleSigmaStrong
       fireCost: 100
 
 - type: entity

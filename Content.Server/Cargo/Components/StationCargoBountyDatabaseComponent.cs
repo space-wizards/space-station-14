@@ -1,4 +1,5 @@
 using Content.Shared.Cargo;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Cargo.Components;
 
@@ -12,7 +13,7 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     /// Maximum amount of bounties a station can have.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int MaxBounties = 5;
+    public int MaxBounties = 6;
 
     /// <summary>
     /// A list of all the bounties currently active for a station.
@@ -32,4 +33,16 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     /// </summary>
     [DataField]
     public HashSet<string> CheckedBounties = new();
+
+    /// <summary>
+    /// The time at which players will be able to skip the next bounty.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextSkipTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The time between skipping bounties.
+    /// </summary>
+    [DataField]
+    public TimeSpan SkipDelay = TimeSpan.FromMinutes(15);
 }

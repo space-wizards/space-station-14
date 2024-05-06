@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.StationEvents.Components;
 using Content.Shared.CCVar;
@@ -17,16 +17,12 @@ public sealed class EventManagerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] public readonly GameTicker GameTicker = default!;
 
-    private ISawmill _sawmill = default!;
-
     public bool EventsEnabled { get; private set; }
     private void SetEnabled(bool value) => EventsEnabled = value;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _sawmill = Logger.GetSawmill("events");
 
         Subs.CVar(_configurationManager, CCVars.EventsEnabled, SetEnabled, true);
     }
@@ -41,13 +37,13 @@ public sealed class EventManagerSystem : EntitySystem
         if (randomEvent == null)
         {
             var errStr = Loc.GetString("station-event-system-run-random-event-no-valid-events");
-            _sawmill.Error(errStr);
+            Log.Error(errStr);
             return errStr;
         }
 
         var ent = GameTicker.AddGameRule(randomEvent);
         var str = Loc.GetString("station-event-system-run-event",("eventName", ToPrettyString(ent)));
-        _sawmill.Info(str);
+        Log.Info(str);
         return str;
     }
 
@@ -57,7 +53,7 @@ public sealed class EventManagerSystem : EntitySystem
     public string? PickRandomEvent()
     {
         var availableEvents = AvailableEvents();
-        _sawmill.Info($"Picking from {availableEvents.Count} total available events");
+        Log.Info($"Picking from {availableEvents.Count} total available events");
         return FindEvent(availableEvents);
     }
 
@@ -65,11 +61,11 @@ public sealed class EventManagerSystem : EntitySystem
     /// Pick a random event from the available events at this time, also considering their weightings.
     /// </summary>
     /// <returns></returns>
-    private string? FindEvent(Dictionary<EntityPrototype, StationEventComponent> availableEvents)
+    public string? FindEvent(Dictionary<EntityPrototype, StationEventComponent> availableEvents)
     {
         if (availableEvents.Count == 0)
         {
-            _sawmill.Warning("No events were available to run!");
+            Log.Warning("No events were available to run!");
             return null;
         }
 
@@ -92,23 +88,27 @@ public sealed class EventManagerSystem : EntitySystem
             }
         }
 
-        _sawmill.Error("Event was not found after weighted pick process!");
+        Log.Error("Event was not found after weighted pick process!");
         return null;
     }
 
     /// <summary>
     /// Gets the events that have met their player count, time-until start, etc.
     /// </summary>
-    /// <param name="ignoreEarliestStart"></param>
+    /// <param name="playerCountOverride">Override for player count, if using this to simulate events rather than in an actual round.</param>
+    /// <param name="currentTimeOverride">Override for round time, if using this to simulate events rather than in an actual round.</param>
     /// <returns></returns>
-    private Dictionary<EntityPrototype, StationEventComponent> AvailableEvents(bool ignoreEarliestStart = false)
+    public Dictionary<EntityPrototype, StationEventComponent> AvailableEvents(
+        bool ignoreEarliestStart = false,
+        int? playerCountOverride = null,
+        TimeSpan? currentTimeOverride = null)
     {
-        var playerCount = _playerManager.PlayerCount;
+        var playerCount = playerCountOverride ?? _playerManager.PlayerCount;
 
         // playerCount does a lock so we'll just keep the variable here
-        var currentTime = !ignoreEarliestStart
+        var currentTime = currentTimeOverride ?? (!ignoreEarliestStart
             ? GameTicker.RoundDuration()
-            : TimeSpan.Zero;
+            : TimeSpan.Zero);
 
         var result = new Dictionary<EntityPrototype, StationEventComponent>();
 
@@ -116,7 +116,6 @@ public sealed class EventManagerSystem : EntitySystem
         {
             if (CanRun(proto, stationEvent, playerCount, currentTime))
             {
-                _sawmill.Debug($"Adding event {proto.ID} to possibilities");
                 result.Add(proto, stationEvent);
             }
         }

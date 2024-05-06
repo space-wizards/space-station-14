@@ -11,7 +11,8 @@ public sealed partial class ExplosionSystem : EntitySystem
     public int ThrowLimit { get; private set; }
     public bool SleepNodeSys { get; private set; }
     public bool IncrementalTileBreaking { get; private set; }
-    public int SingleTickAreaLimit {get; private set; }
+    public int SingleTickAreaLimit { get; private set; }
+    public bool CanCreateVacuum { get; private set; }
 
     private void SubscribeCvars()
     {
@@ -23,5 +24,6 @@ public sealed partial class ExplosionSystem : EntitySystem
         Subs.CVar(_cfg, CCVars.ExplosionMaxProcessingTime, value => MaxProcessingTime = value, true);
         Subs.CVar(_cfg, CCVars.ExplosionIncrementalTileBreaking, value => IncrementalTileBreaking = value, true);
         Subs.CVar(_cfg, CCVars.ExplosionSingleTickAreaLimit, value => SingleTickAreaLimit = value, true);
+        Subs.CVar(_cfg, CCVars.ExplosionCanCreateVacuum, value => CanCreateVacuum = value, true);
     }
 }

@@ -14,6 +14,7 @@
   - BorgModuleMining
   - OreProcessorIndustrialMachineCircuitboard
   - OreBagOfHolding
+  - ClothingMaskWeldingGas
 
 - type: technology
   id: AdvancedPowercells
@@ -52,6 +53,7 @@
   recipeUnlocks:
   - AutolatheHyperConvectionMachineCircuitboard
   - ProtolatheHyperConvectionMachineCircuitboard
+  - CircuitImprinterHyperConvectionMachineCircuitboard
   - SheetifierMachineCircuitboard
 
 - type: technology
@@ -104,8 +106,6 @@
   - RipleyPeripheralsElectronics
   - MechEquipmentGrabber
 
-# Tier 2
-
 - type: technology
   id: Grappling
   name: research-technology-grappling
@@ -113,11 +113,13 @@
     sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
     state: base
   discipline: Industrial
-  tier: 2
+  tier: 1
   cost: 5000
   recipeUnlocks:
   - WeaponGrapplingGun
   - BorgModuleGrapplingGun
+
+# Tier 2
 
 - type: technology
   id: SpaceScanning
@@ -132,7 +134,7 @@
   - RadarConsoleCircuitboard
   - HandHeldMassScanner
   - BorgModuleGPS
-  
+
 - type: technology
   id: Shuttlecraft
   name: research-technology-shuttlecraft
@@ -160,7 +162,6 @@
   recipeUnlocks:
   - HellfireFreezerMachineCircuitBoard
   - PortableScrubberMachineCircuitBoard
-  - SpaceHeaterMachineCircuitBoard
   - HolofanProjector
 
 - type: technology
