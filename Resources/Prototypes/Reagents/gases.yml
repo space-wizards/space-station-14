@@ -35,6 +35,25 @@
         ratios:
           CarbonDioxide: 1.0
           Oxygen: -1.0
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Vox
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison:
+              7
+      - !type:AdjustAlert
+        alertType: Toxins
+        conditions:
+          - !type:ReagentThreshold
+            min: 0.5
+          - !type:OrganType
+            type: Vox
+        clear: true
+        time: 5
 
 - type: reagent
   id: Plasma
@@ -142,6 +161,9 @@
         - !type:OrganType
           type: Plant
           shouldHave: false
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
         - !type:ReagentThreshold
@@ -194,7 +216,7 @@
         - !type:OrganType
           type: Vox
         ratios:
-          CarbonDioxide: 1.0
+          Ammonia: 1.0
           Nitrogen: -1.0
       - !type:ModifyLungGas
         conditions:

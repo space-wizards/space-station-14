@@ -73,6 +73,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
 
         args.Handled = true;
 
+        // TODO: why is this copy paste shit here just have fire extinguisher cancel transfer when safety is on
         var transfer = containerSolution.AvailableVolume;
         if (TryComp<SolutionTransferComponent>(entity.Owner, out var solTrans))
         {

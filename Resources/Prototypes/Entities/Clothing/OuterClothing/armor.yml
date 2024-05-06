@@ -138,6 +138,8 @@
         Radiation: 0
         Caustic: 0.75
   - type: GroupExamine
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterArmorHeavy
@@ -182,32 +184,6 @@
     sprite: Clothing/OuterClothing/Armor/magusred.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/magusred.rsi
-
-- type: entity
-  parent: ClothingOuterBaseLarge
-  id: ClothingOuterArmorScaf
-  name: scaf suit
-  description: A green and brown tactical suit for combat situations.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/scaf.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/scaf.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.7
-        Slash: 0.7
-        Piercing: 0.4
-        Heat: 0.9
-        Caustic: 0.9
-  - type: ExplosionResistance
-    damageCoefficient: 0.8
-  - type: GroupExamine
-  - type: Tag
-    tags:
-    - Hardsuit
-    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -260,6 +236,8 @@
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: GroupExamine
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -286,6 +264,8 @@
   - type: Construction
     graph: BoneArmor
     node: armor
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -305,3 +285,6 @@
         Piercing: 0.6
         Heat: 0.5
   - type: GroupExamine
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
+

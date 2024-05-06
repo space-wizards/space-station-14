@@ -32,7 +32,6 @@ public sealed partial class PolymorphSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly SharedBuckleSystem _buckle = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
@@ -119,7 +118,12 @@ public sealed partial class PolymorphSystem : EntitySystem
 
     private void OnPolymorphActionEvent(Entity<PolymorphableComponent> ent, ref PolymorphActionEvent args)
     {
-        PolymorphEntity(ent, args.Prototype.Configuration);
+        if (!_proto.TryIndex(args.ProtoId, out var prototype) || args.Handled)
+            return;
+
+        PolymorphEntity(ent, prototype.Configuration);
+
+        args.Handled = true;
     }
 
     private void OnRevertPolymorphActionEvent(Entity<PolymorphedEntityComponent> ent,
@@ -195,7 +199,7 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         var targetTransformComp = Transform(uid);
 
-        var child = Spawn(configuration.Entity, targetTransformComp.Coordinates);
+        var child = Spawn(configuration.Entity, _transform.GetMapCoordinates(uid, targetTransformComp), rotation: _transform.GetWorldRotation(uid));
 
         MakeSentientCommand.MakeSentient(child, EntityManager);
 
@@ -349,7 +353,9 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (target.Comp.PolymorphActions.ContainsKey(id))
             return;
 
-        var polyProto = _proto.Index(id);
+        if (!_proto.TryIndex(id, out var polyProto))
+            return;
+
         var entProto = _proto.Index(polyProto.Configuration.Entity);
 
         EntityUid? actionId = default!;
@@ -367,7 +373,7 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         baseAction.Icon = new SpriteSpecifier.EntityPrototype(polyProto.Configuration.Entity);
         if (baseAction is InstantActionComponent action)
-            action.Event = new PolymorphActionEvent(prototype: polyProto);
+            action.Event = new PolymorphActionEvent(id);
     }
 
     public void RemovePolymorphAction(ProtoId<PolymorphPrototype> id, Entity<PolymorphableComponent> target)

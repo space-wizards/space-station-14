@@ -1,0 +1,30 @@
+- type: entity
+  parent: BaseItem
+  id: ChopSticks
+  name: chopsticks
+  description: A very traditional utensil.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/chopstick.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/chopstick.rsi
+    size: Small
+  - type: Utensil
+    types:
+    - Fork
+
+- type: entity
+  parent: BaseItem
+  name: paired chopsticks
+  id: PairedChopsticks
+  description: You should probably seperate them.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: ChopSticks
+    sound:
+      path: /Audio/Effects/chopstickbreak.ogg
+  - type: Sprite
+    sprite: Objects/Misc/chopstick.rsi
+    state: paired

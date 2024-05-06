@@ -11,7 +11,7 @@ public sealed class LavaSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<LavaComponent, StepTriggeredEvent>(OnLavaStepTriggered);
+        SubscribeLocalEvent<LavaComponent, StepTriggeredOffEvent>(OnLavaStepTriggered);
         SubscribeLocalEvent<LavaComponent, StepTriggerAttemptEvent>(OnLavaStepTriggerAttempt);
     }
 
@@ -23,7 +23,7 @@ public sealed class LavaSystem : EntitySystem
         args.Continue = true;
     }
 
-    private void OnLavaStepTriggered(EntityUid uid, LavaComponent component, ref StepTriggeredEvent args)
+    private void OnLavaStepTriggered(EntityUid uid, LavaComponent component, ref StepTriggeredOffEvent args)
     {
         var otherUid = args.Tripper;
 

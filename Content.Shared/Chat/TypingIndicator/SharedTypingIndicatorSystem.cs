@@ -1,5 +1,4 @@
-using Content.Shared.Clothing.Components;
-using Content.Shared.Inventory.Events;
+using Content.Shared.Clothing;
 
 namespace Content.Shared.Chat.TypingIndicator;
 
@@ -17,25 +16,21 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TypingIndicatorClothingComponent, GotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<TypingIndicatorClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<TypingIndicatorClothingComponent, ClothingGotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<TypingIndicatorClothingComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
     }
 
-    private void OnGotEquipped(EntityUid uid, TypingIndicatorClothingComponent component, GotEquippedEvent args)
+    private void OnGotEquipped(EntityUid uid, TypingIndicatorClothingComponent component, ClothingGotEquippedEvent args)
     {
-        if (!TryComp<ClothingComponent>(uid, out var clothing) ||
-            !TryComp<TypingIndicatorComponent>(args.Equipee, out var indicator))
+        if (!TryComp<TypingIndicatorComponent>(args.Wearer, out var indicator))
             return;
-
-        var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
-        if (!isCorrectSlot) return;
 
         indicator.Prototype = component.Prototype;
     }
 
-    private void OnGotUnequipped(EntityUid uid, TypingIndicatorClothingComponent component, GotUnequippedEvent args)
+    private void OnGotUnequipped(EntityUid uid, TypingIndicatorClothingComponent component, ClothingGotUnequippedEvent args)
     {
-        if (!TryComp<TypingIndicatorComponent>(args.Equipee, out var indicator))
+        if (!TryComp<TypingIndicatorComponent>(args.Wearer, out var indicator))
             return;
 
         indicator.Prototype = SharedTypingIndicatorSystem.InitialIndicatorId;
