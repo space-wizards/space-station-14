@@ -14,9 +14,35 @@ namespace Content.Shared.Procedural;
 [DataRecord]
 public sealed class DungeonData
 {
-    public Dictionary<string, Color> Colors = new();
-    public Dictionary<string, EntProtoId> Entities = new();
-    public Dictionary<string, ProtoId<EntitySpawnEntryPrototype>> SpawnGroups = new();
-    public Dictionary<string, ProtoId<ContentTileDefinition>> Tiles = new();
-    public Dictionary<string, EntityWhitelist> Whitelists = new();
+    public static DungeonData Empty = new();
+
+    public Dictionary<DungeonDataKey, Color> Colors = new();
+    public Dictionary<DungeonDataKey, EntProtoId> Entities = new();
+    public Dictionary<DungeonDataKey, ProtoId<EntitySpawnEntryPrototype>> SpawnGroups = new();
+    public Dictionary<DungeonDataKey, ProtoId<ContentTileDefinition>> Tiles = new();
+    public Dictionary<DungeonDataKey, EntityWhitelist> Whitelists = new();
+}
+
+public enum DungeonDataKey : byte
+{
+    // Colors
+    Decals,
+
+    // Entities
+    Cabling,
+    CornerWalls,
+    Walls,
+
+    // SpawnGroups
+    CornerClutter,
+    Entrance,
+    EntranceFlank,
+    WallMounts,
+    Window,
+
+    // Tiles
+    FallbackTile,
+
+    // Whitelists
+    Rooms,
 }

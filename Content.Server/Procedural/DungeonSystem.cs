@@ -4,7 +4,6 @@ using Content.Server.Construction;
 using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
-using Content.Server.Procedural.Job;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.GameTicking;
@@ -49,7 +48,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     public const int CollisionLayer = (int) CollisionGroup.Impassable;
 
     private readonly JobQueue _dungeonJobQueue = new(DungeonJobTime);
-    private readonly Dictionary<DungeonJob, CancellationTokenSource> _dungeonJobs = new();
+    private readonly Dictionary<DungeonJob.DungeonJob, CancellationTokenSource> _dungeonJobs = new();
 
     [ValidatePrototypeId<ContentTileDefinition>]
     public const string FallbackTileId = "FloorSteel";
@@ -190,7 +189,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         int seed)
     {
         var cancelToken = new CancellationTokenSource();
-        var job = new DungeonJob(
+        var job = new DungeonJob.DungeonJob(
             Log,
             DungeonJobTime,
             EntityManager,
@@ -221,7 +220,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         int seed)
     {
         var cancelToken = new CancellationTokenSource();
-        var job = new DungeonJob(
+        var job = new DungeonJob.DungeonJob(
             Log,
             DungeonJobTime,
             EntityManager,

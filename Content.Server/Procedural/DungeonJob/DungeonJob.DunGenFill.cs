@@ -1,14 +1,16 @@
 using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
-using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Collections;
 
-namespace Content.Server.Procedural.Job;
+namespace Content.Server.Procedural.DungeonJob;
 
 public sealed partial class DungeonJob
 {
-    private async Task<ValueList<Dungeon>> GenerateFillDungeon(FillGridDunGen dungen, HashSet<Vector2i> reservedTiles)
+    /// <summary>
+    /// <see cref="FillGridDunGen"/>
+    /// </summary>
+    private async Task<ValueList<Dungeon>> GenerateFillDungeon(Vector2i position, DungeonData data, FillGridDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
     {
         var tiles = _maps.GetAllTilesEnumerator(_gridUid, _grid);
 

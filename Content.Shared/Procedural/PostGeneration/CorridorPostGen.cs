@@ -17,9 +17,6 @@ public sealed partial class CorridorPostGen : IDunGenLayer
     [DataField]
     public int PathLimit = 2048;
 
-    [DataField]
-    public ProtoId<ContentTileDefinition> Tile = "FloorSteel";
-
     /// <summary>
     /// How wide to make the corridor.
     /// </summary>

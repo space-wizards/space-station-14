@@ -13,7 +13,7 @@ public sealed partial class DungeonConfigPrototype : IPrototype
     /// <see cref="Data"/>
     /// </summary>
     [DataField]
-    public DungeonData? Data;
+    public DungeonData Data = DungeonData.Empty;
 
     /// <summary>
     /// The secret sauce, procedural generation layers that get run.

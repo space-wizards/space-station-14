@@ -4,18 +4,17 @@ using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Procedural.Job;
+namespace Content.Server.Procedural.DungeonJob;
 
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// Tries to connect rooms via worm-like corridors.
+    /// <see cref="WormCorridorPostGen"/>
     /// </summary>
-    private async Task PostGen(WormCorridorPostGen gen, DungeonData? data, Dungeon dungeon, Random random)
+    private async Task PostGen(WormCorridorPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (data == null || !data.Tiles.TryGetValue("FallbackTile", out var tileProto) || !_prototype.TryIndex(tileProto, out var tileDef))
         {

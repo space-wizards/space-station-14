@@ -7,11 +7,14 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Procedural.Job;
+namespace Content.Server.Procedural.DungeonJob;
 
 public sealed partial class DungeonJob
 {
-    private async Task<Dungeon> GenerateNoiseDungeon(Vector2i position, NoiseDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
+    /// <summary>
+    /// <see cref="NoiseDunGen"/>
+    /// </summary>
+    private async Task<Dungeon> GenerateNoiseDungeon(Vector2i position, DungeonData data, NoiseDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
     {
         var rand = new Random(seed);
         var tiles = new List<(Vector2i, Tile)>();

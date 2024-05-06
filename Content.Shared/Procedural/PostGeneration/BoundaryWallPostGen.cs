@@ -10,9 +10,6 @@ namespace Content.Shared.Procedural.PostGeneration;
 public sealed partial class BoundaryWallPostGen : IDunGenLayer
 {
     [DataField]
-    public ProtoId<ContentTileDefinition> Tile = "FloorSteel";
-
-    [DataField]
     public BoundaryWallFlags Flags = BoundaryWallFlags.Corridors | BoundaryWallFlags.Rooms;
 }
 

@@ -5,15 +5,14 @@ using Content.Shared.Procedural.DungeonGenerators;
 using Robust.Shared.Collections;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Procedural.Job;
+namespace Content.Server.Procedural.DungeonJob;
 
 public sealed partial class DungeonJob
 {
     /// <summary>
     /// <see cref="ExteriorDunGen"/>
     /// </summary>
-    private async Task<ValueList<Dungeon>> GenerateExteriorDungeon(Vector2i position, ExteriorDunGen dungen,
-        HashSet<Vector2i> reservedTiles, int seed)
+    private async Task<ValueList<Dungeon>> GenerateExteriorDungeon(Vector2i position, DungeonData data, ExteriorDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
     {
         DebugTools.Assert(_grid.ChunkCount > 0);
 

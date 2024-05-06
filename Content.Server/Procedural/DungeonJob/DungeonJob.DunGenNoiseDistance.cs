@@ -5,7 +5,7 @@ using Content.Shared.Procedural.Distance;
 using Content.Shared.Procedural.DungeonGenerators;
 using Robust.Shared.Map;
 
-namespace Content.Server.Procedural.Job;
+namespace Content.Server.Procedural.DungeonJob;
 
 public sealed partial class DungeonJob
 {
@@ -16,7 +16,10 @@ public sealed partial class DungeonJob
      * https://old.reddit.com/r/proceduralgeneration/comments/kaen7h/new_video_on_procedural_island_noise_generation/gfjmgen/ also has more variations
      */
 
-    private async Task<Dungeon> GenerateNoiseDistanceDungeon(Vector2i position, NoiseDistanceDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
+    /// <summary>
+    /// <see cref="NoiseDistanceDunGen"/>
+    /// </summary>
+    private async Task<Dungeon> GenerateNoiseDistanceDungeon(Vector2i position, DungeonData data, NoiseDistanceDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
     {
         var rand = new Random(seed);
         var tiles = new List<(Vector2i, Tile)>();

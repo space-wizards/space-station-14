@@ -5,11 +5,14 @@ using Content.Shared.Storage;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 
-namespace Content.Server.Procedural.Job;
+namespace Content.Server.Procedural.DungeonJob;
 
 public sealed partial class DungeonJob
 {
-    private async Task PostGen(CorridorClutterPostGen gen, Dungeon dungeon, Random random)
+    /// <summary>
+    /// <see cref="CorridorClutterPostGen"/>
+    /// </summary>
+    private async Task PostGen(CorridorClutterPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
         var count = (int) Math.Ceiling(dungeon.CorridorTiles.Count * gen.Chance);

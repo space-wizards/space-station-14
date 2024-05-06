@@ -1,12 +1,6 @@
-using Robust.Shared.Prototypes;
-
 namespace Content.Shared.Procedural.PostGeneration;
 
 /// <summary>
 /// Runs cables throughout the dungeon.
 /// </summary>
-public sealed partial class AutoCablingPostGen : IDunGenLayer
-{
-    [DataField]
-    public EntProtoId Entity = "CableApcExtension";
-}
+public sealed partial class AutoCablingPostGen : IDunGenLayer;

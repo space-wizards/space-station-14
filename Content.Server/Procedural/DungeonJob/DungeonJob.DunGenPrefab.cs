@@ -7,11 +7,14 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Procedural.Job;
+namespace Content.Server.Procedural.DungeonJob;
 
 public sealed partial class DungeonJob
 {
-    private async Task<Dungeon> GeneratePrefabDungeon(Vector2i position, DungeonData? data, PrefabDunGen prefab, HashSet<Vector2i> reservedTiles, int seed)
+    /// <summary>
+    /// <see cref="PrefabDunGen"/>
+    /// </summary>
+    private async Task<Dungeon> GeneratePrefabDungeon(Vector2i position, DungeonData data, PrefabDunGen prefab, HashSet<Vector2i> reservedTiles, int seed)
     {
         var random = new Random(seed);
         var preset = prefab.Presets[random.Next(prefab.Presets.Count)];
