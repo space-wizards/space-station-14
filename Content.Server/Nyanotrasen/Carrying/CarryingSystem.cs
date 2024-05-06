@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Body.Systems;
@@ -5,6 +6,7 @@ using Content.Server.Hands.Systems;
 using Content.Server.Resist;
 using Content.Server.Popups;
 using Content.Server.Inventory;
+using Content.Server.Nyanotrasen.Item.PseudoItem;
 using Content.Shared.Climbing; // Shared instead of Server
 using Content.Shared.Mobs;
 using Content.Shared.DoAfter;
@@ -22,11 +24,14 @@ using Content.Shared.Pulling;
 using Content.Shared.Standing;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Item;
 using Content.Shared.Throwing;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
+using Content.Shared.Nyanotrasen.Item.PseudoItem;
+using Content.Shared.Storage;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 
@@ -45,11 +50,13 @@ namespace Content.Server.Carrying
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
         [Dependency] private readonly RespiratorSystem _respirator = default!;
+        [Dependency] private readonly PseudoItemSystem _pseudoItem = default!; // Needed for fitting check
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<CarriableComponent, GetVerbsEvent<AlternativeVerb>>(AddCarryVerb);
+            SubscribeLocalEvent<CarryingComponent, GetVerbsEvent<InnateVerb>>(AddInsertCarriedVerb);
             SubscribeLocalEvent<CarryingComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<CarryingComponent, BeforeThrowEvent>(OnThrow);
             SubscribeLocalEvent<CarryingComponent, EntParentChangedMessage>(OnParentChanged);
@@ -64,7 +71,6 @@ namespace Content.Server.Carrying
             SubscribeLocalEvent<BeingCarriedComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<CarriableComponent, CarryDoAfterEvent>(OnDoAfter);
         }
-
 
         private void AddCarryVerb(EntityUid uid, CarriableComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
@@ -98,6 +104,33 @@ namespace Content.Server.Carrying
             args.Verbs.Add(verb);
         }
 
+        private void AddInsertCarriedVerb(EntityUid uid, CarryingComponent component, GetVerbsEvent<InnateVerb> args)
+        {
+            // If the person is carrying someone, and the carried person is a pseudo-item, and the target entity is a storage,
+            // then add an action to insert the carried entity into the target
+            var toInsert = args.Using;
+            if (toInsert is not { Valid: true } || !args.CanAccess || !TryComp<PseudoItemComponent>(toInsert, out var pseudoItem))
+                return;
+
+            if (!TryComp<StorageComponent>(args.Target, out var storageComp))
+                return;
+
+            if (!_pseudoItem.CheckItemFits((toInsert.Value, pseudoItem), (args.Target, storageComp)))
+                return;
+
+            InnateVerb verb = new()
+            {
+                Act = () =>
+                {
+                    DropCarried(uid, toInsert.Value);
+                    _pseudoItem.TryInsert(args.Target, toInsert.Value, pseudoItem, storageComp);
+                },
+                Text = Loc.GetString("action-name-insert-other", ("target", toInsert)),
+                Priority = 2
+            };
+            args.Verbs.Add(verb);
+        }
+
         /// <summary>
         /// Since the carried entity is stored as 2 virtual items, when deleted we want to drop them.
         /// </summary>
@@ -126,7 +159,12 @@ namespace Content.Server.Carrying
 
         private void OnParentChanged(EntityUid uid, CarryingComponent component, ref EntParentChangedMessage args)
         {
-            if (Transform(uid).MapUid != args.OldMapId)
+            var xform = Transform(uid);
+            if (xform.MapUid != args.OldMapId)
+                return;
+
+            // Do not drop the carried entity if the new parent is a grid
+            if (xform.ParentUid == xform.GridUid)
                 return;
 
             DropCarried(uid, component.Carried);
@@ -159,9 +197,13 @@ namespace Content.Server.Carrying
             if (!TryComp<CanEscapeInventoryComponent>(uid, out var escape))
                 return;
 
+            if (!args.HasDirectionalMovement)
+                return;
+
             if (_actionBlockerSystem.CanInteract(uid, component.Carrier))
             {
-                _escapeInventorySystem.AttemptEscape(uid, component.Carrier, escape, MassContest(uid, component.Carrier));
+                // Note: the mass contest is inverted because weaker entities are supposed to take longer to escape
+                _escapeInventorySystem.AttemptEscape(uid, component.Carrier, escape, MassContest(component.Carrier, uid));
             }
         }
 
@@ -210,12 +252,7 @@ namespace Content.Server.Carrying
         }
         private void StartCarryDoAfter(EntityUid carrier, EntityUid carried, CarriableComponent component)
         {
-            TimeSpan length = TimeSpan.FromSeconds(3);
-
-            var mod = MassContest(carrier, carried);
-
-            if (mod != 0)
-                length /= mod;
+            TimeSpan length = GetPickupDuration(carrier, carried);
 
             if (length >= TimeSpan.FromSeconds(9))
             {
@@ -236,6 +273,9 @@ namespace Content.Server.Carrying
             };
 
             _doAfterSystem.TryStartDoAfter(args);
+
+            // Show a popup to the person getting picked up
+            _popupSystem.PopupEntity(Loc.GetString("carry-started", ("carrier", carrier)), carried, carried);
         }
 
         private void Carry(EntityUid carrier, EntityUid carried)
@@ -258,6 +298,26 @@ namespace Content.Server.Carrying
             carriedComp.Carrier = carrier;
 
             _actionBlockerSystem.UpdateCanMove(carried);
+        }
+
+        public bool TryCarry(EntityUid carrier, EntityUid toCarry, CarriableComponent? carriedComp = null)
+        {
+            if (!Resolve(toCarry, ref carriedComp, false))
+                return false;
+
+            if (!CanCarry(carrier, toCarry, carriedComp))
+                return false;
+
+            // The second one means that carrier is a pseudo-item and is inside a bag.
+            if (HasComp<BeingCarriedComponent>(carrier) || HasComp<ItemComponent>(carrier))
+                return false;
+
+            if (GetPickupDuration(carrier, toCarry) > TimeSpan.FromSeconds(9))
+                return false;
+
+            Carry(carrier, toCarry);
+
+            return true;
         }
 
         public void DropCarried(EntityUid carrier, EntityUid carried)
@@ -322,6 +382,44 @@ namespace Content.Server.Carrying
                 return 1f;
 
             return rollerPhysics.FixturesMass / targetPhysics.FixturesMass;
+        }
+
+        private TimeSpan GetPickupDuration(EntityUid carrier, EntityUid carried)
+        {
+            var length = TimeSpan.FromSeconds(3);
+
+            var mod = MassContest(carrier, carried);
+            if (mod != 0)
+                length /= mod;
+
+            return length;
+        }
+
+        public override void Update(float frameTime)
+        {
+            var query = EntityQueryEnumerator<BeingCarriedComponent>();
+            while (query.MoveNext(out var carried, out var comp))
+            {
+                var carrier = comp.Carrier;
+                if (carrier is not { Valid: true } || carried is not { Valid: true })
+                    continue;
+
+                // SOMETIMES - when an entity is inserted into disposals, or a cryosleep chamber - it can get re-parented without a proper reparent event
+                // when this happens, it needs to be dropped because it leads to weird behavior
+                if (Transform(carried).ParentUid != carrier)
+                {
+                    DropCarried(carrier, carried);
+                    continue;
+                }
+
+                // Make sure the carried entity is always centered relative to the carrier, as gravity pulls can offset it otherwise
+                var xform = Transform(carried);
+                if (!xform.LocalPosition.Equals(Vector2.Zero))
+                {
+                    xform.LocalPosition = Vector2.Zero;
+                }
+            }
+            query.Dispose();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Content.Shared.Nyanotrasen.Item.PseudoItem;
 /// </summary>
 public partial class SharedPseudoItemSystem
 {
-    protected bool CheckItemFits(Entity<PseudoItemComponent?> itemEnt, Entity<StorageComponent?> storageEnt)
+    public bool CheckItemFits(Entity<PseudoItemComponent?> itemEnt, Entity<StorageComponent?> storageEnt)
     {
         if (!Resolve(itemEnt, ref itemEnt.Comp) || !Resolve(storageEnt, ref storageEnt.Comp))
             return false;

@@ -1,14 +1,18 @@
+using Content.Shared.Actions;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Item.PseudoItem;
+using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nyanotrasen.Item.PseudoItem;
 
@@ -18,9 +22,13 @@ public abstract partial class SharedPseudoItemSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
 
     [ValidatePrototypeId<TagPrototype>]
     private const string PreventTag = "PreventLabel";
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string SleepActionId = "ActionSleep"; // The action used for sleeping inside bags. Currently uses the default sleep action (same as beds)
 
     public override void Initialize()
     {
@@ -64,7 +72,7 @@ public abstract partial class SharedPseudoItemSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private bool TryInsert(EntityUid storageUid, EntityUid toInsert, PseudoItemComponent component,
+    public bool TryInsert(EntityUid storageUid, EntityUid toInsert, PseudoItemComponent component,
         StorageComponent? storage = null)
     {
         if (!Resolve(storageUid, ref storage))
@@ -87,6 +95,10 @@ public abstract partial class SharedPseudoItemSystem : EntitySystem
             return false;
         }
 
+        // If the storage allows sleeping inside, add the respective action
+        if (HasComp<AllowsSleepInsideComponent>(storageUid))
+            _actions.AddAction(toInsert, ref component.SleepAction, SleepActionId, toInsert);
+
         component.Active = true;
         return true;
     }
@@ -98,9 +110,11 @@ public abstract partial class SharedPseudoItemSystem : EntitySystem
 
         RemComp<ItemComponent>(uid);
         component.Active = false;
+
+        _actions.RemoveAction(uid, component.SleepAction); // Remove sleep action if it was added
     }
 
-    private void OnGettingPickedUpAttempt(EntityUid uid, PseudoItemComponent component,
+    protected virtual void OnGettingPickedUpAttempt(EntityUid uid, PseudoItemComponent component,
         GettingPickedUpAttemptEvent args)
     {
         if (args.User == args.Item)
@@ -153,7 +167,11 @@ public abstract partial class SharedPseudoItemSystem : EntitySystem
             NeedHand = true
         };
 
-        _doAfter.TryStartDoAfter(args);
+        if (_doAfter.TryStartDoAfter(args))
+        {
+            // Show a popup to the person getting picked up
+            _popupSystem.PopupEntity(Loc.GetString("carry-started", ("carrier", inserter)), toInsert, toInsert);
+        }
     }
 
     private void OnAttackAttempt(EntityUid uid, PseudoItemComponent component, AttackAttemptEvent args)

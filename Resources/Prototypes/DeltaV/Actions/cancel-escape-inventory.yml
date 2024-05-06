@@ -1,0 +1,10 @@
+- type: entity
+  id: ActionCancelEscape
+  name: Stop escaping
+  description: Calm down and sit peacefuly in your carrier's inventory
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: DeltaV/Actions/escapeinventory.rsi/cancel-escape.png
+    event: !type:EscapeInventoryCancelActionEvent
+    useDelay: 2
