@@ -246,9 +246,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             if (TryComp<ContainmentAlarmComponent>(generator.Owner, out var alarm))
             {
                 if (brokenLink)
-                    _alarm.BroadcastContainmentBreak(generator.Owner, alarm);
+                    _alarm.BroadcastContainmentBreak((generator, alarm));
                 else
-                    _alarm.UpdateAlertLevel(generator.Owner, alarm, component.PowerBuffer);
+                    _alarm.UpdateAlertLevel((generator, alarm), component.PowerBuffer);
             }
         }
 
