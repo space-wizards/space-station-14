@@ -523,8 +523,6 @@
         whitelist:
           tags:
           - CaptainSabre
-        insertSound: /Audio/SimpleStation14/Items/Handling/sword_sheath.ogg # GreyStation - Sound PR
-        ejectSound: /Audio/SimpleStation14/Items/Handling/sword_unsheath.ogg 
   - type: ItemMapper
     mapLayers:
       sheath-sabre:
