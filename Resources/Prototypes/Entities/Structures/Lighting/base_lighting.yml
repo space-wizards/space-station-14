@@ -173,7 +173,7 @@
 - type: entity
   id: PoweredlightExterior
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: Blue
+  suffix: Exterior
   parent: Poweredlight
   components:
   - type: PoweredLight
@@ -185,7 +185,7 @@
 - type: entity
   parent: AlwaysPoweredWallLight
   id: AlwaysPoweredLightExterior
-  suffix: Always Powered, Blue
+  suffix: Always Powered, Exterior
   components:
   - type: PointLight
     radius: 12
