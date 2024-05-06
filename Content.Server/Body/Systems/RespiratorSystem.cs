@@ -88,8 +88,8 @@ public sealed class RespiratorSystem : EntitySystem
             {
                 if (_gameTiming.CurTime >= respirator.LastGaspPopupTime + respirator.GaspPopupCooldown)
                 {
-                        respirator.LastGaspEmoteTime = _gameTiming.CurTime;
-                        _chat.TryEmoteWithChat(uid, respirator.GaspEmote, ignoreActionBlocker: true);
+                    respirator.LastGaspEmoteTime = _gameTiming.CurTime;
+                    _chat.TryEmoteWithChat(uid, respirator.GaspEmote, ignoreActionBlocker: true);
                 }
 
                 TakeSuffocationDamage((uid, respirator));
