@@ -33,6 +33,49 @@
       - id: PlushiePlyushkina
 
 - type: entity
+  id: CrateFunSocksBulk
+  parent: CrateGenericSteel
+  name: bulk socks crate
+  description: seems like everyone on the station is wearing shoes without socks, hopefully this will help.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUnderSocksBee
+        amount: 2
+      - id: ClothingUnderSocksCoder
+        amount: 2
+      - id: ClothingUnderSocksStripedCaptainBlueandGold
+        amount: 2
+      - id: ClothingUnderSocksStripedCaptainBlueandWhite
+        amount: 2
+      - id: ClothingUnderSocksStripedCaptainGoldandBlue
+        amount: 2
+      - id: ClothingUnderSocksStripedCargo
+        amount: 2
+      - id: ClothingUnderSocksStripedScience
+        amount: 2
+      - id: ClothingUnderSocksStripedSecurity
+        amount: 2
+      - id: ClothingUnderSocksStripedSecurityJackboots
+        amount: 2
+      - id: ClothingUnderSocksStripedWhiteandLightBlueBunnySlipper
+        amount: 2
+      - id: ClothingUnderSocksStripedEngineeringAtmos
+        amount: 2
+      - id: ClothingUnderSocksStripedEngineering
+        amount: 2
+      - id: ClothingUnderSocksStripedWhiteandGreen
+        amount: 2
+      - id: ClothingUnderSocksStripedWhiteandOrange
+        amount: 2
+      - id: ClothingUnderSocksStripedWhiteandPurple
+        amount: 2
+      - id: ClothingUnderSocksStripedWhiteandRed
+        amount: 2
+      - id: ClothingUnderSocksStripedWhiteandYellow
+        amount: 2
+
+- type: entity
   id: CrateFunLizardPlushieBulk
   parent: CrateGenericSteel
   name: bulk lizard plushie crate
