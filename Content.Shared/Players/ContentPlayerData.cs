@@ -1,5 +1,4 @@
-﻿using Content.Shared.Administration;
-using Content.Shared.GameTicking;
+﻿using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Robust.Shared.Network;
 
@@ -42,6 +41,31 @@ public sealed class ContentPlayerData
     /// If true, the admin will not show up in adminwho except to admins with the <see cref="AdminFlags.Stealth"/> flag.
     /// </summary>
     public bool Stealthed { get; set; }
+
+    /// <summary>
+    /// The rate at which this player has been sending messages. Allows for rate-limiting.
+    /// </summary>
+    public int MessageCount;
+
+    /// <summary>
+    /// The total amount of characters someone has been sending. Allows for rate-limiting.
+    /// </summary>
+    public int TotalMessageLength;
+
+    /// <summary>
+    /// When the current count for this session expires.
+    /// </summary>
+    public TimeSpan MessageCountExpiresAt;
+
+    /// <summary>
+    /// Whether rate limiting has been announced to the player
+    /// </summary>
+    public bool RateLimitAnnouncedToPlayer;
+
+    /// <summary>
+    /// When can an announcement to admins next be sent at.
+    /// </summary>
+    public TimeSpan CanAnnounceToAdminsNextAt;
 
     public ContentPlayerData(NetUserId userId, string name)
     {
