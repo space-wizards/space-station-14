@@ -7,14 +7,16 @@
 
 - type: dungeonConfig
   id: VGRoid
-  # Floor generation
-  generator: !type:GroupDunGen
-    configs:
-    - VGRoidBlob
-    - VGRoidExteriorDungeons
-    - VGRoidSmaller
+  layers:
+    - !type:PrototypeDunGen
+      proto: VGRoidBlob
+    - !type:PrototypeDunGen
+      proto: VGRoidExteriorDungeons
+    #- !type:PrototypeDunGen
+    #  proto: VGRoidSmaller
     #- VGRoidInteriorDungeons
-    - VGRoidLargePaths
+    #- !type:PrototypeDunGen
+    #  proto: VGRoidLargePaths
     #- VGRoidSmallPaths
     #- VGRoidOres
     #- VGRoidFill
@@ -22,7 +24,8 @@
 # Configs
 - type: dungeonConfig
   id: VGRoidBlob
-  generator: !type:NoiseDistanceDunGen
+  layers:
+  - !type:NoiseDistanceDunGen
     size: 384, 384
     distanceConfig: !type:DunGenEuclideanSquaredDistance
       blendWeight: 0.80
@@ -41,7 +44,8 @@
   id: VGRoidSmaller
   minOffset: 100
   maxOffset: 150
-  generator: !type:NoiseDistanceDunGen
+  layers:
+  - !type:NoiseDistanceDunGen
     size: 256, 256
     distanceConfig: !type:DunGenEuclideanSquaredDistance
     layers:
@@ -60,7 +64,8 @@
   minCount: 1
   maxCount: 3
   reserveTiles: true
-  generator: !type:ExteriorDunGen
+  layers:
+  - !type:ExteriorDunGen
     proto: Experiment
   # TODO:
   # Need to cleanup dungeon initialisation a bit
@@ -79,19 +84,20 @@
 #  maxCount: 5
 #  # Just randomly spawn these in bounds, doesn't really matter if they go out.
 #
-- type: dungeonConfig
-  id: VGRoidLargePaths
-  reserveTiles: true
-  generator: !type:ReplaceTileDunGen
-    layers:
-    - tile: FloorAsteroidSand
-      threshold: 0.70
-      noise:
-        frequency: 0.010
-        noiseType: Perlin
-        fractalType: Ridged
-        octaves: 2
-        gain: 2.0
+#- type: dungeonConfig
+#  id: VGRoidLargePaths
+#  reserveTiles: true
+#  layers:
+#  - !type:ReplaceTileDunGen
+#    layers:
+#    - tile: FloorAsteroidSand
+#      threshold: 0.70
+#      noise:
+#        frequency: 0.010
+#        noiseType: Perlin
+#        fractalType: Ridged
+#        octaves: 2
+#        gain: 2.0
 
 #
 #- type: dungeonConfig
@@ -102,5 +108,6 @@
 
 - type: dungeonConfig
   id: VGRoidFill
-  generator: !type:FillGridDunGen
+  layers:
+  - !type:FillGridDunGen
     proto: AsteroidRock

@@ -8,7 +8,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Generates worm corridors.
 /// </summary>
-public sealed partial class WormCorridorPostGen : IPostDunGen
+public sealed partial class WormCorridorPostGen : IDunGenLayer
 {
     [DataField]
     public int PathLimit = 2048;
@@ -30,9 +30,6 @@ public sealed partial class WormCorridorPostGen : IPostDunGen
     /// </summary>
     [DataField]
     public Angle MaxAngleChange = Angle.FromDegrees(45);
-
-    [DataField]
-    public ProtoId<ContentTileDefinition> Tile = "FloorSteel";
 
     /// <summary>
     /// How wide to make the corridor.

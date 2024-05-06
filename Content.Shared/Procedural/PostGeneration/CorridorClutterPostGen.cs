@@ -5,7 +5,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Adds entities randomly to the corridors.
 /// </summary>
-public sealed partial class CorridorClutterPostGen : IPostDunGen
+public sealed partial class CorridorClutterPostGen : IDunGenLayer
 {
     [DataField]
     public float Chance = 0.05f;

@@ -5,7 +5,7 @@ namespace Content.Shared.Procedural.DungeonGenerators;
 /// <summary>
 /// Fills unreserved tiles with the specified entity prototype.
 /// </summary>
-public sealed partial class FillGridDunGen : IDunGen
+public sealed partial class FillGridDunGen : IDunGenLayer
 {
     [DataField]
     public EntProtoId Proto;

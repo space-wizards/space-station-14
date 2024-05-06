@@ -2,6 +2,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -10,11 +11,11 @@ namespace Content.Server.Procedural.Job;
 
 public sealed partial class DungeonJob
 {
-    private async Task<Dungeon> GeneratePrefabDungeon(Vector2i position, PrefabDunGen prefab, HashSet<Vector2i> reservedTiles, int seed)
+    private async Task<Dungeon> GeneratePrefabDungeon(Vector2i position, DungeonData? data, PrefabDunGen prefab, HashSet<Vector2i> reservedTiles, int seed)
     {
         var random = new Random(seed);
         var preset = prefab.Presets[random.Next(prefab.Presets.Count)];
-        var gen = _prototype.Index<DungeonPresetPrototype>(preset);
+        var gen = _prototype.Index(preset);
 
         var dungeonRotation = _dungeon.GetDungeonRotation(seed);
         var dungeonTransform = Matrix3.CreateTransform(position, dungeonRotation);
@@ -35,17 +36,22 @@ public sealed partial class DungeonJob
         }
 
         var roomProtos = new Dictionary<Vector2i, List<DungeonRoomPrototype>>(_prototype.Count<DungeonRoomPrototype>());
+        EntityWhitelist? roomWhitelist = null;
+        data?.Whitelist.TryGetValue("Rooms", out roomWhitelist);
 
         foreach (var proto in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
         {
             var whitelisted = false;
 
-            foreach (var tag in prefab.RoomWhitelist)
+            if (roomWhitelist?.Tags != null)
             {
-                if (proto.Tags.Contains(tag))
+                foreach (var tag in roomWhitelist.Tags)
                 {
-                    whitelisted = true;
-                    break;
+                    if (proto.Tags.Contains(tag))
+                    {
+                        whitelisted = true;
+                        break;
+                    }
                 }
             }
 

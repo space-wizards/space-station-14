@@ -15,8 +15,14 @@ public sealed partial class DungeonJob
     /// <summary>
     /// Tries to connect rooms via worm-like corridors.
     /// </summary>
-    private async Task PostGen(WormCorridorPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
+    private async Task PostGen(WormCorridorPostGen gen, DungeonData? data, Dungeon dungeon, Random random)
     {
+        if (data == null || !data.Tiles.TryGetValue("FallbackTile", out var tileProto) || !_prototype.TryIndex(tileProto, out var tileDef))
+        {
+            _sawmill.Error($"Null data unsupported for {nameof(WormCorridorPostGen)}");
+            return;
+        }
+
         var networks = new List<(Vector2i Start, HashSet<Vector2i> Network)>();
 
         // List of places to start from.
@@ -31,7 +37,7 @@ public sealed partial class DungeonJob
                 networks.Add((entrance, network));
 
                 // Point away from the room to start with.
-                startAngles.Add(entrance, (entrance + grid.TileSizeHalfVector - room.Center).ToAngle());
+                startAngles.Add(entrance, (entrance + _grid.TileSizeHalfVector - room.Center).ToAngle());
             }
         }
 
@@ -45,7 +51,7 @@ public sealed partial class DungeonJob
             // Find a random network to worm from.
             var startIndex = (i % networks.Count);
             var startPos = networks[startIndex].Start;
-            var position = startPos + grid.TileSizeHalfVector;
+            var position = startPos + _grid.TileSizeHalfVector;
 
             var remainingLength = gen.Length;
             worm.Clear();
@@ -175,7 +181,6 @@ public sealed partial class DungeonJob
         BuildCorridorExterior(dungeon);
 
         var tiles = new List<(Vector2i Index, Tile Tile)>();
-        var tileDef = _prototype.Index(gen.Tile);
 
         foreach (var tile in dungeon.CorridorTiles)
         {

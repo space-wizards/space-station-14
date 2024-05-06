@@ -8,7 +8,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Spawns the specified marker layer on top of the dungeon rooms.
 /// </summary>
-public sealed partial class BiomeMarkerLayerPostGen : IPostDunGen
+public sealed partial class BiomeMarkerLayerPostGen : IDunGenLayer
 {
     /// <summary>
     /// How many times to spawn marker layers; can duplicate.

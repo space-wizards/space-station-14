@@ -8,7 +8,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Places the specified entities on the middle connections between rooms
 /// </summary>
-public sealed partial class MiddleConnectionPostGen : IPostDunGen
+public sealed partial class MiddleConnectionPostGen : IDunGenLayer
 {
     /// <summary>
     /// How much overlap there needs to be between 2 rooms exactly.

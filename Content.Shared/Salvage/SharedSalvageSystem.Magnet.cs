@@ -32,7 +32,7 @@ public abstract partial class SharedSalvageSystem
             var layers = new Dictionary<string, int>();
 
             // If we ever add more random layers will need to Next on these.
-            foreach (var layer in configProto.PostGeneration)
+            foreach (var layer in configProto.Layers)
             {
                 switch (layer)
                 {

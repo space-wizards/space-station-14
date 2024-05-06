@@ -11,6 +11,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -177,10 +178,19 @@ public sealed partial class DungeonJob
         }
     }
 
-    private async Task PostGen(BoundaryWallPostGen gen, Dungeon dungeon, Random random)
+    private async Task PostGen(BoundaryWallPostGen gen, DungeonData? data, Dungeon dungeon, Random random)
     {
         var tileDef = _tileDefManager[gen.Tile];
         var tiles = new List<(Vector2i Index, Tile Tile)>(dungeon.RoomExteriorTiles.Count);
+        EntProtoId cornerWall = default;
+        EntProtoId wall = default;
+        data?.Entities.TryGetValue("Walls", out wall);
+        data?.Entities.TryGetValue("CornerWalls", out cornerWall);
+
+        if (cornerWall == default)
+        {
+            cornerWall = wall;
+        }
 
         // Spawn wall outline
         // - Tiles first
@@ -219,40 +229,35 @@ public sealed partial class DungeonJob
                 continue;
 
             // If no cardinal neighbors in dungeon then we're a corner.
-            var isCorner = false;
+            var isCorner = true;
 
-            if (gen.CornerWall != null)
+            for (var x = -1; x <= 1; x++)
             {
-                isCorner = true;
-
-                for (var x = -1; x <= 1; x++)
+                for (var y = -1; y <= 1; y++)
                 {
-                    for (var y = -1; y <= 1; y++)
+                    if (x != 0 && y != 0)
                     {
-                        if (x != 0 && y != 0)
-                        {
-                            continue;
-                        }
-
-                        var neighbor = new Vector2i(index.Index.X + x, index.Index.Y + y);
-
-                        if (dungeon.RoomTiles.Contains(neighbor) || dungeon.CorridorTiles.Contains(neighbor))
-                        {
-                            isCorner = false;
-                            break;
-                        }
+                        continue;
                     }
 
-                    if (!isCorner)
+                    var neighbor = new Vector2i(index.Index.X + x, index.Index.Y + y);
+
+                    if (dungeon.RoomTiles.Contains(neighbor) || dungeon.CorridorTiles.Contains(neighbor))
+                    {
+                        isCorner = false;
                         break;
+                    }
                 }
 
-                if (isCorner)
-                    _entManager.SpawnEntity(gen.CornerWall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
+                if (!isCorner)
+                    break;
             }
 
+            if (isCorner)
+                _entManager.SpawnEntity(cornerWall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
+
             if (!isCorner)
-                _entManager.SpawnEntity(gen.Wall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
+                _entManager.SpawnEntity(wall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
 
             if (i % 20 == 0)
             {
@@ -317,14 +322,15 @@ public sealed partial class DungeonJob
         }
     }
 
-    private async Task PostGen(CorridorDecalSkirtingPostGen decks, Dungeon dungeon)
+    private async Task PostGen(CorridorDecalSkirtingPostGen decks, DungeonData? data, Dungeon dungeon)
     {
         var directions = new ValueList<DirectionFlag>(4);
         var pocketDirections = new ValueList<Direction>(4);
         var doorQuery = _entManager.GetEntityQuery<DoorComponent>();
         var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
         var offset = -_grid.TileSizeHalfVector;
-        var color = decks.Color;
+        Color color = Color.White;
+        data?.Colors.TryGetValue("Decals", out color);
 
         foreach (var tile in dungeon.CorridorTiles)
         {
@@ -1222,10 +1228,17 @@ public sealed partial class DungeonJob
         }
     }
 
-    private async Task PostGen(WallMountPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid,
-        Random random)
+    private async Task PostGen(WallMountPostGen gen, DungeonData? data, Dungeon dungeon, Random random)
     {
-        var tileDef = _tileDefManager[gen.Tile];
+        if (data == null)
+        {
+            _sawmill.Error($"Tried to run {nameof(WallMountPostGen)} without any dungeon data set which is unsupported");
+            return;
+        }
+
+        var tileDef = _prototype.Index(data.Tiles["FallbackTile"]);
+        data.SpawnGroups.TryGetValue("WallMounts", out var spawnProto);
+
         var checkedTiles = new HashSet<Vector2i>();
         var allExterior = new HashSet<Vector2i>(dungeon.CorridorExteriorTiles);
         allExterior.UnionWith(dungeon.RoomExteriorTiles);
@@ -1234,15 +1247,15 @@ public sealed partial class DungeonJob
         foreach (var neighbor in allExterior)
         {
             // Occupado
-            if (dungeon.RoomTiles.Contains(neighbor) || checkedTiles.Contains(neighbor) || !_anchorable.TileFree(grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+            if (dungeon.RoomTiles.Contains(neighbor) || checkedTiles.Contains(neighbor) || !_anchorable.TileFree(_grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
             if (!random.Prob(gen.Prob) || !checkedTiles.Add(neighbor))
                 continue;
 
-            grid.SetTile(neighbor, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
-            var gridPos = grid.GridTileToLocal(neighbor);
-            var protoNames = EntitySpawnCollection.GetSpawns(gen.Spawns, random);
+            _maps.SetTile(_gridUid, _grid, neighbor, _tile.GetVariantTile(tileDef, random));
+            var gridPos = _maps.GridTileToLocal(_gridUid, _grid, neighbor);
+            var protoNames = EntitySpawnCollection.GetSpawns(_prototype.Index(spawnProto).Entries, random);
 
             _entManager.SpawnEntities(gridPos, protoNames);
             count += protoNames.Count;

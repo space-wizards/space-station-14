@@ -64,9 +64,9 @@ public sealed partial class DungeonJob
         }
 
         var config = _prototype.Index(dungen.Proto);
+        var dungeons = await GetDungeons(dungeonSpawn.Value, config, config.Data, config.Layers, reservedTiles, seed);
 
-        var dungeon = await GetDungeon(dungeonSpawn.Value, config, config.Generator, reservedTiles, seed);
-        return dungeon;
+        return dungeons;
     }
 
     public static void GridCast(Vector2i start, Vector2i end, Vector2iCallback callback)

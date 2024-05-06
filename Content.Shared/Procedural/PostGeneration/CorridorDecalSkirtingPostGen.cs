@@ -7,29 +7,23 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Applies decal skirting to corridors.
 /// </summary>
-public sealed partial class CorridorDecalSkirtingPostGen : IPostDunGen
+public sealed partial class CorridorDecalSkirtingPostGen : IDunGenLayer
 {
-    /// <summary>
-    /// Color to apply to decals.
-    /// </summary>
-    [DataField("color")]
-    public Color? Color;
-
     /// <summary>
     /// Decal where 1 edge is found.
     /// </summary>
-    [DataField("cardinalDecals")]
+    [DataField]
     public Dictionary<DirectionFlag, string> CardinalDecals = new();
 
     /// <summary>
     /// Decal where 1 corner edge is found.
     /// </summary>
-    [DataField("pocketDecals")]
+    [DataField]
     public Dictionary<Direction, string> PocketDecals = new();
 
     /// <summary>
     /// Decal where 2 or 3 edges are found.
     /// </summary>
-    [DataField("cornerDecals")]
+    [DataField]
     public Dictionary<DirectionFlag, string> CornerDecals = new();
 }

@@ -7,19 +7,10 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Iterates room edges and places the relevant tiles and walls on any free indices.
 /// </summary>
-public sealed partial class BoundaryWallPostGen : IPostDunGen
+public sealed partial class BoundaryWallPostGen : IDunGenLayer
 {
     [DataField]
     public ProtoId<ContentTileDefinition> Tile = "FloorSteel";
-
-    [DataField]
-    public EntProtoId Wall = "WallSolid";
-
-    /// <summary>
-    /// Walls to use in corners if applicable.
-    /// </summary>
-    [DataField]
-    public string? CornerWall;
 
     [DataField]
     public BoundaryWallFlags Flags = BoundaryWallFlags.Corridors | BoundaryWallFlags.Rooms;

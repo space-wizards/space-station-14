@@ -6,7 +6,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Spawns entities on either side of an entrance.
 /// </summary>
-public sealed partial class EntranceFlankPostGen : IPostDunGen
+public sealed partial class EntranceFlankPostGen : IDunGenLayer
 {
     [DataField("tile", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
     public string Tile = "FloorSteel";

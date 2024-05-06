@@ -3,9 +3,9 @@ using Content.Shared.Procedural.Distance;
 namespace Content.Shared.Procedural.DungeonGenerators;
 
 /// <summary>
-/// Like <see cref="NoiseDunGen"/> except with maximum dimensions
+/// Like <see cref="Content.Shared.Procedural.DungeonGenerators.NoiseDunGenLayer"/> except with maximum dimensions
 /// </summary>
-public sealed partial class NoiseDistanceDunGen : IDunGen
+public sealed partial class NoiseDistanceDunGen : IDunGenLayer
 {
     [DataField]
     public IDunGenDistance? DistanceConfig;

@@ -6,7 +6,7 @@ namespace Content.Shared.Procedural.DungeonGenerators;
 /// <summary>
 /// Generates dungeon flooring based on the specified noise.
 /// </summary>
-public sealed partial class NoiseDunGen : IDunGen
+public sealed partial class NoiseDunGen : IDunGenLayer
 {
     /*
      * Floodfills out from 0 until it finds a valid tile.
