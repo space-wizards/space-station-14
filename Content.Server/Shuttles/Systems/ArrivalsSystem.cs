@@ -1,10 +1,10 @@
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Parallax;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
@@ -188,7 +188,7 @@ public sealed class ArrivalsSystem : EntitySystem
         if (TryComp<DeviceNetworkComponent>(shuttleUid, out var netComp))
         {
             TryComp<FTLComponent>(shuttleUid, out var ftlComp);
-            var ftlTime = TimeSpan.FromSeconds(ftlComp?.TravelTime ?? ShuttleSystem.DefaultTravelTime);
+            var ftlTime = TimeSpan.FromSeconds(ftlComp?.TravelTime ?? _shuttles.DefaultTravelTime);
 
             var payload = new NetworkPayload
             {
@@ -254,7 +254,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
     private void OnArrivalsDocked(EntityUid uid, ArrivalsShuttleComponent component, ref FTLCompletedEvent args)
     {
-        TimeSpan dockTime = component.NextTransfer - _timing.CurTime + TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime);
+        var dockTime = component.NextTransfer - _timing.CurTime + TimeSpan.FromSeconds(_shuttles.DefaultStartupTime);
 
         if (TryComp<DeviceNetworkComponent>(uid, out var netComp))
         {
@@ -420,7 +420,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 if (comp.NextTransfer > curTime || !TryComp<StationDataComponent>(comp.Station, out var data))
                     continue;
 
-                var tripTime = ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultStartupTime;
+                var tripTime = _shuttles.DefaultTravelTime + _shuttles.DefaultStartupTime;
 
                 // Go back to arrivals source
                 if (xform.MapUid != arrivalsXform.MapUid)
