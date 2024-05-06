@@ -151,24 +151,6 @@ public sealed class RottingSystem : SharedRottingSystem
     }
 
 
-    /// <summary>
-    /// Is anything speeding up the decay?
-    /// e.g. buried in a grave
-    /// TODO: hot temperatures increase rot?
-    /// </summary>
-    /// <returns></returns>
-    private float GetRotRate(EntityUid uid)
-    {
-        if (_container.TryGetContainingContainer(uid, out var container) &&
-            TryComp<ProRottingContainerComponent>(container.Owner, out var rotContainer))
-        {
-            return rotContainer.DecayModifier;
-        }
-
-        return 1f;
-    }
-
-
     public void ReduceAccumulator(EntityUid uid, TimeSpan time)
     {
         if (!TryComp<PerishableComponent>(uid, out var perishable))
@@ -210,6 +192,24 @@ public sealed class RottingSystem : SharedRottingSystem
             perishable.Stage = stage;
             Dirty(uid, perishable);
         }
+    }
+
+
+    /// <summary>
+    /// Is anything speeding up the decay?
+    /// e.g. buried in a grave
+    /// TODO: hot temperatures increase rot?
+    /// </summary>
+    /// <returns></returns>
+    private float GetRotRate(EntityUid uid)
+    {
+        if (_container.TryGetContainingContainer(uid, out var container) &&
+            TryComp<ProRottingContainerComponent>(container.Owner, out var rotContainer))
+        {
+            return rotContainer.DecayModifier;
+        }
+
+        return 1f;
     }
 
 
