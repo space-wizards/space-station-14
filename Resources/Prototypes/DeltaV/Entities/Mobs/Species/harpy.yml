@@ -21,13 +21,13 @@
       "Sax": {66: 0}
   - type: UserInterface
     interfaces:
-      - key: enum.InstrumentUiKey.Key
+      enum.InstrumentUiKey.Key:
         type: InstrumentBoundUserInterface
-      - key: enum.VoiceMaskUIKey.Key
+      enum.VoiceMaskUIKey.Key:
         type: VoiceMaskBoundUserInterface
-      - key: enum.HumanoidMarkingModifierKey.Key
+      enum.HumanoidMarkingModifierKey.Key:
         type: HumanoidMarkingModifierBoundUserInterface
-      - key: enum.StrippingUiKey.Key
+      enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
   - type: Sprite
     scale: 0.9, 0.9
@@ -122,12 +122,12 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.5
     baseSprintSpeed: 5.0
-  - type: Inventory 
+  - type: Inventory
     speciesId: harpy
     templateId: digitigrade
   - type: HarpyVisuals
   - type: UltraVision
-    
+
 - type: entity
   save: false
   name: Urist McHands
@@ -138,7 +138,7 @@
   components:
   - type: HumanoidAppearance
     species: Harpy
-  - type: Inventory 
+  - type: Inventory
     speciesId: harpy
   - type: Sprite
     scale: 0.9, 0.9
