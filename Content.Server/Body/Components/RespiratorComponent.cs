@@ -1,8 +1,8 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Body.Components
 {
