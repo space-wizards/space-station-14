@@ -35,8 +35,8 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
         if (mapPos.MapId == MapId.Nullspace)
             return;
 
-        var angle = (mapPos.Position - _transformSystem.GetMapCoordinates(player.Value).Position).ToWorldAngle();
-        var curRot = _transformSystem.GetWorldRotation(player.Value);
+        (var curPos, var curRot) = _transformSystem.GetWorldPositionRotation(player.Value);
+        var angle = (mapPos.Position - curPos).ToWorldAngle();
 
         // 4-dir handling is separate --
         // only raise event if the cardinal direction has changed
