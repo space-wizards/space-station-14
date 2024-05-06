@@ -33,4 +33,10 @@ public sealed partial class WoundComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 Severity = 100;
+
+    /// <summary>
+    /// Whether multiple wounds originating from the same prototype can exist on a woundable.
+    /// </summary>
+    [DataField]
+    public bool Unique;
 }

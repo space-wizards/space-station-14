@@ -40,6 +40,57 @@ public sealed partial class WoundSystem
         }
     }
 
+    /// <summary>
+    /// Checks whether adding a wound to a woundable entity would conflict with another wound it currently has.
+    /// </summary>
+    /// <param name="wound">The wound to check against.</param>
+    /// <param name="woundable">The woundable entity</param>
+    /// <param name="conflictingWound">The conflicting wound if found.</param>
+    /// <returns>Returns true if the wound conflicts.</returns>
+    private bool ConflictsWithUniqueWound(Entity<WoundComponent> wound, Entity<WoundableComponent> woundable,
+        [NotNullWhen(true)] out Entity<WoundComponent>? conflictingWound)
+    {
+        conflictingWound = null;
+
+        if (wound.Comp.Unique)
+            return false;
+
+        if (!TryComp<MetaDataComponent>(wound, out var meta) || meta.EntityPrototype == null)
+            return false;
+
+        return ConflictsWithUniqueWound(meta.EntityPrototype.ID, woundable, out conflictingWound);
+    }
+
+    /// <summary>
+    /// Checks whether adding a wound to a woundable entity would conflict with another wound it currently has.
+    /// </summary>
+    /// <param name="woundProto">The name of the wound prototype to check against.</param>
+    /// <param name="woundable">The woundable entity</param>
+    /// <param name="conflictingWound">The conflicting unique wound if found.</param>
+    /// <returns>Returns true if the wound conflicts.</returns>
+    private bool ConflictsWithUniqueWound(string woundProto,
+        Entity<WoundableComponent> woundable,
+        [NotNullWhen(true)] out Entity<WoundComponent>? conflictingWound)
+    {
+        conflictingWound = null;
+        var allWounds = GetAllWounds(woundable);
+
+        foreach (var otherWound in allWounds)
+        {
+            // Assumption: Since this wound is unique, then any other wound we are looking for is also unique.
+            // So we don't need to try to get the meta component for other wounds that are not unique.
+            if (otherWound.Comp.Unique &&
+                TryComp<MetaDataComponent>(otherWound.Owner, out var otherMeta) &&
+                otherMeta.EntityPrototype?.ID == woundProto)
+            {
+                conflictingWound = otherWound;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     #endregion
 
 
@@ -104,10 +155,17 @@ public sealed partial class WoundSystem
             //If damage is negative (healing) skip because wound healing is handled with internal logic.
             if (damage < 0)
                 continue;
-            if (!TryGetWoundProtoFromDamage(validWoundable, new(damageTypeId), damage,
-                    out var protoId, out var overflow))
+
+            var gotWound = TryGetWoundProtoFromDamage(validWoundable, new(damageTypeId), damage,
+                out var protoId, out var overflow, out var conflicting);
+
+            if (conflicting != null)
+                SetWoundSeverity(conflicting.Value, 1, true);
+
+            if (!gotWound)
                 return;
-            AddWound(validWoundable, protoId, DefaultSeverity);
+
+            AddWound(validWoundable, protoId!, DefaultSeverity);
         }
     }
 
@@ -167,12 +225,15 @@ public sealed partial class WoundSystem
     /// <param name="damage">Damage being applied</param>
     /// <param name="woundProtoId">Found WoundProtoId</param>
     /// <param name="damageOverflow">The amount of damage exceeding the max cap</param>
+    /// <param name="conflictingWound">A conflicting wound if found. This will not be null when the wound that would
+    /// otherwise be returned was skipped because it would conflict with this wound.</param>
     /// <returns>True if a woundProto is found, false if not</returns>
     public bool TryGetWoundProtoFromDamage(Entity<WoundableComponent> woundable,ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage,
-        [NotNullWhen(true)] out string? woundProtoId, out FixedPoint2 damageOverflow)
+        [NotNullWhen(true)] out string? woundProtoId, out FixedPoint2 damageOverflow, out Entity<WoundComponent>? conflictingWound)
     {
         damageOverflow = 0;
         woundProtoId = null;
+        conflictingWound = null;
         if (!woundable.Comp.Config.TryGetValue(damageType, out var metadata))
             return false;
         //scale the incoming damage and calculate overflows
@@ -184,12 +245,26 @@ public sealed partial class WoundSystem
         }
         var percentageOfMax = adjDamage / metadata.DamageMax *100;
         var woundPool = _prototypeManager.Index(metadata.WoundPool);
+        Entity<WoundComponent>? conflicting = null;
+        var retConflicting = false;
         foreach (var (percentage, lastWoundProtoId) in woundPool.Wounds)
         {
             if (percentage >= percentageOfMax)
                 break;
+
+            if (ConflictsWithUniqueWound(lastWoundProtoId, woundable, out conflicting))
+            {
+                retConflicting = true;
+                continue;
+            }
+
             woundProtoId = lastWoundProtoId;
+            retConflicting = false;
         }
+
+        if (retConflicting)
+            conflictingWound = conflicting;
+
         return woundProtoId != null;
     }
 
@@ -259,6 +334,14 @@ public sealed partial class WoundSystem
         if (!TryComp<WoundableComponent>(args.Container.Owner, out var woundable))
         {
             Log.Error("Tried to add a wound to an entity without a woundable!");
+            args.Cancel();
+            return;
+        }
+
+        if (ConflictsWithUniqueWound(new Entity<WoundComponent>(woundEnt, wound),
+                new Entity<WoundableComponent>(args.Container.Owner, woundable), out _))
+        {
+            Log.Error("Tried to add a wound to entity which would conflict with a unique wound!");
             args.Cancel();
             return;
         }
