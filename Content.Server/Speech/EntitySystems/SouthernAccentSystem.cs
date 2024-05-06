@@ -5,12 +5,8 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class SouthernAccentSystem : EntitySystem
 {
-    private static readonly Regex RegexIng = new(@"ing\b");
-    private static readonly Regex RegexAnd = new(@"\band\b");
-    private static readonly Regex RegexDve = new("d've");
-
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
-
+    
     public override void Initialize()
     {
         base.Initialize();
@@ -24,9 +20,9 @@ public sealed class SouthernAccentSystem : EntitySystem
         message = _replacement.ApplyReplacements(message, "southern");
 
         //They shoulda started runnin' an' hidin' from me!
-        message = RegexIng.Replace(message, "in'");
-        message = RegexAnd.Replace(message, "an'");
-        message = RegexDve.Replace(message, "da");
+        message = Regex.Replace(message, @"ing\b", "in'");
+        message = Regex.Replace(message, @"\band\b", "an'");
+        message = Regex.Replace(message, "d've", "da");
         args.Message = message;
     }
 };

@@ -3,6 +3,7 @@ using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Shared.Alert;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
@@ -116,9 +117,7 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-
-            if (!_entityManager.Deleted(_spriteViewEntity))
-                _entityManager.QueueDeleteEntity(_spriteViewEntity);
+            _entityManager.QueueDeleteEntity(_spriteViewEntity);
         }
     }
 

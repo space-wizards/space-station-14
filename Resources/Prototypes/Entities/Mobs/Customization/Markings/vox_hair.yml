@@ -1,84 +1,11 @@
 - type: marking
-  id: VoxHairAfro
+  id: VoxHairShortQuills
   bodyPart: Hair
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
-      state: afro_s
-
-- type: marking
-  id: VoxHairBraids
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: braid_s
-
-- type: marking
-  id: VoxHairCrestedQuills
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: crestedquills_s
-
-- type: marking
-  id: VoxHairEmperorQuills
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: emperorquills_s
-
-- type: marking
-  id: VoxHairFlowing
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: flowing_s
-
-- type: marking
-  id: VoxHairHawk
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: hawk_s
-
-- type: marking
-  id: VoxHairHorns
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: horns_s
-
-- type: marking
-  id: VoxHairKeelQuills
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: keelquills_s
-
-- type: marking
-  id: VoxHairKeetQuills
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: keetquills_s
-
+      state: vox_shortquills_s
 - type: marking
   id: VoxHairKingly
   bodyPart: Hair
@@ -86,26 +13,15 @@
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
-      state: kingly_s
-
+      state: vox_kingly_s
 - type: marking
-  id: VoxHairLongBraid
+  id: VoxHairAfro
   bodyPart: Hair
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
-      state: afro_s
-
-- type: marking
-  id: VoxHairMange
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: mange_s
-      
+      state: vox_afro_s
 - type: marking
   id: VoxHairMohawk
   bodyPart: Hair
@@ -113,8 +29,23 @@
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
-      state: mohawk_s
-
+      state: vox_mohawk_s
+- type: marking
+  id: VoxHairYasuhiro
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Vox]
+  sprites:
+    - sprite: Mobs/Customization/vox_hair.rsi
+      state: vox_yasu_s
+- type: marking
+  id: VoxHairHorns
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Vox]
+  sprites:
+    - sprite: Mobs/Customization/vox_hair.rsi
+      state: vox_horns_s
 - type: marking
   id: VoxHairNights
   bodyPart: Hair
@@ -122,53 +53,7 @@
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
-      state: nights_s
-
-- type: marking
-  id: VoxHairPony
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: ponytail_s
-
-- type: marking
-  id: VoxHairRazorClipped
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: razor_clipped_s
-
-- type: marking
-  id: VoxHairRazor
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: razor_s
-
-- type: marking
-  id: VoxHairSortBraid
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: short_braid_s
-
-- type: marking
-  id: VoxHairShortQuills
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_hair.rsi
-      state: shortquills_s
-
+      state: vox_nights_s
 - type: marking
   id: VoxHairSurf
   bodyPart: Hair
@@ -176,22 +61,44 @@
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
-      state: surf_s
-
+      state: vox_surf_s
 - type: marking
-  id: VoxHairTielQuills
+  id: VoxHairCropped
   bodyPart: Hair
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
-      state: tielquills_s
-
+      state: vox_cropped_s
 - type: marking
-  id: VoxHairYasu
+  id: VoxHairRuffhawk
   bodyPart: Hair
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
-      state: yasu_s
+      state: vox_ruff_hawk_s
+- type: marking
+  id: VoxHairRows
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Vox]
+  sprites:
+    - sprite: Mobs/Customization/vox_hair.rsi
+      state: vox_rows_s
+- type: marking
+  id: VoxHairMange
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Vox]
+  sprites:
+    - sprite: Mobs/Customization/vox_hair.rsi
+      state: vox_mange_s
+- type: marking
+  id: VoxHairPony
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Vox]
+  sprites:
+    - sprite: Mobs/Customization/vox_hair.rsi
+      state: vox_pony_s

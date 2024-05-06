@@ -31,7 +31,6 @@
         - AppraisalTool
         - JawsOfLife
         - GPS
-        - WeldingMask
       components:
         - SprayPainter
         - NetworkConfigurator
@@ -483,10 +482,6 @@
         - Handcuff
         - BallisticAmmoProvider
         - CartridgeAmmo
-        - DoorRemote
-        - Whistle
-        - HolosignProjector
-        - BalloonPopper
   - type: ItemMapper
     mapLayers:
       flashbang:
@@ -617,7 +612,7 @@
     sprite: Clothing/Belt/securitywebbing.rsi
   - type: Clothing
     sprite: Clothing/Belt/securitywebbing.rsi
-
+  
 - type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltMercWebbing

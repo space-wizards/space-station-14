@@ -106,5 +106,5 @@
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
-    component: ResearchServer
+    component: BecomesStation
     targetName: the station

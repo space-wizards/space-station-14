@@ -57,8 +57,7 @@ namespace Content.Shared.Random.Helpers
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
         }
 
-        public static T Pick<T>(this IRobustRandom random, Dictionary<T, float> weights)
-            where T: notnull
+        public static string Pick(this IRobustRandom random, Dictionary<string, float> weights)
         {
             var sum = weights.Values.Sum();
             var accumulated = 0f;
@@ -75,7 +74,7 @@ namespace Content.Shared.Random.Helpers
                 }
             }
 
-            throw new InvalidOperationException("Invalid weighted pick");
+            throw new InvalidOperationException($"Invalid weighted pick");
         }
 
         public static (string reagent, FixedPoint2 quantity) Pick(this WeightedRandomFillSolutionPrototype prototype, IRobustRandom? random = null)

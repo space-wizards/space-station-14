@@ -6,12 +6,8 @@
   description: Someone forgot to turn off kettle?
   components:
   - type: Item
-    sprite: Objects/Fun/whistles.rsi
     size: Tiny
-  - type: Sprite
-    sprite: Objects/Fun/whistles.rsi
   - type: Clothing
-    sprite: Objects/Fun/whistles.rsi
     quickEquip: false
     slots: neck
   - type: UseDelay
@@ -20,14 +16,7 @@
     sound:
       collection: BaseWhistle
   - type: Whistle
-    distance: 3
-
-- type: entity
-  parent: BaseWhistle
-  id: Whistle
-  components:
-  - type: Sprite
-    state: whistle
+    distance: 5
 
 - type: entity
   parent: BaseWhistle
@@ -35,11 +24,10 @@
   description: Sound of it make you feel fear.
   components:
   - type: Sprite
-    state: sec
-  - type: Clothing
-    equippedPrefix: sec
-  - type: Whistle
-    distance: 5
+    sprite: Objects/Fun/whistle.rsi
+    state: securityWhistle
+  - type: Item
+    sprite: Objects/Fun/whistle.rsi
 
 - type: entity
   parent: BaseWhistle
@@ -48,9 +36,13 @@
   description: A whistle used by Syndicate commanders to draw attention. Avanti!
   components:
   - type: Sprite
-    state: trench
+    sprite: Clothing/Neck/Misc/whistles.rsi
+    state: icon
   - type: Clothing
-    equippedPrefix: trench
+    sprite: Clothing/Neck/Misc/whistles.rsi
+    quickEquip: False
+    slots:
+    - neck
   - type: EmitSoundOnUse
     sound:
       collection: TrenchWhistle

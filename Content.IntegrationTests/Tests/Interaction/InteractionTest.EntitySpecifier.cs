@@ -3,7 +3,6 @@ using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using static Robust.UnitTesting.RobustIntegrationTest;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -55,7 +54,7 @@ public abstract partial class InteractionTest
         /// <summary>
         /// Convert applicable entity prototypes into stack prototypes.
         /// </summary>
-        public async Task ConvertToStack(IPrototypeManager protoMan, IComponentFactory factory, ServerIntegrationInstance server)
+        public void ConvertToStack(IPrototypeManager protoMan, IComponentFactory factory)
         {
             if (Converted)
                 return;
@@ -74,14 +73,11 @@ public abstract partial class InteractionTest
                 return;
             }
 
-            StackComponent? stack = null;
-            await server.WaitPost(() =>
+            if (entProto.TryGetComponent<StackComponent>(factory.GetComponentName(typeof(StackComponent)),
+                    out var stackComp))
             {
-                entProto.TryGetComponent(factory.GetComponentName(typeof(StackComponent)), out stack);
-            });
-
-            if (stack != null)
-                Prototype = stack.StackTypeId;
+                Prototype = stackComp.StackTypeId;
+            }
         }
     }
 
@@ -104,14 +100,11 @@ public abstract partial class InteractionTest
             return default;
         }
 
-        StackComponent? stack = null;
-        await Server.WaitPost(() =>
+        if (entProto.TryGetComponent<StackComponent>(Factory.GetComponentName(typeof(StackComponent)),
+                out var stackComp))
         {
-            entProto.TryGetComponent(Factory.GetComponentName(typeof(StackComponent)), out stack);
-        });
-
-        if (stack != null)
-            return await SpawnEntity((stack.StackTypeId, spec.Quantity), coords);
+            return await SpawnEntity((stackComp.StackTypeId, spec.Quantity), coords);
+        }
 
         Assert.That(spec.Quantity, Is.EqualTo(1), "SpawnEntity only supports returning a singular entity");
         await Server.WaitPost(() => uid = SEntMan.SpawnEntity(spec.Prototype, coords));

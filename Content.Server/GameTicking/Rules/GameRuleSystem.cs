@@ -26,7 +26,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         SubscribeLocalEvent<T, GameRuleAddedEvent>(OnGameRuleAdded);
         SubscribeLocalEvent<T, GameRuleStartedEvent>(OnGameRuleStarted);
         SubscribeLocalEvent<T, GameRuleEndedEvent>(OnGameRuleEnded);
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
+        SubscribeLocalEvent<T, RoundEndTextAppendEvent>(OnRoundEndTextAppend);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent args)
@@ -70,16 +70,11 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         Ended(uid, component, ruleData, args);
     }
 
-    private void OnRoundEndTextAppend(RoundEndTextAppendEvent ev)
+    private void OnRoundEndTextAppend(Entity<T> ent, ref RoundEndTextAppendEvent args)
     {
-        var query = AllEntityQuery<T>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (!TryComp<GameRuleComponent>(uid, out var ruleData))
-                continue;
-
-            AppendRoundEndText(uid, comp, ruleData, ref ev);
-        }
+        if (!TryComp<GameRuleComponent>(ent, out var ruleData))
+            return;
+        AppendRoundEndText(ent, ent, ruleData, ref args);
     }
 
     /// <summary>

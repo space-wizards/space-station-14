@@ -45,7 +45,3 @@
 - type: lobbyBackground
   id: Hazard
   background: /Textures/LobbyScreens/hazard.webp
-
-- type: lobbyBackground
-  id: JustAWeekAway
-  background: /Textures/LobbyScreens/justaweekaway.webp
