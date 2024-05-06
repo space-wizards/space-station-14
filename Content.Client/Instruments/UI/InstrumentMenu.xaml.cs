@@ -168,14 +168,14 @@ namespace Content.Client.Instruments.UI
             if (instrument == null)
                 return false;
 
-            var localPlayer = _owner.PlayerManager.LocalPlayer;
+            var localEntity = _owner.PlayerManager.LocalEntity;
 
             // If we don't have a player or controlled entity, we return.
-            if (localPlayer?.ControlledEntity == null)
+            if (localEntity == null)
                 return false;
 
             // By default, allow an instrument to play itself and skip all other checks
-            if (localPlayer.ControlledEntity == instrumentEnt)
+            if (localEntity == instrumentEnt)
                 return true;
 
             var container = _owner.Entities.System<SharedContainerSystem>();
@@ -183,14 +183,14 @@ namespace Content.Client.Instruments.UI
             container.TryGetContainingContainer(instrumentEnt, out var conMan);
 
             // If the instrument is handheld and we're not holding it, we return.
-            if ((instrument.Handheld && (conMan == null || conMan.Owner != localPlayer.ControlledEntity)))
+            if ((instrument.Handheld && (conMan == null || conMan.Owner != localEntity)))
                 return false;
 
-            if (!_owner.ActionBlocker.CanInteract(localPlayer.ControlledEntity.Value, instrumentEnt))
+            if (!_owner.ActionBlocker.CanInteract(localEntity.Value, instrumentEnt))
                 return false;
 
             // We check that we're in range unobstructed just in case.
-            return _owner.Interactions.InRangeUnobstructed(localPlayer.ControlledEntity.Value, instrumentEnt);
+            return _owner.Interactions.InRangeUnobstructed(localEntity.Value, instrumentEnt);
         }
 
         private void MidiStopButtonOnPressed(ButtonEventArgs? obj)

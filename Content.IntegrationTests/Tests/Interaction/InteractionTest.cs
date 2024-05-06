@@ -12,7 +12,6 @@ using Content.Shared.Body.Part;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Server.Item;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Client.Input;
@@ -184,15 +183,15 @@ public abstract partial class InteractionTest
         await Pair.CreateTestMap();
         PlayerCoords = SEntMan.GetNetCoordinates(MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan));
         TargetCoords = SEntMan.GetNetCoordinates(MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan));
-        await SetTile(Plating, grid: MapData.MapGrid);
+        await SetTile(Plating, grid: MapData.Grid.Comp);
 
         // Get player data
         var sPlayerMan = Server.ResolveDependency<Robust.Server.Player.IPlayerManager>();
         var cPlayerMan = Client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
-        if (cPlayerMan.LocalPlayer?.Session == null)
+        if (Client.Session == null)
             Assert.Fail("No player");
-        ClientSession = cPlayerMan.LocalPlayer!.Session!;
-        ServerSession = sPlayerMan.GetSessionByUserId(ClientSession.UserId);
+        ClientSession = Client.Session!;
+        ServerSession = sPlayerMan.GetSessionById(ClientSession.UserId);
 
         // Spawn player entity & attach
         EntityUid? old = default;
@@ -240,7 +239,7 @@ public abstract partial class InteractionTest
         Assert.Multiple(() =>
         {
             Assert.That(CEntMan.GetNetEntity(cPlayerMan.LocalEntity), Is.EqualTo(Player));
-            Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(SEntMan.GetEntity(Player)));
+            Assert.That(sPlayerMan.GetSessionById(ClientSession.UserId).AttachedEntity, Is.EqualTo(SEntMan.GetEntity(Player)));
         });
     }
 

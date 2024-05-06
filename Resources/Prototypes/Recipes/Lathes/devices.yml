@@ -78,6 +78,16 @@
     Glass: 100
 
 - type: latheRecipe
+  id: SignallerAdvanced
+  result: RemoteSignallerAdvanced
+  category: Parts
+  completetime: 2
+  materials:
+    Steel: 100
+    Plastic: 200
+    Plasma: 100
+
+- type: latheRecipe
   id: AnomalyLocator
   result: AnomalyLocatorEmpty
   category: Tools
@@ -164,6 +174,14 @@
     Silver: 750
     Plasma: 1500
     Uranium: 150
+
+- type: latheRecipe
+  id: ClothingMaskWeldingGas
+  result: ClothingMaskWeldingGas
+  completetime: 3
+  materials:
+    Steel: 600
+    Glass: 200
 
 - type: latheRecipe
   id: WeaponForceGun

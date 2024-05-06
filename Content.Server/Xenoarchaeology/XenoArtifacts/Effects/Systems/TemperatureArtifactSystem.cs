@@ -2,6 +2,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
@@ -28,10 +29,10 @@ public sealed class TemperatureArtifactSystem : EntitySystem
 
         if (component.AffectAdjacentTiles && transform.GridUid != null)
         {
-            var adjacent = _atmosphereSystem.GetAdjacentTileMixtures(transform.GridUid.Value,
+            var enumerator = _atmosphereSystem.GetAdjacentTileMixtures(transform.GridUid.Value,
                 _transformSystem.GetGridOrMapTilePosition(uid, transform), excite: true);
 
-            foreach (var mixture in adjacent)
+            while (enumerator.MoveNext(out var mixture))
             {
                 UpdateTileTemperature(component, mixture);
             }

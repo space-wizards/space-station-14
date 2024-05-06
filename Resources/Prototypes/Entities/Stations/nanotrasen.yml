@@ -10,6 +10,7 @@
   id: StandardNanotrasenStation
   parent:
     - BaseStation
+    - BaseStationNews
     - BaseStationCargo
     - BaseStationJobsSpawning
     - BaseStationRecords
@@ -25,6 +26,7 @@
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen
     - BaseStationGridPreloader
+    - BaseRandomStation
   noSpawn: true
   components:
     - type: Transform

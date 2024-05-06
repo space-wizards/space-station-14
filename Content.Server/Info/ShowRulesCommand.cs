@@ -60,7 +60,7 @@ public sealed class ShowRulesCommand : IConsoleCommand
         var message = new SharedRulesManager.ShowRulesPopupMessage();
         message.PopupTime = seconds;
 
-        var player = IoCManager.Resolve<IPlayerManager>().GetSessionByUserId(located.UserId);
+        var player = IoCManager.Resolve<IPlayerManager>().GetSessionById(located.UserId);
         netManager.ServerSendMessage(message, player.Channel);
     }
 }

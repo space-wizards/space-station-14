@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: JaniDrobeAds
-  advertisements:
+  messages:
     - advertisement-janidrobe-1
-  thankyous:
-    - vending-machine-thanks
+    - advertisement-janidrobe-2
+    - advertisement-janidrobe-3

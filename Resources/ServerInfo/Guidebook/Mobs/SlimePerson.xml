@@ -1,0 +1,33 @@
+<Document>
+  # Slime People
+
+  <Box>
+    <GuideEntityEmbed Entity="MobSlimePerson" Caption=""/>
+  </Box>
+
+  They breathe nitrogen instead of oxygen, which is abundant in the station air, but harder to find compressed into gas tanks. They take significant damage if they are sprayed or splashed with water, but can
+  (and like other species, need to) drink it safely to stay hydrated.
+  They exhale nitrous oxide and are unaffected by it.
+  Their body can process 6 reagents at the same time instead of just 2.
+
+  Slimepeople can morph into a [bold]"geras"[/bold] (an archaic slimefolk term), which is a smaller slime form that can [bold]pass through grilles[/bold],
+  but forces them to drop their inventory and held items. It's handy for a quick getaway. A geras is small enough to pick up (with two hands)
+  and fits in a duffelbag.
+
+  <Box>
+    <GuideEntityEmbed Entity="MobSlimesGeras" Caption="A typical geras."/>
+  </Box>
+
+  Slimepeople have an [bold]internal 2x2 storage inventory[/bold] inside of their slime membrane. Anyone can see what's inside and take it out of you without asking,
+  so be careful. They [bold]don't drop their internal storage when they morph into a geras, however![/bold]
+
+  Slimepeople have slight accelerated regeneration compared to other humanoids. They're also capable of hardening their fists, and as such have stronger punches,
+  although they punch a little slower.
+
+  Their slime "blood" can not be regenerated from Iron. Slime Blood is technically a source of
+  moderately filling food for other species, although drinking the blood of your coworkers is usually frowned upon.
+  They suffocate 80% slower, but take pressure damage 9% faster. This makes them by far the species most capable to survive in hard vacuum. For a while.
+
+  They take [color=#1e90ff]80% less Cellular damage, 40% less Blunt damage and 20% less Poison damage[/color], but [color=#ffa500]50% more Cold damage, 20% more Slash damage and 20% more Piercing damage[/color].
+
+</Document>

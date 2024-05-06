@@ -1,0 +1,31 @@
+{
+  "version":1,
+  "size": {
+    "x":32,
+    "y":32
+  },
+  "copyright":"Created by SlamBamActionman",
+  "license":"CC-BY-SA-3.0",
+  "states": [
+    {
+      "name":"schnozz",
+      "directions":4
+    },
+    {
+      "name":"blob",
+      "directions":4
+    },
+    {
+      "name":"droop",
+      "directions":4
+    },
+    {
+      "name":"uppie",
+      "directions":4
+    },
+    {
+      "name":"nubby",
+      "directions":4
+    }
+  ]
+}

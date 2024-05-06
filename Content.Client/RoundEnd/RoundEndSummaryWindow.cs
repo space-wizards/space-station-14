@@ -2,7 +2,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Message;
 using Content.Shared.GameTicking;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Utility;
@@ -37,7 +36,7 @@ namespace Content.Client.RoundEnd
 
             Contents.AddChild(roundEndTabs);
 
-            OpenCentered();
+            OpenCenteredRight();
             MoveToFront();
         }
 

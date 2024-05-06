@@ -47,9 +47,9 @@ flavor-base-clean = clean
 flavor-base-alkaline = alkaline
 flavor-base-holy = holy
 flavor-base-horrible = horrible
-
 # lmao
 flavor-base-terrible = terrible
+flavor-base-mindful = mindful
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -165,6 +165,12 @@ flavor-complex-glue = like glue
 flavor-complex-spaceshroom-cooked = like space umami
 flavor-complex-lost-friendship = like lost friendship
 flavor-complex-light = like a light gone out
+flavor-complex-profits = like profits
+flavor-complex-fishops = like the dreaded fishops
+flavor-complex-violets = like violets
+flavor-complex-pyrotton = like a burning mouth
+flavor-complex-mothballs = like mothballs
+flavor-complex-paint-thinner = like paint thinner
 
 # Drink-specific flavors.
 
@@ -177,12 +183,28 @@ flavor-complex-rocksandstones = like rocks and stones
 ## Basic drinks
 flavor-complex-water = like water
 flavor-complex-beer = like piss
+flavor-complex-cognac = like dry spicy alcohol
+flavor-complex-mead = like fermented honey
+flavor-complex-vermouth = like herbal grape rinds
 flavor-complex-ale = like bread
+flavor-complex-tonic-water = like angry water
 flavor-complex-cola = like cola
+flavor-complex-energy-drink = like battery acid
+flavor-complex-dr-gibb = like malpractice
+flavor-complex-ginger-soda = like ginger
+flavor-complex-grape-soda = like grape soda
+flavor-complex-lemon-lime-soda = like lemon-lime soda
+flavor-complex-pwr-game-soda = like gaming
+flavor-complex-root-beer-soda = like root beer
+flavor-complex-citrus-soda = like citrus soda
+flavor-complex-space-up-soda = like space
+flavor-complex-starkist-soda = like orange soda
+flavor-complex-fourteen-loko-soda = like sweet malt
 flavor-complex-vodka = like fermented grain
 flavor-complex-tequila = like fermented death
 flavor-complex-sake = like sweet, alcoholic rice
 flavor-complex-rum = like fermented sugar
+flavor-complex-coconut-rum = like nutty fermented sugar
 flavor-complex-coffee-liquor = like strong, bitter coffee
 flavor-complex-whiskey = like molasses
 flavor-complex-shitty-wine = like grape rinds
@@ -195,9 +217,18 @@ flavor-complex-ice = like ice
 flavor-complex-mopwata = like stagnant, dirty water
 
 ## Cocktails
+flavor-complex-arnold-palmer = like a hole-in-one
+flavor-complex-blue-hawaiian = like the tropics
+flavor-complex-cosmopolitan = sweet and tangy
+flavor-complex-painkiller = like spiked pineapple juice
+flavor-complex-pina-colada = like tropical sun
 flavor-complex-long-island = suspiciously like iced tea
 flavor-complex-three-mile-island = like tea brewed in nuclear runoff
 flavor-complex-whiskey-cola = like carbonated molasses
+flavor-complex-root-beer-float = like ice cream in root beer
+flavor-complex-black-russian = like alcoholic coffee
+flavor-complex-white-russian = like alcoholic sweetened coffee
+flavor-complex-moonshine = like pure alcohol
 flavor-complex-singulo = like a bottomless hole
 flavor-complex-syndie-bomb = like bitter whiskey
 flavor-complex-tequila-sunrise = like a mexican morning
@@ -212,6 +243,13 @@ flavor-complex-atomic-cola = like hoarding bottle caps
 flavor-complex-cuba-libre = like spiked cola
 flavor-complex-gin-tonic = like spiked lemon-lime soda
 flavor-complex-screwdriver = like spiked orange juice
+flavor-complex-vodka-red-bool = like a heart attack
+flavor-complex-irish-bool = caffine and Ireland
+flavor-complex-xeno-basher = like killing bugs
+flavor-complex-budget-insuls-drink = like door hacking
+flavor-complex-watermelon-wakeup = like a sweet wakeup call
+flavor-complex-rubberneck = like synthetics
+flavor-complex-irish-car-bomb = like a spiked cola float
 flavor-complex-themartinez = like violets and lemon vodka
 flavor-complex-cogchamp = like brass
 flavor-complex-white-gilgamesh = like lightly carbonated cream
@@ -230,3 +268,4 @@ flavor-complex-bee = unbeelievable
 flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
+flavor-weh = like weh

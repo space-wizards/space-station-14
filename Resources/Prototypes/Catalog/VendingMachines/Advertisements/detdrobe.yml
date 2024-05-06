@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: DetDrobeAds
-  advertisements:
+  messages:
     - advertisement-detdrobe-1
-  thankyous:
-    - vending-machine-thanks
+    - advertisement-detdrobe-2
+    - advertisement-detdrobe-3

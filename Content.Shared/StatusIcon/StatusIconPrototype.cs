@@ -34,13 +34,31 @@ public partial class StatusIconData : IComparable<StatusIconData>
     {
         return Priority.CompareTo(other?.Priority ?? int.MaxValue);
     }
+
+    /// <summary>
+    /// The layer the icon is displayed on. Mod is drawn above Base. Base | Mod
+    /// </summary>
+    [DataField]
+    public StatusIconLayer Layer = StatusIconLayer.Base;
+
+    /// <summary>
+    /// Offset of the status icon, up and down only.
+    /// </summary>
+    [DataField]
+    public int Offset = 0;
+
+    /// <summary>
+    /// Sets if the icon should be rendered with or without the effect of lighting.
+    /// </summary>
+    [DataField]
+    public bool IsShaded = false;
 }
 
 /// <summary>
 /// <see cref="StatusIconData"/> but in new convenient prototype form!
 /// </summary>
 [Prototype("statusIcon")]
-public sealed class StatusIconPrototype : StatusIconData, IPrototype, IInheritingPrototype
+public sealed partial class StatusIconPrototype : StatusIconData, IPrototype, IInheritingPrototype
 {
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<StatusIconPrototype>))]
@@ -62,4 +80,10 @@ public enum StatusIconLocationPreference : byte
     None,
     Left,
     Right,
+}
+
+public enum StatusIconLayer : byte
+{
+    Base,
+    Mod,
 }

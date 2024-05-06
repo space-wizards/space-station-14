@@ -23,3 +23,12 @@ public sealed partial class GeneratorStartedEvent : DoAfterEvent
         return this;
     }
 }
+
+/// <summary>
+/// Used to start a portable generator. This is like <see cref="GeneratorStartedEvent"/> except it isn't a do-after.
+/// </summary>
+[ByRefEvent]
+public sealed partial class AutoGeneratorStartedEvent
+{
+    public bool Started = false;
+}

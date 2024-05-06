@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/99e6a1b09e800f1dd5ac6003053e0a8b05939511/icons/obj/smooth_structures/lattice_clockwork.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "clock_lattice"
+    }
+  ]
+}

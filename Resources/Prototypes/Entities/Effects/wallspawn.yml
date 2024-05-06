@@ -26,15 +26,57 @@
     prototype: AsteroidRock
 
 - type: entity
-  id: WallSpawnAsteroidCrab
+  id: WallSpawnAsteroidUraniumCrab
   parent: WallSpawnAsteroid
   components:
   - type: SpawnOnDespawn
-    prototype: AsteroidRockCrab
+    prototype: AsteroidRockUraniumCrab
 
 - type: entity
-  id: WallSpawnAsteroidCrab1
+  id: WallSpawnAsteroidUranium
   parent: WallSpawnAsteroid
   components:
   - type: SpawnOnDespawn
-    prototype: AsteroidRockCrab1
+    prototype: AsteroidRockUranium
+
+- type: entity
+  id: WallSpawnAsteroidQuartzCrab
+  parent: WallSpawnAsteroid
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockQuartzCrab
+
+- type: entity
+  id: WallSpawnAsteroidQuartz
+  parent: WallSpawnAsteroid
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockQuartz
+
+- type: entity
+  id: WallSpawnAsteroidSilverCrab
+  parent: WallSpawnAsteroid
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockSilverCrab
+
+- type: entity
+  id: WallSpawnAsteroidSilver
+  parent: WallSpawnAsteroid
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockSilver
+
+- type: entity
+  id: WallSpawnAsteroidIronCrab
+  parent: WallSpawnAsteroid
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockTinCrab
+
+- type: entity
+  id: WallSpawnAsteroidIron
+  parent: WallSpawnAsteroid
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockTin

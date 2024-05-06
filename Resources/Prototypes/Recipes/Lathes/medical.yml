@@ -49,7 +49,7 @@
 
 - type: latheRecipe
   id: BodyBag
-  result: BodyBag_Folded
+  result: BodyBagFolded
   completetime: 2
   materials:
     Plastic: 300
@@ -76,16 +76,6 @@
   completetime: 1
   materials:
     Cloth: 200
-
-- type: latheRecipe
-  id: HandheldCrewMonitor
-  result: HandheldCrewMonitorEmpty
-  category: Tools
-  completetime: 2
-  materials:
-    Glass: 1200
-    Steel: 1000
-    Plastic: 1400
 
 - type: latheRecipe
   id: HandheldHealthAnalyzer
@@ -116,7 +106,7 @@
   result: ClothingMaskSterile
   completetime: 2
   materials:
-    Plastic: 100
+    Plastic: 50
 
 - type: latheRecipe
   id: DiseaseSwab
@@ -219,14 +209,6 @@
   completetime: 4
   materials:
     Plastic: 400
-
-- type: latheRecipe
-  id: VehicleWheelchairFolded
-  result: VehicleWheelchairFolded
-  completetime: 1
-  materials:
-    Steel: 500
-    Plastic: 300
 
 - type: latheRecipe
   id: RollerBedSpawnFolded

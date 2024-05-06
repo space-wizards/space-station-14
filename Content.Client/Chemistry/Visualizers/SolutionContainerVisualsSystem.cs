@@ -1,6 +1,8 @@
+using Content.Client.Items.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Hands;
 using Content.Shared.Rounding;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
@@ -10,11 +12,13 @@ namespace Content.Client.Chemistry.Visualizers;
 public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionContainerVisualsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ItemSystem _itemSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<SolutionContainerVisualsComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SolutionContainerVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals);
     }
 
     private void OnMapInit(EntityUid uid, SolutionContainerVisualsComponent component, MapInitEvent args)
@@ -45,12 +49,17 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         if (!args.Sprite.LayerMapTryGet(component.Layer, out var fillLayer))
             return;
 
+        var maxFillLevels = component.MaxFillLevels;
+        var fillBaseName = component.FillBaseName;
+        var changeColor = component.ChangeColor;
+        var fillSprite = component.MetamorphicDefaultSprite;
+
         // Currently some solution methods such as overflowing will try to update appearance with a
         // volume greater than the max volume. We'll clamp it so players don't see
         // a giant error sign and error for debug.
         if (fraction > 1f)
         {
-            Logger.Error("Attempted to set solution container visuals volume ratio on " + ToPrettyString(uid) + " to a value greater than 1. Volume should never be greater than max volume!");
+            Log.Error("Attempted to set solution container visuals volume ratio on " + ToPrettyString(uid) + " to a value greater than 1. Volume should never be greater than max volume!");
             fraction = 1f;
         }
         if (component.Metamorphic)
@@ -68,13 +77,23 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
                     if (reagentProto?.MetamorphicSprite is { } sprite)
                     {
                         args.Sprite.LayerSetSprite(baseLayer, sprite);
-                        args.Sprite.LayerSetVisible(fillLayer, false);
+                        if (reagentProto.MetamorphicMaxFillLevels > 0)
+                        {
+                            args.Sprite.LayerSetVisible(fillLayer, true);
+                            maxFillLevels = reagentProto.MetamorphicMaxFillLevels;
+                            fillBaseName = reagentProto.MetamorphicFillBaseName;
+                            changeColor = reagentProto.MetamorphicChangeColor;
+                            fillSprite = sprite;
+                        }
+                        else
+                            args.Sprite.LayerSetVisible(fillLayer, false);
+
                         if (hasOverlay)
                             args.Sprite.LayerSetVisible(overlayLayer, false);
-                        return;
                     }
                     else
                     {
+                        args.Sprite.LayerSetVisible(fillLayer, true);
                         if (hasOverlay)
                             args.Sprite.LayerSetVisible(overlayLayer, true);
                         if (component.MetamorphicDefaultSprite != null)
@@ -83,21 +102,27 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
                 }
             }
         }
+        else
+        {
+            args.Sprite.LayerSetVisible(fillLayer, true);
+        }
 
-        int closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, component.MaxFillLevels + 1);
+        var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, maxFillLevels + 1);
 
         if (closestFillSprite > 0)
         {
-            if (component.FillBaseName == null)
+            if (fillBaseName == null)
                 return;
 
-            args.Sprite.LayerSetVisible(fillLayer, true);
-
-            var stateName = component.FillBaseName + closestFillSprite;
+            var stateName = fillBaseName + closestFillSprite;
+            if (fillSprite != null)
+                args.Sprite.LayerSetSprite(fillLayer, fillSprite);
             args.Sprite.LayerSetState(fillLayer, stateName);
 
-            if (component.ChangeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, args.Component))
+            if (changeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, args.Component))
                 args.Sprite.LayerSetColor(fillLayer, color);
+            else
+                args.Sprite.LayerSetColor(fillLayer, Color.White);
         }
         else
         {
@@ -106,11 +131,42 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             else
             {
                 args.Sprite.LayerSetState(fillLayer, component.EmptySpriteName);
-                if (component.ChangeColor)
+                if (changeColor)
                     args.Sprite.LayerSetColor(fillLayer, component.EmptySpriteColor);
+                else
+                    args.Sprite.LayerSetColor(fillLayer, Color.White);
             }
         }
 
+        // in-hand visuals
+        _itemSystem.VisualsChanged(uid);
+    }
 
+    private void OnGetHeldVisuals(EntityUid uid, SolutionContainerVisualsComponent component, GetInhandVisualsEvent args)
+    {
+        if (component.InHandsFillBaseName == null)
+            return;
+
+        if (!TryComp(uid, out AppearanceComponent? appearance))
+            return;
+
+        if (!AppearanceSystem.TryGetData<float>(uid, SolutionContainerVisuals.FillFraction, out var fraction, appearance))
+            return;
+
+        var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, component.InHandsMaxFillLevels + 1);
+
+        if (closestFillSprite > 0)
+        {
+            var layer = new PrototypeLayerData();
+
+            var key = "inhand-" + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName + closestFillSprite;
+
+            layer.State = key;
+
+            if (component.ChangeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, appearance))
+                layer.Color = color;
+
+            args.Layers.Add((key, layer));
+        }
     }
 }

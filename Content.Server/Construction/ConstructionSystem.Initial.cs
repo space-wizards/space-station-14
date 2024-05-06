@@ -2,7 +2,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
-using Content.Server.Storage.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
@@ -15,7 +14,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Storage;
-using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -30,8 +28,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
-        [Dependency] private readonly StorageSystem _storageSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -250,8 +247,7 @@ namespace Content.Server.Construction
             var doAfterArgs = new DoAfterArgs(EntityManager, user, doAfterTime, new AwaitedDoAfterEvent(), null)
             {
                 BreakOnDamage = true,
-                BreakOnTargetMove = false,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 NeedHand = false,
                 // allow simultaneously starting several construction jobs using the same stack of materials.
                 CancelDuplicate = false,
@@ -269,7 +265,7 @@ namespace Content.Server.Construction
 
             if (!TryComp(newEntity, out ConstructionComponent? construction))
             {
-                _sawmill.Error($"Initial construction does not have a valid target entity! It is missing a ConstructionComponent.\nGraph: {graph.ID}, Initial Target: {edge.Target}, Ent. Prototype: {newEntityProto}\nCreated Entity {ToPrettyString(newEntity)} will be deleted.");
+                Log.Error($"Initial construction does not have a valid target entity! It is missing a ConstructionComponent.\nGraph: {graph.ID}, Initial Target: {edge.Target}, Ent. Prototype: {newEntityProto}\nCreated Entity {ToPrettyString(newEntity)} will be deleted.");
                 Del(newEntity); // Screw you, make proper construction graphs.
                 return null;
             }
@@ -321,14 +317,14 @@ namespace Content.Server.Construction
         {
             if (!_prototypeManager.TryIndex(prototype, out ConstructionPrototype? constructionPrototype))
             {
-                _sawmill.Error($"Tried to start construction of invalid recipe '{prototype}'!");
+                Log.Error($"Tried to start construction of invalid recipe '{prototype}'!");
                 return false;
             }
 
             if (!_prototypeManager.TryIndex(constructionPrototype.Graph,
                     out ConstructionGraphPrototype? constructionGraph))
             {
-                _sawmill.Error(
+                Log.Error(
                     $"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{prototype}'!");
                 return false;
             }
@@ -394,21 +390,21 @@ namespace Content.Server.Construction
         {
             if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
-                _sawmill.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
+                Log.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
                 RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
                 return;
             }
 
             if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype? constructionGraph))
             {
-                _sawmill.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
+                Log.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
                 RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
                 return;
             }
 
             if (args.SenderSession.AttachedEntity is not {Valid: true} user)
             {
-                _sawmill.Error($"Client sent {nameof(TryStartStructureConstructionMessage)} with no attached entity!");
+                Log.Error($"Client sent {nameof(TryStartStructureConstructionMessage)} with no attached entity!");
                 return;
             }
 
@@ -466,7 +462,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            var mapPos = location.ToMap(EntityManager);
+            var mapPos = location.ToMap(EntityManager, _transformSystem);
             var predicate = GetPredicate(constructionPrototype.CanBuildInImpassable, mapPos);
 
             if (!_interactionSystem.InRangeUnobstructed(user, mapPos, predicate: predicate))

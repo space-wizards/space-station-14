@@ -82,6 +82,9 @@ reagent-desc-atomic-bomb = Nuclear proliferation never tasted so good.
 reagent-name-b52 = b-52
 reagent-desc-b52 = Coffee, irish cream, and cognac. You will get bombed.
 
+reagent-name-blue-hawaiian = blue hawaiian
+reagent-desc-blue-hawaiian = Aloha! Does that mean hello or goodbye?
+
 reagent-name-bahama-mama = bahama mama
 reagent-desc-bahama-mama = Tropical cocktail.
 
@@ -105,6 +108,12 @@ reagent-desc-booger = Ewww...
 
 reagent-name-brave-bull = brave bull
 reagent-desc-brave-bull = It's just as effective as Dutch-Courage!
+
+reagent-name-coconut-rum = coconut rum
+reagent-desc-coconut-rum = Rum with coconut for that tropical feel.
+
+reagent-name-cosmopolitan = cosmopolitan
+reagent-desc-cosmopolitan = Even in the worst situations, nothing beats a fresh cosmopolitan.
 
 reagent-name-cuba-libre = cuba libre
 reagent-desc-cuba-libre = Rum, mixed with cola. Viva la revolucion.
@@ -190,8 +199,14 @@ reagent-desc-moonshine = Artisanal homemade liquor. What could go wrong?
 reagent-name-neurotoxin = neurotoxin
 reagent-desc-neurotoxin = A strong neurotoxin that puts the subject into a death-like state.
 
+reagent-name-painkiller = painkiller
+reagent-desc-painkiller = A cure for what ails you.
+
 reagent-name-patron = patron
 reagent-desc-patron = Tequila with silver in it, a favorite of alcoholic women in the club scene.
+
+reagent-name-pina-colada = piña colada
+reagent-desc-pina-colada = For getting lost in the rain.
 
 reagent-name-red-mead = red mead
 reagent-desc-red-mead = The true Viking's drink! Even though it has a strange red color.
@@ -246,3 +261,21 @@ reagent-desc-whiskey-soda = For the more refined griffon.
 
 reagent-name-white-russian = white russian
 reagent-desc-white-russian = That's just, like, your opinion, man...
+
+reagent-name-vodka-red-bool = vodka red bool
+reagent-desc-vodka-red-bool = Because heart failure and liver failure go hand in hand.
+
+reagent-name-xeno-basher = xeno basher
+reagent-desc-xeno-basher = The perfect drink before an expedition.
+
+reagent-name-irish-bool = irish bool
+reagent-desc-irish-bool = Like a bool in a Ireland shop.
+
+reagent-name-budget-insuls = budget insuls
+reagent-desc-budget-insuls = A tider's preferred drink.
+
+reagent-name-watermelon-wakeup = watermelon wakeup
+reagent-desc-watermelon-wakeup = If you want to be awake, this will do it... Also sweet.
+
+reagent-name-rubberneck = rubberneck
+reagent-desc-rubberneck = A popular drink amongst those adhering to an all synthetic diet.

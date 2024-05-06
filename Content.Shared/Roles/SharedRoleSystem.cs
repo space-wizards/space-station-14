@@ -1,10 +1,12 @@
-﻿using Content.Shared.Administration.Logs;
+using System.Linq;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles;
 
@@ -27,16 +29,18 @@ public abstract class SharedRoleSystem : EntitySystem
     private void OnJobGetAllRoles(EntityUid uid, JobComponent component, ref MindGetAllRolesEvent args)
     {
         var name = "game-ticker-unknown-role";
+        var prototype = "";
         string? playTimeTracker = null;
         if (component.Prototype != null && _prototypes.TryIndex(component.Prototype, out JobPrototype? job))
         {
             name = job.Name;
+            prototype = job.ID;
             playTimeTracker = job.PlayTimeTracker;
         }
 
         name = Loc.GetString(name);
 
-        args.Roles.Add(new RoleInfo(component, name, false, playTimeTracker));
+        args.Roles.Add(new RoleInfo(component, name, false, playTimeTracker, prototype));
     }
 
     protected void SubscribeAntagEvents<T>() where T : AntagonistRoleComponent
@@ -44,17 +48,77 @@ public abstract class SharedRoleSystem : EntitySystem
         SubscribeLocalEvent((EntityUid _, T component, ref MindGetAllRolesEvent args) =>
         {
             var name = "game-ticker-unknown-role";
+            var prototype = "";
             if (component.PrototypeId != null && _prototypes.TryIndex(component.PrototypeId, out AntagPrototype? antag))
             {
                 name = antag.Name;
+                prototype = antag.ID;
             }
             name = Loc.GetString(name);
 
-            args.Roles.Add(new RoleInfo(component, name, true, null));
+            args.Roles.Add(new RoleInfo(component, name, true, null, prototype));
         });
 
-        SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) => args.IsAntagonist = true);
+        SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) => { args.IsAntagonist = true; args.IsExclusiveAntagonist |= typeof(T).TryGetCustomAttribute<ExclusiveAntagonistAttribute>(out _); });
         _antagTypes.Add(typeof(T));
+    }
+
+    public void MindAddRoles(EntityUid mindId, ComponentRegistry components, MindComponent? mind = null, bool silent = false)
+    {
+        if (!Resolve(mindId, ref mind))
+            return;
+
+        EntityManager.AddComponents(mindId, components);
+        var antagonist = false;
+        foreach (var compReg in components.Values)
+        {
+            var compType = compReg.Component.GetType();
+
+            var comp = EntityManager.ComponentFactory.GetComponent(compType);
+            if (IsAntagonistRole(comp.GetType()))
+            {
+                antagonist = true;
+                break;
+            }
+        }
+
+        var mindEv = new MindRoleAddedEvent(silent);
+        RaiseLocalEvent(mindId, ref mindEv);
+
+        var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
+        if (mind.OwnedEntity != null)
+        {
+            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
+        }
+
+        _adminLogger.Add(LogType.Mind, LogImpact.Low,
+            $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
+    }
+
+    public void MindAddRole(EntityUid mindId, Component component, MindComponent? mind = null, bool silent = false)
+    {
+        if (!Resolve(mindId, ref mind))
+            return;
+
+        if (HasComp(mindId, component.GetType()))
+        {
+            throw new ArgumentException($"We already have this role: {component}");
+        }
+
+        EntityManager.AddComponent(mindId, component);
+        var antagonist = IsAntagonistRole(component.GetType());
+
+        var mindEv = new MindRoleAddedEvent(silent);
+        RaiseLocalEvent(mindId, ref mindEv);
+
+        var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
+        if (mind.OwnedEntity != null)
+        {
+            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
+        }
+
+        _adminLogger.Add(LogType.Mind, LogImpact.Low,
+            $"'Role {component}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
     }
 
     /// <summary>
@@ -81,7 +145,7 @@ public abstract class SharedRoleSystem : EntitySystem
         AddComp(mindId, component);
         var antagonist = IsAntagonistRole<T>();
 
-        var mindEv = new MindRoleAddedEvent();
+        var mindEv = new MindRoleAddedEvent(silent);
         RaiseLocalEvent(mindId, ref mindEv);
 
         var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
@@ -132,11 +196,13 @@ public abstract class SharedRoleSystem : EntitySystem
 
     public bool MindHasRole<T>(EntityUid mindId) where T : IComponent
     {
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
         return HasComp<T>(mindId);
     }
 
     public List<RoleInfo> MindGetAllRoles(EntityUid mindId)
     {
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
         var ev = new MindGetAllRolesEvent(new List<RoleInfo>());
         RaiseLocalEvent(mindId, ref ev);
         return ev.Roles;
@@ -147,14 +213,35 @@ public abstract class SharedRoleSystem : EntitySystem
         if (mindId == null)
             return false;
 
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
         var ev = new MindIsAntagonistEvent();
         RaiseLocalEvent(mindId.Value, ref ev);
         return ev.IsAntagonist;
     }
 
+    /// <summary>
+    /// Does this mind possess an exclusive antagonist role
+    /// </summary>
+    /// <param name="mindId">The mind entity</param>
+    /// <returns>True if the mind possesses an exclusive antag role</returns>
+    public bool MindIsExclusiveAntagonist(EntityUid? mindId)
+    {
+        if (mindId == null)
+            return false;
+
+        var ev = new MindIsAntagonistEvent();
+        RaiseLocalEvent(mindId.Value, ref ev);
+        return ev.IsExclusiveAntagonist;
+    }
+
     public bool IsAntagonistRole<T>()
     {
         return _antagTypes.Contains(typeof(T));
+    }
+
+    public bool IsAntagonistRole(Type component)
+    {
+        return _antagTypes.Contains(component);
     }
 
     /// <summary>

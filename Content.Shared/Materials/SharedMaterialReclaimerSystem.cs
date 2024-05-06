@@ -1,7 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
+using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
@@ -11,6 +12,7 @@ using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
@@ -34,13 +36,11 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MaterialReclaimerComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<MaterialReclaimerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<MaterialReclaimerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MaterialReclaimerComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<MaterialReclaimerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<CollideMaterialReclaimerComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
-        SubscribeLocalEvent<ActiveMaterialReclaimerComponent, EntityUnpausedEvent>(OnActiveUnpaused);
     }
 
     private void OnMapInit(EntityUid uid, MaterialReclaimerComponent component, MapInitEvent args)
@@ -51,11 +51,6 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     private void OnShutdown(EntityUid uid, MaterialReclaimerComponent component, ComponentShutdown args)
     {
         _audio.Stop(component.Stream);
-    }
-
-    private void OnUnpaused(EntityUid uid, MaterialReclaimerComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextSound += args.PausedTime;
     }
 
     private void OnExamined(EntityUid uid, MaterialReclaimerComponent component, ExaminedEvent args)
@@ -80,11 +75,6 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     private void OnActiveStartup(EntityUid uid, ActiveMaterialReclaimerComponent component, ComponentStartup args)
     {
         component.ReclaimingContainer = Container.EnsureContainer<Container>(uid, ActiveReclaimerContainerId);
-    }
-
-    private void OnActiveUnpaused(EntityUid uid, ActiveMaterialReclaimerComponent component, ref EntityUnpausedEvent args)
-    {
-        component.EndTime += args.PausedTime;
     }
 
     /// <summary>
@@ -121,6 +111,9 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
             component.Stream = _audio.PlayPredicted(component.Sound, uid, user)?.Entity;
             component.NextSound = Timing.CurTime + component.SoundCooldown;
         }
+
+        var reclaimedEvent = new GotReclaimedEvent(Transform(uid).Coordinates);
+        RaiseLocalEvent(item, ref reclaimedEvent);
 
         var duration = GetReclaimingDuration(uid, item, component);
         // if it's instant, don't bother with all the active comp stuff.
@@ -249,3 +242,6 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         }
     }
 }
+
+[ByRefEvent]
+public record struct GotReclaimedEvent(EntityCoordinates ReclaimerCoordinates);

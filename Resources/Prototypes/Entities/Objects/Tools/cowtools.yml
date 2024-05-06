@@ -11,9 +11,10 @@
     sprite: Objects/Tools/Cowtools/haycutters.rsi
     state: haycutters
   - type: MeleeWeapon
+    wideAnimationRotation: -90
     damage:
       types:
-        Pierce: 0
+        Piercing: 0
     attackRate: 2
   - type: Tool
     qualities:
@@ -127,11 +128,6 @@
     sprite: Objects/Tools/Cowtools/cowelder.rsi
   - type: Tool
     speed: 0.05
-  - type: Welder
-    litMeleeDamageBonus:
-      types: # When lit, negate standard melee damage and replace with heat
-        Heat: 0.5
-        Blunt: -5
 
 - type: entity
   name: milkalyzer
@@ -146,8 +142,8 @@
   - type: GasAnalyzer
   - type: UserInterface
     interfaces:
-    - key: enum.GasAnalyzerUiKey.Key
-      type: GasAnalyzerBoundUserInterface
+      enum.GasAnalyzerUiKey.Key:
+        type: GasAnalyzerBoundUserInterface
   - type: Appearance
 
 - type: entity

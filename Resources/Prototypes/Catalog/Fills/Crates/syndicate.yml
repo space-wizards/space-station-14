@@ -8,6 +8,21 @@
       totalPrice: 50
 
 - type: entity
+  id: CrateCybersunJuggernautBundle
+  suffix: Filled
+  parent: CrateSyndicate
+  name: Cybersun juggernaut bundle
+  description: Contains everything except a big gun to go postal.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitJuggernaut
+      - id: ClothingMaskGasSyndicate
+      - id: ClothingHandsGlovesCombat
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+
+- type: entity
   id: CrateSyndicateSuperSurplusBundle
   parent: CrateSyndicate
   name: Syndicate super surplus crate

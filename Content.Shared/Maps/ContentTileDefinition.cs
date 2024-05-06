@@ -67,7 +67,7 @@ namespace Content.Shared.Maps
         /// <summary>
         /// This controls what variants the `variantize` command is allowed to use.
         /// </summary>
-        [DataField("placementVariants")] public float[] PlacementVariants { get; set; } = new [] { 1f };
+        [DataField("placementVariants")] public float[] PlacementVariants { get; set; } = { 1f };
 
         [DataField("thermalConductivity")] public float ThermalConductivity = 0.04f;
 
@@ -77,7 +77,11 @@ namespace Content.Shared.Maps
         [DataField("itemDrop", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ItemDropPrototypeName { get; private set; } = "FloorTileItemSteel";
 
-        [DataField("isSpace")] public bool IsSpace { get; private set; }
+        // TODO rename data-field in yaml
+        /// <summary>
+        /// Whether or not the tile is exposed to the map's atmosphere.
+        /// </summary>
+        [DataField("isSpace")] public bool MapAtmosphere { get; private set; }
 
         /// <summary>
         ///     Friction override for mob mover in <see cref="SharedMoverController"/>

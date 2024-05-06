@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/0b906c6916ce3803473fa6caa65f5b8661118c46",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "ptwindow0",
+            "directions": 4
+        },
+        {
+            "name": "ptwindow1",
+            "directions": 4
+        },
+        {
+            "name": "ptwindow2",
+            "directions": 4
+        },
+        {
+            "name": "ptwindow3",
+            "directions": 4
+        },
+        {
+            "name": "ptwindow4",
+            "directions": 4
+        },
+        {
+            "name": "ptwindow5",
+            "directions": 4
+        },
+        {
+            "name": "ptwindow6",
+            "directions": 4
+        },
+        {
+            "name": "ptwindow7",
+            "directions": 4
+        }
+    ]
+}

@@ -23,17 +23,20 @@ public sealed class LatheSystem : SharedLatheSystem
             return;
 
         if (_appearance.TryGetData<bool>(uid, PowerDeviceVisuals.Powered, out var powered, args.Component) &&
-            args.Sprite.LayerMapTryGet(PowerDeviceVisualLayers.Powered, out _))
+            args.Sprite.LayerMapTryGet(PowerDeviceVisualLayers.Powered, out var powerLayer))
         {
-            args.Sprite.LayerSetVisible(PowerDeviceVisualLayers.Powered, powered);
+            args.Sprite.LayerSetVisible(powerLayer, powered);
         }
 
         // Lathe specific stuff
-        if (_appearance.TryGetData<bool>(uid, LatheVisuals.IsRunning, out var isRunning, args.Component))
+        if (_appearance.TryGetData<bool>(uid, LatheVisuals.IsRunning, out var isRunning, args.Component) &&
+            args.Sprite.LayerMapTryGet(LatheVisualLayers.IsRunning, out var runningLayer) &&
+            component.RunningState != null &&
+            component.IdleState != null)
         {
             var state = isRunning ? component.RunningState : component.IdleState;
-            args.Sprite.LayerSetAnimationTime(LatheVisualLayers.IsRunning, 0f);
-            args.Sprite.LayerSetState(LatheVisualLayers.IsRunning, state);
+            args.Sprite.LayerSetAnimationTime(runningLayer, 0f);
+            args.Sprite.LayerSetState(runningLayer, state);
         }
     }
 

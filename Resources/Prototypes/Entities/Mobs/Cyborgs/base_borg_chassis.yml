@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseMob
   id: BaseBorgChassis
   name: cyborg
@@ -63,18 +63,19 @@
     locPrefix: silicon
   - type: UserInterface
     interfaces:
-    - key: enum.SiliconLawsUiKey.Key
-      type: SiliconLawBoundUserInterface
-    - key: enum.BorgUiKey.Key
-      type: BorgBoundUserInterface
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+      enum.BorgUiKey.Key:
+        type: BorgBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
   - type: EmagSiliconLaw
     stunTime: 5
-    emagLaws: SyndicateStatic
+  - type: SiliconLawProvider
+    laws: Crewsimov
   - type: IonStormTarget
   - type: Strippable
   - type: InventorySlots
@@ -82,6 +83,7 @@
     templateId: borg
   - type: Hands
     showInHands: false
+    disableExplosionRecursion: true
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
@@ -100,8 +102,6 @@
   - type: BorgChassis
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
-  - type: Wires
-    layoutId: Borg
   - type: NameIdentifier
     group: Silicon
   - type: ContainerContainer
@@ -129,8 +129,14 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
-    speechSounds: Pai
+    speechSounds: Borg
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
   - type: UnblockableSpeech
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBorg
   - type: Construction
     graph: Cyborg
     containers:
@@ -139,6 +145,7 @@
   - type: Lock
     locked: true
   - type: ActivatableUIRequiresLock
+  - type: LockedWiresPanel
   - type: Flashable
   - type: Damageable
     damageContainer: Silicon
@@ -201,13 +208,14 @@
   - type: StandingState
   - type: Tag
     tags:
-    - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
+    - FootstepSound
     - CanPilot
   - type: Emoting
   - type: GuideHelp
     guides:
       - Cyborgs
+  - type: StepTriggerImmune
 
 - type: entity
   id: BaseBorgChassisNT
@@ -223,30 +231,36 @@
     - AllAccess
   - type: AccessReader
     access: [["Command"], ["Research"]]
-  - type: ShowSecurityIcons
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
 
 - type: entity
   id: BaseBorgChassisSyndicate
   parent: BaseBorgChassis
   abstract: true
   components:
-    - type: NpcFactionMember
-      factions:
-        - Syndicate
-    - type: Access
-      tags:
-       - NuclearOperative
-       - SyndicateAgent
-    - type: AccessReader
-      access: [["SyndicateAgent"], ["NuclearOperative"]]
-    - type: SiliconLawProvider
-      laws: SyndicateStatic
-    - type: IntrinsicRadioTransmitter
-      channels:
-        - Binary
-        - Syndicate
-    - type: ActiveRadio
-      channels:
-        - Syndicate
-    - type: ShowSyndicateIcons
-    - type: MovementAlwaysTouching
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: Access
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
+  - type: AccessReader
+    access: [["SyndicateAgent"], ["NuclearOperative"]]
+  - type: SiliconLawProvider
+    laws: SyndicateStatic
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Syndicate
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: ShowSyndicateIcons
+  - type: MovementAlwaysTouching
+  - type: Speech
+    speechSounds: SyndieBorg
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSiliconSyndicate
