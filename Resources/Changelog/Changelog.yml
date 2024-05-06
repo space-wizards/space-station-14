@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Bleed wounds will no longer heal so fast they do not need to be treated.
-      Please see the medical guidebook.
-    type: Tweak
-  - message: Decreased passive bleed wound clotting by 60% (now 0.33u per 3 seconds).
-    type: Tweak
-  - message: Decreased all bloodloss damage (as a result of bleeding) by 50%.
-    type: Tweak
-  - message: Health analyzers will report if your patient is bleeding.
-    type: Add
-  id: 6040
-  time: '2024-02-26T23:26:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25434
-- author: Velcroboy
-  changes:
-  - message: Tweaked wallmounted objects can not be interacted with through thindows
-      or windoors.
-    type: Tweak
-  - message: Fixed NanoMed vendor not being accessible from all directions.
-    type: Fix
-  id: 6041
-  time: '2024-02-26T23:28:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25451
 - author: Lank
   changes:
   - message: Diona can no longer split or reform to cure themselves of a zombie infection.
@@ -3866,3 +3842,18 @@
   id: 6539
   time: '2024-05-06T11:25:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27724
+- author: Blackern5000
+  changes:
+  - message: Burn damage is now half as effective at cauterizing wounds as it was
+      previously
+    type: Tweak
+  id: 6540
+  time: '2024-05-06T20:19:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27726
+- author: Blackern5000
+  changes:
+  - message: Active lights now deal significantly less burn damage when touched.
+    type: Tweak
+  id: 6541
+  time: '2024-05-06T20:20:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27728
