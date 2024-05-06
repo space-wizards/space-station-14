@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Sphiral
-  changes:
-  - message: NT has finally perfected methods for infusing Plasma/Uranium into Glass!
-      Windoors now have such varients! And Uranium Slim Windows exist!
-    type: Add
-  id: 6039
-  time: '2024-02-26T23:25:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25501
 - author: Whisper
   changes:
   - message: Bleed wounds will no longer heal so fast they do not need to be treated.
@@ -3865,3 +3857,12 @@
   id: 6538
   time: '2024-05-06T10:10:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27721
+- author: mirrorcult
+  changes:
+  - message: Tile weighting for many events and variation rules (messes, dragons,
+      revenants, kudzu, gasleak, rods, etc) has been fixed. They will now no longer
+      spawn disproportionately often on smaller grids.
+    type: Add
+  id: 6539
+  time: '2024-05-06T11:25:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27724
