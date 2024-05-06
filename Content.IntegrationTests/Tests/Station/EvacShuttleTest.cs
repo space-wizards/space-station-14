@@ -87,8 +87,9 @@ public sealed class EvacShuttleTest
         Assert.That(LifeStage(salternXform.MapUid.Value), Is.EqualTo(EntityLifeStage.MapInitialized));
 
         // Set up shuttle timing
+        var shuttleSys = server.System<ShuttleSystem>();
         var evacSys = server.System<EmergencyShuttleSystem>();
-        evacSys.TransitTime = ShuttleSystem.DefaultTravelTime; // Absolute minimum transit time, so the test has to run for at least this long
+        evacSys.TransitTime = shuttleSys.DefaultTravelTime; // Absolute minimum transit time, so the test has to run for at least this long
         // TODO SHUTTLE fix spaghetti
 
         var dockTime = server.CfgMan.GetCVar(CCVars.EmergencyShuttleDockTime);
@@ -112,7 +113,7 @@ public sealed class EvacShuttleTest
         Assert.That(shuttleXform.MapUid, Is.EqualTo(ftl.Owner));
 
         // Shuttle should have arrived at centcomm
-        await pair.RunSeconds(ShuttleSystem.DefaultTravelTime);
+        await pair.RunSeconds(shuttleSys.DefaultTravelTime);
         Assert.That(shuttleXform.MapUid, Is.EqualTo(centcommMap));
 
         // Round should be ending now
