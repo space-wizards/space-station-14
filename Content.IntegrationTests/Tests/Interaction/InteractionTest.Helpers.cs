@@ -631,7 +631,7 @@ public abstract partial class InteractionTest
         var entities = await DoEntityLookup(flags);
         var found = ToEntityCollection(entities);
         expected.Remove(found);
-        expected.ConvertToStacks(ProtoMan, Factory, Server);
+        await expected.ConvertToStacks(ProtoMan, Factory, Server);
 
         if (expected.Entities.Count == 0)
             return;
