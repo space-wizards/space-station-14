@@ -43,21 +43,6 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
 
-        if (stationEvent.BlacklistRules != null && stationEvent.BlacklistRules.Count() >0 )
-        {
-            foreach (var blockedRule in stationEvent.BlacklistRules)
-            {
-                if (EntityManager.ComponentFactory.TryGetRegistration(blockedRule, out var reg))
-                {
-                    if (EntityManager.GetAllComponents(reg.Type).Any())
-                    {
-                        AdminLogManager.Add(LogType.EventStopped, $"The {ToPrettyString(uid)} is not started because there is already a {blockedRule} in the game.");
-                        ForceEndSelf(uid, gameRule);
-                        return;
-                    }
-                }
-            }
-        }
 
         AdminLogManager.Add(LogType.EventAnnounced, $"Event added / announced: {ToPrettyString(uid)}");
 

@@ -88,10 +88,4 @@ public sealed partial class StationEventComponent : Component
     [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan? EndTime;
-
-    /// <summary>
-    /// If the specified components exist in the game, the event should not be started. By design, it should be used to prohibit the intersection of multiple events (Nuke + SoloNuke)
-    /// </summary>
-    [DataField]
-    public List<string>? BlacklistRules = new();
 }
