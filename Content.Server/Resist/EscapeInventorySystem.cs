@@ -56,7 +56,7 @@ public sealed class EscapeInventorySystem : EntitySystem
             AttemptEscape(uid, container.Owner, component);
     }
 
-    private void AttemptEscape(EntityUid user, EntityUid container, CanEscapeInventoryComponent component, float multiplier = 1f)
+    public void AttemptEscape(EntityUid user, EntityUid container, CanEscapeInventoryComponent component, float multiplier = 1f)
     {
         if (component.IsEscaping)
             return;

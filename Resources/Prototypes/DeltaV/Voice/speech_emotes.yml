@@ -1,9 +1,89 @@
+# Harpy
+- type: emote
+  id: Ring
+  name: Ring
+  category: Vocal
+  chatMessages: [rings.]
+  chatTriggers:
+    - ring.
+    - rings.
+    - rings!
+    - ringing.
+    - ringed.
+
+- type: emote
+  id: Pew
+  name: Pew
+  category: Vocal
+  chatMessages: [pews.]
+  chatTriggers:
+    - pew.
+    - pews.
+    - pew!
+
+- type: emote
+  id: Bang
+  name: Bang
+  category: Vocal
+  chatMessages: [bangs.]
+  chatTriggers:
+    - bangs.
+    - bang.
+    - bang!
+    - banging.
+    - banged.
+
+#- type: emote
+#  id: Beep
+#  category: Vocal
+#  chatMessages: [beeps.]
+#  chatTriggers:
+#    - beeps.
+#    - beep.
+#    - beep!
+#    - beeping.
+#    - beeped.
+
+- type: emote
+  id: Rev
+  name: Rev
+  category: Vocal
+  chatMessages: [revs.]
+  chatTriggers:
+    - revs.
+    - rev.
+    - rev!
+    - revving
+    - revved
+
+#- type: emote
+#  id: Click
+#  category: Vocal
+#  chatMessages: [clicks.]
+#  chatTriggers:
+#    - clicks.
+#    - click.
+#    - click!
+#    - clicking.
+#    - clicked.
+
+- type: emote
+  id: Caw
+  name: Caw
+  category: Vocal
+  chatMessages: [caws.]
+  chatTriggers:
+    - caws.
+    - caw.
+    - caw!
+    - cawing
+    - cawed
+
 #Vulpkanin
 - type: emote
   id: Bark
-  name: "Bark"
+  name: Bark
   category: Vocal
-  icon: Interface/Actions/scream.png
   chatMessages: [barks.]
   chatTriggers:
     - bark.
@@ -16,9 +96,8 @@
 
 - type: emote
   id: Snarl
-  name: "Snarl"
+  name: Snarl
   category: Vocal
-  icon: Interface/Actions/scream.png
   chatMessages: [snarls.]
   chatTriggers:
     - snarl.
@@ -31,9 +110,8 @@
 
 - type: emote
   id: Whine
-  name: "Whine"
+  name: Whine
   category: Vocal
-  icon: Interface/Actions/scream.png
   chatMessages: [whines.]
   chatTriggers:
     - whine.
@@ -46,9 +124,8 @@
 
 - type: emote
   id: Howl
-  name: "Howl"
+  name: Howl
   category: Vocal
-  icon: Interface/Actions/scream.png
   chatMessages: [howls.]
   chatTriggers:
     - howl.
@@ -59,15 +136,14 @@
     - howled.
 
 - type: emote
-  id: Growl
-  name: "Growl"
+  id: Awoo
+  name: Awoo
   category: Vocal
-  icon: Interface/Actions/scream.png
-  chatMessages: [growls.]
+  chatMessages: [awoos.]
   chatTriggers:
-    - growl.
-    - growl!
-    - growls.
-    - growls!
-    - growling.
-    - growled.
+    - awoo.
+    - awoo!
+    - awoos.
+    - awoos!
+    - awooing.
+    - awooed.

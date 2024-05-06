@@ -1,0 +1,207 @@
+- type: entity
+  save: false
+  name: Urist McHarpy
+  parent: BaseMobHuman
+  id: MobHarpyBase
+  abstract: true
+  components:
+  - type: HarpySinger
+  - type: Instrument
+    allowPercussion: false
+    program: 52
+  - type: SwappableInstrument
+    instrumentList:
+      "Voice": {52: 0}
+      "Trumpet": {56: 0}
+      "Electric": {27: 0}
+      "Bass": {33: 0}
+      "Rock": {29: 0}
+      "Acoustic": {24: 0}
+      "Flute": {73: 0}
+      "Sax": {66: 0}
+  - type: UserInterface
+    interfaces:
+      - key: enum.InstrumentUiKey.Key
+        type: InstrumentBoundUserInterface
+      - key: enum.VoiceMaskUIKey.Key
+        type: VoiceMaskBoundUserInterface
+      - key: enum.HumanoidMarkingModifierKey.Key
+        type: HumanoidMarkingModifierBoundUserInterface
+      - key: enum.StrippingUiKey.Key
+        type: StrippableBoundUserInterface
+  - type: Sprite
+    scale: 0.9, 0.9
+    layers:
+      - map: [ "enum.HumanoidVisualLayers.Chest" ]
+      - map: [ "enum.HumanoidVisualLayers.Head" ]
+      - map: [ "enum.HumanoidVisualLayers.Snout" ]
+      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+      - map: [ "enum.HumanoidVisualLayers.LArm" ]
+      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+      - map: [ "underpants" ]
+      - map: [ "undershirt" ]
+      - map: [ "socks" ]
+      - map: [ "jumpsuit" ]
+      - map: ["enum.HumanoidVisualLayers.LFoot"]
+      - map: ["enum.HumanoidVisualLayers.RFoot"]
+      - map: ["enum.HumanoidVisualLayers.LHand"]
+      - map: ["enum.HumanoidVisualLayers.RHand"]
+      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi
+        state: body-overlay-2
+        visible: false
+      - map: [ "id" ]
+      - map: [ "gloves" ]
+      - map: [ "shoes" ]
+      - map: [ "ears" ]
+      - map: [ "outerClothing" ]
+      - map: [ "eyes" ]
+      - map: [ "belt" ]
+      - map: [ "neck" ]
+      - map: [ "back" ]
+      - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+      - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+      - map: [ "enum.HumanoidVisualLayers.Tail" ]
+      - map: [ "pocket1" ]
+      - map: [ "pocket2" ]
+      - map: [ "clownedon" ] # Dynamically generated
+        sprite: "Effects/creampie.rsi"
+        state: "creampie_human"
+        visible: false
+# Yes, RArm has to be down here
+      - map: [ "enum.HumanoidVisualLayers.RArm" ]
+      - map: [ "enum.HumanoidVisualLayers.Hair" ]
+      - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+      - map: [ "mask" ]
+      - map: [ "head" ]
+      - map: [ "singingLayer" ]
+        sprite: DeltaV/Effects/harpysinger.rsi
+        state: singing_music_notes
+        visible: false
+  - type: HumanoidAppearance
+    species: Harpy
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.32
+        density: 90
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Body
+    prototype: Harpy
+  - type: Damageable
+    damageModifierSet: Harpy
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Piercing: 5
+  - type: Speech
+    speechSounds: Harpy
+    speechVerb: Harpy
+  - type: Vocal
+    sounds:
+      Male: SoundsHarpy
+      Female: SoundsHarpy
+      Unsexed: SoundsHarpy
+  - type: GenericVisualizer
+    visuals:
+      enum.HarpyVisualLayers.Singing:
+        singingLayer:
+          False:  {visible: false}
+          True:  {visible: true}
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 5.0
+  - type: Inventory 
+    speciesId: harpy
+    templateId: digitigrade
+  - type: HarpyVisuals
+  - type: UltraVision
+    
+- type: entity
+  save: false
+  name: Urist McHands
+  parent: MobHumanDummy
+  id: MobHarpyDummy
+  noSpawn: true
+  description: A dummy Harpy meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: Harpy
+  - type: Inventory 
+    speciesId: harpy
+  - type: Sprite
+    scale: 0.9, 0.9
+    layers:
+      - map: [ "enum.HumanoidVisualLayers.Chest" ]
+      - map: [ "enum.HumanoidVisualLayers.Head" ]
+      - map: [ "enum.HumanoidVisualLayers.Snout" ]
+      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+      - map: [ "enum.HumanoidVisualLayers.LArm" ]
+      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+      - map: [ "underpants" ]
+      - map: [ "undershirt" ]
+      - map: [ "socks" ]
+      - map: [ "jumpsuit" ]
+      - map: ["enum.HumanoidVisualLayers.LFoot"]
+      - map: ["enum.HumanoidVisualLayers.RFoot"]
+      - map: ["enum.HumanoidVisualLayers.LHand"]
+      - map: ["enum.HumanoidVisualLayers.RHand"]
+      - map: [ "id" ]
+      - map: [ "gloves" ]
+      - map: [ "shoes" ]
+      - map: [ "ears" ]
+      - map: [ "outerClothing" ]
+      - map: [ "eyes" ]
+      - map: [ "belt" ]
+      - map: [ "neck" ]
+      - map: [ "back" ]
+      - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+      - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+      - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+      - map: [ "enum.HumanoidVisualLayers.Tail" ]
+      - map: [ "pocket1" ]
+      - map: [ "pocket2" ]
+      - map: [ "clownedon" ] # Dynamically generated
+        sprite: "Effects/creampie.rsi"
+        state: "creampie_human"
+        visible: false
+# Yes, RArm has to be down here
+      - map: [ "enum.HumanoidVisualLayers.RArm" ]
+      - map: [ "enum.HumanoidVisualLayers.Hair" ]
+      - map: [ "mask" ]
+      - map: [ "head" ]
+
+- type: entity
+  id: ActionHarpyPlayMidi
+  name: Play MIDI
+  description: Sing your heart out! Right click yourself to set an instrument.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon: DeltaV/Interface/Actions/harpy_sing.png
+    event: !type:OpenUiActionEvent
+      key: enum.InstrumentUiKey.Key
+
+- type: entity
+  id: ActionSyrinxChangeVoiceMask
+  name: Set name
+  description: Change the name others hear to something else.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: DeltaV/Interface/Actions/harpy_syrinx.png
+    itemIconStyle: BigAction
+    event: !type:VoiceMaskSetNameEvent
