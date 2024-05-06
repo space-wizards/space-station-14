@@ -1139,4 +1139,67 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         return (uid, solution, relation);
     }
+
+    public void AdjustDissolvedReagent(
+        Entity<SolutionComponent> dissolvedSolution,
+        FixedPoint2 volume,
+        ReagentId reagent,
+        float concentrationChange)
+    {
+        if (concentrationChange == 0)
+            return;
+        var dissolvedSol = dissolvedSolution.Comp.Solution;
+        var amtChange =
+            GetReagentQuantityFromConcentration(dissolvedSolution, volume, MathF.Abs(concentrationChange));
+        if (concentrationChange > 0)
+        {
+            dissolvedSol.AddReagent(reagent, amtChange);
+        }
+        else
+        {
+            dissolvedSol.RemoveReagent(reagent,amtChange);
+        }
+        UpdateChemicals(dissolvedSolution);
+    }
+
+    public FixedPoint2 GetReagentQuantityFromConcentration(Entity<SolutionComponent> dissolvedSolution,
+        FixedPoint2 volume,float concentration)
+    {
+        var dissolvedSol = dissolvedSolution.Comp.Solution;
+        if (volume == 0
+            || dissolvedSol.Volume == 0)
+            return 0;
+        return concentration * volume;
+    }
+
+    public float GetReagentConcentration(Entity<SolutionComponent> dissolvedSolution,
+        FixedPoint2 volume, ReagentId dissolvedReagent)
+    {
+        var dissolvedSol = dissolvedSolution.Comp.Solution;
+        if (volume == 0
+            || dissolvedSol.Volume == 0
+            || !dissolvedSol.TryGetReagentQuantity(dissolvedReagent, out var dissolvedVol))
+            return 0;
+        return (float)dissolvedVol / volume.Float();
+    }
+
+    public FixedPoint2 ClampReagentAmountByConcentration(
+        Entity<SolutionComponent> dissolvedSolution,
+        FixedPoint2 volume,
+        ReagentId dissolvedReagent,
+        FixedPoint2 dissolvedReagentAmount,
+        float maxConcentration = 1f)
+    {
+        var dissolvedSol = dissolvedSolution.Comp.Solution;
+        if (volume == 0
+            || dissolvedSol.Volume == 0
+            || !dissolvedSol.TryGetReagentQuantity(dissolvedReagent, out var dissolvedVol))
+            return 0;
+        volume *= maxConcentration;
+        dissolvedVol += dissolvedReagentAmount;
+        var overflow = volume - dissolvedVol;
+        if (overflow < 0)
+            dissolvedReagentAmount += overflow;
+        return dissolvedReagentAmount;
+    }
 }
