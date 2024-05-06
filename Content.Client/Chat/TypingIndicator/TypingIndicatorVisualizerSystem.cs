@@ -15,7 +15,7 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
         if (args.Sprite == null)
             return;
 
-        string currentIndicator = component.DefaultTypingIndicator;
+        string currentIndicator = "default"; //= component.DefaultTypingIndicator;
         if (component.TypingIndicatorOverrideList.Count > 0)
             currentIndicator = component.TypingIndicatorOverrideList.First();
 

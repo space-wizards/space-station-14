@@ -13,14 +13,8 @@ namespace Content.Shared.Chat.TypingIndicator;
 public sealed partial class TypingIndicatorComponent : Component
 {
     /// <summary>
-    ///     Prototype id that store all visual info about typing indicator.
-    /// </summary>
-    [DataField]
-    public ProtoId<TypingIndicatorPrototype> DefaultTypingIndicator = "default";
-
-    /// <summary>
-    ///     A list of all indicators that override the default one. E.g if you put on
-    ///     a moth mask the list would have both the lawyer and the moth indicator.
+    ///     Contains all typing indicators that something has. Whatever is at the front of the list is what will be
+    ///     used when they are typing.
     /// </summary>
     [DataField]
     public List<ProtoId<TypingIndicatorPrototype>> TypingIndicatorOverrideList = new List<ProtoId<TypingIndicatorPrototype>>();

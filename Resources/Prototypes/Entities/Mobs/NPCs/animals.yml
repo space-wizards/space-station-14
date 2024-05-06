@@ -520,7 +520,7 @@
   - type: Body
     prototype: Mothroach
   - type: TypingIndicator
-    defaultTypingIndicator: moth
+    typingIndicatorOverrideList: [moth]
   - type: Destructible
     thresholds:
     - trigger:
@@ -1350,7 +1350,7 @@
       Female: FemaleReptilian
       Unsexed: MaleReptilian
   - type: TypingIndicator
-    defaultTypingIndicator: lizard
+    typingIndicatorOverrideList: [lizard]
   - type: InteractionPopup
     successChance: 0.9
     interactSuccessString: petting-success-monkey
@@ -2245,7 +2245,7 @@
       Female: UnisexArachnid
       Unsexed: UnisexArachnid
   - type: TypingIndicator
-    defaultTypingIndicator: spider
+    typingIndicatorOverrideList: [spider]
   - type: Tag
     tags:
     - DoorBumpOpener

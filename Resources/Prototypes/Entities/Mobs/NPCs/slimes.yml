@@ -109,7 +109,7 @@
     speechVerb: Slime
     speechSounds: Slime
   - type: TypingIndicator
-    defaultTypingIndicator: slime
+    typingIndicatorOverrideList: [slime]
 
 - type: entity
   name: basic slime
@@ -130,7 +130,7 @@
     speechSounds: Slime
     allowedEmotes: ['Squish']
   - type: TypingIndicator
-    defaultTypingIndicator: slime
+    typingIndicatorOverrideList: [slime]
   - type: NpcFactionMember
     factions:
     - SimpleNeutral

@@ -44,7 +44,7 @@
     speechSounds: Slime
     allowedEmotes: ['Squish']
   - type: TypingIndicator
-    defaultTypingIndicator: slime
+    typingIndicatorOverrideList: [slime]
   - type: Vocal
     sounds:
       Male: MaleSlime

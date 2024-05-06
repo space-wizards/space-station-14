@@ -29,7 +29,7 @@
     speechSounds: Lizard
     speechVerb: Reptilian
   - type: TypingIndicator
-    defaultTypingIndicator: lizard
+    typingIndicatorOverrideList: [lizard]
   - type: Vocal
     sounds:
       Male: MaleReptilian

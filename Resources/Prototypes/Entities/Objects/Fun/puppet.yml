@@ -17,7 +17,7 @@
     size: Normal
   - type: Muted
   - type: TypingIndicator
-    defaultTypingIndicator: robot
+    typingIndicatorOverrideList: [robot]
   - type: Actions
   - type: MobState
     allowedStates:

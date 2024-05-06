@@ -31,7 +31,7 @@
   - type: DoAfter
   - type: Actions
   - type: TypingIndicator
-    defaultTypingIndicator: robot
+    typingIndicatorOverrideList: [robot]
   - type: Speech
     speechSounds: Pai
   - type: ItemSlots
@@ -103,7 +103,7 @@
     - type: DoAfter
     - type: Actions
     - type: TypingIndicator
-      defaultTypingIndicator: robot
+      typingIndicatorOverrideList: [robot]
     - type: Speech
       speechSounds: Pai
     - type: MobState

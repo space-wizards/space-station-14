@@ -32,7 +32,7 @@
     boardName: wires-board-name-arcade
   - type: WiresVisuals
   - type: TypingIndicator
-    defaultTypingIndicator: robot
+    typingIndicatorOverrideList: [robot]
   - type: Speech
     speechVerb: Robotic
     speechSounds: Vending

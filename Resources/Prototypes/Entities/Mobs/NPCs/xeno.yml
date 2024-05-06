@@ -106,7 +106,7 @@
     rules: ghost-role-information-xeno-rules
   - type: GhostTakeoverAvailable
   - type: TypingIndicator
-    defaultTypingIndicator: alien
+    typingIndicatorOverrideList: [alien]
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: -150

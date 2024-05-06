@@ -65,7 +65,7 @@
           Piercing: 5
           Slash: 10
     - type: TypingIndicator
-      defaultTypingIndicator: alien
+      typingIndicatorOverrideList: [alien]
     - type: Tag
       tags:
         - Carp
@@ -107,7 +107,7 @@
     - type: Sprite
       sprite: Mobs/Aliens/Carps/magic.rsi
     - type: TypingIndicator
-      defaultTypingIndicator: guardian
+      typingIndicatorOverrideList: [guardian]
 
 - type: entity
   name: holocarp
@@ -130,7 +130,7 @@
           layer:
             - Opaque
     - type: TypingIndicator
-      defaultTypingIndicator: robot
+      typingIndicatorOverrideList: [robot]
 
 - type: entity
   parent: MobCarp

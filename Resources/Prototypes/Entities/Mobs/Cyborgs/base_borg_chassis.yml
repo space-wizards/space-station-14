@@ -126,7 +126,7 @@
     - KnockedDown
     - SlowedDown
   - type: TypingIndicator
-    defaultTypingIndicator: robot
+    typingIndicatorOverrideList: [robot]
   - type: Speech
     speechVerb: Robotic
     speechSounds: Borg

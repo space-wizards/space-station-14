@@ -53,7 +53,7 @@
   - type: DoAfter
   - type: Actions
   - type: TypingIndicator
-    defaultTypingIndicator: robot
+    typingIndicatorOverrideList: [robot]
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai

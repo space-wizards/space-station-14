@@ -78,7 +78,7 @@
     - type: Speech
       speechVerb: Robotic
     - type: TypingIndicator
-      defaultTypingIndicator: guardian
+      typingIndicatorOverrideList: [guardian]
     - type: Pullable
     - type: MeleeWeapon
       hidden: false
@@ -124,7 +124,7 @@
     - type: NameIdentifier
       group: Holoparasite
     - type: TypingIndicator
-      defaultTypingIndicator: holo
+      typingIndicatorOverrideList: [holo]
     - type: Sprite
       layers:
         - state: tech_base
@@ -185,7 +185,7 @@
     - type: Speech
       speechVerb: Cluwne
     - type: TypingIndicator
-      defaultTypingIndicator: holo
+      typingIndicatorOverrideList: [holo]
     - type: RandomSprite
       available:
         - enum.DamageStateVisualLayers.Base:

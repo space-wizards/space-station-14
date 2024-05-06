@@ -69,7 +69,7 @@
       Female: UnisexArachnid
       Unsexed: UnisexArachnid
   - type: TypingIndicator
-    defaultTypingIndicator: spider
+    typingIndicatorOverrideList: [spider]
   - type: Sprite # I'd prefer if these maps were better. Insert map pun here.
     layers:
       - map: [ "enum.HumanoidVisualLayers.Chest" ]

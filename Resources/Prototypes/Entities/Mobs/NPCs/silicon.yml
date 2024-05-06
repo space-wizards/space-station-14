@@ -104,7 +104,7 @@
   - type: Speech
     speechVerb: Robotic
   - type: TypingIndicator
-    defaultTypingIndicator: robot
+    typingIndicatorOverrideList: [robot]
   - type: ZombieImmune
   - type: StepTriggerImmune
 
