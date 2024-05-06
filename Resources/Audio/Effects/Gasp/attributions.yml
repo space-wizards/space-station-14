@@ -13,7 +13,7 @@
   - male_deathgasp_5.ogg
   license: "CC-BY-SA-3.0"
   copyright: "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/commit/4397f13c72998aa7e6ce192215c9f77b9d62eee2"
-  source: "https://github.com/ParadiseSS13/Paradise"
+  source: "https://github.com/ParadiseSS13/Paradise/tree/4397f13c72998aa7e6ce192215c9f77b9d62eee2/sound/goonstation/voice"
 
 - files:
   - gasp_female1.ogg
@@ -23,4 +23,4 @@
   - gasp_male2.ogg
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation at https://github.com/tgstation/tgstation/commit/f7a49c4068f1277e6857baf0892d355f1c055974"
-  source: "https://github.com/tgstation/tgstation"
+  source: "https://github.com/tgstation/tgstation/tree/f7a49c4068f1277e6857baf0892d355f1c055974/sound/voice/human"

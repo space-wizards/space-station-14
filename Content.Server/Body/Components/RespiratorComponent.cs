@@ -60,8 +60,8 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     The emote when gasps
         /// </summary>
-        [DataField("gaspEmote", customTypeSerializer:typeof(PrototypeIdSerializer<EmotePrototype>))]
-        public string GaspEmote = "Gasp";
+        [DataField]
+        public ProtoId<EmotePrototype> GaspEmote = "Gasp";
 
         /// <summary>
         ///     How many cycles in a row has the mob been under-saturated?
