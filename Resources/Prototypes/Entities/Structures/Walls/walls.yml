@@ -49,7 +49,6 @@
     price: 75
   - type: RadiationBlocker
     resistance: 2
-  - type: MesonsViewable
   - type: BlockWeather
 
 - type: entity

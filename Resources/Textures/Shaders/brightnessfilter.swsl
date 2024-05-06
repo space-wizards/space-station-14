@@ -1,0 +1,9 @@
+uniform highp float THRESHHOLD;
+uniform sampler2D SCREEN_TEXTURE;
+
+void fragment() {
+    highp vec4 THISCOLOR = texture(SCREEN_TEXTURE, UV);
+    COLOR = vec4(1, 1, 1, 1);
+    if (dot(THISCOLOR.rgb, THISCOLOR.rgb) <= THRESHHOLD)
+        COLOR = vec4(0, 0, 0, 1);
+}

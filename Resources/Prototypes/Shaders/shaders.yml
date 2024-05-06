@@ -106,6 +106,6 @@
   path: "/Textures/Shaders/scanline.swsl"
 
 - type: shader
-  id: BitMaskOutline
+  id: BrightnessFilter
   kind: source
-  path: "/Textures/Shaders/bitmaskoutline.swsl"
+  path: "/Textures/Shaders/brightnessfilter.swsl"

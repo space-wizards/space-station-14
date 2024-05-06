@@ -1,6 +1,0 @@
-uniform highp vec4 OVERLAY_COLOR;
-uniform sampler2D MASK_TEXTURE;
-
-void fragment() {
-    COLOR = texture(MASK_TEXTURE, FRAGCOORD.xy) * OVERLAY_COLOR;
-}
