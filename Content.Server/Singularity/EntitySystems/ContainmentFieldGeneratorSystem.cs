@@ -123,7 +123,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         }
         else
             _popupSystem.PopupEntity(Loc.GetString("comp-containment-alarm-upgrade-fail"), args.User, args.User);
-
+        args.Handled = true;
     }
 
     private void OnAnchorChanged(Entity<ContainmentFieldGeneratorComponent> generator, ref AnchorStateChangedEvent args)
