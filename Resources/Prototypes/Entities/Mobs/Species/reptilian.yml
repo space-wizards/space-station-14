@@ -11,6 +11,7 @@
   - type: Puller
     needsHands: false
   - type: Thirst
+  - type: Carriable
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: full

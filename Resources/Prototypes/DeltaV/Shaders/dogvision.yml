@@ -1,4 +1,0 @@
-- type: shader
-  id: DogVision
-  kind: source
-  path: "/Textures/DeltaV/Shaders/dogvision.swsl"

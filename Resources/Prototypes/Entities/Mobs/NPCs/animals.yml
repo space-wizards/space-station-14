@@ -1946,7 +1946,6 @@
     price: 1000 # Living critters are valuable in space.
   - type: Perishable
 
-
 - type: entity
   name: slug
   parent: SimpleMobBase

@@ -76,7 +76,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         while (query.MoveNext(out var uid, out var comp))
         {
             if (!TryComp<GameRuleComponent>(uid, out var ruleData))
-                return;
+                continue;
 
             AppendRoundEndText(uid, comp, ruleData, ref ev);
         }

@@ -1,0 +1,28 @@
+﻿{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Felinid sprites made by Adrian16199 (Github)",
+    "states": [
+        {
+            "name": "felinid0",
+            "delays": [
+                [
+                    0.2,
+                    0.3,
+                    0.3,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "felinid1"
+        },
+        {
+            "name": "felinid2"
+        }
+    ]
+}

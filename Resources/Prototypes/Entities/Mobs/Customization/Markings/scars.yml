@@ -2,7 +2,7 @@
   id: ScarEyeRight
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [Human, Dwarf]
+  speciesRestriction: [Human, Dwarf, Felinid, Harpy] # Delta V - Felinid, Harpy
   followSkinColor: true
   sprites:
   - sprite: Mobs/Customization/scars.rsi
@@ -12,7 +12,7 @@
   id: ScarEyeLeft
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [Human, Dwarf]
+  speciesRestriction: [Human, Dwarf, Felinid, Harpy] # Delta V - Felinid, Harpy
   followSkinColor: true
   sprites:
   - sprite: Mobs/Customization/scars.rsi

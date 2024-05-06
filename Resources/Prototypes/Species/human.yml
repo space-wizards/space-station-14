@@ -33,7 +33,7 @@
     RFoot: MobHumanRFoot
     Tail: MobHumanoidAnyMarking
     HeadTop: MobHumanoidAnyMarking
-    
+
 - type: markingPoints
   id: MobHumanMarkingLimits
   points:
@@ -44,12 +44,6 @@
       points: 1
       required: false
     Snout:
-      points: 1
-      required: false
-    Tail:
-      points: 1
-      required: false
-    HeadTop:
       points: 1
       required: false
     Chest:

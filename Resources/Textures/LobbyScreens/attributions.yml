@@ -30,5 +30,15 @@
 
 - files: ["THRONGLER.webp"]
   license: "CC-BY-NC-SA-3.0"
-  copyright: " "
-  source: "https://x329436.invisionservice.com/"
+  copyright: "InCrah on twitter / @in_crah"
+  source: "https://twitter.com/in_crah"
+
+- files: ["terminalstation.webp"]
+  license: "CC-BY-SA-3.0"
+  copyright: "aserovich on discord"
+  source: "https://github.com/space-wizards/space-station-14"
+
+- files: ["justaweekaway.webp"]
+  license: "CC-BY-SA-3.0"
+  copyright: "plantyfern on discord"
+  source: "https://github.com/space-wizards/space-station-14"

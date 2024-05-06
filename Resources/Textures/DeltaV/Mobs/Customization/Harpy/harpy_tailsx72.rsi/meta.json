@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Finch by @stillxicarus",
+    "size": {
+        "x": 36,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "finch_tail",
+            "directions": 4
+        }
+    ]
+}

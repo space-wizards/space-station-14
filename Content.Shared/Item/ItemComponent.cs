@@ -3,6 +3,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Content.Shared.Nyanotrasen.Item.PseudoItem;
 
 namespace Content.Shared.Item;
 
@@ -12,11 +13,11 @@ namespace Content.Shared.Item;
 /// </summary>
 [RegisterComponent]
 [NetworkedComponent]
-[Access(typeof(SharedItemSystem)), AutoGenerateComponentState(true)]
+[Access(typeof(SharedItemSystem), typeof(SharedPseudoItemSystem)), AutoGenerateComponentState(true)]
 public sealed partial class ItemComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    [Access(typeof(SharedItemSystem))]
+    [Access(typeof(SharedItemSystem), typeof(SharedPseudoItemSystem))]
     public ProtoId<ItemSizePrototype> Size = "Small";
 
     [Access(typeof(SharedItemSystem))]

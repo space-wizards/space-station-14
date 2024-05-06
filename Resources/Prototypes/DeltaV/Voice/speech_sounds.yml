@@ -6,3 +6,12 @@
     path: /Audio/DeltaV/Voice/Talk/vulp_ask.ogg
   exclaimSound:
     path: /Audio/DeltaV/Voice/Talk/vulp_exclaim.ogg
+
+- type: speechSounds
+  id: Harpy
+  saySound:
+    path: /Audio/DeltaV/Voice/Harpy/chirp1.ogg
+  askSound:
+    path: /Audio/DeltaV/Voice/Harpy/chirp1.ogg
+  exclaimSound:
+    path: /Audio/DeltaV/Voice/Harpy/chirp1.ogg

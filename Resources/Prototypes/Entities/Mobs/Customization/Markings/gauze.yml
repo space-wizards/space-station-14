@@ -2,7 +2,7 @@
   id: GauzeLefteyePatch
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Arachnid]
+  speciesRestriction: [Dwarf, Human, Arachnid, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -16,7 +16,7 @@
   id: GauzeLefteyePad
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -30,7 +30,7 @@
   id: GauzeRighteyePatch
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Arachnid]
+  speciesRestriction: [Dwarf, Human, Arachnid, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -44,7 +44,7 @@
   id: GauzeRighteyePad
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -58,7 +58,7 @@
   id: GauzeBlindfold
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Arachnid]
+  speciesRestriction: [Dwarf, Human, Arachnid, Felinid, Harpy, Vulpkanin] # Delta V - Felinid, Harpy, Vulpkanin
   coloring:
     default:
       type:
@@ -72,7 +72,7 @@
   id: GauzeShoulder
   bodyPart: Chest
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -81,12 +81,12 @@
   sprites:
   - sprite: Mobs/Customization/gauze.rsi
     state: gauze_shoulder
-    
+
 - type: marking
   id: GauzeStomach
   bodyPart: Chest
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -100,7 +100,7 @@
   id: GauzeUpperArmRight
   bodyPart: RArm
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -114,7 +114,7 @@
   id: GauzeLowerArmRight
   bodyPart: RArm, RHand
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -128,7 +128,7 @@
   id: GauzeLeftArm
   bodyPart: LArm, LHand
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -142,7 +142,7 @@
   id: GauzeLowerLegLeft
   bodyPart: LFoot
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Arachnid]
+  speciesRestriction: [Dwarf, Human, Arachnid, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -156,7 +156,7 @@
   id: GauzeUpperLegLeft
   bodyPart: LLeg
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -170,7 +170,7 @@
   id: GauzeUpperLegRight
   bodyPart: RLeg
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -179,12 +179,12 @@
   sprites:
   - sprite: Mobs/Customization/gauze.rsi
     state: gauze_upperleg_r
-    
+
 - type: marking
   id: GauzeLowerLegRight
   bodyPart: RFoot
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Arachnid]
+  speciesRestriction: [Dwarf, Human, Arachnid, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -193,12 +193,12 @@
   sprites:
   - sprite: Mobs/Customization/gauze.rsi
     state: gauze_lowerleg_r
-    
+
 - type: marking
   id: GauzeBoxerWrapRight
   bodyPart: RHand
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
@@ -207,12 +207,12 @@
   sprites:
   - sprite: Mobs/Customization/gauze.rsi
     state: gauze_boxerwrap_r
-    
+
 - type: marking
   id: GauzeBoxerWrapLeft
   bodyPart: LHand
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Felinid, Vulpkanin] # Delta V - Felinid, Vulpkanin
   coloring:
     default:
       type:
