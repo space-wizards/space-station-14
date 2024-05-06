@@ -16,6 +16,13 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task<Dungeon> GeneratePrefabDungeon(Vector2i position, DungeonData data, PrefabDunGen prefab, HashSet<Vector2i> reservedTiles, int seed)
     {
+        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
+            !data.Whitelists.TryGetValue(DungeonDataKey.Rooms, out var roomWhitelist))
+        {
+            _sawmill.Error($"Unable to find dungeon data keys for {nameof(PrefabDunGen)}");
+            return Dungeon.Empty;
+        }
+
         var random = new Random(seed);
         var preset = prefab.Presets[random.Next(prefab.Presets.Count)];
         var gen = _prototype.Index(preset);
@@ -39,8 +46,6 @@ public sealed partial class DungeonJob
         }
 
         var roomProtos = new Dictionary<Vector2i, List<DungeonRoomPrototype>>(_prototype.Count<DungeonRoomPrototype>());
-        EntityWhitelist? roomWhitelist = null;
-        data?.Whitelists.TryGetValue("Rooms", out roomWhitelist);
 
         foreach (var proto in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
         {
@@ -194,7 +199,7 @@ public sealed partial class DungeonJob
                                 if (reservedTiles.Contains(index))
                                     continue;
 
-                                tiles.Add((index, new Tile(_tileDefManager["FloorPlanetGrass"].TileId)));
+                                tiles.Add((index, new Tile(_tileDefManager[tileProto].TileId)));
                             }
                         }
 

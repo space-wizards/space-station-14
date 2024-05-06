@@ -14,6 +14,12 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(AutoCablingPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
+        if (!data.Entities.TryGetValue(DungeonDataKey.Cabling, out var ent))
+        {
+            LogDataError(typeof(AutoCablingPostGen));
+            return;
+        }
+
         // There's a lot of ways you could do this.
         // For now we'll just connect every LV cable in the dungeon.
         var cableTiles = new HashSet<Vector2i>();
@@ -150,7 +156,7 @@ public sealed partial class DungeonJob
             if (found)
                 continue;
 
-            _entManager.SpawnEntity(gen.Entity, _maps.GridTileToLocal(_gridUid, _grid, tile));
+            _entManager.SpawnEntity(ent, _maps.GridTileToLocal(_gridUid, _grid, tile));
         }
     }
 }

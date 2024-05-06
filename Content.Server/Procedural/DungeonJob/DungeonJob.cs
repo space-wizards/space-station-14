@@ -244,6 +244,11 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
         }
     }
 
+    private void LogDataError(Type type)
+    {
+        _sawmill.Error($"Unable to find dungeon data for {type}");
+    }
+
     [Pure]
     private bool ValidateResume()
     {
