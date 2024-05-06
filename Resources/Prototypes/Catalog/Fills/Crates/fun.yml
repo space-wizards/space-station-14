@@ -40,10 +40,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingUnderSocksBee
-        amount: 2
-      - id: ClothingUnderSocksCoder
-        amount: 2
       - id: ClothingUnderSocksStripedCaptainBlueandGold
         amount: 2
       - id: ClothingUnderSocksStripedCaptainBlueandWhite
