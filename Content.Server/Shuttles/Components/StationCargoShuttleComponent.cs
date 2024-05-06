@@ -15,5 +15,5 @@ public sealed partial class StationCargoShuttleComponent : Component
     // YAML is filled out so mappers don't have to read here.
 
     [DataField(required: true)]
-    public ResPath Path = new("/Maps/Shuttles/cargo.yml");
+    public ResPath? Path = new("/Maps/Shuttles/cargo.yml");
 }

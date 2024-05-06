@@ -67,7 +67,7 @@ public sealed partial class ShuttleSystem
 
         var mapId = _mapManager.CreateMap();
 
-        if (_loader.TryLoad(mapId, component.Path.ToString(), out var ent) && ent.Count > 0)
+        if (_loader.TryLoad(mapId, component.Path?.ToString(), out var ent) && ent.Count > 0)
         {
             if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
             {
@@ -82,6 +82,9 @@ public sealed partial class ShuttleSystem
 
     private void GridSpawns(EntityUid uid, GridSpawnComponent component)
     {
+        if (component.Groups != null)
+            return;
+
         if (!_cfg.GetCVar(CCVars.GridFill))
             return;
 

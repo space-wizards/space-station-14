@@ -14,7 +14,7 @@ public sealed partial class GridSpawnComponent : Component
     /// Dictionary of groups where each group will have entries selected.
     /// String is just an identifier to make yaml easier.
     /// </summary>
-    [DataField(required: true)] public Dictionary<string, GridSpawnGroup> Groups = new();
+    [DataField(required: true)] public Dictionary<string, GridSpawnGroup>? Groups = new();
 }
 
 [DataRecord]
