@@ -37,7 +37,7 @@ public sealed partial class DungeonJob
 
         var roomProtos = new Dictionary<Vector2i, List<DungeonRoomPrototype>>(_prototype.Count<DungeonRoomPrototype>());
         EntityWhitelist? roomWhitelist = null;
-        data?.Whitelist.TryGetValue("Rooms", out roomWhitelist);
+        data?.Whitelists.TryGetValue("Rooms", out roomWhitelist);
 
         foreach (var proto in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
         {

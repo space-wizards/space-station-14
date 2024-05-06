@@ -18,5 +18,5 @@ public sealed class DungeonData
     public Dictionary<string, EntProtoId> Entities = new();
     public Dictionary<string, ProtoId<EntitySpawnEntryPrototype>> SpawnGroups = new();
     public Dictionary<string, ProtoId<ContentTileDefinition>> Tiles = new();
-    public Dictionary<string, EntityWhitelist> Whitelist = new();
+    public Dictionary<string, EntityWhitelist> Whitelists = new();
 }
