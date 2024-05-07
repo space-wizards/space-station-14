@@ -28,6 +28,9 @@ namespace Content.Shared.Preferences
         public const int MaxNameLength = 32;
         public const int MaxDescLength = 512;
 
+        /// <summary>
+        /// Job preferences for initial spawn.
+        /// </summary>
         [DataField]
         private Dictionary<string, JobPriority> _jobPriorities = new()
         {
@@ -36,12 +39,21 @@ namespace Content.Shared.Preferences
             }
         };
 
+        /// <summary>
+        /// Antags we have opted in to.
+        /// </summary>
         [DataField]
         private HashSet<string> _antagPreferences = new();
 
+        /// <summary>
+        /// Enabled traits.
+        /// </summary>
         [DataField]
         private HashSet<string> _traitPreferences = new();
 
+        /// <summary>
+        /// <see cref="_loadouts"/>
+        /// </summary>
         public IReadOnlyDictionary<string, RoleLoadout> Loadouts => _loadouts;
 
         [DataField]
@@ -50,9 +62,15 @@ namespace Content.Shared.Preferences
         [DataField]
         public string Name { get; set; } = "John Doe";
 
+        /// <summary>
+        /// Detailed text that can appear for the character if <see cref="CCVars.FlavorText"/> is enabled.
+        /// </summary>
         [DataField]
         public string FlavorText { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Associated <see cref="SpeciesPrototype"/> for this profile.
+        /// </summary>
         [DataField]
         public string Species { get; set; } = SharedHumanoidAppearanceSystem.DefaultSpecies;
 
@@ -65,17 +83,41 @@ namespace Content.Shared.Preferences
         [DataField]
         public Gender Gender { get; private set; } = Gender.Male;
 
+        /// <summary>
+        /// <see cref="Appearance"/>
+        /// </summary>
         public ICharacterAppearance CharacterAppearance => Appearance;
 
+        /// <summary>
+        /// Stores markings, eye colors, etc for the profile.
+        /// </summary>
         [DataField]
         public HumanoidCharacterAppearance Appearance { get; set; } = new();
 
+        /// <summary>
+        /// When spawning into a round what's the preferred spot to spawn.
+        /// </summary>
         [DataField]
         public SpawnPriorityPreference SpawnPriority { get; private set; } = SpawnPriorityPreference.None;
+
+        /// <summary>
+        /// <see cref="_jobPriorities"/>
+        /// </summary>
         public IReadOnlyDictionary<string, JobPriority> JobPriorities => _jobPriorities;
+
+        /// <summary>
+        /// <see cref="_antagPreferences"/>
+        /// </summary>
         public IReadOnlySet<string> AntagPreferences => _antagPreferences;
+
+        /// <summary>
+        /// <see cref="_traitPreferences"/>
+        /// </summary>
         public IReadOnlySet<string> TraitPreferences => _traitPreferences;
 
+        /// <summary>
+        /// If we're unable to get one of our preferred jobs do we spawn as a fallback job or do we stay in lobby.
+        /// </summary>
         [DataField]
         public PreferenceUnavailableMode PreferenceUnavailable { get; private set; } =
             PreferenceUnavailableMode.SpawnAsOverflow;
