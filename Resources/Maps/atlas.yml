@@ -2977,7 +2977,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -59.5,3.5
       parent: 30
-    - type: DeviceList
   - uid: 6648
     components:
     - type: Transform
@@ -3411,7 +3410,7 @@ entities:
       pos: -28.5,14.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -29682.248
+      secondsUntilStateChange: -29845.844
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -3913,7 +3912,7 @@ entities:
       pos: -13.5,-8.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -8909.306
+      secondsUntilStateChange: -9072.9
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4350,7 +4349,7 @@ entities:
       pos: -13.5,2.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -6706.6104
+      secondsUntilStateChange: -6870.205
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4982,11 +4981,6 @@ entities:
     - type: Transform
       pos: 9.5,5.5
       parent: 30
-  - uid: 1642
-    components:
-    - type: Transform
-      pos: 9.5,19.5
-      parent: 30
   - uid: 1926
     components:
     - type: Transform
@@ -5061,6 +5055,11 @@ entities:
     components:
     - type: Transform
       pos: -42.5,-17.5
+      parent: 30
+  - uid: 8502
+    components:
+    - type: Transform
+      pos: 10.5,16.5
       parent: 30
 - proto: BedsheetBlack
   entities:
@@ -5219,10 +5218,10 @@ entities:
       parent: 30
 - proto: BedsheetRed
   entities:
-  - uid: 8663
+  - uid: 8503
     components:
     - type: Transform
-      pos: 9.5,19.5
+      pos: 10.5,16.5
       parent: 30
 - proto: BedsheetSpawner
   entities:
@@ -5390,14 +5389,6 @@ entities:
     - type: DeviceLinkSink
       links:
       - 8208
-  - uid: 8465
-    components:
-    - type: Transform
-      pos: 9.5,20.5
-      parent: 30
-    - type: DeviceLinkSink
-      links:
-      - 8662
   - uid: 8660
     components:
     - type: Transform
@@ -5406,7 +5397,7 @@ entities:
     - type: DeviceLinkSink
       links:
       - 8661
-      - 8662
+      - 6089
 - proto: BookshelfFilled
   entities:
   - uid: 246
@@ -16819,8 +16810,7 @@ entities:
   - uid: 160
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 9.5,18.5
+      pos: 10.5,18.5
       parent: 30
   - uid: 509
     components:
@@ -16915,6 +16905,11 @@ entities:
     - type: Transform
       pos: -0.5,26.5
       parent: 30
+  - uid: 1642
+    components:
+    - type: Transform
+      pos: 10.5,17.5
+      parent: 30
   - uid: 2092
     components:
     - type: Transform
@@ -16924,6 +16919,11 @@ entities:
     components:
     - type: Transform
       pos: 0.5,20.5
+      parent: 30
+  - uid: 3579
+    components:
+    - type: Transform
+      pos: 10.5,16.5
       parent: 30
   - uid: 3677
     components:
@@ -16986,20 +16986,15 @@ entities:
     - type: Transform
       pos: 2.5,21.5
       parent: 30
-  - uid: 8651
+  - uid: 8465
     components:
     - type: Transform
-      pos: 9.5,19.5
+      pos: 10.5,15.5
       parent: 30
   - uid: 8664
     components:
     - type: Transform
       pos: 10.5,19.5
-      parent: 30
-  - uid: 8668
-    components:
-    - type: Transform
-      pos: 10.5,18.5
       parent: 30
 - proto: CarpetBlack
   entities:
@@ -37412,11 +37407,6 @@ entities:
     - type: Transform
       pos: 20.5,-22.5
       parent: 30
-  - uid: 5394
-    components:
-    - type: Transform
-      pos: 9.5,20.5
-      parent: 30
   - uid: 5490
     components:
     - type: Transform
@@ -38473,10 +38463,10 @@ entities:
       parent: 30
 - proto: GunSafeLaserCarbine
   entities:
-  - uid: 3579
+  - uid: 6088
     components:
     - type: Transform
-      pos: 8.5,21.5
+      pos: 9.5,21.5
       parent: 30
 - proto: GunSafeRifleLecter
   entities:
@@ -42957,11 +42947,6 @@ entities:
     - type: Transform
       pos: -51.5,-17.5
       parent: 30
-  - uid: 8389
-    components:
-    - type: Transform
-      pos: 9.5,20.5
-      parent: 30
 - proto: ReinforcedWindow
   entities:
   - uid: 17
@@ -44886,7 +44871,7 @@ entities:
       parent: 30
     - type: DeviceLinkSink
       links:
-      - 8673
+      - 8389
   - uid: 8677
     components:
     - type: Transform
@@ -44895,7 +44880,7 @@ entities:
       parent: 30
     - type: DeviceLinkSink
       links:
-      - 8673
+      - 8389
   - uid: 8678
     components:
     - type: Transform
@@ -44903,7 +44888,7 @@ entities:
       parent: 30
     - type: DeviceLinkSink
       links:
-      - 8673
+      - 8389
 - proto: ShuttersRadiationOpen
   entities:
   - uid: 6112
@@ -45139,6 +45124,16 @@ entities:
       linkedPorts:
         6283:
         - Pressed: Toggle
+  - uid: 6089
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 8.5,19.5
+      parent: 30
+    - type: DeviceLinkSource
+      linkedPorts:
+        8660:
+        - Pressed: Toggle
   - uid: 6389
     components:
     - type: Transform
@@ -45219,6 +45214,20 @@ entities:
       linkedPorts:
         8171:
         - Pressed: Toggle
+  - uid: 8389
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 8.5,17.5
+      parent: 30
+    - type: DeviceLinkSource
+      linkedPorts:
+        8676:
+        - Pressed: Toggle
+        8677:
+        - Pressed: Toggle
+        8678:
+        - Pressed: Toggle
   - uid: 8447
     components:
     - type: Transform
@@ -45243,32 +45252,6 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         8660:
-        - Pressed: Toggle
-  - uid: 8662
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 8.5,19.5
-      parent: 30
-    - type: DeviceLinkSource
-      linkedPorts:
-        8660:
-        - Pressed: Toggle
-        8465:
-        - Pressed: Toggle
-  - uid: 8673
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 11.5,16.5
-      parent: 30
-    - type: DeviceLinkSource
-      linkedPorts:
-        8678:
-        - Pressed: Toggle
-        8677:
-        - Pressed: Toggle
-        8676:
         - Pressed: Toggle
 - proto: SignalSwitchDirectional
   entities:
@@ -51575,6 +51558,11 @@ entities:
     components:
     - type: Transform
       pos: -12.5,26.5
+      parent: 30
+  - uid: 5394
+    components:
+    - type: Transform
+      pos: 9.5,20.5
       parent: 30
   - uid: 5460
     components:
