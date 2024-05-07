@@ -3704,8 +3704,6 @@
   id: 6525
   time: '2024-05-04T00:03:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27654
-<<<<<<< HEAD
-=======
 - author: TheShuEd
   changes:
   - message: Added Train station!
@@ -3858,4 +3856,3 @@
   id: 6545
   time: '2024-05-07T07:26:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27750
->>>>>>> 35dc85fd47a9d3e6af10de2f7aad3076586ee4da
