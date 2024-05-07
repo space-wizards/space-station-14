@@ -343,6 +343,7 @@
     - Cargo
     tags:
     - Maintenance
+  - type: Dumpable
   - type: Storage
     maxItemSize: Huge
     grid:
