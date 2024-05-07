@@ -1,6 +1,6 @@
 # Timers
 - type: loadoutEffectGroup
-  id: Privilege
+  id: Command
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
@@ -22,9 +22,6 @@
 - type: loadout
   id: PlushieSpaceLizard
   equipment: PlushieSpaceLizard
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Privilege
 
 - type: startingGear
   id: PlushieSpaceLizard
@@ -88,7 +85,7 @@
   equipment: CigarCase
   effects:
   - !type:GroupLoadoutEffect
-    proto: Privilege
+    proto: Command
 
 - type: startingGear
   id: CigarCase
@@ -101,7 +98,7 @@
   equipment: CigarGold
   effects:
   - !type:GroupLoadoutEffect
-    proto: Privilege
+    proto: Command
 
 - type: startingGear
   id: CigarGold
