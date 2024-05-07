@@ -113,8 +113,11 @@ public sealed partial class GunSystem : SharedGunSystem
 
         foreach (var (ent, shootable) in ammo)
         {
+            if (ent == null)
+                continue;
+
             // pneumatic cannon doesn't shoot bullets it just throws them, ignore ammo handling
-            if (throwItems && ent != null)
+            if (throwItems)
             {
                 ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, gunUid, user);
                 continue;
