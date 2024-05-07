@@ -19,7 +19,8 @@ public sealed class MessagesUiState(MessagesUiStateMode mode, List<(string, int?
 public enum MessagesUiStateMode : byte
 {
     UserList,
-    Chat
+    Chat,
+    Error
 }
 
 ///<summary>

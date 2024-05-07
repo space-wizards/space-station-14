@@ -36,14 +36,16 @@ public sealed class MessagesServerSystem : EntitySystem
 
     public void Update(EntityUid uid, MessagesServerComponent component)
     {
+        //<TODO> Sync messages between servers.
         var mapId = Transform(uid).MapID;
 
-        if (this.IsPowered(uid, EntityManager))
+        if (!this.IsPowered(uid, EntityManager))
             return;
 
         var query = EntityManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
 
-        Dictionary<int,List<MessagesCartridgeComponent>> cartDict = [];
+        Dictionary<int,List<(EntityUid, MessagesCartridgeComponent)>> cartDict = [];
+        component.NameDict = [];
 
         while (query.MoveNext(out var cartUid, out var cartComponent))
         {
@@ -51,12 +53,13 @@ public sealed class MessagesServerSystem : EntitySystem
                 continue;
             if (cartComponent.EncryptionKey != component.EncryptionKey)
                 continue;
-            int userUid = cartComponent.GetUserUid();
+            int? userUid = _messagesCartridgeSystem.GetUserUid(cartComponent);
             if (userUid == null)
                 continue;
-            if (!cartDict.HasKey(userUid))
-                cartDict[userUid] = [];
-            cartDict[userUid].Append(cartComponent);
+            if (!cartDict.ContainsKey(userUid.Value))
+                cartDict[userUid.Value] = [];
+            cartDict[userUid.Value].Add((cartUid, cartComponent));
+            component.NameDict[userUid.Value] = _messagesCartridgeSystem.GetUserName(cartComponent);
         }
 
         query = EntityManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
@@ -68,7 +71,7 @@ public sealed class MessagesServerSystem : EntitySystem
                 continue;
             if (cartComponent.EncryptionKey != component.EncryptionKey)
                 continue;
-            if (cartComponent.GetUserUid() == null)
+            if (_messagesCartridgeSystem.GetUserUid(cartComponent) == null)
                 continue;
 
             //if the cart has any unsent messages, the server attempts to send them
@@ -88,17 +91,35 @@ public sealed class MessagesServerSystem : EntitySystem
     ///<summary>
     ///Function that tries to send a message to any matching cartridges on its map
     ///</summary>
-    public void TryToSend(MessagesMessageData message, MapId mapId, Dictionary<int,List<MessagesCartridgeComponent>> cartDict)
+    public void TryToSend(MessagesMessageData message, MapId mapId, Dictionary<int,List<(EntityUid, MessagesCartridgeComponent)>> cartDict)
     {
         var cartList = cartDict[message.ReceiverId];
 
-        foreach (var cart in cartList)
+        foreach (var (cartUid, cartProgramComponent) in cartList)
         {
-            EntityUid uid = EntityUid<MessagesCartridgeComponent>(cart);
-            if (cart.LoaderUid == null)
+            if (TryComp(cartUid, out CartridgeComponent cartComponent) && cartComponent.LoaderUid == null)
                 continue;
-            _messagesCartridgeSystem.ServerToPdaMessage(uid, cart, message, cartridge.LoaderUid.Value);
+            _messagesCartridgeSystem.ServerToPdaMessage(cartUid, cartProgramComponent, message, cartComponent.LoaderUid.Value);
         }
+    }
+
+    public string GetNameFromDict(EntityUid? uid, MessagesServerComponent? component, int key)
+    {
+        if ((uid == null) || (component == null))
+            return "LOCALISE THIS TO SAY CONNECTION ERROR";
+        if (component.NameDict.ContainsKey(key))
+            return component.NameDict[key];
+        return "LOCALISE THIS TO SAY UNKNOWN";
+    }
+
+    public Dictionary<int, string> GetNameDict(MessagesServerComponent component)
+    {
+        return component.NameDict;
+    }
+
+    public List<MessagesMessageData> GetMessages(MessagesServerComponent component,int id1, int id2)
+    {
+        return component.Messages.Where(message => (message.SenderId == id1 && message.ReceiverId == id2) || (message.SenderId == id2 && message.ReceiverId == id1));
     }
 
 }

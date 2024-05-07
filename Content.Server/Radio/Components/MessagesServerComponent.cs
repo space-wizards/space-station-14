@@ -30,6 +30,4 @@ public sealed partial class MessagesServerComponent : Component
 
     public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
     public TimeSpan NextUpdate = TimeSpan.Zero;
-    public TimeSpan SyncDelay = TimeSpan.FromSeconds(180);
-    public TimeSpan NextSync = TimeSpan.Zero;
 }
