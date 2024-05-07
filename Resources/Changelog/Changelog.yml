@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: rosieposieeee
-  changes:
-  - message: Added lockable wall buttons and decorative frames for differentiating
-      wall buttons.
-    type: Add
-  id: 6045
-  time: '2024-02-27T07:57:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25631
 - author: metalgearsloth
   changes:
   - message: Fix chat bubbles.
@@ -3855,3 +3847,12 @@
   id: 6544
   time: '2024-05-07T04:21:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27742
+- author: lzk228
+  changes:
+  - message: Morgue now can be anchored and unanchored.
+    type: Tweak
+  - message: Changed morgue's collision layer, so items now can go through it.
+    type: Tweak
+  id: 6545
+  time: '2024-05-07T07:26:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27750
