@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lank
-  changes:
-  - message: Diona can no longer split or reform to cure themselves of a zombie infection.
-    type: Fix
-  id: 6042
-  time: '2024-02-26T23:31:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25404
 - author: Zadeon
   changes:
   - message: Added salt as a new type of ore that can be mined from asteroids. Salt
@@ -3857,3 +3850,11 @@
   id: 6541
   time: '2024-05-06T20:20:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27728
+- author: pissdemon
+  changes:
+  - message: Special ghost roles are now raffled, instead of being given out to the
+      first player requesting them.
+    type: Add
+  id: 6542
+  time: '2024-05-07T01:48:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26629
