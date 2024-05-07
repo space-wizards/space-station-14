@@ -248,6 +248,7 @@
         groups:
           Brute: -1
         types:
+          Bloodloss: 2
           Asphyxiation: 2 # Essentially Stopping all blood reaching a part of your body
       bloodlossModifier: -10
       delay: 0.5
