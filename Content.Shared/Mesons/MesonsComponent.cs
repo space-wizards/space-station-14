@@ -1,9 +1,21 @@
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.Mesons;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MesonsComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public EntProtoId Action = "ActionToggleMesons";
+
+    [DataField]
+    public EntityUid? ActionEntity;
+
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Enabled;
+
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public MesonsViewType MesonsType = MesonsViewType.Walls;
 }
 

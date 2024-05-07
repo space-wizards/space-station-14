@@ -20,6 +20,9 @@ public sealed class MesonsOverlay : Overlay
     private readonly ShaderInstance _scanlineShader;
     private readonly ShaderInstance _brightnessShader;
 
+    public bool Enabled => _enabled;
+
+    private bool _enabled = false;
 
     public MesonsOverlay()
     {
@@ -27,11 +30,34 @@ public sealed class MesonsOverlay : Overlay
         _scanlineShader = _prototypeManager.Index<ShaderPrototype>("Scanline").InstanceUnique();
         _brightnessShader = _prototypeManager.Index<ShaderPrototype>("BrightnessFilter").InstanceUnique();
     }
-    protected override bool BeforeDraw(in OverlayDrawArgs args)
+
+    public void SetSpritesVisible(bool visible)
     {
-        _lightManager.Enabled = true;
+        var playerEntity = _playerManager.LocalSession?.AttachedEntity;
 
         var query = _entityManager.EntityQueryEnumerator<MesonsNonviewableComponent>();
+
+        while (query.MoveNext(out var uid, out _))
+        {
+            if (!_entityManager.TryGetComponent(uid, out SpriteComponent? spriteComponent))
+                continue;
+
+            spriteComponent.Visible = uid == playerEntity || visible;
+        }
+    }
+
+    public void SetEnabled(bool enabled)
+    {
+        _lightManager.Enabled = !enabled;
+        _enabled = enabled;
+
+        SetSpritesVisible(!enabled);
+    }
+
+    protected override bool BeforeDraw(in OverlayDrawArgs args)
+    {
+        if (!_enabled)
+            return false;
 
         var draw = true;
 
@@ -42,8 +68,7 @@ public sealed class MesonsOverlay : Overlay
             || playerEntity is null)
             draw = false;
 
-        while (query.MoveNext(out var uid, out _))
-            _entityManager.EnsureComponent<NoRenderInWorldComponent>(uid).Enabled = uid == playerEntity || draw;
+        SetSpritesVisible(!draw);
 
         return draw;
     }
@@ -58,7 +83,6 @@ public sealed class MesonsOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        _lightManager.Enabled = false;
 
         _scanlineShader.SetParameter("OVERLAY_COLOR", new Color(0f, 0.2f, 0f, 0.5f));
         _brightnessShader.SetParameter("THRESHHOLD", 0.1f);

@@ -55,11 +55,22 @@
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesMeson
-  name: mesons #less confusion
+  name: mesons
   description: Green-tinted goggles that use a proprietary material that provides protection from eye damage and allows you to see through walls.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/meson.rsi
+    layers:
+    - state: icon
+    - state: icon_enabled
+      map: [ "enum.ToggleVisuals.Layer" ]
+      visible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {visible: true}
+          False: {visible: false}
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/meson.rsi
   - type: EyeProtection
