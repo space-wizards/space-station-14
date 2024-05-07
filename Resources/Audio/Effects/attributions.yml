@@ -3,6 +3,11 @@
   copyright: '"Balloon Pop" by Aesterial-Arts on Freesound.org. Cconverted to mono by EmoGarbage404 on GitHub.com'
   source: "https://freesound.org/people/Aesterial-Arts/sounds/633835/"
 
+- files: ["bang.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/694f2e79515f9ad397bc253563d1cb77e6aa72df/sound/effects/bang.ogg"
+
 - files: ["pill_insert.ogg", "pill_remove.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Amateur foley and audio editing by Bright0."
