@@ -128,6 +128,8 @@
     makeSentient: true
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
+    raffle:
+      settings: short
   - type: Speech
     speechVerb: Slime
     speechSounds: Slime
@@ -199,6 +201,8 @@
         - SimpleHostile
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
+      raffle:
+        settings: short
 
 - type: entity
   name: green slime
@@ -234,6 +238,8 @@
         - SimpleHostile
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
+      raffle:
+        settings: short
 
 - type: entity
   name: yellow slime
@@ -269,3 +275,5 @@
         - SimpleHostile
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
+      raffle:
+        settings: short
