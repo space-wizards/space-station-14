@@ -258,7 +258,7 @@
         path: "/Audio/Items/Medical/brutepack_end.ogg"
     - type: Stack
       stackType: Tourniquet
-      count: 5
+      count: 2
     - type: StackPrice
       price: 10
 
