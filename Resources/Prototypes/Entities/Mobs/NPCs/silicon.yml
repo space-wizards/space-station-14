@@ -370,3 +370,8 @@
     tags:
     - DoorBumpOpener
     - FootstepSound
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+    - Supply
