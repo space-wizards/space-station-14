@@ -9,6 +9,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Random;
 using System.Text;
 using Robust.Shared.Player;
+using Content.Shared.Renamer.EntitySystems;
 
 namespace Content.Server.PAI;
 
@@ -16,7 +17,7 @@ public sealed class PAISystem : SharedPAISystem
 {
     [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly RenamerSystem _renamer = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
 
@@ -54,7 +55,7 @@ public sealed class PAISystem : SharedPAISystem
         // Changing the PAI's identity in a way that ties it to the owner's identity also seems weird.
         // Cause then you could remotely figure out information about the owner's equipped items.
 
-        _metaData.SetEntityName(uid, val);
+        _renamer.SetBaseName(uid, val);
     }
 
     private void OnMindRemoved(EntityUid uid, PAIComponent component, MindRemovedMessage args)
@@ -95,7 +96,7 @@ public sealed class PAISystem : SharedPAISystem
 
         // add 's pAI to the scrambled name
         var val = Loc.GetString("pai-system-pai-name-raw", ("name", name.ToString()));
-        _metaData.SetEntityName(uid, val);
+        _renamer.SetBaseName(uid, val);
     }
 
     public void PAITurningOff(EntityUid uid)
@@ -115,7 +116,7 @@ public sealed class PAISystem : SharedPAISystem
         {
             var proto = metadata.EntityPrototype;
             if (proto != null)
-                _metaData.SetEntityName(uid, proto.Name);
+                _renamer.SetBaseName(uid, proto.Name);
         }
     }
 }

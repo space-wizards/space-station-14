@@ -8,6 +8,8 @@ using Content.Shared.Access.Components;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
 using Content.Shared.PDA;
+using Content.Shared.Renamer.Components;
+using Content.Shared.Renamer.EntitySystems;
 using Content.Shared.StationRecords;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -43,10 +45,10 @@ public sealed class RenameCommand : IConsoleCommand
         if (!TryParseUid(args[0], shell, _entManager, out var entityUid))
             return;
 
-        // Metadata
-        var metadata = _entManager.GetComponent<MetaDataComponent>(entityUid.Value);
-        var oldName = metadata.EntityName;
-        _entManager.System<MetaDataSystem>().SetEntityName(entityUid.Value, name, metadata);
+        // Renaming
+        var renamer = _entManager.GetComponent<RenamerComponent>(entityUid.Value);
+        var oldName = renamer.BaseName;
+        _entManager.System<RenamerSystem>().SetBaseName(entityUid.Value, name);
 
         var minds = _entManager.System<SharedMindSystem>();
 

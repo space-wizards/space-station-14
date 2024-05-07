@@ -15,14 +15,6 @@ namespace Content.Server.Chemistry.Components;
 public sealed partial class TransformableContainerComponent : Component
 {
     /// <summary>
-    /// This is the initial metadata name for the container.
-    /// It will revert to this when emptied.
-    /// It defaults to the name of the parent entity unless overwritten.
-    /// </summary>
-    [DataField("initialName")]
-    public string? InitialName;
-
-    /// <summary>
     /// This is the initial metadata description for the container.
     /// It will revert to this when emptied.
     ///     /// It defaults to the description of the parent entity unless overwritten.
