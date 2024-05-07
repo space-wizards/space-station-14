@@ -338,19 +338,23 @@
   - type: Construction
     graph: SupplyBot
     node: bot
-  - type: Storage
-    maxItemSize: Huge
-    grid:
-    - 0,0,9,3
   - type: Access
     groups:
     - Cargo
     tags:
     - Maintenance
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,9,3
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
   - type: UnpoweredFlashlight
   - type: PointLight
     enabled: false
