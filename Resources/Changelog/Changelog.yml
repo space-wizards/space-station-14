@@ -1,45 +1,4 @@
 ﻿Entries:
-- author: rosieposieeee
-  changes:
-  - message: Added lockable wall buttons and decorative frames for differentiating
-      wall buttons.
-    type: Add
-  id: 6045
-  time: '2024-02-27T07:57:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25631
-- author: metalgearsloth
-  changes:
-  - message: Fix chat bubbles.
-    type: Fix
-  id: 6046
-  time: '2024-02-27T13:01:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25643
-- author: rosieposieeee
-  changes:
-  - message: Added grey stalagmites and made all stalagmites weaker and more fun to
-      break.
-    type: Add
-  id: 6047
-  time: '2024-02-27T19:24:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25646
-- author: metalgearsloth
-  changes:
-  - message: Made NPC movement less janky.
-    type: Fix
-  id: 6048
-  time: '2024-02-28T06:41:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25666
-- author: musicmanvr
-  changes:
-  - message: Added the Syndicate decoy bundle, a creative way to trick your foes.
-    type: Add
-  - message: Snap pops have been added to the toy crate.
-    type: Add
-  - message: Syndicate Commanders now have a trench whistle, Avanti!
-    type: Add
-  id: 6049
-  time: '2024-02-28T21:53:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25333
 - author: Whisper
   changes:
   - message: Iron and copper no longer grant infinite blood!
@@ -3855,3 +3814,42 @@
   id: 6544
   time: '2024-05-07T04:21:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27742
+- author: lzk228
+  changes:
+  - message: Morgue now can be anchored and unanchored.
+    type: Tweak
+  - message: Changed morgue's collision layer, so items now can go through it.
+    type: Tweak
+  id: 6545
+  time: '2024-05-07T07:26:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27750
+- author: mirrorcult
+  changes:
+  - message: Events that run now get logged to admin alert chat
+    type: Tweak
+  id: 6546
+  time: '2024-05-07T15:13:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27761
+- author: cooldolphin
+  changes:
+  - message: Cigarettes in the loadout menu.
+    type: Add
+  id: 6547
+  time: '2024-05-07T15:55:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27292
+- author: FairlySadPanda
+  changes:
+  - message: Weapons that deflect shots, like the e-sword, now are most effective
+      at doing so when standing still, with moving or sprinting making the deflection
+      chance worse.
+    type: Tweak
+  id: 6548
+  time: '2024-05-07T18:14:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27219
+- author: deltanedas
+  changes:
+  - message: Lathes can now be sped up by using Space Lube.
+    type: Tweak
+  id: 6549
+  time: '2024-05-07T18:20:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25515
