@@ -33,6 +33,28 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBartenderDark
+  name: bartender's dark uniform
+  description: A nice and tidy uniform, for the more experienced bartender. Still a shame about the bar though.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/bartender_dark.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/bartender_dark.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBowtieBartender
+  name: bartender's red bowtie uniform
+  description: A nice and tidy uniform, but this time with a red bowtie, nice and snazzy.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/bartender_bowtie.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/bartender_bowtie.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitJacketMonkey
   name: bartender's jacket monkey
   description: A decent jacket, for a decent monkey.

@@ -11,6 +11,28 @@
 
 - type: entity
   parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtBartenderDark
+  name: bartender's dark uniform
+  description: A nice and tidy uniform, for the more experienced bartender. Still a shame about the bar though.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/bartender_dark.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/bartender_dark.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtBowtieBartender
+  name: bartender's red bowtie uniform
+  description: A nice and tidy uniform, but this time with a red bowtie, nice and snazzy.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/bartender_bowtie.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/bartender_bowtie.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCaptain
   name: captain's jumpskirt
   description: It's a blue jumpskirt with some gold markings denoting the rank of "Captain".

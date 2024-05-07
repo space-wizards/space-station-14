@@ -1,3 +1,12 @@
+- type: loadoutEffectGroup
+  id: SeniorBartender
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBartender
+      time: 36000 #10 hrs, elite bartenders only
+
 # Head
 - type: loadout
   id: BartenderHead
@@ -37,6 +46,24 @@
     jumpsuit: ClothingUniformJumpskirtBartender
 
 - type: loadout
+  id: BartenderBowtieJumpsuit
+  equipment: BartenderBowtieJumpsuit
+
+- type: startingGear
+  id: BartenderBowtieJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBowtieBartender
+
+- type: loadout
+  id: BartenderBowtieJumpskirt
+  equipment: BartenderBowtieJumpskirt
+
+- type: startingGear
+  id: BartenderBowtieJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtBowtieBartender
+
+- type: loadout
   id: BartenderJumpsuitPurple
   equipment: BartenderJumpsuitPurple
 
@@ -44,6 +71,30 @@
   id: BartenderJumpsuitPurple
   equipment:
     jumpsuit: ClothingUniformJumpsuitBartenderPurple
+
+- type: loadout
+  id: BartenderJumpsuitDark
+  equipment: BartenderJumpsuitDark
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorBartender
+    
+- type: startingGear
+  id: BartenderJumpsuitDark
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBartenderDark
+
+- type: loadout
+  id: BartenderJumpskirtDark
+  equipment: BartenderJumpskirtDark
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorBartender
+    
+- type: startingGear
+  id: BartenderJumpskirtDark
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtBartenderDark
 
 # Outer clothing
 - type: loadout
