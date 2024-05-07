@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix chat bubbles.
-    type: Fix
-  id: 6046
-  time: '2024-02-27T13:01:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25643
 - author: rosieposieeee
   changes:
   - message: Added grey stalagmites and made all stalagmites weaker and more fun to
@@ -3856,3 +3849,10 @@
   id: 6545
   time: '2024-05-07T07:26:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27750
+- author: mirrorcult
+  changes:
+  - message: Events that run now get logged to admin alert chat
+    type: Tweak
+  id: 6546
+  time: '2024-05-07T15:13:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27761
