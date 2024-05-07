@@ -5,6 +5,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -27,6 +28,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<ActivatableUIComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>(OnHandDeselected);
@@ -99,6 +101,9 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!args.CanAccess)
             return false;
 
+        if (!component.RequiredItems?.IsValid(args.Using ?? default, EntityManager) ?? false)
+            return false;
+
         if (component.RequireHands)
         {
             if (args.Hands == null)
@@ -115,6 +120,20 @@ public sealed partial class ActivatableUISystem : EntitySystem
         }
 
         return args.CanInteract || component.AllowSpectator && HasComp<GhostComponent>(args.User);
+    }
+
+    private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (component.VerbOnly)
+            return;
+
+        if (component.RequiredItems != null)
+            return;
+
+        args.Handled = InteractUI(args.User, uid, component);
     }
 
     private void OnActivate(EntityUid uid, ActivatableUIComponent component, ActivateInWorldEvent args)
