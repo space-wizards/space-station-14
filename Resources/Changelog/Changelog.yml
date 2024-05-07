@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Made NPC movement less janky.
-    type: Fix
-  id: 6048
-  time: '2024-02-28T06:41:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25666
 - author: musicmanvr
   changes:
   - message: Added the Syndicate decoy bundle, a creative way to trick your foes.
@@ -3855,3 +3848,12 @@
   id: 6547
   time: '2024-05-07T15:55:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27292
+- author: FairlySadPanda
+  changes:
+  - message: Weapons that deflect shots, like the e-sword, now are most effective
+      at doing so when standing still, with moving or sprinting making the deflection
+      chance worse.
+    type: Tweak
+  id: 6548
+  time: '2024-05-07T18:14:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27219
