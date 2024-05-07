@@ -26,6 +26,8 @@
     - type: GhostRole
       name: ghost-role-information-Death-Squad-name
       description: ghost-role-information-Death-Squad-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ DeathSquadGear ]
@@ -62,6 +64,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
       description: ghost-role-information-ert-leader-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGear ]
@@ -92,6 +96,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
       description: ghost-role-information-ert-leader-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
@@ -114,6 +120,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
       description: ghost-role-information-ert-leader-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGearEVALecter ]
@@ -145,6 +153,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-chaplain-name
       description: ghost-role-information-ert-chaplain-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -174,6 +184,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-chaplain-name
       description: ghost-role-information-ert-chaplain-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTChaplainGearEVA ]
@@ -205,6 +217,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-janitor-name
       description: ghost-role-information-ert-janitor-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -234,6 +248,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-janitor-name
       description: ghost-role-information-ert-janitor-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTJanitorGearEVA ]
@@ -265,6 +281,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
       description: ghost-role-information-ert-engineer-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -294,6 +312,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
       description: ghost-role-information-ert-engineer-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTEngineerGearEVA ]
@@ -325,6 +345,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-security-name
       description: ghost-role-information-ert-security-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -354,6 +376,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-security-name
       description: ghost-role-information-ert-security-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
@@ -375,6 +399,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-security-name
       description: ghost-role-information-ert-security-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTSecurityGearEVALecter ]
@@ -406,6 +432,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
       description: ghost-role-information-ert-medical-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -435,6 +463,8 @@
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
       description: ghost-role-information-ert-medical-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTMedicalGearEVA ]
@@ -463,6 +493,8 @@
     - type: GhostRole
       name: ghost-role-information-cburn-agent-name
       description: ghost-role-information-cburn-agent-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -489,6 +521,8 @@
     - type: GhostRole
       name: ghost-role-information-centcom-official-name
       description: ghost-role-information-centcom-official-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ CentcomGear ]
@@ -551,5 +585,7 @@
     - type: GhostRole
       name: ghost-role-information-cluwne-name
       description: ghost-role-information-cluwne-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Cluwne
