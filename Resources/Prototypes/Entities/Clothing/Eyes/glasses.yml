@@ -55,8 +55,8 @@
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesMeson
-  name: engineering goggles #less confusion
-  description: Green-tinted goggles using a proprietary polymer that provides protection from eye damage of all types.
+  name: mesons #less confusion
+  description: Green-tinted goggles that use a proprietary material that provides protection from eye damage and allows you to see through walls.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/meson.rsi
