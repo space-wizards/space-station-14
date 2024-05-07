@@ -28,7 +28,7 @@ thief-backpack-category-tools-description =
 
 thief-backpack-category-chemistry-name = anatomy set
 thief-backpack-category-chemistry-description =
-    You've peaked in physical conditioning, with implants ready.
+    You've reached your peak physical condition with a little help.
     Includes a storage implanter, DNA scrambler implanter,
     ephedrine bottle, syringe, empty shaker, and omega soap
 
