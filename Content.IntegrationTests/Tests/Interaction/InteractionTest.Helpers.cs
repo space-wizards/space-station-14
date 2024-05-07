@@ -5,12 +5,9 @@ using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using Content.Client.Construction;
-using Content.Server.Atmos;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Gravity;
-using Content.Server.Item;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Prototypes;
@@ -634,7 +631,7 @@ public abstract partial class InteractionTest
         var entities = await DoEntityLookup(flags);
         var found = ToEntityCollection(entities);
         expected.Remove(found);
-        expected.ConvertToStacks(ProtoMan, Factory);
+        await expected.ConvertToStacks(ProtoMan, Factory, Server);
 
         if (expected.Entities.Count == 0)
             return;
@@ -670,7 +667,7 @@ public abstract partial class InteractionTest
         LookupFlags flags = LookupFlags.Uncontained | LookupFlags.Contained,
         bool shouldSucceed = true)
     {
-        spec.ConvertToStack(ProtoMan, Factory);
+        await spec.ConvertToStack(ProtoMan, Factory, Server);
 
         var entities = await DoEntityLookup(flags);
         foreach (var uid in entities)

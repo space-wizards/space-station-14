@@ -19,6 +19,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - WeldingMask
   - type: HideLayerClothing
     slots:
     - Snout
@@ -37,6 +38,7 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+    - WeldingMask
 
 - type: entity
   parent: WeldingMaskBase
