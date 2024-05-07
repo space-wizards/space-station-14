@@ -104,6 +104,11 @@
 		///</summary>
 		Adminchat = 1 << 17,
 
+        ///<summary>
+        /// Allows you to use Admin chat
+        ///</summary>
+        Pii = 1 << 18,
+
         /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>
