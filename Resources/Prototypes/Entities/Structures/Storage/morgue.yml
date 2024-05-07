@@ -5,6 +5,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Pullable
+  - type: Anchorable
   - type: Sprite
     sprite: Structures/Storage/morgue.rsi
     layers:
@@ -28,11 +30,11 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-        density: 190
+        density: 1000
         mask:
         - MachineMask
         layer:
-        - WallLayer
+        - HalfWallLayer
   - type: EntityStorage
     isCollidableWhenOpen: true
     showContents: false
