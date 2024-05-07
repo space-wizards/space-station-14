@@ -678,9 +678,9 @@
   result: GrenadeBlast
   completetime: 3
   materials:
-     Steel: 150
-     Plastic: 100
-     Gold: 50
+     Steel: 450
+     Plastic: 300
+     Gold: 150
      
 - type: latheRecipe
   id: GrenadeFlash
