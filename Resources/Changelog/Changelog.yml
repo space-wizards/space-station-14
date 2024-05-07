@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Zadeon
-  changes:
-  - message: Added salt as a new type of ore that can be mined from asteroids. Salt
-      can be ground up for its base components.
-    type: Add
-  id: 6043
-  time: '2024-02-26T23:34:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25324
 - author: juliangiebel
   changes:
   - message: The mass media consoles UI got overhauled
@@ -3858,3 +3850,10 @@
   id: 6542
   time: '2024-05-07T01:48:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26629
+- author: mirrorcult
+  changes:
+  - message: Less ratkings should spawn during the mouse migration event now
+    type: Tweak
+  id: 6543
+  time: '2024-05-07T03:23:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27760
