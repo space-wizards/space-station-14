@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: juliangiebel
-  changes:
-  - message: The mass media consoles UI got overhauled
-    type: Tweak
-  - message: Added PDA notifications in chat for new news articles. They can be turned
-      off in the news reader program and are only visible to you.
-    type: Add
-  id: 6044
-  time: '2024-02-27T01:38:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/19610
 - author: rosieposieeee
   changes:
   - message: Added lockable wall buttons and decorative frames for differentiating
@@ -3857,3 +3847,11 @@
   id: 6543
   time: '2024-05-07T03:23:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27760
+- author: PJB3005
+  changes:
+  - message: Fixed preferences not loading sometimes if you had a loadout item with
+      playtime requirement selected in a character profile.
+    type: Fix
+  id: 6544
+  time: '2024-05-07T04:21:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27742
