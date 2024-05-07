@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: musicmanvr
-  changes:
-  - message: Added the Syndicate decoy bundle, a creative way to trick your foes.
-    type: Add
-  - message: Snap pops have been added to the toy crate.
-    type: Add
-  - message: Syndicate Commanders now have a trench whistle, Avanti!
-    type: Add
-  id: 6049
-  time: '2024-02-28T21:53:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25333
 - author: Whisper
   changes:
   - message: Iron and copper no longer grant infinite blood!
@@ -3857,3 +3846,10 @@
   id: 6548
   time: '2024-05-07T18:14:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27219
+- author: deltanedas
+  changes:
+  - message: Lathes can now be sped up by using Space Lube.
+    type: Tweak
+  id: 6549
+  time: '2024-05-07T18:20:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25515
