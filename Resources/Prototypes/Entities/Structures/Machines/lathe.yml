@@ -497,16 +497,12 @@
 
 - type: entity
   id: CircuitImprinterHyperConvection
-  parent: CircuitImprinter
+  parent: [CircuitImprinter, BaseHyperlathe]
   name: hyper convection circuit imprinter
   description: A highly-experimental circuit imprinter that harnesses the power of extreme heat to slowly create objects more cost-effectively.
   components:
   - type: Sprite
     sprite: Structures/Machines/circuit_imprinter_hypercon.rsi
-  - type: Lathe
-    materialUseMultiplier: 0.5
-    timeMultiplier: 1.5
-  - type: LatheHeatProducing
   - type: Machine
     board: CircuitImprinterHyperConvectionMachineCircuitboard
 
