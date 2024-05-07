@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
+using Content.Shared.Storage;
 using Robust.Shared.Random;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -13,9 +14,16 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(DungeonEntrancePostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
+        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
+            !data.SpawnGroups.TryGetValue(DungeonDataKey.Entrance, out var entrance))
+        {
+            LogDataError(typeof(DungeonEntrancePostGen));
+            return;
+        }
+
         var rooms = new List<DungeonRoom>(dungeon.Rooms);
         var roomTiles = new List<Vector2i>();
-        var tileDef = _tileDefManager[gen.Tile];
+        var tileDef = (ContentTileDefinition) _tileDefManager[tileProto];
 
         for (var i = 0; i < gen.Count; i++)
         {
@@ -74,10 +82,13 @@ public sealed partial class DungeonJob
                     var gridCoords = _maps.GridTileToLocal(_gridUid, _grid, tile);
                     // Need to offset the spawn to avoid spawning in the room.
 
-                    _entManager.SpawnEntities(gridCoords, gen.Entities);
+                    foreach (var ent in EntitySpawnCollection.GetSpawns(_prototype.Index(entrance).Entries, random))
+                    {
+                        _entManager.SpawnAtPosition(ent, gridCoords);
+                    }
 
                     // Clear out any biome tiles nearby to avoid blocking it
-                    foreach (var nearTile in _grid.GetTilesIntersecting(new Circle(gridCoords.Position, 1.5f), false))
+                    foreach (var nearTile in _maps.GetTilesIntersecting(_gridUid, _grid, new Circle(gridCoords.Position, 1.5f), false))
                     {
                         if (dungeon.RoomTiles.Contains(nearTile.GridIndices) ||
                             dungeon.RoomExteriorTiles.Contains(nearTile.GridIndices) ||
@@ -87,7 +98,7 @@ public sealed partial class DungeonJob
                             continue;
                         }
 
-                        _maps.SetTile(_gridUid, _grid, nearTile.GridIndices, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
+                        _maps.SetTile(_gridUid, _grid, nearTile.GridIndices, _tile.GetVariantTile(tileDef, random));
                     }
 
                     break;

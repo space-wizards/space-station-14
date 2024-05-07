@@ -5,6 +5,11 @@ namespace Content.Shared.Procedural.DungeonGenerators;
 /// <summary>
 /// Places rooms in pre-selected pack layouts. Chooses rooms from the specified whitelist.
 /// </summary>
+/// <remarks>
+/// DungeonData keys are:
+/// - FallbackTile
+/// - Rooms
+/// </remarks>
 public sealed partial class PrefabDunGen : IDunGenLayer
 {
     /// <summary>

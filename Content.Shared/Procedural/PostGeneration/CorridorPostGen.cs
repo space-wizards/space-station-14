@@ -1,11 +1,12 @@
-using Content.Shared.Maps;
-using Robust.Shared.Prototypes;
-
 namespace Content.Shared.Procedural.PostGeneration;
 
 /// <summary>
 /// Connects room entrances via corridor segments.
 /// </summary>
+/// <remarks>
+/// Dungeon data keys are:
+/// - FallbackTile
+/// </remarks>
 public sealed partial class CorridorPostGen : IDunGenLayer
 {
     /// <summary>

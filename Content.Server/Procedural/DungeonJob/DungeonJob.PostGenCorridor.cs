@@ -1,5 +1,6 @@
 using System.Numerics;
 using System.Threading.Tasks;
+using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Map;
@@ -13,6 +14,12 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(CorridorPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
+        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto))
+        {
+            LogDataError(typeof(CorridorPostGen));
+            return;
+        }
+
         var entrances = new List<Vector2i>(dungeon.Rooms.Count);
 
         // Grab entrances
@@ -91,7 +98,7 @@ public sealed partial class DungeonJob
         WidenCorridor(dungeon, gen.Width, corridorTiles);
 
         var setTiles = new List<(Vector2i, Tile)>();
-        var tileDef = _prototype.Index(gen.Tile);
+        var tileDef = (ContentTileDefinition) _tileDefManager[tileProto];
 
         foreach (var tile in corridorTiles)
         {

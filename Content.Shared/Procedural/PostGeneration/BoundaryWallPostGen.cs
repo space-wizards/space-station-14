@@ -1,12 +1,14 @@
-using Content.Shared.Maps;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-
 namespace Content.Shared.Procedural.PostGeneration;
 
 /// <summary>
 /// Iterates room edges and places the relevant tiles and walls on any free indices.
 /// </summary>
+/// <remarks>
+/// Dungeon data keys are:
+/// - CornerWalls (Optional)
+/// - FallbackTile
+/// - Walls
+/// </remarks>
 public sealed partial class BoundaryWallPostGen : IDunGenLayer
 {
     [DataField]

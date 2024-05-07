@@ -20,26 +20,9 @@ public sealed partial class DungeonJob
             return;
         }
 
-        var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
-
         foreach (var tile in dungeon.CorridorTiles)
         {
-            var enumerator = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, tile);
-            var blocked = false;
-
-            while (enumerator.MoveNext(out var ent))
-            {
-                // TODO: TileFree
-                if (!physicsQuery.TryGetComponent(ent, out var physics) ||
-                    !physics.CanCollide ||
-                    !physics.Hard)
-                {
-                    continue;
-                }
-
-                blocked = true;
-                break;
-            }
+            var blocked = _anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask);
 
             if (blocked)
                 continue;

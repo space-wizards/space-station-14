@@ -3,6 +3,11 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Selects [count] rooms and places external doors to them.
 /// </summary>
+/// <remarks>
+/// Dungeon data keys are:
+/// - Entrance
+/// - FallbackTile
+/// </remarks>
 public sealed partial class DungeonEntrancePostGen : IDunGenLayer
 {
     /// <summary>
