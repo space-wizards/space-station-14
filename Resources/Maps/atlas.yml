@@ -3410,7 +3410,7 @@ entities:
       pos: -28.5,14.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -29845.844
+      secondsUntilStateChange: -30399.758
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -3912,7 +3912,7 @@ entities:
       pos: -13.5,-8.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -9072.9
+      secondsUntilStateChange: -9626.8125
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4349,7 +4349,7 @@ entities:
       pos: -13.5,2.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -6870.205
+      secondsUntilStateChange: -7424.118
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -47068,7 +47068,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraCommand
       nameSet: True
-      id: hop bedroom
+      id: HoP Bedroom
   - uid: 7457
     components:
     - type: Transform
@@ -47158,13 +47158,15 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: gravity generator
+      id: Gravity Generator
   - uid: 6100
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -62.5,2.5
       parent: 30
+    - type: SurveillanceCamera
+      id: RTG
   - uid: 7443
     components:
     - type: Transform
@@ -47209,6 +47211,22 @@ entities:
       - SurveillanceCameraEngineering
       nameSet: True
       id: SMES Bank
+  - uid: 8504
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -46.5,-10.5
+      parent: 30
+    - type: SurveillanceCamera
+      id: Burn Chamber
+  - uid: 8505
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -41.5,2.5
+      parent: 30
+    - type: SurveillanceCamera
+      id: Distro
 - proto: SurveillanceCameraMedical
   entities:
   - uid: 7465
@@ -47431,6 +47449,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 10.5,23.5
       parent: 30
+    - type: SurveillanceCamera
+      id: Armory
 - proto: SurveillanceCameraService
   entities:
   - uid: 7705
@@ -47465,7 +47485,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraService
       nameSet: True
-      id: Kitchen freezer
+      id: Kitchen Freezer
   - uid: 7708
     components:
     - type: Transform
@@ -47486,7 +47506,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraService
       nameSet: True
-      id: Entertainment staff
+      id: Entertainment Staff
   - uid: 7711
     components:
     - type: Transform
@@ -47507,7 +47527,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraService
       nameSet: True
-      id: Janitor cupboard
+      id: Janitor Cupboard
 - proto: SurveillanceCameraSupply
   entities:
   - uid: 7448
