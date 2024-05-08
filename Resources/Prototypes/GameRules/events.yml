@@ -428,7 +428,7 @@
         prototype: Nukeops
 
 - type: entity
-  id: SleeperAgentsRule
+  id: SleeperAgents
   parent: BaseGameRule
   noSpawn: true
   components:
@@ -444,7 +444,7 @@
   - type: TraitorRule
   - type: AntagSelection
     definitions:
-    - prefRoles: [ Traitor ]
+    - prefRoles: [ TraitorSleeper ]
       min: 1
       max: 2
       playerRatio: 10
