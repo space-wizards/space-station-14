@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: c4llv07e
-  changes:
-  - message: Cryo won't remove you from the new body if you chose a new ghost role
-      before cryo deleted your old body.
-    type: Fix
-  id: 6053
-  time: '2024-02-28T22:09:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24991
 - author: Nairodian
   changes:
   - message: You can now remove the rust from reinforced walls with a welder.
@@ -3852,3 +3844,10 @@
   id: 6552
   time: '2024-05-08T06:46:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27797
+- author: ShadowCommander
+  changes:
+  - message: Lizards now stop tail pulling when they are downed.
+    type: Fix
+  id: 6553
+  time: '2024-05-08T06:49:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27796
