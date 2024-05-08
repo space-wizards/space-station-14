@@ -103,7 +103,7 @@ public sealed class MetabolismSystem : EntitySystem
         var unitReactions = float.MaxValue;
         foreach (var (reagentId, quantity) in metabolism.Comp.CachedAbsorbedReagents)
         {
-            var reqQuant = quantity*metabolism.Comp.Multiplier;
+            var reqQuant = quantity*metabolism.Comp.BaseMultiplier;
             if (!absorbSol.Solution.TryGetReagentQuantity(reagentId, out var solQuant) || solQuant < reqQuant)
             {
                 unitReactions = 0;

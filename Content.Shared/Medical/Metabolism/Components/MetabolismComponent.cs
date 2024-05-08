@@ -10,17 +10,16 @@ namespace Content.Shared.Medical.Metabolism.Components;
 /// <summary>
 /// This is used for...
 /// </summary>
-[RegisterComponent,NetworkedComponent, AutoGenerateComponentState]
-public abstract partial class MetabolismComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class MetabolismComponent : Component
 {
     [DataField(required: true), AutoNetworkedField]
     public ProtoId<MetabolismTypePrototype> MetabolismType;
+    [DataField(required: true)]
+    public float BaseMultiplier = 1;
 
-    [DataField]
+    [DataField(required: true)]
     public DamageSpecifier DeprivationDamage = new();
-
-    [DataField]
-    public float Multiplier = 1;
 
     [DataField, AutoNetworkedField] public bool UsesBodySolution = true;
     [DataField, AutoNetworkedField] public string AbsorbSolutionId = "bloodReagents";
@@ -30,7 +29,6 @@ public abstract partial class MetabolismComponent : Component
     [DataField, AutoNetworkedField] public EntityUid CachedWasteSolutionEnt = EntityUid.Invalid;
     [DataField] public List<ReagentQuantity> CachedAbsorbedReagents = new();
     [DataField] public List<ReagentQuantity> CachedWasteReagents = new();
-
 
     /// <summary>
     ///     The next time that reagents will be metabolized.

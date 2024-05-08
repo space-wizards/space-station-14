@@ -6,9 +6,9 @@
   name: "body part"
   abstract: true
   components:
+  - type: BodyPart
   - type: Damageable
     damageContainer: Biological
-  - type: BodyPart
   - type: Woundable
     maxHealth: 50
     maxIntegrity: 10

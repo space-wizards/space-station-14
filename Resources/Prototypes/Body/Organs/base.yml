@@ -1,0 +1,56 @@
+﻿- type: entity
+  id: BaseOrganUnGibbable
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+  - type: Organ
+  - type: Food
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+    - people
+  - type: Tag
+    tags:
+    - Meat
+  - type: Metabolism
+    metabolismType: Human
+    baseMultiplier: 1
+    deprivationDamage:
+      types:
+        Cellular: 0.05
+  - type: Damageable
+    damageContainer: Biological
+  - type: Woundable
+    maxHealth: 20
+    maxIntegrity: 5
+    config:
+      Piercing:
+        damageMax: 25
+        woundPool: CommonPiercing
+      Blunt:
+        damageMax: 25
+        woundPool: CommonBlunt
+      Slash:
+        damageMax: 25
+        woundPool: CommonSlash
+
+- type: entity
+  id: BaseOrgan
+  parent: BaseOrganUnGibbable
+  abstract: true
+  components:
+  - type: Gibbable
