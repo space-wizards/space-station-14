@@ -64,7 +64,8 @@ namespace Content.IntegrationTests.Tests.Utility
             var testMap = await pair.CreateTestMap();
             var mapCoordinates = testMap.MapCoords;
 
-            var sEntities = server.ResolveDependency<IEntityManager>();
+            var sEntities = server.EntMan;
+            var sys = server.System<EntityWhitelistSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -80,22 +81,14 @@ namespace Content.IntegrationTests.Tests.Utility
                     Components = new[] { $"{ValidComponent}" },
                     Tags = new() { "WhitelistTestValidTag" }
                 };
-                whitelistInst.UpdateRegistrations();
-                Assert.That(whitelistInst, Is.Not.Null);
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(whitelistInst.Components, Is.Not.Null);
-                    Assert.That(whitelistInst.Tags, Is.Not.Null);
-                });
+                    Assert.That(sys.IsValid(whitelistInst, validComponent), Is.True);
+                    Assert.That(sys.IsValid(whitelistInst, WhitelistTestValidTag), Is.True);
 
-                Assert.Multiple(() =>
-                {
-                    Assert.That(whitelistInst.IsValid(validComponent), Is.True);
-                    Assert.That(whitelistInst.IsValid(WhitelistTestValidTag), Is.True);
-
-                    Assert.That(whitelistInst.IsValid(invalidComponent), Is.False);
-                    Assert.That(whitelistInst.IsValid(WhitelistTestInvalidTag), Is.False);
+                    Assert.That(sys.IsValid(whitelistInst, invalidComponent), Is.False);
+                    Assert.That(sys.IsValid(whitelistInst, WhitelistTestInvalidTag), Is.False);
                 });
 
                 // Test from serialized
@@ -111,11 +104,11 @@ namespace Content.IntegrationTests.Tests.Utility
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(whitelistSer.IsValid(validComponent), Is.True);
-                    Assert.That(whitelistSer.IsValid(WhitelistTestValidTag), Is.True);
+                    Assert.That(sys.IsValid(whitelistSer, validComponent), Is.True);
+                    Assert.That(sys.IsValid(whitelistSer, WhitelistTestValidTag), Is.True);
 
-                    Assert.That(whitelistSer.IsValid(invalidComponent), Is.False);
-                    Assert.That(whitelistSer.IsValid(WhitelistTestInvalidTag), Is.False);
+                    Assert.That(sys.IsValid(whitelistSer, invalidComponent), Is.False);
+                    Assert.That(sys.IsValid(whitelistSer, WhitelistTestInvalidTag), Is.False);
                 });
             });
             await pair.CleanReturnAsync();
