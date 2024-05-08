@@ -339,10 +339,10 @@
     graph: SupplyBot
     node: bot
   - type: Access
-    groups:
-    - Cargo
     tags:
     - Maintenance
+    - Supply
+    - Salvage
   - type: Dumpable
   - type: Storage
     maxItemSize: Huge
