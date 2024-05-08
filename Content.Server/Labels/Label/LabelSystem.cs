@@ -28,18 +28,11 @@ namespace Content.Server.Labels
             base.Initialize();
 
             SubscribeLocalEvent<LabelComponent, MapInitEvent>(OnLabelCompMapInit);
-            SubscribeLocalEvent<LabelComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
             SubscribeLocalEvent<PaperLabelComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PaperLabelComponent, ComponentRemove>(OnComponentRemove);
             SubscribeLocalEvent<PaperLabelComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PaperLabelComponent, EntRemovedFromContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PaperLabelComponent, ExaminedEvent>(OnExamined);
-        }
-
-        private void OnRefreshNameModifiers(Entity<LabelComponent> entity, ref RefreshNameModifiersEvent args)
-        {
-            if (!string.IsNullOrEmpty(entity.Comp.CurrentLabel))
-                args.AddPostfix($"({entity.Comp.CurrentLabel})");
         }
 
         private void OnLabelCompMapInit(EntityUid uid, LabelComponent component, MapInitEvent args)
