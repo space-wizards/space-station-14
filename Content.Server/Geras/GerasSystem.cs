@@ -11,10 +11,10 @@ namespace Content.Server.Geras;
 /// <inheritdoc/>
 public sealed class GerasSystem : SharedGerasSystem
 {
-    [Dependency] private readonly ActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
+    [Dependency] private readonly ActionsSystem _actionsSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     /// <inheritdoc/>
