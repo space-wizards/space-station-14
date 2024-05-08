@@ -4,7 +4,6 @@ using Content.Shared.Charges.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
-using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Examine;
 using Robust.Shared.Audio.Systems;
@@ -21,7 +20,6 @@ public sealed class DashAbilitySystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
