@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
+using Content.Shared.Renamer.EntitySystems;
 using Content.Shared.StatusIcon.Components;
 using Content.Shared.Zombies;
 using Robust.Client.GameObjects;
@@ -15,6 +16,7 @@ public sealed class ZombieSystem : EntitySystem
 
         SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ZombieComponent, CanDisplayStatusIconsEvent>(OnCanDisplayStatusIcons);
+        SubscribeLocalEvent<ZombieComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
         SubscribeLocalEvent<InitialInfectedComponent, CanDisplayStatusIconsEvent>(OnCanDisplayStatusIcons);
     }
 
@@ -44,6 +46,11 @@ public sealed class ZombieSystem : EntitySystem
             return;
 
         args.Cancelled = true;
+    }
+
+    private void OnRefreshNameModifiers(Entity<ZombieComponent> entity, ref RefreshNameModifiersEvent args)
+    {
+        args.AddPrefix(Loc.GetString("zombie-name-prefix"));
     }
 
     private void OnCanDisplayStatusIcons(EntityUid uid, InitialInfectedComponent component, ref CanDisplayStatusIconsEvent args)
