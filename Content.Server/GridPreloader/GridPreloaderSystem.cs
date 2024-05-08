@@ -11,6 +11,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using System.Numerics;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 
 namespace Content.Server.GridPreloader;
@@ -102,17 +103,15 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
                 return false;
         }
 
-        if (preloader.PreloadedGrids.ContainsKey(proto) && preloader.PreloadedGrids[proto].Count > 0)
-        {
-            preloadedGrid = preloader.PreloadedGrids[proto][0];
+        if (!preloader.PreloadedGrids.TryGetValue(proto, out var list) || list.Count <= 0)
+            return false;
 
-            preloader.PreloadedGrids[proto].RemoveAt(0);
-            if (preloader.PreloadedGrids[proto].Count == 0)
-                preloader.PreloadedGrids.Remove(proto);
+        preloadedGrid = list[0];
 
-            return true;
-        }
+        list.RemoveAt(0);
+        if (list.Count == 0)
+            preloader.PreloadedGrids.Remove(proto);
 
-        return false;
+        return true;
     }
 }
