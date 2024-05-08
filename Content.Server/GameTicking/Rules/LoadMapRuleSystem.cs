@@ -16,6 +16,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly GridPreloaderSystem _gridPreloader = default!;
 
@@ -46,6 +47,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
             return;
 
         var mapUid = _map.CreateMap(out var mapId, false);
+        _metaData.SetEntityName(mapUid, $"LoadMapRule destination for rule {ToPrettyString(uid)}");
         comp.Map = mapId;
 
         if (comp.GameMap != null)
@@ -66,7 +68,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         }
         else if (comp.PreloadedGrid != null)
         {
-            // To do: If there are no preloaded shuttles left, the alert will still go off! This is a problem, but it seems to be necessary to make an Event Handler with Canceled fields.
+            // TODO: If there are no preloaded grids left, any rule announcements will still go off!
             if (!_gridPreloader.TryGetPreloadedGrid(comp.PreloadedGrid.Value, out var loadedShuttle))
             {
                 _mapManager.DeleteMap(mapId);
@@ -81,7 +83,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
             Log.Error($"No valid map prototype or map path associated with the rule {ToPrettyString(uid)}");
         }
 
-        // Init map after we load everything.
+        // Init map after we load everything incl. preloaded grids.
         _map.InitializeMap(mapId);
     }
 

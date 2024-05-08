@@ -1,7 +1,7 @@
 - type: preloadedGrid
   id: ShuttleStriker
   path: /Maps/Shuttles/ShuttleEvent/striker.yml
-  copies: 1
+  copies: 2
 
 - type: preloadedGrid
   id: ShuttleCargoLost

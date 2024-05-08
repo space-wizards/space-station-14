@@ -36,7 +36,7 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
             return;
 
         var mapUid = _map.CreateMap(out var mapId, false);
-        _meta.SetEntityName(mapUid, $"GridPreloader map for {ToPrettyString(preloader.Owner)}");
+        _meta.SetEntityName(mapUid, $"GridPreloader map for station {ToPrettyString(preloader.Owner)}");
         preloader.Comp.PreloadGridsMapId = mapId;
         _map.SetPaused(mapId, true);
 
