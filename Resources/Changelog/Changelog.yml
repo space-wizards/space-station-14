@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Kukutis96513
-  changes:
-  - message: Changed the amount of plushies in the lizard plushie crate.
-    type: Tweak
-  id: 6057
-  time: '2024-02-29T16:45:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25122
 - author: Aexxie
   changes:
   - message: Nutribricks spawn in Survival Kits in place of Tinned Meat.
@@ -3851,3 +3844,11 @@
   id: 6556
   time: '2024-05-08T10:21:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27793
+- author: K-Dynamic
+  changes:
+  - message: Bike Horns, Suspenders and the Clown Recorder are now available from
+      the Theatrical Performances Crate
+    type: Tweak
+  id: 6557
+  time: '2024-05-08T12:30:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27668
