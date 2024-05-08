@@ -77,12 +77,6 @@ public sealed partial class RenamerSystem : EntitySystem
             _metaData.SetEntityName(entity, modifiedName, meta);
             Dirty(entity.Owner, meta);
         }
-
-        if (modifiedName == entity.Comp.BaseName)
-        {
-            // We're not actually changing the name at this point, so we can go away
-            RemCompDeferred<RenamerComponent>(entity);
-        }
     }
 }
 
