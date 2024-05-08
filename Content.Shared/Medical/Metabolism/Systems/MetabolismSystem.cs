@@ -92,12 +92,6 @@ public sealed class MetabolismSystem : EntitySystem
             Dirty(respirator);
     }
 
-    private void DoRespirate(Entity<MetabolismComponent> metabolism)
-    {
-
-
-    }
-
     private bool TryAbsorbReagents(Entity<MetabolismComponent> metabolism)
     {
         if (metabolism.Comp.CachedAbsorbSolutionEnt == EntityUid.Invalid
