@@ -134,21 +134,6 @@ public abstract class SharedStorageSystem : EntitySystem
         UpdatePrototypeCache();
     }
 
-    private void OnLockToggled(EntityUid uid, StorageComponent component, ref LockToggledEvent args)
-    {
-        if (!args.Locked)
-            return;
-
-        var actors = _ui.GetActors(uid, StorageComponent.StorageUiKey.Key).ToList();
-        for (var i = actors.Count - 1; i >= 0; i--)
-        {
-            var actor = actors[i];
-            if (_admin.HasAdminFlag(actor, AdminFlags.Admin))
-                continue;
-            _ui.CloseUi(uid, StorageComponent.StorageUiKey.Key, actor);
-        }
-    }
-
     private void OnMapInit(Entity<StorageComponent> entity, ref MapInitEvent args)
     {
         UseDelay.SetLength(entity.Owner, entity.Comp.QuickInsertCooldown, QuickInsertUseDelayID);
@@ -1415,6 +1400,26 @@ public abstract class SharedStorageSystem : EntitySystem
         // if there is no max item size specified, the value used
         // is one below the item size of the storage entity.
         return _nextSmallest[item.Size];
+    }
+
+    /// <summary>
+    /// Checks if a storage's UI is open  by anyone when locked, and closes it unless they're an admin.
+    /// </summary>
+    private void OnLockToggled(EntityUid uid, StorageComponent component, ref LockToggledEvent args)
+    {
+        if (!args.Locked)
+            return;
+
+        //gets everyone looking at the UI
+        var actors = _ui.GetActors(uid, StorageComponent.StorageUiKey.Key).ToList();
+        for (var i = actors.Count - 1; i >= 0; i--)
+        {
+            var actor = actors[i];
+            if (_admin.HasAdminFlag(actor, AdminFlags.Admin))
+                continue;
+            //and closes it unless they're an admin
+            _ui.CloseUi(uid, StorageComponent.StorageUiKey.Key, actor);
+        }
     }
 
     private void OnStackCountChanged(EntityUid uid, MetaDataComponent component, StackCountChangedEvent args)
