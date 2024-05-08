@@ -3,6 +3,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Renamer.EntitySystems;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
@@ -15,6 +16,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly RenamerSystem _renamer = default!;
 
     public override void Initialize()
     {
@@ -50,7 +52,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         if (!HasComp<IdCardComponent>(uid))
         {
             var meta = MetaData(uid);
-            _metaData.SetEntityName(uid, proto.Name, meta);
+            _renamer.SetBaseName(uid, proto.Name);
             _metaData.SetEntityDescription(uid, proto.Description, meta);
         }
 
