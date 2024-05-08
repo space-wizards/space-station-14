@@ -48,9 +48,17 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
                     LoadMap = false,
                 };
 
-                // i dont use TryLoad, because he doesn't return EntityUid
-                // TODO MIRROR FIX
-                var gridUid = _mapLoader.LoadGrid(preloader.Comp.PreloadGridsMapId.Value, proto.Path.ToString(), options);
+                if (!_mapLoader.TryLoad(preloader.Comp.PreloadGridsMapId.Value, proto.Path.ToString(), out var roots,
+                        options))
+                    continue;
+
+                // only supports loading maps with one grid.
+                if (roots.Count != 1)
+                    continue;
+
+                var gridUid = roots[0];
+
+                // gets grid + also confirms that the root we loaded is actually a grid
                 if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
                     continue;
 
@@ -61,14 +69,14 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
                 globalXOffset += mapGrid.LocalAABB.Width / 2;
 
                 var coords = new Vector2(-physic.LocalCenter.X + globalXOffset, -physic.LocalCenter.Y);
-                _transform.SetCoordinates(gridUid.Value, new EntityCoordinates(mapUid, coords));
+                _transform.SetCoordinates(gridUid, new EntityCoordinates(mapUid, coords));
 
                 globalXOffset += (mapGrid.LocalAABB.Width / 2) + 1;
 
                 //Add to list
                 if (!preloader.Comp.PreloadedGrids.ContainsKey(proto.ID))
                     preloader.Comp.PreloadedGrids[proto.ID] = new List<EntityUid>();
-                preloader.Comp.PreloadedGrids[proto.ID].Add(gridUid.Value);
+                preloader.Comp.PreloadedGrids[proto.ID].Add(gridUid);
             }
         }
     }
