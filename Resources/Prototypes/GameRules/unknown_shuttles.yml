@@ -7,7 +7,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 10
+    weight: 7
     reoccurrenceDelay: 30
     duration: 1
   - type: LoadMapRule
@@ -22,7 +22,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 10
+    weight: 7
     reoccurrenceDelay: 30
     duration: 1
   - type: LoadMapRule
@@ -37,7 +37,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 10
+    weight: 8
     reoccurrenceDelay: 30
     duration: 1
   - type: LoadMapRule
@@ -52,7 +52,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 10
+    weight: 4
     reoccurrenceDelay: 30
     duration: 1
   - type: LoadMapRule
@@ -67,7 +67,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 10
+    weight: 4
     reoccurrenceDelay: 30
     duration: 1
   - type: LoadMapRule
