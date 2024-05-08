@@ -39,7 +39,7 @@ namespace Content.Server.Labels
         private void OnRefreshNameModifiers(Entity<LabelComponent> entity, ref RefreshNameModifiersEvent args)
         {
             if (!string.IsNullOrEmpty(entity.Comp.CurrentLabel))
-                args.AddPostfix(entity.Comp.CurrentLabel);
+                args.AddPostfix($" ({entity.Comp.CurrentLabel})");
         }
 
         private void OnLabelCompMapInit(EntityUid uid, LabelComponent component, MapInitEvent args)
