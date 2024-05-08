@@ -214,7 +214,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                     continue;
             }
 
-            MakeAntag(ent, session, def);
+            TryMakeAntag(ent, session, def);
         }
     }
 

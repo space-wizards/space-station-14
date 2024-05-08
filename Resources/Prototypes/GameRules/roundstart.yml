@@ -149,6 +149,9 @@
     - prefRoles: [ Traitor ]
       max: 8
       playerRatio: 10
+      blacklist:
+        components:
+        - MindShield
       lateJoinAdditional: true
       mindComponents:
       - type: TraitorRole
