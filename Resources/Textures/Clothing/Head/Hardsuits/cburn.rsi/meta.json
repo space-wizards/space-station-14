@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by EmoGarbage404",
+  "copyright": "Made by EmoGarbage404. Vox states by Flareguy for SS14",
   "size": {
     "x": 32,
     "y": 32
@@ -28,19 +28,11 @@
       "directions": 4
     },
     {
-      "name": "inhand-left",
+      "name": "equipped-head-vox",
       "directions": 4
     },
     {
-      "name": "inhand-left-unshaded",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right-unshaded",
+      "name": "equipped-head-unshaded-vox",
       "directions": 4
     }
   ]
