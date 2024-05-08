@@ -1,6 +1,4 @@
-﻿using Content.Server.Speech.EntitySystems;
-using Content.Shared.Administration;
-using Content.Shared.Speech;
+﻿using Content.Shared.Administration;
 
 namespace Content.Server.Administration.Systems;
 

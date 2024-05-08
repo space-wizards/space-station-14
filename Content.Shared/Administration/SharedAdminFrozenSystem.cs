@@ -6,7 +6,6 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
-using Content.Shared.Popups;
 using Content.Shared.Speech;
 using Content.Shared.Throwing;
 
