@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from TGstation github https://github.com/tgstation/tgstation/commit/fed2ddeb54d0fb8bb97cb0a899a088b7d7423bbb",
+  "copyright": "Taken from TGstation github https://github.com/tgstation/tgstation/commit/fed2ddeb54d0fb8bb97cb0a899a088b7d7423bbb. Vox state by Flareguy for SS14",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-vox",
       "directions": 4
     },
     {
