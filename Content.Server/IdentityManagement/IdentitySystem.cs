@@ -10,6 +10,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Renamer.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
@@ -19,7 +20,7 @@ namespace Content.Server.IdentityManagement;
 /// <summary>
 ///     Responsible for updating the identity of an entity on init or clothing equip/unequip.
 /// </summary>
-public class IdentitySystem : SharedIdentitySystem
+public sealed class IdentitySystem : SharedIdentitySystem
 {
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
@@ -27,6 +28,7 @@ public class IdentitySystem : SharedIdentitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly CriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
+    [Dependency] private readonly RenamerSystem _renamer = default!;
 
     private HashSet<EntityUid> _queuedIdentityUpdates = new();
 
@@ -84,6 +86,8 @@ public class IdentitySystem : SharedIdentitySystem
     {
         if (identity.IdentityEntitySlot.ContainedEntity is not { } ident)
             return;
+
+        _renamer.RefreshNameModifiers(uid);
 
         var representation = GetIdentityRepresentation(uid);
         var name = GetIdentityName(uid, representation);
