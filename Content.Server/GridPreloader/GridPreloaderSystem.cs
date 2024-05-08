@@ -11,6 +11,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using System.Numerics;
+using JetBrains.Annotations;
 
 namespace Content.Server.GridPreloader;
 public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
@@ -18,9 +19,9 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
+    [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-
 
     public override void Initialize()
     {
@@ -35,6 +36,7 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
             return;
 
         var mapUid = _map.CreateMap(out var mapId, false);
+        _meta.SetEntityName(mapUid, $"GridPreloader map for {ToPrettyString(preloader.Owner)}");
         preloader.Comp.PreloadGridsMapId = mapId;
         _map.SetPaused(mapId, true);
 
@@ -48,8 +50,7 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
                     LoadMap = false,
                 };
 
-                if (!_mapLoader.TryLoad(preloader.Comp.PreloadGridsMapId.Value, proto.Path.ToString(), out var roots,
-                        options))
+                if (!_mapLoader.TryLoad(preloader.Comp.PreloadGridsMapId.Value, proto.Path.ToString(), out var roots, options))
                     continue;
 
                 // only supports loading maps with one grid.
@@ -62,20 +63,20 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
                 if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
                     continue;
 
-                if (!TryComp<PhysicsComponent>(gridUid, out var physic))
+                if (!TryComp<PhysicsComponent>(gridUid, out var physics))
                     continue;
 
-                //Position Calculating
+                // Position Calculating
                 globalXOffset += mapGrid.LocalAABB.Width / 2;
 
-                var coords = new Vector2(-physic.LocalCenter.X + globalXOffset, -physic.LocalCenter.Y);
+                var coords = new Vector2(-physics.LocalCenter.X + globalXOffset, -physics.LocalCenter.Y);
                 _transform.SetCoordinates(gridUid, new EntityCoordinates(mapUid, coords));
 
                 globalXOffset += (mapGrid.LocalAABB.Width / 2) + 1;
 
-                //Add to list
+                // Add to list
                 if (!preloader.Comp.PreloadedGrids.ContainsKey(proto.ID))
-                    preloader.Comp.PreloadedGrids[proto.ID] = new List<EntityUid>();
+                    preloader.Comp.PreloadedGrids[proto.ID] = new();
                 preloader.Comp.PreloadedGrids[proto.ID].Add(gridUid);
             }
         }
@@ -89,6 +90,7 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
     /// <summary>
     /// An attempt to get a certain preloaded shuttle. If there are no more such shuttles left, returns null
     /// </summary>
+    [PublicAPI]
     public bool TryGetPreloadedGrid(ProtoId<PreloadedGridPrototype> proto, [NotNullWhen(true)] out EntityUid? preloadedGrid, GridPreloaderComponent? preloader = null)
     {
         preloadedGrid = null;
