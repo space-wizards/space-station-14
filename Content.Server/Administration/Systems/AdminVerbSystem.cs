@@ -463,7 +463,7 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("configure-verb-get-data-text"),
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
                     Category = VerbCategory.Debug,
-                    Act = () => _uiSystem.TryOpen(args.Target, ConfigurationUiKey.Key, actor.PlayerSession)
+                    Act = () => _uiSystem.OpenUi(args.Target, ConfigurationUiKey.Key, actor.PlayerSession)
                 };
                 args.Verbs.Add(verb);
             }

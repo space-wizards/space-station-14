@@ -1,4 +1,5 @@
 ﻿using Content.Client.Eui;
+using Content.Server.Ghost.Roles.Raffles;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
@@ -41,7 +42,7 @@ public sealed class MakeGhostRoleEui : BaseEui
         _window.OpenCentered();
     }
 
-    private void OnMake(NetEntity entity, string name, string description, string rules, bool makeSentient)
+    private void OnMake(NetEntity entity, string name, string description, string rules, bool makeSentient, GhostRoleRaffleSettings? raffleSettings)
     {
         var session = _playerManager.LocalSession;
         if (session == null)
@@ -49,12 +50,22 @@ public sealed class MakeGhostRoleEui : BaseEui
             return;
         }
 
+        var command = raffleSettings is not null ? "makeghostroleraffled" : "makeghostrole";
+
         var makeGhostRoleCommand =
-            $"makeghostrole " +
+            $"{command} " +
             $"\"{CommandParsing.Escape(entity.ToString())}\" " +
             $"\"{CommandParsing.Escape(name)}\" " +
-            $"\"{CommandParsing.Escape(description)}\" " +
-            $"\"{CommandParsing.Escape(rules)}\"";
+            $"\"{CommandParsing.Escape(description)}\" ";
+
+        if (raffleSettings is not null)
+        {
+            makeGhostRoleCommand += $"{raffleSettings.InitialDuration} " +
+                                    $"{raffleSettings.JoinExtendsDurationBy} " +
+                                    $"{raffleSettings.MaxDuration} ";
+        }
+
+        makeGhostRoleCommand += $"\"{CommandParsing.Escape(rules)}\"";
 
         _consoleHost.ExecuteCommand(session, makeGhostRoleCommand);
 

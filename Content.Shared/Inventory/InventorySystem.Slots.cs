@@ -27,6 +27,31 @@ public partial class InventorySystem : EntitySystem
             .RemoveHandler(HandleViewVariablesSlots, ListViewVariablesSlots);
     }
 
+    /// <summary>
+    /// Tries to find an entity in the specified slot with the specified component.
+    /// </summary>
+    public bool TryGetInventoryEntity<T>(Entity<InventoryComponent?> entity, out EntityUid targetUid)
+        where T : IComponent, IClothingSlots
+    {
+        if (TryGetContainerSlotEnumerator(entity.Owner, out var containerSlotEnumerator))
+        {
+            while (containerSlotEnumerator.NextItem(out var item, out var slot))
+            {
+                if (!TryComp<T>(item, out var required))
+                    continue;
+
+                if ((((IClothingSlots) required).Slots & slot.SlotFlags) == 0x0)
+                    continue;
+
+                targetUid = item;
+                return true;
+            }
+        }
+
+        targetUid = EntityUid.Invalid;
+        return false;
+    }
+
     protected virtual void OnInit(EntityUid uid, InventoryComponent component, ComponentInit args)
     {
         if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
@@ -126,7 +151,6 @@ public partial class InventorySystem : EntitySystem
             slotDefinitions = null;
             return false;
         }
-
         slotDefinitions = inv.Slots;
         return true;
     }

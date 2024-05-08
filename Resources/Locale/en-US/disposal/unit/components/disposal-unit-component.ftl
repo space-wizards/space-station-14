@@ -18,9 +18,6 @@ disposal-eject-verb-get-data-text = Eject contents
 ## No hands
 disposal-unit-no-hands = You don't have hands!
 
-## missed
-disposal-unit-thrown-missed = Missed!
-
 # state
 disposal-unit-state-Ready = Ready
 # Yes I want it to always say Pressurizing

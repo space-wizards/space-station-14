@@ -1,0 +1,30 @@
+﻿- type: entity
+  id: Tippy
+  noSpawn: true
+  components:
+  - type: Sprite
+    netsync: false
+    noRot: false
+    scale: 4,4
+    layers:
+    - sprite: Tips/tippy.rsi
+      state: left
+      map: [ "revealing" ]
+    - sprite: Tips/tippy.rsi
+      state: right
+      map: [ "hiding" ]
+    - sprite: Tips/tippy.rsi
+      state: down
+      visible: false
+      map: [ "speaking" ]
+  # footstep sounds wile waddling onto the screen. 
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
+  # visuals for the speech bubble.
+  # only supports background image.
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    backgroundModulate: "#ffffcc"
+    fontAccentColor: "#000000"

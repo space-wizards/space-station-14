@@ -701,6 +701,20 @@ namespace Content.Client.Preferences.UI
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
+                case HumanoidSkinColor.VoxFeathers:
+                {
+                    if (!_rgbSkinColorContainer.Visible)
+                    {
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
+                    }
+
+                    var color = SkinColor.ClosestVoxColor(_rgbSkinColorSelector.Color);
+
+                    CMarkings.CurrentSkinColor = color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+                    break;
+                }
             }
 
             IsDirty = true;
@@ -728,7 +742,6 @@ namespace Content.Client.Preferences.UI
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
 
             UpdateAntagRequirements();
-            UpdateRoleRequirements();
             UpdateControls();
             ShowClothes.Pressed = true;
         }
@@ -906,6 +919,18 @@ namespace Content.Client.Preferences.UI
 
                     // set the RGB values to the direct values otherwise
                     _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
+                    break;
+                }
+                case HumanoidSkinColor.VoxFeathers:
+                {
+                    if (!_rgbSkinColorContainer.Visible)
+                    {
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
+                    }
+
+                    _rgbSkinColorSelector.Color = SkinColor.ClosestVoxColor(Profile.Appearance.SkinColor);
+
                     break;
                 }
             }
