@@ -21,6 +21,12 @@ public sealed partial class ModifyWearerNameComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public NameModifierType ModifierType = NameModifierType.Prefix;
+
+    /// <summary>
+    /// Priority of the modifier. See <see cref="EntitySystems.RefreshNameModifiersEvent"/> for more information.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int Priority;
 }
 
 public enum NameModifierType

@@ -35,17 +35,17 @@ public sealed partial class ModifyWearerNameSystem : EntitySystem
         {
             case NameModifierType.Prefix:
                 {
-                    args.Args.AddPrefix(entity.Comp.Text);
+                    args.Args.AddPrefix(entity.Comp.Text, entity.Comp.Priority);
                     break;
                 }
             case NameModifierType.Postfix:
                 {
-                    args.Args.AddPostfix(entity.Comp.Text);
+                    args.Args.AddPostfix(entity.Comp.Text, entity.Comp.Priority);
                     break;
                 }
             case NameModifierType.Override:
                 {
-                    args.Args.AddOverride(entity.Comp.Text);
+                    args.Args.AddOverride(entity.Comp.Text, entity.Comp.Priority);
                     break;
                 }
         }
