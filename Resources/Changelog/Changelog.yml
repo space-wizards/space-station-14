@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Engineering structures orders in cargo now supplied via flatpacks (e.g.
-      tesla & singulo generators, other stuff for them).
-    type: Tweak
-  - message: Thrusters and gyroscopes now supplied in crates via flatpacks.
-    type: Tweak
-  id: 6052
-  time: '2024-02-28T22:02:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25647
 - author: c4llv07e
   changes:
   - message: Cryo won't remove you from the new body if you chose a new ghost role
@@ -3855,3 +3845,10 @@
   id: 6551
   time: '2024-05-08T00:25:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26746
+- author: Cojoke-dot
+  changes:
+  - message: You can now shoot over racks
+    type: Tweak
+  id: 6552
+  time: '2024-05-08T06:46:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27797
