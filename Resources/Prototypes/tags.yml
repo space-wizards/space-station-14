@@ -536,6 +536,9 @@
   id: DrinkCan
 
 - type: Tag
+  id: DrinkGlass
+
+- type: Tag
   id: DrinkSpaceGlue
 
 - type: Tag
