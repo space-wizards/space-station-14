@@ -1,6 +1,6 @@
 - type: entity
   name: BaseWeaponRifle
-  parent: BaseItem
+  parent: [BaseItem, BaseGunWieldable]
   id: BaseWeaponRifle
   description: A rooty tooty point and shooty.
   abstract: true
@@ -15,13 +15,7 @@
     - Back
     - suitStorage
   - type: AmmoCounter
-  - type: Wieldable
-  - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -30
   - type: Gun
-    minAngle: 21
-    maxAngle: 32
     fireRate: 5
     selectedMode: FullAuto
     availableModes:

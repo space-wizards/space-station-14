@@ -200,7 +200,7 @@
 
 - type: entity
   name: laser rifle
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponLaserCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
@@ -216,13 +216,7 @@
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
   - type: StaticPrice
     price: 420
-  - type: Wieldable
-  - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -30
   - type: Gun
-    minAngle: 21
-    maxAngle: 32
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -273,7 +267,7 @@
 
 - type: entity
   name: pulse carbine
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponPulseCarbine
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
@@ -287,13 +281,7 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
-  - type: Wieldable
-  - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -30
   - type: Gun
-    minAngle: 21
-    maxAngle: 32
     selectedMode: SemiAuto
     fireRate: 3
     availableModes:
@@ -310,7 +298,7 @@
 
 - type: entity
   name: pulse rifle
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponPulseRifle
   description: A weapon that is almost as infamous as its users.
   components:
@@ -324,13 +312,7 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
-  - type: Wieldable
-  - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -30
   - type: Gun
-    minAngle: 21
-    maxAngle: 32
     fireRate: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
@@ -343,7 +325,7 @@
 
 - type: entity
   name: laser cannon
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponLaserCannon
   description: A heavy duty, high powered laser weapon.
   components:
@@ -357,13 +339,7 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
-  - type: Wieldable
-  - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -30
   - type: Gun
-    minAngle: 21
-    maxAngle: 32
     fireRate: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -404,7 +380,7 @@
 
 - type: entity
   name: x-ray cannon
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponXrayCannon
   description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:
@@ -418,13 +394,7 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
-  - type: Wieldable
-  - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -30
   - type: Gun
-    minAngle: 21
-    maxAngle: 32
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
