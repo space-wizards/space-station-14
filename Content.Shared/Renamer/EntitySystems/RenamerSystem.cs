@@ -14,12 +14,20 @@ public sealed partial class RenamerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RenamerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RenamerComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
     }
 
     private void OnMapInit(Entity<RenamerComponent> entity, ref MapInitEvent args)
     {
         // Set the base name to the current name
         SetBaseName((entity, entity.Comp), Name(entity));
+    }
+
+    private void OnAfterAutoHandleState(Entity<RenamerComponent> entity, ref AfterAutoHandleStateEvent args)
+    {
+        // The server might have generated a different name than we did locally if some systems only handle
+        // adding modifiers server-side, so we apply the server's generated name here to be sure.
+        _metaData.SetEntityName(entity, entity.Comp.FullName);
     }
 
     /// <summary>
@@ -76,6 +84,12 @@ public sealed partial class RenamerSystem : EntitySystem
             // Set the entity's name with modifiers
             _metaData.SetEntityName(entity, modifiedName, meta);
             Dirty(entity.Owner, meta);
+        }
+
+        if (modifiedName != entity.Comp.FullName)
+        {
+            entity.Comp.FullName = modifiedName;
+            Dirty(entity);
         }
     }
 }
