@@ -109,6 +109,7 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<StorageComponent, DestructionEventArgs>(OnDestroy);
         SubscribeLocalEvent<StorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
+        SubscribeLocalEvent<StorageComponent, LockToggledEvent>(OnLockToggled);
         SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
 
         SubscribeLocalEvent<StorageComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
@@ -131,6 +132,21 @@ public abstract class SharedStorageSystem : EntitySystem
             .Register<SharedStorageSystem>();
 
         UpdatePrototypeCache();
+    }
+
+    private void OnLockToggled(EntityUid uid, StorageComponent component, ref LockToggledEvent args)
+    {
+        if (!args.Locked)
+            return;
+
+        var actors = _ui.GetActors(uid, StorageComponent.StorageUiKey.Key).ToList();
+        for (var i = actors.Count - 1; i >= 0; i--)
+        {
+            var actor = actors[i];
+            if (_admin.HasAdminFlag(actor, AdminFlags.Admin))
+                continue;
+            _ui.CloseUi(uid, StorageComponent.StorageUiKey.Key, actor);
+        }
     }
 
     private void OnMapInit(Entity<StorageComponent> entity, ref MapInitEvent args)
