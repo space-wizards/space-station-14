@@ -97,8 +97,7 @@ namespace Content.Server.GameTicking
                 if (job == null)
                 {
                     var playerSession = _playerManager.GetSessionById(netUser);
-                    _chatManager.DispatchServerMessage(playerSession,
-                        Loc.GetString("job-not-available-wait-in-lobby"));
+                    _chatManager.DispatchServerMessage(playerSession, Loc.GetString("job-not-available-wait-in-lobby"));
                 }
                 else
                 {
@@ -316,10 +315,7 @@ namespace Content.Server.GameTicking
         /// <param name="station">The station they're spawning on</param>
         /// <param name="jobId">An optional job for them to spawn as</param>
         /// <param name="silent">Whether or not the player should be greeted upon joining</param>
-        public void MakeJoinGame(ICommonSession player,
-            EntityUid station,
-            string? jobId = null,
-            bool silent = false)
+        public void MakeJoinGame(ICommonSession player, EntityUid station, string? jobId = null, bool silent = false)
         {
             if (!_playerGameStatuses.ContainsKey(player.UserId))
                 return;
@@ -363,7 +359,9 @@ namespace Content.Server.GameTicking
             }
 
             var ghost = _ghost.SpawnGhost(mind.Value);
-            _adminLogger.Add(LogType.LateJoin, LogImpact.Low, $"{player.Name} late joined the round as an Observer with {ToPrettyString(ghost):entity}.");
+            _adminLogger.Add(LogType.LateJoin,
+                LogImpact.Low,
+                $"{player.Name} late joined the round as an Observer with {ToPrettyString(ghost):entity}.");
         }
 
         #region Spawn Points
@@ -372,8 +370,7 @@ namespace Content.Server.GameTicking
         {
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in EntityManager
-                         .EntityQuery<SpawnPointComponent, TransformComponent>(true))
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>(true))
             {
                 if (point.SpawnType != SpawnPointType.Observer)
                     continue;
@@ -389,9 +386,7 @@ namespace Content.Server.GameTicking
                 var query = AllEntityQuery<MapGridComponent>();
                 while (query.MoveNext(out var uid, out var grid))
                 {
-                    if (!metaQuery.TryGetComponent(uid, out var meta)
-                        || meta.EntityPaused
-                        || TerminatingOrDeleted(uid))
+                    if (!metaQuery.TryGetComponent(uid, out var meta) || meta.EntityPaused || TerminatingOrDeleted(uid))
                     {
                         continue;
                     }
