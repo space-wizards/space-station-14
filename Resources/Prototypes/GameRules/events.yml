@@ -394,16 +394,6 @@
         prototype: InitialInfected
 
 - type: entity
-  id: LoneNukeopsRule
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: NukeopsRule
-    faction: Syndicate
-    spawnOutpost: false
-    roundEndBehavior: Nothing
-
-- type: entity
   id: LoneOpsSpawn
   parent: BaseGameRule
   noSpawn: true
