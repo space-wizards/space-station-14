@@ -285,8 +285,9 @@
   - type: InteractionPopup
     interactSuccessString: petting-success-medibot
     interactFailureString: petting-failure-medibot
+    interactSuccessSpawn: EffectHearts
     interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
+      path: /Audio/Animals/cat_meow.ogg
   - type: ShowHealthBars
     damageContainers:
     - Biological
