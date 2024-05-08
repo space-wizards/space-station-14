@@ -77,7 +77,7 @@ public sealed class LungsSystem : SharedLungsSystem
             lungsComp.SolutionOwnerEntity = uid;//the owner is ourself
         }
 
-        var respType = ProtoManager.Index(lungsComp.RespirationType);
+        var respType = ProtoManager.Index(lungsComp.MetabolismType);
         foreach (var (gasProto, maxAbsorption) in respType.AbsorbedGases)
         {
             var gas = ProtoManager.Index(gasProto);
@@ -187,64 +187,75 @@ public sealed class LungsSystem : SharedLungsSystem
 
     private void AbsorbGases(Entity<LungsComponent> lungs)
     {
-        //Do not try to absorb gases if there are none there
-        if (!lungs.Comp.CanBreathe || lungs.Comp.ContainedGas.Volume == 0)
+        //Do not try to absorb gases if there are none there, or if there are no solution to absorb into
+        if (!lungs.Comp.CanBreathe
+            || lungs.Comp.ContainedGas.Volume == 0
+            )
             return;
         var scalingFactor = 1;
+        var dirty = false;
 
-        var absorbSolEnt =
-            new Entity<SolutionComponent>(lungs.Comp.CachedAbsorptionSolutionEnt, Comp<SolutionComponent>(lungs.Comp.CachedAbsorptionSolutionEnt));
-        var wasteSolEnt =
-            new Entity<SolutionComponent>(lungs.Comp.CachedWasteSolutionEnt, Comp<SolutionComponent>(lungs.Comp.CachedWasteSolutionEnt));
-        var absorbedSolution = absorbSolEnt.Comp.Solution;
-        var wasteSolution = wasteSolEnt.Comp.Solution;
-
-        foreach (var (gas, reagent, maxAbsorption) in lungs.Comp.CachedAbsorbedGasData)
+        if (lungs.Comp.CachedAbsorptionSolutionEnt != EntityUid.Invalid)
         {
-            var oldGasMols = lungs.Comp.ContainedGas[(int) gas];
-            if (oldGasMols <= 0)
-                continue;
+            var absorbSolEnt =
+                new Entity<SolutionComponent>(lungs.Comp.CachedAbsorptionSolutionEnt, Comp<SolutionComponent>(lungs.Comp.CachedAbsorptionSolutionEnt));
+            var absorbedSolution = absorbSolEnt.Comp.Solution;
 
-            //factor in the timescale so that the max absorption rate is always per second.
-            var adjustedMaxAbsorption = maxAbsorption * scalingFactor;
+            foreach (var (gas, reagent, maxAbsorption) in lungs.Comp.CachedAbsorbedGasData)
+            {
+                var oldGasMols = lungs.Comp.ContainedGas[(int) gas];
+                if (oldGasMols <= 0)
+                    continue;
 
-            var reagentSaturation = _solutionContainerSystem.GetReagentConcentration(absorbSolEnt, 250, new ReagentId(reagent, null));
-            if (reagentSaturation >= adjustedMaxAbsorption)
-                continue; //TODO: rewrite this so that max blood concentration will never exceed gas concentration
-            var absorptionPercentage = adjustedMaxAbsorption - reagentSaturation;
-            var gasMols = oldGasMols* absorptionPercentage;
-            absorbedSolution.AddReagent(GetReagentUnitsFromMol(gasMols, lungs.Comp.ContainedGas.Pressure,
-                lungs.Comp.ContainedGas.Temperature, reagent));
-            lungs.Comp.ContainedGas.SetMoles(gas, oldGasMols-gasMols);
+                //factor in the timescale so that the max absorption rate is always per second.
+                var adjustedMaxAbsorption = maxAbsorption * scalingFactor;
+
+                var reagentSaturation = _solutionContainerSystem.GetReagentConcentration(absorbSolEnt, 250, new ReagentId(reagent, null));
+                if (reagentSaturation >= adjustedMaxAbsorption)
+                    continue; //TODO: rewrite this so that max blood concentration will never exceed gas concentration
+                var absorptionPercentage = adjustedMaxAbsorption - reagentSaturation;
+                var gasMols = oldGasMols* absorptionPercentage;
+                absorbedSolution.AddReagent(GetReagentUnitsFromMol(gasMols, lungs.Comp.ContainedGas.Pressure,
+                    lungs.Comp.ContainedGas.Temperature, reagent));
+                lungs.Comp.ContainedGas.SetMoles(gas, oldGasMols-gasMols);
+            }
+            _solutionContainerSystem.UpdateChemicals(absorbSolEnt);
+            dirty = true;
         }
-
-        foreach (var (gas, reagent, maxRelease) in lungs.Comp.CachedWasteGasData)
+        if (lungs.Comp.CachedWasteSolutionEnt != EntityUid.Invalid)
         {
-            var oldGasMols = lungs.Comp.ContainedGas[(int) gas];
-            var adjustedMaxRelease = maxRelease * scalingFactor;
+            var wasteSolEnt =
+                new Entity<SolutionComponent>(lungs.Comp.CachedWasteSolutionEnt, Comp<SolutionComponent>(lungs.Comp.CachedWasteSolutionEnt));
+            var wasteSolution = wasteSolEnt.Comp.Solution;
 
-            if (wasteSolution.Volume <= 0)
-                continue;
+            foreach (var (gas, reagent, maxRelease) in lungs.Comp.CachedWasteGasData)
+            {
+                var oldGasMols = lungs.Comp.ContainedGas[(int) gas];
+                var adjustedMaxRelease = maxRelease * scalingFactor;
 
-            //make sure we calculate the max concentration to release into the lungs
-            var wasteConcentration = _solutionContainerSystem.GetReagentConcentration(wasteSolEnt, 250, new ReagentId(reagent, null));
-            wasteConcentration = MathF.Min(wasteConcentration, adjustedMaxRelease);
-            if (wasteConcentration <= 0)
-                return;
-            var gasMolCreated = GetMolsOfReagent(wasteSolution, reagent, lungs.Comp.ContainedGas.Pressure,
-                lungs.Comp.ContainedGas.Temperature) * wasteConcentration - oldGasMols;
-            if (gasMolCreated <= 0)
-                continue;
+                if (wasteSolution.Volume <= 0)
+                    continue;
 
-            lungs.Comp.ContainedGas.AdjustMoles(gas, gasMolCreated);
-            wasteSolution.RemoveReagent(GetReagentUnitsFromMol(gasMolCreated, lungs.Comp.ContainedGas.Pressure,
-                lungs.Comp.ContainedGas.Temperature, reagent));
+                //make sure we calculate the max concentration to release into the lungs
+                var wasteConcentration = _solutionContainerSystem.GetReagentConcentration(wasteSolEnt, 250, new ReagentId(reagent, null));
+                wasteConcentration = MathF.Min(wasteConcentration, adjustedMaxRelease);
+                if (wasteConcentration <= 0)
+                    return;
+                var gasMolCreated = GetMolsOfReagent(wasteSolution, reagent, lungs.Comp.ContainedGas.Pressure,
+                    lungs.Comp.ContainedGas.Temperature) * wasteConcentration - oldGasMols;
+                if (gasMolCreated <= 0)
+                    continue;
+
+                lungs.Comp.ContainedGas.AdjustMoles(gas, gasMolCreated);
+                wasteSolution.RemoveReagent(GetReagentUnitsFromMol(gasMolCreated, lungs.Comp.ContainedGas.Pressure,
+                    lungs.Comp.ContainedGas.Temperature, reagent));
+
+                _solutionContainerSystem.UpdateChemicals(wasteSolEnt);
+                dirty = true;
+            }
         }
-
-        _solutionContainerSystem.UpdateChemicals(absorbSolEnt);
-        _solutionContainerSystem.UpdateChemicals(wasteSolEnt);
-
-        Dirty(lungs);
+        if (dirty)
+            Dirty(lungs);
     }
 
     private void UpdateBreathability(Entity<LungsComponent> lungs, GasMixture? extGas)

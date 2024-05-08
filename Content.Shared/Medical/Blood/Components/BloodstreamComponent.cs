@@ -15,7 +15,7 @@ namespace Content.Shared.Medical.Blood.Components;
 public sealed partial class BloodstreamComponent : Component
 {
     /// <summary>
-    ///     The next time that reagents will be metabolized.
+    ///     The next time that bleeds will be checked.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextUpdate;

@@ -120,7 +120,7 @@
       - state: lung-l
       - state: lung-r
   - type: Lungs
-    respirationType: Human
+    metabolismType: Human
   # TODO Lungs: reimplement
 #  - type: Lung
 # TODO Metabolism: Reimplement this

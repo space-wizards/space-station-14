@@ -67,13 +67,13 @@ public sealed partial class ChemicalAbsorberComponent : Component
 [DataDefinition]
 public partial struct CachedAbsorptionData
 {
-    public List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)> RequiredReagents;
-    public List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)>? RequiredCatalysts;
-    public FixedPoint2 MinTemp;
-    public FixedPoint2 MaxTemp;
-    public readonly float Rate;
-    public bool Quantized;
-    public ProtoId<AbsorptionPrototype> ProtoId;
+    [DataField] public List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)> RequiredReagents;
+    [DataField] public List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)>? RequiredCatalysts;
+    [DataField] public FixedPoint2 MinTemp;
+    [DataField] public FixedPoint2 MaxTemp;
+    [DataField] public float Rate;
+    [DataField] public bool Quantized;
+    [DataField] public ProtoId<AbsorptionPrototype> ProtoId;
 
     public CachedAbsorptionData(List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)> requiredReagents,
         List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)>? requiredCatalysts,

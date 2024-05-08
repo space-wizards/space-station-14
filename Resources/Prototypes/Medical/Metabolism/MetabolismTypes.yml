@@ -1,0 +1,10 @@
+﻿- type: metabolismType
+  id: Human
+  absorbedGases:
+    "0" : 0.21
+  wasteGases:
+    "2" : 0.10
+  requiredReagents:
+    "Oxygen": 0.05
+  wasteReagents:
+    "CarbonDioxide": 0.05

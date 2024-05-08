@@ -1,6 +1,0 @@
-﻿- type: breathingType
-  id: Human
-  absorbedGases:
-    "0" : 0.21
-  wasteGases:
-    "2" : 0.10

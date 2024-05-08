@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Atmos;
-using Content.Shared.Medical.Respiration.Prototypes;
+using Content.Shared.Medical.Metabolism.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -97,7 +97,7 @@ public sealed partial class LungsComponent : Component
     /// What type of respiration does this respirator use
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public ProtoId<BreathingTypePrototype> RespirationType;
+    public ProtoId<MetabolismTypePrototype> MetabolismType;
 
     /// <summary>
     /// Should we look for our solution on the body or this entity
