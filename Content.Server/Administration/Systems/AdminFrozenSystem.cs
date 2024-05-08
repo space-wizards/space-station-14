@@ -6,20 +6,6 @@ namespace Content.Server.Administration.Systems;
 
 public sealed class AdminFrozenSystem : SharedAdminFrozenSystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<AdminFrozenComponent, ScreamActionEvent>(OnScreamAction, before: new[] { typeof(VocalSystem) });
-    }
-
-    private void OnScreamAction(EntityUid uid, AdminFrozenComponent component, ScreamActionEvent args)
-    {
-        if (!component.Muted)
-            return;
-
-        args.Handled = true;
-    }
-
     /// <summary>
     /// Freezes and mutes the given entity.
     /// </summary>
