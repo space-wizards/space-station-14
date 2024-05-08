@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text;
 using Content.Shared.Inventory;
 using Content.Shared.Renamer.Components;
@@ -98,8 +99,8 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
     /// this so you don't include other modifiers.
     /// </summary>
     public readonly string BaseName;
-    private readonly List<string> _prefixes = [];
-    private readonly List<string> _postfixes = [];
+    private readonly List<(string Text, int Priority)> _prefixes = [];
+    private readonly List<(string Text, int Priority)> _postfixes = [];
     private (string Text, int Priority)? _override;
 
     /// <inheritdoc/>
@@ -112,18 +113,20 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
 
     /// <summary>
     /// Adds a prefix before the entity's name.
+    /// Prefixes with a higher <paramref name="priority"/> will be displayed earlier.
     /// </summary>
-    public void AddPrefix(string text)
+    public void AddPrefix(string text, int priority = 0)
     {
-        _prefixes.Add(text);
+        _prefixes.Add((text, priority));
     }
 
     /// <summary>
     /// Adds a postfix after the entity's name.
+    /// Postfixes with a higher <paramref name="priority"/> will be displayed earlier.
     /// </summary>
-    public void AddPostfix(string text)
+    public void AddPostfix(string text, int priority = 0)
     {
-        _postfixes.Add(text);
+        _postfixes.Add((text, priority));
     }
 
     /// <summary>
@@ -145,7 +148,7 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
         var sb = new StringBuilder();
 
         // Add all prefixes
-        foreach (var prefix in _prefixes)
+        foreach (var prefix in _prefixes.OrderByDescending(n => n.Priority))
         {
             sb.Append($"{prefix} ");
         }
@@ -154,7 +157,7 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
         sb.Append(_override?.Text ?? BaseName);
 
         // Add all postfixes
-        foreach (var postfix in _postfixes)
+        foreach (var postfix in _postfixes.OrderByDescending(n => n.Priority))
         {
             sb.Append($" {postfix}");
         }
