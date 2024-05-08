@@ -67,6 +67,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly StationSystem _stations = default!;
         [Dependency] private readonly StationSpawningSystem _spawning = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
+        [Dependency] private readonly AdminFrozenSystem _freeze = default!;
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -149,6 +150,22 @@ namespace Content.Server.Administration.Systems
                         },
                         Impact = LogImpact.Medium,
                     });
+
+                    if (!frozen)
+                    {
+                        args.Verbs.Add(new Verb
+                        {
+                            Priority = -1, // This is just so it doesn't change position in the menu between freeze/unfreeze.
+                            Text = Loc.GetString("admin-verbs-freeze-and-mute"),
+                            Category = VerbCategory.Admin,
+                            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/snow.svg.192dpi.png")),
+                            Act = () =>
+                            {
+                                _freeze.FreezeAndMute(args.Target);
+                            },
+                            Impact = LogImpact.Medium,
+                        });
+                    }
 
                     // Erase
                     args.Verbs.Add(new Verb
