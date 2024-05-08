@@ -243,8 +243,8 @@ ghost-role-information-disaster-victim-rules = Normal station crew rules apply.
 ghost-role-information-syndie-disaster-victim-name = Syndie disaster victim
 ghost-role-information-syndie-disaster-victim-description = You're a regular passenger from a syndicate station. Unfortunately, an evacuation pod has thrown you into an enemy sector.....
 ghost-role-information-syndie-disaster-victim-rules = Normal station crew rules apply. You are NOT an antagonist!
-g
-host-role-information-syndicate-kobold-reinforcement-name = Syndicate Kobold Agent
+
+ghost-role-information-syndicate-kobold-reinforcement-name = Syndicate Kobold Agent
 ghost-role-information-syndicate-kobold-reinforcement-description = Someone needs reinforcements. You, a trained kobold, will help them.
 ghost-role-information-syndicate-kobold-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
 
