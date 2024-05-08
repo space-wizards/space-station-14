@@ -1,5 +1,7 @@
-<DefaultWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+            xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
             Title="{Loc 'reagent-dispenser-bound-user-interface-title'}"
             MinSize="680 450">
     <BoxContainer Orientation="Vertical">
@@ -50,4 +52,4 @@
             </ScrollContainer>
         </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>
