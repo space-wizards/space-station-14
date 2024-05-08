@@ -1,0 +1,7 @@
+- type: entity
+  parent: BaseItem
+  id: HarpyMidi
+  name: harpymidi
+  components:
+    - type: Sprite
+      sprite: DeltaV/Interface/Actions/harpy_sing.png
