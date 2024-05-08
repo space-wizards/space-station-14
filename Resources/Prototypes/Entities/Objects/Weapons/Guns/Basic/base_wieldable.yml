@@ -1,0 +1,12 @@
+# A basic inheritable template for a gun that is wieldable and has the standard inaccuracy.
+- type: entity
+  id: BaseGunWieldable
+  abstract: true
+  components:
+  - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -30
+  - type: Gun
+    minAngle: 21
+    maxAngle: 32   
