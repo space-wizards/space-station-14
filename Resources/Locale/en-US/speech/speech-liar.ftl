@@ -125,8 +125,8 @@ liar-word-replacement-41 = bad
 liar-word-42 = bad
 liar-word-replacement-42 = good
 
-liar-word-42 = want
-liar-word-replacement-42 = "don't want"
+liar-word-43 = want
+liar-word-replacement-43 = "don't want"
 
-liar-word-43 = not
-liar-word-replacement-43 = ""
+liar-word-44 = not
+liar-word-replacement-44 = ""
