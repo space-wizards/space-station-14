@@ -1,34 +1,33 @@
-using Content.Shared.Humanoid;
+using Content.Client.Geras.Component;
 using Content.Shared.Geras;
 using Robust.Client.GameObjects;
+using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.Geras;
 
-public sealed class GerasSystem : SharedGerasSystem
+public sealed class GerasSystem : VisualizerSystem<GerasComponent>
 {
-    public override void Initialize()
+
+    protected override void OnAppearanceChange(EntityUid uid, GerasComponent comp, ref AppearanceChangeEvent args)
     {
-        base.Initialize();
-        SubscribeNetworkEvent<GerasChildEntity>(OnGerasChildEntity);
-    }
-
-    private void OnGerasChildEntity(GerasChildEntity ev)
-    {
-
-        var parentUid = GetEntity(ev.ParentUid);
-        var childUid = GetEntity(ev.ChildUid);
-
-        var skinColor = Color.Green;
-
-        if (!TryComp<HumanoidAppearanceComponent>(parentUid, out var appearanceComp))
+        if (args.Sprite == null)
         {
             return;
         }
-        if (TryComp<SpriteComponent>(childUid, out var sprite))
+
+        if (!AppearanceSystem.TryGetData<Color>(uid, GeraColor.Color, out var color, args.Component))
         {
-            skinColor = appearanceComp.SkinColor;
-            sprite.Color = skinColor;
+           return;
         }
-        return;
+
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        {
+            return;
+        }
+
+        foreach (var spriteLayer in args.Sprite.AllLayers)
+        {
+            sprite.Color = color;
+        }
     }
 }

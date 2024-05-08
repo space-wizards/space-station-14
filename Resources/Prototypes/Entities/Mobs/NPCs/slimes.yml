@@ -141,6 +141,8 @@
   components:
   # they portable...
   - type: MultiHandedItem
+  - type: Geras
+    noAction: true
   - type: Item
     size: Huge
   - type: Sprite

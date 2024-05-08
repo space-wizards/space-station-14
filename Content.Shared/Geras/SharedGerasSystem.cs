@@ -8,12 +8,7 @@ namespace Content.Shared.Geras;
 /// </summary>
 public abstract class SharedGerasSystem : EntitySystem
 {
-    [Serializable, NetSerializable]
-    protected sealed class GerasChildEntity : EntityEventArgs
-    {
-        public NetEntity ParentUid;
-        public NetEntity ChildUid;
-    }
+
 }
 
 public sealed partial class MorphIntoGeras : InstantActionEvent
