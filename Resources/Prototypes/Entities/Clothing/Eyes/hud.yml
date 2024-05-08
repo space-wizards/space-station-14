@@ -203,6 +203,7 @@
   - type: ShowHungerIcons
   - type: ShowThirstIcons
   - type: ShowSyndicateIcons
+  - type: DiagnosticScanner
 
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons]
