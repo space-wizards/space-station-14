@@ -32,70 +32,70 @@ public sealed partial class PlantHolderComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField()]
     public float WaterLevel = 100f;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public float NutritionLevel = 100f;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public float PestLevel;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public float WeedLevel;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public float Toxins;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public int Age;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public int SkipAging;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public bool Dead;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public bool Harvest;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public bool Sampled;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public float YieldMod = 1;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public float MutationMod = 1f;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public float MutationLevel;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public float Health;
 
     ///<summary>
     /// The bonus to potency from fertiliser applied to the curent crop. This is added with the seed's own Potency to determine things like crop reagent contents.
     ///</summary>
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public float PotencyBonus;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public float WeedCoefficient = 1f;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public SeedData? Seed;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public bool ImproperHeat;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public bool ImproperPressure;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public bool ImproperLight;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public bool ForceUpdate;
 
-    [ViewVariables(VVAccess.ReadWrite), Datafield()]
+    [ViewVariables(VVAccess.ReadWrite), DataField()]
     public string SoilSolutionName = "soil";
 
     [DataField]
