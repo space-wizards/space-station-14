@@ -70,6 +70,18 @@
 	  {
          "name":"pipeTrinaryConnectors",
          "directions":4
+      },
+      {
+         "name":"storageStraight",
+         "directions":4
+      },
+      {
+         "name":"storageBend",
+         "directions":4
+      },
+      {
+         "name":"storageTJunction",
+         "directions":4
       }
    ]
 }

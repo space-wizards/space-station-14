@@ -101,6 +101,13 @@
   - type: Construction
     graph: GasPipe
     node: straight
+  - type: Item
+    size: Normal
+    storedSprite:
+      sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: storageStraight
+    shape:
+    - 0,0,0,2
   - type: MeleeWeapon
     attackRate: 1
     damage:
@@ -128,8 +135,14 @@
     graph: GasPipe
     node: bend
   - type: Item
-    size: Normal
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 1,1,1,1
     heldPrefix: Bend
+    storedSprite:
+      sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: storageBend
   - type: MeleeWeapon
     wideAnimationRotation: 180
     attackRate: 1
@@ -141,7 +154,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Blunt: 3 #This SHOULD be 6 but throwing damage is doubled for some reason so for now it's just 3
+        Blunt: 3 #This should be 6 but throwing damage is doubled at the moment for some reason so for now it's 3
 
 - type: entity
   parent: GasPipeBase
@@ -163,7 +176,13 @@
     node: tjunction
   - type: Item
     size: Normal
+    shape:
+    - 0,0,2,0
+    - 1,1,1,1
     heldPrefix: TJunction
+    storedSprite:
+      sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: storageTJunction
   - type: MeleeWeapon
     wideAnimationRotation: 90
     attackRate: 0.75
@@ -195,6 +214,9 @@
     node: fourway
   - type: Item
     size: Normal
+    shape:
+    - 1,0,1,2
+    - 0,1,2,1
     heldPrefix: Fourway
   - type: MeleeWeapon
     wideAnimationRotation: 90
