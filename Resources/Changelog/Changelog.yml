@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Iron and copper no longer grant infinite blood!
-    type: Fix
-  id: 6050
-  time: '2024-02-28T21:56:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25678
 - author: Cojoke-dot
   changes:
   - message: E-sword now lights plasma fires
@@ -3853,3 +3846,12 @@
   id: 6549
   time: '2024-05-07T18:20:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25515
+- author: OnsenCapy
+  changes:
+  - message: Combat gloves now have their own unique sprite.
+    type: Tweak
+  - message: Combat gloves now have heat resistance to match their fireproof description.
+    type: Tweak
+  id: 6550
+  time: '2024-05-08T00:19:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27373
