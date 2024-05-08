@@ -590,11 +590,11 @@
     - type: GhostTakeoverAvailable
     - type: Cluwne
 
-## Lost Cargo technical
+## Lost Cargo technician
 
 - type: entity
-  name: lost cargo techical spawner
-  id: LostCargoTechnicalSpawner
+  name: lost cargo technician spawner
+  id: LostCargoTechnicianSpawner
   parent: MarkerBase
   components:
     - type: Sprite
@@ -604,27 +604,29 @@
           state: icon
     - type: RandomSpawner
       prototypes:
-      - RandomHumanoidLostCargoTechnical
+      - RandomHumanoidLostCargoTechnician
       chance: 1
 
 - type: entity
-  id: RandomHumanoidLostCargoTechnical
-  name: lost cargo technical ghost role
+  id: RandomHumanoidLostCargoTechnician
+  name: lost cargo technician ghost role
   components:
     - type: Sprite
       sprite: Objects/Tools/appraisal-tool.rsi
       state: icon
     - type: RandomHumanoidSpawner
-      settings: LostCargoTechnical
+      settings: LostCargoTechnician
 
 - type: randomHumanoidSettings
-  id: LostCargoTechnical
+  id: LostCargoTechnician
   randomizeName: false
   components:
     - type: GhostRole
       name: ghost-role-information-lost-cargo-technical-name
       description: ghost-role-information-lost-cargo-technical-description
       rules: ghost-role-information-lost-cargo-technical-rules
+      raffle:
+        settings: short
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ CargoTechGear ]
@@ -664,7 +666,7 @@
 
 - type: entity
   id: RandomHumanoidClownTroupeBanana
-  name: banana clown troupe 
+  name: banana clown troupe
   parent: RandomHumanoidClownTroupe
   components:
     - type: RandomHumanoidSpawner
@@ -678,6 +680,8 @@
       name: ghost-role-information-clown-troupe-name
       description: ghost-role-information-clown-troupe-description
       rules: ghost-role-information-clown-troupe-rules
+      raffle:
+        settings: short
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ClownGear ]
@@ -715,7 +719,7 @@
     - type: RandomSpawner
       prototypes:
       - RandomHumanoidTravelingChef
-      
+
 - type: entity
   id: RandomHumanoidTravelingChef
   name: traveling chef ghost role
@@ -734,6 +738,8 @@
       name: ghost-role-information-traveling-chef-name
       description: ghost-role-information-traveling-chef-description
       rules: ghost-role-information-traveling-chef-rules
+      raffle:
+        settings: short
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ChefGear ]
@@ -770,7 +776,7 @@
       state: icon
     - type: RandomHumanoidSpawner
       settings: DisasterVictimResearchDirector
-      
+
 - type: entity
   id: RandomHumanoidDisasterVictimCMO
   parent: RandomHumanoidDisasterVictimRD
@@ -778,7 +784,7 @@
   components:
     - type: RandomHumanoidSpawner
       settings: DisasterVictimCMO
-      
+
 - type: entity
   id: RandomHumanoidDisasterVictimCaptain
   parent: RandomHumanoidDisasterVictimRD
@@ -795,6 +801,8 @@
       name: ghost-role-information-disaster-victim-name
       description: ghost-role-information-disaster-victim-description
       rules: ghost-role-information-disaster-victim-rules
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ResearchDirectorGear ]
@@ -811,6 +819,8 @@
       name: ghost-role-information-disaster-victim-name
       description: ghost-role-information-disaster-victim-description
       rules: ghost-role-information-disaster-victim-rules
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ CMOGear ]
@@ -827,6 +837,8 @@
       name: ghost-role-information-disaster-victim-name
       description: ghost-role-information-disaster-victim-description
       rules: ghost-role-information-disaster-victim-rules
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ CaptainGear ]
@@ -866,12 +878,14 @@
   randomizeName: false
   components:
     - type: NpcFactionMember
-      factions: 
+      factions:
       - Syndicate
     - type: GhostRole
       name: ghost-role-information-syndie-disaster-victim-name
       description: ghost-role-information-syndie-disaster-victim-description
       rules: ghost-role-information-syndie-disaster-victim-rules
+      raffle:
+        settings: short
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ RecruitSyndieGear ]

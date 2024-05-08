@@ -1069,7 +1069,7 @@ entities:
     - type: Transform
       pos: -3.5,-2.5
       parent: 1
-- proto: LostCargoTechnicalSpawner
+- proto: LostCargoTechnicianSpawner
   entities:
   - uid: 69
     components:
