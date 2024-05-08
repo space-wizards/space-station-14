@@ -1,5 +1,5 @@
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Silicons.Laws.Components;
 
 public sealed class DiagnosticsScannerSystem : EntitySystem
 {
