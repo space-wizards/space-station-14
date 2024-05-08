@@ -65,40 +65,31 @@ public sealed class BanListEui : BaseEui
                 unban = new SharedServerUnban(unbanningAdmin, ban.Unban.UnbanTime.UtcDateTime);
             }
 
-            if (!_admins.HasAdminFlag(Player, AdminFlags.Pii))
+            (string, int cidrMask)? ip = ("*Hidden*", 0);
+            var hwid = "*Hidden*";
+
+            if (_admins.HasAdminFlag(Player, AdminFlags.Pii))
             {
-                Bans.Add(new SharedServerBan(
-                    ban.Id,
-                    ban.UserId,
-                    ("*Hidden*",0),
-                    "*Hidden*",
-                    ban.BanTime.UtcDateTime,
-                    ban.ExpirationTime?.UtcDateTime,
-                    ban.Reason,
-                    ban.BanningAdmin == null
-                        ? null
-                        : (await _playerLocator.LookupIdAsync(ban.BanningAdmin.Value))?.Username,
-                    unban
-                ));
+                ip = ban.Address is { } address
+                    ? (address.address.ToString(), address.cidrMask)
+                    : null;
+
+                hwid = ban.HWId == null ? null : Convert.ToBase64String(ban.HWId.Value.AsSpan());
             }
-            else
-            {
-                Bans.Add(new SharedServerBan(
-                    ban.Id,
-                    ban.UserId,
-                    ban.Address is { } address
-                        ? (address.address.ToString(), address.cidrMask)
-                        : null,
-                    ban.HWId == null ? null : Convert.ToBase64String(ban.HWId.Value.AsSpan()),
-                    ban.BanTime.UtcDateTime,
-                    ban.ExpirationTime?.UtcDateTime,
-                    ban.Reason,
-                    ban.BanningAdmin == null
-                        ? null
-                        : (await _playerLocator.LookupIdAsync(ban.BanningAdmin.Value))?.Username,
-                    unban
-                ));
-            }
+
+            Bans.Add(new SharedServerBan(
+                ban.Id,
+                ban.UserId,
+                ip,
+                hwid,
+                ban.BanTime.UtcDateTime,
+                ban.ExpirationTime?.UtcDateTime,
+                ban.Reason,
+                ban.BanningAdmin == null
+                    ? null
+                    : (await _playerLocator.LookupIdAsync(ban.BanningAdmin.Value))?.Username,
+                unban
+            ));
         }
     }
 
@@ -115,42 +106,31 @@ public sealed class BanListEui : BaseEui
                 unban = new SharedServerUnban(unbanningAdmin, ban.Unban.UnbanTime.UtcDateTime);
             }
 
-            if (!_admins.HasAdminFlag(Player, AdminFlags.Pii))
+            (string, int cidrMask)? ip = ("*Hidden*", 0);
+            var hwid = "*Hidden*";
+
+            if (_admins.HasAdminFlag(Player, AdminFlags.Pii))
             {
-                RoleBans.Add(new SharedServerRoleBan(
-                    ban.Id,
-                    ban.UserId,
-                    ("*Hidden*",0),
-                    "*Hidden*",
-                    ban.BanTime.UtcDateTime,
-                    ban.ExpirationTime?.UtcDateTime,
-                    ban.Reason,
-                    ban.BanningAdmin == null
-                        ? null
-                        : (await _playerLocator.LookupIdAsync(ban.BanningAdmin.Value))?.Username,
-                    unban,
-                    ban.Role
-                ));
+                ip = ban.Address is { } address
+                    ? (address.address.ToString(), address.cidrMask)
+                    : null;
+
+                hwid = ban.HWId == null ? null : Convert.ToBase64String(ban.HWId.Value.AsSpan());
             }
-            else
-            {
-                RoleBans.Add(new SharedServerRoleBan(
-                    ban.Id,
-                    ban.UserId,
-                    ban.Address is { } address
-                        ? (address.address.ToString(), address.cidrMask)
-                        : null,
-                    ban.HWId == null ? null : Convert.ToBase64String(ban.HWId.Value.AsSpan()),
-                    ban.BanTime.UtcDateTime,
-                    ban.ExpirationTime?.UtcDateTime,
-                    ban.Reason,
-                    ban.BanningAdmin == null
-                        ? null
-                        : (await _playerLocator.LookupIdAsync(ban.BanningAdmin.Value))?.Username,
-                    unban,
-                    ban.Role
-                ));
-            }
+            RoleBans.Add(new SharedServerRoleBan(
+                ban.Id,
+                ban.UserId,
+                ip,
+                hwid,
+                ban.BanTime.UtcDateTime,
+                ban.ExpirationTime?.UtcDateTime,
+                ban.Reason,
+                ban.BanningAdmin == null
+                    ? null
+                    : (await _playerLocator.LookupIdAsync(ban.BanningAdmin.Value))?.Username,
+                unban,
+                ban.Role
+            ));
         }
     }
 

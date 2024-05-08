@@ -105,7 +105,7 @@
 		Adminchat = 1 << 17,
 
         ///<summary>
-        /// Allows you to use Admin chat
+        /// Permits the visibility of Pii in game and on SS14 Admin
         ///</summary>
         Pii = 1 << 18,
 
