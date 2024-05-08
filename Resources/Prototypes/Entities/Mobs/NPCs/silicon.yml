@@ -340,8 +340,8 @@
     node: bot
   - type: Access
     tags:
+    - Cargo
     - Maintenance
-    - Supply
     - Salvage
   - type: Dumpable
   - type: Storage
