@@ -163,7 +163,12 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (component.RequireOpenPanel && TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
             return;
 
-        args.PushMarkup(Loc.GetString("laws-compromised-examine"));
+        var diagnosticsEvent = new DiagnosticScanEvent();
+        RaiseLocalEvent(args.Examiner, diagnosticsEvent);
+        if (diagnosticsEvent.CanScan)
+        {
+            args.PushMarkup(Loc.GetString("laws-compromised-examine"));
+        }
     }
 
     protected override void OnGotEmagged(EntityUid uid, EmagSiliconLawComponent component, ref GotEmaggedEvent args)
