@@ -46,7 +46,8 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         if (comp.Map != null)
             return;
 
-        var mapUid = _map.CreateMap(out var mapId, false);
+        // grid preloading needs map to init after moving it
+        var mapUid = comp.PreloadedGrid != null ? _map.CreateMap(out var mapId, false) : _map.CreateMap(out mapId);
         _metaData.SetEntityName(mapUid, $"LoadMapRule destination for rule {ToPrettyString(uid)}");
         comp.Map = mapId;
 
@@ -57,7 +58,9 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         }
         else if (comp.MapPath != null)
         {
-            if (!_mapLoader.TryLoad(comp.Map.Value, comp.MapPath.Value.ToString(), out var roots,
+            if (!_mapLoader.TryLoad(comp.Map.Value,
+                    comp.MapPath.Value.ToString(),
+                    out var roots,
                     new MapLoadOptions { LoadMap = true }))
             {
                 _mapManager.DeleteMap(mapId);
@@ -77,14 +80,12 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
 
             _transform.SetParent(loadedShuttle.Value, mapUid);
             comp.MapGrids.Add(loadedShuttle.Value);
+            _map.InitializeMap(mapId);
         }
         else
         {
             Log.Error($"No valid map prototype or map path associated with the rule {ToPrettyString(uid)}");
         }
-
-        // Init map after we load everything incl. preloaded grids.
-        _map.InitializeMap(mapId);
     }
 
     private void OnSelectLocation(Entity<LoadMapRuleComponent> ent, ref AntagSelectLocationEvent args)
