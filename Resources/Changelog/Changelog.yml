@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Rainfey
-  changes:
-  - message: Disallow multiple antag roles per player
-    type: Fix
-  id: 6056
-  time: '2024-02-29T06:25:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23445
 - author: Kukutis96513
   changes:
   - message: Changed the amount of plushies in the lizard plushie crate.
@@ -3851,3 +3844,10 @@
   id: 6555
   time: '2024-05-08T07:30:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27734
+- author: Plykiya
+  changes:
+  - message: The ninja's katana dash is now more reliable.
+    type: Fix
+  id: 6556
+  time: '2024-05-08T10:21:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27793
