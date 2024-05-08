@@ -1,0 +1,24 @@
+<Document>
+  # Felinid
+
+  <Box>
+    <GuideEntityEmbed Entity="MobFelinid" Caption=""/>
+  </Box>
+  
+  Felinids are a mutation of humans, sporting their signature ears and tail from your favourite japanese cartoons.
+  They have a keen sixth sense to landing and [color=#1e90ff]take 80% less damage from falling or high speed impacts.[/color]
+  They will also be slowed down less when injured
+  
+  They will slash with their claws instead of using their fists, dealing [color=#ec3a3a]Slashing[/color] and [color=#ec3a3a]Piercing[/color] damage.
+  
+  ## Ew, Hairballs
+  <Box>
+    <GuideEntityEmbed Entity="Hairball" Caption=""/>
+	<GuideEntityEmbed Entity="MobMouse" Caption=""/>
+  </Box>
+  
+  They are also capable of eating live rats, which will allow them to cough up a disgusting hairball.
+  Be careful when touching them, as they can [color=#ffa500]cause you to throwup when held.[/color]
+  Felinids will use this to their advantage to gross out adversaries
+  
+</Document>
