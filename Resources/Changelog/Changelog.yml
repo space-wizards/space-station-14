@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Nairodian
-  changes:
-  - message: You can now remove the rust from reinforced walls with a welder.
-    type: Fix
-  id: 6054
-  time: '2024-02-29T00:44:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25690
-- author: Ubaser
-  changes:
-  - message: Eris UI theme has been removed.
-    type: Remove
-  id: 6055
-  time: '2024-02-29T05:53:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25673
 - author: Rainfey
   changes:
   - message: Disallow multiple antag roles per player
@@ -3851,3 +3837,17 @@
   id: 6553
   time: '2024-05-08T06:49:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27796
+- author: Plykiya
+  changes:
+  - message: Re-added supplybots.
+    type: Add
+  id: 6554
+  time: '2024-05-08T07:30:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27769
+- author: Hobbitmax
+  changes:
+  - message: Replaced Syndicate Jaws Of Life with a Pyjama bundle on the Train map.
+    type: Tweak
+  id: 6555
+  time: '2024-05-08T07:30:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27734
