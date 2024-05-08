@@ -691,6 +691,7 @@
   - type: Puller
     needsHands: false
   - type: Examiner
+  - type: DoAfter
   - type: CombatMode
   - type: MeleeWeapon
     soundHit:

@@ -1,97 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix chat bubbles.
-    type: Fix
-  id: 6046
-  time: '2024-02-27T13:01:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25643
-- author: rosieposieeee
-  changes:
-  - message: Added grey stalagmites and made all stalagmites weaker and more fun to
-      break.
-    type: Add
-  id: 6047
-  time: '2024-02-27T19:24:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25646
-- author: metalgearsloth
-  changes:
-  - message: Made NPC movement less janky.
-    type: Fix
-  id: 6048
-  time: '2024-02-28T06:41:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25666
-- author: musicmanvr
-  changes:
-  - message: Added the Syndicate decoy bundle, a creative way to trick your foes.
-    type: Add
-  - message: Snap pops have been added to the toy crate.
-    type: Add
-  - message: Syndicate Commanders now have a trench whistle, Avanti!
-    type: Add
-  id: 6049
-  time: '2024-02-28T21:53:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25333
-- author: Whisper
-  changes:
-  - message: Iron and copper no longer grant infinite blood!
-    type: Fix
-  id: 6050
-  time: '2024-02-28T21:56:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25678
-- author: Cojoke-dot
-  changes:
-  - message: E-sword now lights plasma fires
-    type: Tweak
-  id: 6051
-  time: '2024-02-28T21:59:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25665
-- author: lzk228
-  changes:
-  - message: Engineering structures orders in cargo now supplied via flatpacks (e.g.
-      tesla & singulo generators, other stuff for them).
-    type: Tweak
-  - message: Thrusters and gyroscopes now supplied in crates via flatpacks.
-    type: Tweak
-  id: 6052
-  time: '2024-02-28T22:02:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25647
-- author: c4llv07e
-  changes:
-  - message: Cryo won't remove you from the new body if you chose a new ghost role
-      before cryo deleted your old body.
-    type: Fix
-  id: 6053
-  time: '2024-02-28T22:09:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24991
-- author: Nairodian
-  changes:
-  - message: You can now remove the rust from reinforced walls with a welder.
-    type: Fix
-  id: 6054
-  time: '2024-02-29T00:44:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25690
-- author: Ubaser
-  changes:
-  - message: Eris UI theme has been removed.
-    type: Remove
-  id: 6055
-  time: '2024-02-29T05:53:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25673
-- author: Rainfey
-  changes:
-  - message: Disallow multiple antag roles per player
-    type: Fix
-  id: 6056
-  time: '2024-02-29T06:25:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23445
-- author: Kukutis96513
-  changes:
-  - message: Changed the amount of plushies in the lizard plushie crate.
-    type: Tweak
-  id: 6057
-  time: '2024-02-29T16:45:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25122
 - author: Aexxie
   changes:
   - message: Nutribricks spawn in Survival Kits in place of Tinned Meat.
@@ -3856,3 +3763,92 @@
   id: 6545
   time: '2024-05-07T07:26:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27750
+- author: mirrorcult
+  changes:
+  - message: Events that run now get logged to admin alert chat
+    type: Tweak
+  id: 6546
+  time: '2024-05-07T15:13:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27761
+- author: cooldolphin
+  changes:
+  - message: Cigarettes in the loadout menu.
+    type: Add
+  id: 6547
+  time: '2024-05-07T15:55:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27292
+- author: FairlySadPanda
+  changes:
+  - message: Weapons that deflect shots, like the e-sword, now are most effective
+      at doing so when standing still, with moving or sprinting making the deflection
+      chance worse.
+    type: Tweak
+  id: 6548
+  time: '2024-05-07T18:14:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27219
+- author: deltanedas
+  changes:
+  - message: Lathes can now be sped up by using Space Lube.
+    type: Tweak
+  id: 6549
+  time: '2024-05-07T18:20:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25515
+- author: OnsenCapy
+  changes:
+  - message: Combat gloves now have their own unique sprite.
+    type: Tweak
+  - message: Combat gloves now have heat resistance to match their fireproof description.
+    type: Tweak
+  id: 6550
+  time: '2024-05-08T00:19:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27373
+- author: deltanedas
+  changes:
+  - message: Dragons can now breathe fire.
+    type: Add
+  id: 6551
+  time: '2024-05-08T00:25:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26746
+- author: Cojoke-dot
+  changes:
+  - message: You can now shoot over racks
+    type: Tweak
+  id: 6552
+  time: '2024-05-08T06:46:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27797
+- author: ShadowCommander
+  changes:
+  - message: Lizards now stop tail pulling when they are downed.
+    type: Fix
+  id: 6553
+  time: '2024-05-08T06:49:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27796
+- author: Plykiya
+  changes:
+  - message: Re-added supplybots.
+    type: Add
+  id: 6554
+  time: '2024-05-08T07:30:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27769
+- author: Hobbitmax
+  changes:
+  - message: Replaced Syndicate Jaws Of Life with a Pyjama bundle on the Train map.
+    type: Tweak
+  id: 6555
+  time: '2024-05-08T07:30:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27734
+- author: Plykiya
+  changes:
+  - message: The ninja's katana dash is now more reliable.
+    type: Fix
+  id: 6556
+  time: '2024-05-08T10:21:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27793
+- author: K-Dynamic
+  changes:
+  - message: Bike Horns, Suspenders and the Clown Recorder are now available from
+      the Theatrical Performances Crate
+    type: Tweak
+  id: 6557
+  time: '2024-05-08T12:30:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27668

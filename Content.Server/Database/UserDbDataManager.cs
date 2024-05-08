@@ -67,7 +67,7 @@ public sealed class UserDbDataManager : IPostInjectInit
                 _playTimeTracking.LoadData(session, cancel));
 
             cancel.ThrowIfCancellationRequested();
-            _prefs.SanitizeData(session);
+            _prefs.FinishLoad(session);
 
             _sawmill.Verbose($"Load complete for user {session}");
         }
