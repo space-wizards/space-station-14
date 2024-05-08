@@ -186,9 +186,9 @@
   description: A light fixture.
   components:
   - type: LightBulb
-    color: "#FFE4CE" # 5000K color temp
-    lightEnergy: 0.8
-    lightRadius: 10
+    color: "#FFF5E0" # Ported from /vg/
+    lightEnergy: 1.5
+    lightRadius: 6
     lightSoftness: 1
     PowerUse: 25
 
