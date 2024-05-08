@@ -79,8 +79,7 @@ public sealed class DashAbilitySystem : EntitySystem
             _popup.PopupClient(Loc.GetString("dash-ability-no-charges", ("item", uid)), user, user);
             return;
         }
-
-        var origin = Transform(user).MapPosition;
+        var origin = _transform.GetMapCoordinates(user);
         var target = args.Target.ToMap(EntityManager, _transform);
         // prevent collision with the user duh
         if (!_examine.InRangeUnOccluded(origin, target, SharedInteractionSystem.MaxRaycastRange, null))
