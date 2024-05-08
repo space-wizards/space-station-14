@@ -26,7 +26,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         SubscribeLocalEvent<T, GameRuleAddedEvent>(OnGameRuleAdded);
         SubscribeLocalEvent<T, GameRuleStartedEvent>(OnGameRuleStarted);
         SubscribeLocalEvent<T, GameRuleEndedEvent>(OnGameRuleEnded);
-        SubscribeLocalEvent<T, RoundEndTextAppendEvent>(OnRoundEndTextAppend);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent args)
@@ -34,8 +34,8 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         if (args.Forced || args.Cancelled)
             return;
 
-        var query = QueryActiveRules();
-        while (query.MoveNext(out var uid, out _, out _, out var gameRule))
+        var query = QueryAllRules();
+        while (query.MoveNext(out var uid, out _, out var gameRule))
         {
             var minPlayers = gameRule.MinPlayers;
             if (args.Players.Length >= minPlayers)
@@ -70,11 +70,16 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         Ended(uid, component, ruleData, args);
     }
 
-    private void OnRoundEndTextAppend(Entity<T> ent, ref RoundEndTextAppendEvent args)
+    private void OnRoundEndTextAppend(RoundEndTextAppendEvent ev)
     {
-        if (!TryComp<GameRuleComponent>(ent, out var ruleData))
-            return;
-        AppendRoundEndText(ent, ent, ruleData, ref args);
+        var query = AllEntityQuery<T>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (!TryComp<GameRuleComponent>(uid, out var ruleData))
+                continue;
+
+            AppendRoundEndText(uid, comp, ruleData, ref ev);
+        }
     }
 
     /// <summary>

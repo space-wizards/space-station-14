@@ -42,10 +42,12 @@
   - type: SolutionTransfer
     maxTransferAmount: 30
     canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: drink
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Item
     size: Tiny
     sprite: Objects/Specific/Chemistry/beaker.rsi

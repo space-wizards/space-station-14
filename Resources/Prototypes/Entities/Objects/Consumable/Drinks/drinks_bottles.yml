@@ -362,6 +362,7 @@
   - type: Tag
     tags:
     - Wine
+    - DrinkBottle
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -511,6 +512,7 @@
   - type: Tag
     tags:
     - Wine
+    - DrinkBottle
 
 # Small Bottles
 
@@ -536,6 +538,7 @@
   - type: Tag
     tags:
     - Beer
+    - DrinkBottle
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -559,7 +562,7 @@
   - type: Tag
     tags:
     - Beer
-
+    - DrinkBottle
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]

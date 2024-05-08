@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
@@ -8,29 +7,16 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class MobsterAccentSystem : EntitySystem
 {
+    private static readonly Regex RegexIng = new(@"(?<=\w\w)(in)g(?!\w)", RegexOptions.IgnoreCase);
+    private static readonly Regex RegexLowerOr = new(@"(?<=\w)o[Rr](?=\w)");
+    private static readonly Regex RegexUpperOr = new(@"(?<=\w)O[Rr](?=\w)");
+    private static readonly Regex RegexLowerAr = new(@"(?<=\w)a[Rr](?=\w)");
+    private static readonly Regex RegexUpperAr = new(@"(?<=\w)A[Rr](?=\w)");
+    private static readonly Regex RegexFirstWord = new(@"^(\S+)");
+    private static readonly Regex RegexLastWord = new(@"(\S+)$");
+
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
-
-    private static readonly Dictionary<string, string> DirectReplacements = new()
-    {
-        { "let me", "lemme" },
-        { "should", "oughta" },
-        { "the", "da" },
-        { "them", "dem" },
-        { "attack", "whack" },
-        { "kill", "whack" },
-        { "murder", "whack" },
-        { "dead", "sleepin' with da fishies"},
-        { "hey", "ey'o" },
-        { "hi", "ey'o"},
-        { "hello", "ey'o"},
-        { "rules", "roolz" },
-        { "you", "yous" },
-        { "have to", "gotta" },
-        { "going to", "boutta" },
-        { "about to", "boutta" },
-        { "here", "'ere" }
-    };
 
     public override void Initialize()
     {
@@ -51,20 +37,20 @@ public sealed class MobsterAccentSystem : EntitySystem
         // thinking -> thinkin'
         // king -> king
         //Uses captures groups to make sure the captialization of IN is kept
-        msg = Regex.Replace(msg, @"(?<=\w\w)(in)g(?!\w)", "$1'", RegexOptions.IgnoreCase);
+        msg = RegexIng.Replace(msg, "$1'");
 
         // or -> uh and ar -> ah in the middle of words (fuhget, tahget)
-        msg = Regex.Replace(msg, @"(?<=\w)o[Rr](?=\w)", "uh");
-        msg = Regex.Replace(msg, @"(?<=\w)O[Rr](?=\w)", "UH");
-        msg = Regex.Replace(msg, @"(?<=\w)a[Rr](?=\w)", "ah");
-        msg = Regex.Replace(msg, @"(?<=\w)A[Rr](?=\w)", "AH");
+        msg = RegexLowerOr.Replace(msg, "uh");
+        msg = RegexUpperOr.Replace(msg, "UH");
+        msg = RegexLowerAr.Replace(msg, "ah");
+        msg = RegexUpperAr.Replace(msg, "AH");
 
         // Prefix
         if (_random.Prob(0.15f))
         {
             //Checks if the first word of the sentence is all caps
             //So the prefix can be allcapped and to not resanitize the captial
-            var firstWordAllCaps = !Regex.Match(msg, @"^(\S+)").Value.Any(char.IsLower);
+            var firstWordAllCaps = !RegexFirstWord.Match(msg).Value.Any(char.IsLower);
             var pick = _random.Next(1, 2);
 
             // Reverse sanitize capital
@@ -84,7 +70,7 @@ public sealed class MobsterAccentSystem : EntitySystem
         {
             //Checks if the last word of the sentence is all caps
             //So the suffix can be allcapped
-            var lastWordAllCaps = !Regex.Match(msg, @"(\S+)$").Value.Any(char.IsLower);
+            var lastWordAllCaps = !RegexLastWord.Match(msg).Value.Any(char.IsLower);
             var suffix = "";
             if (component.IsBoss)
             {
@@ -94,7 +80,7 @@ public sealed class MobsterAccentSystem : EntitySystem
             else
             {
                 var pick = _random.Next(1, 3);
-                suffix = Loc.GetString($"accent-mobster-suffix-minion-{pick}");                
+                suffix = Loc.GetString($"accent-mobster-suffix-minion-{pick}");
             }
             if (lastWordAllCaps)
                 suffix = suffix.ToUpper();

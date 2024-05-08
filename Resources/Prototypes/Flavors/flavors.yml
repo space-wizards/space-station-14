@@ -590,6 +590,36 @@
   description: flavor-complex-irish-car-bomb
 
 - type: flavor
+  id: vodkaredbool
+  flavorType: Complex
+  description: flavor-complex-vodka-red-bool
+
+- type: flavor
+  id: xenobasher
+  flavorType: Complex
+  description: flavor-complex-xeno-basher
+
+- type: flavor
+  id: irishbool
+  flavorType: Complex
+  description: flavor-complex-irish-bool
+
+- type: flavor
+  id: budgetinsulsdrink
+  flavorType: Complex
+  description: flavor-complex-budget-insuls-drink
+
+- type: flavor
+  id: watermelonwakeup
+  flavorType: Complex
+  description: flavor-complex-watermelon-wakeup
+
+- type: flavor
+  id: rubberneck
+  flavorType: Complex
+  description: flavor-complex-rubberneck
+
+- type: flavor
   id: blackrussian
   flavorType: Complex
   description: flavor-complex-black-russian
@@ -1058,6 +1088,11 @@
   id: violets
   flavorType: Complex
   description: flavor-complex-violets
+
+- type: flavor
+  id: pyrotton
+  flavorType: Complex
+  description: flavor-complex-pyrotton
 
 - type: flavor
   id: mothballs
