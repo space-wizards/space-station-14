@@ -4,26 +4,28 @@
             xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
             Title="{Loc 'reagent-dispenser-bound-user-interface-title'}"
             MinSize="680 450">
-    <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'reagent-dispenser-window-amount-to-dispense-label'}"/>
-            <Control MinSize="20 0"></Control>
-            <Button Name="DispenseButton1" Access="Public" Text="1" StyleClasses="OpenRight"/>
-            <Button Name="DispenseButton5" Access="Public" Text="5" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton10" Access="Public" Text="10" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton15" Access="Public" Text="15" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton20" Access="Public" Text="20" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton25" Access="Public" Text="25" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton30" Access="Public" Text="30" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton50" Access="Public" Text="50" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton100" Access="Public" Text="100" StyleClasses="OpenLeft"/>
+    <BoxContainer Orientation="Horizontal">
+        <BoxContainer Orientation="Vertical" MinWidth="170">
+            <Label Text="{Loc 'reagent-dispenser-window-amount-to-dispense-label'}" HorizontalAlignment="Center" />
+            <GridContainer Columns="3" HorizontalAlignment="Center">
+                <!-- FIXME: OpenLeft / OpenRight misalign the text, currently just set everything to OpenBoth -->
+                <Button Name="DispenseButton1" Access="Public" Text="1" StyleClasses="OpenBoth" SetWidth="40"/>
+                <Button Name="DispenseButton5" Access="Public" Text="5" StyleClasses="OpenBoth" SetWidth="40"/>
+                <Button Name="DispenseButton10" Access="Public" Text="10" StyleClasses="OpenBoth" SetWidth="40"/>  <!-- OpenLeft -->
+                <Button Name="DispenseButton15" Access="Public" Text="15" StyleClasses="OpenBoth" SetWidth="40"/>
+                <Button Name="DispenseButton20" Access="Public" Text="20" StyleClasses="OpenBoth" SetWidth="40"/>
+                <Button Name="DispenseButton25" Access="Public" Text="25" StyleClasses="OpenBoth" SetWidth="40"/>
+                <Button Name="DispenseButton30" Access="Public" Text="30" StyleClasses="OpenBoth" SetWidth="40"/> <!-- OpenRight -->
+                <Button Name="DispenseButton50" Access="Public" Text="50" StyleClasses="OpenBoth" SetWidth="40"/>
+                <Button Name="DispenseButton100" Access="Public" Text="100" StyleClasses="OpenBoth" SetWidth="40"/>
+            </GridContainer>
         </BoxContainer>
         <Control MinSize="0 10"/>
         <GridContainer Name="ChemicalList" HorizontalExpand="True" VerticalExpand="True" Access="Public" Columns="6">
         </GridContainer>
         <Control MinSize="0 10"/>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'reagent-dispenser-window-container-label'}"/>
+            <Label Text="{Loc 'reagent-dispenser-window-container-label'}" HorizontalAlignment="Center"/>
             <Button Name="ClearButton"
                     Access="Public"
                     Text="{Loc 'reagent-dispenser-window-clear-button'}"
