@@ -150,7 +150,7 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
         // Add all prefixes
         foreach (var prefix in _prefixes.OrderByDescending(n => n.Priority))
         {
-            sb.Append($"{prefix} ");
+            sb.Append($"{prefix.Text} ");
         }
 
         // Add the override name if there is one, otherwise the original name
@@ -159,7 +159,7 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
         // Add all postfixes
         foreach (var postfix in _postfixes.OrderByDescending(n => n.Priority))
         {
-            sb.Append($" {postfix}");
+            sb.Append($" {postfix.Text}");
         }
 
         return sb.ToString();

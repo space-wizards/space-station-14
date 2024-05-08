@@ -14,7 +14,7 @@ public sealed partial class ModifyWearerNameComponent : Component
     /// The text to be used as the modifier.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string Text;
+    public string Text = string.Empty;
 
     /// <summary>
     /// What form of modifier should be used.
