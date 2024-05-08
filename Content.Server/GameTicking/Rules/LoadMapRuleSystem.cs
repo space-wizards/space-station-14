@@ -1,6 +1,7 @@
 using Content.Server.Antag;
 using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.GridPreloader;
 using Content.Server.Spawners.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
@@ -14,6 +15,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly GridPreloaderSystem _gridPreloader = default!;
 
     public override void Initialize()
     {
@@ -41,7 +43,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         if (comp.Map != null)
             return;
 
-        _map.CreateMap(out var mapId);
+        var mapUid = _map.CreateMap(out var mapId);
         comp.Map = mapId;
 
         if (comp.GameMap != null)
@@ -53,6 +55,15 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         {
             if (_mapLoader.TryLoad(comp.Map.Value, comp.MapPath.Value.ToString(), out var roots, new MapLoadOptions { LoadMap = true }))
                 comp.MapGrids.AddRange(roots);
+        }
+        else if (comp.PreloadedGrid != null)
+        {
+            //To do: If there are no preloaded shuttles left, the alert will still go off! This is a problem, but it seems to be necessary to make an Event Handler with Canceled fields.
+            if (!_gridPreloader.TryGetPreloadedGrid(comp.PreloadedGrid.Value, out var loadedShuttle))
+                return;
+
+            _transform.SetParent(loadedShuttle.Value, mapUid);
+            comp.MapGrids.Add(loadedShuttle.Value);
         }
         else
         {

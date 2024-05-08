@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.CCVar;
 using Content.Shared.GridPreloader.Prototypes;
 using Content.Shared.GridPreloader.Systems;
@@ -12,11 +13,11 @@ using System.Linq;
 using System.Numerics;
 
 namespace Content.Server.GridPreloader;
-public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
+public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly MapLoaderSystem _map = default!;
+    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -33,15 +34,14 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
         if (!_cfg.GetCVar(CCVars.PreloadGrids))
             return;
 
-        preloader.Comp.PreloadGridsMapId = _mapManager.CreateMap();
-        _mapManager.AddUninitializedMap(preloader.Comp.PreloadGridsMapId.Value);
-        _mapManager.SetMapPaused(preloader.Comp.PreloadGridsMapId.Value, true);
+        var mapUid = _map.CreateMap(out var mapId, false);
+        preloader.Comp.PreloadGridsMapId = mapId;
+        _map.SetPaused(mapId, true);
 
-        var mapUid = _mapManager.GetMapEntityId(preloader.Comp.PreloadGridsMapId.Value);
         var globalXOffset = 0f;
         foreach (var proto in _prototype.EnumeratePrototypes<PreloadedGridPrototype>())
         {
-            for (int i = 0; i < proto.Copies; i++)
+            for (var i = 0; i < proto.Copies; i++)
             {
                 var options = new MapLoadOptions
                 {
@@ -49,21 +49,19 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
                 };
 
                 // i dont use TryLoad, because he doesn't return EntityUid
-                var gridUid = _map.LoadGrid(preloader.Comp.PreloadGridsMapId.Value, proto.Path.ToString(), options);
+                // TODO MIRROR FIX
+                var gridUid = _mapLoader.LoadGrid(preloader.Comp.PreloadGridsMapId.Value, proto.Path.ToString(), options);
                 if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
                     continue;
 
                 if (!TryComp<PhysicsComponent>(gridUid, out var physic))
                     continue;
 
-                if (gridUid == null)
-                    continue;
-
                 //Position Calculating
                 globalXOffset += mapGrid.LocalAABB.Width / 2;
 
-                var coord = new Vector2(-physic.LocalCenter.X + globalXOffset, -physic.LocalCenter.Y);
-                _transform.SetCoordinates(gridUid.Value, new EntityCoordinates(mapUid, coord));
+                var coords = new Vector2(-physic.LocalCenter.X + globalXOffset, -physic.LocalCenter.Y);
+                _transform.SetCoordinates(gridUid.Value, new EntityCoordinates(mapUid, coords));
 
                 globalXOffset += (mapGrid.LocalAABB.Width / 2) + 1;
 
@@ -83,7 +81,7 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
     /// <summary>
     /// An attempt to get a certain preloaded shuttle. If there are no more such shuttles left, returns null
     /// </summary>
-    public bool TryGetPreloadedGrid(ProtoId<PreloadedGridPrototype> proto, EntityCoordinates coord, out EntityUid? preloadedGrid, GridPreloaderComponent? preloader = null)
+    public bool TryGetPreloadedGrid(ProtoId<PreloadedGridPrototype> proto, [NotNullWhen(true)] out EntityUid? preloadedGrid, GridPreloaderComponent? preloader = null)
     {
         preloadedGrid = null;
 
@@ -98,17 +96,13 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
         {
             preloadedGrid = preloader.PreloadedGrids[proto][0];
 
-            _transform.SetCoordinates(preloadedGrid.Value, coord);
-
             preloader.PreloadedGrids[proto].RemoveAt(0);
             if (preloader.PreloadedGrids[proto].Count == 0)
                 preloader.PreloadedGrids.Remove(proto);
 
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 }
