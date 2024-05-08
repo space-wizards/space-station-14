@@ -25,7 +25,6 @@
     - BaseStationSiliconLawCrewsimov
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen
-    - BaseStationGridPreloader
     - BaseRandomStation
   noSpawn: true
   components:
