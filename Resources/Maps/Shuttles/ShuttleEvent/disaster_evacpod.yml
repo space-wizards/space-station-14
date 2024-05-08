@@ -58,15 +58,15 @@ entities:
       version: 2
       data:
         tiles:
-          0,0:
-            0: 275
-          -1,0:
-            0: 52991
           0,-1:
-            0: 12848
-            1: 256
+            0: 4368
+            1: 32
+          0,0:
+            1: 2
+          -1,0:
+            1: 8
           -1,-1:
-            0: 60544
+            1: 128
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
@@ -84,10 +84,10 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 293.14975
+          immutable: True
           moles:
-          - 20.078888
-          - 75.53487
+          - 0
+          - 0
           - 0
           - 0
           - 0
