@@ -6,7 +6,9 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.NameIdentifier;
 using Content.Shared.PDA;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.StationRecords;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -398,6 +400,9 @@ public sealed class AccessReaderSystem : EntitySystem
         if (_idCardSystem.TryFindIdCard(accessor, out var idCard)
             && idCard.Comp is { BypassLogging: false, FullName: not null })
             name = idCard.Comp.FullName;
+
+        if (TryComp<NameIdentifierComponent>(accessor, out var nameIdentifier) && HasComp<BorgChassisComponent>(accessor))
+        name = nameIdentifier.FullIdentifier;
 
         name ??= Loc.GetString("access-reader-unknown-id");
 
