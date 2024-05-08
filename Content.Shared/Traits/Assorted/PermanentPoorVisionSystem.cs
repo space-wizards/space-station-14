@@ -8,7 +8,6 @@ namespace Content.Shared.Traits.Assorted;
 /// </summary>
 public sealed class PermanentPoorVisionSystem : EntitySystem
 {
-
     [Dependency] private readonly BlindableSystem _blinding = default!;
 
     /// <inheritdoc/>
