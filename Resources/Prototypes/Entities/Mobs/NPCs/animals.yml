@@ -1892,11 +1892,8 @@
     layers:
       - state: gondola_body_medium
         map: [ "enum.DamageStateVisualLayers.Base" ]
-        color: "#6e4e40"
-        shader: unshaded
       - state: gondola_moustache_large
         map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-        shader: unshaded
   - type: Physics
   - type: Fixtures
     fixtures:
