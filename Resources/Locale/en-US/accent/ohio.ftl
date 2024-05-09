@@ -286,3 +286,9 @@ accent-ohio-words-replace-91 = gyatdamned
 
 accent-ohio-words-92 = goddang
 accent-ohio-words-replace-92 = gyattdang
+
+accent-ohio-words-93 = fuck
+accent-ohio-words-replace-93 = skibidi
+
+accent-ohio-words-94 = shit
+accent-ohio-words-replace-94 = skibidi
