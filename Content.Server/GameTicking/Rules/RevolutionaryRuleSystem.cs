@@ -28,6 +28,7 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Server.GameTicking.Components;
+using Content.Shared.Cuffs.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -179,7 +180,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             commandList.Add(id);
         }
 
-        return IsGroupDead(commandList, true);
+        return IsGroupDetainedOrDead(commandList, true, true);
     }
 
     private void OnHeadRevMobStateChanged(EntityUid uid, HeadRevolutionaryComponent comp, MobStateChangedEvent ev)
@@ -203,7 +204,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         // If no Head Revs are alive all normal Revs will lose their Rev status and rejoin Nanotrasen
-        if (IsGroupDead(headRevList, false))
+        // Cuffing Head Revs is not enough - they must be killed.
+        if (IsGroupDetainedOrDead(headRevList, false, false))
         {
             var rev = AllEntityQuery<RevolutionaryComponent, MindContainerComponent>();
             while (rev.MoveNext(out var uid, out _, out var mc))
@@ -235,35 +237,43 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     }
 
     /// <summary>
-    /// Will take a group of entities and check if they are all alive or dead
+    /// Will take a group of entities and check if these entities are alive, dead or cuffed.
     /// </summary>
     /// <param name="list">The list of the entities</param>
-    /// <param name="checkOffStation">Bool for if you want to check if someone is in space and consider them dead. (Won't check when emergency shuttle arrives just in case)</param>
+    /// <param name="checkOffStation">Bool for if you want to check if someone is in space and consider them missing in action. (Won't check when emergency shuttle arrives just in case)</param>
+    /// <param name="countCuffed">Bool for if you don't want to count cuffed entities.</param>
     /// <returns></returns>
-    private bool IsGroupDead(List<EntityUid> list, bool checkOffStation)
+    private bool IsGroupDetainedOrDead(List<EntityUid> list, bool checkOffStation, bool countCuffed)
     {
-        var dead = 0;
+        var gone = 0;
         foreach (var entity in list)
         {
-            if (TryComp<MobStateComponent>(entity, out var state))
+            if (TryComp<CuffableComponent>(entity, out var cuffed) && cuffed.CuffedHandCount > 0 && countCuffed)
             {
-                if (state.CurrentState == MobState.Dead || state.CurrentState == MobState.Invalid)
-                {
-                    dead++;
-                }
-                else if (checkOffStation && _stationSystem.GetOwningStation(entity) == null && !_emergencyShuttle.EmergencyShuttleArrived)
-                {
-                    dead++;
-                }
+                gone++;
             }
-            //If they don't have the MobStateComponent they might as well be dead.
             else
             {
-                dead++;
+                if (TryComp<MobStateComponent>(entity, out var state))
+                {
+                    if (state.CurrentState == MobState.Dead || state.CurrentState == MobState.Invalid)
+                    {
+                        gone++;
+                    }
+                    else if (checkOffStation && _stationSystem.GetOwningStation(entity) == null && !_emergencyShuttle.EmergencyShuttleArrived)
+                    {
+                        gone++;
+                    }
+                }
+                //If they don't have the MobStateComponent they might as well be dead.
+                else
+                {
+                    gone++;
+                }
             }
         }
 
-        return dead == list.Count || list.Count == 0;
+        return gone == list.Count || list.Count == 0;
     }
 
     private static readonly string[] Outcomes =

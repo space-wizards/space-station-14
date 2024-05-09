@@ -383,6 +383,30 @@ public abstract class SharedMindSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Tries to find an objective that has the same prototype as the argument.
+    /// </summary>
+    /// <remarks>
+    /// Will not work for objectives that have no prototype, or duplicate objectives with the same prototype.
+    /// <//remarks>
+    public bool TryFindObjective(Entity<MindComponent?> mind, string prototype, [NotNullWhen(true)] out EntityUid? objective)
+    {
+        objective = null;
+        if (!Resolve(mind, ref mind.Comp))
+            return false;
+
+        foreach (var uid in mind.Comp.Objectives)
+        {
+            if (MetaData(uid).EntityPrototype?.ID == prototype)
+            {
+                objective = uid;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public bool TryGetSession(EntityUid? mindId, [NotNullWhen(true)] out ICommonSession? session)
     {
         session = null;
