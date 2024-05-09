@@ -13,6 +13,8 @@ public abstract partial class SharedLabelSystem : EntitySystem
         SubscribeLocalEvent<LabelComponent, ExaminedEvent>(OnExamine);
     }
 
+    public virtual void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null){}
+
     private void OnExamine(EntityUid uid, LabelComponent? label, ExaminedEvent args)
     {
         if (!Resolve(uid, ref label))

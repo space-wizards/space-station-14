@@ -7,6 +7,12 @@
   flavor: soda
   color: "#6c2828"
   recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/colaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: RoyRogers
@@ -42,6 +48,12 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: drgibb
   color: "#102000"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/dr_gibb_glass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: EnergyDrink
@@ -58,7 +70,8 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Theobromine
-        amount: 0.05
+        amount: 0.1
+  fizziness: 0.4
 
 - type: reagent
   id: GrapeSoda
@@ -84,6 +97,7 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
+  fizziness: 0
 
 - type: reagent
   id: LemonLime
@@ -102,6 +116,7 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: pwrgamesoda
   color: "#9385bf"
+  fizziness: 0.9 # gamers crave the fizz
 
 - type: reagent
   id: RootBeer
@@ -132,6 +147,7 @@
   metamorphicMaxFillLevels: 7
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  fizziness: 0.4
 
 - type: reagent
   id: SolDry
@@ -170,6 +186,12 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: sodacitrus
   color: "#a6fa5a"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/space_mountain_wind_glass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: SpaceUp
@@ -179,6 +201,12 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: spaceup
   color: "#e3e3e37d"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/space-up_glass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Starkist

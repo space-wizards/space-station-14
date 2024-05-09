@@ -60,3 +60,26 @@
       prototype: ProjectileMagicTesla
       posData: !type:TargetCasterPos
       speech: action-speech-spell-teslaball
+
+- type: entity
+  id: MimeGun
+  name: Finger Guns
+  description: Shoot muting mime bullets from your fingertips!
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    priority: -1
+    targetingIndicator: false
+    repeat: true
+    useDelay: 1.5
+    itemIconStyle: BigAction
+    checkCanAccess: false
+    range: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: mimegun
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileFingerGun
+      posData: !type:TargetCasterPos

@@ -749,6 +749,40 @@
     price: 300
 
 - type: entity
+  name: ExCaliber
+  parent: BaseWeaponBatterySmall
+  id: WeaponERTGodGun
+  description: Jesus wept.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/ertgodgun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-1
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/ertgodgun.rsi
+  - type: Gun
+    fireRate: 1.35
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 83
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 2
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 300
+
+- type: entity
   name: 2nd Testamendment
   parent: BaseWeaponBatterySmall
   id: WeaponHolyGodGun

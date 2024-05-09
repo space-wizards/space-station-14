@@ -1,7 +1,7 @@
 - type: currency
   id: Telecrystal
   displayName: store-currency-display-telecrystal
-  cash: 
+  cash:
     1: Telecrystal1
   canWithdraw: true
 

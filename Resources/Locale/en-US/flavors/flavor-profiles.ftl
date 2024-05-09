@@ -168,6 +168,9 @@ flavor-complex-light = like a light gone out
 flavor-complex-profits = like profits
 flavor-complex-fishops = like the dreaded fishops
 flavor-complex-violets = like violets
+flavor-complex-pyrotton = like a burning mouth
+flavor-complex-mothballs = like mothballs
+flavor-complex-paint-thinner = like paint thinner
 
 # Drink-specific flavors.
 
@@ -240,6 +243,12 @@ flavor-complex-atomic-cola = like hoarding bottle caps
 flavor-complex-cuba-libre = like spiked cola
 flavor-complex-gin-tonic = like spiked lemon-lime soda
 flavor-complex-screwdriver = like spiked orange juice
+flavor-complex-vodka-red-bool = like a heart attack
+flavor-complex-irish-bool = caffine and Ireland
+flavor-complex-xeno-basher = like killing bugs
+flavor-complex-budget-insuls-drink = like door hacking
+flavor-complex-watermelon-wakeup = like a sweet wakeup call
+flavor-complex-rubberneck = like synthetics
 flavor-complex-irish-car-bomb = like a spiked cola float
 flavor-complex-themartinez = like violets and lemon vodka
 flavor-complex-cogchamp = like brass

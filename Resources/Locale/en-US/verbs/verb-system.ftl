@@ -1,4 +1,3 @@
-verb-system-waiting-on-server-text = Waiting on Server...
 verb-system-null-server-response = Entity not in view. You should not see this.
 
 
@@ -18,6 +17,7 @@ verb-categories-buckle = Buckle
 verb-categories-unbuckle = Unbuckle
 verb-categories-rotate = Rotate
 verb-categories-smite = Smite
+verb-categories-polymorph = Polymorph
 verb-categories-tricks = Tricks
 verb-categories-transfer = Set Transfer Amount
 verb-categories-split = Split
@@ -28,6 +28,7 @@ verb-categories-timer = Set Delay
 verb-categories-lever = Lever
 verb-categories-select-type = Select Type
 verb-categories-fax = Set Destination
+verb-categories-power-level = Power Level
 
 verb-common-toggle-light = Toggle light
 verb-common-close = Close

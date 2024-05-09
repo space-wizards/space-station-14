@@ -2,12 +2,14 @@
   id: Train
   mapName: 'Train'
   mapPath: /Maps/train.yml
-  minPlayers: 0
+  minPlayers: 100
   maxPlayers: 100
   stations:
     Train:
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationRandomTransform
+          enableStationRotation: false
         - type: StationNameSetup
           mapNameTemplate: 'Train "Sentipode" {0}-{1}'
           nameGenerator:
@@ -49,8 +51,8 @@
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 4, 4 ]
-            SecurityCadet: [ 2, 3 ]
+            SecurityOfficer: [ 6, 6 ]
+            SecurityCadet: [ 3, 3 ]
             Lawyer: [ 1, 2 ]
             #supply
             Quartermaster: [ 1, 1 ]

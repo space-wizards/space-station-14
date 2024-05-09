@@ -33,6 +33,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Item;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -127,7 +128,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (user == null ||
             !_combatMode.IsInCombatMode(user) ||
-            !TryGetGun(user.Value, out var ent, out var gun))
+            !TryGetGun(user.Value, out var ent, out var gun) ||
+            HasComp<ItemComponent>(user))
         {
             return;
         }
@@ -136,7 +138,6 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
 
         gun.ShootCoordinates = GetCoordinates(msg.Coordinates);
-        Log.Debug($"Set shoot coordinates to {gun.ShootCoordinates}");
         AttemptShoot(user.Value, ent, gun);
     }
 
@@ -195,7 +196,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (gun.ShotCounter == 0)
             return;
 
-        Log.Debug($"Stopped shooting {ToPrettyString(uid)}");
         gun.ShotCounter = 0;
         gun.ShootCoordinates = null;
         Dirty(uid, gun);
@@ -461,7 +461,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         RemCompDeferred<AmmoComponent>(uid);
     }
 
-    protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
+    protected void MuzzleFlash(EntityUid gun, AmmoComponent component, Angle worldAngle, EntityUid? user = null)
     {
         var attemptEv = new GunMuzzleFlashAttemptEvent();
         RaiseLocalEvent(gun, ref attemptEv);
@@ -473,7 +473,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var ev = new MuzzleFlashEvent(GetNetEntity(gun), sprite, user == gun);
+        var ev = new MuzzleFlashEvent(GetNetEntity(gun), sprite, worldAngle);
         CreateEffect(gun, ev, user);
     }
 
@@ -522,7 +522,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         Dirty(gun);
     }
 
-    protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
+    protected abstract void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? user = null);
 
     /// <summary>
     /// Used for animated effects on the client.

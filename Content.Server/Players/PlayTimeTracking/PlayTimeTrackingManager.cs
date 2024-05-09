@@ -54,7 +54,7 @@ public delegate void CalcPlayTimeTrackersCallback(ICommonSession player, HashSet
 /// Operations like refreshing and sending play time info to clients are deferred until the next frame (note: not tick).
 /// </para>
 /// </remarks>
-public sealed class PlayTimeTrackingManager
+public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager
 {
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IServerNetManager _net = default!;
@@ -201,6 +201,11 @@ public sealed class PlayTimeTrackingManager
         }
     }
 
+    public IReadOnlyDictionary<string, TimeSpan> GetPlayTimes(ICommonSession session)
+    {
+        return GetTrackerTimes(session);
+    }
+
     private void SendPlayTimes(ICommonSession pSession)
     {
         var roles = GetTrackerTimes(pSession);
@@ -304,7 +309,7 @@ public sealed class PlayTimeTrackingManager
         var data = new PlayTimeData();
         _playTimeData.Add(session, data);
 
-        var playTimes = await _db.GetPlayTimes(session.UserId);
+        var playTimes = await _db.GetPlayTimes(session.UserId, cancel);
         cancel.ThrowIfCancellationRequested();
 
         foreach (var timer in playTimes)

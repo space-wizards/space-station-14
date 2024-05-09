@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "AR/molotov/plyush",
+    "size": {
+        "x": 32,
+        "y": 32
+      },
+      "states": [
+        {
+          "name": "plushie_Bkv1"
+        },
+        {
+          "name": "plushie_Bkv2"
+        }]}

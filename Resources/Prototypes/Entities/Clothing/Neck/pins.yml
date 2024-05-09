@@ -151,3 +151,19 @@
     clothingVisuals:
       neck:
       - state: trans-equipped
+ 
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckAutismPin
+  name: autism pin
+  description: be autism do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/autismpin.rsi
+    layers:
+    - state: autism
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/autismpin.rsi
+    clothingVisuals:
+      neck:
+      - state: autism-equipped

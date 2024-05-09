@@ -38,7 +38,7 @@
         amount: 3
       - id: ClothingUniformRandomArmless
         amount: 5
-      - id: ClothingUniformRandomStandart
+      - id: ClothingUniformRandomStandard
         amount: 5
       - id: ClothingUniformRandomBra
         amount: 5
@@ -81,7 +81,7 @@
     contents:
       - id: ClothingUniformJumpsuitColorBlue
       - id: ClothingUniformJumpskirtColorBlue
-      - id: ClothingShoesColorBrown
+      - id: ClothingShoesColorBlue
         amount: 2
 
 - type: entity
@@ -93,7 +93,7 @@
     contents:
       - id: ClothingUniformJumpsuitColorPink
       - id: ClothingUniformJumpskirtColorPink
-      - id: ClothingShoesColorBrown
+      - id: ClothingShoesColorPink
         amount: 2
 
 - type: entity

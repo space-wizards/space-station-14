@@ -199,7 +199,7 @@ public sealed class PricingSystem : EntitySystem
     /// This fires off an event to calculate the price.
     /// Calculating the price of an entity that somehow contains itself will likely hang.
     /// </remarks>
-    public double GetPrice(EntityUid uid)
+    public double GetPrice(EntityUid uid, bool includeContents = true)
     {
         var ev = new PriceCalculationEvent();
         RaiseLocalEvent(uid, ref ev);
@@ -222,7 +222,7 @@ public sealed class PricingSystem : EntitySystem
             price += GetStaticPrice(uid);
         }
 
-        if (TryComp<ContainerManagerComponent>(uid, out var containers))
+        if (includeContents && TryComp<ContainerManagerComponent>(uid, out var containers))
         {
             foreach (var container in containers.Containers.Values)
             {

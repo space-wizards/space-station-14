@@ -53,7 +53,7 @@
     - type: PipeColorVisuals
     - type: UserInterface
       interfaces:
-        - key: enum.GasFilterUiKey.Key
+        enum.GasFilterUiKey.Key:
           type: GasFilterBoundUserInterface
     - type: GasFilter
       enabled: false
@@ -96,6 +96,9 @@
         enabled:
           True: { state: gasFilterFOn }
           False: { state: gasFilterF }
+  - type: Construction
+    node: filterflipped
+
   - type: PipeColorVisuals
   - type: NodeContainer
     nodes:
@@ -138,7 +141,7 @@
     - type: PipeColorVisuals
     - type: UserInterface
       interfaces:
-        - key: enum.GasMixerUiKey.Key
+        enum.GasMixerUiKey.Key:
           type: GasMixerBoundUserInterface
     - type: GasMixer
       enabled: false
@@ -196,6 +199,8 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: North
+  - type: Construction
+    node: mixerflipped
 
 - type: entity
   parent: GasPipeBase

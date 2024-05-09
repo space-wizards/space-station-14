@@ -22,6 +22,33 @@
     - RampingStationEventScheduler
 
 - type: gamePreset
+  id: AllAtOnceNoZeds
+  alias:
+  - allatoncefuckzombies
+  name: all-at-once-nozeds-title
+  description: all-at-once-nozeds-description
+  showInVote: false
+  rules:
+    - Nukeops
+    - Traitor
+    - Revolutionary
+    - RampingStationEventScheduler
+
+#- type: gamePreset
+#  id: AllAtOnceWizard
+#  alias:
+#  - magicalallatonce
+#  name: all-at-once-wizard-title
+#  description: all-at-once-wizard-description
+#  showInVote: false
+#  rules:
+#    - Nukeops
+#    - Traitor
+#    - Revolutionary
+#    - Wizard
+#    - RampingStationEventScheduler
+
+- type: gamePreset
   id: Extended
   alias:
   - extended
@@ -123,18 +150,18 @@
     - BasicStationEventScheduler
     - BasicRoundstartVariation
 
-- type: gamePreset
-  id: Wizard
-  alias:
-    - wizard
-  name: wizard-title
-  description: wizard-description
-  showInVote: false
-  rules:
-    - Wizard
-    - SubGamemodesRule
-    - BasicStationEventScheduler
-    - BasicRoundstartVariation
+#- type: gamePreset
+#  id: Wizard
+#  alias:
+#    - wizard
+#  name: wizard-title
+#  description: wizard-description
+#  showInVote: false
+#  rules:
+#    - Wizard
+#    - SubGamemodesRule
+#    - BasicStationEventScheduler
+#    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Revolutionary
@@ -166,15 +193,3 @@
   - Zombie
   - BasicStationEventScheduler
   - BasicRoundstartVariation
-
-- type: gamePreset
-  id: Pirates
-  alias:
-    - pirates
-  name: pirates-title
-  description: pirates-description
-  showInVote: false
-  rules:
-    - Pirates
-    - BasicStationEventScheduler
-    - BasicRoundstartVariation

@@ -3,10 +3,6 @@
   background: /Textures/LobbyScreens/goob.webp
 
 - type: lobbyBackground
-  id: What
-  background: /Textures/LobbyScreens/what.webp
-
-- type: lobbyBackground
   id: Valve
   background: /Textures/LobbyScreens/Valve.webp
 
@@ -17,7 +13,7 @@
 - type: lobbyBackground
   id: gugel
   background: /Textures/LobbyScreens/gugel.webp
-  
+
 - type: lobbyBackground
   id: gigaclown
   background: /Textures/LobbyScreens/gigaclown.webp
@@ -37,7 +33,39 @@
 - type: lobbyBackground
   id: THRONGLER
   background: /Textures/LobbyScreens/THRONGLER.webp
-  
+
 - type: lobbyBackground
   id: mime
   background: /Textures/LobbyScreens/mime.webp
+
+- type: lobbyBackground
+  id: breakingchem
+  background: /Textures/LobbyScreens/breakingchem.webp
+
+- type: lobbyBackground
+  id: clown
+  background: /Textures/LobbyScreens/clown.webp
+
+- type: lobbyBackground
+  id: monkeyops
+  background: /Textures/LobbyScreens/monkeyops.webp
+
+- type: lobbyBackground
+  id: command
+  background: /Textures/LobbyScreens/command.webp
+
+- type: lobbyBackground
+  id: combine
+  background: /Textures/LobbyScreens/combine.webp
+
+- type: lobbyBackground
+  id: Behonker
+  background: /Textures/LobbyScreens/behonker.webp
+
+- type: lobbyBackground
+  id: TerminalStation
+  background: /Textures/LobbyScreens/terminalstation.webp
+
+- type: lobbyBackground
+  id: JustAWeekAway
+  background: /Textures/LobbyScreens/justaweekaway.webp

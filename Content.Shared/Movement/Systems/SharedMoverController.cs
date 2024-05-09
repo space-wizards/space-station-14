@@ -23,6 +23,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
+using Content.Shared.StepTrigger.Components;
 
 namespace Content.Shared.Movement.Systems
 {
@@ -46,6 +47,7 @@ namespace Content.Shared.Movement.Systems
         [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
         [Dependency] private   readonly SharedTransformSystem _transform = default!;
         [Dependency] private   readonly TagSystem _tags = default!;
+        [Dependency] private   readonly IEntityManager _entities = default!;
 
         protected EntityQuery<InputMoverComponent> MoverQuery;
         protected EntityQuery<MobMoverComponent> MobMoverQuery;
@@ -57,11 +59,6 @@ namespace Content.Shared.Movement.Systems
         protected EntityQuery<TransformComponent> XformQuery;
         protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
         protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
-
-        private const float StepSoundMoveDistanceRunning = 2;
-        private const float StepSoundMoveDistanceWalking = 1.5f;
-
-        private const float FootstepVariation = 0f;
 
         /// <summary>
         /// <see cref="CCVars.StopSpeed"/>
@@ -258,7 +255,7 @@ namespace Content.Shared.Movement.Systems
 
                     var audioParams = sound.Params
                         .WithVolume(sound.Params.Volume + soundModifier)
-                        .WithVariation(sound.Params.Variation ?? FootstepVariation);
+                        .WithVariation(sound.Params.Variation ?? mobMover.FootstepVariation);
 
                     // If we're a relay target then predict the sound for all relays.
                     if (relayTarget != null)
@@ -404,7 +401,9 @@ namespace Content.Shared.Movement.Systems
                 return false;
 
             var coordinates = xform.Coordinates;
-            var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
+            var distanceNeeded = mover.Sprinting
+                ? mobMover.StepSoundMoveDistanceRunning
+                : mobMover.StepSoundMoveDistanceWalking;
 
             // Handle footsteps.
             if (!weightless)

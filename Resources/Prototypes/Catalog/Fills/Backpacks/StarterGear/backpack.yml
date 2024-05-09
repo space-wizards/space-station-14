@@ -17,7 +17,7 @@
       - id: BoxHug
       - id: RubberStampClown
       - id: CrayonRainbow
-      - id: ClownCuffs
+      - id: BookHowToClown
 
 - type: entity
   noSpawn: true
@@ -98,6 +98,17 @@
   noSpawn: true
   parent: ClothingBackpack
   id: ClothingBackpackHOPFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: Flash
+      #- id: TelescopicBaton
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackIan
+  id: ClothingBackpackHOPIanFilled
   components:
   - type: StorageFill
     contents:
@@ -204,7 +215,7 @@
       - id: Bible
       - id: RubberStampChaplain
       - id: WeaponGodGun
-  
+
 - type: entity
   noSpawn: true
   parent: ClothingBackpack

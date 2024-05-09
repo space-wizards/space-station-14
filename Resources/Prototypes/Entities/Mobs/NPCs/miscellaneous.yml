@@ -66,3 +66,162 @@
       interactFailureString: petting-failure-generic
       interactSuccessSound:
         path: /Audio/Animals/lizard_happy.ogg
+
+- type: entity
+  id: MobTomatoKiller
+  parent:
+  - BaseSimpleMob
+  - MobDamageable
+  - MobBloodstream
+  - MobFlammable
+  - MobCombat
+  name: tomato killer
+  description: it seems today it's not you eating tomatoes, it's the tomatoes eating you.
+  components:
+  - type: Item
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: KillerTomatoCompound
+  - type: NPCImprintingOnSpawnBehaviour
+    whitelist:
+      components:
+      - HumanoidAppearance
+  - type: Sprite
+    sprite: Mobs/Demons/tomatokiller.rsi
+    noRot: true
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+  - type: Bloodstream
+    bloodReagent: JuiceTomato
+    bloodMaxVolume: 50
+    chemicalMaxVolume: 30
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatTomato
+      amount: 2
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 100
+      behaviors:
+      - !type:GibBehavior { }
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      24: Dead
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 80
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+  - type: MeleeWeapon
+    hidden: true
+    damage:
+      groups:
+        Brute: 4
+    animation: WeaponArcBite
+  - type: Climbing
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Effects/Footsteps/slime1.ogg
+      params:
+        volume: 3
+  - type: Tag
+    tags:
+      - FootstepSound
+      - Fruit
+  - type: Extractable
+    grindableSolutionName: bloodstream
+  - type: PotencyVisuals
+  - type: Appearance
+  - type: Produce
+    seedId: killerTomato
+
+- type: entity
+  name: Skibidi Toilet
+  id: MobSkibidiToilet
+  parent: SimpleMobBase
+  description: Skibidi dop dop mmm yes yes
+  components:
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: HTN
+      rootTask:
+        task: SimpleRangedHostileCompound
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Mobs/Demons/skibidi.rsi
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: alive
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.30
+          density: 80
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: alive
+        Dead:
+          Base: dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        100: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 5
+    - type: Tag
+      tags:
+        - FootstepSound
+    - type: HitscanBatteryAmmoProvider
+      proto: RedLightLaser
+      fireCost: 50
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 50
+    - type: Battery
+      maxCharge: 1000
+      startingCharge: 1000
+    - type: Gun
+      fireRate: 1
+      useKey: false
+      selectedMode: SemiAuto
+      availableModes:
+        - SemiAuto
+      soundGunshot: /Audio/Misc/skibidi.wav
+    - type: CombatMode
+    - type: InteractionPopup
+      successChance: 0.3
+      interactSuccessString: petting-success-reptile
+      interactFailureString: petting-failure-generic
+      interactSuccessSound:
+        path: /Audio/Misc/skibidi.wav

@@ -12,6 +12,7 @@
     species: Arachnid
   - type: Hunger
   - type: Thirst
+  - type: Carriable
   - type: Sericulture
     action: ActionSericulture
     productionLength: 2
@@ -62,6 +63,7 @@
   - type: Speech
     speechVerb: Arachnid
     speechSounds: Arachnid
+    allowedEmotes: ['Click', 'Chitter']
   - type: Vocal
     sounds:
       Male: UnisexArachnid

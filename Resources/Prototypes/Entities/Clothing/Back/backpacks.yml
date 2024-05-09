@@ -23,13 +23,14 @@
         ents: []
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   # to prevent bag open/honk spam
   - type: UseDelay
     delay: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: AllowsSleepInside
 
 - type: entity
   parent: ClothingBackpack
@@ -267,7 +268,7 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/syndicate.rsi
   - type: ExplosionResistance
-    damageCoefficient: 0.1         
+    damageCoefficient: 0.1
 
 #Special
 - type: entity

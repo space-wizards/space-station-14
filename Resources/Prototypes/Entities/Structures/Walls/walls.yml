@@ -169,7 +169,7 @@
     sprite: Structures/Walls/meat.rsi
   - type: Construction
     graph: Girder
-    node: bananiumWall
+    node: meatWall
   - type: Destructible
     thresholds:
     - trigger:
@@ -1233,6 +1233,14 @@
     - type: Icon
       sprite: Structures/Magic/forcewall.rsi
       state: forcewall
+
+- type: entity
+  parent: WallInvisible
+  id: WallMimeBlockade
+  name: invisible wall
+  components:
+    - type: TimedDespawn
+      lifetime: 20
 
 - type: entity
   parent: BaseWall

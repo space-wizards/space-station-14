@@ -42,8 +42,5 @@
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolMk58Nonlethal
+    pocket1: WeaponPistolMk58
     pocket2: DeathAcidifierImplanter
-  innerClothingSkirt: ClothingUniformJumpskirtColorBlue
-  satchel: ClothingBackpackSatchelCaptainFilled
-  duffelbag: ClothingBackpackDuffelCaptainFilled

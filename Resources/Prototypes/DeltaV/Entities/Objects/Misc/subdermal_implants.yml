@@ -1,0 +1,17 @@
+- type: entity
+  parent: BaseSubdermalImplant
+  id: BionicSyrinxImplant
+  name: bionic syrinx implant
+  description: This implant lets a harpy adjust their voice to whoever they can think of.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSyrinxChangeVoiceMask
+      whitelist:
+        components:
+        - HarpySinger
+    - type: VoiceMasker
+    - type: Tag
+      tags:
+        - SubdermalImplant
+        - BionicSyrinxImplant

@@ -15,4 +15,10 @@ public sealed partial class CanEscapeInventoryComponent : Component
 
     [DataField("doAfter")]
     public DoAfterId? DoAfter;
+
+    /// <summary>
+    ///     DeltaV - action to cancel inventory escape. Added dynamically.
+    /// </summary>
+    [DataField]
+    public EntityUid? EscapeCancelAction;
 }

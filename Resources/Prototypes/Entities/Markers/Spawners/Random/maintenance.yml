@@ -65,6 +65,7 @@
         - ClothingUniformJumpsuitPirate
         - ClothingShoesBootsCowboyFancy
         - ClothingHeadHatCowboyBountyHunter
+        - ClothingNeckAutismPin
       rareChance: 0.01
       prototypes:
         - Lighter

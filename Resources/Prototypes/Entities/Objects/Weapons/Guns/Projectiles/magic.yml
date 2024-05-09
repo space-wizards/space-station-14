@@ -106,6 +106,34 @@
     damage: 25
 
 - type: entity
+  noSpawn: true
+  parent: BaseBulletTrigger
+  id: ProjectileDragonsBreath
+  name: dragon's breath
+  description: Try not to get toasted.
+  components:
+  - type: PointLight
+    color: "#E25822"
+    radius: 3.0
+    energy: 5.0
+  - type: IgnitionSource
+    temperature: 1000
+    ignited: true
+  - type: RepeatingTrigger
+    delay: 0.5 # line of fire as well as if it hits something
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: FireBomb
+    totalIntensity: 5 # low intensity, the point is to burn attackers not to break open walls, dragons can just eat them
+    intensitySlope: 1
+    maxIntensity: 3
+    canCreateVacuum: false
+    deleteAfterExplosion: false
+    repeatable: true
+  - type: TimedDespawn
+    lifetime: 5
+
+- type: entity
   id: ProjectileAnomalyFireball
   name: fireball
   description: Hovering blob of flame.
@@ -290,4 +318,39 @@
   - type: Electrified
     requirePower: false
 
-  
+- type: entity
+  id: ProjectileFingerGun
+  name: silent bullet
+  description: Pew pew!
+  parent: BaseBullet
+  components:
+    - type: FlyBySound
+    - type: Sprite
+      netsync: false
+      noRot: false
+    - type: Projectile
+      impactEffect: BulletImpactEffect
+      damage:
+        types:
+          Piercing: 20
+      soundHit:
+        path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    - type: StaminaDamageOnCollide
+      damage: 25
+    - type: TimedDespawn
+      lifetime: 10
+    - type: SolutionContainerManager
+      solutions:
+        ammo:
+          reagents:
+          - ReagentId: MuteToxin
+            Quantity: 20
+    - type: RefillableSolution
+      solution: ammo
+    - type: DrainableSolution
+      solution: ammo
+    - type: SolutionInjectOnProjectileHit
+      transferAmount: 20
+      solution: ammo
+    - type: InjectableSolution
+      solution: ammo

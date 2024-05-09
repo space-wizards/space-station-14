@@ -95,6 +95,7 @@
     - RevolverCapGun
     - PlushieHampter
     - PlushieLizard
+    - PlushieLouie
     - PlushieAtmosian
     - PlushieSpaceLizard
     - PlushieNuke
@@ -106,6 +107,8 @@
     - PlushieNar
     - PlushieSnake
     - PlushieArachind
+    - PlushieBlackburna
+    - PlushiePlyushkina
     - Basketball
     - Football
     - PlushieRouny
@@ -129,6 +132,7 @@
     - PlushiePenguin
     - PlushieHuman
     - ClothingHeadHatCowboyRed
+    - Whistle
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade
@@ -138,9 +142,9 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-      - key: enum.SpaceVillainArcadeUiKey.Key
+      enum.SpaceVillainArcadeUiKey.Key:
         type: SpaceVillainArcadeBoundUserInterface
-      - key: enum.WiresUiKey.Key
+      enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer
     board: SpaceVillainArcadeComputerCircuitboard
@@ -182,9 +186,9 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-      - key: enum.BlockGameUiKey.Key
+      enum.BlockGameUiKey.Key:
         type: BlockGameBoundUserInterface
-      - key: enum.WiresUiKey.Key
+      enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard

@@ -17,9 +17,9 @@
   name: rcd-component-deconstruct
   mode: Deconstruct
   cost: 2
-  delay: 1
+  delay: 0
   rotation: Camera
-  fx: EffectRCDDeconstruct2
+  fx: EffectRCDConstruct0
     
 - type: rcd
   id: DeconstructTile      # Hidden prototype - do not add to RCDs

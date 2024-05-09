@@ -10,11 +10,17 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: full
   - type: Thirst
+  - type: Carriable
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeatHuman
       amount: 5
+  - type: HumanoidAppearance
+    species: Human
+    hideLayersOnEquip:
+    - Hair
+    - Snout
 
 - type: entity
   parent: BaseSpeciesDummy

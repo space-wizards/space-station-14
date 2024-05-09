@@ -259,10 +259,10 @@
   id: CableCoil
 
 - type: Tag
-  id: CannonBall
+  id: CaneBlade
 
 - type: Tag
-  id: CannonRestrict
+  id: CannonBall
 
 - type: Tag
   id: CannotSuicide
@@ -323,6 +323,9 @@
 
 - type: Tag
   id: CartridgeAntiMateriel
+
+- type: Tag
+  id: CartridgeMortis
 
 - type: Tag
   id: CartridgeCap
@@ -399,6 +402,9 @@
 
 - type: Tag
   id: ClownSuit
+
+- type: Tag
+  id: CluwneHappyHonk
 
 - type: Tag
   id: CluwneHorn
@@ -522,6 +528,9 @@
 
 - type: Tag
   id: DoorElectronics
+
+- type: Tag
+  id: DoorElectronicsConfigurator
 
 - type: Tag
   id: DrinkBottle
@@ -864,6 +873,9 @@
   id: Meat
 
 - type: Tag
+  id: Medal
+
+- type: Tag
   id: Medkit
 
 - type: Tag
@@ -1108,13 +1120,13 @@
   id: Shiv
 
 - type: Tag
-  id: ShoesRequiredStepTriggerImmune
-
-- type: Tag
   id: Shovel
 
 - type: Tag
   id: Sidearm
+
+- type: Tag
+  id: SignalTrigger
 
 - type: Tag
   id: SkeletonMotorcycleKeys
@@ -1130,9 +1142,6 @@
 
 - type: Tag
   id: Smokable
-
-- type: Tag
-  id: SnapPop
 
 - type: Tag
   id: SnowyLabs
@@ -1189,7 +1198,7 @@
 
 - type: Tag
   id: SuitEVA
-  
+
 - type: Tag
   id: Sunglasses
 
@@ -1248,6 +1257,9 @@
   id: TrashBag
 
 - type: Tag
+  id: Truncheon
+
+- type: Tag
   id: Unimplantable
 
 - type: Tag
@@ -1290,6 +1302,9 @@
   id: WeaponShotgunKammerer
 
 - type: Tag
+  id: WeldingMask
+
+- type: Tag
   id: WetFloorSign
 
 - type: Tag
@@ -1330,3 +1345,5 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+# ALPHABETICAL

@@ -1,20 +1,44 @@
 - files: ["goob.webp"]
   license: "CC-BY-NC-SA-3.0"
+  copyright: " "
+  source: "https://x329436.invisionservice.com/"
 
 - files: ["what.webp"]
   license: "CC-BY-NC-SA-3.0"
+  copyright: " "
+  source: "https://x329436.invisionservice.com/"
 
 - files: ["Valve.webp"]
   license: "CC-BY-NC-SA-3.0"
+  copyright: " "
+  source: "https://x329436.invisionservice.com/"
 
 - files: ["Goob2.webp"]
   license: "CC-BY-NC-SA-3.0"
+  copyright: " "
+  source: "https://x329436.invisionservice.com/"
 
 - files: ["gugel.webp"]
   license: "CC-BY-NC-SA-3.0"
-  
+  copyright: " "
+  source: "https://x329436.invisionservice.com/"
+
 - files: ["mime.webp"]
   license: "CC-BY-NC-SA-3.0"
+  copyright: " "
+  source: "https://x329436.invisionservice.com/"
 
 - files: ["THRONGLER.webp"]
-  license: "CC-BY-NC-SA-3.0" 
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "InCrah on twitter / @in_crah"
+  source: "https://twitter.com/in_crah"
+
+- files: ["terminalstation.webp"]
+  license: "CC-BY-SA-3.0"
+  copyright: "aserovich on discord"
+  source: "https://github.com/space-wizards/space-station-14"
+
+- files: ["justaweekaway.webp"]
+  license: "CC-BY-SA-3.0"
+  copyright: "plantyfern on discord"
+  source: "https://github.com/space-wizards/space-station-14"

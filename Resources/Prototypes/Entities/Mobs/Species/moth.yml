@@ -9,6 +9,7 @@
     species: Moth
   - type: Hunger
   - type: Thirst
+  - type: Carriable
   - type: Icon
     sprite: Mobs/Species/Moth/parts.rsi
     state: full
@@ -22,6 +23,7 @@
     accent: zombieMoth
   - type: Speech
     speechVerb: Moth
+    allowedEmotes: ['Chitter', 'Squeak']
   - type: TypingIndicator
     proto: moth
   - type: Butcherable

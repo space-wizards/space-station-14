@@ -160,7 +160,7 @@
 
 - type: entity
   name: clown cuffs
-  description: To be used for good or evil? The honkmother will decide. Honk.
+  description: OH GOD WHY???? Honk!
   id: ClownCuffs
   parent: Handcuffs
   components:
@@ -168,13 +168,13 @@
     size: Normal
     storedRotation: 90
   - type: Handcuff
-    breakoutTime: 1
+    breakoutTime: 0.75
     cuffedRSI: Objects/Fun/clowncuffs.rsi
     bodyIconState: body-overlay
     startCuffSound:
       path: /Audio/Misc/honkalarm.ogg
       params:
-        volume: -10
+        volume: -15
     endCuffSound:
       path: /Audio/Items/bikehorn.ogg
     startUncuffSound:
@@ -187,4 +187,4 @@
     sprite: Objects/Fun/clowncuffs.rsi
     state: icon
   - type: UseDelay
-    delay: 2
+    delay: 3

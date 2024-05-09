@@ -4351,7 +4351,6 @@ entities:
       solutions:
         absorbed:
           temperature: 293.15
-          canMix: False
           canReact: True
           maxVol: 50
           name: null
@@ -5148,6 +5147,20 @@ entities:
 - proto: SpawnPointCaptain
   entities:
   - uid: 954
+    components:
+    - type: Transform
+      pos: -4.5,4.5
+      parent: 179
+- proto: SpawnPointBlueshieldOfficer
+  entities:
+  - uid: 121464342
+    components:
+    - type: Transform
+      pos: -4.5,4.5
+      parent: 179
+- proto: SpawnPointNanotrasenRepresentative
+  entities:
+  - uid: 42146433
     components:
     - type: Transform
       pos: -4.5,4.5
