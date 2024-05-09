@@ -84,6 +84,8 @@ public sealed partial class RenamerSystem : EntitySystem
             // Set the entity's name with modifiers
             _metaData.SetEntityName(entity, modifiedName, meta);
             Dirty(entity.Owner, meta);
+            var ev = new NameRefreshedEvent();
+            RaiseLocalEvent(entity, ref ev);
         }
 
         if (modifiedName != entity.Comp.FullName)
@@ -173,3 +175,9 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
         return sb.ToString();
     }
 }
+
+/// <summary>
+/// Raised on an entity when its name changes as a result of a <see cref="RefreshNameModifiersEvent"/>.
+/// </summary>
+[ByRefEvent]
+public record struct NameRefreshedEvent() { }
