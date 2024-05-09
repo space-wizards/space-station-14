@@ -11,10 +11,10 @@ namespace Content.Shared.Renamer.Components;
 public sealed partial class ModifyWearerNameComponent : Component
 {
     /// <summary>
-    /// The text to be used as the modifier.
+    /// The localization ID of the text to be used as the modifier.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string Text = string.Empty;
+    public LocId Text = string.Empty;
 
     /// <summary>
     /// What form of modifier should be used.
