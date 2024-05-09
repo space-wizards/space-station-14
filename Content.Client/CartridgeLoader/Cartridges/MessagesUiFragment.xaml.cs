@@ -15,6 +15,7 @@ public sealed partial class MessagesUiFragment : BoxContainer
 
     public MessagesUiFragment()
     {
+        RobustXamlLoader.Load(this);
         Input.OnTextEntered += _ =>
         {
             if (!string.IsNullOrEmpty(Input.Text))
