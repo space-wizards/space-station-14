@@ -1,6 +1,5 @@
 using Content.Shared.Bed;
 using Robust.Client.GameObjects;
-using Content.Server.Interaction.Components;
 
 namespace Content.Client.Bed;
 
