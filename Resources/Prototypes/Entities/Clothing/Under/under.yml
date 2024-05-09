@@ -8,10 +8,6 @@
   suffix: Socks
   description: Basic Socks
   components:
-  - type: Sprite
-    sprite: To be added
-  - type: Clothing
-    sprite: To be added
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
