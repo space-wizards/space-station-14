@@ -28,22 +28,24 @@
                 <Button Name="EjectButton" Access="Public" Text="{Loc 'reagent-dispenser-window-eject-button'}" StyleClasses="OpenLeft" />
             </BoxContainer>
         </BoxContainer>
-        <BoxContainer Orientation="Vertical">
-            <GridContainer Name="ChemicalList" HorizontalExpand="True" VerticalExpand="True" Access="Public" Columns="6" />
-            <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" MinSize="0 160">
-                <PanelContainer VerticalExpand="True"
-                                SizeFlagsStretchRatio="6"
-                                MinSize="0 150">
+        <SplitContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" MinHeight="50" SizeFlagsStretchRatio="2.5">
+                <GridContainer Name="ChemicalList" HorizontalExpand="True" VerticalExpand="True" Access="Public" Columns="6" />
+            </ScrollContainer>
+            <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" MinHeight="50">
+                <PanelContainer VerticalExpand="True">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#1b1b1e" />
                     </PanelContainer.PanelOverride>
                     <BoxContainer Name="ContainerInfo"
                                 Orientation="Vertical"
-                                HorizontalExpand="True">
+                                HorizontalExpand="True"
+                                VerticalExpand="True"
+                                Margin="5">
                         <Label Text="{Loc 'reagent-dispenser-window-no-container-loaded-text'}"/>
                     </BoxContainer>
                 </PanelContainer>
             </ScrollContainer>
-        </BoxContainer>
+        </SplitContainer>
     </BoxContainer>
 </controls:FancyWindow>
