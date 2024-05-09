@@ -220,6 +220,7 @@
     access: [["Medical"], ["Command"], ["Research"]]
   - type: Inventory
     templateId: borgDutch
+  - type: SolutionScanner
 
 - type: entity
   id: BorgChassisService
