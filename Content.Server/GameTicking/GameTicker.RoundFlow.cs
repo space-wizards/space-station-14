@@ -4,12 +4,14 @@ using Content.Server.Discord;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
 using Content.Server.Maps;
+using Content.Server.Voting.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
+using Content.Shared.Voting;
 using JetBrains.Annotations;
 using Prometheus;
 using Robust.Server.Maps;
@@ -27,6 +29,7 @@ namespace Content.Server.GameTicking
     {
         [Dependency] private readonly DiscordWebhook _discord = default!;
         [Dependency] private readonly ITaskManager _taskManager = default!;
+        [Dependency] private readonly IVoteManager _voteManager = default!;
 
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
             "ss14_round_number",
@@ -165,12 +168,32 @@ namespace Content.Server.GameTicking
 
             var gridIds = _map.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
 
-            _metaData.SetEntityName(_mapManager.GetMapEntityId(targetMapId), "Station map");
+            _metaData.SetEntityName(_mapManager.GetMapEntityId(targetMapId), $"station map - {map.MapName}");
 
             var gridUids = gridIds.ToList();
             RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, gridUids, stationName));
 
             return gridUids;
+        }
+
+        public int ReadyPlayerCount()
+        {
+            var total = 0;
+            foreach (var (userId, status) in _playerGameStatuses)
+            {
+                if (LobbyEnabled && status == PlayerGameStatus.NotReadyToPlay)
+                    continue;
+
+                if (!_playerManager.TryGetSessionById(userId, out _))
+                    continue;
+
+                if (_banManager.GetRoleBans(userId) == null)
+                    continue;
+
+                total++;
+            }
+
+            return total;
         }
 
         public void StartRound(bool force = false)
@@ -228,6 +251,8 @@ namespace Content.Server.GameTicking
                 readyPlayerProfiles.Add(userId, profile);
             }
 
+            DebugTools.AssertEqual(readyPlayers.Count, ReadyPlayerCount());
+
             // Just in case it hasn't been loaded previously we'll try loading it.
             LoadMaps();
 
@@ -245,7 +270,10 @@ namespace Content.Server.GameTicking
             var origReadyPlayers = readyPlayers.ToArray();
 
             if (!StartPreset(origReadyPlayers, force))
+            {
+                _startingRound = false;
                 return;
+            }
 
             // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
             _mapManager.DoMapInitialize(DefaultMap);
@@ -482,6 +510,11 @@ namespace Content.Server.GameTicking
 
                 SendStatusToAll();
                 UpdateInfoText();
+
+                if (_configurationManager.GetCVar(CCVars.GameAutoMapVote))
+                {
+                    _voteManager.CreateStandardVote(null, StandardVoteType.Map);
+                }
 
                 ReqWindowAttentionAll();
             }

@@ -20,3 +20,8 @@ public enum AntagAcceptability
     All
 }
 
+public enum AntagSelectionTime : byte
+{
+    PrePlayerSpawn,
+    PostPlayerSpawn
+}

@@ -88,6 +88,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadMirror
+  name: head mirror
+  description: I doubt even the CMO knows how to use this thing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/head_mirror.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/head_mirror.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatRichard
   name: richard
   description: 'Do you like hurting people?'

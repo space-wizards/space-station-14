@@ -40,7 +40,7 @@
       size: Huge
     - type: UserInterface
       interfaces:
-        - key: enum.SharedGasTankUiKey.Key
+        enum.SharedGasTankUiKey.Key:
           type: GasTankBoundUserInterface
     - type: Clothing
       sprite: Objects/Tanks/Jetpacks/blue.rsi

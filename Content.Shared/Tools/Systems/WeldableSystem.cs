@@ -69,7 +69,7 @@ public sealed class WeldableSystem : EntitySystem
         if (!CanWeld(uid, tool, user, component))
             return false;
 
-        if (!_toolSystem.UseTool(tool, user, uid, component.WeldingTime.Seconds, component.WeldingQuality, new WeldFinishedEvent()))
+        if (!_toolSystem.UseTool(tool, user, uid, component.Time.Seconds, component.WeldingQuality, new WeldFinishedEvent(), component.Fuel))
             return false;
 
         // Log attempt
@@ -140,10 +140,10 @@ public sealed class WeldableSystem : EntitySystem
         if (!_query.Resolve(uid, ref component))
             return;
 
-        if (component.WeldingTime.Equals(time))
+        if (component.Time.Equals(time))
             return;
 
-        component.WeldingTime = time;
+        component.Time = time;
         Dirty(uid, component);
     }
 }

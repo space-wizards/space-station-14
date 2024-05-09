@@ -153,7 +153,7 @@ public sealed class AccessReaderSystem : EntitySystem
             return IsAllowedInternal(access, stationKeys, reader);
 
         if (!_containerSystem.TryGetContainer(target, reader.ContainerAccessProvider, out var container))
-            return false;
+            return Paused(target); // when mapping, containers with electronics arent spawned
 
         foreach (var entity in container.ContainedEntities)
         {
@@ -318,6 +318,7 @@ public sealed class AccessReaderSystem : EntitySystem
         {
             component.AccessLists.Add(new HashSet<ProtoId<AccessLevelPrototype>>(){access});
         }
+        Dirty(uid, component);
         RaiseLocalEvent(uid, new AccessReaderConfigurationChangedEvent());
     }
 

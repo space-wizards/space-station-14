@@ -5,7 +5,6 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
@@ -74,7 +73,7 @@ public sealed partial class StoreSystem
         if (!Resolve(uid, ref component))
             return;
 
-        _ui.TryCloseAll(uid, StoreUiKey.Key);
+        _ui.CloseUi(uid, StoreUiKey.Key);
     }
 
     /// <summary>
@@ -84,12 +83,13 @@ public sealed partial class StoreSystem
     /// <param name="store">The store entity itself</param>
     /// <param name="component">The store component being refreshed.</param>
     /// <param name="ui"></param>
-    public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null, PlayerBoundUserInterface? ui = null)
+    public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null)
     {
         if (!Resolve(store, ref component))
             return;
 
-        if (ui == null && !_ui.TryGetUi(store, StoreUiKey.Key, out ui))
+        // TODO: Why is the state not being set unless this?
+        if (!_ui.HasUi(store, StoreUiKey.Key))
             return;
 
         //this is the person who will be passed into logic for all listing filtering.
@@ -99,13 +99,13 @@ public sealed partial class StoreSystem
         }
 
         //dictionary for all currencies, including 0 values for currencies on the whitelist
-        Dictionary<string, FixedPoint2> allCurrency = new();
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> allCurrency = new();
         foreach (var supported in component.CurrencyWhitelist)
         {
             allCurrency.Add(supported, FixedPoint2.Zero);
 
-            if (component.Balance.ContainsKey(supported))
-                allCurrency[supported] = component.Balance[supported];
+            if (component.Balance.TryGetValue(supported, out var value))
+                allCurrency[supported] = value;
         }
 
         // TODO: if multiple users are supposed to be able to interact with a single BUI & see different
@@ -114,12 +114,12 @@ public sealed partial class StoreSystem
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
         var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter, component.RefundAllowed);
-        _ui.SetUiState(ui, state);
+        _ui.SetUiState(store, StoreUiKey.Key, state);
     }
 
     private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)
     {
-        UpdateUserInterface(args.Session.AttachedEntity, GetEntity(args.Entity), component);
+        UpdateUserInterface(args.Actor, GetEntity(args.Entity), component);
     }
 
     private void BeforeActivatableUiOpen(EntityUid uid, StoreComponent component, BeforeActivatableUIOpenEvent args)
@@ -140,8 +140,7 @@ public sealed partial class StoreSystem
             return;
         }
 
-        if (msg.Session.AttachedEntity is not { Valid: true } buyer)
-            return;
+        var buyer = msg.Actor;
 
         //verify that we can actually buy this listing and it wasn't added
         if (!ListingHasCategory(listing, component.Categories))
@@ -264,7 +263,7 @@ public sealed partial class StoreSystem
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager)}\" from {ToPrettyString(uid)}");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
-        _audio.PlayEntity(component.BuySuccessSound, msg.Session, uid); //cha-ching!
+        _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
 
         UpdateUserInterface(buyer, uid, component);
     }
@@ -290,8 +289,7 @@ public sealed partial class StoreSystem
         if (proto.Cash == null || !proto.CanWithdraw)
             return;
 
-        if (msg.Session.AttachedEntity is not { Valid: true } buyer)
-            return;
+        var buyer = msg.Actor;
 
         FixedPoint2 amountRemaining = msg.Amount;
         var coordinates = Transform(buyer).Coordinates;
@@ -314,7 +312,7 @@ public sealed partial class StoreSystem
     {
         // TODO: Remove guardian/holopara
 
-        if (args.Session.AttachedEntity is not { Valid: true } buyer)
+        if (args.Actor is not { Valid: true } buyer)
             return;
 
         if (!IsOnStartingMap(uid, component))
