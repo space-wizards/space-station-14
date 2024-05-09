@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Potato1234_x
-  changes:
-  - message: Added fill levels to bowls, chefs rejoice!
-    type: Add
-  id: 6060
-  time: '2024-02-29T21:41:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25639
 - author: Plykiya
   changes:
   - message: Dragging objects over gas pipes no longer slows you down.
@@ -3846,3 +3839,16 @@
   id: 6559
   time: '2024-05-09T06:00:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27673
+- author: Plykiya
+  changes:
+  - message: The emagged protolathe can now print truncheons and the new T3 portable
+      recharger.
+    type: Add
+  - message: The emagged circuit printer can now print ship guns.
+    type: Add
+  - message: Autolathe emagged recipes that are research gated have been moved over
+      to the protolathe.
+    type: Tweak
+  id: 6560
+  time: '2024-05-09T06:03:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27575
