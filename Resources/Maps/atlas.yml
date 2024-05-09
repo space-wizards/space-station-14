@@ -3410,7 +3410,7 @@ entities:
       pos: -28.5,14.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -30399.758
+      secondsUntilStateChange: -30425.305
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -3912,7 +3912,7 @@ entities:
       pos: -13.5,-8.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -9626.8125
+      secondsUntilStateChange: -9652.359
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4349,7 +4349,7 @@ entities:
       pos: -13.5,2.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -7424.118
+      secondsUntilStateChange: -7449.665
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -20212,6 +20212,14 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -23.5,-10.5
+      parent: 30
+- proto: ComputerRoboticsControl
+  entities:
+  - uid: 8506
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -27.5,-11.5
       parent: 30
 - proto: ComputerSalvageExpedition
   entities:
