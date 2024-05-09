@@ -1403,7 +1403,7 @@ public abstract class SharedStorageSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks if a storage's UI is open  by anyone when locked, and closes it unless they're an admin.
+    /// Checks if a storage's UI is open by anyone when locked, and closes it unless they're an admin.
     /// </summary>
     private void OnLockToggled(EntityUid uid, StorageComponent component, ref LockToggledEvent args)
     {
