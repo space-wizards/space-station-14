@@ -1,20 +1,12 @@
+# Parents
 - type: entity
-  id: ShelfWood
+  abstract: true
+  id: ShelfBase
   parent: BaseStructure
-  name: wooden shelf
-  description: a convenient place to place, well, anything really.
+  name: shelf
+  description: a strange place to place, well, anything really. You feel like you shouldn't be seeing this.'
   components:
-  # remove collision !
-  # make reinforced versions
-  # make bar fillable version !
-  # make reinforced have openable doors !
   # make reinforced have lock layers (also make proto's with various lock presets like with windoors)
-  # maybe weldable reinforced
-  # probably make no-anchor !
-  # construction graphs
-  # maybe no deconstruct
-  # Only place on walls !
-  # 
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Storage/Shelfs/wood.rsi
@@ -28,6 +20,7 @@
         density: 35
         layer:
         - BulletImpassable
+  - type: Transform
   - type: Damageable
     damageModifierSet: Wood
     damageContainer: Inorganic
@@ -40,14 +33,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroyHeavy
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialWoodPlank1:
-            min: 1
-            max: 3
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Transform
   - type: WallMount
     arc: 175
   - type: Storage
@@ -66,15 +53,66 @@
   - type: Tag
     tags:
     - Structure
+
+- type: entity
+  abstract: true
+  id: ShelfBaseReinforced
+  parent: ShelfBase
+  name: reinforced shelf
+  description: It looks as strong as reality itself.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Shelfs/wood.rsi
+    layers:
+    - state: rbase
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateDoorOpen: open
+    stateDoorClosed: closed
+  - type: Lock
+  - type: LockVisuals
+  - type: AccessReader
+
+# Normal
+- type: entity
+  id: ShelfWood
+  parent: ShelfBase
+  name: wooden shelf
+  description: A convenient place to place, well, anything really.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Tag
+    tags:
+    - Structure
     - Wooden
   - type: Construction
     graph: Shelf
     node: ShelfWood
 
-
 - type: entity
   id: ShelfMetal
-  parent: ShelfWood
+  parent: ShelfBase
   name: metal shelf
   description: A sturdy place to place, well, anything really.
   components:
@@ -109,7 +147,7 @@
 
 - type: entity
   id: ShelfGlass
-  parent: ShelfWood
+  parent: ShelfBase
   name: glass shelf
   description: A fragile place to place, well, anything really.
   components:
@@ -132,7 +170,7 @@
         spawn:
           ShardGlass:
             min: 0
-            max: 3
+            max: 2
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Tag
@@ -145,24 +183,10 @@
 # Reinforced
 - type: entity
   id: ShelfRWood
-  parent: ShelfWood
+  parent: ShelfBaseReinforced
   name: sturdy wood shelf
   description: A safe place to put your favorite bottle of whiskey
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Shelfs/wood.rsi
-    layers:
-      - state: rbase
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.StorageVisuals.Open:
-        base:
-          True: { state: open }
-          False: { state: closed }
-  - type: LockVisuals
-  - type: Lock
-  - type: AccessReader
   - type: Destructible
     thresholds:
     - trigger:
@@ -176,7 +200,7 @@
         spawn:
           MaterialWoodPlank:
             min: 2
-            max: 3
+            max: 5
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
@@ -185,21 +209,12 @@
 
 - type: entity
   id: ShelfRMetal
-  parent: ShelfMetal
+  parent: ShelfBaseReinforced
   name: sturdy metal shelf
   description: A strong & shiny place to keep all your vials safe
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/metal.rsi
-    layers:
-      - state: rbase
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.StorageVisuals.Open:
-        base:
-          True: { state: open }
-          False: { state: closed }
   - type: Destructible
     thresholds:
     - trigger:
@@ -214,45 +229,26 @@
           SheetPlasteel1:
             min: 2
             max: 3
-          SheetRGlass1: #make drop shards, rods, and double check items
+          ShardGlass: #make drop shards, rods, and double check items
+            min: 1
+            max: 2
+          MetalRod:
             min: 1
             max: 2
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
-  # TODO: Goob. ===========================
     graph: Shelf
     node: ShelfRMetal
-  - type: Lock
-  - type: LockVisuals
-  - type: AccessReader
 
 - type: entity
   id: ShelfRGlass
-  parent: ShelfGlass
+  parent: ShelfBaseReinforced
   name: sturdy glass shelf
   description: Crystal clear reinforced glass doors to show off all your fancy bottles you definitely didn't sell a co-worker's favorite mothroach for.
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/glass.rsi
-    layers:
-      - state: rbase
-        map: ["enum.StorageVisualLayers.Base"]
-      - state: closed
-        map: ["enum.StorageVisualLayers.Door"]
-      - state: locked
-        map: ["enum.LockVisualLayers.Lock"]
-        shader: unshaded
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateDoorOpen: open
-    stateDoorClosed: closed
-  # - type: GenericVisualizer
-  #   visuals:
-  #     enum.StorageVisuals.Open:
-  #       base:
-  #         True: { state: open }
-  #         False: { state: closed }
   - type: Destructible
     thresholds:
     - trigger:
@@ -264,24 +260,25 @@
           collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
+          SheetPlastic1:
+            min: 1
+            max: 3
           ShardGlass:
             min: 1
             max: 2
+          MetalRod:
+            min: 0
+            max: 1
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
-  # TODO: Goob. ===========================
     graph: Shelf
     node: ShelfRGlass
-  #start of locky stuff
-  - type: Lock
-  - type: LockVisuals
-  - type: AccessReader
 
 # Departmental
 - type: entity
   id: ShelfBar
-  parent: ShelfWood
+  parent: ShelfBase
   name: bar shelf
   description: Made out of the finest synthetic wood for all alcohol holding needs.
   components:
@@ -299,12 +296,17 @@
   - type: Destructible
     thresholds:
     - trigger:
+        !type:DamageTrigger
+        damage: 100
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialWoodPlank1:
+          SheetSteel1:
             min: 1
-            max: 3
+            max: 4
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Storage
@@ -324,53 +326,119 @@
 
 - type: entity
   id: ShelfKitchen
-  parent: ShelfWood
+  parent: ShelfBase
   name: cooking shelf
-  description: Holds knifes, Spice, and everything nice!
+  description: Holds knifes, spice, and everything nice!
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/Departments/Service/kitchen.rsi
     state: base
+    layers:
+      - state: base
+      - state: kitchen-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Appearance
+  - type: StorageFillVisualizer
+    maxFillLevels: 13
+    fillBaseName: kitchen
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 4
+          WoodPlank:
+            min: 0
+            max: 1
+          MetalRod:
+            min: 0
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Storage
+    grid:
+    - 0,0,5,1
+    - 0,3,5,4
+    maxItemSize: Normal
+    whitelist:
+      tags:
+        - DrinkGlass
+        - BoxCardboard
+        - MonkeyCube
+        - Enzyme
+        - Mayo
+        - Packet
+        - Cleaver
+        - Knife
+        - KitchenKnife
+        - RollingPin
+        - Ingredient
+        - Trash
   - type: Construction
     graph: Shelf
     node: ShelfKitchen
 
 - type: entity
   id: ShelfChemistry
-  parent: ShelfWood
+  parent: ShelfBaseReinforced
   name: chemical shelf
   description: Keeps all your chemicals safe and out of the clow- er, public hands!
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/Departments/Medical/chemistry.rsi
     layers:
-      - state: base
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.StorageVisuals.Open:
-        base:
-          True: { state: open }
-          False: { state: closed }
-  - type: LockVisuals
-  - type: Lock
-  - type: AccessReader
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: chem-0
+    - map: ["enum.StorageFillLayers.Fill"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+  - type: StorageFillVisualizer
+    maxFillLevels: 7
+    fillBaseName: chem
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 300
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: WoodDestroyHeavy
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialWoodPlank:
-            min: 2
-            max: 3
+          SheetPlasteel1:
+            min: 1
+            max: 2
+          SheetPlastic1:
+            min: 1
+            max: 2
+          ShardGlass:
+            min: 1
+            max: 1
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: Storage
+    grid:
+    - 0,0,5,1
+    - 0,3,5,4
+    maxItemSize: Normal
+    whitelist:
+      tags:
+        - ChemDispensable
+        - GlassBeaker
+        - Bottle
   - type: Construction
     graph: Shelf
     node: ShelfChemistry

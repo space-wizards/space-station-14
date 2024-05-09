@@ -69,7 +69,6 @@
     - !type:TileNotBlocked
 
 # Shelfs
-
 # Normals
 - type: construction
   id: ShelfWood
