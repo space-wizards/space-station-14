@@ -104,8 +104,3 @@
   id: Scanline
   kind: source
   path: "/Textures/Shaders/scanline.swsl"
-
-- type: shader
-  id: BrightnessFilter
-  kind: source
-  path: "/Textures/Shaders/brightnessfilter.swsl"

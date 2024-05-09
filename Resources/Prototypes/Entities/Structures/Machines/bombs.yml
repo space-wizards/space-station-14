@@ -126,6 +126,7 @@
       totalIntensity: 4000.0
       intensitySlope: 3
       maxIntensity: 400
+    - type: MesonsNonviewable
 
 - type: entity
   parent: SyndicateBomb

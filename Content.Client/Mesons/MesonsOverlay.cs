@@ -1,8 +1,11 @@
+using Content.Shared.Construction.Components;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Mesons;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Mesons;
@@ -18,7 +21,7 @@ public sealed class MesonsOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     private readonly ShaderInstance _scanlineShader;
-    private readonly ShaderInstance _brightnessShader;
+    private readonly ShaderInstance _greyscaleShader;
 
     public bool Enabled => _enabled;
 
@@ -28,7 +31,7 @@ public sealed class MesonsOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
         _scanlineShader = _prototypeManager.Index<ShaderPrototype>("Scanline").InstanceUnique();
-        _brightnessShader = _prototypeManager.Index<ShaderPrototype>("BrightnessFilter").InstanceUnique();
+        _greyscaleShader = _prototypeManager.Index<ShaderPrototype>("GreyscaleFullscreen").InstanceUnique();
     }
 
     public void SetSpritesVisible(bool visible)
@@ -85,13 +88,12 @@ public sealed class MesonsOverlay : Overlay
 
 
         _scanlineShader.SetParameter("OVERLAY_COLOR", new Color(0f, 0.2f, 0f, 0.5f));
-        _brightnessShader.SetParameter("THRESHHOLD", 0.1f);
-        _brightnessShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _greyscaleShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
 
         var worldHandle = args.WorldHandle;
         var viewport = args.WorldBounds;
-        worldHandle.UseShader(_brightnessShader);
+        worldHandle.UseShader(_greyscaleShader);
         worldHandle.DrawRect(viewport, Color.White);
         worldHandle.UseShader(_scanlineShader);
         worldHandle.DrawRect(viewport, Color.White);

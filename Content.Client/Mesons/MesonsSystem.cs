@@ -7,10 +7,11 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mesons;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Mesons;
 
-public sealed class MesonsSystem : SharedMesonsSystem
+public sealed class MesonsSystem : EntitySystem
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;

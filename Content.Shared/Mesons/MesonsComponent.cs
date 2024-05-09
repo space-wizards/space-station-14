@@ -6,10 +6,10 @@ namespace Content.Shared.Mesons;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MesonsComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId Action = "ActionToggleMesons";
 
-    [DataField]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? ActionEntity;
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
