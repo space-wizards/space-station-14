@@ -26,6 +26,7 @@ public abstract class SharedIdCardSystem : EntitySystem
     private void OnMapInit(EntityUid uid, IdCardComponent id, MapInitEvent args)
     {
         UpdateEntityName(uid, id);
+        id.MessagesId = uid.Id;
     }
 
     /// <summary>

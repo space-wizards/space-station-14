@@ -9,6 +9,7 @@ using Content.Server.Radio.Components;
 using Robust.Shared.Containers;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using System.Linq;
 
 
 namespace Content.Server.Radio.EntitySystems;
@@ -42,49 +43,49 @@ public sealed class MessagesServerSystem : EntitySystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        var query = EntityManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
+        var query = EntityManager.AllEntityQueryEnumerator<MessagesCartridgeComponent, CartridgeComponent>();
 
         Dictionary<int,List<(EntityUid, MessagesCartridgeComponent)>> cartDict = [];
         component.NameDict = [];
 
-        while (query.MoveNext(out var cartUid, out var cartComponent))
+        while (query.MoveNext(out var cartUid, out var messagesCartComponent, out var cartComponent))
         {
             if (Transform(cartUid).MapID != mapId)
                 continue;
-            if (cartComponent.EncryptionKey != component.EncryptionKey)
+            if (messagesCartComponent.EncryptionKey != component.EncryptionKey)
                 continue;
             int? userUid = _messagesCartridgeSystem.GetUserUid(cartComponent);
             if (userUid == null)
                 continue;
             if (!cartDict.ContainsKey(userUid.Value))
                 cartDict[userUid.Value] = [];
-            cartDict[userUid.Value].Add((cartUid, cartComponent));
+            cartDict[userUid.Value].Add((cartUid, messagesCartComponent));
             component.NameDict[userUid.Value] = _messagesCartridgeSystem.GetUserName(cartComponent);
         }
 
-        query = EntityManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
+        query = EntityManager.AllEntityQueryEnumerator<MessagesCartridgeComponent, CartridgeComponent>();
 
         //Loop iterates over all cartridges on the map when the server is updated
-        while (query.MoveNext(out var cartUid, out var cartComponent))
+        while (query.MoveNext(out var cartUid, out var messagesCartComponent, out var cartComponent))
         {
             if (Transform(cartUid).MapID != mapId)
                 continue;
-            if (cartComponent.EncryptionKey != component.EncryptionKey)
+            if (messagesCartComponent.EncryptionKey != component.EncryptionKey)
                 continue;
             if (_messagesCartridgeSystem.GetUserUid(cartComponent) == null)
                 continue;
 
             //if the cart has any unsent messages, the server attempts to send them
-            if (cartComponent.MessagesQueue.Count > 0)
+            if (messagesCartComponent.MessagesQueue.Count > 0)
             {
-                while(cartComponent.MessagesQueue.TryPop(out var message))
+                while(messagesCartComponent.MessagesQueue.TryPop(out var message))
                 {
                     TryToSend(message, mapId, cartDict);
                     component.Messages.Add(message);
                 }
             }
 
-            _messagesCartridgeSystem.ForceUpdate(cartUid, cartComponent);
+            _messagesCartridgeSystem.ForceUpdate(cartUid, messagesCartComponent);
         }
     }
 
@@ -97,9 +98,10 @@ public sealed class MessagesServerSystem : EntitySystem
 
         foreach (var (cartUid, cartProgramComponent) in cartList)
         {
-            if (TryComp(cartUid, out CartridgeComponent cartComponent) && cartComponent.LoaderUid == null)
+            var messagesCartComponent = CompOrNull<CartridgeComponent>(cartUid);
+            if (messagesCartComponent == null || messagesCartComponent.LoaderUid == null)
                 continue;
-            _messagesCartridgeSystem.ServerToPdaMessage(cartUid, cartProgramComponent, message, cartComponent.LoaderUid.Value);
+            _messagesCartridgeSystem.ServerToPdaMessage(cartUid, cartProgramComponent, message, messagesCartComponent.LoaderUid.Value);
         }
     }
 
@@ -119,7 +121,7 @@ public sealed class MessagesServerSystem : EntitySystem
 
     public List<MessagesMessageData> GetMessages(MessagesServerComponent component,int id1, int id2)
     {
-        return component.Messages.Where(message => (message.SenderId == id1 && message.ReceiverId == id2) || (message.SenderId == id2 && message.ReceiverId == id1));
+        return new List<MessagesMessageData>(component.Messages.Where(message => (message.SenderId == id1 && message.ReceiverId == id2) || (message.SenderId == id2 && message.ReceiverId == id1)));
     }
 
 }
