@@ -153,14 +153,33 @@
       mindComponents:
       - type: TraitorRole
         prototype: Traitor
+
+- type: entity
+  id: TraitorVariations
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: SubGamemodes
+    rules:
+    - id: BloodBrother
+      prob: 0.5
+
+- type: entity
+  id: BloodBrother
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: GameRule
+    minPlayers: 5 # same as traitor
+  - type: BloodBrotherRule
   - type: AntagSelection
-    selectionTime: PrePlayerSpawn
     definitions:
     - prefRoles: [ BloodBrother ]
+      maxRange:
       min: 2
       max: 3
-      playerRatio: 10
-      lateJoinAdditional: true
+      playerRatio: 5
+      lateJoinAdditional: false
       mindComponents:
       - type: BloodBrotherRole
         prototype: BloodBrother

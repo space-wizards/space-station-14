@@ -48,7 +48,8 @@
   weights:
     TraitorObjectiveGroupSteal: 1
     TraitorObjectiveGroupKill: 1
-    #HijackShuttleObjective: 0.02 # for the sake of it
+    TraitorObjectiveGroupSocial: 0.5
+    #HijackShuttleObjective: 0.1 # for the sake of it
 
 - type: weightedRandom
   id: BloodBrotherEscapeObjectiveGroup

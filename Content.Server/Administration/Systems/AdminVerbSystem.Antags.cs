@@ -78,7 +78,7 @@ public sealed partial class AdminVerbSystem
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-bloodbrother"),
         };
-        args.Verbs.Add(traitor);
+        args.Verbs.Add(bloodBrother);
 
         Verb zombie = new()
         {

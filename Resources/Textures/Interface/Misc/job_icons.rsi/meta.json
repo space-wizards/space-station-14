@@ -180,14 +180,14 @@
         {
             "name": "Syndicate"
         },
-      {
-        "name": "Visitor"
-      },
-      {
-        "name": "InitialInfected"
-      },
-      {
-        "name": "BloodBrother"
-      },
+        {
+            "name": "Visitor"
+        },
+        {
+            "name": "InitialInfected"
+        },
+        {
+            "name": "BloodBrother"
+        }
     ]
 }

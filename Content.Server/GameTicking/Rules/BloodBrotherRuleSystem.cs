@@ -11,21 +11,18 @@ using Robust.Server.Audio;
 using Content.Shared.Traitor.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Server.Objectives.Components;
-using Content.Server.NPC.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.NPC.Systems;
+using System.Text;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComponent>
 {
-    [Dependency] private readonly BloodBrotherRuleComponent _bloodBroRule = default!;
-    [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly ChatManager _chatManager = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly NpcFactionSystem _npcFactionSystem = default!;
 
@@ -41,35 +38,23 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
     {
         if (args.Session == null) return;
 
-        MakeBloodBrother(args.Session);
+        MakeBloodBrother(args.EntityUid, ent);
     }
     private void OnRoundEnd(Entity<BloodBrotherRuleComponent> ent, ref RoundEndMessageEvent args)
     {
         BloodBrotherRuleComponent.CommonObjectives.Clear();
     }
 
-    public bool MakeBloodBrother(ICommonSession sesh)
+    public bool MakeBloodBrother(EntityUid uid, BloodBrotherRuleComponent bloodBroRule)
     {
-        if (!_mindSystem.TryGetMind(sesh, out var mindId, out var mind))
+        if (!_mindSystem.TryGetMind(uid, out var mindId, out var mind))
             return false;
         if (HasComp<BloodBrotherComponent>(mindId))
             return false;
-        if (mind.OwnedEntity is not { })
-            return false;
-
-        var traitorRule = EntityQuery<TraitorRuleComponent>().FirstOrDefault();
-
-        if (traitorRule == null)
-            traitorRule = Comp<TraitorRuleComponent>(GameTicker.AddGameRule("Traitor"));
 
         _roleSystem.MindAddRole(mindId, new BloodBrotherComponent());
 
-        if (_mindSystem.TryGetSession(mindId, out var session))
-        {
-            _audio.PlayGlobal(traitorRule.GreetSoundNotification, sesh);
-            _chatManager.DispatchServerMessage(sesh, Loc.GetString("bloodbrother-role-greeting"));
-            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", traitorRule.Codewords))));
-        }
+        _antag.SendBriefing(uid, GetBriefing(), Color.Crimson, bloodBroRule.GreetingSound);
 
         _npcFactionSystem.RemoveFaction(mindId, "Nanotrasen", false);
         _npcFactionSystem.AddFaction(mindId, "Syndicate");
@@ -81,7 +66,7 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
             foreach (var objective in BloodBrotherRuleComponent.CommonObjectives)
                 _mindSystem.AddObjective(mindId, mind, objective);
 
-        for (int i = 0; i < _bloodBroRule.MaxObjectives / _bloodBroRule.NumberOfAntags; i++)
+        for (int i = 0; i < bloodBroRule.MaxObjectives / bloodBroRule.NumberOfAntags; i++)
             BloodBrotherRuleComponent.CommonObjectives.Add(RollObjective(mindId, mind));
 
         var aliveObj = _objectives.GetRandomObjective(mindId, mind, "BloodbrotherAliveObjective");
@@ -90,6 +75,20 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
 
         return true;
     }
+
+    public string GetBriefing()
+    {
+        var traitorRule = EntityQuery<TraitorRuleComponent>().FirstOrDefault();
+
+        if (traitorRule == null)
+            traitorRule = Comp<TraitorRuleComponent>(GameTicker.AddGameRule("Traitor"));
+
+        var sb = new StringBuilder();
+        sb.AppendLine(Loc.GetString("bloodbrother-role-greeting"));
+        sb.AppendLine(Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", traitorRule.Codewords))));
+        return sb.ToString();
+    }
+
     private EntityUid RollObjective(EntityUid id, MindComponent mind)
     {
         var objective = _objectives.GetRandomObjective(id, mind, "TraitorObjectiveGroups");

@@ -45,9 +45,15 @@ traitor-role-uplink-code-short = Your uplink code is {$code}. Set it as your PDA
 
 # BloodBrotherRole
 bloodbrother-role-greeting =
-    You are a blood brother.
+    You are a member of the blood brothers.
+
     Your objectives and codewords are listed in the character menu.
-    You have no uplink, but a brother in crime to help you do your objectives.
-    You will be able to recognise him out of the crowd very easily.
-    Your objectives are shared, therefore you must work together to complete this mission.
+    His name and job role is also listed in the character menu.
     Death to Nanotrasen!
+bloodbrother-designated-partner =
+    Your designated partner is {$partner}, {$job}.
+    You must work together to complete your objectives.
+bloodbrother-no-partner =
+    You don't have a designated partner.
+    Use a special flash to perform a syndicate sleeper agent protocol on a crewmember.
+    This will not work on security or command personnel.

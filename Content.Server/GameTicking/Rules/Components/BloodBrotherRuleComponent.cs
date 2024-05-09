@@ -1,4 +1,6 @@
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Content.Shared.Roles;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
@@ -7,6 +9,9 @@ public sealed partial class BloodBrotherRuleComponent : Component
 {
     public readonly List<EntityUid> Minds = new();
     public static readonly List<EntityUid> CommonObjectives = new();
+
+    [DataField]
+    public ProtoId<AntagPrototype> PrototypeId = "BloodBrother";
 
     /// <summary>
     /// The total number of active blood brothers.
