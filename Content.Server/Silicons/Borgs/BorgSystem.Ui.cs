@@ -74,7 +74,6 @@ public sealed partial class BorgSystem
             return;
 
         _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Actor):player} set borg \"{ToPrettyString(uid)}\"'s name to: {name}");
-        _metaData.SetEntityName(uid, name, metaData);
         _renamer.SetBaseName(uid, name);
     }
 
