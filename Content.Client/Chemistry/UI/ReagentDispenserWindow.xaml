@@ -7,7 +7,7 @@
     <BoxContainer Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" MinWidth="170">
             <Label Text="{Loc 'reagent-dispenser-window-amount-to-dispense-label'}" HorizontalAlignment="Center" />
-            <GridContainer Columns="3" HorizontalAlignment="Center">
+            <GridContainer Columns="3" HorizontalAlignment="Center" Margin="5">
                 <!-- FIXME: OpenLeft / OpenRight misalign the text, currently just set everything to OpenBoth -->
                 <Button Name="DispenseButton1" Access="Public" Text="1" StyleClasses="OpenBoth" SetWidth="40"/>
                 <Button Name="DispenseButton5" Access="Public" Text="5" StyleClasses="OpenBoth" SetWidth="40"/>
@@ -22,9 +22,8 @@
             <Control VerticalExpand="True" />
             <Label Name="ContainerInfoName" Access="Public" Text="" HorizontalAlignment="Center" />
             <Label Name="ContainerInfoFill" Access="Public" Text="" HorizontalAlignment="Center" StyleClasses="LabelSubText" />
-            <SpriteView Name="View" Scale="5 5" HorizontalAlignment="Center" />
-            <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'reagent-dispenser-window-container-label'}" HorizontalAlignment="Center" />
+            <SpriteView Name="View" Scale="4 4" HorizontalAlignment="Center" />
+            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Name="ClearButton" Access="Public" Text="{Loc 'reagent-dispenser-window-clear-button'}" StyleClasses="OpenRight" />
                 <Button Name="EjectButton" Access="Public" Text="{Loc 'reagent-dispenser-window-eject-button'}" StyleClasses="OpenLeft" />
             </BoxContainer>
