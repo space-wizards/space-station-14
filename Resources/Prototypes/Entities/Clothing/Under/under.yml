@@ -8,6 +8,10 @@
   suffix: Socks
   description: Basic Socks
   components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedBase
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedBase
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
@@ -166,7 +170,7 @@
 - type: entity
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedWhiteandGreen
-  name: striped socks
+  name: striped green socks
   description: Minty! Now in Green.
   components:
   - type: Sprite
@@ -181,7 +185,7 @@
   description: A pair of bunny slippers with striped socks for all your hospital needs.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/rocksStripedWhiteandLightBlueBunnySlipper.rsi
+    sprite: Clothing/Under/Socks/SocksStripedWhiteandLightBlueBunnySlipper.rsi
   - type: Clothing
     sprite: Clothing/Under/Socks/SocksStripedWhiteandLightBlueBunnySlipper.rsi
 
@@ -222,7 +226,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedWhiteandYellow
   name: striped yellow socks
-  description: Please don't order pilk at the bar.
+  description: Now please don't order pilk at the bar.
   components:
   - type: Sprite
     sprite: Clothing/Under/Socks/SocksStripedWhiteandYellow.rsi
@@ -242,12 +246,231 @@
 
 - type: entity
   parent: ClothingUnderSocksBase
-  id: ClothingUnderSocksStriped
+  id: ClothingUnderSocksStripedBotany
   name: striped socks
-  description: 
+  description: Water proof socks to mutate random plants in.
   components:
   - type: Sprite
-    sprite: 
+    sprite: Clothing/Under/Socks/SocksStripedBotany
   - type: Clothing
-    sprite: 
+    sprite: Clothing/Under/Socks/SocksStripedBotany
 
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedClown
+  name: striped socks
+  description: Candy Floss Flavored socks for the less squeaky Honki.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedClown
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedClown
+
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedClown
+  name: striped socks
+  description: Honk and sock?! Sign me up!
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedClownShoes
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedClownShoes
+
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedClown
+  name: striped socks
+  description: EVEN BIGGER honk and sock?! Sign me up!
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedClownShoesLarge
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedClownShoesLarge
+
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedDetective
+  name: striped socks
+  description: Two toned brown socks for the inquisitive or those who just wanted brown long boots and had nothing better.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedDetective
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedDetective
+
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedEngineeringCE
+  name: striped socks
+  description: While wearing these you might almost forget to refuel the ame.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedEngineeringCE
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedEngineeringCE
+
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedGrey
+  name: striped socks
+  description: Standard grey stripey socks for the gentle tider or chef in your life.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedGrey
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedGrey
+
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedGreyDark
+  name: striped socks
+  description: Dark grey socks for the servers of the nightlife. pretty neat otherwise too.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedGreyDark
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedGreyDark
+
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedHotpinkBlack
+  name: striped socks
+  description: Hot Pink and black socks for a special teammember, Say hi to Johnalex!
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedHotpinkBlack
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedHotpinkBlack
+
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedHotpinkLight
+  name: striped socks
+  description: Hot pink and Clown candy socks for a special teammember, Say hi to Johnalex!
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedHotpinkLight
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedHotpinkLight
+
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedHotpinkGhost
+  name: striped socks
+  description: How did you get these? Say hi to JohnAlex.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedHotpinkGhost
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedHotpinkGhost
+
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedJanitor
+  name: striped janitor socks
+  description: Purple Socks given to janitors who like a little chaos in their life.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedJanitor
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedJanitor
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedJanitorGalosh
+  name: striped janitor socks and galoshes
+  description: Cushioned boots to keep the stink sealed while you clean the nightclub.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedJanitorGalosh
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedJanitorGalosh
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedMime
+  name: striped black and white socks
+  description: Socks Perfect for the Silent type.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedMime
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedMime
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedMusican
+  name: striped musican socks
+  description: Socks tailored from the same matieral as your suit, oddly ichy.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedMusican
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedMusican
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedScienceRD
+  name: striped research director socks
+  description: The Perfect socks to wear while using magboots in your hand.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedScienceRD
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedScienceRD
+
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingUnderSocksStripedSecurityHos
+  name: striped head of security socks
+  description: Socks Designed to keep you mentally stable during even the worst of shifts.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedSecurityHos
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedSecurityHos
+
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingUnderSocksStripedSecurityHosJackboot
+  name: striped head of security jack boots and zsocks
+  description: Socks Designed to keep you mentally stable during even the worst of shifts now in boots.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedSecurityHosJackboot
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedSecurityHosJackboot
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedSherbert
+  name: striped blue and pink socks
+  description: A special color ment to invoke the idea of icecream.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedSherbert
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedSherbert
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedVoidGreen
+  name: striped void socks
+  description: Socks for the nimblest of fingers and edgiest of dealers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedVoidGreen
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedVoidGreen
