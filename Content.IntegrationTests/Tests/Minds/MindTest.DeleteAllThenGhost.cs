@@ -34,7 +34,7 @@ public sealed partial class MindTests
             Console.WriteLine(pair.Client.EntMan.ToPrettyString(ent));
         }
 
-        Assert.That(pair.Client.EntMan.EntityCount, Is.EqualTo(0));
+        Assert.That(pair.Server.EntMan.EntityCount, Is.EqualTo(0));
 
         // Create a new map.
         int mapId = 1;
