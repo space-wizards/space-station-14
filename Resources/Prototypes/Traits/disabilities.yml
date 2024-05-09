@@ -18,8 +18,8 @@
     components:
       - Blindable
   components:
-    - type: PermanentPoorVision
-      shortSightedness: 4
+    - type: PermanentBlindness
+      blindness: 4
 
 - type: trait
   id: Narcolepsy

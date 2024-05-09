@@ -25,7 +25,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
 
     private void OnExamined(Entity<PermanentBlindnessComponent> blindness, ref ExaminedEvent args)
     {
-        if (args.IsInDetailsRange && !_net.IsClient)
+        if (args.IsInDetailsRange && !_net.IsClient && blindness.Comp.Blindness == 0)
         {
             args.PushMarkup(Loc.GetString("permanent-blindness-trait-examined", ("target", Identity.Entity(blindness, EntityManager))));
         }
@@ -41,7 +41,12 @@ public sealed class PermanentBlindnessSystem : EntitySystem
         if (!_entityManager.TryGetComponent<BlindableComponent>(blindness, out var blindable))
             return;
 
-        var maxMagnitudeInt = (int) BlurryVisionComponent.MaxMagnitude;
-        _blinding.SetMinDamage(new Entity<BlindableComponent?>(blindness.Owner, blindable), maxMagnitudeInt);
+        if (blindness.Comp.Blindness != 0)
+            _blinding.SetMinDamage(new Entity<BlindableComponent?>(blindness.Owner, blindable), blindness.Comp.Blindness);
+        else
+        {
+            var maxMagnitudeInt = (int) BlurryVisionComponent.MaxMagnitude;
+            _blinding.SetMinDamage(new Entity<BlindableComponent?>(blindness.Owner, blindable), maxMagnitudeInt);
+        }
     }
 }
