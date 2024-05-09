@@ -29,8 +29,7 @@ namespace Content.Server.Ghost
             {
                 var deniedMessage = Loc.GetString("ghost-command-denied");
                 shell.WriteLine(deniedMessage);
-                IoCManager.Resolve<IEntitySystemManager>()
-                    .GetEntitySystem<PopupSystem>()
+                _entities.System<PopupSystem>()
                     .PopupEntity(deniedMessage, frozen, frozen);
                 return;
             }
