@@ -37,7 +37,16 @@ public sealed class MessagesServerSystem : EntitySystem
 
     public void Update(EntityUid uid, MessagesServerComponent component)
     {
-        //<TODO> Sync messages between servers.
+        var serverQuery = EntityManager.AllEntityQueryEnumerator<MessagesServerComponent>();
+
+        while (serverQuery.MoveNext(out var serverUid, out var serverComponent))
+        {
+            if (serverUid.Id >= uid.Id)
+                continue;
+            component.Messages = new List<MessagesMessageData>(component.Messages.Union(serverComponent.Messages));
+            serverComponent.Messages = new List<MessagesMessageData>(component.Messages);
+        }
+
         var mapId = Transform(uid).MapID;
 
         if (!this.IsPowered(uid, EntityManager))
@@ -106,11 +115,11 @@ public sealed class MessagesServerSystem : EntitySystem
 
     public string GetNameFromDict(EntityUid? uid, MessagesServerComponent? component, int key)
     {
-        if ((uid == null) || (component == null))
-            return "LOCALISE THIS TO SAY CONNECTION ERROR";
-        if (component.NameDict.ContainsKey(key))
-            return component.NameDict[key];
-        return "LOCALISE THIS TO SAY UNKNOWN";
+        if (uid == null || (component == null))
+            return Loc.GetString("messages-pda-connection-error");
+        if (component.NameDict.TryGetValue(key, out var value))
+            return value;
+        return Loc.GetString("messages-pda-user-missing");
     }
 
     public Dictionary<int, string> GetNameDict(MessagesServerComponent component)

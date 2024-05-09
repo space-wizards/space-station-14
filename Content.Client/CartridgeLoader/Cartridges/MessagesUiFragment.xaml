@@ -1,5 +1,5 @@
 <cartridges:MessagesUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
-                                 xmlns="https://spacestation14.io" Margin="1 0 2 0">
+                                 xmlns="https://spacestation14.io" Margin="1 0 2 0" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
     <PanelContainer StyleClasses="BackgroundDark"/>
     <BoxContainer Name="OverContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">

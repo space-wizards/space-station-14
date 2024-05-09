@@ -1,4 +1,6 @@
 using Content.Shared.CartridgeLoader.Cartridges;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 
 namespace Content.Server.Radio.Components;
 
@@ -28,6 +30,15 @@ public sealed partial class MessagesServerComponent : Component
     [DataField]
     public MessagesKeys EncryptionKey = MessagesKeys.Nanotrasen;
 
+    ///<summary>
+    /// Delay between updates on the given server.
+    ///</summary>
+    [DataField]
     public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
+
+    ///<summary>
+    /// The next time the server will be updated
+    ///</summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextUpdate = TimeSpan.Zero;
 }

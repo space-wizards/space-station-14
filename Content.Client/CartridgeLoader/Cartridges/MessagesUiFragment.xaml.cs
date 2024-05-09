@@ -15,11 +15,6 @@ public sealed partial class MessagesUiFragment : BoxContainer
 
     public MessagesUiFragment()
     {
-        RobustXamlLoader.Load(this);
-        Orientation = LayoutOrientation.Vertical;
-        HorizontalExpand = true;
-        VerticalExpand = true;
-
         Input.OnTextEntered += _ =>
         {
             if (!string.IsNullOrEmpty(Input.Text))
@@ -49,6 +44,12 @@ public sealed partial class MessagesUiFragment : BoxContainer
             }
 
             OverContainer.AddChild(Input);
+            OverContainer.AddChild(HeaderBox);
+        }
+        else if (mode == MessagesUiStateMode.Error)
+        {
+            HeaderLabel.Text = Loc.GetString("messages-pda-error-header");
+            AddNote(Loc.GetString("messages-pda-error-message"));
             OverContainer.AddChild(HeaderBox);
         }
         else

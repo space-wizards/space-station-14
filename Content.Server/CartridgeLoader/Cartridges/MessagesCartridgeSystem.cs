@@ -108,7 +108,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     {
         var idComponent = GetIdCard(component);
         if (idComponent == null || idComponent.FullName == null)
-            return "THIS SHOULD SAY UNKNOWN"; //<Todo> localise
+            return Loc.GetString("messages-pda-unknown-name");
         return idComponent.FullName;
     }
 
