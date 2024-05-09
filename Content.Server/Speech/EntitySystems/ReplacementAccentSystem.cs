@@ -89,8 +89,8 @@ namespace Content.Server.Speech.EntitySystems
 
                     // In-place replace the match with the transformed capitalization replacement
                     message = message.Remove(match.Index, match.Length).Insert(match.Index, replacement);
-                    string mask = new string('_', match.Length);
-                    maskMessage = message.Remove(match.Index, match.Length).Insert(match.Index, mask);
+                    var mask = new string('_', replacement.Length);
+                    maskMessage = maskMessage.Remove(match.Index, match.Length).Insert(match.Index, mask);
                 }
             }
 
