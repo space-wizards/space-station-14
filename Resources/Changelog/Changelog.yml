@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Added recipe of handheld station map to autolathe.
-    type: Add
-  id: 6065
-  time: '2024-02-29T22:34:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25719
 - author: MACMAN2003
   changes:
   - message: There are now more ways to craft reinforced plasma/uranium glass.
@@ -3854,3 +3847,11 @@
   id: 6564
   time: '2024-05-09T06:48:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27098
+- author: deltanedas
+  changes:
+  - message: Firesuits and hardsuits now protect your skin from fire, you will instead
+      die of heatstroke.
+    type: Tweak
+  id: 6565
+  time: '2024-05-09T07:12:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27161
