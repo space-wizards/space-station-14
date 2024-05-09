@@ -76,13 +76,12 @@ public sealed class MessagesServerSystem : EntitySystem
                 continue;
 
             //if the cart has any unsent messages, the server attempts to send them
-            if (messagesCartComponent.MessagesQueue.Count > 0)
+            while (messagesCartComponent.MessagesQueue.Count > 0)
             {
-                while(messagesCartComponent.MessagesQueue.TryPop(out var message))
-                {
-                    TryToSend(message, mapId, cartDict);
-                    component.Messages.Add(message);
-                }
+                var message = messagesCartComponent.MessagesQueue[0];
+                TryToSend(message, mapId, cartDict);
+                component.Messages.Add(message);
+                messagesCartComponent.MessagesQueue.RemoveAt(0);
             }
 
             _messagesCartridgeSystem.ForceUpdate(cartUid, messagesCartComponent);

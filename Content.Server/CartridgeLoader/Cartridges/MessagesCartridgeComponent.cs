@@ -9,7 +9,7 @@ public sealed partial class MessagesCartridgeComponent : Component
     /// The list of messages the device is trying to send.
     /// </summary>
     [DataField]
-    public Stack<MessagesMessageData> MessagesQueue = [];
+    public List<MessagesMessageData> MessagesQueue = [];
 
     /// <summary>
     /// The message system user id of the crew the user is chatting with

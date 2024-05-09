@@ -59,7 +59,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
                 Content = messageEvent.StringInput,
                 Time = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan)
             };
-            component.MessagesQueue.Push(messageData);
+            component.MessagesQueue.Add(messageData);
         }
         else
         {
