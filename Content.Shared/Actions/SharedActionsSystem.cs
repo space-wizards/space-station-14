@@ -112,7 +112,7 @@ public abstract class SharedActionsSystem : EntitySystem
         bool logError = true)
     {
         result = null;
-        if (!Exists(uid))
+        if (!Exists(uid) || TerminatingOrDeleted(uid.Value))
             return false;
 
         var ev = new GetActionDataEvent();
