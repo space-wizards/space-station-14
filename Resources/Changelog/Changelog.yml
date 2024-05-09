@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Aexxie
-  changes:
-  - message: Nutribricks spawn in Survival Kits in place of Tinned Meat.
-    type: Tweak
-  - message: Lizards can now eat Nutribricks.
-    type: Fix
-  - message: Moths can eat Nutribrick wrappers.
-    type: Add
-  id: 6058
-  time: '2024-02-29T21:39:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25659
 - author: Flareguy
   changes:
   - message: Big O2 tanks and N2 tanks no longer spawn in any departmental locker.
@@ -3852,3 +3841,12 @@
   id: 6557
   time: '2024-05-08T12:30:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27668
+- author: Riolume
+  changes:
+  - message: Added ability to drink from spray bottles
+    type: Add
+  - message: Can now see the amount of liquid in spray bottles
+    type: Add
+  id: 6558
+  time: '2024-05-09T05:56:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27815
