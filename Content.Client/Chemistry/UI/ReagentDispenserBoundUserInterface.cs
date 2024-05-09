@@ -52,28 +52,8 @@ namespace Content.Client.Chemistry.UI
             _window.DispenseButton50.OnPressed += _ => SendMessage(new ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount.U50));
             _window.DispenseButton100.OnPressed += _ => SendMessage(new ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount.U100));
 
-            // Setup reagent button actions.
             _window.OnDispenseReagentButtonPressed += (args, button) => SendMessage(new ReagentDispenserDispenseReagentMessage(button.ReagentId));
-            _window.OnDispenseReagentButtonMouseEntered += (args, button) =>
-            {
-                if (_lastState is not null)
-                    _window.UpdateContainerInfo(_lastState);
-            };
-            _window.OnDispenseReagentButtonMouseExited += (args, button) =>
-            {
-                if (_lastState is not null)
-                    _window.UpdateContainerInfo(_lastState);
-            };
-
             _window.OnEjectJugButtonPressed += (args, button) => SendMessage(new ItemSlotButtonPressedEvent(button.ReagentId));
-            _window.OnEjectJugButtonMouseEntered += (args, button) => {
-                if (_lastState is not null)
-                    _window.UpdateContainerInfo(_lastState);
-            };
-            _window.OnEjectJugButtonMouseExited += (args, button) => {
-                if (_lastState is not null)
-                    _window.UpdateContainerInfo(_lastState);
-            };
         }
 
         /// <summary>

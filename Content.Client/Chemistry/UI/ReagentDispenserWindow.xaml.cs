@@ -20,12 +20,8 @@ namespace Content.Client.Chemistry.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         public event Action<BaseButton.ButtonEventArgs, DispenseReagentButton>? OnDispenseReagentButtonPressed;
-        public event Action<GUIMouseHoverEventArgs, DispenseReagentButton>? OnDispenseReagentButtonMouseEntered;
-        public event Action<GUIMouseHoverEventArgs, DispenseReagentButton>? OnDispenseReagentButtonMouseExited;
 
         public event Action<BaseButton.ButtonEventArgs, EjectJugButton>? OnEjectJugButtonPressed;
-        public event Action<GUIMouseHoverEventArgs, EjectJugButton>? OnEjectJugButtonMouseEntered;
-        public event Action<GUIMouseHoverEventArgs, EjectJugButton>? OnEjectJugButtonMouseExited;
 
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
@@ -65,13 +61,9 @@ namespace Content.Client.Chemistry.UI
             {
                 var button = new DispenseReagentButton(entry.Key, entry.Value.Key, entry.Value.Value);
                 button.OnPressed += args => OnDispenseReagentButtonPressed?.Invoke(args, button);
-                button.OnMouseEntered += args => OnDispenseReagentButtonMouseEntered?.Invoke(args, button);
-                button.OnMouseExited += args => OnDispenseReagentButtonMouseExited?.Invoke(args, button);
                 ChemicalList.AddChild(button);
                 var ejectButton = new EjectJugButton(entry.Key);
                 ejectButton.OnPressed += args => OnEjectJugButtonPressed?.Invoke(args, ejectButton);
-                ejectButton.OnMouseEntered += args => OnEjectJugButtonMouseEntered?.Invoke(args, ejectButton);
-                ejectButton.OnMouseExited += args => OnEjectJugButtonMouseExited?.Invoke(args, ejectButton);
                 ChemicalList.AddChild(ejectButton);
             }
         }
