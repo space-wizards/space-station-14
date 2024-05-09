@@ -92,6 +92,8 @@
     name: ghost-role-information-loneop-name
     description: ghost-role-information-loneop-description
     rules: ghost-role-information-loneop-rules
+    raffle:
+      settings: default
   - type: GhostRoleAntagSpawner
   - type: Sprite
     sprite: Markers/jobs.rsi
