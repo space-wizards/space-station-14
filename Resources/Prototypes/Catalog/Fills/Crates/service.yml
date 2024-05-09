@@ -20,7 +20,7 @@
       - id: Plunger
         amount: 2
       - id: BoxCleanerGrenades
-      
+
 - type: entity
   id: CrateServiceReplacementLights
   parent: CrateGenericSteel
@@ -88,6 +88,10 @@
     - id: ClothingNeckCloakVoid
     - id: RevolverCapGun
     - id: BarberScissors
+    - id: ClothingUniformJumpskirtOldDress
+    - id: BikeHorn
+    - id: ClownRecorder
+    - id: ClothingBeltSuspenders
 
 - type: entity
   id: CrateServiceCustomSmokable

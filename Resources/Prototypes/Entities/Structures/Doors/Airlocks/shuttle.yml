@@ -6,6 +6,11 @@
   description: Necessary for connecting two space craft together.
   components:
   - type: Docking
+  - type: DockingSignalControl
+  - type: DeviceLinkSource
+    ports:
+      - DoorStatus
+      - DockStatus
   - type: Fixtures
     fixtures:
       fix1:
@@ -75,7 +80,6 @@
   suffix: Glass, Docking
   description: Necessary for connecting two space craft together.
   components:
-  - type: Docking
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
     snapCardinals: false
@@ -127,7 +131,6 @@
   suffix: Glass, Docking
   description: Necessary for connecting two space craft together.
   components:
-  - type: Docking
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle_syndicate.rsi
     snapCardinals: false

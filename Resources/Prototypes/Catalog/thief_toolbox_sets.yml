@@ -14,6 +14,7 @@
   - ClothingEyesChameleon
   - ClothingHeadsetChameleon
   - ClothingShoesChameleon
+  - ChameleonProjector
 
 - type: thiefBackpackSet
   id: ToolsSet

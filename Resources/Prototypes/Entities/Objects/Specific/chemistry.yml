@@ -45,8 +45,8 @@
     solution: beaker
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Drink
     solution: beaker
   - type: Appearance
@@ -136,10 +136,12 @@
     solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: beaker
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Drink
     solution: beaker
   - type: Appearance
@@ -162,6 +164,9 @@
     solution: beaker
   - type: StaticPrice
     price: 10
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: beaker
@@ -210,6 +215,9 @@
     fillBaseName: beakerlarge
     inHandsMaxFillLevels: 4
     inHandsFillBaseName: -fill-
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 100
   - type: StaticPrice
     price: 20
 
@@ -276,8 +284,8 @@
     solution: dropper
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Spillable
     solution: injector
   - type: Item
