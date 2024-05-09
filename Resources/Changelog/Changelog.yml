@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Nairodian
-  changes:
-  - message: The smooth tail now has a second color layer to customize.
-    type: Tweak
-  id: 6063
-  time: '2024-02-29T22:27:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25685
-- author: Hanzdegloker
-  changes:
-  - message: Commonly used decals should no longer washout the details of the tiles
-      below.
-    type: Tweak
-  id: 6064
-  time: '2024-02-29T22:27:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25689
 - author: lzk228
   changes:
   - message: Added recipe of handheld station map to autolathe.
@@ -3853,3 +3838,19 @@
   id: 6562
   time: '2024-05-09T06:36:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24855
+- author: Killerqu00
+  changes:
+  - message: Revolutionaries can now cuff command members in order to seize control
+      of the station.
+    type: Tweak
+  id: 6563
+  time: '2024-05-09T06:48:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27627
+- author: vorkathbruh
+  changes:
+  - message: Nuclear operative agents now require time in Chemistry rather than time
+      in the Medical department.
+    type: Tweak
+  id: 6564
+  time: '2024-05-09T06:48:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27098
