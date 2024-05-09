@@ -99,15 +99,17 @@ namespace Content.Server.Chemistry.EntitySystems
                 else
                     continue;
 
-                // Add volume remaining label
+                // Get volume remaining and color of solution
                 FixedPoint2 quantity = 0f;
+                var reagentColor = Color.White;
                 if (storedContainer != null && _solutionContainerSystem.TryGetDrainableSolution(storedContainer.Value, out _, out var sol))
                 {
                     quantity = sol.Volume;
+                    reagentColor = sol.GetColor(_prototypeManager);
                 }
                 var storedAmount = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", quantity));
 
-                inventory.Add(new ReagentInventoryItem(storageSlotId, reagentLabel, storedAmount));
+                inventory.Add(new ReagentInventoryItem(storageSlotId, reagentLabel, storedAmount, reagentColor));
             }
 
             return inventory;

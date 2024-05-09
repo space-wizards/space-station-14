@@ -49,21 +49,19 @@ namespace Content.Client.Chemistry.UI
         /// <param name="inventory">Reagents which can be dispensed by this dispenser</param>
         public void UpdateReagentsList(List<ReagentInventoryItem> inventory)
         {
-            if (ChemicalList == null)
+            if (ReagentList == null)
                 return;
 
-            ChemicalList.Children.Clear();
+            ReagentList.Children.Clear();
             //Sort inventory by reagentLabel
             inventory.Sort((x, y) => x.ReagentLabel.CompareTo(y.ReagentLabel));
 
             foreach (var item in inventory)
             {
-                var button = new DispenseReagentButton(item.StorageSlotId, item.ReagentLabel, item.StoredAmount);
-                button.OnPressed += args => OnDispenseReagentButtonPressed?.Invoke(item.StorageSlotId);
-                ChemicalList.AddChild(button);
-                var ejectButton = new EjectJugButton(item.StorageSlotId);
-                ejectButton.OnPressed += args => OnEjectJugButtonPressed?.Invoke(item.StorageSlotId);
-                ChemicalList.AddChild(ejectButton);
+                var card = new ReagentCardControl(item);
+                card.OnPressed += OnDispenseReagentButtonPressed;
+                card.OnEjectButtonPressed += OnEjectJugButtonPressed;
+                ReagentList.Children.Add(card);
             }
         }
 
