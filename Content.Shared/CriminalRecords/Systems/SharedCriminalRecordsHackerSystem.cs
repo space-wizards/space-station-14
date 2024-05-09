@@ -30,7 +30,7 @@ public abstract class SharedCriminalRecordsHackerSystem : EntitySystem
         var doAfterArgs = new DoAfterArgs(EntityManager, ent, ent.Comp.Delay, new CriminalRecordsHackDoAfterEvent(), target: target, used: ent, eventTarget: ent)
         {
             BreakOnDamage = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             MovementThreshold = 0.5f
         };
 
