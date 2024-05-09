@@ -101,7 +101,7 @@
             - material: Plasteel
               amount: 2
               doAfter: 2
-            - material: RGlass
+            - material: ReinforcedGlass
               amount: 5
               doAfter: 2
             - material: Plastic
@@ -156,6 +156,9 @@
             - !type:SpawnPrototype
                 prototype: MaterialWoodPlank1
                 amount: 8
+            - !type:SpawnPrototype
+                prototype: CableApcStack1
+                amount: 2
           steps:
             - tool: Screwing
               doAfter: 5
@@ -259,7 +262,7 @@
               doAfter: 2
             - tool: Screwing
               doAfter: 1
-            - tool: Wrenching
+            - tool: Anchoring
               doAfter: 2
             - tool: Prying
               doAfter: 4

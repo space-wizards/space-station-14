@@ -191,7 +191,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 215
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -232,7 +232,7 @@
           ShardGlass: #make drop shards, rods, and double check items
             min: 1
             max: 2
-          MetalRod:
+          PartRodMetal1:
             min: 1
             max: 2
       - !type:DoActsBehavior
@@ -253,7 +253,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 250
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -266,7 +266,7 @@
           ShardGlass:
             min: 1
             max: 2
-          MetalRod:
+          PartRodMetal1:
             min: 0
             max: 1
       - !type:DoActsBehavior
@@ -304,7 +304,7 @@
           collection: WoodDestroyHeavy
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetSteel1:
+          MaterialWoodPlank1:
             min: 1
             max: 4
       - !type:DoActsBehavior
@@ -355,10 +355,10 @@
           SheetSteel1:
             min: 1
             max: 4
-          WoodPlank:
+          MaterialWoodPlank1:
             min: 0
             max: 1
-          MetalRod:
+          PartRodMetal1:
             min: 0
             max: 2
       - !type:DoActsBehavior
@@ -411,7 +411,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 330
       behaviors:
       - !type:PlaySoundBehavior
         sound:
