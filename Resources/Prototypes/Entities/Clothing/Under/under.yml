@@ -235,7 +235,7 @@
 
 - type: entity
   parent: ClothingUnderSocksBase
-  id: ClothingUnderSocksStripedYellowandPurple
+  id: ClothingUnderSocksStripedWhiteandYellow
   name: Striped yellow and purple socks
   description: Striped socks styled after banana and grape jelly sandwiches.
   components:
@@ -269,8 +269,8 @@
 
 
 - type: entity
-  parent: ClothingUnderSocksBase
-  id: ClothingUnderSocksStripedClown
+  parent: ClothingShoesClownBase
+  id: ClothingUnderSocksStripedClownShoes
   name: striped socks
   description: Honk and sock?! Sign me up!
   components:
@@ -281,8 +281,8 @@
 
 
 - type: entity
-  parent: ClothingUnderSocksBase
-  id: ClothingUnderSocksStripedClown
+  parent: ClothingShoesClownBase
+  id: ClothingUnderSocksStripedClownShoesLarge
   name: striped socks
   description: EVEN BIGGER honk and sock?! Sign me up!
   components:
@@ -388,7 +388,7 @@
     sprite: Clothing/Under/Socks/SocksStripedJanitor
 
 - type: entity
-  parent: ClothingUnderSocksBase
+  parent: ClothingShoesGaloshes
   id: ClothingUnderSocksStripedJanitorGalosh
   name: striped janitor socks and galoshes
   description: Cushioned boots to keep the stink sealed while you clean the nightclub.
