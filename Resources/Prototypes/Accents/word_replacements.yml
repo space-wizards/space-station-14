@@ -97,6 +97,8 @@
     accent-ohio-words-90: accent-ohio-words-replace-90
     accent-ohio-words-91: accent-ohio-words-replace-91
     accent-ohio-words-92: accent-ohio-words-replace-92
+    accent-ohio-words-93: accent-ohio-words-replace-93
+    accent-ohio-words-94: accent-ohio-words-replace-94
 
 - type: accent
   id: mobster
