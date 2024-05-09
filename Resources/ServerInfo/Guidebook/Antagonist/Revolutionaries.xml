@@ -4,13 +4,13 @@
   - Revolutionaries are antagonists that are sponsored by the Syndicate to take over the station.
 
   ## Head Revolutionaries
-  
+
 <Box>
   <GuideEntityEmbed Entity="Flash" Caption="Flash"/>
   <GuideEntityEmbed Entity="ClothingEyesGlassesSunglasses" Caption="Sunglasses"/>
 </Box>
 
-  [color=#5e9cff]Head Revolutionaries[/color] are chosen at the start of the shift and are tasked with taking over the station by killing or exiling all of the Command staff. Head Revolutionaries will be given a [color=#a4885c]Flash[/color] and a pair of [color=#a4885c]Sunglasses[/color] to aid them.
+  [color=#5e9cff]Head Revolutionaries[/color] are chosen at the start of the shift and are tasked with taking over the station by killing, exiling or cuffing all of the Command staff. Head Revolutionaries will be given a [color=#a4885c]Flash[/color] and a pair of [color=#a4885c]Sunglasses[/color] to aid them.
 
   ## Conversion
 
@@ -41,7 +41,7 @@
 
   ## Objectives
 
-  You must eliminate or exile all of the following Command staff on station in no particular order.
+  You must eliminate, exile or arrest all of the following Command staff on station in no particular order.
   - Captain
   - Head of Personnel
   - Chief Engineer
