@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Blood.Components;
 using Content.Shared.Medical.Blood.Events;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -17,6 +18,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly VascularSystem _vascularSystem = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
 
 
     /// <inheritdoc/>
@@ -64,16 +66,25 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnBloodstreamMapInit(EntityUid bloodstreamEnt, BloodstreamComponent bloodstream, ref MapInitEvent args)
     {
-        if (!_solutionSystem.EnsureSolutionEntity((bloodstreamEnt, null), BloodstreamComponent.BloodSolutionId,
-                out var bloodSolution, bloodstream.MaxVolume)
-            || !_solutionSystem.EnsureSolutionEntity((bloodstreamEnt, null), BloodstreamComponent.SpillSolutionId,
-                out var spillSolution, bloodstream.MaxVolume)
-            || !_solutionSystem.EnsureSolutionEntity((bloodstreamEnt, null), BloodstreamComponent.DissolvedReagentSolutionId,
-                out var bloodReagentSolution, bloodstream.MaxVolume))
+        if (_netManager.IsClient)
+            return;
+
+        if (!_solutionSystem.EnsureSolutionEntity((bloodstreamEnt, null),
+                BloodstreamComponent.BloodSolutionId,
+                out var bloodSolution,
+                bloodstream.MaxVolume)
+            || !_solutionSystem.EnsureSolutionEntity((bloodstreamEnt, null),
+                BloodstreamComponent.SpillSolutionId,
+                out var spillSolution,
+                FixedPoint2.MaxValue)
+            || !_solutionSystem.EnsureSolutionEntity((bloodstreamEnt, null),
+                BloodstreamComponent.DissolvedReagentSolutionId,
+                out var bloodReagentSolution,
+                FixedPoint2.MaxValue))
             return;//this will never get called because ensureSolution only returns false on client and MapInit only runs on server, but this fixes nullables
 
         _solutionSystem.SetCapacity((bloodSolution.Value, bloodSolution), bloodstream.MaxVolume);
-        _solutionSystem.SetCapacity((bloodReagentSolution.Value, bloodReagentSolution), bloodstream.MaxVolume);
+        _solutionSystem.SetCapacity((bloodReagentSolution.Value, bloodReagentSolution), FixedPoint2.MaxValue);
         _solutionSystem.SetCapacity((spillSolution.Value, spillSolution), FixedPoint2.MaxValue);
 
         var volume = bloodstream.Volume > 0 ? bloodstream.Volume : bloodstream.MaxVolume;
@@ -171,11 +182,14 @@ public sealed class BloodstreamSystem : EntitySystem
         spillSolution = null;
         bloodReagentSolution = null;
         return _solutionSystem.TryGetSolution((bloodstream, bloodstream),
-                   BloodstreamComponent.BloodSolutionId, out bloodSolution, true)
+                   BloodstreamComponent.BloodSolutionId,
+                   out bloodSolution, true)
                && _solutionSystem.TryGetSolution((bloodstream, bloodstream),
-                   BloodstreamComponent.DissolvedReagentSolutionId, out bloodReagentSolution, true)
+                   BloodstreamComponent.DissolvedReagentSolutionId,
+                   out bloodReagentSolution, true)
                && _solutionSystem.TryGetSolution((bloodstream, bloodstream),
-                   BloodstreamComponent.SpillSolutionId, out spillSolution, true);
+                   BloodstreamComponent.SpillSolutionId,
+                   out spillSolution, true);
     }
 
     public bool TryGetBloodSolution(Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream,

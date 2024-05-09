@@ -1,9 +1,13 @@
 ﻿- type: metabolismType
   id: Human
   absorbedGases:
-    "0" : 0.21
+    "0" :
+      lowThreshold: 0.90
+      highThreshold: 1.0
   wasteGases:
-    "2" : 0.10
+    "2" :
+      lowThreshold: 0.05
+      highThreshold: 0.30
   requiredReagents:
     "Oxygen": 0.05
   wasteReagents:

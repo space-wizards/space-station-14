@@ -9,18 +9,6 @@ namespace Content.Shared.Medical.Respiration.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class LungsComponent : Component
 {
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan NextUpdate;
-
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan NextPhasedUpdate;
-
-    /// <summary>
-    /// Rate that reagents are absorbed from the contained gas, and when low-pressure is checked
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan UpdateRate = TimeSpan.FromSeconds(1);
-
     /// <summary>
     /// The time it takes to perform an inhalation
     /// </summary>
@@ -58,6 +46,19 @@ public sealed partial class LungsComponent : Component
             _ => throw new Exception("Unknown phase of breathing cycle. This should not happen!")
         };
 
+    public float TargetVolume
+    => Phase switch
+    {
+        BreathingPhase.Inhale => float.Lerp(NormalInhaleVolume,
+            MaxVolume,
+            BreathEffort),
+        BreathingPhase.Exhale => float.Lerp(MinVolume,
+            NormalExhaleVolume,
+            1-BreathEffort),
+        //We only care about target volume when inhaling or exhaling
+        _ => ContainedGas.Volume
+    };
+
     /// <summary>
     /// Can these lungs breathe?
     /// </summary>
@@ -67,28 +68,40 @@ public sealed partial class LungsComponent : Component
     public BreathingPhase Phase = BreathingPhase.Pause;
 
     /// <summary>
-    /// The maximum volume of gas that can be held in these lungs
+    /// The maximum volume that these lungs can expand to.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float TotalVolume = 8;
+    public float MaxVolume = 8;
 
     /// <summary>
-    /// The amount of gas that stays in the lungs after exhaling. This is bypassed in low pressure environments.
+    /// The minimum volume that these lungs can compress to. This is bypassed and volume is set to 0 in low pressure environments.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ResidualVolume = 1.5f;
+    public float MinVolume = 1.5f;
 
     /// <summary>
-    /// The target volume for the current cycle state
+    /// Lung volume during a normal inhale
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float TargetLungVolume = 3;
+    public float NormalInhaleVolume = 4f;
 
     /// <summary>
-    /// The lung volume increase/decrease when inhaling or exhaling
+    /// Lung volume during a normal exhale
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float TidalVolume = 0.5f;
+    public float NormalExhaleVolume = 3.5f;
+
+    /// <summary>
+    /// How much extra *work* is being put into breathing, this is used to lerp between volume range and it's respective max value
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float BreathEffort = 0f;
+
+    /// <summary>
+    /// How quickly does breathing effort change based on if we are outside the target range for an absorbed reagent
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float EffortSensitivity = 0.05f;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public GasMixture ContainedGas = new();
@@ -109,13 +122,7 @@ public sealed partial class LungsComponent : Component
     /// What solutionId to put absorbed reagents into
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string AbsorbOutputSolution = "bloodReagents";
-
-    /// <summary>
-    /// What solutionId to take waste reagents out of
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public string WasteSourceSolution = "bloodReagents";
+    public string TargetSolutionId = "bloodReagents";
 
     /// <summary>
     /// Cached solution owner entity.
@@ -124,22 +131,36 @@ public sealed partial class LungsComponent : Component
     public EntityUid SolutionOwnerEntity = EntityUid.Invalid;
 
     [DataField, AutoNetworkedField]
-    public EntityUid CachedAbsorptionSolutionEnt = EntityUid.Invalid;
-
-    [DataField, AutoNetworkedField]
-    public EntityUid CachedWasteSolutionEnt = EntityUid.Invalid;
+    public EntityUid CachedTargetSolutionEnt = EntityUid.Invalid;
 
     /// <summary>
     /// cached data for absorbed gases
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<(Gas gas, string reagent, float maxAbsorption)> CachedAbsorbedGasData = new();
+    public List<(Gas gas, string reagent, GasMetabolismData)> CachedAbsorbedGasData = new();
 
     /// <summary>
     /// cached data for waste gases
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<(Gas gas, string reagent, float maxAbsorption)> CachedWasteGasData = new();
+    public List<(Gas gas, string reagent, GasMetabolismData)> CachedWasteGasData = new();
+}
+
+
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class LungsTickingComponent : Component
+{
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextUpdate;
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextPhasedUpdate;
+
+    /// <summary>
+    /// Rate that reagents are absorbed from the contained gas, and when low-pressure is checked
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan UpdateRate = TimeSpan.FromSeconds(1);
 }
 
 

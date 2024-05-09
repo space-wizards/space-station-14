@@ -2,6 +2,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.Metabolism.Prototypes;
 
@@ -19,8 +20,11 @@ public sealed partial class MetabolismTypePrototype : IPrototype
     public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> WasteReagents = new();
 
     [DataField(required: true)]
-    public Dictionary<ProtoId<GasPrototype>, float> AbsorbedGases = new();
+    public Dictionary<ProtoId<GasPrototype>, GasMetabolismData> AbsorbedGases = new();
 
     [DataField(required: true)]
-    public Dictionary<ProtoId<GasPrototype>, float> WasteGases = new();
+    public Dictionary<ProtoId<GasPrototype>, GasMetabolismData> WasteGases = new();
 }
+
+[DataRecord, Serializable, NetSerializable]
+public record struct GasMetabolismData(float LowThreshold = 0.95f, float HighThreshold = 1f);

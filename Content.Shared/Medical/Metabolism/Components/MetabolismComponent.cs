@@ -37,5 +37,6 @@ public sealed partial class MetabolismComponent : Component
     public TimeSpan NextUpdate;
 
     [DataField, AutoNetworkedField]
-    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1.0f);
+    //public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1.0f);
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(0.2f);
 }

@@ -1,14 +1,10 @@
 - type: entity
   id: BaseHumanOrganUnGibbable
-  parent: BaseItem
+  parent: BaseOrganUnGibbable
   abstract: true
   components:
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
-  - type: Organ
-  - type: Food
-  - type: Extractable
-    grindableSolutionName: organ
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -29,10 +25,8 @@
 
 - type: entity
   id: BaseHumanOrgan
-  parent: BaseHumanOrganUnGibbable
+  parent: BaseOrgan
   abstract: true
-  components:
-  - type: Gibbable
 
 - type: entity
   id: OrganHumanBrain
