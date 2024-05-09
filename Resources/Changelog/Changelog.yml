@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Dragging objects over gas pipes no longer slows you down.
-    type: Fix
-  id: 6061
-  time: '2024-02-29T21:41:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25629
-- author: TheShuEd
-  changes:
-  - message: 9 new colourful curtains. Can be crafted from carpets.
-    type: Add
-  id: 6062
-  time: '2024-02-29T22:25:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25684
 - author: Nairodian
   changes:
   - message: The smooth tail now has a second color layer to customize.
@@ -3852,3 +3838,18 @@
   id: 6560
   time: '2024-05-09T06:03:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27575
+- author: deltanedas
+  changes:
+  - message: Ninja can now hack criminal records consoles to make everyone wanted.
+    type: Add
+  id: 6561
+  time: '2024-05-09T06:35:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24982
+- author: deltanedas
+  changes:
+  - message: Added the robotics console for remotely looking at, disabling or destroying
+      cyborgs!
+    type: Add
+  id: 6562
+  time: '2024-05-09T06:36:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24855
