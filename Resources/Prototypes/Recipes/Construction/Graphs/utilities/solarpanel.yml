@@ -28,18 +28,15 @@
         - to: solarpanel
           conditions:
             - !type:EntityAnchored
-              value: true
           steps:
             - material: Glass
               amount: 2
               doAfter: 0.5
           completed:
             - !type:SnapToGrid
-              offset: Center
         - to: solartracker
           conditions:
             - !type:EntityAnchored
-              value: true
           steps:
             - tag: SolarTrackerElectronics
               name: Solar Tracker Electronics
@@ -52,7 +49,6 @@
               doAfter: 2
           completed:
             - !type:SnapToGrid
-              offset: Center
 
     - node: solarpanel
       entity: SolarPanel

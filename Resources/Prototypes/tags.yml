@@ -259,10 +259,10 @@
   id: CableCoil
 
 - type: Tag
-  id: CannonBall
+  id: CaneBlade
 
 - type: Tag
-  id: CannonRestrict
+  id: CannonBall
 
 - type: Tag
   id: CannotSuicide
@@ -401,6 +401,9 @@
   id: ClownSuit
 
 - type: Tag
+  id: CluwneHappyHonk
+
+- type: Tag
   id: CluwneHorn
 
 - type: Tag
@@ -417,6 +420,9 @@
 
 - type: Tag
   id: ConveyorAssembly
+
+- type: Tag
+  id: CoordinatesDisk
 
 - type: Tag #Ohioans die happy
   id: Corn
@@ -519,6 +525,9 @@
 
 - type: Tag
   id: DoorElectronics
+
+- type: Tag
+  id: DoorElectronicsConfigurator
 
 - type: Tag
   id: DrinkBottle
@@ -858,6 +867,9 @@
   id: Meat
 
 - type: Tag
+  id: Medal
+
+- type: Tag
   id: Medkit
 
 - type: Tag
@@ -910,9 +922,6 @@
 
 - type: Tag
   id: NoBlockAnchoring
-
-- type: Tag
-  id: NoPaint
 
 - type: Tag
   id: NozzleBackTank
@@ -1034,9 +1043,6 @@
 - type: Tag
   id: RawMaterial
 
-- type: Tag
-  id: RCDDeconstructWhitelist
-
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable
@@ -1102,13 +1108,13 @@
   id: Shiv
 
 - type: Tag
-  id: ShoesRequiredStepTriggerImmune
-
-- type: Tag
   id: Shovel
 
 - type: Tag
   id: Sidearm
+
+- type: Tag
+  id: SignalTrigger
 
 - type: Tag
   id: SkeletonMotorcycleKeys
@@ -1124,9 +1130,6 @@
 
 - type: Tag
   id: Smokable
-
-- type: Tag
-  id: SnapPop
 
 - type: Tag
   id: SnowyLabs
@@ -1180,6 +1183,9 @@
 
 - type: Tag
   id: SuitEVA
+
+- type: Tag
+  id: Sunglasses
 
 - type: Tag
   id: SurgeryTool
@@ -1236,6 +1242,9 @@
   id: TrashBag
 
 - type: Tag
+  id: Truncheon
+
+- type: Tag
   id: Unimplantable
 
 - type: Tag
@@ -1273,6 +1282,9 @@
 
 - type: Tag
   id: WeaponShotgunKammerer
+
+- type: Tag
+  id: WeldingMask
 
 - type: Tag
   id: WetFloorSign
@@ -1315,3 +1327,5 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+# ALPHABETICAL

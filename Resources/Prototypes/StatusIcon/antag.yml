@@ -28,9 +28,10 @@
 
 - type: statusIcon
   id: MindShieldIcon
-  priority: 1
+  priority: 2
   locationPreference: Right
   layer: Mod
+  isShaded: true
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: MindShield

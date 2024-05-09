@@ -62,3 +62,16 @@
   icon:
     sprite: Mobs/Silicon/Bots/mimebot.rsi
     state: mimebot
+
+- type: construction
+  name: supplybot
+  id: supplybot
+  graph: SupplyBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+  description: This bot can be loaded with cargo to make deliveries.
+  icon:
+    sprite: Mobs/Silicon/Bots/supplybot.rsi
+    state: supplybot

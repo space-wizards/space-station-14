@@ -96,6 +96,8 @@
   - tp
   - tpto
   - respawn
+  - tippy
+  - tip
 
 - Flags: SERVER
   Commands:

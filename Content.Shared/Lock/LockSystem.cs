@@ -1,5 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
@@ -9,6 +10,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
+using Content.Shared.Wires;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
@@ -40,8 +42,11 @@ public sealed class LockSystem : EntitySystem
         SubscribeLocalEvent<LockComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<LockComponent, LockDoAfter>(OnDoAfterLock);
         SubscribeLocalEvent<LockComponent, UnlockDoAfter>(OnDoAfterUnlock);
-    }
 
+        SubscribeLocalEvent<LockedWiresPanelComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
+        SubscribeLocalEvent<LockedWiresPanelComponent, AttemptChangePanelEvent>(OnAttemptChangePanel);
+        SubscribeLocalEvent<LockedAnchorableComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+    }
     private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
     {
         _appearanceSystem.SetData(uid, LockVisuals.Locked, lockComp.Locked);
@@ -53,12 +58,12 @@ public sealed class LockSystem : EntitySystem
             return;
 
         // Only attempt an unlock by default on Activate
-        if (lockComp.Locked)
+        if (lockComp.Locked && lockComp.UnlockOnClick)
         {
             TryUnlock(uid, args.User, lockComp);
             args.Handled = true;
         }
-        else if (lockComp.LockOnClick)
+        else if (!lockComp.Locked && lockComp.LockOnClick)
         {
             TryLock(uid, args.User, lockComp);
             args.Handled = true;
@@ -197,6 +202,18 @@ public sealed class LockSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns true if the entity is locked.
+    /// Entities with no lock component are considered unlocked.
+    /// </summary>
+    public bool IsLocked(Entity<LockComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        return ent.Comp.Locked;
+    }
+
+    /// <summary>
     /// Raises an event for other components to check whether or not
     /// the entity can be locked in its current state.
     /// </summary>
@@ -226,18 +243,18 @@ public sealed class LockSystem : EntitySystem
 
     private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !CanToggleLock(uid, args.User))
+        if (!args.CanAccess || !args.CanInteract)
             return;
 
         AlternativeVerb verb = new()
         {
-            Act = component.Locked ?
-                () => TryUnlock(uid, args.User, component) :
-                () => TryLock(uid, args.User, component),
+            Act = component.Locked
+                ? () => TryUnlock(uid, args.User, component)
+                : () => TryLock(uid, args.User, component),
             Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock"),
-            Icon = component.Locked ?
-                new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")) :
-                new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/lock.svg.192dpi.png")),
+            Icon = !component.Locked
+                ? new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/lock.svg.192dpi.png"))
+                : new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")),
         };
         args.Verbs.Add(verb);
     }
@@ -274,6 +291,54 @@ public sealed class LockSystem : EntitySystem
             return;
 
         TryUnlock(uid, args.User, skipDoAfter: true);
+    }
+
+    private void OnLockToggleAttempt(Entity<LockedWiresPanelComponent> ent, ref LockToggleAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!TryComp<WiresPanelComponent>(ent, out var panel) || !panel.Open)
+            return;
+
+        if (!args.Silent)
+        {
+            _sharedPopupSystem.PopupClient(Loc.GetString("construction-step-condition-wire-panel-close"),
+                ent,
+                args.User);
+        }
+        args.Cancelled = true;
+    }
+
+
+    private void OnAttemptChangePanel(Entity<LockedWiresPanelComponent> ent, ref AttemptChangePanelEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!TryComp<LockComponent>(ent, out var lockComp) || !lockComp.Locked)
+            return;
+
+        _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-generic-fail",
+            ("target", Identity.Entity(ent, EntityManager))),
+            ent,
+            args.User);
+        args.Cancelled = true;
+    }
+
+    private void OnUnanchorAttempt(Entity<LockedAnchorableComponent> ent, ref UnanchorAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!TryComp<LockComponent>(ent, out var lockComp) || !lockComp.Locked)
+            return;
+
+        _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-generic-fail",
+                ("target", Identity.Entity(ent, EntityManager))),
+            ent,
+            args.User);
+        args.Cancel();
     }
 }
 

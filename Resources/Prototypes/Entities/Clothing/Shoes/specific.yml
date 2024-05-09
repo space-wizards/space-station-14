@@ -15,6 +15,7 @@
   parent: [ClothingShoesBaseButcherable, ClothingSlotBase]
   id: ClothingShoesClownBase
   components:
+  - type: WaddleWhenWorn
   - type: ItemSlots
     slots:
       item:
@@ -157,15 +158,34 @@
     - type: Tag
       tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
-      sprite: Clothing/Shoes/Color/black.rsi
+      sprite: Clothing/Shoes/color.rsi
+      layers:
+      - state: icon
+        color: "#3f3f3f"
+      - state: soles-icon
     - type: Clothing
-      sprite: Clothing/Shoes/Color/black.rsi
+      sprite: Clothing/Shoes/color.rsi
+      clothingVisuals:
+        shoes:
+        - state: equipped-FEET
+          color: "#1d1d1d"
+        - state: soles-equipped-FEET
+    - type: Item
+      inhandVisuals:
+        left:
+        - state: inhand-left
+          color: "#3f3f3f"
+        - state: soles-inhand-left
+        right:
+        - state: inhand-right
+          color: "#3f3f3f"
+        - state: soles-inhand-right
     - type: ChameleonClothing
       slot: [FEET]
       default: ClothingShoesColorBlack
     - type: UserInterface
       interfaces:
-        - key: enum.ChameleonUiKey.Key
+        enum.ChameleonUiKey.Key:
           type: ChameleonBoundUserInterface
 
 - type: entity

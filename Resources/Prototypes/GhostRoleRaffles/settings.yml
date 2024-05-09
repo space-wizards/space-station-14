@@ -1,0 +1,15 @@
+# for important antag roles (nukie reinforcements, ninja, etc.)
+- type: ghostRoleRaffleSettings
+  id: default
+  settings:
+    initialDuration: 30
+    joinExtendsDurationBy: 10
+    maxDuration: 90
+
+# for roles that don't matter too much or are available plentifully (e.g. space carp)
+- type: ghostRoleRaffleSettings
+  id: short
+  settings:
+    initialDuration: 10
+    joinExtendsDurationBy: 5
+    maxDuration: 30

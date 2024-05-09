@@ -70,7 +70,6 @@
       tags:
         - Carp
         - DoorBumpOpener
-        - NoPaint
     - type: ReplacementAccent
       accent: genericAggressive
     - type: Speech
@@ -164,6 +163,8 @@
       makeSentient: true
       name: ghost-role-information-sentient-carp-name
       description: ghost-role-information-sentient-carp-description
+      raffle:
+        settings: short
     - type: GhostTakeoverAvailable
     - type: HTN
       rootTask:

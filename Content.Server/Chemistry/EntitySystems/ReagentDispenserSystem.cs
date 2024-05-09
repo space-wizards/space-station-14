@@ -1,11 +1,12 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
+using Content.Shared.Nutrition.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
@@ -61,7 +62,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var inventory = GetInventory(reagentDispenser);
 
             var state = new ReagentDispenserBoundUserInterfaceState(outputContainerInfo, GetNetEntity(outputContainer), inventory, reagentDispenser.Comp.DispenseAmount);
-            _userInterfaceSystem.TrySetUiState(reagentDispenser, ReagentDispenserUiKey.Key, state);
+            _userInterfaceSystem.SetUiState(reagentDispenser.Owner, ReagentDispenserUiKey.Key, state);
         }
 
         private ContainerInfo? BuildOutputContainerInfo(EntityUid? container)
