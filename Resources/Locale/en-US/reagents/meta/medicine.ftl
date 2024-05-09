@@ -143,4 +143,4 @@ reagent-name-potassium-iodide = potassium iodide
 reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by 90%. Prophylactic use only.
 
 reagent-name-haloperidol = haloperidol
-reagent-desc-haloperidol = Removes most stimulating/hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
+reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.

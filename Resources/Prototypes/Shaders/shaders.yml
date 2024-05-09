@@ -60,7 +60,7 @@
 - type: shader
   id: Drowsiness
   kind: source
-  path: "/Textures/Shaders/drowsiness.swsl"
+  path: "/Textures/Shaders/radial_blur.swsl"
 
 - type: shader
   id: Texture
