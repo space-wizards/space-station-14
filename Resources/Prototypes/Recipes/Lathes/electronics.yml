@@ -983,3 +983,13 @@
   materials:
     Steel: 100
     Glass: 500
+
+- type: latheRecipe
+  id: SalvageMagnetMachineCircuitboard
+  result: SalvageMagnetMachineCircuitboard
+  category: Circuitry
+  completetime: 10
+  materials:
+    Steel: 300
+    Glass: 500
+    Gold: 100
