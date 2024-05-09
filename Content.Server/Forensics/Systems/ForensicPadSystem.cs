@@ -5,6 +5,7 @@ using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Renamer.EntitySystems;
 
 namespace Content.Server.Forensics
 {
@@ -17,6 +18,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly RenamerSystem _renamer = default!;
 
         public override void Initialize()
         {
@@ -102,7 +104,7 @@ namespace Content.Server.Forensics
                 var name = HasComp<FingerprintComponent>(args.Args.Target)
                     ? "forensic-pad-fingerprint-name"
                     : "forensic-pad-gloves-name";
-                _metaData.SetEntityName(uid, Loc.GetString(name, ("entity", args.Args.Target)));
+                _renamer.SetBaseName(uid, Loc.GetString(name, ("entity", args.Args.Target)));
             }
 
             padComponent.Sample = args.Sample;

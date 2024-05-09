@@ -22,6 +22,7 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
+using Content.Shared.Renamer.EntitySystems;
 
 namespace Content.Server.Implants;
 
@@ -39,6 +40,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly PullingSystem _pullingSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly RenamerSystem _renamer = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private HashSet<Entity<MapGridComponent>> _targetGrids = [];
@@ -207,7 +209,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         {
             var newProfile = HumanoidCharacterProfile.RandomWithSpecies(humanoid.Species);
             _humanoidAppearance.LoadProfile(ent, newProfile, humanoid);
-            _metaData.SetEntityName(ent, newProfile.Name);
+            _renamer.SetBaseName(ent, newProfile.Name);
             if (TryComp<DnaComponent>(ent, out var dna))
             {
                 dna.DNA = _forensicsSystem.GenerateDNA();
