@@ -278,13 +278,17 @@
   name: cup ramen
   description: A cheap food with a taste that reminds you of your school years.
   components:
+  - type: RefillableSolution
+    solution: food
+  - type: InjectableSolution
+    solution: food
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40 #big cup
+        maxVol: 50 #big cup
         reagents:
-        - ReagentId: HotRamen
-          Quantity: 25
+        - ReagentId: DryRamen
+          Quantity: 30
         - ReagentId: Soysauce
           Quantity: 5
   - type: Sprite
@@ -293,7 +297,7 @@
     trash: FoodPacketCupRamenTrash
 
 - type: entity
-  parent: FoodSnackBase
+  parent: DrinkRamen
   id: DrinkHellRamen
   name: hell ramen
   description: Super spicy flavor!
@@ -303,14 +307,10 @@
       food:
         maxVol: 50
         reagents:
-        - ReagentId: HotRamen
+        - ReagentId: DryRamen
           Quantity: 30
         - ReagentId: CapsaicinOil
           Quantity: 5
-  - type: Sprite
-    state: ramen
-  - type: Food
-    trash: FoodPacketCupRamenTrash
 
 - type: entity
   name: chow mein
