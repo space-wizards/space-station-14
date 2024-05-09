@@ -973,7 +973,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     /// <summary>
     /// Creates a simple planet setup for a map.
     /// </summary>
-    public void EnsurePlanet(EntityUid mapUid, BiomeTemplatePrototype biomeTemplate, int? seed = null, MetaDataComponent? metadata = null)
+    public void EnsurePlanet(EntityUid mapUid, BiomeTemplatePrototype biomeTemplate, int? seed = null, MetaDataComponent? metadata = null, Color? mapLight = null)
     {
         if (!Resolve(mapUid, ref metadata))
             return;
@@ -998,7 +998,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         // Lava: #A34931
 
         var light = EnsureComp<MapLightComponent>(mapUid);
-        light.AmbientLightColor = Color.FromHex("#D8B059");
+        light.AmbientLightColor = mapLight ?? Color.FromHex("#D8B059");
         Dirty(mapUid, light, metadata);
 
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
