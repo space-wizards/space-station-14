@@ -27814,6 +27814,13 @@ entities:
     - type: Transform
       pos: -4.5,-19.5
       parent: 31
+- proto: ComputerRoboticsControl
+  entities:
+  - uid: 11453
+    components:
+    - type: Transform
+      pos: -0.5,-28.5
+      parent: 31
 - proto: ComputerSalvageExpedition
   entities:
   - uid: 33
