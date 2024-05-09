@@ -1411,12 +1411,11 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
 
         // Gets everyone looking at the UI
-        var actors = _ui.GetActors(uid, StorageComponent.StorageUiKey.Key).ToList();
-        for (var i = actors.Count - 1; i >= 0; i--)
+        foreach (var actor in _ui.GetActors(uid, StorageComponent.StorageUiKey.Key))
         {
-            var actor = actors[i];
             if (_admin.HasAdminFlag(actor, AdminFlags.Admin))
                 continue;
+                
             // And closes it unless they're an admin
             _ui.CloseUi(uid, StorageComponent.StorageUiKey.Key, actor);
         }
