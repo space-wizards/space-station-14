@@ -1410,14 +1410,14 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!args.Locked)
             return;
 
-        //gets everyone looking at the UI
+        // Gets everyone looking at the UI
         var actors = _ui.GetActors(uid, StorageComponent.StorageUiKey.Key).ToList();
         for (var i = actors.Count - 1; i >= 0; i--)
         {
             var actor = actors[i];
             if (_admin.HasAdminFlag(actor, AdminFlags.Admin))
                 continue;
-            //and closes it unless they're an admin
+            // And closes it unless they're an admin
             _ui.CloseUi(uid, StorageComponent.StorageUiKey.Key, actor);
         }
     }
