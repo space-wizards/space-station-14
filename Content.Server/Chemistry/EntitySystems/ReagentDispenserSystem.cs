@@ -81,9 +81,9 @@ namespace Content.Server.Chemistry.EntitySystems
             return null;
         }
 
-        private List<KeyValuePair<string, KeyValuePair<string, string>>> GetInventory(Entity<ReagentDispenserComponent> reagentDispenser)
+        private List<ReagentInventoryItem> GetInventory(Entity<ReagentDispenserComponent> reagentDispenser)
         {
-            var inventory = new List<KeyValuePair<string, KeyValuePair<string, string>>>();
+            var inventory = new List<ReagentInventoryItem>();
 
             for (var i = 0; i < reagentDispenser.Comp.NumSlots; i++)
             {
@@ -107,7 +107,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 }
                 var storedAmount = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", quantity));
 
-                inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(reagentLabel, storedAmount)));
+                inventory.Add(new ReagentInventoryItem(storageSlotId, reagentLabel, storedAmount));
             }
 
             return inventory;

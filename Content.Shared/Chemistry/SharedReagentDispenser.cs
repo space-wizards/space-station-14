@@ -53,19 +53,28 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
+    public sealed class ReagentInventoryItem(string storageSlotId, string reagentLabel, string storedAmount)
+    {
+        public string StorageSlotId = storageSlotId;
+        public string ReagentLabel = reagentLabel;
+        public string StoredAmount = storedAmount;
+    }
+
+    [Serializable, NetSerializable]
     public sealed class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
     {
         public readonly ContainerInfo? OutputContainer;
 
         public readonly NetEntity? OutputContainerEntity;
+
         /// <summary>
         /// A list of the reagents which this dispenser can dispense.
         /// </summary>
-        public readonly List<KeyValuePair<string, KeyValuePair<string, string>>> Inventory;
+        public readonly List<ReagentInventoryItem> Inventory;
 
         public readonly ReagentDispenserDispenseAmount SelectedDispenseAmount;
 
-        public ReagentDispenserBoundUserInterfaceState(ContainerInfo? outputContainer, NetEntity? outputContainerEntity, List<KeyValuePair<string, KeyValuePair<string, string>>> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount)
+        public ReagentDispenserBoundUserInterfaceState(ContainerInfo? outputContainer, NetEntity? outputContainerEntity, List<ReagentInventoryItem> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount)
         {
             OutputContainer = outputContainer;
             OutputContainerEntity = outputContainerEntity;

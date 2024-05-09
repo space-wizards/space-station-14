@@ -19,9 +19,8 @@ namespace Content.Client.Chemistry.UI
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        public event Action<BaseButton.ButtonEventArgs, DispenseReagentButton>? OnDispenseReagentButtonPressed;
-
-        public event Action<BaseButton.ButtonEventArgs, EjectJugButton>? OnEjectJugButtonPressed;
+        public event Action<string>? OnDispenseReagentButtonPressed;
+        public event Action<string>? OnEjectJugButtonPressed;
 
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
@@ -48,22 +47,22 @@ namespace Content.Client.Chemistry.UI
         /// Update the button grid of reagents which can be dispensed.
         /// </summary>
         /// <param name="inventory">Reagents which can be dispensed by this dispenser</param>
-        public void UpdateReagentsList(List<KeyValuePair<string, KeyValuePair<string, string>>> inventory)
+        public void UpdateReagentsList(List<ReagentInventoryItem> inventory)
         {
             if (ChemicalList == null)
                 return;
 
             ChemicalList.Children.Clear();
             //Sort inventory by reagentLabel
-            inventory.Sort((x, y) => x.Value.Key.CompareTo(y.Value.Key));
+            inventory.Sort((x, y) => x.ReagentLabel.CompareTo(y.ReagentLabel));
 
-            foreach (KeyValuePair<string, KeyValuePair<string, string>> entry in inventory)
+            foreach (var item in inventory)
             {
-                var button = new DispenseReagentButton(entry.Key, entry.Value.Key, entry.Value.Value);
-                button.OnPressed += args => OnDispenseReagentButtonPressed?.Invoke(args, button);
+                var button = new DispenseReagentButton(item.StorageSlotId, item.ReagentLabel, item.StoredAmount);
+                button.OnPressed += args => OnDispenseReagentButtonPressed?.Invoke(item.StorageSlotId);
                 ChemicalList.AddChild(button);
-                var ejectButton = new EjectJugButton(entry.Key);
-                ejectButton.OnPressed += args => OnEjectJugButtonPressed?.Invoke(args, ejectButton);
+                var ejectButton = new EjectJugButton(item.StorageSlotId);
+                ejectButton.OnPressed += args => OnEjectJugButtonPressed?.Invoke(item.StorageSlotId);
                 ChemicalList.AddChild(ejectButton);
             }
         }
