@@ -1,11 +1,4 @@
 - type: trait
-  id: PirateAccent
-  name: trait-pirate-accent-name
-  description: trait-pirate-accent-desc
-  components:
-    - type: PirateAccent
-
-- type: trait
   id: Accentless
   name: trait-accentless-name
   description: trait-accentless-desc
@@ -18,11 +11,53 @@
       accent: dwarf
 
 - type: trait
+  id: PirateAccent
+  name: trait-pirate-accent-name
+  description: trait-pirate-accent-desc
+  components:
+    - type: PirateAccent
+
+- type: trait
   id: Southern
-  name: trait-southern-name
-  description: trait-southern-desc
+  name: trait-southern-accent-name
+  description: trait-southern-accent-desc
   components:
     - type: SouthernAccent
+
+- type: trait
+  id: Mobster
+  name: trait-mobster-accent-name
+  description: trait-mobster-accent-desc
+  components:
+    - type: MobsterAccent
+
+- type: trait
+  id: Italian
+  name: trait-italian-accent-name
+  description: trait-italian-accent-desc
+  components:
+    - type: ItalianAccent
+
+- type: trait
+  id: Dwarf
+  name: trait-dwarf-accent-name
+  description: trait-dwarf-accent-desc
+  components:
+    - type: DwarfAccent
+
+- type: trait
+  id: Cowboy
+  name: trait-cowboy-accent-name
+  description: trait-cowboy-accent-desc
+  components:
+    - type: CowboyAccent
+
+- type: trait
+  id: Ohio
+  name: trait-ohio-accent-name
+  description: trait-ohio-accent-desc
+  components:
+    - type: OhioAccent
 
 - type: trait
   id: Liar

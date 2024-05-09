@@ -33,11 +33,26 @@ trait-frontal-lisp-desc = You thpeak with a lithp
 trait-socialanxiety-name = Social Anxiety
 trait-socialanxiety-desc = You are anxious when you speak and stutter.
 
-trait-southern-name = Southern Drawl
-trait-southern-desc = You have a different way of speakin'.
+trait-southern-accent-name = Southern Drawl
+trait-southern-accent-desc = You have a different way of speakin'.
 
 trait-snoring-name = Snoring
 trait-snoring-desc = You will snore while sleeping.
+
+trait-mobster-accent-name = Mobster Accent
+trait-mobster-accent-desc = Ey'o yous oughta whack 'em, capiche?
+
+trait-italian-accent-name = Italian Accent
+trait-italian-accent-desc = Mamma-mia!
+
+trait-dwarf-accent-name = Dwarf Accent
+trait-dwarf-accent-desc = Ach nae...
+
+trait-cowboy-accent-name = Cowboy Accent
+trait-cowboy-accent-desc = This is a stick up, partner!
+
+trait-ohio-accent-name = Rizz Accent
+trait-ohio-accent-desc = Chat... is that the Rizzler, like in Fortnite??
 
 trait-liar-name = Pathological liar
 trait-liar-desc = You can hardly bring yourself to tell the truth. Sometimes you lie anyway.
