@@ -135,25 +135,16 @@ namespace Content.Client.Chemistry.UI
         {
             ContainerInfo.Children.Clear();
 
-            if (state.OutputContainer is null)
-            {
+            if (state.OutputContainer is null) {
+                ContainerInfoName.Text = "";
+                ContainerInfoFill.Text = "";
                 ContainerInfo.Children.Add(new Label { Text = Loc.GetString("reagent-dispenser-window-no-container-loaded-text") });
                 return;
             }
 
-            ContainerInfo.Children.Add(new BoxContainer // Name of the container and its fill status (Ex: 44/100u)
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                Children =
-                {
-                    new Label {Text = $"{state.OutputContainer.DisplayName}: "},
-                    new Label
-                    {
-                        Text = $"{state.OutputContainer.CurrentVolume}/{state.OutputContainer.MaxVolume}",
-                        StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
-                    }
-                }
-            });
+            // Set Name of the container and its fill status (Ex: 44/100u)
+            ContainerInfoName.Text = state.OutputContainer.DisplayName;
+            ContainerInfoFill.Text = state.OutputContainer.CurrentVolume + "/" + state.OutputContainer.MaxVolume;
 
             foreach (var (reagent, quantity) in state.OutputContainer.Reagents!)
             {
