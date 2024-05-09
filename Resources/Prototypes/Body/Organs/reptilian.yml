@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: OrganReptilianStomach
-  parent: OrganAnimalStomach
+  parent: OrganHumanStomach
   noSpawn: true
   components:
   #TODO Stomach: Reimplement this

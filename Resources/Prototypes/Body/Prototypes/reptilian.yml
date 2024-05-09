@@ -13,10 +13,10 @@
     torso:
       part: TorsoReptilian
       organs:
-        heart: OrganAnimalHeart
+        heart: OrganHumanHeart
         lungs: OrganHumanLungs
         stomach: OrganReptilianStomach
-        liver: OrganAnimalLiver
+        liver: OrganHumanLiver
         kidneys: OrganHumanKidneys
       connections:
       - right arm
