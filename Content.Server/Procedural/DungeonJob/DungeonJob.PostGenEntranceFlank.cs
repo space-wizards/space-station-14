@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
+using Content.Shared.Storage;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 
@@ -14,8 +15,15 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(EntranceFlankPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
+        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
+            !data.SpawnGroups.TryGetValue(DungeonDataKey.EntranceFlank, out var flankProto))
+        {
+            _sawmill.Error($"Unable to get dungeon data for {nameof(gen)}");
+            return;
+        }
+
         var tiles = new List<(Vector2i Index, Tile)>();
-        var tileDef = _tileDefManager[gen.Tile];
+        var tileDef = _tileDefManager[tileProto];
         var spawnPositions = new ValueList<Vector2i>(dungeon.Rooms.Count);
 
         foreach (var room in dungeon.Rooms)
@@ -40,10 +48,11 @@ public sealed partial class DungeonJob
         }
 
         _maps.SetTiles(_gridUid, _grid, tiles);
+        var entGroup = _prototype.Index(flankProto);
 
         foreach (var entrance in spawnPositions)
         {
-            _entManager.SpawnEntities(_maps.GridTileToLocal(_gridUid, _grid, entrance), gen.Entities);
+            _entManager.SpawnEntities(_maps.GridTileToLocal(_gridUid, _grid, entrance), EntitySpawnCollection.GetSpawns(entGroup.Entries, random));
         }
     }
 }

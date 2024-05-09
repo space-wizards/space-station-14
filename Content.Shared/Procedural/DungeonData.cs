@@ -14,9 +14,9 @@ namespace Content.Shared.Procedural;
 [DataRecord]
 public sealed class DungeonData
 {
-    // I hate this but it also significantly reduces yaml boat if we add like 10 variations on the same set of layers
+    // I hate this but it also significantly reduces yaml bloat if we add like 10 variations on the same set of layers
     // e.g. science rooms, engi rooms, cargo rooms all under PlanetBase for example.
-    // without having to do weird nesting.
+    // without having to do weird nesting. It also means we don't need to copy-paste the same prototype across several layers
     // The alternative is doing like,
     // 2 layer prototype, 1 layer with the specified data, 3 layer prototype, 2 layers with specified data, etc.
     // As long as we just keep the code clean over time it won't be bad to maintain.

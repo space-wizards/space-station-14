@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
+using Content.Shared.Storage;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -13,7 +14,15 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(JunctionPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        var tileDef = _tileDefManager[gen.Tile];
+        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
+            !data.SpawnGroups.TryGetValue(DungeonDataKey.Entrance, out var entranceProto))
+        {
+            _sawmill.Error($"Dungeon data keys are missing for {nameof(gen)}");
+            return;
+        }
+
+        var tileDef = _tileDefManager[tileProto];
+        var entranceGroup = _prototype.Index(entranceProto);
 
         // N-wide junctions
         foreach (var tile in dungeon.CorridorTiles)
@@ -107,10 +116,14 @@ public sealed partial class DungeonJob
                     for (var x = -width + 1; x < width; x++)
                     {
                         var weh = tile + neighborDir.ToIntVec() * x;
-                        grid.SetTile(weh, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
 
-                        var coords = grid.GridTileToLocal(weh);
-                        _entManager.SpawnEntities(coords, gen.Entities);
+                        if (reservedTiles.Contains(weh))
+                            continue;
+
+                        _maps.SetTile(_gridUid, _grid, weh, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
+
+                        var coords = _maps.GridTileToLocal(_gridUid, _grid, weh);
+                        _entManager.SpawnEntities(coords, EntitySpawnCollection.GetSpawns(entranceGroup.Entries, random));
                     }
 
                     break;

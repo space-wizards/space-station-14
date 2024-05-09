@@ -1,10 +1,8 @@
-using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -16,7 +14,11 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(MiddleConnectionPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        // TODO: Need a minimal spanning tree version tbh
+        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto))
+        {
+            _sawmill.Error($"Dungeon data keys are missing for {nameof(gen)}");
+            return;
+        }
 
         // Grab all of the room bounds
         // Then, work out connections between them
@@ -44,7 +46,7 @@ public sealed partial class DungeonJob
                         if (dungeon.RoomTiles.Contains(neighbor))
                             continue;
 
-                        if (!_anchorable.TileFree(grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+                        if (!_anchorable.TileFree(_grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                             continue;
 
                         roomEdges.Add(neighbor);
@@ -59,8 +61,6 @@ public sealed partial class DungeonJob
         // TODO: Optional loops
 
         var roomConnections = new Dictionary<DungeonRoom, List<DungeonRoom>>();
-        var frontier = new Queue<DungeonRoom>();
-        frontier.Enqueue(dungeon.Rooms.First());
         var tileDef = _tileDefManager[gen.Tile];
 
         foreach (var (room, border) in roomBorders)
@@ -86,7 +86,7 @@ public sealed partial class DungeonJob
 
                 foreach (var node in flipp)
                 {
-                    center += (Vector2) node + grid.TileSizeHalfVector;
+                    center += node + _grid.TileSizeHalfVector;
                 }
 
                 center /= flipp.Count;
@@ -95,7 +95,7 @@ public sealed partial class DungeonJob
 
                 foreach (var node in flipp)
                 {
-                    nodeDistances.Add((node, (node + grid.TileSizeHalfVector - center).LengthSquared()));
+                    nodeDistances.Add((node, (node + _grid.TileSizeHalfVector - center).LengthSquared()));
                 }
 
                 nodeDistances.Sort((x, y) => x.Distance.CompareTo(y.Distance));
@@ -106,7 +106,7 @@ public sealed partial class DungeonJob
                 {
                     var node = nodeDistances[i].Node;
                     var gridPos = grid.GridTileToLocal(node);
-                    if (!_anchorable.TileFree(grid, node, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+                    if (!_anchorable.TileFree(_grid, node, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                         continue;
 
                     width--;

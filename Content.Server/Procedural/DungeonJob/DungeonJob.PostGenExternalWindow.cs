@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
+using Content.Shared.Storage;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
@@ -25,6 +26,13 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(ExternalWindowPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
+        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
+            !data.SpawnGroups.TryGetValue(DungeonDataKey.Window, out var windowGroup))
+        {
+            _sawmill.Error($"Unable to get dungeon data for {nameof(gen)}");
+            return;
+        }
+
         // Iterate every tile with N chance to spawn windows on that wall per cardinal dir.
         var chance = 0.25 / 3f;
 
@@ -34,7 +42,7 @@ public sealed partial class DungeonJob
         random.Shuffle(validTiles);
 
         var tiles = new List<(Vector2i, Tile)>();
-        var tileDef = _tileDefManager[gen.Tile];
+        var tileDef = _tileDefManager[tileProto];
         var count = Math.Floor(validTiles.Count * chance);
         var index = 0;
         var takenTiles = new HashSet<Vector2i>();
@@ -68,7 +76,7 @@ public sealed partial class DungeonJob
 
                     if (!allExterior.Contains(neighbor) ||
                         takenTiles.Contains(neighbor) ||
-                        !_anchorable.TileFree(grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+                        !_anchorable.TileFree(_grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                     {
                         isValid = false;
                         break;
@@ -101,6 +109,9 @@ public sealed partial class DungeonJob
                 {
                     var neighbor = tile + dirVec * j;
 
+                    if (reservedTiles.Contains(neighbor))
+                        continue;
+
                     tiles.Add((neighbor, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
                     index++;
                     takenTiles.Add(neighbor);
@@ -108,24 +119,20 @@ public sealed partial class DungeonJob
             }
         }
 
-        grid.SetTiles(tiles);
+        _maps.SetTiles(_gridUid, _grid, tiles);
         index = 0;
+        var spawnEntry = _prototype.Index(windowGroup);
 
         foreach (var tile in tiles)
         {
-            var gridPos = grid.GridTileToLocal(tile.Item1);
+            var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile.Item1);
 
-            index += gen.Entities.Count;
-            _entManager.SpawnEntities(gridPos, gen.Entities);
+            index += spawnEntry.Entries.Count;
+            _entManager.SpawnEntities(gridPos, EntitySpawnCollection.GetSpawns(spawnEntry.Entries, random));
+            await SuspendDungeon();
 
-            if (index > 20)
-            {
-                index -= 20;
-                await SuspendDungeon();
-
-                if (!ValidateResume())
-                    return;
-            }
+            if (!ValidateResume())
+                return;
         }
     }
 }
