@@ -7,46 +7,114 @@
     <BoxContainer Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" MinWidth="170">
             <Label Text="{Loc 'reagent-dispenser-window-amount-to-dispense-label'}" HorizontalAlignment="Center" />
-            <GridContainer Columns="3" HorizontalAlignment="Center" Margin="5">
+            <GridContainer Columns="3"
+                           HorizontalAlignment="Center"
+                           Margin="5">
                 <!-- FIXME: OpenLeft / OpenRight misalign the text, currently just hacked my way around it with margins -->
-                <Button Name="DispenseButton1" Access="Public" Text="1" StyleClasses="OpenBoth" SetWidth="40"/>
-                <Button Name="DispenseButton5" Access="Public" Text="5" StyleClasses="OpenBoth" SetWidth="40"/>
-                <Button Name="DispenseButton10" Access="Public" StyleClasses="OpenLeft" SetWidth="40">
-                    <Label Text="10" Align="Center" Margin="0 0 -3 0" />
+                <Button Name="DispenseButton1"
+                        Access="Public"
+                        Text="1"
+                        StyleClasses="OpenBoth"
+                        SetWidth="40" />
+                <Button Name="DispenseButton5"
+                        Access="Public"
+                        Text="5"
+                        StyleClasses="OpenBoth"
+                        SetWidth="40" />
+                <Button Name="DispenseButton10"
+                        Access="Public"
+                        StyleClasses="OpenLeft"
+                        SetWidth="40">
+                    <Label Text="10"
+                           Align="Center"
+                           Margin="0 0 -3 0" />
                 </Button>
-                <Button Name="DispenseButton15" Access="Public" Text="15" StyleClasses="OpenBoth" SetWidth="40"/>
-                <Button Name="DispenseButton20" Access="Public" Text="20" StyleClasses="OpenBoth" SetWidth="40"/>
-                <Button Name="DispenseButton25" Access="Public" Text="25" StyleClasses="OpenBoth" SetWidth="40"/>
-                <Button Name="DispenseButton30" Access="Public" StyleClasses="OpenRight" SetWidth="40">
-                    <Label Text="30" Align="Center"  Margin="-3 0 0 0" />
+                <Button Name="DispenseButton15"
+                        Access="Public"
+                        Text="15"
+                        StyleClasses="OpenBoth"
+                        SetWidth="40" />
+                <Button Name="DispenseButton20"
+                        Access="Public"
+                        Text="20"
+                        StyleClasses="OpenBoth"
+                        SetWidth="40" />
+                <Button Name="DispenseButton25"
+                        Access="Public"
+                        Text="25"
+                        StyleClasses="OpenBoth"
+                        SetWidth="40" />
+                <Button Name="DispenseButton30"
+                        Access="Public"
+                        StyleClasses="OpenRight"
+                        SetWidth="40">
+                    <Label Text="30"
+                           Align="Center"
+                           Margin="-3 0 0 0" />
                 </Button>
-                <Button Name="DispenseButton50" Access="Public" Text="50" StyleClasses="OpenBoth" SetWidth="40"/>
-                <Button Name="DispenseButton100" Access="Public" Text="100" StyleClasses="OpenBoth" SetWidth="40"/>
+                <Button Name="DispenseButton50"
+                        Access="Public"
+                        Text="50"
+                        StyleClasses="OpenBoth"
+                        SetWidth="40" />
+                <Button Name="DispenseButton100"
+                        Access="Public"
+                        Text="100"
+                        StyleClasses="OpenBoth"
+                        SetWidth="40" />
             </GridContainer>
             <Control VerticalExpand="True" />
-            <Label Name="ContainerInfoName" Access="Public" Text="" HorizontalAlignment="Center" />
-            <Label Name="ContainerInfoFill" Access="Public" Text="" HorizontalAlignment="Center" StyleClasses="LabelSubText" />
-            <SpriteView Name="View" Scale="4 4" HorizontalAlignment="Center" />
+            <Label Name="ContainerInfoName"
+                   Access="Public"
+                   Text=""
+                   HorizontalAlignment="Center" />
+            <Label Name="ContainerInfoFill"
+                   Access="Public"
+                   Text=""
+                   HorizontalAlignment="Center"
+                   StyleClasses="LabelSubText" />
+            <SpriteView Name="View"
+                        Scale="4 4"
+                        HorizontalAlignment="Center" />
             <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Name="ClearButton" Access="Public" Text="{Loc 'reagent-dispenser-window-clear-button'}" StyleClasses="OpenRight" />
-                <Button Name="EjectButton" Access="Public" Text="{Loc 'reagent-dispenser-window-eject-button'}" StyleClasses="OpenLeft" />
+                <Button Name="ClearButton"
+                        Access="Public"
+                        Text="{Loc 'reagent-dispenser-window-clear-button'}"
+                        StyleClasses="OpenRight" />
+                <Button Name="EjectButton"
+                        Access="Public"
+                        Text="{Loc 'reagent-dispenser-window-eject-button'}"
+                        StyleClasses="OpenLeft" />
             </BoxContainer>
         </BoxContainer>
-        <SplitContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-            <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" MinHeight="50" SizeFlagsStretchRatio="2.5">
-                <GridContainer Name="ReagentList" HorizontalExpand="True" VerticalExpand="True" Access="Public" Columns="3" />
+        <SplitContainer Orientation="Vertical"
+                        HorizontalExpand="True"
+                        VerticalExpand="True">
+            <ScrollContainer HScrollEnabled="False"
+                             HorizontalExpand="True"
+                             VerticalExpand="True"
+                             MinHeight="50"
+                             SizeFlagsStretchRatio="2.5">
+                <GridContainer Name="ReagentList"
+                               HorizontalExpand="True"
+                               VerticalExpand="True"
+                               Access="Public"
+                               Columns="3" />
             </ScrollContainer>
-            <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" MinHeight="50">
+            <ScrollContainer HScrollEnabled="False"
+                             HorizontalExpand="True"
+                             VerticalExpand="True"
+                             MinHeight="50">
                 <PanelContainer VerticalExpand="True">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#1b1b1e" />
                     </PanelContainer.PanelOverride>
                     <BoxContainer Name="ContainerInfo"
-                                Orientation="Vertical"
-                                HorizontalExpand="True"
-                                VerticalExpand="True"
-                                Margin="5">
-                        <Label Text="{Loc 'reagent-dispenser-window-no-container-loaded-text'}"/>
+                                  Orientation="Vertical"
+                                  HorizontalExpand="True"
+                                  VerticalExpand="True"
+                                  Margin="5">
+                        <Label Text="{Loc 'reagent-dispenser-window-no-container-loaded-text'}" />
                     </BoxContainer>
                 </PanelContainer>
             </ScrollContainer>
