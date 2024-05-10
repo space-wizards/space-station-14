@@ -32,24 +32,24 @@ namespace Content.Client.UserInterface.Controls
             set => WindowTitle.Text = value;
         }
 
-        private string? _helpGuidebookId;
-        public EntProtoId<GuideHelpComponent>? HelpGuidebookId
+        private List<string>? _helpGuidebookIds;
+        public List<string>? HelpGuidebookIds
         {
-            get => _helpGuidebookId;
+            get => _helpGuidebookIds;
             set
             {
-                _helpGuidebookId = value;
-                HelpButton.Disabled = _helpGuidebookId == null;
+                _helpGuidebookIds = value;
+                HelpButton.Disabled = _helpGuidebookIds == null;
                 HelpButton.Visible = !HelpButton.Disabled;
             }
         }
 
         public void Help()
         {
-            if (HelpGuidebookId is null)
+            if (HelpGuidebookIds is null)
                 return;
             _guidebookSystem ??= _sysMan.GetEntitySystem<GuidebookSystem>();
-            _guidebookSystem.OpenHelp(HelpGuidebookId);
+            _guidebookSystem.OpenHelp(HelpGuidebookIds);
         }
 
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
