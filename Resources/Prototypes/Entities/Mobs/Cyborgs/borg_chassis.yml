@@ -246,6 +246,12 @@
   - type: Inventory
     templateId: borgDutch
   - type: SolutionScanner
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHoverBorg
@@ -359,6 +365,19 @@
       noMindState: synd_medical
     - type: Construction
       node: syndicatemedical
+    - type: SolutionScanner
+    - type: ShowHealthBars
+      damageContainers:
+      - Biological
+    - type: ShowHealthIcons
+      damageContainers:
+      - Biological
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepHoverBorg
+        params:
+          volume: -6
+    
 
 - type: entity
   id: BorgChassisSyndicateSaboteur
