@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Space heaters machine boards are now printable round start and can additionally
-      be ordered by cargo.
-    type: Tweak
-  id: 6072
-  time: '2024-03-02T06:43:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25735
 - author: Krunk
   changes:
   - message: Picking up and dumping trash is less arduous for tiny, plentiful items,
@@ -3859,3 +3851,13 @@
   id: 6571
   time: '2024-05-10T02:01:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27841
+- author: Boaz1111
+  changes:
+  - message: You can now actually spawn as a reporter on Oasis
+    type: Fix
+  - message: Oasis now has roundstart sec radios instead of handheld radios mapped
+      in sec, det now has a criminal records computer on box
+    type: Tweak
+  id: 6572
+  time: '2024-05-10T02:15:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27564
