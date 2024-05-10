@@ -377,7 +377,6 @@
         collection: FootstepHoverBorg
         params:
           volume: -6
-    
 
 - type: entity
   id: BorgChassisSyndicateSaboteur
