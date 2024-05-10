@@ -69,7 +69,12 @@ public sealed class RoleSystem : EntitySystem
             args.Roles.Add(new RoleInfo(component, name, true, null, prototype));
         });
 
-        SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) => { args.IsAntagonist = true; args.IsExclusiveAntagonist |= typeof(T).TryGetCustomAttribute<ExclusiveAntagonistAttribute>(out _); });
+        SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) =>
+            {
+                args.IsAntagonist = true; args.IsExclusiveAntagonist |= typeof(T).TryGetCustomAttribute<ExclusiveAntagonistAttribute>(out _);
+            });
+
+        SubscribeLocalEvent((EntityUid _, T comp, ref GetBriefingEvent args) => { args.Append(comp.Briefing == null ? null : Loc.GetString(comp.Briefing), true); });
         _antagTypes.Add(typeof(T));
     }
 
@@ -218,14 +223,41 @@ public sealed class RoleSystem : EntitySystem
         return ev.Roles;
     }
 
-    public string? MindGetBriefing(EntityUid? mindId)
+    /// <summary>
+    ///     Formats a complete briefing message from all mind components.
+    /// </summary>
+    public FormattedMessage? MindGetBriefing(EntityUid? mindId)
     {
         if (mindId == null)
             return null;
 
         var ev = new GetBriefingEvent();
         RaiseLocalEvent(mindId.Value, ref ev);
-        return ev.Briefing;
+        var beforeAntag = ev.Briefings.Aggregate(new FormattedMessage(),
+            (messages, next) =>
+            {
+                messages.AddMessage(next);
+                messages.PushNewline();
+                return messages;
+            });
+
+        var afterAntag = ev.AntagBriefings.Aggregate(new FormattedMessage(),
+            (messages, next) =>
+            {
+                messages.AddMessage(next);
+                messages.PushNewline();
+                return messages;
+            });
+
+        var finalMsg = new FormattedMessage();
+        finalMsg.AddMessage(beforeAntag);
+        if (ev.AntagBriefings.Count == 0)
+            return finalMsg;
+
+        finalMsg.PushMarkup("character-info-middle-antag-greeting");
+        finalMsg.AddMessage(afterAntag);
+
+        return finalMsg;
     }
 
     public bool MindIsAntagonist(EntityUid? mindId)
@@ -277,31 +309,28 @@ public sealed class RoleSystem : EntitySystem
 
 /// <summary>
 /// Event raised on the mind to get its briefing.
-/// Handlers can either replace or append to the briefing, whichever is more appropriate.
+/// Handlers should append to the list of messages.
 /// </summary>
 [ByRefEvent]
 public sealed class GetBriefingEvent
 {
-    public string? Briefing;
-
-    public GetBriefingEvent(string? briefing = null)
-    {
-        Briefing = briefing;
-    }
+    public readonly List<FormattedMessage> Briefings = new();
+    public readonly List<FormattedMessage> AntagBriefings = new();
 
     /// <summary>
-    /// If there is no briefing, sets it to the string.
-    /// If there is a briefing, adds a new line to separate it from the appended string.
+    /// Adds a new briefing to the event.
+    /// If antagonist, sends it to a different list for sorting purposes (we display antag briefings after
+    /// all regular briefings)
     /// </summary>
-    public void Append(string text)
+    public void Append(string? text, bool antagonist)
     {
-        if (Briefing == null)
-        {
-            Briefing = text;
-        }
+        if (text == null)
+            return;
+
+        var msg = FormattedMessage.FromMarkup(text);
+        if (antagonist)
+            AntagBriefings.Add(msg);
         else
-        {
-            Briefing += "\n" + text;
-        }
+            Briefings.Add(msg);
     }
 }

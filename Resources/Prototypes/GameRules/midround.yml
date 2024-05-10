@@ -51,8 +51,7 @@
       mindComponents:
       - type: ThiefRole
         prototype: Thief
-      briefing:
-        sound: "/Audio/Misc/thief_greeting.ogg"
+      startSound: "/Audio/Misc/thief_greeting.ogg"
 
 #- type: entity
 #  noSpawn: true

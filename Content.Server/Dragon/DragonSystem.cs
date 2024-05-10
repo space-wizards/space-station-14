@@ -198,11 +198,7 @@ public sealed partial class DragonSystem : EntitySystem
         var mindId = args.MindId;
         var mind = args.Mind;
 
-        _role.MindAddRole(mindId, new DragonRoleComponent(), mind);
-        _role.MindAddRole(mindId, new RoleBriefingComponent()
-        {
-            Briefing = Loc.GetString("dragon-role-briefing")
-        }, mind);
+        _role.MindAddRole(mindId, new DragonRoleComponent() { Briefing = Loc.GetString("dragon-role-briefing") }, mind);
     }
 
     private void OnZombified(Entity<DragonComponent> ent, ref EntityZombifiedEvent args)
@@ -240,7 +236,7 @@ public sealed partial class DragonSystem : EntitySystem
             return;
 
         var mind = Comp<MindComponent>(mindContainer.Mind.Value);
-        foreach (var objId in mind.AllObjectives)
+        foreach (var objId in mind.Objectives)
         {
             if (_objQuery.TryGetComponent(objId, out var obj))
             {

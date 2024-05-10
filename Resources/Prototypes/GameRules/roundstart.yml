@@ -167,10 +167,7 @@
     - prefRoles: [ HeadRev ]
       max: 3
       playerRatio: 15
-      briefing:
-        text: head-rev-role-greeting
-        color: CornflowerBlue
-        sound: "/Audio/Ambience/Antag/headrev_start.ogg"
+      startSound: "/Audio/Ambience/Antag/headrev_start.ogg"
       startingGear: HeadRevGear
       components:
       - type: Revolutionary
@@ -178,6 +175,7 @@
       mindComponents:
       - type: RevolutionaryRole
         prototype: HeadRev
+        briefing: head-rev-role-greeting
 
 - type: entity
   id: Sandbox
@@ -213,10 +211,7 @@
         components:
         - ZombieImmune
         - InitialInfectedExempt
-      briefing:
-        text: zombie-patientzero-role-greeting
-        color: Plum
-        sound: "/Audio/Ambience/Antag/zombie_start.ogg"
+      startSound: "/Audio/Ambience/Antag/zombie_start.ogg"
       components:
       - type: PendingZombie
       - type: ZombifyOnDeath
@@ -224,6 +219,7 @@
       mindComponents:
       - type: InitialInfectedRole
         prototype: InitialInfected
+        briefing: zombie-patientzero-role-greeting
 
 # event schedulers
 - type: entity

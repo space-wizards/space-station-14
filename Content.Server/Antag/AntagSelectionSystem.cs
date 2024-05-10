@@ -21,6 +21,7 @@ using Content.Shared.Roles;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -312,7 +313,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             _mind.TransferTo(curMind.Value, antagEnt, ghostCheckOverride: true);
             _role.MindAddRoles(curMind.Value, def.MindComponents);
             ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
-            SendBriefing(session, def.Briefing);
+            SendBriefingSound(session, def.StartSound);
         }
 
         var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);
@@ -353,6 +354,18 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
 
         return new AntagSelectionPlayerPool(new() { preferredList, fallbackList, unwantedList, invalidList });
+    }
+
+    /// <summary>
+    ///     Sends a briefing sound to the given session.
+    ///     This is mostly just for convenience when refactoring older systems, this is basically just an audio system call.
+    /// </summary>
+    public void SendBriefingSound(ICommonSession? session, SoundSpecifier? sound)
+    {
+        if (session == null)
+            return;
+
+        _audio.PlayGlobal(sound, session);
     }
 
     /// <summary>

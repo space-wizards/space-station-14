@@ -23,8 +23,6 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         base.Initialize();
 
         SubscribeLocalEvent<ThiefRuleComponent, AfterAntagEntitySelectedEvent>(AfterAntagSelected);
-
-        SubscribeLocalEvent<ThiefRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<ThiefRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
     }
 
@@ -35,7 +33,10 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         //Generate objectives
         GenerateObjectives(mindId, mind, ent);
-        _antag.SendBriefing(args.EntityUid, MakeBriefing(args.EntityUid), null, null);
+
+        var comp = Comp<ThiefRoleComponent>(mindId);
+        comp.Briefing = MakeBriefing(args.EntityUid);
+        Dirty(mindId, comp);
     }
 
     private void GenerateObjectives(EntityUid mindId, MindComponent mind, ThiefRuleComponent thiefRule)
@@ -67,15 +68,6 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         var escapeObjective = _objectives.GetRandomObjective(mindId, mind, thiefRule.EscapeObjectiveGroup);
         if (escapeObjective != null)
             _mindSystem.AddObjective(mindId, mind, escapeObjective.Value);
-    }
-
-    //Add mind briefing
-    private void OnGetBriefing(Entity<ThiefRoleComponent> thief, ref GetBriefingEvent args)
-    {
-        if (!TryComp<MindComponent>(thief.Owner, out var mind) || mind.OwnedEntity == null)
-            return;
-
-        args.Append(MakeBriefing(mind.OwnedEntity.Value));
     }
 
     private string MakeBriefing(EntityUid thief)

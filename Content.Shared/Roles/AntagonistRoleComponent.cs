@@ -7,6 +7,9 @@ public abstract partial class AntagonistRoleComponent : Component
 {
     [DataField("prototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public string? PrototypeId;
+
+    [DataField]
+    public LocId? Briefing;
 }
 
 /// <summary>

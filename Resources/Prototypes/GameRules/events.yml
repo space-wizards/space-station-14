@@ -379,10 +379,7 @@
         components:
         - ZombieImmune
         - InitialInfectedExempt
-      briefing:
-        text: zombie-patientzero-role-greeting
-        color: Plum
-        sound: "/Audio/Ambience/Antag/zombie_start.ogg"
+      startSound: "/Audio/Ambience/Antag/zombie_start.ogg"
       components:
       - type: PendingZombie #less time to prepare than normal
         minInitialInfectedGrace: 300
@@ -392,6 +389,7 @@
       mindComponents:
       - type: InitialInfectedRole
         prototype: InitialInfected
+        briefing: zombie-patientzero-role-greeting
 
 - type: entity
   id: LoneOpsSpawn

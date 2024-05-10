@@ -4,6 +4,7 @@ using Content.Server.Mind;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles.Jobs;
 
@@ -24,7 +25,6 @@ public sealed class JobSystem : SharedJobSystem
 
     private void MindOnDoGreeting(EntityUid mindId, MindComponent component, ref MindRoleAddedEvent args)
     {
-        // TODO MIRROR CHAR REMOVE N REPLACE
         if (args.Silent)
             return;
 
@@ -34,13 +34,9 @@ public sealed class JobSystem : SharedJobSystem
         if (!MindTryGetJob(mindId, out _, out var prototype))
             return;
 
-        _chat.DispatchServerMessage(session, Loc.GetString("job-greet-introduce-job-name",
-            ("jobName", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(prototype.LocalizedName))));
-
+        // TODO this should probably get moved into briefing somehow, or at least a more prominent area
         if (prototype.RequireAdminNotify)
             _chat.DispatchServerMessage(session, Loc.GetString("job-greet-important-disconnect-admin-notify"));
-
-        _chat.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning", ("jobName", prototype.LocalizedName), ("supervisors", Loc.GetString(prototype.Supervisors))));
     }
 
     public void MindAddJob(EntityUid mindId, string jobPrototypeId)

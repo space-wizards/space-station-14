@@ -1,17 +1,17 @@
 using System.Numerics;
 using Content.Client.Gameplay;
 using Content.Client.Message;
+using Content.Client.Mind;
+using Content.Client.Objectives.Systems;
+using Content.Client.Roles;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Character.Controls;
 using Content.Client.UserInterface.Systems.Character.Windows;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
-using Content.Shared.Mind;
 using Content.Shared.Objectives;
 using Content.Shared.Objectives.Components;
-using Content.Shared.Objectives.Systems;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -28,10 +28,10 @@ namespace Content.Client.UserInterface.Systems.Character;
 public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
-    [UISystemDependency] private readonly SharedMindSystem _minds = default!;
+    [UISystemDependency] private readonly MindSystem _minds = default!;
     [UISystemDependency] private readonly RoleSystem _roles = default!;
-    [UISystemDependency] private readonly SharedObjectivesSystem _objectives = default!;
-    [UISystemDependency] private readonly SharedJobSystem _jobs = default!;
+    [UISystemDependency] private readonly ObjectivesSystem _objectives = default!;
+    [UISystemDependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IEntityManager _entity = default!;
 
@@ -114,7 +114,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             _window.SubTextLabel.SetMarkup(Loc.GetString("character-info-subtext-label", ("job", FormattedMessage.EscapeText(jobName))));
 
         // Get briefing
-        var briefing = _roles.MindGetBriefing(mindId);
+        var briefings = _roles.MindGetBriefing(mindId);
 
         // Get all objectives
         _window.ObjectivesContainer.RemoveAllChildren();
@@ -123,6 +123,12 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         {
             _window.ObjectivesPanel.MinSize = Vector2.Zero;
             _window.ObjectivesPanel.SetSize = Vector2.Zero;
+            _window.MinSize = new Vector2(360, 550);
+        }
+        else
+        {
+            _window.ObjectivesPanel.MinSize = new Vector2(300, 550);
+            _window.MinSize = new Vector2(660, 550);
         }
 
         var objectivesSorted = new Dictionary<string, List<ObjectiveInfo>>();
@@ -175,14 +181,9 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             _window.ObjectivesContainer.AddChild(objectiveControl);
         }
 
-        if (briefing != null)
+        if (briefings != null)
         {
-            var briefingControl = new ObjectiveBriefingControl();
-            var text = new FormattedMessage();
-            text.PushColor(Color.Yellow);
-            text.AddText(briefing);
-            briefingControl.Label.SetMessage(text);
-            _window.BriefingContainer.AddChild(briefingControl);
+            _window.BriefingLabel.SetMessage(briefings);
         }
 
         var controls = GetCharacterInfoControls(entity);

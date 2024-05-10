@@ -495,11 +495,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (ent.Comp.TargetStation is not { } station)
             return;
 
-        _antag.SendBriefing(args.Session, Loc.GetString("nukeops-welcome",
-                ("station", station),
-                ("name", Name(ent))),
-            Color.Red,
-            ent.Comp.GreetSoundNotification);
+        _antag.SendBriefingSound(args.Session, ent.Comp.GreetSoundNotification);
+
+        var comp = Comp<NukeopsRoleComponent>(args.EntityUid);
+        comp.Briefing = Loc.GetString("nukeops-briefing",
+            ("station", station),
+            ("name", Name(ent)));
+
+        Dirty(args.EntityUid, comp);
     }
 
     /// <remarks>

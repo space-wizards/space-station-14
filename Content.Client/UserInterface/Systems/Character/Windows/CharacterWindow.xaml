@@ -3,22 +3,19 @@
     xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'character-info-title'}"
-    MinSize="320 550">
+    MinSize="360 550">
     <BoxContainer
         VerticalExpand="True"
         HorizontalExpand="True"
-        SeparationOverride="5"
-        Orientation="Horizontal"
-        Margin="5 5 5 5">
+        Orientation="Horizontal">
         <BoxContainer Name="LeftPanel"
                       Orientation="Vertical"
                       VerticalExpand="True"
                       HorizontalExpand="True"
-                      SeparationOverride="5"
-                      MinSize="320 550">
+                      MinSize="360 550">
             <cc:StripeBack
                 Name="SpritePanel"
-                MinSize="320 150">
+                MinSize="360 150">
                 <BoxContainer
                     Orientation="Horizontal"
                     Align="Center">
@@ -32,16 +29,19 @@
                     </BoxContainer>
                 </BoxContainer>
             </cc:StripeBack>
-            <PanelContainer>
+            <PanelContainer Margin="5 5 5 5">
                 <PanelContainer.PanelOverride>
                     <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
                 </PanelContainer.PanelOverride>
                 <ScrollContainer
-                    Name="BriefingContainer"
-                    Access="Public"
-                    HScrollEnabled="False"
-                    MinSize="320 400">
-
+                    HScrollEnabled="False">
+                    <BoxContainer
+                        Name="BriefingContainer"
+                        Access="Public"
+                        MinSize="360 400"
+                        HorizontalExpand="True">
+                        <RichTextLabel Name="BriefingLabel" Access="Public"/>
+                    </BoxContainer>
                 </ScrollContainer>
             </PanelContainer>
 
@@ -50,15 +50,17 @@
                       Access="Public"
                       Orientation="Vertical"
                       MinSize="300 550">
-            <PanelContainer>
+            <PanelContainer Margin="5 5 5 5">
                 <PanelContainer.PanelOverride>
                     <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
                 </PanelContainer.PanelOverride>
                 <ScrollContainer
-                    Name="ObjectivesContainer"
-                    Access="Public"
                     HScrollEnabled="False">
-
+                    <BoxContainer
+                        Name="ObjectivesContainer"
+                        Access="Public"
+                        MinSize="300 550"
+                        HorizontalExpand="True"/>
                 </ScrollContainer>
             </PanelContainer>
 

@@ -23,7 +23,19 @@ public abstract class SharedJobSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnProtoReload);
+        SubscribeLocalEvent<JobComponent, GetBriefingEvent>(OnGetBriefing);
         SetupTrackerLookup();
+    }
+
+    private void OnGetBriefing(Entity<JobComponent> ent, ref GetBriefingEvent args)
+    {
+        if (!_prototypes.TryIndex(ent.Comp.Prototype, out var proto))
+            return;
+
+        if (proto.Description != null)
+            args.Append(Loc.GetString(proto.Description), false);
+
+        args.Append(Loc.GetString("job-greet-supervisors-warning", ("jobName", proto.LocalizedName), ("supervisors", Loc.GetString(proto.Supervisors))), false);
     }
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
