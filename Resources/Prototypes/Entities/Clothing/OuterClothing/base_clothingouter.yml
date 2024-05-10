@@ -27,6 +27,21 @@
 - type: entity
   abstract: true
   parent: ClothingOuterBase
+  id: ClothingOuterBaseGinormous
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    slots:
+    - outerClothing
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: HeldSpeedModifier
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterBase
   id: ClothingOuterStorageBase
   components:
   - type: Storage

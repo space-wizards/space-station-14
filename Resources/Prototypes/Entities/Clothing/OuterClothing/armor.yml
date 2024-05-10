@@ -29,7 +29,7 @@
   id: ClothingOuterArmorBasicSlim
   name: armor vest
   suffix: slim
-  description: A slim Type I armored vest that provides decent protection against most types of damage.
+  description: A slim Type I armored vest that provides decent protection against most types of damage bruh
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/security_slim.rsi
@@ -61,6 +61,7 @@
 - type: entity
   parent: ClothingOuterArmorBasic
   id: ClothingOuterArmorBulletproof
+  suffix: admeme
   name: bulletproof vest
   description: A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent.
   components:
@@ -121,8 +122,32 @@
   - type: GroupExamine
 
 - type: entity
+  parent: ClothingOuterBaseGinormous
+  id: ClothingOuterArmorSwat
+  name: SWAT Armor
+  description: NT's attempt to create universal and inexpensive protection. Provides excellent protection against many types of damage, but also slows down extremely strongly.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/heavy.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/heavy.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.35
+        Slash: 0.35
+        Piercing: 0.35
+        Heat: 0.4
+        Radiation: 0.4
+        Caustic: 0.4
+  - type: ExplosionResistance
+    damageCoefficient: 0.35
+  - type: GroupExamine
+
+- type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorHeavy
+  suffix: DO NOT MAP
   name: heavy armor suit
   description: A heavily armored suit that protects against excessive damage.
   components:
@@ -146,6 +171,7 @@
 - type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorHeavyGreen
+  suffix: DO NOT MAP
   name: green heavy armor suit
   description: A heavily armored suit with green accents that protects against excessive damage.
   components:
@@ -157,6 +183,7 @@
 - type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorHeavyRed
+  suffix: DO NOT MAP
   name: red heavy armor suit
   description: A heavily armored suit with red accents that protects against excessive damage.
   components:
@@ -168,6 +195,7 @@
 - type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorMagusblue
+  suffix: DO NOT MAP
   name: blue magus armor
   description: An blue armored suit that provides good protection.
   components:
@@ -179,6 +207,7 @@
 - type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorMagusred
+  suffix: DO NOT MAP
   name: red magus armor
   description: A red armored suit that provides good protection.
   components:
