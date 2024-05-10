@@ -207,9 +207,9 @@ public abstract class SharedIdCardSystem : EntitySystem
         var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle) ? string.Empty : $" ({id.JobTitle})";
 
         var val = string.IsNullOrWhiteSpace(id.FullName)
-            ? Loc.GetString("access-id-card-component-owner-name-job-title-text",
+            ? Loc.GetString(id.NameLocId,
                 ("jobSuffix", jobSuffix))
-            : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
+            : Loc.GetString(id.FullNameLocId,
                 ("fullName", id.FullName),
                 ("jobSuffix", jobSuffix));
         _metaSystem.SetEntityName(uid, val);
