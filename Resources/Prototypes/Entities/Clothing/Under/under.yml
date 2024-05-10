@@ -194,6 +194,9 @@
     sprite: Clothing/Under/Socks/SocksStripedWhiteandLightBlueBunnySlipper.rsi
   - type: Clothing
     sprite: Clothing/Under/Socks/SocksStripedWhiteandLightBlueBunnySlipper.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
 
 - type: entity
   parent: ClothingUnderSocksBase
@@ -245,7 +248,7 @@
 
 - type: entity
   parent: ClothingUnderSocksBase
-  id: ClothingUnderSocksStripedWhiteandYellow
+  id: ClothingUnderSocksStripedYellowandPurple
   name: Striped yellow and purple socks
   suffix: Socks
   description: Striped socks styled after banana and grape jelly sandwiches.
@@ -279,7 +282,7 @@
     sprite: Clothing/Under/Socks/SocksStripedClown
   - type: Clothing
     sprite: Clothing/Under/Socks/SocksStripedClown
-
+  - type: WaddleWhenWorn
 
 - type: entity
   parent: ClothingShoesClownBase
@@ -292,6 +295,7 @@
     sprite: Clothing/Under/Socks/SocksStripedClownShoes
   - type: Clothing
     sprite: Clothing/Under/Socks/SocksStripedClownShoes
+  - type: WaddleWhenWorn
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
@@ -307,6 +311,7 @@
     sprite: Clothing/Under/Socks/SocksStripedClownShoesLarge
   - type: Clothing
     sprite: Clothing/Under/Socks/SocksStripedClownShoesLarge
+  - type: WaddleWhenWorn
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
@@ -488,7 +493,7 @@
 - type: entity
   parent: ClothingShoesMilitaryBase
   id: ClothingUnderSocksStripedSecurityHosJackboot
-  name: striped head of security jack boots and zsocks
+  name: striped head of security jack boots and socks
   suffix: Socks Head of Security
   description: Socks Designed to keep you mentally stable during even the worst of shifts now in boots.
   components:
