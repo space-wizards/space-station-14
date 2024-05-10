@@ -17,11 +17,11 @@
   - type: ActivatableUI
     key: enum.ForensicScannerUiKey.Key
     inHandsOnly: true
-    requireActiveHand: false
+    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
-      enum.ForensicScannerUiKey.Key:
-        type: ForensicScannerBoundUserInterface
+    - key: enum.ForensicScannerUiKey.Key
+      type: ForensicScannerBoundUserInterface
   - type: ForensicScanner
   - type: GuideHelp
     guides:

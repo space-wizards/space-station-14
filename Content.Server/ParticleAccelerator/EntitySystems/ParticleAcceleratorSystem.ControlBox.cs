@@ -67,7 +67,7 @@ public sealed partial class ParticleAcceleratorSystem
         FireEmitter(comp.StarboardEmitter!.Value, strength);
     }
 
-    public void SwitchOn(EntityUid uid, EntityUid? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
+    public void SwitchOn(EntityUid uid, ICommonSession? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -77,7 +77,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (comp.Enabled || !comp.CanBeEnabled)
             return;
 
-        if (user is { } player)
+        if (user?.AttachedEntity is { } player)
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} on");
 
         comp.Enabled = true;
@@ -90,14 +90,14 @@ public sealed partial class ParticleAcceleratorSystem
         UpdateUI(uid, comp);
     }
 
-    public void SwitchOff(EntityUid uid, EntityUid? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
+    public void SwitchOff(EntityUid uid, ICommonSession? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
         if (!comp.Enabled)
             return;
 
-        if (user is { } player)
+        if (user?.AttachedEntity is { } player)
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} off");
 
         comp.Enabled = false;
@@ -138,7 +138,7 @@ public sealed partial class ParticleAcceleratorSystem
         UpdateUI(uid, comp);
     }
 
-    public void SetStrength(EntityUid uid, ParticleAcceleratorPowerState strength, EntityUid? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
+    public void SetStrength(EntityUid uid, ParticleAcceleratorPowerState strength, ICommonSession? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -154,7 +154,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (strength == comp.SelectedStrength)
             return;
 
-        if (user is { } player)
+        if (user?.AttachedEntity is { } player)
         {
             var impact = strength switch
             {
@@ -235,8 +235,7 @@ public sealed partial class ParticleAcceleratorSystem
     {
         if (!Resolve(uid, ref comp))
             return;
-
-        if (!_uiSystem.HasUi(uid, ParticleAcceleratorControlBoxUiKey.Key))
+        if (!_uiSystem.TryGetUi(uid, ParticleAcceleratorControlBoxUiKey.Key, out var bui))
             return;
 
         var draw = 0f;
@@ -248,7 +247,7 @@ public sealed partial class ParticleAcceleratorSystem
             receive = powerConsumer.ReceivedPower;
         }
 
-        _uiSystem.SetUiState(uid, ParticleAcceleratorControlBoxUiKey.Key, new ParticleAcceleratorUIState(
+        _uiSystem.SetUiState(bui, new ParticleAcceleratorUIState(
             comp.Assembled,
             comp.Enabled,
             comp.SelectedStrength,
@@ -347,7 +346,7 @@ public sealed partial class ParticleAcceleratorSystem
         UpdateAppearance(uid, comp);
 
         if (!args.Powered)
-            _uiSystem.CloseUi(uid, ParticleAcceleratorControlBoxUiKey.Key);
+            _uiSystem.TryCloseAll(uid, ParticleAcceleratorControlBoxUiKey.Key);
     }
 
     private void OnUISetEnableMessage(EntityUid uid, ParticleAcceleratorControlBoxComponent comp, ParticleAcceleratorSetEnableMessage msg)
@@ -362,10 +361,10 @@ public sealed partial class ParticleAcceleratorSystem
         if (msg.Enabled)
         {
             if (comp.Assembled)
-                SwitchOn(uid, msg.Actor, comp);
+                SwitchOn(uid, msg.Session, comp);
         }
         else
-            SwitchOff(uid, msg.Actor, comp);
+            SwitchOff(uid, msg.Session, comp);
 
         UpdateUI(uid, comp);
     }
@@ -379,7 +378,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
             return;
 
-        SetStrength(uid, msg.State, msg.Actor, comp);
+        SetStrength(uid, msg.State, msg.Session, comp);
 
         UpdateUI(uid, comp);
     }
@@ -393,7 +392,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
             return;
 
-        RescanParts(uid, msg.Actor, comp);
+        RescanParts(uid, msg.Session, comp);
 
         UpdateUI(uid, comp);
     }

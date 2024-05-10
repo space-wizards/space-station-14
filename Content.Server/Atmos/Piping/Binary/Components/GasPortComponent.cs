@@ -1,5 +1,3 @@
-using Content.Shared.Atmos;
-
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]

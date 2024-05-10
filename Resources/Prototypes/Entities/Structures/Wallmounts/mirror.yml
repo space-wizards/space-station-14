@@ -16,5 +16,5 @@
     key: enum.MagicMirrorUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.MagicMirrorUiKey.Key:
-        type: MagicMirrorBoundUserInterface
+    - key: enum.MagicMirrorUiKey.Key
+      type: MagicMirrorBoundUserInterface

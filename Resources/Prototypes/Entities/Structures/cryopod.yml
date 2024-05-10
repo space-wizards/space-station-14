@@ -12,8 +12,8 @@
       map: ["base"]
   - type: UserInterface
     interfaces:
-      enum.CryostorageUIKey.Key:
-        type: CryostorageBoundUserInterface
+    - key: enum.CryostorageUIKey.Key
+      type: CryostorageBoundUserInterface
   - type: ActivatableUI
     key: enum.CryostorageUIKey.Key
   - type: AccessReader

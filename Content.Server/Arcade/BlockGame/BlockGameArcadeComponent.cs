@@ -13,10 +13,10 @@ public sealed partial class BlockGameArcadeComponent : Component
     /// <summary>
     /// The player currently playing the active session of NT-BG.
     /// </summary>
-    public EntityUid? Player = null;
+    public ICommonSession? Player = null;
 
     /// <summary>
     /// The players currently viewing (but not playing) the active session of NT-BG.
     /// </summary>
-    public readonly List<EntityUid> Spectators = new();
+    public readonly List<ICommonSession> Spectators = new();
 }

@@ -19,7 +19,7 @@
     key: enum.PaperUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.PaperUiKey.Key:
-        type: PaperBoundUserInterface
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
   - type: Paper
     content: book-text-holoparasite-info

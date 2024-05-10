@@ -211,7 +211,7 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
     /// </remarks>
     public uint? GetRecordByName(EntityUid station, string name, StationRecordsComponent? records = null)
     {
-        if (!Resolve(station, ref records, false))
+        if (!Resolve(station, ref records))
             return null;
 
         foreach (var (id, record) in GetRecordsOfType<GeneralStationRecord>(station, records))

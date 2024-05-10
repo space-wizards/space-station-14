@@ -1,6 +1,5 @@
 using System.Threading;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -34,7 +33,6 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRestartRule
 
     public void RestartTimer(MaxTimeRestartRuleComponent component)
     {
-        // TODO FULL GAME SAVE
         component.TimerCancel.Cancel();
         component.TimerCancel = new CancellationTokenSource();
         Timer.Spawn(component.RoundMaxTime, () => TimerFired(component), component.TimerCancel.Token);
@@ -51,7 +49,6 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRestartRule
 
         _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds",("seconds", (int) component.RoundEndDelay.TotalSeconds)));
 
-        // TODO FULL GAME SAVE
         Timer.Spawn(component.RoundEndDelay, () => GameTicker.RestartRound());
     }
 

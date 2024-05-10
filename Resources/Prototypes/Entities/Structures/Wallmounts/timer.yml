@@ -32,8 +32,8 @@
     key: enum.SignalTimerUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.SignalTimerUiKey.Key:
-        type: SignalTimerBoundUserInterface
+    - key: enum.SignalTimerUiKey.Key
+      type: SignalTimerBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: Electrified

@@ -21,7 +21,7 @@ public sealed class DoAfterOverlay : Overlay
     private readonly ProgressColorSystem _progressColor;
 
     private readonly Texture _barTexture;
-    private readonly ShaderInstance _unshadedShader;
+    private readonly ShaderInstance _shader;
 
     /// <summary>
     ///     Flash time for cancelled DoAfters
@@ -45,7 +45,7 @@ public sealed class DoAfterOverlay : Overlay
         var sprite = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
         _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
 
-        _unshadedShader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
+        _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -58,6 +58,7 @@ public sealed class DoAfterOverlay : Overlay
         const float scale = 1f;
         var scaleMatrix = Matrix3.CreateScale(new Vector2(scale, scale));
         var rotationMatrix = Matrix3.CreateRotation(-rotation);
+        handle.UseShader(_shader);
 
         var curTime = _timing.CurTime;
 
@@ -77,13 +78,6 @@ public sealed class DoAfterOverlay : Overlay
             var worldPosition = _transform.GetWorldPosition(xform, xformQuery);
             if (!bounds.Contains(worldPosition))
                 continue;
-
-            // shades the do-after bar if the do-after bar belongs to other players
-            // does not shade do-afters belonging to the local player
-            if (uid != localEnt)
-                handle.UseShader(null);
-            else
-                handle.UseShader(_unshadedShader);
 
             // If the entity is paused, we will draw the do-after as it was when the entity got paused.
             var meta = metaQuery.GetComponent(uid);

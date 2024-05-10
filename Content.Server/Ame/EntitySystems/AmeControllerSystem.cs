@@ -129,11 +129,11 @@ public sealed class AmeControllerSystem : EntitySystem
         if (!Resolve(uid, ref controller))
             return;
 
-        if (!_userInterfaceSystem.HasUi(uid, AmeControllerUiKey.Key))
+        if (!_userInterfaceSystem.TryGetUi(uid, AmeControllerUiKey.Key, out var bui))
             return;
 
         var state = GetUiState(uid, controller);
-        _userInterfaceSystem.SetUiState(uid, AmeControllerUiKey.Key, state);
+        _userInterfaceSystem.SetUiState(bui, state);
 
         controller.NextUIUpdate = _gameTiming.CurTime + controller.UpdateUIPeriod;
     }
@@ -324,7 +324,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
     private void OnUiButtonPressed(EntityUid uid, AmeControllerComponent comp, UiButtonPressedMessage msg)
     {
-        var user = msg.Actor;
+        var user = msg.Session.AttachedEntity;
         if (!Exists(user))
             return;
 
@@ -334,7 +334,7 @@ public sealed class AmeControllerSystem : EntitySystem
             _ => true,
         };
 
-        if (!PlayerCanUseController(uid, user, needsPower, comp))
+        if (!PlayerCanUseController(uid, user!.Value, needsPower, comp))
             return;
 
         _audioSystem.PlayPvs(comp.ClickSound, uid, AudioParams.Default.WithVolume(-2f));

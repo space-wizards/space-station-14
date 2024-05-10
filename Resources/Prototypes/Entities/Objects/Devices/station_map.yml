@@ -28,7 +28,7 @@
               acts: [ "Destruction" ]
     - type: UserInterface
       interfaces:
-        enum.StationMapUiKey.Key:
+        - key: enum.StationMapUiKey.Key
           type: StationMapBoundUserInterface
 
 - type: entity

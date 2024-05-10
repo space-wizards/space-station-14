@@ -15,9 +15,6 @@
     size: Large
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     heldPrefix: firstaid
-  - type: PhysicalComposition
-    materialComposition:
-      Plastic: 150
   - type: Tag
     tags:
     - Medkit

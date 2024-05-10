@@ -21,6 +21,7 @@ namespace Content.Client.PDA
         protected override void Open()
         {
             base.Open();
+            SendMessage(new PdaRequestUpdateInterfaceMessage());
             _menu = new PdaMenu();
             _menu.OpenCenteredLeft();
             _menu.OnClose += Close;
@@ -31,17 +32,17 @@ namespace Content.Client.PDA
 
             _menu.EjectIdButton.OnPressed += _ =>
             {
-                SendPredictedMessage(new ItemSlotButtonPressedEvent(PdaComponent.PdaIdSlotId));
+                SendMessage(new ItemSlotButtonPressedEvent(PdaComponent.PdaIdSlotId));
             };
 
             _menu.EjectPenButton.OnPressed += _ =>
             {
-                SendPredictedMessage(new ItemSlotButtonPressedEvent(PdaComponent.PdaPenSlotId));
+                SendMessage(new ItemSlotButtonPressedEvent(PdaComponent.PdaPenSlotId));
             };
 
             _menu.EjectPaiButton.OnPressed += _ =>
             {
-                SendPredictedMessage(new ItemSlotButtonPressedEvent(PdaComponent.PdaPaiSlotId));
+                SendMessage(new ItemSlotButtonPressedEvent(PdaComponent.PdaPaiSlotId));
             };
 
             _menu.ActivateMusicButton.OnPressed += _ =>

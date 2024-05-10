@@ -15,7 +15,6 @@ public sealed partial class PirateAccentComponent : Component
     {
         "accent-pirate-prefix-1",
         "accent-pirate-prefix-2",
-        "accent-pirate-prefix-3",
-        "accent-pirate-prefix-4",
+        "accent-pirate-prefix-3"
     };
 }

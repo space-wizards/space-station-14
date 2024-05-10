@@ -13,8 +13,8 @@
     key: enum.InstrumentUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.InstrumentUiKey.Key:
-        type: InstrumentBoundUserInterface
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
   - type: Item
     size: Normal
   - type: StaticPrice
@@ -51,8 +51,8 @@
         acts: ["Destruction"]
   - type: UserInterface
     interfaces:
-      enum.InstrumentUiKey.Key:
-        type: InstrumentBoundUserInterface
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
   - type: Fixtures
     fixtures:
       fix1:

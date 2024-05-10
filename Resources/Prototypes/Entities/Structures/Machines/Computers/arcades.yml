@@ -129,7 +129,6 @@
     - PlushiePenguin
     - PlushieHuman
     - ClothingHeadHatCowboyRed
-    - Whistle
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade
@@ -139,9 +138,9 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-      enum.SpaceVillainArcadeUiKey.Key:
+      - key: enum.SpaceVillainArcadeUiKey.Key
         type: SpaceVillainArcadeBoundUserInterface
-      enum.WiresUiKey.Key:
+      - key: enum.WiresUiKey.Key
         type: WiresBoundUserInterface
   - type: Computer
     board: SpaceVillainArcadeComputerCircuitboard
@@ -183,9 +182,9 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-      enum.BlockGameUiKey.Key:
+      - key: enum.BlockGameUiKey.Key
         type: BlockGameBoundUserInterface
-      enum.WiresUiKey.Key:
+      - key: enum.WiresUiKey.Key
         type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard

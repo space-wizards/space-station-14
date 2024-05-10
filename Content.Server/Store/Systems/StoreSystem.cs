@@ -100,7 +100,7 @@ public sealed partial class StoreSystem : EntitySystem
         if (args.Handled)
         {
             var msg = Loc.GetString("store-currency-inserted", ("used", args.Used), ("target", args.Target));
-            _popup.PopupEntity(msg, args.Target.Value, args.User);
+            _popup.PopupEntity(msg, args.Target.Value);
             QueueDel(args.Used);
         }
     }
@@ -199,9 +199,10 @@ public sealed partial class StoreSystem : EntitySystem
         if (component.Balance == new Dictionary<string, FixedPoint2>() && preset.InitialBalance != null) //if we don't have a value stored, use the preset
             TryAddCurrency(preset.InitialBalance, uid, component);
 
-        if (_ui.HasUi(uid, StoreUiKey.Key))
+        var ui = _ui.GetUiOrNull(uid, StoreUiKey.Key);
+        if (ui != null)
         {
-            _ui.SetUiState(uid, StoreUiKey.Key, new StoreInitializeState(preset.StoreName));
+            _ui.SetUiState(ui, new StoreInitializeState(preset.StoreName));
         }
     }
 }

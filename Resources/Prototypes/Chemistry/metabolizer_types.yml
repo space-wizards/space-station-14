@@ -1,46 +1,46 @@
-# If your species wants to metabolize stuff differently,
+﻿# If your species wants to metabolize stuff differently,
 # you'll likely have to tag its metabolizers with something other than Human.
 
 - type: metabolizerType
   id: Animal
-  name: metabolizer-type-animal
+  name: animal
 
 - type: metabolizerType
   id: Bloodsucker
-  name: metabolizer-type-bloodsucker
+  name: bloodsucker
 
 - type: metabolizerType
   id: Dragon
-  name: metabolizer-type-dragon
+  name: dragon
 
 - type: metabolizerType
   id: Human
-  name: metabolizer-type-human
+  name: human
 
 - type: metabolizerType
   id: Slime
-  name: metabolizer-type-slime
+  name: slime
 
 - type: metabolizerType
   id: Vox
-  name: metabolizer-type-vox
+  name: vox
 
 - type: metabolizerType
   id: Rat
-  name: metabolizer-type-rat
+  name: rat
 
 - type: metabolizerType
   id: Plant
-  name: metabolizer-type-plant
+  name: plant
 
 - type: metabolizerType
   id: Dwarf
-  name: metabolizer-type-dwarf
+  name: dwarf
 
 - type: metabolizerType
   id: Moth
-  name: metabolizer-type-moth
+  name: moth
 
 - type: metabolizerType
   id: Arachnid
-  name: metabolizer-type-arachnid
+  name: arachnid

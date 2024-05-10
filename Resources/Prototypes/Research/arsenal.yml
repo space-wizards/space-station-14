@@ -24,12 +24,11 @@
   tier: 1
   cost: 10000
   recipeUnlocks:
-  - BoxShotgunIncendiary
-  - MagazineRifleIncendiary
-  - MagazinePistolIncendiary
-  - MagazineLightRifleIncendiary
-  - SpeedLoaderMagnumIncendiary
-  - MagazineShotgunIncendiary
+  - ShellShotgunIncendiary
+  - CartridgePistolIncendiary
+  - CartridgeMagnumIncendiary
+  - CartridgeLightRifleIncendiary
+  - CartridgeRifleIncendiary
   - MagazineBoxPistolIncendiary
   - MagazineBoxMagnumIncendiary
   - MagazineBoxLightRifleIncendiary
@@ -48,21 +47,6 @@
   - WeaponLaserCarbine
 
 - type: technology
-  id: NonlethalAmmunition
-  name: research-technology-nonlethal-ammunition
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: beanbag
-  discipline: Arsenal
-  tier: 1
-  cost: 5000
-  recipeUnlocks:
-  - MagazineShotgunBeanbag
-  - ShellTranquilizer 
-  - BoxBeanbag 
-  - WeaponDisabler
-
-- type: technology
   id: UraniumMunitions
   name: research-technology-uranium-munitions
   icon:
@@ -72,15 +56,15 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - MagazineRifleUranium
-  - MagazinePistolUranium
-  - MagazineLightRifleUranium
-  - SpeedLoaderMagnumUranium
+  - ShellShotgunUranium
+  - CartridgePistolUranium
+  - CartridgeMagnumUranium
+  - CartridgeLightRifleUranium
+  - CartridgeRifleUranium
   - MagazineBoxPistolUranium
   - MagazineBoxMagnumUranium
   - MagazineBoxLightRifleUranium
   - MagazineBoxRifleUranium
-  - BoxShotgunUranium
 
 - type: technology
   id: AdvancedRiotControl
@@ -156,7 +140,6 @@
   - PowerCageMedium
   - MagazineGrenadeEmpty
   - GrenadeFlash
-  - GrenadeBlast
   - ShuttleGunSvalinnMachineGunCircuitboard
   - ShuttleGunPerforatorCircuitboard
   - ShuttleGunFriendshipCircuitboard
@@ -176,7 +159,6 @@
   cost: 15000
   recipeUnlocks:
   - WeaponAdvancedLaser
-  - PortableRecharger
 
 - type: technology
   id: ExperimentalBatteryAmmo

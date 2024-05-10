@@ -102,15 +102,13 @@ public sealed class PAISystem : SharedPAISystem
     {
         //  Close the instrument interface if it was open
         //  before closing
-        if (HasComp<ActiveInstrumentComponent>(uid))
+        if (HasComp<ActiveInstrumentComponent>(uid) && TryComp<ActorComponent>(uid, out var actor))
         {
-            _instrumentSystem.ToggleInstrumentUi(uid, uid);
+            _instrumentSystem.ToggleInstrumentUi(uid, actor.PlayerSession);
         }
 
         //  Stop instrument
-        if (TryComp<InstrumentComponent>(uid, out var instrument))
-            _instrumentSystem.Clean(uid, instrument);
-
+        if (TryComp<InstrumentComponent>(uid, out var instrument)) _instrumentSystem.Clean(uid, instrument);
         if (TryComp<MetaDataComponent>(uid, out var metadata))
         {
             var proto = metadata.EntityPrototype;

@@ -37,9 +37,3 @@
   id: Bounty
   minValue: 0
   maxValue: 999
-
-- type: nameIdentifierGroup
-  id: CargoTelepads
-  prefix: TELE
-  minValue: 0
-  maxValue: 999

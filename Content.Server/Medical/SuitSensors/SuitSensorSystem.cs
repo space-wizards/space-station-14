@@ -7,10 +7,10 @@ using Content.Server.GameTicking;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
-using Content.Shared.Clothing;
 using Content.Shared.Damage;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -40,8 +40,8 @@ public sealed class SuitSensorSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
         SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SuitSensorComponent, ClothingGotEquippedEvent>(OnEquipped);
-        SubscribeLocalEvent<SuitSensorComponent, ClothingGotUnequippedEvent>(OnUnequipped);
+        SubscribeLocalEvent<SuitSensorComponent, GotEquippedEvent>(OnEquipped);
+        SubscribeLocalEvent<SuitSensorComponent, GotUnequippedEvent>(OnUnequipped);
         SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SuitSensorComponent, GetVerbsEvent<Verb>>(OnVerb);
         SubscribeLocalEvent<SuitSensorComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
@@ -160,13 +160,19 @@ public sealed class SuitSensorSystem : EntitySystem
         }
     }
 
-    private void OnEquipped(EntityUid uid, SuitSensorComponent component, ref ClothingGotEquippedEvent args)
+    private void OnEquipped(EntityUid uid, SuitSensorComponent component, GotEquippedEvent args)
     {
-        component.User = args.Wearer;
+        if (args.Slot != component.ActivationSlot)
+            return;
+
+        component.User = args.Equipee;
     }
 
-    private void OnUnequipped(EntityUid uid, SuitSensorComponent component, ref ClothingGotUnequippedEvent args)
+    private void OnUnequipped(EntityUid uid, SuitSensorComponent component, GotUnequippedEvent args)
     {
+        if (args.Slot != component.ActivationSlot)
+            return;
+
         component.User = null;
     }
 

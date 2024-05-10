@@ -35,6 +35,11 @@ public sealed partial class SalvageSystem
 
     private void OnMagnetClaim(EntityUid uid, SalvageMagnetComponent component, ref MagnetClaimOfferEvent args)
     {
+        var player = args.Session.AttachedEntity;
+
+        if (player is null)
+            return;
+
         var station = _station.GetOwningStation(uid);
 
         if (!TryComp(station, out SalvageMagnetDataComponent? dataComp) ||
@@ -172,12 +177,12 @@ public sealed partial class SalvageSystem
             // Fuck with the seed to mix wrecks and asteroids.
             seed = (int) (seed / 10f) * 10;
 
-
+            
             if (i >= data.Comp.OfferCount / 2)
             {
                 seed++;
             }
-
+            
 
             data.Comp.Offered.Add(seed);
         }
@@ -211,7 +216,7 @@ public sealed partial class SalvageSystem
         if (!TryComp(station, out SalvageMagnetDataComponent? dataComp))
             return;
 
-        _ui.SetUiState(entity.Owner, SalvageMagnetUiKey.Key,
+        _ui.TrySetUiState(entity, SalvageMagnetUiKey.Key,
             new SalvageMagnetBoundUserInterfaceState(dataComp.Offered)
             {
                 Cooldown = dataComp.OfferCooldown,
@@ -233,7 +238,7 @@ public sealed partial class SalvageSystem
             if (station != data.Owner)
                 continue;
 
-            _ui.SetUiState(magnetUid, SalvageMagnetUiKey.Key,
+            _ui.TrySetUiState(magnetUid, SalvageMagnetUiKey.Key,
                 new SalvageMagnetBoundUserInterfaceState(data.Comp.Offered)
                 {
                     Cooldown = data.Comp.OfferCooldown,

@@ -99,11 +99,6 @@
         /// </summary>
         Stealth = 1 << 16,
 
-        ///<summary>
-		/// Allows you to use Admin chat
-		///</summary>
-		Adminchat = 1 << 17,
-
         /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>

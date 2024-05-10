@@ -259,7 +259,7 @@ namespace Content.Shared.Movement.Systems
             }
 
             var oldMapId = args.OldMapId;
-            var mapId = args.Transform.MapUid;
+            var mapId = args.Transform.MapID;
 
             // If we change maps then reset eye rotation entirely.
             if (oldMapId != mapId)

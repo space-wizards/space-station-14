@@ -44,6 +44,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - ShoesRequiredStepTriggerImmune
   - type: MobState
     allowedStates:
       - Alive
@@ -72,8 +73,6 @@
   - type: InputMover
   - type: MobMover
   - type: ZombieImmune
-  - type: ClothingRequiredStepTriggerImmune
-    slots: All
 
 - type: entity
   abstract: true
@@ -232,8 +231,6 @@
   - type: GhostRole
     prob: 0
     description: ghost-role-information-angry-slimes-description
-    raffle:
-      settings: short
   - type: NpcFactionMember
     factions:
     - SimpleHostile

@@ -11,65 +11,49 @@ namespace Content.Server.Atmos.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
-        public bool OnFire;
+        public bool OnFire { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
-        public float FireStacks;
+        public float FireStacks { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField]
-        public float MaximumFireStacks = 10f;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField]
-        public float MinimumFireStacks = -10f;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField]
-        public string FlammableFixtureID = "flammable";
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField]
-        public float MinIgnitionTemperature = 373.15f;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField]
+        [DataField("fireSpread")]
         public bool FireSpread { get; private set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField]
+        [DataField("canResistFire")]
         public bool CanResistFire { get; private set; } = false;
 
-        [DataField(required: true)]
+        [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = new(); // Empty by default, we don't want any funny NREs.
 
         /// <summary>
         ///     Used for the fixture created to handle passing firestacks when two flammable objects collide.
         /// </summary>
-        [DataField]
+        [DataField("flammableCollisionShape")]
         public IPhysShape FlammableCollisionShape = new PhysShapeCircle(0.35f);
 
         /// <summary>
         ///     Should the component be set on fire by interactions with isHot entities
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField]
+        [DataField("alwaysCombustible")]
         public bool AlwaysCombustible = false;
 
         /// <summary>
         ///     Can the component anyhow lose its FireStacks?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField]
+        [DataField("canExtinguish")]
         public bool CanExtinguish = true;
 
         /// <summary>
         ///     How many firestacks should be applied to component when being set on fire?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField]
+        [DataField("firestacksOnIgnite")]
         public float FirestacksOnIgnite = 2.0f;
 
         /// <summary>

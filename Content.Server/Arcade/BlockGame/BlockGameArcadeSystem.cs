@@ -37,12 +37,14 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         }
     }
 
-    private void UpdatePlayerStatus(EntityUid uid, EntityUid actor, BlockGameArcadeComponent? blockGame = null)
+    private void UpdatePlayerStatus(EntityUid uid, ICommonSession session, PlayerBoundUserInterface? bui = null, BlockGameArcadeComponent? blockGame = null)
     {
         if (!Resolve(uid, ref blockGame))
             return;
+        if (bui == null && !_uiSystem.TryGetUi(uid, BlockGameUiKey.Key, out bui))
+            return;
 
-        _uiSystem.ServerSendUiMessage(uid, BlockGameUiKey.Key, new BlockGameMessages.BlockGameUserStatusMessage(blockGame.Player == actor), actor);
+        _uiSystem.TrySendUiMessage(bui, new BlockGameMessages.BlockGameUserStatusMessage(blockGame.Player == session), session);
     }
 
     private void OnComponentInit(EntityUid uid, BlockGameArcadeComponent component, ComponentInit args)
@@ -52,21 +54,33 @@ public sealed class BlockGameArcadeSystem : EntitySystem
 
     private void OnAfterUIOpen(EntityUid uid, BlockGameArcadeComponent component, AfterActivatableUIOpenEvent args)
     {
-        if (component.Player == null)
-            component.Player = args.Actor;
-        else
-            component.Spectators.Add(args.Actor);
+        if (!TryComp<ActorComponent>(args.User, out var actor))
+            return;
+        if (!_uiSystem.TryGetUi(uid, BlockGameUiKey.Key, out var bui))
+            return;
 
-        UpdatePlayerStatus(uid, args.Actor, component);
-        component.Game?.UpdateNewPlayerUI(args.Actor);
+        var session = actor.PlayerSession;
+        if (!bui.SubscribedSessions.Contains(session))
+            return;
+
+        if (component.Player == null)
+            component.Player = session;
+        else
+            component.Spectators.Add(session);
+
+        UpdatePlayerStatus(uid, session, bui, component);
+        component.Game?.UpdateNewPlayerUI(session);
     }
 
     private void OnAfterUiClose(EntityUid uid, BlockGameArcadeComponent component, BoundUIClosedEvent args)
     {
-        if (component.Player != args.Actor)
+        if (args.Session is not { } session)
+            return;
+
+        if (component.Player != session)
         {
-            component.Spectators.Remove(args.Actor);
-            UpdatePlayerStatus(uid, args.Actor, blockGame: component);
+            component.Spectators.Remove(session);
+            UpdatePlayerStatus(uid, session, blockGame: component);
             return;
         }
 
@@ -74,11 +88,11 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         if (component.Spectators.Count > 0)
         {
             component.Player = component.Spectators[0];
-            component.Spectators.Remove(component.Player.Value);
-            UpdatePlayerStatus(uid, component.Player.Value, blockGame: component);
+            component.Spectators.Remove(component.Player);
+            UpdatePlayerStatus(uid, component.Player, blockGame: component);
         }
 
-        UpdatePlayerStatus(uid, temp.Value, blockGame: component);
+        UpdatePlayerStatus(uid, temp, blockGame: component);
     }
 
     private void OnBlockPowerChanged(EntityUid uid, BlockGameArcadeComponent component, ref PowerChangedEvent args)
@@ -86,7 +100,8 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         if (args.Powered)
             return;
 
-        _uiSystem.CloseUi(uid, BlockGameUiKey.Key);
+        if (_uiSystem.TryGetUi(uid, BlockGameUiKey.Key, out var bui))
+            _uiSystem.CloseAll(bui);
         component.Player = null;
         component.Spectators.Clear();
     }
@@ -97,7 +112,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
             return;
         if (!BlockGameUiKey.Key.Equals(msg.UiKey))
             return;
-        if (msg.Actor != component.Player)
+        if (msg.Session != component.Player)
             return;
 
         if (msg.PlayerAction == BlockGamePlayerAction.NewGame)

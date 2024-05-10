@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Pair;
 
@@ -16,22 +17,6 @@ public sealed partial class TestPair
             await Server.WaitRunTicks(1);
             await Client.WaitRunTicks(1);
         }
-    }
-
-    /// <summary>
-    /// Convert a time interval to some number of ticks.
-    /// </summary>
-    public int SecondsToTicks(float seconds)
-    {
-        return (int) Math.Ceiling(seconds / Server.Timing.TickPeriod.TotalSeconds);
-    }
-
-    /// <summary>
-    /// Run the server & client in sync for some amount of time
-    /// </summary>
-    public async Task RunSeconds(float seconds)
-    {
-        await RunTicksSync(SecondsToTicks(seconds));
     }
 
     /// <summary>

@@ -33,10 +33,10 @@
   components:
     - type: Sprite
       sprite: Mobs/Species/Vox/parts.rsi
-      state: "torso"
+      state: "torso_m"
     - type: Icon
       sprite: Mobs/Species/Vox/parts.rsi
-      state: "torso"
+      state: "torso_m"
     - type: BodyPart
       partType: Torso
     - type: Extractable
@@ -54,10 +54,10 @@
   components:
     - type: Sprite
       sprite: Mobs/Species/Vox/parts.rsi
-      state: "head"
+      state: "head_m"
     - type: Icon
       sprite: Mobs/Species/Vox/parts.rsi
-      state: "head"
+      state: "head_m"
     - type: BodyPart
       partType: Head
       vital: true

@@ -14,7 +14,6 @@
     slots:
     - Back
   - type: Wieldable
-    unwieldOnUse: false
   - type: GunWieldBonus
     minAngle: -20
     maxAngle: -20

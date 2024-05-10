@@ -1,6 +1,4 @@
-﻿using Content.Shared.Atmos;
-
-namespace Content.Server.Atmos
+﻿namespace Content.Server.Atmos
 {
     public interface IGasMixtureHolder
     {

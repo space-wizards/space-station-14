@@ -17,9 +17,6 @@
   - type: Storage
     grid:
     - 0,0,7,1
-    whitelist:
-      tags:
-        - Medal
   - type: StorageFill
     contents:
     - id: ClothingNeckGoldmedal

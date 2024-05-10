@@ -89,9 +89,9 @@
     scanDelay: 0
   - type: UserInterface
     interfaces:
-      enum.HealthAnalyzerUiKey.Key:
+      - key: enum.HealthAnalyzerUiKey.Key
         type: HealthAnalyzerBoundUserInterface
-      enum.WiresUiKey.Key:
+      - key: enum.WiresUiKey.Key
         type: WiresBoundUserInterface
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key

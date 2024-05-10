@@ -31,8 +31,7 @@ public sealed partial class AnomalySystem
         {
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
-
-            _ui.CloseUi(uid, AnomalyScannerUiKey.Key);
+            _ui.TryCloseAll(uid, AnomalyScannerUiKey.Key);
         }
     }
 
@@ -109,7 +108,7 @@ public sealed partial class AnomalySystem
         Popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid);
         UpdateScannerWithNewAnomaly(uid, args.Args.Target.Value, component);
 
-        _ui.OpenUi(uid, AnomalyScannerUiKey.Key, args.User);
+        if (TryComp<ActorComponent>(args.Args.User, out var actor)) _ui.TryOpen(uid, AnomalyScannerUiKey.Key, actor.PlayerSession);
 
         args.Handled = true;
     }
@@ -124,7 +123,7 @@ public sealed partial class AnomalySystem
             nextPulse = anomalyComponent.NextPulseTime;
 
         var state = new AnomalyScannerUserInterfaceState(GetScannerMessage(component), nextPulse);
-        _ui.SetUiState(uid, AnomalyScannerUiKey.Key, state);
+        _ui.TrySetUiState(uid, AnomalyScannerUiKey.Key, state);
     }
 
     public void UpdateScannerWithNewAnomaly(EntityUid scanner, EntityUid anomaly, AnomalyScannerComponent? scannerComp = null, AnomalyComponent? anomalyComp = null)

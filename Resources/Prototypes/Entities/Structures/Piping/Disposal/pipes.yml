@@ -143,8 +143,8 @@
     key: enum.DisposalTaggerUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.DisposalTaggerUiKey.Key:
-        type: DisposalTaggerBoundUserInterface
+    - key: enum.DisposalTaggerUiKey.Key
+      type: DisposalTaggerBoundUserInterface
   - type: Construction
     graph: DisposalPipe
     node: tagger
@@ -219,8 +219,8 @@
     key: enum.DisposalRouterUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.DisposalRouterUiKey.Key:
-        type: DisposalRouterBoundUserInterface
+    - key: enum.DisposalRouterUiKey.Key
+      type: DisposalRouterBoundUserInterface
   - type: Fixtures
     fixtures:
       fix1:
@@ -271,8 +271,6 @@
           bounds: "-0.25,-0.5,0.5,0.5"
         mask:
         - SubfloorMask
-  - type: Construction
-    node: routerflipped
 
 - type: entity
   id: DisposalJunction
@@ -355,8 +353,6 @@
           bounds: "-0.25,-0.5,0.5,0.5"
         mask:
         - SubfloorMask
-  - type: Construction
-    node: junctionflipped
 
 - type: entity
   id: DisposalYJunction
@@ -493,5 +489,3 @@
         pipe:
           Free: { state: signal-router-flipped-free }
           Anchored: { state: signal-router-flipped }
-  - type: Construction
-    node: signal_router_flipped

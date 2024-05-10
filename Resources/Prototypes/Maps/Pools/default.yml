@@ -9,10 +9,9 @@
   - Fland
   - Marathon
   - Meta
-  - Oasis
   - Omega
   - Origin
   - Saltern
   - Packed
   - Reach
-  - Train
+  #- Train <- return after station anchoring PR is finished and merged

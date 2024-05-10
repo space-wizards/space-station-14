@@ -144,33 +144,14 @@ namespace Content.Server.GameTicking
 
             async void SpawnWaitDb()
             {
-                try
-                {
-                    await _userDb.WaitLoadComplete(session);
-                }
-                catch (OperationCanceledException)
-                {
-                    // Bail, user must've disconnected or something.
-                    Log.Debug($"Database load cancelled while waiting to spawn {session}");
-                    return;
-                }
+                await _userDb.WaitLoadComplete(session);
 
                 SpawnPlayer(session, EntityUid.Invalid);
             }
 
             async void SpawnObserverWaitDb()
             {
-                try
-                {
-                    await _userDb.WaitLoadComplete(session);
-                }
-                catch (OperationCanceledException)
-                {
-                    // Bail, user must've disconnected or something.
-                    Log.Debug($"Database load cancelled while waiting to spawn {session}");
-                    return;
-                }
-
+                await _userDb.WaitLoadComplete(session);
                 JoinAsObserver(session);
             }
 

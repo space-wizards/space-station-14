@@ -15,8 +15,6 @@
         prob: 0.50
       - id: DoorRemoteCargo
       - id: RubberStampQm
-      - id: RubberStampDenied
-      - id: RubberStampApproved
       - id: ClothingHeadsetAltCargo
       - id: BoxEncryptionKeyCargo
 
@@ -120,8 +118,6 @@
       - id: DoorRemoteService
       - id: ClothingNeckGoldmedal
       - id: RubberStampHop
-      - id: RubberStampDenied
-      - id: RubberStampApproved
       - id: BoxEncryptionKeyPassenger
       - id: BoxEncryptionKeyService
       - id: ClothingBackpackIan

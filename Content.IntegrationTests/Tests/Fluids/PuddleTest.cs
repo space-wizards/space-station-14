@@ -46,14 +46,17 @@ namespace Content.IntegrationTests.Tests.Fluids
             var server = pair.Server;
 
             var testMap = await pair.CreateTestMap();
-            var grid = testMap.Grid.Comp;
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<PuddleSystem>();
 
+            MapGridComponent grid = null;
+
             // Remove all tiles
             await server.WaitPost(() =>
             {
+                grid = testMap.MapGrid;
+
                 foreach (var tile in grid.GetAllTiles())
                 {
                     grid.SetTile(tile.GridIndices, Tile.Empty);

@@ -40,10 +40,4 @@ public sealed partial class IdCardComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool BypassLogging;
-
-    [DataField]
-    public LocId NameLocId = "access-id-card-component-owner-name-job-title-text";
-
-    [DataField]
-    public LocId FullNameLocId = "access-id-card-component-owner-full-name-job-title-text";
 }

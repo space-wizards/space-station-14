@@ -14,13 +14,12 @@ namespace Content.Server.Entry
             "Icon",
             "HandheldGPS",
             "CableVisualizer",
-            "SolutionItemStatus",
             "UIFragment",
             "PdaBorderColor",
             "InventorySlots",
             "LightFade",
             "HolidayRsiSwap",
-            "OptionsVisualizer"
+            "OptionsVisualizer",
         };
     }
 }

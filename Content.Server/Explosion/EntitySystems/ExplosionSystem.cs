@@ -160,7 +160,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (explosive.Exploded)
             return;
 
-        explosive.Exploded = !explosive.Repeatable;
+        explosive.Exploded = true;
 
         // Override the explosion intensity if optional arguments were provided.
         if (radius != null)

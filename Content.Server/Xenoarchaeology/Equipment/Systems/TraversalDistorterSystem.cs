@@ -17,6 +17,8 @@ public sealed class TraversalDistorterSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<TraversalDistorterComponent, MapInitEvent>(OnInit);
+
+        SubscribeLocalEvent<TraversalDistorterComponent, ActivateInWorldEvent>(OnInteract);
         SubscribeLocalEvent<TraversalDistorterComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<TraversalDistorterComponent, ItemPlacedEvent>(OnItemPlaced);
@@ -28,25 +30,30 @@ public sealed class TraversalDistorterSystem : EntitySystem
         component.NextActivation = _timing.CurTime;
     }
 
-    /// <summary>
-    /// Switches the state of the traversal distorter between up and down.
-    /// </summary>
-    /// <param name="uid">The distorter's entity</param>
-    /// <param name="component">The component on the entity</param>
-    /// <returns>If the distorter changed state</returns>
-    public bool SetState(EntityUid uid, TraversalDistorterComponent component, bool isDown)
+    private void OnInteract(EntityUid uid, TraversalDistorterComponent component, ActivateInWorldEvent args)
     {
-        if (!this.IsPowered(uid, EntityManager))
-            return false;
-
+        if (args.Handled || !this.IsPowered(uid, EntityManager))
+            return;
         if (_timing.CurTime < component.NextActivation)
-            return false;
-
+            return;
+        args.Handled = true;
         component.NextActivation = _timing.CurTime + component.ActivationDelay;
 
-        component.BiasDirection = isDown ? BiasDirection.Down : BiasDirection.Up;
+        component.BiasDirection = component.BiasDirection == BiasDirection.In
+            ? BiasDirection.Out
+            : BiasDirection.In;
 
-        return true;
+        var toPopup = string.Empty;
+        switch (component.BiasDirection)
+        {
+            case BiasDirection.In:
+                toPopup = Loc.GetString("traversal-distorter-set-in");
+                break;
+            case BiasDirection.Out:
+                toPopup = Loc.GetString("traversal-distorter-set-out");
+                break;
+        }
+        _popup.PopupEntity(toPopup, uid);
     }
 
     private void OnExamine(EntityUid uid, TraversalDistorterComponent component, ExaminedEvent args)
@@ -54,11 +61,11 @@ public sealed class TraversalDistorterSystem : EntitySystem
         string examine = string.Empty;
         switch (component.BiasDirection)
         {
-            case BiasDirection.Up:
-                examine = Loc.GetString("traversal-distorter-desc-up");
+            case BiasDirection.In:
+                examine = Loc.GetString("traversal-distorter-desc-in");
                 break;
-            case BiasDirection.Down:
-                examine = Loc.GetString("traversal-distorter-desc-down");
+            case BiasDirection.Out:
+                examine = Loc.GetString("traversal-distorter-desc-out");
                 break;
         }
 

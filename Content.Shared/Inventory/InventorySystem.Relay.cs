@@ -123,11 +123,6 @@ public sealed class InventoryRelayedEvent<TEvent> : EntityEventArgs
     }
 }
 
-public interface IClothingSlots
-{
-    SlotFlags Slots { get; }
-}
-
 /// <summary>
 ///     Events that should be relayed to inventory slots should implement this interface.
 /// </summary>

@@ -42,6 +42,7 @@ petting-failure-crab = You reach out to pet {THE($target)}, but {SUBJECT($target
 petting-failure-dehydrated-carp = You pet {THE($target)} on {POSS-ADJ($target)} dry little head.
 petting-failure-goat = You reach out to pet {THE($target)}, but {SUBJECT($target)} stubbornly refuses!
 petting-failure-goose = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too horrible!
+petting-failure-goose = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too australian!
 petting-failure-possum = You reach out to pet {THE($target)}, but are met with hisses and snarls!
 petting-failure-pig = You reach out to pet {THE($target)}, but are met with irritated oinks and squeals!
 petting-failure-raccoon = You reach out to pet {THE($target)}, but {THE($target)} is busy raccooning around.
@@ -66,6 +67,11 @@ petting-failure-honkbot = You reach out to pet {THE($target)}, but {SUBJECT($tar
 petting-failure-cleanbot = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy mopping!
 petting-failure-mimebot = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy miming!
 petting-failure-medibot = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} syringe nearly stabs your hand!
+
+## Knocking on windows
+
+# Shown when knocking on a window
+comp-window-knock = *knock knock*
 
 ## Rattling fences
 

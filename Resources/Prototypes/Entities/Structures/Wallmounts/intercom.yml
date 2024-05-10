@@ -63,9 +63,9 @@
     key: enum.IntercomUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.IntercomUiKey.Key:
+      - key: enum.IntercomUiKey.Key
         type: IntercomBoundUserInterface
-      enum.WiresUiKey.Key:
+      - key: enum.WiresUiKey.Key
         type: WiresBoundUserInterface
   - type: Construction
     graph: Intercom

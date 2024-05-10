@@ -1,7 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Atmos;
-using Content.Shared.Atmos.Reactions;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;

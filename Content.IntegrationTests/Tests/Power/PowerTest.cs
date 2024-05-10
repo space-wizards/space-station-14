@@ -143,8 +143,8 @@ namespace Content.IntegrationTests.Tests.Power
     anchored: true
   - type: UserInterface
     interfaces:
-      enum.ApcUiKey.Key:
-        type: ApcBoundUserInterface
+    - key: enum.ApcUiKey.Key
+      type: ApcBoundUserInterface
   - type: AccessReader
     access: [['Engineering']]
 

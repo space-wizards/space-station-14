@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   abstract: true
   parent: BaseItem
   id: GasTankBase
@@ -19,8 +19,8 @@
     key: enum.SharedGasTankUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.SharedGasTankUiKey.Key:
-        type: GasTankBoundUserInterface
+    - key: enum.SharedGasTankUiKey.Key
+      type: GasTankBoundUserInterface
   - type: GasTank
     outputPressure: 21.3
     air:
@@ -238,6 +238,3 @@
     outputPressure: 101.3
   - type: Clothing
     sprite: Objects/Tanks/plasma.rsi
-    slots:
-    - Belt
-    - suitStorage

@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.GameTicking.Components;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Prototypes;
@@ -101,22 +101,6 @@ public sealed partial class GameTicker
 
         if (MetaData(ruleEntity).EntityPrototype?.ID is not { } id) // you really fucked up
             return false;
-
-        // If we already have it, then we just skip the delay as it has already happened.
-        if (!RemComp<DelayedStartRuleComponent>(ruleEntity) && ruleData.Delay != null)
-        {
-            var delayTime = TimeSpan.FromSeconds(ruleData.Delay.Value.Next(_robustRandom));
-
-            if (delayTime > TimeSpan.Zero)
-            {
-                _sawmill.Info($"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
-                _adminLogger.Add(LogType.EventStarted, $"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
-
-                var delayed = EnsureComp<DelayedStartRuleComponent>(ruleEntity);
-                delayed.RuleStartTime = _gameTiming.CurTime + (delayTime);
-                return true;
-            }
-        }
 
         _allPreviousGameRules.Add((RoundDuration(), id));
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
@@ -271,18 +255,6 @@ public sealed partial class GameTicker
         }
     }
 
-    private void UpdateGameRules()
-    {
-        var query = EntityQueryEnumerator<DelayedStartRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var delay, out var rule))
-        {
-            if (_gameTiming.CurTime < delay.RuleStartTime)
-                continue;
-
-            StartGameRule(uid, rule);
-        }
-    }
-
     #region Command Implementations
 
     [AdminCommand(AdminFlags.Fun)]
@@ -351,3 +323,38 @@ public sealed partial class GameTicker
 
     #endregion
 }
+
+/*
+/// <summary>
+///     Raised broadcast when a game rule is selected, but not started yet.
+/// </summary>
+public sealed class GameRuleAddedEvent
+{
+    public GameRulePrototype Rule { get; }
+
+    public GameRuleAddedEvent(GameRulePrototype rule)
+    {
+        Rule = rule;
+    }
+}
+
+public sealed class GameRuleStartedEvent
+{
+    public GameRulePrototype Rule { get; }
+
+    public GameRuleStartedEvent(GameRulePrototype rule)
+    {
+        Rule = rule;
+    }
+}
+
+public sealed class GameRuleEndedEvent
+{
+    public GameRulePrototype Rule { get; }
+
+    public GameRuleEndedEvent(GameRulePrototype rule)
+    {
+        Rule = rule;
+    }
+}
+*/

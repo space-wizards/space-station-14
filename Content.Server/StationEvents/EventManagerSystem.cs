@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.StationEvents.Components;
 using Content.Shared.CCVar;
@@ -16,7 +15,6 @@ public sealed class EventManagerSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] public readonly GameTicker GameTicker = default!;
 
     public bool EventsEnabled { get; private set; }
@@ -45,7 +43,6 @@ public sealed class EventManagerSystem : EntitySystem
 
         var ent = GameTicker.AddGameRule(randomEvent);
         var str = Loc.GetString("station-event-system-run-event",("eventName", ToPrettyString(ent)));
-        _chat.SendAdminAlert(str);
         Log.Info(str);
         return str;
     }
@@ -64,7 +61,7 @@ public sealed class EventManagerSystem : EntitySystem
     /// Pick a random event from the available events at this time, also considering their weightings.
     /// </summary>
     /// <returns></returns>
-    public string? FindEvent(Dictionary<EntityPrototype, StationEventComponent> availableEvents)
+    private string? FindEvent(Dictionary<EntityPrototype, StationEventComponent> availableEvents)
     {
         if (availableEvents.Count == 0)
         {
@@ -98,20 +95,16 @@ public sealed class EventManagerSystem : EntitySystem
     /// <summary>
     /// Gets the events that have met their player count, time-until start, etc.
     /// </summary>
-    /// <param name="playerCountOverride">Override for player count, if using this to simulate events rather than in an actual round.</param>
-    /// <param name="currentTimeOverride">Override for round time, if using this to simulate events rather than in an actual round.</param>
+    /// <param name="ignoreEarliestStart"></param>
     /// <returns></returns>
-    public Dictionary<EntityPrototype, StationEventComponent> AvailableEvents(
-        bool ignoreEarliestStart = false,
-        int? playerCountOverride = null,
-        TimeSpan? currentTimeOverride = null)
+    private Dictionary<EntityPrototype, StationEventComponent> AvailableEvents(bool ignoreEarliestStart = false)
     {
-        var playerCount = playerCountOverride ?? _playerManager.PlayerCount;
+        var playerCount = _playerManager.PlayerCount;
 
         // playerCount does a lock so we'll just keep the variable here
-        var currentTime = currentTimeOverride ?? (!ignoreEarliestStart
+        var currentTime = !ignoreEarliestStart
             ? GameTicker.RoundDuration()
-            : TimeSpan.Zero);
+            : TimeSpan.Zero;
 
         var result = new Dictionary<EntityPrototype, StationEventComponent>();
 
@@ -119,6 +112,7 @@ public sealed class EventManagerSystem : EntitySystem
         {
             if (CanRun(proto, stationEvent, playerCount, currentTime))
             {
+                Log.Debug($"Adding event {proto.ID} to possibilities");
                 result.Add(proto, stationEvent);
             }
         }

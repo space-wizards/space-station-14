@@ -313,8 +313,8 @@
       fillBaseName: cart_water-
     - type: UserInterface
       interfaces:
-        enum.StorageUiKey.Key:
-          type: StorageBoundUserInterface
+      - key: enum.StorageUiKey.Key
+        type: StorageBoundUserInterface
     - type: Drink
       solution: bucket
     - type: ContainerContainer

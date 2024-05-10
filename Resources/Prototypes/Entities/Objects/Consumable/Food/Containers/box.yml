@@ -555,6 +555,7 @@
   - type: Tag
     tags:
     - Trash
+    - HappyHonk
     - MimeHappyHonk
   - type: Sprite
     sprite: Objects/Storage/Happyhonk/mime.rsi
@@ -651,10 +652,6 @@
   name: woeful cluwne meal
   description: Nothing good can come of this.
   components:
-  - type: Tag
-    tags:
-    - Trash
-    - CluwneHappyHonk
   - type: Sprite
     sprite: Objects/Storage/Happyhonk/cluwne.rsi
     state: box

@@ -6,11 +6,17 @@
     edges:
     - to: bot
       steps:
-      - tag: HappyHonk
+      - tag: BoxHug
         icon:
-          sprite: Objects/Storage/Happyhonk/clown.rsi
-          state: box
-        name: happy honk meal
+          sprite: Objects/Storage/boxes.rsi
+          state: box_hug
+        name: box of hugs
+      - tag: ClownRubberStamp
+        icon:
+          sprite: Objects/Misc/stamps.rsi
+          state: stamp-clown
+        name: clown's rubber stamp
+        doAfter: 2
       - tag: BikeHorn
         icon:
             sprite: Objects/Fun/bikehorn.rsi
@@ -39,15 +45,21 @@
     edges:
     - to: bot
       steps:
-      - tag: CluwneHappyHonk
+      - tag: HappyHonk
         icon:
-          sprite: Objects/Storage/Happyhonk/cluwne.rsi
+          sprite: Objects/Storage/Happyhonk/clown.rsi
           state: box
-        name: woeful cluwne meal
+        name: happy honk meal
+      - tag: ClownRubberStamp
+        icon:
+          sprite: Objects/Misc/stamps.rsi
+          state: stamp-clown
+        name: clown's rubber stamp
+        doAfter: 2
       - tag: CluwneHorn
         icon:
-          sprite: Objects/Fun/cluwnehorn.rsi
-          state: icon
+            sprite: Objects/Fun/cluwnehorn.rsi
+            state: icon
         name: broken bike horn
         doAfter: 2
       - tag: ProximitySensor

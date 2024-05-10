@@ -27,4 +27,5 @@
   equipment:
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
+    belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58

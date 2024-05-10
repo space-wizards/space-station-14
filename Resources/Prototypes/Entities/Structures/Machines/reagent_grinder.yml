@@ -12,8 +12,8 @@
     key: enum.ReagentGrinderUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.ReagentGrinderUiKey.Key:
-        type: ReagentGrinderBoundUserInterface
+    - key: enum.ReagentGrinderUiKey.Key
+      type: ReagentGrinderBoundUserInterface
   - type: Appearance
   - type: GenericVisualizer
     visuals:

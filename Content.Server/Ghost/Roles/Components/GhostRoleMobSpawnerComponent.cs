@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Ghost.Roles.Components
 {
@@ -9,22 +10,17 @@ namespace Content.Server.Ghost.Roles.Components
     [Access(typeof(GhostRoleSystem))]
     public sealed partial class GhostRoleMobSpawnerComponent : Component
     {
-        [DataField]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("deleteOnSpawn")]
         public bool DeleteOnSpawn = true;
 
-        [DataField]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("availableTakeovers")]
         public int AvailableTakeovers = 1;
 
         [ViewVariables]
         public int CurrentTakeovers = 0;
 
-        [DataField]
-        public EntProtoId? Prototype;
-
-        /// <summary>
-        ///     If this ghostrole spawner has multiple selectable ghostrole prototypes.
-        /// </summary>
-        [DataField]
-        public List<string> SelectablePrototypes = [];
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? Prototype { get; private set; }
     }
 }

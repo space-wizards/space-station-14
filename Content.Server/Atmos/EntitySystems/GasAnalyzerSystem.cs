@@ -95,9 +95,9 @@ namespace Content.Server.Atmos.EntitySystems
             component.Enabled = true;
             Dirty(uid, component);
             UpdateAppearance(uid, component);
-            EnsureComp<ActiveGasAnalyzerComponent>(uid);
+            if (!HasComp<ActiveGasAnalyzerComponent>(uid))
+                AddComp<ActiveGasAnalyzerComponent>(uid);
             UpdateAnalyzer(uid, component);
-            OpenUserInterface(uid, user, component);
         }
 
         /// <summary>
@@ -118,7 +118,8 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref component))
                 return;
 
-            _userInterface.CloseUi(uid, GasAnalyzerUiKey.Key, user);
+            if (user != null && TryComp<ActorComponent>(user, out var actor))
+                _userInterface.TryClose(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
 
             component.Enabled = false;
             Dirty(uid, component);
@@ -131,6 +132,8 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnDisabledMessage(EntityUid uid, GasAnalyzerComponent component, GasAnalyzerDisableMessage message)
         {
+            if (message.Session.AttachedEntity is not { Valid: true })
+                return;
             DisableAnalyzer(uid, component);
         }
 
@@ -139,7 +142,10 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref component, false))
                 return;
 
-            _userInterface.OpenUi(uid, GasAnalyzerUiKey.Key, user);
+            if (!TryComp<ActorComponent>(user, out var actor))
+                return;
+
+            _userInterface.TryOpen(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
         }
 
         /// <summary>
@@ -236,7 +242,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (gasMixList.Count == 0)
                 return false;
 
-            _userInterface.ServerSendUiMessage(uid, GasAnalyzerUiKey.Key,
+            _userInterface.TrySendUiMessage(uid, GasAnalyzerUiKey.Key,
                 new GasAnalyzerUserMessage(gasMixList.ToArray(),
                     component.Target != null ? Name(component.Target.Value) : string.Empty,
                     GetNetEntity(component.Target) ?? NetEntity.Invalid,

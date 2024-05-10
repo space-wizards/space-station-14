@@ -1,6 +1,5 @@
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Client.UserInterface.Controls;
 using Content.Shared.Implants.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -18,7 +17,7 @@ public sealed class ImplanterStatusControl : Control
         _parent = parent;
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
         _label.MaxWidth = 350;
-        AddChild(new ClipControl { Children = { _label } });
+        AddChild(_label);
 
         Update();
     }
@@ -43,12 +42,17 @@ public sealed class ImplanterStatusControl : Control
             _ => Loc.GetString("injector-invalid-injector-toggle-mode")
         };
 
-        var implantName = _parent.ImplanterSlot.HasItem
-            ? _parent.ImplantData.Item1
-            : Loc.GetString("implanter-empty-text");
+        var (implantName, implantDescription) = _parent.ImplanterSlot.HasItem switch
+        {
+            false => (Loc.GetString("implanter-empty-text"), ""),
+            true => (_parent.ImplantData.Item1, _parent.ImplantData.Item2),
+        };
+
 
         _label.SetMarkup(Loc.GetString("implanter-label",
                 ("implantName", implantName),
-                ("modeString", modeStringLocalized)));
+                ("implantDescription", implantDescription),
+                ("modeString", modeStringLocalized),
+                ("lineBreak", "\n")));
     }
 }

@@ -1,5 +1,4 @@
 using Content.Server.Antag.Mimic;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.VendingMachines;

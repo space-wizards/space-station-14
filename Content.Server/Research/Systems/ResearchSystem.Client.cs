@@ -45,7 +45,7 @@ public sealed partial class ResearchSystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, args.Actor);
+        _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, args.Session);
     }
     #endregion
 
@@ -88,7 +88,7 @@ public sealed partial class ResearchSystem
         var state = new ResearchClientBoundInterfaceState(names.Length, names,
             GetServerIds(), serverComponent?.Id ?? -1);
 
-        _uiSystem.SetUiState(uid, ResearchClientUiKey.Key, state);
+        _uiSystem.TrySetUiState(uid, ResearchClientUiKey.Key, state);
     }
 
     /// <summary>

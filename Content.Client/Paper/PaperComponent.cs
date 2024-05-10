@@ -1,6 +1,9 @@
 using Content.Shared.Paper;
+using Robust.Shared.GameStates;
 
 namespace Content.Client.Paper;
 
-[RegisterComponent]
-public sealed partial class PaperComponent : SharedPaperComponent;
+[NetworkedComponent, RegisterComponent]
+public sealed partial class PaperComponent : SharedPaperComponent
+{
+}

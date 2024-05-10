@@ -145,14 +145,27 @@ public sealed class SwapTeleporterSystem : EntitySystem
         }
 
         var teleEnt = GetTeleportingEntity((uid, xform));
+        var teleEntXform = Transform(teleEnt);
         var otherTeleEnt = GetTeleportingEntity((linkedEnt, Transform(linkedEnt)));
+        var otherTeleEntXform = Transform(otherTeleEnt);
 
         _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-other",
             ("entity", Identity.Entity(linkedEnt, EntityManager))),
             otherTeleEnt,
             otherTeleEnt,
             PopupType.MediumCaution);
-        _transform.SwapPositions(teleEnt, otherTeleEnt);
+        var pos = teleEntXform.Coordinates;
+        var otherPos = otherTeleEntXform.Coordinates;
+
+        if (_transform.ContainsEntity(teleEnt, (otherTeleEnt, otherTeleEntXform)) ||
+            _transform.ContainsEntity(otherTeleEnt, (teleEnt, teleEntXform)))
+        {
+            Log.Error($"Invalid teleport swap attempt between {ToPrettyString(teleEnt)} and {ToPrettyString(otherTeleEnt)}");
+            return;
+        }
+
+        _transform.SetCoordinates(teleEnt, otherPos);
+        _transform.SetCoordinates(otherTeleEnt, pos);
     }
 
     /// <remarks>

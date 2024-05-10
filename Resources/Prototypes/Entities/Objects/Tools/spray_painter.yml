@@ -13,8 +13,8 @@
     key: enum.SprayPainterUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.SprayPainterUiKey.Key:
-        type: SprayPainterBoundUserInterface
+    - key: enum.SprayPainterUiKey.Key
+      type: SprayPainterBoundUserInterface
   - type: SprayPainter
     colorPalette:
       red: '#FF1212FF'

@@ -18,11 +18,12 @@
   - type: PaperLabelType
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
+    closeOnHandDeselect: false
     requireHands: false
   - type: UserInterface
     interfaces:
-      enum.PaperUiKey.Key:
-        type: PaperBoundUserInterface
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
   - type: Item
     size: Tiny
   - type: Tag
@@ -31,7 +32,6 @@
     - Trash
     - Paper
   - type: Appearance
-  - type: FaxableObject
   - type: PaperVisuals
   - type: Flammable
     fireSpread: true
@@ -264,8 +264,8 @@
     key: enum.PaperUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.PaperUiKey.Key:
-        type: PaperBoundUserInterface
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
 
 - type: entity
   parent: Paper
@@ -695,10 +695,10 @@
     key: enum.CargoConsoleUiKey.Orders
   - type: UserInterface
     interfaces:
-      enum.CargoConsoleUiKey.Orders:
-        type: CargoOrderConsoleBoundUserInterface
-      enum.StorageUiKey.Key:
-        type: StorageBoundUserInterface
+    - key: enum.CargoConsoleUiKey.Orders
+      type: CargoOrderConsoleBoundUserInterface
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
   - type: MeleeWeapon
     wideAnimationRotation: 180
     damage:

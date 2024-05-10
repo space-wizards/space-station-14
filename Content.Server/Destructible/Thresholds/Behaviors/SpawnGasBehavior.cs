@@ -1,5 +1,4 @@
 using Content.Server.Atmos;
-using Content.Shared.Atmos;
 using JetBrains.Annotations;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;

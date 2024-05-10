@@ -13,12 +13,10 @@
     program: 2
   - type: UserInterface
     interfaces:
-      enum.InstrumentUiKey.Key:
-        type: InstrumentBoundUserInterface
-        requireInputValidation: false
-      enum.StationMapUiKey.Key:
-        type: UntrackedStationMapBoundUserInterface
-        requireInputValidation: false
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
+    - key: enum.StationMapUiKey.Key
+      type: UntrackedStationMapBoundUserInterface
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
     layers:

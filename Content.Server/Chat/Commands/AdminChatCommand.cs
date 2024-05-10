@@ -5,7 +5,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Chat.Commands
 {
-    [AdminCommand(AdminFlags.Adminchat)]
+    [AdminCommand(AdminFlags.Admin)]
     internal sealed class AdminChatCommand : IConsoleCommand
     {
         public string Command => "asay";

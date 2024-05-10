@@ -90,7 +90,7 @@
     - type: WiresPanel
     - type: UserInterface
       interfaces:
-        enum.WiresUiKey.Key:
+        - key: enum.WiresUiKey.Key
           type: WiresBoundUserInterface
     - type: Physics
       canCollide: false

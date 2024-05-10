@@ -168,57 +168,45 @@ namespace Content.Tests.Shared
         private string _damagePrototypes = @"
 - type: damageType
   id: Blunt
-  name: damage-type-blunt
 
 - type: damageType
   id: Slash
-  name: damage-type-slash
 
 - type: damageType
   id: Piercing
-  name: damage-type-piercing
 
 - type: damageType
   id: Heat
-  name: damage-type-heat
 
 - type: damageType
   id: Shock
-  name: damage-type-shock
 
 - type: damageType
   id: Cold
-  name: damage-type-cold
 
 # Poison damage. Generally caused by various reagents being metabolised.
 - type: damageType
   id: Poison
-  name: damage-type-poison
 
 - type: damageType
   id: Radiation
-  name: damage-type-radiation
 
 # Damage due to being unable to breathe.
 # Represents not enough oxygen (or equivalent) getting to the blood.
 # Usually healed automatically if entity can breathe
 - type: damageType
   id: Asphyxiation
-  name: damage-type-asphyxiation
 
 # Damage representing not having enough blood.
 # Represents there not enough blood to supply oxygen (or equivalent).
 - type: damageType
   id: Bloodloss
-  name: damage-type-bloodloss
 
 - type: damageType
   id: Cellular
-  name: damage-type-cellular
 
 - type: damageGroup
   id: Brute
-  name: damage-group-brute
   damageTypes:
     - Blunt
     - Slash
@@ -226,7 +214,6 @@ namespace Content.Tests.Shared
 
 - type: damageGroup
   id: Burn
-  name: damage-group-burn
   damageTypes:
     - Heat
     - Shock
@@ -238,7 +225,6 @@ namespace Content.Tests.Shared
 # bloodloss, not this whole group, unless you have a wonder drug that affects both.
 - type: damageGroup
   id: Airloss
-  name: damage-group-airloss
   damageTypes:
     - Asphyxiation
     - Bloodloss
@@ -247,14 +233,12 @@ namespace Content.Tests.Shared
 # Though there are probably some radioactive poisons.
 - type: damageGroup
   id: Toxin
-  name: damage-group-toxin
   damageTypes:
     - Poison
     - Radiation
 
 - type: damageGroup
   id: Genetic
-  name: damage-group-genetic
   damageTypes:
     - Cellular
 

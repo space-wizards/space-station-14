@@ -4,7 +4,6 @@ using Content.Server.UserInterface;
 using Content.Shared.Advertise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using ActivatableUIComponent = Content.Shared.UserInterface.ActivatableUIComponent;
 
 namespace Content.Server.Advertise;
 

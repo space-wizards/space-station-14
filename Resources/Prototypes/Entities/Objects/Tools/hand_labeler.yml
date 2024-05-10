@@ -17,7 +17,7 @@
       inHandsOnly: true
     - type: UserInterface
       interfaces:
-        enum.HandLabelerUiKey.Key:
+        - key: enum.HandLabelerUiKey.Key
           type: HandLabelerBoundUserInterface
     - type: HandLabeler
       whitelist:

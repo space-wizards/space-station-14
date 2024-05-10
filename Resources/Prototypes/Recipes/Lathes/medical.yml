@@ -106,7 +106,7 @@
   result: ClothingMaskSterile
   completetime: 2
   materials:
-    Plastic: 50
+    Plastic: 100
 
 - type: latheRecipe
   id: DiseaseSwab

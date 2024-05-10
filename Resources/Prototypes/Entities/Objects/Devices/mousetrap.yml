@@ -15,7 +15,7 @@
       requiredTriggeredSpeed: 0
     - type: Mousetrap
     - type: TriggerOnStepTrigger
-    - type: ClothingRequiredStepTrigger
+    - type: ShoesRequiredStepTrigger
     - type: DamageUserOnTrigger
       damage:
         types:

@@ -17,14 +17,6 @@ public sealed class StorageBoundUserInterface : BoundUserInterface
         _storage = _entManager.System<StorageSystem>();
     }
 
-    protected override void Open()
-    {
-        base.Open();
-
-        if (_entManager.TryGetComponent<StorageComponent>(Owner, out var comp))
-            _storage.OpenStorageWindow((Owner, comp));
-    }
-
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -32,6 +24,17 @@ public sealed class StorageBoundUserInterface : BoundUserInterface
             return;
 
         _storage.CloseStorageWindow(Owner);
+    }
+
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        base.ReceiveMessage(message);
+
+        if (message is StorageModifyWindowMessage)
+        {
+            if (_entManager.TryGetComponent<StorageComponent>(Owner, out var comp))
+                _storage.OpenStorageWindow((Owner, comp));
+        }
     }
 }
 

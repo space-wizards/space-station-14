@@ -12,8 +12,7 @@
   - type: Clothing
     quickEquip: false
     slots:
-      - Back
-      - suitStorage
+    - Back
   - type: Wieldable
     wieldSound:
       path: /Audio/Items/bow_pull.ogg

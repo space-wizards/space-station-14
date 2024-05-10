@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -15,37 +14,36 @@ public sealed partial class TestPair
     /// <summary>
     /// Creates a map, a grid, and a tile, and gives back references to them.
     /// </summary>
-    [MemberNotNull(nameof(TestMap))]
-    public async Task<TestMapData> CreateTestMap(bool initialized = true, string tile = "Plating")
+    public async Task<TestMapData> CreateTestMap()
     {
-        var mapData = new TestMapData();
-        TestMap = mapData;
         await Server.WaitIdleAsync();
         var tileDefinitionManager = Server.ResolveDependency<ITileDefinitionManager>();
 
+        var mapData = new TestMapData();
         TestMap = mapData;
         await Server.WaitPost(() =>
         {
-            mapData.MapUid = Server.System<SharedMapSystem>().CreateMap(out mapData.MapId, runMapInit: initialized);
-            mapData.Grid = Server.MapMan.CreateGridEntity(mapData.MapId);
-            mapData.GridCoords = new EntityCoordinates(mapData.Grid, 0, 0);
-            var plating = tileDefinitionManager[tile];
+            mapData.MapId = Server.MapMan.CreateMap();
+            mapData.MapUid = Server.MapMan.GetMapEntityId(mapData.MapId);
+            var mapGrid = Server.MapMan.CreateGridEntity(mapData.MapId);
+            mapData.MapGrid = mapGrid;
+            mapData.GridUid = mapGrid.Owner; // Fixing this requires an engine PR.
+            mapData.GridCoords = new EntityCoordinates(mapData.GridUid, 0, 0);
+            var plating = tileDefinitionManager["Plating"];
             var platingTile = new Tile(plating.TileId);
-            mapData.Grid.Comp.SetTile(mapData.GridCoords, platingTile);
+            mapData.MapGrid.SetTile(mapData.GridCoords, platingTile);
             mapData.MapCoords = new MapCoordinates(0, 0, mapData.MapId);
-            mapData.Tile = mapData.Grid.Comp.GetAllTiles().First();
+            mapData.Tile = mapData.MapGrid.GetAllTiles().First();
         });
 
-        TestMap = mapData;
         if (!Settings.Connected)
             return mapData;
 
         await RunTicksSync(10);
         mapData.CMapUid = ToClientUid(mapData.MapUid);
-        mapData.CGridUid = ToClientUid(mapData.Grid);
+        mapData.CGridUid = ToClientUid(mapData.GridUid);
         mapData.CGridCoords = new EntityCoordinates(mapData.CGridUid, 0, 0);
 
-        TestMap = mapData;
         return mapData;
     }
 

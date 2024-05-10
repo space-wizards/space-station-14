@@ -1,6 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Shared.Atmos;
-using Content.Shared.Atmos.Reactions;
+using Content.Server.Atmos.Reactions;
 
 namespace Content.Server.Atmos
 {

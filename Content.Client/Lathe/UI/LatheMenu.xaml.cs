@@ -10,8 +10,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Client.ResourceManagement;
-using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Lathe.UI;
@@ -21,8 +19,6 @@ public sealed partial class LatheMenu : DefaultWindow
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IResourceCache _resources = default!;
-
     private EntityUid _owner;
     private readonly SpriteSystem _spriteSystem;
     private readonly LatheSystem _lathe;
@@ -108,21 +104,12 @@ public sealed partial class LatheMenu : DefaultWindow
         RecipeList.Children.Clear();
         foreach (var prototype in sortedRecipesToShow)
         {
-            List<Texture> textures;
-            if (_prototypeManager.TryIndex(prototype.Result, out EntityPrototype? entityProto) && entityProto != null)
-            {
-                textures = SpriteComponent.GetPrototypeTextures(entityProto, _resources).Select(o => o.Default).ToList();
-            }
-            else
-            {
-                textures = prototype.Icon == null
-                    ? new List<Texture> { _spriteSystem.GetPrototypeIcon(prototype.Result).Default }
-                    : new List<Texture> { _spriteSystem.Frame0(prototype.Icon) };
-            }
-
+            var icon = prototype.Icon == null
+                ? _spriteSystem.GetPrototypeIcon(prototype.Result).Default
+                : _spriteSystem.Frame0(prototype.Icon);
             var canProduce = _lathe.CanProduce(_owner, prototype, quantity);
 
-            var control = new RecipeControl(prototype, () => GenerateTooltipText(prototype), canProduce, textures);
+            var control = new RecipeControl(prototype, () => GenerateTooltipText(prototype), canProduce, icon);
             control.OnButtonPressed += s =>
             {
                 if (!int.TryParse(AmountLineEdit.Text, out var amount) || amount <= 0)

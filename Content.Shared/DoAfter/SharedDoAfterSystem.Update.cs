@@ -104,7 +104,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             doAfter.AttemptEvent = _factory.CreateInstance(evType, new object[] { doAfter, args.Event });
         }
 
-        args.Event.DoAfter = doAfter;
         if (args.EventTarget != null)
             RaiseLocalEvent(args.EventTarget.Value, doAfter.AttemptEvent, args.Broadcast);
         else

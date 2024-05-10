@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.StationEvents.Components;

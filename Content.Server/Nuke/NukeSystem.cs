@@ -187,7 +187,7 @@ public sealed class NukeSystem : EntitySystem
                     continue;
 
                 var msg = Loc.GetString("nuke-component-cant-anchor-floor");
-                _popups.PopupEntity(msg, uid, args.Actor, PopupType.MediumCaution);
+                _popups.PopupEntity(msg, uid, args.Session, PopupType.MediumCaution);
 
                 return;
             }
@@ -243,7 +243,10 @@ public sealed class NukeSystem : EntitySystem
 
         else
         {
-            DisarmBombDoafter(uid, args.Actor, component);
+            if (args.Session.AttachedEntity is not { } user)
+                return;
+
+            DisarmBombDoafter(uid, user, component);
         }
     }
 
@@ -363,7 +366,8 @@ public sealed class NukeSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (!_ui.HasUi(uid, NukeUiKey.Key))
+        var ui = _ui.GetUiOrNull(uid, NukeUiKey.Key);
+        if (ui == null)
             return;
 
         var anchored = Transform(uid).Anchored;
@@ -384,7 +388,7 @@ public sealed class NukeSystem : EntitySystem
             CooldownTime = (int) component.CooldownTime
         };
 
-        _ui.SetUiState(uid, NukeUiKey.Key, state);
+        _ui.SetUiState(ui, state);
     }
 
     private void PlayNukeKeypadSound(EntityUid uid, int number, NukeComponent? component = null)

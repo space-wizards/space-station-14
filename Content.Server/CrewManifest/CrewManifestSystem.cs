@@ -100,12 +100,12 @@ public sealed class CrewManifestSystem : EntitySystem
             return;
 
         var owningStation = _stationSystem.GetOwningStation(uid);
-        if (owningStation == null || !TryComp(ev.Actor, out ActorComponent? actorComp))
+        if (owningStation == null || ev.Session is not { } session)
         {
             return;
         }
 
-        CloseEui(owningStation.Value, actorComp.PlayerSession, uid);
+        CloseEui(owningStation.Value, session, uid);
     }
 
     /// <summary>
@@ -136,12 +136,12 @@ public sealed class CrewManifestSystem : EntitySystem
         {
             Log.Error(
                 "{User} tried to open crew manifest from wrong UI: {Key}. Correct owned is {ExpectedKey}",
-                msg.Actor, msg.UiKey, component.OwnerKey);
+                msg.Session, msg.UiKey, component.OwnerKey);
             return;
         }
 
         var owningStation = _stationSystem.GetOwningStation(uid);
-        if (owningStation == null || !TryComp(msg.Actor, out ActorComponent? actorComp))
+        if (owningStation == null || msg.Session is not { } session)
         {
             return;
         }
@@ -151,7 +151,7 @@ public sealed class CrewManifestSystem : EntitySystem
             return;
         }
 
-        OpenEui(owningStation.Value, actorComp.PlayerSession, uid);
+        OpenEui(owningStation.Value, session, uid);
     }
 
     /// <summary>

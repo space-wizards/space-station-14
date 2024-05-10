@@ -1,4 +1,4 @@
-using Content.Shared.Body.Prototypes;
+﻿using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
@@ -74,7 +74,7 @@ namespace Content.Server.Chemistry.ReagentEffects
                 return Loc.GetString("reagent-effect-guidebook-adjust-reagent-group",
                     ("chance", Probability),
                     ("deltasign", MathF.Sign(Amount.Float())),
-                    ("group", groupProto.LocalizedName),
+                    ("group", groupProto.ID),
                     ("amount", MathF.Abs(Amount.Float())));
             }
 

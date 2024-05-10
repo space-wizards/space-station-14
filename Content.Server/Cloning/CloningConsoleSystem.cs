@@ -135,17 +135,17 @@ namespace Content.Server.Cloning
 
         public void UpdateUserInterface(EntityUid consoleUid, CloningConsoleComponent consoleComponent)
         {
-            if (!_uiSystem.HasUi(consoleUid, CloningConsoleUiKey.Key))
+            if (!_uiSystem.TryGetUi(consoleUid, CloningConsoleUiKey.Key, out var ui))
                 return;
 
             if (!_powerReceiverSystem.IsPowered(consoleUid))
             {
-                _uiSystem.CloseUis(consoleUid);
+                _uiSystem.CloseAll(ui);
                 return;
             }
 
             var newState = GetUserInterfaceState(consoleComponent);
-            _uiSystem.SetUiState(consoleUid, CloningConsoleUiKey.Key, newState);
+            _uiSystem.SetUiState(ui, newState);
         }
 
         public void TryClone(EntityUid uid, EntityUid cloningPodUid, EntityUid scannerUid, CloningPodComponent? cloningPod = null, MedicalScannerComponent? scannerComp = null, CloningConsoleComponent? consoleComponent = null)

@@ -129,7 +129,7 @@ public sealed class GatewaySystem : EntitySystem
             unlockTime
         );
 
-        _ui.SetUiState(uid, GatewayUiKey.Key, state);
+        _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
     }
 
     private void UpdateAppearance(EntityUid uid)
@@ -139,14 +139,12 @@ public sealed class GatewaySystem : EntitySystem
 
     private void OnOpenPortal(EntityUid uid, GatewayComponent comp, GatewayOpenPortalMessage args)
     {
-        if (GetNetEntity(uid) == args.Destination ||
+        if (args.Session.AttachedEntity == null || GetNetEntity(uid) == args.Destination ||
             !comp.Enabled || !comp.Interactable)
-        {
             return;
-        }
 
         // if the gateway has an access reader check it before allowing opening
-        var user = args.Actor;
+        var user = args.Session.AttachedEntity.Value;
         if (CheckAccess(user, uid, comp))
             return;
 

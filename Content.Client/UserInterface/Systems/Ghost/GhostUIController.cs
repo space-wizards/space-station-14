@@ -111,12 +111,6 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         _net.SendSystemNetworkMessage(msg);
     }
 
-    private void OnGhostnadoClicked()
-    {
-        var msg = new GhostnadoRequestEvent();
-        _net.SendSystemNetworkMessage(msg);
-    }
-
     public void LoadGui()
     {
         if (Gui == null)
@@ -126,7 +120,6 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         Gui.ReturnToBodyPressed += ReturnToBody;
         Gui.GhostRolesPressed += GhostRolesPressed;
         Gui.TargetWindow.WarpClicked += OnWarpClicked;
-        Gui.TargetWindow.OnGhostnadoClicked += OnGhostnadoClicked;
 
         UpdateGui();
     }

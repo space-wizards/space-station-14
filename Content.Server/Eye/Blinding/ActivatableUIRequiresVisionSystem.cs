@@ -5,7 +5,6 @@ using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Robust.Shared.Player;
 using Robust.Server.GameObjects;
-using Robust.Shared.Collections;
 
 namespace Content.Server.Eye.Blinding;
 
@@ -38,19 +37,24 @@ public sealed class ActivatableUIRequiresVisionSystem : EntitySystem
         if (!args.Blind)
             return;
 
-        var toClose = new ValueList<(EntityUid Entity, Enum Key)>();
+        if (!TryComp<ActorComponent>(uid, out var actor))
+            return;
 
-        foreach (var bui in _userInterfaceSystem.GetActorUis(uid))
+        var uiList = _userInterfaceSystem.GetAllUIsForSession(actor.PlayerSession);
+        if (uiList == null)
+            return;
+
+        Queue<PlayerBoundUserInterface> closeList = new(); // foreach collection modified moment
+
+        foreach (var ui in uiList)
         {
-            if (HasComp<ActivatableUIRequiresVisionComponent>(bui.Entity))
-            {
-                toClose.Add(bui);
-            }
+            if (HasComp<ActivatableUIRequiresVisionComponent>(ui.Owner))
+                closeList.Enqueue(ui);
         }
 
-        foreach (var bui in toClose)
+        foreach (var ui in closeList)
         {
-            _userInterfaceSystem.CloseUi(bui.Entity, bui.Key, uid);
+            _userInterfaceSystem.CloseUi(ui, actor.PlayerSession);
         }
     }
 }

@@ -111,15 +111,17 @@ namespace Content.Server.Strip
             if (TryComp<CombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
                 return;
 
-            if (HasComp<StrippingComponent>(user))
+            if (TryComp<ActorComponent>(user, out var actor) && HasComp<StrippingComponent>(user))
             {
-                _userInterfaceSystem.OpenUi(strippable.Owner, StrippingUiKey.Key, user);
+                if (_userInterfaceSystem.SessionHasOpenUi(strippable, StrippingUiKey.Key, actor.PlayerSession))
+                    return;
+                _userInterfaceSystem.TryOpen(strippable, StrippingUiKey.Key, actor.PlayerSession);
             }
         }
 
         private void OnStripButtonPressed(Entity<StrippableComponent> strippable, ref StrippingSlotButtonPressed args)
         {
-            if (args.Actor is not { Valid: true } user ||
+            if (args.Session.AttachedEntity is not { Valid: true } user ||
                 !TryComp<HandsComponent>(user, out var userHands))
                 return;
 
@@ -171,7 +173,7 @@ namespace Content.Server.Strip
 
         private void OnStripEnsnareMessage(EntityUid uid, EnsnareableComponent component, StrippingEnsnareButtonPressed args)
         {
-            if (args.Actor is not { Valid: true } user)
+            if (args.Session.AttachedEntity is not { Valid: true } user)
                 return;
 
             foreach (var entity in component.Container.ContainedEntities)

@@ -1,58 +1,28 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Collections;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Station;
 
 public abstract class SharedStationSpawningSystem : EntitySystem
 {
-    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly InventorySystem InventorySystem = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private   readonly SharedStorageSystem _storage = default!;
     [Dependency] private   readonly SharedTransformSystem _xformSystem = default!;
-
-    private EntityQuery<HandsComponent> _handsQuery;
-    private EntityQuery<InventoryComponent> _inventoryQuery;
-    private EntityQuery<StorageComponent> _storageQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        _handsQuery = GetEntityQuery<HandsComponent>();
-        _inventoryQuery = GetEntityQuery<InventoryComponent>();
-        _storageQuery = GetEntityQuery<StorageComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
-    }
-
-    /// <summary>
-    /// <see cref="EquipStartingGear(Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.Prototypes.ProtoId{Content.Shared.Roles.StartingGearPrototype}},bool)"/>
-    /// </summary>
-    public void EquipStartingGear(EntityUid entity, ProtoId<StartingGearPrototype>? startingGear, bool raiseEvent = true)
-    {
-        PrototypeManager.TryIndex(startingGear, out var gearProto);
-        EquipStartingGear(entity, gearProto);
-    }
 
     /// <summary>
     /// Equips starting gear onto the given entity.
     /// </summary>
     /// <param name="entity">Entity to load out.</param>
     /// <param name="startingGear">Starting gear to use.</param>
-    /// <param name="raiseEvent">Should we raise the event for equipped. Set to false if you will call this manually</param>
-    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear, bool raiseEvent = true)
+    public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear)
     {
-        if (startingGear == null)
-            return;
-
-        var xform = _xformQuery.GetComponent(entity);
-
         if (InventorySystem.TryGetSlots(entity, out var slotDefinitions))
         {
             foreach (var slot in slotDefinitions)
@@ -60,16 +30,16 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 var equipmentStr = startingGear.GetGear(slot.Name);
                 if (!string.IsNullOrEmpty(equipmentStr))
                 {
-                    var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, xform.Coordinates);
+                    var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, silent: true, force:true);
                 }
             }
         }
 
-        if (_handsQuery.TryComp(entity, out var handsComponent))
+        if (TryComp(entity, out HandsComponent? handsComponent))
         {
             var inhand = startingGear.Inhand;
-            var coords = xform.Coordinates;
+            var coords = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
             foreach (var prototype in inhand)
             {
                 var inhandEntity = EntityManager.SpawnEntity(prototype, coords);
@@ -85,7 +55,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
         {
             var coords = _xformSystem.GetMapCoordinates(entity);
             var ents = new ValueList<EntityUid>();
-            _inventoryQuery.TryComp(entity, out var inventoryComp);
+            TryComp(entity, out InventoryComponent? inventoryComp);
 
             foreach (var (slot, entProtos) in startingGear.Storage)
             {
@@ -99,7 +69,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
 
                 if (inventoryComp != null &&
                     InventorySystem.TryGetSlotEntity(entity, slot, out var slotEnt, inventoryComponent: inventoryComp) &&
-                    _storageQuery.TryComp(slotEnt, out var storage))
+                    TryComp(slotEnt, out StorageComponent? storage))
                 {
                     foreach (var ent in ents)
                     {
@@ -107,12 +77,6 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                     }
                 }
             }
-        }
-
-        if (raiseEvent)
-        {
-            var ev = new StartingGearEquippedEvent(entity);
-            RaiseLocalEvent(entity, ref ev, true);
         }
     }
 }

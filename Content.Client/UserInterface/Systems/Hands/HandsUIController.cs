@@ -22,22 +22,12 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     [Dependency] private readonly IPlayerManager _player = default!;
 
     [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
-    [UISystemDependency] private readonly UseDelaySystem _useDelay = default!;
 
     private readonly List<HandsContainer> _handsContainers = new();
     private readonly Dictionary<string, int> _handContainerIndices = new();
     private readonly Dictionary<string, HandButton> _handLookup = new();
     private HandsComponent? _playerHandsComponent;
     private HandButton? _activeHand = null;
-
-    // We only have two item status controls (left and right hand),
-    // but we may have more than two hands.
-    // We handle this by having the item status be the *last active* hand of that side.
-    // These variables store which that is.
-    // ("middle" hands are hardcoded as right, whatever)
-    private HandButton? _statusHandLeft;
-    private HandButton? _statusHandRight;
-
     private int _backupSuffix = 0; //this is used when autogenerating container names if they don't have names
 
     private HotbarGui? HandsGui => UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
@@ -190,7 +180,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             hand.Blocked = false;
         }
 
-        UpdateHandStatus(hand, entity);
+        if (_playerHandsComponent?.ActiveHand?.Name == name)
+            HandsGui?.UpdatePanelEntity(entity);
     }
 
     private void OnItemRemoved(string name, EntityUid entity)
@@ -200,7 +191,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             return;
 
         hand.SetEntity(null);
-        UpdateHandStatus(hand, null);
+        if (_playerHandsComponent?.ActiveHand?.Name == name)
+            HandsGui?.UpdatePanelEntity(null);
     }
 
     private HandsContainer GetFirstAvailableContainer()
@@ -240,6 +232,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             if (_activeHand != null)
                 _activeHand.Highlight = false;
 
+            HandsGui?.UpdatePanelEntity(null);
             return;
         }
 
@@ -257,20 +250,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             _player.LocalSession?.AttachedEntity is { } playerEntity &&
             _handsSystem.TryGetHand(playerEntity, handName, out var hand, _playerHandsComponent))
         {
-            var foldedLocation = hand.Location.GetUILocation();
-            if (foldedLocation == HandUILocation.Left)
-            {
-                _statusHandLeft = handControl;
-                HandsGui.UpdatePanelEntityLeft(hand.HeldEntity);
-            }
-            else
-            {
-                // Middle or right
-                _statusHandRight = handControl;
-                HandsGui.UpdatePanelEntityRight(hand.HeldEntity);
-            }
-
-            HandsGui.SetHighlightHand(foldedLocation);
+            HandsGui.UpdatePanelEntity(hand.HeldEntity);
         }
     }
 
@@ -297,16 +277,6 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             GetFirstAvailableContainer().AddButton(button);
         }
-
-        // If we don't have a status for this hand type yet, set it.
-        // This means we have status filled by default in most scenarios,
-        // otherwise the user'd need to switch hands to "activate" the hands the first time.
-        if (location.GetUILocation() == HandUILocation.Left)
-            _statusHandLeft ??= button;
-        else
-            _statusHandRight ??= button;
-
-        UpdateVisibleStatusPanels();
 
         return button;
     }
@@ -366,35 +336,9 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             handContainer.RemoveButton(handButton);
         }
 
-        if (_statusHandLeft == handButton)
-            _statusHandLeft = null;
-        if (_statusHandRight == handButton)
-            _statusHandRight = null;
-
         _handLookup.Remove(handName);
         handButton.Dispose();
-        UpdateVisibleStatusPanels();
         return true;
-    }
-
-    private void UpdateVisibleStatusPanels()
-    {
-        var leftVisible = false;
-        var rightVisible = false;
-
-        foreach (var hand in _handLookup.Values)
-        {
-            if (hand.HandLocation.GetUILocation() == HandUILocation.Left)
-            {
-                leftVisible = true;
-            }
-            else
-            {
-                rightVisible = true;
-            }
-        }
-
-        HandsGui?.UpdateStatusVisibility(leftVisible, rightVisible);
     }
 
     public string RegisterHandContainer(HandsContainer handContainer)
@@ -451,25 +395,16 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             foreach (var hand in container.GetButtons())
             {
 
-                if (!_entities.TryGetComponent(hand.Entity, out UseDelayComponent? useDelay))
+                if (!_entities.TryGetComponent(hand.Entity, out UseDelayComponent? useDelay) ||
+                    useDelay is not { DelayStartTime: var start, DelayEndTime: var end })
                 {
                     hand.CooldownDisplay.Visible = false;
                     continue;
                 }
-                var delay = _useDelay.GetLastEndingDelay((hand.Entity.Value, useDelay));
 
                 hand.CooldownDisplay.Visible = true;
-                hand.CooldownDisplay.FromTime(delay.StartTime, delay.EndTime);
+                hand.CooldownDisplay.FromTime(start, end);
             }
         }
-    }
-
-    private void UpdateHandStatus(HandButton hand, EntityUid? entity)
-    {
-        if (hand == _statusHandLeft)
-            HandsGui?.UpdatePanelEntityLeft(entity);
-
-        if (hand == _statusHandRight)
-            HandsGui?.UpdatePanelEntityRight(entity);
     }
 }

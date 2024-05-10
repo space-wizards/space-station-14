@@ -110,7 +110,7 @@
     key: enum.SharedGasTankUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.SharedGasTankUiKey.Key:
+      - key: enum.SharedGasTankUiKey.Key
         type: GasTankBoundUserInterface
   - type: Explosive
     explosionType: Default

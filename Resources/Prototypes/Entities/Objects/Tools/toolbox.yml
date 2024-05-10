@@ -167,5 +167,5 @@
     key: enum.ThiefBackpackUIKey.Key
   - type: UserInterface
     interfaces:
-      enum.ThiefBackpackUIKey.Key:
+      - key: enum.ThiefBackpackUIKey.Key
         type: ThiefBackpackBoundUserInterface

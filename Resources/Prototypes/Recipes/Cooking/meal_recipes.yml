@@ -1704,14 +1704,6 @@
     LeavesCannabis: 1
 
 - type: microwaveMealRecipe
-  id: RecipeDriedCannabisRainbow
-  name: dried rainbow cannabis leaves recipe
-  result: LeavesCannabisRainbowDried
-  time: 10
-  solids:
-    LeavesCannabisRainbow: 1
-
-- type: microwaveMealRecipe
   id: RecipeTrashBakedBananaPeel
   name: baked banana peel recipe
   result: TrashBakedBananaPeel

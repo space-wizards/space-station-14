@@ -30,8 +30,8 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-      enum.ReagentDispenserUiKey.Key:
-        type: ReagentDispenserBoundUserInterface
+    - key: enum.ReagentDispenserUiKey.Key
+      type: ReagentDispenserBoundUserInterface
   - type: Anchorable
   - type: Pullable
   - type: Damageable

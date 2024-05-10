@@ -96,22 +96,19 @@ public abstract class ClothingSystem : EntitySystem
             {
                 if (TryComp(item, out HideLayerClothingComponent? comp))
                 {
-                    if (comp.Slots.Contains(layer))
+                    //Checks for mask toggling. TODO: Make a generic system for this
+                    if (comp.HideOnToggle && TryComp(item, out MaskComponent? mask) && TryComp(item, out ClothingComponent? clothing))
                     {
-                        //Checks for mask toggling. TODO: Make a generic system for this
-                        if (comp.HideOnToggle && TryComp(item, out MaskComponent? mask) && TryComp(item, out ClothingComponent? clothing))
-                        {
-                            if (clothing.EquippedPrefix != mask.EquippedPrefix)
-                            {
-                                shouldLayerShow = false;
-                                break;
-                            }
-                        }
-                        else
+                        if (clothing.EquippedPrefix != mask.EquippedPrefix)
                         {
                             shouldLayerShow = false;
                             break;
                         }
+                    }
+                    else
+                    {
+                        shouldLayerShow = false;
+                        break;
                     }
                 }
             }
@@ -123,28 +120,10 @@ public abstract class ClothingSystem : EntitySystem
     {
         component.InSlot = args.Slot;
         CheckEquipmentForLayerHide(args.Equipment, args.Equipee);
-
-        if ((component.Slots & args.SlotFlags) != SlotFlags.NONE)
-        {
-            var gotEquippedEvent = new ClothingGotEquippedEvent(args.Equipee, component);
-            RaiseLocalEvent(uid, ref gotEquippedEvent);
-
-            var didEquippedEvent = new ClothingDidEquippedEvent((uid, component));
-            RaiseLocalEvent(args.Equipee, ref didEquippedEvent);
-        }
     }
 
     protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
-        if ((component.Slots & args.SlotFlags) != SlotFlags.NONE)
-        {
-            var gotUnequippedEvent = new ClothingGotUnequippedEvent(args.Equipee, component);
-            RaiseLocalEvent(uid, ref gotUnequippedEvent);
-
-            var didUnequippedEvent = new ClothingDidUnequippedEvent((uid, component));
-            RaiseLocalEvent(args.Equipee, ref didUnequippedEvent);
-        }
-
         component.InSlot = null;
         CheckEquipmentForLayerHide(args.Equipment, args.Equipee);
     }

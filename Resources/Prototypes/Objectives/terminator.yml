@@ -1,0 +1,40 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseTerminatorObjective
+  components:
+  - type: Objective
+    difficulty: 1
+    issuer: susnet
+  - type: RoleRequirement
+    roles:
+      components:
+      - TerminatorRole
+
+- type: entity
+  noSpawn: true
+  parent: [BaseTerminatorObjective, BaseKillObjective]
+  id: TerminateObjective
+  description: Follow your programming and terminate the target.
+  components:
+  - type: Objective
+    unique: false
+  - type: TargetObjective
+    title: objective-terminate-title
+  - type: PickRandomPerson
+  - type: TerminatorTargetOverride
+  - type: KillPersonCondition
+    requireDead: true
+
+- type: entity
+  noSpawn: true
+  parent: BaseTerminatorObjective
+  id: ShutDownObjective
+  name: Shut down
+  description: Once the mission is complete die to prevent our technology from being stolen.
+  components:
+  - type: Objective
+    icon:
+      sprite: Mobs/Species/Terminator/parts.rsi
+      state: skull_icon
+  - type: DieCondition

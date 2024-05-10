@@ -62,7 +62,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var inventory = GetInventory(reagentDispenser);
 
             var state = new ReagentDispenserBoundUserInterfaceState(outputContainerInfo, GetNetEntity(outputContainer), inventory, reagentDispenser.Comp.DispenseAmount);
-            _userInterfaceSystem.SetUiState(reagentDispenser.Owner, ReagentDispenserUiKey.Key, state);
+            _userInterfaceSystem.TrySetUiState(reagentDispenser, ReagentDispenserUiKey.Key, state);
         }
 
         private ContainerInfo? BuildOutputContainerInfo(EntityUid? container)
@@ -81,9 +81,9 @@ namespace Content.Server.Chemistry.EntitySystems
             return null;
         }
 
-        private List<ReagentInventoryItem> GetInventory(Entity<ReagentDispenserComponent> reagentDispenser)
+        private List<KeyValuePair<string, KeyValuePair<string, string>>> GetInventory(Entity<ReagentDispenserComponent> reagentDispenser)
         {
-            var inventory = new List<ReagentInventoryItem>();
+            var inventory = new List<KeyValuePair<string, KeyValuePair<string, string>>>();
 
             for (var i = 0; i < reagentDispenser.Comp.NumSlots; i++)
             {
@@ -99,17 +99,15 @@ namespace Content.Server.Chemistry.EntitySystems
                 else
                     continue;
 
-                // Get volume remaining and color of solution
+                // Add volume remaining label
                 FixedPoint2 quantity = 0f;
-                var reagentColor = Color.White;
                 if (storedContainer != null && _solutionContainerSystem.TryGetDrainableSolution(storedContainer.Value, out _, out var sol))
                 {
                     quantity = sol.Volume;
-                    reagentColor = sol.GetColor(_prototypeManager);
                 }
                 var storedAmount = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", quantity));
 
-                inventory.Add(new ReagentInventoryItem(storageSlotId, reagentLabel, storedAmount, reagentColor));
+                inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(reagentLabel, storedAmount)));
             }
 
             return inventory;

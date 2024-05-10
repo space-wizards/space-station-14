@@ -1,5 +1,4 @@
 using Content.Server.Atmos.Components;
-using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;

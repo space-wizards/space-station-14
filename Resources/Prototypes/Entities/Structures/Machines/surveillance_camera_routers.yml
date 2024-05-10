@@ -13,7 +13,7 @@
     - type: DeviceNetworkRequiresPower
     - type: UserInterface
       interfaces:
-        enum.SurveillanceCameraSetupUiKey.Router:
+        - key: enum.SurveillanceCameraSetupUiKey.Router
           type: SurveillanceCameraSetupBoundUi
     - type: Machine
       board: SurveillanceCameraRouterCircuitboard
@@ -118,7 +118,7 @@
     - type: DeviceNetworkRequiresPower
     - type: UserInterface
       interfaces:
-        enum.SurveillanceCameraSetupUiKey.Router:
+        - key: enum.SurveillanceCameraSetupUiKey.Router
           type: SurveillanceCameraSetupBoundUi
     - type: Machine
       board: SurveillanceCameraWirelessRouterCircuitboard

@@ -222,8 +222,7 @@ public sealed partial class ClimbSystem : VirtualController
             used: entityToMove)
         {
             BreakOnMove = true,
-            BreakOnDamage = true,
-            DuplicateCondition = DuplicateConditions.SameTool | DuplicateConditions.SameTarget
+            BreakOnDamage = true
         };
 
         _audio.PlayPredicted(comp.StartClimbSound, climbable, user);

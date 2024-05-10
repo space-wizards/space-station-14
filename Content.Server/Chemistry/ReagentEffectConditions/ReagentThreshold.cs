@@ -1,4 +1,4 @@
-using Content.Shared.Chemistry.Reagent;
+﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
@@ -43,7 +43,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
                 prototype.TryIndex(Reagent, out reagentProto);
 
             return Loc.GetString("reagent-effect-condition-guidebook-reagent-threshold",
-                ("reagent", reagentProto?.LocalizedName ?? Loc.GetString("reagent-effect-condition-guidebook-this-reagent")),
+                ("reagent", reagentProto?.LocalizedName ?? "this reagent"),
                 ("max", Max == FixedPoint2.MaxValue ? (float) int.MaxValue : Max.Float()),
                 ("min", Min.Float()));
         }

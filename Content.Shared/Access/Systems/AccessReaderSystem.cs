@@ -153,7 +153,7 @@ public sealed class AccessReaderSystem : EntitySystem
             return IsAllowedInternal(access, stationKeys, reader);
 
         if (!_containerSystem.TryGetContainer(target, reader.ContainerAccessProvider, out var container))
-            return Paused(target); // when mapping, containers with electronics arent spawned
+            return false;
 
         foreach (var entity in container.ContainedEntities)
         {

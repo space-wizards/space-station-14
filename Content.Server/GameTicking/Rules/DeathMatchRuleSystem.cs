@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Administration.Commands;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
 using Content.Server.Mind;
@@ -34,6 +33,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnSpawnComplete);
         SubscribeLocalEvent<KillReportedEvent>(OnKillReported);
         SubscribeLocalEvent<DeathMatchRuleComponent, PlayerPointChangedEvent>(OnPointChanged);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
     }
 
     private void OnBeforeSpawn(PlayerBeforeSpawnEvent ev)
@@ -113,17 +113,21 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
         _roundEnd.EndRound(component.RestartDelay);
     }
 
-    protected override void AppendRoundEndText(EntityUid uid, DeathMatchRuleComponent component, GameRuleComponent gameRule, ref RoundEndTextAppendEvent args)
+    private void OnRoundEndTextAppend(RoundEndTextAppendEvent ev)
     {
-        if (!TryComp<PointManagerComponent>(uid, out var point))
-            return;
-
-        if (component.Victor != null && _player.TryGetPlayerData(component.Victor.Value, out var data))
+        var query = EntityQueryEnumerator<DeathMatchRuleComponent, PointManagerComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var dm, out var point, out var rule))
         {
-            args.AddLine(Loc.GetString("point-scoreboard-winner", ("player", data.UserName)));
-            args.AddLine("");
+            if (!GameTicker.IsGameRuleAdded(uid, rule))
+                continue;
+
+            if (dm.Victor != null && _player.TryGetPlayerData(dm.Victor.Value, out var data))
+            {
+                ev.AddLine(Loc.GetString("point-scoreboard-winner", ("player", data.UserName)));
+                ev.AddLine("");
+            }
+            ev.AddLine(Loc.GetString("point-scoreboard-header"));
+            ev.AddLine(new FormattedMessage(point.Scoreboard).ToMarkup());
         }
-        args.AddLine(Loc.GetString("point-scoreboard-header"));
-        args.AddLine(new FormattedMessage(point.Scoreboard).ToMarkup());
     }
 }

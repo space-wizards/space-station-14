@@ -6,14 +6,6 @@
   maxLimit: 3
   loadouts:
   - PlushieLizard
-  - PlushieSpaceLizard
-  - Lighter
-  - CigPackGreen
-  - CigPackRed
-  - CigPackBlue
-  - CigPackBlack
-  - CigarCase
-  - CigarGold
   - ClothingNeckLGBTPin
   - ClothingNeckAromanticPin
   - ClothingNeckAsexualPin
@@ -25,15 +17,6 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
-
-- type: loadoutGroup
-  id: Glasses
-  name: loadout-group-glasses
-  minLimit: 0
-  loadouts:
-  - Glasses
-  - GlassesJamjar
-  - GlassesJensen
 
 # Command
 - type: loadoutGroup
@@ -122,7 +105,6 @@
   loadouts:
   - GreyJumpsuit
   - GreyJumpskirt
-  - RainbowJumpsuit
   - AncientJumpsuit
 
 - type: loadoutGroup
@@ -246,14 +228,6 @@
   minLimit: 0
   loadouts:
   - LawyerNeck
-
-- type: loadoutGroup
-  id: LawyerBackpack
-  name: loadout-group-lawyer-backpack
-  loadouts:
-  - LawyerBackpack
-  - LawyerSatchel
-  - LawyerDuffel
 
 - type: loadoutGroup
   id: ChaplainHead
@@ -912,13 +886,6 @@
   - SecurityDuffel
 
 - type: loadoutGroup
-  id: SecurityBelt
-  name: loadout-group-security-belt
-  loadouts:
-  - SecurityBelt
-  - SecurityWebbing
-
-- type: loadoutGroup
   id: SecurityOuterClothing
   name: loadout-group-security-outerclothing
   loadouts:
@@ -994,7 +961,6 @@
   minLimit: 0
   loadouts:
   - ChiefMedicalOfficerBeret
-  - CMOMedicalHeadMirror
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerJumpsuit
@@ -1002,8 +968,6 @@
   loadouts:
   - ChiefMedicalOfficerJumpsuit
   - ChiefMedicalOfficerJumpskirt
-  - ChiefMedicalOfficerTurtleneckJumpsuit
-  - ChiefMedicalOfficerTurtleneckJumpskirt
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerOuterClothing
@@ -1043,7 +1007,6 @@
   loadouts:
   - MedicalBeret
   - SeniorPhysicianBeret
-  - MedicalHeadMirror
   - BlueSurgeryCap
   - GreenSurgeryCap
   - PurpleSurgeryCap

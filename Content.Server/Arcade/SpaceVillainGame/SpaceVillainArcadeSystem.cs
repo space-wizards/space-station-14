@@ -90,10 +90,12 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
                 _audioSystem.PlayPvs(component.NewGameSound, uid, AudioParams.Default.WithVolume(-4f));
 
                 component.Game = new SpaceVillainGame(uid, component, this);
-                _uiSystem.ServerSendUiMessage(uid, SpaceVillainArcadeUiKey.Key, component.Game.GenerateMetaDataMessage());
+                if (_uiSystem.TryGetUi(uid, SpaceVillainArcadeUiKey.Key, out var bui))
+                    _uiSystem.SendUiMessage(bui, component.Game.GenerateMetaDataMessage());
                 break;
             case PlayerAction.RequestData:
-                _uiSystem.ServerSendUiMessage(uid, SpaceVillainArcadeUiKey.Key, component.Game.GenerateMetaDataMessage());
+                if (_uiSystem.TryGetUi(uid, SpaceVillainArcadeUiKey.Key, out bui))
+                    _uiSystem.SendUiMessage(bui, component.Game.GenerateMetaDataMessage());
                 break;
         }
     }
@@ -108,6 +110,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && power.Powered)
             return;
 
-        _uiSystem.CloseUi(uid, SpaceVillainArcadeUiKey.Key);
+        if (_uiSystem.TryGetUi(uid, SpaceVillainArcadeUiKey.Key, out var bui))
+            _uiSystem.CloseAll(bui);
     }
 }

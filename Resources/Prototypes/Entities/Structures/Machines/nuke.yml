@@ -88,8 +88,8 @@
     key: enum.NukeUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.NukeUiKey.Key:
-        type: NukeBoundUserInterface
+    - key: enum.NukeUiKey.Key
+      type: NukeBoundUserInterface
   - type: StaticPrice
     price: 50000 # YOU STOLE A NUCLEAR FISSION EXPLOSIVE?!
   - type: CargoSellBlacklist

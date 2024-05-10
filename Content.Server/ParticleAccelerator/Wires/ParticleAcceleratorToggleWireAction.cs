@@ -23,9 +23,10 @@ public sealed partial class ParticleAcceleratorPowerWireAction : ComponentWireAc
     public override bool Cut(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
+        var userSession = EntityManager.TryGetComponent<ActorComponent>(user, out var actor) ? actor.PlayerSession : null;
 
         controller.CanBeEnabled = false;
-        paSystem.SwitchOff(wire.Owner, user, controller);
+        paSystem.SwitchOff(wire.Owner, userSession, controller);
         return true;
     }
 
@@ -38,10 +39,11 @@ public sealed partial class ParticleAcceleratorPowerWireAction : ComponentWireAc
     public override void Pulse(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
+        var userSession = EntityManager.TryGetComponent<ActorComponent>(user, out var actor) ? actor.PlayerSession : null;
 
         if (controller.Enabled)
-            paSystem.SwitchOff(wire.Owner, user, controller);
+            paSystem.SwitchOff(wire.Owner, userSession, controller);
         else if (controller.Assembled)
-            paSystem.SwitchOn(wire.Owner, user, controller);
+            paSystem.SwitchOn(wire.Owner, userSession, controller);
     }
 }

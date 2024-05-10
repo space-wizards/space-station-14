@@ -37,8 +37,8 @@
     canChangeTransferAmount: true
   - type: UserInterface
     interfaces:
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Destructible
     thresholds:
     - trigger:

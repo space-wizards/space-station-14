@@ -129,7 +129,7 @@ public sealed partial class ArtifactSystem : EntitySystem
     {
         var nodeAmount = _random.Next(component.NodesMin, component.NodesMax);
 
-        GenerateArtifactNodeTree(uid, component.NodeTree, nodeAmount);
+        GenerateArtifactNodeTree(uid, ref component.NodeTree, nodeAmount);
         var firstNode = GetRootNode(component.NodeTree);
         EnterNode(uid, ref firstNode, component);
     }
@@ -184,14 +184,13 @@ public sealed partial class ArtifactSystem : EntitySystem
         var currentNode = GetNodeFromId(component.CurrentNodeId.Value, component);
 
         currentNode.Triggered = true;
-        if (currentNode.Edges.Count == 0)
-            return;
-
-        var newNode = GetNewNode(uid, component);
-        if (newNode == null)
-            return;
-
-        EnterNode(uid, ref newNode, component);
+        if (currentNode.Edges.Any())
+        {
+            var newNode = GetNewNode(uid, component);
+            if (newNode == null)
+                return;
+            EnterNode(uid, ref newNode, component);
+        }
     }
 
     private ArtifactNode? GetNewNode(EntityUid uid, ArtifactComponent component)
@@ -211,15 +210,15 @@ public sealed partial class ArtifactSystem : EntitySystem
         {
             switch (trav.BiasDirection)
             {
-                case BiasDirection.Up:
-                    var upNodes = allNodes.Where(x => GetNodeFromId(x, component).Depth < currentNode.Depth).ToHashSet();
-                    if (upNodes.Count != 0)
-                        allNodes = upNodes;
+                case BiasDirection.In:
+                    var foo = allNodes.Where(x => GetNodeFromId(x, component).Depth < currentNode.Depth).ToHashSet();
+                    if (foo.Any())
+                        allNodes = foo;
                     break;
-                case BiasDirection.Down:
-                    var downNodes = allNodes.Where(x => GetNodeFromId(x, component).Depth > currentNode.Depth).ToHashSet();
-                    if (downNodes.Count != 0)
-                        allNodes = downNodes;
+                case BiasDirection.Out:
+                    var bar = allNodes.Where(x => GetNodeFromId(x, component).Depth > currentNode.Depth).ToHashSet();
+                    if (bar.Any())
+                        allNodes = bar;
                     break;
             }
         }
@@ -227,14 +226,12 @@ public sealed partial class ArtifactSystem : EntitySystem
         var undiscoveredNodes = allNodes.Where(x => !GetNodeFromId(x, component).Discovered).ToList();
         Log.Debug($"Undiscovered nodes: {string.Join(", ", undiscoveredNodes)}");
         var newNode = _random.Pick(allNodes);
-
-        if (undiscoveredNodes.Count != 0 && _random.Prob(0.75f))
+        if (undiscoveredNodes.Any() && _random.Prob(0.75f))
         {
             newNode = _random.Pick(undiscoveredNodes);
         }
 
         Log.Debug($"Going to node {newNode}");
-
         return GetNodeFromId(newNode, component);
     }
 

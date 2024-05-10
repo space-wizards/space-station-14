@@ -4,8 +4,8 @@ using Content.Shared.Charges.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
+using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Examine;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
@@ -20,7 +20,7 @@ public sealed class DashAbilitySystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
@@ -79,10 +79,11 @@ public sealed class DashAbilitySystem : EntitySystem
             _popup.PopupClient(Loc.GetString("dash-ability-no-charges", ("item", uid)), user, user);
             return;
         }
-        var origin = _transform.GetMapCoordinates(user);
+
+        var origin = Transform(user).MapPosition;
         var target = args.Target.ToMap(EntityManager, _transform);
         // prevent collision with the user duh
-        if (!_examine.InRangeUnOccluded(origin, target, SharedInteractionSystem.MaxRaycastRange, null))
+        if (!_interaction.InRangeUnobstructed(origin, target, 0f, CollisionGroup.Opaque, uid => uid == user))
         {
             // can only dash if the destination is visible on screen
             _popup.PopupClient(Loc.GetString("dash-ability-cant-see", ("item", uid)), user, user);

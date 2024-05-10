@@ -59,7 +59,6 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        base.Initialize();
         Subs.CVar(_configurationManager, CCVars.ICRandomCharacters, e => _randomizeCharacters = e, true);
 
         _spawnerCallbacks = new Dictionary<SpawnPriorityPreference, Action<PlayerSpawningEvent>>()
@@ -182,7 +181,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (prototype?.StartingGear != null)
         {
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
-            EquipStartingGear(entity.Value, startingGear, raiseEvent: false);
+            EquipStartingGear(entity.Value, startingGear);
         }
 
         // Run loadouts after so stuff like storage loadouts can get
@@ -218,13 +217,10 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
                     }
 
                     // Handle any extra data here.
-                    EquipStartingGear(entity.Value, startingGear, raiseEvent: false);
+                    EquipStartingGear(entity.Value, startingGear);
                 }
             }
         }
-
-        var gearEquippedEv = new StartingGearEquippedEvent(entity.Value);
-        RaiseLocalEvent(entity.Value, ref gearEquippedEv, true);
 
         if (profile != null)
         {

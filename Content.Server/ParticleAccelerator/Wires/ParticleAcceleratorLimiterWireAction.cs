@@ -48,7 +48,8 @@ public sealed partial class ParticleAcceleratorLimiterWireAction : ComponentWire
         // Yes, it's a feature that mending this wire WON'T WORK if the strength wire is also cut.
         // Since that blocks SetStrength().
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
-        paSystem.SetStrength(wire.Owner, controller.MaxStrength, user, controller);
+        var userSession = EntityManager.TryGetComponent<ActorComponent>(user, out var actor) ? actor.PlayerSession : null;
+        paSystem.SetStrength(wire.Owner, controller.MaxStrength, userSession, controller);
         return true;
     }
 

@@ -1,5 +1,4 @@
-﻿using Content.Server.GameTicking.Components;
-using Content.Server.GameTicking.Rules.Components;
+﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
 using Robust.Shared.Random;
 

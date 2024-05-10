@@ -58,12 +58,12 @@ public sealed class LockSystem : EntitySystem
             return;
 
         // Only attempt an unlock by default on Activate
-        if (lockComp.Locked && lockComp.UnlockOnClick)
+        if (lockComp.Locked)
         {
             TryUnlock(uid, args.User, lockComp);
             args.Handled = true;
         }
-        else if (!lockComp.Locked && lockComp.LockOnClick)
+        else if (lockComp.LockOnClick)
         {
             TryLock(uid, args.User, lockComp);
             args.Handled = true;
@@ -199,18 +199,6 @@ public sealed class LockSystem : EntitySystem
 
         Unlock(uid, user, lockComp);
         return true;
-    }
-
-    /// <summary>
-    /// Returns true if the entity is locked.
-    /// Entities with no lock component are considered unlocked.
-    /// </summary>
-    public bool IsLocked(Entity<LockComponent?> ent)
-    {
-        if (!Resolve(ent, ref ent.Comp, false))
-            return false;
-
-        return ent.Comp.Locked;
     }
 
     /// <summary>

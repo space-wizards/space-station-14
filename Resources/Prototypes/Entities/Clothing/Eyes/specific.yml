@@ -16,6 +16,6 @@
       default: ClothingEyesGlassesSunglasses
     - type: UserInterface
       interfaces:
-        enum.ChameleonUiKey.Key:
+        - key: enum.ChameleonUiKey.Key
           type: ChameleonBoundUserInterface
 

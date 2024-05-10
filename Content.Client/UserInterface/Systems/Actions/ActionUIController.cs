@@ -15,7 +15,6 @@ using Content.Shared.Actions;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -43,7 +42,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly IInputManager _input = default!;
 
     [UISystemDependency] private readonly ActionsSystem? _actionsSystem = default;
     [UISystemDependency] private readonly InteractionOutlineSystem? _interactionOutline = default;
@@ -202,7 +200,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         var coords = args.Coordinates;
 
-        if (!_actionsSystem.ValidateWorldTarget(user, coords, (actionId, action)))
+        if (!_actionsSystem.ValidateWorldTarget(user, coords, action))
         {
             // Invalid target.
             if (action.DeselectOnMiss)
@@ -237,7 +235,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         var entity = args.EntityUid;
 
-        if (!_actionsSystem.ValidateEntityTarget(user, entity, (actionId, action)))
+        if (!_actionsSystem.ValidateEntityTarget(user, entity, action))
         {
             if (action.DeselectOnMiss)
                 StopTargeting();
@@ -357,10 +355,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private void OnActionsUpdated()
     {
         QueueWindowUpdate();
-
-        // TODO ACTIONS allow buttons to persist across state applications
-        // Then we don't have to interrupt drags any time the buttons get rebuilt.
-        _menuDragHelper.EndDrag();
 
         if (_actionsSystem != null)
             _container?.SetActionData(_actionsSystem, _actions.ToArray());
@@ -522,8 +516,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             button.ClearData();
             if (_container?.TryGetButtonIndex(button, out position) ?? false)
             {
-                if (_actions.Count > position && position >= 0)
-                    _actions.RemoveAt(position);
+                _actions.RemoveAt(position);
             }
         }
         else if (button.TryReplaceWith(actionId.Value, _actionsSystem) &&
@@ -546,22 +539,23 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void DragAction()
     {
-        if (_menuDragHelper.Dragged is not {ActionId: {} action} dragged)
-        {
-            _menuDragHelper.EndDrag();
-            return;
-        }
-
         EntityUid? swapAction = null;
-        var currentlyHovered = UIManager.MouseGetControl(_input.MouseScreenPosition);
-        if (currentlyHovered is ActionButton button)
+        if (UIManager.CurrentlyHovered is ActionButton button)
         {
+            if (!_menuDragHelper.IsDragging || _menuDragHelper.Dragged?.ActionId is not { } type)
+            {
+                _menuDragHelper.EndDrag();
+                return;
+            }
+
             swapAction = button.ActionId;
-            SetAction(button, action, false);
+            SetAction(button, type, false);
         }
 
-        if (dragged.Parent is ActionButtonContainer)
-            SetAction(dragged, swapAction, false);
+        if (_menuDragHelper.Dragged is {Parent: ActionButtonContainer} old)
+        {
+            SetAction(old, swapAction, false);
+        }
 
         if (_actionsSystem != null)
             _container?.SetActionData(_actionsSystem, _actions.ToArray());
@@ -616,27 +610,27 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnActionPressed(GUIBoundKeyEventArgs args, ActionButton button)
     {
-        if (args.Function == EngineKeyFunctions.UIRightClick)
+        if (args.Function == EngineKeyFunctions.UIClick)
+        {
+            if (button.ActionId == null)
+            {
+                var ev = new FillActionSlotEvent();
+                EntityManager.EventBus.RaiseEvent(EventSource.Local, ev);
+                if (ev.Action != null)
+                    SetAction(button, ev.Action);
+            }
+            else
+            {
+                _menuDragHelper.MouseDown(button);
+            }
+
+            args.Handle();
+        }
+        else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
             SetAction(button, null);
             args.Handle();
-            return;
         }
-
-        if (args.Function != EngineKeyFunctions.UIClick)
-            return;
-
-        args.Handle();
-        if (button.ActionId != null)
-        {
-            _menuDragHelper.MouseDown(button);
-            return;
-        }
-
-        var ev = new FillActionSlotEvent();
-        EntityManager.EventBus.RaiseEvent(EventSource.Local, ev);
-        if (ev.Action != null)
-            SetAction(button, ev.Action);
     }
 
     private void OnActionUnpressed(GUIBoundKeyEventArgs args, ActionButton button)
@@ -644,31 +638,33 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (args.Function != EngineKeyFunctions.UIClick || _actionsSystem == null)
             return;
 
-        args.Handle();
+        //todo: make dragging onto the same spot NOT trigger again
+        if (UIManager.CurrentlyHovered == button)
+        {
+            _menuDragHelper.EndDrag();
 
-        if (_menuDragHelper.IsDragging)
+            if (_actionsSystem.TryGetActionData(button.ActionId, out var baseAction))
+            {
+                if (baseAction is BaseTargetActionComponent action)
+                {
+                    // for target actions, we go into "select target" mode, we don't
+                    // message the server until we actually pick our target.
+
+                    // if we're clicking the same thing we're already targeting for, then we simply cancel
+                    // targeting
+                    ToggleTargeting(button.ActionId.Value, action);
+                    return;
+                }
+
+                _actionsSystem?.TriggerAction(button.ActionId.Value, baseAction);
+            }
+        }
+        else
         {
             DragAction();
-            return;
         }
 
-        _menuDragHelper.EndDrag();
-
-        if (!_actionsSystem.TryGetActionData(button.ActionId, out var baseAction))
-            return;
-
-        if (baseAction is not BaseTargetActionComponent action)
-        {
-            _actionsSystem?.TriggerAction(button.ActionId.Value, baseAction);
-            return;
-        }
-
-        // for target actions, we go into "select target" mode, we don't
-        // message the server until we actually pick our target.
-
-        // if we're clicking the same thing we're already targeting for, then we simply cancel
-        // targeting
-        ToggleTargeting(button.ActionId.Value, action);
+        args.Handle();
     }
 
     private bool OnMenuBeginDrag()

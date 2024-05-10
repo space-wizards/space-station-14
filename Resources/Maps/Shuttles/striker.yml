@@ -1771,7 +1771,7 @@ entities:
     - type: Transform
       pos: 0.5436061,-7.5129323
       parent: 325
-- proto: SpawnPointNukies
+- proto: SpawnPointLoneNukeOperative
   entities:
   - uid: 322
     components:

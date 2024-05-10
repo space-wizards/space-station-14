@@ -21,17 +21,11 @@ public sealed partial class LockComponent : Component
     public bool Locked  = true;
 
     /// <summary>
-    /// Whether or not the lock is locked by simply clicking.
+    /// Whether or not the lock is toggled by simply clicking.
     /// </summary>
     [DataField("lockOnClick"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public bool LockOnClick;
-
-    /// <summary>
-    /// Whether or not the lock is unlocked by simply clicking.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool UnlockOnClick = true;
 
     /// <summary>
     /// The sound played when unlocked.

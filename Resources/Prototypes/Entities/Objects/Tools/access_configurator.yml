@@ -62,12 +62,12 @@
       doAfter: 0.5
     - type: UserInterface
       interfaces:
-        enum.AccessOverriderUiKey.Key:
+        - key: enum.AccessOverriderUiKey.Key
           type: AccessOverriderBoundUserInterface
     - type: ActivatableUI
       key: enum.AccessOverriderUiKey.Key
       requireHands: true
-      requireActiveHand: false
+      closeOnHandDeselect: false
       singleUser: true
     - type: ItemSlots
     - type: ContainerContainer

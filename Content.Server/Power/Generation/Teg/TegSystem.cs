@@ -7,7 +7,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
-using Content.Shared.Atmos;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
 using Content.Shared.Power.Generation.Teg;

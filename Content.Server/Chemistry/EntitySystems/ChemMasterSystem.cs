@@ -80,7 +80,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 chemMaster.Mode, BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
                 bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillDosageLimit, updateLabel);
 
-            _userInterfaceSystem.SetUiState(owner, ChemMasterUiKey.Key, state);
+            _userInterfaceSystem.TrySetUiState(owner, ChemMasterUiKey.Key, state);
         }
 
         private void OnSetModeMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSetModeMessage message)
@@ -179,7 +179,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnCreatePillsMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterCreatePillsMessage message)
         {
-            var user = message.Actor;
+            var user = message.Session.AttachedEntity;
             var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
                 || !TryComp(container, out StorageComponent? storage))
@@ -218,9 +218,18 @@ namespace Content.Server.Chemistry.EntitySystems
                 pill.PillType = chemMaster.Comp.PillType;
                 Dirty(item, pill);
 
-                // Log pill creation by a user
-                _adminLogger.Add(LogType.Action, LogImpact.Low,
-                    $"{ToPrettyString(user):user} printed {ToPrettyString(item):pill} {SharedSolutionContainerSystem.ToPrettyString(itemSolution.Comp.Solution)}");
+                if (user.HasValue)
+                {
+                    // Log pill creation by a user
+                    _adminLogger.Add(LogType.Action, LogImpact.Low,
+                        $"{ToPrettyString(user.Value):user} printed {ToPrettyString(item):pill} {SolutionContainerSystem.ToPrettyString(itemSolution.Comp.Solution)}");
+                }
+                else
+                {
+                    // Log pill creation by magic? This should never happen... right?
+                    _adminLogger.Add(LogType.Action, LogImpact.Low,
+                        $"Unknown printed {ToPrettyString(item):pill} {SolutionContainerSystem.ToPrettyString(itemSolution.Comp.Solution)}");
+                }
             }
 
             UpdateUiState(chemMaster);
@@ -229,7 +238,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnOutputToBottleMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterOutputToBottleMessage message)
         {
-            var user = message.Actor;
+            var user = message.Session.AttachedEntity;
             var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
                 || !_solutionContainerSystem.TryGetSolution(container, SharedChemMaster.BottleSolutionName, out var soln, out var solution))
@@ -251,9 +260,18 @@ namespace Content.Server.Chemistry.EntitySystems
             _labelSystem.Label(container, message.Label);
             _solutionContainerSystem.TryAddSolution(soln.Value, withdrawal);
 
-            // Log bottle creation by a user
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(user):user} bottled {ToPrettyString(container):bottle} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
+            if (user.HasValue)
+            {
+                // Log bottle creation by a user
+                _adminLogger.Add(LogType.Action, LogImpact.Low,
+                    $"{ToPrettyString(user.Value):user} bottled {ToPrettyString(container):bottle} {SolutionContainerSystem.ToPrettyString(solution)}");
+            }
+            else
+            {
+                // Log bottle creation by magic? This should never happen... right?
+                _adminLogger.Add(LogType.Action, LogImpact.Low,
+                    $"Unknown bottled {ToPrettyString(container):bottle} {SolutionContainerSystem.ToPrettyString(solution)}");
+            }
 
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);

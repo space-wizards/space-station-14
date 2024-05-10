@@ -26,13 +26,6 @@ public sealed partial class WieldableComponent : Component
     [AutoNetworkedField, DataField("wielded")]
     public bool Wielded = false;
 
-    /// <summary>
-    ///     Whether using the item inhand while wielding causes the item to unwield.
-    ///     Unwielding can conflict with other inhand actions. 
-    /// </summary>
-    [DataField]
-    public bool UnwieldOnUse = true;
-
     [DataField("wieldedInhandPrefix")]
     public string? WieldedInhandPrefix = "wielded";
 
