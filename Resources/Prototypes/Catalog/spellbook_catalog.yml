@@ -4,7 +4,7 @@
   name: spellbook-fireball-name
   description: spellbook-fireball-desc
   productAction: ActionFireball
-  productUpgradeID: SpellbookFireballUpgrade
+  productUpgradeId: SpellbookFireballUpgrade
   cost:
     WizCoin: 2
   categories:
@@ -119,10 +119,9 @@
     stock: 1
 
 # Upgrades
-# TODO: Delist automatically with a condition, have it check for the remaining upgrades or something
 - type: listing
   id: SpellbookFireballUpgrade
-  productUpgradeID: SpellbookFireballUpgrade
+  productUpgradeId: SpellbookFireballUpgrade
   name: fireball upgrade
   description: upgrades fireball
   icon:
@@ -136,5 +135,5 @@
   - !type:BuyBeforeCondition
     whitelist:
       - SpellbookFireball
-  - !type:ListingLimitedStockCondition
-    stock: 2 #manual delist for now
+  - !type:ListingLimitedUpgradesCondition
+    prototype: ActionFireball
