@@ -22,7 +22,6 @@
     damageContainers:
     - Inorganic
     - Silicon
-  - type: DiagnosticScanner
 
 - type: entity
   parent: ClothingEyesBase
@@ -203,7 +202,6 @@
   - type: ShowHungerIcons
   - type: ShowThirstIcons
   - type: ShowSyndicateIcons
-  - type: DiagnosticScanner
 
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons]
@@ -284,4 +282,3 @@
     damageContainers:
     - Inorganic
     - Silicon
-  - type: DiagnosticScanner
