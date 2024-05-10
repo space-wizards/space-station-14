@@ -1,143 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Engineering structures orders in cargo now supplied via flatpacks (e.g.
-      tesla & singulo generators, other stuff for them).
-    type: Tweak
-  - message: Thrusters and gyroscopes now supplied in crates via flatpacks.
-    type: Tweak
-  id: 6052
-  time: '2024-02-28T22:02:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25647
-- author: c4llv07e
-  changes:
-  - message: Cryo won't remove you from the new body if you chose a new ghost role
-      before cryo deleted your old body.
-    type: Fix
-  id: 6053
-  time: '2024-02-28T22:09:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24991
-- author: Nairodian
-  changes:
-  - message: You can now remove the rust from reinforced walls with a welder.
-    type: Fix
-  id: 6054
-  time: '2024-02-29T00:44:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25690
-- author: Ubaser
-  changes:
-  - message: Eris UI theme has been removed.
-    type: Remove
-  id: 6055
-  time: '2024-02-29T05:53:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25673
-- author: Rainfey
-  changes:
-  - message: Disallow multiple antag roles per player
-    type: Fix
-  id: 6056
-  time: '2024-02-29T06:25:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23445
-- author: Kukutis96513
-  changes:
-  - message: Changed the amount of plushies in the lizard plushie crate.
-    type: Tweak
-  id: 6057
-  time: '2024-02-29T16:45:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25122
-- author: Aexxie
-  changes:
-  - message: Nutribricks spawn in Survival Kits in place of Tinned Meat.
-    type: Tweak
-  - message: Lizards can now eat Nutribricks.
-    type: Fix
-  - message: Moths can eat Nutribrick wrappers.
-    type: Add
-  id: 6058
-  time: '2024-02-29T21:39:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25659
-- author: Flareguy
-  changes:
-  - message: Big O2 tanks and N2 tanks no longer spawn in any departmental locker.
-      Use tank dispensers to get them instead.
-    type: Tweak
-  - message: Removed all instances where N2 tanks spawned as counterparts to O2 tanks.
-      This includes things like lockers, suit storages, and the emergency toolbox.
-    type: Remove
-  id: 6059
-  time: '2024-02-29T21:40:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25660
-- author: Potato1234_x
-  changes:
-  - message: Added fill levels to bowls, chefs rejoice!
-    type: Add
-  id: 6060
-  time: '2024-02-29T21:41:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25639
-- author: Plykiya
-  changes:
-  - message: Dragging objects over gas pipes no longer slows you down.
-    type: Fix
-  id: 6061
-  time: '2024-02-29T21:41:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25629
-- author: TheShuEd
-  changes:
-  - message: 9 new colourful curtains. Can be crafted from carpets.
-    type: Add
-  id: 6062
-  time: '2024-02-29T22:25:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25684
-- author: Nairodian
-  changes:
-  - message: The smooth tail now has a second color layer to customize.
-    type: Tweak
-  id: 6063
-  time: '2024-02-29T22:27:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25685
-- author: Hanzdegloker
-  changes:
-  - message: Commonly used decals should no longer washout the details of the tiles
-      below.
-    type: Tweak
-  id: 6064
-  time: '2024-02-29T22:27:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25689
-- author: lzk228
-  changes:
-  - message: Added recipe of handheld station map to autolathe.
-    type: Add
-  id: 6065
-  time: '2024-02-29T22:34:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25719
-- author: MACMAN2003
-  changes:
-  - message: There are now more ways to craft reinforced plasma/uranium glass.
-    type: Tweak
-  id: 6066
-  time: '2024-02-29T22:57:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/22804
-- author: deltanedas
-  changes:
-  - message: Acidifiers and microbombs now require confirmation before gibbing you.
-    type: Tweak
-  id: 6067
-  time: '2024-03-01T02:48:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24609
-- author: exincore
-  changes:
-  - message: Chameleon gear now only reveals its menu button to its wearer.
-    type: Tweak
-  id: 6068
-  time: '2024-03-01T12:49:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25746
-- author: Nairodian
-  changes:
-  - message: Fixed all command and security roles not having cryogenics access.
-    type: Fix
-  id: 6069
-  time: '2024-03-01T21:21:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25752
 - author: IlyaElDunaev
   changes:
   - message: Added detective's rubber stamp.
@@ -3855,3 +3716,146 @@
   id: 6551
   time: '2024-05-08T00:25:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26746
+- author: Cojoke-dot
+  changes:
+  - message: You can now shoot over racks
+    type: Tweak
+  id: 6552
+  time: '2024-05-08T06:46:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27797
+- author: ShadowCommander
+  changes:
+  - message: Lizards now stop tail pulling when they are downed.
+    type: Fix
+  id: 6553
+  time: '2024-05-08T06:49:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27796
+- author: Plykiya
+  changes:
+  - message: Re-added supplybots.
+    type: Add
+  id: 6554
+  time: '2024-05-08T07:30:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27769
+- author: Hobbitmax
+  changes:
+  - message: Replaced Syndicate Jaws Of Life with a Pyjama bundle on the Train map.
+    type: Tweak
+  id: 6555
+  time: '2024-05-08T07:30:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27734
+- author: Plykiya
+  changes:
+  - message: The ninja's katana dash is now more reliable.
+    type: Fix
+  id: 6556
+  time: '2024-05-08T10:21:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27793
+- author: K-Dynamic
+  changes:
+  - message: Bike Horns, Suspenders and the Clown Recorder are now available from
+      the Theatrical Performances Crate
+    type: Tweak
+  id: 6557
+  time: '2024-05-08T12:30:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27668
+- author: Riolume
+  changes:
+  - message: Added ability to drink from spray bottles
+    type: Add
+  - message: Can now see the amount of liquid in spray bottles
+    type: Add
+  id: 6558
+  time: '2024-05-09T05:56:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27815
+- author: Blackern5000
+  changes:
+  - message: Atmos metal pipes now deal blunt damage.
+    type: Add
+  id: 6559
+  time: '2024-05-09T06:00:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27673
+- author: Plykiya
+  changes:
+  - message: The emagged protolathe can now print truncheons and the new T3 portable
+      recharger.
+    type: Add
+  - message: The emagged circuit printer can now print ship guns.
+    type: Add
+  - message: Autolathe emagged recipes that are research gated have been moved over
+      to the protolathe.
+    type: Tweak
+  id: 6560
+  time: '2024-05-09T06:03:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27575
+- author: deltanedas
+  changes:
+  - message: Ninja can now hack criminal records consoles to make everyone wanted.
+    type: Add
+  id: 6561
+  time: '2024-05-09T06:35:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24982
+- author: deltanedas
+  changes:
+  - message: Added the robotics console for remotely looking at, disabling or destroying
+      cyborgs!
+    type: Add
+  id: 6562
+  time: '2024-05-09T06:36:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24855
+- author: Killerqu00
+  changes:
+  - message: Revolutionaries can now cuff command members in order to seize control
+      of the station.
+    type: Tweak
+  id: 6563
+  time: '2024-05-09T06:48:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27627
+- author: vorkathbruh
+  changes:
+  - message: Nuclear operative agents now require time in Chemistry rather than time
+      in the Medical department.
+    type: Tweak
+  id: 6564
+  time: '2024-05-09T06:48:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27098
+- author: deltanedas
+  changes:
+  - message: Firesuits and hardsuits now protect your skin from fire, you will instead
+      die of heatstroke.
+    type: Tweak
+  id: 6565
+  time: '2024-05-09T07:12:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27161
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Fixed non-inital infected getting the succumb to zombie action.
+    type: Fix
+  id: 6566
+  time: '2024-05-09T21:45:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27820
+- author: Hanzdegloker
+  changes:
+  - message: Added CMO turtleneck jumpsuit/jumpskirt.
+    type: Add
+  - message: Added a head mirror which may spawn in medical doctor's lockers
+    type: Add
+  id: 6567
+  time: '2024-05-09T21:53:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26153
+- author: PrPleGoo
+  changes:
+  - message: The crafted medsec hud now displays health icons too.
+    type: Tweak
+  - message: The health status icon now goes on the left for all types of med HUD.
+    type: Tweak
+  id: 6568
+  time: '2024-05-10T01:35:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27483
+- author: Moomoobeef
+  changes:
+  - message: CentCom has now started hiring crew who are short-sighted.
+    type: Add
+  id: 6569
+  time: '2024-05-10T01:40:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26037

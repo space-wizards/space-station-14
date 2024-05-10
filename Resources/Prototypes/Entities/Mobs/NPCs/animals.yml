@@ -1422,6 +1422,7 @@
           horns_bighorn: KoboldHornColors
           horns_argali: KoboldHornColors
           horns_ayrshire: KoboldHornColors
+          horns_floppy_kobold_ears: Inherit
           horns_double: Inherit
           horns_kobold_ears: Inherit
   - type: Butcherable
