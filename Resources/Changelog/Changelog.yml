@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Rev's reenabled
-    type: Tweak
-  id: 6078
-  time: '2024-03-03T00:30:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25704
 - author: EmoGarbage404
   changes:
   - message: Fixed issues where using the Quantum Spin Inverted would bug out the
@@ -3861,3 +3854,11 @@
   id: 6577
   time: '2024-05-10T08:12:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27702
+- author: TheShuEd
+  changes:
+  - message: 'New events added to the game: Random ships with new ghost roles can
+      now come to the station.'
+    type: Add
+  id: 6578
+  time: '2024-05-10T11:35:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24490
