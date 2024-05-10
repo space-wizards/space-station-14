@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nairodian
-  changes:
-  - message: Fixed all command and security roles not having cryogenics access.
-    type: Fix
-  id: 6069
-  time: '2024-03-01T21:21:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25752
 - author: IlyaElDunaev
   changes:
   - message: Added detective's rubber stamp.
@@ -3859,3 +3852,10 @@
   id: 6568
   time: '2024-05-10T01:35:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27483
+- author: Moomoobeef
+  changes:
+  - message: CentCom has now started hiring crew who are short-sighted.
+    type: Add
+  id: 6569
+  time: '2024-05-10T01:40:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26037
