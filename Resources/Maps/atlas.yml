@@ -3750,6 +3750,11 @@ entities:
       parent: 30
 - proto: AirlockExternalGlassShuttleArrivals
   entities:
+  - uid: 1296
+    components:
+    - type: Transform
+      pos: 7.5,30.5
+      parent: 30
   - uid: 7628
     components:
     - type: Transform
@@ -3783,14 +3788,6 @@ entities:
     components:
     - type: Transform
       pos: 21.5,-24.5
-      parent: 30
-- proto: AirlockExternalGlassShuttleEscape
-  entities:
-  - uid: 1296
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 7.5,30.5
       parent: 30
 - proto: AirlockExternalGlassShuttleLocked
   entities:
@@ -4745,11 +4742,6 @@ entities:
     components:
     - type: Transform
       pos: 15.5,34.5
-      parent: 30
-  - uid: 8509
-    components:
-    - type: Transform
-      pos: 7.5,30.5
       parent: 30
 - proto: AtmosFixBlockerMarker
   entities:
