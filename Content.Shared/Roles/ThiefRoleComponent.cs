@@ -1,6 +1,8 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Roles;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ThiefRoleComponent : AntagonistRoleComponent
 {
 }

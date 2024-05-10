@@ -1,11 +1,13 @@
-﻿namespace Content.Shared.Roles;
+﻿using Robust.Shared.GameStates;
+
+namespace Content.Shared.Roles;
 
 /// <summary>
 /// Adds a briefing to the character info menu, does nothing else.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RoleBriefingComponent : Component
 {
-    [DataField("briefing"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public string Briefing;
 }

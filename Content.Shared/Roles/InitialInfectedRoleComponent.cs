@@ -1,6 +1,8 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Roles;
 
-[RegisterComponent, ExclusiveAntagonist]
+[RegisterComponent, ExclusiveAntagonist, NetworkedComponent]
 public sealed partial class InitialInfectedRoleComponent : AntagonistRoleComponent
 {
 

@@ -1,9 +1,11 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Roles;
 
 /// <summary>
 ///     Added to mind entities to tag that they are a Revolutionary.
 /// </summary>
-[RegisterComponent, ExclusiveAntagonist]
+[RegisterComponent, ExclusiveAntagonist, NetworkedComponent]
 public sealed partial class RevolutionaryRoleComponent : AntagonistRoleComponent
 {
     /// <summary>

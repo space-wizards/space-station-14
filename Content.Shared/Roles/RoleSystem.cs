@@ -53,7 +53,7 @@ public sealed class RoleSystem : EntitySystem
         args.Roles.Add(new RoleInfo(component, name, false, playTimeTracker, prototype));
     }
 
-    protected void SubscribeAntagEvents<T>() where T : AntagonistRoleComponent
+    private void SubscribeAntagEvents<T>() where T : AntagonistRoleComponent
     {
         SubscribeLocalEvent((EntityUid _, T component, ref MindGetAllRolesEvent args) =>
         {
