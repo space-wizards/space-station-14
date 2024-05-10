@@ -5,7 +5,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
-namespace Content.Server.HealthExaminable;
+namespace Content.Shared.HealthExaminable;
 
 public sealed class HealthExaminableSystem : EntitySystem
 {
@@ -42,7 +42,7 @@ public sealed class HealthExaminableSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private FormattedMessage CreateMarkup(EntityUid uid, HealthExaminableComponent component, DamageableComponent damage)
+    public FormattedMessage CreateMarkup(EntityUid uid, HealthExaminableComponent component, DamageableComponent damage)
     {
         var msg = new FormattedMessage();
 

@@ -1,4 +1,3 @@
-using Content.Server.Access.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
@@ -6,7 +5,7 @@ using Content.Shared.PDA;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Access.Systems;
+namespace Content.Shared.Access.Systems;
 
 public sealed class IdExaminableSystem : EntitySystem
 {
@@ -22,7 +21,7 @@ public sealed class IdExaminableSystem : EntitySystem
     private void OnGetExamineVerbs(EntityUid uid, IdExaminableComponent component, GetVerbsEvent<ExamineVerb> args)
     {
         var detailsRange = _examineSystem.IsInDetailsRange(args.User, uid);
-        var info = GetInfo(uid) ?? Loc.GetString("id-examinable-component-verb-no-id");
+        var info = GetMessage(uid);
 
         var verb = new ExamineVerb()
         {
@@ -41,7 +40,12 @@ public sealed class IdExaminableSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private string? GetInfo(EntityUid uid)
+    public string GetMessage(EntityUid uid)
+    {
+        return GetInfo(uid) ?? Loc.GetString("id-examinable-component-verb-no-id");
+    }
+
+    public string? GetInfo(EntityUid uid)
     {
         if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
         {
@@ -65,9 +69,9 @@ public sealed class IdExaminableSystem : EntitySystem
         var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle) ? string.Empty : $" ({id.JobTitle})";
 
         var val = string.IsNullOrWhiteSpace(id.FullName)
-            ? Loc.GetString("access-id-card-component-owner-name-job-title-text",
+            ? Loc.GetString(id.NameLocId,
                 ("jobSuffix", jobSuffix))
-            : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
+            : Loc.GetString(id.FullNameLocId,
                 ("fullName", id.FullName),
                 ("jobSuffix", jobSuffix));
 
