@@ -87,19 +87,25 @@ public sealed class DrainSystem : SharedDrainSystem
 
         // Try to transfer as much solution as possible to the drain
 
-        var transferSolution = _solutionContainerSystem.SplitSolution(containerSoln.Value,
-            FixedPoint2.Min(containerSolution.Volume, drainSolution.AvailableVolume));
+        var amountToPutInDrain = drainSolution.AvailableVolume;
+        var amountToSpillOnGround = containerSolution.Volume - drainSolution.AvailableVolume;
 
-        _solutionContainerSystem.TryAddSolution(drain.Solution.Value, transferSolution);
-
-        _audioSystem.PlayPvs(drain.ManualDrainSound, target);
-        _ambientSoundSystem.SetAmbience(target, true);
-
-        // If drain is full, spill
-
-        if (drainSolution.MaxVolume == drainSolution.Volume)
+        if (amountToPutInDrain > 0)
         {
-            _puddleSystem.TrySpillAt(Transform(target).Coordinates, containerSolution, out _);
+            var solutionToPutInDrain = _solutionContainerSystem.SplitSolution(containerSoln.Value, amountToPutInDrain);
+            _solutionContainerSystem.TryAddSolution(drain.Solution.Value, solutionToPutInDrain);
+
+            _audioSystem.PlayPvs(drain.ManualDrainSound, target);
+            _ambientSoundSystem.SetAmbience(target, true);
+        }
+
+
+        // Spill the remainder.
+
+        if (amountToSpillOnGround > 0)
+        {
+            var solutionToSpill = _solutionContainerSystem.SplitSolution(containerSoln.Value, amountToSpillOnGround);
+            _puddleSystem.TrySpillAt(Transform(target).Coordinates, solutionToSpill, out _);
             _popupSystem.PopupEntity(
                 Loc.GetString("drain-component-empty-verb-target-is-full-message", ("object", target)),
                 container);

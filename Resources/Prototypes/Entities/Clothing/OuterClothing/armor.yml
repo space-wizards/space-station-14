@@ -21,6 +21,7 @@
         Heat: 0.80
   - type: ExplosionResistance
     damageCoefficient: 0.90
+  - type: AllowSuitStorage
 
 #Alternate / slim basic armor vest
 - type: entity
@@ -96,6 +97,7 @@
         Heat: 0.4 # this technically means it protects against fires pretty well? -heat is just for lasers and stuff, not atmos temperature
   - type: Reflect
     reflectProb: 1
+    innate: true # armor grants a passive shield that does not require concentration to maintain
     reflects:
       - Energy
 
@@ -138,6 +140,8 @@
         Radiation: 0
         Caustic: 0.75
   - type: GroupExamine
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterArmorHeavy
@@ -208,6 +212,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.65
   - type: GroupExamine
+  - type: AllowSuitStorage
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -234,6 +239,8 @@
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: GroupExamine
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -260,6 +267,8 @@
   - type: Construction
     graph: BoneArmor
     node: armor
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -279,3 +288,6 @@
         Piercing: 0.6
         Heat: 0.5
   - type: GroupExamine
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
+

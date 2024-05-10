@@ -82,6 +82,13 @@ public sealed partial class ExplosiveComponent : Component
     public bool? DeleteAfterExplosion;
 
     /// <summary>
+    /// Whether to not set <see cref="Exploded"/> to true, allowing it to explode multiple times.
+    /// This should never be used if it is damageable.
+    /// </summary>
+    [DataField]
+    public bool Repeatable;
+
+    /// <summary>
     ///     Avoid somehow double-triggering this explosion (e.g. by damaging this entity from its own explosion.
     /// </summary>
     public bool Exploded;

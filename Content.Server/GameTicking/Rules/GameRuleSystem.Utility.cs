@@ -1,7 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
+using Content.Shared.Random.Helpers;
+using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -82,17 +85,23 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         targetCoords = EntityCoordinates.Invalid;
         targetGrid = EntityUid.Invalid;
 
-        var possibleTargets = station.Comp.Grids;
-        if (possibleTargets.Count == 0)
+        // Weight grid choice by tilecount
+        var weights = new Dictionary<Entity<MapGridComponent>, float>();
+        foreach (var possibleTarget in station.Comp.Grids)
+        {
+            if (!TryComp<MapGridComponent>(possibleTarget, out var comp))
+                continue;
+
+            weights.Add((possibleTarget, comp), _map.GetAllTiles(possibleTarget, comp).Count());
+        }
+
+        if (weights.Count == 0)
         {
             targetGrid = EntityUid.Invalid;
             return false;
         }
 
-        targetGrid = RobustRandom.Pick(possibleTargets);
-
-        if (!TryComp<MapGridComponent>(targetGrid, out var gridComp))
-            return false;
+        (targetGrid, var gridComp) = RobustRandom.Pick(weights);
 
         var found = false;
         var aabb = gridComp.LocalAABB;

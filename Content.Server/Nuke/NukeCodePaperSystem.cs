@@ -66,6 +66,7 @@ namespace Content.Server.Nuke
                     paperContent,
                     Loc.GetString("nuke-codes-fax-paper-name"),
                     null,
+                    null,
                     "paper_stamp-centcom",
                     new List<StampDisplayInfo>
                     {

@@ -552,5 +552,19 @@
       - state: icon-syndicate
     - type: ItemBorgModule
       items:
-      - WeaponLightMachineGunL6C
-      - PinpointerSyndicateNuclear
+        - WeaponLightMachineGunL6C
+        - PinpointerSyndicateNuclear
+
+- type: entity
+  id: BorgModuleMartyr
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: martyr cyborg module
+  description: "A module that comes with an explosive you probably don't want to handle yourself."
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicateborgbomb
+        - state: icon-bomb
+    - type: ItemBorgModule
+      items:
+        - SelfDestructSeq

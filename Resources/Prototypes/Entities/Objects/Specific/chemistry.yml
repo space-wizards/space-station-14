@@ -136,6 +136,8 @@
     solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: beaker
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
@@ -162,6 +164,9 @@
     solution: beaker
   - type: StaticPrice
     price: 10
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: beaker
@@ -210,6 +215,9 @@
     fillBaseName: beakerlarge
     inHandsMaxFillLevels: 4
     inHandsFillBaseName: -fill-
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 100
   - type: StaticPrice
     price: 20
 
