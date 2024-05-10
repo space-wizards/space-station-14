@@ -284,11 +284,6 @@ BriefcaseSyndieBase: null
 BodyBag_Container: BodyBag
 BodyBag_Folded: BodyBagFolded
 
-<<<<<<< MORE-secret-doors
-# 2024-05-10
-BaseSecretDoorAssembly: null
-SolidSecretDoor: SolidFalseWall
-=======
 # 2024-04-26
 BaseBulletRubber: null
 BulletPistolRubber: BulletPistol
