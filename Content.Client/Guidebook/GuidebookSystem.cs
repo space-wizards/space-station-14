@@ -80,9 +80,9 @@ public sealed class GuidebookSystem : EntitySystem
         });
     }
 
-    public void OpenHelp(string id)
+    public void OpenHelp(List<string> guides)
     {
-        OnGuidebookOpen?.Invoke(new List<string> { id }, null, null, true, id);
+        OnGuidebookOpen?.Invoke(guides, null, null, true, guides[0]);
     }
 
     private void OnInteract(EntityUid uid, GuideHelpComponent component, ActivateInWorldEvent args)
