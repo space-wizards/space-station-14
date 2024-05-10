@@ -55,7 +55,6 @@
       - id: ClothingHeadMirror
       - id: ClothingEyesGlasses
       - id: ClothingOuterWinterCMO
-      - id: ClothingUnderSocksStripedWhiteandLightBlueBunnySlipper
 
 - type: entity
   id: DresserHeadOfPersonnelFilled
