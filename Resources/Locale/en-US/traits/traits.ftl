@@ -51,8 +51,5 @@ trait-dwarf-accent-desc = Ach nae...
 trait-cowboy-accent-name = Cowboy Accent
 trait-cowboy-accent-desc = This is a stick up, partner!
 
-trait-ohio-accent-name = Rizz Accent
-trait-ohio-accent-desc = Chat... is that the Rizzler, like in Fortnite??
-
 trait-liar-name = Pathological liar
 trait-liar-desc = You can hardly bring yourself to tell the truth. Sometimes you lie anyway.
