@@ -30,7 +30,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
-        SubscribeLocalEvent<BorgChassisComponent, LockToggleAttempt>(OnLockToggleAttempt);
+        SubscribeLocalEvent<BorgChassisComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
 
         InitializeRelay();
     }
