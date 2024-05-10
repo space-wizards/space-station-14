@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: IlyaElDunaev
-  changes:
-  - message: Added detective's rubber stamp.
-    type: Add
-  id: 6070
-  time: '2024-03-01T22:50:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25676
-- author: rosieposieeee
-  changes:
-  - message: Added additional signage to help the crew navigate.
-    type: Add
-  id: 6071
-  time: '2024-03-02T06:42:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25766
 - author: EmoGarbage404
   changes:
   - message: Space heaters machine boards are now printable round start and can additionally
@@ -3859,3 +3845,17 @@
   id: 6569
   time: '2024-05-10T01:40:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26037
+- author: whateverusername0
+  changes:
+  - message: Traitors now know their employers.
+    type: Tweak
+  id: 6570
+  time: '2024-05-10T02:01:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27855
+- author: Boaz1111
+  changes:
+  - message: Loneops now has a functioning ghost role raffle.
+    type: Fix
+  id: 6571
+  time: '2024-05-10T02:01:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27841
