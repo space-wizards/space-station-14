@@ -109,7 +109,9 @@
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.001 # yes it needs to be this low, fires are fucking deadly apparently!!!!
+    coefficient: 0.01
+  - type: FireProtection
+    reduction: 0.75 # almost perfectly sealed, atmos firesuit is better
   - type: ClothingSpeedModifier
     walkModifier: 0.4
     sprintModifier: 0.6
@@ -137,6 +139,7 @@
     - HidesHarpyWings
   - type: ClothingRequiredStepTriggerImmune
     slots: WITHOUT_POCKET
+  - type: AllowSuitStorage
 
 - type: entity
   abstract: true
@@ -160,6 +163,7 @@
   - type: Tag
     tags:
     - HidesHarpyWings
+  - type: AllowSuitStorage
 
 - type: entity
   parent: ClothingOuterBase
