@@ -22,7 +22,7 @@ public sealed partial class ReagentCardControl : Control
         ReagentNameLabel.Text = item.ReagentLabel;
         ReagentNameLabel.FontColorOverride = Color.White;
         FillLabel.Text = item.StoredAmount;
-        EjectButtonIcon.Text = "⏏";
+        EjectButtonIcon.Text = Loc.GetString("reagent-dispenser-window-eject-container-button");
 
         MainButton.OnPressed += args => OnPressed?.Invoke(StorageSlotId);
         EjectButton.OnPressed += args => OnEjectButtonPressed?.Invoke(StorageSlotId);

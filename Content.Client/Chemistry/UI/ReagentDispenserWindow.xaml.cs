@@ -71,7 +71,6 @@ namespace Content.Client.Chemistry.UI
             ClearButton.Disabled = castState.OutputContainer is null;
             EjectButton.Disabled = castState.OutputContainer is null;
 
-            var test = ((int) castState.SelectedDispenseAmount).ToString();
             AmountGrid.Selected = ((int)castState.SelectedDispenseAmount).ToString();
         }
 
