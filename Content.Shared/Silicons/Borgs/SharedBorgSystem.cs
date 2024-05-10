@@ -6,7 +6,6 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs.Components;
-using Content.Shared.Whitelist;
 using Content.Shared.Wires;
 using Robust.Shared.Containers;
 
@@ -20,7 +19,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly ItemSlotsSystem ItemSlots = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -33,7 +31,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
-        SubscribeLocalEvent<BorgChassisComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
 
         InitializeRelay();
     }
@@ -99,12 +96,5 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
         var sprintDif = movement.BaseWalkSpeed / movement.BaseSprintSpeed;
         args.ModifySpeed(1f, sprintDif);
-    }
-
-    private void OnLockToggleAttempt(Entity<BorgChassisComponent> ent, ref LockToggleAttemptEvent args)
-    {
-        // prevent locking blacklist things when borg is the one doing the locking
-        if (args.User == ent.Owner && !_whitelist.IsAllowed(ent, blacklist: ent.Comp.LockBlacklist))
-            args.Cancelled = true;
     }
 }

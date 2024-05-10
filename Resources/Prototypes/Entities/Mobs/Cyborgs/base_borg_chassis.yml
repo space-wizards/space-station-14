@@ -100,7 +100,8 @@
     doAfterDelay: 10
     allowSelfRepair: false
   - type: BorgChassis
-    lockBlacklist:
+  - type: LockingWhitelist
+    blacklist:
       components:
       - BorgChassis
       - RoboticsConsole
