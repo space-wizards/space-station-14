@@ -71,7 +71,7 @@
     priority: -1
     targetingIndicator: false
     repeat: true
-    useDelay: 1.5
+    useDelay: 0.95
     itemIconStyle: BigAction
     checkCanAccess: false
     range: 60
