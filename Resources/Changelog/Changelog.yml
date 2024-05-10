@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: exincore
-  changes:
-  - message: Chameleon gear now only reveals its menu button to its wearer.
-    type: Tweak
-  id: 6068
-  time: '2024-03-01T12:49:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25746
 - author: Nairodian
   changes:
   - message: Fixed all command and security roles not having cryogenics access.
@@ -3857,3 +3850,12 @@
   id: 6567
   time: '2024-05-09T21:53:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26153
+- author: PrPleGoo
+  changes:
+  - message: The crafted medsec hud now displays health icons too.
+    type: Tweak
+  - message: The health status icon now goes on the left for all types of med HUD.
+    type: Tweak
+  id: 6568
+  time: '2024-05-10T01:35:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27483
