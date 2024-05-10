@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Krunk
-  changes:
-  - message: Picking up and dumping trash is less arduous for tiny, plentiful items,
-      such as bullets.
-    type: Tweak
-  id: 6073
-  time: '2024-03-02T13:57:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24899
 - author: Errant
   changes:
   - message: Breathing tritium or plasma now displays a HUD alert.
@@ -3861,3 +3853,11 @@
   id: 6572
   time: '2024-05-10T02:15:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27564
+- author: notquitehadouken
+  changes:
+  - message: You can now only use suit storage with hardsuits, softsuits, and armor
+      instead of all outer clothing
+    type: Tweak
+  id: 6573
+  time: '2024-05-10T02:19:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27546
