@@ -45,7 +45,7 @@ public sealed class IdExaminableSystem : EntitySystem
         return GetInfo(uid) ?? Loc.GetString("id-examinable-component-verb-no-id");
     }
 
-    private string? GetInfo(EntityUid uid)
+    public string? GetInfo(EntityUid uid)
     {
         if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
         {
