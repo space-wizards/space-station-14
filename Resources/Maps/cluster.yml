@@ -7936,13 +7936,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 15.5,27.5
       parent: 1
-- proto: Bible
-  entities:
-  - uid: 7547
-    components:
-    - type: Transform
-      pos: -31.507103,14.620898
-      parent: 1
 - proto: BlastDoor
   entities:
   - uid: 3218
@@ -27372,13 +27365,6 @@ entities:
     - type: Transform
       pos: -2.0726793,23.701418
       parent: 1
-- proto: ClothingBeltMilitaryWebbing
-  entities:
-  - uid: 9624
-    components:
-    - type: Transform
-      pos: 16.498451,25.579258
-      parent: 1
 - proto: ClothingBeltUtilityFilled
   entities:
   - uid: 6028
@@ -37629,13 +37615,6 @@ entities:
       parent: 1
     - type: AtmosPipeColor
       color: '#990000FF'
-  - uid: 3171
-    components:
-    - type: Transform
-      pos: -24.5,6.5
-      parent: 1
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
   - uid: 10454
     components:
     - type: Transform
@@ -47180,6 +47159,14 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -26.5,6.5
       parent: 1
+  - uid: 5358
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -24.5,6.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 5600
     components:
     - type: Transform
@@ -56727,6 +56714,12 @@ entities:
       parent: 1
 - proto: MaintenanceWeaponSpawner
   entities:
+  - uid: 3171
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 16.5,25.5
+      parent: 1
   - uid: 8834
     components:
     - type: Transform
