@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: waylon531
-  changes:
-  - message: Nutribrick and MRE wrappers can now be put in trash bags
-    type: Tweak
-  id: 6075
-  time: '2024-03-02T14:23:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25760
-- author: Fildrance
-  changes:
-  - message: fixed lobby music restarting after volume change in options. Lobby music
-      is also not being looped by default - all lobby songs will play in shuffle mode.
-    type: Fix
-  id: 6076
-  time: '2024-03-02T20:40:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25530
 - author: exincore
   changes:
   - message: Inventories now show a secondary smart-equip star.
@@ -3861,3 +3846,18 @@
   id: 6574
   time: '2024-05-10T02:37:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27831
+- author: Jajsha
+  changes:
+  - message: Emagged cyborgs no longer reveal that they have been emagged by simply
+      examining their internals.
+    type: Tweak
+  id: 6575
+  time: '2024-05-10T02:57:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27816
+- author: RiceMar
+  changes:
+  - message: Larger guns are now wieldable and suffer an inaccuracy when not wielded.
+    type: Add
+  id: 6576
+  time: '2024-05-10T02:58:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26970
