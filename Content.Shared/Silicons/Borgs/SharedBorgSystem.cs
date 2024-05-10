@@ -104,7 +104,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
     private void OnLockToggleAttempt(Entity<BorgChassisComponent> ent, ref LockToggleAttemptEvent args)
     {
         // prevent locking blacklist things when borg is the one doing the locking
-        if (args.User == ent.Owner && _whitelist.IsValid(ent.Comp.LockBlacklist, ent) == true)
+        if (args.User == ent.Owner && !_whitelist.IsAllowed(ent, blacklist: ent.Comp.LockBlacklist))
             args.Cancelled = true;
     }
 }
