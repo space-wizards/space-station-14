@@ -1,5 +1,6 @@
 # These are technically shoes for now, as we don't actually have underwear. But
 # I would cry if we didn't have them. -swept
+# I made so fucking much oh my god -Neptune
 
 - type: entity
   parent: ClothingShoesBase
@@ -30,6 +31,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksBee
   name: bee socks
+  suffix: Socks
   description: Make them loins buzz!
   components:
   - type: Sprite
@@ -41,6 +43,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksCoder
   name: coder socks
+  suffix: Socks
   description: It's time to code sisters!!11!
   components:
   - type: Sprite
@@ -52,6 +55,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedWhiteandLightBlue
   name: striped light blue socks
+  suffix: Socks
   description: Wearing these white and light blue socks makes you feel just a little bit lazier.
   components:
   - type: Sprite
@@ -63,7 +67,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedCaptainBlueandGold
   name: striped captain socks
-  suffix: Captain
+  suffix: Socks Captain
   description: Striped socks in blue and gold that make you feel special enough to boss the heads.
   components:
   - type: Sprite
@@ -75,7 +79,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedCaptainBlueandWhite
   name: striped hop socks
-  suffix: Captain
+  suffix: Socks Head of Personel
   description: Striped socks in blue and white to command the staff in.
   components:
   - type: Sprite
@@ -87,7 +91,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedCaptainGoldandBlue
   name: striped captain socks
-  suffix: Captain
+  suffix: Socks Captain
   description: Striped socks in gold and blue that make you feel special enough to boss the heads.
   components:
   - type: Sprite
@@ -99,7 +103,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedCargo
   name: striped cargo socks
-  suffix: Cargo
+  suffix: Socks Cargo
   description: These striped socks make you feel a little bit stronger.
   components:
   - type: Sprite
@@ -111,7 +115,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedEngineeringAtmos
   name:  striped atmos Tech socks
-  suffix: Atmos
+  suffix: Socks Atmos
   description: Striped socks to make you stand out in an emergency
   components:
   - type: Sprite
@@ -123,7 +127,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedEngineering
   name:  striped Engineer socks
-  suffix: Engineer
+  suffix: Socks Engineer
   description: Striped socks to make you stand out in an emergency
   components:
   - type: Sprite
@@ -135,7 +139,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedScience
   name:  striped science socks
-  suffix: Science
+  suffix: Socks Science
   description: These Striped socks make you want to do some Science
   components:
   - type: Sprite
@@ -147,7 +151,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedSecurity
   name:  striped security socks
-  suffix: Security
+  suffix: Socks Security
   description: These striped socks make you feel like beating up a mime
   components:
   - type: Sprite
@@ -159,7 +163,7 @@
   parent: ClothingShoesMilitaryBase
   id: ClothingUnderSocksStripedSecurityJackboots
   name: JackBoots with striped socks
-  suffix: Security
+  suffix: Socks Security
   description: The striped socks make you feel a little more "Secure"
   components:
   - type: Sprite
@@ -171,6 +175,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedWhiteandGreen
   name: striped green socks
+  suffix: Socks
   description: Minty! Now in Green.
   components:
   - type: Sprite
@@ -182,6 +187,7 @@
   parent: ClothingShoesSlippers
   id: ClothingUnderSocksStripedWhiteandLightBlueBunnySlipper
   name: Striped socks with bunny slippers
+  suffix: Socks
   description: A pair of bunny slippers with striped socks for all your hospital needs.
   components:
   - type: Sprite
@@ -193,6 +199,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedWhiteandOrange
   name: striped orange socks
+  suffix: Socks
   description: Striped socks that match the traffic style.
   components:
   - type: Sprite
@@ -204,6 +211,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedWhiteandPurple
   name: striped purple socks
+  suffix: Socks
   description: Striped socks that smell like grape soda.
   components:
   - type: Sprite
@@ -215,6 +223,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedWhiteandRed
   name: striped red socks
+  suffix: Socks
   description: Minty! Now in red.
   components:
   - type: Sprite
@@ -226,6 +235,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedWhiteandYellow
   name: striped yellow socks
+  suffix: Socks
   description: Now please don't order pilk at the bar.
   components:
   - type: Sprite
@@ -237,6 +247,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedWhiteandYellow
   name: Striped yellow and purple socks
+  suffix: Socks
   description: Striped socks styled after banana and grape jelly sandwiches.
   components:
   - type: Sprite
@@ -247,7 +258,8 @@
 - type: entity
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedBotany
-  name: striped socks
+  name: striped botany socks
+  suffix: Socks Botany
   description: Water proof socks to mutate random plants in.
   components:
   - type: Sprite
@@ -259,7 +271,8 @@
 - type: entity
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedClown
-  name: striped socks
+  name: striped clown socks
+  suffix: Socks Clown
   description: Candy Floss Flavored socks for the less squeaky Honki.
   components:
   - type: Sprite
@@ -271,31 +284,38 @@
 - type: entity
   parent: ClothingShoesClownBase
   id: ClothingUnderSocksStripedClownShoes
-  name: striped socks
+  name: striped clown socks and shoes
+  suffix: Socks Clown
   description: Honk and sock?! Sign me up!
   components:
   - type: Sprite
     sprite: Clothing/Under/Socks/SocksStripedClownShoes
   - type: Clothing
     sprite: Clothing/Under/Socks/SocksStripedClownShoes
-
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
 
 - type: entity
   parent: ClothingShoesClownBase
   id: ClothingUnderSocksStripedClownShoesLarge
-  name: striped socks
+  name: striped clown socks and large shoes
+  suffix: Socks Clown
   description: EVEN BIGGER honk and sock?! Sign me up!
   components:
   - type: Sprite
     sprite: Clothing/Under/Socks/SocksStripedClownShoesLarge
   - type: Clothing
     sprite: Clothing/Under/Socks/SocksStripedClownShoesLarge
-
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
 
 - type: entity
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedDetective
-  name: striped socks
+  name: striped detective socks
+  suffix: Socks Detective
   description: Two toned brown socks for the inquisitive or those who just wanted brown long boots and had nothing better.
   components:
   - type: Sprite
@@ -307,7 +327,8 @@
 - type: entity
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedEngineeringCE
-  name: striped socks
+  name: striped chief engineer socks
+  suffix: Socks Chief Engineer
   description: While wearing these you might almost forget to refuel the ame.
   components:
   - type: Sprite
@@ -319,7 +340,8 @@
 - type: entity
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedGrey
-  name: striped socks
+  name: striped grey socks
+  suffix: Socks
   description: Standard grey stripey socks for the gentle tider or chef in your life.
   components:
   - type: Sprite
@@ -331,7 +353,8 @@
 - type: entity
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedGreyDark
-  name: striped socks
+  name: striped dark grey socks
+  suffix: Socks
   description: Dark grey socks for the servers of the nightlife. pretty neat otherwise too.
   components:
   - type: Sprite
@@ -343,7 +366,8 @@
 - type: entity
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedHotpinkBlack
-  name: striped socks
+  name: striped Hotpink socks
+  suffix: Socks
   description: Hot Pink and black socks for a special teammember, Say hi to Johnalex!
   components:
   - type: Sprite
@@ -355,7 +379,8 @@
 - type: entity
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedHotpinkLight
-  name: striped socks
+  name: striped Hotpink socks
+  suffix: Socks
   description: Hot pink and Clown candy socks for a special teammember, Say hi to Johnalex!
   components:
   - type: Sprite
@@ -366,20 +391,33 @@
 
 - type: entity
   parent: ClothingUnderSocksBase
-  id: ClothingUnderSocksStripedHotpinkGhost
-  name: striped socks
+  id: ClothingUnderGhostSocksStripedDookiebrown
+  name: striped Dookie Brown Ghost sock
+  suffix: Socks Ghost
+  description: How did you get these? Say hi to Harriet_Shitty
+  components:
+  - type: Sprite
+    sprite: Clothing\Under\GhostSocks\StrippedDookiebrown
+  - type: Clothing
+    sprite: Clothing\Under\GhostSocks\StrippedDookiebrown
+
+- type: entity
+  parent: ClothingUnderSocksBase
+  id: ClothingUnderGhostSocksStripedHotpinkGhost
+  name: striped Hotpink ghost sock
+  suffix: Socks Ghost
   description: How did you get these? Say hi to JohnAlex.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedHotpinkGhost
+    sprite: Clothing\Under\GhostSocks\StrippedHotpink
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedHotpinkGhost
-
+    sprite: Clothing\Under\GhostSocks\StrippedHotpink
 
 - type: entity
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedJanitor
   name: striped janitor socks
+  suffix: Socks Janitor
   description: Purple Socks given to janitors who like a little chaos in their life.
   components:
   - type: Sprite
@@ -391,6 +429,7 @@
   parent: ClothingShoesGaloshes
   id: ClothingUnderSocksStripedJanitorGalosh
   name: striped janitor socks and galoshes
+  suffix: Socks Janitor
   description: Cushioned boots to keep the stink sealed while you clean the nightclub.
   components:
   - type: Sprite
@@ -402,6 +441,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedMime
   name: striped black and white socks
+  suffix: Socks Mime
   description: Socks Perfect for the Silent type.
   components:
   - type: Sprite
@@ -413,6 +453,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedMusican
   name: striped musican socks
+  suffix: Socks Musican
   description: Socks tailored from the same matieral as your suit, oddly ichy.
   components:
   - type: Sprite
@@ -424,6 +465,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedScienceRD
   name: striped research director socks
+  suffix: Socks Research Director
   description: The Perfect socks to wear while using magboots in your hand.
   components:
   - type: Sprite
@@ -435,6 +477,7 @@
   parent: ClothingShoesMilitaryBase
   id: ClothingUnderSocksStripedSecurityHos
   name: striped head of security socks
+  suffix: Socks Head of Security
   description: Socks Designed to keep you mentally stable during even the worst of shifts.
   components:
   - type: Sprite
@@ -446,6 +489,7 @@
   parent: ClothingShoesMilitaryBase
   id: ClothingUnderSocksStripedSecurityHosJackboot
   name: striped head of security jack boots and zsocks
+  suffix: Socks Head of Security
   description: Socks Designed to keep you mentally stable during even the worst of shifts now in boots.
   components:
   - type: Sprite
@@ -457,6 +501,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedSherbert
   name: striped blue and pink socks
+  suffix: Socks
   description: A special color ment to invoke the idea of icecream.
   components:
   - type: Sprite
@@ -468,6 +513,7 @@
   parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedVoidGreen
   name: striped void socks
+  suffix: Socks Thief
   description: Socks for the nimblest of fingers and edgiest of dealers.
   components:
   - type: Sprite

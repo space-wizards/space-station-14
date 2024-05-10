@@ -1290,14 +1290,13 @@
   completetime: 1
   materials:
     Cloth: 100
-
+# Socks
 - type: latheRecipe
   id: ClothingUnderSocksBee
   result: ClothingUnderSocksBee
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksCoder
@@ -1306,14 +1305,12 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedWhiteandLightBlue
   result: ClothingUnderSocksStripedWhiteandLightBlue
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedCaptainBlueandGold
@@ -1322,7 +1319,6 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedCaptainBlueandWhite
   result: ClothingUnderSocksStripedCaptainBlueandWhite
@@ -1330,14 +1326,12 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedCaptainBlueandWhite
   result: ClothingUnderSocksStripedCaptainBlueandWhite
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedCaptainGoldandBlue
@@ -1346,14 +1340,12 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedCargo
   result: ClothingUnderSocksStripedCargo
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedEngineeringAtmos
@@ -1362,14 +1354,12 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedEngineering
   result: ClothingUnderSocksStripedEngineering
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedSecurity
@@ -1378,14 +1368,12 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedSecurityHos
   result: ClothingUnderSocksStripedSecurityHos
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedSecurityJackboots
@@ -1410,14 +1398,12 @@
   materials:
     Cloth: 300
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedWhiteandOrange
   result: ClothingUnderSocksStripedWhiteandOrange
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedWhiteandPurple
@@ -1426,7 +1412,6 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedWhiteandRed
   result: ClothingUnderSocksStripedWhiteandRed
@@ -1434,7 +1419,6 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedWhiteandYellow
   result: ClothingUnderSocksStripedWhiteandYellow
@@ -1442,14 +1426,12 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedWhiteandYellow
   result: ClothingUnderSocksStripedWhiteandYellow
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedBotany
@@ -1458,7 +1440,6 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedClown
   result: ClothingUnderSocksStripedClown
@@ -1466,14 +1447,12 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedClownShoes
   result: ClothingUnderSocksStripedClownShoes
   completetime: 2
   materials:
     Cloth: 500
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedClownShoesLarge
@@ -1490,14 +1469,12 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedEngineeringCE
   result: ClothingUnderSocksStripedEngineeringCE
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedGrey
@@ -1506,14 +1483,12 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedGreyDark
   result: ClothingUnderSocksStripedGreyDark
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedHotpinkBlack
@@ -1522,14 +1497,12 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedHotpinkLight
   result: ClothingUnderSocksStripedHotpinkLight
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedJanitor
@@ -1538,22 +1511,12 @@
   materials:
     Cloth: 200
 
-
-- type: latheRecipe
-  id: ClothingUnderSocksStripedJanitorGalosh
-  result: ClothingUnderSocksStripedJanitorGalosh
-  completetime: 2
-  materials:
-    Cloth: 1000
-    Durathread: 100
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedMime
   result: ClothingUnderSocksStripedMime
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedMusican
@@ -1562,14 +1525,12 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedScienceRD
   result: ClothingUnderSocksStripedScienceRD
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedWhiteandGreen
@@ -1578,14 +1539,12 @@
   materials:
     Cloth: 200
 
-
 - type: latheRecipe
   id: ClothingUnderSocksStripedSherbert
   result: ClothingUnderSocksStripedSherbert
   completetime: 2
   materials:
     Cloth: 200
-
 
 - type: latheRecipe
   id: ClothingUnderSocksStripedVoidGreen
