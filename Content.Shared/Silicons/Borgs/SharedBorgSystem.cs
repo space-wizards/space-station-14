@@ -6,6 +6,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Whitelist;
 using Content.Shared.Wires;
 using Robust.Shared.Containers;
 
