@@ -2977,6 +2977,10 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -59.5,3.5
       parent: 30
+    - type: DeviceList
+      devices:
+      - 6799
+      - 7235
   - uid: 6648
     components:
     - type: Transform
@@ -35460,6 +35464,9 @@ entities:
     - type: Transform
       pos: -58.5,2.5
       parent: 30
+    - type: DeviceNetwork
+      deviceLists:
+      - 6101
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 7289
@@ -36085,6 +36092,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: -57.5,1.5
       parent: 30
+    - type: DeviceNetwork
+      deviceLists:
+      - 6101
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 7318
