@@ -141,7 +141,7 @@ namespace Content.Client.Voting
                     return;
                 }
 
-                _voteSource?.StartPlaying();
+                _voteSource?.Restart();
                 @new = true;
 
                 // Refresh
