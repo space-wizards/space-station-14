@@ -89,6 +89,9 @@
     - id: RevolverCapGun
     - id: BarberScissors
     - id: ClothingUniformJumpskirtOldDress
+    - id: BikeHorn
+    - id: ClownRecorder
+    - id: ClothingBeltSuspenders
 
 - type: entity
   id: CrateServiceCustomSmokable
