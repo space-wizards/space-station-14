@@ -74,7 +74,7 @@ public sealed class RoleSystem : EntitySystem
                 args.IsAntagonist = true; args.IsExclusiveAntagonist |= typeof(T).TryGetCustomAttribute<ExclusiveAntagonistAttribute>(out _);
             });
 
-        SubscribeLocalEvent((EntityUid _, T comp, ref GetBriefingEvent args) => { args.Append(comp.Briefing == null ? null : Loc.GetString(comp.Briefing), true); });
+        SubscribeLocalEvent((EntityUid _, T comp, ref GetBriefingEvent args) => { args.Append(comp.Briefing, true); });
         _antagTypes.Add(typeof(T));
     }
 

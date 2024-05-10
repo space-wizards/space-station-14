@@ -10,5 +10,5 @@ public sealed partial class InitialInfectedRoleComponent : Component, IAntagonis
     public ProtoId<AntagPrototype>? PrototypeId { get; set; }
 
     [DataField, AutoNetworkedField]
-    public LocId? Briefing { get; set; }
+    public string? Briefing { get; set; }
 }

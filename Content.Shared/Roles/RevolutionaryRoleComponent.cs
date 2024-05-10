@@ -13,7 +13,7 @@ public sealed partial class RevolutionaryRoleComponent : Component, IAntagonistR
     public ProtoId<AntagPrototype>? PrototypeId { get; set; }
 
     [DataField, AutoNetworkedField]
-    public LocId? Briefing { get; set; }
+    public string? Briefing { get; set; }
 
     /// <summary>
     /// For headrevs, how many people you have converted.

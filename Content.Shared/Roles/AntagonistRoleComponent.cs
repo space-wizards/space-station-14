@@ -8,7 +8,7 @@ public interface IAntagonistRoleComponent
 {
     public ProtoId<AntagPrototype>? PrototypeId { get; set; }
 
-    public LocId? Briefing { get; set; }
+    public string? Briefing { get; set; }
 }
 
 /// <summary>

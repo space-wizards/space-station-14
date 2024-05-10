@@ -13,5 +13,5 @@ public sealed partial class NukeopsRoleComponent : Component, IAntagonistRoleCom
     public ProtoId<AntagPrototype>? PrototypeId { get; set; }
 
     [DataField, AutoNetworkedField]
-    public LocId? Briefing { get; set; }
+    public string? Briefing { get; set; }
 }
