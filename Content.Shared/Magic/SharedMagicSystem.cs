@@ -193,7 +193,7 @@ public abstract class SharedMagicSystem : EntitySystem
 
         var transform = Transform(args.Performer);
 
-        foreach (var position in GetInstantSpawnPositions(transform, args.Pos))
+        foreach (var position in GetInstantSpawnPositions(transform, args.PosData))
         {
             SpawnSpellHelper(args.Prototype, position, args.Performer, preventCollide: args.PreventCollideWithCaster);
         }

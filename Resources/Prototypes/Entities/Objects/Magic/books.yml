@@ -56,7 +56,7 @@
   parent: BaseSpellbook
   components:
     - type: Spellbook
-      spells:
+      spellActions:
         ActionSpawnMagicarpSpell: -1
 
 - type: entity

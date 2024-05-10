@@ -20,5 +20,6 @@ public sealed partial class InstantSpawnSpellEvent : InstantActionEvent, ISpeakS
     /// <summary>
     /// Gets the targeted spawn positons; may lead to multiple entities being spawned.
     /// </summary>
-    [DataField] public MagicInstantSpawnData Pos = new TargetCasterPos();
+    [DataField]
+    public MagicInstantSpawnData PosData = new TargetCasterPos();
 }
