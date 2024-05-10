@@ -1,5 +1,5 @@
-﻿using Content.Client.CharacterInfo;
-using Content.Client.Message;
+﻿using Content.Client.Message;
+using Content.Client.UserInterface.Systems.Character;
 using Content.Shared.Points;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -9,23 +9,22 @@ namespace Content.Client.Points;
 /// <inheritdoc/>
 public sealed class PointSystem : SharedPointSystem
 {
-    [Dependency] private readonly CharacterInfoSystem _characterInfo = default!;
-
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<PointManagerComponent, AfterAutoHandleStateEvent>(OnHandleState);
-        SubscribeLocalEvent<CharacterInfoSystem.GetCharacterInfoControlsEvent>(OnGetCharacterInfoControls);
+        SubscribeLocalEvent<GetCharacterInfoControlsEvent>(OnGetCharacterInfoControls);
     }
 
     private void OnHandleState(EntityUid uid, PointManagerComponent component, ref AfterAutoHandleStateEvent args)
     {
-        _characterInfo.RequestCharacterInfo();
+        // TODO MIRROR UPDATE CHARACTER WINDOW
+        //_characterInfo.RequestCharacterInfo();
     }
 
-    private void OnGetCharacterInfoControls(ref CharacterInfoSystem.GetCharacterInfoControlsEvent ev)
+    private void OnGetCharacterInfoControls(ref GetCharacterInfoControlsEvent ev)
     {
         foreach (var point in EntityQuery<PointManagerComponent>())
         {

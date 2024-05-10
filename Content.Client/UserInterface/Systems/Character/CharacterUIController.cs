@@ -1,8 +1,6 @@
-using System.Linq;
-using Content.Client.CharacterInfo;
 using Content.Client.Gameplay;
+using Content.Client.Message;
 using Content.Client.UserInterface.Controls;
-using Content.Client.UserInterface.Systems.Character.Controls;
 using Content.Client.UserInterface.Systems.Character.Windows;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
@@ -14,17 +12,16 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
-using static Content.Client.CharacterInfo.CharacterInfoSystem;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Character;
 
 [UsedImplicitly]
-public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
+public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IEntityManager _entity = default!;
 
     private CharacterWindow? _window;
     private MenuButton? CharacterButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CharacterButton;
@@ -35,8 +32,6 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         _window = UIManager.CreateWindow<CharacterWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
-
-
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenCharacterMenu,
@@ -53,18 +48,6 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         }
 
         CommandBinds.Unregister<CharacterUIController>();
-    }
-
-    public void OnSystemLoaded(CharacterInfoSystem system)
-    {
-        system.OnCharacterUpdate += CharacterUpdated;
-        _player.LocalPlayerDetached += CharacterDetached;
-    }
-
-    public void OnSystemUnloaded(CharacterInfoSystem system)
-    {
-        system.OnCharacterUpdate -= CharacterUpdated;
-        _player.LocalPlayerDetached -= CharacterDetached;
     }
 
     public void UnloadButton()
@@ -98,18 +81,20 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     private void DeactivateButton() => CharacterButton!.Pressed = false;
     private void ActivateButton() => CharacterButton!.Pressed = true;
 
-    private void CharacterUpdated(CharacterData data)
+    private void UpdateCharacterWindow()
     {
         if (_window == null)
-        {
             return;
-        }
 
-        var (entity, job, objectives, briefing, entityName) = data;
+        if (_player.LocalEntity is not { } entity)
+            return;
+
+        var entityName = _entity.GetComponent<MetaDataComponent>(entity).EntityName;
 
         _window.SpriteView.SetEntity(entity);
-        _window.NameLabel.Text = entityName;
-        _window.SubText.Text = job;
+        _window.NameLabel.SetMarkup(FormattedMessage.EscapeText(entityName));
+        //_window.SubTextLabel.Text = job;
+        /*
         _window.Objectives.RemoveAllChildren();
         _window.ObjectivesLabel.Visible = objectives.Any();
 
@@ -163,8 +148,17 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         }
 
         _window.RolePlaceholder.Visible = briefing == null && !controls.Any() && !objectives.Any();
+        */
     }
 
+    public List<Control> GetCharacterInfoControls(EntityUid uid)
+    {
+        var ev = new GetCharacterInfoControlsEvent(uid);
+        _entity.EventBus.RaiseLocalEvent(uid, ref ev, true);
+        return ev.Controls;
+    }
+
+    // TODO MIRROR?
     private void CharacterDetached(EntityUid uid)
     {
         CloseWindow();
@@ -196,8 +190,19 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         }
         else
         {
-            _characterInfo.RequestCharacterInfo();
+            UpdateCharacterWindow();
             _window.Open();
         }
     }
+}
+
+/// <summary>
+/// Event raised to get additional controls to display in the character info menu.
+/// </summary>
+[ByRefEvent]
+public readonly record struct GetCharacterInfoControlsEvent(EntityUid Entity)
+{
+    public readonly List<Control> Controls = new();
+
+    public readonly EntityUid Entity = Entity;
 }
