@@ -19,6 +19,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly ItemSlotsSystem ItemSlots = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -101,8 +102,8 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
     private void OnLockToggleAttempt(Entity<BorgChassisComponent> ent, ref LockToggleAttemptEvent args)
     {
-        // prevent cyborgs unlocking things, even though they have HandsComponent
-        if (args.User == ent.Owner)
+        // prevent locking blacklist things when borg is the one doing the locking
+        if (args.User == ent.Owner && _whitelist.IsValid(ent.Comp.LockBlacklist, ent) == true)
             args.Cancelled = true;
     }
 }
