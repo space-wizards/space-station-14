@@ -26,13 +26,7 @@ public sealed partial class TriggerSystem
         if (!component.StartOnStick)
             return;
 
-        HandleTimerTrigger(
-            uid,
-            args.User,
-            component.Delay,
-            component.BeepInterval,
-            component.InitialBeepDelay,
-            component.BeepSound);
+        StartTimer((uid, component), args.User);
     }
 
     private void OnExamined(EntityUid uid, OnUseTimerTriggerComponent component, ExaminedEvent args)
@@ -54,14 +48,7 @@ public sealed partial class TriggerSystem
             args.Verbs.Add(new AlternativeVerb()
             {
                 Text = Loc.GetString("verb-start-detonation"),
-                Act = () => HandleTimerTrigger(
-                    uid,
-                    args.User,
-                    component.Delay,
-                    component.BeepInterval,
-                    component.InitialBeepDelay,
-                    component.BeepSound
-                ),
+                Act = () => StartTimer((uid, component), args.User),
                 Priority = 2
             });
         }
@@ -173,13 +160,7 @@ public sealed partial class TriggerSystem
 
         _popupSystem.PopupEntity(Loc.GetString("trigger-activated", ("device", uid)), args.User, args.User);
 
-        HandleTimerTrigger(
-            uid,
-            args.User,
-            component.Delay,
-            component.BeepInterval,
-            component.InitialBeepDelay,
-            component.BeepSound);
+        StartTimer((uid, component), args.User);
 
         args.Handled = true;
     }
