@@ -63,8 +63,6 @@ public sealed class MessagesServerSystem : EntitySystem
             serverComponent.Messages = new List<MessagesMessageData>(component.Messages);
         }
 
-        var mapId = Transform(uid).MapID;
-
         if (!TryComp(uid, out DeviceNetworkComponent? device))
             return;
 
@@ -89,7 +87,7 @@ public sealed class MessagesServerSystem : EntitySystem
     ///<summary>
     ///Function that tries to send a message to any matching cartridges on its map
     ///</summary>
-    public void SendMessage(EntityUid uid, MessagesServerComponent component,MessagesMessageData message)
+    public void SendMessage(EntityUid uid, MessagesServerComponent component, MessagesMessageData message)
     {
         component.Messages.Add(message);
 
@@ -117,9 +115,9 @@ public sealed class MessagesServerSystem : EntitySystem
         return component.NameDict;
     }
 
-    public List<MessagesMessageData> GetMessages(MessagesServerComponent component,int id1, int id2)
+    public List<MessagesMessageData> GetMessages(MessagesServerComponent component, int id1, int id2)
     {
-        return new List<MessagesMessageData>(component.Messages.Where(message => (message.SenderId == id1 && message.ReceiverId == id2) || (message.SenderId == id2 && message.ReceiverId == id1)));
+        return new List<MessagesMessageData>(component.Messages.Where(message => message.SenderId == id1 && message.ReceiverId == id2 || message.SenderId == id2 && message.ReceiverId == id1));
     }
 
 }
