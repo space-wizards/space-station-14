@@ -51,6 +51,12 @@
       sprite:  Objects/Misc/books.rsi
       state: book_icon
   - type: MessagesCartridge
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: NTMessagesClient
+    receiveFrequencyId: NTMessagesServer
+    autoConnect: false
+  - type: StationLimitedNetwork
 
 - type: entity
   parent: BaseItem
@@ -69,7 +75,12 @@
       sprite:  Objects/Misc/books.rsi
       state: book_icon
   - type: MessagesCartridge
-    encryptionKey: Syndicate
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: SyndicateMessagesClient
+    receiveFrequencyId: SyndicateMessagesServer
+    autoConnect: false
+  - type: StationLimitedNetwork
 
 - type: entity
   parent: BaseItem

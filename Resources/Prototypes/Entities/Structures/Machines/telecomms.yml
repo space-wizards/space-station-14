@@ -126,6 +126,13 @@
     sound:
       path: /Audio/Ambience/Objects/server_fans.ogg
   - type: MessagesServer
+  - type: SingletonDeviceNetServer
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: NTMessagesServer
+    receiveFrequencyId: NTMessagesClients
+    autoConnect: false
+  - type: StationLimitedNetwork
 
 - type: entity
   id: SyndicateMessagesServer
@@ -134,7 +141,13 @@
   description: Server that allows PDA messaging between Syndicate operatives to function.
   components:
   - type: MessagesServer
-    encryptionKey: Syndicate
+  - type: StationLimitedNetwork
+  - type: SingletonDeviceNetServer
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: SyndicateMessagesServer
+    receiveFrequencyId: SyndicateMessagesClient
+    autoConnect: false
 
 - type: entity
   parent: TelecomServer

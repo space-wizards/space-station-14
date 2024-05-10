@@ -13,6 +13,10 @@ using Content.Shared.Chat;
 using Robust.Shared.Player;
 using Content.Server.PDA.Ringer;
 using Robust.Shared.Network;
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork;
 
 
 namespace Content.Server.CartridgeLoader.Cartridges;
@@ -23,12 +27,15 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly MessagesServerSystem _messagesServerSystem = default!;
+    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
         SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
+        SubscribeLocalEvent<MessagesCartridgeComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
     }
 
     /// <summary>
@@ -59,7 +66,13 @@ public sealed class MessagesCartridgeSystem : EntitySystem
                 Content = messageEvent.StringInput,
                 Time = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan)
             };
-            component.MessagesQueue.Add(messageData);
+            if (!TryComp(uid, out DeviceNetworkComponent? device))
+                return;
+            var packet = new NetworkPayload()
+            {
+                ["Message"] = messageData
+            };
+            _deviceNetworkSystem.QueuePacket(uid, null, packet, device: device);
         }
         else
         {
@@ -70,29 +83,51 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         UpdateUiState(uid, GetEntity(args.LoaderUid), component);
     }
 
-    //Function that returns the uid and component of an active server with matching faction on a given map if it exists
-    public (EntityUid?, MessagesServerComponent?) GetActiveServer(MessagesCartridgeComponent component, MapId mapId)
+    private void OnPacketReceived(EntityUid uid, MessagesCartridgeComponent component, DeviceNetworkPacketEvent args)
     {
-        var servers = EntityManager.AllEntityQueryEnumerator<MessagesServerComponent, ApcPowerReceiverComponent, TransformComponent>();
-        while (servers.MoveNext(out var uid, out var messageServer, out var power, out var transform))
+        if (!TryComp(uid, out CartridgeComponent? cartComponent))
+            return;
+        if (args.Data.TryGetValue<MessagesServerComponent>("ServerComponent", out var server));
+            component.LastServer = server;
+        if (args.Data.TryGetValue<bool>("NameQuery", out var _))
+            SendName(uid, component, cartComponent);
+        if (args.Data.TryGetValue<MessagesMessageData>("Message", out var message) && cartComponent.LoaderUid != null)
         {
-            if (messageServer.EncryptionKey != component.EncryptionKey)
-                continue;
+            var name = GetName(message.SenderId, component);
 
-            if (transform.MapID == mapId &&
-                power.Powered)
-            {
-                return (uid, messageServer);
-            }
+            var subtitleString = Loc.GetString("messages-pda-notification-header");
+
+            _cartridgeLoaderSystem.SendNotification(
+                cartComponent.LoaderUid.Value,
+                $"{name} {subtitleString} ",
+                message.Content);
+
+            if (HasComp<CartridgeLoaderComponent>(cartComponent.LoaderUid))
+                UpdateUiState(uid, cartComponent.LoaderUid.Value, component);
         }
-        return (null,null);
+
+    }
+
+    private void SendName(EntityUid uid, MessagesCartridgeComponent component, CartridgeComponent cartComponent)
+    {
+        string name = GetUserName(cartComponent);
+
+        if (!TryComp(uid, out DeviceNetworkComponent? device))
+            return;
+        var packet = new NetworkPayload()
+        {
+            ["UserId"] = GetUserUid(cartComponent),
+            ["NewName"] = GetUserName(cartComponent),
+        };
+        _deviceNetworkSystem.QueuePacket(uid, null, packet, device: device);
     }
 
     //helper function to get name of a given user
-    private string GetName(int key, MessagesCartridgeComponent component, MapId mapId)
+    private string GetName(int key, MessagesCartridgeComponent component)
     {
-        var serverSearch = GetActiveServer(component, mapId);
-        return _messagesServerSystem.GetNameFromDict(serverSearch.Item1, serverSearch.Item2, key);
+        if (component.LastServer == null)
+            return Loc.GetString("messages-pda-connection-error");
+        return _messagesServerSystem.GetNameFromDict(component.LastServer, key);
     }
 
     //helper function to get messages id of a given cart
@@ -139,8 +174,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         MessagesUiState state;
         MapId mapId = Transform(uid).MapID;
         int? currentUserId = GetUserUid(cartComponent);
-        var serverSearch = GetActiveServer(component, mapId);
-        if (currentUserId == null || serverSearch.Item2 == null)
+        if (currentUserId == null || component.LastServer == null)
         {
             state = new MessagesUiState(MessagesUiStateMode.Error, [], null);
             _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, state);
@@ -150,7 +184,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         {
             List<(string, int?)> userList = [];
 
-            var nameDict = _messagesServerSystem.GetNameDict(serverSearch.Item2);
+            var nameDict = _messagesServerSystem.GetNameDict(component.LastServer);
 
             foreach (var nameEntry in nameDict.Keys)
             {
@@ -173,7 +207,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         {
             List<MessagesMessageData> messageList = []; //Else, list messages from the current chat
 
-            foreach (var message in _messagesServerSystem.GetMessages(serverSearch.Item2, component.ChatUid.Value, currentUserId.Value))
+            foreach (var message in _messagesServerSystem.GetMessages(component.LastServer, component.ChatUid.Value, currentUserId.Value))
             {
                 if (message.SenderId == component.ChatUid && message.ReceiverId == currentUserId || message.ReceiverId == component.ChatUid && message.SenderId == currentUserId)
                 {
@@ -193,31 +227,15 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
             foreach (var message in messageList)
             {
-                var name = GetName(message.SenderId, component, mapId);
+                var name = GetName(message.SenderId, component);
                 var stationTime = message.Time.Subtract(_gameTicker.RoundStartTimeSpan);
                 var content = $"{stationTime.ToString("\\[hh\\:mm\\:ss\\]")} {name}: {message.Content}";
                 formattedMessageList.Add((content, null));
             }
 
-            state = new MessagesUiState(MessagesUiStateMode.Chat, formattedMessageList, GetName(component.ChatUid.Value, component, mapId));
+            state = new MessagesUiState(MessagesUiStateMode.Chat, formattedMessageList, GetName(component.ChatUid.Value, component));
         }
         _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, state);
-    }
-
-    //function that receives the message and notifies the user
-    public void ServerToPdaMessage(EntityUid uid, MessagesCartridgeComponent component, MessagesMessageData message, EntityUid pdaUid)
-    {
-        var name = GetName(message.SenderId, component, Transform(uid).MapID);
-
-        var subtitleString = Loc.GetString("messages-pda-notification-header");
-
-        _cartridgeLoaderSystem.SendNotification(
-            pdaUid,
-            $"{name} {subtitleString} ",
-            message.Content);
-
-        if (HasComp<CartridgeLoaderComponent>(pdaUid))
-            UpdateUiState(uid, pdaUid, component);
     }
 
 }

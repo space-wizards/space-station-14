@@ -10,6 +10,10 @@ using Robust.Shared.Containers;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using System.Linq;
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork;
 
 
 namespace Content.Server.Radio.EntitySystems;
@@ -19,6 +23,15 @@ public sealed class MessagesServerSystem : EntitySystem
 
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly MessagesCartridgeSystem _messagesCartridgeSystem = default!;
+    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly SingletonDeviceNetServerSystem _singletonServerSystem = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<MessagesServerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+    }
+
 
     public override void Update(float frameTime)
     {
@@ -26,6 +39,8 @@ public sealed class MessagesServerSystem : EntitySystem
         var serverQuery = EntityQueryEnumerator<MessagesServerComponent>();
         while (serverQuery.MoveNext(out var uid, out var server))
         {
+            if (!_singletonServerSystem.IsActiveServer(uid))
+                continue;
             if (server.NextUpdate <= _gameTiming.CurTime)
             {
                 server.NextUpdate += server.UpdateDelay;
@@ -37,86 +52,61 @@ public sealed class MessagesServerSystem : EntitySystem
 
     public void Update(EntityUid uid, MessagesServerComponent component)
     {
+        if (!this.IsPowered(uid, EntityManager))
+            return;
+
         var serverQuery = EntityManager.AllEntityQueryEnumerator<MessagesServerComponent>();
 
         while (serverQuery.MoveNext(out var serverUid, out var serverComponent))
         {
-            if (serverUid.Id >= uid.Id)
-                continue;
             component.Messages = new List<MessagesMessageData>(component.Messages.Union(serverComponent.Messages));
             serverComponent.Messages = new List<MessagesMessageData>(component.Messages);
         }
 
         var mapId = Transform(uid).MapID;
 
-        if (!this.IsPowered(uid, EntityManager))
+        if (!TryComp(uid, out DeviceNetworkComponent? device))
             return;
 
-        var query = EntityManager.AllEntityQueryEnumerator<MessagesCartridgeComponent, CartridgeComponent>();
-
-        Dictionary<int,List<(EntityUid, MessagesCartridgeComponent)>> cartDict = [];
-        component.NameDict = [];
-
-        while (query.MoveNext(out var cartUid, out var messagesCartComponent, out var cartComponent))
+        var packet = new NetworkPayload()
         {
-            if (Transform(cartUid).MapID != mapId)
-                continue;
-            if (messagesCartComponent.EncryptionKey != component.EncryptionKey)
-                continue;
-            int? userUid = _messagesCartridgeSystem.GetUserUid(cartComponent);
-            if (userUid == null)
-                continue;
-            if (!cartDict.ContainsKey(userUid.Value))
-                cartDict[userUid.Value] = [];
-            cartDict[userUid.Value].Add((cartUid, messagesCartComponent));
-            component.NameDict[userUid.Value] = _messagesCartridgeSystem.GetUserName(cartComponent);
-        }
+            ["NameQuery"] = true,
+            ["ServerComponent"] = component
+        };
+        _deviceNetworkSystem.QueuePacket(uid, null, packet, device: device);
+    }
 
-        query = EntityManager.AllEntityQueryEnumerator<MessagesCartridgeComponent, CartridgeComponent>();
-
-        //Loop iterates over all cartridges on the map when the server is updated
-        while (query.MoveNext(out var cartUid, out var messagesCartComponent, out var cartComponent))
-        {
-            if (Transform(cartUid).MapID != mapId)
-                continue;
-            if (messagesCartComponent.EncryptionKey != component.EncryptionKey)
-                continue;
-            if (_messagesCartridgeSystem.GetUserUid(cartComponent) == null)
-                continue;
-
-            //if the cart has any unsent messages, the server attempts to send them
-            while (messagesCartComponent.MessagesQueue.Count > 0)
-            {
-                var message = messagesCartComponent.MessagesQueue[0];
-                TryToSend(message, mapId, cartDict);
-                component.Messages.Add(message);
-                messagesCartComponent.MessagesQueue.RemoveAt(0);
-            }
-
-            _messagesCartridgeSystem.ForceUpdate(cartUid, messagesCartComponent);
-        }
+    private void OnPacketReceived(EntityUid uid, MessagesServerComponent component, DeviceNetworkPacketEvent args)
+    {
+        if (!_singletonServerSystem.IsActiveServer(uid))
+            return;
+        if (args.Data.TryGetValue<string>("NewName", out var name) && args.Data.TryGetValue<int>("UserId", out var userId))
+            component.NameDict[userId] = name;
+        if (args.Data.TryGetValue<MessagesMessageData>("Message", out var message))
+            SendMessage(uid, component, message);
     }
 
     ///<summary>
     ///Function that tries to send a message to any matching cartridges on its map
     ///</summary>
-    public void TryToSend(MessagesMessageData message, MapId mapId, Dictionary<int,List<(EntityUid, MessagesCartridgeComponent)>> cartDict)
+    public void SendMessage(EntityUid uid, MessagesServerComponent component,MessagesMessageData message)
     {
-        var cartList = cartDict[message.ReceiverId];
+        component.Messages.Add(message);
 
-        foreach (var (cartUid, cartProgramComponent) in cartList)
+        if (!TryComp(uid, out DeviceNetworkComponent? device))
+            return;
+
+        var packet = new NetworkPayload()
         {
-            var messagesCartComponent = CompOrNull<CartridgeComponent>(cartUid);
-            if (messagesCartComponent == null || messagesCartComponent.LoaderUid == null)
-                continue;
-            _messagesCartridgeSystem.ServerToPdaMessage(cartUid, cartProgramComponent, message, messagesCartComponent.LoaderUid.Value);
-        }
+            ["Message"] = message,
+            ["ServerComponent"] = component
+        };
+
+        _deviceNetworkSystem.QueuePacket(uid, null, packet, device: device);
     }
 
-    public string GetNameFromDict(EntityUid? uid, MessagesServerComponent? component, int key)
+    public string GetNameFromDict(MessagesServerComponent component, int key)
     {
-        if (uid == null || (component == null))
-            return Loc.GetString("messages-pda-connection-error");
         if (component.NameDict.TryGetValue(key, out var value))
             return value;
         return Loc.GetString("messages-pda-user-missing");
