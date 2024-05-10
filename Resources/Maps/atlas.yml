@@ -5653,13 +5653,11 @@ entities:
       canCollide: False
 - proto: BoxLightMixed
   entities:
-  - uid: 3304
+  - uid: 8510
     components:
     - type: Transform
-      pos: 21.439213,-3.5924182
+      pos: 22.63117,-2.7198458
       parent: 30
-    - type: Physics
-      canCollide: False
 - proto: BoxMouthSwab
   entities:
   - uid: 2751
@@ -5751,6 +5749,16 @@ entities:
       parent: 30
     - type: Physics
       canCollide: False
+  - uid: 3304
+    components:
+    - type: Transform
+      pos: 23.86443,-3.60678
+      parent: 30
+  - uid: 8509
+    components:
+    - type: Transform
+      pos: 23.630054,-3.66928
+      parent: 30
 - proto: ButtonFrameCaution
   entities:
   - uid: 8209
@@ -39565,10 +39573,10 @@ entities:
     - type: Transform
       pos: 21.491993,-2.5611682
       parent: 30
-  - uid: 3292
+  - uid: 8511
     components:
     - type: Transform
-      pos: 21.491993,-3.1392932
+      pos: 22.021795,-2.5635958
       parent: 30
 - proto: MopItem
   entities:
@@ -46048,7 +46056,7 @@ entities:
   - uid: 3299
     components:
     - type: Transform
-      pos: 23.460743,-1.4986682
+      pos: 23.41242,-1.4073458
       parent: 30
 - proto: soda_dispenser
   entities:
@@ -55020,6 +55028,11 @@ entities:
       parent: 30
 - proto: WaterTankHighCapacity
   entities:
+  - uid: 3292
+    components:
+    - type: Transform
+      pos: 21.5,-3.5
+      parent: 30
   - uid: 7273
     components:
     - type: Transform
