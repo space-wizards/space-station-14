@@ -1,19 +1,16 @@
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
-using Robust.Shared.Player;
-using System.Linq;
 using Content.Server.Antag;
-using Robust.Server.Audio;
 using Content.Shared.Traitor.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Server.Objectives.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.NPC.Systems;
 using System.Text;
+using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -45,7 +42,7 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
         BloodBrotherRuleComponent.CommonObjectives.Clear();
     }
 
-    public bool MakeBloodBrother(EntityUid uid, BloodBrotherRuleComponent bloodBroRule)
+    public bool MakeBloodBrother(EntityUid uid, BloodBrotherRuleComponent component)
     {
         if (!_mindSystem.TryGetMind(uid, out var mindId, out var mind))
             return false;
@@ -53,11 +50,11 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
             return false;
 
         _roleSystem.MindAddRole(mindId, new BloodBrotherComponent());
+        component.Minds.Add(mindId);
 
-        _antag.SendBriefing(uid, GetBriefing(), Color.Crimson, bloodBroRule.GreetingSound);
+        _antag.SendBriefing(uid, GetBriefing(component), Color.Crimson, component.GreetingSound);
 
         _npcFactionSystem.RemoveFaction(mindId, "Nanotrasen", false);
-        _npcFactionSystem.AddFaction(mindId, "Syndicate");
         _npcFactionSystem.AddFaction(mindId, "BloodBrother");
 
         // roll absolutely random objectives with no difficulty tweaks
@@ -66,7 +63,7 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
             foreach (var objective in BloodBrotherRuleComponent.CommonObjectives)
                 _mindSystem.AddObjective(mindId, mind, objective);
 
-        for (int i = 0; i < bloodBroRule.MaxObjectives / bloodBroRule.NumberOfAntags; i++)
+        for (int i = 0; i < component.MaxObjectives / component.NumberOfAntags; i++)
             BloodBrotherRuleComponent.CommonObjectives.Add(RollObjective(mindId, mind));
 
         var aliveObj = _objectives.GetRandomObjective(mindId, mind, "BloodbrotherAliveObjective");
@@ -76,16 +73,25 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
         return true;
     }
 
-    public string GetBriefing()
+    public string GetBriefing(BloodBrotherRuleComponent component)
     {
-        var traitorRule = EntityQuery<TraitorRuleComponent>().FirstOrDefault();
-
-        if (traitorRule == null)
-            traitorRule = Comp<TraitorRuleComponent>(GameTicker.AddGameRule("Traitor"));
-
         var sb = new StringBuilder();
-        sb.AppendLine(Loc.GetString("bloodbrother-role-greeting"));
-        sb.AppendLine(Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", traitorRule.Codewords))));
+        sb.AppendLine(Loc.GetString("bloodbrother-briefing-start"));
+
+        if (component.NumberOfAntags < 2)
+            sb.AppendLine(Loc.GetString("bloodbrother-briefing-nopartner"));
+        else
+        {
+            foreach (var uid in component.Minds)
+            {
+                var name = GetEntityData(GetNetEntity(uid)).Item2.EntityName;
+                var job = Comp<JobComponent>(uid).ToString();
+
+                sb.AppendLine(Loc.GetString("bloodbrother-briefing-partner", ("partner", name), ("job", job ?? "Unknown")));
+            }
+            sb.AppendLine(Loc.GetString("bloodbrother-briefing-partner-end"));
+        }
+
         return sb.ToString();
     }
 

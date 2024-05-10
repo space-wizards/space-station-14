@@ -4,7 +4,6 @@ traitor-round-end-codewords = The codewords were: [color=White]{$codewords}[/col
 traitor-round-end-agent-name = traitor
 
 objective-issuer-syndicate = [color=crimson]The Syndicate[/color]
-objective-issuer-bloodbrothers = [color=red]Blood Brother[/color]
 objective-issuer-unknown = Unknown
 
 # Shown at the end of a round of Traitor
@@ -43,18 +42,3 @@ traitor-role-codewords-short =
     The codewords are:
     {$codewords}.
 traitor-role-uplink-code-short = Your uplink code is {$code}. Set it as your PDA ringtone to access uplink.
-
-# BloodBrotherRole
-bloodbrother-role-greeting =
-    You are a member of the blood brothers.
-
-    Your objectives and codewords are listed in the character menu.
-    His name and job role is also listed in the character menu.
-    Death to Nanotrasen!
-bloodbrother-designated-partner =
-    Your designated partner is {$partner}, {$job}.
-    You must work together to complete your objectives.
-bloodbrother-no-partner =
-    You don't have a designated partner.
-    Use a special flash to perform a syndicate sleeper agent protocol on a crewmember.
-    This will not work on security or command personnel.

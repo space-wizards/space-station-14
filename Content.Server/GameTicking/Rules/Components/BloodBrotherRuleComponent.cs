@@ -22,7 +22,7 @@ public sealed partial class BloodBrotherRuleComponent : Component
     /// Minimal amount of bros created.
     /// </summary>
     [DataField]
-    public int MinBros = 2;
+    public int MinBros = 1;
 
     /// <summary>
     /// Max amount of bros created.
@@ -34,7 +34,7 @@ public sealed partial class BloodBrotherRuleComponent : Component
     /// Max amount of objectives possible.
     /// </summary>
     [DataField]
-    public int MaxObjectives = 5;
+    public int MaxObjectives = 3;
 
     /// <summary>
     /// Path to the traitor greeting sound.
