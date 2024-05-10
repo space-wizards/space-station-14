@@ -311,6 +311,7 @@
     sprite: Objects/Specific/Hydroponics/banana.rsi
     heldPrefix: peel
   - type: Slippery
+    paralyzeTime: 1.0
     launchForwardsMultiplier: 1.0
   - type: StepTrigger
     intersectRatio: 0.2
@@ -388,6 +389,7 @@
       path: /Audio/Effects/slip.ogg
       params:
         volume: -100
+    paralyzeTime: 1.0
     launchForwardsMultiplier: 1.0
 
 - type: entity
