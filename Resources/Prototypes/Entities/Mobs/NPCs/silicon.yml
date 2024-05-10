@@ -271,9 +271,20 @@
       Critical:
         reagent: SpaceDrugs
         quantity: 25
+  - type: RandomSprite
+    available:
+        - enum.DamageStateVisualLayers.Base:
+            medibot: ""
+          enum.DamageStateVisualLayers.BaseUnshaded:
+            powered: Rainbow
   - type: Sprite
     sprite: Mobs/Silicon/Bots/medibot.rsi
-    state: medibot
+    layers:
+      - state: medibot
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+      - state: powered
+        map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+        shader: unshaded
   - type: HTN
     rootTask:
       task: MedibotCompound

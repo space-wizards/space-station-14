@@ -9,6 +9,10 @@
       {
          "directions" : 1,
          "name" : "medibot"
+      },
+      {
+         "directions" : 1,
+         "name" : "powered"
       }
    ],
    "version" : 1
