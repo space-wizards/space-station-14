@@ -81,8 +81,9 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             case 0:
                 _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, new GeneralStationRecordConsoleState());
                 return;
-            case 1:
-                console.ActiveKey = listing.Keys.First();
+            default:
+                if (console.ActiveKey == null)
+                    console.ActiveKey = listing.Keys.First();
                 break;
         }
 
