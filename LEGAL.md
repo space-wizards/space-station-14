@@ -1,4 +1,4 @@
-﻿# Legal Info
+# Legal Info
 
 ## Copyright
 
@@ -6,11 +6,11 @@ The Authors retain all copyright to their respective work here submitted.
 
 ## Code license
 
-Content contributed to this repository after commit 87c70a89a67d0521a56388e6b1c3f2cb947943e4 is licensed under the GNU Affero General Public License version 3.0, unless otherwise stated. See `LICENSE-AGPLv3.txt`.
+Content contributed to this repository after commit 8270907bdc509a3fb5ecfecde8cc14e5845ede36 is licensed under the GNU Affero General Public License version 3.0, unless otherwise stated. See `LICENSE-AGPLv3.txt`.
 
-Content contributed to this repository before commit 87c70a89a67d0521a56388e6b1c3f2cb947943e4 is licensed under the MIT license, unless otherwise stated. See `LICENSE-MIT.txt`.
+Content contributed to this repository before commit 8270907bdc509a3fb5ecfecde8cc14e5845ede36 is licensed under the MIT license, unless otherwise stated. See `LICENSE-MIT.txt`.
 
-[87c70a89a67d0521a56388e6b1c3f2cb947943e4](https://github.com/DeltaV-Station/Delta-v/commit/87c70a89a67d0521a56388e6b1c3f2cb947943e4) was pushed on February 17th 2024 at 21:48 UTC
+[8270907bdc509a3fb5ecfecde8cc14e5845ede36](https://github.com/Goob-Station/Goob-Station/commit/8270907bdc509a3fb5ecfecde8cc14e5845ede36) was pushed on April 23rd 2024 at 15:22 UTC
 
 ## Warranty
 
