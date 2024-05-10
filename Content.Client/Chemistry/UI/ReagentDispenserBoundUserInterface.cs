@@ -34,6 +34,7 @@ namespace Content.Client.Chemistry.UI
             _window = new()
             {
                 Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
+                HelpGuidebookId = "Chemicals"
             };
 
             _window.OpenCentered();

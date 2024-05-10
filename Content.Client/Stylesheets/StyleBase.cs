@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client.Resources;
+using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -64,6 +65,7 @@ namespace Content.Client.Stylesheets
                 12
             );
             var textureCloseButton = resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png");
+            var textureHelpButton = resCache.GetTexture("/Textures/Interface/Nano/help.png");
 
             // Button styles.
             var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
@@ -168,6 +170,32 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty("font", notoSans12Italic),
+                    }),
+
+                // Window help button base texture.
+                new StyleRule(
+                    new SelectorElement(typeof(TextureButton), new[] {FancyWindow.StyleClassWindowHelpButton}, null,
+                        null),
+                    new[]
+                    {
+                        new StyleProperty(TextureButton.StylePropertyTexture, textureHelpButton),
+                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#4B596A")),
+                    }),
+                // Window help button hover.
+                new StyleRule(
+                    new SelectorElement(typeof(TextureButton), new[] {FancyWindow.StyleClassWindowHelpButton}, null,
+                        new[] {TextureButton.StylePseudoClassHover}),
+                    new[]
+                    {
+                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
+                    }),
+                // Window help button pressed.
+                new StyleRule(
+                    new SelectorElement(typeof(TextureButton), new[] {FancyWindow.StyleClassWindowHelpButton}, null,
+                        new[] {TextureButton.StylePseudoClassPressed}),
+                    new[]
+                    {
+                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
                     }),
 
                 // Window close button base texture.
