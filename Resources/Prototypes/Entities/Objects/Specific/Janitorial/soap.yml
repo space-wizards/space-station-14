@@ -197,6 +197,7 @@
     fillBaseName: gibs-
   - type: Slippery
     paralyzeTime: 1
+    launchForwardsMultiplier: 1
   - type: StepTrigger
   - type: Item
     heldPrefix: gibs

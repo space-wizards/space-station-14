@@ -113,7 +113,8 @@
   components:
   - type: Clickable
   - type: Slippery
-    launchForwardsMultiplier: 2.0
+    paralyzeTime: 1
+    launchForwardsMultiplier: 1
   - type: Transform
     noRot: true
     anchored: true
