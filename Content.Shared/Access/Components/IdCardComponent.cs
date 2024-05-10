@@ -41,9 +41,17 @@ public sealed partial class IdCardComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool BypassLogging;
 
+
     ///<summary>
     /// Id used for the PDA messages system.
     ///</summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int MessagesId;
+
+    [DataField]
+    public LocId NameLocId = "access-id-card-component-owner-name-job-title-text";
+
+    [DataField]
+    public LocId FullNameLocId = "access-id-card-component-owner-full-name-job-title-text";
+
 }
