@@ -130,7 +130,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     transmitFrequencyId: NTMessagesServer
-    receiveFrequencyId: NTMessagesClients
+    receiveFrequencyId: NTMessagesClient
     autoConnect: false
   - type: StationLimitedNetwork
 

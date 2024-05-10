@@ -129,7 +129,13 @@
   - type: Computer
     board: SyndicateShuttleConsoleCircuitboard
   - type: MessagesServer
-    encryptionKey: Syndicate
+  - type: SingletonDeviceNetServer
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: SyndicateMessagesServer
+    receiveFrequencyId: SyndicateMessagesClient
+    autoConnect: false
+  - type: StationLimitedNetwork
 
 - type: entity
   parent: BaseComputerShuttle
@@ -594,6 +600,13 @@
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
   - type: MessagesServer
+  - type: SingletonDeviceNetServer
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: NTMessagesServer
+    receiveFrequencyId: NTMessagesClient
+    autoConnect: false
+  - type: StationLimitedNetwork
 
 - type: entity
   parent: ComputerComms
