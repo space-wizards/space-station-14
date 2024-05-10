@@ -30,7 +30,7 @@ public enum MessagesUiStateMode : byte
 /// Data of a single message in the system, containing the ids of the sender and recipient, the text content and the time it was sent.
 ///</summary>
 [Serializable, NetSerializable]
-public partial struct MessagesMessageData
+public struct MessagesMessageData
 {
     public int SenderId;
     public int ReceiverId;
