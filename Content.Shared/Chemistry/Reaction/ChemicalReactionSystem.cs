@@ -201,7 +201,7 @@ namespace Content.Shared.Chemistry.Reaction
                 reagent,
                 unitReactions, EntityManager, null, 1f);
 
-            var posFound = _transformSystem.TryGetMapOrGridCoordinates(soln, out var gridPos);
+            var posFound = _transformSystem.TryGetGridOrMapCoordinates(soln, out var gridPos);
 
             _adminLogger.Add(LogType.ChemicalReaction, reaction.Impact,
                 $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(soln):metabolizer} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found]")}");

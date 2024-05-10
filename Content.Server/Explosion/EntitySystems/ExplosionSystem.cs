@@ -251,7 +251,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         var mapPos = _transformSystem.GetMapCoordinates(pos);
 
-        var posFound = _transformSystem.TryGetMapOrGridCoordinates(uid, out var gridPos, pos);
+        var posFound = _transformSystem.TryGetGridOrMapCoordinates(uid, out var gridPos, pos);
 
         QueueExplosion(mapPos, typeId, totalIntensity, slope, maxTileIntensity, tileBreakScale, maxTileBreak, canCreateVacuum, addLog: false);
 
