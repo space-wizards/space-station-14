@@ -57,13 +57,3 @@
   cost: 5200
   category: cargoproduct-category-name-armory
   group: market
-
-- type: cargoProduct
-  id: ArmorySwat
-  icon:
-    sprite: Clothing/OuterClothing/Armor/heavy.rsi
-    state: icon
-  product: CrateArmorySwatArmor
-  cost: 15000
-  category: Armory
-  group: market

@@ -69,22 +69,3 @@
       amount: 2
     - id: MagazinePistol
       amount: 4
-
-- type: entity
-  id: CrateArmorySwatArmor
-  parent: CrateWeaponSecure
-  name: SWAT armor crate
-  description: Contains 2 SWAT Helmet, 2 SWAT Armor, 2 Combat Knife, 2 SWAT Mask, 2 Assault Belt. Have fun.
-  components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHeadHelmetSwat
-        amount: 2
-      - id: ClothingOuterArmorSwat
-        amount: 2
-      - id: ClothingMaskGasSwat
-        amount: 2
-      - id: CombatKnife
-        amount: 2
-      - id: ClothingBeltAssault
-        amount: 2
