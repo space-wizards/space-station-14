@@ -20,5 +20,7 @@ borg-ui-module-counter = {$actual}/{$max}
 
 # Transponder
 borg-transponder-disabled-popup = A brain shoots out the top of {$name}!
+borg-transponder-disabling-popup = Your transponder begins to lock you out of the chassis!
+borg-transponder-destroying-popup = The self destruct of {$name} starts beeping!
 borg-transponder-emagged-disabled-popup = Your transponder's lights go out!
 borg-transponder-emagged-destroyed-popup = Your transponder's fuse blows!
