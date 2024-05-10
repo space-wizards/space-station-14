@@ -93,7 +93,6 @@
       - state: server
       - state: variant-research
       - state: server_o
-        map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ApcPowerReceiver
     powerLoad: 200
   - type: ExtensionCableReceiver
