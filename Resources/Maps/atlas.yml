@@ -353,7 +353,7 @@ entities:
             color: '#464646FF'
             id: BrickTileWhiteCornerNe
           decals:
-            999: -22,0
+            973: -22,0
         - node:
             color: '#52B4E996'
             id: BrickTileWhiteCornerNw
@@ -363,32 +363,32 @@ entities:
             color: '#464646FF'
             id: BrickTileWhiteCornerSe
           decals:
-            994: -22,4
+            968: -22,4
         - node:
             color: '#464646FF'
             id: BrickTileWhiteInnerNe
           decals:
-            1000: -23,0
-            1001: -22,-1
+            974: -23,0
+            975: -22,-1
         - node:
             color: '#464646FF'
             id: BrickTileWhiteInnerSe
           decals:
-            995: -23,4
-            996: -22,5
+            969: -23,4
+            970: -22,5
         - node:
             color: '#464646FF'
             id: BrickTileWhiteLineE
           decals:
-            991: -23,1
-            992: -23,2
-            993: -23,3
+            965: -23,1
+            966: -23,2
+            967: -23,3
         - node:
             color: '#464646FF'
             id: BrickTileWhiteLineN
           decals:
-            1002: -21,-1
-            1003: -20,-1
+            976: -21,-1
+            977: -20,-1
         - node:
             color: '#52B4E996'
             id: BrickTileWhiteLineN
@@ -399,8 +399,8 @@ entities:
             color: '#464646FF'
             id: BrickTileWhiteLineS
           decals:
-            997: -21,5
-            998: -20,5
+            971: -21,5
+            972: -20,5
         - node:
             color: '#52B4E996'
             id: BrickTileWhiteLineS
@@ -4735,6 +4735,21 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 22.5,34.5
+      parent: 30
+  - uid: 8507
+    components:
+    - type: Transform
+      pos: 22.5,34.5
+      parent: 30
+  - uid: 8508
+    components:
+    - type: Transform
+      pos: 15.5,34.5
+      parent: 30
+  - uid: 8509
+    components:
+    - type: Transform
+      pos: 7.5,30.5
       parent: 30
 - proto: AtmosFixBlockerMarker
   entities:
