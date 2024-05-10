@@ -1,49 +1,67 @@
-<cc:FancyWindow
+<DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'character-info-title'}"
-    MinWidth="400"
-    MinHeight="545">
+    MinSize="320 550">
     <BoxContainer
         VerticalExpand="True"
         HorizontalExpand="True"
         SeparationOverride="5"
-        Orientation="Horizontal">
+        Orientation="Horizontal"
+        Margin="5 5 5 5">
         <BoxContainer Name="LeftPanel"
                       Orientation="Vertical"
                       VerticalExpand="True"
                       HorizontalExpand="True"
-                      SeparationOverride="5">
-            <PanelContainer
-                Name="SpritePanel">
-                <PanelContainer.PanelOverride>
-                    <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
+                      SeparationOverride="5"
+                      MinSize="320 550">
+            <cc:StripeBack
+                Name="SpritePanel"
+                MinSize="320 150">
                 <BoxContainer
-                    Orientation="Horizontal">
-                    <SpriteView Name="SpriteView" Access="Public"/>
-                    <BoxContainer Orientation="Vertical">
+                    Orientation="Horizontal"
+                    Align="Center">
+                    <SpriteView Name="SpriteView" Access="Public" SetSize="96 96" MinSize="96 96" Scale="3 3"/>
+                    <BoxContainer
+                        Orientation="Vertical"
+                        Align="Begin"
+                        Margin="0 15 0 0">
                         <RichTextLabel Name="NameLabel" Access="Public"/>
                         <RichTextLabel Name="SubTextLabel" Access="Public"/>
                     </BoxContainer>
                 </BoxContainer>
-            </PanelContainer>
-            <ScrollContainer
-                Name="BriefingContainer"
-                Access="Public"
-                HScrollEnabled="False">
+            </cc:StripeBack>
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+                <ScrollContainer
+                    Name="BriefingContainer"
+                    Access="Public"
+                    HScrollEnabled="False"
+                    MinSize="320 400">
 
-            </ScrollContainer>
+                </ScrollContainer>
+            </PanelContainer>
+
         </BoxContainer>
         <BoxContainer Name="ObjectivesPanel"
-                      Orientation="Vertical">
-            <ScrollContainer
-                Name="ObjectivesContainer"
-                Access="Public"
-                HScrollEnabled="False">
+                      Access="Public"
+                      Orientation="Vertical"
+                      MinSize="300 550">
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+                <ScrollContainer
+                    Name="ObjectivesContainer"
+                    Access="Public"
+                    HScrollEnabled="False">
 
-            </ScrollContainer>
+                </ScrollContainer>
+            </PanelContainer>
+
         </BoxContainer>
     </BoxContainer>
-</cc:FancyWindow>
+</DefaultWindow>

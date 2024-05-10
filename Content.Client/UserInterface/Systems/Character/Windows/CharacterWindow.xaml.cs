@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.UserInterface.Systems.Character.Windows;
 
 [GenerateTypedNameReferences]
-public sealed partial class CharacterWindow : FancyWindow
+public sealed partial class CharacterWindow : DefaultWindow
 {
     public CharacterWindow()
     {

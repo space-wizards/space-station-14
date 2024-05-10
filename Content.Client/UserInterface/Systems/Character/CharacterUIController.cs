@@ -1,9 +1,17 @@
+using System.Numerics;
 using Content.Client.Gameplay;
 using Content.Client.Message;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.Character.Controls;
 using Content.Client.UserInterface.Systems.Character.Windows;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
+using Content.Shared.Mind;
+using Content.Shared.Objectives;
+using Content.Shared.Objectives.Components;
+using Content.Shared.Objectives.Systems;
+using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -20,6 +28,10 @@ namespace Content.Client.UserInterface.Systems.Character;
 public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
+    [UISystemDependency] private readonly SharedMindSystem _minds = default!;
+    [UISystemDependency] private readonly RoleSystem _roles = default!;
+    [UISystemDependency] private readonly SharedObjectivesSystem _objectives = default!;
+    [UISystemDependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IEntityManager _entity = default!;
 
@@ -81,7 +93,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     private void DeactivateButton() => CharacterButton!.Pressed = false;
     private void ActivateButton() => CharacterButton!.Pressed = true;
 
-    private void UpdateCharacterWindow()
+    public void UpdateCharacterWindow()
     {
         if (_window == null)
             return;
@@ -92,13 +104,45 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         var entityName = _entity.GetComponent<MetaDataComponent>(entity).EntityName;
 
         _window.SpriteView.SetEntity(entity);
-        _window.NameLabel.SetMarkup(FormattedMessage.EscapeText(entityName));
-        //_window.SubTextLabel.Text = job;
-        /*
-        _window.Objectives.RemoveAllChildren();
-        _window.ObjectivesLabel.Visible = objectives.Any();
+        _window.NameLabel.SetMarkup(Loc.GetString("character-info-name-label", ("name", FormattedMessage.EscapeText(entityName))));
 
-        foreach (var (groupId, conditions) in objectives)
+        // all further info requires a mind more or less
+        if (!_minds.TryGetMind(entity, out var mindId, out var mind))
+            return;
+
+        if (_jobs.MindTryGetJobName(mindId, out var jobName))
+            _window.SubTextLabel.SetMarkup(Loc.GetString("character-info-subtext-label", ("job", FormattedMessage.EscapeText(jobName))));
+
+        // Get briefing
+        var briefing = _roles.MindGetBriefing(mindId);
+
+        // Get all objectives
+        _window.ObjectivesContainer.RemoveAllChildren();
+
+        if (mind.Objectives.Count == 0)
+        {
+            _window.ObjectivesPanel.MinSize = Vector2.Zero;
+            _window.ObjectivesPanel.SetSize = Vector2.Zero;
+        }
+
+        var objectivesSorted = new Dictionary<string, List<ObjectiveInfo>>();
+
+        foreach (var objective in mind.Objectives)
+        {
+            var info = _objectives.GetInfo(objective, mindId, mind);
+
+            if (info == null)
+                continue;
+
+            // group objectives by their issuer
+            var issuer = _entity.GetComponent<ObjectiveComponent>(objective).Issuer;
+
+            if (!objectivesSorted.ContainsKey(issuer))
+                objectivesSorted[issuer] = new();
+            objectivesSorted[issuer].Add(info.Value);
+        }
+
+        foreach (var (groupId, conditions) in objectivesSorted)
         {
             var objectiveControl = new CharacterObjectiveControl
             {
@@ -128,7 +172,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
                 objectiveControl.AddChild(conditionControl);
             }
 
-            _window.Objectives.AddChild(objectiveControl);
+            _window.ObjectivesContainer.AddChild(objectiveControl);
         }
 
         if (briefing != null)
@@ -138,17 +182,14 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             text.PushColor(Color.Yellow);
             text.AddText(briefing);
             briefingControl.Label.SetMessage(text);
-            _window.Objectives.AddChild(briefingControl);
+            _window.BriefingContainer.AddChild(briefingControl);
         }
 
-        var controls = _characterInfo.GetCharacterInfoControls(entity);
+        var controls = GetCharacterInfoControls(entity);
         foreach (var control in controls)
         {
-            _window.Objectives.AddChild(control);
+            _window.BriefingContainer.AddChild(control);
         }
-
-        _window.RolePlaceholder.Visible = briefing == null && !controls.Any() && !objectives.Any();
-        */
     }
 
     public List<Control> GetCharacterInfoControls(EntityUid uid)
