@@ -300,6 +300,40 @@
     - Fruit
 
 - type: entity
+  name: smartana
+  parent: FoodProduceBase
+  id: FoodSmartana
+  description: Even THIS smarter than clown.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - banana
+      - magical
+  - type: Food
+    trash: TrashSmartanaPeel
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Cognizine
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 2
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/smartana.rsi
+  - type: Produce
+    seedId: smartana
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceBanana
+        Quantity: 10
+  - type: Tag
+    tags:
+    - Fruit
+
+- type: entity
   name: banana peel
   parent: BaseItem
   id: TrashBananaPeel
@@ -389,6 +423,22 @@
       params:
         volume: -100
     launchForwardsMultiplier: 1.6
+
+- type: entity
+  name: smartana peel
+  parent: TrashBananaPeel
+  id: TrashSmartanaPeel
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/smartana.rsi
+    state: peel
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/smartana.rsi
+    heldPrefix: peel
+  - type: Slippery
+    slipSound:
+      path: /Audio/Effects/slip.ogg
+    launchForwardsMultiplier: 1.3
 
 - type: entity
   name: bananium peel

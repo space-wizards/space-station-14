@@ -88,6 +88,8 @@
   packetPrototype: MimanaSeeds
   productPrototypes:
     - FoodMimana
+  mutationPrototypes:
+    - smartana
   harvestRepeat: Repeat
   lifespan: 50
   maturation: 6
@@ -100,6 +102,33 @@
     MuteToxin:
       Min: 1
       Max: 5
+      PotencyDivisor: 20
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
+
+- type: seed
+  id: smartana
+  name: seeds-smartana-name
+  noun: seeds-noun-seeds
+  displayName: smartana plant
+  plantRsi: Objects/Specific/Hydroponics/smartana.rsi
+  packetPrototype: SmartanaSeeds
+  productPrototypes:
+    - FoodSmartana
+  harvestRepeat: Repeat
+  lifespan: 15
+  maturation: 6
+  production: 6
+  yield: 1
+  idealLight: 9
+  waterConsumption: 0.70
+  idealHeat: 298
+  chemicals:
+    Cognizine:
+      Min: 1
+      Max: 2
       PotencyDivisor: 20
     Nutriment:
       Min: 1
