@@ -44,7 +44,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Slippery
-    paralyzeTime: 2
+    paralyzeTime: 1.5
     launchForwardsMultiplier: 1.5
   - type: StepTrigger
     intersectRatio: 0.2

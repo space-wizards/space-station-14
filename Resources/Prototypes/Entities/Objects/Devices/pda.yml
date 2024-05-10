@@ -255,7 +255,7 @@
   - type: Icon
     state: pda-clown
   - type: Slippery
-    paralyzeTime: 4
+    paralyzeTime: 1.5 # secretly made of bananium
     launchForwardsMultiplier: 1.5
   - type: StepTrigger
   - type: CollisionWake
