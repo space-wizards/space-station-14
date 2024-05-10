@@ -411,21 +411,6 @@
     - chirping.
     - chirping!
 
-- type: emote #GreyStation - Fart PR
-  id: Fart
-  category: Vocal
-  chatMessages: [farts]
-  chatTriggers:
-    - fart
-    - farts
-    - farted
-    - fart.
-    - farts.
-    - farted.
-    - fart!
-    - farts!
-    - farted!
-
 # Machine Emotes
 - type: emote
   id: Beep

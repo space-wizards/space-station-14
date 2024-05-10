@@ -1,0 +1,17 @@
+# vocal emotes
+- type: emote
+  id: Fart
+  name: chat-emote-name-fart
+  category: Vocal
+  icon: Interface/Actions/scream.png
+  chatMessages: [chat-emote-msg-fart]
+  chatTriggers:
+  - fart
+  - farts
+  - farted
+  - fart.
+  - farts.
+  - farted.
+  - fart!
+  - farts!
+  - farted!
