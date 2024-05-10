@@ -46,7 +46,7 @@
     attackRate: 0.75
     damage:
       types:
-        Blunt: 25 #thwack
+        Blunt: 20 #thwack
         Structural: 20
     soundHit:
       collection: MetalThud
@@ -162,6 +162,9 @@
     pilotWhitelist:
       components:
       - HumanoidAppearance
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.38
 
 - type: entity
   parent: MechHonker

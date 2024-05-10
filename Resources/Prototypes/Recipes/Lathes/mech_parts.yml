@@ -60,9 +60,9 @@
   category: Mech
   completetime: 10
   materials:
-    Steel: 3000
+    Steel: 1800
     Glass: 1200
-    Bananium: 500
+    Bananium: 400
 
 - type: latheRecipe
   id: HonkerLArm
@@ -70,9 +70,9 @@
   category: Mech
   completetime: 10
   materials:
-    Steel: 3000
-    Glass: 1200
-    Bananium: 500
+    Steel: 1200
+    Glass: 1000
+    Bananium: 150
 
 - type: latheRecipe
   id: HonkerLLeg
@@ -80,9 +80,9 @@
   category: Mech
   completetime: 10
   materials:
-    Steel: 3000
-    Glass: 1200
-    Bananium: 500
+    Steel: 1200
+    Glass: 1000
+    Bananium: 150
 
 - type: latheRecipe
   id: HonkerRLeg
@@ -90,9 +90,9 @@
   category: Mech
   completetime: 10
   materials:
-    Steel: 3000
-    Glass: 1200
-    Bananium: 500
+    Steel: 1200
+    Glass: 1000
+    Bananium: 150
 
 - type: latheRecipe
   id: HonkerRArm
@@ -100,9 +100,9 @@
   category: Mech
   completetime: 10
   materials:
-    Steel: 3000
-    Glass: 1200
-    Bananium: 500
+    Steel: 1200
+    Glass: 1000
+    Bananium: 150
 
 - type: latheRecipe
   id: MechEquipmentHorn
