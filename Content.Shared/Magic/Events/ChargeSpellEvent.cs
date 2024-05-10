@@ -3,7 +3,7 @@
 namespace Content.Shared.Magic.Events;
 
 /// <summary>
-///     Adds provided Charge to the held wand
+/// Adds provided Charge to the held wand
 /// </summary>
 public sealed partial class ChargeSpellEvent : InstantActionEvent, ISpeakSpell
 {

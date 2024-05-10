@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Interaction;
-using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -16,7 +15,6 @@ public sealed class ActionOnInteractSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
@@ -44,9 +42,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var actionEnts = component.ActionEntities;
-
-        if (actionEnts is null)
+        if (component.ActionEntities is not {} actionEnts)
         {
             if (!TryComp<ActionsContainerComponent>(uid,  out var actionsContainerComponent))
                 return;
@@ -71,9 +67,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var actionEnts = component.ActionEntities;
-
-        if (actionEnts is null)
+        if (component.ActionEntities is not {} actionEnts)
         {
             if (!TryComp<ActionsContainerComponent>(uid,  out var actionsContainerComponent))
                 return;

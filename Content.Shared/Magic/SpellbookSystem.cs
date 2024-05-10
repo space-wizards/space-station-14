@@ -7,7 +7,7 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Magic;
 
-public sealed class SharedSpellbookSystem : EntitySystem
+public sealed class SpellbookSystem : EntitySystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -17,16 +17,16 @@ public sealed class SharedSpellbookSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<SpellbookComponent, MapInitEvent>(OnInit, before: new []{typeof(SharedMagicSystem)});
+        SubscribeLocalEvent<SpellbookComponent, MapInitEvent>(OnInit, before: [typeof(SharedMagicSystem)]);
         SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
         SubscribeLocalEvent<SpellbookComponent, SpellbookDoAfterEvent>(OnDoAfter);
     }
 
-    private void OnInit(EntityUid uid, SpellbookComponent component, MapInitEvent args)
+    private void OnInit(Entity<SpellbookComponent> ent, ref MapInitEvent args)
     {
-        foreach (var (id, charges) in component.SpellActions)
+        foreach (var (id, charges) in ent.Comp.SpellActions)
         {
-            var spell = _actionContainer.AddAction(uid, id);
+            var spell = _actionContainer.AddAction(ent, id);
             if (spell == null)
                 continue;
 
@@ -35,49 +35,43 @@ public sealed class SharedSpellbookSystem : EntitySystem
                 charge = _actions.GetCharges(spell);
 
             _actions.SetCharges(spell, charge < 0 ? null : charge);
-            component.Spells.Add(spell.Value);
+            ent.Comp.Spells.Add(spell.Value);
         }
     }
 
-    private void OnUse(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
+    private void OnUse(Entity<SpellbookComponent> ent, ref UseInHandEvent args)
     {
         if (args.Handled)
             return;
 
-        AttemptLearn(uid, component, args);
+        AttemptLearn(ent, args);
 
         args.Handled = true;
     }
 
-    private void OnDoAfter(EntityUid uid, SpellbookComponent component, DoAfterEvent args)
+    private void OnDoAfter<T>(Entity<SpellbookComponent> ent, ref T args) where T : DoAfterEvent // Sometimes i despise this language
     {
         if (args.Handled || args.Cancelled)
             return;
 
         args.Handled = true;
 
-        if (!component.LearnPermanently)
+        if (!ent.Comp.LearnPermanently)
         {
-            _actions.GrantActions(args.Args.User, component.Spells, uid);
+            _actions.GrantActions(args.Args.User, ent.Comp.Spells, ent);
             return;
         }
 
         if (_mind.TryGetMind(args.Args.User, out var mindId, out _))
         {
-            ActionsContainerComponent? mindActionContainerComp = null;
-            if (!TryComp<ActionsContainerComponent>(mindId, out var mindActionsContainerComponent))
-                mindActionContainerComp = EnsureComp<ActionsContainerComponent>(mindId);
-
-            mindActionContainerComp ??= mindActionsContainerComponent;
+            var mindActionContainerComp = EnsureComp<ActionsContainerComponent>(mindId);
 
             if (_netManager.IsServer)
-            {
-                _actionContainer.TransferAllActionsWithNewAttached(uid, mindId, args.Args.User, newContainer: mindActionContainerComp);
-            }
+                _actionContainer.TransferAllActionsWithNewAttached(ent, mindId, args.Args.User, newContainer: mindActionContainerComp);
         }
         else
         {
-            foreach (var (id, charges) in component.SpellActions)
+            foreach (var (id, charges) in ent.Comp.SpellActions)
             {
                 EntityUid? actionId = null;
                 if (_actions.AddAction(args.Args.User, ref actionId, id))
@@ -85,12 +79,12 @@ public sealed class SharedSpellbookSystem : EntitySystem
             }
         }
 
-        component.SpellActions.Clear();
+        ent.Comp.SpellActions.Clear();
     }
 
-    private void AttemptLearn(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
+    private void AttemptLearn(Entity<SpellbookComponent> ent, UseInHandEvent args)
     {
-        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.LearnTime, new SpellbookDoAfterEvent(), uid, target: uid)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.LearnTime, new SpellbookDoAfterEvent(), ent, target: ent)
         {
             BreakOnMove = true,
             BreakOnDamage = true,

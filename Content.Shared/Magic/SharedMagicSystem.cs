@@ -363,7 +363,7 @@ public abstract class SharedMagicSystem : EntitySystem
 
         var targetMapCoords = args.Target;
 
-        WorldSpawnSpellHelper(args.Contents, targetMapCoords, args.Performer, args.Lifetime, args.Offset);
+        WorldSpawnSpellHelper(args.Prototypes, targetMapCoords, args.Performer, args.Lifetime, args.Offset);
         Speak(args);
         args.Handled = true;
     }

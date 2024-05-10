@@ -11,8 +11,8 @@ public sealed partial class WorldSpawnSpellEvent : WorldTargetActionEvent, ISpea
     /// <summary>
     /// The list of prototypes this spell will spawn
     /// </summary>
-    [DataField("prototypes")]
-    public List<EntitySpawnEntry> Contents = new();
+    [DataField]
+    public List<EntitySpawnEntry> Prototypes = new();
 
     // TODO: This offset is liable for deprecation.
     // TODO: Target tile via code instead?
@@ -20,14 +20,15 @@ public sealed partial class WorldSpawnSpellEvent : WorldTargetActionEvent, ISpea
     /// The offset the prototypes will spawn in on relative to the one prior.
     /// Set to 0,0 to have them spawn on the same tile.
     /// </summary>
-    [DataField("offset")]
+    [DataField]
     public Vector2 Offset;
 
     /// <summary>
     /// Lifetime to set for the entities to self delete
     /// </summary>
-    [DataField("lifetime")] public float? Lifetime;
+    [DataField]
+    public float? Lifetime;
 
-    [DataField("speech")]
+    [DataField]
     public string? Speech { get; private set; }
 }

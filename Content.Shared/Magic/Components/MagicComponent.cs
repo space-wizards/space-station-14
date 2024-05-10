@@ -1,6 +1,7 @@
 ﻿using Robust.Shared.GameStates;
 
 namespace Content.Shared.Magic.Components;
+
 // TODO: Rename to MagicActionComponent or MagicRequirementsComponent
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedMagicSystem))]
 public sealed partial class MagicComponent : Component

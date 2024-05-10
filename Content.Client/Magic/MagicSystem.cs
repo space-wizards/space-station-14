@@ -2,7 +2,4 @@
 
 namespace Content.Client.Magic;
 
-public sealed class MagicSystem : SharedMagicSystem
-{
-    // Empty class because of Shared inheritance.
-}
+public sealed class MagicSystem : SharedMagicSystem;

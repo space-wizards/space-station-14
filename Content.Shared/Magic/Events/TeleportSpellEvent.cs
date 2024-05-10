@@ -1,12 +1,11 @@
 ﻿using Content.Shared.Actions;
-using Robust.Shared.Audio;
 
 namespace Content.Shared.Magic.Events;
 
 // TODO: Can probably just be an entity or something
 public sealed partial class TeleportSpellEvent : WorldTargetActionEvent, ISpeakSpell
 {
-    [DataField("speech")]
+    [DataField]
     public string? Speech { get; private set; }
 
     // TODO: Move to magic component
@@ -15,6 +14,6 @@ public sealed partial class TeleportSpellEvent : WorldTargetActionEvent, ISpeakS
     /// <summary>
     /// Volume control for the spell.
     /// </summary>
-    [DataField("blinkVolume")]
+    [DataField]
     public float BlinkVolume = 5f;
 }
