@@ -118,13 +118,13 @@
   productPrototypes:
     - FoodSmartana
   harvestRepeat: Repeat
-  lifespan: 15
+  lifespan: 10
   maturation: 6
-  production: 6
+  production: 9
   yield: 1
   idealLight: 9
-  waterConsumption: 0.70
-  idealHeat: 298
+  waterConsumption: 1.50
+  idealHeat: 250
   chemicals:
     Cognizine:
       Min: 1
