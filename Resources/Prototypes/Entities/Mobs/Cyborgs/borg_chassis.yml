@@ -20,6 +20,11 @@
       - BorgModuleGeneric
     hasMindState: robot_e
     noMindState: robot_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: robot
+    name: cyborg
   - type: Construction
     node: cyborg
   - type: Speech
@@ -57,6 +62,11 @@
       - BorgModuleCargo
     hasMindState: miner_e
     noMindState: miner_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: miner
+    name: salvage cyborg
   - type: Construction
     node: mining
   - type: IntrinsicRadioTransmitter
@@ -100,6 +110,11 @@
       - BorgModuleEngineering
     hasMindState: engineer_e
     noMindState: engineer_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: engineer
+    name: engineer cyborg
   - type: Construction
     node: engineer
   - type: IntrinsicRadioTransmitter
@@ -151,6 +166,11 @@
       - BorgModuleJanitor
     hasMindState: janitor_e
     noMindState: janitor_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: janitor
+    name: janitor cyborg
   - type: Construction
     node: janitor
   - type: IntrinsicRadioTransmitter
@@ -202,6 +222,11 @@
       - BorgModuleMedical
     hasMindState: medical_e
     noMindState: medical_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: medical
+    name: medical cyborg
   - type: Construction
     node: medical
   - type: IntrinsicRadioTransmitter
@@ -223,8 +248,6 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHoverBorg
-      params:
-        volume: -6
 
 - type: entity
   id: BorgChassisService
@@ -250,6 +273,11 @@
       - BorgModuleService
     hasMindState: service_e
     noMindState: service_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: service
+    name: service cyborg
   - type: Construction
     node: service
   - type: IntrinsicRadioTransmitter

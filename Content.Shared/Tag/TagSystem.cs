@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -185,6 +186,7 @@ public sealed class TagSystem : EntitySystem
     /// <summary>
     ///     Checks if a tag has been added to an entity.
     /// </summary>
+    [Obsolete]
     public bool HasTag(EntityUid entity, string id, EntityQuery<TagComponent> tagQuery)
     {
         return tagQuery.TryGetComponent(entity, out var component) &&
@@ -243,7 +245,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(EntityUid entity, List<ProtoId<TagPrototype>> ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                HasAllTags(component, ids);
     }
 
@@ -521,15 +523,17 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(TagComponent component, List<ProtoId<TagPrototype>> ids)
     {
-        var stringIds = new List<string>();
-        foreach (var tag in ids)
+        foreach (var id in ids)
         {
-            stringIds.Add(tag.Id);
+            AssertValidTag(id);
+
+            if (!component.Tags.Contains(id))
+                return false;
+
         }
 
-        return HasAllTags(component, stringIds);
+        return true;
     }
-
 
     /// <summary>
     ///     Checks if any of the given tags have been added.
@@ -551,7 +555,6 @@ public sealed class TagSystem : EntitySystem
 
         return false;
     }
-
 
     /// <summary>
     ///     Checks if any of the given tags have been added.
@@ -619,13 +622,15 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(TagComponent comp, List<ProtoId<TagPrototype>> ids)
     {
-        var stringIds = new List<string>();
-        foreach (var tag in ids)
+        foreach (var id in ids)
         {
-            stringIds.Add(tag.Id);
+            AssertValidTag(id);
+
+            if (comp.Tags.Contains(id))
+                return true;
         }
 
-        return HasAnyTag(comp, stringIds);
+        return false;
     }
 
     /// <summary>

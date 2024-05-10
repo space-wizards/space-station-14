@@ -12,6 +12,8 @@
     name: ghost-role-information-syndicate-reinforcement-name
     description: ghost-role-information-syndicate-reinforcement-description
     rules: ghost-role-information-syndicate-reinforcement-rules
+    raffle:
+      settings: default
   - type: GhostRoleMobSpawner
     prototype: MobHumanSyndicateAgent
   - type: EmitSoundOnUse
@@ -37,6 +39,8 @@
     name: ghost-role-information-syndicate-monkey-reinforcement-name
     description: ghost-role-information-syndicate-monkey-reinforcement-description
     rules: ghost-role-information-syndicate-monkey-reinforcement-rules
+    raffle:
+      settings: default
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgent
     selectablePrototypes: ["SyndicateMonkey", "SyndicateKobold"]
@@ -61,5 +65,7 @@
       name: Syndicate Assault Cyborg
       description: Nuclear operatives needs reinforcements. You, a cold silicon killing machine, will help them.
       rules: Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+      raffle:
+        settings: default
     - type: GhostRoleMobSpawner
       prototype: PlayerBorgSyndicateAssaultBattery
