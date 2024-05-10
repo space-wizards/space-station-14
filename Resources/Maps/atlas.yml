@@ -49187,7 +49187,7 @@ entities:
   - uid: 4559
     components:
     - type: Transform
-      pos: -26.5,-14.5
+      pos: -24.5,-14.5
       parent: 30
 - proto: VendingMachineRobotics
   entities:
