@@ -362,6 +362,14 @@
   - type: GuideHelp
     guides:
     - Forensics
+    - type: MessagesServer
+  - type: SingletonDeviceNetServer
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: NTMessagesServer
+    receiveFrequencyId: NTMessagesClient
+    autoConnect: false
+  - type: StationLimitedNetwork
 
 - type: entity
   parent: BaseComputer
@@ -599,14 +607,6 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
-  - type: MessagesServer
-  - type: SingletonDeviceNetServer
-  - type: DeviceNetwork
-    deviceNetId: Wireless
-    transmitFrequencyId: NTMessagesServer
-    receiveFrequencyId: NTMessagesClient
-    autoConnect: false
-  - type: StationLimitedNetwork
 
 - type: entity
   parent: ComputerComms
