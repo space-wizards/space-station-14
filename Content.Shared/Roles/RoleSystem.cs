@@ -53,7 +53,7 @@ public sealed class RoleSystem : EntitySystem
         args.Roles.Add(new RoleInfo(component, name, false, playTimeTracker, prototype));
     }
 
-    private void SubscribeAntagEvents<T>() where T : AntagonistRoleComponent
+    private void SubscribeAntagEvents<T>() where T : Component, IAntagonistRoleComponent
     {
         SubscribeLocalEvent((EntityUid _, T component, ref MindGetAllRolesEvent args) =>
         {
@@ -238,6 +238,7 @@ public sealed class RoleSystem : EntitySystem
             {
                 messages.AddMessage(next);
                 messages.PushNewline();
+                messages.PushNewline();
                 return messages;
             });
 
@@ -245,6 +246,7 @@ public sealed class RoleSystem : EntitySystem
             (messages, next) =>
             {
                 messages.AddMessage(next);
+                messages.PushNewline();
                 messages.PushNewline();
                 return messages;
             });
@@ -254,7 +256,8 @@ public sealed class RoleSystem : EntitySystem
         if (ev.AntagBriefings.Count == 0)
             return finalMsg;
 
-        finalMsg.PushMarkup("character-info-middle-antag-greeting");
+        finalMsg.PushMarkup(Loc.GetString("character-info-middle-antag-greeting"));
+        finalMsg.PushNewline();
         finalMsg.AddMessage(afterAntag);
 
         return finalMsg;

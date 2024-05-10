@@ -1,9 +1,10 @@
-<DefaultWindow
+<cc:FancyWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'character-info-title'}"
-    MinSize="360 550">
+    MinSize="400 550"
+    SetSize="400 550">
     <BoxContainer
         VerticalExpand="True"
         HorizontalExpand="True"
@@ -12,10 +13,12 @@
                       Orientation="Vertical"
                       VerticalExpand="True"
                       HorizontalExpand="True"
-                      MinSize="360 550">
+                      MinWidth="400">
             <cc:StripeBack
                 Name="SpritePanel"
-                MinSize="360 150">
+                SetHeight="120"
+                MinWidth="360"
+                VerticalAlignment="Top">
                 <BoxContainer
                     Orientation="Horizontal"
                     Align="Center">
@@ -23,47 +26,42 @@
                     <BoxContainer
                         Orientation="Vertical"
                         Align="Begin"
-                        Margin="0 15 0 0">
+                        Margin="0 10 0 0">
                         <RichTextLabel Name="NameLabel" Access="Public"/>
                         <RichTextLabel Name="SubTextLabel" Access="Public"/>
                     </BoxContainer>
                 </BoxContainer>
             </cc:StripeBack>
-            <PanelContainer Margin="5 5 5 5">
-                <PanelContainer.PanelOverride>
-                    <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
-                <ScrollContainer
-                    HScrollEnabled="False">
-                    <BoxContainer
-                        Name="BriefingContainer"
-                        Access="Public"
-                        MinSize="360 400"
-                        HorizontalExpand="True">
-                        <RichTextLabel Name="BriefingLabel" Access="Public"/>
-                    </BoxContainer>
-                </ScrollContainer>
-            </PanelContainer>
-
+            <BoxContainer
+                Name="BriefingContainer"
+                Access="Public"
+                Orientation="Vertical"
+                VerticalExpand="True"
+                Align="Begin"
+                MinSize="360 250"
+                Margin="5 5 5 5">
+                <RichTextLabel VerticalAlignment="Top" VerticalExpand="True" HorizontalExpand="True" Name="BriefingLabel" Access="Public"/>
+            </BoxContainer>
         </BoxContainer>
         <BoxContainer Name="ObjectivesPanel"
                       Access="Public"
                       Orientation="Vertical"
-                      MinSize="300 550">
-            <PanelContainer Margin="5 5 5 5">
+                      MinSize="300 550"
+                      VerticalExpand="True">
+            <PanelContainer VerticalExpand="True" Margin="5 5 5 5">
                 <PanelContainer.PanelOverride>
                     <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
                 </PanelContainer.PanelOverride>
                 <ScrollContainer
-                    HScrollEnabled="False">
+                    VerticalExpand="True"
+                    HScrollEnabled="False"
+                    Margin="5 5 5 5">
                     <BoxContainer
                         Name="ObjectivesContainer"
                         Access="Public"
-                        MinSize="300 550"
-                        HorizontalExpand="True"/>
+                        MinSize="300 550"/>
                 </ScrollContainer>
             </PanelContainer>
-
         </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</cc:FancyWindow>

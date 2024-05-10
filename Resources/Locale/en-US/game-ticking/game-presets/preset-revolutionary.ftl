@@ -3,8 +3,7 @@
 roles-antag-rev-head-name = Head Revolutionary
 roles-antag-rev-head-objective = Your objective is to take over the station by converting people to your cause and killing all Command staff on station.
 
-head-rev-briefing =
-    [color=blue]You are a Head Revolutionary.
+head-rev-briefing = [color=blue]You are a Head Revolutionary.
     You are tasked with removing all of Command from station via death, exilement or imprisonment.
     The Syndicate has sponsored you with a flash that converts the crew to your side.
     Beware, this won't work on Security, Command, or those wearing sunglasses.
@@ -19,8 +18,7 @@ roles-antag-rev-objective = Your objective is to ensure the safety and follow th
 
 rev-break-control = {$name} has remembered their true allegiance!
 
-rev-briefing =
-    [color=red]You are a Revolutionary.
+rev-briefing = [color=red]You are a Revolutionary.
     You are tasked with taking over the station and protecting the Head Revolutionaries.
     Get rid of all of the Command staff.
     Viva la revolución![/color]

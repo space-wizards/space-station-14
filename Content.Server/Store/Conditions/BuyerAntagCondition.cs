@@ -39,7 +39,7 @@ public sealed partial class BuyerAntagCondition : ListingCondition
         {
             foreach (var role in roles)
             {
-                if (role.Component is not AntagonistRoleComponent blacklistantag)
+                if (role.Component is not IAntagonistRoleComponent blacklistantag)
                     continue;
 
                 if (blacklistantag.PrototypeId != null && Blacklist.Contains(blacklistantag.PrototypeId))
@@ -52,7 +52,7 @@ public sealed partial class BuyerAntagCondition : ListingCondition
             var found = false;
             foreach (var role in roles)
             {
-                if (role.Component is not AntagonistRoleComponent antag)
+                if (role.Component is not IAntagonistRoleComponent antag)
                     continue;
 
                 if (antag.PrototypeId != null && Whitelist.Contains(antag.PrototypeId))

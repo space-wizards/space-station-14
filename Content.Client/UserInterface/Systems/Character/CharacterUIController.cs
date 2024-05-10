@@ -123,12 +123,12 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         {
             _window.ObjectivesPanel.MinSize = Vector2.Zero;
             _window.ObjectivesPanel.SetSize = Vector2.Zero;
-            _window.MinSize = new Vector2(360, 550);
+            _window.SetSize = new Vector2(360, 300);
         }
         else
         {
             _window.ObjectivesPanel.MinSize = new Vector2(300, 550);
-            _window.MinSize = new Vector2(660, 550);
+            _window.SetSize = new Vector2(660, 300);
         }
 
         var objectivesSorted = new Dictionary<string, List<ObjectiveInfo>>();

@@ -1,6 +1,14 @@
-﻿namespace Content.Shared.Roles;
+﻿using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
-[RegisterComponent]
-public sealed partial class SubvertedSiliconRoleComponent : AntagonistRoleComponent
+namespace Content.Shared.Roles;
+
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class SubvertedSiliconRoleComponent : Component, IAntagonistRoleComponent
 {
+    [DataField, AutoNetworkedField]
+    public ProtoId<AntagPrototype>? PrototypeId { get; set; }
+
+    [DataField, AutoNetworkedField]
+    public LocId? Briefing { get; set; }
 }

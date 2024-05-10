@@ -1,8 +1,14 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Roles;
 
-[RegisterComponent, ExclusiveAntagonist, NetworkedComponent]
-public sealed partial class ZombieRoleComponent : AntagonistRoleComponent
+[RegisterComponent, ExclusiveAntagonist, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class ZombieRoleComponent : Component, IAntagonistRoleComponent
 {
+    [DataField, AutoNetworkedField]
+    public ProtoId<AntagPrototype>? PrototypeId { get; set; }
+
+    [DataField, AutoNetworkedField]
+    public LocId? Briefing { get; set; }
 }

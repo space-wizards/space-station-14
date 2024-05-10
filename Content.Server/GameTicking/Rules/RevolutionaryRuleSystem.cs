@@ -54,7 +54,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
-    public readonly ProtoId<NpcFactionPrototype> RevPrototypeId = "Rev";
+    public readonly ProtoId<AntagPrototype> RevPrototypeId = "Rev";
 
     public override void Initialize()
     {
