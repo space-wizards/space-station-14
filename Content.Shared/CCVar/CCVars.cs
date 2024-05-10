@@ -1,3 +1,4 @@
+using Content.Shared.Maps;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 
@@ -904,6 +905,13 @@ namespace Content.Shared.CCVar
         /// </remarks>
         public static readonly CVarDef<int> ExplosionSingleTickAreaLimit =
             CVarDef.Create("explosion.single_tick_area_limit", 400, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether or not explosions are allowed to create tiles that have
+        ///     <see cref="ContentTileDefinition.MapAtmosphere"/> set to true.
+        /// </summary>
+        public static readonly CVarDef<bool> ExplosionCanCreateVacuum =
+            CVarDef.Create("explosion.can_create_vacuum", true, CVar.SERVERONLY);
 
         /*
          * Radiation
@@ -1994,7 +2002,7 @@ namespace Content.Shared.CCVar
         // Clippy!
         public static readonly CVarDef<string> TippyEntity =
             CVarDef.Create("tippy.entity", "Tippy", CVar.SERVER | CVar.REPLICATED);
-            
+
         /*
          * DEBUG
          */

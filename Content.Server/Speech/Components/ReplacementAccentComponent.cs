@@ -32,5 +32,11 @@ namespace Content.Server.Speech.Components
     {
         [DataField("accent", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>), required: true)]
         public string Accent = default!;
+
+        /// <summary>
+        /// Allows you to substitute words, not always, but with some chance
+        /// </summary>
+        [DataField]
+        public float ReplacementChance = 1f;
     }
 }

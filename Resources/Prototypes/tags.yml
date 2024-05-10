@@ -401,6 +401,9 @@
   id: ClownSuit
 
 - type: Tag
+  id: CluwneHappyHonk
+
+- type: Tag
   id: CluwneHorn
 
 - type: Tag
@@ -1279,6 +1282,9 @@
 
 - type: Tag
   id: WeaponShotgunKammerer
+
+- type: Tag
+  id: WeldingMask
 
 - type: Tag
   id: WetFloorSign
