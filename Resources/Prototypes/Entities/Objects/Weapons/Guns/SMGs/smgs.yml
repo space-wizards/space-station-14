@@ -80,7 +80,7 @@
 
 - type: entity
   name: C-20r sub machine gun
-  parent: BaseWeaponSubMachineGun
+  parent: [BaseWeaponSubMachineGun, BaseGunWieldable]
   id: WeaponSubMachineGunC20r
   description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.
   components:
@@ -94,6 +94,8 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
   - type: Gun
+    minAngle: 21
+    maxAngle: 32  
     shotsPerBurst: 5
     availableModes:
     - SemiAuto
@@ -111,7 +113,7 @@
 
 - type: entity
   name: Drozd
-  parent: BaseWeaponSubMachineGun
+  parent: [BaseWeaponSubMachineGun, BaseGunWieldable]
   id: WeaponSubMachineGunDrozd
   description: An excellent fully automatic Heavy SMG.
   components:
@@ -125,6 +127,8 @@
     - type: Clothing
       sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
     - type: Gun
+      minAngle: 21
+      maxAngle: 32  
       fireRate: 6
       selectedMode: FullAuto
       soundGunshot:
