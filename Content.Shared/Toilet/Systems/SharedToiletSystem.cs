@@ -64,7 +64,7 @@ namespace Content.Shared.Toilet.Systems
 
             if (component.ToggleSeat)
             {
-                toggleVerb.Text = Loc.GetString("toilet-seat-close");
+                toggleVerb.Text = Loc.GetString("toilet-seat-close"); // 312312387
                 toggleVerb.Icon =
                     new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
             }
