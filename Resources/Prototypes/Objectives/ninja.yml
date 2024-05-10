@@ -46,7 +46,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseNinjaObjective
+  parent: [BaseNinjaObjective, BaseCodeObjective]
   id: SpiderChargeObjective
   description: This bomb can be detonated in a specific location. Note that the bomb will not work anywhere else!
   components:
@@ -54,7 +54,6 @@
     icon:
       sprite: Objects/Weapons/Bombs/spidercharge.rsi
       state: icon
-  - type: SpiderChargeCondition
 
 - type: entity
   noSpawn: true
@@ -70,7 +69,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseNinjaObjective
+  parent: [BaseNinjaObjective, BaseCodeObjective]
   id: TerrorObjective
   name: Call in a threat
   description: Use your gloves on a communication console in order to bring another threat to the station.
@@ -79,4 +78,15 @@
     icon:
       sprite: Objects/Fun/Instruments/otherinstruments.rsi
       state: red_phone
-  - type: TerrorCondition
+
+- type: entity
+  noSpawn: true
+  parent: [BaseNinjaObjective, BaseCodeObjective]
+  id: MassArrestObjective
+  name: Set everyone to wanted
+  description: Use your gloves to hack a criminal records console, setting the entire station to be wanted!
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Weapons/Melee/stunbaton.rsi
+      state: stunbaton_on

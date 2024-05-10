@@ -7,6 +7,8 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class PirateAccentSystem : EntitySystem
 {
+    private static readonly Regex FirstWordAllCapsRegex = new(@"^(\S+)");
+
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
@@ -26,7 +28,7 @@ public sealed class PirateAccentSystem : EntitySystem
             return msg;
         //Checks if the first word of the sentence is all caps
         //So the prefix can be allcapped and to not resanitize the captial
-        var firstWordAllCaps = !Regex.Match(msg, @"^(\S+)").Value.Any(char.IsLower);
+        var firstWordAllCaps = !FirstWordAllCapsRegex.Match(msg).Value.Any(char.IsLower);
 
         var pick = _random.Pick(component.PirateWords);
         var pirateWord = Loc.GetString(pick);
