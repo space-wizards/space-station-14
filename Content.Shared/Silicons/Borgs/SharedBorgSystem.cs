@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
+﻿using Content.Shared.Lock;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
@@ -101,7 +102,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
     private void OnLockToggleAttempt(Entity<BorgChassisComponent> ent, ref LockToggleAttemptEvent args)
     {
         // prevent cyborgs unlocking things, even though they have HandsComponent
-        if (args.User == ent)
+        if (args.User == ent.Owner)
             args.Cancelled = true;
     }
 }
