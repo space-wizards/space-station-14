@@ -58,7 +58,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly MindSystem _mind = default!;
-        [Dependency] private readonly SharedRoleSystem _roles = default!;
+        [Dependency] private readonly RoleSystem _roles = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         /// <summary>

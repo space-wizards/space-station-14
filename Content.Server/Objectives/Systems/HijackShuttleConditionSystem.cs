@@ -16,7 +16,7 @@ public sealed class HijackShuttleConditionSystem : EntitySystem
 {
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedRoleSystem _role = default!;
+    [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()

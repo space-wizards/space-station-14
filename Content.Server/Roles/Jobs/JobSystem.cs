@@ -24,6 +24,7 @@ public sealed class JobSystem : SharedJobSystem
 
     private void MindOnDoGreeting(EntityUid mindId, MindComponent component, ref MindRoleAddedEvent args)
     {
+        // TODO MIRROR CHAR REMOVE N REPLACE
         if (args.Silent)
             return;
 

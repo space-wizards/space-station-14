@@ -42,7 +42,7 @@ namespace Content.Server.Mind.Commands
             var builder = new StringBuilder();
             builder.AppendFormat("player: {0}, mob: {1}\nroles: ", mind.UserId, mind.OwnedEntity);
 
-            var roles = _entities.System<SharedRoleSystem>();
+            var roles = _entities.System<RoleSystem>();
             foreach (var role in roles.MindGetAllRoles(mindId))
             {
                 builder.AppendFormat("{0} ", role.Name);

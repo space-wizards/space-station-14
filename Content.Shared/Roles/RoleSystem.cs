@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles;
 
-public abstract class SharedRoleSystem : EntitySystem
+public sealed class RoleSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
@@ -24,6 +24,16 @@ public abstract class SharedRoleSystem : EntitySystem
     {
         // TODO make roles entities
         SubscribeLocalEvent<JobComponent, MindGetAllRolesEvent>(OnJobGetAllRoles);
+
+        SubscribeAntagEvents<DragonRoleComponent>();
+        SubscribeAntagEvents<InitialInfectedRoleComponent>();
+        SubscribeAntagEvents<NinjaRoleComponent>();
+        SubscribeAntagEvents<NukeopsRoleComponent>();
+        SubscribeAntagEvents<RevolutionaryRoleComponent>();
+        SubscribeAntagEvents<SubvertedSiliconRoleComponent>();
+        SubscribeAntagEvents<TraitorRoleComponent>();
+        SubscribeAntagEvents<ZombieRoleComponent>();
+        SubscribeAntagEvents<ThiefRoleComponent>();
     }
 
     private void OnJobGetAllRoles(EntityUid uid, JobComponent component, ref MindGetAllRolesEvent args)
@@ -208,6 +218,16 @@ public abstract class SharedRoleSystem : EntitySystem
         return ev.Roles;
     }
 
+    public string? MindGetBriefing(EntityUid? mindId)
+    {
+        if (mindId == null)
+            return null;
+
+        var ev = new GetBriefingEvent();
+        RaiseLocalEvent(mindId.Value, ref ev);
+        return ev.Briefing;
+    }
+
     public bool MindIsAntagonist(EntityUid? mindId)
     {
         if (mindId == null)
@@ -252,5 +272,36 @@ public abstract class SharedRoleSystem : EntitySystem
     {
         if (Resolve(mindId, ref mind) && mind.Session != null)
             _audio.PlayGlobal(sound, mind.Session);
+    }
+}
+
+/// <summary>
+/// Event raised on the mind to get its briefing.
+/// Handlers can either replace or append to the briefing, whichever is more appropriate.
+/// </summary>
+[ByRefEvent]
+public sealed class GetBriefingEvent
+{
+    public string? Briefing;
+
+    public GetBriefingEvent(string? briefing = null)
+    {
+        Briefing = briefing;
+    }
+
+    /// <summary>
+    /// If there is no briefing, sets it to the string.
+    /// If there is a briefing, adds a new line to separate it from the appended string.
+    /// </summary>
+    public void Append(string text)
+    {
+        if (Briefing == null)
+        {
+            Briefing = text;
+        }
+        else
+        {
+            Briefing += "\n" + text;
+        }
     }
 }

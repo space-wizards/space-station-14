@@ -1,6 +1,4 @@
-using Content.Shared.Roles;
-
-namespace Content.Server.Roles;
+namespace Content.Shared.Roles;
 
 [RegisterComponent]
 public sealed partial class ThiefRoleComponent : AntagonistRoleComponent

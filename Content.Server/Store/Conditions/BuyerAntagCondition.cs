@@ -32,7 +32,7 @@ public sealed partial class BuyerAntagCondition : ListingCondition
         if (!minds.TryGetMind(args.Buyer, out var mindId, out var mind))
             return true;
 
-        var roleSystem = ent.System<SharedRoleSystem>();
+        var roleSystem = ent.System<RoleSystem>();
         var roles = roleSystem.MindGetAllRoles(mindId);
 
         if (Blacklist != null)

@@ -6,6 +6,7 @@ using Content.Server.Roles;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Roles;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;

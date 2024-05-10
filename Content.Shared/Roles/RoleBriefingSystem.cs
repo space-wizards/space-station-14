@@ -1,4 +1,4 @@
-namespace Content.Server.Roles;
+namespace Content.Shared.Roles;
 
 public sealed class RoleBriefingSystem : EntitySystem
 {

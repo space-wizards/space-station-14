@@ -4,6 +4,7 @@ using Content.Shared.Objectives.Components;
 using Content.Shared.Ninja.Components;
 using Robust.Shared.Random;
 using Content.Server.Roles;
+using Content.Shared.Roles;
 
 namespace Content.Server.Objectives.Systems;
 

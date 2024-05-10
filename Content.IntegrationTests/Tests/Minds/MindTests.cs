@@ -271,7 +271,7 @@ public sealed partial class MindTests
         await server.WaitAssertion(() =>
         {
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
-            var roleSystem = entMan.EntitySysManager.GetEntitySystem<SharedRoleSystem>();
+            var roleSystem = entMan.EntitySysManager.GetEntitySystem<RoleSystem>();
 
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);

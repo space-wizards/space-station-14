@@ -29,6 +29,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Server.GameTicking.Components;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Roles;
 
 namespace Content.Server.GameTicking.Rules;
 

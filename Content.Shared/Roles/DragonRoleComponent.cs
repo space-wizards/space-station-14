@@ -1,12 +1,9 @@
-using Content.Server.Dragon;
-using Content.Shared.Roles;
-
-namespace Content.Server.Roles;
+namespace Content.Shared.Roles;
 
 /// <summary>
 /// Role used to keep track of space dragons for antag purposes.
 /// </summary>
-[RegisterComponent, Access(typeof(DragonSystem)), ExclusiveAntagonist]
+[RegisterComponent, ExclusiveAntagonist]
 public sealed partial class DragonRoleComponent : AntagonistRoleComponent
 {
 }

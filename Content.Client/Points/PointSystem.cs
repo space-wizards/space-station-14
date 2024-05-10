@@ -9,6 +9,8 @@ namespace Content.Client.Points;
 /// <inheritdoc/>
 public sealed class PointSystem : SharedPointSystem
 {
+    [Dependency] private readonly IUserInterfaceManager _ui = default!;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -20,8 +22,7 @@ public sealed class PointSystem : SharedPointSystem
 
     private void OnHandleState(EntityUid uid, PointManagerComponent component, ref AfterAutoHandleStateEvent args)
     {
-        // TODO MIRROR UPDATE CHARACTER WINDOW
-        //_characterInfo.RequestCharacterInfo();
+        _ui.GetUIController<CharacterUIController>().UpdateCharacterWindow();
     }
 
     private void OnGetCharacterInfoControls(ref GetCharacterInfoControlsEvent ev)
