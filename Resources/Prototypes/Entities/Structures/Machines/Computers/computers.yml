@@ -362,7 +362,7 @@
   - type: GuideHelp
     guides:
     - Forensics
-    - type: MessagesServer
+  - type: MessagesServer
   - type: SingletonDeviceNetServer
   - type: DeviceNetwork
     deviceNetId: Wireless
