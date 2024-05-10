@@ -183,25 +183,6 @@
         refresh: false
 
 - type: reagent
-  id: THCOil # deprecated in favor of THC, preserved here for forks
-  name: reagent-name-thc-oil
-  group: Narcotics
-  desc: reagent-desc-thc-oil
-  physicalDesc: reagent-physical-desc-skunky
-  flavor: bitter
-  flavorMinimum: 0.05
-  color: "#DAA520"
-  metabolisms:
-    Narcotic:
-      effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
-        time: 16
-        refresh: false
-
-- type: reagent
   id: Nicotine
   name: reagent-name-nicotine
   group: Narcotics
