@@ -98,7 +98,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         args.ModifySpeed(1f, sprintDif);
     }
 
-    private void OnLockToggleAttempt(Entity<BorgChassisComponent> ent, ref LockToggleAttempt args)
+    private void OnLockToggleAttempt(Entity<BorgChassisComponent> ent, ref LockToggleAttemptEvent args)
     {
         // prevent cyborgs unlocking things, even though they have HandsComponent
         if (args.User == ent)
