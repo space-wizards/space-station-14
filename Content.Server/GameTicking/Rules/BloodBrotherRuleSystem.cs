@@ -11,6 +11,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.NPC.Systems;
 using System.Text;
 using Content.Shared.Roles.Jobs;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -22,6 +23,7 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly NpcFactionSystem _npcFactionSystem = default!;
+    [Dependency] private readonly SharedJobSystem _jobs = default!;
 
     public override void Initialize()
     {
@@ -84,9 +86,8 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
         {
             foreach (var uid in component.Minds)
             {
-                var name = GetEntityData(GetNetEntity(uid)).Item2.EntityName;
-                var job = Comp<JobComponent>(uid).ToString();
-
+                var name = Comp<MetaDataComponent>(uid).EntityName;
+                _jobs.MindTryGetJobName(uid, out var job);
                 sb.AppendLine(Loc.GetString("bloodbrother-briefing-partner", ("partner", name), ("job", job ?? "Unknown")));
             }
             sb.AppendLine(Loc.GetString("bloodbrother-briefing-partner-end"));
