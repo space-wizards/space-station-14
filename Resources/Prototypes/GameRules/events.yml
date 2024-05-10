@@ -404,7 +404,7 @@
     minimumPlayers: 20
     duration: 1
   - type: LoadMapRule
-    mapPath: /Maps/Shuttles/striker.yml
+    preloadedGrid: ShuttleStriker
   - type: NukeopsRule
     roundEndBehavior: Nothing
   - type: AntagSelection
