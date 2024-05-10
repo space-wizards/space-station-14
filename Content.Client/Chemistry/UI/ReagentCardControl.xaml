@@ -15,7 +15,7 @@
                 <BoxContainer Orientation="Vertical"
                               VerticalExpand="True"
                               HorizontalExpand="True"
-                              Margin="-4 0 0 0">
+                              Margin="-5 0 0 0">
                     <Label Name="ReagentNameLabel"
                            StyleClasses="LabelSubText" />
                     <Label Name="FillLabel"
