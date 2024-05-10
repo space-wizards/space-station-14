@@ -507,7 +507,7 @@
   - type: ItemBorgModule
     items:
     - WeaponPistolRinkhal
-    - EnergySword
+    - EnergyDagger
 
 - type: entity
   id: BorgModuleOperative
