@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed issues where using the Quantum Spin Inverted would bug out the
-      character's physics.
-    type: Fix
-  id: 6079
-  time: '2024-03-03T06:45:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25700
 - author: deltanedas
   changes:
   - message: No more raiding the jani vend for galoshes, which are back to normal
@@ -3862,3 +3854,10 @@
   id: 6578
   time: '2024-05-10T11:35:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24490
+- author: MisterMecky
+  changes:
+  - message: Fland kitchen freezer now starts off cold
+    type: Fix
+  id: 6579
+  time: '2024-05-10T15:57:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27532
