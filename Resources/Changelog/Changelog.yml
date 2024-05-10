@@ -1,98 +1,4 @@
 ﻿Entries:
-- author: MACMAN2003
-  changes:
-  - message: There are now more ways to craft reinforced plasma/uranium glass.
-    type: Tweak
-  id: 6066
-  time: '2024-02-29T22:57:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/22804
-- author: deltanedas
-  changes:
-  - message: Acidifiers and microbombs now require confirmation before gibbing you.
-    type: Tweak
-  id: 6067
-  time: '2024-03-01T02:48:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24609
-- author: exincore
-  changes:
-  - message: Chameleon gear now only reveals its menu button to its wearer.
-    type: Tweak
-  id: 6068
-  time: '2024-03-01T12:49:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25746
-- author: Nairodian
-  changes:
-  - message: Fixed all command and security roles not having cryogenics access.
-    type: Fix
-  id: 6069
-  time: '2024-03-01T21:21:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25752
-- author: IlyaElDunaev
-  changes:
-  - message: Added detective's rubber stamp.
-    type: Add
-  id: 6070
-  time: '2024-03-01T22:50:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25676
-- author: rosieposieeee
-  changes:
-  - message: Added additional signage to help the crew navigate.
-    type: Add
-  id: 6071
-  time: '2024-03-02T06:42:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25766
-- author: EmoGarbage404
-  changes:
-  - message: Space heaters machine boards are now printable round start and can additionally
-      be ordered by cargo.
-    type: Tweak
-  id: 6072
-  time: '2024-03-02T06:43:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25735
-- author: Krunk
-  changes:
-  - message: Picking up and dumping trash is less arduous for tiny, plentiful items,
-      such as bullets.
-    type: Tweak
-  id: 6073
-  time: '2024-03-02T13:57:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24899
-- author: Errant
-  changes:
-  - message: Breathing tritium or plasma now displays a HUD alert.
-    type: Add
-  id: 6074
-  time: '2024-03-02T14:07:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24484
-- author: waylon531
-  changes:
-  - message: Nutribrick and MRE wrappers can now be put in trash bags
-    type: Tweak
-  id: 6075
-  time: '2024-03-02T14:23:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25760
-- author: Fildrance
-  changes:
-  - message: fixed lobby music restarting after volume change in options. Lobby music
-      is also not being looped by default - all lobby songs will play in shuffle mode.
-    type: Fix
-  id: 6076
-  time: '2024-03-02T20:40:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25530
-- author: exincore
-  changes:
-  - message: Inventories now show a secondary smart-equip star.
-    type: Add
-  id: 6077
-  time: '2024-03-02T23:57:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25696
-- author: Emisse
-  changes:
-  - message: Rev's reenabled
-    type: Tweak
-  id: 6078
-  time: '2024-03-03T00:30:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25704
 - author: EmoGarbage404
   changes:
   - message: Fixed issues where using the Quantum Spin Inverted would bug out the
@@ -3855,3 +3761,104 @@
   id: 6565
   time: '2024-05-09T07:12:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27161
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Fixed non-inital infected getting the succumb to zombie action.
+    type: Fix
+  id: 6566
+  time: '2024-05-09T21:45:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27820
+- author: Hanzdegloker
+  changes:
+  - message: Added CMO turtleneck jumpsuit/jumpskirt.
+    type: Add
+  - message: Added a head mirror which may spawn in medical doctor's lockers
+    type: Add
+  id: 6567
+  time: '2024-05-09T21:53:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26153
+- author: PrPleGoo
+  changes:
+  - message: The crafted medsec hud now displays health icons too.
+    type: Tweak
+  - message: The health status icon now goes on the left for all types of med HUD.
+    type: Tweak
+  id: 6568
+  time: '2024-05-10T01:35:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27483
+- author: Moomoobeef
+  changes:
+  - message: CentCom has now started hiring crew who are short-sighted.
+    type: Add
+  id: 6569
+  time: '2024-05-10T01:40:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26037
+- author: whateverusername0
+  changes:
+  - message: Traitors now know their employers.
+    type: Tweak
+  id: 6570
+  time: '2024-05-10T02:01:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27855
+- author: Boaz1111
+  changes:
+  - message: Loneops now has a functioning ghost role raffle.
+    type: Fix
+  id: 6571
+  time: '2024-05-10T02:01:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27841
+- author: Boaz1111
+  changes:
+  - message: You can now actually spawn as a reporter on Oasis
+    type: Fix
+  - message: Oasis now has roundstart sec radios instead of handheld radios mapped
+      in sec, det now has a criminal records computer on box
+    type: Tweak
+  id: 6572
+  time: '2024-05-10T02:15:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27564
+- author: notquitehadouken
+  changes:
+  - message: You can now only use suit storage with hardsuits, softsuits, and armor
+      instead of all outer clothing
+    type: Tweak
+  id: 6573
+  time: '2024-05-10T02:19:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27546
+- author: aspiringLich
+  changes:
+  - message: The Chemical, Booze, and Soda Dispensers now have updated UIs.
+    type: Add
+  id: 6574
+  time: '2024-05-10T02:37:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27831
+- author: Jajsha
+  changes:
+  - message: Emagged cyborgs no longer reveal that they have been emagged by simply
+      examining their internals.
+    type: Tweak
+  id: 6575
+  time: '2024-05-10T02:57:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27816
+- author: RiceMar
+  changes:
+  - message: Larger guns are now wieldable and suffer an inaccuracy when not wielded.
+    type: Add
+  id: 6576
+  time: '2024-05-10T02:58:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26970
+- author: Doctor-Cpu
+  changes:
+  - message: Atlas has been reworked.
+    type: Tweak
+  id: 6577
+  time: '2024-05-10T08:12:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27702
+- author: TheShuEd
+  changes:
+  - message: 'New events added to the game: Random ships with new ghost roles can
+      now come to the station.'
+    type: Add
+  id: 6578
+  time: '2024-05-10T11:35:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24490

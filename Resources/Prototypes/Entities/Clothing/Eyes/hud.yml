@@ -162,6 +162,9 @@
   - type: ShowHealthBars
     damageContainers:
     - Biological
+  - type: ShowHealthIcons
+    damageContainers: 
+    - Biological
 
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons]

@@ -330,12 +330,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> DebugCoordinatesAdminOnly =
             CVarDef.Create("game.debug_coordinates_admin_only", true, CVar.SERVER | CVar.REPLICATED);
 
-        /// <summary>
-        ///     Controls if lobby has an automatic map vote.
-        /// </summary>
-        public static readonly CVarDef<bool>
-            GameAutoMapVote = CVarDef.Create("game.lobby_auto_map_vote", true, CVar.ARCHIVE | CVar.SERVERONLY);
-
 #if EXCEPTION_TOLERANCE
         /// <summary>
         ///     Amount of times round start must fail before the server is shut down.
@@ -1380,6 +1374,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> GridFill =
             CVarDef.Create("shuttle.grid_fill", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether to automatically preloading grids by GridPreloaderSystem
+        /// </summary>
+        public static readonly CVarDef<bool> PreloadGrids =
+            CVarDef.Create("shuttle.preload_grids", true, CVar.SERVERONLY);
 
         /*
          * Emergency
