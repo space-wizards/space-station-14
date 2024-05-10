@@ -38,7 +38,6 @@ namespace Content.Client.Voting
         [Dependency] private readonly IBaseClient _client = default!;
         [Dependency] private readonly IClientConsoleHost _console = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
-        [Dependency] private readonly IEntitySystemManager _sys = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IResourceCache _res = default!;
 
