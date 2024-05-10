@@ -224,6 +224,7 @@ public sealed class LockSystem : EntitySystem
 
         var ev = new LockToggleAttemptEvent(user, quiet);
         RaiseLocalEvent(uid, ref ev, true);
+        RaiseLocalEvent(user, ref ev, true);
         return !ev.Cancelled;
     }
 

@@ -30,6 +30,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
+        SubscribeLocalEvent<BorgChassisComponent, LockToggleAttempt>(OnLockToggleAttempt);
 
         InitializeRelay();
     }
@@ -95,5 +96,12 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
         var sprintDif = movement.BaseWalkSpeed / movement.BaseSprintSpeed;
         args.ModifySpeed(1f, sprintDif);
+    }
+
+    private void OnLockToggleAttempt(Entity<BorgChassisComponent> ent, ref LockToggleAttempt args)
+    {
+        // prevent cyborgs unlocking things, even though they have HandsComponent
+        if (args.User == ent)
+            args.Cancelled = true;
     }
 }
