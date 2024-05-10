@@ -33,6 +33,7 @@ public sealed partial class MessagesUiFragment : BoxContainer
         MessageContainer.DisposeAllChildren();
         Input.Orphan();
         HeaderBox.Orphan();
+        BackButton.Orphan();
 
         if (contents == null) return;
         if (mode == MessagesUiStateMode.Chat)
@@ -46,6 +47,7 @@ public sealed partial class MessagesUiFragment : BoxContainer
 
             OverContainer.AddChild(Input);
             OverContainer.AddChild(HeaderBox);
+            OverContainer.AddChild(BackButton);
         }
         else if (mode == MessagesUiStateMode.Error)
         {
