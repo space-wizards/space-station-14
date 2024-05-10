@@ -79,7 +79,7 @@
       - state: detail_rivets
         color: gold
     - type: Spellbook
-      spells:
+      spellActions:
         ActionForceWall: -1
 
 - type: entity
@@ -100,7 +100,7 @@
       - state: detail_rivets
         color: gold
     - type: Spellbook
-      spells:
+      spellActions:
         ActionBlink: -1
 
 - type: entity
@@ -123,7 +123,7 @@
         color: red
       - state: overlay_blood
     - type: Spellbook
-      spells:
+      spellActions:
         ActionSmite: -1
 
 - type: entity
@@ -145,7 +145,7 @@
       - state: detail_bookmark
         color: "#98c495"
     - type: Spellbook
-      spells:
+      spellActions:
         ActionKnock: -1
 
 - type: entity
@@ -169,7 +169,7 @@
       - state: icon_magic_fireball
         shader: unshaded
     - type: Spellbook
-      spells:
+      spellActions:
         ActionFireball: -1
 
 - type: entity
@@ -184,7 +184,7 @@
     layers:
     - state: spell_default
   - type: Spellbook
-    spells:
+    spellActions:
       ActionFlashRune: -1
       ActionExplosionRune: -1
       ActionIgniteRune: -1
