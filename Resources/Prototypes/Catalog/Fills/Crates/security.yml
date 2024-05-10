@@ -113,4 +113,15 @@
       - id: TrackingImplanter
         amount: 4
 
+- type: entity
+  id: CrateSecurityBolas # todo - replace bolas with e-bolas
+  name: bola crate
+  description: Contains 5 bolas. Requires Security access to open.
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: Bola
+        amount: 5
+
 # Cosmetic Crates
