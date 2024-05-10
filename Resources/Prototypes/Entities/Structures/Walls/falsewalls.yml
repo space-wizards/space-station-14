@@ -1,0 +1,258 @@
+- type: entity
+  id: BaseFalseWallUnWeldable # To prevent welding of wooden/meat/plastic false walls
+  parent: BaseStructure
+  name: solid wall # No meta
+  suffix: false wall
+  abstract: true
+  description: Keeps the air in and the greytide out.
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: AnimationPlayer
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+  - type: Door
+    bumpOpen: false
+    clickOpen: true
+    canCrush: false
+    closeTimeOne: 0.2
+    closeTimeTwo: 0.6
+    openTimeOne: 0.6
+    openTimeTwo: 0.2
+    openingAnimationTime: 1.2
+    closingAnimationTime: 1.2
+  - type: Appearance
+  - type: Airtight
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 55
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DisplacedGirder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: Occluder
+  - type: Tag
+    tags:
+    - Structure
+    - Wall
+  - type: BlockWeather
+
+# Constructable false walls
+
+- type: entity
+  id: SolidFalseWall
+  parent: BaseFalseWallUnWeldable
+  name: solid wall
+  components:
+  - type: Weldable
+    time: 5
+  - type: Construction
+    graph: Girder
+    node: solidFalseWall
+
+- type: entity
+  id: PlasticFalseWall
+  name: plastic wall
+  parent: BaseFalseWallUnWeldable
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_plastic.rsi
+  - type: Construction
+    graph: Girder
+    node: plasticFalseWall
+
+- type: entity
+  id: WoodFalseWall
+  name: wood wall
+  parent: BaseFalseWallUnWeldable
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_wood.rsi
+  - type: Construction
+    graph: Girder
+    node: woodFalseWall
+
+- type: entity
+  id: MeatFalseWall
+  name: meat wall
+  description: Sticky.
+  parent: BaseFalseWallUnWeldable
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_meat.rsi
+  - type: Construction
+    graph: Girder
+    node: meatFalseWall
+
+- type: entity
+  id: GoldFalseWall
+  name: gold wall
+  parent: SolidFalseWall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_gold.rsi
+  - type: Construction
+    graph: Girder
+    node: goldFalseWall
+
+- type: entity
+  id: SilverFalseWall
+  name: silver wall
+  parent: SolidFalseWall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_silver.rsi
+  - type: Construction
+    graph: Girder
+    node: silverFalseWall
+
+- type: entity
+  id: BananiumFalseWall
+  name: bananium wall
+  parent: SolidFalseWall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_bananium.rsi
+  - type: Construction
+    graph: Girder
+    node: bananiumFalseWall
+
+- type: entity
+  id: UraniumFalseWall
+  name: uranium wall
+  parent: SolidFalseWall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_uranium.rsi
+  - type: Construction
+    graph: Girder
+    node: uraniumFalseWall
+
+- type: entity
+  id: PlasmaFalseWall
+  name: plasma wall
+  parent: SolidFalseWall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_plasma.rsi
+  - type: Construction
+    graph: Girder
+    node: plasmaFalseWall
+
+- type: entity
+  id: ClockFalseWall
+  name: clock wall
+  parent: SolidFalseWall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_clock.rsi
+  - type: Construction
+    graph: Girder
+    node: clockFalseWall
+
+- type: entity
+  id: ReinforcedFalseWall
+  name: reinforced wall
+  parent: SolidFalseWall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_reinf.rsi
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Construction
+    graph: Girder
+    node: reinforcedFalseWall
+
+# Non-constructible
+
+- type: entity
+  id: PlastitaniumFalseWall
+  name: plastitanium wall
+  parent: SolidFalseWall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_plastitanium.rsi
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000 # It is impossible to create these fwalls, I will leave the same characteristics as the walls
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  id: RivetedFalseWall
+  name: riveted wall
+  parent: SolidFalseWall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_riveted.rsi
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  id: CultFalseWall
+  name: cult wall
+  parent: SolidFalseWall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_cult.rsi
+
+- type: entity
+  id: MiningFalseWall
+  name: wall
+  parent: SolidFalseWall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/false_walls/false_wall_mining.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]

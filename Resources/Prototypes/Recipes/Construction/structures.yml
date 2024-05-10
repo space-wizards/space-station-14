@@ -1727,207 +1727,208 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-
+    
+# False walls
 - type: construction
-  name: secret door assembly
-  id: SolidSecretDoorAssembly
-  graph: SecretDoor
+  name: displaced girder
+  id: DisplacedGirder
+  graph: Girder
   startNode: start
-  targetNode: assembly
+  targetNode: displacedGirder
   category: construction-category-structures
-  description: Assembly to create a secret door.
+  description: Girder with poorly tightened bolts, for creating false walls
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/SecretDoors/assembly.rsi
-    state: assembly
+    sprite: Structures/Walls/false_walls/diplaced_girder.rsi
+    state: displaced
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: solid secret door
-  id: SolidSecretDoor
-  graph: SecretDoor
+  name: solid false wall
+  id: SolidFalseWall
+  graph: Girder
   startNode: start
-  targetNode: solidSecretDoor
+  targetNode: solidFalseWall
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: False wall for your secrets.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/SecretDoors/secret_door.rsi
+    sprite: Structures/Walls/false_walls/false_wall.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: plastic secret door
-  id: PlasticSecretDoor
-  graph: SecretDoor
+  name: plastic false wall
+  id: PlasticFalseWall
+  graph: Girder
   startNode: start
-  targetNode: plasticSecretDoor
+  targetNode: plasticFalseWall
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: False wall for your secrets
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/SecretDoors/secret_door_plastic.rsi
+    sprite: Structures/Walls/false_walls/false_wall_plastic.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: bananium secret door
-  id: BananiumSecretDoor
-  graph: SecretDoor
+  name: bananium false wall
+  id: BananiumFalseWall
+  graph: Girder
   startNode: start
-  targetNode: bananiumSecretDoor
+  targetNode: bananiumFalseWall
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: False wall for your secrets
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/SecretDoors/secret_door_clown.rsi
+    sprite: Structures/Walls/false_walls/false_wall_bananium.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: clock secret door
-  id: ClockSecretDoor
-  graph: SecretDoor
+  name: clock false wall
+  id: ClockFalseWall
+  graph: Girder
   startNode: start
-  targetNode: clockSecretDoor
+  targetNode: clockFalseWall
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: False wall for your secrets
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/SecretDoors/secret_door_clock.rsi
+    sprite: Structures/Walls/false_walls/false_wall_clock.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: gold secret door
-  id: GoldSecretDoor
-  graph: SecretDoor
+  name: gold false wall
+  id: GoldFalseWall
+  graph: Girder
   startNode: start
-  targetNode: goldSecretDoor
+  targetNode: goldFalseWall
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: False wall for your secrets
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/SecretDoors/secret_door_gold.rsi
+    sprite: Structures/Walls/false_walls/false_wall_gold.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: meat secret door
-  id: MeatSecretDoor
-  graph: SecretDoor
+  name: meat false wall
+  id: MeatFalseWall
+  graph: Girder
   startNode: start
-  targetNode: meatSecretDoor
+  targetNode: meatFalseWall
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: False wall for your secrets
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/SecretDoors/secret_door_meat.rsi
+    sprite: Structures/Walls/false_walls/false_wall_meat.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: plasma secret door
-  id: PlasmaSecretDoor
-  graph: SecretDoor
+  name: plasma false wall
+  id: PlasmaFalseWall
+  graph: Girder
   startNode: start
-  targetNode: plasmaSecretDoor
+  targetNode: plasmaFalseWall
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: False wall for your secrets
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/SecretDoors/secret_door_plasma.rsi
+    sprite: Structures/Walls/false_walls/false_wall_plasma.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: silver secret door
-  id: SilverSecretDoor
-  graph: SecretDoor
+  name: silver false wall
+  id: SilverFalseWall
+  graph: Girder
   startNode: start
-  targetNode: silverSecretDoor
+  targetNode: silverFalseWall
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: False wall for your secrets
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/SecretDoors/secret_door_silver.rsi
+    sprite: Structures/Walls/false_walls/false_wall_silver.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: uranium secret door
-  id: UraniumSecretDoor
-  graph: SecretDoor
+  name: uranium false wall
+  id: UraniumFalseWall
+  graph: Girder
   startNode: start
-  targetNode: uraniumSecretDoor
+  targetNode: uraniumFalseWall
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: False wall for your secrets
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/SecretDoors/secret_door_uranium.rsi
+    sprite: Structures/Walls/false_walls/false_wall_uranium.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: wood secret door
-  id: WoodSecretDoor
-  graph: SecretDoor
+  name: wood false wall
+  id: WoodFalseWall
+  graph: Girder
   startNode: start
-  targetNode: woodSecretDoor
+  targetNode: woodFalseWall
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: False wall for your secrets
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/SecretDoors/secret_door_wood.rsi
+    sprite: Structures/Walls/false_walls/false_wall_wood.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: reinforced secret door
-  id: ReinforcedSecretDoor
-  graph: SecretDoor
+  name: reinforced false wall
+  id: ReinforcedFalseWall
+  graph: Girder
   startNode: start
-  targetNode: reinforcedSecretDoor
+  targetNode: reinforcedFalseWall
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: False wall for your secrets
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/SecretDoors/secret_door_reinf.rsi
+    sprite: Structures/Walls/false_walls/false_wall_reinf.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked

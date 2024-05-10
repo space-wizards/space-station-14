@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/blob/b5fa92d6918b2e4ea0bc0eef05fdcf2f8fb082a5/icons/obj/structures.dmi and modified",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "displaced"
+    }
+  ]
+}
