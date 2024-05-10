@@ -270,8 +270,8 @@ namespace Content.Server.Explosion.EntitySystems
             if (!Resolve(ent, ref ent.Comp, false))
                 return;
 
-            var (uid, comp) = ent;
-            HandleTimerTrigger(uid, user, comp.Delay, comp.BeepInterval, comp.InitialBeepDelay, comp.BeepSound);
+            var comp = ent.Comp.Value;
+            HandleTimerTrigger(ent, user, comp.Delay, comp.BeepInterval, comp.InitialBeepDelay, comp.BeepSound);
         }
 
         public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay, float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound)

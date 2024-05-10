@@ -107,9 +107,6 @@ public sealed partial class BorgSystem
 
     private void Destroy(Entity<BorgTransponderComponent> ent)
     {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-
         // this is stealthy until someone realises you havent exploded
         if (CheckEmagged(ent, "destroyed"))
         {
