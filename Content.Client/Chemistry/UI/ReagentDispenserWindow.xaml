@@ -2,67 +2,21 @@
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                      xmlns:ui="clr-namespace:Content.Client.Chemistry.UI"
                       Title="{Loc 'reagent-dispenser-bound-user-interface-title'}"
                       MinSize="680 460">
     <BoxContainer Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" MinWidth="170">
             <Label Text="{Loc 'reagent-dispenser-window-amount-to-dispense-label'}" HorizontalAlignment="Center" />
-            <GridContainer Columns="3"
-                           HorizontalAlignment="Center"
-                           Margin="5">
-                <!-- FIXME: OpenLeft / OpenRight misalign the text, currently just hacked my way around it with margins -->
-                <Button Name="DispenseButton1"
-                        Access="Public"
-                        Text="1"
-                        StyleClasses="OpenBoth"
-                        SetWidth="40" />
-                <Button Name="DispenseButton5"
-                        Access="Public"
-                        Text="5"
-                        StyleClasses="OpenBoth"
-                        SetWidth="40" />
-                <Button Name="DispenseButton10"
-                        Access="Public"
-                        StyleClasses="OpenLeft"
-                        SetWidth="40">
-                    <Label Text="10"
-                           Align="Center"
-                           Margin="0 0 -3 0" />
-                </Button>
-                <Button Name="DispenseButton15"
-                        Access="Public"
-                        Text="15"
-                        StyleClasses="OpenBoth"
-                        SetWidth="40" />
-                <Button Name="DispenseButton20"
-                        Access="Public"
-                        Text="20"
-                        StyleClasses="OpenBoth"
-                        SetWidth="40" />
-                <Button Name="DispenseButton25"
-                        Access="Public"
-                        Text="25"
-                        StyleClasses="OpenBoth"
-                        SetWidth="40" />
-                <Button Name="DispenseButton30"
-                        Access="Public"
-                        StyleClasses="OpenRight"
-                        SetWidth="40">
-                    <Label Text="30"
-                           Align="Center"
-                           Margin="-3 0 0 0" />
-                </Button>
-                <Button Name="DispenseButton50"
-                        Access="Public"
-                        Text="50"
-                        StyleClasses="OpenBoth"
-                        SetWidth="40" />
-                <Button Name="DispenseButton100"
-                        Access="Public"
-                        Text="100"
-                        StyleClasses="OpenBoth"
-                        SetWidth="40" />
-            </GridContainer>
+            <ui:ButtonGrid
+                Name="AmountGrid"
+                Access="Public"
+                Columns="3"
+                HorizontalAlignment="Center"
+                Margin="5"
+                ButtonList="1,5,10,15,20,25,30,50,100"
+                RadioGroup="True">
+            </ui:ButtonGrid>
             <Control VerticalExpand="True" />
             <Label Name="ContainerInfoName"
                    Access="Public"
