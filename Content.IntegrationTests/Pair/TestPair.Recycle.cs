@@ -131,7 +131,7 @@ public sealed partial class TestPair : IAsyncDisposable
         // Move to pre-round lobby. Required to toggle dummy ticker on and off
         if (gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
         {
-            await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting server.");
+            await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting round.");
             Assert.That(gameTicker.DummyTicker, Is.False);
             Server.CfgMan.SetCVar(CCVars.GameLobbyEnabled, true);
             await Server.WaitPost(() => gameTicker.RestartRound());
@@ -146,6 +146,7 @@ public sealed partial class TestPair : IAsyncDisposable
 
         // Restart server.
         await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting server again");
+        await Server.WaitPost(() => Server.EntMan.FlushEntities());
         await Server.WaitPost(() => gameTicker.RestartRound());
         await RunTicksSync(1);
 

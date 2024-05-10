@@ -173,6 +173,7 @@ ui-options-function-open-crafting-menu = Open crafting menu
 ui-options-function-open-inventory-menu = Open inventory
 ui-options-function-open-a-help = Open admin help
 ui-options-function-open-abilities-menu = Open action menu
+ui-options-function-toggle-round-end-summary-window = Toggle round end summary window
 ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu
 ui-options-function-open-tile-spawn-window = Open tile spawn menu
@@ -196,7 +197,6 @@ ui-options-function-editor-rotate-object = Rotate
 ui-options-function-editor-flip-object = Flip
 ui-options-function-editor-copy-object = Copy
 
-ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-show-debug-console = Open Console
 ui-options-function-show-debug-monitors = Show Debug Monitors
 ui-options-function-inspect-entity = Inspect Entity

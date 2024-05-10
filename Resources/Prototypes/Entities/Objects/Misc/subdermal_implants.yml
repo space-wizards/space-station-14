@@ -126,7 +126,7 @@
           ents: [ ]
     - type: UserInterface
       interfaces:
-        - key: enum.StorageUiKey.Key
+        enum.StorageUiKey.Key:
           type: StorageBoundUserInterface
 
 - type: entity
@@ -160,8 +160,8 @@
       Telecrystal: 0
   - type: UserInterface
     interfaces:
-    - key: enum.StoreUiKey.Key
-      type: StoreBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
 
 - type: entity
   parent: BaseSubdermalImplant

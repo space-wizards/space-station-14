@@ -144,7 +144,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnToggleMessage(EntityUid uid, GasThermoMachineComponent thermoMachine, GasThermomachineToggleMessage args)
         {
             var powerState = _power.TogglePower(uid);
-            _adminLogger.Add(LogType.AtmosPowerChanged, $"{ToPrettyString(args.Session.AttachedEntity)} turned {(powerState ? "On" : "Off")} {ToPrettyString(uid)}");
+            _adminLogger.Add(LogType.AtmosPowerChanged, $"{ToPrettyString(args.Actor)} turned {(powerState ? "On" : "Off")} {ToPrettyString(uid)}");
             DirtyUI(uid, thermoMachine);
         }
 
@@ -155,7 +155,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             else
                 thermoMachine.TargetTemperature = MathF.Max(args.Temperature, thermoMachine.MinTemperature);
             thermoMachine.TargetTemperature = MathF.Max(thermoMachine.TargetTemperature, Atmospherics.TCMB);
-            _adminLogger.Add(LogType.AtmosTemperatureChanged, $"{ToPrettyString(args.Session.AttachedEntity)} set temperature on {ToPrettyString(uid)} to {thermoMachine.TargetTemperature}");
+            _adminLogger.Add(LogType.AtmosTemperatureChanged, $"{ToPrettyString(args.Actor)} set temperature on {ToPrettyString(uid)} to {thermoMachine.TargetTemperature}");
             DirtyUI(uid, thermoMachine);
         }
 
@@ -168,8 +168,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!Resolve(uid, ref powerReceiver))
                 return;
 
-            _userInterfaceSystem.TrySetUiState(uid, ThermomachineUiKey.Key,
-                new GasThermomachineBoundUserInterfaceState(thermoMachine.MinTemperature, thermoMachine.MaxTemperature, thermoMachine.TargetTemperature, !powerReceiver.PowerDisabled, IsHeater(thermoMachine)), null, ui);
+            _userInterfaceSystem.SetUiState(uid, ThermomachineUiKey.Key,
+                new GasThermomachineBoundUserInterfaceState(thermoMachine.MinTemperature, thermoMachine.MaxTemperature, thermoMachine.TargetTemperature, !powerReceiver.PowerDisabled, IsHeater(thermoMachine)));
         }
 
         private void OnExamined(EntityUid uid, GasThermoMachineComponent thermoMachine, ExaminedEvent args)

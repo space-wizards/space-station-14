@@ -65,13 +65,20 @@
   components:
   - type: StorageFill
     contents:
-      - id: WelderMini
-      - id: Welder
-        prob: 0.7
-      - id: WelderIndustrial
-        prob: 0.5
+      - id: ClothingHeadHatWelding
+      - id: ClothingHeadHatWelding
       - id: ClothingHeadHatWelding
         prob: 0.5
+      - id: Welder
+      - id: Welder
+      - id: WelderMini
+        orGroup: thirdWelder
+      - id: Welder
+        prob: 0.33
+        orGroup: thirdWelder
+      - id: WelderIndustrial
+        prob: 0.33
+        orGroup: thirdWelder
 
 - type: entity
   id: LockerAtmosphericsFilledHardsuit

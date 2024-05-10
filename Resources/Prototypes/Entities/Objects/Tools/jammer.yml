@@ -6,8 +6,26 @@
   components:
   - type: Sprite
     sprite: Objects/Devices/jammer.rsi
-    state: jammer
+    layers:
+        - state: jammer
+        - state: jammer_high_charge
+          map: ["enum.RadioJammerLayers.LED"]
+          shader: unshaded
+          visible: false
   - type: RadioJammer
+    settings:
+    - wattage: 1
+      range: 2.5
+      message: radio-jammer-component-set-message-low
+      name: radio-jammer-component-setting-low
+    - wattage: 2
+      range: 6
+      message: radio-jammer-component-set-message-medium
+      name: radio-jammer-component-setting-medium
+    - wattage: 12
+      range: 12
+      message: radio-jammer-component-set-message-high
+      name: radio-jammer-component-setting-high
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ContainerContainer
@@ -18,3 +36,15 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.RadioJammerVisuals.LEDOn:
+        RadioJammerLayers.LED:
+          True: { visible: True }
+          False: { visible: False }
+      enum.RadioJammerVisuals.ChargeLevel:
+        RadioJammerLayers.LED:
+          Low: {state: jammer_low_charge}
+          Medium: {state: jammer_medium_charge}
+          High: {state: jammer_high_charge}

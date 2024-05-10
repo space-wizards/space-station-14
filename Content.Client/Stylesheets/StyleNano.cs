@@ -136,6 +136,8 @@ namespace Content.Client.Stylesheets
         public const string StyleClassPowerStateGood = "PowerStateGood";
 
         public const string StyleClassItemStatus = "ItemStatus";
+        public const string StyleClassItemStatusNotHeld = "ItemStatusNotHeld";
+        public static readonly Color ItemStatusNotHeldColor = Color.Gray;
 
         //Background
         public const string StyleClassBackgroundBaseDark = "PanelBackgroundBaseDark";
@@ -1233,6 +1235,16 @@ namespace Content.Client.Stylesheets
                 {
                     new StyleProperty("font", notoSans10),
                 }),
+
+                Element()
+                    .Class(StyleClassItemStatusNotHeld)
+                    .Prop("font", notoSansItalic10)
+                    .Prop("font-color", ItemStatusNotHeldColor),
+
+                Element<RichTextLabel>()
+                    .Class(StyleClassItemStatus)
+                    .Prop(nameof(RichTextLabel.LineHeightScale), 0.7f)
+                    .Prop(nameof(Control.Margin), new Thickness(0, 0, 0, -6)),
 
                 // Slider
                 new StyleRule(SelectorElement.Type(typeof(Slider)), new []

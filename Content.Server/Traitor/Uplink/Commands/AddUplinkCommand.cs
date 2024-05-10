@@ -83,12 +83,9 @@ namespace Content.Server.Traitor.Uplink.Commands
                 uplinkEntity = eUid;
             }
 
-            // Get TC count
-            var tcCount = _cfgManager.GetCVar(CCVars.TraitorStartingBalance);
-            Logger.Debug(_entManager.ToPrettyString(user));
             // Finally add uplink
             var uplinkSys = _entManager.System<UplinkSystem>();
-            if (!uplinkSys.AddUplink(user, FixedPoint2.New(tcCount), uplinkEntity: uplinkEntity))
+            if (!uplinkSys.AddUplink(user, 20, uplinkEntity: uplinkEntity))
             {
                 shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
             }

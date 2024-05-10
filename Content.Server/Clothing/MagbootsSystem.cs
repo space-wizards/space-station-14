@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Alert;
 using Content.Shared.Clothing;
-using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Clothing;
 
@@ -13,8 +12,8 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<MagbootsComponent, ClothingGotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<MagbootsComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
     }
 
     protected override void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component)
@@ -38,19 +37,13 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
         }
     }
 
-    private void OnGotUnequipped(EntityUid uid, MagbootsComponent component, GotUnequippedEvent args)
+    private void OnGotUnequipped(EntityUid uid, MagbootsComponent component, ref ClothingGotUnequippedEvent args)
     {
-        if (args.Slot == "shoes")
-        {
-            UpdateMagbootEffects(args.Equipee, uid, false, component);
-        }
+        UpdateMagbootEffects(args.Wearer, uid, false, component);
     }
 
-    private void OnGotEquipped(EntityUid uid, MagbootsComponent component, GotEquippedEvent args)
+    private void OnGotEquipped(EntityUid uid, MagbootsComponent component, ref ClothingGotEquippedEvent args)
     {
-        if (args.Slot == "shoes")
-        {
-            UpdateMagbootEffects(args.Equipee, uid, true, component);
-        }
+        UpdateMagbootEffects(args.Wearer, uid, true, component);
     }
 }

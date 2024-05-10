@@ -42,7 +42,7 @@ public sealed class SolutionTransferSystem : EntitySystem
         var newTransferAmount = FixedPoint2.Clamp(message.Value, ent.Comp.MinimumTransferAmount, ent.Comp.MaximumTransferAmount);
         ent.Comp.TransferAmount = newTransferAmount;
 
-        if (message.Session.AttachedEntity is { Valid: true } user)
+        if (message.Actor is { Valid: true } user)
             _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), ent, user);
     }
 
@@ -53,10 +53,9 @@ public sealed class SolutionTransferSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || !comp.CanChangeTransferAmount || args.Hands == null)
             return;
 
-        if (!TryComp<ActorComponent>(args.User, out var actor))
-            return;
-
         // Custom transfer verb
+        var @event = args;
+
         args.Verbs.Add(new AlternativeVerb()
         {
             Text = Loc.GetString("comp-solution-transfer-verb-custom-amount"),
@@ -64,8 +63,7 @@ public sealed class SolutionTransferSystem : EntitySystem
             // TODO: remove server check when bui prediction is a thing
             Act = () =>
             {
-                if (_net.IsServer)
-                    _ui.TryOpen(uid, TransferAmountUiKey.Key, actor.PlayerSession);
+                _ui.OpenUi(uid, TransferAmountUiKey.Key, @event.User);
             },
             Priority = 1
         });

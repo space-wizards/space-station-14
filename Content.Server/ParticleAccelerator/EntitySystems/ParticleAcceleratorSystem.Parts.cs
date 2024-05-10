@@ -18,7 +18,7 @@ public sealed partial class ParticleAcceleratorSystem
         SubscribeLocalEvent<ParticleAcceleratorPartComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
     }
 
-    public void RescanParts(EntityUid uid, ICommonSession? user = null, ParticleAcceleratorControlBoxComponent? controller = null)
+    public void RescanParts(EntityUid uid, EntityUid? user = null, ParticleAcceleratorControlBoxComponent? controller = null)
     {
         if (!Resolve(uid, ref controller))
             return;

@@ -239,8 +239,8 @@
     - type: AtmosDevice
     - type: UserInterface
       interfaces:
-      - key: enum.ThermomachineUiKey.Key
-        type: GasThermomachineBoundUserInterface
+        enum.ThermomachineUiKey.Key:
+          type: GasThermomachineBoundUserInterface
     - type: ActivatableUI
       inHandsOnly: false
       key: enum.ThermomachineUiKey.Key

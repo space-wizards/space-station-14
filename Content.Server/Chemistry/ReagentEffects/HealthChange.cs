@@ -74,7 +74,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
                 damages.Add(
                     Loc.GetString("health-change-display",
-                        ("kind", group.ID),
+                        ("kind", group.LocalizedName),
                         ("amount", MathF.Abs(amount.Float())),
                         ("deltasign", sign)
                     ));
@@ -96,7 +96,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
                 damages.Add(
                     Loc.GetString("health-change-display",
-                        ("kind", kind),
+                        ("kind", prototype.Index<DamageTypePrototype>(kind).LocalizedName),
                         ("amount", MathF.Abs(amount.Float())),
                         ("deltasign", sign)
                     ));

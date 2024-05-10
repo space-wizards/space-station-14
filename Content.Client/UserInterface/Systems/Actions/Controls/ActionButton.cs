@@ -152,16 +152,8 @@ public sealed class ActionButton : Control, IEntityControl
 
         OnThemeUpdated();
 
-        OnKeyBindDown += args =>
-        {
-            Depress(args, true);
-            OnPressed(args);
-        };
-        OnKeyBindUp += args =>
-        {
-            Depress(args, false);
-            OnUnpressed(args);
-        };
+        OnKeyBindDown += OnPressed;
+        OnKeyBindUp += OnUnpressed;
 
         TooltipSupplier = SupplyTooltip;
     }
@@ -175,11 +167,23 @@ public sealed class ActionButton : Control, IEntityControl
 
     private void OnPressed(GUIBoundKeyEventArgs args)
     {
+        if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.UIRightClick)
+            return;
+
+        if (args.Function == EngineKeyFunctions.UIRightClick)
+            Depress(args, true);
+
         ActionPressed?.Invoke(args, this);
     }
 
     private void OnUnpressed(GUIBoundKeyEventArgs args)
     {
+        if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.UIRightClick)
+            return;
+
+        if (args.Function == EngineKeyFunctions.UIRightClick)
+            Depress(args, false);
+
         ActionUnpressed?.Invoke(args, this);
     }
 
@@ -377,12 +381,6 @@ public sealed class ActionButton : Control, IEntityControl
         // action can still be toggled if it's allowed to stay selected
         if (_action is not {Enabled: true})
             return;
-
-        if (_depressed && !depress)
-        {
-            // fire the action
-            OnUnpressed(args);
-        }
 
         _depressed = depress;
         DrawModeChanged();

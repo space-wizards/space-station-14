@@ -18,7 +18,6 @@ using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
-using Content.Server.Terminator.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
 using Content.Shared.Body.Components;
@@ -31,7 +30,6 @@ using Content.Shared.Database;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -74,7 +72,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
-    [Dependency] private readonly TerminatorSystem _terminator = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
@@ -152,7 +149,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     // Fuck you. Burn Forever.
-                    flammable.FireStacks = FlammableSystem.MaximumFireStacks;
+                    flammable.FireStacks = flammable.MaximumFireStacks;
                     _flammableSystem.Ignite(args.Target, args.User);
                     var xform = Transform(args.Target);
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-set-alight-self"), args.Target,
@@ -824,27 +821,5 @@ public sealed partial class AdminVerbSystem
             Impact = LogImpact.Extreme,
         };
         args.Verbs.Add(superBonk);
-
-        Verb terminate = new()
-        {
-            Text = "Terminate",
-            Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ("Mobs/Species/Terminator/parts.rsi"), "skull_icon"),
-            Act = () =>
-            {
-                if (!TryComp<MindContainerComponent>(args.Target, out var mindContainer) || mindContainer.Mind == null)
-                    return;
-
-                var coords = Transform(args.Target).Coordinates;
-                var mindId = mindContainer.Mind.Value;
-                _terminator.CreateSpawner(coords, mindId);
-
-                _popupSystem.PopupEntity(Loc.GetString("admin-smite-terminate-prompt"), args.Target,
-                    args.Target, PopupType.LargeCaution);
-            },
-            Impact = LogImpact.Extreme,
-            Message = Loc.GetString("admin-smite-terminate-description")
-        };
-        args.Verbs.Add(terminate);
     }
 }

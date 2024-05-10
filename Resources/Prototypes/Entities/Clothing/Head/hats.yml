@@ -245,7 +245,7 @@
     - 0,0,0,0
   - type: UserInterface
     interfaces:
-      - key: enum.StorageUiKey.Key
+      enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
   - type: ContainerContainer
     containers:
@@ -834,8 +834,8 @@
     - 0,0,0,0
   - type: UserInterface
     interfaces:
-      - key: enum.StorageUiKey.Key
-        type: StorageBoundUserInterface
+        enum.StorageUiKey.Key:
+          type: StorageBoundUserInterface
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

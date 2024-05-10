@@ -50,8 +50,8 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.ChemMasterUiKey.Key
-      type: ChemMasterBoundUserInterface
+      enum.ChemMasterUiKey.Key:
+        type: ChemMasterBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 250
   - type: Appearance

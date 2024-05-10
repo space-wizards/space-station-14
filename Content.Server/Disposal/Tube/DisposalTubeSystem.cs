@@ -101,8 +101,9 @@ namespace Content.Server.Disposal.Tube
         /// <param name="msg">A user interface message from the client.</param>
         private void OnUiAction(EntityUid uid, DisposalRouterComponent router, SharedDisposalRouterComponent.UiActionMessage msg)
         {
-            if (!EntityManager.EntityExists(msg.Session.AttachedEntity))
+            if (!EntityManager.EntityExists(msg.Actor))
                 return;
+
             if (TryComp<PhysicsComponent>(uid, out var physBody) && physBody.BodyType != BodyType.Static)
                 return;
 
@@ -279,9 +280,9 @@ namespace Content.Server.Disposal.Tube
 
         private void OnOpenTaggerUI(EntityUid uid, DisposalTaggerComponent tagger, BoundUIOpenedEvent args)
         {
-            if (_uiSystem.TryGetUi(uid, DisposalTaggerUiKey.Key, out var bui))
+            if (_uiSystem.HasUi(uid, DisposalTaggerUiKey.Key))
             {
-                _uiSystem.SetUiState(bui,
+                _uiSystem.SetUiState(uid, DisposalTaggerUiKey.Key,
                     new DisposalTaggerUserInterfaceState(tagger.Tag));
             }
         }
@@ -292,13 +293,9 @@ namespace Content.Server.Disposal.Tube
         /// <returns>Returns a <see cref="SharedDisposalRouterComponent.DisposalRouterUserInterfaceState"/></returns>
         private void UpdateRouterUserInterface(EntityUid uid, DisposalRouterComponent router)
         {
-            var bui = _uiSystem.GetUiOrNull(uid, DisposalRouterUiKey.Key);
-            if (bui == null)
-                return;
-
             if (router.Tags.Count <= 0)
             {
-                _uiSystem.SetUiState(bui, new DisposalRouterUserInterfaceState(""));
+                _uiSystem.SetUiState(uid, DisposalRouterUiKey.Key, new DisposalRouterUserInterfaceState(""));
                 return;
             }
 
@@ -312,7 +309,7 @@ namespace Content.Server.Disposal.Tube
 
             taglist.Remove(taglist.Length - 2, 2);
 
-            _uiSystem.SetUiState(bui, new DisposalRouterUserInterfaceState(taglist.ToString()));
+            _uiSystem.SetUiState(uid, DisposalRouterUiKey.Key, new DisposalRouterUserInterfaceState(taglist.ToString()));
         }
 
         private void OnAnchorChange(EntityUid uid, DisposalTubeComponent component, ref AnchorStateChangedEvent args)

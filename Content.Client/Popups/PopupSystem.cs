@@ -5,7 +5,6 @@ using Content.Shared.Popups;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -163,6 +162,15 @@ namespace Content.Client.Popups
             PopupEntity(message, uid, type);
         }
 
+        public override void PopupClient(string? message, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient == null)
+                return;
+
+            if (_timing.IsFirstTimePredicted)
+                PopupCursor(message, recipient.Value, type);
+        }
+
         public override void PopupClient(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
         {
             if (recipient == null)
@@ -170,6 +178,15 @@ namespace Content.Client.Popups
 
             if (_timing.IsFirstTimePredicted)
                 PopupEntity(message, uid, recipient.Value, type);
+        }
+
+        public override void PopupClient(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient == null)
+                return;
+
+            if (_timing.IsFirstTimePredicted)
+                PopupCoordinates(message, coordinates, recipient.Value, type);
         }
 
         public override void PopupEntity(string? message, EntityUid uid, PopupType type = PopupType.Small)

@@ -66,11 +66,8 @@ public sealed class ApcSystem : EntitySystem
     //Update the HasAccess var for UI to read
     private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
     {
-        if (args.Session.AttachedEntity == null)
-            return;
-
         // TODO: this should be per-player not stored on the apc
-        component.HasAccess = _accessReader.IsAllowed(args.Session.AttachedEntity.Value, uid);
+        component.HasAccess = _accessReader.IsAllowed(args.Actor, uid);
         UpdateApcState(uid, component);
     }
 
@@ -81,21 +78,18 @@ public sealed class ApcSystem : EntitySystem
         if (attemptEv.Cancelled)
         {
             _popup.PopupCursor(Loc.GetString("apc-component-on-toggle-cancel"),
-                args.Session, PopupType.Medium);
+                args.Actor, PopupType.Medium);
             return;
         }
 
-        if (args.Session.AttachedEntity == null)
-            return;
-
-        if (_accessReader.IsAllowed(args.Session.AttachedEntity.Value, uid))
+        if (_accessReader.IsAllowed(args.Actor, uid))
         {
             ApcToggleBreaker(uid, component);
         }
         else
         {
             _popup.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
-                args.Session, PopupType.Medium);
+                args.Actor, PopupType.Medium);
         }
     }
 
@@ -158,7 +152,7 @@ public sealed class ApcSystem : EntitySystem
             (int) MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
             battery.CurrentStorage / battery.Capacity);
 
-        _ui.TrySetUiState(uid, ApcUiKey.Key, state, ui: ui);
+        _ui.SetUiState((uid, ui), ApcUiKey.Key, state);
     }
 
     private ApcChargeState CalcChargeState(EntityUid uid, PowerState.Battery battery)

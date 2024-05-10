@@ -24,12 +24,6 @@ public sealed partial class WelderComponent : Component
     public string FuelSolutionName = "Welder";
 
     /// <summary>
-    ///     Solution on the entity that contains the fuel.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public Entity<SolutionComponent>? FuelSolution;
-
-    /// <summary>
     ///     Reagent that will be used as fuel for welding.
     /// </summary>
     [DataField]

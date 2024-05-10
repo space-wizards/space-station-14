@@ -1,8 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Hands.Components;
 using Content.Shared.Storage.EntitySystems;
-using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Inventory;
@@ -96,7 +94,7 @@ public partial class InventorySystem
     /// </summary>
     /// <param name="entity">The entity that you want to spawn an item on</param>
     /// <param name="items">A list of prototype IDs that you want to spawn in the bag.</param>
-    public void SpawnItemsOnEntity(EntityUid entity, List<EntProtoId> items)
+    public void SpawnItemsOnEntity(EntityUid entity, List<string> items)
     {
         foreach (var item in items)
         {

@@ -41,7 +41,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
     private void OnWriteToTargetIdMessage(EntityUid uid, IdCardConsoleComponent component, WriteToTargetIdMessage args)
     {
-        if (args.Session.AttachedEntity is not { Valid: true } player)
+        if (args.Actor is not { Valid: true } player)
             return;
 
         TryWriteToTargetId(uid, args.FullName, args.JobTitle, args.AccessList, args.JobPrototype, player, component);
@@ -104,7 +104,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 Name(targetId));
         }
 
-        _userInterface.TrySetUiState(uid, IdCardConsoleUiKey.Key, newState);
+        _userInterface.SetUiState(uid, IdCardConsoleUiKey.Key, newState);
     }
 
     /// <summary>

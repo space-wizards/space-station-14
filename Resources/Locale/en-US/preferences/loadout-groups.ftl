@@ -1,5 +1,6 @@
 # Miscellaneous
 loadout-group-trinkets = Trinkets
+loadout-group-glasses = Glasses
 
 # Command
 loadout-group-captain-head = Captain head
@@ -35,6 +36,7 @@ loadout-group-librarian-jumpsuit = Librarian jumpsuit
 
 loadout-group-lawyer-jumpsuit = Lawyer jumpsuit
 loadout-group-lawyer-neck = Lawyer neck
+loadout-group-lawyer-backpack = Lawyer backpack
 
 loadout-group-chaplain-head = Chaplain head
 loadout-group-chaplain-mask = Chaplain mask
@@ -140,6 +142,7 @@ loadout-group-warden-outerclothing = Warden outer clothing
 loadout-group-security-head = Security head
 loadout-group-security-jumpsuit = Security jumpsuit
 loadout-group-security-backpack = Security backpack
+loadout-group-security-belt = Security Belt
 loadout-group-security-outerclothing = Security outer clothing
 loadout-group-security-shoes = Security shoes
 loadout-group-security-id = Security ID

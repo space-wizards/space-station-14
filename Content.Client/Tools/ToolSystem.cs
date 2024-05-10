@@ -13,7 +13,7 @@ namespace Content.Client.Tools
         {
             base.Initialize();
 
-            Subs.ItemStatus<WelderComponent>(ent => new WelderStatusControl(ent));
+            Subs.ItemStatus<WelderComponent>(ent => new WelderStatusControl(ent, EntityManager, this));
             Subs.ItemStatus<MultipleToolComponent>(ent => new MultipleToolStatusControl(ent));
         }
 

@@ -21,7 +21,8 @@
   equipment:
     mask: ClothingMaskGas
 
-# Jumpsuit
+# Jumpsuits
+# Grey
 - type: loadout
   id: GreyJumpsuit
   equipment: GreyJumpsuit
@@ -40,6 +41,20 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorGrey
 
+# Rainbow
+- type: loadout
+  id: RainbowJumpsuit
+  equipment: RainbowJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+
+- type: startingGear
+  id: RainbowJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformColorRainbow
+
+# Ancient
 - type: loadout
   id: AncientJumpsuit
   equipment: AncientJumpsuit

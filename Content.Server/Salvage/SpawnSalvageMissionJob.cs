@@ -50,6 +50,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     private readonly DungeonSystem _dungeon;
     private readonly MetaDataSystem _metaData;
     private readonly SharedTransformSystem _xforms;
+    private readonly SharedMapSystem _map;
 
     public readonly EntityUid Station;
     public readonly EntityUid? CoordinatesDisk;
@@ -69,6 +70,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         DungeonSystem dungeon,
         MetaDataSystem metaData,
         SharedTransformSystem xform,
+        SharedMapSystem map,
         EntityUid station,
         EntityUid? coordinatesDisk,
         SalvageMissionParams missionParams,
@@ -83,6 +85,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         _dungeon = dungeon;
         _metaData = metaData;
         _xforms = xform;
+        _map = map;
         Station = station;
         CoordinatesDisk = coordinatesDisk;
         _missionParams = missionParams;
@@ -95,9 +98,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     protected override async Task<bool> Process()
     {
         _sawmill.Debug("salvage", $"Spawning salvage mission with seed {_missionParams.Seed}");
-        var mapId = _mapManager.CreateMap();
-        var mapUid = _mapManager.GetMapEntityId(mapId);
-        _mapManager.AddUninitializedMap(mapId);
+        var mapUid = _map.CreateMap(out var mapId, runMapInit: false);
         MetaDataComponent? metadata = null;
         var grid = _entManager.EnsureComponent<MapGridComponent>(mapUid);
         var random = new Random(_missionParams.Seed);

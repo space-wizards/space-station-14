@@ -273,8 +273,18 @@
 #Head Rev Gear
 - type: startingGear
   id: HeadRevGear
-  equipment:
-    pocket2: Flash
+  storage:
+    back:
+    - Flash
+    - ClothingEyesGlassesSunglasses
+
+#Thief Gear
+- type: startingGear
+  id: ThiefGear
+  storage:
+    back:
+    - ToolboxThief
+    - ClothingHandsChameleonThief
 
 #Gladiator with spear
 - type: startingGear

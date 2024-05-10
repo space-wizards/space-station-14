@@ -546,7 +546,7 @@ public sealed class ChatUIController : UIController
         }
 
         // only admins can see / filter asay
-        if (_admin.HasFlag(AdminFlags.Admin))
+        if (_admin.HasFlag(AdminFlags.Adminchat))
         {
             FilterableChannels |= ChatChannel.Admin;
             FilterableChannels |= ChatChannel.AdminAlert;

@@ -278,9 +278,12 @@
     sprite: Clothing/Mask/sterile.rsi
   - type: IngestionBlocker
   - type: Item
-    storedRotation: -90
+    size: Tiny
   - type: IdentityBlocker
     coverage: MOUTH
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
 
 - type: entity
   parent: ClothingMaskBase
