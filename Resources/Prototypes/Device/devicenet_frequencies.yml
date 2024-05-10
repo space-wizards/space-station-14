@@ -112,3 +112,23 @@
   id: BasicDevice
   name: device-frequency-prototype-name-basic-device
   frequency: 1280
+
+- type: deviceFrequency
+  id: NTMessagesServer
+  name: device-frequency-prototype-name-nt-messages-server
+  frequency: 2790
+
+- type: deviceFrequency
+  id: NTMessagesClient
+  name: device-frequency-prototype-name-nt-messages-client
+  frequency: 2791
+
+- type: deviceFrequency
+  id: SyndicateMessagesServer
+  name: device-frequency-prototype-name-syndicate-messages-server
+  frequency: 2792
+
+- type: deviceFrequency
+  id: SyndicateMessagesClient
+  name: device-frequency-prototype-name-syndicate-messages-client
+  frequency: 2793

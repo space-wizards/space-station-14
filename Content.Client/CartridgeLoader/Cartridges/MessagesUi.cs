@@ -10,8 +10,6 @@ public sealed partial class MessagesUi : UIFragment
 {
     private MessagesUiFragment _fragment;
 
-
-
     public override Control GetUIFragmentRoot()
     {
         return _fragment!;

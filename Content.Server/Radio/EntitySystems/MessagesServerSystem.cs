@@ -74,6 +74,9 @@ public sealed class MessagesServerSystem : EntitySystem
         _deviceNetworkSystem.QueuePacket(uid, null, packet, device: device);
     }
 
+    /// <summary>
+    /// Reacts to packets received from clients
+    /// </summary>
     private void OnPacketReceived(EntityUid uid, MessagesServerComponent component, DeviceNetworkPacketEvent args)
     {
         if (!_singletonServerSystem.IsActiveServer(uid))
@@ -84,9 +87,9 @@ public sealed class MessagesServerSystem : EntitySystem
             SendMessage(uid, component, message);
     }
 
-    ///<summary>
-    ///Function that tries to send a message to any matching cartridges on its map
-    ///</summary>
+    /// <summary>
+    /// Broadcasts a message into the network
+    /// </summary>
     public void SendMessage(EntityUid uid, MessagesServerComponent component, MessagesMessageData message)
     {
         component.Messages.Add(message);
@@ -103,6 +106,9 @@ public sealed class MessagesServerSystem : EntitySystem
         _deviceNetworkSystem.QueuePacket(uid, null, packet, device: device);
     }
 
+    /// <summary>
+    /// Returns the name of a given user
+    /// </summary>
     public string GetNameFromDict(MessagesServerComponent component, int key)
     {
         if (component.NameDict.TryGetValue(key, out var value))
@@ -110,11 +116,17 @@ public sealed class MessagesServerSystem : EntitySystem
         return Loc.GetString("messages-pda-user-missing");
     }
 
+    /// <summary>
+    /// Returns the name dictionary cache
+    /// </summary>
     public Dictionary<int, string> GetNameDict(MessagesServerComponent component)
     {
         return component.NameDict;
     }
 
+    /// <summary>
+    /// Returns list of messages between the two users
+    /// </summary>
     public List<MessagesMessageData> GetMessages(MessagesServerComponent component, int id1, int id2)
     {
         return new List<MessagesMessageData>(component.Messages.Where(message => message.SenderId == id1 && message.ReceiverId == id2 || message.SenderId == id2 && message.ReceiverId == id1));

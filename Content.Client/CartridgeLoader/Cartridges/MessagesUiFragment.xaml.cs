@@ -62,6 +62,9 @@ public sealed partial class MessagesUiFragment : BoxContainer
         }
     }
 
+    ///<summary>
+    /// Adding a button for selecting a chat
+    ///</summary>
     private void AddButton(int? userUid, string userName)
     {
         var button = new Button
@@ -75,6 +78,9 @@ public sealed partial class MessagesUiFragment : BoxContainer
         MessageContainer.AddChild(button);
     }
 
+    ///<summary>
+    /// Adding a text label to the message container
+    ///</summary>
     private void AddNote(string note)
     {
         MessageContainer.AddChild(new Label

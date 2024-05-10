@@ -15,6 +15,9 @@ public sealed class MessagesUiState(MessagesUiStateMode mode, List<(string, int?
     public string? Name = name;
 }
 
+///<summary>
+/// Enum representing the modes the program's UI can be in
+///</summary>
 [Serializable, NetSerializable]
 public enum MessagesUiStateMode : byte
 {
@@ -33,12 +36,4 @@ public partial struct MessagesMessageData
     public int ReceiverId;
     public string Content;
     public TimeSpan Time;
-}
-
-
-[Serializable, NetSerializable]
-public enum MessagesKeys : byte
-{
-    Nanotrasen,
-    Syndicate
 }

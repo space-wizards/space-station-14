@@ -24,17 +24,11 @@ public sealed partial class MessagesServerComponent : Component
     [DataField]
     public Dictionary<int, string> NameDict = [];
 
-    /// <summary>
-    /// Key used to denote which faction the server belongs to.
-    /// </summary>
-    [DataField]
-    public MessagesKeys EncryptionKey = MessagesKeys.Nanotrasen;
-
     ///<summary>
     /// Delay between updates on the given server.
     ///</summary>
     [DataField]
-    public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
+    public TimeSpan UpdateDelay = TimeSpan.FromSeconds(10);
 
     ///<summary>
     /// The next time the server will be updated

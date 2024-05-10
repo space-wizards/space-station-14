@@ -83,6 +83,9 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         UpdateUiState(uid, GetEntity(args.LoaderUid), component);
     }
 
+    /// <summary>
+    /// React and respond to packets from the server
+    /// </summary>
     private void OnPacketReceived(EntityUid uid, MessagesCartridgeComponent component, DeviceNetworkPacketEvent args)
     {
         if (!TryComp(uid, out CartridgeComponent? cartComponent))
@@ -93,14 +96,17 @@ public sealed class MessagesCartridgeSystem : EntitySystem
             SendName(uid, component, cartComponent);
         if (args.Data.TryGetValue<MessagesMessageData>("Message", out var message) && cartComponent.LoaderUid != null)
         {
-            var name = GetName(message.SenderId, component);
+            if (message.ReceiverId == GetUserUid(cartComponent))
+            {
+                var name = GetName(message.SenderId, component);
 
-            var subtitleString = Loc.GetString("messages-pda-notification-header");
+                var subtitleString = Loc.GetString("messages-pda-notification-header");
 
-            _cartridgeLoaderSystem.SendNotification(
-                cartComponent.LoaderUid.Value,
-                $"{name} {subtitleString} ",
-                message.Content);
+                _cartridgeLoaderSystem.SendNotification(
+                    cartComponent.LoaderUid.Value,
+                    $"{name} {subtitleString} ",
+                    message.Content);
+            }
 
             if (HasComp<CartridgeLoaderComponent>(cartComponent.LoaderUid))
                 UpdateUiState(uid, cartComponent.LoaderUid.Value, component);
@@ -108,6 +114,9 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
     }
 
+    /// <summary>
+    /// Sends the user's name to the server cache.
+    /// </summary>
     private void SendName(EntityUid uid, MessagesCartridgeComponent component, CartridgeComponent cartComponent)
     {
         string name = GetUserName(cartComponent);
@@ -122,7 +131,9 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         _deviceNetworkSystem.QueuePacket(uid, null, packet, device: device);
     }
 
-    //helper function to get name of a given user
+    /// <summary>
+    /// Retrieves the name of the given user from the last contacted server
+    /// </summary>
     private string GetName(int key, MessagesCartridgeComponent component)
     {
         if (component.LastServer == null)
@@ -130,7 +141,9 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         return _messagesServerSystem.GetNameFromDict(component.LastServer, key);
     }
 
-    //helper function to get messages id of a given cart
+    /// <summary>
+    /// Returns the user's id in the messages system
+    /// </summary>
     public int? GetUserUid(CartridgeComponent component)
     {
         var idComponent = GetIdCard(component);
@@ -139,14 +152,29 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         return idComponent.MessagesId;
     }
 
+    /// <summary>
+    /// Returns the user's name and job title
+    /// </summary>
     public string GetUserName(CartridgeComponent component)
     {
         var idComponent = GetIdCard(component);
+        string job;
         if (idComponent == null || idComponent.FullName == null)
             return Loc.GetString("messages-pda-unknown-name");
-        return idComponent.FullName;
+        if (idComponent.JobTitle != null)
+        {
+            job = idComponent.JobTitle;
+        }
+        else
+        {
+            job = Loc.GetString("messages-pda-unknown-job");
+        }
+        return $"{idComponent.FullName} ({job})";
     }
 
+    /// <summary>
+    /// Finds the id card in the PDA if present
+    /// </summary>
     private IdCardComponent? GetIdCard(CartridgeComponent component)
     {
         var loaderUid = component.LoaderUid;
@@ -158,7 +186,9 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
     }
 
-    //Updates the ui state of a given cartridge
+    ///<summary>
+    ///Updates the ui state of a given cartridge
+    ///</summary>
     public void ForceUpdate(EntityUid uid, MessagesCartridgeComponent component)
     {
         if (HasComp<CartridgeLoaderComponent>(Transform(uid).ParentUid))

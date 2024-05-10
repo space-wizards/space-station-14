@@ -17,12 +17,4 @@ public sealed partial class MessagesCartridgeComponent : Component
     /// </summary>
     [DataField]
     public int? ChatUid = null;
-
-    /// <summary>
-    /// Key used to denote which faction the cartridge belongs to.
-    /// </summary>
-    [DataField]
-    public MessagesKeys EncryptionKey = MessagesKeys.Nanotrasen;
 }
-
-
