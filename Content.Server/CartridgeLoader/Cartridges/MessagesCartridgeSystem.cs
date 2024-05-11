@@ -30,8 +30,8 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
         SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<MessagesCartridgeComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
-        SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeDeactivatedEvent>(OnCartDeactivation);
-        SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeActivatedEvent>(OnCartActivation);
+        SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeRemovedEvent>(OnCartRemoval);
+        SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeAddedEvent>(OnCartAddition);
     }
 
     /// <summary>
@@ -85,17 +85,17 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     }
 
     /// <summary>
-    /// On cartridge activation, connect to messages network.
+    /// On cartridge adding, connect to messages network.
     /// </summary>
-    private void OnCartActivation(EntityUid uid, MessagesCartridgeComponent component, CartridgeActivatedEvent args)
+    private void OnCartAddition(EntityUid uid, MessagesCartridgeComponent component, CartridgeAddedEvent args)
     {
         _deviceNetworkSystem.ConnectDevice(uid);
     }
 
     /// <summary>
-    /// On cartridge deactivation, disconnect from messages network.
+    /// On cartridge removal, disconnect from messages network.
     /// </summary>
-    private void OnCartDeactivation(EntityUid uid, MessagesCartridgeComponent component, CartridgeDeactivatedEvent args)
+    private void OnCartRemoval(EntityUid uid, MessagesCartridgeComponent component, CartridgeRemovedEvent args)
     {
         _deviceNetworkSystem.DisconnectDevice(uid, null);
     }

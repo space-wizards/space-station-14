@@ -2,13 +2,13 @@
                                  xmlns="https://spacestation14.io" Margin="1 0 2 0" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
     <PanelContainer StyleClasses="BackgroundDark"/>
     <BoxContainer Name="OverContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Name="HeaderBox">
+            <Button Name="BackButton" Text="{Loc 'messages-pda-ui-back'}" HorizontalExpand="False"/>
+            <Label Name="HeaderLabel"/>
+        </BoxContainer>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
             <BoxContainer Orientation="Vertical" Name="MessageContainer" HorizontalExpand="True" VerticalExpand="True"/>
         </ScrollContainer>
         <LineEdit Name="Input" HorizontalExpand="True" SetHeight="32"/>
-        <BoxContainer Name="HeaderBox">
-            <Button Name="BackButton" Text="{Loc 'messages-pda-ui-back'}"/>
-            <Label Name="HeaderLabel"/>
-        </BoxContainer>
     </BoxContainer>
 </cartridges:MessagesUiFragment>

@@ -6,3 +6,4 @@ messages-pda-unknown-name = Unknown
 messages-pda-unknown-job = Unknown
 messages-pda-user-missing = NAME ENTRY MISSING
 messages-pda-ui-back = Back
+messages-pda-chat-choice = Select chat

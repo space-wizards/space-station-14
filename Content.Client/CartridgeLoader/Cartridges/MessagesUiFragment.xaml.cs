@@ -32,7 +32,6 @@ public sealed partial class MessagesUiFragment : BoxContainer
     {
         MessageContainer.DisposeAllChildren();
         Input.Orphan();
-        HeaderBox.Orphan();
         BackButton.Orphan();
 
         if (contents == null) return;
@@ -46,17 +45,16 @@ public sealed partial class MessagesUiFragment : BoxContainer
             }
 
             OverContainer.AddChild(Input);
-            OverContainer.AddChild(HeaderBox);
-            OverContainer.AddChild(BackButton);
+            HeaderBox.AddChild(BackButton);
         }
         else if (mode == MessagesUiStateMode.Error)
         {
             HeaderLabel.Text = Loc.GetString("messages-pda-error-header");
             AddNote(Loc.GetString("messages-pda-error-message"));
-            OverContainer.AddChild(HeaderBox);
         }
         else
         {
+            HeaderLabel.Text = Loc.GetString("messages-pda-chat-choice");
             foreach (var (user, userUid) in contents)
             {
                 AddButton(userUid, user);
