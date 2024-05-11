@@ -174,8 +174,17 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     {
         var idComponent = GetIdCard(component);
         string job;
-        if (idComponent == null || idComponent.FullName == null)
+        string name;
+        if (idComponent == null)
             return Loc.GetString("messages-pda-unknown-name");
+        if (idComponent.FullName != null)
+        {
+            name = idComponent.FullName;
+        }
+        else
+        {
+            name = Loc.GetString("messages-pda-unknown-name");
+        }
         if (idComponent.JobTitle != null)
         {
             job = idComponent.JobTitle;
@@ -184,7 +193,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         {
             job = Loc.GetString("messages-pda-unknown-job");
         }
-        return $"{idComponent.FullName} ({job})";
+        return $"{name} ({job})";
     }
 
     /// <summary>
