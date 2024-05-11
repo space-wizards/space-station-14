@@ -12,7 +12,7 @@
       path: /Audio/Magic/blink.ogg
     itemIconStyle: BigAction
     checkCanAccess: false
-    repeat: true
+    repeat: false
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: blink
