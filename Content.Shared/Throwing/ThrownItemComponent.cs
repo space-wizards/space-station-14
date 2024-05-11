@@ -52,7 +52,7 @@ namespace Content.Shared.Throwing
         public Vector2? OriginalScale = null;
 
         /// <summary>
-        ///     If the events on collision will actually be raised
+        ///     If ThrowHitByEvent and ThrowDoHitEvent will be raised when this item hits something, and if LandEvent will be raised
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         public bool HitEvents = true;
