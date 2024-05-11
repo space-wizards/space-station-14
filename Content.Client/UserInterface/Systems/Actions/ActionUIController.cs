@@ -536,7 +536,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void DragAction()
     {
-        if (_menuDragHelper.Dragged is not {ActionId: {} action} dragged)
+        if (_menuDragHelper.Dragged is not {Action: {} action} dragged)
         {
             _menuDragHelper.EndDrag();
             return;
