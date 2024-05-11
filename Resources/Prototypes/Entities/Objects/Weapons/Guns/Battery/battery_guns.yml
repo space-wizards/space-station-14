@@ -113,7 +113,7 @@
       gun_magazine: !type:ContainerSlot
 
 - type: entity
-  id: BaseWeaponBatterySmall
+  id: BaseWeaponBatterySmallOld
   parent: BaseWeaponBattery
   abstract: true
   components:
@@ -134,7 +134,7 @@
 
 - type: entity
   id: BaseWeaponPowerCellSmall
-  parent: BaseWeaponPowerCell
+  parent: BaseWeaponPowerCellOld
   abstract: true
   components:
   - type: Item
