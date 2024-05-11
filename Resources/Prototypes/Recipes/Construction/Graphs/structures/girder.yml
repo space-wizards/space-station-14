@@ -29,6 +29,16 @@
             - tool: Screwing
               doAfter: 2
 
+        - to: displacedGirder
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Prying
+              doAfter: 3
+
         - to: wall
           completed:
             - !type:SnapToGrid
@@ -512,4 +522,262 @@
         - to: reinforcedWall
           steps:
             - tool: Welding
+              doAfter: 5
+
+    - node: displacedGirder
+      entity: DisplacedGirder
+      edges:
+        - to: girder
+          steps:
+            - tool: Screwing
+              doAfter: 3
+
+        - to: solidFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 3
+
+        - to: plasticFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Plastic
+              amount: 2
+              doAfter: 3
+
+        - to: bananiumFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Bananium
+              amount: 2
+              doAfter: 3
+
+        - to: clockFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Brass
+              amount: 2
+              doAfter: 3
+
+        - to: goldFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Gold
+              amount: 2
+              doAfter: 3
+
+        - to: meatFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: MeatSheets
+              amount: 2
+              doAfter: 3
+
+        - to: plasmaFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Plasma
+              amount: 2
+              doAfter: 3
+
+        - to: silverFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Silver
+              amount: 2
+              doAfter: 3
+
+        - to: uraniumFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Uranium
+              amount: 2
+              doAfter: 3
+
+        - to: woodFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: WoodPlank
+              amount: 2
+              doAfter: 3
+
+        - to: reinforcedFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Plasteel
+              amount: 2
+              doAfter: 3
+
+    - node: solidFalseWall
+      entity: SolidFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+    - node: plasticFalseWall
+      entity: PlasticFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPlastic1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+    - node: bananiumFalseWall
+      entity: BananiumFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+          completed:
+            - !type:GivePrototype
+              prototype: MaterialBananium1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+    - node: clockFalseWall
+      entity: ClockFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+          completed:
+            - !type:GivePrototype
+              prototype: SheetBrass1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+    - node: goldFalseWall
+      entity: GoldFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+          completed:
+            - !type:GivePrototype
+              prototype: IngotGold1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+    - node: meatFalseWall
+      entity: MeatFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:GivePrototype
+              prototype: MaterialSheetMeat1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+    - node: plasmaFalseWall
+      entity: PlasmaFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPlasma1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+    - node: silverFalseWall
+      entity: SilverFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+          completed:
+            - !type:GivePrototype
+              prototype: IngotSilver1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+    - node: uraniumFalseWall
+      entity: UraniumFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+          completed:
+            - !type:GivePrototype
+              prototype: SheetUranium1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+    - node: woodFalseWall
+      entity: WoodFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:GivePrototype
+              prototype: MaterialWoodPlank1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+    - node: reinforcedFalseWall
+      entity: ReinforcedFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPlasteel1
+              amount: 2
+          steps:
+            - tool: Prying
               doAfter: 5
