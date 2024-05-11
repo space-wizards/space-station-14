@@ -216,7 +216,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             {
                 world.Event.Target = coords;
                 world.Event.Performer = user;
-                world.Event.Action = actionId;
             }
 
             _actionsSystem.PerformAction(user, user.Comp, uid, action, world.Event, _timing.CurTime);
@@ -252,7 +251,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             {
                 entityTarget.Event.Target = entity;
                 entityTarget.Event.Performer = user;
-                entityTarget.Event.Action = actionId;
             }
 
             _actionsSystem.PerformAction(user, user.Comp, uid, action, entityTarget.Event, _timing.CurTime);
@@ -619,7 +617,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         args.Handle();
-        if (button.ActionId != null)
+        if (button.Action != null)
         {
             _menuDragHelper.MouseDown(button);
             return;
@@ -649,7 +647,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (button.Action is not {} action)
             return;
 
-        if (!TryComp<TargetActionComponent>(action, out var target))
+        if (!_entMan.TryGetComponent<TargetActionComponent>(action, out var target))
         {
             _actionsSystem?.TriggerAction(action, action.Comp);
             return;
