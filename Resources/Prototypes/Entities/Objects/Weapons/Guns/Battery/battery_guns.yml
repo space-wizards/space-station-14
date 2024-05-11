@@ -1,7 +1,3 @@
-
-
-
-
 - type: entity
   id: BaseWeaponBattery
   parent: BaseItem
@@ -64,8 +60,6 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
-    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
   - type: Appearance
@@ -84,10 +78,6 @@
   id: WeaponLaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
-  # - type: MagazineVisuals
-  #   magState: mag
-  #   steps: 5
-  #   zeroVisible: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     layers:
@@ -149,10 +139,6 @@
   id: WeaponTeslaGun
   description: The power of the primordial element of lightning in your hands.
   components:
-  # - type: MagazineVisuals
-  #   magState: mag
-  #   steps: 5
-  #   zeroVisible: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/tesla_gun.rsi
     layers:
@@ -161,8 +147,6 @@
       - state: mag-unshaded-4
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
-  # - type: Item
-  #   size: Huge
   # - type: Clothing
   #   sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
   - type: Appearance
@@ -179,7 +163,7 @@
   - type: ProjectileBatteryAmmoProvider
     proto: TeslaGunBullet
     fireCost: 300
-  - type: StaticPrice
+  - type: StaticPrice #did all of these have static prices before?
     price: 500
 
 - type: entity
@@ -384,11 +368,6 @@
       layers:
         - state: base
           map: ["enum.GunVisualLayers.Base"]
-    - type: Appearance
-    - type: MagazineVisuals #does this gun even have mag visuals?
-      magState: mag
-      steps: 5
-      zeroVisible: false
     - type: Gun
       fireRate: 0.5
       soundGunshot:
@@ -413,10 +392,6 @@
   id: WeaponXrayCannon
   description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:
-  # - type: MagazineVisuals
-  #   magState: mag
-  #   steps: 5
-  #   zeroVisible: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
     layers:
@@ -449,10 +424,6 @@
   id: WeaponDisabler
   description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
   components:
-  # - type: MagazineVisuals
-  #   magState: mag
-  #   steps: 5
-  #   zeroVisible: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/disabler.rsi
     layers:
@@ -475,7 +446,7 @@
     proto: BulletDisabler
     fireCost: 100
   - type: Tag
-    tags: #do lists like this combine with inheritance?
+    tags:
       - Taser
       - Sidearm
   - type: StaticPrice
@@ -490,10 +461,6 @@
   id: WeaponDisablerSMG
   description: Advanced weapon that exhausts organic targets, weakening them until they collapse.
   components:
-  # - type: MagazineVisuals
-  #   magState: mag
-  #   steps: 5
-  #   zeroVisible: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/disabler_smg.rsi
     layers:
@@ -557,10 +524,6 @@
   id: WeaponTaser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
   components:
-  # - type: MagazineVisuals
-  #   magState: mag
-  #   steps: 5
-  #   zeroVisible: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
     layers:
@@ -599,10 +562,6 @@
   id: WeaponAntiqueLaser
   description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
-  # - type: MagazineVisuals
-  #   magState: mag
-  #   steps: 5
-  #   zeroVisible: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
     layers: #this layer data could probably be in a magzine visuals template
@@ -643,10 +602,6 @@
   id: WeaponAdvancedLaser
   description: An experimental high-energy laser pistol with a self-charging nuclear battery.
   components:
-  # - type: MagazineVisuals
-  #   magState: mag
-  #   steps: 5
-  #   zeroVisible: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     layers:
@@ -691,10 +646,6 @@
   id: WeaponPistolCHIMP
   description: Just because it's a little C.H.I.M.P. doesn't mean it can't punch like an A.P.E.
   components:
-  # - type: MagazineVisuals
-  #   magState: mag
-  #   steps: 5
-  #   zeroVisible: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
     layers:
@@ -742,7 +693,7 @@
   description: This C.H.I.M.P. seems to have a greater punch than is usual...
   components:
   - type: BatteryWeaponFireModes
-    fireModes: #can this be shortened?
+    fireModes:
     - proto: AnomalousParticleDeltaStrong
       fireCost: 100
     - proto: AnomalousParticleEpsilonStrong
@@ -762,26 +713,11 @@
   id: WeaponBehonkerLaser
   description: The eye of a behonker, it fires a laser when squeezed.
   components:
-  # - type: Clothing
-  #   sprite: Objects/Weapons/Guns/Battery/taser.rsi
-  #   quickEquip: false
-  #   slots:
-  #   - Belt
-  #   - suitStorage
-  # - type: MagazineVisuals
-  #   magState: mag
-  #   steps: 5
-  #   zeroVisible: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/behonker_eye.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-  - type: Appearance
-  - type: MagazineVisuals #does this gun have mag visuals?
-    magState: mag
-    steps: 5
-    zeroVisible: true
   - type: Gun
     fireRate: 1
     soundGunshot:
