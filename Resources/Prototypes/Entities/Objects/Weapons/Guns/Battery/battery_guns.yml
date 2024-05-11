@@ -456,6 +456,28 @@
     - Security
 
 - type: entity
+  parent: WeaponDisabler
+  id: WeaponDisablerPractice
+  name: practice disabler
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse. This one has been undertuned for cadets making it mostly harmless.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+        - state: mag-unshaded-0
+          map: ["enum.GunVisualLayers.MagUnshaded"]
+          shader: unshaded
+    - type: Clothing
+      sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
+    - type: ProjectileBatteryAmmoProvider
+      proto: BulletDisablerPractice
+      fireCost: 100
+    - type: StaticPrice
+      price: 100
+
+- type: entity
   parent: BaseWeaponBattery
   id: WeaponDisablerSMG
   name: disabler SMG
@@ -493,28 +515,6 @@
       - Sidearm
   - type: StaticPrice
     price: 260
-
-- type: entity
-  parent: WeaponDisabler
-  id: WeaponDisablerPractice
-  name: practice disabler #move this under disabler
-  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse. This one has been undertuned for cadets making it mostly harmless.
-  components:
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
-      layers:
-        - state: base
-          map: ["enum.GunVisualLayers.Base"]
-        - state: mag-unshaded-0
-          map: ["enum.GunVisualLayers.MagUnshaded"]
-          shader: unshaded
-    - type: Clothing
-      sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
-    - type: ProjectileBatteryAmmoProvider
-      proto: BulletDisablerPractice
-      fireCost: 100
-    - type: StaticPrice
-      price: 100
 
 - type: entity
   parent:
