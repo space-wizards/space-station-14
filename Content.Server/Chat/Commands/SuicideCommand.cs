@@ -41,8 +41,7 @@ namespace Content.Server.Chat.Commands
             {
                 var deniedMessage = Loc.GetString("suicide-command-denied");
                 shell.WriteLine(deniedMessage);
-                IoCManager.Resolve<IEntitySystemManager>()
-                    .GetEntitySystem<PopupSystem>()
+                entityManager.System<PopupSystem>()
                     .PopupEntity(deniedMessage, victim, victim);
                 return;
             }
