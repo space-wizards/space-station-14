@@ -9,7 +9,7 @@ namespace Content.Shared.Humanoid;
 public sealed partial class HumanoidProfileExport
 {
     [DataField]
-    public string ForkId = "Wizden";
+    public string ForkId;
 
     [DataField]
     public int Version = 1;

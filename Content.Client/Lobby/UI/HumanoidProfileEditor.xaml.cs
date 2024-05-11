@@ -1478,8 +1478,8 @@ namespace Content.Client.Lobby.UI
             }
             finally
             {
-                await file.Value.fileStream.DisposeAsync();
                 EndExport();
+                await file.Value.fileStream.DisposeAsync();
             }
         }
 
