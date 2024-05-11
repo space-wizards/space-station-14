@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.CombatMode;
 using Content.Shared.Communications;
+using Content.Shared.CriminalRecords.Components;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -62,6 +63,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         RemComp<StunProviderComponent>(user);
         RemComp<ResearchStealerComponent>(user);
         RemComp<CommsHackerComponent>(user);
+        RemComp<CriminalRecordsHackerComponent>(user);
     }
 
     /// <summary>

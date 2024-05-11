@@ -62,12 +62,30 @@ public sealed class BlindableSystem : EntitySystem
             return;
 
         blindable.Comp.EyeDamage += amount;
-        blindable.Comp.EyeDamage = Math.Clamp(blindable.Comp.EyeDamage, 0, BlindableComponent.MaxDamage);
-        Dirty(blindable);
-        UpdateIsBlind(blindable);
+        UpdateEyeDamage(blindable, true);
+    }
+    private void UpdateEyeDamage(Entity<BlindableComponent?> blindable, bool isDamageChanged)
+    {
+        if (!Resolve(blindable, ref blindable.Comp, false))
+            return;
 
+        var previousDamage = blindable.Comp.EyeDamage;
+        blindable.Comp.EyeDamage = Math.Clamp(blindable.Comp.EyeDamage, blindable.Comp.MinDamage, BlindableComponent.MaxDamage);
+        Dirty(blindable);
+        if (!isDamageChanged && previousDamage == blindable.Comp.EyeDamage)
+            return;
+
+        UpdateIsBlind(blindable);
         var ev = new EyeDamageChangedEvent(blindable.Comp.EyeDamage);
         RaiseLocalEvent(blindable.Owner, ref ev);
+    }
+    public void SetMinDamage(Entity<BlindableComponent?> blindable, int amount)
+    {
+        if (!Resolve(blindable, ref blindable.Comp, false))
+            return;
+
+        blindable.Comp.MinDamage = amount;
+        UpdateEyeDamage(blindable, false);
     }
 }
 
