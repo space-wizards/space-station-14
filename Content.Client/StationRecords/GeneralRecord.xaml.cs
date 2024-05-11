@@ -8,8 +8,8 @@ namespace Content.Client.StationRecords;
 [GenerateTypedNameReferences]
 public sealed partial class GeneralRecord : Control
 {
-    public Action<uint?>? OnDeleted;
-    public GeneralRecord(GeneralStationRecord record, bool canDelete, uint? id, Action<uint>? onDeleted)
+    public Action<uint>? OnDeletePressed;
+    public GeneralRecord(GeneralStationRecord record, bool canDelete, uint? id)
     {
         RobustXamlLoader.Load(this);
         RecordName.Text = record.Name;
@@ -27,7 +27,7 @@ public sealed partial class GeneralRecord : Control
         if (canDelete && id != null )
         {
             DeleteButton.Visible = true;
-            DeleteButton.OnPressed += _ => onDeleted?.Invoke(id.Value);
+            DeleteButton.OnPressed += _ => OnDeletePressed?.Invoke(id.Value);
         }
     }
 }

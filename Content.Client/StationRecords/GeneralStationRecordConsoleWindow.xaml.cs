@@ -139,7 +139,10 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     private void PopulateRecordContainer(GeneralStationRecord record, bool enableDelete, uint? id)
     {
         RecordContainer.RemoveAllChildren();
-        RecordContainer.AddChild(new GeneralRecord(record, enableDelete, id, OnDeleted));
+        var newRecord = new GeneralRecord(record, enableDelete, id);
+        newRecord.OnDeletePressed = OnDeleted;
+
+        RecordContainer.AddChild(newRecord);
     }
 
     private void FilterListingOfRecords(string text = "")
