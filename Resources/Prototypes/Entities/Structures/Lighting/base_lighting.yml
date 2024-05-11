@@ -91,7 +91,7 @@
     bulb: Tube
     damage:
       types:
-        Heat: 5
+        Heat: 2
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot
@@ -132,7 +132,7 @@
     hasLampOnSpawn: LightTube
     damage:
       types:
-        Heat: 5
+        Heat: 2
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -15
@@ -151,7 +151,7 @@
     hasLampOnSpawn: LedLightTube
     damage:
       types:
-        Heat: 2.5
+        Heat: 1 #LEDs don't get as hot
   - type: PointLight
     radius: 15
     energy: 1
@@ -173,19 +173,19 @@
 - type: entity
   id: PoweredlightExterior
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: Blue
+  suffix: Exterior
   parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: ExteriorLightTube
     damage:
       types:
-        Heat: 5
+        Heat: 4 #brighter light gets hotter
 
 - type: entity
   parent: AlwaysPoweredWallLight
   id: AlwaysPoweredLightExterior
-  suffix: Always Powered, Blue
+  suffix: Always Powered, Exterior
   components:
   - type: PointLight
     radius: 12
@@ -204,7 +204,7 @@
     hasLampOnSpawn: SodiumLightTube
     damage:
       types:
-        Heat: 5
+        Heat: 2
   - type: PointLight
     radius: 10
     energy: 2.5
@@ -291,7 +291,7 @@
     bulb: Bulb
     damage:
       types:
-        Heat: 5
+        Heat: 2
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
@@ -330,7 +330,7 @@
     hasLampOnSpawn: LedLightBulb
     damage:
       types:
-        Heat: 2.5
+        Heat: 1
 
 - type: entity
   id: PoweredSmallLight
@@ -345,7 +345,7 @@
     hasLampOnSpawn: LightBulb
     damage:
       types:
-        Heat: 5
+        Heat: 2
 
 #Emergency Lights
 - type: entity
@@ -400,7 +400,7 @@
     hasLampOnSpawn: LightTubeCrystalCyan
     damage:
       types:
-        Heat: 5
+        Heat: 2
   - type: PointLight
     radius: 8
     energy: 3
@@ -427,7 +427,7 @@
     hasLampOnSpawn: LightTubeCrystalBlue
     damage:
       types:
-        Heat: 5
+        Heat: 2
   - type: PointLight
     radius: 8
     energy: 3
@@ -454,7 +454,7 @@
     hasLampOnSpawn: LightTubeCrystalPink
     damage:
       types:
-        Heat: 5
+        Heat: 2
   - type: PointLight
     radius: 8
     energy: 3
@@ -481,7 +481,7 @@
     hasLampOnSpawn: LightTubeCrystalOrange
     damage:
       types:
-        Heat: 5
+        Heat: 2
   - type: PointLight
     radius: 8
     energy: 3
@@ -508,7 +508,7 @@
     hasLampOnSpawn: LightTubeCrystalRed
     damage:
       types:
-        Heat: 5
+        Heat: 2
   - type: PointLight
     radius: 8
     energy: 3
@@ -535,7 +535,7 @@
     hasLampOnSpawn: LightTubeCrystalGreen
     damage:
       types:
-        Heat: 5
+        Heat: 2
   - type: PointLight
     radius: 8
     energy: 3

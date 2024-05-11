@@ -1,0 +1,74 @@
+﻿- type: entity
+  id: UnknownShuttleCargoLost
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 5
+    reoccurrenceDelay: 30
+    duration: 1
+  - type: LoadMapRule
+    preloadedGrid: ShuttleCargoLost
+
+- type: entity
+  id: UnknownShuttleTravelingCuisine
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 5
+    reoccurrenceDelay: 30
+    duration: 1
+  - type: LoadMapRule
+    preloadedGrid: TravelingCuisine
+
+- type: entity
+  id: UnknownShuttleDisasterEvacPod
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 5
+    reoccurrenceDelay: 30
+    duration: 1
+  - type: LoadMapRule
+    preloadedGrid: DisasterEvacPod
+
+- type: entity
+  id: UnknownShuttleHonki
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 2
+    reoccurrenceDelay: 30
+    duration: 1
+  - type: LoadMapRule
+    preloadedGrid: Honki
+
+- type: entity
+  id: UnknownShuttleSyndieEvacPod
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 2
+    reoccurrenceDelay: 30
+    duration: 1
+  - type: LoadMapRule
+    preloadedGrid: SyndieEvacPod

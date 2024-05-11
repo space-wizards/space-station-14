@@ -201,7 +201,7 @@ ActionVehicleHorn: null
 CrateFunATV: null
 CrateFunSyndicateSegway: null
 MobTaxiBot: null
-MobSupplyBot: null
+# MobSupplyBot: null
 SpawnVehicleMotobike: null
 SpawnVehicleATV: null
 SpawnVehicleSecway: null
