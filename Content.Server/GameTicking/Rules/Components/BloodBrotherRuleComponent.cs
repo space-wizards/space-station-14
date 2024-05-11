@@ -8,7 +8,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class BloodBrotherRuleComponent : Component
 {
     public readonly List<EntityUid> Minds = new();
-    public static readonly List<EntityUid> CommonObjectives = new();
+    public readonly List<EntityUid> CommonObjectives = new();
 
     [DataField]
     public ProtoId<AntagPrototype> PrototypeId = "BloodBrother";

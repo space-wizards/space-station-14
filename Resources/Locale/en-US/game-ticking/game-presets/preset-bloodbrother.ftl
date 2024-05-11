@@ -5,15 +5,28 @@ bloodbrother-round-end-agent-name = a member of the Blood Brothers
 objective-issuer-bloodbrothers = [color=red]Blood Brother[/color]
 
 bloodbrother-briefing-start =
-    You are a member of the Blood Brothers.
-    You have unfinished business on the station that must be resolved.
-    Work with your companions to achieve your goals.
+    You are a Blood Brother.
+    The Blood Brotherhood only accepts those that have proven themselves.
+    Prove yourself and prove your brothers by completing your objectives together!
+    Do not cooperate with members of The Syndicate, we don't want them to know they've got competition!
+bloodbrother-briefing-short =
+    Prove yourself and prove your brothers by completing objectives together!
+
+bloodbrother-briefing-partner-start =
+    Your brothers are:
 bloodbrother-briefing-partner =
-    Your partner is {$partner}: {$job}.
+    {$partner}: {$job}
 bloodbrother-briefing-partner-end =
-    Keep the members of your team alive and unrestrained.
-    You must work together to complete your objectives.
+    Use your character menu to track their health and status.
+    The entire team must escape on the evacuation shuttle alive and unrestrained, or else everything will be in vain!
 bloodbrother-briefing-nopartner =
-    You don't have a designated partner.
-    Fortunately you grabbed a special flash to brainwash one crewmember to work on your side.
-    Keep it secured and dispose of it after using.
+    We've trusted you with a special single use flash to brainwash one crewmember into working on our side.
+    Keep it out of running eyes and dispose of it after using!
+
+# a latejoiner / brainwashed new guy
+bloodbrother-briefing-newpartner =
+    Attention: One of our brothers, {$partner}: {$job}, has arrived at the station!
+    Check your character menu to see their status.
+bloodbrother-briefing-start-brainwashed =
+    You have been brainwashed into working with the Blood Brotherhood!
+    Prove yourself and prove your brothers by completing your objectives together!

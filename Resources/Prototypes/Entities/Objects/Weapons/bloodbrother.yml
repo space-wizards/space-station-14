@@ -1,8 +1,8 @@
 - type: entity
   name: flash
   parent: BaseItem
-  id: FlashBloodbrother
-  description: An ultrabright flashbulb with a trigger, which causes the victim to be brainwashed to help you with your tasks. Useless when burnt out.
+  id: FlashBloodBrother
+  description: "A special flash with a trigger, which causes the victim to be brainwashed to help you with your tasks. WARNING: SINGLE USE ONLY!"
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/flash.rsi
