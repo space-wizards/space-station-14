@@ -115,4 +115,4 @@
   components:
   - type: MovementBodyPart
     walkSpeed: 3
-    sprintSpeed: 5
+    sprintSpeed: 5 # +.5 from normal movement speed
