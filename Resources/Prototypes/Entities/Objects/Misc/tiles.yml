@@ -897,6 +897,21 @@
     count: 4
 
 # Terrain
+- type: entity
+  name: grass tile
+  parent: FloorTileItemBase
+  id: FloorTileItemGrass
+  components:
+  - type: Sprite
+    state: grass
+  - type: Item
+    heldPrefix: grass
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorGrass
+  - type: Stack
+    stackType: FloorTileGrass
 
 - type: entity
   name: snow tile
@@ -1007,7 +1022,7 @@
   description: Fake grass that covers up wires and even comes with realistic NanoTrimmings!
   components:
   - type: Sprite
-    state: astrograss
+    state: grass
   - type: Item
     heldPrefix: grass
   - type: FloorTile
