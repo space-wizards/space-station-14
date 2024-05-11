@@ -58,7 +58,7 @@ public sealed partial class ThirstComponent : Component
     };
 
     [DataField]
-    public ProtoId<AlertCategoryPrototype> ThirstyCategory = "Thirsty";
+    public ProtoId<AlertCategoryPrototype> ThirstyCategory = "Thirst";
 
     public static readonly Dictionary<ThirstThreshold, ProtoId<AlertPrototype>> ThirstThresholdAlertTypes = new()
     {
