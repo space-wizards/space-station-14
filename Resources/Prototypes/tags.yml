@@ -628,8 +628,8 @@
 - type: Tag
   id: GeigerCounter
   
-  type: Tag
-  id: GhostFeet  # Netptune + others, use this for added ghost socks
+- type: Tag
+  id: GhostFeet  # Neptune + others, set ghost socks here
 
 - type: Tag
   id: GlassAirlock
@@ -648,15 +648,15 @@
 
 - type: Tag
   id: Grenade
-  
-- type: Tag
-  id: GuideEmbeded
 
 - type: Tag
   id: HudMedical
 
 - type: Tag
   id: HudSecurity
+
+- type: Tag
+  id: GuideEmbeded
 
 - type: Tag
   id: Hamster
