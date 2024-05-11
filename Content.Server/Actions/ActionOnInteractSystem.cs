@@ -56,7 +56,10 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
         var (actId, act) = _random.Pick(options);
         if (act.Event != null)
+        {
             act.Event.Performer = args.User;
+            act.Event.Action = actId;
+        }
 
         _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
@@ -92,6 +95,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 if (entAct.Event != null)
                 {
                     entAct.Event.Performer = args.User;
+                    entAct.Event.Action = entActId;
                     entAct.Event.Target = args.Target.Value;
                 }
 
@@ -117,6 +121,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (act.Event != null)
         {
             act.Event.Performer = args.User;
+            act.Event.Action = actId;
             act.Event.Target = args.ClickLocation;
         }
 
