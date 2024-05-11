@@ -10,9 +10,9 @@
   description: Basic Socks
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedBase
+    sprite: Clothing/Under/Socks/SocksStripedBase.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedBase
+    sprite: Clothing/Under/Socks/SocksStripedBase.rsi
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
@@ -278,9 +278,9 @@
   description: Water proof socks to mutate random plants in.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedBotany
+    sprite: Clothing/Under/Socks/SocksStripedBotany.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedBotany
+    sprite: Clothing/Under/Socks/SocksStripedBotany.rsi
 
 - type: entity
   parent: ClothingUnderSocksBase
@@ -290,9 +290,9 @@
   description: Candy Floss Flavored socks for the less squeaky Honki.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedClown
+    sprite: Clothing/Under/Socks/SocksStripedClown.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedClown
+    sprite: Clothing/Under/Socks/SocksStripedClown.rsi
   - type: WaddleWhenWorn
 
 - type: entity
@@ -303,9 +303,9 @@
   description: Honk and sock?! Sign me up!
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedClownShoes
+    sprite: Clothing/Under/Socks/SocksStripedClownShoes.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedClownShoes
+    sprite: Clothing/Under/Socks/SocksStripedClownShoes.rsi
   - type: WaddleWhenWorn
   - type: FootstepModifier
     footstepSoundCollection:
@@ -319,9 +319,9 @@
   description: EVEN BIGGER honk and sock?! Sign me up!
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedClownShoesLarge
+    sprite: Clothing/Under/Socks/SocksStripedClownShoesLarge.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedClownShoesLarge
+    sprite: Clothing/Under/Socks/SocksStripedClownShoesLarge.rsi
   - type: WaddleWhenWorn
   - type: FootstepModifier
     footstepSoundCollection:
@@ -335,9 +335,9 @@
   description: Two toned brown socks for the inquisitive or those who just wanted brown long boots and had nothing better.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedDetective
+    sprite: Clothing/Under/Socks/SocksStripedDetective.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedDetective
+    sprite: Clothing/Under/Socks/SocksStripedDetective.rsi
 
 
 - type: entity
@@ -348,9 +348,9 @@
   description: While wearing these you might almost forget to refuel the ame.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedEngineeringCE
+    sprite: Clothing/Under/Socks/SocksStripedEngineeringCE.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedEngineeringCE
+    sprite: Clothing/Under/Socks/SocksStripedEngineeringCE.rsi
 
 
 - type: entity
@@ -361,9 +361,9 @@
   description: Standard grey stripey socks for the gentle tider or chef in your life.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedGrey
+    sprite: Clothing/Under/Socks/SocksStripedGrey.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedGrey
+    sprite: Clothing/Under/Socks/SocksStripedGrey.rsi
 
 
 - type: entity
@@ -374,9 +374,9 @@
   description: Dark grey socks for the servers of the nightlife. pretty neat otherwise too.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedGreyDark
+    sprite: Clothing/Under/Socks/SocksStripedGreyDark.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedGreyDark
+    sprite: Clothing/Under/Socks/SocksStripedGreyDark.rsi
 
 
 - type: entity
@@ -387,9 +387,9 @@
   description: Hot Pink and black socks for a special teammember, Say hi to Johnalex!
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedHotpinkBlack
+    sprite: Clothing/Under/Socks/SocksStripedHotpinkBlack.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedHotpinkBlack
+    sprite: Clothing/Under/Socks/SocksStripedHotpinkBlack.rsi
 
 
 - type: entity
@@ -400,9 +400,9 @@
   description: Hot pink and Clown candy socks for a special teammember, Say hi to Johnalex!
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedHotpinkLight
+    sprite: Clothing/Under/Socks/SocksStripedHotpinkLight.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedHotpinkLight
+    sprite: Clothing/Under/Socks/SocksStripedHotpinkLight.rsi
 
 
 - type: entity
@@ -413,9 +413,9 @@
   description: How did you get these? Say hi to Harriet_Shitty
   components:
   - type: Sprite
-    sprite: Clothing\Under\GhostSocks\StrippedDookiebrown
+    sprite: Clothing\Under\GhostSocks\StrippedDookiebrown.rsi
   - type: Clothing
-    sprite: Clothing\Under\GhostSocks\StrippedDookiebrown
+    sprite: Clothing\Under\GhostSocks\StrippedDookiebrown.rsi
 
 - type: entity
   parent: ClothingUnderSocksBase
@@ -425,9 +425,9 @@
   description: How did you get these? Say hi to JohnAlex.
   components:
   - type: Sprite
-    sprite: Clothing\Under\GhostSocks\StrippedHotpink
+    sprite: Clothing\Under\GhostSocks\StrippedHotpink.rsi
   - type: Clothing
-    sprite: Clothing\Under\GhostSocks\StrippedHotpink
+    sprite: Clothing\Under\GhostSocks\StrippedHotpink.rsi
 
 - type: entity
   parent: ClothingUnderSocksBase
@@ -437,9 +437,9 @@
   description: Purple Socks given to janitors who like a little chaos in their life.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedJanitor
+    sprite: Clothing/Under/Socks/SocksStripedJanitor.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedJanitor
+    sprite: Clothing/Under/Socks/SocksStripedJanitor.rsi
 
 - type: entity
   parent: ClothingShoesGaloshes
@@ -449,9 +449,9 @@
   description: Cushioned boots to keep the stink sealed while you clean the nightclub.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedJanitorGalosh
+    sprite: Clothing/Under/Socks/SocksStripedJanitorGalosh.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedJanitorGalosh
+    sprite: Clothing/Under/Socks/SocksStripedJanitorGalosh.rsi
 
 - type: entity
   parent: ClothingUnderSocksBase
@@ -461,9 +461,9 @@
   description: Socks Perfect for the Silent type.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedMime
+    sprite: Clothing/Under/Socks/SocksStripedMime.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedMime
+    sprite: Clothing/Under/Socks/SocksStripedMime.rsi
 
 - type: entity
   parent: ClothingUnderSocksBase
@@ -473,9 +473,9 @@
   description: Socks tailored from the same matieral as your suit, oddly ichy.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedMusican
+    sprite: Clothing/Under/Socks/SocksStripedMusican.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedMusican
+    sprite: Clothing/Under/Socks/SocksStripedMusican.rsi
 
 - type: entity
   parent: ClothingUnderSocksBase
@@ -485,9 +485,9 @@
   description: The Perfect socks to wear while using magboots in your hand.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedScienceRD
+    sprite: Clothing/Under/Socks/SocksStripedScienceRD.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedScienceRD
+    sprite: Clothing/Under/Socks/SocksStripedScienceRD.rsi
 
 - type: entity
   parent: ClothingShoesMilitaryBase
@@ -497,9 +497,9 @@
   description: Socks Designed to keep you mentally stable during even the worst of shifts.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedSecurityHos
+    sprite: Clothing/Under/Socks/SocksStripedSecurityHos.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedSecurityHos
+    sprite: Clothing/Under/Socks/SocksStripedSecurityHos.rsi
 
 - type: entity
   parent: ClothingShoesMilitaryBase
@@ -509,9 +509,9 @@
   description: Socks Designed to keep you mentally stable during even the worst of shifts now in boots.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedSecurityHosJackboot
+    sprite: Clothing/Under/Socks/SocksStripedSecurityHosJackboot.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedSecurityHosJackboot
+    sprite: Clothing/Under/Socks/SocksStripedSecurityHosJackboot.rsi
 
 - type: entity
   parent: ClothingUnderSocksBase
@@ -521,9 +521,9 @@
   description: A special color ment to invoke the idea of icecream.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedSherbert
+    sprite: Clothing/Under/Socks/SocksStripedSherbert.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedSherbert
+    sprite: Clothing/Under/Socks/SocksStripedSherbert.rsi
 
 - type: entity
   parent: ClothingUnderSocksBase
@@ -533,6 +533,6 @@
   description: Socks for the nimblest of fingers and edgiest of dealers.
   components:
   - type: Sprite
-    sprite: Clothing/Under/Socks/SocksStripedVoidGreen
+    sprite: Clothing/Under/Socks/SocksStripedVoidGreen.rsi
   - type: Clothing
-    sprite: Clothing/Under/Socks/SocksStripedVoidGreen
+    sprite: Clothing/Under/Socks/SocksStripedVoidGreen.rsi
