@@ -182,7 +182,11 @@ public abstract class SharedActionsSystem : EntitySystem
         if (action.Cooldown?.End > end)
             return;
 
-        action.Cooldown = new ActionCooldown(start, end.Value);
+        action.Cooldown = new ActionCooldown
+        {
+            Start = start,
+            End = end.Value
+        };
         Dirty(actionId.Value, action);
     }
 
