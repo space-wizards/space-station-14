@@ -1,3 +1,5 @@
+# Undated because these were moved from other files.
+
 - type: tileAlias
   id: FloorBasaslt
   target: FloorBasalt
@@ -49,6 +51,8 @@
   id: FloorAsteroidCoarseSandDug
   target: FloorAsteroidSandDug
 
+# 2023-09-09
+
 - type: tileAlias
   id: FloorGlassAlt
   target: FloorGlass
@@ -56,3 +60,33 @@
 - type: tileAlias
   id: FloorRGlassAlt
   target: FloorRGlass
+
+# 2024-5-21
+
+- type: tileAlias
+  id: FloorDirt
+  target: FloorAstroDirt
+
+- type: tileAlias
+  id: FloorGrass
+  target: FloorAstroGrass
+
+- type: tileAlias
+  id: FloorGrassJungle
+  target: FloorAstroGrass
+
+- type: tileAlias
+  id: FloorGrassDark
+  target: FloorAstroGrass
+
+- type: tileAlias
+  id: FloorGrassLight
+  target: FloorAstroGrass
+
+- type: tileAlias
+  id: FloorMowedAstroGrass
+  target: FloorAstroGrass
+
+- type: tileAlias
+  id: FloorJungleAstroGrass
+  target: FloorAstroGrass

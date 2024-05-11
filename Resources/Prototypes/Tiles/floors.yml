@@ -1433,85 +1433,10 @@
   - 1.0
   - 1.0
   - 1.0
-  baseTurf: FloorDirt
+  baseTurf: FloorPlanetDirt
   isSubfloor: true
   footstepSounds:
     collection: FootstepTile
-  heatCapacity: 10000
-  weather: true
-
-- type: tile
-  id: FloorGrass
-  name: tiles-planet-grass-floor
-  sprite: /Textures/Tiles/grass.png
-  baseTurf: FloorDirt
-  isSubfloor: true
-  footstepSounds:
-    collection: FootstepGrass
-  itemDrop: FloorTileItemGrass
-  heatCapacity: 10000
-  weather: true
-
-- type: tile
-  id: FloorGrassJungle
-  name: tiles-jungle-grass-floor
-  sprite: /Textures/Tiles/grassjungle.png
-  baseTurf: FloorDirt
-  isSubfloor: true
-  footstepSounds:
-    collection: FootstepGrass
-  itemDrop: FloorTileItemGrassJungle
-  heatCapacity: 10000
-  weather: true
-
-- type: tile
-  id: FloorGrassDark
-  name: tiles-dark-grass-floor
-  sprite: /Textures/Tiles/grassdark.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  baseTurf: FloorDirt
-  isSubfloor: true
-  footstepSounds:
-    collection: FootstepGrass
-  heatCapacity: 10000
-  weather: true
-
-- type: tile
-  id: FloorGrassLight
-  name: tiles-light-grass-floor
-  sprite: /Textures/Tiles/grasslight.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  baseTurf: FloorDirt
-  isSubfloor: true
-  footstepSounds:
-    collection: FootstepGrass
-  heatCapacity: 10000
-  weather: true
-
-- type: tile
-  id: FloorDirt
-  name: tiles-dirt-floor
-  sprite: /Textures/Tiles/dirt.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  baseTurf: Plating
-  isSubfloor: true
-  footstepSounds:
-    collection: FootstepAsteroid
   heatCapacity: 10000
   weather: true
 
@@ -1844,6 +1769,7 @@
 # Faux sci tiles
 
 # Grass
+# Does not parent planetmap grass since we don't want edge tiles
 - type: tile
   id: FloorAstroGrass
   name: tiles-astro-grass
@@ -1854,16 +1780,6 @@
   - 1.0
   - 1.0
   - 1.0
-  edgeSpritePriority: 1
-  edgeSprites:
-    SouthEast: /Textures/Tiles/Planet/Grass/single_edge.png
-    NorthEast: /Textures/Tiles/Planet/Grass/single_edge.png
-    NorthWest: /Textures/Tiles/Planet/Grass/single_edge.png
-    SouthWest: /Textures/Tiles/Planet/Grass/single_edge.png
-    South: /Textures/Tiles/Planet/Grass/double_edge.png
-    East: /Textures/Tiles/Planet/Grass/double_edge.png
-    North: /Textures/Tiles/Planet/Grass/double_edge.png
-    West: /Textures/Tiles/Planet/Grass/double_edge.png
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Cutting ]
@@ -1872,24 +1788,17 @@
   itemDrop: FloorTileItemAstroGrass
   heatCapacity: 10000
 
+# Dirt
 - type: tile
-  id: FloorMowedAstroGrass
-  name: tiles-mowed-astro-grass
-  parent: FloorGrass
+  id: FloorAstroDirt
+  parent: FloorPlanetDirt
+  name: tiles-astro-dirt
   baseTurf: Plating
   isSubfloor: false
-  deconstructTools: [ Cutting ]
-  itemDrop: FloorTileItemMowedAstroGrass
-
-- type: tile
-  id: FloorJungleAstroGrass
-  name: tiles-jungle-astro-grass
-  parent: FloorGrassJungle
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Cutting ]
-  itemDrop: FloorTileItemJungleAstroGrass
-
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroDirt
+  heatCapacity: 10000
+ 
 # Ice
 - type: tile
   id: FloorAstroIce
@@ -1908,9 +1817,27 @@
 - type: tile
   id: FloorAstroSnow
   name: tiles-astro-snow
-  parent: FloorSnow
+  sprite: /Textures/Tiles/Planet/Snow/snow.png
+  variants: 13
+  placementVariants:
+  - 0.8
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0116
+  - 0.0116
   baseTurf: Plating
   isSubfloor: false
+  footstepSounds:
+    collection: FootstepSnow
+  heatCapacity: 10000
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroSnow
 

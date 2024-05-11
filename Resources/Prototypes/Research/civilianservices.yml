@@ -112,8 +112,7 @@
   cost: 5000
   recipeUnlocks:
   - FauxTileAstroGrass
-  - FauxTileMowedAstroGrass
-  - FauxTileJungleAstroGrass
+  - FauxTileAstroDirt
   - FauxTileAstroIce
   - FauxTileAstroSnow
 
