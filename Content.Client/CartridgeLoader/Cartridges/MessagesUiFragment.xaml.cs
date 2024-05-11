@@ -23,7 +23,7 @@ public sealed partial class MessagesUiFragment : BoxContainer
             Input.Clear();
         };
 
-        HeaderButton.OnPressed += _ => OnButtonPressed?.Invoke(null);
+        BackButton.OnPressed += _ => OnButtonPressed?.Invoke(null);
 
         UpdateState(MessagesUiStateMode.UserList, [], null);
     }

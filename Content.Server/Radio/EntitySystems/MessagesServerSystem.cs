@@ -63,15 +63,12 @@ public sealed class MessagesServerSystem : EntitySystem
             serverComponent.Messages = new List<MessagesMessageData>(component.Messages);
         }
 
-        if (!TryComp(uid, out DeviceNetworkComponent? device))
-            return;
-
         var packet = new NetworkPayload()
         {
             ["NameQuery"] = true,
             ["ServerComponent"] = component
         };
-        _deviceNetworkSystem.QueuePacket(uid, null, packet, device: device);
+        _deviceNetworkSystem.QueuePacket(uid, null, packet);
     }
 
     /// <summary>
@@ -94,16 +91,13 @@ public sealed class MessagesServerSystem : EntitySystem
     {
         component.Messages.Add(message);
 
-        if (!TryComp(uid, out DeviceNetworkComponent? device))
-            return;
-
         var packet = new NetworkPayload()
         {
             ["Message"] = message,
             ["ServerComponent"] = component
         };
 
-        _deviceNetworkSystem.QueuePacket(uid, null, packet, device: device);
+        _deviceNetworkSystem.QueuePacket(uid, null, packet);
     }
 
     /// <summary>

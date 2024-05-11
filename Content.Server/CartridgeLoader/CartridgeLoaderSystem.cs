@@ -9,9 +9,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Content.Shared.PDA;
-using Content.Server.CartridgeLoader.Cartridges;
-using Content.Shared.Access.Components;
 
 namespace Content.Server.CartridgeLoader;
 

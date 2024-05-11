@@ -1,23 +1,15 @@
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.PDA;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Content.Server.Radio.Components;
 using Content.Server.GameTicking;
 using Robust.Shared.Timing;
 using Content.Shared.Access.Components;
 using Content.Server.Radio.EntitySystems;
-using Content.Server.Power.Components;
-using Content.Shared.Chat;
-using Robust.Shared.Player;
-using Content.Server.PDA.Ringer;
-using Robust.Shared.Network;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork;
-
+using Content.Server.Station.Systems;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -28,6 +20,8 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly MessagesServerSystem _messagesServerSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly SingletonDeviceNetServerSystem _singletonServerSystem = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
 
 
     public override void Initialize()
@@ -43,6 +37,9 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     /// </summary>
     private void OnUiReady(EntityUid uid, MessagesCartridgeComponent component, CartridgeUiReadyEvent args)
     {
+        var stationId = _stationSystem.GetOwningStation(uid);
+        if (stationId.HasValue)
+            _singletonServerSystem.TryGetActiveServerAddress<MessagesServerComponent>(stationId.Value, out _);
         UpdateUiState(uid, args.Loader, component);
     }
 
@@ -59,6 +56,9 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
         if (messageEvent.Action == MessagesUiAction.Send && TryComp(uid, out CartridgeComponent? cartComponent) && GetUserUid(cartComponent) is int userId && component.ChatUid != null && messageEvent.StringInput != null)
         {
+            var stationId = _stationSystem.GetOwningStation(uid);
+            if (!stationId.HasValue)
+                return;
             MessagesMessageData messageData = new()
             {
                 SenderId = userId,
@@ -66,13 +66,12 @@ public sealed class MessagesCartridgeSystem : EntitySystem
                 Content = messageEvent.StringInput,
                 Time = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan)
             };
-            if (!TryComp(uid, out DeviceNetworkComponent? device))
-                return;
             var packet = new NetworkPayload()
             {
                 ["Message"] = messageData
             };
-            _deviceNetworkSystem.QueuePacket(uid, null, packet, device: device);
+            _singletonServerSystem.TryGetActiveServerAddress<MessagesServerComponent>(stationId.Value, out var address);
+            _deviceNetworkSystem.QueuePacket(uid, address, packet);
         }
         else
         {
@@ -90,10 +89,10 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     {
         if (!TryComp(uid, out CartridgeComponent? cartComponent))
             return;
-        if (args.Data.TryGetValue<MessagesServerComponent>("ServerComponent", out var server));
+        if (args.Data.TryGetValue<MessagesServerComponent>("ServerComponent", out var server))
             component.LastServer = server;
         if (args.Data.TryGetValue<bool>("NameQuery", out var _))
-            SendName(uid, component, cartComponent);
+            SendName(uid, component, cartComponent, args.SenderAddress);
         if (args.Data.TryGetValue<MessagesMessageData>("Message", out var message) && cartComponent.LoaderUid != null)
         {
             if (message.ReceiverId == GetUserUid(cartComponent))
@@ -117,18 +116,16 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     /// <summary>
     /// Sends the user's name to the server cache.
     /// </summary>
-    private void SendName(EntityUid uid, MessagesCartridgeComponent component, CartridgeComponent cartComponent)
+    private void SendName(EntityUid uid, MessagesCartridgeComponent component, CartridgeComponent cartComponent, string? address)
     {
         string name = GetUserName(cartComponent);
 
-        if (!TryComp(uid, out DeviceNetworkComponent? device))
-            return;
         var packet = new NetworkPayload()
         {
             ["UserId"] = GetUserUid(cartComponent),
             ["NewName"] = GetUserName(cartComponent),
         };
-        _deviceNetworkSystem.QueuePacket(uid, null, packet, device: device);
+        _deviceNetworkSystem.QueuePacket(uid, address, packet);
     }
 
     /// <summary>

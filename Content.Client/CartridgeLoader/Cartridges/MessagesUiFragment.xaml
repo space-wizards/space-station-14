@@ -7,7 +7,7 @@
         </ScrollContainer>
         <LineEdit Name="Input" HorizontalExpand="True" SetHeight="32"/>
         <BoxContainer Name="HeaderBox">
-            <Button Name="HeaderButton" Text="messages-ui-back"/>
+            <Button Name="BackButton" Text="{Loc 'messages-pda-ui-back'}"/>
             <Label Name="HeaderLabel"/>
         </BoxContainer>
     </BoxContainer>
