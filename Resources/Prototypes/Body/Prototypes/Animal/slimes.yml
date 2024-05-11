@@ -19,7 +19,7 @@
 
 - type: body
   id: Geras
-  name: "geras"
+  name: "slimes"
   root: torso
   slots:
     torso:

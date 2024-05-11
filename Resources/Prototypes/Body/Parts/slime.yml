@@ -99,7 +99,7 @@
 #Because it turns out body effects movement speed
 - type: entity
   id: LegsSlime
-  name: "slime legs"
+  name: slime legs
   parent: LegsAnimal
   noSpawn: true
   components:
@@ -109,7 +109,7 @@
 
 - type: entity
   id: LegsGeras
-  name: "slime legs"
+  name: slime legs
   parent: LegsAnimal
   noSpawn: true
   components:
