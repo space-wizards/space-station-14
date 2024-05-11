@@ -141,8 +141,6 @@ namespace Content.Shared.Throwing
                 _adminLogger.Add(LogType.ThrowHit, LogImpact.Low,
                     $"{ToPrettyString(thrown):thrown} thrown by {ToPrettyString(component.Thrower.Value):thrower} hit {ToPrettyString(target):target}.");
 
-            Log.Debug($"{component},{component.HitEvents}:{thrown}:{target}");
-
             RaiseLocalEvent(target, new ThrowHitByEvent(thrown, target, component), true);
             RaiseLocalEvent(thrown, new ThrowDoHitEvent(thrown, target, component), true);
         }
