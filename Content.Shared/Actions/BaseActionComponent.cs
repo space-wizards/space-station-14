@@ -1,5 +1,4 @@
-﻿using Content.Shared.Mobs;
-using Robust.Shared.Audio;
+﻿using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -24,6 +23,11 @@ public abstract partial class BaseActionComponent : Component
     ///     when turned on.
     /// </summary>
     [DataField("iconOn")] public SpriteSpecifier? IconOn;
+
+    /// <summary>
+    ///     For toggle actions only, background to show when toggled on.
+    /// </summary>
+    [DataField] public SpriteSpecifier? BackgroundOn;
 
     /// <summary>
     ///     If not null, this color will modulate the action icon color.
