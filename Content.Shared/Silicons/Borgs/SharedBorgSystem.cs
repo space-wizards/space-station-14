@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
-﻿using Content.Shared.Lock;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;

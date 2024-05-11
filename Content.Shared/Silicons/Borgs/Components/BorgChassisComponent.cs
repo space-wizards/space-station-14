@@ -19,12 +19,6 @@ public sealed partial class BorgChassisComponent : Component
     [DataField("activated"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool Activated;
 
-    /// <summary>
-    /// Things the borg is not allowed to lock or unlock.
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? LockBlacklist;
-
     #region Brain
     /// <summary>
     /// A whitelist for which entities count as valid brains
