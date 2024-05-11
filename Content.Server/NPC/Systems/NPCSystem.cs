@@ -52,7 +52,7 @@ namespace Content.Server.NPC.Systems
                 return;
 
             // This NPC has an attached mind, so it should not wake up.
-            if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.Mind != null)
+            if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind)
                 return;
 
             WakeNPC(uid, component);
