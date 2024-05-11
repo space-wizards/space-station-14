@@ -897,37 +897,6 @@
     count: 4
 
 # Terrain
-- type: entity
-  name: grass tile
-  parent: FloorTileItemBase
-  id: FloorTileItemGrass
-  components:
-  - type: Sprite
-    state: grass
-  - type: Item
-    heldPrefix: grass
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorGrass
-  - type: Stack
-    stackType: FloorTileGrass
-
-- type: entity
-  name: jungle grass tile
-  parent: FloorTileItemBase
-  id: FloorTileItemGrassJungle
-  components:
-  - type: Sprite
-    state: grassjungle
-  - type: Item
-    heldPrefix: grassjungle
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorGrassJungle
-  - type: Stack
-    stackType: FloorTileGrassJungle
 
 - type: entity
   name: snow tile
