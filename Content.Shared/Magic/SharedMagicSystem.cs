@@ -182,7 +182,7 @@ public abstract class SharedMagicSystem : EntitySystem
     }
 
     #region Spells
-
+    #region Instant Spawn Spells
     /// <summary>
     /// Handles the instant action (i.e. on the caster) attempting to spawn an entity.
     /// </summary>
@@ -202,60 +202,7 @@ public abstract class SharedMagicSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnProjectileSpell(ProjectileSpellEvent ev)
-    {
-        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || !_net.IsServer)
-            return;
-
-        ev.Handled = true;
-        Speak(ev);
-
-        var xform = Transform(ev.Performer);
-        var fromCoords = xform.Coordinates;
-        var toCoords = ev.Target;
-        var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
-
-        // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
-        var fromMap = fromCoords.ToMap(EntityManager, _transform);
-        var spawnCoords = _mapManager.TryFindGridAt(fromMap, out var gridUid, out _)
-            ? fromCoords.WithEntityId(gridUid, EntityManager)
-            : new(_mapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
-
-        var ent = Spawn(ev.Prototype, spawnCoords);
-        var direction = toCoords.ToMapPos(EntityManager, _transform) -
-                        spawnCoords.ToMapPos(EntityManager, _transform);
-        _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer);
-    }
-
-    // staves.yml ActionRGB light
-    private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
-    {
-        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
-            return;
-
-        ev.Handled = true;
-        Speak(ev);
-
-        foreach (var toRemove in ev.ToRemove)
-        {
-            if (_compFact.TryGetRegistration(toRemove, out var registration))
-                RemComp(ev.Target, registration.Type);
-        }
-
-        foreach (var (name, data) in ev.ToAdd)
-        {
-            if (HasComp(ev.Target, data.Component.GetType()))
-                continue;
-
-            var component = (Component) _compFact.GetComponent(name);
-            component.Owner = ev.Target;
-            var temp = (object) component;
-            _seriMan.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(ev.Target, (Component) temp!);
-        }
-    }
-
-    /// <summary>
+        /// <summary>
     ///     Gets spawn positions listed on <see cref="InstantSpawnSpellEvent"/>
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
@@ -327,28 +274,9 @@ public abstract class SharedMagicSystem : EntitySystem
                 throw new ArgumentOutOfRangeException();
         }
     }
-
-    // TODO: Rename to teleport clicked spell?
-    /// <summary>
-    /// Teleports the user to the clicked location
-    /// </summary>
-    /// <param name="args"></param>
-    private void OnTeleportSpell(TeleportSpellEvent args)
-    {
-        if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
-            return;
-
-        var transform = Transform(args.Performer);
-
-        if (transform.MapID != args.Target.GetMapId(EntityManager) || !_interaction.InRangeUnobstructed(args.Performer, args.Target, range: 1000F, collisionMask: CollisionGroup.Opaque, popup: true))
-            return;
-
-        _transform.SetCoordinates(args.Performer, args.Target);
-        _transform.AttachToGridOrMap(args.Performer, transform);
-        Speak(args);
-        args.Handled = true;
-    }
-
+    // End Instant Spawn Spells
+    #endregion
+    #region World Spawn Spells
     /// <summary>
     /// Spawns entities from a list within range of click.
     /// </summary>
@@ -391,7 +319,89 @@ public abstract class SharedMagicSystem : EntitySystem
             offsetCoords = offsetCoords.Offset(offsetVector2);
         }
     }
+    // End World Spawn Spells
+    #endregion
+    #region Projectile Spells
+    private void OnProjectileSpell(ProjectileSpellEvent ev)
+    {
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || !_net.IsServer)
+            return;
 
+        ev.Handled = true;
+        Speak(ev);
+
+        var xform = Transform(ev.Performer);
+        var fromCoords = xform.Coordinates;
+        var toCoords = ev.Target;
+        var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
+
+        // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
+        var fromMap = fromCoords.ToMap(EntityManager, _transform);
+        var spawnCoords = _mapManager.TryFindGridAt(fromMap, out var gridUid, out _)
+            ? fromCoords.WithEntityId(gridUid, EntityManager)
+            : new(_mapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
+
+        var ent = Spawn(ev.Prototype, spawnCoords);
+        var direction = toCoords.ToMapPos(EntityManager, _transform) -
+                        spawnCoords.ToMapPos(EntityManager, _transform);
+        _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer);
+    }
+    // End Projectile Spells
+    #endregion
+    #region Change Component Spells
+    // staves.yml ActionRGB light
+    private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
+    {
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+
+        foreach (var toRemove in ev.ToRemove)
+        {
+            if (_compFact.TryGetRegistration(toRemove, out var registration))
+                RemComp(ev.Target, registration.Type);
+        }
+
+        foreach (var (name, data) in ev.ToAdd)
+        {
+            if (HasComp(ev.Target, data.Component.GetType()))
+                continue;
+
+            var component = (Component) _compFact.GetComponent(name);
+            component.Owner = ev.Target;
+            var temp = (object) component;
+            _seriMan.CopyTo(data.Component, ref temp);
+            EntityManager.AddComponent(ev.Target, (Component) temp!);
+        }
+    }
+    // End Change Component Spells
+    #endregion
+    #region Teleport Spells
+    // TODO: Rename to teleport clicked spell?
+    /// <summary>
+    /// Teleports the user to the clicked location
+    /// </summary>
+    /// <param name="args"></param>
+    private void OnTeleportSpell(TeleportSpellEvent args)
+    {
+        if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
+            return;
+
+        var transform = Transform(args.Performer);
+
+        if (transform.MapID != args.Target.GetMapId(EntityManager) || !_interaction.InRangeUnobstructed(args.Performer, args.Target, range: 1000F, collisionMask: CollisionGroup.Opaque, popup: true))
+            return;
+
+        _transform.SetCoordinates(args.Performer, args.Target);
+        _transform.AttachToGridOrMap(args.Performer, transform);
+        Speak(args);
+        args.Handled = true;
+    }
+    // End Teleport Spells
+    #endregion
+    #region Spell Helpers
     private void SpawnSpellHelper(string? proto, EntityCoordinates position, EntityUid performer, float? lifetime = null, bool preventCollide = false)
     {
         if (!_net.IsServer)
@@ -411,7 +421,9 @@ public abstract class SharedMagicSystem : EntitySystem
             comp.Uid = performer;
         }
     }
-
+    // End Spell Helpers
+    #endregion
+    #region Smite Spells
     private void OnSmiteSpell(SmiteSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
@@ -430,7 +442,9 @@ public abstract class SharedMagicSystem : EntitySystem
 
         _body.GibBody(ev.Target, true, body);
     }
-
+    // End Smite Spells
+    #endregion
+    #region Knock Spells
     /// <summary>
     /// Opens all doors and locks within range
     /// </summary>
@@ -461,7 +475,9 @@ public abstract class SharedMagicSystem : EntitySystem
                 _lock.Unlock(target, args.Performer, lockComp);
         }
     }
-
+    // End Knock Spells
+    #endregion
+    #region Charge Spells
     // TODO: Future support to charge other items
     private void OnChargeSpell(ChargeSpellEvent ev)
     {
@@ -485,7 +501,9 @@ public abstract class SharedMagicSystem : EntitySystem
 
         _gunSystem.UpdateBasicEntityAmmoCount(wand.Value, basicAmmoComp.Count.Value + ev.Charge, basicAmmoComp);
     }
-
+    // End Charge Spells
+    #endregion
+    // End Spells
     #endregion
 
     // When any spell is cast it will raise this as an event, so then it can be played in server or something. At least until chat gets moved to shared
