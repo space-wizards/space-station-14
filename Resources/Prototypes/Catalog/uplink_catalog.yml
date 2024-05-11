@@ -1771,11 +1771,11 @@
 - type: listing
   id: UplinkMimery
   name: Guide to Advanced Mimery Volume 1
-  description: A finely written book on how to hone your mime skills. Focuses on invisible walls.
+  description: A finely written book on how to hone your mime skills. Focuses on advanced invisible walls.
   icon: { sprite: /Textures/Objects/Misc/books.rsi, state: mime_book }
   productEntity: MimerySpellbook
   cost:
-    Telecrystal: 8
+    Telecrystal: 6
   categories:
   - UplinkJob
   conditions:
@@ -1785,7 +1785,7 @@
 
 - type: listing
   id: UplinkMimery2
-  name: Guide to Advanced Mimery Volume 1
+  name: Guide to Advanced Mimery Volume 2
   description: A finely written book on how to hone your mime skills. Focuses on finger guns.
   icon: { sprite: /Textures/Objects/Misc/books.rsi, state: mime_book2 }
   productEntity: Mimery2Spellbook
