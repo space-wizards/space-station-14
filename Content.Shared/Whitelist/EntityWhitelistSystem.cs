@@ -24,39 +24,20 @@ public sealed class EntityWhitelistSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks whether a given entity satisfies a whitelist.
-    /// If the whitelist is null it returns null.
-    /// </summary>
-    public bool? Match(EntityWhitelist? list, [NotNullWhen(true)] EntityUid? uid)
-    {
-        if (list == null)
-            return null;
-
-        return IsValid(list, uid);
-    }
-
-    /// <summary>
     /// Checks whether a given entity is allowed by a whitelist and not blocked by a blacklist.
     /// If a blacklist is provided and it matches then this returns false.
     /// If a whitelist is provided and it does not match then this returns false.
     /// If either list is null it does not get checked.
     /// </summary>
-    public bool IsAllowed([NotNullWhen(true)] EntityUid? uid, EntityWhitelist? blacklist = null, EntityWhitelist? whitelist = null)
+    public bool CheckBoth([NotNullWhen(true)] EntityUid? uid, EntityWhitelist? blacklist = null, EntityWhitelist? whitelist = null)
     {
         if (uid == null)
             return false;
 
-        return Match(blacklist, uid) != true
-            && Match(whitelist, uid) != false;
-    }
+        if (blacklist != null && IsValid(blacklist, uid))
+            return false;
 
-    /// <summary>
-    /// Checks whether a given entity is on a blacklist.
-    /// If the blacklist is null it cannot be on it, so it returns false.
-    /// </summary>
-    public bool IsBlacklisted(EntityWhitelist? list, EntityUid? uid)
-    {
-        return Match(list, uid) != true;
+        return whitelist == null || IsValid(whitelist, uid);
     }
 
     /// <summary>
