@@ -4,10 +4,12 @@
   description: Fires an explosive fireball towards the clicked location.
   noSpawn: true
   components:
+  - type: Magic
   - type: WorldTargetAction
     useDelay: 15
     itemIconStyle: BigAction
     checkCanAccess: false
+    raiseOnUser: true
     range: 60
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/fireball.ogg
@@ -16,25 +18,25 @@
       state: fireball
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
-      posData: !type:TargetCasterPos
       speech: action-speech-spell-fireball
   - type: ActionUpgrade
     effectedLevels:
       2: ActionFireballII
+      3: ActionFireballIII
 
 - type: entity
   id: ActionFireballII
   parent: ActionFireball
   name: Fireball II
-  description: Fire three explosive fireball towards the clicked location.
+  description: Fires a fireball, but faster!
   noSpawn: true
   components:
   - type: WorldTargetAction
-    useDelay: 5
-    charges: 3
+    useDelay: 10
     renewCharges: true
     itemIconStyle: BigAction
     checkCanAccess: false
+    raiseOnUser: true
     range: 60
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/fireball.ogg
@@ -43,5 +45,27 @@
       state: fireball
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
-      posData: !type:TargetCasterPos
       speech: action-speech-spell-fireball
+
+- type: entity
+  id: ActionFireballIII
+  parent: ActionFireball
+  name: Fireball III
+  description: The fastest fireball in the west!
+  noSpawn: true
+  components:
+    - type: WorldTargetAction
+      useDelay: 8
+      renewCharges: true
+      itemIconStyle: BigAction
+      checkCanAccess: false
+      raiseOnUser: true
+      range: 60
+      sound: !type:SoundPathSpecifier
+        path: /Audio/Magic/fireball.ogg
+      icon:
+        sprite: Objects/Magic/magicactions.rsi
+        state: fireball
+      event: !type:ProjectileSpellEvent
+        prototype: ProjectileFireball
+        speech: action-speech-spell-fireball
