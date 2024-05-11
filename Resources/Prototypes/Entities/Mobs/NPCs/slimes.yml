@@ -93,6 +93,7 @@
     prototype: Slimes
     requiredLegs: 1
   - type: MeleeWeapon
+    altDisarm: false
     soundHit:
         path: /Audio/Weapons/punch3.ogg
     angle: 0
