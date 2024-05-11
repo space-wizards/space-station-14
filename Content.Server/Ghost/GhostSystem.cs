@@ -44,7 +44,6 @@ namespace Content.Server.Ghost
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;

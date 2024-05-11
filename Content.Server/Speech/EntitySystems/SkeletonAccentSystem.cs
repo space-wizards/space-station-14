@@ -4,7 +4,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class SkeletonAccentSystem : EntitySystem
+public sealed partial class SkeletonAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -45,7 +45,7 @@ public sealed class SkeletonAccentSystem : EntitySystem
 
         // Character manipulations:
         // At the start of words, any non-vowel + "one" becomes "bone", e.g. tone -> bone ; lonely -> bonely; clone -> clone (remains unchanged).
-        msg = Regex.Replace(msg, @"(?<!\w)[^aeiou]one", "bone", RegexOptions.IgnoreCase);
+        msg = BoneRegex().Replace(msg, "bone");
 
         // Direct word/phrase replacements:
         foreach (var (first, replace) in DirectReplacements)
@@ -65,4 +65,7 @@ public sealed class SkeletonAccentSystem : EntitySystem
     {
         args.Message = Accentuate(args.Message, component);
     }
+
+    [GeneratedRegex(@"(?<!\w)[^aeiou]one", RegexOptions.IgnoreCase, "en-US")]
+    private static partial Regex BoneRegex();
 }

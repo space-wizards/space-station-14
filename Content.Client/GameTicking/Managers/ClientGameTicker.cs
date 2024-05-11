@@ -17,7 +17,6 @@ namespace Content.Client.GameTicking.Managers
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IClientAdminManager _admin = default!;
         [Dependency] private readonly IClyde _clyde = default!;
-        [Dependency] private readonly SharedMapSystem _map = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private Dictionary<NetEntity, Dictionary<string, uint?>>  _jobsAvailable = new();

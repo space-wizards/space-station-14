@@ -25,7 +25,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Administration.Systems
 {
     [UsedImplicitly]
-    public sealed class BwoinkSystem : SharedBwoinkSystem
+    public sealed partial class BwoinkSystem : SharedBwoinkSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
@@ -157,7 +157,7 @@ namespace Content.Server.Administration.Systems
                 return;
 
             // Basic sanity check and capturing webhook ID and token
-            var match = Regex.Match(url, @"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$");
+            var match = DiscordRegex().Match(url);
 
             if (!match.Success)
             {
@@ -518,6 +518,9 @@ namespace Content.Server.Administration.Systems
             stringbuilder.Append(message);
             return stringbuilder.ToString();
         }
+
+        [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
+        private static partial Regex DiscordRegex();
     }
 }
 
