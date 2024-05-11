@@ -504,7 +504,7 @@ public abstract class $CLASS$ : EntitySystem {
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E5309225B3C35D409F6D38F2DEE27CBD/Shortcut/@EntryValue">nfield</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E5309225B3C35D409F6D38F2DEE27CBD/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E5309225B3C35D409F6D38F2DEE27CBD/Text/@EntryValue">[DataField, AutoNetworkedField]
-public readonly $TYPE$ $NAME$;</s:String>
+public $TYPE$ $NAME$;</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=EA04030275C2A349A1CF0D32838BD1FA/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=EA04030275C2A349A1CF0D32838BD1FA/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=EA04030275C2A349A1CF0D32838BD1FA/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
