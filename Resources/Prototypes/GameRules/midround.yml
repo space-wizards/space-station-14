@@ -12,6 +12,7 @@
     - DoorjackObjective
     - SpiderChargeObjective
     - TerrorObjective
+    - MassArrestObjective
     - NinjaSurviveObjective
   - type: NinjaRule
     threats: NinjaThreats

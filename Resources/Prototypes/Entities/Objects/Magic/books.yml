@@ -440,7 +440,7 @@
 - type: entity
   id: MimerySpellbook
   name: Guide to Advanced Mimery Volume 1
-  description: A guide on how to improve your mimery. Focuses on invisible walls.
+  description: A guide on how to improve your mimery. Focuses on advanced invisible walls.
   parent: BaseSpellbook
   components:
    - type: Sprite
@@ -465,6 +465,6 @@
      - state: mime_book2
    - type: Spellbook
      learnPermanently: true
-     learnTime: 8
+     learnTime: 4
      spells:
        MimeGun: -1
