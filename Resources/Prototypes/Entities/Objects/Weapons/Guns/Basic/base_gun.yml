@@ -1,8 +1,23 @@
+# BASE
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseGun
+  components:
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+
 # SMALL
 # A basic template for a small gun that is equipped in the belt slot.
 - type: entity
-  id: BaseGunSmall
   abstract: true
+  parent: BaseGun
+  id: BaseGunSmall
   components:
   - type: Item
     size: Small
@@ -21,8 +36,9 @@
 # LARGE
 # A basic template for a gun that is large enough to not fit well in bags and be equipped on the back.
 - type: entity
-  id: BaseGunLarge
   abstract: true
+  parent: BaseGun
+  id: BaseGunLarge
   components:
   - type: Item
     size: Huge
@@ -35,8 +51,9 @@
 # HEAVY
 # A basic template for a massive gun that requires multiple hands to carry and slows the carrier.
 - type: entity
-  id: BaseGunHeavy
   abstract: true
+  parent: BaseGun
+  id: BaseGunHeavy
   components:
   - type: Item
     size: Ginormous
@@ -49,8 +66,9 @@
 # WIELDABLE
 # A basic template for a gun that is wieldable and has standard innacuracy when not wielded.
 - type: entity
-  id: BaseGunWieldable
   abstract: true
+  parent: BaseGun
+  id: BaseGunWieldable
   components:
   - type: Wieldable
   - type: GunWieldBonus
@@ -58,4 +76,40 @@
     maxAngle: -30
   - type: Gun
     minAngle: 21
-    maxAngle: 32   
+    maxAngle: 32
+
+# BATTERY
+# A basic template for a gun that is powered by an internal battery and can be recharged at recharger.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunBattery
+  components:
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: AmmoCounter
+
+# POWER CELL
+#A basic template for a gun that is powered by an insertable powercell.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunPowerCell
+  components:
+  - type: MagazineAmmoProvider
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: PowerCellSmall
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+          - PowerCell
+          - PowerCellSmall
+  - type: AmmoCounter
