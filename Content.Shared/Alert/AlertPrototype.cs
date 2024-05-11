@@ -47,8 +47,8 @@ public sealed partial class AlertPrototype : IPrototype
     /// replace each other and are mutually exclusive, for example lowpressure / highpressure,
     /// hot / cold. If left unspecified, the alert will not replace or be replaced by any other alerts.
     /// </summary>
-    [DataField("category")]
-    public AlertCategory? Category { get; private set; }
+    [DataField]
+    public ProtoId<AlertCategoryPrototype>? Category { get; private set; }
 
     /// <summary>
     /// Key which is unique w.r.t category semantics (alerts with same category have equal keys,

@@ -12,12 +12,12 @@ namespace Content.Shared.Alert;
 public struct AlertKey
 {
     public ProtoId<AlertPrototype>? AlertType { get; private set; } = default!;
-    public readonly AlertCategory? AlertCategory;
+    public readonly ProtoId<AlertCategoryPrototype>? AlertCategory;
 
     /// NOTE: if the alert has a category you must pass the category for this to work
     /// properly as a key. I.e. if the alert has a category and you pass only the alert type, and you
     /// compare this to another AlertKey that has both the category and the same alert type, it will not consider them equal.
-    public AlertKey(ProtoId<AlertPrototype>? alertType, AlertCategory? alertCategory)
+    public AlertKey(ProtoId<AlertPrototype>? alertType, ProtoId<AlertCategoryPrototype>? alertCategory)
     {
         AlertCategory = alertCategory;
         AlertType = alertType;
@@ -49,7 +49,7 @@ public struct AlertKey
     /// <param name="category">alert category, must not be null</param>
     /// <returns>An alert key for the provided alert category. This must only be used for
     /// queries and never storage, as it is lacking an alert type.</returns>
-    public static AlertKey ForCategory(AlertCategory category)
+    public static AlertKey ForCategory(ProtoId<AlertCategoryPrototype> category)
     {
         return new(null, category);
     }

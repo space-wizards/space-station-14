@@ -51,7 +51,7 @@ public abstract class AlertsSystem : EntitySystem
     }
 
     /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
-    public bool IsShowingAlertCategory(EntityUid euid, AlertCategory alertCategory)
+    public bool IsShowingAlertCategory(EntityUid euid, ProtoId<AlertCategoryPrototype> alertCategory)
     {
         return EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent)
                && alertsComponent.Alerts.ContainsKey(AlertKey.ForCategory(alertCategory));
@@ -131,7 +131,7 @@ public abstract class AlertsSystem : EntitySystem
     /// <summary>
     /// Clear the alert with the given category, if one is currently showing.
     /// </summary>
-    public void ClearAlertCategory(EntityUid euid, AlertCategory category)
+    public void ClearAlertCategory(EntityUid euid, ProtoId<AlertCategoryPrototype> category)
     {
         if(!TryComp(euid, out AlertsComponent? alertsComponent))
             return;

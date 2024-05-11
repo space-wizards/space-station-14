@@ -32,6 +32,9 @@ public sealed partial class MobThresholdsComponent : Component
         {MobState.Dead, "HumanDead"},
     };
 
+    [DataField]
+    public ProtoId<AlertCategoryPrototype> HealthAlertCategory = "Health";
+
     /// <summary>
     /// Whether or not this entity should display damage overlays (robots don't feel pain, black out etc.)
     /// </summary>

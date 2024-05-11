@@ -75,6 +75,9 @@ public sealed partial class HungerComponent : Component
         { HungerThreshold.Dead, "Starving" }
     };
 
+    [DataField]
+    public ProtoId<AlertCategoryPrototype> HungerAlertCategory = "Hunger";
+
     /// <summary>
     /// A dictionary relating HungerThreshold to how much they modify <see cref="BaseDecayRate"/>.
     /// </summary>

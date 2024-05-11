@@ -281,7 +281,7 @@ namespace Content.Server.Atmos.EntitySystems
                             _alertsSystem.ShowAlert(uid, barotrauma.HighPressureAlert, 1);
                             break;
                         default:
-                            _alertsSystem.ClearAlertCategory(uid, AlertCategory.Pressure);
+                            _alertsSystem.ClearAlertCategory(uid, barotrauma.PressureAlertCategory);
                             break;
                     }
                 }

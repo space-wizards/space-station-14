@@ -49,7 +49,7 @@ namespace Content.Shared.Alert
                             _typeToIdx[alert] = i++;
                             break;
                         case "category":
-                            _categoryToIdx[Enum.Parse<AlertCategory>(alert)] = i++;
+                            _categoryToIdx[alert] = i++;
                             break;
                         default:
                             throw new ArgumentException();
@@ -59,7 +59,7 @@ namespace Content.Shared.Alert
         }
 
         private readonly Dictionary<ProtoId<AlertPrototype>, int> _typeToIdx = new();
-        private readonly Dictionary<AlertCategory, int> _categoryToIdx = new();
+        private readonly Dictionary<ProtoId<AlertCategoryPrototype>, int> _categoryToIdx = new();
 
         private int GetOrderIndex(AlertPrototype alert)
         {
@@ -68,7 +68,7 @@ namespace Content.Shared.Alert
                 return idx;
             }
             if (alert.Category != null &&
-                _categoryToIdx.TryGetValue((AlertCategory) alert.Category, out idx))
+                _categoryToIdx.TryGetValue(alert.Category.Value, out idx))
             {
                 return idx;
             }

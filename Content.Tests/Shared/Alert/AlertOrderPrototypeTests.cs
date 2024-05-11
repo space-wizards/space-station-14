@@ -95,9 +95,9 @@ namespace Content.Tests.Shared.Alert
             expectedOrder.Add("Stun");
             expectedOrder.Add("LowPressure");
             expectedOrder.Add("Cold");
-            // stuff at end of list ordered by enum value
-            expectedOrder.Add("Weightless");
+            // stuff at end of list ordered by ID
             expectedOrder.Add("PilotingShuttle");
+            expectedOrder.Add("Weightless");
 
             var actual = alerts.ToList();
             actual.Sort(alertOrder);

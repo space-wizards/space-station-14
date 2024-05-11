@@ -34,6 +34,9 @@ public sealed class TemperatureSystem : EntitySystem
 
     private float _accumulatedFrametime;
 
+    [ValidatePrototypeId<AlertCategoryPrototype>]
+    public const string TemperatureAlertCategory = "Temperature";
+
     public override void Initialize()
     {
         SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
@@ -187,7 +190,7 @@ public sealed class TemperatureSystem : EntitySystem
 
         if (!TryComp<TemperatureComponent>(uid, out var temperature))
         {
-            _alerts.ClearAlertCategory(uid, AlertCategory.Temperature);
+            _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
             return;
         }
 
@@ -231,7 +234,7 @@ public sealed class TemperatureSystem : EntitySystem
                 break;
 
             case > 0.66f:
-                _alerts.ClearAlertCategory(uid, AlertCategory.Temperature);
+                _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
                 break;
         }
     }
