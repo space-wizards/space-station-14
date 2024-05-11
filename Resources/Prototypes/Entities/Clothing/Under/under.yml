@@ -113,6 +113,18 @@
 
 - type: entity
   parent: ClothingUnderSocksBase
+  id: ClothingUnderSocksStripedCargoQm
+  name: striped Quartermaster socks
+  suffix: Socks Quartermaster
+  description: These striped socks make you feel a little bit stronger.
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/SocksStripedCargoQm.rsi
+  - type: Clothing
+    sprite: Clothing/Under/Socks/SocksStripedCargoQm.rsi
+
+- type: entity
+  parent: ClothingUnderSocksBase
   id: ClothingUnderSocksStripedEngineeringAtmos
   name:  striped atmos Tech socks
   suffix: Socks Atmos
