@@ -229,9 +229,10 @@
   - type: FlavorProfile
     flavors:
       - clean
+      - banana
   - type: Residue
     residueAdjective: residue-slippery
-    residueColor: residue-red
+    residueColor: residue-yellow
 
 - type: entity
   name: omega soap
