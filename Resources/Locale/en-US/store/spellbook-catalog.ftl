@@ -29,3 +29,7 @@ spellbook-wand-polymorph-carp-description = For when you need a carp filet quick
 
 spellbook-event-summon-ghosts-name = Summon Ghosts
 spellbook-event-summon-ghosts-description = Who ya gonna call?
+
+# Upgrades
+spellbook-upgrade-fireball-name = Upgrade Fireball
+spellbook-upgrade-fireball-description = Upgrades Fireball to a maximum of level 3!

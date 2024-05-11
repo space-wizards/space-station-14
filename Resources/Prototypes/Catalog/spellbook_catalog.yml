@@ -122,8 +122,8 @@
 - type: listing
   id: SpellbookFireballUpgrade
   productUpgradeId: SpellbookFireballUpgrade
-  name: fireball upgrade
-  description: upgrades fireball
+  name: spellbook-upgrade-fireball-name
+  description: spellbook-upgrade-fireball-description
   icon:
     sprite: Objects/Magic/magicactions.rsi
     state: fireball
@@ -135,5 +135,8 @@
   - !type:BuyBeforeCondition
     whitelist:
       - SpellbookFireball
-  - !type:ListingLimitedUpgradesCondition
-    prototype: ActionFireball
+  # manual for now until ListedLimitedUpgradeCondition can be fixed
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  #- !type:ListingLimitedUpgradesCondition
+  #  prototype: ActionFireball
