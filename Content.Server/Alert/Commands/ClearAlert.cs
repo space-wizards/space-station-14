@@ -38,13 +38,13 @@ namespace Content.Server.Alert.Commands
 
             var alertType = args[0];
             var alertsSystem = EntitySystem.Get<AlertsSystem>();
-            if (!alertsSystem.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
+            if (!alertsSystem.TryGet(alertType, out var alert))
             {
                 shell.WriteLine("unrecognized alertType " + alertType);
                 return;
             }
 
-            alertsSystem.ClearAlert(attachedEntity, alert.AlertType);
+            alertsSystem.ClearAlert(attachedEntity, alert.ID);
         }
     }
 }
