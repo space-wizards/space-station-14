@@ -133,8 +133,8 @@
     - suitStorage
 
 - type: entity
-  id: BaseWeaponPowerCellSmall
-  parent: BaseWeaponPowerCellOld
+  id: BaseWeaponPowerCellSmallOld
+  parent: BaseWeaponPowerCell
   abstract: true
   components:
   - type: Item
