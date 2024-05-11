@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: 'Reworked shuttle consoles, including: manual FTL jumps, new map screen,
-      fixed performance issues, new docking screen.'
-    type: Tweak
-  id: 6081
-  time: '2024-03-03T07:39:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24430
-- author: Errant-4
-  changes:
-  - message: Toggling your own internals no longer requires a delay.
-    type: Tweak
-  id: 6082
-  time: '2024-03-03T08:31:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25781
 - author: SlamBamActionman
   changes:
   - message: Arachnids are no longer perma-pied and can clean it off.
@@ -3862,3 +3847,20 @@
   id: 6580
   time: '2024-05-10T23:49:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27856
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Fix firesuits, ninja suits, and some armor not allowing suit storage.
+    type: Fix
+  id: 6581
+  time: '2024-05-11T02:20:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27897
+- author: ike709
+  changes:
+  - message: UIs can now link to a Guidebook entry via a help button in the top right
+      corner.
+    type: Add
+  - message: Added the help button to the reagent dispenser UI.
+    type: Add
+  id: 6582
+  time: '2024-05-11T02:21:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27891
