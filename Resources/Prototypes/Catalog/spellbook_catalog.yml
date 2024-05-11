@@ -135,8 +135,6 @@
   - !type:BuyBeforeCondition
     whitelist:
       - SpellbookFireball
-  # manual for now until ListedLimitedUpgradeCondition can be fixed
+  # manual for now
   - !type:ListingLimitedStockCondition
     stock: 2
-  #- !type:ListingLimitedUpgradesCondition
-  #  prototype: ActionFireball
