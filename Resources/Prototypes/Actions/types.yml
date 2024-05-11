@@ -164,6 +164,7 @@
   noSpawn: true
   components:
   - type: Action
+    checkCanInteract: false
     charges: 3
     useDelay: 5
     itemIconStyle: BigAction

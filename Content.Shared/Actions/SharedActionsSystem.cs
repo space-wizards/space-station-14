@@ -165,6 +165,27 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(uid, action);
     }
 
+    /// <summary>
+    ///     Sets the cooldown for this action only if it is bigger than the one it already has.
+    /// </summary>
+    public void SetIfBiggerCooldown(EntityUid? actionId, TimeSpan? cooldown)
+    {
+        if (cooldown == null ||
+            cooldown.Value <= TimeSpan.Zero ||
+            !TryGetActionData(actionId, out var action))
+        {
+            return;
+        }
+
+        var start = GameTiming.CurTime;
+        var end = start + cooldown;
+        if (action.Cooldown?.End > end)
+            return;
+
+        action.Cooldown = (start, end.Value);
+        Dirty(actionId.Value, action);
+    }
+
     public void StartUseDelay(EntityUid? actionId)
     {
         if (actionId is not {} uid)
@@ -553,6 +574,7 @@ public abstract class SharedActionsSystem : EntitySystem
             if (!action.RaiseOnUser && action.Container is {} container && !_mindQuery.HasComp(container))
                 target = container;
 
+            actionEvent.Action = actionId;
             RaiseLocalEvent(target, (object) actionEvent, broadcast: true);
             handled = actionEvent.Handled;
         }
@@ -592,6 +614,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
         if (dirty && component != null)
             Dirty(performer, component); // TODO: it modifies the action component then dirties the USER?!
+
+        var ev = new ActionPerformedEvent(performer);
+        RaiseLocalEvent(actionId, ref ev);
     }
     #endregion
 

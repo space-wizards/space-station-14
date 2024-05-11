@@ -57,6 +57,7 @@
   tier: 1
   cost: 5000
   recipeUnlocks:
+  - MagazineShotgunBeanbag
   - ShellTranquilizer 
   - BoxBeanbag 
   - WeaponDisabler
@@ -155,6 +156,7 @@
   - PowerCageMedium
   - MagazineGrenadeEmpty
   - GrenadeFlash
+  - GrenadeBlast
   - ShuttleGunSvalinnMachineGunCircuitboard
   - ShuttleGunPerforatorCircuitboard
   - ShuttleGunFriendshipCircuitboard
@@ -174,6 +176,7 @@
   cost: 15000
   recipeUnlocks:
   - WeaponAdvancedLaser
+  - PortableRecharger
 
 - type: technology
   id: ExperimentalBatteryAmmo

@@ -4,7 +4,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
 using Content.Server.Light.EntitySystems;
-using Content.Server.Light.Events;
 using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
@@ -12,7 +11,9 @@ using Content.Server.Store.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Chat;
+using Content.Shared.Light;
 using Content.Shared.Light.Components;
+using Content.Shared.Light.EntitySystems;
 using Content.Shared.PDA;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -207,8 +208,9 @@ namespace Content.Server.PDA
             if (!PdaUiKey.Key.Equals(msg.UiKey))
                 return;
 
-            if (TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
-                _unpoweredFlashlight.ToggleLight(uid, flashlight);
+            // TODO PREDICTION
+            // When moving this to shared, fill in the user field
+            _unpoweredFlashlight.TryToggleLight(uid, user: null);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaShowRingtoneMessage msg)

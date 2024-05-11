@@ -17,9 +17,9 @@
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 18000 # 5h
-  - !type:DepartmentTimeRequirement
-    department: Medical
-    time: 18000 # 5h
+  - !type:RoleTimeRequirement
+    role: JobChemist 
+    time: 10800 # 3h
 
 - type: antag
   id: NukeopsCommander

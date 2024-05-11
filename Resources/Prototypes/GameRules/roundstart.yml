@@ -147,7 +147,7 @@
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]
-      max: 12
+      max: 8
       playerRatio: 10
       lateJoinAdditional: true
       mindComponents:

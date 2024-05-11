@@ -152,16 +152,8 @@ public sealed class ActionButton : Control, IEntityControl
 
         OnThemeUpdated();
 
-        OnKeyBindDown += args =>
-        {
-            Depress(args, true);
-            OnPressed(args);
-        };
-        OnKeyBindUp += args =>
-        {
-            Depress(args, false);
-            OnUnpressed(args);
-        };
+        OnKeyBindDown += OnPressed;
+        OnKeyBindUp += OnUnpressed;
 
         TooltipSupplier = SupplyTooltip;
     }
@@ -175,11 +167,23 @@ public sealed class ActionButton : Control, IEntityControl
 
     private void OnPressed(GUIBoundKeyEventArgs args)
     {
+        if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.UIRightClick)
+            return;
+
+        if (args.Function == EngineKeyFunctions.UIRightClick)
+            Depress(args, true);
+
         ActionPressed?.Invoke(args, this);
     }
 
     private void OnUnpressed(GUIBoundKeyEventArgs args)
     {
+        if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.UIRightClick)
+            return;
+
+        if (args.Function == EngineKeyFunctions.UIRightClick)
+            Depress(args, false);
+
         ActionUnpressed?.Invoke(args, this);
     }
 
@@ -281,10 +285,19 @@ public sealed class ActionButton : Control, IEntityControl
 
         _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
         _spriteSys ??= _entities.System<SpriteSystem>();
-        if ((_controller.SelectingTargetFor == action || action.Comp.Toggled) && action.Comp.IconOn != null)
-            SetActionIcon(_spriteSys.Frame0(action.Comp.IconOn));
+        if (_controller.SelectingTargetFor == action || action.Comp.Toggled)
+        {
+            if (action.Comp.IconOn is {} icon)
+                SetActionIcon(_spriteSys.Frame0(icon));
+
+            if (action.Comp.BackgroundOn is {} background)
+                _buttonBackgroundTexture = _spriteSys.Frame0(background);
+        }
         else
+        {
             SetActionIcon(action.Comp.Icon != null ? _spriteSys.Frame0(action.Comp.Icon) : null);
+            _buttonBackgroundTexture = Theme.ResolveTexture("SlotBackground");
+        }
     }
 
     public void UpdateBackground()
@@ -377,12 +390,6 @@ public sealed class ActionButton : Control, IEntityControl
         // action can still be toggled if it's allowed to stay selected
         if (Action?.Comp is not {Enabled: true})
             return;
-
-        if (_depressed && !depress)
-        {
-            // fire the action
-            OnUnpressed(args);
-        }
 
         _depressed = depress;
         DrawModeChanged();

@@ -195,7 +195,10 @@ namespace Content.Client.Actions
             if (action.ClientExclusive)
             {
                 if (instantAction.Event != null)
+                {
                     instantAction.Event.Performer = user;
+                    instantAction.Event.Action = actionId;
+                }
 
                 PerformAction(user, actions, actionId, action, instantAction.Event, GameTiming.CurTime);
             }
