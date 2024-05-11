@@ -445,6 +445,17 @@
   - type: AntagSelection
     definitions:
     - prefRoles: [ TraitorSleeper ]
+      fallbackRoles: [ Traitor ]
+      min: 1
+      max: 2
+      playerRatio: 10
+      blacklist:
+        components:
+        - MindShield
+      mindComponents:
+      - type: TraitorRole
+        prototype: Traitor
+    - prefRoles: [ Traitor ]
       min: 1
       max: 2
       playerRatio: 10
