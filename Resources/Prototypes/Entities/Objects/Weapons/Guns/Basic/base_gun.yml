@@ -1,0 +1,61 @@
+# SMALL
+# A basic template for a small gun that is equipped in the belt slot.
+- type: entity
+  id: BaseGunSmall
+  abstract: true
+  components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage
+
+# LARGE
+# A basic template for a gun that is large enough to not fit well in bags and be equipped on the back.
+- type: entity
+  id: BaseGunLarge
+  abstract: true
+  components:
+  - type: Item
+    size: Huge
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+
+# HEAVY
+# A basic template for a massive gun that requires multiple hands to carry and slows the carrier.
+- type: entity
+  id: BaseGunHeavy
+  abstract: true
+  components:
+  - type: Item
+    size: Ginormous
+  - type: MultiHandedItem
+  - type: ClothingSpeedModifier
+    walkModifier: 0.6
+    sprintModifier: 0.6
+  - type: HeldSpeedModifier
+
+# WIELDABLE
+# A basic template for a gun that is wieldable and has standard innacuracy when not wielded.
+- type: entity
+  id: BaseGunWieldable
+  abstract: true
+  components:
+  - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -30
+  - type: Gun
+    minAngle: 21
+    maxAngle: 32   

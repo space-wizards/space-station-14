@@ -3,6 +3,52 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: AmmoCounter
+
+- type: entity
+  id: BaseWeaponPowerCell
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: MagazineAmmoProvider
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: PowerCellSmall
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+            - PowerCell
+            - PowerCellSmall
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: AmmoCounter
+
+- type: entity
+  id: BaseWeaponBatteryOld
+  parent: BaseItem
+  abstract: true
+  components:
   - type: Sprite
   - type: Item
     size: Huge
@@ -32,7 +78,7 @@
     price: 500
 
 - type: entity
-  id: BaseWeaponPowerCell
+  id: BaseWeaponPowerCellOld
   parent: BaseItem
   abstract: true
   components:
