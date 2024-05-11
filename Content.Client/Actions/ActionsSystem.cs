@@ -113,7 +113,7 @@ namespace Content.Client.Actions
             ActionsUpdated?.Invoke();
         }
 
-        public static int ActionComparer(Entity<ActionComponent?> a, Entity<ActionComponent?> b)
+        public static int ActionComparer(Entity<ActionComponent> a, Entity<ActionComponent> b)
         {
             var priorityA = a.Comp?.Priority ?? 0;
             var priorityB = b.Comp?.Priority ?? 0;
