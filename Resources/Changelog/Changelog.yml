@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Syringes now prevent injecting on empty and drawing on full.
-    type: Tweak
-  - message: You can now tell if you are being drawn from or injected by a syringe.
-    type: Tweak
-  id: 6085
-  time: '2024-03-04T05:07:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25480
 - author: metalgearsloth
   changes:
   - message: Fix expedition FTL.
@@ -3865,3 +3856,11 @@
   id: 6584
   time: '2024-05-11T15:03:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27617
+- author: DrSmugleaf
+  changes:
+  - message: Bullets no longer hit mobs that are in crit, unless they are directly
+      clicked on while shooting.
+    type: Tweak
+  id: 6585
+  time: '2024-05-11T15:42:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27905
