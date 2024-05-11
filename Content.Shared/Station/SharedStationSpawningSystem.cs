@@ -1,6 +1,8 @@
+using System.Linq;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
@@ -17,12 +19,52 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     [Dependency] private   readonly SharedStorageSystem _storage = default!;
     [Dependency] private   readonly SharedTransformSystem _xformSystem = default!;
 
+    private EntityQuery<HandsComponent> _handsQuery;
+    private EntityQuery<InventoryComponent> _inventoryQuery;
+    private EntityQuery<StorageComponent> _storageQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        _handsQuery = GetEntityQuery<HandsComponent>();
+        _inventoryQuery = GetEntityQuery<InventoryComponent>();
+        _storageQuery = GetEntityQuery<StorageComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+    }
+
     /// <summary>
-    /// Equips starting gear onto the given entity.
+    ///     Equips the given starting gears from a `RoleLoadout` onto an entity.
     /// </summary>
-    /// <param name="entity">Entity to load out.</param>
-    /// <param name="startingGear">Starting gear to use.</param>
-    public void EquipStartingGear(EntityUid entity, ProtoId<StartingGearPrototype>? startingGear)
+    public void EquipRoleLoadout(EntityUid entity, RoleLoadout loadout, RoleLoadoutPrototype roleProto)
+    {
+        // Order loadout selections by the order they appear on the prototype.
+        foreach (var group in loadout.SelectedLoadouts.OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
+        {
+            foreach (var items in group.Value)
+            {
+                if (!PrototypeManager.TryIndex(items.Prototype, out var loadoutProto))
+                {
+                    Log.Error($"Unable to find loadout prototype for {items.Prototype}");
+                    continue;
+                }
+
+                if (!PrototypeManager.TryIndex(loadoutProto.Equipment, out var startingGear))
+                {
+                    Log.Error($"Unable to find starting gear {loadoutProto.Equipment} for loadout {loadoutProto}");
+                    continue;
+                }
+
+                // Handle any extra data here.
+                EquipStartingGear(entity, startingGear, raiseEvent: false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <see cref="EquipStartingGear(Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.Prototypes.ProtoId{Content.Shared.Roles.StartingGearPrototype}},bool)"/>
+    /// </summary>
+    public void EquipStartingGear(EntityUid entity, ProtoId<StartingGearPrototype>? startingGear, bool raiseEvent = true)
     {
         PrototypeManager.TryIndex(startingGear, out var gearProto);
         EquipStartingGear(entity, gearProto);
@@ -33,10 +75,13 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     /// </summary>
     /// <param name="entity">Entity to load out.</param>
     /// <param name="startingGear">Starting gear to use.</param>
-    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear)
+    /// <param name="raiseEvent">Should we raise the event for equipped. Set to false if you will call this manually</param>
+    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear, bool raiseEvent = true)
     {
         if (startingGear == null)
             return;
+
+        var xform = _xformQuery.GetComponent(entity);
 
         if (InventorySystem.TryGetSlots(entity, out var slotDefinitions))
         {
@@ -45,16 +90,16 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 var equipmentStr = startingGear.GetGear(slot.Name);
                 if (!string.IsNullOrEmpty(equipmentStr))
                 {
-                    var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
+                    var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, xform.Coordinates);
                     InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, silent: true, force:true);
                 }
             }
         }
 
-        if (TryComp(entity, out HandsComponent? handsComponent))
+        if (_handsQuery.TryComp(entity, out var handsComponent))
         {
             var inhand = startingGear.Inhand;
-            var coords = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
+            var coords = xform.Coordinates;
             foreach (var prototype in inhand)
             {
                 var inhandEntity = EntityManager.SpawnEntity(prototype, coords);
@@ -70,7 +115,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
         {
             var coords = _xformSystem.GetMapCoordinates(entity);
             var ents = new ValueList<EntityUid>();
-            TryComp(entity, out InventoryComponent? inventoryComp);
+            _inventoryQuery.TryComp(entity, out var inventoryComp);
 
             foreach (var (slot, entProtos) in startingGear.Storage)
             {
@@ -84,7 +129,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
 
                 if (inventoryComp != null &&
                     InventorySystem.TryGetSlotEntity(entity, slot, out var slotEnt, inventoryComponent: inventoryComp) &&
-                    TryComp(slotEnt, out StorageComponent? storage))
+                    _storageQuery.TryComp(slotEnt, out var storage))
                 {
                     foreach (var ent in ents)
                     {
@@ -92,6 +137,12 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                     }
                 }
             }
+        }
+
+        if (raiseEvent)
+        {
+            var ev = new StartingGearEquippedEvent(entity);
+            RaiseLocalEvent(entity, ref ev, true);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Content.Server.Atmos.EntitySystems
             airtight.Comp.CurrentAirBlockedDirection =
                 (int) Rotate((AtmosDirection) airtight.Comp.InitialAirBlockedDirection, xform.LocalRotation);
             UpdatePosition(airtight, xform);
-            var airtightEv = new AirtightChanged(airtight, airtight, default);
+            var airtightEv = new AirtightChanged(airtight, airtight, false, default);
             RaiseLocalEvent(airtight, ref airtightEv, true);
         }
 
@@ -64,7 +64,7 @@ namespace Content.Server.Atmos.EntitySystems
             airtight.LastPosition = (gridId.Value, tilePos);
             InvalidatePosition(gridId.Value, tilePos);
 
-            var airtightEv = new AirtightChanged(uid, airtight, (gridId.Value, tilePos));
+            var airtightEv = new AirtightChanged(uid, airtight, false, (gridId.Value, tilePos));
             RaiseLocalEvent(uid, ref airtightEv, true);
         }
 
@@ -76,7 +76,7 @@ namespace Content.Server.Atmos.EntitySystems
                 airtight.LastPosition = (gridId, args.TilePos);
                 InvalidatePosition(gridId, args.TilePos);
 
-                var airtightEv = new AirtightChanged(uid, airtight, (gridId, args.TilePos));
+                var airtightEv = new AirtightChanged(uid, airtight, false, (gridId, args.TilePos));
                 RaiseLocalEvent(uid, ref airtightEv, true);
             }
         }
@@ -87,7 +87,7 @@ namespace Content.Server.Atmos.EntitySystems
             airtight.CurrentAirBlockedDirection = (int) Rotate((AtmosDirection)airtight.InitialAirBlockedDirection, ev.NewRotation);
             var pos = airtight.LastPosition;
             UpdatePosition(ent, ev.Component);
-            var airtightEv = new AirtightChanged(owner, airtight, pos);
+            var airtightEv = new AirtightChanged(owner, airtight, false, pos);
             RaiseLocalEvent(owner, ref airtightEv, true);
         }
 
@@ -102,7 +102,7 @@ namespace Content.Server.Atmos.EntitySystems
             var pos = airtight.Comp.LastPosition;
             airtight.Comp.AirBlocked = airblocked;
             UpdatePosition(airtight, xform);
-            var airtightEv = new AirtightChanged(airtight, airtight, pos);
+            var airtightEv = new AirtightChanged(airtight, airtight, true, pos);
             RaiseLocalEvent(airtight, ref airtightEv, true);
         }
 
@@ -149,6 +149,13 @@ namespace Content.Server.Atmos.EntitySystems
         }
     }
 
+    /// <summary>
+    /// Raised upon the airtight status being changed via anchoring, movement, etc.
+    /// </summary>
+    /// <param name="Entity"></param>
+    /// <param name="Airtight"></param>
+    /// <param name="AirBlockedChanged">Whether the <see cref="AirtightComponent.AirBlocked"/> changed</param>
+    /// <param name="Position"></param>
     [ByRefEvent]
-    public readonly record struct AirtightChanged(EntityUid Entity, AirtightComponent Airtight, (EntityUid Grid, Vector2i Tile) Position);
+    public readonly record struct AirtightChanged(EntityUid Entity, AirtightComponent Airtight, bool AirBlockedChanged, (EntityUid Grid, Vector2i Tile) Position);
 }

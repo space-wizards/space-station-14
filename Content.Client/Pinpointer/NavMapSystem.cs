@@ -24,14 +24,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
                 if (!state.AllChunks!.Contains(index))
                     component.Chunks.Remove(index);
             }
-
-            foreach (var beacon in component.Beacons)
-            {
-                if (!state.AllBeacons!.Contains(beacon))
-                    component.Beacons.Remove(beacon);
-            }
         }
-
         else
         {
             foreach (var index in component.Chunks.Keys)
@@ -39,25 +32,19 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
                 if (!state.Chunks.ContainsKey(index))
                     component.Chunks.Remove(index);
             }
-
-            foreach (var beacon in component.Beacons)
-            {
-                if (!state.Beacons.Contains(beacon))
-                    component.Beacons.Remove(beacon);
-            }
         }
 
-        foreach (var ((category, origin), chunk) in state.Chunks)
+        foreach (var (origin, chunk) in state.Chunks)
         {
             var newChunk = new NavMapChunk(origin);
-
-            foreach (var (atmosDirection, value) in chunk)
-                newChunk.TileData[atmosDirection] = value;
-
-            component.Chunks[(category, origin)] = newChunk;
+            Array.Copy(chunk, newChunk.TileData, chunk.Length);
+            component.Chunks[origin] = newChunk;
         }
 
-        foreach (var beacon in state.Beacons)
-            component.Beacons.Add(beacon);
+        component.Beacons.Clear();
+        foreach (var (nuid, beacon) in state.Beacons)
+        {
+            component.Beacons[nuid] = beacon;
+        }
     }
 }

@@ -7,6 +7,7 @@ using Content.Shared.Chat;
 using Content.Shared.Mind;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Enums;
 using Robust.Shared.Player;
 
 namespace Content.Server.Antag;
@@ -63,15 +64,17 @@ public sealed partial class AntagSelectionSystem
     /// </summary>
     public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool, AntagSelectionDefinition def)
     {
-        var poolSize = pool?.Count ?? _playerManager.Sessions.Length;
+        var poolSize = pool?.Count ?? _playerManager.Sessions
+            .Count(s => s.State.Status is not SessionStatus.Disconnected and not SessionStatus.Zombie);
+
         // factor in other definitions' affect on the count.
         var countOffset = 0;
         foreach (var otherDef in ent.Comp.Definitions)
         {
-            countOffset += Math.Clamp(poolSize / otherDef.PlayerRatio, otherDef.Min, otherDef.Max) * otherDef.PlayerRatio;
+            countOffset += Math.Clamp((poolSize - countOffset) / otherDef.PlayerRatio, otherDef.Min, otherDef.Max) * otherDef.PlayerRatio;
         }
         // make sure we don't double-count the current selection
-        countOffset -= Math.Clamp((poolSize + countOffset) / def.PlayerRatio, def.Min, def.Max) * def.PlayerRatio;
+        countOffset -= Math.Clamp(poolSize / def.PlayerRatio, def.Min, def.Max) * def.PlayerRatio;
 
         return Math.Clamp((poolSize - countOffset) / def.PlayerRatio, def.Min, def.Max);
     }

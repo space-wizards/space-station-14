@@ -218,8 +218,25 @@
   - type: StepTriggerImmune
 
 - type: entity
+  abstract: true
+  id: BaseBorgTransponder
+  components:
+  - type: BorgTransponder
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CyborgControl
+    transmitFrequencyId: RoboticsConsole
+  # explosion does most of its damage in the center and less at the edges
+  - type: Explosive
+    explosionType: Minibomb
+    totalIntensity: 30
+    intensitySlope: 20
+    maxIntensity: 20
+    canCreateVacuum: false # its for killing the borg not the station
+
+- type: entity
   id: BaseBorgChassisNT
-  parent: BaseBorgChassis
+  parent: [BaseBorgChassis, BaseBorgTransponder]
   abstract: true
   components:
   - type: NpcFactionMember
