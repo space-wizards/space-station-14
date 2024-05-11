@@ -46,6 +46,7 @@ public sealed partial class MessagesUiFragment : BoxContainer
 
             OverContainer.AddChild(Input);
             HeaderBox.AddChild(BackButton);
+            BackButton.SetPositionInParent(0);
         }
         else if (mode == MessagesUiStateMode.Error)
         {

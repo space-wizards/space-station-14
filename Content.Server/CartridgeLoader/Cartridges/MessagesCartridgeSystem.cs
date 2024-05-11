@@ -30,8 +30,9 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
         SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<MessagesCartridgeComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
-        SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeRemovedEvent>(OnCartRemoval);
-        SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeAddedEvent>(OnCartAddition);
+        SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeActivatedEvent>(OnCartActivation);
+        SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeDeactivatedEvent>(OnCartDeactivation);
+        SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeAddedEvent>(OnCartInsertion);
     }
 
     /// <summary>
@@ -85,17 +86,25 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     }
 
     /// <summary>
-    /// On cartridge adding, connect to messages network.
+    /// On cart insertion, register as background process.
     /// </summary>
-    private void OnCartAddition(EntityUid uid, MessagesCartridgeComponent component, CartridgeAddedEvent args)
+    private void OnCartInsertion(EntityUid uid, MessagesCartridgeComponent component, CartridgeAddedEvent args)
+    {
+        _cartridgeLoaderSystem.RegisterBackgroundProgram(args.Loader, uid);
+    }
+
+    /// <summary>
+    /// On cartridge activation, connect to messages network.
+    /// </summary>
+    private void OnCartActivation(EntityUid uid, MessagesCartridgeComponent component, CartridgeActivatedEvent args)
     {
         _deviceNetworkSystem.ConnectDevice(uid);
     }
 
     /// <summary>
-    /// On cartridge removal, disconnect from messages network.
+    /// On cartridge deactivation, disconnect from messages network.
     /// </summary>
-    private void OnCartRemoval(EntityUid uid, MessagesCartridgeComponent component, CartridgeRemovedEvent args)
+    private void OnCartDeactivation(EntityUid uid, MessagesCartridgeComponent component, CartridgeDeactivatedEvent args)
     {
         _deviceNetworkSystem.DisconnectDevice(uid, null);
     }
@@ -121,13 +130,13 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
                 _cartridgeLoaderSystem.SendNotification(
                     cartComponent.LoaderUid.Value,
-                    $"{name} {subtitleString} ",
+                    $"{name} {subtitleString}",
                     message.Content);
             }
-
-            if (HasComp<CartridgeLoaderComponent>(cartComponent.LoaderUid))
-                UpdateUiState(uid, cartComponent.LoaderUid.Value, component);
         }
+
+        if (HasComp<CartridgeLoaderComponent>(cartComponent.LoaderUid))
+            UpdateUiState(uid, cartComponent.LoaderUid.Value, component);
 
     }
 
