@@ -36,6 +36,9 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly IAfkManager _afkManager = default!;
 
+        [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
+        private static partial Regex DiscordRegex();
+
         private ISawmill _sawmill = default!;
         private readonly HttpClient _httpClient = new();
         private string _webhookUrl = string.Empty;
@@ -518,9 +521,6 @@ namespace Content.Server.Administration.Systems
             stringbuilder.Append(message);
             return stringbuilder.ToString();
         }
-
-        [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
-        private static partial Regex DiscordRegex();
     }
 }
 
