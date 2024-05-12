@@ -207,6 +207,9 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (_container?.StorageEntity != uid)
             return;
 
+        if (_menuDragHelper.Dragged != null)
+            return;
+
         _container.BuildItemPieces();
     }
 
