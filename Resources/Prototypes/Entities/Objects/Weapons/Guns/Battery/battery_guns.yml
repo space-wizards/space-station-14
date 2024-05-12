@@ -1,3 +1,4 @@
+# svalinn laser pistol
 - type: entity
   parent:
   - BaseGunSmall
@@ -24,6 +25,7 @@
   - type: StaticPrice
     price: 500
 
+# retro laser blaster
 - type: entity
   parent:
   - BaseGunSmall
@@ -53,6 +55,7 @@
   - type: StaticPrice
     price: 500
 
+# makeshift laser pistol
 - type: entity
   parent:
   - BaseGunSmall
@@ -85,6 +88,7 @@
   - type: StaticPrice
     price: 500
 
+# tesla gun
 - type: entity
   parent:
   - BaseGunLarge
@@ -120,6 +124,7 @@
   - type: StaticPrice #did all of these have static prices before?
     price: 500
 
+# laser rifle
 - type: entity
   parent:
   - BaseGunLarge
@@ -150,6 +155,7 @@
   - type: StaticPrice
     price: 420
 
+# practice laser rifle
 - type: entity
   parent: WeaponLaserCarbine
   id: WeaponLaserCarbinePractice
@@ -162,6 +168,7 @@
   - type: StaticPrice
     price: 300
 
+# pulse pistol
 - type: entity
   parent:
   - BaseGunSmall
@@ -197,6 +204,7 @@
   - type: StaticPrice
     price: 500
 
+# pulse carbine
 - type: entity
   parent:
   - BaseGunLarge
@@ -238,6 +246,7 @@
   - type: StaticPrice
     price: 500
 
+# pulse rifle
 - type: entity
   parent:
   - BaseGunLarge
@@ -275,6 +284,7 @@
   - type: StaticPrice
     price: 500
 
+# laser cannon
 - type: entity
   parent:
   - BaseGunLarge
@@ -309,6 +319,7 @@
   - type: StaticPrice
     price: 500
 
+# portable particle decelerator
 - type: entity
   parent:
   - BaseGunHeavy
@@ -337,6 +348,7 @@
   - type: StaticPrice
     price: 500
 
+# x-ray cannon
 - type: entity
   parent:
   - BaseGunLarge
@@ -370,6 +382,7 @@
   - type: StaticPrice #were these static prices always here
     price: 500
 
+# disabler
 - type: entity
   parent:
   - BaseGunSmall
@@ -409,6 +422,7 @@
     guides:
     - Security
 
+# practice disabler
 - type: entity
   parent: WeaponDisabler
   id: WeaponDisablerPractice
@@ -431,6 +445,7 @@
   - type: StaticPrice
     price: 100
 
+# disabler SMG
 - type: entity
   parent: BaseGunBattery
   id: WeaponDisablerSMG
@@ -470,6 +485,7 @@
   - type: StaticPrice
     price: 260
 
+# taser
 - type: entity
   parent:
   - BaseGunSmall
@@ -508,6 +524,7 @@
   - type: StaticPrice
     price: 500
 
+# antique laser pistol
 - type: entity
   parent:
   - BaseGunSmall
@@ -550,6 +567,7 @@
   - type: StealTarget
     stealGroup: WeaponAntiqueLaser
 
+# advanced laser pistol
 - type: entity
   parent: BaseGunBattery
   id: WeaponAdvancedLaser
@@ -592,6 +610,7 @@
   - type: StaticPrice
     price: 63
 
+# C.H.I.M.P. handcannon
 - type: entity
   parent:
   - BaseGunSmall
@@ -640,6 +659,7 @@
   - type: StaticPrice
     price: 100
 
+# experimental C.H.I.M.P. handcannon
 - type: entity
   parent: WeaponPistolCHIMP
   id: WeaponPistolCHIMPUpgraded
@@ -659,6 +679,7 @@
     - proto: AnomalousParticleSigmaStrong
       fireCost: 100
 
+# eye of a behonker
 - type: entity
   parent:
   - BaseGunSmall
