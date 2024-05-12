@@ -1281,6 +1281,9 @@
   id: WeaponShotgunKammerer
 
 - type: Tag
+  id: WeldingMask
+
+- type: Tag
   id: WetFloorSign
 
 - type: Tag

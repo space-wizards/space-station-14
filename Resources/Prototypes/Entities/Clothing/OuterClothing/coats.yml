@@ -10,7 +10,7 @@
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
   id: ClothingOuterCoatDetective
   name: detective trenchcoat
   description: A rugged canvas trenchcoat, designed and created by TX Fabrication Corp. Wearing it makes you feel for the plight of the Tibetans.
@@ -53,6 +53,7 @@
 
 - type: entity
   abstract: true
+  parent: AllowSuitStorageClothing
   id: ClothingOuterArmorHoS
   components:
   - type: Armor
@@ -68,6 +69,7 @@
 
 - type: entity
   abstract: true
+  parent: AllowSuitStorageClothing
   id: ClothingOuterArmorWarden
   components:
   - type: Armor
@@ -225,7 +227,7 @@
   parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabCmo
   name: chief medical officer's lab coat
-  description: Bluer than the standard model.
+  description: Custom made blue lab coat for the Chief Medical Officer, offers improved protection against chemical spills and minor cuts
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
@@ -234,7 +236,9 @@
   - type: Armor
     modifiers:
       coefficients:
-        Caustic: 0.75
+        Slash: 0.95
+        Heat: 0.95
+        Caustic: 0.65
 
 - type: entity
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabCmo]

@@ -31,6 +31,9 @@ public sealed partial class TraitorRuleComponent : Component
     [DataField]
     public ProtoId<DatasetPrototype> CodewordVerbs = "verbs";
 
+    [DataField]
+    public ProtoId<DatasetPrototype> ObjectiveIssuers = "TraitorCorporations";
+
     public int TotalTraitors => TraitorMinds.Count;
     public string[] Codewords = new string[3];
 

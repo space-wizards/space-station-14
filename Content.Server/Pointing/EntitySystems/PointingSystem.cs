@@ -183,7 +183,7 @@ namespace Content.Server.Pointing.EntitySystems
                     (eyeComp.VisibilityMask & layer) == 0)
                     return false;
 
-                return Transform(ent).MapPosition.InRange(Transform(player).MapPosition, PointingRange);
+                return _transform.GetMapCoordinates(ent).InRange(_transform.GetMapCoordinates(player), PointingRange);
             }
 
             var viewers = Filter.Empty()
