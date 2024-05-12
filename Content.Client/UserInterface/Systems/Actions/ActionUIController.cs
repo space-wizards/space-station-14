@@ -266,12 +266,12 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void UnloadButton()
     {
-        ActionButton.OnPressed -= ActionButtonPressed;
+        ActionButton?.OnPressed -= ActionButtonPressed;
     }
 
     public void LoadButton()
     {
-        ActionButton.OnPressed += ActionButtonPressed;
+        ActionButton?.OnPressed += ActionButtonPressed;
     }
 
     private void OnWindowOpened()
@@ -886,7 +886,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             foreach (var button in _container.GetButtons())
             {
-                if (button.Action == uid)
+                if (button.Action.Owner == uid)
                     button.UpdateIcons();
             }
         }
