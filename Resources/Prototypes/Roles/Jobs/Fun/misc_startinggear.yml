@@ -49,6 +49,15 @@
     - DeathAcidifierImplanter # crew will try to steal their amazing hardsuits
     - FreedomImplanter
 
+# Syndicate Operative Outfit - Civilian
+- type: startingGear
+  id: SyndicateOperativeGearCivilian
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSyndieFormal
+    back: ClothingBackpackDuffelSyndicate
+    shoes: ClothingShoesBootsCombat
+    gloves: ClothingHandsGlovesColorBlack
+
 # Syndicate Footsoldier Gear
 - type: startingGear
   id: SyndicateFootsoldierGear
