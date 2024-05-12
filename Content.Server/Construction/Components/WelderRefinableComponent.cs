@@ -17,7 +17,7 @@ public sealed partial class WelderRefinableComponent : Component
     public float RefineTime = 2f;
 
     [DataField]
-    public float RefineFuel;
+    public float RefineFuel = 1f;
 
     [DataField]
     public ProtoId<ToolQualityPrototype> QualityNeeded = "Welding";
