@@ -20,7 +20,9 @@ public sealed class ContainerFillSystem : EntitySystem
             return;
 
         var xform = Transform(uid);
-        var coords = new EntityCoordinates(uid, Vector2.Zero);
+
+        if (!_transformSystem.TryGetGridOrMapCoordinates(uid, out var coords, xform))
+            return;
 
         foreach (var (contaienrId, prototypes) in component.Containers)
         {
@@ -32,7 +34,7 @@ public sealed class ContainerFillSystem : EntitySystem
 
             foreach (var proto in prototypes)
             {
-                var ent = Spawn(proto, coords);
+                var ent = Spawn(proto, coords.Value);
                 if (!_containerSystem.Insert(ent, container, containerXform: xform))
                 {
                     Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} failed to insert an entity: {ToPrettyString(ent)}.");
