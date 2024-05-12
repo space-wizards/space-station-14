@@ -5,10 +5,12 @@
   description: Fires an explosive fireball towards the clicked location.
   noSpawn: true
   components:
+  - type: Magic
   - type: Action
     useDelay: 15
     itemIconStyle: BigAction
     checkCanAccess: false
+    raiseOnUser: true
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/fireball.ogg
     icon:
@@ -19,20 +21,28 @@
   - type: WorldTargetAction
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
-      posData: !type:TargetCasterPos
       speech: action-speech-spell-fireball
   - type: ActionUpgrade
     effectedLevels:
       2: ActionFireballII
+      3: ActionFireballIII
 
 - type: entity
-  id: ActionFireballII
   parent: ActionFireball
+  id: ActionFireballII
   name: Fireball II
-  description: Fire three explosive fireball towards the clicked location.
+  description: Fires a fireball, but faster!
   noSpawn: true
   components:
-  - type: WorldTargetAction
-    useDelay: 5
-    charges: 3
-    renewCharges: true
+  - type: Action
+    useDelay: 10
+
+- type: entity
+  parent: ActionFireball
+  id: ActionFireballIII
+  name: Fireball III
+  description: The fastest fireball in the west!
+  noSpawn: true
+  components:
+  - type: Action
+    useDelay: 8

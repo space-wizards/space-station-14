@@ -142,8 +142,8 @@
 
 # TODO: why the fuck does this not just use the item icon
 - type: entity
-  id: ActionToggleMagboots
   parent: ActionBaseToggleMagboots
+  id: ActionToggleMagboots
   noSpawn: true
   components:
   - type: Action
@@ -151,8 +151,8 @@
     iconOn: { sprite : Clothing/Shoes/Boots/magboots.rsi, state: icon-on }
 
 - type: entity
-  id: ActionToggleMagbootsAdvanced
   parent: ActionBaseToggleMagboots
+  id: ActionToggleMagbootsAdvanced
   noSpawn: true
   components:
   - type: Action
@@ -160,8 +160,8 @@
     iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
 
 - type: entity
-  id: ActionToggleMagbootsSci
   parent: ActionBaseToggleMagboots
+  id: ActionToggleMagbootsSci
   noSpawn: true
   components:
   - type: Action
@@ -169,8 +169,8 @@
     iconOn: Clothing/Shoes/Boots/magboots-science.rsi/icon-on.png
 
 - type: entity
-  id: ActionToggleMagbootsSyndie
   parent: ActionBaseToggleMagboots
+  id: ActionToggleMagbootsSyndie
   noSpawn: true
   components:
   - type: Action

@@ -9,12 +9,14 @@
     useDelay: 10
     itemIconStyle: BigAction
     checkCanAccess: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/blink.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: blink
   - type: TargetAction
     range: 16 # default examine-range.
     # ^ should probably add better validation that the clicked location is on the users screen somewhere,
-    repeat: true
+    repeat: false
   - type: WorldTargetAction
     event: !type:TeleportSpellEvent

@@ -37,7 +37,7 @@ public sealed class BlindableSystem : EntitySystem
         var old = blindable.Comp.IsBlind;
 
         // Don't bother raising an event if the eye is too damaged.
-        if (blindable.Comp.EyeDamage >= BlindableComponent.MaxDamage)
+        if (blindable.Comp.EyeDamage >= blindable.Comp.MaxDamage)
         {
             blindable.Comp.IsBlind = true;
         }
@@ -70,7 +70,7 @@ public sealed class BlindableSystem : EntitySystem
             return;
 
         var previousDamage = blindable.Comp.EyeDamage;
-        blindable.Comp.EyeDamage = Math.Clamp(blindable.Comp.EyeDamage, blindable.Comp.MinDamage, BlindableComponent.MaxDamage);
+        blindable.Comp.EyeDamage = Math.Clamp(blindable.Comp.EyeDamage, blindable.Comp.MinDamage, blindable.Comp.MaxDamage);
         Dirty(blindable);
         if (!isDamageChanged && previousDamage == blindable.Comp.EyeDamage)
             return;

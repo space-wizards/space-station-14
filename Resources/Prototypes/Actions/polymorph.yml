@@ -17,3 +17,37 @@
     itemIconStyle: NoItem
   - type: InstantAction
     event: !type:PolymorphActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionPolymorphWizardSpider
+  name: Spider Polymorph
+  description: Polymorphs you into a Spider.
+  noSpawn: true
+  components:
+  - type: Action
+    useDelay: 60
+    itemIconStyle: NoItem
+    icon:
+      sprite: Mobs/Animals/spider.rsi
+      state: tarantula
+  - type: InstantAction
+    event: !type:PolymorphActionEvent
+      protoId: WizardSpider
+
+- type: entity
+  parent: BaseAction
+  id: ActionPolymorphWizardRod
+  name: Rod Form
+  description: CLANG!
+  noSpawn: true
+  components:
+  - type: Action
+    useDelay: 60
+    itemIconStyle: NoItem
+    icon:
+      sprite: Objects/Fun/immovable_rod.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:PolymorphActionEvent
+      protoId: WizardRod
