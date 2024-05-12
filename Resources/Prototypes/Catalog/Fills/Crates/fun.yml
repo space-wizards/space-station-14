@@ -40,25 +40,21 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingUnderSocksStripedCaptainBlueandGold
+      - id: ClothingUnderSocksStripedGrey
         amount: 2
-      - id: ClothingUnderSocksStripedCaptainBlueandWhite
+      - id: ClothingUnderSocksStripedGreyDark
         amount: 2
-      - id: ClothingUnderSocksStripedCaptainGoldandBlue
+      - id: ClothingUnderSocksStripedMime
         amount: 2
-      - id: ClothingUnderSocksStripedCargo
+      - id: ClothingUnderSocksStripedSherbert
         amount: 2
-      - id: ClothingUnderSocksStripedScience
-        amount: 2
-      - id: ClothingUnderSocksStripedSecurity
-        amount: 2
-      - id: ClothingUnderSocksStripedSecurityJackboots
+      - id: ClothingUnderSocksStripedVoidGreen
         amount: 2
       - id: ClothingUnderSocksStripedWhiteandLightBlueBunnySlipper
         amount: 2
-      - id: ClothingUnderSocksStripedEngineeringAtmos
+      - id: ClothingUnderSocksStripedWhiteandLightBlue
         amount: 2
-      - id: ClothingUnderSocksStripedEngineering
+      - id: ClothingUnderSocksStripedYellowandPurple
         amount: 2
       - id: ClothingUnderSocksStripedWhiteandGreen
         amount: 2
@@ -70,6 +66,73 @@
         amount: 2
       - id: ClothingUnderSocksStripedWhiteandYellow
         amount: 2
+      - id: ClothingUnderSocksCoder
+        amount: 2
+
+- type: entity
+  id: CrateFunSocksJob
+  parent: CrateGenericSteel
+  name: job socks crate
+  description: seems like everyone on the station is wearing shoes without socks, hopefully this will help.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUnderSocksStripedBotany
+        amount: 2
+      - id: ClothingUnderSocksStripedClown
+        amount: 1
+      - id: ClothingUnderSocksStripedClownShoes
+        amount: 1
+      - id: ClothingUnderSocksStripedClownShoesLarge
+        amount: 1
+      - id: ClothingUnderSocksStripedJanitor
+        amount: 1
+      - id: ClothingUnderSocksStripedJanitorGalosh
+        amount: 1
+      - id: ClothingUnderSocksStripedScience
+        amount: 2
+      - id: ClothingUnderSocksStripedSecurity
+        amount: 2
+      - id: ClothingUnderSocksStripedSecurityJackboots
+        amount: 2
+      - id: ClothingUnderSocksStripedCargo
+        amount: 2
+      - id: ClothingUnderSocksStripedEngineeringAtmos
+        amount: 2
+      - id: ClothingUnderSocksStripedEngineering
+        amount: 2
+      - id: ClothingUnderSocksStripedMusican
+        amount: 2
+
+- type: entity
+  id: CrateFunSocksCommand
+  parent: CrateGenericSteel
+  name: command socks crate
+  description: seems like everyone on the station is wearing shoes without socks, hopefully this will help.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUnderSocksStripedCaptainBlueandGold
+        amount: 1
+      - id: ClothingUnderSocksStripedCaptainBlueandWhite
+        amount: 1
+      - id: ClothingUnderSocksStripedCaptainGoldandBlue
+        amount: 1
+      - id: ClothingUnderSocksStripedEngineeringCE
+        amount: 1
+      - id: ClothingUnderSocksStripedScienceRD
+        amount: 1
+      - id: ClothingUnderSocksStripedSecurityHos
+        amount: 1
+      - id: ClothingUnderSocksStripedSecurityHosJackboot
+        amount: 1
+      - id: ClothingUnderSocksStripedCargoQm
+        amount: 1
+      - id: ClothingUnderSocksStripedHotpinkBlack
+        amount: 1
+      - id: ClothingUnderSocksStripedHotpinkLight
+        amount: 2
+
 
 - type: entity
   id: CrateFunLizardPlushieBulk
