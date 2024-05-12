@@ -10,7 +10,7 @@ namespace Content.Server.Ghost.Roles.UI
 
         public GhostRolesEui()
         {
-            _ghostRoleSystem = IoCManager.Resolve<IEntitySystemManager>.GetEntitySystem<GhostRoleSystem>();
+            _ghostRoleSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GhostRoleSystem>();
         }
 
         public override GhostRolesEuiState GetNewState()
