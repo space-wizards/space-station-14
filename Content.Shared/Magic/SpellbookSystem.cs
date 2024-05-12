@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Actions;
+﻿using Content.Shared.Actions.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Magic.Components;

@@ -2,12 +2,14 @@
 
 # TODO: entity category thing here probably
 - type: entity
+  abstract: true
   id: BaseAction
   components:
   - type: Action
 
 # an action that is done all in le head and cant be prevented by any means
 - type: entity
+  abstract: true
   parent: BaseAction
   id: BaseMentalAction
   components:
