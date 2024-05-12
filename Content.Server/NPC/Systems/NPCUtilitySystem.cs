@@ -224,7 +224,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 {
                     if (TryComp<EntityStorageComponent>(container.Owner, out var storageComponent))
                     {
-                        if (storageComponent is { Open: false })
+                        if (storageComponent is { Open: false } && _weldable.IsWelded(container.Owner))
                         {
                             return 0.0f;
                         }
@@ -372,7 +372,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (compQuery.Components.Count == 0)
                     return;
 
-                var mapPos = _xformQuery.GetComponent(owner).MapPosition;
+                var mapPos = _transform.GetMapCoordinates(owner, xform: _xformQuery.GetComponent(owner));
                 _compTypes.Clear();
                 var i = -1;
                 EntityPrototype.ComponentRegistryEntry compZero = default!;

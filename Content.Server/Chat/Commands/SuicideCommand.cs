@@ -1,4 +1,5 @@
 using Content.Server.GameTicking;
+using Content.Server.Popups;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
 using Robust.Shared.Console;
@@ -26,17 +27,27 @@ namespace Content.Server.Chat.Commands
             if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
                 return;
 
-            var minds = IoCManager.Resolve<IEntityManager>().System<SharedMindSystem>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var minds = entityManager.System<SharedMindSystem>();
             // This check also proves mind not-null for at the end when the mob is ghosted.
             if (!minds.TryGetMind(player, out var mindId, out var mind) ||
                 mind.OwnedEntity is not { Valid: true } victim)
             {
-                shell.WriteLine("You don't have a mind!");
+                shell.WriteLine(Loc.GetString("suicide-command-no-mind"));
                 return;
             }
 
-            var gameTicker = EntitySystem.Get<GameTicker>();
-            var suicideSystem = EntitySystem.Get<SuicideSystem>();
+            if (entityManager.HasComponent<AdminFrozenComponent>(victim))
+            {
+                var deniedMessage = Loc.GetString("suicide-command-denied");
+                shell.WriteLine(deniedMessage);
+                entityManager.System<PopupSystem>()
+                    .PopupEntity(deniedMessage, victim, victim);
+                return;
+            }
+
+            var gameTicker = entityManager.System<GameTicker>();
+            var suicideSystem = entityManager.System<SuicideSystem>();
             if (suicideSystem.Suicide(victim))
             {
                 // Prevent the player from returning to the body.
@@ -48,7 +59,7 @@ namespace Content.Server.Chat.Commands
             if (gameTicker.OnGhostAttempt(mindId, true, mind: mind))
                 return;
 
-            shell.WriteLine("You can't ghost right now.");
+            shell.WriteLine(Loc.GetString("ghost-command-denied"));
         }
     }
 }

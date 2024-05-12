@@ -19,6 +19,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -42,6 +43,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -75,6 +77,7 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
+            SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
         }
 
         private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
@@ -360,6 +363,15 @@ namespace Content.Server.Ghost
             args.Cancelled = true;
         }
 
+        private void OnToggleGhostVisibilityToAll(ToggleGhostVisibilityToAllEvent ev)
+        {
+            if (ev.Handled)
+                return;
+
+            ev.Handled = true;
+            MakeVisible(true);
+        }
+
         /// <summary>
         /// When the round ends, make all players able to see ghosts.
         /// </summary>
@@ -388,6 +400,60 @@ namespace Content.Server.Ghost
             RaiseLocalEvent(target, ghostBoo, true);
 
             return ghostBoo.Handled;
+        }
+
+        public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityUid targetEntity,
+            bool canReturn = false)
+        {
+            _transformSystem.TryGetMapOrGridCoordinates(targetEntity, out var spawnPosition);
+            return SpawnGhost(mind, spawnPosition, canReturn);
+        }
+
+        public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityCoordinates? spawnPosition = null,
+            bool canReturn = false)
+        {
+            if (!Resolve(mind, ref mind.Comp))
+                return null;
+
+            // Test if the map is being deleted
+            var mapUid = spawnPosition?.GetMapUid(EntityManager);
+            if (mapUid == null || TerminatingOrDeleted(mapUid.Value))
+                spawnPosition = null;
+
+            spawnPosition ??= _ticker.GetObserverSpawnPoint();
+
+            if (!spawnPosition.Value.IsValid(EntityManager))
+            {
+                Log.Warning($"No spawn valid ghost spawn position found for {mind.Comp.CharacterName}"
+                    + " \"{ToPrettyString(mind)}\"");
+                _minds.TransferTo(mind.Owner, null, createGhost: false, mind: mind.Comp);
+                return null;
+            }
+
+            var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition.Value);
+            var ghostComponent = Comp<GhostComponent>(ghost);
+
+            // Try setting the ghost entity name to either the character name or the player name.
+            // If all else fails, it'll default to the default entity prototype name, "observer".
+            // However, that should rarely happen.
+            if (!string.IsNullOrWhiteSpace(mind.Comp.CharacterName))
+                _metaData.SetEntityName(ghost, mind.Comp.CharacterName);
+            else if (!string.IsNullOrWhiteSpace(mind.Comp.Session?.Name))
+                _metaData.SetEntityName(ghost, mind.Comp.Session.Name);
+
+            if (mind.Comp.TimeOfDeath.HasValue)
+            {
+                SetTimeOfDeath(ghost, mind.Comp.TimeOfDeath!.Value, ghostComponent);
+            }
+
+            SetCanReturnToBody(ghostComponent, canReturn);
+
+            if (canReturn)
+                _minds.Visit(mind.Owner, ghost, mind.Comp);
+            else
+                _minds.TransferTo(mind.Owner, ghost, mind: mind.Comp);
+            Log.Debug($"Spawned ghost \"{ToPrettyString(ghost)}\" for {mind.Comp.CharacterName}.");
+            return ghost;
         }
     }
 }

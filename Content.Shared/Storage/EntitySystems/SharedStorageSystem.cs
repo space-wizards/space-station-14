@@ -109,6 +109,7 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<StorageComponent, DestructionEventArgs>(OnDestroy);
         SubscribeLocalEvent<StorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
+        SubscribeLocalEvent<StorageComponent, LockToggledEvent>(OnLockToggled);
         SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
 
         SubscribeLocalEvent<StorageComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
@@ -1399,6 +1400,25 @@ public abstract class SharedStorageSystem : EntitySystem
         // if there is no max item size specified, the value used
         // is one below the item size of the storage entity.
         return _nextSmallest[item.Size];
+    }
+
+    /// <summary>
+    /// Checks if a storage's UI is open by anyone when locked, and closes it unless they're an admin.
+    /// </summary>
+    private void OnLockToggled(EntityUid uid, StorageComponent component, ref LockToggledEvent args)
+    {
+        if (!args.Locked)
+            return;
+
+        // Gets everyone looking at the UI
+        foreach (var actor in _ui.GetActors(uid, StorageComponent.StorageUiKey.Key).ToList())
+        {
+            if (_admin.HasAdminFlag(actor, AdminFlags.Admin))
+                continue;
+
+            // And closes it unless they're an admin
+            _ui.CloseUi(uid, StorageComponent.StorageUiKey.Key, actor);
+        }
     }
 
     private void OnStackCountChanged(EntityUid uid, MetaDataComponent component, StackCountChangedEvent args)
