@@ -1,4 +1,6 @@
 ﻿using Content.Server.IdentityManagement;
+using Content.Shared.Administration;
+using Content.Shared.Administration.Managers;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
@@ -13,6 +15,7 @@ namespace Content.Server.Clothing.Systems;
 
 public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
+    [Dependency] private readonly ISharedAdminManager _adminManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
@@ -33,7 +36,10 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void OnVerb(EntityUid uid, ChameleonClothingComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.User != args.User)
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (component.User != args.User && !_adminManager.HasAdminFlag(args.User, AdminFlags.Admin))
             return;
 
         args.Verbs.Add(new InteractionVerb()
