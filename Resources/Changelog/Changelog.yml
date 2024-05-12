@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Lawdog
-  changes:
-  - message: Changed the max volume of shot glasses from 7u to 5u to better represent
-      drinking shots in real life
-    type: Tweak
-  id: 6088
-  time: '2024-03-04T23:51:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25847
 - author: deltanedas
   changes:
   - message: Rehydrated mobs (carp) now keep their forensics data from their cube/plushie
@@ -3870,3 +3862,11 @@
   id: 6587
   time: '2024-05-12T15:07:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27883
+- author: ShadowCommander
+  changes:
+  - message: Fixed cyborg laws window and other UIs breaking when the built in light
+      was on.
+    type: Fix
+  id: 6588
+  time: '2024-05-12T22:14:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27956
