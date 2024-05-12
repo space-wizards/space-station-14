@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix expedition FTL.
-    type: Fix
-  id: 6086
-  time: '2024-03-04T06:24:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25823
 - author: Nairodian
   changes:
   - message: Welding masks can now be made in the Autolathe.
@@ -3864,3 +3857,16 @@
   id: 6585
   time: '2024-05-11T15:42:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27905
+- author: metalgearsloth
+  changes:
+  - message: Add a reset button to character setup.
+    type: Add
+  - message: Actually get the import / export character buttons working.
+    type: Add
+  - message: Fix performance drop in the eye color picker.
+    type: Fix
+  - message: Fix instances where role timers don't load properly in character setup.
+    type: Fix
+  id: 6586
+  time: '2024-05-11T23:18:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27576
