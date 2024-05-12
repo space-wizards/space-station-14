@@ -838,6 +838,20 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(backwardsAccent);
 
+        Verb ohioAccent = new()
+        {
+            Text = "Gives Immaculate Rizz",
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/rizz-accent.png")),
+            Act = () =>
+            {
+                EnsureComp<OhioAccentComponent>(args.Target);
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-ohio-accent-description"),
+        };
+        args.Verbs.Add(ohioAccent);
+
         Verb disarmProne = new()
         {
             Text = "Disarm Prone",

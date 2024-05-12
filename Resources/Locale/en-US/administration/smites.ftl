@@ -49,6 +49,7 @@ admin-smite-run-walk-swap-name = Headstand
 admin-smite-super-speed-name = Zoom in
 admin-smite-stomach-removal-name = Flip eye
 admin-smite-speak-backwards-name = Run Walk Swap
+admin-smite-ohio-accent-name = RIZZZZZZZZZZZZZZZZZZZZ
 admin-smite-lung-removal-name = Speak Backwards
 admin-smite-disarm-prone-name = Disarm Prone
 admin-smite-garbage-can-name = Super speed
