@@ -37,7 +37,7 @@ namespace Content.Client.Actions
         public event Action<List<SlotAssignment>>? AssignSlot;
 
         private readonly List<EntityUid> _removed = new();
-        private readonly List<Entity<ActionComponent?>> _added = new();
+        private readonly List<Entity<ActionComponent>> _added = new();
 
         public override void Initialize()
         {
@@ -91,8 +91,8 @@ namespace Content.Client.Actions
                 if (!comp.Actions.Add(actionId))
                     continue;
 
-                TryGetActionData(actionId, out var action);
-                _added.Add((actionId, action));
+                if (TryGetActionData(actionId, out var action))
+                    _added.Add((actionId, action));
             }
 
             if (_playerManager.LocalEntity != uid)
