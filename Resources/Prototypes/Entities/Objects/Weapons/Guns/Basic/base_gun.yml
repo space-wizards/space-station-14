@@ -91,7 +91,7 @@
   - type: AmmoCounter
 
 # POWER CELL
-#A basic template for a gun that is powered by an insertable powercell.
+# A basic template for a gun that is powered by an insertable powercell.
 - type: entity
   abstract: true
   parent: BaseGun
