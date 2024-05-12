@@ -20,7 +20,6 @@ public sealed partial class ReagentCardControl : Control
         StorageSlotId = item.StorageSlotId;
         ColorPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = item.ReagentColor };
         ReagentNameLabel.Text = item.ReagentLabel;
-        ReagentNameLabel.FontColorOverride = Color.White;
         FillLabel.Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", item.Quantity));;
         EjectButtonIcon.Text = Loc.GetString("reagent-dispenser-window-eject-container-button");
 
