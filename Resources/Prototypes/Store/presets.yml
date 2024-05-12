@@ -17,14 +17,13 @@
   - Telecrystal
 
 - type: storePreset
-  id: StorePresetWizard
+  id: StorePresetSpellbook
   storeName: Spellbook
   categories:
-  - WizardSpells
-  - WizardItems
-  - OffensiveSpells
-  - DefensiveSpells
-  - MobilitySpells
-  - AssistanceSpells
+  - SpellbookOffensive    #Fireball, Rod Form
+  - SpellbookDefensive    #Magic Missile, Wall of Force
+  - SpellbookUtility      #Body Swap, Lich, Teleport, Knock, Polymorph
+  - SpellbookEquipment    #Battlemage Robes, Staff of Locker
+  - SpellbookEvents       #Summon Weapons, Summon Ghosts
   currencyWhitelist:
-  - Magipoints
+    - WizCoin

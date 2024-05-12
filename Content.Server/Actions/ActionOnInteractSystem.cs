@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Interaction;
 using Robust.Shared.Random;
@@ -38,10 +39,18 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, ActionOnInteractComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled || component.ActionEntities == null)
+        if (args.Handled)
             return;
 
-        var options = GetValidActions<InstantActionComponent>(component.ActionEntities);
+        if (component.ActionEntities is not {} actionEnts)
+        {
+            if (!TryComp<ActionsContainerComponent>(uid,  out var actionsContainerComponent))
+                return;
+
+            actionEnts = actionsContainerComponent.Container.ContainedEntities.ToList();
+        }
+
+        var options = GetValidActions<InstantActionComponent>(actionEnts);
         if (options.Count == 0)
             return;
 
@@ -58,13 +67,21 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, ActionOnInteractComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || component.ActionEntities == null)
+        if (args.Handled)
             return;
+
+        if (component.ActionEntities is not {} actionEnts)
+        {
+            if (!TryComp<ActionsContainerComponent>(uid,  out var actionsContainerComponent))
+                return;
+
+            actionEnts = actionsContainerComponent.Container.ContainedEntities.ToList();
+        }
 
         // First, try entity target actions
         if (args.Target != null)
         {
-            var entOptions = GetValidActions<EntityTargetActionComponent>(component.ActionEntities, args.CanReach);
+            var entOptions = GetValidActions<EntityTargetActionComponent>(actionEnts, args.CanReach);
             for (var i = entOptions.Count - 1; i >= 0; i--)
             {
                 var action = entOptions[i];

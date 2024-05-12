@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Arachnids are no longer perma-pied and can clean it off.
-    type: Fix
-  id: 6083
-  time: '2024-03-03T08:54:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25713
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Monkeys and kobolds can now wear blood-red hardsuits.
-    type: Add
-  id: 6084
-  time: '2024-03-04T03:56:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/22273
-- author: Plykiya
-  changes:
-  - message: Syringes now prevent injecting on empty and drawing on full.
-    type: Tweak
-  - message: You can now tell if you are being drawn from or injected by a syringe.
-    type: Tweak
-  id: 6085
-  time: '2024-03-04T05:07:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25480
-- author: metalgearsloth
-  changes:
-  - message: Fix expedition FTL.
-    type: Fix
-  id: 6086
-  time: '2024-03-04T06:24:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25823
 - author: Nairodian
   changes:
   - message: Welding masks can now be made in the Autolathe.
@@ -3864,3 +3834,39 @@
   id: 6582
   time: '2024-05-11T02:21:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27891
+- author: Vasilis
+  changes:
+  - message: NPC's activly being controlled by a player wont return to their AI behevior
+      if the player disconnects.
+    type: Fix
+  id: 6583
+  time: '2024-05-11T15:01:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27651
+- author: ShadowCommander
+  changes:
+  - message: Fixed screen freeze in some cases when getting gibbed or butchered.
+    type: Fix
+  id: 6584
+  time: '2024-05-11T15:03:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27617
+- author: DrSmugleaf
+  changes:
+  - message: Bullets no longer hit mobs that are in crit, unless they are directly
+      clicked on while shooting.
+    type: Tweak
+  id: 6585
+  time: '2024-05-11T15:42:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27905
+- author: metalgearsloth
+  changes:
+  - message: Add a reset button to character setup.
+    type: Add
+  - message: Actually get the import / export character buttons working.
+    type: Add
+  - message: Fix performance drop in the eye color picker.
+    type: Fix
+  - message: Fix instances where role timers don't load properly in character setup.
+    type: Fix
+  id: 6586
+  time: '2024-05-11T23:18:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27576

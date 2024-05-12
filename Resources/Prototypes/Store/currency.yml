@@ -11,8 +11,8 @@
   canWithdraw: false
 
 - type: currency
-  id: Magipoints
-  displayName: store-currency-display-magipoints
+  id: WizCoin
+  displayName: store-currency-display-wizcoin
   canWithdraw: false
 
 #debug
