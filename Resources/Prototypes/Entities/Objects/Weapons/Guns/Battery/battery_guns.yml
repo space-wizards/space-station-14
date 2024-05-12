@@ -121,7 +121,7 @@
   - type: ProjectileBatteryAmmoProvider
     proto: TeslaGunBullet
     fireCost: 300
-  - type: StaticPrice #did all of these have static prices before?
+  - type: StaticPrice
     price: 500
 
 # laser rifle
@@ -379,7 +379,7 @@
   - type: HitscanBatteryAmmoProvider
     proto: XrayLaser
     fireCost: 100
-  - type: StaticPrice #were these static prices always here
+  - type: StaticPrice
     price: 500
 
 # disabler
@@ -535,7 +535,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
-    layers: #this layer data could probably be in a magzine visuals template
+    layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-4

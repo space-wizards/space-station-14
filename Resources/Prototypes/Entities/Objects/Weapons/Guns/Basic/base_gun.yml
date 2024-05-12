@@ -13,7 +13,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
 
 # SMALL
-# A basic template for a small gun that is equipped in the belt slot.
+# A basic template for a small gun that can be equipped in the belt slot.
 - type: entity
   abstract: true
   parent: BaseGun
@@ -64,7 +64,7 @@
   - type: HeldSpeedModifier
 
 # WIELDABLE
-# A basic template for a gun that is wieldable and has standard innacuracy when not wielded.
+# A basic template for a gun that is wieldable and has improved accuracy when wielded. Includes a standard innacuracy.
 - type: entity
   abstract: true
   parent: BaseGun
