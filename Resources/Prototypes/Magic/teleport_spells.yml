@@ -8,7 +8,6 @@
   - type: Action
     useDelay: 10
     itemIconStyle: BigAction
-    checkCanAccess: false
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/blink.ogg
     icon:
@@ -18,5 +17,6 @@
     range: 16 # default examine-range.
     # ^ should probably add better validation that the clicked location is on the users screen somewhere,
     repeat: false
+    checkCanAccess: false
   - type: WorldTargetAction
     event: !type:TeleportSpellEvent

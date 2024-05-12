@@ -226,10 +226,10 @@
   - type: Action
     icon: { sprite : Interface/Actions/devour.rsi, state: icon }
     iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
+    priority: 1
   - type: TargetAction
   - type: EntityTargetAction
     event: !type:DevourActionEvent
-    priority: 1
 
 - type: entity
   noSpawn: true

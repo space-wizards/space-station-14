@@ -9,7 +9,6 @@
   - type: Action
     useDelay: 15
     itemIconStyle: BigAction
-    checkCanAccess: false
     raiseOnUser: true
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/fireball.ogg
@@ -18,6 +17,7 @@
       state: fireball
   - type: TargetAction
     range: 60
+    checkCanAccess: false
   - type: WorldTargetAction
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
