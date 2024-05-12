@@ -6,12 +6,11 @@ namespace Content.Server.Ghost.Roles.UI
 {
     public sealed class GhostRolesEui : BaseEui
     {
-        [Dependency] private readonly IEntityManager _e = default!;
-        [Dependency] private readonly GhostRoleSystem _ghostRoleSystem;
+        private readonly GhostRoleSystem _ghostRoleSystem;
 
         public GhostRolesEui()
         {
-            _ghostRoleSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GhostRoleSystem>();
+            _ghostRoleSystem = IoCManager.Resolve<IEntitySystemManager>.GetEntitySystem<GhostRoleSystem>();
         }
 
         public override GhostRolesEuiState GetNewState()
@@ -41,7 +40,7 @@ namespace Content.Server.Ghost.Roles.UI
         {
             base.Closed();
 
-            _e.System<GhostRoleSystem>().CloseEui(Player);
+            _ghostRoleSystem.CloseEui(Player);
         }
     }
 }

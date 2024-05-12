@@ -19,7 +19,6 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
     [Dependency] private readonly EmagProviderSystem _emagProvider = default!;
     [Dependency] private readonly CodeConditionSystem _codeCondition = default!;
     [Dependency] private readonly CommsHackerSystem _commsHacker = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly SharedStunProviderSystem _stunProvider = default!;
     [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
 

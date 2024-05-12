@@ -30,7 +30,6 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Server.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Collections;
 
 namespace Content.Server.Ghost.Roles
