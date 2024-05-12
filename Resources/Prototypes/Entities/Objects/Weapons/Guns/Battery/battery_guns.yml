@@ -105,8 +105,6 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  # - type: Clothing
-  #   sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -569,7 +567,9 @@
 
 # advanced laser pistol
 - type: entity
-  parent: BaseGunBattery
+  parent:
+  - BaseGunSmall
+  - BaseGunBattery
   id: WeaponAdvancedLaser
   name: advanced laser pistol
   description: An experimental high-energy laser pistol with a self-charging nuclear battery.
@@ -584,12 +584,9 @@
       shader: unshaded
   - type: Item
     size: Normal  # Intentionally larger than other pistols
+    shape: null
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
-    quickEquip: false
-    slots:
-    - Belt
-    - suitStorage
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -604,9 +601,6 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 30
-  - type: Tag
-    tags:
-    - Sidearm
   - type: StaticPrice
     price: 63
 
