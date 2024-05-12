@@ -10,7 +10,7 @@ public sealed partial class MessagesCartridgeComponent : Component
     /// The component of the last contacted server
     /// </summary>
     [DataField]
-    public MessagesServerComponent? LastServer = null;
+    public EntityUid? LastServer = null;
 
     /// <summary>
     /// The message system user id of the crew the user is chatting with

@@ -6,13 +6,13 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 public sealed class MessagesUiMessageEvent : CartridgeMessageEvent
 {
     public readonly MessagesUiAction Action;
-    public readonly int? UidInput;
+    public readonly int? TargetChatUid;
     public readonly string? StringInput;
 
-    public MessagesUiMessageEvent(MessagesUiAction action, string? stringInput, int? uidInput)
+    public MessagesUiMessageEvent(MessagesUiAction action, string? stringInput, int? targetChatUid)
     {
         Action = action;
-        UidInput = uidInput;
+        TargetChatUid = targetChatUid;
         StringInput = stringInput;
     }
 }

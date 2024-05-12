@@ -23,16 +23,4 @@ public sealed partial class MessagesServerComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<int, string> NameDict = [];
-
-    ///<summary>
-    /// Delay between updates on the given server.
-    ///</summary>
-    [DataField]
-    public TimeSpan UpdateDelay = TimeSpan.FromSeconds(10);
-
-    ///<summary>
-    /// The next time the server will be updated
-    ///</summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan NextUpdate = TimeSpan.Zero;
 }
