@@ -23,6 +23,6 @@ namespace Content.Server.Body.Components
         public TimeSpan Delay = TimeSpan.FromSeconds(3);
 
         [DataField]
-        public ProtoId<AlertPrototype> Alert = "Internals";
+        public ProtoId<AlertPrototype> InternalsAlert = "Internals";
     }
 }

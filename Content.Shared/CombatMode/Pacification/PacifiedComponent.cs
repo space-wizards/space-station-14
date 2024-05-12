@@ -45,5 +45,5 @@ public sealed partial class PacifiedComponent : Component
     public EntityUid? LastAttackedEntity = null;
 
     [DataField]
-    public ProtoId<AlertPrototype> Alert = "Pacified";
+    public ProtoId<AlertPrototype> PacifiedAlert = "Pacified";
 }

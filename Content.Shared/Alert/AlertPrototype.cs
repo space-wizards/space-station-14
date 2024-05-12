@@ -67,7 +67,7 @@ public sealed partial class AlertPrototype : IPrototype
     /// Maximum severity level supported by this state. -1 (default) indicates
     /// no severity levels are supported by the state.
     /// </summary>
-    [DataField("maxSeverity")]
+    [DataField]
     public short MaxSeverity = -1;
 
     /// <summary>
@@ -79,7 +79,7 @@ public sealed partial class AlertPrototype : IPrototype
     /// Defines what to do when the alert is clicked.
     /// This will always be null on clientside.
     /// </summary>
-    [DataField("onClick", serverOnly: true)]
+    [DataField(serverOnly: true)]
     public IAlertClick? OnClick { get; private set; }
 
     /// <param name="severity">severity level, if supported by this alert</param>

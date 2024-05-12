@@ -19,5 +19,5 @@ public sealed partial class MagbootsComponent : Component
     public bool On;
 
     [DataField]
-    public ProtoId<AlertPrototype> Alert = "Magboots";
+    public ProtoId<AlertPrototype> MagbootsAlert = "Magboots";
 }

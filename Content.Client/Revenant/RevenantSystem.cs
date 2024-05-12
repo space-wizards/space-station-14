@@ -41,7 +41,7 @@ public sealed class RevenantSystem : EntitySystem
 
     private void OnUpdateAlert(Entity<RevenantComponent> ent, ref UpdateAlertSpriteEvent args)
     {
-        if (args.Alert.ID != ent.Comp.Alert)
+        if (args.Alert.ID != ent.Comp.EssenceAlert)
             return;
 
         var sprite = args.SpriteViewEnt.Comp;

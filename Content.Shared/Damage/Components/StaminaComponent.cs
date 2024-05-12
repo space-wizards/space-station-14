@@ -55,5 +55,5 @@ public sealed partial class StaminaComponent : Component
     public TimeSpan NextUpdate = TimeSpan.Zero;
 
     [DataField]
-    public ProtoId<AlertPrototype> Alert = "Stamina";
+    public ProtoId<AlertPrototype> StaminaAlert = "Stamina";
 }

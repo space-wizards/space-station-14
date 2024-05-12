@@ -79,7 +79,7 @@ public sealed partial class StaminaSystem : EntitySystem
         {
             RemCompDeferred<ActiveStaminaComponent>(uid);
         }
-        _alerts.ClearAlert(uid, component.Alert);
+        _alerts.ClearAlert(uid, component.StaminaAlert);
     }
 
     private void OnStartup(EntityUid uid, StaminaComponent component, ComponentStartup args)
@@ -206,7 +206,7 @@ public sealed partial class StaminaSystem : EntitySystem
             return;
 
         var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, component.CritThreshold - component.StaminaDamage), component.CritThreshold, 7);
-        _alerts.ShowAlert(uid, component.Alert, (short) severity);
+        _alerts.ShowAlert(uid, component.StaminaAlert, (short) severity);
     }
 
     /// <summary>

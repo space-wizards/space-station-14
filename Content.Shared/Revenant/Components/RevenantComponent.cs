@@ -202,7 +202,7 @@ public sealed partial class RevenantComponent : Component
     #endregion
 
     [DataField]
-    public ProtoId<AlertPrototype> Alert = "Essence";
+    public ProtoId<AlertPrototype> EssenceAlert = "Essence";
 
     #region Visualizer
     [DataField("state")]

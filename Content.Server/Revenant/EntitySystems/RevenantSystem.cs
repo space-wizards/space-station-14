@@ -141,7 +141,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (TryComp<StoreComponent>(uid, out var store))
             _store.UpdateUserInterface(uid, uid, store);
 
-        _alerts.ShowAlert(uid, component.Alert);
+        _alerts.ShowAlert(uid, component.EssenceAlert);
 
         if (component.Essence <= 0)
         {

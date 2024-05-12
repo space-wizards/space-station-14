@@ -174,6 +174,6 @@ namespace Content.Server.Body.Components
         public TimeSpan StatusTime;
 
         [DataField]
-        public ProtoId<AlertPrototype> Alert = "Bleed";
+        public ProtoId<AlertPrototype> BleedingAlert = "Bleed";
     }
 }

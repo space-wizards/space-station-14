@@ -108,7 +108,7 @@ public sealed class PacificationSystem : EntitySystem
             _actionsSystem.SetEnabled(combatMode.CombatToggleActionEntity, false);
         }
 
-        _alertsSystem.ShowAlert(uid, component.Alert);
+        _alertsSystem.ShowAlert(uid, component.PacifiedAlert);
     }
 
     private void OnShutdown(EntityUid uid, PacifiedComponent component, ComponentShutdown args)
@@ -120,7 +120,7 @@ public sealed class PacificationSystem : EntitySystem
             _combatSystem.SetCanDisarm(uid, true, combatMode);
 
         _actionsSystem.SetEnabled(combatMode.CombatToggleActionEntity, true);
-        _alertsSystem.ClearAlert(uid, component.Alert);
+        _alertsSystem.ClearAlert(uid, component.PacifiedAlert);
     }
 
     private void OnBeforeThrow(Entity<PacifiedComponent> ent, ref BeforeThrowEvent args)
