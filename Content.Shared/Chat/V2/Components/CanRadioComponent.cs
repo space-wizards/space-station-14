@@ -15,7 +15,7 @@ public sealed partial class CanRadioComponent : Component
     public HashSet<string> SendChannels = new();
 
     /// <summary>
-    /// What channels can this entity talk on?
+    /// What channels can this entity receive on?
     /// </summary>
     [DataField("receiveChannels"), AutoNetworkedField]
     public HashSet<string> ReceiveChannels = new();

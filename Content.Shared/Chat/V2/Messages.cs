@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Serialization;
+﻿using Content.Shared.Radio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chat.V2;
 
@@ -59,9 +61,9 @@ public sealed class AttemptLocalChatEvent(NetEntity sender, string message) : Ch
 /// <param name="message">The message sent</param>
 /// <param name="channel">The channel the message is on</param>
 [Serializable, NetSerializable]
-public abstract class RadioAttemptEvent(NetEntity sender, string message, string channel) : ChatAttemptEvent(sender, message)
+public abstract class RadioAttemptEvent(NetEntity sender, string message, ProtoId<RadioChannelPrototype> channel) : ChatAttemptEvent(sender, message)
 {
-    public string Channel = channel;
+    public ProtoId<RadioChannelPrototype> Channel = channel;
 }
 
 /// <summary>

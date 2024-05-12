@@ -43,27 +43,40 @@ public sealed class ContentPlayerData
     public bool Stealthed { get; set; }
 
     /// <summary>
-    /// The rate at which this player has been sending messages. Allows for rate-limiting.
+    /// Tracks how many messages in the player's message budget have been used. Goes up when a message is sent, goes
+    /// down each rate-limiting interval. If this number is too high, messages cannot be sent.
     /// </summary>
-    public int MessageCount;
+    /// <example>
+    /// Urist McSpammer says "I like cheese". This counter increases by one. If this counter reaches the
+    /// message limit specified via the chat.rate_limit_count cvar, the player cannot send any more messages until
+    /// enough time has passed that another attempt allows this value to decrement somewhat.
+    /// </example>
+    public int MessageRateOverTime;
 
     /// <summary>
-    /// The total amount of characters someone has been sending. Allows for rate-limiting.
+    /// Tracks how many consumed characters in the player's character budget have been used. Goes up when a message is
+    /// sent, goes down each rate-limiting interval. If this number is too high, messages cannot be sent.
     /// </summary>
-    public int TotalMessageLength;
+    /// <example>
+    /// Urist McSpammer says "I like cheese". This counter increases by the length of the message. If this
+    /// counter reaches the message limit specified via the chat.max_announcement_length cvar, the player cannot send
+    /// any more messages until enough time has passed that another attempt allows this value to decrement somewhat.
+    /// </example>
+    public int NetMessageLengthOverTime;
 
     /// <summary>
-    /// When the current count for this session expires.
+    /// The time that the current frame-of-reference for chat spam detection expires at. This is increased set by
+    /// the value of the cvar chat.rate_limit_period when the first message is sent after the last period expired.
     /// </summary>
     public TimeSpan MessageCountExpiresAt;
 
     /// <summary>
-    /// Whether rate limiting has been announced to the player
+    /// Whether rate limiting has been announced to the player.
     /// </summary>
     public bool RateLimitAnnouncedToPlayer;
 
     /// <summary>
-    /// When can an announcement to admins next be sent at.
+    /// When an announcement to admins can next be sent at.
     /// </summary>
     public TimeSpan CanAnnounceToAdminsNextAt;
 
