@@ -20,7 +20,6 @@ namespace Content.Server.Radio.EntitySystems;
 
 public sealed class MessagesServerSystem : EntitySystem
 {
-
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly MessagesCartridgeSystem _messagesCartridgeSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
@@ -39,14 +38,14 @@ public sealed class MessagesServerSystem : EntitySystem
     {
         if (!_singletonServerSystem.IsActiveServer(uid))
             return;
-        if (args.Data.TryGetValue<string>("NewName", out var name) && args.Data.TryGetValue<int>("UserId", out var userId))
+        if (args.Data.TryGetValue<string>(MessagesNetworkKeys.NewName, out var name) && args.Data.TryGetValue<int>(MessagesNetworkKeys.UserId, out var userId))
         {
             component.NameDict[userId] = name;
 
             var packet = new NetworkPayload();
             _deviceNetworkSystem.QueuePacket(uid, args.SenderAddress, packet);
         }
-        if (args.Data.TryGetValue<MessagesMessageData>("Message", out var message))
+        if (args.Data.TryGetValue<MessagesMessageData>(MessagesNetworkKeys.Message, out var message))
             SendMessage(uid, component, message);
     }
 
@@ -59,7 +58,7 @@ public sealed class MessagesServerSystem : EntitySystem
 
         var packet = new NetworkPayload()
         {
-            ["Message"] = message
+            [MessagesNetworkKeys.Message] = message
         };
 
         _deviceNetworkSystem.QueuePacket(uid, null, packet);
@@ -105,3 +104,11 @@ public sealed class MessagesServerSystem : EntitySystem
     }
 
 }
+
+public  enum MessagesNetworkKeys : string
+{
+    NewName,
+    UserId,
+    Message
+};
+

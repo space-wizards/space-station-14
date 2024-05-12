@@ -72,7 +72,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
             };
             var packet = new NetworkPayload()
             {
-                ["Message"] = messageData
+                [MessagesNetworkKeys.Message] = messageData
             };
             _singletonServerSystem.TryGetActiveServerAddress<MessagesServerComponent>(stationId.Value, out var address);
             _deviceNetworkSystem.QueuePacket(uid, address, packet);
@@ -121,7 +121,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         if (!TryComp(uid, out CartridgeComponent? cartComponent))
             return;
         component.LastServer = args.Sender;
-        if (args.Data.TryGetValue<MessagesMessageData>("Message", out var message) && cartComponent.LoaderUid != null)
+        if (args.Data.TryGetValue<MessagesMessageData>(MessagesNetworkKeys.Message, out var message) && cartComponent.LoaderUid != null)
         {
             if (message.ReceiverId == GetUserUid(cartComponent))
             {
@@ -150,8 +150,8 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
         var packet = new NetworkPayload()
         {
-            ["UserId"] = userUid,
-            ["NewName"] = name
+            [MessagesNetworkKeys.UserId] = userUid,
+            [MessagesNetworkKeys.NewName] = name
         };
         _deviceNetworkSystem.QueuePacket(uid, address, packet);
     }
