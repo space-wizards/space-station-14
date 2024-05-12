@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nairodian
-  changes:
-  - message: Welding masks can now be made in the Autolathe.
-    type: Add
-  id: 6087
-  time: '2024-03-04T22:36:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25842
 - author: Lawdog
   changes:
   - message: Changed the max volume of shot glasses from 7u to 5u to better represent
@@ -3870,3 +3863,10 @@
   id: 6586
   time: '2024-05-11T23:18:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27576
+- author: nikthechampiongr
+  changes:
+  - message: Fixed records consoles sometimes failing to show crew records.
+    type: Fix
+  id: 6587
+  time: '2024-05-12T15:07:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27883

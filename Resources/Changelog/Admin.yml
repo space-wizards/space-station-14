@@ -213,5 +213,14 @@ Entries:
   id: 27
   time: '2024-05-12T14:35:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27813
+- author: nikthechampiongr
+  changes:
+  - message: Admins are now able to remove station records through the records console
+      interface on their aghost. This will remove the record from the manifest and
+      criminal records as well.
+    type: Add
+  id: 28
+  time: '2024-05-12T15:07:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27883
 Name: Admin
 Order: 1
