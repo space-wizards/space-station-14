@@ -9,6 +9,8 @@ namespace Content.Server.Chat.Commands
     [AnyCommand]
     internal sealed class SuicideCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _e = default!;
+
         public string Command => "suicide";
 
         public string Description => Loc.GetString("suicide-command-description");
@@ -26,7 +28,7 @@ namespace Content.Server.Chat.Commands
             if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
                 return;
 
-            var minds = IoCManager.Resolve<IEntityManager>().System<SharedMindSystem>();
+            var minds = _e.System<SharedMindSystem>();
             // This check also proves mind not-null for at the end when the mob is ghosted.
             if (!minds.TryGetMind(player, out var mindId, out var mind) ||
                 mind.OwnedEntity is not { Valid: true } victim)
@@ -35,8 +37,8 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            var gameTicker = EntitySystem.Get<GameTicker>();
-            var suicideSystem = EntitySystem.Get<SuicideSystem>();
+            var gameTicker = _e.System<GameTicker>();
+            var suicideSystem = _e.System<SuicideSystem>();
             if (suicideSystem.Suicide(victim))
             {
                 // Prevent the player from returning to the body.

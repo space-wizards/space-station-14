@@ -30,7 +30,7 @@ namespace Content.Server.Ghost
                 mind = _entities.GetComponent<MindComponent>(mindId);
             }
 
-            if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mindId, true, true, mind))
+            if (!_entities.System<GameTicker>().OnGhostAttempt(mindId, true, true, mind))
             {
                 shell.WriteLine("You can't ghost right now.");
             }
