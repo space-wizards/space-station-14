@@ -16,51 +16,24 @@ public sealed class RadioChannelValidationSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChatValidationEvent<AttemptEquipmentRadioEvent>>((msg, args) => HandleRadioValidationEvent(msg, args));
-        SubscribeLocalEvent<ChatValidationEvent<AttemptInternalRadioEvent>>((msg, args) => HandleRadioValidationEvent(msg, args));
+        SubscribeLocalEvent<ChatValidationEvent<AttemptEquipmentRadioEvent>>(OnValidateAttemptEquipmentRadioEvent);
+        SubscribeLocalEvent<ChatValidationEvent<AttemptInternalRadioEvent>>(OnValidateAttemptInternalRadioEvent);
     }
 
-    private void HandleRadioValidationEvent(ChatValidationEvent<AttemptEquipmentRadioEvent> msg, EntitySessionEventArgs args)
+    private void OnValidateAttemptEquipmentRadioEvent(ChatValidationEvent<AttemptEquipmentRadioEvent> msg, EntitySessionEventArgs args)
     {
-        if (!_proto.TryIndex<RadioChannelPrototype>(msg.Event.Channel, out _))
-        {
+        if (!_proto.TryIndex(msg.Event.Channel, out _) ||
+            !TryComp<CanRadioUsingEquipmentComponent>(GetEntity(msg.Event.Sender), out var comp) ||
+            !comp.Channels.Contains(msg.Event.Channel))
             msg.Cancel(Loc.GetString(RadioChannelFailed, (RadioChannelKey, msg.Event.Channel)));
-
-            return;
-        }
-
-        if (!TryComp<CanRadioUsingEquipmentComponent>(GetEntity(msg.Event.Sender), out var comp))
-        {
-            msg.Cancel(Loc.GetString(RadioChannelFailed, (RadioChannelKey, msg.Event.Channel)));
-
-            return;
-        }
-
-        if (!comp.Channels.Contains(msg.Event.Channel))
-        {
-            msg.Cancel(Loc.GetString(RadioChannelFailed, (RadioChannelKey, msg.Event.Channel)));
-        }
     }
 
-    private void HandleRadioValidationEvent(ChatValidationEvent<AttemptInternalRadioEvent> msg, EntitySessionEventArgs args)
+    private void OnValidateAttemptInternalRadioEvent(ChatValidationEvent<AttemptInternalRadioEvent> msg, EntitySessionEventArgs args)
     {
-        if (!_proto.TryIndex<RadioChannelPrototype>(msg.Event.Channel, out _))
-        {
+        if (!_proto.TryIndex(msg.Event.Channel, out _) ||
+            !TryComp<CanRadioComponent>(GetEntity(msg.Event.Sender), out var comp) ||
+            !comp.SendChannels.Contains(msg.Event.Channel)
+        )
             msg.Cancel(Loc.GetString(RadioChannelFailed, (RadioChannelKey, msg.Event.Channel)));
-
-            return;
-        }
-
-        if (!TryComp<CanRadioComponent>(GetEntity(msg.Event.Sender), out var comp))
-        {
-            msg.Cancel(Loc.GetString(RadioChannelFailed, (RadioChannelKey, msg.Event.Channel)));
-
-            return;
-        }
-
-        if (!comp.SendChannels.Contains(msg.Event.Channel))
-        {
-            msg.Cancel(Loc.GetString(RadioChannelFailed, (RadioChannelKey, msg.Event.Channel)));
-        }
     }
 }

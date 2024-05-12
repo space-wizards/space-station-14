@@ -42,20 +42,20 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         _whisperFailed = Loc.GetString(WhisperFailed);
         _entityNotOwnedBySender = Loc.GetString(EntityNotOwnedBySender);
 
-        SubscribeNetworkEvent<AttemptDeadChatEvent>(HandleAttemptDeadChat);
-        SubscribeNetworkEvent<AttemptEmoteEvent>(HandleAttemptEmote);
-        SubscribeNetworkEvent<AttemptLocalChatEvent>(HandleAttemptLocalChat);
-        SubscribeNetworkEvent<AttemptLoocEvent>(HandleAttemptLooc);
-        SubscribeNetworkEvent<AttemptEquipmentRadioEvent>(HandleAttemptEquipmentRadio);
-        SubscribeNetworkEvent<AttemptInternalRadioEvent>(HandleAttemptInternalRadio);
-        SubscribeNetworkEvent<AttemptWhisperEvent>(HandleAttemptWhisper);
+        SubscribeNetworkEvent<AttemptDeadChatEvent>(OnAttemptDeadChat);
+        SubscribeNetworkEvent<AttemptEmoteEvent>(OnAttemptEmote);
+        SubscribeNetworkEvent<AttemptLocalChatEvent>(OnAttemptLocalChat);
+        SubscribeNetworkEvent<AttemptLoocEvent>(OnAttemptLooc);
+        SubscribeNetworkEvent<AttemptEquipmentRadioEvent>(OnAttemptEquipmentRadio);
+        SubscribeNetworkEvent<AttemptInternalRadioEvent>(OnAttemptInternalRadio);
+        SubscribeNetworkEvent<AttemptWhisperEvent>(OnAttemptWhisper);
     }
 
-    private void HandleAttemptDeadChat(AttemptDeadChatEvent ev, EntitySessionEventArgs args)
+    private void OnAttemptDeadChat(AttemptDeadChatEvent ev, EntitySessionEventArgs args)
     {
         var entityUid = GetEntity(ev.Sender);
 
-        if (!ValidateMessage(ev, args.SenderSession, out var reason))
+        if (!ValidateMessage(entityUid, ev, args.SenderSession, out var reason))
         {
             RaiseNetworkEvent(new DeadChatFailedEvent(ev.Sender, reason), args.SenderSession);
 
@@ -64,15 +64,11 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
 
         var isAdmin = _admin.IsAdmin(entityUid);
 
-        // Dead Chat doesn't use a sentinel component to control access. Admins can always talk on Dead Chat.
-        if (!isAdmin)
+        // Non-admins can only talk on dead chat if they're a ghost or currently dead.
+        if (!isAdmin && !HasComp<GhostComponent>(entityUid) && !_mobState.IsDead(entityUid))
         {
-            // Non-admins can only talk on dead chat if they're a ghost or currently dead.
-            if (!HasComp<GhostComponent>(entityUid) && !_mobState.IsDead(entityUid))
-            {
-                RaiseNetworkEvent(new DeadChatFailedEvent(ev.Sender, _deadChatFailed),
-                    args.SenderSession);
-            }
+            RaiseNetworkEvent(new DeadChatFailedEvent(ev.Sender, _deadChatFailed),
+                args.SenderSession);
 
             return;
         }
@@ -80,7 +76,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         _repo.Add(new DeadChatCreatedEvent(entityUid, SanitizeMessage(ev), isAdmin));
     }
 
-    private void HandleAttemptEmote(AttemptEmoteEvent ev, EntitySessionEventArgs args)
+    private void OnAttemptEmote(AttemptEmoteEvent ev, EntitySessionEventArgs args)
     {
         if (!ValidateMessage(ev, args.SenderSession, out var reason, _emoteFailed, out CanEmoteComponent? comp))
         {
@@ -92,7 +88,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         _repo.Add(new EmoteCreatedEvent(GetEntity(ev.Sender), SanitizeMessage(ev), comp.Range));
     }
 
-    private void HandleAttemptLocalChat(AttemptLocalChatEvent ev, EntitySessionEventArgs args)
+    private void OnAttemptLocalChat(AttemptLocalChatEvent ev, EntitySessionEventArgs args)
     {
         if (!ValidateMessage(ev, args.SenderSession, out var reason, _localChatFailed, out CanLocalChatComponent? comp))
         {
@@ -104,9 +100,9 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         _repo.Add(new LocalChatCreatedEvent(GetEntity(ev.Sender), SanitizeMessage(ev), comp.Range));
     }
 
-    private void HandleAttemptLooc(AttemptLoocEvent ev, EntitySessionEventArgs args)
+    private void OnAttemptLooc(AttemptLoocEvent ev, EntitySessionEventArgs args)
     {
-        if (!ValidateMessage(ev, args.SenderSession, out var reason))
+        if (!ValidateMessage(GetEntity(ev.Sender), ev, args.SenderSession, out var reason))
         {
             RaiseNetworkEvent(new LoocFailedEvent(ev.Sender, reason), args.SenderSession);
 
@@ -116,7 +112,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         _repo.Add(new LoocCreatedEvent(GetEntity(ev.Sender), SanitizeMessage(ev)));
     }
 
-    private void HandleAttemptEquipmentRadio(AttemptEquipmentRadioEvent ev, EntitySessionEventArgs args)
+    private void OnAttemptEquipmentRadio(AttemptEquipmentRadioEvent ev, EntitySessionEventArgs args)
     {
         if (!ValidateMessage(ev, args.SenderSession, out var reason, _radioFailed,
                 out CanRadioUsingEquipmentComponent? comp))
@@ -129,7 +125,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         _repo.Add(new RadioCreatedEvent(GetEntity(ev.Sender), SanitizeMessage(ev), ev.Channel));
     }
 
-    private void HandleAttemptInternalRadio(AttemptInternalRadioEvent ev, EntitySessionEventArgs args)
+    private void OnAttemptInternalRadio(AttemptInternalRadioEvent ev, EntitySessionEventArgs args)
     {
         if (!ValidateMessage(ev, args.SenderSession, out var reason, _radioFailed, out CanRadioComponent? comp))
         {
@@ -141,7 +137,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         _repo.Add(new RadioCreatedEvent(GetEntity(ev.Sender), SanitizeMessage(ev), ev.Channel));
     }
 
-    private void HandleAttemptWhisper(AttemptWhisperEvent ev, EntitySessionEventArgs args)
+    private void OnAttemptWhisper(AttemptWhisperEvent ev, EntitySessionEventArgs args)
     {
         if (!ValidateMessage(ev, args.SenderSession, out var reason, _whisperFailed, out CanWhisperComponent? comp))
         {
@@ -156,10 +152,8 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
     /// <summary>
     /// Validates messages. Return true means the message is valid.
     /// </summary>
-    private bool ValidateMessage<T>(T ev, ICommonSession player, out string reason) where T : ChatAttemptEvent
+    private bool ValidateMessage<T>(EntityUid entityUid, T ev, ICommonSession player, out string reason) where T : ChatAttemptEvent
     {
-        var entityUid = GetEntity(ev.Sender);
-
         // This check is simple, so we don't need to raise an event for it.
         if (player.AttachedEntity != null || player.AttachedEntity != entityUid)
         {
@@ -209,7 +203,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
 
         var entityUid = GetEntity(ev.Sender);
 
-        if (!ValidateMessage(ev, player, out reason))
+        if (!ValidateMessage(entityUid, ev, player, out reason))
         {
             return false;
         }
@@ -228,7 +222,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
     private string SanitizeMessage<T>(T evt) where T : ChatAttemptEvent
     {
         var sanitize = new ChatSanitizationEvent<T>(evt);
-        RaiseLocalEvent(ref sanitize);
+        RaiseLocalEvent(sanitize);
 
         return sanitize.ChatMessageSanitized ?? sanitize.ChatMessageRaw;
     }

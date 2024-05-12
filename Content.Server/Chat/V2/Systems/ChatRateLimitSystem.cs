@@ -34,10 +34,10 @@ public sealed class ChatRateLimitSystem : EntitySystem
         _configuration.OnValueChanged(CCVars.ChatRateLimitCount, limitCount => _chatRateLimitCount = limitCount, true);
         _configuration.OnValueChanged(CCVars.ChatMaxAnnouncementLength, maxLen => _maxChatMessageLength = maxLen, true);
 
-        SubscribeLocalEvent<ChatValidationEvent<ChatAttemptEvent>>((msg, args) => HandleValidationEvent(msg, args));
+        SubscribeLocalEvent<ChatValidationEvent<ChatAttemptEvent>>((msg, args) => OnValidationEvent(msg, args));
     }
 
-    private void HandleValidationEvent(ChatValidationEvent<ChatAttemptEvent> validationEvent, EntitySessionEventArgs args)
+    private void OnValidationEvent(ChatValidationEvent<ChatAttemptEvent> validationEvent, EntitySessionEventArgs args)
     {
         if (validationEvent.IsCancelled)
             return;
@@ -67,16 +67,16 @@ public sealed class ChatRateLimitSystem : EntitySystem
             data.MessageCountExpiresAt = time + TimeSpan.FromSeconds(_periodLength);
 
             // Backoff from spamming slowly
-            data.MessageCount /= 2;
-            data.TotalMessageLength /= 2;
+            data.MessageRateOverTime /= 2;
+            data.NetMessageLengthOverTime /= 2;
 
             data.RateLimitAnnouncedToPlayer = false;
         }
 
-        data.MessageCount += 1;
-        data.TotalMessageLength += messageLen;
+        data.MessageRateOverTime += 1;
+        data.NetMessageLengthOverTime += messageLen;
 
-        if (data.MessageCount <= _chatRateLimitCount && data.TotalMessageLength <= _maxChatMessageLength)
+        if (data.MessageRateOverTime <= _chatRateLimitCount && data.NetMessageLengthOverTime <= _maxChatMessageLength)
             return false;
 
         // Breached rate limits, inform admins if configured.
