@@ -120,7 +120,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     {
         if (!TryComp(uid, out CartridgeComponent? cartComponent))
             return;
-        UpdateName(cartComponent);
+        component.LastServer = args.Sender;
         if (args.Data.TryGetValue<MessagesMessageData>("Message", out var message) && cartComponent.LoaderUid != null)
         {
             if (message.ReceiverId == GetUserUid(cartComponent))
@@ -143,13 +143,17 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     /// <summary>
     /// Updates the user's name in the storage component.
     /// </summary>
-    private void UpdateName(EntityUid uid, MessagesCartridgeComponent component, CartridgeComponent cartComponent, string? address)
+    private void SendName(EntityUid uid, MessagesCartridgeComponent component, CartridgeComponent cartComponent, string? address)
     {
         TryGetUserName(cartComponent, out var name);
         var userUid = GetUserUid(cartComponent);
-        var frequency = GetFrequency(uid);
 
-        if (userUid !=)
+        var packet = new NetworkPayload()
+        {
+            ["UserId"] = userUid,
+            ["NewName"] = name
+        };
+        _deviceNetworkSystem.QueuePacket(uid, address, packet);
     }
 
     /// <summary>
