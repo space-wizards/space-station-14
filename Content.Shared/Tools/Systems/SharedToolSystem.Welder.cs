@@ -16,7 +16,7 @@ public abstract partial class SharedToolSystem
     {
         SubscribeLocalEvent<WelderComponent, ExaminedEvent>(OnWelderExamine);
         SubscribeLocalEvent<WelderComponent, AfterInteractEvent>(OnWelderAfterInteract);
-        SubscribeLocalEvent<WelderComponent, DoAfterAttemptEvent<ToolDoAfterEvent>>(OnWelderToolUseAttempt);
+        SubscribeLocalEvent<WelderComponent, ToolUseAttemptEvent>(OnWelderToolUseAttempt);
         SubscribeLocalEvent<WelderComponent, ToolDoAfterEvent>(OnWelderDoAfter);
         SubscribeLocalEvent<WelderComponent, ItemToggledEvent>(OnToggle);
         SubscribeLocalEvent<WelderComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
@@ -120,9 +120,9 @@ public abstract partial class SharedToolSystem
         }
     }
 
-    private void OnWelderToolUseAttempt(Entity<WelderComponent> entity, ref DoAfterAttemptEvent<ToolDoAfterEvent> args)
+    private void OnWelderToolUseAttempt(Entity<WelderComponent> entity, ref ToolUseAttemptEvent args)
     {
-        var user = args.DoAfter.Args.User;
+        var user = args.User;
 
         if (!ItemToggle.IsActivated(entity.Owner))
         {
@@ -133,7 +133,7 @@ public abstract partial class SharedToolSystem
 
         var (fuel, _) = GetWelderFuelAndCapacity(entity);
 
-        if (args.Event.Fuel > fuel)
+        if (args.Fuel > fuel)
         {
             _popup.PopupClient(Loc.GetString("welder-component-cannot-weld-message"), entity, user);
             args.Cancel();
