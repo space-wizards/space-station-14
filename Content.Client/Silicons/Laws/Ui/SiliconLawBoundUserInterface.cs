@@ -46,12 +46,10 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
         if (_laws != null && _laws.Count == msg.Laws.Count)
         {
             var isSame = true;
-            msg.Laws.Sort();
-            for (var i = 0; i < _laws.Count; i++)
+            foreach (var law in msg.Laws)
             {
-                if (_laws[i].LawString == msg.Laws[i].LawString)
+                if (_laws.Contains(law))
                     continue;
-
                 isSame = false;
                 break;
             }
@@ -61,7 +59,6 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
         }
 
         _laws = msg.Laws.ToList();
-        _laws.Sort();
 
         _menu?.Update(_owner, msg);
     }
