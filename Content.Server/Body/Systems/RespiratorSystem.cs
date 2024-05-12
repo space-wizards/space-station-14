@@ -175,7 +175,7 @@ public sealed class RespiratorSystem : EntitySystem
             var organs = _bodySystem.GetBodyOrganComponents<LungComponent>(ent);
             foreach (var (comp, _) in organs)
             {
-                _alertsSystem.ShowAlert(ent, comp.AsphyxiationAlert);
+                _alertsSystem.ShowAlert(ent, comp.Alert);
             }
         }
 
@@ -191,7 +191,7 @@ public sealed class RespiratorSystem : EntitySystem
         var organs = _bodySystem.GetBodyOrganComponents<LungComponent>(ent);
         foreach (var (comp, _) in organs)
         {
-            _alertsSystem.ClearAlert(ent, comp.AsphyxiationAlert);
+            _alertsSystem.ClearAlert(ent, comp.Alert);
         }
 
         _damageableSys.TryChangeDamage(ent, ent.Comp.DamageRecovery);

@@ -33,5 +33,5 @@ public sealed partial class LungComponent : Component
     /// The type of gas this lung needs. Used only for the breathing alerts, not actual metabolism.
     /// </summary>
     [DataField]
-    public ProtoId<AlertPrototype> AsphyxiationAlert = "LowOxygen";
+    public ProtoId<AlertPrototype> Alert = "LowOxygen";
 }
