@@ -201,5 +201,17 @@ Entries:
   id: 26
   time: '2024-05-02T06:23:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24945
+- author: pissdemon
+  changes:
+  - message: Players frozen by admins can no longer use the "ghost" or "suicide" console
+      commands.
+    type: Tweak
+  - message: Added a "Freeze And Mute" admin verb. In addition to acting like Freeze,
+      it will mute the targeted player, which prevents them from speaking or emoting
+      until unfrozen. It can also be used on already frozen but not yet muted players.
+    type: Add
+  id: 27
+  time: '2024-05-12T14:35:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27813
 Name: Admin
 Order: 1
