@@ -32,45 +32,6 @@ public sealed class MessagesServerSystem : EntitySystem
         SubscribeLocalEvent<MessagesServerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
     }
 
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        var serverQuery = EntityQueryEnumerator<MessagesServerComponent>();
-        while (serverQuery.MoveNext(out var uid, out var server))
-        {
-            if (!_singletonServerSystem.IsActiveServer(uid))
-                continue;
-            if (server.NextUpdate <= _gameTiming.CurTime)
-            {
-                server.NextUpdate += server.UpdateDelay;
-
-                Update(uid, server);
-            }
-        }
-    }
-
-    public void Update(EntityUid uid, MessagesServerComponent component)
-    {
-        if (!this.IsPowered(uid, EntityManager))
-            return;
-
-        var serverQuery = EntityManager.AllEntityQueryEnumerator<MessagesServerComponent>();
-
-        while (serverQuery.MoveNext(out var serverUid, out var serverComponent))
-        {
-            component.Messages = new List<MessagesMessageData>(component.Messages.Union(serverComponent.Messages));
-            serverComponent.Messages = new List<MessagesMessageData>(component.Messages);
-        }
-
-        var packet = new NetworkPayload()
-        {
-            ["NameQuery"] = true,
-            ["ServerComponent"] = component
-        };
-        _deviceNetworkSystem.QueuePacket(uid, null, packet);
-    }
-
     /// <summary>
     /// Reacts to packets received from clients
     /// </summary>
@@ -79,7 +40,12 @@ public sealed class MessagesServerSystem : EntitySystem
         if (!_singletonServerSystem.IsActiveServer(uid))
             return;
         if (args.Data.TryGetValue<string>("NewName", out var name) && args.Data.TryGetValue<int>("UserId", out var userId))
+        {
             component.NameDict[userId] = name;
+
+            var packet = new NetworkPayload();
+            _deviceNetworkSystem.QueuePacket(uid, args.SenderAddress, packet);
+        }
         if (args.Data.TryGetValue<MessagesMessageData>("Message", out var message))
             SendMessage(uid, component, message);
     }
@@ -93,8 +59,7 @@ public sealed class MessagesServerSystem : EntitySystem
 
         var packet = new NetworkPayload()
         {
-            ["Message"] = message,
-            ["ServerComponent"] = component
+            ["Message"] = message
         };
 
         _deviceNetworkSystem.QueuePacket(uid, null, packet);
@@ -103,26 +68,39 @@ public sealed class MessagesServerSystem : EntitySystem
     /// <summary>
     /// Returns the name of a given user
     /// </summary>
-    public string GetNameFromDict(MessagesServerComponent component, int key)
+    public bool TryGetNameFromDict(EntityUid? uid, int key, out string name)
     {
-        if (component.NameDict.TryGetValue(key, out var value))
-            return value;
-        return Loc.GetString("messages-pda-user-missing");
+        if (!TryComp(uid, out MessagesServerComponent? component))
+        {
+            name = Loc.GetString("messages-pda-connection-error");
+            return false;
+        }
+        if (component.NameDict.TryGetValue(key, out var keyValue))
+        {
+            name = keyValue;
+            return true;
+        }
+        name = Loc.GetString("messages-pda-user-missing");
+        return false;
     }
 
     /// <summary>
     /// Returns the name dictionary cache
     /// </summary>
-    public Dictionary<int, string> GetNameDict(MessagesServerComponent component)
+    public Dictionary<int, string> GetNameDict(EntityUid? uid)
     {
+        if (!TryComp(uid, out MessagesServerComponent? component))
+            return new Dictionary<int, string>();
         return component.NameDict;
     }
 
     /// <summary>
     /// Returns list of messages between the two users
     /// </summary>
-    public List<MessagesMessageData> GetMessages(MessagesServerComponent component, int id1, int id2)
+    public List<MessagesMessageData> GetMessages(EntityUid? uid, int id1, int id2)
     {
+        if (!TryComp(uid, out MessagesServerComponent? component))
+            return new List<MessagesMessageData>();
         return new List<MessagesMessageData>(component.Messages.Where(message => message.SenderId == id1 && message.ReceiverId == id2 || message.SenderId == id2 && message.ReceiverId == id1));
     }
 

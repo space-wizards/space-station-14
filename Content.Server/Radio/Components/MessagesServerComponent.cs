@@ -13,26 +13,8 @@ namespace Content.Server.Radio.Components;
 public sealed partial class MessagesServerComponent : Component
 {
     /// <summary>
-    /// The list of messages cached by the server.
+    /// Connected message storage entity.
     /// </summary>
     [DataField]
-    public List<MessagesMessageData> Messages = [];
-
-    /// <summary>
-    /// Dictionary translating uids to readable names
-    /// </summary>
-    [DataField]
-    public Dictionary<int, string> NameDict = [];
-
-    ///<summary>
-    /// Delay between updates on the given server.
-    ///</summary>
-    [DataField]
-    public TimeSpan UpdateDelay = TimeSpan.FromSeconds(10);
-
-    ///<summary>
-    /// The next time the server will be updated
-    ///</summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan NextUpdate = TimeSpan.Zero;
+    EntityUid? MessageStorage;
 }

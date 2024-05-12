@@ -27,13 +27,13 @@ public sealed partial class MessagesUi : UIFragment
         if (state is not MessagesUiState messagesState)
             return;
 
-        _fragment?.UpdateState(messagesState.Mode, messagesState.Contents, messagesState.Name);
+        _fragment.UpdateState(messagesState.Mode, messagesState.Contents, messagesState.Name);
     }
 
     private void SendMessagesMessage(MessagesUiAction action, string? stringInput, int? uidInput, BoundUserInterface userInterface)
     {
-        var MessagesMessage = new MessagesUiMessageEvent(action, stringInput, uidInput);
-        var message = new CartridgeUiMessage(MessagesMessage);
+        var messagesMessage = new MessagesUiMessageEvent(action, stringInput, uidInput);
+        var message = new CartridgeUiMessage(messagesMessage);
         userInterface.SendMessage(message);
     }
 }
