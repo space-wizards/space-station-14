@@ -266,12 +266,14 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void UnloadButton()
     {
-        ActionButton.OnPressed -= ActionButtonPressed;
+        if (ActionButton != null)
+            ActionButton.OnPressed -= ActionButtonPressed;
     }
 
     public void LoadButton()
     {
-        ActionButton.OnPressed += ActionButtonPressed;
+        if (ActionButton != null)
+            ActionButton.OnPressed += ActionButtonPressed;
     }
 
     private void OnWindowOpened()
