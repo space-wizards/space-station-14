@@ -29,7 +29,7 @@ on:
 jobs:
   build:
     name: Test Packaging
-    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false && github.actor != 'DeltaV-Bot'
     runs-on: ubuntu-latest
 
     steps:

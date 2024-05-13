@@ -10,12 +10,12 @@ on:
 
 jobs:
   Label:
-    if: ( github.event.pull_request.draft == false ) && ( github.actor != 'PJBot' )
+    if: ( github.event.pull_request.draft == false ) && ( github.actor != 'PJBot' ) && ( github.actor != 'DeltaV-Bot' )
     runs-on: ubuntu-latest
     steps:
       - name: Check for Merge Conflicts
         uses: eps1lon/actions-label-merge-conflict@v3.0.0
         with:
-          dirtyLabel: "Merge Conflict"
+          dirtyLabel: "Status: Merge Conflict"
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           commentOnDirty: "This pull request has conflicts, please resolve those before we can evaluate the pull request."
