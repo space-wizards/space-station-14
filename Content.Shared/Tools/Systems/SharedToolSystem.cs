@@ -131,7 +131,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (!Resolve(tool, ref toolComponent, false))
             return false;
 
-        if (!CanStartToolUse(tool, user, target, fuel, toolQualitiesNeeded, toolComponent))
+        if (!CanStartToolUse(tool, user, target, fuel, toolQualitiesNeeded, out var needsFuel, toolComponent))
             return false;
 
         var toolEvent = new ToolDoAfterEvent(fuel, doAfterEv, GetNetEntity(target));
@@ -141,7 +141,7 @@ public abstract partial class SharedToolSystem : EntitySystem
             BreakOnMove = true,
             BreakOnWeightlessMove = false,
             NeedHand = tool != user,
-            AttemptFrequency = fuel > 0 ? AttemptFrequency.EveryTick : AttemptFrequency.Never
+            AttemptFrequency = fuel > 0 || needsFuel ? AttemptFrequency.EveryTick : AttemptFrequency.Never
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
@@ -201,8 +201,10 @@ public abstract partial class SharedToolSystem : EntitySystem
         return Resolve(uid, ref tool, false) && tool.Qualities.ContainsAll(qualities);
     }
 
-    private bool CanStartToolUse(EntityUid tool, EntityUid user, EntityUid? target, float fuel, IEnumerable<string> toolQualitiesNeeded, ToolComponent? toolComponent = null)
+    private bool CanStartToolUse(EntityUid tool, EntityUid user, EntityUid? target, float fuel, IEnumerable<string> toolQualitiesNeeded, out bool requiresFuel, ToolComponent? toolComponent = null)
     {
+        requiresFuel = false;
+
         if (!Resolve(tool, ref toolComponent))
             return false;
 
@@ -217,10 +219,14 @@ public abstract partial class SharedToolSystem : EntitySystem
             return false;
 
         // check if the tool allows being used
-        var beforeAttempt = new ToolUseAttemptEvent(user, fuel);
+        var beforeAttempt = new ToolUseAttemptEvent(user);
         RaiseLocalEvent(tool, beforeAttempt);
         if (beforeAttempt.Cancelled)
             return false;
+
+        // check if fuel is needed - aka if we're dealing with a welder
+        if (HasComp<WelderComponent>(tool))
+            requiresFuel = true;
 
         // check if the target allows using the tool
         if (target != null && target != tool)

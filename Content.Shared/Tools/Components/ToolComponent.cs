@@ -28,12 +28,10 @@ namespace Content.Shared.Tools.Components
     public sealed class ToolUseAttemptEvent : CancellableEntityEventArgs
     {
         public EntityUid User { get; }
-        public float Fuel { get; }
 
-        public ToolUseAttemptEvent(EntityUid user, float fuel = 0)
+        public ToolUseAttemptEvent(EntityUid user)
         {
             User = user;
-            Fuel = fuel;
         }
     }
 
