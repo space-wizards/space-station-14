@@ -6,7 +6,7 @@
   name: shelf
   description: a strange place to place, well, anything really. You feel like you shouldn't be seeing this.'
   components:
-  # make reinforced have lock layers (also make proto's with various lock presets like with windoors)
+  # make proto's with various lock presets like with windoors
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Storage/Shelfs/wood.rsi
@@ -229,7 +229,7 @@
           SheetPlasteel1:
             min: 2
             max: 3
-          ShardGlass: #make drop shards, rods, and double check items
+          ShardGlass:
             min: 1
             max: 2
           PartRodMetal1:
