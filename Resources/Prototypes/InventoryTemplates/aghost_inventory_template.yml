@@ -41,6 +41,9 @@
       uiWindowPos: 1,0
       strippingWindowPos: 1,3
       displayName: Shoes
+      whitelist:
+        tags:
+          - GhostFeet   
     
     # Durk wants ghost gloves    
     - name: gloves
@@ -48,4 +51,4 @@
       slotFlags: GLOVES
       uiWindowPos: 2,1
       strippingWindowPos: 2,2
-      displayName: Gloves  
+      displayName: Gloves    

@@ -627,6 +627,9 @@
 
 - type: Tag
   id: GeigerCounter
+  
+- type: Tag
+  id: GhostFeet  # Neptune + others, set ghost socks here
 
 - type: Tag
   id: GlassAirlock

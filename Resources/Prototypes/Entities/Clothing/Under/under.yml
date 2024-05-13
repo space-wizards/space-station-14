@@ -416,6 +416,9 @@
     sprite: Clothing/Under/GhostSocks/StrippedDookiebrown.rsi
   - type: Clothing
     sprite: Clothing/Under/GhostSocks/StrippedDookiebrown.rsi
+  - type: Tag
+    tags:
+    -  GhostFeet
 
 - type: entity
   parent: ClothingUnderSocksBase
@@ -428,6 +431,9 @@
     sprite: Clothing/Under/GhostSocks/StrippedHotpink.rsi
   - type: Clothing
     sprite: Clothing/Under/GhostSocks/StrippedHotpink.rsi
+  - type: Tag
+    tags:
+    -  GhostFeet
 
 - type: entity
   parent: ClothingUnderSocksBase
