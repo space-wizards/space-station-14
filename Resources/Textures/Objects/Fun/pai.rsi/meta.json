@@ -38,6 +38,30 @@
       ]
     },
     {
+        "name": "command-icon-pai-off"
+      },
+      {
+        "name": "command-pai-off-overlay"
+      },
+      {
+        "name": "command-pai-on-overlay",
+        "delays": [
+          [
+            0.8,
+            0.8
+          ]
+        ]
+      },
+      {
+        "name": "command-pai-searching-overlay",
+        "delays": [
+        [
+          0.8,
+          0.8
+        ]
+       ]
+    },
+    {
       "name": "syndicate-icon-pai-off"
     },
     {
