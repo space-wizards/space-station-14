@@ -1,4 +1,5 @@
 using Content.Server.Explosion.Components.OnTrigger;
+using Content.Shared.Explosion;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 
