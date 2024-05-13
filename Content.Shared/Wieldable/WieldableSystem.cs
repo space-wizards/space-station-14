@@ -154,7 +154,7 @@ public sealed class WieldableSystem : EntitySystem
             return false;
         }
 
-        if (hands.Count < component.FreeHandsRequired)
+        if (_handsSystem.CountFreeableHands((user, hands)) < component.FreeHandsRequired)
         {
             if (!quiet)
             {
