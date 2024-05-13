@@ -15,7 +15,9 @@
         Slash: 0.80
         Piercing: 0.80
         Heat: 0.80
+  - type: HideLayerClothing
+    slots:
+    - Hair
   - type: Tag
     tags:
     - WhitelistChameleon
-    - HidesHair

@@ -25,9 +25,10 @@
     radius: 1.2
     energy: 3.8
     color: "#EBAB34"
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   parent: ClothingHeadBase
@@ -39,9 +40,9 @@
     sprite: GreyStation/Clothing/Head/Misc/gigapompodour.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Head/Misc/gigapompodour.rsi
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
 
 - type: entity
   parent: ClothingHeadBase
@@ -58,9 +59,9 @@
   - type: Item
     sprite: GreyStation/Clothing/Head/Misc/gigapompodour.rsi
     heldPrefix: blonde
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
 
 - type: entity
   parent: ClothingHeadBase
@@ -72,9 +73,10 @@
     sprite: GreyStation/Clothing/Head/Misc/gorillamask.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Head/Misc/gorillamask.rsi
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   parent: ClothingHeadBase
@@ -86,9 +88,10 @@
     sprite: GreyStation/Clothing/Head/Misc/cowmask.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Head/Misc/cowmask.rsi
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   parent: ClothingHeadBase
@@ -100,9 +103,10 @@
     sprite: GreyStation/Clothing/Head/Misc/pigmask.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Head/Misc/pigmask.rsi
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   parent: ClothingHeadBase
@@ -114,9 +118,10 @@
     sprite: GreyStation/Clothing/Head/Misc/xeno_helm.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Head/Misc/xeno_helm.rsi
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   parent: ClothingHeadBase
@@ -128,9 +133,10 @@
     sprite: GreyStation/Clothing/Head/Misc/lobster_helm.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Head/Misc/lobster_helm.rsi
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   parent: ClothingHeadBase
@@ -142,6 +148,22 @@
     sprite: GreyStation/Clothing/Head/Misc/nemes_headdress.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Head/Misc/nemes_headdress.rsi
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRobCop
+  name: robocop hat
+  description: A robotic head-piece with a single visor.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/robcop_helm.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/robcop_helm.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
