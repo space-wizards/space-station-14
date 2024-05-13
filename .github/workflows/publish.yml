@@ -52,9 +52,10 @@ jobs:
     - name: Upload files to centcomm
       uses: appleboy/scp-action@master
       with:
-        host: centcomm.spacestation14.io
-        username: wizards-build-push
-        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
+        host: ${{ secrets.PUBLISH_HOST }}
+        username: ${{ secrets.PUBLISH_USER }}
+        key: ${{ secrets.PUBLISH_KEY }}
+        port: ${{ secrets.PUBLISH_PORT }}
         source: "release/${{ github.sha }}"
         target: "/home/wizards-build-push/builds_dir/builds/"
         strip_components: 1
@@ -62,9 +63,10 @@ jobs:
     - name: Update manifest JSON
       uses: appleboy/ssh-action@master
       with:
-        host: centcomm.spacestation14.io
-        username: wizards-build-push
-        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
+        host: ${{ secrets.PUBLISH_HOST }}
+        username: ${{ secrets.PUBLISH_USER }}
+        key: ${{ secrets.PUBLISH_KEY }}
+        port: ${{ secrets.PUBLISH_PORT }}
         script: /home/wizards-build-push/push.ps1 ${{ github.sha }}
 
     - name: Publish changelog (Discord)
