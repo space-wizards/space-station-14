@@ -9,6 +9,8 @@ namespace Content.Server.Alert.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class ClearAlert : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _e = default!;
+
         public string Command => "clearalert";
         public string Description => "Clears an alert for a player, defaulting to current player";
         public string Help => "clearalert <alertType> <name or userID, omit for current player>";
@@ -30,14 +32,14 @@ namespace Content.Server.Alert.Commands
                 if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
+            if (!_e.TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
             {
                 shell.WriteLine("user has no alerts component");
                 return;
             }
 
             var alertType = args[0];
-            var alertsSystem = EntitySystem.Get<AlertsSystem>();
+            var alertsSystem = _e.System<AlertsSystem>();
             if (!alertsSystem.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
             {
                 shell.WriteLine("unrecognized alertType " + alertType);

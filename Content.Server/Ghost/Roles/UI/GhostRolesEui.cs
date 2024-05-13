@@ -40,7 +40,7 @@ namespace Content.Server.Ghost.Roles.UI
         {
             base.Closed();
 
-            EntitySystem.Get<GhostRoleSystem>().CloseEui(Player);
+            _ghostRoleSystem.CloseEui(Player);
         }
     }
 }
