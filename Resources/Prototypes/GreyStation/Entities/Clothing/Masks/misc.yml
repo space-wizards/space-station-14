@@ -11,6 +11,9 @@
     sprite: GreyStation/Clothing/Mask/hockey_mask.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Mask/hockey_mask.rsi
+  - type: HideLayerClothing
+    slots:
+    - Snout
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -25,6 +28,9 @@
     sprite: GreyStation/Clothing/Mask/retro_hockey_mask.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Mask/retro_hockey_mask.rsi
+  - type: HideLayerClothing
+    slots:
+    - Snout
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -114,7 +120,9 @@
   - type: BreathMask
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Snout
   - type: Tag
     tags:
     - WhitelistChameleon
-    - HidesNose

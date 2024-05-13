@@ -45,3 +45,16 @@
     clothingPrototype: ClothingHoodAmongGrande
   - type: TypingIndicatorClothing
     proto: lawyer
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterRobCopSuit
+  name: robocop suit
+  description: A robotic suit. More machine than man when you put this on!
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Misc/robcopsuit.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Misc/robcopsuit.rsi
+  - type: TypingIndicatorClothing
+    proto: robot
