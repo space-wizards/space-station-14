@@ -58,7 +58,7 @@ public sealed class PayloadSystem : EntitySystem
         // Pass trigger event onto all contained payloads. Payload capacity configurable by construction graphs.
         foreach (var ent in GetAllPayloads(uid, contMan))
         {
-            RaiseLocalEvent(ent, args, false);
+            RaiseLocalEvent(ent, ref args, false);
         }
     }
 
@@ -73,7 +73,7 @@ public sealed class PayloadSystem : EntitySystem
         // Ensure we don't enter a trigger-loop
         DebugTools.Assert(!_tagSystem.HasTag(uid, "Payload"));
 
-        RaiseLocalEvent(parent, args, false);
+        RaiseLocalEvent(parent, ref args, false);
     }
 
     private void OnEntityInserted(EntityUid uid, PayloadCaseComponent _, EntInsertedIntoContainerMessage args)
