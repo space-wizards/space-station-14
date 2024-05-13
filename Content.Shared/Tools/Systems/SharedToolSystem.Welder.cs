@@ -126,7 +126,7 @@ public abstract partial class SharedToolSystem
 
         if (!ItemToggle.IsActivated(entity.Owner))
         {
-            _popup.PopupClient(Loc.GetString("welder-component-welder-not-lit-message"), entity, user);
+            _popup.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), entity, user);
             args.Cancel();
             return;
         }
@@ -135,7 +135,7 @@ public abstract partial class SharedToolSystem
 
         if (args.Fuel > fuel)
         {
-            _popup.PopupClient(Loc.GetString("welder-component-cannot-weld-message"), entity, user);
+            _popup.PopupEntity(Loc.GetString("welder-component-cannot-weld-message"), entity, user);
             args.Cancel();
         }
     }
