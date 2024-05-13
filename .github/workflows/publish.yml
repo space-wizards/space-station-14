@@ -57,7 +57,7 @@ jobs:
         key: ${{ secrets.PUBLISH_KEY }}
         port: ${{ secrets.PUBLISH_PORT }}
         source: "release/${{ github.sha }}"
-        target: "/var/www/builds.delta-v.org/delta-v/builds/"
+        target: "/home/wizards-build-push/builds_dir/builds/"
         strip_components: 1
 
     - name: Update manifest JSON
@@ -67,7 +67,7 @@ jobs:
         username: ${{ secrets.PUBLISH_USER }}
         key: ${{ secrets.PUBLISH_KEY }}
         port: ${{ secrets.PUBLISH_PORT }}
-        script: /home/deltav/publish/push.ps1 ${{ github.sha }}
+        script: /home/wizards-build-push/push.ps1 ${{ github.sha }}
 
     - name: Publish changelog (Discord)
       run: Tools/actions_changelogs_since_last_run.py
