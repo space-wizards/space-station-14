@@ -16,7 +16,6 @@ using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Shared.Wieldable;
 
@@ -155,7 +154,7 @@ public sealed class WieldableSystem : EntitySystem
             return false;
         }
 
-        if (hands.CountFreeHands() < component.FreeHandsRequired)
+        if (hands.Count < component.FreeHandsRequired)
         {
             if (!quiet)
             {
@@ -198,7 +197,7 @@ public sealed class WieldableSystem : EntitySystem
 
         for (var i = 0; i < component.FreeHandsRequired; i++)
         {
-            _virtualItemSystem.TrySpawnVirtualItemInHand(used, user);
+            _virtualItemSystem.TrySpawnVirtualItemInHand(used, user, true);
         }
 
         if (TryComp(used, out UseDelayComponent? useDelay)

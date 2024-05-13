@@ -76,18 +76,40 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     /// </summary>
     /// <param name="blockingEnt">The entity we will make a virtual entity copy of</param>
     /// <param name="user">The entity that we want to insert the virtual entity</param>
-    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user)
+    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, bool dropOthers = false)
     {
-        return TrySpawnVirtualItemInHand(blockingEnt, user, out _);
+        return TrySpawnVirtualItemInHand(blockingEnt, user, out _, dropOthers);
     }
 
-    /// <inheritdoc cref="TrySpawnVirtualItemInHand(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid)"/>
-    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem)
+    /// <inheritdoc cref="TrySpawnVirtualItemInHand(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,bool)"/>
+    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem, bool dropOthers = false)
     {
-        if (!TrySpawnVirtualItem(blockingEnt, user, out virtualItem) || !_handsSystem.TryGetEmptyHand(user, out var hand))
+        virtualItem = null;
+        if (!_handsSystem.TryGetEmptyHand(user, out var empty))
+        {
+            if (!dropOthers)
+                return false;
+
+            foreach (var hand in _handsSystem.EnumerateHands(user))
+            {
+                if (hand.HeldEntity == blockingEnt || HasComp<VirtualItemComponent>(hand.HeldEntity))
+                    continue;
+
+                if (!_handsSystem.TryDrop(user, hand))
+                    continue;
+
+                empty = hand;
+                break;
+            }
+        }
+
+        if (empty == null)
             return false;
 
-        _handsSystem.DoPickup(user, hand, virtualItem.Value);
+        if (!TrySpawnVirtualItem(blockingEnt, user, out virtualItem, dropOthers))
+            return false;
+
+        _handsSystem.DoPickup(user, empty, virtualItem.Value);
         return true;
     }
 
@@ -178,7 +200,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     /// </summary>
     /// <param name="blockingEnt">The entity we will make a virtual entity copy of</param>
     /// <param name="user">The entity that we want to insert the virtual entity</param>
-    public bool TrySpawnVirtualItem(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem)
+    public bool TrySpawnVirtualItem(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem, bool dropOthers = false)
     {
         if (_netManager.IsClient)
         {
