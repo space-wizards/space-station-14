@@ -71,11 +71,13 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     }
 
     #region Hands
+
     /// <summary>
     /// Spawns a virtual item in a empty hand
     /// </summary>
     /// <param name="blockingEnt">The entity we will make a virtual entity copy of</param>
     /// <param name="user">The entity that we want to insert the virtual entity</param>
+    /// <param name="dropOthers">Whether or not to try and drop other items to make space</param>
     public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, bool dropOthers = false)
     {
         return TrySpawnVirtualItemInHand(blockingEnt, user, out _, dropOthers);
@@ -142,6 +144,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     /// <param name="blockingEnt">The entity we will make a virtual entity copy of</param>
     /// <param name="user">The entity that we want to insert the virtual entity</param>
     /// <param name="slot">The slot to which we will insert the virtual entity (could be the "shoes" slot, for example)</param>
+    /// <param name="force">Whether or not to force an equip</param>
     public bool TrySpawnVirtualItemInInventory(EntityUid blockingEnt, EntityUid user, string slot, bool force = false)
     {
         return TrySpawnVirtualItemInInventory(blockingEnt, user, slot, force, out _);
@@ -162,6 +165,8 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     /// that's done check if the found virtual entity is a copy of our matching entity,
     /// if it is, delete it
     /// </summary>
+    /// <param name="user">The entity that we want to delete the virtual entity from</param>
+    /// <param name="matching">The entity that made the virtual entity</param>
     /// <param name="slotName">Set this param if you have the name of the slot, it avoids unnecessary queries</param>
     public void DeleteInSlotMatching(EntityUid user, EntityUid matching, string? slotName = null)
     {
@@ -200,6 +205,8 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     /// </summary>
     /// <param name="blockingEnt">The entity we will make a virtual entity copy of</param>
     /// <param name="user">The entity that we want to insert the virtual entity</param>
+    /// <param name="virtualItem">The virtual item, if spawned</param>
+    /// <param name="dropOthers">Whether or not to try and drop other items to make space</param>
     public bool TrySpawnVirtualItem(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem, bool dropOthers = false)
     {
         if (_netManager.IsClient)
