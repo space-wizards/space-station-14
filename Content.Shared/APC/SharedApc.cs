@@ -210,7 +210,7 @@ namespace Content.Shared.APC
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(MainBreaker, HasAccess, Power, (int)ApcExternalPower, Charge);
+            return HashCode.Combine(MainBreaker, HasAccess, Power, (int) ApcExternalPower, Charge);
         }
     }
 
@@ -219,7 +219,7 @@ namespace Content.Shared.APC
     {
     }
 
-    public enum ApcExternalPowerState
+    public enum ApcExternalPowerState : byte
     {
         None,
         Low,
@@ -227,7 +227,7 @@ namespace Content.Shared.APC
     }
 
     [NetSerializable, Serializable]
-    public enum ApcUiKey
+    public enum ApcUiKey : byte
     {
         Key,
     }
