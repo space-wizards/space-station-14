@@ -195,9 +195,21 @@ public sealed class WieldableSystem : EntitySystem
         if (component.WieldSound != null)
             _audioSystem.PlayPredicted(component.WieldSound, used, user);
 
+        var virtuals = new List<EntityUid>();
         for (var i = 0; i < component.FreeHandsRequired; i++)
         {
-            _virtualItemSystem.TrySpawnVirtualItemInHand(used, user, true);
+            if (_virtualItemSystem.TrySpawnVirtualItemInHand(used, user, out var virtualItem, true))
+            {
+                virtuals.Add(virtualItem.Value);
+                continue;
+            }
+
+            foreach (var existingVirtual in virtuals)
+            {
+                QueueDel(existingVirtual);
+            }
+
+            return false;
         }
 
         if (TryComp(used, out UseDelayComponent? useDelay)
