@@ -26,7 +26,7 @@ namespace Content.Benchmarks;
 [Virtual]
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 [CategoriesColumn]
-public class EntityQueryBenchmark
+public class ComponentQueryBenchmark
 {
     public const string Map = "Maps/atlas.yml";
 
