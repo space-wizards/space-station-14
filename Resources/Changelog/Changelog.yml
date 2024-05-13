@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Brandon-Huu
-  changes:
-  - message: Removed the ability for command or any antag-safe role to be initial
-      infected in zombie mode
-    type: Remove
-  id: 6090
-  time: '2024-03-05T04:34:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25785
 - author: Whisper
   changes:
   - message: Glass shards can be added to flatcaps to create bladed flatcaps!
@@ -3870,3 +3862,10 @@
   id: 6589
   time: '2024-05-13T00:03:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27962
+- author: lzk228
+  changes:
+  - message: Fixed color jumpskirts female mask.
+    type: Fix
+  id: 6590
+  time: '2024-05-13T19:25:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27984
