@@ -17,6 +17,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using ActivatableUISystem = Content.Shared.UserInterface.ActivatableUISystem;
 
 namespace Content.Server.Wires;
 
@@ -347,7 +348,7 @@ public sealed class WiresSystem : SharedWiresSystem
         }
     }
 
-    private class ActiveWireAction
+    private sealed class ActiveWireAction
     {
         /// <summary>
         ///     The wire action's ID. This is so that once the action is finished,
@@ -393,11 +394,11 @@ public sealed class WiresSystem : SharedWiresSystem
 
     private void OnWiresActionMessage(EntityUid uid, WiresComponent component, WiresActionMessage args)
     {
-        if (args.Session.AttachedEntity == null)
+        if (args.Actor == null)
         {
             return;
         }
-        var player = (EntityUid) args.Session.AttachedEntity;
+        var player = (EntityUid) args.Actor;
 
         if (!EntityManager.TryGetComponent(player, out HandsComponent? handsComponent))
         {
@@ -458,7 +459,7 @@ public sealed class WiresSystem : SharedWiresSystem
         {
             if (TryComp(args.User, out ActorComponent? actor))
             {
-                _uiSystem.TryOpen(uid, WiresUiKey.Key, actor.PlayerSession);
+                _uiSystem.OpenUi(uid, WiresUiKey.Key, actor.PlayerSession);
                 args.Handled = true;
             }
         }
@@ -468,7 +469,8 @@ public sealed class WiresSystem : SharedWiresSystem
     {
         if (args.Open)
             return;
-        _uiSystem.TryCloseAll(ent, WiresUiKey.Key);
+
+        _uiSystem.CloseUi(ent.Owner, WiresUiKey.Key);
     }
 
     private void OnAttemptOpenActivatableUI(EntityUid uid, ActivatableUIRequiresPanelComponent component, ActivatableUIOpenAttemptEvent args)
@@ -574,18 +576,17 @@ public sealed class WiresSystem : SharedWiresSystem
 
         statuses.Sort((a, b) => a.position.CompareTo(b.position));
 
-        _uiSystem.TrySetUiState(uid, WiresUiKey.Key, new WiresBoundUserInterfaceState(
+        _uiSystem.SetUiState((uid, ui), WiresUiKey.Key, new WiresBoundUserInterfaceState(
             clientList.ToArray(),
             statuses.Select(p => new StatusEntry(p.key, p.value)).ToArray(),
             Loc.GetString(wires.BoardName),
             wires.SerialNumber,
-            wires.WireSeed), ui: ui);
+            wires.WireSeed));
     }
 
     public void OpenUserInterface(EntityUid uid, ICommonSession player)
     {
-        if (_uiSystem.TryGetUi(uid, WiresUiKey.Key, out var ui))
-            _uiSystem.OpenUi(ui, player);
+        _uiSystem.OpenUi(uid, WiresUiKey.Key, player);
     }
 
     /// <summary>
@@ -629,7 +630,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
         if (!args.WiresAccessible)
         {
-            _uiSystem.TryCloseAll(uid, WiresUiKey.Key);
+            _uiSystem.CloseUi(uid, WiresUiKey.Key);
         }
     }
 

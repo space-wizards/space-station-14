@@ -354,41 +354,18 @@ namespace Content.IntegrationTests.Tests
 
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
-
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
-            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
-            var mapSystem = entityManager.System<SharedMapSystem>();
             var logmill = server.ResolveDependency<ILogManager>().GetSawmill("EntityTest");
 
-            Entity<MapGridComponent> grid = default!;
-
-            await server.WaitPost(() =>
-            {
-                // Create a one tile grid to stave off the grid 0 monsters
-                var mapId = mapManager.CreateMap();
-
-                mapManager.AddUninitializedMap(mapId);
-
-                grid = mapManager.CreateGridEntity(mapId);
-
-                var tileDefinition = tileDefinitionManager["Plating"];
-                var tile = new Tile(tileDefinition.TileId);
-                var coordinates = new EntityCoordinates(grid.Owner, Vector2.Zero);
-
-                mapSystem.SetTile(grid.Owner, grid.Comp!, coordinates, tile);
-
-                mapManager.DoMapInitialize(mapId);
-            });
-
+            await pair.CreateTestMap();
             await server.WaitRunTicks(5);
+            var testLocation = pair.TestMap.GridCoords;
 
             await server.WaitAssertion(() =>
             {
                 Assert.Multiple(() =>
                 {
-                    var testLocation = new EntityCoordinates(grid.Owner, Vector2.Zero);
 
                     foreach (var type in componentFactory.AllRegisteredTypes)
                     {

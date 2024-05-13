@@ -44,6 +44,16 @@
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <ui:MenuButton
+        Name="EmotesButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/emotes.svg.192dpi.png'}"
+        ToolTip="{Loc 'game-hud-open-emotes-menu-button-tooltip'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenEmotesMenu}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:MenuButton
         Name="CraftingButton"
         Access="Internal"
         Icon="{xe:Tex '/Textures/Interface/hammer.svg.192dpi.png'}"

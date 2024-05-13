@@ -26,6 +26,8 @@
     solutions:
       bucket:
         maxVol: 250
+  - type: MixableSolution
+    solution: bucket
   - type: SolutionTransfer
     transferAmount: 100
     maxTransferAmount: 100
@@ -33,8 +35,8 @@
     canChangeTransferAmount: true
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: MeleeWeapon
     soundNoDamage:
       path: "/Audio/Effects/Fluids/splat.ogg"
@@ -48,6 +50,8 @@
   - type: RefillableSolution
     solution: bucket
   - type: DrainableSolution
+    solution: bucket
+  - type: SolutionItemStatus
     solution: bucket
   - type: Appearance
   - type: SolutionContainerVisuals

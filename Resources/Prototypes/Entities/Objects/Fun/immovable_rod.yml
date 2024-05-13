@@ -11,8 +11,6 @@
     state: icon
     noRot: false
   - type: ImmovableRod
-  - type: TimedDespawn
-    lifetime: 30.0
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
@@ -36,8 +34,16 @@
     location: immovable rod
 
 - type: entity
+  id: ImmovableRodDespawn
+  suffix: Despawn
   parent: ImmovableRod
+  components:
+  - type: TimedDespawn
+    lifetime: 30.0
+
+- type: entity
   id: ImmovableRodSlow
+  parent: ImmovableRodDespawn
   suffix: Slow
   components:
   - type: ImmovableRod
@@ -45,13 +51,40 @@
     maxSpeed: 5
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodKeepTiles
   suffix: Keep Tiles
   components:
   - type: ImmovableRod
     destroyTiles: false
     hitSoundProbability: 1.0
+
+# For Wizard Polymorph
+- type: entity
+  parent: ImmovableRod
+  id: ImmovableRodWizard
+  suffix: Wizard
+  components:
+  - type: ImmovableRod
+    minSpeed: 35
+    destroyTiles: false
+    randomizeVelocity: false
+    shouldGib: false
+    damage:
+      types:
+        Blunt: 200
+  - type: MovementIgnoreGravity
+    gravityState: true
+  - type: InputMover
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 5
+    weightlessModifier: 2
+    weightlessFriction: 0
+    friction: 0
+    frictionNoInput: 0
+  - type: CanMoveInAir
+  - type: MovementAlwaysTouching
+  - type: NoSlip
 
 - type: entity
   parent: ImmovableRodKeepTiles

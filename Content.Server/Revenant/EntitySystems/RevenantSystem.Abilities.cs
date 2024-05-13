@@ -15,6 +15,7 @@ using Content.Shared.Bed.Sleep;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Revenant.Components;
+using Content.Shared.Physics;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
@@ -135,6 +136,12 @@ public sealed partial class RevenantSystem
             return;
         }
 
+        if(_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)
+        {
+            _popup.PopupEntity(Loc.GetString("revenant-in-solid"), uid, uid);
+            return;
+        }
+
         var doAfter = new DoAfterArgs(EntityManager, uid, revenant.HarvestDebuffs.X, new HarvestEvent(), uid, target: target)
         {
             DistanceThreshold = 2,
@@ -238,7 +245,7 @@ public sealed partial class RevenantSystem
             {
                 //hardcoded damage specifiers til i die.
                 var dspec = new DamageSpecifier();
-                dspec.DamageDict.Add("Structural", 15);
+                dspec.DamageDict.Add("Structural", 60);
                 _damage.TryChangeDamage(ent, dspec, origin: uid);
             }
 

@@ -55,6 +55,14 @@
   itemSize: 1
 
 - type: stack
+  id: Pyrotton
+  name: pyrotton
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: pyrotton }
+  spawn: MaterialPyrotton1
+  maxCount: 30
+  itemSize: 1
+
+- type: stack
   id: Bananium
   name: bananium
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: bananium }

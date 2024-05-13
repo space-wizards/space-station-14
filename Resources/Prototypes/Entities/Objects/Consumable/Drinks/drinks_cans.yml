@@ -6,7 +6,7 @@
   components:
   - type: Drink
   - type: Openable
-  - type: PressurizedDrink
+  - type: Shakeable
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -14,13 +14,15 @@
         - ReagentId: Cola
           Quantity: 30
         maxVol: 30
+  - type: MixableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 15
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
     layers:
@@ -33,6 +35,8 @@
   - type: RefillableSolution
     solution: drink
   - type: DrainableSolution
+    solution: drink
+  - type: PressurizedSolution
     solution: drink
   - type: Appearance
   - type: GenericVisualizer

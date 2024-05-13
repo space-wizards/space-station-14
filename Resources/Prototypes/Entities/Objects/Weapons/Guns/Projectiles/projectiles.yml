@@ -102,26 +102,7 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 2
-
-- type: entity
-  id: BaseBulletRubber
-  name: base bullet rubber
-  parent: BaseBullet
-  noSpawn: true
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    layers:
-    - state: rubber
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 3
-    soundHit:
-      path: /Audio/Weapons/Guns/Hits/snap.ogg
-  - type: StaminaDamageOnCollide
-    damage: 22 # 5 hits to stun sounds reasonable
+        Blunt: 1
 
 - type: entity
   id: BaseBulletIncendiary
@@ -288,7 +269,7 @@
       fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
-    damage: 5
+    damage: 1
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
@@ -641,7 +622,7 @@
         shader: unshaded
   - type: AnomalousParticle
     particleType: Sigma
-    
+
 - type: entity
   parent: AnomalousParticleSigma
   id: AnomalousParticleSigmaStrong
@@ -650,7 +631,7 @@
   components:
   - type: AnomalousParticle
     particleType: Sigma
-    
+
 # Launcher projectiles (grenade / rocket)
 - type: entity
   id: BulletRocket

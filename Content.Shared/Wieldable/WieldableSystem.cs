@@ -1,3 +1,4 @@
+using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -34,7 +35,7 @@ public sealed class WieldableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand, before: [typeof(SharedGunSystem)]);
         SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
@@ -45,6 +46,7 @@ public sealed class WieldableSystem : EntitySystem
         SubscribeLocalEvent<GunWieldBonusComponent, ItemWieldedEvent>(OnGunWielded);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemUnwieldedEvent>(OnGunUnwielded);
         SubscribeLocalEvent<GunWieldBonusComponent, GunRefreshModifiersEvent>(OnGunRefreshModifiers);
+        SubscribeLocalEvent<GunWieldBonusComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
     }
@@ -90,7 +92,15 @@ public sealed class WieldableSystem : EntitySystem
         {
             args.MinAngle += bonus.Comp.MinAngle;
             args.MaxAngle += bonus.Comp.MaxAngle;
+            args.AngleDecay += bonus.Comp.AngleDecay;
+            args.AngleIncrease += bonus.Comp.AngleIncrease;
         }
+    }
+
+    private void OnExamine(EntityUid uid, GunWieldBonusComponent component, ref ExaminedEvent args)
+    {
+        if (component.WieldBonusExamineMessage != null)
+            args.PushText(Loc.GetString(component.WieldBonusExamineMessage));
     }
 
     private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -123,7 +133,7 @@ public sealed class WieldableSystem : EntitySystem
 
         if (!component.Wielded)
             args.Handled = TryWield(uid, component, args.User);
-        else
+        else if (component.UnwieldOnUse)
             args.Handled = TryUnwield(uid, component, args.User);
     }
 
@@ -195,8 +205,9 @@ public sealed class WieldableSystem : EntitySystem
             && !_delay.TryResetDelay((used, useDelay), true))
             return false;
 
-        _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", used)), user, user);
-        _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", user), ("item", used)), user, Filter.PvsExcept(user), true);
+        var selfMessage = Loc.GetString("wieldable-component-successful-wield", ("item", used));
+        var othersMessage = Loc.GetString("wieldable-component-successful-wield-other", ("user", user), ("item", used));
+        _popupSystem.PopupPredicted(selfMessage, othersMessage, user, user);
 
         var targEv = new ItemWieldedEvent();
         RaiseLocalEvent(used, ref targEv);
@@ -239,10 +250,9 @@ public sealed class WieldableSystem : EntitySystem
             if (component.UnwieldSound != null)
                 _audioSystem.PlayPredicted(component.UnwieldSound, uid, args.User);
 
-            _popupSystem.PopupClient(Loc.GetString("wieldable-component-failed-wield",
-                ("item", uid)), args.User.Value, args.User.Value);
-            _popupSystem.PopupEntity(Loc.GetString("wieldable-component-failed-wield-other",
-                ("user", args.User.Value), ("item", uid)), args.User.Value, Filter.PvsExcept(args.User.Value), true);
+            var selfMessage = Loc.GetString("wieldable-component-failed-wield", ("item", uid));
+            var othersMessage = Loc.GetString("wieldable-component-failed-wield-other", ("user", args.User.Value), ("item", uid));
+            _popupSystem.PopupPredicted(selfMessage, othersMessage, args.User.Value, args.User.Value);
         }
 
         _appearance.SetData(uid, WieldableVisuals.Wielded, false);

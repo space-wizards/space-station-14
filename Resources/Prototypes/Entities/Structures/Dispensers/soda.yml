@@ -19,9 +19,6 @@
     noRot: false
   - type: Machine
     board: SodaDispenserMachineCircuitboard
-  - type: Wires
-    boardName: wires-board-name-soda
-    layoutId: SodaDispenser
   - type: GuideHelp
     guides:
     - Bartender

@@ -3,6 +3,7 @@ using Content.Shared.Sprite;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.State;
+using Robust.Shared.Physics;
 
 namespace Content.Client.Sprite;
 
@@ -15,6 +16,7 @@ public sealed class SpriteFadeSystem : EntitySystem
 
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private readonly HashSet<FadingSpriteComponent> _comps = new();
 
@@ -48,7 +50,7 @@ public sealed class SpriteFadeSystem : EntitySystem
             spriteQuery.TryGetComponent(player, out var playerSprite))
         {
             var fadeQuery = GetEntityQuery<SpriteFadeComponent>();
-            var mapPos = playerXform.MapPosition;
+            var mapPos = _transform.GetMapCoordinates(_playerManager.LocalEntity!.Value, xform: playerXform);
 
             // Also want to handle large entities even if they may not be clickable.
             foreach (var ent in state.GetClickableEntities(mapPos))

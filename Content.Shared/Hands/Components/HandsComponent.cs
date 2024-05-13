@@ -32,6 +32,12 @@ public sealed partial class HandsComponent : Component
     public List<string> SortedHands = new();
 
     /// <summary>
+    ///     If true, the items in the hands won't be affected by explosions.
+    /// </summary>
+    [DataField]
+    public bool DisableExplosionRecursion = false;
+
+    /// <summary>
     ///     The amount of throw impulse per distance the player is from the throw target.
     /// </summary>
     [DataField("throwForceMultiplier")]
@@ -120,9 +126,43 @@ public sealed class HandsComponentState : ComponentState
 /// <summary>
 ///     What side of the body this hand is on.
 /// </summary>
+/// <seealso cref="HandUILocation"/>
+/// <seealso cref="HandLocationExt"/>
 public enum HandLocation : byte
 {
     Left,
     Middle,
     Right
+}
+
+/// <summary>
+/// What side of the UI a hand is on.
+/// </summary>
+/// <seealso cref="HandLocationExt"/>
+/// <seealso cref="HandLocation"/>
+public enum HandUILocation : byte
+{
+    Left,
+    Right
+}
+
+/// <summary>
+/// Helper functions for working with <see cref="HandLocation"/>.
+/// </summary>
+public static class HandLocationExt
+{
+    /// <summary>
+    /// Convert a <see cref="HandLocation"/> into the appropriate <see cref="HandUILocation"/>.
+    /// This maps "middle" hands to <see cref="HandUILocation.Right"/>.
+    /// </summary>
+    public static HandUILocation GetUILocation(this HandLocation location)
+    {
+        return location switch
+        {
+            HandLocation.Left => HandUILocation.Left,
+            HandLocation.Middle => HandUILocation.Right,
+            HandLocation.Right => HandUILocation.Right,
+            _ => throw new ArgumentOutOfRangeException(nameof(location), location, null)
+        };
+    }
 }

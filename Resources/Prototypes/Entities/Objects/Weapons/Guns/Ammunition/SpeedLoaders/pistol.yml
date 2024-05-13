@@ -57,22 +57,3 @@
     steps: 7
     zeroVisible: false
   - type: Appearance
-
-- type: entity
-  id: SpeedLoaderPistolRubber
-  name: "speed loader (.35 auto rubber)"
-  parent: BaseSpeedLoaderPistol
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolRubber
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: rubber-6
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: rubber
-    steps: 7
-    zeroVisible: false
-  - type: Appearance

@@ -94,6 +94,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredOffEvent>(OnStepTriggered);
             SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
             SubscribeLocalEvent<TriggerWhenEmptyComponent, OnEmptyGunShotEvent>(OnEmptyTriggered);
+            SubscribeLocalEvent<RepeatingTriggerComponent, MapInitEvent>(OnRepeatInit);
 
             SubscribeLocalEvent<SpawnOnTriggerComponent, TriggerEvent>(OnSpawnTrigger);
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
@@ -153,7 +154,7 @@ namespace Content.Server.Explosion.EntitySystems
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
         {
             // TODO Make flash durations sane ffs.
-            _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
+            _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f, probability: component.Probability);
             args.Handled = true;
         }
 
@@ -241,6 +242,11 @@ namespace Content.Server.Explosion.EntitySystems
             Trigger(uid, args.EmptyGun);
         }
 
+        private void OnRepeatInit(Entity<RepeatingTriggerComponent> ent, ref MapInitEvent args)
+        {
+            ent.Comp.NextTrigger = _timing.CurTime + ent.Comp.Delay;
+        }
+
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
@@ -323,6 +329,7 @@ namespace Content.Server.Explosion.EntitySystems
             UpdateProximity();
             UpdateTimer(frameTime);
             UpdateTimedCollide(frameTime);
+            UpdateRepeat();
         }
 
         private void UpdateTimer(float frameTime)
@@ -355,6 +362,20 @@ namespace Content.Server.Explosion.EntitySystems
                 // In case this is a re-usable grenade, un-prime it.
                 if (TryComp<AppearanceComponent>(uid, out var appearance))
                     _appearance.SetData(uid, TriggerVisuals.VisualState, TriggerVisualState.Unprimed, appearance);
+            }
+        }
+
+        private void UpdateRepeat()
+        {
+            var now = _timing.CurTime;
+            var query = EntityQueryEnumerator<RepeatingTriggerComponent>();
+            while (query.MoveNext(out var uid, out var comp))
+            {
+                if (comp.NextTrigger > now)
+                    continue;
+
+                comp.NextTrigger = now + comp.Delay;
+                Trigger(uid);
             }
         }
     }

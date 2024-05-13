@@ -262,7 +262,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         }
         else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
         {
-            _entity.EntityNetManager?.SendSystemNetworkMessage(
+            _entity.RaisePredictiveEvent(
                 new InteractInventorySlotEvent(_entity.GetNetEntity(control.Entity), altInteract: false));
             args.Handle();
         }

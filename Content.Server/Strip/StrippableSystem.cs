@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Ensnaring;
 using Content.Shared.CombatMode;
@@ -20,7 +21,6 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Server.Strip
 {
@@ -111,17 +111,15 @@ namespace Content.Server.Strip
             if (TryComp<CombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
                 return;
 
-            if (TryComp<ActorComponent>(user, out var actor))
+            if (HasComp<StrippingComponent>(user))
             {
-                if (_userInterfaceSystem.SessionHasOpenUi(strippable, StrippingUiKey.Key, actor.PlayerSession))
-                    return;
-                _userInterfaceSystem.TryOpen(strippable, StrippingUiKey.Key, actor.PlayerSession);
+                _userInterfaceSystem.OpenUi(strippable.Owner, StrippingUiKey.Key, user);
             }
         }
 
         private void OnStripButtonPressed(Entity<StrippableComponent> strippable, ref StrippingSlotButtonPressed args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } user ||
+            if (args.Actor is not { Valid: true } user ||
                 !TryComp<HandsComponent>(user, out var userHands))
                 return;
 
@@ -173,7 +171,7 @@ namespace Content.Server.Strip
 
         private void OnStripEnsnareMessage(EntityUid uid, EnsnareableComponent component, StrippingEnsnareButtonPressed args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } user)
+            if (args.Actor is not { Valid: true } user)
                 return;
 
             foreach (var entity in component.Container.ContainedEntities)

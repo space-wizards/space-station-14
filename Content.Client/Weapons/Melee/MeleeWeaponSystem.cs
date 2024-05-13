@@ -43,6 +43,12 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         UpdatesOutsidePrediction = true;
     }
 
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+        UpdateEffects();
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -136,7 +142,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Light attack
         if (useDown == BoundKeyState.Down)
         {
-            var attackerPos = Transform(entity).MapPosition;
+            var attackerPos = TransformSystem.GetMapCoordinates(entity);
 
             if (mousePos.MapId != attackerPos.MapId ||
                 (attackerPos.Position - mousePos.Position).Length() > weapon.Range)

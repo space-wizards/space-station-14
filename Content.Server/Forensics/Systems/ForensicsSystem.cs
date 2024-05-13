@@ -103,7 +103,7 @@ namespace Content.Server.Forensics
 
         private void OnAfterInteract(EntityUid uid, CleansForensicsComponent component, AfterInteractEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.CanReach)
                 return;
 
             if (!TryComp<ForensicsComponent>(args.Target, out var forensicsComp))

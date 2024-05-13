@@ -133,11 +133,13 @@
     unequipSound: /Audio/Mecha/mechmove03.ogg
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
     - HelmetEVA
-    - HidesNose
   - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   abstract: true
@@ -161,6 +163,8 @@
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.1
+  - type: FireProtection
+    reduction: 0.2
   - type: Armor
     modifiers:
       coefficients:
@@ -173,10 +177,12 @@
   - type: IngestionBlocker
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
-    - HidesNose
   - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   abstract: true
@@ -248,6 +254,6 @@
   - type: TemperatureProtection
     coefficient: 0.7
   - type: GroupExamine
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair

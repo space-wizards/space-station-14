@@ -20,7 +20,6 @@
     InconstancyParticle: 0.5
     FullUnknown: 0.5
     Jumping: 0.3
-    Moving: 0.1
   #Complex
     FastUnknown: 0.2
     JumpingUnknown: 0.1
@@ -59,14 +58,14 @@
   id: DelayedForce
   earnPointModifier: 1.15
   description: anomaly-behavior-delayed-force
-  pulseFrequencyModifier: 0.5
+  pulseFrequencyModifier: 2
   pulsePowerModifier: 2
   
 - type: anomalyBehavior
   id: Rapid
   earnPointModifier: 1.15
   description: anomaly-behavior-rapid
-  pulseFrequencyModifier: 2
+  pulseFrequencyModifier: 0.5
   pulsePowerModifier: 0.5
 
 - type: anomalyBehavior
@@ -85,6 +84,7 @@
   description: anomaly-behavior-reflect
   components:
   - type: Reflect
+    innate: true
     reflectProb: 0.5
     reflects:
       - Energy
@@ -132,19 +132,6 @@
   - type: ShuffleParticlesAnomaly
     shuffleOnParticleHit: true
     prob: 0.8
-
-- type: anomalyBehavior
-  id: Moving
-  earnPointModifier: 2.2
-  description: anomaly-behavior-moving
-  components:
-  - type: RandomWalk
-    minSpeed: 0
-    maxSpeed: 0.3
-  - type: CanMoveInAir
-  - type: Physics
-    bodyType: Dynamic
-    bodyStatus: InAir
 
 - type: anomalyBehavior
   id: Jumping

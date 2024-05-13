@@ -26,6 +26,14 @@
                 <CheckBox Name="EnableColorNameCheckBox" Text="{Loc 'ui-options-enable-color-name'}" />
                 <CheckBox Name="ColorblindFriendlyCheckBox" Text="{Loc 'ui-options-colorblind-friendly'}" />
                 <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'ui-options-chat-window-opacity'}" Margin="8 0" />
+                    <Slider Name="ChatWindowOpacitySlider"
+                            MinValue="0"
+                            MaxValue="1"
+                            MinWidth="200" />
+                    <Label Name="ChatWindowOpacityLabel" Margin="8 0" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal">
                     <Label Text="{Loc 'ui-options-screen-shake-intensity'}" Margin="8 0" />
                     <Slider Name="ScreenShakeIntensitySlider"
                             MinValue="0"
@@ -41,6 +49,7 @@
                 <Label Text="{Loc 'ui-options-general-speech'}"
                        FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
                        StyleClasses="LabelKeyText"/>
+                <CheckBox Name="ShowOocPatronColor" Text="{Loc 'ui-options-show-ooc-patron-color'}" />
                 <CheckBox Name="ShowLoocAboveHeadCheckBox" Text="{Loc 'ui-options-show-looc-on-head'}" />
                 <CheckBox Name="FancySpeechBubblesCheckBox" Text="{Loc 'ui-options-fancy-speech'}" />
                 <CheckBox Name="FancyNameBackgroundsCheckBox" Text="{Loc 'ui-options-fancy-name-background'}" />
@@ -65,6 +74,3 @@
         </controls:StripeBack>
     </BoxContainer>
 </tabs:MiscTab>
-
-
-

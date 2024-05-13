@@ -1,5 +1,7 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
+using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Systems;
@@ -40,6 +42,7 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
 
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
+
 
         AdminLogManager.Add(LogType.EventAnnounced, $"Event added / announced: {ToPrettyString(uid)}");
 

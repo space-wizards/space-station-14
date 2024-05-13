@@ -247,6 +247,27 @@ public sealed class FollowerSystem : EntitySystem
             StopFollowingEntity(player, uid, followed);
         }
     }
+
+    /// <summary>
+    /// Get the most followed entity.
+    /// </summary>
+    public EntityUid? GetMostFollowed()
+    {
+        EntityUid? picked = null;
+        int most = 0;
+        var query = EntityQueryEnumerator<FollowedComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            var count = comp.Following.Count;
+            if (count > most)
+            {
+                picked = uid;
+                most = count;
+            }
+        }
+
+        return picked;
+    }
 }
 
 public abstract class FollowEvent : EntityEventArgs
