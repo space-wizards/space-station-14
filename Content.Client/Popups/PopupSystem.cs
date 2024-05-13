@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
+using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -12,7 +13,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Popups
 {
@@ -310,11 +310,6 @@ namespace Content.Client.Popups
             public int Repeats = 1;
         }
 
-        public sealed class CursorPopupLabel(ScreenCoordinates screenCoords) : PopupLabel
-        {
-            public ScreenCoordinates InitialPos = screenCoords;
-        }
-
         public sealed class WorldPopupLabel(EntityCoordinates coordinates) : PopupLabel
         {
             /// <summary>
@@ -323,12 +318,21 @@ namespace Content.Client.Popups
             public EntityCoordinates InitialPos = coordinates;
         }
 
+        public sealed class CursorPopupLabel(ScreenCoordinates screenCoords) : PopupLabel
+        {
+            public ScreenCoordinates InitialPos = screenCoords;
+        }
+
+        [UsedImplicitly]
         private record struct WorldPopupData(
             string Message,
             PopupType Type,
             EntityCoordinates Coordinates,
             EntityUid? Entity);
 
-        private record struct CursorPopupData(string Message, PopupType Type);
+        [UsedImplicitly]
+        private record struct CursorPopupData(
+            string Message,
+            PopupType Type);
     }
 }
