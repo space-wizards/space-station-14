@@ -1,3 +1,69 @@
+# RED LASER
+# A basic template for a gun that fires the RedLaser hitscan.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunRedLaser
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 62.5
+
+# RED MEDIUM LASER
+# A basic template for a gun that fires the RedMediumLaser hitscan.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunRedMediumLaser
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 100
+
+# RED HEAVY LASER
+# A basic template for a gun that fires the RedHeavyLaser hitscan.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunRedHeavyLaser
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: RedHeavyLaser
+    fireCost: 100
+
+# XRAY LASER
+# A basic template for a gun that fires the XrayLaser hitscan.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunXrayLaser
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: XrayLaser
+    fireCost: 100
+
+# PULSE
+# A basic template for a gun that fires the Pulse hitscan.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunPulse
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: Pulse
+    fireCost: 200
+
+# SELF RECHARGING
+# A basic template for a gun that recharges its own internal battery over time.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunSelfRecharger
+  components:
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
+
 # svalinn laser pistol
 - type: entity
   parent:
@@ -30,6 +96,7 @@
   parent:
   - BaseGunSmall
   - BaseGunBattery
+  - BaseGunRedMediumLaser
   id: WeaponLaserGun
   name: retro laser blaster
   description: A weapon using light amplified by the stimulated emission of radiation.
@@ -50,7 +117,6 @@
     steps: 5
     zeroVisible: true
   - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
     fireCost: 62.5
   - type: StaticPrice
     price: 500
@@ -60,6 +126,7 @@
   parent:
   - BaseGunSmall
   - BaseGunBattery
+  - BaseGunRedLaser
   id: WeaponMakeshiftLaser
   name: makeshift laser pistol
   description: Better pray it won't burn your hands off.
@@ -79,9 +146,6 @@
     magState: mag
     steps: 5
     zeroVisible: false
-  - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
-    fireCost: 62.5
   - type: Battery
     maxCharge: 500
     startingCharge: 500
@@ -128,6 +192,7 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunBattery
+  - BaseGunRedLaser
   id: WeaponLaserCarbine
   name: laser rifle
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
@@ -147,9 +212,6 @@
     magState: mag
     steps: 5
     zeroVisible: false
-  - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
-    fireCost: 62.5
   - type: StaticPrice
     price: 420
 
@@ -171,6 +233,7 @@
   parent:
   - BaseGunSmall
   - BaseGunBattery
+  - BaseGunPulse
   id: WeaponPulsePistol
   name: pulse pistol
   description: A state of the art energy pistol favoured as a sidearm by the NT operatives.
@@ -193,9 +256,6 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: HitscanBatteryAmmoProvider
-    proto: Pulse
-    fireCost: 200
   - type: Battery
     maxCharge: 2000
     startingCharge: 2000
@@ -208,6 +268,7 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunBattery
+  - BaseGunPulse
   id: WeaponPulseCarbine
   name: pulse carbine
   description: A high tech energy carbine favoured by the NT-ERT operatives.
@@ -235,9 +296,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: HitscanBatteryAmmoProvider
-    proto: Pulse
-    fireCost: 200
   - type: Battery
     maxCharge: 5000
     startingCharge: 5000
@@ -250,6 +308,7 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunBattery
+  - BaseGunPulse
   id: WeaponPulseRifle
   name: pulse rifle
   description: A weapon that is almost as infamous as its users.
@@ -274,7 +333,6 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: Pulse
     fireCost: 100
   - type: Battery
     maxCharge: 40000
@@ -288,6 +346,7 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunBattery
+  - BaseGunRedHeavyLaser
   id: WeaponLaserCannon
   name: laser cannon
   description: A heavy duty, high powered laser weapon.
@@ -311,9 +370,6 @@
     fireRate: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: HitscanBatteryAmmoProvider
-    proto: RedHeavyLaser
-    fireCost: 100
   - type: StaticPrice
     price: 500
 
@@ -352,6 +408,7 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunBattery
+  - BaseGunXrayLaser
   id: WeaponXrayCannon
   name: x-ray cannon
   description: An experimental weapon that uses concentrated x-ray energy against its target.
@@ -374,9 +431,6 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
-  - type: HitscanBatteryAmmoProvider
-    proto: XrayLaser
-    fireCost: 100
   - type: StaticPrice
     price: 500
 
@@ -527,6 +581,8 @@
   parent:
   - BaseGunSmall
   - BaseGunBattery
+  - BaseGunRedMediumLaser
+  - BaseGunSelfRecharger
   id: WeaponAntiqueLaser
   name: antique laser pistol
   description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
@@ -549,12 +605,6 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
-    fireCost: 100
-  - type: BatterySelfRecharger
-    autoRecharge: true
-    autoRechargeRate: 40
   - type: Tag
     tags:
     - HighRiskItem
@@ -570,6 +620,8 @@
   parent:
   - BaseGunSmall
   - BaseGunBattery
+  - BaseGunRedMediumLaser
+  - BaseGunSelfRecharger
   id: WeaponAdvancedLaser
   name: advanced laser pistol
   description: An experimental high-energy laser pistol with a self-charging nuclear battery.
@@ -595,11 +647,7 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
-    fireCost: 100
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 30
   - type: StaticPrice
     price: 63
@@ -678,6 +726,8 @@
   parent:
   - BaseGunSmall
   - BaseGunBattery
+  - BaseGunRedMediumLaser
+  - BaseGunSelfRecharger
   id: WeaponBehonkerLaser
   name: eye of a behonker
   description: The eye of a behonker, it fires a laser when squeezed.
@@ -691,11 +741,5 @@
     fireRate: 1
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_clown.ogg
-  - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
-    fireCost: 100
-  - type: BatterySelfRecharger
-    autoRecharge: true
-    autoRechargeRate: 40
   - type: StaticPrice
     price: 750
