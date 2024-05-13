@@ -1,9 +1,9 @@
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Radio;
 using Content.Server.SurveillanceCamera;
 using Content.Shared.Emp;
 using Content.Shared.Examine;
+using Content.Shared.Explosion;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
@@ -102,7 +102,7 @@ public sealed class EmpSystem : SharedEmpSystem
         args.PushMarkup(Loc.GetString("emp-disabled-comp-on-examine"));
     }
 
-    private void HandleEmpTrigger(EntityUid uid, EmpOnTriggerComponent comp, TriggerEvent args)
+    private void HandleEmpTrigger(EntityUid uid, EmpOnTriggerComponent comp, ref TriggerEvent args)
     {
         EmpPulse(_transform.GetMapCoordinates(uid), comp.Range, comp.EnergyConsumption, comp.DisableDuration);
         args.Handled = true;

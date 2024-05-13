@@ -1,7 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceLinking.Components;
-using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.Explosion;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Timing;
 
@@ -37,7 +37,7 @@ public sealed class SignallerSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnTrigger(EntityUid uid, SignallerComponent component, TriggerEvent args)
+    private void OnTrigger(EntityUid uid, SignallerComponent component, ref TriggerEvent args)
     {
         if (!TryComp(uid, out UseDelayComponent? useDelay)
             // if on cooldown, do nothing

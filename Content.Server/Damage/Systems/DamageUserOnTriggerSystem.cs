@@ -1,8 +1,6 @@
 using Content.Server.Damage.Components;
-using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Damage;
-using Content.Shared.StepTrigger;
-using Content.Shared.StepTrigger.Systems;
+using Content.Shared.Explosion;
 
 namespace Content.Server.Damage.Systems;
 
@@ -16,7 +14,7 @@ public sealed class DamageUserOnTriggerSystem : EntitySystem
         SubscribeLocalEvent<DamageUserOnTriggerComponent, TriggerEvent>(OnTrigger);
     }
 
-    private void OnTrigger(EntityUid uid, DamageUserOnTriggerComponent component, TriggerEvent args)
+    private void OnTrigger(EntityUid uid, DamageUserOnTriggerComponent component, ref TriggerEvent args)
     {
         if (args.User is null)
             return;

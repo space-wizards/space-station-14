@@ -1,6 +1,6 @@
-using Robust.Shared.Timing;
-using Robust.Shared.Serialization.Manager;
 using Content.Server.Explosion.Components.OnTrigger;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -17,7 +17,7 @@ public sealed class TwoStageTriggerSystem : EntitySystem
         SubscribeLocalEvent<TwoStageTriggerComponent, TriggerEvent>(OnTrigger);
     }
 
-    private void OnTrigger(EntityUid uid, TwoStageTriggerComponent component, TriggerEvent args)
+    private void OnTrigger(EntityUid uid, TwoStageTriggerComponent component, ref TriggerEvent args)
     {
         if (component.Triggered)
             return;

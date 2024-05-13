@@ -1,4 +1,4 @@
-using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Explosion;
 using Robust.Shared.Player;
 
 namespace Content.Server.GhostKick;
@@ -12,7 +12,7 @@ public sealed class GhostKickUserOnTriggerSystem : EntitySystem
         SubscribeLocalEvent<GhostKickUserOnTriggerComponent, TriggerEvent>(HandleMineTriggered);
     }
 
-    private void HandleMineTriggered(EntityUid uid, GhostKickUserOnTriggerComponent userOnTriggerComponent, TriggerEvent args)
+    private void HandleMineTriggered(EntityUid uid, GhostKickUserOnTriggerComponent userOnTriggerComponent, ref TriggerEvent args)
     {
         if (!TryComp(args.User, out ActorComponent? actor))
             return;

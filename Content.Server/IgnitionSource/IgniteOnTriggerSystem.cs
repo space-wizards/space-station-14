@@ -1,4 +1,4 @@
-using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Explosion;
 using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;

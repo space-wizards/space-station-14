@@ -1,13 +1,10 @@
-using Content.Server.Explosion.EntitySystems;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives.Components;
 using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Server.Sticky.Events;
-using Content.Shared.Interaction;
+using Content.Shared.Explosion;
 using Content.Shared.Ninja.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -75,7 +72,7 @@ public sealed class SpiderChargeSystem : EntitySystem
     /// Handles greentext after exploding.
     /// Assumes it didn't move and the target was destroyed so be nice.
     /// </summary>
-    private void OnExplode(EntityUid uid, SpiderChargeComponent comp, TriggerEvent args)
+    private void OnExplode(EntityUid uid, SpiderChargeComponent comp, ref TriggerEvent args)
     {
         if (!TryComp<SpaceNinjaComponent>(comp.Planter, out var ninja))
             return;

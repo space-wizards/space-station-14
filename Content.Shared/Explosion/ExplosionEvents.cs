@@ -50,3 +50,15 @@ public record struct BeforeExplodeEvent(DamageSpecifier Damage, string Id, List<
     /// </summary>
     public readonly List<EntityUid> Contents = Contents;
 }
+
+/// <summary>
+/// Raised whenever something is Triggered on the entity.
+/// </summary>
+[ByRefEvent]
+public record struct TriggerEvent(EntityUid Triggered, EntityUid? User = null, bool Handled = false);
+
+/// <summary>
+/// Raised when timer trigger becomes active.
+/// </summary>
+[ByRefEvent]
+public readonly record struct ActiveTimerTriggerEvent(EntityUid Triggered, EntityUid? User);

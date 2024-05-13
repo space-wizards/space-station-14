@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using Content.Server.Explosion.Components;
-using Content.Server.Explosion.EntitySystems;
-using Robust.Shared.Physics.Dynamics;
+﻿using Content.Server.Explosion.Components;
+using Content.Shared.Explosion;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Explosion.EntitySystems;

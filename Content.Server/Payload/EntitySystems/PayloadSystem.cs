@@ -1,16 +1,16 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
+using Content.Shared.Explosion;
 using Content.Shared.Payload.Components;
 using Content.Shared.Tag;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
-using System.Linq;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Payload.EntitySystems;
 
@@ -50,7 +50,7 @@ public sealed class PayloadSystem : EntitySystem
         }
     }
 
-    private void OnCaseTriggered(EntityUid uid, PayloadCaseComponent component, TriggerEvent args)
+    private void OnCaseTriggered(EntityUid uid, PayloadCaseComponent component, ref TriggerEvent args)
     {
         if (!TryComp(uid, out ContainerManagerComponent? contMan))
             return;
@@ -62,7 +62,7 @@ public sealed class PayloadSystem : EntitySystem
         }
     }
 
-    private void OnTriggerTriggered(EntityUid uid, PayloadTriggerComponent component, TriggerEvent args)
+    private void OnTriggerTriggered(EntityUid uid, PayloadTriggerComponent component, ref TriggerEvent args)
     {
         if (!component.Active)
             return;

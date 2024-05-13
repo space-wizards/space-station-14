@@ -1,14 +1,10 @@
 using Content.Server.Damage.Systems;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
+using Content.Shared.Explosion;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Inventory;
 using Content.Shared.Mousetrap;
-using Content.Shared.StepTrigger;
 using Content.Shared.StepTrigger.Systems;
-using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
 
 namespace Content.Server.Mousetrap;
 
@@ -55,7 +51,7 @@ public sealed class MousetrapSystem : EntitySystem
         }
     }
 
-    private void OnTrigger(EntityUid uid, MousetrapComponent component, TriggerEvent args)
+    private void OnTrigger(EntityUid uid, MousetrapComponent component, ref TriggerEvent args)
     {
         component.IsActive = false;
         UpdateVisuals(uid);

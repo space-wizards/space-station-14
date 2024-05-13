@@ -1,8 +1,9 @@
-using Content.Shared.Explosion.Components;
-using Content.Shared.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Coordinates.Helpers;
+using Content.Shared.Explosion;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -25,7 +26,7 @@ public sealed class SmokeOnTriggerSystem : SharedSmokeOnTriggerSystem
         SubscribeLocalEvent<SmokeOnTriggerComponent, TriggerEvent>(OnTrigger);
     }
 
-    private void OnTrigger(EntityUid uid, SmokeOnTriggerComponent comp, TriggerEvent args)
+    private void OnTrigger(EntityUid uid, SmokeOnTriggerComponent comp, ref TriggerEvent args)
     {
         var xform = Transform(uid);
         var mapCoords = _transform.GetMapCoordinates(uid, xform);

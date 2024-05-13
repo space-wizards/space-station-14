@@ -1,10 +1,10 @@
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Sound.Components;
-using Content.Shared.UserInterface;
+using Content.Shared.Explosion;
 using Content.Shared.Sound;
 using Content.Shared.Sound.Components;
-using Robust.Shared.Timing;
+using Content.Shared.UserInterface;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Sound;
 
@@ -48,7 +48,7 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
         TryEmitSound(uid, component, args.User, false);
     }
 
-    private void HandleEmitSoundOnTrigger(EntityUid uid, EmitSoundOnTriggerComponent component, TriggerEvent args)
+    private void HandleEmitSoundOnTrigger(EntityUid uid, EmitSoundOnTriggerComponent component, ref TriggerEvent args)
     {
         TryEmitSound(uid, component, args.User, false);
         args.Handled = true;
