@@ -108,7 +108,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
         if (empty == null)
             return false;
 
-        if (!TrySpawnVirtualItem(blockingEnt, user, out virtualItem, dropOthers))
+        if (!TrySpawnVirtualItem(blockingEnt, user, out virtualItem))
             return false;
 
         _handsSystem.DoPickup(user, empty, virtualItem.Value);
@@ -206,8 +206,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     /// <param name="blockingEnt">The entity we will make a virtual entity copy of</param>
     /// <param name="user">The entity that we want to insert the virtual entity</param>
     /// <param name="virtualItem">The virtual item, if spawned</param>
-    /// <param name="dropOthers">Whether or not to try and drop other items to make space</param>
-    public bool TrySpawnVirtualItem(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem, bool dropOthers = false)
+    public bool TrySpawnVirtualItem(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem)
     {
         if (_netManager.IsClient)
         {
