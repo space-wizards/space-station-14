@@ -45,6 +45,7 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: CommandPersonalAI
 
 - type: entity
   id: LockerCaptainFilled
@@ -71,6 +72,7 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: CommandPersonalAI
 
 - type: entity
   id: LockerCaptainFilledNoLaser
@@ -96,6 +98,7 @@
       - id: RubberStampCaptain
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: CommandPersonalAI
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
