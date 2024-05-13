@@ -77,8 +77,6 @@
   meltingPoint: 18.2
   tileReactions:
     - !type:SpillTileReaction
-      paralyzeTime: 1.5
-      launchForwardsMultiplier: 1.5
       requiredSlipSpeed: 1
       superSlippery: true
 

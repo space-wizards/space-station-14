@@ -21,10 +21,8 @@
     sprite: Objects/Specific/Janitorial/soap.rsi
     storedRotation: -90
   - type: Slippery
-    paralyzeTime: 1
-    launchForwardsMultiplier: 1
   - type: StepTrigger
-    intersectRatio: 0.2
+    intersectRatio: 0.18
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -129,8 +127,8 @@
   - type: SolutionContainerVisuals
     fillBaseName: syndie-
   - type: Slippery
-    paralyzeTime: 2.5
-    launchForwardsMultiplier: 2.5
+    paralyzeTime: 3
+    launchForwardsMultiplier: 3
   - type: Item
     heldPrefix: syndie
   - type: FlavorProfile
@@ -196,8 +194,6 @@
   - type: SolutionContainerVisuals
     fillBaseName: gibs-
   - type: Slippery
-    paralyzeTime: 1
-    launchForwardsMultiplier: 1
   - type: StepTrigger
   - type: Item
     heldPrefix: gibs
