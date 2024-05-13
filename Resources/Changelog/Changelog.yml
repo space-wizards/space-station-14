@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Glass shards can be added to flatcaps to create bladed flatcaps!
-    type: Add
-  id: 6091
-  time: '2024-03-05T20:57:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25780
 - author: MACMAN2003
   changes:
   - message: Added clockwork structures and brass to build them with.
@@ -3869,3 +3862,10 @@
   id: 6590
   time: '2024-05-13T19:25:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27984
+- author: aspiringLich
+  changes:
+  - message: Tweaked the Chemical, Booze, and Soda Dispenser UIs to aid readability.
+    type: Tweak
+  id: 6591
+  time: '2024-05-13T21:46:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27958
