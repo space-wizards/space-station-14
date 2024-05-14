@@ -16,7 +16,6 @@
       state: magicmissile
     event: !type:ProjectileSpellEvent
       prototype: ProjectileMagicMissile
-      posData: !type:TargetCasterPos
       speech: action-speech-spell-magicmissile
 
 - type: entity
@@ -37,7 +36,6 @@
       state: ice
     event: !type:ProjectileSpellEvent
       prototype: ProjectileIceBurst
-      posData: !type:TargetCasterPos
       speech: action-speech-spell-iceburst
 
 - type: entity
@@ -58,7 +56,6 @@
       state: tesla
     event: !type:ProjectileSpellEvent
       prototype: ProjectileMagicTesla
-      posData: !type:TargetCasterPos
       speech: action-speech-spell-teslaball
 
 - type: entity
@@ -82,4 +79,3 @@
       state: mimegun
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFingerGun
-      posData: !type:TargetCasterPos

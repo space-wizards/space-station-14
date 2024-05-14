@@ -45,7 +45,6 @@
       state: fireball
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
-      posData: !type:TargetCasterPos
       speech: action-speech-spell-fireball
 
 - type: entity
