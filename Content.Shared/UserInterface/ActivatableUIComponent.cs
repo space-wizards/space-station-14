@@ -17,6 +17,8 @@ namespace Content.Shared.UserInterface
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public bool InHandsOnly;
+        // TODO ensure that the BUI's range is set to 0
+        // Avoids costly bui range checks,
 
         [DataField]
         public bool SingleUser;
@@ -51,13 +53,6 @@ namespace Content.Shared.UserInterface
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public bool VerbOnly;
-
-        /// <summary>
-        ///     Whether spectators (non-admin ghosts) should be allowed to view this UI.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField]
-        public bool AllowSpectator = true;
 
         /// <summary>
         ///     Whether the item must be in the user's currently selected/active hand.
