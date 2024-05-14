@@ -97,7 +97,7 @@ public sealed class SatiationSystem : EntitySystem
         InitializeSatiation(uid, component.Hunger, HungerAlertThresholds, HungerAlertCategory, args);
         Dirty(uid, component);
 
-        TryComp(uid, out MovementSpeedModifierComponent? moveMod);
+        if (TryComp(uid, out MovementSpeedModifierComponent? moveMod))
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid, moveMod);
     }
 
