@@ -58,7 +58,7 @@ internal sealed class UdderSystem : EntitySystem
                 if (_satiation.GetHungerThreshold(satiation) < SatiationThreashold.Okay)
                     continue;
 
-                _satiation.ModifyHunger(uid, -udder.HungerUsage, satiation);
+                _satiation.ModifyHunger((uid, satiation), -udder.HungerUsage);
             }
 
             if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution))

@@ -85,7 +85,7 @@ public sealed class EggLayerSystem : EntitySystem
                 return false;
             }
 
-            _satiation.ModifyHunger(uid, -egglayer.HungerUsage, satiation);
+            _satiation.ModifyHunger((uid, satiation), -egglayer.HungerUsage);
         }
 
         foreach (var ent in EntitySpawnCollection.GetSpawns(egglayer.EggSpawn, _random))

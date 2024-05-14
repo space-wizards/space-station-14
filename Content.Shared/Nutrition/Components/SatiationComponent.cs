@@ -9,18 +9,18 @@ namespace Content.Shared.Nutrition.Components;
 [AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class SatiationComponent : Component
 {
-    [DataField("hunger"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public Satiation Hunger = new();
 
-    [DataField("thirst"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public Satiation Thirst = new();
 
     /// <summary>
     /// The time when the thirst will update next.
     /// </summary>
-    [DataField("nextUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     [AutoPausedField]
     public TimeSpan NextUpdateTime;

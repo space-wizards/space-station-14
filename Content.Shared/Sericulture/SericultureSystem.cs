@@ -53,7 +53,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
     {
         if (TryComp<SatiationComponent>(uid, out var satiationComp)
-        && _satiationSystem.IsHungerBelowState(uid, satiationComp, comp.MinHungerThreshold, satiationComp.Hunger.Current- comp.HungerCost))
+        && _satiationSystem.IsHungerBelowState((uid, satiationComp), comp.MinHungerThreshold, satiationComp.Hunger.Current- comp.HungerCost))
         {
             _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;
@@ -77,7 +77,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
             return;
 
         if (TryComp<SatiationComponent>(uid, out var satiationComp) // A check, just incase the doafter is somehow performed when the entity is not in the right hunger state.
-        && _satiationSystem.IsHungerBelowState(uid, satiationComp, comp.MinHungerThreshold, satiationComp.Hunger.Current - comp.HungerCost))
+        && _satiationSystem.IsHungerBelowState((uid, satiationComp), comp.MinHungerThreshold, satiationComp.Hunger.Current - comp.HungerCost))
         {
             _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;

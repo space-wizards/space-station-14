@@ -154,8 +154,8 @@ public sealed class AnimalHusbandrySystem : EntitySystem
             return false;
 
         if (TryComp<SatiationComponent>(uid, out var satiation)
-        && _satiation.GetHungerThreshold(satiation) < SatiationThreashold.Okay
-        && _satiation.GetThirstThreshold(satiation) < SatiationThreashold.Okay)
+            && _satiation.GetHungerThreshold(satiation) < SatiationThreashold.Okay
+            && _satiation.GetThirstThreshold(satiation) < SatiationThreashold.Okay)
             return false;
 
         return true;

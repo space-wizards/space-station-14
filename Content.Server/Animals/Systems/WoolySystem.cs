@@ -49,7 +49,7 @@ public sealed class WoolySystem : EntitySystem
                 if (_satiation.GetHungerThreshold(satiation) < SatiationThreashold.Okay)
                     continue;
 
-                _satiation.ModifyHunger(uid, -wooly.HungerUsage, satiation);
+                _satiation.ModifyHunger((uid, satiation), -wooly.HungerUsage);
             }
 
             if (!_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution))

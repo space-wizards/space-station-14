@@ -120,8 +120,8 @@ public sealed class SatiationSystem : EntitySystem
 
     private void OnRejuvenate(EntityUid uid, SatiationComponent component, RejuvenateEvent args)
     {
-        SetThirst(uid, component.Thirst.Thresholds[SatiationThreashold.Okay], component);
-        SetHunger(uid, component.Hunger.Thresholds[SatiationThreashold.Okay], component);
+        SetThirst((uid, component), component.Thirst.Thresholds[SatiationThreashold.Okay]);
+        SetHunger((uid, component), component.Hunger.Thresholds[SatiationThreashold.Okay]);
     }
 
     /// <summary>
@@ -130,11 +130,11 @@ public sealed class SatiationSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="amount"></param>
     /// <param name="component"></param>
-    public void ModifyThirst(EntityUid uid, float amount, SatiationComponent? component = null)
+    public void ModifyThirst(Entity<SatiationComponent?> ent, float amount)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
-        SetThirst(uid, component.Thirst.Current + amount, component);
+        SetThirst(ent, ent.Comp.Thirst.Current + amount);
     }
 
     /// <summary>
@@ -143,11 +143,11 @@ public sealed class SatiationSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="amount"></param>
     /// <param name="component"></param>
-    public void ModifyHunger(EntityUid uid, float amount, SatiationComponent? component = null)
+    public void ModifyHunger(Entity<SatiationComponent?> ent, float amount)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
-        SetHunger(uid, component.Hunger.Current + amount, component);
+        SetHunger(ent, ent.Comp.Hunger.Current + amount);
     }
 
     private void SetSatiation(Satiation satiation, float amount)
@@ -163,13 +163,13 @@ public sealed class SatiationSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="amount"></param>
     /// <param name="component"></param>
-    public void SetThirst(EntityUid uid, float amount, SatiationComponent? component = null)
+    public void SetThirst(Entity<SatiationComponent?> ent, float amount)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
-        SetSatiation(component.Thirst, amount);
-        UpdateCurrentThirstThreshold(uid, component);
-        Dirty(uid, component);
+        SetSatiation(ent.Comp.Thirst, amount);
+        UpdateCurrentThirstThreshold(ent);
+        Dirty(ent);
     }
 
     /// <summary>
@@ -178,13 +178,13 @@ public sealed class SatiationSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="amount"></param>
     /// <param name="component"></param>
-    public void SetHunger(EntityUid uid, float amount, SatiationComponent? component = null)
+    public void SetHunger(Entity<SatiationComponent?> ent, float amount)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
-        SetSatiation(component.Hunger, amount);
-        UpdateCurrentHungerThreshold(uid, component);
-        Dirty(uid, component);
+        SetSatiation(ent.Comp.Hunger, amount);
+        UpdateCurrentHungerThreshold(ent);
+        Dirty(ent);
     }
 
     private void UpdateCurrentThreshold(Satiation satiation)
@@ -199,23 +199,23 @@ public sealed class SatiationSystem : EntitySystem
             satiation.CurrentThresholdDamage = null;
     }
 
-    private void UpdateCurrentThirstThreshold(EntityUid uid, SatiationComponent? component = null)
+    private void UpdateCurrentThirstThreshold(Entity<SatiationComponent?> ent)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
-        UpdateCurrentThreshold(component.Thirst);
-        DoThirstThresholdEffects(uid, component);
-        Dirty(uid, component);
+        UpdateCurrentThreshold(ent.Comp.Thirst);
+        DoThirstThresholdEffects((ent.Owner, ent.Comp));
+        Dirty(ent);
     }
 
-    private void UpdateCurrentHungerThreshold(EntityUid uid, SatiationComponent? component = null)
+    private void UpdateCurrentHungerThreshold(Entity<SatiationComponent?> ent)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
-        UpdateCurrentThreshold(component.Hunger);
-        DoHungerThresholdEffects(uid, component);
+        UpdateCurrentThreshold(ent.Comp.Hunger);
+        DoHungerThresholdEffects((ent.Owner, ent.Comp));
 
-        Dirty(uid, component);
+        Dirty(ent);
     }
 
     private bool DoThresholdEffects(EntityUid uid, Satiation satiation, Dictionary<SatiationThreashold, AlertType> alertThresholds, AlertCategory alertCategory, bool force)
@@ -245,15 +245,15 @@ public sealed class SatiationSystem : EntitySystem
         return true;
     }
 
-    private void DoThirstThresholdEffects(EntityUid uid, SatiationComponent component, bool force = false)
+    private void DoThirstThresholdEffects(Entity<SatiationComponent> ent, bool force = false)
     {
-        if (!DoThresholdEffects(uid, component.Thirst, ThirstAlertThresholds, ThirstAlertCategory, force))
+        if (!DoThresholdEffects(ent.Owner, ent.Comp.Thirst, ThirstAlertThresholds, ThirstAlertCategory, force))
             return;
     }
 
-    private void DoHungerThresholdEffects(EntityUid uid, SatiationComponent component, bool force = false)
+    private void DoHungerThresholdEffects(Entity<SatiationComponent> ent, bool force = false)
     {
-        if (!DoThresholdEffects(uid, component.Hunger, HungerAlertThresholds, HungerAlertCategory, force))
+        if (!DoThresholdEffects(ent.Owner, ent.Comp.Hunger, HungerAlertThresholds, HungerAlertCategory, force))
             return;
     }
 
@@ -309,23 +309,23 @@ public sealed class SatiationSystem : EntitySystem
     /// <summary>
     /// A check that returns if the entity is below a thirst threshold.
     /// </summary>
-    public bool IsThirstBelowState(EntityUid uid, SatiationComponent? component, SatiationThreashold threshold, float? thirst = null)
+    public bool IsThirstBelowState(Entity<SatiationComponent?> ent, SatiationThreashold threshold, float? thirst = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return false; // It's never going to go thirsty, so it's probably fine to assume that it's not... you know, thirsty.
 
-        return GetThirstThreshold(component, thirst) < threshold;
+        return GetThirstThreshold(ent.Comp, thirst) < threshold;
     }
 
     /// <summary>
     /// A check that returns if the entity is below a hunger threshold.
     /// </summary>
-    public bool IsHungerBelowState(EntityUid uid, SatiationComponent? component, SatiationThreashold threshold, float? food = null)
+    public bool IsHungerBelowState(Entity<SatiationComponent?> ent, SatiationThreashold threshold, float? food = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return false; // It's never going to go hungry, so it's probably fine to assume that it's not... you know, hungry.
 
-        return GetHungerThreshold(component, food) < threshold;
+        return GetHungerThreshold(ent.Comp, food) < threshold;
     }
 
     private bool GetMovementThreshold(SatiationThreashold threshold)
@@ -386,9 +386,9 @@ public sealed class SatiationSystem : EntitySystem
                 continue;
             component.NextUpdateTime = _timing.CurTime + component.UpdateRate;
 
-            ModifyThirst(uid, -component.Thirst.ActualDecayRate, component);
+            ModifyThirst((uid, component), -component.Thirst.ActualDecayRate);
             DoContinuousEffects(uid, component.Thirst);
-            ModifyHunger(uid, -component.Hunger.ActualDecayRate, component);
+            ModifyHunger((uid, component), -component.Hunger.ActualDecayRate);
             DoContinuousEffects(uid, component.Hunger);
         }
     }

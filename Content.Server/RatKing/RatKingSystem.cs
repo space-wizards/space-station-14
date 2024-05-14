@@ -53,7 +53,7 @@ namespace Content.Server.RatKing
                 return;
             }
             args.Handled = true;
-            _satiation.ModifyHunger(uid, -component.HungerPerArmyUse, satiation);
+            _satiation.ModifyHunger((uid, satiation), -component.HungerPerArmyUse);
             var servant = Spawn(component.ArmyMobSpawnId, Transform(uid).Coordinates);
             var comp = EnsureComp<RatKingServantComponent>(servant);
             comp.King = uid;
@@ -83,7 +83,7 @@ namespace Content.Server.RatKing
                 return;
             }
             args.Handled = true;
-            _satiation.ModifyHunger(uid, -component.HungerPerDomainUse, satiation);
+            _satiation.ModifyHunger((uid, satiation), -component.HungerPerDomainUse);
 
             _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid);
             var tileMix = _atmos.GetTileMixture(uid, excite: true);

@@ -25,7 +25,7 @@ namespace Content.Server.Chemistry.ReagentEffects
             var entman = args.EntityManager;
             if (!entman.TryGetComponent(args.SolutionEntity, out SatiationComponent? satiation))
                 return;
-            entman.System<SatiationSystem>().ModifyHunger(args.SolutionEntity, NutritionFactor * (float) args.Quantity, satiation);
+            entman.System<SatiationSystem>().ModifyHunger((args.SolutionEntity, satiation), NutritionFactor * (float) args.Quantity);
         }
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

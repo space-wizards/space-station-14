@@ -37,7 +37,7 @@ namespace Content.Server.Nutrition
             }
 
             var hungryThreshold = satiation.Hunger.Thresholds[SatiationThreashold.Desperate];
-            _entities.System<SatiationSystem>().SetHunger(playerEntity, hungryThreshold, satiation);
+            _entities.System<SatiationSystem>().SetHunger((playerEntity, satiation), hungryThreshold);
         }
     }
 }

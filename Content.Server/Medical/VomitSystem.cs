@@ -41,8 +41,8 @@ namespace Content.Server.Medical
             // Vomiting makes you hungrier and thirstier
             if (TryComp<SatiationComponent>(uid, out var satiation))
             {
-                _satiation.ModifyHunger(uid, hungerAdded, satiation);
-                _satiation.ModifyThirst(uid, thirstAdded, satiation);
+                _satiation.ModifyHunger((uid, satiation), hungerAdded);
+                _satiation.ModifyThirst((uid, satiation), thirstAdded);
             }
 
 
