@@ -355,7 +355,7 @@ reagent-effect-guidebook-plant-attribute =
     { $chance ->
         [1] Adjusts
         *[other] adjust
-    } $attribute by $amount
+    } {$attribute} by {$amount}
 
 reagent-effect-guidebook-plant-cryoxadone =
     { $chance ->
@@ -379,4 +379,4 @@ reagent-effect-guidebook-plant-robust-harvest =
     { $chance ->
         [1] Increases
         *[other] increase
-    } the plant's potency by $increase up to a maximum of $limit. Causes the plant to lose its seeds once the potency reaches $seedlesstreshold. Trying to add potency over $limit may cause decrease in yield at a 10% chance.
+    } the plant's potency by {$increase} up to a maximum of {$limit}. Causes the plant to lose its seeds once the potency reaches {$seedlesstreshold}. Trying to add potency over {$limit} may cause decrease in yield at a 10% chance.
