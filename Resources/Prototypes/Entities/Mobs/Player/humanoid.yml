@@ -12,7 +12,6 @@
   id: EmergencySquadBase
   parent: HumanoidEventBase
   abstract: true
-  name: Emergency Squad Base
   components:
     - type: MindShield
     - type: InitialInfectedExempt
@@ -760,7 +759,7 @@
     - type: RandomHumanoidSpawner
       settings: DisasterVictimCaptain
 
-#Following use EmergencySquadBase since they are heads and probably should have mindshields
+## Following use EmergencySquadBase since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
   id: DisasterVictimResearchDirector
