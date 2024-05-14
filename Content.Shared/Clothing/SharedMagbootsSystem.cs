@@ -1,9 +1,11 @@
 using Content.Shared.Actions;
+using Content.Shared.Alert;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Gravity;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
-using Content.Shared.Slippery;
-using Content.Shared.Toggleable;
+using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 
@@ -11,91 +13,66 @@ namespace Content.Shared.Clothing;
 
 public abstract class SharedMagbootsSystem : EntitySystem
 {
-    [Dependency] private readonly ClothingSpeedModifierSystem _clothingSpeedModifier = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly ClothingSystem _clothing = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedActionsSystem _sharedActions = default!;
-    [Dependency] private readonly SharedActionsSystem _actionContainer = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private readonly SharedItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MagbootsComponent, GetVerbsEvent<ActivationVerb>>(AddToggleVerb);
-        SubscribeLocalEvent<MagbootsComponent, InventoryRelayedEvent<SlipAttemptEvent>>(OnSlipAttempt);
-        SubscribeLocalEvent<MagbootsComponent, GetItemActionsEvent>(OnGetActions);
-        SubscribeLocalEvent<MagbootsComponent, ToggleMagbootsEvent>(OnToggleMagboots);
-        SubscribeLocalEvent<MagbootsComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<MagbootsComponent, ItemToggledEvent>(OnToggled);
+        SubscribeLocalEvent<MagbootsComponent, ClothingGotEquippedEvent>(OnEquipped);
+        SubscribeLocalEvent<MagbootsComponent, ClothingGotUnequippedEvent>(OnUnequipped);
+        // let magboots themselves get stuck to the floor :)
+        SubscribeLocalEvent<MagbootsComponent, CheckGravityEvent>(OnCheckGravity);
+        SubscribeLocalEvent<MagbootsComponent, InventoryRelayedEvent<CheckGravityEvent>>(OnCheckGravity);
     }
 
-    private void OnMapInit(EntityUid uid, MagbootsComponent component, MapInitEvent args)
+    private void OnToggled(Entity<MagbootsComponent> ent, ref ItemToggledEvent args)
     {
-        _actionContainer.AddAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
-        Dirty(uid, component);
-    }
-
-    private void OnToggleMagboots(EntityUid uid, MagbootsComponent component, ToggleMagbootsEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Handled = true;
-
-        ToggleMagboots(uid, component);
-    }
-
-    private void ToggleMagboots(EntityUid uid, MagbootsComponent magboots)
-    {
-        magboots.On = !magboots.On;
-
-        if (_sharedContainer.TryGetContainingContainer(uid, out var container) &&
-            _inventory.TryGetSlotEntity(container.Owner, "shoes", out var entityUid) && entityUid == uid)
-            UpdateMagbootEffects(container.Owner, uid, true, magboots);
-
-        if (TryComp<ItemComponent>(uid, out var item))
+        // only stick to the floor if being worn in the correct slot
+        if (_container.TryGetContainingContainer(ent, out var container) &&
+            _inventory.TryGetSlotEntity(container.Owner, "shoes", out var shoes)
+            && ent == shoes)
         {
-            _item.SetHeldPrefix(uid, magboots.On ? "on" : null, component: item);
-            _clothing.SetEquippedPrefix(uid, magboots.On ? "on" : null);
+            UpdateMagbootEffects(container.Owner, args.Activated);
         }
 
-        _appearance.SetData(uid, ToggleVisuals.Toggled, magboots.On);
-        OnChanged(uid, magboots);
-        Dirty(uid, magboots);
+        var prefix = args.Activated ? "on" : null;
+        _item.SetHeldPrefix(ent, prefix);
+        _clothing.SetEquippedPrefix(ent, prefix);
     }
 
-    protected virtual void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component) { }
-
-    protected void OnChanged(EntityUid uid, MagbootsComponent component)
+    private void OnUnequipped(Entity<MagbootsComponent> ent, ref ClothingGotUnequippedEvent args)
     {
-        _sharedActions.SetToggled(component.ToggleActionEntity, component.On);
-        _clothingSpeedModifier.SetClothingSpeedModifierEnabled(uid, component.On);
+        UpdateMagbootEffects(args.Wearer, false);
     }
 
-    private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetVerbsEvent<ActivationVerb> args)
+    private void OnEquipped(Entity<MagbootsComponent> ent, ref ClothingGotEquippedEvent args)
     {
-        if (!args.CanAccess || !args.CanInteract)
-            return;
-
-        ActivationVerb verb = new();
-        verb.Text = Loc.GetString("toggle-magboots-verb-get-data-text");
-        verb.Act = () => ToggleMagboots(uid, component);
-        // TODO VERB ICON add toggle icon? maybe a computer on/off symbol?
-        args.Verbs.Add(verb);
+        UpdateMagbootEffects(args.Wearer, _toggle.IsActivated(ent.Owner));
     }
 
-    private void OnSlipAttempt(EntityUid uid, MagbootsComponent component, InventoryRelayedEvent<SlipAttemptEvent> args)
+    protected virtual void UpdateMagbootEffects(EntityUid user, bool on)
     {
-        if (component.On)
-            args.Args.Cancel();
+        if (on)
+            _alerts.ShowAlert(user, AlertType.Magboots);
+        else
+            _alerts.ClearAlert(user, AlertType.Magboots);
     }
 
-    private void OnGetActions(EntityUid uid, MagbootsComponent component, GetItemActionsEvent args)
+    private void OnCheckGravity(Entity<MagbootsComponent> ent, ref CheckGravityEvent args)
     {
-        args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
+        if (_toggle.IsActivated(ent.Owner))
+            args.Handled = true;
+    }
+
+    private void OnCheckGravity(Entity<MagbootsComponent> ent, ref InventoryRelayedEvent<CheckGravityEvent> args)
+    {
+        OnCheckGravity(ent, ref args.Args);
     }
 }
-
-public sealed partial class ToggleMagbootsEvent : InstantActionEvent {}
