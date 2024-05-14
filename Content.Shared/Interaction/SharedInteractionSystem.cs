@@ -20,6 +20,7 @@ using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
+using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
@@ -74,6 +75,7 @@ namespace Content.Shared.Interaction
         private EntityQuery<CombatModeComponent> _combatQuery;
         private EntityQuery<WallMountComponent> _wallMountQuery;
         private EntityQuery<UseDelayComponent> _delayQuery;
+        private EntityQuery<ActivatableUIComponent> _uiQuery;
 
         private const CollisionGroup InRangeUnobstructedMask = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
@@ -95,6 +97,7 @@ namespace Content.Shared.Interaction
             _combatQuery = GetEntityQuery<CombatModeComponent>();
             _wallMountQuery = GetEntityQuery<WallMountComponent>();
             _delayQuery = GetEntityQuery<UseDelayComponent>();
+            _uiQuery = GetEntityQuery<ActivatableUIComponent>();
 
             SubscribeLocalEvent<TransformComponent, BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
             SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
@@ -131,10 +134,11 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void OnBoundInterfaceInteractAttempt(BoundUserInterfaceMessageAttempt ev)
         {
+            _uiQuery.TryComp(ev.Target, out var uiComp);
             if (!_actionBlockerSystem.CanInteract(ev.Actor, ev.Target))
             {
-                // We permit ghosts to open uis,
-                if (ev.Message is not OpenBoundInterfaceMessage || !HasComp<GhostComponent>(ev.Actor))
+                // We permit ghosts to open uis unless explicitly blocked
+                if (ev.Message is not OpenBoundInterfaceMessage || !HasComp<GhostComponent>(ev.Actor) || uiComp?.BlockSpectators == true)
                 {
                     ev.Cancel();
                     return;
@@ -147,6 +151,24 @@ namespace Content.Shared.Interaction
             DebugTools.Assert(range <= 0 || UiRangeCheck(ev.Actor, ev.Target, range));
 
             if (range <= 0 && !IsAccessible(ev.Actor, ev.Target))
+            {
+                ev.Cancel();
+                return;
+            }
+
+            if (uiComp == null)
+                return;
+
+            if (uiComp.SingleUser && uiComp.CurrentSingleUser != ev.Actor)
+            {
+                ev.Cancel();
+                return;
+            }
+
+            if (!uiComp.RequireHands)
+                return;
+
+            if (!_handsQuery.TryComp(ev.Actor, out var hands) || hands.Hands.Count == 0)
                 ev.Cancel();
         }
 

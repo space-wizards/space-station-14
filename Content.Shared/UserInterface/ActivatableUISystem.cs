@@ -24,6 +24,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ActivatableUIComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<ActivatableUIComponent, InteractUsingEvent>(OnInteractUsing);
@@ -33,28 +34,21 @@ public sealed partial class ActivatableUISystem : EntitySystem
         SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(GetActivationVerb);
         SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<Verb>>(GetVerb);
 
-        SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
         SubscribeLocalEvent<UserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
 
         InitializePower();
     }
 
-    private void OnBoundInterfaceInteractAttempt(BoundUserInterfaceMessageAttempt ev)
+    private void OnStartup(Entity<ActivatableUIComponent> ent, ref ComponentStartup args)
     {
-        if (!TryComp(ev.Target, out ActivatableUIComponent? comp))
-            return;
-
-        if (comp.SingleUser && comp.CurrentSingleUser != ev.Actor)
+        if (ent.Comp.Key == null)
         {
-            ev.Cancel();
+            Log.Error($"Missing UI Key for entity: {ToPrettyString(ent)}");
             return;
         }
 
-        if (!comp.RequireHands)
-            return;
-
-        if (!TryComp(ev.Actor, out HandsComponent? hands) || hands.Hands.Count == 0)
-            ev.Cancel();
+        if (ent.Comp.InHandsOnly && _uiSystem.TryGetInterfaceData(ent.Owner, ent.Comp.Key, out var data))
+            data.InteractionRange = 0;
     }
 
     private void OnActionPerform(EntityUid uid, UserInterfaceComponent component, OpenUiActionEvent args)
@@ -99,10 +93,6 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!args.CanAccess)
             return false;
 
-        // Allow ghosts to view in-range UIs
-        if (HasComp<GhostComponent>(args.User))
-            return true;
-
         if (!component.RequiredItems?.IsValid(args.Using ?? default, EntityManager) ?? false)
             return false;
 
@@ -121,7 +111,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             }
         }
 
-        return args.CanInteract;
+        return args.CanInteract || HasComp<GhostComponent>(args.User) && !component.BlockSpectators;
     }
 
     private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
@@ -193,7 +183,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             return true;
         }
 
-        if (!_blockerSystem.CanInteract(user, uiEntity) && !HasComp<GhostComponent>(user))
+        if (!_blockerSystem.CanInteract(user, uiEntity) && (!HasComp<GhostComponent>(user) || aui.BlockSpectators))
             return false;
 
         if (aui.RequireHands)
