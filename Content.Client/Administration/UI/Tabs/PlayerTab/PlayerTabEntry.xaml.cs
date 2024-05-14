@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Administration.UI.Tabs.PlayerTab;
 
 [GenerateTypedNameReferences]
-public sealed partial class PlayerTabEntry : ContainerButton
+public sealed partial class PlayerTabEntry : PanelContainer
 {
     public NetEntity? PlayerEntity;
 
