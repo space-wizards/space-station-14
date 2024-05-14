@@ -50,7 +50,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
             SearchList.SearchBar = SearchLineEdit;
             SearchList.GenerateItem += GenerateButton;
             SearchList.DataFilterCondition += DataFilterCondition;
-            SearchList.ItemKeyBindDown += OnEntryKeyBindDown;
+            SearchList.ItemKeyBindDown += (args, data) => OnEntryKeyBindDown?.Invoke(args, data);
 
             RefreshPlayerList(_adminSystem.PlayerList);
         }
