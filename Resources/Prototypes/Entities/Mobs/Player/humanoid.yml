@@ -1,17 +1,15 @@
 ## Random humanoids
 
 - type: randomHumanoidSettings
-  id: HumanoidEventBase
-  abstract: true
+  id: EventHumanoid
   components:
     - type: RandomHumanoidAppearance
       randomizeName: false
     - type: GhostTakeoverAvailable
 
 - type: randomHumanoidSettings
-  id: EmergencySquadBase
-  parent: HumanoidEventBase
-  abstract: true
+  id: EmergencySquad
+  parent: EventHumanoid
   components:
     - type: MindShield
     - type: InitialInfectedExempt
@@ -36,7 +34,7 @@
 
 - type: randomHumanoidSettings
   id: DeathSquad
-  parent: EmergencySquadBase
+  parent: EmergencySquad
   randomizeName: false
   components:        
     - type: GhostRole
@@ -72,7 +70,7 @@
 
 - type: randomHumanoidSettings
   id: ERTLeader
-  parent: EmergencySquadBase
+  parent: EmergencySquad
   randomizeName: false
   components:
     - type: GhostRole
@@ -459,7 +457,7 @@
 
 - type: randomHumanoidSettings
   id: CBURNAgent
-  parent: EmergencySquadBase
+  parent: EmergencySquad
   components:
     - type: Loadout
       prototypes: [CBURNGear]
@@ -487,7 +485,7 @@
 
 - type: randomHumanoidSettings
   id: CentcomOfficial
-  parent: EmergencySquadBase
+  parent: EmergencySquad
   components:
     - type: GhostRole
       name: ghost-role-information-centcom-official-name
@@ -553,7 +551,7 @@
 
 - type: randomHumanoidSettings
   id: Cluwne
-  parent: HumanoidEventBase
+  parent: EventHumanoid
   randomizeName: false
   components:
     - type: GhostRole
@@ -595,7 +593,7 @@
 
 - type: randomHumanoidSettings
   id: LostCargoTechnician
-  parent: HumanoidEventBase
+  parent: EventHumanoid
   components:
     - type: GhostRole
       name: ghost-role-information-lost-cargo-technical-name
@@ -645,7 +643,7 @@
 
 - type: randomHumanoidSettings
   id: ClownTroupe
-  parent: HumanoidEventBase
+  parent: EventHumanoid
   randomizeName: false
   components:
     - type: GhostRole
@@ -662,18 +660,11 @@
 
 - type: randomHumanoidSettings
   id: ClownTroupeBanana
-  parent: HumanoidEventBase
+  parent: ClownTroupe
   randomizeName: false
   components:
-    - type: GhostRole
-      name: ghost-role-information-clown-troupe-name
-      description: ghost-role-information-clown-troupe-description
-      rules: ghost-role-information-clown-troupe-rules
     - type: Loadout
       prototypes: [ BananaClown ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_clown
 
 # Traveling exotic chef
 
@@ -703,7 +694,7 @@
 
 - type: randomHumanoidSettings
   id: TravelingChef
-  parent: HumanoidEventBase
+  parent: EventHumanoid
   components:
     - type: GhostRole
       name: ghost-role-information-traveling-chef-name
@@ -759,11 +750,11 @@
     - type: RandomHumanoidSpawner
       settings: DisasterVictimCaptain
 
-## Following use EmergencySquadBase since they are heads and probably should have mindshields
+## Following use EmergencySquad since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
-  id: DisasterVictimResearchDirector
-  parent: EmergencySquadBase
+  id: DisasterVictimHead
+  parent: EmergencySquad
   components:
     - type: GhostRole
       name: ghost-role-information-disaster-victim-name
@@ -771,32 +762,25 @@
       rules: ghost-role-information-disaster-victim-rules
       raffle:
         settings: default
+
+- type: randomHumanoidSettings
+  id: DisasterVictimResearchDirector
+  parent: DisasterVictimHead
+  components:
     - type: Loadout
       roleLoadout: [ JobResearchDirector ]
 
 - type: randomHumanoidSettings
   id: DisasterVictimCMO
-  parent: EmergencySquadBase
+  parent: DisasterVictimHead
   components:
-    - type: GhostRole
-      name: ghost-role-information-disaster-victim-name
-      description: ghost-role-information-disaster-victim-description
-      rules: ghost-role-information-disaster-victim-rules
-      raffle:
-        settings: default
     - type: Loadout
       roleLoadout: [ JobChiefMedicalOfficer ]
 
 - type: randomHumanoidSettings
   id: DisasterVictimCaptain
-  parent: EmergencySquadBase
+  parent: DisasterVictimHead
   components:
-    - type: GhostRole
-      name: ghost-role-information-disaster-victim-name
-      description: ghost-role-information-disaster-victim-description
-      rules: ghost-role-information-disaster-victim-rules
-      raffle:
-        settings: default
     - type: Loadout
       roleLoadout: [ JobCaptain ]
 
@@ -828,7 +812,7 @@
 
 - type: randomHumanoidSettings
   id: SyndieDisasterVictim
-  parent: HumanoidEventBase
+  parent: EventHumanoid
   components:
     - type: NpcFactionMember
       factions:
