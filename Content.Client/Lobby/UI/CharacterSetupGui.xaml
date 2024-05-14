@@ -17,10 +17,6 @@
                 <Button Name="RulesButton"
                         Text="{Loc 'character-setup-gui-character-setup-rules-button'}"
                         StyleClasses="ButtonBig"/>
-                <Button Name="SaveButton"
-                        Access="Public"
-                        Text="{Loc 'character-setup-gui-character-setup-save-button'}"
-                        StyleClasses="ButtonBig"/>
                 <Button Name="CloseButton"
                         Access="Public"
                         Text="{Loc 'character-setup-gui-character-setup-close-button'}"
