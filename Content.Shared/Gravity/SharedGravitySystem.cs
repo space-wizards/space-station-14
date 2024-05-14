@@ -17,6 +17,8 @@ namespace Content.Shared.Gravity
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
 
+        private EntityQuery<InventoryComponent> _inventoryQuery;
+
         public bool IsWeightless(EntityUid uid, PhysicsComponent? body = null, TransformComponent? xform = null)
         {
             Resolve(uid, ref body, false);
@@ -42,19 +44,27 @@ namespace Content.Shared.Gravity
             // Check for something holding us down
             // If the planet has gravity component and no gravity it will still give gravity
             // If there's no gravity comp at all (i.e. space) then they don't work.
-            if (hasGrav && _inventory.TryGetSlotEntity(uid, "shoes", out var ent))
+            var ev = new CheckGravityEvent();
+            RaiseLocalEvent(uid, ref ev);
+            if (ev.Handled)
+                return false;
+
+            if (_inventoryQuery.TryComp(uid, out var inv))
             {
-                // TODO this should just be a event that gets relayed instead of a specific slot & component check.
-                if (TryComp<MagbootsComponent>(ent, out var boots) && boots.On)
+                _inventory.RelayEvent((uid, inv), ref ev);
+                if (ev.Handled)
                     return false;
             }
 
-            return true;
+            return !hasGrav;
         }
 
         public override void Initialize()
         {
             base.Initialize();
+
+            _inventoryQuery = GetEntityQuery<InventoryComponent>();
+
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
             SubscribeLocalEvent<AlertSyncEvent>(OnAlertsSync);
             SubscribeLocalEvent<AlertsComponent, EntParentChangedMessage>(OnAlertsParentChange);
