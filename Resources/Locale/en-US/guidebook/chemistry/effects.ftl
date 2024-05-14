@@ -355,7 +355,7 @@ reagent-effect-guidebook-plant-attribute =
     { $chance ->
         [1] Adjusts
         *[other] adjust
-    } {$attribute} by {$amount}
+    } {$attribute} by [color=${colorvalue}]{$amount}[/color]
 
 reagent-effect-guidebook-plant-cryoxadone =
     { $chance ->

@@ -43,6 +43,18 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             return !(Prob <= 0f) && IoCManager.Resolve<IRobustRandom>().Prob(Prob);
         }
 
-        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString("reagent-effect-guidebook-plant-attribute", ("attribute", Loc.GetString(Attribute)), ("amount", Amount), ("chance", Probability));
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        {
+            string color;
+            if (Positive ^ Attribute<0.0)
+            {
+                color = "green";
+            }
+            else
+            {
+                color = "red";
+            }
+            Loc.GetString("reagent-effect-guidebook-plant-attribute", ("attribute", Loc.GetString(Attribute.ToString("0.00"))), ("amount", Amount), ("colorvalue", color), ("chance", Probability));
+        }
     }
 }
