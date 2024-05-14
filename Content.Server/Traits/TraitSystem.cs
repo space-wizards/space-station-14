@@ -38,15 +38,7 @@ public sealed class TraitSystem : EntitySystem
                 continue;
 
             // Add all components required by the prototype
-            foreach (var entry in traitPrototype.Components.Values)
-            {
-                if (HasComp(args.Mob, entry.Component.GetType()))
-                    continue;
-
-                var comp = (Component) _serializationManager.CreateCopy(entry.Component, notNullableOverride: true);
-                comp.Owner = args.Mob;
-                EntityManager.AddComponent(args.Mob, comp);
-            }
+            EntityManager.AddComponents(args.Mob,traitPrototype.Components, false);
 
             // Add item required by the trait
             if (traitPrototype.TraitGear != null)
@@ -56,7 +48,9 @@ public sealed class TraitSystem : EntitySystem
 
                 var coords = Transform(args.Mob).Coordinates;
                 var inhandEntity = EntityManager.SpawnEntity(traitPrototype.TraitGear, coords);
-                _sharedHandsSystem.TryPickup(args.Mob, inhandEntity, checkActionBlocker: false,
+                _sharedHandsSystem.TryPickup(args.Mob,
+                    inhandEntity,
+                    checkActionBlocker: false,
                     handsComp: handsComponent);
             }
         }
