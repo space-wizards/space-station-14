@@ -22,6 +22,8 @@
   id: DeathSquad
   randomizeName: false
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-Death-Squad-name
@@ -60,6 +62,8 @@
   id: ERTLeader
   randomizeName: false
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
@@ -92,6 +96,8 @@
   id: ERTLeaderEVA
   parent: ERTLeader
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
@@ -116,6 +122,8 @@
   id: ERTLeaderEVALecter
   parent: ERTLeaderEVA
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
@@ -149,6 +157,8 @@
   id: ERTChaplain
   parent: ERTLeader
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-chaplain-name
@@ -180,6 +190,8 @@
   id: ERTChaplainEVA
   parent: ERTChaplain
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-chaplain-name
@@ -213,6 +225,8 @@
   id: ERTJanitor
   parent: ERTLeader
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-janitor-name
@@ -244,6 +258,8 @@
   id: ERTJanitorEVA
   parent: ERTJanitor
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-janitor-name
@@ -277,6 +293,8 @@
   id: ERTEngineer
   parent: ERTLeader
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
@@ -308,6 +326,8 @@
   id: ERTEngineerEVA
   parent: ERTEngineer
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
@@ -341,6 +361,8 @@
   id: ERTSecurity
   parent: ERTLeader
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-security-name
@@ -372,6 +394,8 @@
   id: ERTSecurityEVA
   parent: ERTSecurity
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-security-name
@@ -395,6 +419,8 @@
   id: ERTSecurityEVALecter
   parent: ERTSecurityEVA
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-security-name
@@ -428,6 +454,8 @@
   id: ERTMedical
   parent: ERTLeader
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
@@ -459,6 +487,8 @@
   id: ERTMedicalEVA
   parent: ERTMedical
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
@@ -487,6 +517,8 @@
 - type: randomHumanoidSettings
   id: CBURNAgent
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: Loadout
       prototypes: [CBURNGear]
@@ -517,6 +549,8 @@
 - type: randomHumanoidSettings
   id: CentcomOfficial
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: MindShield
     - type: GhostRole
       name: ghost-role-information-centcom-official-name
@@ -545,6 +579,8 @@
 - type: randomHumanoidSettings
   id: SyndicateAgent
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: Loadout
       prototypes: [SyndicateOperativeGearExtremelyBasic]
 
@@ -561,6 +597,8 @@
 - type: randomHumanoidSettings
   id: NukeOp
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: NukeOperative
 
 - type: entity
@@ -582,6 +620,8 @@
   id: Cluwne
   randomizeName: false
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-cluwne-name
       description: ghost-role-information-cluwne-description
@@ -621,6 +661,8 @@
   id: LostCargoTechnician
   randomizeName: false
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-lost-cargo-technical-name
       description: ghost-role-information-lost-cargo-technical-description
@@ -676,6 +718,8 @@
   id: ClownTroupe
   randomizeName: false
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-clown-troupe-name
       description: ghost-role-information-clown-troupe-description
@@ -693,6 +737,8 @@
   id: ClownTroupeBanana
   randomizeName: false
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-clown-troupe-name
       description: ghost-role-information-clown-troupe-description
@@ -734,6 +780,8 @@
   id: TravelingChef
   randomizeName: false
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-traveling-chef-name
       description: ghost-role-information-traveling-chef-description
@@ -797,6 +845,8 @@
   id: DisasterVictimResearchDirector
   randomizeName: false
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-disaster-victim-name
       description: ghost-role-information-disaster-victim-description
@@ -815,6 +865,8 @@
   id: DisasterVictimCMO
   randomizeName: false
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-disaster-victim-name
       description: ghost-role-information-disaster-victim-description
@@ -833,6 +885,8 @@
   id: DisasterVictimCaptain
   randomizeName: false
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-disaster-victim-name
       description: ghost-role-information-disaster-victim-description
@@ -877,6 +931,8 @@
   id: SyndieDisasterVictim
   randomizeName: false
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: NpcFactionMember
       factions:
       - Syndicate

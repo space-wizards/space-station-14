@@ -11,6 +11,8 @@
   name: syndicate agent
   suffix: Human, Base
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
     - type: Loadout
       prototypes: [SyndicateOperativeGearExtremelyBasic]
     - type: RandomMetadata
