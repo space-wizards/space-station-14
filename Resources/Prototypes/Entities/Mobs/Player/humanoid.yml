@@ -1,4 +1,5 @@
 # Random humanoids
+
 - type: randomHumanoidSettings
   id: HumanoidEventBase
   abstract: true
@@ -6,7 +7,7 @@
     - type: RandomHumanoidAppearance
       randomizeName: false
     - type: GhostTakeoverAvailable
-  
+
 - type: randomHumanoidSettings
   id: EmergencySquadBase
   parent: HumanoidEventBase
