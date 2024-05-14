@@ -1,4 +1,20 @@
 # Random humanoids
+- type: randomHumanoidSettings
+  id: HumanoidEventBase
+  abstract: true
+  components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
+    - type: GhostTakeoverAvailable
+  
+- type: randomHumanoidSettings
+  id: EmergencySquadBase
+  parent: HumanoidEventBase
+  abstract: true
+  name: Emergency Squad Base
+  components:
+    - type: MindShield
+    - type: InitialInfectedExempt
 
 ## Death Squad
 
@@ -20,24 +36,20 @@
 
 - type: randomHumanoidSettings
   id: DeathSquad
+  parent: EmergencySquadBase
   randomizeName: false
-  components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
+  components:        
     - type: GhostRole
       name: ghost-role-information-Death-Squad-name
       description: ghost-role-information-Death-Squad-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ DeathSquadGear ]
     - type: RandomMetadata
       nameSegments:
         - NamesFirstMilitaryLeader
         - NamesLastMilitary
-    - type: InitialInfectedExempt
 
 
 ## ERT Leader
@@ -60,24 +72,20 @@
 
 - type: randomHumanoidSettings
   id: ERTLeader
+  parent: EmergencySquadBase
   randomizeName: false
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
       description: ghost-role-information-ert-leader-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGear ]
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitaryLeader
       - NamesLastMilitary
-    - type: InitialInfectedExempt
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVA
@@ -96,18 +104,13 @@
   id: ERTLeaderEVA
   parent: ERTLeader
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
       description: ghost-role-information-ert-leader-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
-    - type: InitialInfectedExempt
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVALecter
@@ -122,18 +125,13 @@
   id: ERTLeaderEVALecter
   parent: ERTLeaderEVA
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
       description: ghost-role-information-ert-leader-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGearEVALecter ]
-    - type: InitialInfectedExempt
 
 ## ERT Chaplain
 
@@ -157,22 +155,17 @@
   id: ERTChaplain
   parent: ERTLeader
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-chaplain-name
       description: ghost-role-information-ert-chaplain-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
       - NamesLastMilitary
     - type: Loadout
       prototypes: [ ERTChaplainGear ]
-    - type: InitialInfectedExempt
 
 - type: entity
   id: RandomHumanoidSpawnerERTChaplainEVA
@@ -190,18 +183,13 @@
   id: ERTChaplainEVA
   parent: ERTChaplain
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-chaplain-name
       description: ghost-role-information-ert-chaplain-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTChaplainGearEVA ]
-    - type: InitialInfectedExempt
 
 ## ERT Janitor
 
@@ -225,22 +213,17 @@
   id: ERTJanitor
   parent: ERTLeader
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-janitor-name
       description: ghost-role-information-ert-janitor-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
       - NamesLastMilitary
     - type: Loadout
       prototypes: [ ERTJanitorGear ]
-    - type: InitialInfectedExempt
 
 - type: entity
   id: RandomHumanoidSpawnerERTJanitorEVA
@@ -258,18 +241,13 @@
   id: ERTJanitorEVA
   parent: ERTJanitor
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-janitor-name
       description: ghost-role-information-ert-janitor-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTJanitorGearEVA ]
-    - type: InitialInfectedExempt
 
 ## ERT Engineer
 
@@ -293,22 +271,17 @@
   id: ERTEngineer
   parent: ERTLeader
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
       description: ghost-role-information-ert-engineer-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
       - NamesLastMilitary
     - type: Loadout
       prototypes: [ ERTEngineerGear ]
-    - type: InitialInfectedExempt
 
 - type: entity
   id: RandomHumanoidSpawnerERTEngineerEVA
@@ -326,18 +299,13 @@
   id: ERTEngineerEVA
   parent: ERTEngineer
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
       description: ghost-role-information-ert-engineer-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTEngineerGearEVA ]
-    - type: InitialInfectedExempt
 
 ## ERT Security
 
@@ -361,22 +329,17 @@
   id: ERTSecurity
   parent: ERTLeader
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-security-name
       description: ghost-role-information-ert-security-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
       - NamesLastMilitary
     - type: Loadout
       prototypes: [ ERTSecurityGear ]
-    - type: InitialInfectedExempt
 
 - type: entity
   id: RandomHumanoidSpawnerERTSecurityEVA
@@ -394,18 +357,13 @@
   id: ERTSecurityEVA
   parent: ERTSecurity
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-security-name
       description: ghost-role-information-ert-security-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
-    - type: InitialInfectedExempt
 
 - type: entity
   id: RandomHumanoidSpawnerERTSecurityEVALecter
@@ -419,18 +377,13 @@
   id: ERTSecurityEVALecter
   parent: ERTSecurityEVA
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-security-name
       description: ghost-role-information-ert-security-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTSecurityGearEVALecter ]
-    - type: InitialInfectedExempt
 
 ## ERT Medic
 
@@ -454,22 +407,17 @@
   id: ERTMedical
   parent: ERTLeader
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
       description: ghost-role-information-ert-medical-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
       - NamesLastMilitary
     - type: Loadout
       prototypes: [ ERTMedicalGear ]
-    - type: InitialInfectedExempt
 
 - type: entity
   id: RandomHumanoidSpawnerERTMedicalEVA
@@ -487,18 +435,13 @@
   id: ERTMedicalEVA
   parent: ERTMedical
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
       description: ghost-role-information-ert-medical-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTMedicalGearEVA ]
-    - type: InitialInfectedExempt
 
 ## CBURN
 
@@ -516,10 +459,8 @@
 
 - type: randomHumanoidSettings
   id: CBURNAgent
+  parent: EmergencySquadBase
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: Loadout
       prototypes: [CBURNGear]
     - type: GhostRole
@@ -527,12 +468,10 @@
       description: ghost-role-information-cburn-agent-description
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
       - NamesLastMilitary
-    - type: InitialInfectedExempt
 ## Central Command
 
 - type: entity
@@ -548,19 +487,15 @@
 
 - type: randomHumanoidSettings
   id: CentcomOfficial
+  parent: EmergencySquadBase
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-centcom-official-name
       description: ghost-role-information-centcom-official-description
       raffle:
         settings: default
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ CentcomGear ]
-    - type: InitialInfectedExempt
 
 ## Syndicate
 
@@ -618,17 +553,18 @@
 
 - type: randomHumanoidSettings
   id: Cluwne
+  parent: HumanoidEventBase
   randomizeName: false
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-cluwne-name
       description: ghost-role-information-cluwne-description
       raffle:
         settings: default
-    - type: GhostTakeoverAvailable
     - type: Cluwne
+
+
+## Shuttle roles
 
 ## Lost Cargo technician
 
@@ -659,23 +595,16 @@
 
 - type: randomHumanoidSettings
   id: LostCargoTechnician
-  randomizeName: false
+  parent: HumanoidEventBase
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-lost-cargo-technical-name
       description: ghost-role-information-lost-cargo-technical-description
       rules: ghost-role-information-lost-cargo-technical-rules
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       roleLoadout: [ JobCargoTechnician ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_first
-      - names_last
 
 # Clown troupe
 
@@ -716,17 +645,15 @@
 
 - type: randomHumanoidSettings
   id: ClownTroupe
+  parent: HumanoidEventBase
   randomizeName: false
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-clown-troupe-name
       description: ghost-role-information-clown-troupe-description
       rules: ghost-role-information-clown-troupe-rules
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       roleLoadout: [ JobClown ]
     - type: RandomMetadata
@@ -735,15 +662,13 @@
 
 - type: randomHumanoidSettings
   id: ClownTroupeBanana
+  parent: HumanoidEventBase
   randomizeName: false
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-clown-troupe-name
       description: ghost-role-information-clown-troupe-description
       rules: ghost-role-information-clown-troupe-rules
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ BananaClown ]
     - type: RandomMetadata
@@ -778,23 +703,16 @@
 
 - type: randomHumanoidSettings
   id: TravelingChef
-  randomizeName: false
+  parent: HumanoidEventBase
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-traveling-chef-name
       description: ghost-role-information-traveling-chef-description
       rules: ghost-role-information-traveling-chef-rules
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       roleLoadout: [ JobChef ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_first
-      - names_last
 
 # Disaster victim
 
@@ -841,65 +759,46 @@
     - type: RandomHumanoidSpawner
       settings: DisasterVictimCaptain
 
+#Following use EmergencySquadBase since they are heads and probably should have mindshields
+
 - type: randomHumanoidSettings
   id: DisasterVictimResearchDirector
-  randomizeName: false
+  parent: EmergencySquadBase
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-disaster-victim-name
       description: ghost-role-information-disaster-victim-description
       rules: ghost-role-information-disaster-victim-rules
       raffle:
         settings: default
-    - type: GhostTakeoverAvailable
     - type: Loadout
       roleLoadout: [ JobResearchDirector ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_first
-      - names_last
 
 - type: randomHumanoidSettings
   id: DisasterVictimCMO
-  randomizeName: false
+  parent: EmergencySquadBase
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-disaster-victim-name
       description: ghost-role-information-disaster-victim-description
       rules: ghost-role-information-disaster-victim-rules
       raffle:
         settings: default
-    - type: GhostTakeoverAvailable
     - type: Loadout
       roleLoadout: [ JobChiefMedicalOfficer ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_first
-      - names_last
 
 - type: randomHumanoidSettings
   id: DisasterVictimCaptain
-  randomizeName: false
+  parent: EmergencySquadBase
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
     - type: GhostRole
       name: ghost-role-information-disaster-victim-name
       description: ghost-role-information-disaster-victim-description
       rules: ghost-role-information-disaster-victim-rules
       raffle:
         settings: default
-    - type: GhostTakeoverAvailable
     - type: Loadout
       roleLoadout: [ JobCaptain ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_first
-      - names_last
 
 # Syndie Disaster Victim
 
@@ -929,10 +828,8 @@
 
 - type: randomHumanoidSettings
   id: SyndieDisasterVictim
-  randomizeName: false
+  parent: HumanoidEventBase
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
     - type: NpcFactionMember
       factions:
       - Syndicate
@@ -942,10 +839,5 @@
       rules: ghost-role-information-syndie-disaster-victim-rules
       raffle:
         settings: short
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ SyndicateOperativeGearCivilian ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_first
-      - names_last
