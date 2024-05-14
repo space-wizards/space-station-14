@@ -4,14 +4,12 @@
          xmlns:co="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Name="PlayerCount" HorizontalExpand="True" SizeFlagsStretchRatio="3"
-                   Text="{Loc Player Count}"/>
-            <LineEdit Name="SearchLineEdit" HorizontalExpand="True" SizeFlagsStretchRatio="2"
+            <Label Name="PlayerCount" HorizontalExpand="True" Text="{Loc Player Count}" />
+            <LineEdit Name="SearchLineEdit" HorizontalExpand="True"
                       PlaceHolder="{Loc player-tab-filter-line-edit-placeholder}" />
-            <Button Name="ShowDisconnectedButton" HorizontalExpand="True" SizeFlagsStretchRatio="2"
-                    Text="{Loc player-tab-show-disconnected}" ToggleMode="True"/>
-            <Button Name="OverlayButton" HorizontalExpand="True" SizeFlagsStretchRatio="2"
-                    Text="{Loc player-tab-overlay}" ToggleMode="True"/>
+            <Button Name="ShowDisconnectedButton" HorizontalExpand="True"
+                    Text="{Loc player-tab-show-disconnected}" ToggleMode="True" />
+            <Button Name="OverlayButton" HorizontalExpand="True" Text="{Loc player-tab-overlay}" ToggleMode="True" />
         </BoxContainer>
         <Control MinSize="0 5"/>
         <pt:PlayerTabHeader Name="ListHeader"/>
