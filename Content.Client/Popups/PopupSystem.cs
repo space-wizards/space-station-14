@@ -7,6 +7,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -269,7 +270,7 @@ namespace Content.Client.Popups
 
             if (_aliveWorldLabels.Count > 0)
             {
-                var aliveWorldToRemove = new List<WorldPopupData>();
+                var aliveWorldToRemove = new ValueList<WorldPopupData>();
                 foreach (var (data, label) in _aliveWorldLabels)
                 {
                     label.TotalTime += frameTime;
@@ -286,7 +287,7 @@ namespace Content.Client.Popups
 
             if (_aliveCursorLabels.Count > 0)
             {
-                var aliveCursorToRemove = new List<CursorPopupData>();
+                var aliveCursorToRemove = new ValueList<CursorPopupData>();
                 foreach (var (data, label) in _aliveCursorLabels)
                 {
                     label.TotalTime += frameTime;
