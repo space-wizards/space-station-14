@@ -47,8 +47,11 @@ public sealed partial class ActivatableUISystem : EntitySystem
             return;
         }
 
-        if (ent.Comp.InHandsOnly && _uiSystem.TryGetInterfaceData(ent.Owner, ent.Comp.Key, out var data))
-            data.InteractionRange = 0;
+        // TODO BUI
+        // set interaction range to zero to avoid constant range checks.
+        //
+        // if (ent.Comp.InHandsOnly && _uiSystem.TryGetInterfaceData(ent.Owner, ent.Comp.Key, out var data))
+        //     data.InteractionRange = 0;
     }
 
     private void OnActionPerform(EntityUid uid, UserInterfaceComponent component, OpenUiActionEvent args)
