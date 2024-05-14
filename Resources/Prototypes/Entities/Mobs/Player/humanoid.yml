@@ -8,7 +8,7 @@
     - type: GhostTakeoverAvailable
 
 - type: randomHumanoidSettings
-  id: EmergencySquad
+  id: EventHumanoidImportant
   parent: EventHumanoid
   components:
     - type: MindShield
@@ -34,7 +34,7 @@
 
 - type: randomHumanoidSettings
   id: DeathSquad
-  parent: EmergencySquad
+  parent: EventHumanoidImportant
   randomizeName: false
   components:        
     - type: GhostRole
@@ -70,7 +70,7 @@
 
 - type: randomHumanoidSettings
   id: ERTLeader
-  parent: EmergencySquad
+  parent: EventHumanoidImportant
   randomizeName: false
   components:
     - type: GhostRole
@@ -457,7 +457,7 @@
 
 - type: randomHumanoidSettings
   id: CBURNAgent
-  parent: EmergencySquad
+  parent: EventHumanoidImportant
   components:
     - type: Loadout
       prototypes: [CBURNGear]
@@ -485,7 +485,7 @@
 
 - type: randomHumanoidSettings
   id: CentcomOfficial
-  parent: EmergencySquad
+  parent: EventHumanoidImportant
   components:
     - type: GhostRole
       name: ghost-role-information-centcom-official-name
@@ -750,11 +750,11 @@
     - type: RandomHumanoidSpawner
       settings: DisasterVictimCaptain
 
-## Following use EmergencySquad since they are heads and probably should have mindshields
+## Following use EventHumanoidImportant since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
   id: DisasterVictimHead
-  parent: EmergencySquad
+  parent: EventHumanoidImportant
   components:
     - type: GhostRole
       name: ghost-role-information-disaster-victim-name
