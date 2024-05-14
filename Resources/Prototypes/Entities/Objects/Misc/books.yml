@@ -22,7 +22,6 @@
     contentSize: 12000
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
-    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:

@@ -26,6 +26,9 @@
     price: 0
   - type: StackPrice
     price: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 15
 
 - type: entity
   id: CableHVStack

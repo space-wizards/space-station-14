@@ -14,6 +14,8 @@
     makeSentient: true
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: HTN
     rootTask:
@@ -89,6 +91,12 @@
     speedModifierThresholds:
       250: 0.7
       400: 0.5
+  # disable taking damage from fire, since its a fire breathing dragon
+  - type: Flammable
+    damage:
+      types: {}
+  - type: Temperature
+    heatDamageThreshold: 800
   - type: Metabolizer
     solutionOnBody: false
     updateInterval: 0.25
@@ -139,9 +147,32 @@
     spawnRiftAction: ActionSpawnRift
   - type: GenericAntag
     rule: Dragon
+  - type: ActionGun
+    action: ActionDragonsBreath
+    gunProto: DragonsBreathGun
   - type: GuideHelp
     guides:
     - MinorAntagonists
+
+- type: entity
+  noSpawn: true
+  id: DragonsBreathGun
+  name: dragon's lung
+  description: For dragon's breathing
+  components:
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 5
+    rechargeSound:
+      path: /Audio/Animals/space_dragon_roar.ogg
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileDragonsBreath
+    capacity: 1
+    count: 1
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Animals/space_dragon_roar.ogg
+    soundEmpty: null
+    projectileSpeed: 5
 
 - type: entity
   parent: BaseMobDragon
@@ -150,6 +181,8 @@
   components:
   - type: GhostRole
     description: ghost-role-information-space-dragon-dungeon-description
+    raffle:
+      settings: default
   - type: SlowOnDamage
     speedModifierThresholds:
       100: 0.7
@@ -179,6 +212,7 @@
       state: icon
     event: !type:DragonSpawnRiftActionEvent
     useDelay: 1
+    priority: 3
 
 - type: entity
   id: ActionDevour
@@ -190,3 +224,18 @@
     icon: { sprite : Interface/Actions/devour.rsi, state: icon }
     iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
     event: !type:DevourActionEvent
+    priority: 1
+
+- type: entity
+  noSpawn: true
+  id: ActionDragonsBreath
+  name: "[color=orange]Dragon's Breath[/color]"
+  description: Spew out flames at anyone foolish enough to attack you!
+  components:
+  - type: WorldTargetAction
+    # TODO: actual sprite
+    icon: { sprite : Objects/Weapons/Guns/Projectiles/magic.rsi, state: fireball }
+    event: !type:ActionGunShootEvent
+    priority: 2
+    checkCanAccess: false
+    range: 0

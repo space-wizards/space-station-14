@@ -79,7 +79,7 @@
   id: SlimeMorphGeras
   configuration:
     entity: MobSlimesGeras
-    transferName: false
+    transferName: true
     transferHumanoidAppearance: false
     inventory: Drop
     transferDamage: true
@@ -175,3 +175,25 @@
     revertOnDeath: true
     revertOnCrit: true
     duration: 20
+
+# Polymorphs for Wizards polymorph self spell
+- type: polymorph
+  id: WizardSpider
+  configuration:
+    entity: MobGiantSpiderWizard #Not angry so ghosts can't just take over the wizard
+    transferName: true
+    inventory: None
+    revertOnDeath: true
+    revertOnCrit: true
+
+- type: polymorph
+  id: WizardRod
+  configuration:
+    entity: ImmovableRodWizard #CLANG
+    transferName: true
+    transferDamage: false
+    inventory: None
+    duration: 1
+    forced: true
+    revertOnCrit: false
+    revertOnDeath: false

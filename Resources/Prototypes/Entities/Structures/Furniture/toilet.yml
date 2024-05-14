@@ -104,7 +104,10 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      toilet:
+      drainBuffer:
+        maxVol: 100
+      tank:
+        maxVol: 500
         reagents:
         - ReagentId: Water
           Quantity: 180
