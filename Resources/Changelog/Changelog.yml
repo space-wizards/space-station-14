@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deepdarkdepths
-  changes:
-  - message: Added the paramedic's cap to the uniform printer.
-    type: Add
-  id: 6093
-  time: '2024-03-06T01:17:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25861
 - author: lzk228
   changes:
   - message: Livestock crate and artifact container now can go under plastic flaps.
@@ -3869,3 +3862,11 @@
   id: 6592
   time: '2024-05-13T21:49:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27986
+- author: DrSmugleaf
+  changes:
+  - message: Failing to fire a gun that requires wielding will no longer delay the
+      next shot.
+    type: Tweak
+  id: 6593
+  time: '2024-05-14T04:53:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27973
