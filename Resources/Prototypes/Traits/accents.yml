@@ -13,15 +13,6 @@
     - type: SouthernAccent
 
 - type: trait
-  id: Liar
-  name: trait-liar-name
-  description: trait-liar-desc
-  components:
-    - type: ReplacementAccent
-      replacementChance: 0.15
-      accent: liar
-
-- type: trait
   id: PirateAccent
   name: trait-pirate-accent-name
   description: trait-pirate-accent-desc
@@ -38,3 +29,19 @@
       fourRandomProb: 0
       threeRandomProb: 0
       cutRandomProb: 0
+
+- type: trait
+  id: Cowboy
+  name: trait-cowboy-name
+  description: trait-cowboy-desc
+  components:
+    - type: ReplacementAccent
+      accent: cowboy
+
+- type: trait
+  id: Italian
+  name: trait-italian-name
+  description: trait-italian-desc
+  components:
+    - type: ReplacementAccent
+      accent: italian

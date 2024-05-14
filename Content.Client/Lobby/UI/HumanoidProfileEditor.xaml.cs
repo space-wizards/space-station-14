@@ -463,13 +463,29 @@ namespace Content.Client.Lobby.UI
         {
             TraitsList.DisposeAllChildren();
 
-            var traits = _prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => Loc.GetString(t.Name)).ToList();
+            var categories = _prototypeManager.EnumeratePrototypes<TraitCategoryPrototype>().OrderBy(t => Loc.GetString(t.Name)).ToList();
             TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-traits-tab"));
 
-            if (traits.Count > 0)
+            if (categories.Count < 1)
             {
-                foreach (var trait in traits)
+                TraitsList.AddChild(new Label
                 {
+                    Text = Loc.GetString("humanoid-profile-editor-no-traits"),
+                    FontColorOverride = Color.Gray,
+                });
+                return;
+            }
+
+            foreach (var category in categories)
+            {
+                TraitsList.AddChild(new Label
+                {
+                    Text = Loc.GetString(category.Name)
+                });
+
+                foreach (var traitProto in category.Traits)
+                {
+                    var trait = _prototypeManager.Index(traitProto);
                     var selector = new TraitPreferenceSelector(trait);
 
                     selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
@@ -482,14 +498,6 @@ namespace Content.Client.Lobby.UI
 
                     TraitsList.AddChild(selector);
                 }
-            }
-            else
-            {
-                TraitsList.AddChild(new Label
-                {
-                    Text = Loc.GetString("humanoid-profile-editor-no-traits"),
-                    FontColorOverride = Color.Gray,
-                });
             }
         }
 
