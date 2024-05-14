@@ -1,7 +1,7 @@
-<Control xmlns="https://spacestation14.io">
+<Control xmlns="https://spacestation14.io" HorizontalExpand="True">
     <BoxContainer Name="MainContainer"
                   Orientation="Horizontal"
-                  SetWidth="160">
+                  HorizontalExpand="True">
         <PanelContainer Name="ColorPanel"
                         VerticalExpand="True"
                         SetWidth="7"
@@ -16,8 +16,7 @@
                               VerticalExpand="True"
                               HorizontalExpand="True"
                               Margin="-5 0 0 0">
-                    <Label Name="ReagentNameLabel"
-                           StyleClasses="LabelSubText" />
+                    <Label Name="ReagentNameLabel" />
                     <Label Name="FillLabel"
                            StyleClasses="LabelSubText"
                            Margin="0 -5 0 0" />

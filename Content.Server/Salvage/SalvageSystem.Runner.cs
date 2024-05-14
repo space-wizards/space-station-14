@@ -1,9 +1,7 @@
 using System.Numerics;
 using Content.Server.Salvage.Expeditions;
-using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
-using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Shared.Chat;
 using Content.Shared.Humanoid;
@@ -13,7 +11,6 @@ using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Salvage;
 
@@ -168,16 +165,16 @@ public sealed partial class SalvageSystem
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(5).Minutes)));
             }
             // Auto-FTL out any shuttles
-            else if (remaining < TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime) + TimeSpan.FromSeconds(0.5))
+            else if (remaining < TimeSpan.FromSeconds(_shuttle.DefaultStartupTime) + TimeSpan.FromSeconds(0.5))
             {
                 var ftlTime = (float) remaining.TotalSeconds;
 
-                if (remaining < TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime))
+                if (remaining < TimeSpan.FromSeconds(_shuttle.DefaultStartupTime))
                 {
                     ftlTime = MathF.Max(0, (float) remaining.TotalSeconds - 0.5f);
                 }
 
-                ftlTime = MathF.Min(ftlTime, ShuttleSystem.DefaultStartupTime);
+                ftlTime = MathF.Min(ftlTime, _shuttle.DefaultStartupTime);
                 var shuttleQuery = AllEntityQuery<ShuttleComponent, TransformComponent>();
 
                 if (TryComp<StationDataComponent>(comp.Station, out var data))

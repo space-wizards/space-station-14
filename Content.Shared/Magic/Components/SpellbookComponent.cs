@@ -1,12 +1,13 @@
 ﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server.Magic.Components;
+namespace Content.Shared.Magic.Components;
 
 /// <summary>
-/// Spellbooks for having an entity learn spells as long as they've read the book and it's in their hand.
+/// Spellbooks can grant one or more spells to the user. If marked as <see cref="LearnPermanently"/> it will teach
+/// the performer the spells and wipe the book.
+/// Default behavior requires the book to be held in hand
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SpellbookSystem))]
 public sealed partial class SpellbookComponent : Component
 {
     /// <summary>
@@ -18,18 +19,18 @@ public sealed partial class SpellbookComponent : Component
     /// <summary>
     /// The three fields below is just used for initialization.
     /// </summary>
-    [DataField("spells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, EntityPrototype>))]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public Dictionary<string, int> SpellActions = new();
+    public Dictionary<EntProtoId, int> SpellActions = new();
 
-    [DataField("learnTime")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float LearnTime = .75f;
 
     /// <summary>
     ///  If true, the spell action stays even after the book is removed
     /// </summary>
-    [DataField("learnPermanently")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool LearnPermanently;
 }

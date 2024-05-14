@@ -1,6 +1,5 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Medical.Blood.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
@@ -29,8 +28,8 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             //TODO: refactor chem flushing from bloodstream (why does this even exist)
 
-            // var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
-            // bloodstreamSys.FlushChemicals(args.SolutionEntity, args.Reagent.ID, cleanseRate);
+            //var bloodstreamSys = args.EntityManager.System<BloodstreamSystem>();
+            //bloodstreamSys.FlushChemicals(args.SolutionEntity, args.Reagent.ID, cleanseRate);
         }
     }
 }
