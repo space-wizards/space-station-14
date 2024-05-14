@@ -7,6 +7,7 @@ using Content.Client.Lobby.UI.Loadouts;
 using Content.Client.Lobby.UI.Roles;
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
@@ -480,8 +481,18 @@ namespace Content.Client.Lobby.UI
             {
                 TraitsList.AddChild(new Label
                 {
-                    Text = Loc.GetString(category.Name)
+                    Text = Loc.GetString(category.Name),
+                    Margin = new Thickness(0, 10, 0, 0),
+                    StyleClasses = { StyleBase.StyleClassLabelHeading },
                 });
+                if (category.MaxTraits > -1)
+                {
+                    TraitsList.AddChild(new Label
+                    {
+                        Text = Loc.GetString("humanoid-profile-editor-trait-count-hint", ("count", category.MaxTraits)),
+                        FontColorOverride = Color.Gray
+                    });
+                }
 
                 foreach (var traitProto in category.Traits)
                 {
@@ -492,7 +503,7 @@ namespace Content.Client.Lobby.UI
 
                     selector.PreferenceChanged += preference =>
                     {
-                        Profile = Profile?.WithTraitPreference(trait.ID, preference);
+                        Profile = Profile?.WithTraitPreference(trait.ID, category.ID, preference);
                         SetDirty();
                     };
 

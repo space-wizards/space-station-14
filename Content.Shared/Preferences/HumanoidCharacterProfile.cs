@@ -346,7 +346,7 @@ namespace Content.Shared.Preferences
             };
         }
 
-        public HumanoidCharacterProfile WithTraitPreference(string traitId, bool pref)
+        public HumanoidCharacterProfile WithTraitPreference(string traitId, string categoryId, bool pref)
         {
             var list = new HashSet<string>(_traitPreferences);
 

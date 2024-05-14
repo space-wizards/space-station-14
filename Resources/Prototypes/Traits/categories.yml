@@ -1,7 +1,6 @@
 - type: traitCategory
   id: Disabilities
   name: trait-category-disabilities
-  maxTraits: 2
   traits:
   - Blindness
   - PoorVision
@@ -17,7 +16,6 @@
   - LightweightDrunk
   - Paracusia
   - Snoring
-  - Accentless
   - Liar
 
 - type: traitCategory
@@ -31,3 +29,4 @@
   - SocialAnxiety
   - Cowboy
   - Italian
+  - Accentless

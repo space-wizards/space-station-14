@@ -55,6 +55,8 @@ humanoid-profile-editor-flavortext-tab = Description
 humanoid-profile-editor-traits-tab = Traits
 humanoid-profile-editor-no-traits = No traits available
 
+humanoid-profile-editor-trait-count-hint = You can select maximum {$count} traits.
+
 trait-category-disabilities = Disabilities
 trait-category-neutral = Neutral
 trait-category-accents = Accents
