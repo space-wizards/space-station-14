@@ -73,6 +73,9 @@ namespace Content.Shared.ActionBlocker
             if (!CanConsciouslyPerformAction(user))
                 return false;
 
+            if (HasComp<SleepingComponent>(user))
+                return false;
+
             var ev = new InteractionAttemptEvent(user, target);
             RaiseLocalEvent(user, ev);
 
