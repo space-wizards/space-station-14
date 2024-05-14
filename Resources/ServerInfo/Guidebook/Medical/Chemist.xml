@@ -10,7 +10,7 @@ While chemists primarily make medications, there's a very wide variety of chemic
 <GuideEntityEmbed Entity="ChemDispenser"/>
 <GuideEntityEmbed Entity="ChemBag"/>
 <GuideEntityEmbed Entity="KitchenReagentGrinder"/>
-<GuideEntityEmbed Entity="chem_master"/>
+<GuideEntityEmbed Entity="ChemMaster"/>
 </Box>
 <Box>
 <GuideEntityEmbed Entity="LargeBeaker"/>
