@@ -1,5 +1,5 @@
 - type: entity
-  id: soda_dispenser
+  id: SodaDispenser
   name: soda dispenser
   suffix: Filled
   parent: ReagentDispenserBase
