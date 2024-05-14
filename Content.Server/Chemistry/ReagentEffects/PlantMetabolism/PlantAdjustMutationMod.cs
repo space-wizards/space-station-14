@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     {
         public PlantAdjustMutationMod()
         {
-            Attribute = Loc.GetString("plant-attribute-mutation-mod");
+            Attribute = "plant-attribute-mutation-mod";
         }
 
         public override void Effect(ReagentEffectArgs args)

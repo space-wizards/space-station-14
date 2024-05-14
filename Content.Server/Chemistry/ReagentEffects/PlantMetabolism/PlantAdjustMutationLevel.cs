@@ -6,7 +6,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     {
         public PlantAdjustMutationLevel()
         {
-            Attribute = Loc.GetString("plant-attribute-mutation-level");
+            Attribute = "plant-attribute-mutation-level";
         }
 
         public override void Effect(ReagentEffectArgs args)

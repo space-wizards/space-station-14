@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     {
         public PlantAffectGrowth()
         {
-            Attribute = Loc.GetString("plant-attribute-growth");
+            Attribute = "plant-attribute-growth";
         }
 
         public override void Effect(ReagentEffectArgs args)

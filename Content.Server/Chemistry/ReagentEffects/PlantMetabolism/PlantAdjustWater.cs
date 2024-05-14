@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     {
         public PlantAdjustWater()
         {
-            Attribute = Loc.GetString("plant-attribute-water");
+            Attribute = "plant-attribute-water";
         }
 
         public override void Effect(ReagentEffectArgs args)

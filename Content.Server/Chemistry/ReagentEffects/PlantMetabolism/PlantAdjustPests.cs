@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     {
         public PlantAdjustPests()
         {
-            Attribute = Loc.GetString("plant-attribute-pests");
+            Attribute = "plant-attribute-pests";
         }
 
         public override void Effect(ReagentEffectArgs args)
