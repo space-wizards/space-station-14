@@ -1,4 +1,6 @@
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Containers;
@@ -11,14 +13,18 @@ public abstract class SharedPowerCellSystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected readonly SharedItemToggleSystem Toggle = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<PowerCellSlotComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
         SubscribeLocalEvent<PowerCellSlotComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
+
+        SubscribeLocalEvent<PowerCellDrawComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
     }
 
     private void OnRejuvenate(EntityUid uid, PowerCellSlotComponent component, RejuvenateEvent args)
@@ -63,13 +69,31 @@ public abstract class SharedPowerCellSystem : EntitySystem
         RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
     }
 
+    private void OnActivateAttempt(Entity<PowerCellDrawComponent> ent, ref ItemToggleActivateAttemptEvent args)
+    {
+        if (!HasDrawCharge(ent, ent.Comp, user: args.User))
+            args.Cancelled = true;
+    }
+
+    private void OnToggled(Entity<PowerCellDrawComponent> ent, ref ItemToggledEvent args)
+    {
+        if (args.Activated)
+            ent.Comp.NextUpdateTime = Timing.CurTime;
+    }
+
+    [Obsolete("Use ItemToggleSystem directly")]
     public void SetPowerCellDrawEnabled(EntityUid uid, bool enabled, PowerCellDrawComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false) || enabled == component.Drawing)
+        Toggle.TrySetActive(uid, enabled);
+    }
+
+    public void SetDrawEnabled(Entity<PowerCellDrawComponent?> ent, bool enabled)
+    {
+        if (!Resolve(ent, ref ent.Comp, false) || ent.Comp.Enabled == enabled)
             return;
 
-        component.Drawing = enabled;
-        component.NextUpdateTime = Timing.CurTime;
+        ent.Comp.Enabled = enabled;
+        Dirty(ent, ent.Comp);
     }
 
     /// <summary>
