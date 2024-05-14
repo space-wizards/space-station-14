@@ -122,7 +122,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
 
         private void GenerateButton(ListData data, ListContainerButton button)
         {
-            if (data is not PlayerListData { Info: var player })
+            if (data is not PlayerListData { Info: var player, FilteringString: var filteringString })
                 return;
 
             var useAltColor = false;
@@ -135,7 +135,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                 player.Connected,
                 player.PlaytimeString);
             entry.PlayerEntity = player.NetEntity;
-            entry.ToolTip = Loc.GetString("player-tab-entry-tooltip");
+            button.ToolTip = $"{player.Username}, {player.CharacterName}, {player.IdentityName}, {player.StartingJob}";
 
             button.AddChild(entry);
         }

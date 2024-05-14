@@ -36,6 +36,7 @@
                HorizontalExpand="True"
                ClipText="True"
                Text="{Loc player-tab-playtime}"
-               MouseFilter="Pass"/>
+               MouseFilter="Pass"
+               ToolTip="{Loc player-tab-entry-tooltip}"/>
     </BoxContainer>
 </Control>
