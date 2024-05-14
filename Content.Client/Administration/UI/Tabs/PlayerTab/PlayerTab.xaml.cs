@@ -50,10 +50,12 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
             SearchList.SearchBar = SearchLineEdit;
             SearchList.GenerateItem += GenerateButton;
             SearchList.DataFilterCondition += DataFilterCondition;
-            SearchList.ItemKeyBindDown += (a, l) => OnEntryKeyBindDown?.Invoke(a, l);
+            SearchList.ItemKeyBindDown += OnEntryKeyBindDown;
 
             RefreshPlayerList(_adminSystem.PlayerList);
         }
+
+        #region Antag Overlay
 
         private void OverlayEnabled()
         {
@@ -76,6 +78,8 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                 _adminSystem.AdminOverlayOff();
             }
         }
+
+        #endregion
 
         private void ShowDisconnectedPressed(ButtonEventArgs args)
         {
@@ -136,6 +140,14 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
             button.AddChild(entry);
         }
 
+        /// <summary>
+        /// Determines whether <paramref name="filter"/> is contained in <paramref name="listData"/>.FilteringString.
+        /// If all characters are lowercase, the comparison ignores case.
+        /// If there is an uppercase character, the comparison is case sensitive.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="listData"></param>
+        /// <returns>Whether <paramref name="filter"/> is contained in <paramref name="listData"/>.FilteringString.</returns>
         private bool DataFilterCondition(string filter, ListData listData)
         {
             if (listData is not PlayerListData {Info: var info, FilteringString: var playerString})
