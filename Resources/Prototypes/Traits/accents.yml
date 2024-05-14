@@ -1,0 +1,40 @@
+- type: trait
+  id: FrontalLisp
+  name: trait-frontal-lisp-name
+  description: trait-frontal-lisp-desc
+  components:
+    - type: FrontalLisp
+
+- type: trait
+  id: Southern
+  name: trait-southern-name
+  description: trait-southern-desc
+  components:
+    - type: SouthernAccent
+
+- type: trait
+  id: Liar
+  name: trait-liar-name
+  description: trait-liar-desc
+  components:
+    - type: ReplacementAccent
+      replacementChance: 0.15
+      accent: liar
+
+- type: trait
+  id: PirateAccent
+  name: trait-pirate-accent-name
+  description: trait-pirate-accent-desc
+  components:
+    - type: PirateAccent
+
+- type: trait
+  id: SocialAnxiety
+  name: trait-socialanxiety-name
+  description: trait-socialanxiety-desc
+  components:
+    - type: StutteringAccent
+      matchRandomProb: 0.1
+      fourRandomProb: 0
+      threeRandomProb: 0
+      cutRandomProb: 0

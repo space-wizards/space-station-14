@@ -1,0 +1,31 @@
+- type: traitCategory
+  id: Disabilities
+  name: trait-category-disabilities
+  maxTraits: 2
+  traits:
+  - Blindness
+  - Poorvision
+  - Narcolepsy
+  - Pacifist
+  - Unrevivable
+  - Muted
+
+- type: traitCategory
+  id: Neutral
+  name: trait-category-neutral
+  traits:
+  - LightweightDrunk
+  - Paracusia
+  - Snoring
+  - Accentless
+
+- type: traitCategory
+  id: Accents
+  name: trait-category-accents
+  maxTraits: 1
+  traits:
+  - FrontalLisp
+  - Southern
+  - Liar
+  - PirateAccent
+  - SocialAnxiety

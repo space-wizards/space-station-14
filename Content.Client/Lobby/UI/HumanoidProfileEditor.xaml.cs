@@ -472,14 +472,7 @@ namespace Content.Client.Lobby.UI
                 {
                     var selector = new TraitPreferenceSelector(trait);
 
-                    if (Profile?.TraitPreferences.Contains(trait.ID) == true)
-                    {
-                        selector.Preference = true;
-                    }
-                    else
-                    {
-                        selector.Preference = false;
-                    }
+                    selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
 
                     selector.PreferenceChanged += preference =>
                     {
@@ -494,8 +487,7 @@ namespace Content.Client.Lobby.UI
             {
                 TraitsList.AddChild(new Label
                 {
-                    // TODO: Localise
-                    Text = "No traits available :(",
+                    Text = Loc.GetString("humanoid-profile-editor-no-traits"),
                     FontColorOverride = Color.Gray,
                 });
             }
