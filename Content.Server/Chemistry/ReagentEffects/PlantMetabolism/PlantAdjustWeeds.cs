@@ -6,6 +6,11 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [UsedImplicitly]
     public sealed partial class PlantAdjustWeeds : PlantAdjustAttribute
     {
+        public PlantAdjustWeeds()
+        {
+            Attribute = Loc.GetString("plant-attribute-weeds");
+        }
+
         public override void Effect(ReagentEffectArgs args)
         {
             if (!CanMetabolize(args.SolutionEntity, out var plantHolderComp, args.EntityManager))

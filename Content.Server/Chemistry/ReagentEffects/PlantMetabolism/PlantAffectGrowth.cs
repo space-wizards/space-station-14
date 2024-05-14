@@ -7,6 +7,11 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [UsedImplicitly]
     public sealed partial class PlantAffectGrowth : PlantAdjustAttribute
     {
+        public PlantAffectGrowth()
+        {
+            Attribute = Loc.GetString("plant-attribute-growth");
+        }
+
         public override void Effect(ReagentEffectArgs args)
         {
             if (!CanMetabolize(args.SolutionEntity, out var plantHolderComp, args.EntityManager))

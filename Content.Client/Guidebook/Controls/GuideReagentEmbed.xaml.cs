@@ -128,8 +128,16 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
                     continue;
 
                 var groupLabel = new RichTextLabel();
-                groupLabel.SetMarkup(Loc.GetString("guidebook-reagent-effects-metabolism-group-rate",
-                    ("group", _prototype.Index<MetabolismGroupPrototype>(group).LocalizedName), ("rate", effect.MetabolismRate)));
+                if (effect.MetabolismRate >= 0)
+                {
+                    groupLabel.SetMarkup(Loc.GetString("guidebook-reagent-effects-metabolism-group-rate",
+                        ("group", _prototype.Index<MetabolismGroupPrototype>(group).LocalizedName), ("rate", effect.MetabolismRate)));
+                }
+                else
+                {
+                    groupLabel.SetMarkup(Loc.GetString("guidebook-reagent-effects-metabolism-group-norate",
+                        ("group", _prototype.Index<MetabolismGroupPrototype>(group).LocalizedName)));
+                }
                 var descriptionLabel = new RichTextLabel
                 {
                     Margin = new Thickness(25, 0, 10, 0)

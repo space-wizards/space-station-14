@@ -6,6 +6,11 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [UsedImplicitly]
     public sealed partial class PlantAdjustMutationMod : PlantAdjustAttribute
     {
+        public PlantAdjustMutationMod()
+        {
+            Attribute = Loc.GetString("plant-attribute-mutation-mod");
+        }
+
         public override void Effect(ReagentEffectArgs args)
         {
             if (!CanMetabolize(args.SolutionEntity, out var plantHolderComp, args.EntityManager))

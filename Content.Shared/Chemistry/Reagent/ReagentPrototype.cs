@@ -201,6 +201,16 @@ namespace Content.Shared.Chemistry.Reagent
             GuideEntries = proto.Metabolisms?
                 .Select(x => (x.Key, x.Value.MakeGuideEntry(prototype, entSys)))
                 .ToDictionary(x => x.Key, x => x.Item2);
+            if (proto.PlantMetabolisms.Count > 0)
+            {
+                if (GuideEntries == null)
+                    GuideEntries = new Dictionary<ProtoId<MetabolismGroupPrototype>, ReagentEffectsGuideEntry>();
+                GuideEntries["PlantMetabolisms"] = new ReagentEffectsGuideEntry(-1.0f, proto.PlantMetabolisms
+                        .Select(x => x.GuidebookEffectDescription(prototype, entSys))
+                        .Where(x => x is not null)
+                        .Select(x => x!)
+                        .ToArray());
+            }
         }
     }
 

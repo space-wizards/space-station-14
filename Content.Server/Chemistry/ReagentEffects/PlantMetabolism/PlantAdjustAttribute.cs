@@ -15,6 +15,9 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
         [DataField]
         public float Prob { get; protected set; } = 1; // = (80);
 
+        [DataField]
+        public string Attribute { get; protected set; } = "missing";
+
         /// <summary>
         ///     Checks if the plant holder can metabolize the reagent or not. Checks if it has an alive plant by default.
         /// </summary>
@@ -40,6 +43,6 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             return !(Prob <= 0f) && IoCManager.Resolve<IRobustRandom>().Prob(Prob);
         }
 
-        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString("reagent-effect-guidebook-missing", ("chance", Probability));
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString("reagent-effect-guidebook-plant-attribute", ("attribute", Attribute), ("amount", Amount), ("chance", Probability));
     }
 }

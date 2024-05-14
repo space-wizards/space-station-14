@@ -15,6 +15,7 @@ guidebook-reagent-sources-ent-wrapper = [bold]{$name}[/bold] \[1\]
 guidebook-reagent-sources-gas-wrapper = [bold]{$name} (gas)[/bold] \[1\]
 guidebook-reagent-effects-header = Effects
 guidebook-reagent-effects-metabolism-group-rate = [bold]{$group}[/bold] [color=gray]({$rate} units per second)[/color]
+guidebook-reagent-effects-metabolism-group-norate = [bold]{$group}[/bold]
 guidebook-reagent-physical-description = [italic]Seems to be {$description}.[/italic]
 guidebook-reagent-recipes-mix-info = {$minTemp ->
     [0] {$hasMax ->
