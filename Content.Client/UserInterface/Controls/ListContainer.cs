@@ -5,6 +5,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
+using Robust.Shared.Noise;
 
 namespace Content.Client.UserInterface.Controls;
 
@@ -22,8 +23,9 @@ public sealed class ListContainer : Control
     }
     public bool Toggle { get; set; }
     public Action<ListData, ListContainerButton>? GenerateItem;
-    public Action<BaseButton.ButtonEventArgs?, ListData?>? ItemPressed;
-    public Action<GUIBoundKeyEventArgs, ListData?>? ItemKeyBindDown;
+    public Action<BaseButton.ButtonEventArgs, ListData>? ItemPressed;
+    public Action<GUIBoundKeyEventArgs, ListData>? ItemKeyBindDown;
+    public Action? NoItemSelected;
     public IReadOnlyList<ListData> Data => _data;
 
     private const int DefaultSeparation = 3;
@@ -97,7 +99,7 @@ public sealed class ListContainer : Control
         if (_selected != null && !data.Contains(_selected))
         {
             _selected = null;
-            ItemPressed?.Invoke(null, null);
+            NoItemSelected?.Invoke();
         }
     }
 
