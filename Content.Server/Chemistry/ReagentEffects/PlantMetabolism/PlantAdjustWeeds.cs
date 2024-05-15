@@ -9,6 +9,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
         public PlantAdjustWeeds()
         {
             Attribute = "plant-attribute-weeds";
+            Positive = false;
         }
 
         public override void Effect(ReagentEffectArgs args)
