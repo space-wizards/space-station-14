@@ -17,7 +17,7 @@ public sealed partial class DashAbilityComponent : Component
     /// The action id for dashing.
     /// </summary>
     [DataField]
-    public EntProtoId DashAction = "ActionEnergyKatanaDash";
+    public EntProtoId<WorldTargetActionComponent> DashAction = "ActionEnergyKatanaDash";
 
     [DataField, AutoNetworkedField]
     public EntityUid? DashActionEntity;

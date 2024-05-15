@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory.Events;
@@ -29,17 +30,34 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<NinjaSuitComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<NinjaSuitComponent, ClothingGotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<NinjaSuitComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<NinjaSuitComponent, ToggleClothingCheckEvent>(OnCloakCheck);
+        SubscribeLocalEvent<NinjaSuitComponent, CheckItemCreatorEvent>(OnStarCheck);
+        SubscribeLocalEvent<NinjaSuitComponent, CreateItemAttemptEvent>(OnCreateStarAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, GotUnequippedEvent>(OnUnequipped);
+    }
+
+    private void OnEquipped(Entity<NinjaSuitComponent> ent, ref ClothingGotEquippedEvent args)
+    {
+        var user = args.Wearer;
+        if (!_ninja.NinjaQuery.TryComp(user, out var ninja));
+            return;
+
+        NinjaEquipped(ent, (user, ninja));
+    }
+
+    protected virtual void NinjaEquipped(Entity<NinjaSuitComponent> ent, Entity<SpaceNinjaComponent> user)
+    {
+        // mark the user as wearing this suit, used when being attacked among other things
+        _ninja.AssignSuit(user, ent);
     }
 
     private void OnMapInit(Entity<NinjaSuitComponent> ent, ref MapInitEvent args)
     {
         var (uid, comp) = ent;
         _actionContainer.EnsureAction(uid, ref comp.RecallKatanaActionEntity, comp.RecallKatanaAction);
-        _actionContainer.EnsureAction(uid, ref comp.CreateThrowingStarActionEntity, comp.CreateThrowingStarAction);
         _actionContainer.EnsureAction(uid, ref comp.EmpActionEntity, comp.EmpAction);
         Dirty(uid, comp);
     }
@@ -54,7 +72,6 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
 
         var comp = ent.Comp;
         args.AddAction(ref comp.RecallKatanaActionEntity, comp.RecallKatanaAction);
-        args.AddAction(ref comp.CreateThrowingStarActionEntity, comp.CreateThrowingStarAction);
         args.AddAction(ref comp.EmpActionEntity, comp.EmpAction);
     }
 
@@ -64,6 +81,18 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     private void OnCloakCheck(Entity<NinjaSuitComponent> ent, ref ToggleClothingCheckEvent args)
     {
         if (!_ninja.IsNinja(args.User))
+            args.Cancelled = true;
+    }
+
+    private void OnStarCheck(Entity<NinjaSuitComponent> ent, ref CheckItemCreatorEvent args)
+    {
+        if (!_ninja.IsNinja(args.User))
+            args.Cancelled = true;
+    }
+
+    private void OnCreateStarAttempt(Entity<NinjaSuitComponent> ent, ref CreateItemAttemptEvent args)
+    {
+        if (CheckDisabled(ent, args.User))
             args.Cancelled = true;
     }
 

@@ -27,28 +27,6 @@ public sealed partial class NinjaSuitComponent : Component
     [DataField]
     public string DisableDelayId = "suit_powers";
 
-    // TODO: split this out into its own component easy
-    /// <summary>
-    /// The action id for creating throwing stars.
-    /// </summary>
-    [DataField]
-    public EntProtoId CreateThrowingStarAction = "ActionCreateThrowingStar";
-
-    [DataField, AutoNetworkedField]
-    public EntityUid? CreateThrowingStarActionEntity;
-
-    /// <summary>
-    /// Battery charge used to create a throwing star. Can do it 25 times on a small-capacity power cell.
-    /// </summary>
-    [DataField]
-    public float ThrowingStarCharge = 14.4f;
-
-    /// <summary>
-    /// Throwing star item to create with the action
-    /// </summary>
-    [DataField]
-    public EntProtoId ThrowingStarPrototype = "ThrowingStarNinja";
-
     /// <summary>
     /// The action id for recalling a bound energy katana
     /// </summary>
@@ -99,8 +77,6 @@ public sealed partial class NinjaSuitComponent : Component
     [DataField]
     public float EmpDuration = 60f;
 }
-
-public sealed partial class CreateThrowingStarEvent : InstantActionEvent;
 
 public sealed partial class RecallKatanaEvent : InstantActionEvent;
 

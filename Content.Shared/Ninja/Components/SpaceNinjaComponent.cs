@@ -6,18 +6,12 @@ namespace Content.Shared.Ninja.Components;
 
 /// <summary>
 /// Component placed on a mob to make it a space ninja, able to use suit and glove powers.
-/// Contains ids of all ninja equipment and the game rule.
+/// Contains ids of all ninja equipment.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedSpaceNinjaSystem))]
 public sealed partial class SpaceNinjaComponent : Component
 {
-    /// <summary>
-    /// The ninja game rule that spawned this ninja.
-    /// </summary>
-    [DataField]
-    public EntityUid? Rule;
-
     /// <summary>
     /// Currently worn suit
     /// </summary>
@@ -25,7 +19,7 @@ public sealed partial class SpaceNinjaComponent : Component
     public EntityUid? Suit;
 
     /// <summary>
-    /// Currently worn gloves
+    /// Currently worn gloves, if enabled.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Gloves;

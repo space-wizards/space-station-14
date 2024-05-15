@@ -2,7 +2,6 @@ using Content.Server.Emp;
 using Content.Server.Ninja.Events;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
-using Content.Shared.Clothing;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
@@ -27,23 +26,17 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NinjaSuitComponent, ClothingGotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<NinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, EmpAttemptEvent>(OnEmpAttempt);
-        SubscribeLocalEvent<NinjaSuitComponent, CreateThrowingStarEvent>(OnCreateThrowingStar);
         SubscribeLocalEvent<NinjaSuitComponent, RecallKatanaEvent>(OnRecallKatana);
         SubscribeLocalEvent<NinjaSuitComponent, NinjaEmpEvent>(OnEmp);
     }
 
-    private void OnEquipped(Entity<NinjaSuitComponent> ent, ref ClothingGotEquippedEvent args)
+    protected override void NinjaEquipped(Entity<NinjaSuitComponent> ent, Entity<SpaceNinjaComponent> user)
     {
-        var user = args.Wearer;
-        if (!_ninja.NinjaQuery.TryComp(user, out var ninja));
-            return;
+        base.NinjaEquipped(ent, user);
 
-        _ninja.SetSuitPowerAlert((user, ninja));
-        // mark the user as wearing this suit, used when being attacked among other things
-        _ninja.AssignSuit((user, ninja), ent);
+        _ninja.SetSuitPowerAlert(user);
     }
 
     // TODO: if/when battery is in shared, put this there too
@@ -69,6 +62,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
             return;
 
         var ev = new NinjaBatteryChangedEvent(args.EntityUid, uid);
+        RaiseLocalEvent(uid, ref ev);
         RaiseLocalEvent(user, ref ev);
     }
 
@@ -85,26 +79,6 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 
         // remove power indicator
         _ninja.SetSuitPowerAlert(user);
-    }
-
-    private void OnCreateThrowingStar(Entity<NinjaSuitComponent> ent, ref CreateThrowingStarEvent args)
-    {
-        var (uid, comp) = ent;
-        args.Handled = true;
-
-        var user = args.Performer;
-        if (!_ninja.TryUseCharge(user, comp.ThrowingStarCharge))
-        {
-            Popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
-            return;
-        }
-
-        if (CheckDisabled(ent, user))
-            return;
-
-        // try to put throwing star in hand, otherwise it goes on the ground
-        var star = Spawn(comp.ThrowingStarPrototype, Transform(user).Coordinates);
-        _hands.TryPickupAnyHand(user, star);
     }
 
     private void OnRecallKatana(Entity<NinjaSuitComponent> ent, ref RecallKatanaEvent args)
