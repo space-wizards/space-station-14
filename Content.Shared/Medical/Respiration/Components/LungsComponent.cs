@@ -160,7 +160,7 @@ public sealed partial class LungsTickingComponent : Component
     /// Rate that reagents are absorbed from the contained gas, and when low-pressure is checked
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan UpdateRate = TimeSpan.FromSeconds(1);
+    public TimeSpan UpdateRate = TimeSpan.FromSeconds(0.5f);
 }
 
 

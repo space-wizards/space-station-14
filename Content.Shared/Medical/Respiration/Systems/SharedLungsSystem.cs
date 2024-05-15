@@ -27,7 +27,6 @@ public abstract class SharedLungsSystem : EntitySystem //Never forget the commun
 
     const int solutionVolume = 250; //TODO: unhardcode this shit
 
-
     public override void Initialize()
     {
         SubscribeLocalEvent<LungsComponent, MapInitEvent>(OnLungsMapInit, after:[typeof(SharedBodySystem), typeof(BloodstreamSystem)]);
@@ -159,9 +158,10 @@ public abstract class SharedLungsSystem : EntitySystem //Never forget the commun
     {
         lungs.Comp1.Phase = lungs.Comp1.Phase switch
         {
-            BreathingPhase.Hold or BreathingPhase.Pause => BreathingPhase.Inhale,
-            BreathingPhase.Inhale => BreathingPhase.Exhale,
-            BreathingPhase.Exhale => BreathingPhase.Pause,
+            BreathingPhase.Inhale => BreathingPhase.Pause,
+            BreathingPhase.Pause => BreathingPhase.Exhale,
+            BreathingPhase.Exhale => BreathingPhase.Inhale,
+            BreathingPhase.Hold => BreathingPhase.Inhale,
             BreathingPhase.Suffocating => BreathingPhase.Suffocating,
             _ => lungs.Comp1.Phase
         };

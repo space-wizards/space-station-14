@@ -33,6 +33,8 @@ public sealed class LungsSystem : SharedLungsSystem
                 if (!attempt.Canceled)
                     BreathCycle(lungs);
                 SetNextPhaseDelay((uid, lungsComp, lungsTickingComp));
+                if (lungsComp.Phase != BreathingPhase.Suffocating)
+                    AbsorbGases(lungs);
             }
 
             if (GameTiming.CurTime >= lungsTickingComp.NextUpdate)
