@@ -105,6 +105,7 @@ public sealed class ItemToggleSystem : EntitySystem
         var attempt = new ItemToggleActivateAttemptEvent(user);
         RaiseLocalEvent(uid, ref attempt);
 
+        if (!comp.Predictable) predicted = false;
         if (attempt.Cancelled)
         {
             if (predicted)
@@ -149,6 +150,7 @@ public sealed class ItemToggleSystem : EntitySystem
         if (attempt.Cancelled)
             return false;
 
+        if (!comp.Predictable) predicted = false;
         Deactivate(ent, predicted, user);
         return true;
     }
