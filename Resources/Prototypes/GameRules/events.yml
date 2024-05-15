@@ -113,6 +113,10 @@
       max: 1
       pickPlayer: false
       startingGear: SpaceNinjaGear
+      briefing:
+        text: ninja-role-greeting
+        color: Green
+        sound: /Audio/Misc/ninja_greeting.ogg
       components:
       - type: SpaceNinja
       - type: GenericAntag
@@ -127,9 +131,7 @@
         nameSegments:
         - names_ninja_title
         - names_ninja
-      mindComponents:
-      - type: NinjaRole
-        prototype: Ninja
+      # role added in ninja system as mindComponents get added too late to work
 
 - type: entity
   parent: BaseGameRule

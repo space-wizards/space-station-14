@@ -73,22 +73,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         return newCount - oldCount;
     }
 
-    /// <summary>
-    /// Returns a ninja's gamerule config data.
-    /// If the gamerule was not started then it returns null.
-    /// </summary>
-    public NinjaRuleComponent? NinjaRule(EntityUid uid, GenericAntagComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp))
-            return null;
-
-        // mind not added yet so no rule
-        if (comp.RuleEntity == null)
-            return null;
-
-        return CompOrNull<NinjaRuleComponent>(comp.RuleEntity);
-    }
-
     // TODO: can probably copy paste borg code here
     /// <summary>
     /// Update the alert for the ninja's suit power indicator.
@@ -145,25 +129,11 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         var mindId = args.MindId;
         var mind = args.Mind;
 
-        var config = NinjaRule(uid);
-        if (config == null)
-        {
-            Log.Error($"Tried to create ninja {uid} with no rule!");
-            return;
-        }
-
         var role = new NinjaRoleComponent
         {
             PrototypeId = "SpaceNinja"
         };
         _role.MindAddRole(mindId, role, mind);
-        _role.MindPlaySound(mindId, config.GreetingSound, mind);
-
-        if (mind.Session is not {} session)
-            return;
-
-        _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
-        _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
     }
 
     /// <summary>
