@@ -11,12 +11,6 @@ namespace Content.Shared.ProximityDetection.Components;
 public sealed partial class ProximityDetectorComponent : Component
 {
     /// <summary>
-    /// Whether or not it's on.
-    /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Enabled = true;
-
-    /// <summary>
     /// The criteria used to filter entities
     /// Note: RequireAll is only supported for tags, all components are required to count as a match!
     /// </summary>
@@ -35,13 +29,13 @@ public sealed partial class ProximityDetectorComponent : Component
     [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 Distance = -1;
 
-
     /// <summary>
     /// The farthest distance to search for targets
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 Range = 10f;
 
+    // TODO: use timespans not this
     public float AccumulatedFrameTime;
 
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]

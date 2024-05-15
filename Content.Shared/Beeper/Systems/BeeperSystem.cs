@@ -1,7 +1,8 @@
 ﻿using Content.Shared.Beeper.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Beeper.Systems;
@@ -11,32 +12,17 @@ namespace Content.Shared.Beeper.Systems;
 public sealed class BeeperSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly INetManager _net = default!;
-
-    public override void Initialize()
-    {
-    }
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<BeeperComponent>();
-        while (query.MoveNext(out var uid, out var beeper))
+        var query = EntityQueryEnumerator<BeeperComponent, ItemToggleComponent>();
+        while (query.MoveNext(out var uid, out var beeper, out var toggle))
         {
-            if (!beeper.Enabled)
-                continue;
-            RunUpdate_Internal(uid, beeper);
+            if (toggle.Activated)
+                RunUpdate_Internal(uid, beeper);
         }
-    }
-
-    public void SetEnable(EntityUid owner, bool isEnabled, BeeperComponent? beeper = null)
-    {
-        if (!Resolve(owner, ref beeper) || beeper.Enabled == isEnabled)
-            return;
-        beeper.Enabled = isEnabled;
-
-        RunUpdate_Internal(owner, beeper);
-        Dirty(owner, beeper);
     }
 
     public void SetIntervalScaling(EntityUid owner, BeeperComponent beeper, FixedPoint2 newScaling)
@@ -70,6 +56,7 @@ public sealed class BeeperSystem : EntitySystem
         if (!Resolve(owner, ref comp))
             return;
         comp.IsMuted = isMuted;
+        Dirty(owner, comp);
     }
 
     private void UpdateBeepInterval(EntityUid owner, BeeperComponent beeper)
@@ -91,19 +78,17 @@ public sealed class BeeperSystem : EntitySystem
 
     private void RunUpdate_Internal(EntityUid owner, BeeperComponent beeper)
     {
-        if (!beeper.Enabled)
-        {
+        if (!_toggle.IsActivated(owner))
             return;
-        }
+
         UpdateBeepInterval(owner, beeper);
         if (beeper.NextBeep >= _timing.CurTime)
             return;
+
         var beepEvent = new BeepPlayedEvent(beeper.IsMuted);
         RaiseLocalEvent(owner, ref beepEvent);
-        if (!beeper.IsMuted && _net.IsServer)
-        {
-            _audio.PlayPvs(beeper.BeepSound, owner);
-        }
+        if (!beeper.IsMuted)
+            _audio.PlayPredicted(beeper.BeepSound, owner, user: null);
         beeper.LastBeepTime = _timing.CurTime;
     }
 }

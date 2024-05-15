@@ -14,12 +14,6 @@ namespace Content.Shared.Beeper.Components;
 public sealed partial class BeeperComponent : Component
 {
     /// <summary>
-    /// Whether or not it's on.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Enabled = true;
-
-    /// <summary>
     /// How much to scale the interval by (< 0 = min, > 1 = max)
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
@@ -56,7 +50,7 @@ public sealed partial class BeeperComponent : Component
     /// Is the beep muted
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public bool IsMuted = false;
+    public bool IsMuted;
 
     /// <summary>
     /// The sound played when the locator beeps.
