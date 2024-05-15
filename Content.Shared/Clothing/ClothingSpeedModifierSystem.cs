@@ -59,10 +59,8 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
     private void OnRefreshMoveSpeed(EntityUid uid, ClothingSpeedModifierComponent component, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
-        if (!_toggle.IsActivated(uid))
-            return;
-
-        args.Args.ModifySpeed(component.WalkModifier, component.SprintModifier);
+        if (_toggle.IsActivated(uid))
+            args.Args.ModifySpeed(component.WalkModifier, component.SprintModifier);
     }
 
     private void OnClothingVerbExamine(EntityUid uid, ClothingSpeedModifierComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -114,6 +112,9 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
     private void OnToggled(Entity<ClothingSpeedModifierComponent> ent, ref ItemToggledEvent args)
     {
+        // make sentient boots slow or fast too
+        _movementSpeed.RefreshMovementSpeedModifiers(ent);
+
         if (_container.TryGetContainingContainer(ent, out var container))
         {
             // inventory system will automatically hook into the event raised by this and update accordingly
