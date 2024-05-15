@@ -53,6 +53,17 @@
 
 - type: entity
   save: false
+  id: MobMetabolism
+  abstract: true
+  components:
+  - type: Metabolism
+    metabolismType: Human
+    baseMultiplier: 1
+    calorieBuffer: 1500
+    calorieStorage: 80000
+
+- type: entity
+  save: false
   id: MobConsciousness
   abstract: true
   components:

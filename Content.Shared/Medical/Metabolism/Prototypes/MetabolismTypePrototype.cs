@@ -44,9 +44,11 @@ public sealed partial class MetabolismTypePrototype : IPrototype
     [DataField]
     public ProtoId<ReagentPrototype>? EnergyReagent = null;
 
-    //How much energy is used per metabolic reaction. This will be scaled by any multipliers
+    /// <summary>
+    /// What concentration should we try to keep the energy reagent at
+    /// </summary>
     [DataField]
-    public FixedPoint2 KCalPerReaction = 0;
+    public float TargetEnergyReagentConcentration = 0;
 
     /// <summary>
     /// How many KiloCalories are there in each reagent unit of the Energy Reagent

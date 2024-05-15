@@ -27,9 +27,10 @@ public sealed partial class MetabolizerComponent : Component
 
     [DataField, AutoNetworkedField] public EntityUid CachedAbsorbSolutionEnt = EntityUid.Invalid;
     [DataField, AutoNetworkedField] public EntityUid CachedWasteSolutionEnt = EntityUid.Invalid;
-    [DataField] public List<ReagentQuantity> CachedAbsorbedReagents = new();
-    [DataField] public List<ReagentQuantity> CachedWasteReagents = new();
-
+    [DataField, AutoNetworkedField] public List<ReagentQuantity> CachedAbsorbedReagents = new();
+    [DataField, AutoNetworkedField] public List<ReagentQuantity> CachedWasteReagents = new();
+    [DataField, AutoNetworkedField] public ReagentId? CachedEnergyReagent = null;
+    [DataField, AutoNetworkedField] public float CachedKCalPerReagent = 0;
     /// <summary>
     ///     The next time that reagents will be metabolized.
     /// </summary>
@@ -37,5 +38,5 @@ public sealed partial class MetabolizerComponent : Component
     public TimeSpan NextUpdate;
 
     [DataField, AutoNetworkedField]
-    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(0.5f);
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1f);
 }

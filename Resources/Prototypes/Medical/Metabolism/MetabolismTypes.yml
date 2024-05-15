@@ -9,15 +9,19 @@
       lowThreshold: 0.05
       highThreshold: 0.30
   requiredReagents:
-    "Oxygen": 0.05
+    "Oxygen": 0.06
+    "Sugar": 0.01
   wasteReagents:
-    "CarbonDioxide": 0.05
+    "CarbonDioxide": 0.06
   deprivationDamage:
     types:
       Cellular: 0.05
-  energyReagent: "Glucose"
-  #Glucose kCals per aerobic reaction is 686 (https://www.sciencedirect.com/topics/nursing-and-health-professions/caloric-density)
-  kCalPerReaction: 686
-  #Molar volume of glucose is 115.48ml/mole with a Caloric density of 686 KCal
-  #SS14 uses DeciLitres for units so 115.48ml is 1.1548 RU. 686/1.1548 = 594.0422584 which gives us RU per KCal
-  kCalPerEnergyReagent:  594.0422584
+  energyReagent: "Sugar" #TODO metabolism: add glucose and swap this to use it
+  #Average human blood sugar concentration is 0.055 mol/RU, converted this is 6.3514%. I rounded up to 6.5 because it's nicer.
+  #This makes the "healthy" glucose level for humans at 16.25 RU, if humans have 250 RU of blood.
+  targetEnergyReagentConcentration: 0.065
+
+  #Molar volume of glucose is 115.48ml/mole with a Caloric density of 686 KCal (https://www.sciencedirect.com/topics/nursing-and-health-professions/caloric-density)
+  #SS14 uses DeciLitres for units so 115.48ml is 1.1548 RU. 686/1.1548 = 594.0422584 which gives us RU per KCal,
+  #rounding it up to 595 to keep the numbers nicer
+  kCalPerEnergyReagent:  595

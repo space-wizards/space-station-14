@@ -20,6 +20,8 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly INetManager _netManager = default!;
 
+    public static int BloodstreamVolumeTEMP = 250; //TODO: unhardcode this shit
+
 
     /// <inheritdoc/>
     public override void Initialize()

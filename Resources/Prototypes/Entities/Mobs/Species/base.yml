@@ -5,6 +5,7 @@
   - MobDamageable
   - MobConsciousness
   - MobWoundable
+  - MobMetabolism
   - MobPain
   - MobCombat
   id: BaseMobSpecies

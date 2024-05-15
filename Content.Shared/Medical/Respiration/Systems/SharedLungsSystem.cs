@@ -25,10 +25,11 @@ public abstract class SharedLungsSystem : EntitySystem //Never forget the commun
     [Dependency] protected BloodstreamSystem BloodstreamSystem = default!;
     [Dependency] protected INetManager NetManager = default!;
 
-    const int solutionVolume = 250; //TODO: unhardcode this shit
+    private int solutionVolume = 0; //TODO: unhardcode this shit
 
     public override void Initialize()
     {
+        solutionVolume = BloodstreamSystem.BloodstreamVolumeTEMP;
         SubscribeLocalEvent<LungsComponent, MapInitEvent>(OnLungsMapInit, after:[typeof(SharedBodySystem), typeof(BloodstreamSystem)]);
         SubscribeLocalEvent<LungsComponent, BodyInitializedEvent>(OnBodyInitialized, after: [typeof(BloodstreamSystem)]);
         base.Initialize();
