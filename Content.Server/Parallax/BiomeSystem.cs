@@ -39,6 +39,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IParallelManager _parallel = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
@@ -119,6 +120,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             SetSeed(uid, component, _random.Next());
         }
 
+        if (_proto.TryIndex(component.Template, out var biome))
+            SetTemplate(uid, component, biome);
+
         var xform = Transform(uid);
         var mapId = xform.MapID;
 
@@ -149,6 +153,15 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 }
             }
         }
+    }
+
+    public void SetEnabled(Entity<BiomeComponent?> ent, bool enabled = true)
+    {
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.Enabled == enabled)
+            return;
+
+        ent.Comp.Enabled = enabled;
+        Dirty(ent, ent.Comp);
     }
 
     public void SetSeed(EntityUid uid, BiomeComponent component, int seed, bool dirty = true)
