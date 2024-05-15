@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Froffy
-  changes:
-  - message: Water can now be scooped from water tiles, such as planetary rivers.
-    type: Add
-  id: 6097
-  time: '2024-03-06T01:37:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25825
 - author: Ko4erga
   changes:
   - message: '"Post light" updated.'
@@ -3868,3 +3861,10 @@
   id: 6596
   time: '2024-05-15T10:30:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28045
+- author: EdenTheLiznerd
+  changes:
+  - message: Removed the throngler from the grand lottery
+    type: Tweak
+  id: 6597
+  time: '2024-05-15T21:02:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28060
