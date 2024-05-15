@@ -104,7 +104,19 @@
     earliestStart: 30
     reoccurrenceDelay: 20
     minimumPlayers: 30
-  - type: NinjaSpawnRule
+  - type: SpaceSpawnRule
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostSpaceNinja
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: NinjaGear
+      components:
+      - type: SpaceNinja
+      mindComponents:
+      - type: NinjaRole
+        prototype: Ninja
 
 - type: entity
   parent: BaseGameRule
