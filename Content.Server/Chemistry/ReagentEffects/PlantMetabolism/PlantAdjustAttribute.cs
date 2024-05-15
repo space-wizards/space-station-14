@@ -63,7 +63,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             {
                 color = "red";
             }
-            return Loc.GetString("reagent-effect-guidebook-plant-attribute", ("attribute", Loc.GetString(Attribute)), ("amount", Amount.ToString("0.00")), ("colorvalue", color), ("chance", Probability));
+            return Loc.GetString("reagent-effect-guidebook-plant-attribute", ("attribute", Loc.GetString(Attribute)), ("amount", Amount.ToString("0.00")), ("colorName", color), ("chance", Probability));
         }
     }
 }
