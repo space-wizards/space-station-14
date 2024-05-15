@@ -15,12 +15,12 @@ namespace Content.Shared.Item.ItemToggle;
 /// <remarks>
 /// If you need extended functionality (e.g. requiring power) then add a new component and use events.
 /// </remarks>
-public abstract class SharedItemToggleSystem : EntitySystem
+public sealed class ItemToggleSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()

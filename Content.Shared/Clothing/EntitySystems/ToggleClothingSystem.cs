@@ -13,7 +13,7 @@ namespace Content.Shared.Clothing.EntitySystems;
 public sealed class ToggleClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedItemToggleSystem _toggle = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {

@@ -9,7 +9,7 @@ namespace Content.Shared.Item.ItemToggle;
 /// </summary>
 public sealed class ToggleVerbSystem : EntitySystem
 {
-    [Dependency] private readonly SharedItemToggleSystem _toggle = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {

@@ -374,8 +374,10 @@
         path: /Audio/Weapons/ebladehum.ogg
     - type: ItemToggleSize
       activatedSize: Huge
-    - type: ItemToggleDisarmMalus
-      activatedDisarmMalus: 0.6
+    - type: ComponentToggler
+      components:
+      - type: DisarmMalus
+        malus: 0.6
     - type: Sprite
       sprite: Objects/Weapons/Melee/e_shield.rsi
       layers:
@@ -485,8 +487,10 @@
         path: /Audio/Weapons/telescopicoff.ogg
         params:
           volume: -5
-    - type: ItemToggleDisarmMalus
-      activatedDisarmMalus: 0.6
+    - type: ComponentToggler
+      components:
+      - type: DisarmMalus
+        malus: 0.6
     - type: ItemToggleSize
       activatedSize: Huge
     - type: Sprite

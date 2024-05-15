@@ -20,7 +20,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedItemToggleSystem _toggle = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
 

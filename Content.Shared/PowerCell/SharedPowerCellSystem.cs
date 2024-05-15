@@ -13,7 +13,7 @@ public abstract class SharedPowerCellSystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] protected readonly SharedItemToggleSystem Toggle = default!;
+    [Dependency] protected readonly ItemToggleSystem Toggle = default!;
 
     public override void Initialize()
     {

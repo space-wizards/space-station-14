@@ -25,7 +25,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     [Dependency] private readonly PowerCellSystem _cell = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedItemToggleSystem _toggle = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;

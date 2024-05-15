@@ -18,7 +18,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly SharedItemToggleSystem _toggle = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {

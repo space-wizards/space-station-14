@@ -250,7 +250,7 @@
   - type: ComponentToggler
     components:
     - type: Sharp
-    - type: ItemToggleDisarmMalus
+    - type: DisarmMalus
       malus: 0.7
   - type: Wieldable
     wieldSound: null # esword light sound instead
