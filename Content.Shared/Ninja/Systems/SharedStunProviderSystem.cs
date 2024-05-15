@@ -11,22 +11,12 @@ public abstract class SharedStunProviderSystem : EntitySystem
     /// <summary>
     /// Set the battery field on the stun provider.
     /// </summary>
-    public void SetBattery(EntityUid uid, EntityUid? battery, StunProviderComponent? comp = null)
+    public void SetBattery(Entity<StunProviderComponent?> ent, EntityUid? battery)
     {
-        if (!Resolve(uid, ref comp))
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.BatteryUid == battery)
             return;
 
-        comp.BatteryUid = battery;
-    }
-
-    /// <summary>
-    /// Set the no power popup field on the stun provider.
-    /// </summary>
-    public void SetNoPowerPopup(EntityUid uid, string popup, StunProviderComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp))
-            return;
-
-        comp.NoPowerPopup = popup;
+        ent.Comp.BatteryUid = battery;
+        Dirty(ent, ent.Comp);
     }
 }

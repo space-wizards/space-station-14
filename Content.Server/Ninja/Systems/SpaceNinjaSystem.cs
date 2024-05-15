@@ -11,7 +11,6 @@ using Content.Server.PowerCell;
 using Content.Server.Research.Systems;
 using Content.Server.Roles;
 using Content.Shared.Alert;
-using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Doors.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
@@ -26,11 +25,6 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Ninja.Systems;
 
-// TODO: when syndiborgs are a thing have a borg converter with 6 second doafter
-// engi -> saboteur
-// medi -> idk reskin it
-// other -> assault
-
 /// <summary>
 /// Main ninja system that handles ninja setup, provides helper methods for the rest of the code to use.
 /// </summary>
@@ -44,7 +38,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly StealthClothingSystem _stealthClothing = default!;
 
     public override void Initialize()
     {
@@ -62,7 +55,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         var query = EntityQueryEnumerator<SpaceNinjaComponent>();
         while (query.MoveNext(out var uid, out var ninja))
         {
-            UpdateNinja(uid, ninja, frameTime);
+            SetSuitPowerAlert((uid, ninja));
         }
     }
 
@@ -100,9 +93,10 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// <summary>
     /// Update the alert for the ninja's suit power indicator.
     /// </summary>
-    public void SetSuitPowerAlert(EntityUid uid, SpaceNinjaComponent? comp = null)
+    public void SetSuitPowerAlert(Entity<SpaceNinjaComponent> ent)
     {
-        if (!Resolve(uid, ref comp, false) || comp.Deleted || comp.Suit == null)
+        var (uid, comp) = ent;
+        if (comp.Deleted || comp.Suit == null)
         {
             _alerts.ClearAlert(uid, AlertType.SuitPower);
             return;
@@ -168,25 +162,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         var session = mind.Session;
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
-    }
-
-    // TODO: PowerCellDraw, modify when cloak enabled
-    /// <summary>
-    /// Handle constant power drains from passive usage and cloak.
-    /// </summary>
-    private void UpdateNinja(EntityUid uid, SpaceNinjaComponent ninja, float frameTime)
-    {
-        if (ninja.Suit == null)
-            return;
-
-        float wattage = Suit.SuitWattage(ninja.Suit.Value);
-
-        SetSuitPowerAlert(uid, ninja);
-        if (!TryUseCharge(uid, wattage * frameTime))
-        {
-            // ran out of power, uncloak ninja
-            _stealthClothing.SetEnabled(ninja.Suit.Value, uid, false);
-        }
     }
 
     /// <summary>
