@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
@@ -17,6 +18,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
 {
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly ItemSlotsSystem ItemSlots = default!;
+    [Dependency] protected readonly SharedItemToggleSystem Toggle = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
     /// <inheritdoc/>
@@ -87,7 +89,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
     private void OnRefreshMovementSpeedModifiers(EntityUid uid, BorgChassisComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        if (component.Activated)
+        if (Toggle.IsActivated(uid))
             return;
 
         if (!TryComp<MovementSpeedModifierComponent>(uid, out var movement))

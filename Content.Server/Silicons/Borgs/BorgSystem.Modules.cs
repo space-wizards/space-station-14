@@ -29,7 +29,7 @@ public sealed partial class BorgSystem
 
         if (!TryComp<BorgChassisComponent>(chassis, out var chassisComp) ||
             args.Container != chassisComp.ModuleContainer ||
-            !chassisComp.Activated)
+            !Toggle.IsActivated(chassis))
             return;
 
         if (!_powerCell.HasDrawCharge(uid))
@@ -143,6 +143,7 @@ public sealed partial class BorgSystem
         var ev = new BorgModuleSelectedEvent(chassis);
         RaiseLocalEvent(moduleUid, ref ev);
         chassisComp.SelectedModule = moduleUid;
+        Dirty(chassis, chassisComp);
     }
 
     /// <summary>
@@ -162,6 +163,7 @@ public sealed partial class BorgSystem
         var ev = new BorgModuleUnselectedEvent(chassis);
         RaiseLocalEvent(chassisComp.SelectedModule.Value, ref ev);
         chassisComp.SelectedModule = null;
+        Dirty(chassis, chassisComp);
     }
 
     private void OnItemModuleSelected(EntityUid uid, ItemBorgModuleComponent component, ref BorgModuleSelectedEvent args)
