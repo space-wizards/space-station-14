@@ -77,8 +77,7 @@ public abstract class SharedPowerCellSystem : EntitySystem
 
     private void OnToggled(Entity<PowerCellDrawComponent> ent, ref ItemToggledEvent args)
     {
-        if (args.Activated)
-            ent.Comp.NextUpdateTime = Timing.CurTime;
+        ent.Comp.NextUpdateTime = Timing.CurTime;
     }
 
     [Obsolete("Use ItemToggleSystem directly")]

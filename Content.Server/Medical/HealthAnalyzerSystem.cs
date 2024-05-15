@@ -7,6 +7,7 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
 using Content.Shared.PowerCell;
@@ -24,6 +25,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     [Dependency] private readonly PowerCellSystem _cell = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedItemToggleSystem _toggle = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
@@ -144,7 +146,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         //Link the health analyzer to the scanned entity
         healthAnalyzer.Comp.ScannedEntity = target;
 
-        _cell.SetPowerCellDrawEnabled(healthAnalyzer, true);
+        _toggle.TryActivate(healthAnalyzer.Owner);
 
         UpdateScannedUser(healthAnalyzer, target, true);
     }
@@ -159,7 +161,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         //Unlink the analyzer
         healthAnalyzer.Comp.ScannedEntity = null;
 
-        _cell.SetPowerCellDrawEnabled(target, false);
+        _toggle.TryDeactivate(healthAnalyzer.Owner);
 
         UpdateScannedUser(healthAnalyzer, target, false);
     }

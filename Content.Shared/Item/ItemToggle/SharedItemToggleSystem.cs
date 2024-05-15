@@ -28,6 +28,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ItemToggleComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<ItemToggleComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ItemToggleComponent, ItemUnwieldedEvent>(TurnOffOnUnwielded);
         SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnOnWielded);
         SubscribeLocalEvent<ItemToggleComponent, UseInHandEvent>(OnUseInHand);
@@ -40,6 +41,15 @@ public abstract class SharedItemToggleSystem : EntitySystem
     private void OnStartup(Entity<ItemToggleComponent> ent, ref ComponentStartup args)
     {
         UpdateVisuals(ent);
+    }
+
+    private void OnMapInit(Entity<ItemToggleComponent> ent, ref MapInitEvent args)
+    {
+        if (!ent.Comp.Activated)
+            return;
+
+        var ev = new ItemToggledEvent(Predicted: ent.Comp.Predictable, Activated: ent.Comp.Activated, User: null);
+        RaiseLocalEvent(ent, ref ev);
     }
 
     private void OnUseInHand(Entity<ItemToggleComponent> ent, ref UseInHandEvent args)
@@ -72,9 +82,9 @@ public abstract class SharedItemToggleSystem : EntitySystem
     public bool TrySetActive(Entity<ItemToggleComponent?> ent, bool active, EntityUid? user = null, bool predicted = true)
     {
         if (active)
-            return TryDeactivate(ent, user, predicted: predicted);
-        else
             return TryActivate(ent, user, predicted: predicted);
+        else
+            return TryDeactivate(ent, user, predicted: predicted);
     }
 
     /// <summary>
@@ -260,7 +270,8 @@ public abstract class SharedItemToggleSystem : EntitySystem
             var stream = args.Predicted
                 ? _audio.PlayPredicted(comp.ActiveSound, uid, args.User, loop)
                 : _audio.PlayPvs(comp.ActiveSound, uid, loop);
-            comp.PlayingStream = stream.Value.Entity;
+            if (stream?.Entity is {} entity)
+                comp.PlayingStream = entity;
         }
     }
 }

@@ -174,11 +174,11 @@ public sealed partial class BorgSystem : SharedBorgSystem
         if (args.NewMobState == MobState.Alive)
         {
             if (_mind.TryGetMind(uid, out _, out _))
-                _powerCell.SetPowerCellDrawEnabled(uid, true);
+                _powerCell.SetDrawEnabled(uid, true);
         }
         else
         {
-            _powerCell.SetPowerCellDrawEnabled(uid, false);
+            _powerCell.SetDrawEnabled(uid, false);
         }
     }
 
