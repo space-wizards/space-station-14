@@ -33,3 +33,8 @@
     sprite: Structures/Doors/Airlocks/Glass/external.rsi
   - type: PaintableAirlock
     group: ExternalGlass
+  - type: Fixtures
+    fixtures:
+      fix1:
+        layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
+        - GlassAirlockLayer
