@@ -125,6 +125,7 @@
     - Stun
     - KnockedDown
     - SlowedDown
+    - Flashed
   - type: TypingIndicator
     proto: robot
   - type: Speech
@@ -146,7 +147,6 @@
     locked: true
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel
-  - type: Flashable
   - type: Damageable
     damageContainer: Silicon
   - type: Destructible
