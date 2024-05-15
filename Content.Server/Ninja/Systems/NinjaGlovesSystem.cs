@@ -1,5 +1,6 @@
 using Content.Server.Ninja.Events;
-using Content.Server.Objectives.Systems;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Systems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 
@@ -10,7 +11,8 @@ namespace Content.Server.Ninja.Systems;
 /// </summary>
 public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
-    [Dependency] private readonly CodeConditionSystem _codeCondition = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
 
     protected override void EnableGloves(Entity<NinjaGlovesComponent> ent, Entity<SpaceNinjaComponent> user)
@@ -21,11 +23,24 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         if (user.Comp.Suit is not {} suit)
             return;
 
+        if (!_mind.TryGetMind(user, out var mindId, out var mind))
+            return;
+
         foreach (var ability in ent.Comp.Abilities)
         {
+            // non-objective abilities are added in shared already
+            if (ability.Objective is not {} objId)
+                continue;
+
             // prevent doing an objective multiple times by toggling gloves after doing them
             // if it's not tied to an objective always add them anyway
-            if (ability.Objective is {} obj && _codeCondition.IsCompleted(user.Owner, obj))
+            if (!_mind.TryFindObjective((mindId, mind), objId, out var obj))
+            {
+                Log.Error($"Ninja glove ability of {ent} referenced missing objective {ability.Objective} of {_mind.MindOwnerLoggingString(mind)}");
+                continue;
+            }
+
+            if (!_objectives.IsCompleted(obj.Value, (mindId, mind)))
                 EntityManager.AddComponents(user, ability.Components);
         }
 

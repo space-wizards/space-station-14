@@ -42,10 +42,8 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     private void OnEquipped(Entity<NinjaSuitComponent> ent, ref ClothingGotEquippedEvent args)
     {
         var user = args.Wearer;
-        if (!_ninja.NinjaQuery.TryComp(user, out var ninja));
-            return;
-
-        NinjaEquipped(ent, (user, ninja));
+        if (_ninja.NinjaQuery.TryComp(user, out var ninja));
+            NinjaEquipped(ent, (user, ninja));
     }
 
     protected virtual void NinjaEquipped(Entity<NinjaSuitComponent> ent, Entity<SpaceNinjaComponent> user)

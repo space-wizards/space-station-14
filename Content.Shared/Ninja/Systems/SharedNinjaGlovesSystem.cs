@@ -48,8 +48,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         comp.User = null;
         Dirty(uid, comp);
 
-        _popup.PopupClient(Loc.GetString("ninja-gloves-off"), user, user);
-
         foreach (var ability in comp.Abilities)
         {
             EntityManager.RemoveComponents(user, ability.Components);
@@ -96,7 +94,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             return;
 
         var message = Loc.GetString(args.Activated ? "ninja-gloves-on" : "ninja-gloves-off");
-        _popup.PopupEntity(message, user, user);
+        _popup.PopupClient(message, user, user);
 
         if (args.Activated && _ninja.NinjaQuery.TryComp(user, out var ninja))
             EnableGloves(ent, (user, ninja));
