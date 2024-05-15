@@ -12,3 +12,12 @@
     "Oxygen": 0.05
   wasteReagents:
     "CarbonDioxide": 0.05
+  deprivationDamage:
+    types:
+      Cellular: 0.05
+  energyReagent: "Glucose"
+  #Glucose kCals per aerobic reaction is 686 (https://www.sciencedirect.com/topics/nursing-and-health-professions/caloric-density)
+  kCalPerReaction: 686
+  #Molar volume of glucose is 115.48ml/mole with a Caloric density of 686 KCal
+  #SS14 uses DeciLitres for units so 115.48ml is 1.1548 RU. 686/1.1548 = 594.0422584 which gives us RU per KCal
+  kCalPerEnergyReagent:  594.0422584

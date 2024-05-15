@@ -24,42 +24,43 @@ public sealed class MetabolismSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<MetabolismComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<MetabolismComponent, BodyInitializedEvent>(OnBodyInit);
+        SubscribeLocalEvent<MetabolizerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<MetabolizerComponent, BodyInitializedEvent>(OnBodyInit);
     }
 
-    private void OnBodyInit(EntityUid uid, MetabolismComponent metabolism, BodyInitializedEvent args)
+    private void OnBodyInit(EntityUid uid, MetabolizerComponent metabolizer, BodyInitializedEvent args)
     {
-        if (!metabolism.UsesBodySolution)
+        if (!metabolizer.UsesBodySolution)
             return;
-        UpdateCachedSolutions((uid, metabolism), args.Body);
+        UpdateCachedSolutions((uid, metabolizer), args.Body);
     }
 
-    private void OnMapInit(EntityUid uid, MetabolismComponent metabolism, MapInitEvent args)
+    private void OnMapInit(EntityUid uid, MetabolizerComponent metabolizer, MapInitEvent args)
     {
         if (_netManager.IsClient)
             return;
 
         //prevent accidents, yaml should not be setting values in these but just in case...
-        metabolism.CachedAbsorbedReagents.Clear();
-        metabolism.CachedWasteReagents.Clear();
-        var respType = _protoManager.Index(metabolism.MetabolismType);
-        foreach (var (reagentId, minAmt) in respType.RequiredReagents)
+        metabolizer.CachedAbsorbedReagents.Clear();
+        metabolizer.CachedWasteReagents.Clear();
+        var metabolismType = _protoManager.Index(metabolizer.MetabolismType);
+        foreach (var (reagentId, minAmt) in metabolismType.RequiredReagents)
         {
-            metabolism.CachedAbsorbedReagents.Add(new ReagentQuantity(reagentId, minAmt, null));
+            metabolizer.CachedAbsorbedReagents.Add(new ReagentQuantity(reagentId, minAmt, null));
         }
-        foreach (var (reagentId, minAmt) in respType.WasteReagents)
+        foreach (var (reagentId, minAmt) in metabolismType.WasteReagents)
         {
-            metabolism.CachedWasteReagents.Add(new ReagentQuantity(reagentId, minAmt, null));
+            metabolizer.CachedWasteReagents.Add(new ReagentQuantity(reagentId, minAmt, null));
         }
 
-        if (metabolism.UsesBodySolution) //if we are using a solution on body, differ initializing cached solutions
+        if (metabolizer.UsesBodySolution) //if we are using a solution on body, differ initializing cached solutions
             return;
-        UpdateCachedSolutions((uid, metabolism), uid);
+        metabolizer.CachedDeprivationDamage = metabolismType.DeprivationDamage;
+        UpdateCachedSolutions((uid, metabolizer), uid);
     }
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<MetabolismComponent>();
+        var query = EntityQueryEnumerator<MetabolizerComponent>();
         while (query.MoveNext(out var uid, out var metabolism))
         {
             if (_gameTiming.CurTime < metabolism.NextUpdate)
@@ -69,7 +70,7 @@ public sealed class MetabolismSystem : EntitySystem
             if (!TryAbsorbReagents((uid,metabolism)))
             {
                 _damageSystem.TryChangeDamage(uid,
-                    metabolism.DeprivationDamage,
+                    metabolism.CachedDeprivationDamage,
                     true,
                     false);
                 //TODO: block entity healing
@@ -77,7 +78,7 @@ public sealed class MetabolismSystem : EntitySystem
         }
     }
 
-    private void UpdateCachedSolutions(Entity<MetabolismComponent> respirator,
+    private void UpdateCachedSolutions(Entity<MetabolizerComponent> respirator,
         EntityUid? target)
     {
         target ??= respirator.Owner;
@@ -97,7 +98,7 @@ public sealed class MetabolismSystem : EntitySystem
             Dirty(respirator);
     }
 
-    private bool TryAbsorbReagents(Entity<MetabolismComponent> metabolism)
+    private bool TryAbsorbReagents(Entity<MetabolizerComponent> metabolism)
     {
         if (metabolism.Comp.CachedAbsorbSolutionEnt == EntityUid.Invalid
             || metabolism.Comp.CachedWasteSolutionEnt == EntityUid.Invalid)

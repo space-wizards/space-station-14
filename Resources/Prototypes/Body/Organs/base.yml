@@ -26,12 +26,9 @@
   - type: Tag
     tags:
     - Meat
-  - type: Metabolism
+  - type: Metabolizer
     metabolismType: Human
     baseMultiplier: 1
-    deprivationDamage:
-      types:
-        Cellular: 0.05
   - type: Damageable
     damageContainer: Biological
   - type: Woundable
