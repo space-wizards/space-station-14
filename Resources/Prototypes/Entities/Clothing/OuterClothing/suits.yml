@@ -157,6 +157,7 @@
     components:
     - type: Stealth
       minVisibility: 0.1
+      lastVisibility: 0.1
   - type: PowerCellDraw
     drawRate: 1.8 # 200 seconds on the default cell
   # throwing star ability
