@@ -140,6 +140,7 @@
     - TemporaryBlindness
     - Pacified
     - StaminaModifier
+    - Flashed
   - type: Reflect
     enabled: false
     reflectProb: 0
@@ -233,7 +234,6 @@
   id: BaseMobSpeciesOrganic
   abstract: true
   components:
-  - type: Flashable
   - type: Barotrauma
     damage:
       types:
@@ -248,24 +248,7 @@
         Heat: -0.07
       groups:
         Brute: -0.07
-  # Organs
-  - type: StatusEffects
-    allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
-    - Stutter
-    - SeeingRainbows
-    - Electrocution
-    - ForcedSleep
-    - TemporaryBlindness
-    - Drunk
-    - SlurredSpeech
-    - RatvarianLanguage
-    - PressureImmunity
-    - Muted
-    - Pacified
-    - StaminaModifier
+
   - type: Blindable
   # Other
   - type: Temperature
