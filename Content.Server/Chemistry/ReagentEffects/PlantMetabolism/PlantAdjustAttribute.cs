@@ -55,7 +55,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
             string color;
-            if (Positive ^ Attribute<0.0)
+            if (Positive ^ Amount < 0.0)
             {
                 color = "green";
             }
@@ -63,7 +63,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             {
                 color = "red";
             }
-            Loc.GetString("reagent-effect-guidebook-plant-attribute", ("attribute", Loc.GetString(Attribute.ToString("0.00"))), ("amount", Amount), ("colorvalue", color), ("chance", Probability));
+            return Loc.GetString("reagent-effect-guidebook-plant-attribute", ("attribute", Loc.GetString(Attribute)), ("amount", Amount.ToString("0.00")), ("colorvalue", color), ("chance", Probability));
         }
     }
 }
