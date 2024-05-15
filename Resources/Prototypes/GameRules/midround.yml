@@ -14,8 +14,6 @@
     - TerrorObjective
     - MassArrestObjective
     - NinjaSurviveObjective
-  - type: NinjaRule
-    threats: NinjaThreats
 
 # stores configuration for dragon
 - type: entity
