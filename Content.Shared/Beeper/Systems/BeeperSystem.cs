@@ -3,6 +3,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Beeper.Systems;
@@ -12,6 +13,7 @@ namespace Content.Shared.Beeper.Systems;
 public sealed class BeeperSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -87,8 +89,8 @@ public sealed class BeeperSystem : EntitySystem
 
         var beepEvent = new BeepPlayedEvent(beeper.IsMuted);
         RaiseLocalEvent(owner, ref beepEvent);
-        if (!beeper.IsMuted)
-            _audio.PlayPredicted(beeper.BeepSound, owner, user: null);
+        if (!beeper.IsMuted && _net.IsServer)
+            _audio.PlayPvs(beeper.BeepSound, owner);
         beeper.LastBeepTime = _timing.CurTime;
     }
 }

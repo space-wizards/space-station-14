@@ -75,10 +75,31 @@ public sealed class ProximityDetectionSystem : EntitySystem
         RunUpdate_Internal(owner, detector);
     }
 
+    private void ClearTarget(Entity<ProximityDetectorComponent> ent)
+    {
+        var (uid, comp) = ent;
+        if (comp.TargetEnt == null)
+            return;
+
+        comp.Distance = -1;
+        comp.TargetEnt = null;
+        var noDetectEvent = new ProximityTargetUpdatedEvent(comp, null, -1);
+        RaiseLocalEvent(uid, ref noDetectEvent);
+        var newTargetEvent = new NewProximityTargetEvent(comp, null);
+        RaiseLocalEvent(uid, ref newTargetEvent);
+        Dirty(uid, comp);
+    }
+
     private void RunUpdate_Internal(EntityUid owner,ProximityDetectorComponent detector)
     {
         if (!_net.IsServer) //only run detection checks on the server!
             return;
+
+        if (Deleted(detector.TargetEnt))
+        {
+            ClearTarget((owner, detector));
+        }
+
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(owner);
         List<(EntityUid TargetEnt, float Distance)> detections = new();
@@ -157,15 +178,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
     {
         if (detections.Count == 0)
         {
-            if (detector.TargetEnt == null)
-                return;
-            detector.Distance = -1;
-            detector.TargetEnt = null;
-            var noDetectEvent = new ProximityTargetUpdatedEvent(detector, null, -1);
-            RaiseLocalEvent(owner, ref noDetectEvent);
-            var newTargetEvent = new NewProximityTargetEvent(detector, null);
-            RaiseLocalEvent(owner, ref newTargetEvent);
-            Dirty(owner, detector);
+            ClearTarget((owner, detector));
             return;
         }
         var closestDistance = detections[0].Distance;
@@ -182,6 +195,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
         var newData = newTarget || detector.Distance != closestDistance;
         detector.TargetEnt = closestEnt;
         detector.Distance = closestDistance;
+        Dirty(owner, detector);
         if (newTarget)
         {
             var newTargetEvent = new NewProximityTargetEvent(detector, closestEnt);
