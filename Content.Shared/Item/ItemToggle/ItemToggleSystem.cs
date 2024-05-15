@@ -158,16 +158,6 @@ public sealed class ItemToggleSystem : EntitySystem
     private void Activate(Entity<ItemToggleComponent> ent, bool predicted, EntityUid? user = null)
     {
         var (uid, comp) = ent;
-        // TODO: Fix this hardcoding: ToggleableLightVisualsComponent or something can handle the event?
-        TryComp(uid, out AppearanceComponent? appearance);
-        _appearance.SetData(uid, ToggleableLightVisuals.Enabled, true, appearance);
-        _appearance.SetData(uid, ToggleVisuals.Toggled, true, appearance);
-
-        if (_light.TryGetLight(uid, out var light))
-        {
-            _light.SetEnabled(uid, true, light);
-        }
-
         var soundToPlay = comp.SoundActivate;
         if (predicted)
             _audio.PlayPredicted(soundToPlay, uid, user);
@@ -235,6 +225,7 @@ public sealed class ItemToggleSystem : EntitySystem
     /// </summary>
     private void TurnOnOnWielded(Entity<ItemToggleComponent> ent, ref ItemWieldedEvent args)
     {
+        // FIXME: for some reason both client and server play sound
         TryActivate(ent);
     }
 
