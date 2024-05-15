@@ -22,7 +22,7 @@ public sealed class AntagLoadProfileRuleSystem : GameRuleSystem<AntagLoadProfile
         SubscribeLocalEvent<AntagLoadProfileRuleComponent, AntagSelectEntityEvent>(OnSelectEntity);
     }
 
-    private void OnSelectEntity(Entity<NukeopsRuleComponent> ent, ref AntagSelectEntityEvent args)
+    private void OnSelectEntity(Entity<AntagLoadProfileRuleComponent> ent, ref AntagSelectEntityEvent args)
     {
         if (args.Handled)
             return;
