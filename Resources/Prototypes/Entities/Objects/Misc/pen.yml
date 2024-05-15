@@ -83,7 +83,7 @@
   description: A luxurious fountain pen for the captain of the station.
   components:
   - type: Sprite
-      state: pen_cap
+    state: pen_cap
 
 - type: entity
   name: CentCom pen
@@ -104,4 +104,3 @@
   components:
   - type: Sprite
     state: pen_hop
-
