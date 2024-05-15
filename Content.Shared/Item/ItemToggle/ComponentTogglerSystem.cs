@@ -21,8 +21,8 @@ public sealed class ComponentTogglerSystem : EntitySystem
             return;
 
         if (args.Activated)
-            EntityManager.AddComponents(ent, ent.Comp.Components);
+            EntityManager.AddComponents(target, ent.Comp.Components);
         else
-            EntityManager.RemoveComponents(ent, ent.Comp.Components);
+            EntityManager.RemoveComponents(target, ent.Comp.Components);
     }
 }
