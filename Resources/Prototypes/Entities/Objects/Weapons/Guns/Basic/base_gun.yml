@@ -11,6 +11,8 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: StaticPrice
+    price: 500
 
 # SMALL
 # A basic template for a small gun that can be equipped in the belt slot.

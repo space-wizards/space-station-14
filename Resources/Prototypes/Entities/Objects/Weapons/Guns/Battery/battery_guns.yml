@@ -22,8 +22,6 @@
     magState: mag
     steps: 5
     zeroVisible: true
-  - type: StaticPrice
-    price: 500
 
 # retro laser blaster
 - type: entity
@@ -52,8 +50,6 @@
     zeroVisible: true
   - type: HitscanBatteryAmmoProvider
     fireCost: 62.5
-  - type: StaticPrice
-    price: 500
 
 # makeshift laser pistol
 - type: entity
@@ -83,8 +79,6 @@
   - type: Battery
     maxCharge: 500
     startingCharge: 500
-  - type: StaticPrice
-    price: 500
 
 # tesla gun
 - type: entity
@@ -117,8 +111,6 @@
   - type: ProjectileBatteryAmmoProvider
     proto: TeslaGunBullet
     fireCost: 300
-  - type: StaticPrice
-    price: 500
 
 # laser rifle
 - type: entity
@@ -193,8 +185,6 @@
   - type: Battery
     maxCharge: 2000
     startingCharge: 2000
-  - type: StaticPrice
-    price: 500
 
 # pulse carbine
 - type: entity
@@ -233,8 +223,6 @@
   - type: Battery
     maxCharge: 5000
     startingCharge: 5000
-  - type: StaticPrice
-    price: 500
 
 # pulse rifle
 - type: entity
@@ -271,8 +259,6 @@
   - type: Battery
     maxCharge: 40000
     startingCharge: 40000
-  - type: StaticPrice
-    price: 500
 
 # laser cannon
 - type: entity
@@ -304,8 +290,6 @@
     fireRate: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: StaticPrice
-    price: 500
 
 # portable particle decelerator
 - type: entity
@@ -333,8 +317,6 @@
   - type: Battery
     maxCharge: 10000
     startingCharge: 10000
-  - type: StaticPrice
-    price: 500
 
 # x-ray cannon
 - type: entity
@@ -365,8 +347,6 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
-  - type: StaticPrice
-    price: 500
 
 # disabler
 - type: entity
@@ -402,8 +382,6 @@
     tags:
     - Taser
     - Sidearm
-  - type: StaticPrice
-    price: 500
   - type: GuideHelp
     guides:
     - Security
@@ -507,8 +485,6 @@
     tags:
     - Taser
     - Sidearm
-  - type: StaticPrice
-    price: 500
 
 # antique laser pistol
 - type: entity
