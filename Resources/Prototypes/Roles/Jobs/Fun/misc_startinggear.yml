@@ -413,6 +413,7 @@
     ears: ClothingHeadsetCMO
     belt: ClothingBeltMedical
     outerClothing: ClothingOuterCoatLabCmo
+
 #Captain Disaster Victim
 - type: startingGear
   id: DisasterVictimCaptain
@@ -441,6 +442,7 @@
     back: ClothingBackpackSatchelCaptain
     ears: ClothingHeadsetAltCommand
     outerClothing: ClothingOuterArmorCaptainCarapace
+
 #RD Disaster Victim
 - type: startingGear
   id: DisasterVictimRD
