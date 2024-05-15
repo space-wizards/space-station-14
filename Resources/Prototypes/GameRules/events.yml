@@ -105,15 +105,28 @@
     reoccurrenceDelay: 20
     minimumPlayers: 30
   - type: SpaceSpawnRule
+  - type: AntagLoadProfileRule
   - type: AntagSelection
     definitions:
     - spawnerPrototype: SpawnPointGhostSpaceNinja
       min: 1
       max: 1
       pickPlayer: false
-      startingGear: NinjaGear
+      startingGear: SpaceNinjaGear
       components:
       - type: SpaceNinja
+      - type: GenericAntag
+        rule: Ninja
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      - type: AutoImplant
+        implants:
+        - DeathAcidifierImplant
+      - type: RandomMetadata
+        nameSegments:
+        - names_ninja_title
+        - names_ninja
       mindComponents:
       - type: NinjaRole
         prototype: Ninja
@@ -406,9 +419,9 @@
         prototype: InitialInfected
 
 - type: entity
-  id: LoneOpsSpawn
-  parent: BaseGameRule
   noSpawn: true
+  parent: BaseNukeopsRule
+  id: LoneOpsSpawn
   components:
   - type: StationEvent
     earliestStart: 35
