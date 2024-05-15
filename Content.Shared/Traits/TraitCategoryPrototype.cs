@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Traits;
 
 /// <summary>
-///     Describes a trait.
+/// Traits category with general settings. Allows you to limit the number of taken traits in one category
 /// </summary>
 [Prototype("traitCategory")]
 public sealed partial class TraitCategoryPrototype : IPrototype
@@ -16,7 +16,7 @@ public sealed partial class TraitCategoryPrototype : IPrototype
     ///     Name of the trait category displayed in the UI
     /// </summary>
     [DataField]
-    public LocId Name { get; private set; } = "";
+    public LocId Name { get; private set; } = string.Empty;
 
     /// <summary>
     ///     The maximum number of traits that can be taken in this category. If -1, you can take as many traits as you like.
