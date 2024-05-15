@@ -66,6 +66,7 @@
   parent: [ AnomalyLocatorUnpowered, PowerCellSlotSmallItem ]
   suffix: Powered
   components:
+  - type: ItemToggle
   - type: PowerCellDraw
     drawRate: 1
     useRate: 0
@@ -99,6 +100,7 @@
   parent: [ AnomalyLocatorWideUnpowered, PowerCellSlotSmallItem ]
   suffix: Powered
   components:
+  - type: ItemToggle
   - type: PowerCellDraw
     drawRate: 1
     useRate: 0

@@ -31,6 +31,7 @@
       size: Large
     - type: Speech
       speechVerb: Robotic
+    - type: ItemToggle
     - type: Defibrillator
       zapHeal:
         types:
