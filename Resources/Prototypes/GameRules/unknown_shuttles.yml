@@ -1,4 +1,8 @@
-﻿- type: entity
+﻿# Temporary solution: the total weight of all events in this file should be 7.
+# If you add new shuttles, reduce the weight of all shuttles evenly. 
+# It is necessary to make an event that can select subevents in Future.
+
+- type: entity
   id: UnknownShuttleCargoLost
   parent: BaseGameRule
   noSpawn: true
@@ -7,7 +11,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 5
+    weight: 2
     reoccurrenceDelay: 30
     duration: 1
   - type: LoadMapRule
@@ -22,7 +26,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 5
+    weight: 2
     reoccurrenceDelay: 30
     duration: 1
   - type: LoadMapRule
@@ -37,26 +41,11 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 5
-    reoccurrenceDelay: 30
-    duration: 1
-  - type: LoadMapRule
-    preloadedGrid: DisasterEvacPod
-
-- type: entity
-  id: UnknownShuttleHonki
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     weight: 2
     reoccurrenceDelay: 30
     duration: 1
   - type: LoadMapRule
-    preloadedGrid: Honki
+    preloadedGrid: DisasterEvacPod
 
 - type: entity
   id: UnknownShuttleSyndieEvacPod
@@ -67,7 +56,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 2
+    weight: 1
     reoccurrenceDelay: 30
     duration: 1
   - type: LoadMapRule

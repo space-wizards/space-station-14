@@ -635,75 +635,6 @@
       - names_first
       - names_last
 
-# Clown troupe
-
-- type: entity
-  name: clown troupe spawner
-  id: ClownTroupeSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Fun/bikehorn.rsi
-          state: icon
-    - type: RandomSpawner
-      prototypes:
-      - RandomHumanoidClownTroupe
-      rarePrototypes:
-      - RandomHumanoidClownTroupeBanana
-      rareChance: 0.3
-
-- type: entity
-  id: RandomHumanoidClownTroupe
-  name: clown troupe ghost role
-  components:
-    - type: Sprite
-      sprite: Objects/Tools/appraisal-tool.rsi
-      state: icon
-    - type: RandomHumanoidSpawner
-      settings: ClownTroupe
-
-- type: entity
-  id: RandomHumanoidClownTroupeBanana
-  name: banana clown troupe
-  parent: RandomHumanoidClownTroupe
-  components:
-    - type: RandomHumanoidSpawner
-      settings: ClownTroupeBanana
-
-- type: randomHumanoidSettings
-  id: ClownTroupe
-  randomizeName: false
-  components:
-    - type: GhostRole
-      name: ghost-role-information-clown-troupe-name
-      description: ghost-role-information-clown-troupe-description
-      rules: ghost-role-information-clown-troupe-rules
-      raffle:
-        settings: short
-    - type: GhostTakeoverAvailable
-    - type: Loadout
-      prototypes: [ ClownTroupe ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_clown
-
-- type: randomHumanoidSettings
-  id: ClownTroupeBanana
-  randomizeName: false
-  components:
-    - type: GhostRole
-      name: ghost-role-information-clown-troupe-name
-      description: ghost-role-information-clown-troupe-description
-      rules: ghost-role-information-clown-troupe-rules
-    - type: GhostTakeoverAvailable
-    - type: Loadout
-      prototypes: [ BananaClown ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_clown
-
 # Traveling exotic chef
 
 - type: entity
@@ -776,6 +707,9 @@
       state: icon
     - type: RandomHumanoidSpawner
       settings: DisasterVictimResearchDirector
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
 
 - type: entity
   id: RandomHumanoidDisasterVictimCMO
@@ -784,6 +718,9 @@
   components:
     - type: RandomHumanoidSpawner
       settings: DisasterVictimCMO
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
 
 - type: entity
   id: RandomHumanoidDisasterVictimCaptain
@@ -792,6 +729,9 @@
   components:
     - type: RandomHumanoidSpawner
       settings: DisasterVictimCaptain
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
 
 - type: randomHumanoidSettings
   id: DisasterVictimResearchDirector

@@ -125,7 +125,8 @@ entities:
             0: 16896
           0,-1:
             0: 2115
-            1: 29440
+            1: 28928
+            2: 512
           -2,1:
             0: 8
           -1,1:
@@ -161,6 +162,21 @@ entities:
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.6852
+          - 81.57766
           - 0
           - 0
           - 0
@@ -228,7 +244,7 @@ entities:
   - uid: 9
     components:
     - type: Transform
-      pos: 1.5,1.5
+      pos: 1.603499,2.1003861
       parent: 1
 - proto: CableApcExtension
   entities:
@@ -507,16 +523,58 @@ entities:
   - uid: 92
     components:
     - type: Transform
-      pos: 1.5,-0.5
+      pos: 1.4544919,-1.5740927
       parent: 1
+    - type: Physics
+      fixedRotation: False
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape: !type:PolygonShape
+            radius: 0.01
+            vertices:
+            - -0.4,-0.4
+            - 0.4,-0.4
+            - 0.4,0.29
+            - -0.4,0.29
+          mask:
+          - Impassable
+          - HighImpassable
+          - LowImpassable
+          layer:
+          - TableLayer
+          - LowImpassable
+          - BulletImpassable
+          - Opaque
+          density: 50
+          hard: True
+          restitution: 0
+          friction: 0.4
+        throw-fixture:
+          shape: !type:PolygonShape
+            radius: 0.01
+            vertices:
+            - -0.4,-0.4
+            - 0.4,-0.4
+            - 0.4,0.29
+            - -0.4,0.29
+          mask:
+          - Impassable
+          - HighImpassable
+          - BulletImpassable
+          layer: []
+          density: 1
+          hard: False
+          restitution: 0
+          friction: 0.4
     - type: EntityStorage
       air:
         volume: 200
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.7459903
-        - 6.568249
+        - 1.8856695
+        - 7.0937095
         - 0
         - 0
         - 0
@@ -547,6 +605,10 @@ entities:
           showEnts: False
           occludes: True
           ent: null
+    - type: ThrownItem
+      thrownTime: 162.0993516
+      thrower: invalid
+      animate: False
 - proto: CyberPen
   entities:
   - uid: 93
@@ -576,6 +638,23 @@ entities:
     components:
     - type: Transform
       pos: -2.5,-0.5
+      parent: 1
+  - uid: 158
+    components:
+    - type: Transform
+      pos: -2.5,-0.5
+      parent: 1
+  - uid: 164
+    components:
+    - type: Transform
+      pos: 3.5,-0.5
+      parent: 1
+- proto: GravityGeneratorMini
+  entities:
+  - uid: 159
+    components:
+    - type: Transform
+      pos: -0.5,-1.5
       parent: 1
 - proto: Grille
   entities:
@@ -859,6 +938,28 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,-1.5
       parent: 1
+  - uid: 146
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -4.5,-1.5
+      parent: 1
+  - uid: 147
+    components:
+    - type: Transform
+      pos: -4.5,4.5
+      parent: 1
+  - uid: 149
+    components:
+    - type: Transform
+      pos: 5.5,4.5
+      parent: 1
+  - uid: 153
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 5.5,-1.5
+      parent: 1
 - proto: ToolboxSyndicateFilled
   entities:
   - uid: 96
@@ -1094,27 +1195,10 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,-0.5
       parent: 1
-  - uid: 146
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -4.5,-1.5
-      parent: 1
-  - uid: 147
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 5.5,4.5
-      parent: 1
   - uid: 148
     components:
     - type: Transform
       pos: -3.5,7.5
-      parent: 1
-  - uid: 149
-    components:
-    - type: Transform
-      pos: -4.5,4.5
       parent: 1
   - uid: 150
     components:
@@ -1132,12 +1216,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-0.5
-      parent: 1
-  - uid: 153
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-1.5
       parent: 1
   - uid: 154
     components:
@@ -1161,17 +1239,6 @@ entities:
     components:
     - type: Transform
       pos: 2.5,-0.5
-      parent: 1
-  - uid: 158
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -0.5,-1.5
-      parent: 1
-  - uid: 159
-    components:
-    - type: Transform
-      pos: 1.5,-1.5
       parent: 1
   - uid: 160
     components:
