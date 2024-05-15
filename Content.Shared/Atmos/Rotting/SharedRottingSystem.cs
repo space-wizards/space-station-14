@@ -1,5 +1,4 @@
-﻿using Content.Shared.Damage;
-using Content.Shared.Examine;
+﻿using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -14,7 +13,6 @@ public abstract class SharedRottingSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public const int MaxStages = 3;
