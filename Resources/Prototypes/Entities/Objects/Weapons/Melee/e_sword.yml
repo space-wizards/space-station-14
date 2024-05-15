@@ -77,7 +77,6 @@
       - state: inhand-right-blade
         shader: unshaded
   - type: Reflect
-    enabled: false
     reflectProb: 0.5
     minReflectProb: 0.25
   - type: IgnitionSource

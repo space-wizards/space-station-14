@@ -17,7 +17,6 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Reflect
-    enabled: true
     # Design intent: a robust captain or tot can sacrifice movement to make the most of this weapon, but they have to
     # really restrict themselves to walking speed or less.
     reflectProb: 0.5
@@ -192,7 +191,6 @@
       soundHit:
         path: /Audio/Effects/explosion_small1.ogg
     - type: Reflect
-      enabled: true
       reflectProb: 0.5 # In robust hands, deflects as well as an e-sword
       velocityBeforeNotMaxProb: 1.0
       velocityBeforeMinProb: 3.0

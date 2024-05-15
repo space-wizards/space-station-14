@@ -140,9 +140,6 @@
     - TemporaryBlindness
     - Pacified
     - StaminaModifier
-  - type: Reflect
-    enabled: false
-    reflectProb: 0
   - type: Body
     prototype: Human
     requiredLegs: 2

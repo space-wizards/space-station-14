@@ -9,6 +9,7 @@ using Content.Shared.Gravity;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
@@ -29,10 +30,11 @@ namespace Content.Shared.Weapons.Reflect;
 /// </summary>
 public sealed class ReflectSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -100,7 +102,7 @@ public sealed class ReflectSystem : EntitySystem
         // Do we have the components needed to try a reflect at all?
         if (
             !Resolve(reflector, ref reflect, false) ||
-            !reflect.Enabled ||
+            !_toggle.IsActivated(reflector) ||
             !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
             (reflect.Reflects & reflective.Reflective) == 0x0 ||
             !TryComp<PhysicsComponent>(projectile, out var physics) ||
@@ -200,7 +202,7 @@ public sealed class ReflectSystem : EntitySystem
         [NotNullWhen(true)] out Vector2? newDirection)
     {
         if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
-            !reflect.Enabled ||
+            !_toggle.IsActivated(reflector) ||
             TryComp<StaminaComponent>(reflector, out var staminaComponent) && staminaComponent.Critical ||
             _standing.IsDown(reflector))
         {
@@ -238,7 +240,7 @@ public sealed class ReflectSystem : EntitySystem
 
         EnsureComp<ReflectUserComponent>(args.Equipee);
 
-        if (component.Enabled)
+        if (_toggle.IsActivated(uid))
             EnableAlert(args.Equipee);
     }
 
@@ -254,7 +256,7 @@ public sealed class ReflectSystem : EntitySystem
 
         EnsureComp<ReflectUserComponent>(args.User);
 
-        if (component.Enabled)
+        if (_toggle.IsActivated(uid))
             EnableAlert(args.User);
     }
 
@@ -265,13 +267,8 @@ public sealed class ReflectSystem : EntitySystem
 
     private void OnToggleReflect(EntityUid uid, ReflectComponent comp, ref ItemToggledEvent args)
     {
-        comp.Enabled = args.Activated;
-        Dirty(uid, comp);
-
-        if (comp.Enabled)
-            EnableAlert(uid);
-        else
-            DisableAlert(uid);
+        if (args.User is {} user)
+            RefreshReflectUser(user);
     }
 
     /// <summary>
@@ -281,7 +278,7 @@ public sealed class ReflectSystem : EntitySystem
     {
         foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(user, SlotFlags.WITHOUT_POCKET))
         {
-            if (!HasComp<ReflectComponent>(ent))
+            if (!HasComp<ReflectComponent>(ent) || !_toggle.IsActivated(ent))
                 continue;
 
             EnsureComp<ReflectUserComponent>(user);
