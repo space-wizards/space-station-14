@@ -1433,15 +1433,15 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void HandleOpenBackpack(ICommonSession? session)
     {
-        HandleOpenSlotUI(session, "back");
+        HandleToggleSlotUI(session, "back");
     }
 
     private void HandleOpenBelt(ICommonSession? session)
     {
-        HandleOpenSlotUI(session, "belt");
+        HandleToggleSlotUI(session, "belt");
     }
 
-    private void HandleOpenSlotUI(ICommonSession? session, string slot)
+    private void HandleToggleSlotUI(ICommonSession? session, string slot)
     {
         if (session is not { } playerSession)
             return;
@@ -1455,7 +1455,14 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!ActionBlocker.CanInteract(playerEnt, storageEnt))
             return;
 
-        OpenStorageUI(storageEnt.Value, playerEnt);
+        if (!_ui.IsUiOpen(storageEnt.Value, StorageComponent.StorageUiKey.Key, playerEnt))
+        {
+            OpenStorageUI(storageEnt.Value, playerEnt);
+        }
+        else
+        {
+            _ui.CloseUi(storageEnt.Value, StorageComponent.StorageUiKey.Key, playerEnt);
+        }
     }
 
     protected void ClearCantFillReasons()
