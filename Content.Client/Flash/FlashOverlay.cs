@@ -53,15 +53,14 @@ namespace Content.Client.Flash
             var timeDone = (float) (curTime - time.Value.Item1).TotalSeconds;
 
             PercentComplete = timeDone / lastsFor;
-            // if we don't have a screenshot yet, take one
-            if (ScreenshotTexture == null && PercentComplete < 1.0f)
-                ReceiveFlash();
         }
 
         public void ReceiveFlash()
         {
             if (_stateManager.CurrentState is IMainViewportState state)
             {
+                // take a screenshot
+                // note that the callback takes a while and ScreenshotTexture will be null the first few Draws
                 state.Viewport.Viewport.Screenshot(image =>
                 {
                     var rgba32Image = image.CloneAs<Rgba32>(SixLabors.ImageSharp.Configuration.Default);
