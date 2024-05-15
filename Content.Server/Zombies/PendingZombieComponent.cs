@@ -36,6 +36,18 @@ public sealed partial class PendingZombieComponent : Component
     public TimeSpan GracePeriod = TimeSpan.Zero;
 
     /// <summary>
+    /// The minimum amount of time initial infected have before they start taking infection damage.
+    /// </summary>
+    [DataField]
+    public TimeSpan MinInitialInfectedGrace = TimeSpan.FromMinutes(12.5f);
+
+    /// <summary>
+    /// The maximum amount of time initial infected have before they start taking damage.
+    /// </summary>
+    [DataField]
+    public TimeSpan MaxInitialInfectedGrace = TimeSpan.FromMinutes(15f);
+
+    /// <summary>
     /// The chance each second that a warning will be shown.
     /// </summary>
     [DataField("infectionWarningChance")]
@@ -50,6 +62,4 @@ public sealed partial class PendingZombieComponent : Component
         "zombie-infection-warning",
         "zombie-infection-underway"
     };
-
-    [DataField] public EntityUid? Action;
 }

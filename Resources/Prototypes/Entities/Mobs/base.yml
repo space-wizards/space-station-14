@@ -192,7 +192,7 @@
     canResistFire: true
     damage: #per second, scales with number of fire 'stacks'
       types:
-        Heat: 3
+        Heat: 1.5
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning

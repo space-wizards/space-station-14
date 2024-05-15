@@ -116,7 +116,7 @@ public sealed partial class GunSystem
 
     public sealed class BoxesStatusControl : Control
     {
-        private readonly BoxContainer _bulletsList;
+        private readonly BatteryBulletRenderer _bullets;
         private readonly Label _ammoCount;
 
         public BoxesStatusControl()
@@ -128,27 +128,18 @@ public sealed partial class GunSystem
             AddChild(new BoxContainer
             {
                 Orientation = BoxContainer.LayoutOrientation.Horizontal,
-                HorizontalExpand = true,
                 Children =
                 {
-                    new Control
+                    (_bullets = new BatteryBulletRenderer
                     {
-                        HorizontalExpand = true,
-                        Children =
-                        {
-                            (_bulletsList = new BoxContainer
-                            {
-                                Orientation = BoxContainer.LayoutOrientation.Horizontal,
-                                VerticalAlignment = VAlignment.Center,
-                                SeparationOverride = 4
-                            }),
-                        }
-                    },
-                    new Control() { MinSize = new Vector2(5, 0) },
+                        Margin = new Thickness(0, 0, 5, 0),
+                        HorizontalExpand = true
+                    }),
                     (_ammoCount = new Label
                     {
                         StyleClasses = { StyleNano.StyleClassItemStatus },
                         HorizontalAlignment = HAlignment.Right,
+                        VerticalAlignment = VAlignment.Bottom
                     }),
                 }
             });
@@ -156,46 +147,12 @@ public sealed partial class GunSystem
 
         public void Update(int count, int max)
         {
-            _bulletsList.RemoveAllChildren();
-
             _ammoCount.Visible = true;
 
             _ammoCount.Text = $"x{count:00}";
-            max = Math.Min(max, 8);
-            FillBulletRow(_bulletsList, count, max);
-        }
 
-        private static void FillBulletRow(Control container, int count, int capacity)
-        {
-            var colorGone = Color.FromHex("#000000");
-            var color = Color.FromHex("#E00000");
-
-            // Draw the empty ones
-            for (var i = count; i < capacity; i++)
-            {
-                container.AddChild(new PanelContainer
-                {
-                    PanelOverride = new StyleBoxFlat()
-                    {
-                        BackgroundColor = colorGone,
-                    },
-                    MinSize = new Vector2(10, 15),
-                });
-            }
-
-            // Draw the full ones, but limit the count to the capacity
-            count = Math.Min(count, capacity);
-            for (var i = 0; i < count; i++)
-            {
-                container.AddChild(new PanelContainer
-                {
-                    PanelOverride = new StyleBoxFlat()
-                    {
-                        BackgroundColor = color,
-                    },
-                    MinSize = new Vector2(10, 15),
-                });
-            }
+            _bullets.Capacity = max;
+            _bullets.Count = count;
         }
     }
 

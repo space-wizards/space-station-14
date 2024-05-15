@@ -79,7 +79,6 @@
   description: it seems today it's not you eating tomatoes, it's the tomatoes eating you.
   components:
   - type: Item
-    size: Huge
   - type: NpcFactionMember
     factions:
       - SimpleHostile
@@ -142,10 +141,6 @@
   - type: Climbing
   - type: NameIdentifier
     group: GenericNumber
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      60: 0.7
-      80: 0.5
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Effects/Footsteps/slime1.ogg

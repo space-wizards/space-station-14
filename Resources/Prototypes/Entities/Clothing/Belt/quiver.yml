@@ -18,7 +18,11 @@
     whitelist:
       tags:
       - Arrow
+      - Plunger
   - type: Appearance
   - type: StorageContainerVisuals
     maxFillLevels: 3
     fillBaseName: fill-
+  - type: Construction
+    graph: Quiver
+    node: Quiver

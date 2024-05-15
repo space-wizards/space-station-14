@@ -1,6 +1,7 @@
-using Content.Server.GameTicking.Rules;
+using Content.Server.Antag;
 using Content.Server.Traitor.Components;
 using Content.Shared.Mind.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traitor.Systems;
 
@@ -9,7 +10,10 @@ namespace Content.Server.Traitor.Systems;
 /// </summary>
 public sealed class AutoTraitorSystem : EntitySystem
 {
-    [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string DefaultTraitorRule = "Traitor";
 
     public override void Initialize()
     {
@@ -20,44 +24,6 @@ public sealed class AutoTraitorSystem : EntitySystem
 
     private void OnMindAdded(EntityUid uid, AutoTraitorComponent comp, MindAddedMessage args)
     {
-        TryMakeTraitor(uid, comp);
-    }
-
-    /// <summary>
-    /// Sets the GiveUplink field.
-    /// </summary>
-    public void SetGiveUplink(EntityUid uid, bool giveUplink, AutoTraitorComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp))
-            return;
-
-        comp.GiveUplink = giveUplink;
-    }
-
-    /// <summary>
-    /// Sets the GiveObjectives field.
-    /// </summary>
-    public void SetGiveObjectives(EntityUid uid, bool giveObjectives, AutoTraitorComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp))
-            return;
-
-        comp.GiveObjectives = giveObjectives;
-    }
-
-    /// <summary>
-    /// Checks if there is a mind, then makes it a traitor using the options.
-    /// </summary>
-    public bool TryMakeTraitor(EntityUid uid, AutoTraitorComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp))
-            return false;
-
-        //Start the rule if it has not already been started
-        var traitorRuleComponent = _traitorRule.StartGameRule();
-        _traitorRule.MakeTraitor(uid, traitorRuleComponent, giveUplink: comp.GiveUplink, giveObjectives: comp.GiveObjectives);
-        // prevent spamming anything if it fails
-        RemComp<AutoTraitorComponent>(uid);
-        return true;
+        _antag.ForceMakeAntag<AutoTraitorComponent>(args.Mind.Comp.Session, DefaultTraitorRule);
     }
 }

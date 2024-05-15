@@ -22,6 +22,7 @@ public static partial class PoolManager
         (CVars.ThreadParallelCount.Name,      "1"),
         (CCVars.GameRoleTimers.Name,          "false"),
         (CCVars.GridFill.Name,                "false"),
+        (CCVars.PreloadGrids.Name,            "false"),
         (CCVars.ArrivalsShuttles.Name,        "false"),
         (CCVars.EmergencyShuttleEnabled.Name, "false"),
         (CCVars.ProcgenPreload.Name,          "false"),
@@ -32,6 +33,7 @@ public static partial class PoolManager
         (CCVars.GameLobbyEnabled.Name, "false"),
         (CCVars.ConfigPresetDevelopment.Name, "false"),
         (CCVars.AdminLogsEnabled.Name, "false"),
+        (CCVars.AutosaveEnabled.Name, "false"),
         (CVars.NetBufferSize.Name, "0")
     };
 

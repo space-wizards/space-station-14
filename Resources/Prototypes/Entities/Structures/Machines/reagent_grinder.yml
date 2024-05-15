@@ -12,8 +12,8 @@
     key: enum.ReagentGrinderUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.ReagentGrinderUiKey.Key
-      type: ReagentGrinderBoundUserInterface
+      enum.ReagentGrinderUiKey.Key:
+        type: ReagentGrinderBoundUserInterface
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -32,6 +32,7 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
+        hard: false
   - type: Sprite
     sprite: Structures/Machines/juicer.rsi
     drawdepth: SmallObjects

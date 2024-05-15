@@ -8,6 +8,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Internals;
 using Content.Shared.Inventory;
+using Content.Shared.Roles;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
@@ -23,17 +24,29 @@ public sealed class InternalsSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
-    public const SlotFlags InventorySlots = SlotFlags.POCKET | SlotFlags.BELT;
+    private EntityQuery<InternalsComponent> _internalsQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _internalsQuery = GetEntityQuery<InternalsComponent>();
 
         SubscribeLocalEvent<InternalsComponent, InhaleLocationEvent>(OnInhaleLocation);
         SubscribeLocalEvent<InternalsComponent, ComponentStartup>(OnInternalsStartup);
         SubscribeLocalEvent<InternalsComponent, ComponentShutdown>(OnInternalsShutdown);
         SubscribeLocalEvent<InternalsComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
         SubscribeLocalEvent<InternalsComponent, InternalsDoAfterEvent>(OnDoAfter);
+
+        SubscribeLocalEvent<StartingGearEquippedEvent>(OnStartingGear);
+    }
+
+    private void OnStartingGear(ref StartingGearEquippedEvent ev)
+    {
+        if (!_internalsQuery.TryComp(ev.Entity, out var internals) || internals.BreathToolEntity == null)
+            return;
+
+        ToggleInternals(ev.Entity, ev.Entity, force: false, internals);
     }
 
     private void OnGetInteractionVerbs(
@@ -217,7 +230,7 @@ public sealed class InternalsSystem : EntitySystem
         if (component.BreathToolEntity is null || !AreInternalsWorking(component))
             return 2;
 
-        // If pressure in the tank is below low pressure threshhold, flash warning on internals UI
+        // If pressure in the tank is below low pressure threshold, flash warning on internals UI
         if (TryComp<GasTankComponent>(component.GasTankEntity, out var gasTank)
             && gasTank.IsLowPressure)
         {

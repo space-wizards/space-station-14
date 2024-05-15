@@ -94,7 +94,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             _ambientSoundSystem.SetAmbience(uid, false);
 
             DirtyUI(uid, filter);
-            _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
+            _userInterfaceSystem.CloseUi(uid, GasFilterUiKey.Key);
         }
 
         private void OnFilterActivate(EntityUid uid, GasFilterComponent filter, ActivateInWorldEvent args)
@@ -104,7 +104,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             if (EntityManager.GetComponent<TransformComponent>(uid).Anchored)
             {
-                _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.PlayerSession);
+                _userInterfaceSystem.OpenUi(uid, GasFilterUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, filter);
             }
             else
@@ -120,7 +120,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!Resolve(uid, ref filter))
                 return;
 
-            _userInterfaceSystem.TrySetUiState(uid, GasFilterUiKey.Key,
+            _userInterfaceSystem.SetUiState(uid, GasFilterUiKey.Key,
                 new GasFilterBoundUserInterfaceState(MetaData(uid).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
         }
 
@@ -136,7 +136,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             filter.Enabled = args.Enabled;
             _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
-                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
+                $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, filter);
             UpdateAppearance(uid, filter);
         }
@@ -145,7 +145,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             filter.TransferRate = Math.Clamp(args.Rate, 0f, filter.MaxTransferRate);
             _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
-                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the transfer rate on {ToPrettyString(uid):device} to {args.Rate}");
+                $"{ToPrettyString(args.Actor):player} set the transfer rate on {ToPrettyString(uid):device} to {args.Rate}");
             DirtyUI(uid, filter);
 
         }
@@ -158,7 +158,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 {
                     filter.FilteredGas = parsedGas;
                     _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
-                        $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the filter on {ToPrettyString(uid):device} to {parsedGas.ToString()}");
+                        $"{ToPrettyString(args.Actor):player} set the filter on {ToPrettyString(uid):device} to {parsedGas.ToString()}");
                     DirtyUI(uid, filter);
                 }
                 else
@@ -170,7 +170,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             {
                 filter.FilteredGas = null;
                 _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
-                    $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the filter on {ToPrettyString(uid):device} to none");
+                    $"{ToPrettyString(args.Actor):player} set the filter on {ToPrettyString(uid):device} to none");
                 DirtyUI(uid, filter);
             }
         }

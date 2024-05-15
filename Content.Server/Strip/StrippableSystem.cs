@@ -111,17 +111,15 @@ namespace Content.Server.Strip
             if (TryComp<CombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
                 return;
 
-            if (TryComp<ActorComponent>(user, out var actor) && HasComp<StrippingComponent>(user))
+            if (HasComp<StrippingComponent>(user))
             {
-                if (_userInterfaceSystem.SessionHasOpenUi(strippable, StrippingUiKey.Key, actor.PlayerSession))
-                    return;
-                _userInterfaceSystem.TryOpen(strippable, StrippingUiKey.Key, actor.PlayerSession);
+                _userInterfaceSystem.OpenUi(strippable.Owner, StrippingUiKey.Key, user);
             }
         }
 
         private void OnStripButtonPressed(Entity<StrippableComponent> strippable, ref StrippingSlotButtonPressed args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } user ||
+            if (args.Actor is not { Valid: true } user ||
                 !TryComp<HandsComponent>(user, out var userHands))
                 return;
 
@@ -173,7 +171,7 @@ namespace Content.Server.Strip
 
         private void OnStripEnsnareMessage(EntityUid uid, EnsnareableComponent component, StrippingEnsnareButtonPressed args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } user)
+            if (args.Actor is not { Valid: true } user)
                 return;
 
             foreach (var entity in component.Container.ContainedEntities)
@@ -498,7 +496,7 @@ namespace Content.Server.Strip
 
             if (!_handsSystem.TryGetHand(target, handName, out var handSlot, target.Comp))
             {
-                _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", target)), user);
+                _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", Identity.Name(target, EntityManager, user))), user);
                 return false;
             }
 
@@ -513,7 +511,7 @@ namespace Content.Server.Strip
 
             if (!_handsSystem.CanDropHeld(target, handSlot, false))
             {
-                _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop-message", ("owner", target)), user);
+                _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop-message", ("owner", Identity.Name(target, EntityManager, user))), user);
                 return false;
             }
 
