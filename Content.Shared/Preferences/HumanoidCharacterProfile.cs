@@ -346,17 +346,59 @@ namespace Content.Shared.Preferences
             };
         }
 
-        public HumanoidCharacterProfile WithTraitPreference(string traitId, string categoryId, bool pref)
+         public HumanoidCharacterProfile WithTraitPreference(string traitId, bool pref)
         {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var list = new HashSet<string>(_traitPreferences);
 
             if (pref)
             {
-                list.Add(traitId);
+                if (!list.Contains(traitId))
+                {
+                    var protos = prototypeManager.EnumeratePrototypes<TraitCategoryPrototype>();
+                    TraitCategoryPrototype? category = null;
+
+                    foreach (var proto in protos)
+                    {
+                      if (!proto.Traits.Contains(traitId))
+                        continue;
+
+                      category = proto;
+                    }
+
+                    if (category is not null && category.MaxTraits != -1)
+                    {
+                        var count = 0;
+                        foreach (var trait in list)
+                        {
+                            if (!category.Traits.Contains(traitId))
+                              continue;
+
+                            count++;
+                        }
+
+                        if (count >= category.MaxTraits)
+                        {
+                            return new(this)
+                            {
+                                _traitPreferences = list,
+                            };
+                        }
+
+                        list.Add(traitId);
+                    }
+                    else
+                    {
+                      list.Add(traitId);
+                    }
+                }
             }
             else
             {
-                list.Remove(traitId);
+                if (list.Contains(traitId))
+                {
+                    list.Remove(traitId);
+                }
             }
 
             return new(this)

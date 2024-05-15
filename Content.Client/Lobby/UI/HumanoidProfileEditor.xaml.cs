@@ -503,7 +503,7 @@ namespace Content.Client.Lobby.UI
 
                     selector.PreferenceChanged += preference =>
                     {
-                        Profile = Profile?.WithTraitPreference(trait.ID, category.ID, preference);
+                        Profile = Profile?.WithTraitPreference(trait.ID, preference);
                         SetDirty();
                     };
 
