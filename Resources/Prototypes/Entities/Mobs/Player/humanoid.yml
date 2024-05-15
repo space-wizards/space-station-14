@@ -602,7 +602,7 @@
       raffle:
         settings: short
     - type: Loadout
-      roleLoadout: [ JobCargoTechnician ]
+      prototypes: [ LostCargoTechGearSuit, LostCargoTechGearCoat ]
 
 # Clown troupe
 
@@ -653,7 +653,7 @@
       raffle:
         settings: short
     - type: Loadout
-      roleLoadout: [ JobClown ]
+      prototypes: [ ClownTroupe ]
     - type: RandomMetadata
       nameSegments:
       - names_clown
@@ -703,7 +703,7 @@
       raffle:
         settings: short
     - type: Loadout
-      roleLoadout: [ JobChef ]
+      prototypes: [ TravelingChef ]
 
 # Disaster victim
 
@@ -768,21 +768,21 @@
   parent: DisasterVictimHead
   components:
     - type: Loadout
-      roleLoadout: [ JobResearchDirector ]
+      prototypes: [ DisasterVictimRD, DisasterVictimRDAlt ]
 
 - type: randomHumanoidSettings
   id: DisasterVictimCMO
   parent: DisasterVictimHead
   components:
     - type: Loadout
-      roleLoadout: [ JobChiefMedicalOfficer ]
+      prototypes: [ DisasterVictimCMO, DisasterVictimCMOAlt ]
 
 - type: randomHumanoidSettings
   id: DisasterVictimCaptain
   parent: DisasterVictimHead
   components:
     - type: Loadout
-      roleLoadout: [ JobCaptain ]
+      prototypes: [ DisasterVictimCaptain, DisasterVictimCaptainAlt ]
 
 # Syndie Disaster Victim
 
@@ -824,4 +824,4 @@
       raffle:
         settings: short
     - type: Loadout
-      prototypes: [ SyndicateOperativeGearCivilian ]
+      prototypes: [ SyndicateOperativeGearDisasterVictim ]
