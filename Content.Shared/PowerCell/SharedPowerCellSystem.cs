@@ -71,8 +71,8 @@ public abstract class SharedPowerCellSystem : EntitySystem
 
     private void OnActivateAttempt(Entity<PowerCellDrawComponent> ent, ref ItemToggleActivateAttemptEvent args)
     {
-        if (!HasDrawCharge(ent, ent.Comp, user: args.User) ||
-            !HasActivateCharge(ent, ent.Comp, user: args.User))
+        if (!HasDrawCharge(ent, ent.Comp, user: args.User)
+            || !HasActivatableCharge(ent, ent.Comp, user: args.User))
             args.Cancelled = true;
     }
 
