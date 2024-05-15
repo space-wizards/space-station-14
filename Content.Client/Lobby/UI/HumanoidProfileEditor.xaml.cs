@@ -505,6 +505,7 @@ namespace Content.Client.Lobby.UI
                     {
                         Profile = Profile?.WithTraitPreference(trait.ID, preference);
                         SetDirty();
+                        RefreshTraits(); // If too many traits are selected, they will be reset to the real value.
                     };
 
                     TraitsList.AddChild(selector);
