@@ -206,7 +206,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: [ClothingHandsBase, BaseToggleClothing]
   id: ClothingHandsGlovesSpaceNinja
   name: space ninja gloves
   description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.
@@ -234,6 +234,8 @@
   - type: Thieving
     stripTimeReduction: 1
     stealthy: true
+  - type: ToggleClothing
+    action: ActionToggleNinjaGloves
   - type: NinjaGloves
     abilities:
     - components:

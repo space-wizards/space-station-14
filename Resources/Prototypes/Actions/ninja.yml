@@ -23,7 +23,7 @@
       state: icon
     itemIconStyle: NoItem
     priority: -10
-    event: !type:CreateThrowingStarEvent {}
+    event: !type:CreateItemEvent {}
 
 - type: entity
   id: ActionRecallKatana

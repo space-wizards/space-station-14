@@ -153,12 +153,18 @@
   - type: ToggleClothing
     action: ActionTogglePhaseCloak
   - type: ComponentToggler
-    useParent: true
+    parent: true
     components:
     - type: Stealth
       minVisibility: 0.1
   - type: PowerCellDraw
     drawRate: 1.8 # 200 seconds on the default cell
+  # throwing star ability
+  - type: ItemCreator
+    action: ActionCreateThrowingStar
+    charge: 14.4
+    spawnedPrototype: ThrowingStarNinja
+    noPowerPopup: ninja-no-power
   # core ninja suit stuff
   - type: NinjaSuit
   - type: UseDelay

@@ -1,3 +1,14 @@
+# a raffled ghost role using AntagSelection
+- type: entity
+  abstract: true
+  parent: MarkerBase
+  id: BaseSpawnPointAntag
+  components:
+  - type: GhostRole
+    raffle:
+      settings: default
+  - type: GhostRoleAntagSpawner
+
 - type: entity
   id: SpawnPointGhostRatKing
   name: ghost role spawn point
@@ -83,18 +94,14 @@
 
 - type: entity
   noSpawn: true
+  parent: BaseSpawnPointAntag
   id: SpawnPointLoneNukeOperative
   name: ghost role spawn point
-  suffix: loneops
-  parent: MarkerBase
   components:
   - type: GhostRole
     name: ghost-role-information-loneop-name
     description: ghost-role-information-loneop-description
     rules: ghost-role-information-loneop-rules
-    raffle:
-      settings: default
-  - type: GhostRoleAntagSpawner
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -124,19 +131,14 @@
       state: alive
 
 - type: entity
+  noSpawn: true
+  parent: BaseSpawnPointAntag
   id: SpawnPointGhostSpaceNinja
-  name: ghost role spawn point
-  suffix: space ninja
-  parent: MarkerBase
   components:
   - type: GhostRole
     name: ghost-role-information-space-ninja-name
     description: ghost-role-information-space-ninja-description
     rules: ghost-role-information-space-ninja-rules
-    raffle:
-      settings: default
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanSpaceNinja
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
