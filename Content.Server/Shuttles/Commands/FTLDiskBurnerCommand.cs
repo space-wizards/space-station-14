@@ -101,8 +101,7 @@ public sealed class FTLDiskBurnerCommand : IConsoleCommand
             }
             else
             {
-                shell.WriteLine(destinations + "is not an EntityID");
-                return;
+                shell.WriteLine(destinations + " is not an EntityID");
             }
         }
     }
