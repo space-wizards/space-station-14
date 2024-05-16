@@ -17,6 +17,13 @@
     <PackageVersion Include="Veldrid.SPIRV" Version="1.0.15" />
   </ItemGroup>
   <PropertyGroup>
-    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    <!--
+    We actually set ManagePackageVersionsCentrally manually in another import file.
+    Since .NET SDK 8.0.300, ManagePackageVersionsCentrally is automatically set if Directory.Packages.props exists.
+    https://github.com/NuGet/NuGet.Client/pull/5572
+    We actively negate this here, as we have some packages in tree we don't want such automatic behavior for.
+    We use Directory.Build.props to get copy the state *after* our MSBuild config but before Nuget's config.
+    -->
+    <ManagePackageVersionsCentrally />
   </PropertyGroup>
 </Project>
