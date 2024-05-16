@@ -6,10 +6,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [UsedImplicitly]
     public sealed partial class PlantAdjustMutationMod : PlantAdjustAttribute
     {
-        public PlantAdjustMutationMod()
-        {
-            Attribute = "plant-attribute-mutation-mod";
-        }
+        public override string GuidebookAttributeName { get; set; } = "plant-attribute-mutation-mod";
 
         public override void Effect(ReagentEffectArgs args)
         {

@@ -4,10 +4,8 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     public sealed partial class PlantAdjustMutationLevel : PlantAdjustAttribute
     {
-        public PlantAdjustMutationLevel()
-        {
-            Attribute = "plant-attribute-mutation-level";
-        }
+        public override string GuidebookAttributeName { get; set; } = "plant-attribute-mutation-level";
+
 
         public override void Effect(ReagentEffectArgs args)
         {

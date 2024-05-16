@@ -7,10 +7,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [UsedImplicitly]
     public sealed partial class PlantAdjustWater : PlantAdjustAttribute
     {
-        public PlantAdjustWater()
-        {
-            Attribute = "plant-attribute-water";
-        }
+        public override string GuidebookAttributeName { get; set; } = "plant-attribute-water";
 
         public override void Effect(ReagentEffectArgs args)
         {

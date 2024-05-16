@@ -7,10 +7,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [UsedImplicitly]
     public sealed partial class PlantAffectGrowth : PlantAdjustAttribute
     {
-        public PlantAffectGrowth()
-        {
-            Attribute = "plant-attribute-growth";
-        }
+        public override string GuidebookAttributeName { get; set; } = "plant-attribute-growth";
 
         public override void Effect(ReagentEffectArgs args)
         {

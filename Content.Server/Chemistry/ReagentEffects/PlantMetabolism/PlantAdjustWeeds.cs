@@ -6,11 +6,8 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [UsedImplicitly]
     public sealed partial class PlantAdjustWeeds : PlantAdjustAttribute
     {
-        public PlantAdjustWeeds()
-        {
-            Attribute = "plant-attribute-weeds";
-            Positive = false;
-        }
+        public override string GuidebookAttributeName { get; set; } = "plant-attribute-weeds";
+        public override bool GuidebookIsAttributePositive { get; protected set; } = false;
 
         public override void Effect(ReagentEffectArgs args)
         {

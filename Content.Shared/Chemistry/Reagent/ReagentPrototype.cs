@@ -195,6 +195,8 @@ namespace Content.Shared.Chemistry.Reagent
 
         public Dictionary<ProtoId<MetabolismGroupPrototype>, ReagentEffectsGuideEntry>? GuideEntries;
 
+        public List<string>? PlantMetabolisms = null;
+
         public ReagentGuideEntry(ReagentPrototype proto, IPrototypeManager prototype, IEntitySystemManager entSys)
         {
             ReagentPrototype = proto.ID;
@@ -203,13 +205,11 @@ namespace Content.Shared.Chemistry.Reagent
                 .ToDictionary(x => x.Key, x => x.Item2);
             if (proto.PlantMetabolisms.Count > 0)
             {
-                if (GuideEntries == null)
-                    GuideEntries = new Dictionary<ProtoId<MetabolismGroupPrototype>, ReagentEffectsGuideEntry>();
-                GuideEntries["PlantMetabolisms"] = new ReagentEffectsGuideEntry(-1.0f, proto.PlantMetabolisms
-                        .Select(x => x.GuidebookEffectDescription(prototype, entSys))
-                        .Where(x => x is not null)
-                        .Select(x => x!)
-                        .ToArray());
+                PlantMetabolisms = new List<string> (proto.PlantMetabolisms
+                    .Select(x => x.GuidebookEffectDescription(prototype, entSys))
+                    .Where(x => x is not null)
+                    .Select(x => x!)
+                    .ToArray());
             }
         }
     }

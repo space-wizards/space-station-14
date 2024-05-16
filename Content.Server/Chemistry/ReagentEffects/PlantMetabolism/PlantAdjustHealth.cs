@@ -5,10 +5,8 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     public sealed partial class PlantAdjustHealth : PlantAdjustAttribute
     {
-        public PlantAdjustHealth()
-        {
-            Attribute = "plant-attribute-health";
-        }
+        public override string GuidebookAttributeName { get; set; } = "plant-attribute-health";
+
 
         public override void Effect(ReagentEffectArgs args)
         {

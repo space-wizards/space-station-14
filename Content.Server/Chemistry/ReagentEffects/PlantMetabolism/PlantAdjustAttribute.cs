@@ -19,13 +19,13 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
         /// Localisation key for the name of the adjusted attribute. Used for guidebook description.
         /// </summary>
         [DataField]
-        public string Attribute { get; protected set; } = "missing";
+        public virtual string GuidebookAttributeName { get; set; } = "plant-attribute-missing";
 
         /// <summary>
         /// Whether the attribute in question is a good thing. Used for guidebook description to determine the color of the number.
         /// </summary>
         [DataField]
-        public bool Positive = true;
+        public virtual bool GuidebookIsAttributePositive { get; protected set; } = true;
 
         /// <summary>
         ///     Checks if the plant holder can metabolize the reagent or not. Checks if it has an alive plant by default.
@@ -55,7 +55,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
             string color;
-            if (Positive ^ Amount < 0.0)
+            if (GuidebookIsAttributePositive ^ Amount < 0.0)
             {
                 color = "green";
             }
@@ -63,7 +63,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             {
                 color = "red";
             }
-            return Loc.GetString("reagent-effect-guidebook-plant-attribute", ("attribute", Loc.GetString(Attribute)), ("amount", Amount.ToString("0.00")), ("colorName", color), ("chance", Probability));
+            return Loc.GetString("reagent-effect-guidebook-plant-attribute", ("attribute", Loc.GetString(GuidebookAttributeName)), ("amount", Amount.ToString("0.00")), ("colorName", color), ("chance", Probability));
         }
     }
 }
