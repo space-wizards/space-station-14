@@ -4,19 +4,14 @@
   copies: 2
 
 - type: preloadedGrid
-  id: ShuttleCargoLost
-  path: /Maps/Shuttles/ShuttleEvent/lost_cargo.yml
-  copies: 2
-
-- type: preloadedGrid
   id: TravelingCuisine
   path: /Maps/Shuttles/ShuttleEvent/traveling_china_cuisine.yml
   copies: 2
 
 - type: preloadedGrid
-  id: DisasterEvacPod
-  path: /Maps/Shuttles/ShuttleEvent/disaster_evacpod.yml
-  copies: 3
+  id: PilotWhiteship
+  path: /Maps/Shuttles/ShuttleEvent/basic_whiteship.yml
+  copies: 2
 
 - type: preloadedGrid
   id: Honki

@@ -1,19 +1,4 @@
 ﻿- type: entity
-  id: UnknownShuttleCargoLost
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    weight: 5
-    reoccurrenceDelay: 30
-    duration: 1
-  - type: LoadMapRule
-    preloadedGrid: ShuttleCargoLost
-
-- type: entity
   id: UnknownShuttleTravelingCuisine
   parent: BaseGameRule
   noSpawn: true
@@ -29,7 +14,7 @@
     preloadedGrid: TravelingCuisine
 
 - type: entity
-  id: UnknownShuttleDisasterEvacPod
+  id: UnknownShuttleShuttlePilot
   parent: BaseGameRule
   noSpawn: true
   components:
@@ -40,8 +25,9 @@
     weight: 5
     reoccurrenceDelay: 30
     duration: 1
+    earliestStart: 20
   - type: LoadMapRule
-    preloadedGrid: DisasterEvacPod
+    preloadedGrid: PilotWhiteship
 
 - type: entity
   id: UnknownShuttleHonki
@@ -59,7 +45,7 @@
     preloadedGrid: Honki
 
 - type: entity
-  id: UnknownShuttleSyndieEvacPod
+  id: UnknownShuttleSyndicateBoarders
   parent: BaseGameRule
   noSpawn: true
   components:
@@ -70,5 +56,6 @@
     weight: 2
     reoccurrenceDelay: 30
     duration: 1
+    earliestStart: 30
   - type: LoadMapRule
     preloadedGrid: SyndieEvacPod

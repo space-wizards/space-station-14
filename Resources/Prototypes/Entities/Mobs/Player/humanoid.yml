@@ -590,51 +590,6 @@
     - type: GhostTakeoverAvailable
     - type: Cluwne
 
-## Lost Cargo technician
-
-- type: entity
-  name: lost cargo technician spawner
-  id: LostCargoTechnicianSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Tools/appraisal-tool.rsi
-          state: icon
-    - type: RandomSpawner
-      prototypes:
-      - RandomHumanoidLostCargoTechnician
-      chance: 1
-
-- type: entity
-  id: RandomHumanoidLostCargoTechnician
-  name: lost cargo technician ghost role
-  components:
-    - type: Sprite
-      sprite: Objects/Tools/appraisal-tool.rsi
-      state: icon
-    - type: RandomHumanoidSpawner
-      settings: LostCargoTechnician
-
-- type: randomHumanoidSettings
-  id: LostCargoTechnician
-  randomizeName: false
-  components:
-    - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
-    - type: GhostTakeoverAvailable
-    - type: Loadout
-      roleLoadout: [ JobCargoTechnician ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_first
-      - names_last
-
 # Clown troupe
 
 - type: entity
@@ -748,11 +703,11 @@
       - names_first
       - names_last
 
-# Disaster victim
+# Shuttle pilot
 
 - type: entity
-  name: disaster victim spawner
-  id: DisasterVictimSpawner
+  name: whiteship pilot spawner
+  id: WhiteshipPilotSpawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -762,96 +717,41 @@
         state: icon
   - type: RandomSpawner
     prototypes:
-    - RandomHumanoidDisasterVictimRD
-    - RandomHumanoidDisasterVictimCMO
-    - RandomHumanoidDisasterVictimCaptain
-    - MobSkeletonCloset
+    - RandomHumanoidWhiteshipPilot
 
 - type: entity
-  id: RandomHumanoidDisasterVictimRD
-  name: disaster victim RD ghost role
+  id: RandomHumanoidWhiteshipPilot
+  name: whiteship pilot ghost role
   components:
     - type: Sprite
       sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
       state: icon
     - type: RandomHumanoidSpawner
-      settings: DisasterVictimResearchDirector
-
-- type: entity
-  id: RandomHumanoidDisasterVictimCMO
-  parent: RandomHumanoidDisasterVictimRD
-  name: disaster victim CMO ghost role
-  components:
-    - type: RandomHumanoidSpawner
-      settings: DisasterVictimCMO
-
-- type: entity
-  id: RandomHumanoidDisasterVictimCaptain
-  parent: RandomHumanoidDisasterVictimRD
-  name: disaster victim Captain ghost role
-  components:
-    - type: RandomHumanoidSpawner
-      settings: DisasterVictimCaptain
+      settings: WhiteshipPilot
 
 - type: randomHumanoidSettings
-  id: DisasterVictimResearchDirector
+  id: WhiteshipPilot
   randomizeName: false
   components:
     - type: GhostRole
-      name: ghost-role-information-disaster-victim-name
-      description: ghost-role-information-disaster-victim-description
-      rules: ghost-role-information-disaster-victim-rules
+      name: ghost-role-information-whiteship-pilot-name
+      description: ghost-role-information-whiteship-pilot-description
+      rules: ghost-role-information-whiteship-pilot-rules
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
-      roleLoadout: [ JobResearchDirector ]
+      roleLoadout: [ JobPassenger ]
     - type: RandomMetadata
       nameSegments:
       - names_first
       - names_last
 
-- type: randomHumanoidSettings
-  id: DisasterVictimCMO
-  randomizeName: false
-  components:
-    - type: GhostRole
-      name: ghost-role-information-disaster-victim-name
-      description: ghost-role-information-disaster-victim-description
-      rules: ghost-role-information-disaster-victim-rules
-      raffle:
-        settings: default
-    - type: GhostTakeoverAvailable
-    - type: Loadout
-      roleLoadout: [ JobChiefMedicalOfficer ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_first
-      - names_last
-
-- type: randomHumanoidSettings
-  id: DisasterVictimCaptain
-  randomizeName: false
-  components:
-    - type: GhostRole
-      name: ghost-role-information-disaster-victim-name
-      description: ghost-role-information-disaster-victim-description
-      rules: ghost-role-information-disaster-victim-rules
-      raffle:
-        settings: default
-    - type: GhostTakeoverAvailable
-    - type: Loadout
-      roleLoadout: [ JobCaptain ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_first
-      - names_last
-
-# Syndie Disaster Victim
+# Syndicate Boarder
 
 - type: entity
-  name: syndie disaster victim spawner
-  id: SyndieDisasterVictimSpawner
+  name: syndie boarder spawner
+  id: SyndicateBoarderSpawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -861,34 +761,36 @@
         state: banner_syndicate
   - type: RandomSpawner
     prototypes:
-    - RandomHumanoidSyndieDisasterVictim
+    - RandomHumanoidSyndicateBoarder
 
 - type: entity
-  id: RandomHumanoidSyndieDisasterVictim
-  name: syndie disaster victim ghost role
+  id: RandomHumanoidSyndicateBoarder
+  name: syndie boarder ghost role
   components:
     - type: Sprite
       sprite: Structures/Decoration/banner.rsi
       state: banner_syndicate
     - type: RandomHumanoidSpawner
-      settings: SyndieDisasterVictim
+      settings: SyndicateBoarder
+    - type: GenericAntag
+      rule: Dragon
 
 - type: randomHumanoidSettings
-  id: SyndieDisasterVictim
+  id: SyndicateBoarder
   randomizeName: false
   components:
     - type: NpcFactionMember
       factions:
       - Syndicate
     - type: GhostRole
-      name: ghost-role-information-syndie-disaster-victim-name
-      description: ghost-role-information-syndie-disaster-victim-description
-      rules: ghost-role-information-syndie-disaster-victim-rules
+      name: ghost-role-information-syndicate-boarder-name
+      description: ghost-role-information-syndicate-boarder-description
+      rules: ghost-role-information-syndicate-boarder-rules
       raffle:
         settings: short
     - type: GhostTakeoverAvailable
     - type: Loadout
-      prototypes: [ SyndicateOperativeGearCivilian ]
+      prototypes: [ SyndicateFootsoldierGear ]
     - type: RandomMetadata
       nameSegments:
       - names_first
