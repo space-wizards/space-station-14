@@ -178,9 +178,14 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
                 Margin = new Thickness(25, 0, 10, 0)
             };
             var descMsg = new FormattedMessage();
+            var descriptionsCount = guideEntryRegistryPlant.PlantMetabolisms.Count;
+            var i = 0;
             foreach (var effectString in guideEntryRegistryPlant.PlantMetabolisms)
             {
                 descMsg.AddMarkup(effectString);
+                i++;
+                if (i < descriptionsCount)
+                    descMsg.PushNewline();
             }
             descriptionLabel.SetMessage(descMsg);
 
