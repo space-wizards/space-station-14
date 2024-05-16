@@ -16,4 +16,7 @@
     <PackageVersion Include="Veldrid" Version="4.8.0" />
     <PackageVersion Include="Veldrid.SPIRV" Version="1.0.15" />
   </ItemGroup>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
 </Project>
