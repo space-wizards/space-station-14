@@ -206,3 +206,13 @@
   storage:
     back:
     - ClothingNeckAutismPin
+
+- type: loadout
+  id: EmergencyNitrogenTank
+  equipment: EmergencyNitrogenTank
+
+- type: startingGear
+  id: EmergencyNitrogenTank
+  storage:
+    back:
+    - EmergencyNitrogenTank
