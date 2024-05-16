@@ -5,6 +5,7 @@ namespace Content.Server.Paper;
 public sealed class PaperRandomStorySystem : EntitySystem
 {
     [Dependency] private readonly StoryGeneratorSystem _storyGen = default!;
+    [Dependency] private readonly PaperSystem _paper = default!;
 
     public override void Initialize()
     {
@@ -21,7 +22,6 @@ public sealed class PaperRandomStorySystem : EntitySystem
         if (!_storyGen.TryGenerateStoryFromTemplate(paperStory.Comp.Template, out var story))
             return;
 
-        paper.Content += $"\n{story}";
-        Dirty(paperStory.Owner, paper);
+        _paper.SetContent(paperStory.Owner, story, paper);
     }
 }
