@@ -63,7 +63,7 @@ public sealed class FTLDiskBurnerCommand : IConsoleCommand
             if (_entManager.TryParseNetEntity(destinations, out var nullableDest))
             {
                 if (nullableDest == null)
-                    return;
+                    continue;
 
                 dest = (EntityUid) nullableDest;
 
@@ -71,12 +71,19 @@ public sealed class FTLDiskBurnerCommand : IConsoleCommand
                 if (!_entManager.HasComponent<MapComponent>(dest))
                 {
                     if (!_entManager.TryGetComponent<TransformComponent>(dest, out var entTransform))
-                        return;
+                    {
+                        shell.WriteLine(destinations + " has no Transform!");
+                        continue;
+                    }
 
                     var mapSystem = _entSystemManager.GetEntitySystem<SharedMapSystem>();
                     mapSystem.TryGetMap(entTransform.MapID, out var mapDest);
                     if (mapDest == null)
-                        return;
+                    {
+                        shell.WriteLine(destinations + " has no map to FTL to!");
+                        continue;
+                    }
+
                     dest = (EntityUid) mapDest;
                 }
 
