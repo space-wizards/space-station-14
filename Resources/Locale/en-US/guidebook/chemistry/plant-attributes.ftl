@@ -7,4 +7,3 @@ plant-attribute-mutation-level = mutation level
 plant-attribute-pests = pests level
 plant-attribute-mutation-mod = mutation modifier
 plant-attribute-health = health
-plant-attribute-missing = ATTRIBUTE NAME MISSING
