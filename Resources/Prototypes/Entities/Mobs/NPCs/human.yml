@@ -22,7 +22,7 @@
         - Syndicate
     - type: Loadout
       prototypes:
-        - LimitedSalvageSpecialistGear
+        - SalvageSpecialistGear
     - type: InputMover
     - type: MobMover
     - type: HTN
@@ -40,7 +40,7 @@
       - Syndicate
   - type: Loadout
     prototypes:
-      - LimitedPirateGear
+      - PirateGear
   - type: InputMover
   - type: MobMover
   - type: HTN

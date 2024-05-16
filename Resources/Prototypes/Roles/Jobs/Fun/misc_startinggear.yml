@@ -228,30 +228,15 @@
     shoes: ClothingShoesClownBanana
     jumpsuit: ClothingUniformJumpsuitClownBanana
     mask: ClothingMaskClownBanana
+    pocket1: BikeHorn
+    pocket2: ClownRecorder
 
-# Limited Gear
+# Passenger but without the ID, bag, or headset
 - type: startingGear
   id: LimitedPassengerGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
     shoes: ClothingShoesColorBlack
-
-- type: startingGear
-  id: LimitedSalvageSpecialistGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
-    shoes: ClothingShoesBootsSalvage
-
-- type: startingGear
-  id: LimitedPirateGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitPirate
-    head: ClothingHeadBandBlack
-    shoes: ClothingShoesBootsLaceup
-    belt: ClothingBeltUtility
-    ears: ClothingHeadsetService
-    pocket1: BikeHorn
-    pocket2: ClownRecorder
 
 #Clown Troupe
 - type: startingGear
