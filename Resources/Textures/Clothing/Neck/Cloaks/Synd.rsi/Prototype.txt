@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakSynd
+  name: Syndicate cloak
+  description: dark like a crushed station. Nicely!
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/SyndiCloak.rsi
+  - type: StealTarget
+    stealGroup: SyndiCloak
