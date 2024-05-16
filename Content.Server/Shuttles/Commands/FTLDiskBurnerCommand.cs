@@ -40,7 +40,7 @@ public sealed class FTLDiskBurnerCommand : IConsoleCommand
 
         if (player == null)
         {
-            shell.WriteLine("Only a player can run this command without arguments.");
+            shell.WriteLine("Only a player can run this command.");
             return;
         }
 
