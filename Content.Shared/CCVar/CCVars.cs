@@ -1651,8 +1651,8 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ChatSanitizerEnabled =
             CVarDef.Create("chat.chat_sanitizer_enabled", true, CVar.SERVERONLY);
 
-        public static readonly CVarDef<bool> ChatShowTypingIndicator = // This is client only so I can only assume it's intentional.
-            CVarDef.Create("chat.show_typing_indicator", true, CVar.CLIENTONLY);
+        public static readonly CVarDef<bool> ChatShowTypingIndicator =
+            CVarDef.Create("chat.show_typing_indicator", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<bool> ChatEnableFancyBubbles =
             CVarDef.Create("chat.enable_fancy_bubbles", true, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying fancy speech bubbles, which display the speaking character's name.");
