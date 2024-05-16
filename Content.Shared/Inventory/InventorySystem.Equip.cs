@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Armor;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
@@ -114,7 +115,7 @@ public abstract partial class InventorySystem
         if (!_handsSystem.CanDropHeld(actor, hands.ActiveHand!, checkActionBlocker: false))
             return;
 
-        RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor), false);
+        RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor));
 
         TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true, checkDoafter:true);
     }
@@ -243,8 +244,16 @@ public abstract partial class InventorySystem
             return false;
 
         DebugTools.Assert(slotDefinition.Name == slot);
-        if (slotDefinition.DependsOn != null && !TryGetSlotEntity(target, slotDefinition.DependsOn, out _, inventory))
-            return false;
+        if (slotDefinition.DependsOn != null)
+        {
+            if (!TryGetSlotEntity(target, slotDefinition.DependsOn, out EntityUid? slotEntity, inventory))
+                return false;
+
+            if (slotDefinition.DependsOnComponents is { } componentRegistry)
+                foreach (var (_, entry) in componentRegistry)
+                    if (!HasComp(slotEntity, entry.Component.GetType()))
+                        return false;
+        }
 
         var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) &&
                               item != null &&
@@ -301,7 +310,6 @@ public abstract partial class InventorySystem
             reason = itemAttemptEvent.Reason ?? reason;
             return false;
         }
-
         return true;
     }
 
