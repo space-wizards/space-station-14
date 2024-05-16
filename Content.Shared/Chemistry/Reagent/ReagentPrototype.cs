@@ -142,7 +142,7 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
 
-        public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume)
+        public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager)
         {
             var removed = FixedPoint2.Zero;
 
@@ -151,7 +151,7 @@ namespace Content.Shared.Chemistry.Reagent
 
             foreach (var reaction in TileReactions)
             {
-                removed += reaction.TileReact(tile, this, reactVolume - removed);
+                removed += reaction.TileReact(tile, this, reactVolume - removed, entityManager);
 
                 if (removed > reactVolume)
                     throw new Exception("Removed more than we have!");
