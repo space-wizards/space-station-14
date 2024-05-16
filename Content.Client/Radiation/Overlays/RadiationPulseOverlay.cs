@@ -1,9 +1,11 @@
 using System.Numerics;
 using Content.Shared.Radiation.Components;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Graphics;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -14,6 +16,7 @@ namespace Content.Client.Radiation.Overlays
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        private TransformSystem? _transform;
 
         private const float MaxDist = 15.0f;
 
@@ -72,6 +75,8 @@ namespace Content.Client.Radiation.Overlays
         //Queries all pulses on the map and either adds or removes them from the list of rendered pulses based on whether they should be drawn (in range? on the same z-level/map? pulse entity still exists?)
         private void RadiationQuery(IEye? currentEye)
         {
+            _transform ??= _entityManager.System<TransformSystem>();
+
             if (currentEye == null)
             {
                 _pulses.Clear();
@@ -91,7 +96,7 @@ namespace Content.Client.Radiation.Overlays
                             (
                                 _baseShader.Duplicate(),
                                 new RadiationShaderInstance(
-                                    _entityManager.GetComponent<TransformComponent>(pulseEntity).MapPosition,
+                                    _transform.GetMapCoordinates(pulseEntity),
                                     pulse.VisualRange,
                                     pulse.StartTime,
                                     pulse.VisualDuration
@@ -109,7 +114,7 @@ namespace Content.Client.Radiation.Overlays
                     _entityManager.TryGetComponent(pulseEntity, out RadiationPulseComponent? pulse))
                 {
                     var shaderInstance = _pulses[pulseEntity];
-                    shaderInstance.instance.CurrentMapCoords = _entityManager.GetComponent<TransformComponent>(pulseEntity).MapPosition;
+                    shaderInstance.instance.CurrentMapCoords = _transform.GetMapCoordinates(pulseEntity);
                     shaderInstance.instance.Range = pulse.VisualRange;
                 } else {
                     _pulses[pulseEntity].shd.Dispose();

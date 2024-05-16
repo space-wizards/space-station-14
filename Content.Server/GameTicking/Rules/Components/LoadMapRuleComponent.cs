@@ -1,4 +1,6 @@
 using Content.Server.Maps;
+using Content.Shared.GridPreloader.Prototypes;
+using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -16,10 +18,13 @@ public sealed partial class LoadMapRuleComponent : Component
     public MapId? Map;
 
     [DataField]
-    public ProtoId<GameMapPrototype>? GameMap ;
+    public ProtoId<GameMapPrototype>? GameMap;
 
     [DataField]
     public ResPath? MapPath;
+
+    [DataField]
+    public ProtoId<PreloadedGridPrototype>? PreloadedGrid;
 
     [DataField]
     public List<EntityUid> MapGrids = new();
