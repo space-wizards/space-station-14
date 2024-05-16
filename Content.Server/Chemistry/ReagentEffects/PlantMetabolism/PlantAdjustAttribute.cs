@@ -19,7 +19,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
         /// Localisation key for the name of the adjusted attribute. Used for guidebook description.
         /// </summary>
         [DataField]
-        public virtual string GuidebookAttributeName { get; set; } = "plant-attribute-missing";
+        public abstract string GuidebookAttributeName { get; set; }
 
         /// <summary>
         /// Whether the attribute in question is a good thing. Used for guidebook description to determine the color of the number.
