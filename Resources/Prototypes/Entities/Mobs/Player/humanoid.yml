@@ -16,7 +16,7 @@
         - NamesLastMilitary
     - type: RandomHumanoidSpawner
       settings: DeathSquad
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: randomHumanoidSettings
   id: DeathSquad
@@ -35,7 +35,7 @@
       nameSegments:
         - NamesFirstMilitaryLeader
         - NamesLastMilitary
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 
 ## ERT Leader
@@ -54,7 +54,7 @@
       - NamesLastMilitary
     - type: RandomHumanoidSpawner
       settings: ERTLeader
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: randomHumanoidSettings
   id: ERTLeader
@@ -73,7 +73,7 @@
       nameSegments:
       - NamesFirstMilitaryLeader
       - NamesLastMilitary
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVA
@@ -86,7 +86,7 @@
       state: ertleadereva
     - type: RandomHumanoidSpawner
       settings: ERTLeaderEVA
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: randomHumanoidSettings
   id: ERTLeaderEVA
@@ -101,7 +101,7 @@
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVALecter
@@ -110,7 +110,7 @@
   components:
     - type: RandomHumanoidSpawner
       settings: ERTLeaderEVALecter
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: randomHumanoidSettings
   id: ERTLeaderEVALecter
@@ -125,7 +125,7 @@
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGearEVALecter ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 ## ERT Chaplain
 
@@ -162,7 +162,7 @@
       - NamesLastMilitary
     - type: Loadout
       prototypes: [ ERTChaplainGear ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: entity
   id: RandomHumanoidSpawnerERTChaplainEVA
@@ -189,7 +189,7 @@
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTChaplainGearEVA ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 ## ERT Janitor
 
@@ -226,7 +226,7 @@
       - NamesLastMilitary
     - type: Loadout
       prototypes: [ ERTJanitorGear ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: entity
   id: RandomHumanoidSpawnerERTJanitorEVA
@@ -253,7 +253,7 @@
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTJanitorGearEVA ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 ## ERT Engineer
 
@@ -290,7 +290,7 @@
       - NamesLastMilitary
     - type: Loadout
       prototypes: [ ERTEngineerGear ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: entity
   id: RandomHumanoidSpawnerERTEngineerEVA
@@ -317,7 +317,7 @@
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTEngineerGearEVA ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 ## ERT Security
 
@@ -354,7 +354,7 @@
       - NamesLastMilitary
     - type: Loadout
       prototypes: [ ERTSecurityGear ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: entity
   id: RandomHumanoidSpawnerERTSecurityEVA
@@ -381,7 +381,7 @@
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: entity
   id: RandomHumanoidSpawnerERTSecurityEVALecter
@@ -404,7 +404,7 @@
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTSecurityGearEVALecter ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 ## ERT Medic
 
@@ -441,7 +441,7 @@
       - NamesLastMilitary
     - type: Loadout
       prototypes: [ ERTMedicalGear ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: entity
   id: RandomHumanoidSpawnerERTMedicalEVA
@@ -468,7 +468,7 @@
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTMedicalGearEVA ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 ## CBURN
 
@@ -482,7 +482,7 @@
       state: cburn
     - type: RandomHumanoidSpawner
       settings: CBURNAgent
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: randomHumanoidSettings
   id: CBURNAgent
@@ -500,7 +500,7 @@
       nameSegments:
       - NamesFirstMilitary
       - NamesLastMilitary
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 ## Central Command
 
 - type: entity
@@ -512,7 +512,7 @@
       state: centcom
     - type: RandomHumanoidSpawner
       settings: CentcomOfficial
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 - type: randomHumanoidSettings
   id: CentcomOfficial
@@ -526,7 +526,7 @@
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ CentcomGear ]
-    - type: InitialInfectedExempt
+    - type: AntagImmune
 
 ## Syndicate
 

@@ -151,7 +151,7 @@
       playerRatio: 10
       blacklist:
         components:
-        - MindShield
+        - AntagImmune
       lateJoinAdditional: true
       mindComponents:
       - type: TraitorRole
@@ -215,7 +215,7 @@
       blacklist:
         components:
         - ZombieImmune
-        - InitialInfectedExempt
+        - AntagImmune
       briefing:
         text: zombie-patientzero-role-greeting
         color: Plum
