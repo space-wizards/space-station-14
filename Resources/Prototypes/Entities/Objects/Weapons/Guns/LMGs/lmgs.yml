@@ -6,13 +6,13 @@
   abstract: true
   components:
   - type: Sprite
-  - type: Item
-    size: Huge
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
-    quickEquip: false
-    slots:
-    - Back
+  # - type: Item
+  #   size: Huge
+  # - type: Clothing
+  #   sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    # quickEquip: false
+    # slots:
+    # - Back
   - type: Wieldable
     unwieldOnUse: false
   - type: GunWieldBonus
@@ -61,7 +61,9 @@
 - type: entity
   name: L6 SAW
   id: WeaponLightMachineGunL6
-  parent: BaseWeaponLightMachineGun
+  parent:
+  - BaseWeaponLightMachineGun
+  - BaseGunLarge
   description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip. Uses .30 rifle ammo.
   components:
   - type: Sprite
@@ -71,6 +73,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-3
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
   - type: MagazineVisuals
     magState: mag
     steps: 4
