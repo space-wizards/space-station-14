@@ -71,6 +71,16 @@
     shoes: ClothingShoesBootsCombatFilled
     gloves: ClothingHandsGlovesColorBlack
 
+# Syndicate Operative Outfit - NukeOps Reinforcement
+- type: startingGear
+  id: SyndicateOperativeGearReinforcementNukeOps
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicateOperative
+    shoes: ClothingShoesBootsCombatFilled
+    gloves: ClothingHandsGlovesColorBlack
+    id: SyndiPDA
+
 # Syndicate Operative Outfit - Civilian
 - type: startingGear
   id: SyndicateOperativeGearCivilian
