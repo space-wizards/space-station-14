@@ -89,7 +89,7 @@
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
-      - FullAuto
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
     soundEmpty:
@@ -113,14 +113,14 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineLightRifleBox
+          - MagazineLightRifleBox
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
         priority: 1
         whitelist:
           tags:
-            - CartridgeLightRifle
+          - CartridgeLightRifle
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -139,9 +139,9 @@
     - type: Sprite
       sprite: Objects/Weapons/Guns/LMGs/l6.rsi
       layers:
-        - state: base
+      - state: base
           map: [ "enum.GunVisualLayers.Base" ]
-        - state: mag-3
+      - state: mag-3
           map: [ "enum.GunVisualLayers.Mag" ]
     - type: Item
       size: Huge
@@ -153,7 +153,7 @@
       fireRate: 8
       selectedMode: FullAuto
       availableModes:
-        - FullAuto
+      - FullAuto
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
       soundEmpty:
