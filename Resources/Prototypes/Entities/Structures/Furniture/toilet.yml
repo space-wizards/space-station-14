@@ -51,10 +51,6 @@
       disposals: !type:Container
   - type: Physics
     bodyType: Static
-  - type: Fixtures
-    fixtures:
-      fix1:
-        hard: false
   - type: Construction
     graph: Toilet
     node: toilet
