@@ -236,6 +236,20 @@ ghost-role-information-traveling-chef-name = Traveling Chef
 ghost-role-information-traveling-chef-description = You are a chef on a traveling shuttle of exotic cuisine. Delight the station with delicious food!
 ghost-role-information-traveling-chef-rules = Normal station crew rules apply.
 
+ghost-role-information-lost-challenge-commander-name = Commander on Shore Leave
+ghost-role-information-lost-challenge-commander-description = You are a command member from another starship who was granted shore leave with one of your cargo technicians.
+ghost-role-information-lost-challenge-commander-rules = You are not hostile to the station, do what you must to ensure your own survival.
+                                     You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                     You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                     You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+
+ghost-role-information-lost-challenge-cargo-technican-name = Cargo Chauffeur
+ghost-role-information-lost-challenge-cargo-technican-description = You are a cargo technicial who was granted shore leave with one of your commanding officer.
+ghost-role-information-lost-challenge-cargo-technican-rules = You are not hostile to the station, do what you must to ensure your own survival.
+                                     You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                     You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                     You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+
 ghost-role-information-disaster-victim-name = Disaster Victim
 ghost-role-information-disaster-victim-description = You were rescued in an escape pod from another station that suffered a terrible fate. Perhaps you will be found and rescued.
 ghost-role-information-disaster-victim-rules = Normal station crew rules apply.

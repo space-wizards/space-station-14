@@ -435,6 +435,22 @@
 
 - type: entity
   parent: IDCardStandard
+  id: VisitorIDCard
+  name: visitor ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idvisitor
+  - type: IdCard
+    jobTitle: Visitor
+    jobIcon: Visitor
+  - type: Access
+    groups:
+    - Visitor
+
+- type: entity
+  parent: IDCardStandard
   id: BrigmedicIDCard
   name: brigmedic ID card
   components:
@@ -485,7 +501,7 @@
   - type: Sprite
     layers:
     - state: gold
-    - state: ert_chaplain # we have the sprite for the id but dont have chaplain ERT equipment for now.
+    - state: ert_chaplain
   - type: IdCard
     jobTitle: ERT Soul Officer
   - type: Item

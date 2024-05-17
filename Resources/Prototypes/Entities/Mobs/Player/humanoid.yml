@@ -893,3 +893,165 @@
       nameSegments:
       - names_first
       - names_last
+
+# CHALLENGE
+# Cargo Tech Disaster Victim
+
+- type: entity
+  name: challenge cargo technician spawner
+  id: ChallengeCargoTechnicianSpawner #!!
+  parent: MarkerBase
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Tools/appraisal-tool.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+      - RandomHumanoidChallengeCargoTechnician
+      chance: 1
+
+- type: entity
+  id: RandomHumanoidChallengeCargoTechnician
+  name: disaster cargo technician ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: ChallengeCargoTechnician
+
+- type: randomHumanoidSettings
+  id: ChallengeCargoTechnician
+  randomizeName: false
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-cargo-technican-name
+      description: ghost-role-information-lost-challenge-cargo-technican-description
+      rules: ghost-role-information-lost-disaster-challenge-cargo-technican-rules
+      raffle:
+        settings: short
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeCargoTechGearSuit, ChallengeCargoTechGearCoat ] #!!
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+# CHALLENGE
+# Command Disaster Victim
+
+- type: entity
+  name: disaster victim spawner
+  id: ChallengeVictimSpawner
+  parent: MarkerBase
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidChallengeVictimRD
+    - RandomHumanoidChallengeVictimCMO
+    - RandomHumanoidChallengeVictimCaptain
+
+- type: entity
+  id: RandomHumanoidChallengeVictimRD
+  name: disaster victim RD ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimResearchDirector
+
+- type: entity
+  id: RandomHumanoidChallengeVictimCMO
+  parent: RandomHumanoidChallengeVictimRD
+  name: disaster victim CMO ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimCMO
+
+- type: entity
+  id: RandomHumanoidChallengeVictimCaptain
+  parent: RandomHumanoidChallengeVictimRD
+  name: disaster victim Captain ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimCaptain
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimResearchDirector
+  randomizeName: false
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimRD, ChallengeVictimRDAlt ] #!!
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimCMO
+  randomizeName: false
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimCMO, ChallengeVictimCMOAlt ] #!!
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimCaptain
+  randomizeName: false
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimCaptain, ChallengeVictimCaptainAlt ] #!!
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last

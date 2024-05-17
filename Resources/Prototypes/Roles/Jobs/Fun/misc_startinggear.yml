@@ -467,3 +467,115 @@
     back: ClothingBackpackSatchelScience
     ears: ClothingHeadsetRD
     outerClothing: ClothingOuterCoatRD
+
+# CHALLENGE
+# carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
+# Challenge Cargo Tech
+- type: startingGear
+  id: ChallengeCargoTechGearSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargo
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatCargosoft
+    id: VisitorPDA
+    back: ClothingBackpackCargo
+    #ears: null # No headsets.
+    pocket1: AppraisalTool
+
+- type: startingGear
+  id: ChallengeCargoTechGearCoat
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargo
+    shoes: ClothingShoesBootsWinterCargo
+    head: ClothingHeadHatCargosoft
+    id: VisitorPDA
+    back: ClothingBackpackSatchelCargo
+    #ears: # No headsets.
+    pocket1: AppraisalTool
+    outerClothing: ClothingOuterWinterCargo
+
+# CHALLENGE
+# carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
+#CMO Disaster Victim
+- type: startingGear
+  id: ChallengeVictimCMO
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMO
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadMirror
+    neck: ClothingCloakCmo
+    id: VisitorPDA
+    back: ClothingBackpackMedical
+    #ears: # No headsets.
+    belt: ClothingBeltMedical
+    outerClothing: ClothingOuterCoatLabCmo
+
+- type: startingGear
+  id: ChallengeVictimCMOAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMOTurtle
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatBeretCmo
+    neck: ClothingNeckMantleCMO
+    id: VisitorPDA
+    back: ClothingBackpackSatchelMedical
+    #ears: # No headsets.
+    belt: ClothingBeltMedical
+    outerClothing: ClothingOuterCoatLabCmo
+
+# CHALLENGE
+# carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
+#Captain Disaster Victim
+- type: startingGear
+  id: ChallengeVictimCaptain
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptain
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    head: ClothingHeadHatCaptain
+    neck: ClothingNeckCloakCap
+    id: VisitorPDA
+    back: ClothingBackpackCaptain
+    #ears: # No headsets.
+
+- type: startingGear
+  id: ChallengeVictimCaptainAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCapFormal
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    head: ClothingHeadHatCapcap
+    neck: ClothingNeckMantleCap
+    id: VisitorPDA
+    back: ClothingBackpackSatchelCaptain
+    #ears: # No headsets.
+    outerClothing: ClothingOuterWinterCap
+
+# CHALLENGE
+# carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
+#RD Disaster Victim
+- type: startingGear
+  id: ChallengeVictimRD
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirector
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatBeretRND
+    neck: ClothingNeckCloakRd
+    id: VisitorPDA
+    back: ClothingBackpackScience
+    #ears: #No headsets.
+    outerClothing: ClothingOuterCoatRD
+
+- type: startingGear
+  id: ChallengeVictimRDAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirector
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatBeretRND
+    neck: ClothingNeckMantleRD
+    id: VisitorPDA
+    back: ClothingBackpackSatchelScience
+    #ears: # No headsets.
+    outerClothing: ClothingOuterCoatRD
