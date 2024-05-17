@@ -86,7 +86,7 @@
   - type: StationEvent
     startAnnouncement: null # It should be silent.
     weight: 2 # Hopefully 2 is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
-    earlieststart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
+    earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
     reoccurrenceDelay: 30
     duration: 1
     minimumPlayers: 25

@@ -444,7 +444,7 @@
     - state: idvisitor
   - type: IdCard
     jobTitle: Visitor
-    jobIcon: Visitor
+    jobIcon: JobIconVisitor
   - type: Access
     groups:
     - Visitor

@@ -929,7 +929,6 @@
 - type: randomHumanoidSettings
   id: ChallengeCargoTechnician
   randomizeName: false
-  suffix: CHALLENGE
   # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
   components:
     - type: GhostRole
