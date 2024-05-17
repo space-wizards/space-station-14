@@ -55,7 +55,6 @@
   cost: 1
   components:
     - type: ReplacementAccent
-      replacementChance: 0.15
       accent: liar
 
 # 2 Cost
