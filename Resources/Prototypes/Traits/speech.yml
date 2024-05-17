@@ -1,10 +1,18 @@
+# Free
+
 - type: trait
-  id: FrontalLisp
-  name: trait-frontal-lisp-name
-  description: trait-frontal-lisp-desc
-  cost: 1
+  id: Accentless
+  name: trait-accentless-name
+  description: trait-accentless-desc
   components:
-    - type: FrontalLisp
+  - type: Accentless
+    removes:
+    - type: LizardAccent
+    - type: MothAccent
+    - type: ReplacementAccent
+      accent: dwarf
+
+# 1 Cost
 
 - type: trait
   id: SouthernAccent
@@ -21,18 +29,6 @@
   cost: 1
   components:
     - type: PirateAccent
-
-- type: trait
-  id: SocialAnxiety
-  name: trait-socialanxiety-name
-  description: trait-socialanxiety-desc
-  cost: 2
-  components:
-    - type: StutteringAccent
-      matchRandomProb: 0.1
-      fourRandomProb: 0
-      threeRandomProb: 0
-      cutRandomProb: 0
 
 - type: trait
   id: CowboyAccent
@@ -62,14 +58,24 @@
       replacementChance: 0.15
       accent: liar
 
+# 2 Cost
+
 - type: trait
-  id: Accentless
-  name: trait-accentless-name
-  description: trait-accentless-desc
+  id: SocialAnxiety
+  name: trait-socialanxiety-name
+  description: trait-socialanxiety-desc
+  cost: 2
   components:
-  - type: Accentless
-    removes:
-    - type: LizardAccent
-    - type: MothAccent
-    - type: ReplacementAccent
-      accent: dwarf
+    - type: StutteringAccent
+      matchRandomProb: 0.1
+      fourRandomProb: 0
+      threeRandomProb: 0
+      cutRandomProb: 0
+
+- type: trait
+  id: FrontalLisp
+  name: trait-frontal-lisp-name
+  description: trait-frontal-lisp-desc
+  cost: 2
+  components:
+    - type: FrontalLisp
