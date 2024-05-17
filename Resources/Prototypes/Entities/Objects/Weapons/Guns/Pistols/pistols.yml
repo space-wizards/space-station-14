@@ -63,10 +63,10 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: ChamberMagazineAmmoProvider
-    boltClosed: null
   - type: Gun
     fireRate: 4
+  - type: ChamberMagazineAmmoProvider
+    boltClosed: null
   - type: ItemSlots
     slots:
       gun_magazine:
