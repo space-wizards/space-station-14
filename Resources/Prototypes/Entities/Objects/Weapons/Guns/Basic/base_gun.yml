@@ -79,6 +79,8 @@
   - type: Gun
     minAngle: 21
     maxAngle: 32
+  - type: UseDelay
+    delay: 1
 
 # SILENCED
 # A basic template for a gun that makes almost no noise when fired.
