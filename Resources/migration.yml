@@ -335,3 +335,13 @@ ReinforcementRadioSyndicateMonkeyNukeops: ReinforcementRadioSyndicateAncestorNuk
 
 # 2024-05-01
 DrinkBottleGoldschlager: DrinkBottleGildlager
+
+# 2024-05-17
+DisasterVictimSpawner: WhiteshipPilotSpawner
+RandomHumanoidDisasterVictimRD: RandomHumanoidWhiteshipPilot
+RandomHumanoidDisasterVictimCMO: RandomHumanoidWhiteshipPilot
+RandomHumanoidDisasterVictimCaptain: RandomHumanoidWhiteshipPilot
+LostCargoTechnicianSpawner: WhiteshipPilotSpawner
+RandomHumanoidLostCargoTechnician: RandomHumanoidWhiteshipPilot
+SyndieDisasterVictimSpawner: SyndicateRaiderSpawner
+RandomHumanoidSyndieDisasterVictim: RandomHumanoidSyndicateRaider

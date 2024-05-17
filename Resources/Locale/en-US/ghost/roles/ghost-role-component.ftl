@@ -224,10 +224,6 @@ ghost-role-information-syndicate-monkey-reinforcement-name = Syndicate Monkey Ag
 ghost-role-information-syndicate-monkey-reinforcement-description = Someone needs reinforcements. You, a trained monkey, will help them.
 ghost-role-information-syndicate-monkey-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
 
-ghost-role-information-clown-troupe-name = Space Clown
-ghost-role-information-clown-troupe-description = You and your troupe have come to cheer up this station with your best jokes. Honk!
-ghost-role-information-clown-troupe-rules = You have no allegiance. Make friends, wage war with the station, or do anything inbetween.
-
 ghost-role-information-traveling-chef-name = Traveling Chef
 ghost-role-information-traveling-chef-description = You are a chef on a traveling shuttle of exotic cuisine. Delight the station with delicious food!
 ghost-role-information-traveling-chef-rules = You have no allegiance. Satisfiy your customers, poison them, or do anything inbetween.
@@ -236,9 +232,9 @@ ghost-role-information-whiteship-pilot-name = Shuttle Pilot
 ghost-role-information-whiteship-pilot-description = You are the pilot of your own shuttle. Explore space debris for materials & gear, or do whatever else you'd do with a shuttle.
 ghost-role-information-whiteship-pilot-rules = You have no allegiance. Make friends, wage war with the station, or do anything inbetween.
 
-ghost-role-information-syndicate-boarder-name = Syndicate Boarder
-ghost-role-information-syndicate-boarder-description = You're a boarder sent by the syndicate, tasked with stealing something valuable from one of NanoTrasen's ships.
-ghost-role-information-syndicate-boarder-rules = You are a syndicate agent tasked with stealing something from the station. As an antagonist, work with your fellow boarding crew, and do whatever is required to complete this task.
+ghost-role-information-syndicate-raider-name = Syndicate Raider
+ghost-role-information-syndicate-raider-description = You're a boarding group sent by the syndicate, tasked with disrupting NanoTrasen's work.
+ghost-role-information-syndicate-raider-rules = Work with your crew to sow chaos on the station (or defect, if you wish.)
 
 ghost-role-information-syndicate-kobold-reinforcement-name = Syndicate Kobold Agent
 ghost-role-information-syndicate-kobold-reinforcement-description = Someone needs reinforcements. You, a trained kobold, will help them.

@@ -590,75 +590,6 @@
     - type: GhostTakeoverAvailable
     - type: Cluwne
 
-# Clown troupe
-
-- type: entity
-  name: clown troupe spawner
-  id: ClownTroupeSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Fun/bikehorn.rsi
-          state: icon
-    - type: RandomSpawner
-      prototypes:
-      - RandomHumanoidClownTroupe
-      rarePrototypes:
-      - RandomHumanoidClownTroupeBanana
-      rareChance: 0.3
-
-- type: entity
-  id: RandomHumanoidClownTroupe
-  name: clown troupe ghost role
-  components:
-    - type: Sprite
-      sprite: Objects/Tools/appraisal-tool.rsi
-      state: icon
-    - type: RandomHumanoidSpawner
-      settings: ClownTroupe
-
-- type: entity
-  id: RandomHumanoidClownTroupeBanana
-  name: banana clown troupe
-  parent: RandomHumanoidClownTroupe
-  components:
-    - type: RandomHumanoidSpawner
-      settings: ClownTroupeBanana
-
-- type: randomHumanoidSettings
-  id: ClownTroupe
-  randomizeName: false
-  components:
-    - type: GhostRole
-      name: ghost-role-information-clown-troupe-name
-      description: ghost-role-information-clown-troupe-description
-      rules: ghost-role-information-clown-troupe-rules
-      raffle:
-        settings: short
-    - type: GhostTakeoverAvailable
-    - type: Loadout
-      roleLoadout: [ JobClown ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_clown
-
-- type: randomHumanoidSettings
-  id: ClownTroupeBanana
-  randomizeName: false
-  components:
-    - type: GhostRole
-      name: ghost-role-information-clown-troupe-name
-      description: ghost-role-information-clown-troupe-description
-      rules: ghost-role-information-clown-troupe-rules
-    - type: GhostTakeoverAvailable
-    - type: Loadout
-      prototypes: [ BananaClown ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_clown
-
 # Traveling exotic chef
 
 - type: entity
@@ -750,8 +681,8 @@
 # Syndicate Boarder
 
 - type: entity
-  name: syndie boarder spawner
-  id: SyndicateBoarderSpawner
+  name: syndie raider spawner
+  id: SyndicateRaiderSpawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -761,31 +692,29 @@
         state: banner_syndicate
   - type: RandomSpawner
     prototypes:
-    - RandomHumanoidSyndicateBoarder
+    - RandomHumanoidSyndicateRaider
 
 - type: entity
-  id: RandomHumanoidSyndicateBoarder
-  name: syndie boarder ghost role
+  id: RandomHumanoidSyndicateRaider
+  name: syndie raider ghost role
   components:
     - type: Sprite
       sprite: Structures/Decoration/banner.rsi
       state: banner_syndicate
     - type: RandomHumanoidSpawner
-      settings: SyndicateBoarder
-    - type: GenericAntag
-      rule: Dragon
+      settings: SyndicateRaider
 
 - type: randomHumanoidSettings
-  id: SyndicateBoarder
+  id: SyndicateRaider
   randomizeName: false
   components:
     - type: NpcFactionMember
       factions:
       - Syndicate
     - type: GhostRole
-      name: ghost-role-information-syndicate-boarder-name
-      description: ghost-role-information-syndicate-boarder-description
-      rules: ghost-role-information-syndicate-boarder-rules
+      name: ghost-role-information-syndicate-raider-name
+      description: ghost-role-information-syndicate-raider-description
+      rules: ghost-role-information-syndicate-raider-rules
       raffle:
         settings: short
     - type: GhostTakeoverAvailable
@@ -795,3 +724,6 @@
       nameSegments:
       - names_first
       - names_last
+# The giveUplink datafield does not actually work yet, so they can't have objectives via AutoTraitor yet.
+#    - type: AutoTraitor
+#      giveUplink: false

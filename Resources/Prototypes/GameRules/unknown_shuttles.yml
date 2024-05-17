@@ -30,22 +30,7 @@
     preloadedGrid: PilotWhiteship
 
 - type: entity
-  id: UnknownShuttleHonki
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    weight: 2
-    reoccurrenceDelay: 30
-    duration: 1
-  - type: LoadMapRule
-    preloadedGrid: Honki
-
-- type: entity
-  id: UnknownShuttleSyndicateBoarders
+  id: UnknownShuttleSyndicateRaiders
   parent: BaseGameRule
   noSpawn: true
   components:
