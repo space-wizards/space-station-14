@@ -48,5 +48,11 @@ public sealed partial class TraitPrototype : IPrototype
     /// </summary>
     [DataField]
     public EntProtoId? TraitGear;
+
+    /// <summary>
+    /// Trait Price. If negative number, points will be added.
+    /// </summary>
+    [DataField]
+    public int Cost = 0;
 }
 

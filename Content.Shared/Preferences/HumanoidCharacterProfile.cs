@@ -346,59 +346,41 @@ namespace Content.Shared.Preferences
             };
         }
 
-         public HumanoidCharacterProfile WithTraitPreference(string traitId, bool pref)
+        public HumanoidCharacterProfile WithTraitPreference(string traitId, string categoryId, bool pref)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var categoryProto = prototypeManager.Index<TraitCategoryPrototype>(categoryId);
             var list = new HashSet<string>(_traitPreferences);
 
             if (pref)
             {
-                if (!list.Contains(traitId))
+                if (categoryProto.MaxTraitPoints >= 0)
                 {
-                    var protos = prototypeManager.EnumeratePrototypes<TraitCategoryPrototype>();
-                    TraitCategoryPrototype? category = null;
-
-                    foreach (var proto in protos)
+                    var count = 0;
+                    foreach (var trait in list)
                     {
-                      if (!proto.Traits.Contains(traitId))
-                        continue;
-
-                      category = proto;
+                        var traitIndex = prototypeManager.Index<TraitPrototype>(trait);
+                        count += traitIndex.Cost;
                     }
 
-                    if (category is not null && category.MaxTraits != -1)
+                    if (count >= categoryProto.MaxTraitPoints)
                     {
-                        var count = 0;
-                        foreach (var trait in list)
+                        return new(this)
                         {
-                            if (!category.Traits.Contains(traitId))
-                              continue;
-
-                            count++;
-                        }
-
-                        if (count >= category.MaxTraits)
-                        {
-                            return new(this)
-                            {
-                                _traitPreferences = list,
-                            };
-                        }
-
-                        list.Add(traitId);
+                            _traitPreferences = list,
+                        };
                     }
-                    else
-                    {
-                      list.Add(traitId);
-                    }
+
+                    list.Add(traitId);
+                }
+                else
+                {
+                    list.Add(traitId);
                 }
             }
             else
             {
-                if (list.Contains(traitId))
-                {
-                    list.Remove(traitId);
-                }
+                list.Remove(traitId);
             }
 
             return new(this)

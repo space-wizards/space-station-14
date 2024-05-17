@@ -20,7 +20,13 @@ public sealed partial class TraitPreferenceSelector : Control
     public TraitPreferenceSelector(TraitPrototype trait)
     {
         RobustXamlLoader.Load(this);
-        Checkbox.Text = Loc.GetString(trait.Name);
+
+        var text = "";
+        if (trait.Cost != 0)
+            text += $"[{trait.Cost}] ";
+        text += Loc.GetString(trait.Name);
+
+        Checkbox.Text = text;
         Checkbox.OnToggled += OnCheckBoxToggled;
 
         if (trait.Description is { } desc)

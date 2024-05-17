@@ -22,7 +22,7 @@ public sealed partial class TraitCategoryPrototype : IPrototype
     ///     The maximum number of traits that can be taken in this category. If -1, you can take as many traits as you like.
     /// </summary>
     [DataField]
-    public int MaxTraits = -1;
+    public int MaxTraitPoints = -1;
 
     /// <summary>
     ///     All the traits in this group.

@@ -53,3 +53,30 @@
       - BorgChassis
   components:
     - type: Muted
+
+- type: trait
+  id: LightweightDrunk
+  name: trait-lightweight-name
+  description: trait-lightweight-desc
+  components:
+    - type: LightweightDrunk
+      boozeStrengthMultiplier: 2
+
+- type: trait
+  id: Paracusia
+  name: trait-paracusia-name
+  description: trait-paracusia-desc
+  components:
+    - type: Paracusia
+      minTimeBetweenIncidents: 0.1
+      maxTimeBetweenIncidents: 300
+      maxSoundDistance: 7
+      sounds:
+        collection: Paracusia
+
+- type: trait
+  id: Snoring
+  name: trait-snoring-name
+  description: trait-snoring-desc
+  components:
+    - type: Snoring

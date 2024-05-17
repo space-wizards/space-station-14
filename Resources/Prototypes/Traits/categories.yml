@@ -8,25 +8,20 @@
   - Pacifist
   - Unrevivable
   - Muted
-
-- type: traitCategory
-  id: Neutral
-  name: trait-category-neutral
-  traits:
   - LightweightDrunk
   - Paracusia
   - Snoring
-  - Liar
 
 - type: traitCategory
-  id: Accents
-  name: trait-category-accents
-  maxTraits: 1
+  id: SpeechTraits
+  name: trait-category-speech
+  maxTraitPoints: 2
   traits:
-  - FrontalLisp
-  - Southern
+  - SouthernAccent
   - PirateAccent
-  - SocialAnxiety
-  - Cowboy
-  - Italian
+  - CowboyAccent
+  - ItalianAccent
   - Accentless
+  - FrontalLisp
+  - SocialAnxiety
+  - Liar
