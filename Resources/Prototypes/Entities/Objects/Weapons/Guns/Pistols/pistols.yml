@@ -27,9 +27,9 @@
   #   - Belt
   - type: Gun
     fireRate: 6
-    selectedMode: SemiAuto
-    availableModes:
-      - SemiAuto
+    # selectedMode: SemiAuto
+    # availableModes:
+    #   - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   - type: ChamberMagazineAmmoProvider
