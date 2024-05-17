@@ -26,7 +26,7 @@
   #   - suitStorage
   #   - Belt
   - type: Gun
-    fireRate: 6
+    # fireRate: 6
     # selectedMode: SemiAuto
     # availableModes:
     #   - SemiAuto
@@ -76,6 +76,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: Gun
+    fireRate: 6
     availableModes:
       - SemiAuto
       - FullAuto
