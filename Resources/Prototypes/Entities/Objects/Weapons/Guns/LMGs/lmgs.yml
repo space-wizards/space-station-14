@@ -13,24 +13,24 @@
     # quickEquip: false
     # slots:
     # - Back
-  - type: Wieldable
-    unwieldOnUse: false
-  - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -20
-  - type: Gun
-    minAngle: 24
-    maxAngle: 45
-    angleIncrease: 4
-    angleDecay: 16
-    fireRate: 8
-    selectedMode: FullAuto
-    availableModes:
-      - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  # - type: Wieldable
+  #   unwieldOnUse: false
+  # - type: GunWieldBonus
+  #   minAngle: -20
+  #   maxAngle: -20
+  # - type: Gun
+  #   minAngle: 24
+  #   maxAngle: 45
+  #   angleIncrease: 4
+  #   angleDecay: 16
+  #   fireRate: 8
+  #   selectedMode: FullAuto
+  #   availableModes:
+  #     - FullAuto
+  #   soundGunshot:
+  #     path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+  #   soundEmpty:
+  #     path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
@@ -64,6 +64,7 @@
   parent:
   - BaseWeaponLightMachineGun
   - BaseGunLarge
+  - BaseGunWieldable
   description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip. Uses .30 rifle ammo.
   components:
   - type: Sprite
@@ -75,6 +76,24 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -20
+  - type: Gun
+    minAngle: 24
+    maxAngle: 45
+    angleIncrease: 4
+    angleDecay: 16
+    fireRate: 8
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: MagazineVisuals
     magState: mag
     steps: 4
