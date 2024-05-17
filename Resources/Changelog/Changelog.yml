@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Debug coordinates are now automatically enabled on the F3 overlay upon
-      readmin.
-    type: Fix
-  id: 6101
-  time: '2024-03-06T01:43:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25063
 - author: metalgearsloth
   changes:
   - message: Pod launches will now be offset slightly.
@@ -3866,3 +3858,10 @@
   id: 6600
   time: '2024-05-17T16:33:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28049
+- author: YuNii
+  changes:
+  - message: Added the ability to re-bind the emote menu.
+    type: Add
+  id: 6601
+  time: '2024-05-17T19:46:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28083
