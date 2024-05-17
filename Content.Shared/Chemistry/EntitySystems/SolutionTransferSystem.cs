@@ -17,7 +17,6 @@ namespace Content.Shared.Chemistry.EntitySystems;
 /// </summary>
 public sealed class SolutionTransferSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;

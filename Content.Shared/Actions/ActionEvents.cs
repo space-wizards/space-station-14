@@ -157,7 +157,7 @@ public abstract partial class BaseActionEvent : HandledEntityEventArgs
     public EntityUid Performer;
 
     /// <summary>
-    ///     The action that was performed.
+    ///     The action the event belongs to.
     /// </summary>
     public EntityUid Action;
 }

@@ -4,6 +4,7 @@ using Content.Shared.EntityList;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -18,6 +19,7 @@ public sealed partial class GatherableSystem : EntitySystem
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -61,7 +63,7 @@ public sealed partial class GatherableSystem : EntitySystem
         if (component.MappedLoot == null)
             return;
 
-        var pos = Transform(gatheredUid).MapPosition;
+        var pos = _transform.GetMapCoordinates(gatheredUid);
 
         foreach (var (tag, table) in component.MappedLoot)
         {
