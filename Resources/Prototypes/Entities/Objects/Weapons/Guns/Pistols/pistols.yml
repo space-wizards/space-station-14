@@ -5,12 +5,12 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sprite
-    layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
+  # - type: Sprite
+  #   layers:
+  #     - state: base
+  #       map: ["enum.GunVisualLayers.Base"]
+  #     - state: mag-0
+  #       map: ["enum.GunVisualLayers.Mag"]
   # - type: Item
   #   size: Small
   #   shape:
@@ -57,11 +57,11 @@
   #   containers:
   #     gun_magazine: !type:ContainerSlot
   #     gun_chamber: !type:ContainerSlot
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
+  # - type: MagazineVisuals
+  #   magState: mag
+  #   steps: 1
+  #   zeroVisible: true
+  # - type: Appearance
   # - type: StaticPrice
   #   price: 500
 
@@ -76,6 +76,11 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 6
     availableModes:
@@ -106,6 +111,11 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
 
 - type: entity
   name: cobra
@@ -155,6 +165,11 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
 
 - type: entity
   name: mk 58
@@ -178,6 +193,11 @@
     fireRate: 5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
 
 - type: entity
   name: N1984
@@ -223,3 +243,8 @@
         whitelist:
           tags:
             - CartridgeMagnum
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
