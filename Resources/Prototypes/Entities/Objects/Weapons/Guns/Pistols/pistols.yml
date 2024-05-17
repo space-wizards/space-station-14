@@ -70,6 +70,7 @@
   parent:
   - BaseWeaponPistol
   - BaseGunSmall
+  - BaseGunPistolMag
   id: WeaponPistolViper
   description: A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses .35 auto ammo.
   components:
@@ -109,6 +110,7 @@
   parent:
   - BaseWeaponPistol
   - BaseGunSmall
+  - BaseGunPistolMag
   id: WeaponPistolCobra
   description: A rugged, robust operator handgun with inbuilt silencer. Uses .25 caseless ammo.
   components:
@@ -157,6 +159,7 @@
   parent:
   - BaseWeaponPistol
   - BaseGunSmall
+  - BaseGunPistolMag
   id: WeaponPistolMk58
   description: A cheap, ubiquitous sidearm, produced by a NanoTrasen subsidiary. Uses .35 auto ammo.
   components:
@@ -179,6 +182,7 @@
   parent:
   - BaseWeaponPistol
   - BaseGunSmall
+  - BaseGunPistolMag
   id: WeaponPistolN1984 # the spaces in description are for formatting.
   description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber.
   components:
