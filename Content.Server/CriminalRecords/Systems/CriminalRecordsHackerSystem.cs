@@ -6,6 +6,7 @@ using Content.Shared.CriminalRecords.Components;
 using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Dataset;
 using Content.Shared.Security;
+using Content.Shared.StationRecords;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -14,6 +15,7 @@ namespace Content.Server.CriminalRecords.Systems;
 public sealed class CriminalRecordsHackerSystem : SharedCriminalRecordsHackerSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -38,8 +40,7 @@ public sealed class CriminalRecordsHackerSystem : SharedCriminalRecordsHackerSys
         foreach (var (key, record) in _records.GetRecordsOfType<CriminalRecord>(station))
         {
             var reason = _random.Pick(reasons.Values);
-            record.Status = SecurityStatus.Wanted;
-            record.Reason = reason;
+            _criminalRecords.OverwriteStatus(new StationRecordKey(key, station), record, SecurityStatus.Wanted, reason);
             // no radio message since spam
             // no history since lazy and its easy to remove anyway
             // main damage with this is existing arrest warrants are lost and to anger beepsky
