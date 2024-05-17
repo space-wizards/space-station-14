@@ -16,13 +16,13 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
         public float Prob { get; protected set; } = 1; // = (80);
 
         /// <summary>
-        /// Localisation key for the name of the adjusted attribute. Used for guidebook description.
+        /// Localisation key for the name of the adjusted attribute. Used for guidebook descriptions.
         /// </summary>
         [DataField]
         public abstract string GuidebookAttributeName { get; set; }
 
         /// <summary>
-        /// Whether the attribute in question is a good thing. Used for guidebook description to determine the color of the number.
+        /// Whether the attribute in question is a good thing. Used for guidebook descriptions to determine the color of the number.
         /// </summary>
         [DataField]
         public virtual bool GuidebookIsAttributePositive { get; protected set; } = true;
