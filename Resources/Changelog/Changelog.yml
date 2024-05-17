@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ko4erga
-  changes:
-  - message: '"Post light" updated.'
-    type: Tweak
-  id: 6098
-  time: '2024-03-06T01:39:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25814
 - author: Ilya246
   changes:
   - message: Gas leak events are now 4 times as strong, and may leak water vapor.
@@ -3868,3 +3861,10 @@
   id: 6597
   time: '2024-05-15T21:02:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28060
+- author: deltanedas
+  changes:
+  - message: Fixed ninja criminal records hack not changing sechud icons.
+    type: Fix
+  id: 6598
+  time: '2024-05-16T20:51:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28021
