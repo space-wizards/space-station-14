@@ -42,9 +42,6 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private readonly RadiationSystem _radiation = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
-    [Dependency] private readonly ISerializationManager _serialization = default!;
-    [Dependency] private readonly IEntityManager _entity = default!;
 
     public const float MinParticleVariation = 0.8f;
     public const float MaxParticleVariation = 1.2f;

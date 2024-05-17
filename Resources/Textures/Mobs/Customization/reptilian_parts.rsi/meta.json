@@ -590,11 +590,7 @@
       "directions": 4
     },
     {
-      "name": "horns_floppy_kobold_ears_primary",
-      "directions": 4
-    },
-	{
-      "name": "horns_floppy_kobold_ears_secondary",
+      "name": "horns_floppy_kobold_ears",
       "directions": 4
     },
     {

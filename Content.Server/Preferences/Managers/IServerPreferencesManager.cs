@@ -12,7 +12,7 @@ namespace Content.Server.Preferences.Managers
         void Init();
 
         Task LoadData(ICommonSession session, CancellationToken cancel);
-        void SanitizeData(ICommonSession session);
+        void FinishLoad(ICommonSession session);
         void OnClientDisconnected(ICommonSession session);
 
         bool TryGetCachedPreferences(NetUserId userId, [NotNullWhen(true)] out PlayerPreferences? playerPreferences);
