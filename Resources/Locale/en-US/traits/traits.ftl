@@ -42,5 +42,5 @@ trait-southern-desc = You have a different way of speakin'.
 trait-snoring-name = Snoring
 trait-snoring-desc = You will snore while sleeping.
 
-trait-liar-name = Pathological liar
+trait-liar-name = Pathological Liar
 trait-liar-desc = You can hardly bring yourself to tell the truth. Sometimes you lie anyway.
