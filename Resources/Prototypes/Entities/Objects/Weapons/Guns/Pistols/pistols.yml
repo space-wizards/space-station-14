@@ -30,7 +30,6 @@
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
-      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   - type: ChamberMagazineAmmoProvider
@@ -74,6 +73,10 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+  - type: Gun
+    availableModes:
+      - SemiAuto
+      - FullAuto
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -121,8 +124,6 @@
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
       params:
         volume: -14
-    availableModes:
-    - SemiAuto
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -163,8 +164,6 @@
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Gun
     fireRate: 5
-    availableModes:
-    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
 
@@ -189,8 +188,6 @@
     angleIncrease: 8
     angleDecay: 9
     fireRate: 4
-    availableModes:
-    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
   - type: ItemSlots
