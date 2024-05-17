@@ -1,11 +1,11 @@
-- type: entity
-  name: BaseWeaponLightMachineGun
-  parent: BaseItem
-  id: BaseWeaponLightMachineGun
-  description: A rooty tooty point and shooty.
-  abstract: true
-  components:
-  - type: Sprite
+# - type: entity
+#   name: BaseWeaponLightMachineGun
+#   parent: BaseItem
+#   id: BaseWeaponLightMachineGun
+#   description: A rooty tooty point and shooty.
+#   abstract: true
+#   components:
+  # - type: Sprite
   # - type: Item
   #   size: Huge
   # - type: Clothing
@@ -31,32 +31,32 @@
   #     path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
   #   soundEmpty:
   #     path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
-  - type: ChamberMagazineAmmoProvider
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
-  - type: AmmoCounter
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineLightRifleBox
-        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineLightRifleBox
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeLightRifle
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeLightRifle
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
+  # - type: ChamberMagazineAmmoProvider
+  #   soundRack:
+  #     path: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
+  # - type: AmmoCounter
+  # - type: ItemSlots
+  #   slots:
+  #     gun_magazine:
+  #       name: Magazine
+  #       startingItem: MagazineLightRifleBox
+  #       insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  #       ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+  #       priority: 2
+  #       whitelist:
+  #         tags:
+  #           - MagazineLightRifleBox
+  #     gun_chamber:
+  #       name: Chamber
+  #       startingItem: CartridgeLightRifle
+  #       priority: 1
+  #       whitelist:
+  #         tags:
+  #           - CartridgeLightRifle
+  # - type: ContainerContainer
+  #   containers:
+  #     gun_magazine: !type:ContainerSlot
+  #     gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: L6 SAW
@@ -99,6 +99,32 @@
     steps: 4
     zeroVisible: true
   - type: Appearance
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
+  - type: AmmoCounter
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLightRifleBox
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLightRifleBox
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: L6C ROW
