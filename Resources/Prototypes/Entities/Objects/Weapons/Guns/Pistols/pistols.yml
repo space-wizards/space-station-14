@@ -25,13 +25,13 @@
   #   slots:
   #   - suitStorage
   #   - Belt
-  - type: Gun
+  # - type: Gun
     # fireRate: 6
     # selectedMode: SemiAuto
     # availableModes:
     #   - SemiAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+    # soundGunshot:
+    #   path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   # - type: ChamberMagazineAmmoProvider
   #   soundRack:
   #     path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
@@ -81,6 +81,8 @@
     availableModes:
       - SemiAuto
       - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
