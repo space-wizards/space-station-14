@@ -51,6 +51,7 @@
   parent:
   - BaseGunSmall
   - BaseGunPistolMag
+  - BaseGunSilenced
   id: WeaponPistolCobra
   name: cobra
   description: A rugged, robust operator handgun with inbuilt silencer. Uses .25 caseless ammo.
@@ -66,10 +67,6 @@
     boltClosed: null
   - type: Gun
     fireRate: 4
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
-      params:
-        volume: -14
   - type: ItemSlots
     slots:
       gun_magazine:
