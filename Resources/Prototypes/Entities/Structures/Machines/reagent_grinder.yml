@@ -32,6 +32,7 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
+        hard: false
   - type: Sprite
     sprite: Structures/Machines/juicer.rsi
     drawdepth: SmallObjects
