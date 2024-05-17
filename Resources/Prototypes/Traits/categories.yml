@@ -17,11 +17,11 @@
   name: trait-category-speech
   maxTraitPoints: 2
   traits:
+  - Accentless
+  - FrontalLisp
   - SouthernAccent
   - PirateAccent
   - CowboyAccent
   - ItalianAccent
-  - Accentless
-  - FrontalLisp
-  - SocialAnxiety
   - Liar
+  - SocialAnxiety

@@ -350,32 +350,30 @@ namespace Content.Shared.Preferences
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var categoryProto = prototypeManager.Index<TraitCategoryPrototype>(categoryId);
+            var traitProto = prototypeManager.Index<TraitPrototype>(traitId);
+
             var list = new HashSet<string>(_traitPreferences);
 
             if (pref)
             {
+                list.Add(traitId);
+
                 if (categoryProto.MaxTraitPoints >= 0)
                 {
                     var count = 0;
                     foreach (var trait in list)
                     {
-                        var traitIndex = prototypeManager.Index<TraitPrototype>(trait);
-                        count += traitIndex.Cost;
+                        var traitProtoTemp = prototypeManager.Index<TraitPrototype>(trait);
+                        count += traitProtoTemp.Cost;
                     }
 
-                    if (count >= categoryProto.MaxTraitPoints)
+                    if (count > categoryProto.MaxTraitPoints && traitProto.Cost != 0)
                     {
                         return new(this)
                         {
-                            _traitPreferences = list,
+                            _traitPreferences = _traitPreferences,
                         };
                     }
-
-                    list.Add(traitId);
-                }
-                else
-                {
-                    list.Add(traitId);
                 }
             }
             else
