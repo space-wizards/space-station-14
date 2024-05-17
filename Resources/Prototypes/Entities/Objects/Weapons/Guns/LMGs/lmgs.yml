@@ -139,9 +139,9 @@
       sprite: Objects/Weapons/Guns/LMGs/l6.rsi
       layers:
       - state: base
-          map: [ "enum.GunVisualLayers.Base" ]
+        map: [ "enum.GunVisualLayers.Base" ]
       - state: mag-3
-          map: [ "enum.GunVisualLayers.Mag" ]
+        map: [ "enum.GunVisualLayers.Mag" ]
     - type: Item
       size: Huge
     - type: Gun
