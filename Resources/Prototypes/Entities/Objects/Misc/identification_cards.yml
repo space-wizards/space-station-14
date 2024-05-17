@@ -445,9 +445,8 @@
   - type: IdCard
     jobTitle: Visitor
     jobIcon: JobIconVisitor
-  - type: Access
-    groups:
-    - Visitor
+  - type: PresetIdCard
+    job: Visitor
 
 - type: entity
   parent: IDCardStandard
