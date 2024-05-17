@@ -14,6 +14,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: Gun
     fireRate: 6
     availableModes:
