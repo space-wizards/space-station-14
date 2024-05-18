@@ -10,10 +10,22 @@ public sealed class IdBindSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<IdBindComponent, StartingGearEquippedEvent>(OnGearEquipped);
+        //Activate on being added or when starting gear is equipped
+        SubscribeLocalEvent<IdBindComponent, StartingGearEquippedEvent>(StartAttempt);
+        SubscribeLocalEvent<IdBindComponent, ComponentInit>(StartAttempt);
     }
 
-    private void OnGearEquipped(Entity<IdBindComponent> ent, ref StartingGearEquippedEvent args)
+    private void StartAttempt(Entity<IdBindComponent> ent, ref StartingGearEquippedEvent args)
+    {
+        TryBind(ent);
+    }
+
+    private void StartAttempt(Entity<IdBindComponent> ent, ref ComponentInit args)
+    {
+        TryBind(ent);
+    }
+
+    private void TryBind(Entity<IdBindComponent> ent)
     {
         if (!_cardSystem.TryFindIdCard(ent, out var cardId))
             return;
