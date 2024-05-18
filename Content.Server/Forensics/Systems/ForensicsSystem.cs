@@ -11,6 +11,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
+using Content.Shared.Verbs;
 
 namespace Content.Server.Forensics
 {
@@ -32,6 +33,8 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
+            SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
+
         }
 
         private void OnInteract(EntityUid uid, FingerprintComponent component, ContactInteractionEvent args)
@@ -106,12 +109,41 @@ namespace Content.Server.Forensics
             if (args.Handled || !args.CanReach)
                 return;
 
-            if (!TryComp<ForensicsComponent>(args.Target, out var forensicsComp))
+            args.Handled = StartClean(component, uid, args.User, args.Target, args.Used);
+        }
+
+        private void OnUtilityVerb(Entity<CleansForensicsComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
+        {
+            if (!args.CanInteract || !args.CanAccess || !args.CanInteract)
                 return;
 
-            if((forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned) || (forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count > 0))
+            var user = args.User;
+            var target = args.Target;
+            var used = entity;
+
+            var verb = new UtilityVerb()
             {
-                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.CleanDelay, new CleanForensicsDoAfterEvent(), uid, target: args.Target, used: args.Used)
+                Act = () =>
+                {
+                    StartClean(entity, entity, user, target, used);
+                },
+                IconEntity = GetNetEntity(entity),
+                Text = Loc.GetString(Loc.GetString("forensics-verb-text")),
+                Message = Loc.GetString(Loc.GetString("forensics-verb-message"))
+            };
+
+            args.Verbs.Add(verb);
+        }
+
+        public bool StartClean(CleansForensicsComponent cleanComp,
+                                EntityUid uid, EntityUid user, EntityUid? target, EntityUid used)
+        {
+            if (!TryComp<ForensicsComponent>(target, out var forensicsComp))
+                return false;
+
+            if ((forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned) || (forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count > 0))
+            {
+                var doAfterArgs = new DoAfterArgs(EntityManager, user, cleanComp.CleanDelay, new CleanForensicsDoAfterEvent(), uid, target: target, used: used)
                 {
                     BreakOnHandChange = true,
                     NeedHand = true,
@@ -122,10 +154,14 @@ namespace Content.Server.Forensics
                 };
 
                 _doAfterSystem.TryStartDoAfter(doAfterArgs);
-                _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning", ("target", args.Target)), args.User, args.User);
 
-                args.Handled = true;
+                _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning", ("target", target)), user, user);
+
+                return true;
             }
+            else
+                return false;
+
         }
 
         private void OnCleanForensicsDoAfter(EntityUid uid, ForensicsComponent component, CleanForensicsDoAfterEvent args)
