@@ -104,12 +104,13 @@ namespace Content.Server.Forensics
             }
         }
 
-        private void OnAfterInteract(EntityUid uid, CleansForensicsComponent component, AfterInteractEvent args)
+        // Try: "Entity<CleansForensicsComponent> cleanitemcomp" or something!
+        private void OnAfterInteract(Entity<CleansForensicsComponent> cleanForensicsEntity, ref AfterInteractEvent args)
         {
             if (args.Handled || !args.CanReach)
                 return;
 
-            args.Handled = StartClean(component, uid, args.User, args.Target, args.Used);
+            args.Handled = StartClean(cleanForensicsEntity, args.User, args.Target);
         }
 
         private void OnUtilityVerb(Entity<CleansForensicsComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
@@ -117,16 +118,13 @@ namespace Content.Server.Forensics
             if (!args.CanInteract || !args.CanAccess || !args.CanInteract)
                 return;
 
+            // These need to be set outside for the anonymous method!
             var user = args.User;
             var target = args.Target;
-            var used = entity;
 
             var verb = new UtilityVerb()
             {
-                Act = () =>
-                {
-                    StartClean(entity, entity, user, target, used);
-                },
+                Act = () => StartClean(entity, user, target),
                 IconEntity = GetNetEntity(entity),
                 Text = Loc.GetString(Loc.GetString("forensics-verb-text")),
                 Message = Loc.GetString(Loc.GetString("forensics-verb-message"))
@@ -135,15 +133,22 @@ namespace Content.Server.Forensics
             args.Verbs.Add(verb);
         }
 
-        public bool StartClean(CleansForensicsComponent cleanComp,
-                                EntityUid uid, EntityUid user, EntityUid? target, EntityUid used)
+        /// <summary>
+        ///     Attempts to clean the given item with the given CleansForensics entity.
+        /// </summary>
+        /// <param name="cleanForensicsEntity">The entity that is being used to clean the target.</param>
+        /// <param name="user">The user that is using the cleanForensicsEntity.</param>
+        /// <param name="target">The target of the forensics clean.</param>
+        /// <returns>True if the target can be cleaned and has some sort of DNA or fingerprints / fibers and false otherwise.</returns>
+        public bool StartClean(Entity<CleansForensicsComponent> cleanForensicsEntity, EntityUid user, EntityUid? target)
         {
             if (!TryComp<ForensicsComponent>(target, out var forensicsComp))
                 return false;
 
             if ((forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned) || (forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count > 0))
             {
-                var doAfterArgs = new DoAfterArgs(EntityManager, user, cleanComp.CleanDelay, new CleanForensicsDoAfterEvent(), uid, target: target, used: used)
+                var cleanDelay = cleanForensicsEntity.Comp.CleanDelay;
+                var doAfterArgs = new DoAfterArgs(EntityManager, user, cleanDelay, new CleanForensicsDoAfterEvent(), cleanForensicsEntity, target: target, used: cleanForensicsEntity)
                 {
                     BreakOnHandChange = true,
                     NeedHand = true,
