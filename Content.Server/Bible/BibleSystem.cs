@@ -241,7 +241,7 @@ namespace Content.Server.Bible
             // If this is going to use a ghost role mob spawner, attach it to the bible.
             if (HasComp<GhostRoleMobSpawnerComponent>(familiar))
             {
-                _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), ent, user, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), familiar, user, PopupType.Medium);
                 _transform.SetParent(familiar, uid);
             }
             component.AlreadySummoned = true;
