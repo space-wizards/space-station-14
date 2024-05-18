@@ -74,8 +74,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-3
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
   - type: GunWieldBonus
     minAngle: -20
     maxAngle: -20
@@ -92,15 +90,9 @@
       path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
-  - type: MagazineVisuals
-    magState: mag
-    steps: 4
-    zeroVisible: true
-  - type: Appearance
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
-  - type: AmmoCounter
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -123,6 +115,12 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+  - type: AmmoCounter
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Appearance
 
 # L6C ROW
 - type: entity
@@ -140,8 +138,6 @@
         map: [ "enum.GunVisualLayers.Base" ]
       - state: mag-3
         map: [ "enum.GunVisualLayers.Mag" ]
-    - type: Item
-      size: Huge
     - type: Gun
       minAngle: 4
       maxAngle: 25
