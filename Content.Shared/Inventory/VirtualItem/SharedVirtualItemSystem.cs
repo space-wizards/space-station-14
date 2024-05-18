@@ -4,6 +4,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -29,6 +30,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string VirtualItem = "VirtualItem";
@@ -94,11 +96,17 @@ public abstract class SharedVirtualItemSystem : EntitySystem
 
             foreach (var hand in _handsSystem.EnumerateHands(user))
             {
-                if (hand.HeldEntity == blockingEnt || HasComp<VirtualItemComponent>(hand.HeldEntity))
+                if (hand.HeldEntity is not { } held)
+                    continue;
+
+                if (held == blockingEnt || HasComp<VirtualItemComponent>(held))
                     continue;
 
                 if (!_handsSystem.TryDrop(user, hand))
                     continue;
+
+                if (!TerminatingOrDeleted(held))
+                    _popup.PopupClient(Loc.GetString("virtual-item-dropped-other", ("dropped", held)), user, user);
 
                 empty = hand;
                 break;
