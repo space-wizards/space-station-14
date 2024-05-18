@@ -73,9 +73,23 @@
   id: BaseGunWieldable
   components:
   - type: Wieldable
+    unwieldOnUse: false
   - type: GunWieldBonus
     minAngle: -20
     maxAngle: -30
   - type: Gun
     minAngle: 21
     maxAngle: 32
+
+# SILENCED
+# A basic template for a gun that makes almost no noise when fired.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunSilenced
+  components:
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+      params:
+        volume: -14
