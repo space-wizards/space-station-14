@@ -76,8 +76,6 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
-  - type: Wieldable
-    unwieldOnUse: false
   - type: GunWieldBonus
     minAngle: -20
     maxAngle: -20
