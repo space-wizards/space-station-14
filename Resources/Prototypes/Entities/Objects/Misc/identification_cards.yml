@@ -859,7 +859,7 @@
     heldPrefix: green
   - type: IdCard
     jobTitle: Universal
-    jobIcon: JobIconNanotrasen
+    jobIcon: JobIconAdmin
   - type: Access
     groups:
     - AllAccess
