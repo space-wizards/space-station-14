@@ -164,7 +164,7 @@ public sealed class TileSystem : EntitySystem
         }
 
         var plating = _tileDefinitionManager[tileDef.BaseTurf];
-        _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, new Tile(plating.TileId));
+        _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, new Tile(plating.TileId, variant: PickVariant(tileDef)));
 
         return true;
     }
