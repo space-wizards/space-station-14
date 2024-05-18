@@ -78,6 +78,7 @@
   parent: AccessConfigurator
   id: AccessConfiguratorUniversal
   name: universal access configurator
+  suffix: Admin
   description: A modified access configurator used only by the mythical Administrator.
   components:
   - type: Sprite

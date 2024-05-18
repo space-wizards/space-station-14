@@ -845,6 +845,7 @@
   parent: IDCardStandard
   id: UniversalIDCard
   name: universal ID card
+  suffix: Admin
   description: An ID card that gives you access beyond your wildest dreams.
   components:
   - type: Sprite
