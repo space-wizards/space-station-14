@@ -129,11 +129,12 @@
   group: market
 
 - type: cargoProduct
+  name: "space heater crate"
   id: EngineeringSpaceHeater
   icon:
     sprite: Structures/Piping/Atmospherics/Portable/portable_sheater.rsi
     state: sheaterOff
-  product: SpaceHeater
+  product: CrateEngineeringSpaceHeater
   cost: 300
   category: cargoproduct-category-name-engineering
   group: market
