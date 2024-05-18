@@ -244,7 +244,7 @@ ghost-role-information-lost-challenge-commander-rules = You are not hostile to t
                                      You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
 
 ghost-role-information-lost-challenge-cargo-technican-name = Cargo Chauffeur
-ghost-role-information-lost-challenge-cargo-technican-description = You are a cargo technicial who was granted shore leave with one of your commanding officer.
+ghost-role-information-lost-challenge-cargo-technican-description = You are a cargo technician who was granted shore leave with one of your commanding officers.
 ghost-role-information-lost-challenge-cargo-technican-rules = You are not hostile to the station, do what you must to ensure your own survival.
                                      You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                      You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
