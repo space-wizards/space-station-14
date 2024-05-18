@@ -28,6 +28,14 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
+        mask:
+        - Impassable
+        - HighImpassable
+        - MidImpassable
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
         density: 190
         mask:
         - MachineMask
@@ -38,7 +46,7 @@
         hard: False
   - type: Transform
     anchored: true
-    noRot: false
+    noRot: true
   - type: ApcPowerReceiver
     powerLoad: 12000
     needsPower: false #only turns on when scanning
