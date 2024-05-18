@@ -254,11 +254,17 @@ public sealed class FollowerSystem : EntitySystem
     public EntityUid? GetMostFollowed()
     {
         EntityUid? picked = null;
-        int most = 0;
+        var most = 0;
         var query = EntityQueryEnumerator<FollowedComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            var count = comp.Following.Count;
+            var count = 0;
+            foreach (var follower in comp.Following)
+            {
+                // Only count non-admin, ghost followers
+                if (TryComp<GhostComponent>(follower, out var ghost) && !ghost.CanGhostInteract)
+                    count++;
+            }
             if (count > most)
             {
                 picked = uid;
