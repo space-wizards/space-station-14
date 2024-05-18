@@ -1,6 +1,7 @@
 # L6 SAW
 - type: entity
   parent:
+  - BaseWeaponL6
   - BaseGunLarge
   - BaseGunWieldable
   id: WeaponLightMachineGunL6
@@ -20,16 +21,6 @@
   - type: Gun
     minAngle: 24
     maxAngle: 45
-    angleIncrease: 4
-    angleDecay: 16
-    fireRate: 8
-    selectedMode: FullAuto
-    availableModes:
-    - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
@@ -65,6 +56,7 @@
 # L6C ROW
 - type: entity
   parent:
+  - BaseWeaponL6
   - BaseGunBattery
   - BaseGunSelfRecharger
   id: WeaponLightMachineGunL6C
@@ -78,19 +70,6 @@
         map: [ "enum.GunVisualLayers.Base" ]
       - state: mag-3
         map: [ "enum.GunVisualLayers.Mag" ]
-    - type: Gun
-      minAngle: 4
-      maxAngle: 25
-      angleIncrease: 4
-      angleDecay: 16
-      fireRate: 8
-      selectedMode: FullAuto
-      availableModes:
-      - FullAuto
-      soundGunshot:
-        path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
-      soundEmpty:
-        path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
     - type: ContainerContainer
       containers:
         ballistic-ammo: !type:Container
