@@ -336,7 +336,11 @@ ReinforcementRadioSyndicateMonkeyNukeops: ReinforcementRadioSyndicateAncestorNuk
 # 2024-05-01
 DrinkBottleGoldschlager: DrinkBottleGildlager
 
-# 2024-05-17
+# 2024-05-14
+soda_dispenser: SodaDispenser
+chem_master: ChemMaster
+
+# 2024-05-18
 DisasterVictimSpawner: WhiteshipPilotSpawner
 RandomHumanoidDisasterVictimRD: RandomHumanoidWhiteshipPilot
 RandomHumanoidDisasterVictimCMO: RandomHumanoidWhiteshipPilot
@@ -345,3 +349,4 @@ LostCargoTechnicianSpawner: WhiteshipPilotSpawner
 RandomHumanoidLostCargoTechnician: RandomHumanoidWhiteshipPilot
 SyndieDisasterVictimSpawner: SyndicateRaiderSpawner
 RandomHumanoidSyndieDisasterVictim: RandomHumanoidSyndicateRaider
+

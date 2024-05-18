@@ -590,6 +590,53 @@
     - type: GhostTakeoverAvailable
     - type: Cluwne
 
+<<<<<<< HEAD
+=======
+## Lost Cargo technician
+
+- type: entity
+  name: lost cargo technician spawner
+  id: LostCargoTechnicianSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Tools/appraisal-tool.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+      - RandomHumanoidLostCargoTechnician
+      chance: 1
+
+- type: entity
+  id: RandomHumanoidLostCargoTechnician
+  name: lost cargo technician ghost role
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: LostCargoTechnician
+
+- type: randomHumanoidSettings
+  id: LostCargoTechnician
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-cargo-technical-name
+      description: ghost-role-information-lost-cargo-technical-description
+      rules: ghost-role-information-lost-cargo-technical-rules
+      raffle:
+        settings: short
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ LostCargoTechGearSuit, LostCargoTechGearCoat ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
 # Traveling exotic chef
 
 - type: entity
@@ -628,7 +675,7 @@
         settings: short
     - type: GhostTakeoverAvailable
     - type: Loadout
-      roleLoadout: [ JobChef ]
+      prototypes: [ TravelingChef ]
     - type: RandomMetadata
       nameSegments:
       - names_first
@@ -699,8 +746,22 @@
   name: syndie raider ghost role
   components:
     - type: Sprite
-      sprite: Structures/Decoration/banner.rsi
-      state: banner_syndicate
+      layers:
+      - state: green
+      - sprite: Mobs/Species/Human/parts.rsi
+        state: full
+      - sprite: Clothing/Shoes/Boots/combatboots.rsi
+        state: equipped-FEET
+      - sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
+        state: equipped-INNERCLOTHING
+      - sprite: Clothing/OuterClothing/Armor/security.rsi
+        state: equipped-OUTERCLOTHING
+      - sprite: Clothing/Hands/Gloves/Color/black.rsi
+        state: equipped-HAND
+      - sprite: Clothing/Mask/gas.rsi
+        state: equipped-MASK
+      - sprite: Clothing/Head/Helmets/swat_syndicate.rsi
+        state: equipped-HELMET
     - type: RandomHumanoidSpawner
       settings: SyndicateRaider
 
@@ -724,6 +785,6 @@
       nameSegments:
       - names_first
       - names_last
-# The giveUplink datafield does not actually work yet, so they can't have objectives via AutoTraitor yet.
+# The giveUplink datafield does not actually work yet, so they can't act as objective-only traitors yet.
 #    - type: AutoTraitor
 #      giveUplink: false
