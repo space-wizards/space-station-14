@@ -24,48 +24,40 @@ public sealed partial class GasTileOverlayComponent : Component
     public GameTick ForceTick { get; set; }
 }
 
+[Serializable, NetSerializable]
+public sealed class GasTileOverlayState(Dictionary<Vector2i, GasOverlayChunk> chunks) : ComponentState
+{
+    public readonly Dictionary<Vector2i, GasOverlayChunk> Chunks = chunks;
+}
 
 [Serializable, NetSerializable]
-public sealed class GasTileOverlayState : ComponentState, IComponentDeltaState
+public sealed class GasTileOverlayDeltaState(
+    Dictionary<Vector2i, GasOverlayChunk> modifiedChunks,
+    HashSet<Vector2i> allChunks)
+    : ComponentState, IComponentDeltaState<GasTileOverlayState>
 {
-    public readonly Dictionary<Vector2i, GasOverlayChunk> Chunks;
-    public bool FullState => AllChunks == null;
+    public readonly Dictionary<Vector2i, GasOverlayChunk> ModifiedChunks = modifiedChunks;
+    public readonly HashSet<Vector2i> AllChunks = allChunks;
 
-    // required to infer deleted/missing chunks for delta states
-    public HashSet<Vector2i>? AllChunks;
-
-    public GasTileOverlayState(Dictionary<Vector2i, GasOverlayChunk> chunks)
+    public void ApplyToFullState(GasTileOverlayState state)
     {
-        Chunks = chunks;
-    }
-
-    public void ApplyToFullState(IComponentState fullState)
-    {
-        DebugTools.Assert(!FullState);
-        var state = (GasTileOverlayState) fullState;
-        DebugTools.Assert(state.FullState);
-
         foreach (var key in state.Chunks.Keys)
         {
             if (!AllChunks!.Contains(key))
                 state.Chunks.Remove(key);
         }
 
-        foreach (var (chunk, data) in Chunks)
+        foreach (var (chunk, data) in ModifiedChunks)
         {
             state.Chunks[chunk] = new(data);
         }
     }
 
-    public IComponentState CreateNewFullState(IComponentState fullState)
+    public GasTileOverlayState CreateNewFullState(GasTileOverlayState state)
     {
-        DebugTools.Assert(!FullState);
-        var state = (GasTileOverlayState) fullState;
-        DebugTools.Assert(state.FullState);
-
         var chunks = new Dictionary<Vector2i, GasOverlayChunk>(state.Chunks.Count);
 
-        foreach (var (chunk, data) in Chunks)
+        foreach (var (chunk, data) in ModifiedChunks)
         {
             chunks[chunk] = new(data);
         }
