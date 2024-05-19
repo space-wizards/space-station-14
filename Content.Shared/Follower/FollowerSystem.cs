@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Shared.Administration.Managers;
 using Content.Shared.Database;
 using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
@@ -27,7 +26,6 @@ public sealed class FollowerSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedJointSystem _jointSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
-    [Dependency] private readonly ISharedAdminManager _adminManager = default!;
     [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
@@ -261,14 +259,15 @@ public sealed class FollowerSystem : EntitySystem
 
         // Look for followers that are ghosts and are player controlled
         var query = EntityQueryEnumerator<FollowerComponent, GhostComponent, ActorComponent>();
-        while (query.MoveNext(out var uid, out var _, out var _, out var _))
+        while (query.MoveNext(out var _, out var follower, out var ghost, out var _))
         {
             // Exclude admin ghosts
-            if (!_adminManager.IsAdmin(uid))
+            if (!ghost.CanGhostInteract)
             {
+                var followed = follower.Following;
                 // Add new entry or increment existing
-                if (!followedEnts.TryAdd(uid, 0))
-                    followedEnts[uid]++;
+                if (!followedEnts.TryAdd(followed, 1))
+                    followedEnts[followed]++;
             }
         }
 
