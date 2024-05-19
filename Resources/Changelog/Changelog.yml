@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Flasks can once again be put into dispensers.
-    type: Fix
-  id: 6104
-  time: '2024-03-06T17:19:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25883
 - author: Doctor-Cpu
   changes:
   - message: Cargo palllets can no longer be ordered from cargo request terminal
@@ -3867,3 +3860,11 @@
   id: 6603
   time: '2024-05-19T00:23:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28122
+- author: DrSmugleaf
+  changes:
+  - message: Attempting to dual wield something will now automatically drop the item
+      in your other hand.
+    type: Tweak
+  id: 6604
+  time: '2024-05-19T01:35:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27975
