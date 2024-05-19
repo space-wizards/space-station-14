@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Administration.Managers;
 using Content.Shared.Database;
 using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
@@ -14,6 +15,7 @@ using Robust.Shared.Map.Events;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Follower;
@@ -25,6 +27,7 @@ public sealed class FollowerSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedJointSystem _jointSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+    [Dependency] private readonly ISharedAdminManager _adminManager = default!;
     [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
@@ -249,26 +252,35 @@ public sealed class FollowerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Get the most followed entity.
+    /// Gets the entity with the most non-admin ghosts following it.
     /// </summary>
-    public EntityUid? GetMostFollowed()
+    public EntityUid? GetMostGhostFollowed()
     {
+        // Keep a tally of how many ghosts are following each entity
+        var followedEnts = new Dictionary<EntityUid, int>();
+
+        // Look for followers that are ghosts and are player controlled
+        var query = EntityQueryEnumerator<FollowerComponent, GhostComponent, ActorComponent>();
+        while (query.MoveNext(out var uid, out var _, out var _, out var _))
+        {
+            // Exclude admin ghosts
+            if (!_adminManager.IsAdmin(uid))
+            {
+                // Add new entry or increment existing
+                if (!followedEnts.TryAdd(uid, 0))
+                    followedEnts[uid]++;
+            }
+        }
+
+        // Find the entity with the most followers
         EntityUid? picked = null;
         var most = 0;
-        var query = EntityQueryEnumerator<FollowedComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        foreach (var followed in followedEnts)
         {
-            var count = 0;
-            foreach (var follower in comp.Following)
+            if (followed.Value > most)
             {
-                // Only count non-admin, ghost followers
-                if (TryComp<GhostComponent>(follower, out var ghost) && !ghost.CanGhostInteract)
-                    count++;
-            }
-            if (count > most)
-            {
-                picked = uid;
-                most = count;
+                picked = followed.Key;
+                most = followed.Value;
             }
         }
 
