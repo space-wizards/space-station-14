@@ -196,6 +196,7 @@
       - WeaponCapacitorRechargerCircuitboard
       - HandheldStationMap
       - ClothingHeadHatWelding
+      - WhiteCane
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
