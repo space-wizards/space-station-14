@@ -215,7 +215,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (aui.SingleUser && aui.CurrentSingleUser != null && user != aui.CurrentSingleUser)
         {
             var message = Loc.GetString("machine-already-in-use", ("machine", uiEntity));
-            _popupSystem.PopupEntity(message, uiEntity, user);
+            _popupSystem.PopupClient(message, uiEntity, user);
 
             if (_uiSystem.IsUiOpen(uiEntity, aui.Key))
                 return true;
