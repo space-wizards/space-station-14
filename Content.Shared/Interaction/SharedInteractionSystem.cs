@@ -99,7 +99,7 @@ namespace Content.Shared.Interaction
             _delayQuery = GetEntityQuery<UseDelayComponent>();
             _uiQuery = GetEntityQuery<ActivatableUIComponent>();
 
-            SubscribeLocalEvent<TransformComponent, BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
+            SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
             SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
 
             SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
@@ -1250,12 +1250,12 @@ namespace Content.Shared.Interaction
         }
 
 
-        private void HandleUserInterfaceRangeCheck(Entity<TransformComponent> ent, ref BoundUserInterfaceCheckRangeEvent ev)
+        private void HandleUserInterfaceRangeCheck(ref BoundUserInterfaceCheckRangeEvent ev)
         {
             if (ev.Result == BoundUserInterfaceRangeResult.Fail)
                 return;
 
-            ev.Result = UiRangeCheck(ev.Actor!, (ent, ent), ev.Data.InteractionRange)
+            ev.Result = UiRangeCheck(ev.Actor!, ev.Target, ev.Data.InteractionRange)
                     ? BoundUserInterfaceRangeResult.Pass
                     : BoundUserInterfaceRangeResult.Fail;
         }
