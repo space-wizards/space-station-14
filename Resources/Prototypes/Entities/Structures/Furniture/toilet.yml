@@ -59,7 +59,9 @@
           radius: 0.4
         density: 190
         mask:
-        - TableMask
+        - MachineMask
+        layer:
+        - None
   - type: Construction
     graph: Toilet
     node: toilet
