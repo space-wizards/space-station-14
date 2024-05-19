@@ -53,7 +53,7 @@ traitor-tiger-uplink = You have been provided with a syndicate uplink from your 
 traitor-tiger-roundend = [color=crimson]a Tiger Cooperative Fanatic[/color]
 
 traitor-waffleco-intro = You are a Waffle Co. infiltrator.
-traitor-waffleco-goal = You are not here for a station-wide demonstration. Again, other Waffle Co. Traitors may be, so watch out. Your job is to only accomplish your objectives.
+traitor-waffleco-goal = You are not here for a station-wide demonstration. Again, other Waffle Co. infiltrators may be, so watch out. Your job is to only accomplish your objectives.
 traitor-waffleco-allies = Members of Donk Co. are to be killed on sight; they are not allowed to be on the station while we're around.
 traitor-waffleco-uplink = You have been provided with a syndicate uplink located in your PDA to accomplish your task.
 traitor-waffleco-roundend = [color=orange]an employee from Waffle Corporation[/color]
