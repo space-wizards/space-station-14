@@ -1255,14 +1255,9 @@ namespace Content.Shared.Interaction
             if (ev.Result == BoundUserInterfaceRangeResult.Fail)
                 return;
 
-            if (UiRangeCheck(ev.Actor, (ent, ent), ev.Data.InteractionRange))
-            {
-                ev.Result = BoundUserInterfaceRangeResult.Pass;
-            }
-            else
-            {
-                ev.Result = BoundUserInterfaceRangeResult.Fail;
-            }
+            ev.Result = UiRangeCheck(ev.Actor!, (ent, ent), ev.Data.InteractionRange)
+                    ? BoundUserInterfaceRangeResult.Pass
+                    : BoundUserInterfaceRangeResult.Fail;
         }
     }
 
