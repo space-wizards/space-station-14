@@ -107,7 +107,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         // Assign briefing
         _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
         {
-            Briefing = GenerateBriefingShort(component.Codewords, code, issuer)
+            Briefing = GenerateBriefing(component.Codewords, code, issuer, shortBrief: true)
         }, mind, true);
 
         // Change the faction
@@ -146,30 +146,17 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         args.Text += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", comp.Codewords)));
     }
 
-    private string GenerateBriefing(string[] codewords, Note[]? uplinkCode, string objectiveIssuer)
+    private string GenerateBriefing(string[] codewords, Note[]? uplinkCode, string objectiveIssuer, bool shortBrief = false)
     {
         var sb = new StringBuilder();
         sb.AppendLine("\n" + Loc.GetString($"traitor-{objectiveIssuer}-intro"));
         sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-goal"));
         sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-uplink"));
         sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-allies"));
-        sb.AppendLine("\n" + Loc.GetString($"traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
+        sb.AppendLine("\n" + Loc.GetString($"traitor-role-codewords{(shortBrief ? "-short" : "")}", ("codewords", string.Join(", ", codewords))));
 
         if (uplinkCode != null)
-            sb.AppendLine("\n" + Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
-
-        return sb.ToString();
-    }
-    private string GenerateBriefingShort(string[] codewords, Note[]? uplinkCode, string objectiveIssuer)
-    {
-        var sb = new StringBuilder();
-        sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-intro"));
-        sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-goal"));
-        sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-allies"));
-        sb.AppendLine("\n" + Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", codewords))));
-
-        if (uplinkCode != null)
-            sb.AppendLine("\n" + Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
+            sb.AppendLine("\n" + Loc.GetString($"traitor-role-uplink-code{(shortBrief ? "-short" : "")}", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
 
         return sb.ToString();
     }
