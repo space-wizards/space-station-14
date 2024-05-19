@@ -240,7 +240,8 @@ namespace Content.Server.Power.Pow3r
                 }
             }
 
-            if (unmet <= 0 || totalBatterySupply <= 0)
+            // Return if normal supplies met all demand or there are no supplying batteries
+            if (unmet <= 0 || totalMaxBatterySupply <= 0)
                 return;
 
             // Target output capacity for batteries
@@ -275,8 +276,8 @@ namespace Content.Server.Power.Pow3r
 
                 battery.SupplyRampTarget = battery.MaxEffectiveSupply * relativeTargetBatteryOutput - battery.CurrentReceiving * battery.Efficiency;
 
-                DebugTools.Assert(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency <= battery.LoadingNetworkDemand
-                    || MathHelper.CloseToPercent(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency, battery.LoadingNetworkDemand, 0.001));
+                DebugTools.Assert(battery.MaxEffectiveSupply * relativeTargetBatteryOutput <= battery.LoadingNetworkDemand
+                                  || MathHelper.CloseToPercent(battery.MaxEffectiveSupply * relativeTargetBatteryOutput, battery.LoadingNetworkDemand, 0.001));
             }
         }
 
