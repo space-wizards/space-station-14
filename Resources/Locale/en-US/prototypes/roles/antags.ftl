@@ -1,5 +1,5 @@
-﻿roles-antag-syndicate-agent-name = Syndicate agent
-roles-antag-syndicate-agent-objective = Complete your objectives without being caught.
+roles-antag-traitor-name = Traitor
+roles-antag-traitor-objective = Complete your objectives without being caught.
 
 roles-antag-initial-infected-name = Initial Infected
 roles-antag-initial-infected-objective = Once you turn, infect as many other crew members as possible.

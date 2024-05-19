@@ -75,8 +75,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", component.Codewords)));
         var issuer = _random.Pick(_prototypeManager.Index(component.ObjectiveIssuers).Values);
+        component.ObjectiveIssuer = issuer;
 
         Note[]? code = null;
+
         if (giveUplink)
         {
             // Calculate the amount of currency on the uplink.
@@ -105,7 +107,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         // Assign briefing
         _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
         {
-            Briefing = briefing
+            Briefing = GenerateBriefingShort(component.Codewords, code, issuer)
         }, mind, true);
 
         // Change the faction
@@ -135,7 +137,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     private void OnObjectivesTextGetInfo(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextGetInfoEvent args)
     {
         args.Minds = _antag.GetAntagMindEntityUids(uid);
-        args.AgentName = Loc.GetString("traitor-round-end-agent-name");
+        args.AgentName = Loc.GetString($"traitor-{comp.ObjectiveIssuer}-roundend");
+        args.Faction = Loc.GetString("traitor-round-end-agent-name");
     }
 
     private void OnObjectivesTextPrepend(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextPrependEvent args)
@@ -143,13 +146,30 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         args.Text += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", comp.Codewords)));
     }
 
-    private string GenerateBriefing(string[] codewords, Note[]? uplinkCode, string? objectiveIssuer = null)
+    private string GenerateBriefing(string[] codewords, Note[]? uplinkCode, string objectiveIssuer)
     {
         var sb = new StringBuilder();
-        sb.AppendLine(Loc.GetString("traitor-role-greeting", ("corporation", objectiveIssuer ?? Loc.GetString("objective-issuer-unknown"))));
-        sb.AppendLine(Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", codewords))));
+        sb.AppendLine("\n" + Loc.GetString($"traitor-{objectiveIssuer}-intro"));
+        sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-goal"));
+        sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-uplink"));
+        sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-allies"));
+        sb.AppendLine("\n" + Loc.GetString($"traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
+
         if (uplinkCode != null)
-            sb.AppendLine(Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
+            sb.AppendLine("\n" + Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
+
+        return sb.ToString();
+    }
+    private string GenerateBriefingShort(string[] codewords, Note[]? uplinkCode, string objectiveIssuer)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-intro"));
+        sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-goal"));
+        sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-allies"));
+        sb.AppendLine("\n" + Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", codewords))));
+
+        if (uplinkCode != null)
+            sb.AppendLine("\n" + Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
 
         return sb.ToString();
     }
