@@ -26,6 +26,11 @@
       collection: BikeHorn
       params:
         variation: 0.125
+  - type: EmitSoundOnCollide
+    sound:
+      collection: BikeHorn
+      params:
+        variation: 0.125
   - type: Tag
     tags:
     - Payload # yes, you can make re-usable prank grenades
