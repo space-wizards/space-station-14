@@ -1,43 +1,4 @@
 ﻿Entries:
-- author: Just_Art
-  changes:
-  - message: Added bob 5 hair!
-    type: Add
-  - message: Added long hair with bundles!
-    type: Add
-  id: 6100
-  time: '2024-03-06T01:42:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25772
-- author: Errant
-  changes:
-  - message: Debug coordinates are now automatically enabled on the F3 overlay upon
-      readmin.
-    type: Fix
-  id: 6101
-  time: '2024-03-06T01:43:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25063
-- author: metalgearsloth
-  changes:
-  - message: Pod launches will now be offset slightly.
-    type: Add
-  id: 6102
-  time: '2024-03-06T01:44:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25855
-- author: Brandon-Huu
-  changes:
-  - message: The Syndicate is now supplying barber scissors in the Hristov bundle
-      to make your disguises even balde- better.
-    type: Tweak
-  id: 6103
-  time: '2024-03-06T02:03:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25695
-- author: Tayrtahn
-  changes:
-  - message: Flasks can once again be put into dispensers.
-    type: Fix
-  id: 6104
-  time: '2024-03-06T17:19:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25883
 - author: Doctor-Cpu
   changes:
   - message: Cargo palllets can no longer be ordered from cargo request terminal
@@ -3868,3 +3829,42 @@
   id: 6599
   time: '2024-05-17T07:51:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27960
+- author: lzk228
+  changes:
+  - message: Fixed bug with pathological liar and zombie accents.
+    type: Fix
+  id: 6600
+  time: '2024-05-17T16:33:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28049
+- author: YuNii
+  changes:
+  - message: Added the ability to re-bind the emote menu.
+    type: Add
+  id: 6601
+  time: '2024-05-17T19:46:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28083
+- author: benjamin-burges
+  changes:
+  - message: Bible summon messages are now only visible to the chaplain using the
+      Bible.
+    type: Tweak
+  id: 6602
+  time: '2024-05-18T14:23:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28104
+- author: Aquif
+  changes:
+  - message: Changing your character's description now properly updates the save button.
+    type: Fix
+  - message: The character description editor does not discard your last edit anymore.
+    type: Fix
+  id: 6603
+  time: '2024-05-19T00:23:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28122
+- author: DrSmugleaf
+  changes:
+  - message: Attempting to dual wield something will now automatically drop the item
+      in your other hand.
+    type: Tweak
+  id: 6604
+  time: '2024-05-19T01:35:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27975
