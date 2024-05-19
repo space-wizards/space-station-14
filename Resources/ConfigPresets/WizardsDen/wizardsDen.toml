@@ -4,7 +4,6 @@
 [game]
 desc             = "Official English Space Station 14 servers. Vanilla, low roleplay."
 lobbyenabled     = true
-lobby_auto_map_vote = false
 soft_max_players = 80
 panic_bunker.enabled = true
 panic_bunker.disable_with_admins = true

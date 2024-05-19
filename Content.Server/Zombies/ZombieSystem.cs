@@ -66,7 +66,14 @@ namespace Content.Server.Zombies
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
 
+            SubscribeLocalEvent<IncurableZombieComponent, MapInitEvent>(OnPendingMapInit);
+
             SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
+        }
+
+        private void OnPendingMapInit(EntityUid uid, IncurableZombieComponent component, MapInitEvent args)
+        {
+            _actions.AddAction(uid, ref component.Action, component.ZombifySelfActionPrototype);
         }
 
         private void OnPendingMapInit(EntityUid uid, PendingZombieComponent component, MapInitEvent args)
@@ -79,7 +86,6 @@ namespace Content.Server.Zombies
 
             component.NextTick = _timing.CurTime + TimeSpan.FromSeconds(1f);
             component.GracePeriod = _random.Next(component.MinInitialInfectedGrace, component.MaxInitialInfectedGrace);
-            _actions.AddAction(uid, ref component.Action, component.ZombifySelfActionPrototype);
         }
 
         public override void Update(float frameTime)
