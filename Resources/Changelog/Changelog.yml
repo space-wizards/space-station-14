@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Brandon-Huu
-  changes:
-  - message: The Syndicate is now supplying barber scissors in the Hristov bundle
-      to make your disguises even balde- better.
-    type: Tweak
-  id: 6103
-  time: '2024-03-06T02:03:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25695
 - author: Tayrtahn
   changes:
   - message: Flasks can once again be put into dispensers.
@@ -3866,3 +3858,12 @@
   id: 6602
   time: '2024-05-18T14:23:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28104
+- author: Aquif
+  changes:
+  - message: Changing your character's description now properly updates the save button.
+    type: Fix
+  - message: The character description editor does not discard your last edit anymore.
+    type: Fix
+  id: 6603
+  time: '2024-05-19T00:23:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28122
