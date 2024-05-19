@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Lawdrobe has some new items and new ads!
-    type: Add
-  id: 6106
-  time: '2024-03-07T19:18:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25299
 - author: Blackern5000
   changes:
   - message: Salvagers can now pull in overgrown floral anomalies.
@@ -3868,3 +3861,10 @@
   id: 6605
   time: '2024-05-19T22:22:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28146
+- author: EmoGarbage404
+  changes:
+  - message: Mirrors work again.
+    type: Fix
+  id: 6606
+  time: '2024-05-19T22:35:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28084
