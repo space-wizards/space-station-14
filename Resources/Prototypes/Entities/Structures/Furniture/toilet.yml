@@ -51,6 +51,15 @@
       disposals: !type:Container
   - type: Physics
     bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 190
+        mask:
+        - TableMask
   - type: Construction
     graph: Toilet
     node: toilet
