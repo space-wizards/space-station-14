@@ -23,7 +23,6 @@ public abstract class SharedNavMapSystem : EntitySystem
     public const int FloorMask = AllDirMask << (int) NavMapChunkType.Floor;
 
     [Robust.Shared.IoC.Dependency] private readonly TagSystem _tagSystem = default!;
-    [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private readonly string[] _wallTags = ["Wall", "Window"];
     private EntityQuery<NavMapDoorComponent> _doorQuery;
