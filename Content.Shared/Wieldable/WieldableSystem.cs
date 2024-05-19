@@ -161,7 +161,7 @@ public sealed class WieldableSystem : EntitySystem
             return false;
         }
 
-        if (hands.CountFreeHands() < component.FreeHandsRequired)
+        if (_handsSystem.CountFreeableHands((user, hands)) < component.FreeHandsRequired)
         {
             if (!quiet)
             {
@@ -202,9 +202,21 @@ public sealed class WieldableSystem : EntitySystem
         if (component.WieldSound != null)
             _audioSystem.PlayPredicted(component.WieldSound, used, user);
 
+        var virtuals = new List<EntityUid>();
         for (var i = 0; i < component.FreeHandsRequired; i++)
         {
-            _virtualItemSystem.TrySpawnVirtualItemInHand(used, user);
+            if (_virtualItemSystem.TrySpawnVirtualItemInHand(used, user, out var virtualItem, true))
+            {
+                virtuals.Add(virtualItem.Value);
+                continue;
+            }
+
+            foreach (var existingVirtual in virtuals)
+            {
+                QueueDel(existingVirtual);
+            }
+
+            return false;
         }
 
         if (TryComp(used, out UseDelayComponent? useDelay)
