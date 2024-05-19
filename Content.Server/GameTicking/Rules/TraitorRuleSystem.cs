@@ -151,7 +151,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         var sb = new StringBuilder();
         sb.AppendLine("\n" + Loc.GetString($"traitor-{objectiveIssuer}-intro"));
         sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-goal"));
-        sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-uplink"));
+        if (!shortBrief)
+            sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-uplink"));
         sb.AppendLine(Loc.GetString($"traitor-{objectiveIssuer}-allies"));
         sb.AppendLine("\n" + Loc.GetString($"traitor-role-codewords{(shortBrief ? "-short" : "")}", ("codewords", string.Join(", ", codewords))));
 
