@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Doctor-Cpu
-  changes:
-  - message: Cargo palllets can no longer be ordered from cargo request terminal
-    type: Remove
-  id: 6105
-  time: '2024-03-07T17:53:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25882
 - author: Beck Thompson
   changes:
   - message: Lawdrobe has some new items and new ads!
@@ -3868,3 +3861,10 @@
   id: 6604
   time: '2024-05-19T01:35:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27975
+- author: SHOTbyGUN
+  changes:
+  - message: White cane recipe for MedFab
+    type: Add
+  id: 6605
+  time: '2024-05-19T22:22:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28146
