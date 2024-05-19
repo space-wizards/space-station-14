@@ -267,6 +267,7 @@ namespace Content.Shared.Damage
             }
 
             component.DamageModifierSetId = state.ModifierSetId;
+            component.HealthBarThreshold = state.HealthBarThreshold;
 
             // Has the damage actually changed?
             DamageSpecifier newDamage = new() { DamageDict = new(state.DamageDict) };
