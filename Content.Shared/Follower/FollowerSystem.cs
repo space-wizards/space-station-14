@@ -277,7 +277,7 @@ public sealed class FollowerSystem : EntitySystem
 
             if (followedEnts[followed] > most)
             {
-                picked = uid;
+                picked = followed;
                 most = followedEnts[followed];
             }
         }
