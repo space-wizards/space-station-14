@@ -49,7 +49,7 @@ public class PvsBenchmark
 #if !DEBUG
         ProgramShared.PathOffset = "../../../../";
 #endif
-        PoolManager.Startup(null);
+        PoolManager.Startup();
 
         _pair = PoolManager.GetServerClient().GetAwaiter().GetResult();
         _entMan = _pair.Server.ResolveDependency<IEntityManager>();

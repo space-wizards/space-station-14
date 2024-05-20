@@ -1,31 +1,31 @@
 - type: dataset
-  id: book_type
+  id: BookTypes
   values:
-  - story-gen-book-type1 
-  - story-gen-book-type2 
-  - story-gen-book-type3 
-  - story-gen-book-type4 
-  - story-gen-book-type5 
-  - story-gen-book-type6 
-  - story-gen-book-type7 
-  - story-gen-book-type8 
-  - story-gen-book-type9 
+  - story-gen-book-type1
+  - story-gen-book-type2
+  - story-gen-book-type3
+  - story-gen-book-type4
+  - story-gen-book-type5
+  - story-gen-book-type6
+  - story-gen-book-type7
+  - story-gen-book-type8
+  - story-gen-book-type9
   - story-gen-book-type10
   - story-gen-book-type11
   - story-gen-book-type12
 
 - type: dataset
-  id: book_genre
+  id: BookGenres
   values:
-  - story-gen-book-genre1 
-  - story-gen-book-genre2 
-  - story-gen-book-genre3 
-  - story-gen-book-genre4 
-  - story-gen-book-genre5 
-  - story-gen-book-genre6 
-  - story-gen-book-genre7 
-  - story-gen-book-genre8 
-  - story-gen-book-genre9 
+  - story-gen-book-genre1
+  - story-gen-book-genre2
+  - story-gen-book-genre3
+  - story-gen-book-genre4
+  - story-gen-book-genre5
+  - story-gen-book-genre6
+  - story-gen-book-genre7
+  - story-gen-book-genre8
+  - story-gen-book-genre9
   - story-gen-book-genre10
   - story-gen-book-genre11
   - story-gen-book-genre12
@@ -33,17 +33,17 @@
   - story-gen-book-genre14
 
 - type: dataset
-  id: book_hint_appearance
+  id: BookHintAppearances
   values:
-  - story-gen-book-appearance1 
-  - story-gen-book-appearance2 
-  - story-gen-book-appearance3 
-  - story-gen-book-appearance4 
-  - story-gen-book-appearance5 
-  - story-gen-book-appearance6 
-  - story-gen-book-appearance7 
-  - story-gen-book-appearance8 
-  - story-gen-book-appearance9 
+  - story-gen-book-appearance1
+  - story-gen-book-appearance2
+  - story-gen-book-appearance3
+  - story-gen-book-appearance4
+  - story-gen-book-appearance5
+  - story-gen-book-appearance6
+  - story-gen-book-appearance7
+  - story-gen-book-appearance8
+  - story-gen-book-appearance9
   - story-gen-book-appearance10
   - story-gen-book-appearance11
   - story-gen-book-appearance12
@@ -64,17 +64,17 @@
   - story-gen-book-appearance27
 
 - type: dataset
-  id: book_character
+  id: BookCharacters
   values:
-  - story-gen-book-character1 
-  - story-gen-book-character2 
-  - story-gen-book-character3 
-  - story-gen-book-character4 
-  - story-gen-book-character5 
-  - story-gen-book-character6 
-  - story-gen-book-character7 
-  - story-gen-book-character8 
-  - story-gen-book-character9 
+  - story-gen-book-character1
+  - story-gen-book-character2
+  - story-gen-book-character3
+  - story-gen-book-character4
+  - story-gen-book-character5
+  - story-gen-book-character6
+  - story-gen-book-character7
+  - story-gen-book-character8
+  - story-gen-book-character9
   - story-gen-book-character10
   - story-gen-book-character11
   - story-gen-book-character12
@@ -108,17 +108,17 @@
   - story-gen-book-character40
 
 - type: dataset
-  id: book_character_trait
+  id: BookCharacterTraits
   values:
-  - story-gen-book-character-trait1 
-  - story-gen-book-character-trait2 
-  - story-gen-book-character-trait3 
-  - story-gen-book-character-trait4 
-  - story-gen-book-character-trait5 
-  - story-gen-book-character-trait6 
-  - story-gen-book-character-trait7 
-  - story-gen-book-character-trait8 
-  - story-gen-book-character-trait9 
+  - story-gen-book-character-trait1
+  - story-gen-book-character-trait2
+  - story-gen-book-character-trait3
+  - story-gen-book-character-trait4
+  - story-gen-book-character-trait5
+  - story-gen-book-character-trait6
+  - story-gen-book-character-trait7
+  - story-gen-book-character-trait8
+  - story-gen-book-character-trait9
   - story-gen-book-character-trait10
   - story-gen-book-character-trait11
   - story-gen-book-character-trait12
@@ -137,17 +137,17 @@
 
 
 - type: dataset
-  id: book_event
+  id: BookEvents
   values:
-  - story-gen-book-event1 
-  - story-gen-book-event2 
-  - story-gen-book-event3 
-  - story-gen-book-event4 
-  - story-gen-book-event5 
-  - story-gen-book-event6 
-  - story-gen-book-event7 
-  - story-gen-book-event8 
-  - story-gen-book-event9 
+  - story-gen-book-event1
+  - story-gen-book-event2
+  - story-gen-book-event3
+  - story-gen-book-event4
+  - story-gen-book-event5
+  - story-gen-book-event6
+  - story-gen-book-event7
+  - story-gen-book-event8
+  - story-gen-book-event9
   - story-gen-book-event10
   - story-gen-book-event11
   - story-gen-book-event12
@@ -165,50 +165,50 @@
   - story-gen-book-event24
 
 - type: dataset
-  id: book_action
+  id: BookActions
   values:
-  - story-gen-book-action1 
-  - story-gen-book-action2 
-  - story-gen-book-action3 
-  - story-gen-book-action4 
-  - story-gen-book-action5 
-  - story-gen-book-action6 
-  - story-gen-book-action7 
-  - story-gen-book-action8 
-  - story-gen-book-action9 
+  - story-gen-book-action1
+  - story-gen-book-action2
+  - story-gen-book-action3
+  - story-gen-book-action4
+  - story-gen-book-action5
+  - story-gen-book-action6
+  - story-gen-book-action7
+  - story-gen-book-action8
+  - story-gen-book-action9
   - story-gen-book-action10
   - story-gen-book-action11
   - story-gen-book-action12
 
 - type: dataset
-  id: book_action_trait
+  id: BookActionTraits
   values:
-  - story-gen-book-action-trait1 
-  - story-gen-book-action-trait2 
-  - story-gen-book-action-trait3 
-  - story-gen-book-action-trait4 
-  - story-gen-book-action-trait5 
-  - story-gen-book-action-trait6 
-  - story-gen-book-action-trait7 
-  - story-gen-book-action-trait8 
-  - story-gen-book-action-trait9 
+  - story-gen-book-action-trait1
+  - story-gen-book-action-trait2
+  - story-gen-book-action-trait3
+  - story-gen-book-action-trait4
+  - story-gen-book-action-trait5
+  - story-gen-book-action-trait6
+  - story-gen-book-action-trait7
+  - story-gen-book-action-trait8
+  - story-gen-book-action-trait9
   - story-gen-book-action-trait10
   - story-gen-book-action-trait11
   - story-gen-book-action-trait12
   - story-gen-book-action-trait13
 
 - type: dataset
-  id: book_location
+  id: BookLocations
   values:
-  - story-gen-book-location1 
-  - story-gen-book-location2 
-  - story-gen-book-location3 
-  - story-gen-book-location4 
-  - story-gen-book-location5 
-  - story-gen-book-location6 
-  - story-gen-book-location7 
-  - story-gen-book-location8 
-  - story-gen-book-location9 
+  - story-gen-book-location1
+  - story-gen-book-location2
+  - story-gen-book-location3
+  - story-gen-book-location4
+  - story-gen-book-location5
+  - story-gen-book-location6
+  - story-gen-book-location7
+  - story-gen-book-location8
+  - story-gen-book-location9
   - story-gen-book-location10
   - story-gen-book-location11
   - story-gen-book-location12
@@ -236,7 +236,7 @@
   - story-gen-book-location34
 
 - type: dataset
-  id: book_story_element
+  id: BookStoryElements
   values:
   - story-gen-book-element1
   - story-gen-book-element2
@@ -249,17 +249,17 @@
   - story-gen-book-element9
 
 - type: dataset
-  id: book_story_element_trait
+  id: BookStoryElementTraits
   values:
-  - story-gen-book-element-trait1 
-  - story-gen-book-element-trait2 
-  - story-gen-book-element-trait3 
-  - story-gen-book-element-trait4 
-  - story-gen-book-element-trait5 
-  - story-gen-book-element-trait6 
-  - story-gen-book-element-trait7 
-  - story-gen-book-element-trait8 
-  - story-gen-book-element-trait9 
+  - story-gen-book-element-trait1
+  - story-gen-book-element-trait2
+  - story-gen-book-element-trait3
+  - story-gen-book-element-trait4
+  - story-gen-book-element-trait5
+  - story-gen-book-element-trait6
+  - story-gen-book-element-trait7
+  - story-gen-book-element-trait8
+  - story-gen-book-element-trait9
   - story-gen-book-element-trait10
   - story-gen-book-element-trait11
   - story-gen-book-element-trait12
