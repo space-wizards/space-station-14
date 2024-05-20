@@ -16,7 +16,7 @@ namespace Content.Server.EntityEffects.Effects
         {
             if (!args.EntityManager.TryGetComponent(args.TargetEntity, out FlammableComponent? flammable)) return;
 
-            var flammableSystem = EntitySystem.Get<FlammableSystem>();
+            var flammableSystem = args.EntityManager.System<FlammableSystem>();
             flammableSystem.Extinguish(args.TargetEntity, flammable);
             flammableSystem.AdjustFireStacks(args.TargetEntity, -1.5f * (float) args.Quantity, flammable);
         }

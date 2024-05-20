@@ -1,8 +1,10 @@
 using Content.Server.Emp;
 using Content.Shared.EntityEffects;
+using Content.Shared.Chemistry.Reagent;
+using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Chemistry.ReactionEffects;
+namespace Content.Server.EntityEffects.Effects;
 
 
 [DataDefinition]
@@ -37,11 +39,12 @@ public sealed partial class EmpReactionEffect : EntityEffect
 
     public override void Effect(EntityEffectArgs args)
     {
+        var tSys = args.EntityManager.System<TransformSystem>();
         var transform = args.EntityManager.GetComponent<TransformComponent>(args.TargetEntity);
         var range = MathF.Min((float) (args.Quantity*EmpRangePerUnit), EmpMaxRange);
 
-        args.EntityManager.System<EmpSystem>().EmpPulse(
-            transform.MapPosition,
+        args.EntityManager.System<EmpSystem>()
+            .EmpPulse(tSys.GetMapCoordinates(args.TargetEntity, xform: transform),
             range,
             EnergyConsumption,
             DisableDuration);

@@ -12,6 +12,7 @@
     - DoorjackObjective
     - SpiderChargeObjective
     - TerrorObjective
+    - MassArrestObjective
     - NinjaSurviveObjective
   - type: NinjaRule
     threats: NinjaThreats
@@ -43,7 +44,7 @@
       playerRatio: 1
       lateJoinAdditional: true
       allowNonHumans: true
-      multiAntagSetting: All
+      multiAntagSetting: NotExclusive
       startingGear: ThiefGear
       components:
       - type: Pacified

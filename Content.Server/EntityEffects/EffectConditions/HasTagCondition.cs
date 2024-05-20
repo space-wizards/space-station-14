@@ -18,7 +18,7 @@ public sealed partial class HasTag : EntityEffectCondition
     public override bool Condition(EntityEffectArgs args)
     {
         if (args.EntityManager.TryGetComponent<TagComponent>(args.TargetEntity, out var tag))
-            return EntitySystem.Get<TagSystem>().HasTag(tag, Tag) ^ Invert;
+            return args.EntityManager.System<TagSystem>().HasTag(tag, Tag) ^ Invert;
 
         return false;
     }

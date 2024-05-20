@@ -6,6 +6,9 @@ namespace Content.Server.EntityEffects.Effects.PlantMetabolism;
 [UsedImplicitly]
 public sealed partial class PlantAdjustWeeds : PlantAdjustAttribute
 {
+    public override string GuidebookAttributeName { get; set; } = "plant-attribute-weeds";
+    public override bool GuidebookIsAttributePositive { get; protected set; } = false;
+
     public override void Effect(EntityEffectArgs args)
     {
         if (!CanMetabolize(args.TargetEntity, out var plantHolderComp, args.EntityManager))

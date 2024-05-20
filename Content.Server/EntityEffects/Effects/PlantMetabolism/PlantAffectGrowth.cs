@@ -7,6 +7,8 @@ namespace Content.Server.EntityEffects.Effects.PlantMetabolism;
 [UsedImplicitly]
 public sealed partial class PlantAffectGrowth : PlantAdjustAttribute
 {
+    public override string GuidebookAttributeName { get; set; } = "plant-attribute-growth";
+
     public override void Effect(EntityEffectArgs args)
     {
         if (!CanMetabolize(args.TargetEntity, out var plantHolderComp, args.EntityManager))

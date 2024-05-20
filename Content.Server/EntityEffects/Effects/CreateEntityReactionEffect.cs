@@ -2,7 +2,7 @@ using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Chemistry.ReactionEffects;
+namespace Content.Server.EntityEffects.Effects;
 
 [DataDefinition]
 public sealed partial class CreateEntityReactionEffect : EntityEffect
@@ -33,7 +33,7 @@ public sealed partial class CreateEntityReactionEffect : EntityEffect
 
         for (var i = 0; i < quantity; i++)
         {
-            var uid = args.EntityManager.SpawnEntity(Entity, transform.MapPosition);
+            var uid = args.EntityManager.SpawnEntity(Entity, transformSystem.GetMapCoordinates(args.TargetEntity, xform: transform));
             transformSystem.AttachToGridOrMap(uid);
 
             // TODO figure out how to properly spawn inside of containers

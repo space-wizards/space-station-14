@@ -18,7 +18,7 @@ public sealed partial class Oxygenate : EntityEffect
     {
         if (args.EntityManager.TryGetComponent<RespiratorComponent>(args.TargetEntity, out var resp))
         {
-            var respSys = EntitySystem.Get<RespiratorSystem>();
+            var respSys = args.EntityManager.System<RespiratorSystem>();
             respSys.UpdateSaturation(args.TargetEntity, args.Quantity.Float() * Factor, resp);
         }
     }
