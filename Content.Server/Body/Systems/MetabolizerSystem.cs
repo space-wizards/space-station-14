@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
+using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -190,7 +191,7 @@ namespace Content.Server.Body.Systems
                     }
 
                     var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
-                    var args = new ReagentEffectArgs(actualEntity, ent, solution, proto, mostToRemove,
+                    var args = new EntityEffectArgs(actualEntity, ent, solution, proto, mostToRemove,
                         EntityManager, null, scale);
 
                     // do all effects, if conditions apply

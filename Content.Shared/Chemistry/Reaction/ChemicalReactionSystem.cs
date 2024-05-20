@@ -2,6 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
+using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -197,7 +198,7 @@ namespace Content.Shared.Chemistry.Reaction
 
         private void OnReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, ReagentPrototype? reagent, FixedPoint2 unitReactions)
         {
-            var args = new ReagentEffectArgs(soln, null, soln.Comp.Solution,
+            var args = new EntityEffectArgs(soln, null, soln.Comp.Solution,
                 reagent,
                 unitReactions, EntityManager, null, 1f);
 
@@ -213,7 +214,7 @@ namespace Content.Shared.Chemistry.Reaction
 
                 if (effect.ShouldLog)
                 {
-                    var entity = args.SolutionEntity;
+                    var entity = args.TargetEntity;
                     _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
                         $"Reaction effect {effect.GetType().Name:effect} of reaction {reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found")}");
                 }
