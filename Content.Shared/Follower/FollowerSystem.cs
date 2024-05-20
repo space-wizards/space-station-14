@@ -6,7 +6,6 @@ using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -264,7 +263,7 @@ public sealed class FollowerSystem : EntitySystem
 
         // Look for followers that are ghosts and are player controlled
         var query = EntityQueryEnumerator<FollowerComponent, GhostComponent, ActorComponent>();
-        while (query.MoveNext(out var uid, out var follower, out var _, out var actor))
+        while (query.MoveNext(out _, out var follower, out _, out var actor))
         {
             // Exclude admins
             if (_adminManager.IsAdmin(actor.PlayerSession))
