@@ -57,15 +57,6 @@
     back: ClothingBackpackDuffelSyndicate
     shoes: ClothingShoesBootsCombat
     gloves: ClothingHandsGlovesColorBlack
-
-# Syndicate Operative Outfit - Disaster Victim
-- type: startingGear
-  id: SyndicateOperativeGearDisasterVictim
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitSyndieFormal
-    back: ClothingBackpackDuffelSyndicate
-    shoes: ClothingShoesBootsCombat
-    gloves: ClothingHandsGlovesColorBlack
     id: SyndiPDA
     ears: ClothingHeadsetAltSyndicate
 
