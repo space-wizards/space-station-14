@@ -1,4 +1,11 @@
 - type: trait
+  id: PirateAccent
+  name: trait-pirate-accent-name
+  description: trait-pirate-accent-desc
+  components:
+    - type: PirateAccent
+
+- type: trait
   id: Accentless
   name: trait-accentless-name
   description: trait-accentless-desc
@@ -65,5 +72,4 @@
   description: trait-liar-desc
   components:
     - type: ReplacementAccent
-      replacementChance: 0.15
       accent: liar

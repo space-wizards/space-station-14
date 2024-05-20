@@ -1,94 +1,4 @@
 ﻿Entries:
-- author: ps3moira
-  changes:
-  - message: Changed brick, wood, and web walls to be unable to conjoin with different
-      walls.
-    type: Tweak
-  id: 6096
-  time: '2024-03-06T01:36:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25674
-- author: Froffy
-  changes:
-  - message: Water can now be scooped from water tiles, such as planetary rivers.
-    type: Add
-  id: 6097
-  time: '2024-03-06T01:37:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25825
-- author: Ko4erga
-  changes:
-  - message: '"Post light" updated.'
-    type: Tweak
-  id: 6098
-  time: '2024-03-06T01:39:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25814
-- author: Ilya246
-  changes:
-  - message: Gas leak events are now 4 times as strong, and may leak water vapor.
-      The fog is coming.
-    type: Tweak
-  id: 6099
-  time: '2024-03-06T01:41:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25864
-- author: Just_Art
-  changes:
-  - message: Added bob 5 hair!
-    type: Add
-  - message: Added long hair with bundles!
-    type: Add
-  id: 6100
-  time: '2024-03-06T01:42:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25772
-- author: Errant
-  changes:
-  - message: Debug coordinates are now automatically enabled on the F3 overlay upon
-      readmin.
-    type: Fix
-  id: 6101
-  time: '2024-03-06T01:43:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25063
-- author: metalgearsloth
-  changes:
-  - message: Pod launches will now be offset slightly.
-    type: Add
-  id: 6102
-  time: '2024-03-06T01:44:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25855
-- author: Brandon-Huu
-  changes:
-  - message: The Syndicate is now supplying barber scissors in the Hristov bundle
-      to make your disguises even balde- better.
-    type: Tweak
-  id: 6103
-  time: '2024-03-06T02:03:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25695
-- author: Tayrtahn
-  changes:
-  - message: Flasks can once again be put into dispensers.
-    type: Fix
-  id: 6104
-  time: '2024-03-06T17:19:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25883
-- author: Doctor-Cpu
-  changes:
-  - message: Cargo palllets can no longer be ordered from cargo request terminal
-    type: Remove
-  id: 6105
-  time: '2024-03-07T17:53:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25882
-- author: Beck Thompson
-  changes:
-  - message: Lawdrobe has some new items and new ads!
-    type: Add
-  id: 6106
-  time: '2024-03-07T19:18:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25299
-- author: Blackern5000
-  changes:
-  - message: Salvagers can now pull in overgrown floral anomalies.
-    type: Add
-  id: 6107
-  time: '2024-03-07T19:37:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24650
 - author: Nimfar11
   changes:
   - message: Slimes can now drink FourteenLoko without harming their bodies.
@@ -3869,3 +3779,92 @@
   id: 6595
   time: '2024-05-14T23:59:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28010
+- author: Vermidia
+  changes:
+  - message: Shuttle roles get PDAs and headsets now
+    type: Fix
+  id: 6596
+  time: '2024-05-15T10:30:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28045
+- author: EdenTheLiznerd
+  changes:
+  - message: Removed the throngler from the grand lottery
+    type: Tweak
+  id: 6597
+  time: '2024-05-15T21:02:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28060
+- author: deltanedas
+  changes:
+  - message: Fixed ninja criminal records hack not changing sechud icons.
+    type: Fix
+  id: 6598
+  time: '2024-05-16T20:51:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28021
+- author: EmoGarbage404
+  changes:
+  - message: Fixed a bug that would cause items in your inventory to get stuck to
+      your cursor.
+    type: Fix
+  id: 6599
+  time: '2024-05-17T07:51:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27960
+- author: lzk228
+  changes:
+  - message: Fixed bug with pathological liar and zombie accents.
+    type: Fix
+  id: 6600
+  time: '2024-05-17T16:33:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28049
+- author: YuNii
+  changes:
+  - message: Added the ability to re-bind the emote menu.
+    type: Add
+  id: 6601
+  time: '2024-05-17T19:46:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28083
+- author: benjamin-burges
+  changes:
+  - message: Bible summon messages are now only visible to the chaplain using the
+      Bible.
+    type: Tweak
+  id: 6602
+  time: '2024-05-18T14:23:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28104
+- author: Aquif
+  changes:
+  - message: Changing your character's description now properly updates the save button.
+    type: Fix
+  - message: The character description editor does not discard your last edit anymore.
+    type: Fix
+  id: 6603
+  time: '2024-05-19T00:23:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28122
+- author: DrSmugleaf
+  changes:
+  - message: Attempting to dual wield something will now automatically drop the item
+      in your other hand.
+    type: Tweak
+  id: 6604
+  time: '2024-05-19T01:35:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27975
+- author: SHOTbyGUN
+  changes:
+  - message: White cane recipe for MedFab
+    type: Add
+  id: 6605
+  time: '2024-05-19T22:22:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28146
+- author: EmoGarbage404
+  changes:
+  - message: Mirrors work again.
+    type: Fix
+  id: 6606
+  time: '2024-05-19T22:35:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28084
+- author: PolterTzi
+  changes:
+  - message: The guidebook now lists the effects reagents have on plants.
+    type: Add
+  id: 6607
+  time: '2024-05-19T23:01:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28038

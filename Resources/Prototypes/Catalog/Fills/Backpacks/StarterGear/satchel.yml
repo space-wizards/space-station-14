@@ -218,7 +218,6 @@
       - id: RubberStampChaplain
       - id: WeaponGodGun
 
-
 - type: entity
   noSpawn: true
   parent: ClothingBackpackSatchel
@@ -300,4 +299,5 @@
     contents:
     - id: GasAnalyzer
     - id: trayScanner
+    - id: AccessConfiguratorUniversal
   - type: Unremoveable

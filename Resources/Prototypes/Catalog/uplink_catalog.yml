@@ -298,7 +298,7 @@
   id: UplinkExplodingPen
   name: uplink-exploding-pen-name
   description: uplink-exploding-pen-desc
-  icon: { sprite: /Textures/Objects/Misc/bureaucracy.rsi, state: pen }
+  icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
   productEntity: PenExplodingBox
   cost:
     Telecrystal: 4
@@ -472,7 +472,7 @@
   id: UplinkHypopen
   name: uplink-hypopen-name
   description: uplink-hypopen-desc
-  icon: { sprite: /Textures/Objects/Misc/bureaucracy.rsi, state: pen }
+  icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
   productEntity: HypopenBox
   cost:
     Telecrystal: 6
