@@ -824,4 +824,12 @@
       raffle:
         settings: short
     - type: Loadout
+<<<<<<< HEAD
       prototypes: [ SyndicateOperativeGearDisasterVictim ]
+=======
+      prototypes: [ SyndicateOperativeGearCivilian ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+>>>>>>> 3b6136894661e3a2858dccdf5a5c68afa95e6bb6

@@ -375,3 +375,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Visitor
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconAdmin
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Admin
