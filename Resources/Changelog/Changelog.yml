@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nimfar11
-  changes:
-  - message: Slimes can now drink FourteenLoko without harming their bodies.
-    type: Tweak
-  id: 6108
-  time: '2024-03-07T20:50:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25889
 - author: NakataRin
   changes:
   - message: Evacuation shuttle arrives 10 minutes on green alert now.
@@ -3868,3 +3861,11 @@
   id: 6607
   time: '2024-05-19T23:01:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28038
+- author: Tayrtahn
+  changes:
+  - message: The popup for someone pointing at you is now slightly larger than normal
+      popups.
+    type: Tweak
+  id: 6608
+  time: '2024-05-20T13:32:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28152
