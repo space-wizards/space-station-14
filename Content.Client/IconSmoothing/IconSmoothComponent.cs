@@ -30,7 +30,7 @@ namespace Content.Client.IconSmoothing
         ///     Prepended to the RSI state.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("base")]
-        public string StateBase { get; private set; } = string.Empty;
+        public string StateBase { get; set; } = string.Empty;
 
         [DataField("shader", customTypeSerializer:typeof(PrototypeIdSerializer<ShaderPrototype>))]
         public string? Shader;
@@ -45,6 +45,12 @@ namespace Content.Client.IconSmoothing
         ///     Used by <see cref="IconSmoothSystem"/> to reduce redundant updates.
         /// </summary>
         internal int UpdateGeneration { get; set; }
+
+        /// <summary>
+        /// If not empty, <see cref="StateBase"/> will be randomly selected from this list. Allows to randomize the visual.
+        /// </summary>
+        [DataField]
+        public List<string> RandomStates = new();
     }
 
     /// <summary>

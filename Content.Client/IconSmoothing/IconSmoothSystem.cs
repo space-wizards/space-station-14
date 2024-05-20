@@ -1,10 +1,12 @@
 using System.Numerics;
 using Content.Shared.IconSmoothing;
+using Content.Shared.Random.Helpers;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Map.Enumerators;
+using Robust.Shared.Random;
 using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.IconSmoothing
@@ -18,6 +20,8 @@ namespace Content.Client.IconSmoothing
     {
         private readonly Queue<EntityUid> _dirtyEntities = new();
         private readonly Queue<EntityUid> _anchorChangedEntities = new();
+
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         private int _generation;
 
@@ -42,6 +46,10 @@ namespace Content.Client.IconSmoothing
 
         private void OnStartup(EntityUid uid, IconSmoothComponent component, ComponentStartup args)
         {
+            //Randomize visual
+            if (component.RandomStates.Count > 0)
+                component.StateBase = _random.Pick(component.RandomStates);
+
             var xform = Transform(uid);
             if (xform.Anchored)
             {
