@@ -1,0 +1,22 @@
+<ContainerButton xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:style="clr-namespace:Content.Client.Stylesheets">
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalExpand="True"
+                  SeparationOverride="0"
+                  Name="InternalHBox">
+        <SpriteView Scale="2 2"
+                    OverrideDirection="South"
+                    Name="View"/>
+        <Label Name="DescriptionLabel"
+               ClipText="True"
+               HorizontalExpand="True"/>
+        <Button Name="DeleteButton"
+                Text="{Loc 'character-setup-gui-character-picker-button-delete-button'}"/>
+        <Button Name="ConfirmDeleteButton"
+                Text="{Loc 'character-setup-gui-character-picker-button-confirm-delete-button'}"
+                Visible="False"
+                ModulateSelfOverride="{x:Static style:StyleNano.ButtonColorCautionDefault}"/>
+
+    </BoxContainer>
+</ContainerButton>

@@ -61,7 +61,7 @@
 - type: cargoProduct
   id: ServiceBureaucracy
   icon:
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: Objects/Misc/pens.rsi
     state: pen
   product: CrateServiceBureaucracy
   cost: 1000
