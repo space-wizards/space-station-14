@@ -109,8 +109,12 @@ public abstract partial class SharedHandsSystem
         if (!CanDropHeld(uid, hand, checkActionBlocker))
             return false;
 
+        var userXform = Transform(uid);
+        var isInContainer = ContainerSystem.IsEntityOrParentInContainer(uid, xform: userXform);
+
         var entity = hand.HeldEntity!.Value;
-        DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
+        if (!isInContainer)
+            DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
 
         if (TerminatingOrDeleted(entity))
             return true;
@@ -118,9 +122,6 @@ public abstract partial class SharedHandsSystem
         var itemXform = Transform(entity);
         if (itemXform.MapUid == null)
             return true;
-
-        var userXform = Transform(uid);
-        var isInContainer = ContainerSystem.IsEntityOrParentInContainer(uid, xform: userXform);
 
         if (targetDropLocation == null || isInContainer)
         {
