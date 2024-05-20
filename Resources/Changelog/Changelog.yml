@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: NakataRin
-  changes:
-  - message: Evacuation shuttle arrives 10 minutes on green alert now.
-    type: Tweak
-  id: 6109
-  time: '2024-03-07T21:01:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25906
 - author: Admiral-Obvious-001
   changes:
   - message: Zombies are now tougher to kill.
@@ -3869,3 +3862,11 @@
   id: 6608
   time: '2024-05-20T13:32:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28152
+- author: Tayrtahn
+  changes:
+  - message: '"Warp to most followed" ghost option no longer includes admins and non-ghost
+      followers.'
+    type: Fix
+  id: 6609
+  time: '2024-05-20T14:12:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28120
