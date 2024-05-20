@@ -272,7 +272,7 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Items/Toys/weh.ogg
-  - type: EmitSoundOnTrigger
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/weh.ogg
   - type: Food
@@ -327,7 +327,7 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
-  - type: EmitSoundOnTrigger
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
   - type: Food
@@ -688,7 +688,7 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
-  - type: emitSoundOnCollide
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: Food
@@ -778,7 +778,7 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Human/malescream_4.ogg
-  - type: EmitSoundOnTrigger
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Voice/Human/malescream_5.ogg
 
