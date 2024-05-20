@@ -267,7 +267,7 @@ public sealed class FollowerSystem : EntitySystem
         while (query.MoveNext(out var uid, out var follower, out var _, out var _))
         {
             // Exclude admins
-            if (_adminManager.IsAdmin(uid))
+            if (_adminManager.IsAdmin(actor.PlayerSession))
                 continue;
 
             var followed = follower.Following;
