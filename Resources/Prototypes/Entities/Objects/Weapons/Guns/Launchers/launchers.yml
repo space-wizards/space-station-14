@@ -11,22 +11,17 @@
     layers:
     - state: icon
       map: ["enum.GunVisualLayers.Base"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
   - type: AmmoCounter
   - type: Gun
     fireRate: 1
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
   - type: BallisticAmmoProvider
+    proto: GrenadeFrag
+    capacity: 3
     whitelist:
       tags:
       - Grenade
-    capacity: 3
-    proto: GrenadeFrag
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: ContainerContainer
@@ -48,18 +43,16 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 0.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
   - type: BallisticAmmoProvider
+    proto: CartridgeRocket
+    capacity: 1
     whitelist:
       tags:
       - CartridgeRocket
-    proto: CartridgeRocket
-    capacity: 1
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: ContainerContainer
@@ -86,8 +79,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 6
     selectedMode: FullAuto
@@ -124,8 +115,6 @@
     layers:
     - state: icon
       map: ["enum.GunVisualLayers.Base"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
   - type: Gun
     fireRate: 1
     soundGunshot:
@@ -243,8 +232,8 @@
   - type: AmmoCounter
   - type: GrapplingGun
   - type: Gun
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
     fireRate: 0.5
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
   - type: BasicEntityAmmoProvider
     proto: GrapplingHook
     capacity: 1
