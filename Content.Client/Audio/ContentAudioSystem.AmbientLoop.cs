@@ -4,6 +4,7 @@ using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Random;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -14,28 +15,26 @@ public sealed partial class ContentAudioSystem
 {
     private EntityUid? _ambientLoopStream;
     private AmbientLoopPrototype? _loopProto;
+    private readonly TimeSpan _ambientLoopUpdateTime = TimeSpan.FromSeconds(5f);
 
-    private readonly TimeSpan AmbientLoopUpdateTime = TimeSpan.FromSeconds(5f);
-    private const float AmbientLoopFadeTime = 5f;
+    private const float AmbientLoopFadeInTime = 5f;
+    private const float AmbientLoopFadeOutTime = 10f;
     private TimeSpan _nextLoop;
+
     private void InitializeAmbientLoop()
     {
-        //TODO: Add CVar to ambient loop
+        Subs.CVar(_configManager, CCVars.AmbientMusicVolume, AmbienceCVarChangedAmbientLoop, true);
 
-        //Reset Loop
         _nextAudio = TimeSpan.Zero;
-        SetupAmbienceLoop();
-
     }
 
-    private void SetupAmbienceLoop()
+    private void AmbienceCVarChangedAmbientLoop(float obj)
     {
-        foreach (var ambienceLoop in _proto.EnumeratePrototypes<AmbientLoopPrototype>())
+        _volumeSlider = SharedAudioSystem.GainToVolume(obj);
+
+        if (_ambientLoopStream != null && _loopProto != null)
         {
-            var loops = _ambientSounds.GetOrNew(ambienceLoop.ID);
-
-            DebugTools.Assert(loops.Count == 0);
-
+            _audio.SetVolume(_ambientLoopStream, _loopProto.Sound.Params.Volume + _volumeSlider);
         }
     }
 
@@ -44,7 +43,7 @@ public sealed partial class ContentAudioSystem
         if (_timing.CurTime < _nextLoop)
             return;
 
-        _nextLoop = _timing.CurTime + AmbientLoopUpdateTime;
+        _nextLoop = _timing.CurTime + _ambientLoopUpdateTime;
 
         if (_state.CurrentState is not GameplayState)
         {
@@ -60,7 +59,7 @@ public sealed partial class ContentAudioSystem
         {
             ChangeAmbientLoop(currentLoopProto);
         }
-        else if (_loopProto.ToString() != currentLoopProto.ToString())
+        else if (_loopProto.ID != currentLoopProto.ID)
         {
             ChangeAmbientLoop(currentLoopProto);
         }
@@ -71,16 +70,19 @@ public sealed partial class ContentAudioSystem
         if (!TryGetAudioLoops(newProto.Sound, out var loopsResPaths))
             return;
 
-        FadeOut(_ambientLoopStream, duration: AmbientLoopFadeTime);
+        _loopProto = newProto;
+        FadeOut(_ambientLoopStream, duration: AmbientLoopFadeOutTime);
         var loopResPath = _random.Pick(loopsResPaths).ToString();
         var newLoop = _audio.PlayGlobal(
             loopResPath,
             Filter.Local(),
             false,
-            AudioParams.Default.WithLoop(true) //TODO Volume CVAR
+            AudioParams.Default
+                .WithLoop(true)
+                .WithVolume(_loopProto.Sound.Params.Volume + _volumeSlider)
         );
         _ambientLoopStream = newLoop.Value.Entity;
-        FadeIn(_ambientLoopStream, newLoop.Value.Component, AmbientLoopFadeTime);
+        FadeIn(_ambientLoopStream, newLoop.Value.Component, AmbientLoopFadeInTime);
     }
 
     private bool TryGetAudioLoops(SoundSpecifier sound, out List<ResPath> sounds)
@@ -112,10 +114,10 @@ public sealed partial class ContentAudioSystem
         if (player == null)
             return null;
 
-        var ambiLoops = _proto.EnumeratePrototypes<AmbientLoopPrototype>().ToList();
-        ambiLoops.Sort((x, y) => y.Priority.CompareTo(x.Priority));
+        var ambientLoops = _proto.EnumeratePrototypes<AmbientLoopPrototype>().ToList();
+        ambientLoops.Sort((x, y) => y.Priority.CompareTo(x.Priority));
 
-        foreach (var loop in ambiLoops)
+        foreach (var loop in ambientLoops)
         {
             if (!_rules.IsTrue(player.Value, _proto.Index<RulesPrototype>(loop.Rules)))
                 continue;

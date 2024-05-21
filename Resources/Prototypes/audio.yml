@@ -101,7 +101,7 @@
   sound:
     collection: AmbientLoopStation
     params:
-      volume: -5
+      volume: -20
   rules: AlwaysTrue
   priority: 0
 
@@ -110,7 +110,7 @@
   sound:
     collection: AmbientLoopWind
     params:
-      volume: -5
+      volume: -3
   rules: OnMapGrid
   priority: 1
 

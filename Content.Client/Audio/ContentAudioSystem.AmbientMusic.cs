@@ -59,7 +59,7 @@ public sealed partial class ContentAudioSystem
 
     private void InitializeAmbientMusic()
     {
-        Subs.CVar(_configManager, CCVars.AmbientMusicVolume, AmbienceCVarChanged, true);
+        Subs.CVar(_configManager, CCVars.AmbientMusicVolume, AmbienceCVarChangedAmbientMusic, true);
         _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("audio.ambience");
 
         // Reset audio
@@ -72,7 +72,7 @@ public sealed partial class ContentAudioSystem
         SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEndMessage);
     }
 
-    private void AmbienceCVarChanged(float obj)
+    private void AmbienceCVarChangedAmbientMusic(float obj)
     {
         _volumeSlider = SharedAudioSystem.GainToVolume(obj);
 
