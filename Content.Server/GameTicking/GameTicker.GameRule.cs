@@ -45,9 +45,11 @@ public sealed partial class GameTicker
             ClearGameRulesCommand);
 
         // List game rules command.
+        var localizedHelp = Loc.GetString("listgamerules-command-help");
+
         _consoleHost.RegisterCommand("listgamerules",
-            "Lists all rules that have been added for the round so far.",
-            "listgamerules - Lists all rules that have been added for the round so far.",
+            string.Empty,
+            $"listgamerules - {localizedHelp}",
             ListGameRuleCommand);
     }
 
