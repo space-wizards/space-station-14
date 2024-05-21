@@ -119,63 +119,26 @@
 
 # tether gun
 - type: entity
-  parent:
-  - BaseItem
-  - PowerCellSlotMediumItem
+  parent: BasePhysicsGun
   id: WeaponTetherGun
   name: tether gun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
-    layers:
-    - state: base
-    - state: base-unshaded
-      map: [ "unshaded" ]
-      shader: unshaded
-      visible: false
-  - type: Item
-    storedRotation: -90
   - type: TetherGun
     frequency: 5
     dampingRatio: 4
-  - type: PowerCellDraw
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.TetherVisualsStatus.Key:
-        unshaded:
-          True: { visible: true }
-          False: { visible: false }
-  - type: ToggleableLightVisuals
-    spriteLayer: unshaded
-    inhandVisuals:
-      left:
-      - state: inhand-left-unshaded
-        shader: unshaded
-      right:
-      - state: inhand-right-unshaded
-        shader: unshaded
 
 # force gun
 - type: entity
-  parent:
-  - BaseItem
-  - PowerCellSlotMediumItem
+  parent: BasePhysicsGun
   id: WeaponForceGun
   name: force gun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
-    layers:
-    - state: base
-    - state: base-unshaded
-      map: [ "unshaded" ]
-      shader: unshaded
-      visible: false
-  - type: Item
-    storedRotation: -90
   - type: ForceGun
     frequency: 15
     dampingRatio: 4
@@ -185,23 +148,6 @@
       path: /Audio/Weapons/soup.ogg
       params:
         volume: 2
-  - type: PowerCellDraw
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.TetherVisualsStatus.Key:
-        unshaded:
-          True: { visible: true }
-          False: { visible: false }
-  - type: ToggleableLightVisuals
-    spriteLayer: unshaded
-    inhandVisuals:
-      left:
-      - state: inhand-left-unshaded
-        shader: unshaded
-      right:
-      - state: inhand-right-unshaded
-        shader: unshaded
 
 # grappling gun
 - type: entity
