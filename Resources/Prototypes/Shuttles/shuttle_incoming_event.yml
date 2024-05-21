@@ -1,0 +1,29 @@
+- type: preloadedGrid
+  id: ShuttleStriker
+  path: /Maps/Shuttles/ShuttleEvent/striker.yml
+  copies: 2
+
+- type: preloadedGrid
+  id: ShuttleCargoLost
+  path: /Maps/Shuttles/ShuttleEvent/lost_cargo.yml
+  copies: 2
+
+- type: preloadedGrid
+  id: TravelingCuisine
+  path: /Maps/Shuttles/ShuttleEvent/traveling_china_cuisine.yml
+  copies: 2
+
+- type: preloadedGrid
+  id: DisasterEvacPod
+  path: /Maps/Shuttles/ShuttleEvent/disaster_evacpod.yml
+  copies: 3
+
+- type: preloadedGrid
+  id: Honki
+  path: /Maps/Shuttles/ShuttleEvent/honki.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: SyndieEvacPod
+  path: /Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml
+  copies: 2

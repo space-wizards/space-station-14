@@ -570,7 +570,7 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null,
             bool popup = false)
         {
-            if (!TryComp<TransformComponent>(other, out var otherXform))
+            if (!TryComp(other, out TransformComponent? otherXform))
                 return false;
 
             return InRangeUnobstructed(origin, other, otherXform.Coordinates, otherXform.LocalRotation, range, collisionMask, predicate,
@@ -633,7 +633,7 @@ namespace Content.Shared.Interaction
                 fixtureA.FixtureCount > 0 &&
                 TryComp<FixturesComponent>(other, out var fixtureB) &&
                 fixtureB.FixtureCount > 0 &&
-                TryComp<TransformComponent>(origin, out var xformA))
+                TryComp(origin, out TransformComponent? xformA))
             {
                 var (worldPosA, worldRotA) = xformA.GetWorldPositionRotation();
                 var xfA = new Transform(worldPosA, worldRotA);
@@ -665,14 +665,14 @@ namespace Content.Shared.Interaction
                 else
                 {
                     // We'll still do the raycast from the centres but we'll bump the range as we know they're in range.
-                    originPos = xformA.MapPosition;
+                    originPos = _transform.GetMapCoordinates(origin, xform: xformA);
                     range = (originPos.Position - targetPos.Position).Length();
                 }
             }
             // No fixtures, e.g. wallmounts.
             else
             {
-                originPos = Transform(origin).MapPosition;
+                originPos = _transform.GetMapCoordinates(origin);
                 var otherParent = Transform(other).ParentUid;
                 targetRot = otherParent.IsValid() ? Transform(otherParent).LocalRotation + otherAngle : otherAngle;
             }
@@ -826,7 +826,7 @@ namespace Content.Shared.Interaction
             bool popup = false)
         {
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
-            var originPosition = Transform(origin).MapPosition;
+            var originPosition = _transform.GetMapCoordinates(origin);
             var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicate, ShouldCheckAccess(origin));
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)

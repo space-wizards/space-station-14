@@ -404,7 +404,7 @@
     minimumPlayers: 20
     duration: 1
   - type: LoadMapRule
-    mapPath: /Maps/Shuttles/striker.yml
+    preloadedGrid: ShuttleStriker
   - type: NukeopsRule
     roundEndBehavior: Nothing
   - type: AntagSelection
@@ -433,10 +433,10 @@
   noSpawn: true
   components:
   - type: StationEvent
-    earliestStart: 25
+    earliestStart: 30
     weight: 8
     minimumPlayers: 15
-    reoccurrenceDelay: 30
+    maxOccurrences: 1 # can only happen once per round
     startAnnouncement: station-event-communication-interception
     startAudio:
       path: /Audio/Announcements/intercept.ogg
