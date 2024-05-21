@@ -35,17 +35,6 @@
     - Belt
     - suitStorage
 
-# SIDEARM
-# An extension of BaseGunSmall that marks the weapon as a sidearm, allowing it to be stored in whitelisted belts.
-- type: entity
-  abstract: true
-  parent: BaseGunSmall
-  id: BaseGunSidearm
-  components:
-  - type: Tag
-    tags:
-    - Sidearm
-
 # LARGE
 # A basic template for a gun that is large enough to not fit well in bags and be equipped on the back.
 - type: entity
