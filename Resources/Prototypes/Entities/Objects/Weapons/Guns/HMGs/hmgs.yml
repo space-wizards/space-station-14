@@ -24,34 +24,24 @@
 - type: entity
   name: minigun
   id: WeaponMinigun
-  parent: BaseWeaponHeavyMachineGun
+  parent:
+  - BaseGunHeavy
   description: Vzzzzzt! Rahrahrahrah! Vrrrrr! Uses .10 rifle ammo.
   components:
-  - type: Sprite
-  - type: Item
-    size: Ginormous
-  - type: Gun
-    fireRate: 20
-    selectedMode: FullAuto
-    availableModes:
-    - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
-  - type: StaticPrice
-    price: 500
   - type: Sprite
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
     layers:
     - state: icon
       map: ["enum.GunVisualLayers.Base"]
-  - type: Item
-    sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
   - type: Gun
     fireRate: 15
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/minigun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: BallisticAmmoProvider
     proto: CartridgeMinigun
     capacity: 1000
