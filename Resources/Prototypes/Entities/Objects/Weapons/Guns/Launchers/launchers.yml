@@ -1,25 +1,3 @@
-# - type: entity
-#   name: BaseWeaponLauncher
-#   parent: BaseItem
-#   id: BaseWeaponLauncher
-#   description: A rooty tooty point and shooty.
-#   abstract: true
-#   components:
-  # - type: Sprite
-  # - type: Clothing
-  #   sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
-  #   quickEquip: false
-  #   slots:
-  #   - Back
-  # - type: Item
-  #   size: Huge
-  # - type: StaticPrice
-  #   price: 500
-  # - type: ContainerContainer
-  #   containers:
-  #     ballistic-ammo: !type:Container
-  #       ents: []
-
 - type: entity
   name: china lake
   parent:
