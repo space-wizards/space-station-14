@@ -72,14 +72,14 @@ public sealed partial class ContentAudioSystem
 
         _loopProto = newProto;
         FadeOut(_ambientLoopStream, duration: AmbientLoopFadeOutTime);
-        var loopResPath = _random.Pick(loopsResPaths).ToString();
         var newLoop = _audio.PlayGlobal(
-            loopResPath,
+            newProto.Sound,
             Filter.Local(),
             false,
             AudioParams.Default
                 .WithLoop(true)
                 .WithVolume(_loopProto.Sound.Params.Volume + _volumeSlider)
+                .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
         );
         _ambientLoopStream = newLoop.Value.Entity;
         FadeIn(_ambientLoopStream, newLoop.Value.Component, AmbientLoopFadeInTime);
