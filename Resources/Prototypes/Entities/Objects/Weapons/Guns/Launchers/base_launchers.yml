@@ -1,3 +1,23 @@
+# BALLISTIC LAUNCHER
+# A basic template for a launcher that uses the BallisticAmmoProvider component.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunLauncherBallistic
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRocket
+    capacity: 1
+    whitelist:
+      tags:
+      - CartridgeRocket
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+
 # PHYSICS GUN
 # A basic template for a physics manipulating gun. Groups together the visual qualities of all physics guns.
 - type: entity
