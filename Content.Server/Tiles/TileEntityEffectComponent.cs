@@ -6,14 +6,14 @@ using Robust.Shared.GameStates;
 namespace Content.Server.Tiles;
 
 /// <summary>
-/// Applies flammable and damage while vaulting.
+/// Applies effects upon stepping onto a tile.
 /// </summary>
 [RegisterComponent, Access(typeof(TileEntityEffectSystem))]
 public sealed partial class TileEntityEffectComponent : Component
 {
     /// <summary>
-    /// How many fire stacks are applied per second.
+    /// List of effects that should be applied.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField]
-    public List<EntityEffect> Effects = new();
+    public List<EntityEffect> Effects = default!;
 }
