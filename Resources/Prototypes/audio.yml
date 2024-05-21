@@ -101,7 +101,7 @@
   sound:
     collection: AmbientLoopStation
     params:
-      volume: -20
+      volume: -10
   rules: AlwaysTrue
   priority: 0
 
