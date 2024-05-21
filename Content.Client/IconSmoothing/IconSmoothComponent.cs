@@ -45,12 +45,6 @@ namespace Content.Client.IconSmoothing
         ///     Used by <see cref="IconSmoothSystem"/> to reduce redundant updates.
         /// </summary>
         internal int UpdateGeneration { get; set; }
-
-        /// <summary>
-        /// If not empty, <see cref="StateBase"/> will be randomly selected from this list. Allows to randomize the visual.
-        /// </summary>
-        [DataField]
-        public List<string> RandomStates = new();
     }
 
     /// <summary>
