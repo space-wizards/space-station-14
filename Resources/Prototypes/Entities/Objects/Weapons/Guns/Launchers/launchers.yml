@@ -5,16 +5,16 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sprite
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
-    quickEquip: false
-    slots:
-    - Back
-  - type: Item
-    size: Huge
-  - type: StaticPrice
-    price: 500
+  # - type: Sprite
+  # - type: Clothing
+  #   sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+  #   quickEquip: false
+  #   slots:
+  #   - Back
+  # - type: Item
+  #   size: Huge
+  # - type: StaticPrice
+  #   price: 500
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -25,6 +25,7 @@
   parent:
   - BaseWeaponLauncher
   - BaseGunWieldable
+  - BaseGunLarge
   id: WeaponLauncherChinaLake
   description: PLOOP
   components:
@@ -35,9 +36,6 @@
         map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
-    slots:
-    - Back
-    - suitStorage
   - type: AmmoCounter
   - type: Gun
     fireRate: 1
@@ -57,7 +55,9 @@
 
 - type: entity
   name: RPG-7
-  parent: BaseWeaponLauncher
+  parent:
+  - BaseWeaponLauncher
+  - BaseGunLarge
   id: WeaponLauncherRocket
   description: A modified ancient rocket-propelled grenade launcher.
   components:
@@ -90,7 +90,9 @@
 
 - type: entity
   name: multiple rocket launcher
-  parent: BaseWeaponLauncher
+  parent:
+  - BaseWeaponLauncher
+  - BaseGunLarge
   id: WeaponLauncherMultipleRocket
   description: A modified ancient rocket-propelled grenade launcher.
   components:
@@ -125,7 +127,9 @@
 
 - type: entity
   name: pirate cannon
-  parent: BaseWeaponLauncher
+  parent:
+  - BaseWeaponLauncher
+  - BaseGunLarge
   id: WeaponLauncherPirateCannon
   description: Kaboom!
   components:
