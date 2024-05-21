@@ -1,0 +1,35 @@
+# PHYSICS GUN
+# A basic template for a physics manipulating gun. Groups together the visual qualities of all physics guns.
+- type: entity
+  abstract: true
+  parent:
+  - BaseItem
+  - PowerCellSlotMediumItem
+  id: BasePhysicsGun
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: base-unshaded
+      map: [ "unshaded" ]
+      shader: unshaded
+      visible: false
+  - type: Item
+    storedRotation: -90
+  - type: PowerCellDraw
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TetherVisualsStatus.Key:
+        unshaded:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ToggleableLightVisuals
+    spriteLayer: unshaded
+    inhandVisuals:
+      left:
+      - state: inhand-left-unshaded
+        shader: unshaded
+      right:
+      - state: inhand-right-unshaded
+        shader: unshaded
