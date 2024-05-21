@@ -18,13 +18,18 @@ public sealed partial class ModifyBloodLevel : EntityEffect
         => Loc.GetString("reagent-effect-guidebook-modify-blood-level", ("chance", Probability),
             ("deltasign", MathF.Sign(Amount.Float())));
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         if (args.EntityManager.TryGetComponent<BloodstreamComponent>(args.TargetEntity, out var blood))
         {
             var sys = args.EntityManager.System<BloodstreamSystem>();
-            var amt = Scaled ? Amount * args.Quantity : Amount;
-            amt *= args.Scale;
+            var amt = Amount;
+            if (args is EntityEffectReagentArgs reagentArgs)
+            {
+                if (Scaled)
+                    amt *= reagentArgs.Quantity;
+                amt *= reagentArgs.Scale;
+            }
 
             sys.TryModifyBloodLevel(args.TargetEntity, amt, blood);
         }

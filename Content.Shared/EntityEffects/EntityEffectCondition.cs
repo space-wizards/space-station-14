@@ -10,7 +10,7 @@ public abstract partial class EntityEffectCondition
 {
     [JsonPropertyName("id")] private protected string _id => this.GetType().Name;
 
-    public abstract bool Condition(EntityEffectArgs args);
+    public abstract bool Condition(EntityEffectBaseArgs args);
 
     /// <summary>
     /// Effect explanations are of the form "[chance to] [action] when [condition] and [condition]"

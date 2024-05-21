@@ -15,17 +15,35 @@ public sealed partial class ModifyLungGas : EntityEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => null;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!args.EntityManager.TryGetComponent<LungComponent>(args.OrganEntity, out var lung))
-            return;
 
-        foreach (var (gas, ratio) in _ratios)
+        LungComponent? lung;
+        float amount = 1f;
+
+        if (args is EntityEffectReagentArgs reagentArgs)
         {
-            var quantity = ratio * args.Quantity.Float() / Atmospherics.BreathMolesToReagentMultiplier;
-            if (quantity < 0)
-                quantity = Math.Max(quantity, -lung.Air[(int)gas]);
-            lung.Air.AdjustMoles(gas, quantity);
+            if (!args.EntityManager.TryGetComponent<LungComponent>(reagentArgs.OrganEntity, out var organLung))
+                return;
+            lung = organLung;
+            amount = reagentArgs.Quantity.Float();
+        }
+        else
+        {
+            if (!args.EntityManager.TryGetComponent<LungComponent>(args.TargetEntity, out var organLung)) //Likely needs to be modified to ensure it works correctly
+                return;
+            lung = organLung;
+        }
+
+        if (lung != null)
+        {
+            foreach (var (gas, ratio) in _ratios)
+            {
+                var quantity = ratio * amount / Atmospherics.BreathMolesToReagentMultiplier;
+                if (quantity < 0)
+                    quantity = Math.Max(quantity, -lung.Air[(int) gas]);
+                lung.Air.AdjustMoles(gas, quantity);
+            }
         }
     }
 }

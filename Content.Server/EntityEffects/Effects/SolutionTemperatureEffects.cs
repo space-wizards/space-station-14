@@ -19,13 +19,16 @@ public sealed partial class SetSolutionTemperatureEffect : EntityEffect
         => Loc.GetString("reagent-effect-guidebook-set-solution-temperature-effect",
             ("chance", Probability), ("temperature", _temperature));
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
-        var solution = args.Source;
-        if (solution == null)
-            return;
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            var solution = reagentArgs.Source;
+            if (solution == null)
+                return;
 
-        solution.Temperature = _temperature;
+            solution.Temperature = _temperature;
+        }
     }
 }
 
@@ -59,14 +62,17 @@ public sealed partial class AdjustSolutionTemperatureEffect : EntityEffect
         => Loc.GetString("reagent-effect-guidebook-adjust-solution-temperature-effect",
             ("chance", Probability), ("deltasign", MathF.Sign(_delta)), ("mintemp", _minTemp), ("maxtemp", _maxTemp));
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
-        var solution = args.Source;
-        if (solution == null || solution.Volume == 0)
-            return;
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            var solution = reagentArgs.Source;
+            if (solution == null || solution.Volume == 0)
+                return;
 
-        var deltaT = _scaled ? _delta * (float) args.Quantity : _delta;
-        solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);
+            var deltaT = _scaled ? _delta * (float) reagentArgs.Quantity : _delta;
+            solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);
+        }
     }
 }
 
@@ -95,23 +101,26 @@ public sealed partial class AdjustSolutionThermalEnergyEffect : EntityEffect
     /// </summary>
     [DataField("scaled")] private bool _scaled;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
-        var solution = args.Source;
-        if (solution == null || solution.Volume == 0)
-            return;
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            var solution = reagentArgs.Source;
+            if (solution == null || solution.Volume == 0)
+                return;
 
-        if (_delta > 0 && solution.Temperature >= _maxTemp)
-            return;
-        if (_delta < 0 && solution.Temperature <= _minTemp)
-            return;
+            if (_delta > 0 && solution.Temperature >= _maxTemp)
+                return;
+            if (_delta < 0 && solution.Temperature <= _minTemp)
+                return;
 
-        var heatCap = solution.GetHeatCapacity(null);
-        var deltaT = _scaled
-            ? _delta / heatCap * (float) args.Quantity
-            : _delta / heatCap;
+            var heatCap = solution.GetHeatCapacity(null);
+            var deltaT = _scaled
+                ? _delta / heatCap * (float) reagentArgs.Quantity
+                : _delta / heatCap;
 
-        solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);
+            solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);
+        }
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

@@ -19,10 +19,13 @@ namespace Content.Server.EntityEffects.Effects
             => Loc.GetString("reagent-effect-guidebook-reduce-rotting",
                 ("chance", Probability),
                 ("time", RottingAmount));
-        public override void Effect(EntityEffectArgs args)
+        public override void Effect(EntityEffectBaseArgs args)
         {
-            if (args.Scale != 1f)
-                return;
+            if (args is EntityEffectReagentArgs reagentArgs)
+            {
+                if (reagentArgs.Scale != 1f)
+                    return;
+            }
 
             var rottingSys = args.EntityManager.EntitySysManager.GetEntitySystem<RottingSystem>();
 

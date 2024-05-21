@@ -17,16 +17,24 @@ public sealed partial class ChemCleanBloodstream : EntityEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-chem-clean-bloodstream", ("chance", Probability));
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
-        if (args.Source == null || args.Reagent == null)
-            return;
-
+        
         var cleanseRate = CleanseRate;
 
-        cleanseRate *= args.Scale;
-
         var bloodstreamSys = args.EntityManager.System<BloodstreamSystem>();
-        bloodstreamSys.FlushChemicals(args.TargetEntity, args.Reagent.ID, cleanseRate);
+
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            if (reagentArgs.Source == null || reagentArgs.Reagent == null)
+                return;
+
+            cleanseRate *= reagentArgs.Scale.Float();
+            bloodstreamSys.FlushChemicals(args.TargetEntity, reagentArgs.Reagent.ID, cleanseRate);
+        }
+        else
+        {
+            bloodstreamSys.FlushChemicals(args.TargetEntity, "", cleanseRate);
+        }
     }
 }

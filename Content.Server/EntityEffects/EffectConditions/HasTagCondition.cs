@@ -15,7 +15,7 @@ public sealed partial class HasTag : EntityEffectCondition
     [DataField]
     public bool Invert = false;
 
-    public override bool Condition(EntityEffectArgs args)
+    public override bool Condition(EntityEffectBaseArgs args)
     {
         if (args.EntityManager.TryGetComponent<TagComponent>(args.TargetEntity, out var tag))
             return args.EntityManager.System<TagSystem>().HasTag(tag, Tag) ^ Invert;

@@ -7,7 +7,7 @@ namespace Content.Server.EntityEffects.Effects;
 
 public sealed partial class ActivateArtifact : EntityEffect
 {
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var artifact = args.EntityManager.EntitySysManager.GetEntitySystem<ArtifactSystem>();
         artifact.TryActivateArtifact(args.TargetEntity);

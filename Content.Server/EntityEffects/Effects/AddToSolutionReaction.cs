@@ -11,18 +11,22 @@ namespace Content.Server.EntityEffects.Effects
         [DataField("solution")]
         private string _solution = "reagents";
 
-        public override void Effect(EntityEffectArgs args)
+        public override void Effect(EntityEffectBaseArgs args)
         {
-            if (args.Reagent == null)
-                return;
+            if (args is EntityEffectReagentArgs reagentArgs) {
+                if (reagentArgs.Reagent == null)
+                    return;
 
-            // TODO see if this is correct
-            var solutionContainerSystem = args.EntityManager.System<SolutionContainerSystem>();
-            if (!solutionContainerSystem.TryGetSolution(args.TargetEntity, _solution, out var solutionContainer))
-                return;
+                // TODO see if this is correct
+                var solutionContainerSystem = reagentArgs.EntityManager.System<SolutionContainerSystem>();
+                if (!solutionContainerSystem.TryGetSolution(reagentArgs.TargetEntity, _solution, out var solutionContainer))
+                    return;
 
-            if (solutionContainerSystem.TryAddReagent(solutionContainer.Value, args.Reagent.ID, args.Quantity, out var accepted))
-                args.Source?.RemoveReagent(args.Reagent.ID, accepted);
+                if (solutionContainerSystem.TryAddReagent(solutionContainer.Value, reagentArgs.Reagent.ID, reagentArgs.Quantity, out var accepted))
+                    reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.ID, accepted);
+            }
+
+            //TODO: Someone needs to figure out how this looks for non-reagent effects.
         }
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>

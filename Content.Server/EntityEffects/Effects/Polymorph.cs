@@ -21,7 +21,7 @@ public sealed partial class Polymorph : EntityEffect
             ("chance", Probability), ("entityname",
                 prototype.Index<EntityPrototype>(prototype.Index<PolymorphPrototype>(PolymorphPrototype).Configuration.Entity).Name));
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var entityManager = args.EntityManager;
         var uid = args.TargetEntity;

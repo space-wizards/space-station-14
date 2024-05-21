@@ -20,15 +20,18 @@ public sealed partial class OrganType : EntityEffectCondition
     [DataField]
     public bool ShouldHave = true;
 
-    public override bool Condition(EntityEffectArgs args)
+    public override bool Condition(EntityEffectBaseArgs args)
     {
-        if (args.OrganEntity == null)
-            return false;
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            if (reagentArgs.OrganEntity == null)
+                return false;
 
-        if (args.EntityManager.TryGetComponent<MetabolizerComponent>(args.OrganEntity.Value, out var metabolizer)
-            && metabolizer.MetabolizerTypes != null
-            && metabolizer.MetabolizerTypes.Contains(Type))
-            return ShouldHave;
+            if (reagentArgs.EntityManager.TryGetComponent<MetabolizerComponent>(reagentArgs.OrganEntity.Value, out var metabolizer)
+                && metabolizer.MetabolizerTypes != null
+                && metabolizer.MetabolizerTypes.Contains(Type))
+                return ShouldHave;
+        }
         return !ShouldHave;
     }
 

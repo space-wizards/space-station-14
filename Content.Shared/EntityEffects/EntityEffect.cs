@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Shared.EntityEffects;
 
@@ -50,7 +51,7 @@ public abstract partial class EntityEffect
     [DataField("shouldLog")]
     public virtual bool ShouldLog { get; private set; } = false;
 
-    public abstract void Effect(EntityEffectArgs args);
+    public abstract void Effect(EntityEffectBaseArgs args);
 
     /// <summary>
     /// Produces a localized, bbcode'd guidebook description for this effect.
@@ -72,7 +73,7 @@ public abstract partial class EntityEffect
 
 public static class EntityEffectExt
 {
-    public static bool ShouldApply(this EntityEffect effect, EntityEffectArgs args,
+    public static bool ShouldApply(this EntityEffect effect, EntityEffectBaseArgs args,
         IRobustRandom? random = null)
     {
         if (random == null)
@@ -105,3 +106,40 @@ public readonly record struct EntityEffectArgs(
     float Scale
 );
 
+public record class EntityEffectBaseArgs
+{
+    public EntityUid TargetEntity;
+
+    public IEntityManager EntityManager = default!;
+
+    public EntityEffectBaseArgs(EntityUid targetEntity, IEntityManager entityManager)
+    {
+        TargetEntity = targetEntity;
+        EntityManager = entityManager;
+    }
+}
+
+public record class EntityEffectReagentArgs : EntityEffectBaseArgs
+{
+    public EntityUid? OrganEntity;
+
+    public Solution? Source;
+
+    public FixedPoint2 Quantity;
+
+    public ReagentPrototype? Reagent;
+
+    public ReactionMethod? Method;
+
+    public FixedPoint2 Scale;
+
+    public EntityEffectReagentArgs(EntityUid targetEntity, IEntityManager entityManager, EntityUid? organEntity, Solution? source, FixedPoint2 quantity, ReagentPrototype? reagent, ReactionMethod? method, FixedPoint2 scale) : base(targetEntity, entityManager)
+    {
+        OrganEntity = organEntity;
+        Source = source;
+        Quantity = quantity;
+        Reagent = reagent;
+        Method = method;
+        Scale = scale;
+    }
+}

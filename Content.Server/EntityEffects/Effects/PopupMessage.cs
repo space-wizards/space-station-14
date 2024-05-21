@@ -20,16 +20,26 @@ namespace Content.Server.EntityEffects.Effects
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
             => null;
 
-        public override void Effect(EntityEffectArgs args)
+        public override void Effect(EntityEffectBaseArgs args)
         {
             var popupSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedPopupSystem>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var msg = random.Pick(Messages);
-            var msgArgs = new (string, object)[] {
+            var msgArgs = new (string, object)[]
+            {
                 ("entity", args.TargetEntity),
-                ("organ", args.OrganEntity.GetValueOrDefault()),
             };
+
+            if (args is EntityEffectReagentArgs reagentArgs)
+            {
+                msgArgs = new (string, object)[]
+                {
+                    ("entity", reagentArgs.TargetEntity),
+                    ("organ", reagentArgs.OrganEntity.GetValueOrDefault()),
+                };
+            }
+
             if (Type == PopupRecipients.Local)
                 popupSys.PopupEntity(Loc.GetString(msg, msgArgs), args.TargetEntity, args.TargetEntity, VisualType);
             else if (Type == PopupRecipients.Pvs)

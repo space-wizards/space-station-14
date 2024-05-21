@@ -10,7 +10,7 @@ public sealed partial class MobStateCondition : EntityEffectCondition
     [DataField]
     public MobState Mobstate = MobState.Alive;
 
-    public override bool Condition(EntityEffectArgs args)
+    public override bool Condition(EntityEffectBaseArgs args)
     {
         if (args.EntityManager.TryGetComponent(args.TargetEntity, out MobStateComponent? mobState))
         {

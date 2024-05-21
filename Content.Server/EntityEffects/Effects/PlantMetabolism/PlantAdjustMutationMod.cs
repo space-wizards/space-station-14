@@ -8,7 +8,7 @@ public sealed partial class PlantAdjustMutationMod : PlantAdjustAttribute
 {
     public override string GuidebookAttributeName { get; set; } = "plant-attribute-mutation-mod";
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         if (!CanMetabolize(args.TargetEntity, out var plantHolderComp, args.EntityManager))
             return;

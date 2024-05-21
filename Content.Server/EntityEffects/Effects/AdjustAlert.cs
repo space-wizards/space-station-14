@@ -34,7 +34,7 @@ public sealed partial class AdjustAlert : EntityEffect
     //JUSTIFICATION: This just changes some visuals, doesn't need to be documented.
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var alertSys = args.EntityManager.EntitySysManager.GetEntitySystem<AlertsSystem>();
         if (!args.EntityManager.HasComponent<AlertsComponent>(args.TargetEntity))
@@ -42,7 +42,7 @@ public sealed partial class AdjustAlert : EntityEffect
 
         if (Clear && Time <= 0)
         {
-                alertSys.ClearAlert(args.TargetEntity, Type);
+            alertSys.ClearAlert(args.TargetEntity, Type);
         }
         else
         {

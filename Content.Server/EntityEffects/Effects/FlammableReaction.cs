@@ -23,16 +23,23 @@ namespace Content.Server.EntityEffects.Effects
 
         public override LogImpact LogImpact => LogImpact.Medium;
 
-        public override void Effect(EntityEffectArgs args)
+        public override void Effect(EntityEffectBaseArgs args)
         {
             if (!args.EntityManager.TryGetComponent(args.TargetEntity, out FlammableComponent? flammable))
                 return;
 
             var multiplier = flammable.FireStacks == 0f ? Multiplier : MultiplierOnExisting;
-            args.EntityManager.System<FlammableSystem>().AdjustFireStacks(args.TargetEntity, args.Quantity.Float() * multiplier, flammable);
-
-            if (args.Reagent != null)
-                args.Source?.RemoveReagent(args.Reagent.ID, args.Quantity);
+            var quantity = 1f;
+            if (args is EntityEffectReagentArgs reagentArgs)
+            {
+                quantity = reagentArgs.Quantity.Float();
+                reagentArgs.EntityManager.System<FlammableSystem>().AdjustFireStacks(args.TargetEntity, quantity * multiplier, flammable);
+                if (reagentArgs.Reagent != null)
+                    reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.ID, reagentArgs.Quantity);
+            } else
+            {
+                args.EntityManager.System<FlammableSystem>().AdjustFireStacks(args.TargetEntity, multiplier, flammable);
+            }
         }
     }
 }

@@ -37,11 +37,17 @@ public sealed partial class EmpReactionEffect : EntityEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
             => Loc.GetString("reagent-effect-guidebook-emp-reaction-effect", ("chance", Probability));
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var tSys = args.EntityManager.System<TransformSystem>();
         var transform = args.EntityManager.GetComponent<TransformComponent>(args.TargetEntity);
-        var range = MathF.Min((float) (args.Quantity*EmpRangePerUnit), EmpMaxRange);
+
+        var range = EmpRangePerUnit;
+
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            range = MathF.Min((float) (reagentArgs.Quantity * EmpRangePerUnit), EmpMaxRange);
+        }
 
         args.EntityManager.System<EmpSystem>()
             .EmpPulse(tSys.GetMapCoordinates(args.TargetEntity, xform: transform),

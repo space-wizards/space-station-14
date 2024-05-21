@@ -110,10 +110,14 @@ namespace Content.Server.EntityEffects.Effects
                 ("healsordeals", healsordeals));
         }
 
-        public override void Effect(EntityEffectArgs args)
+        public override void Effect(EntityEffectBaseArgs args)
         {
-            var scale = ScaleByQuantity ? args.Quantity : FixedPoint2.New(1);
-            scale *= args.Scale;
+            var scale = FixedPoint2.New(1);
+
+            if (args is EntityEffectReagentArgs reagentArgs)
+            {
+                scale = ScaleByQuantity ? reagentArgs.Quantity * reagentArgs.Scale : reagentArgs.Scale;
+            }
 
             args.EntityManager.System<DamageableSystem>().TryChangeDamage(
                 args.TargetEntity,

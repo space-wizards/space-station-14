@@ -20,12 +20,19 @@ public sealed partial class Electrocute : EntityEffect
 
     public override bool ShouldLog => true;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
-        args.EntityManager.System<ElectrocutionSystem>().TryDoElectrocution(args.TargetEntity, null,
-            Math.Max((args.Quantity * ElectrocuteDamageScale).Int(), 1), TimeSpan.FromSeconds(ElectrocuteTime), Refresh, ignoreInsulation: true);
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            reagentArgs.EntityManager.System<ElectrocutionSystem>().TryDoElectrocution(reagentArgs.TargetEntity, null,
+                Math.Max((reagentArgs.Quantity * ElectrocuteDamageScale).Int(), 1), TimeSpan.FromSeconds(ElectrocuteTime), Refresh, ignoreInsulation: true);
 
-        if (args.Reagent != null)
-            args.Source?.RemoveReagent(args.Reagent.ID, args.Quantity);
+            if (reagentArgs.Reagent != null)
+                reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.ID, reagentArgs.Quantity);
+        } else
+        {
+            args.EntityManager.System<ElectrocutionSystem>().TryDoElectrocution(args.TargetEntity, null,
+                Math.Max(ElectrocuteDamageScale, 1), TimeSpan.FromSeconds(ElectrocuteTime), Refresh, ignoreInsulation: true);
+        }
     }
 }

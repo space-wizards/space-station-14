@@ -21,12 +21,14 @@ public sealed partial class Drunk : EntityEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-drunk", ("chance", Probability));
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var boozePower = BoozePower;
 
-        boozePower *= args.Scale;
-
+        if (args is EntityEffectReagentArgs reagentArgs) {
+            boozePower *= reagentArgs.Scale.Float();
+        }
+        
         var drunkSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedDrunkSystem>();
         drunkSys.TryApplyDrunkenness(args.TargetEntity, boozePower, SlurSpeech);
     }

@@ -20,7 +20,7 @@ public sealed partial class SatiateThirst : EntityEffect
     public float HydrationFactor { get; set; } = DefaultHydrationFactor;
 
     /// Satiate thirst if a ThirstComponent can be found
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var uid = args.TargetEntity;
         if (args.EntityManager.TryGetComponent(uid, out ThirstComponent? thirst))

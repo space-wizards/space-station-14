@@ -14,12 +14,19 @@ public sealed partial class Oxygenate : EntityEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => null;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
+
+        var multiplier = 1f;
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            multiplier = reagentArgs.Quantity.Float();
+        }
+
         if (args.EntityManager.TryGetComponent<RespiratorComponent>(args.TargetEntity, out var resp))
         {
             var respSys = args.EntityManager.System<RespiratorSystem>();
-            respSys.UpdateSaturation(args.TargetEntity, args.Quantity.Float() * Factor, resp);
+            respSys.UpdateSaturation(args.TargetEntity, multiplier * Factor, resp);
         }
     }
 }

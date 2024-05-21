@@ -21,10 +21,11 @@ public sealed partial class ResetNarcolepsy : EntityEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-reset-narcolepsy", ("chance", Probability));
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
-        if (args.Scale != 1f)
-            return;
+        if (args is EntityEffectReagentArgs reagentArgs)
+            if (reagentArgs.Scale != 1f)
+                return;
 
         args.EntityManager.EntitySysManager.GetEntitySystem<NarcolepsySystem>().AdjustNarcolepsyTimer(args.TargetEntity, TimerReset);
     }

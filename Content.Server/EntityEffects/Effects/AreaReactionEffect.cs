@@ -50,33 +50,39 @@ public sealed partial class AreaReactionEffect : EntityEffect
 
     public override LogImpact LogImpact => LogImpact.High;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
-        if (args.Source == null)
-            return;
-
-        var spreadAmount = (int) Math.Max(0, Math.Ceiling((args.Quantity / OverflowThreshold).Float()));
-        var splitSolution = args.Source.SplitSolution(args.Source.Volume);
-        var transform = args.EntityManager.GetComponent<TransformComponent>(args.TargetEntity);
-        var mapManager = IoCManager.Resolve<IMapManager>();
-        var mapSys = args.EntityManager.System<MapSystem>();
-        var sys = args.EntityManager.System<TransformSystem>();
-        var mapCoords = sys.GetMapCoordinates(args.TargetEntity, xform: transform);
-
-        if (!mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
-            !mapSys.TryGetTileRef(gridUid, grid, transform.Coordinates, out var tileRef) ||
-            tileRef.Tile.IsSpace())
+        if (args is EntityEffectReagentArgs reagentArgs)
         {
-            return;
+            if (reagentArgs.Source == null)
+                return;
+
+            var spreadAmount = (int) Math.Max(0, Math.Ceiling((reagentArgs.Quantity / OverflowThreshold).Float()));
+            var splitSolution = reagentArgs.Source.SplitSolution(reagentArgs.Source.Volume);
+            var transform = reagentArgs.EntityManager.GetComponent<TransformComponent>(reagentArgs.TargetEntity);
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            var mapSys = reagentArgs.EntityManager.System<MapSystem>();
+            var sys = reagentArgs.EntityManager.System<TransformSystem>();
+            var mapCoords = sys.GetMapCoordinates(reagentArgs.TargetEntity, xform: transform);
+
+            if (!mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
+                !mapSys.TryGetTileRef(gridUid, grid, transform.Coordinates, out var tileRef) ||
+                tileRef.Tile.IsSpace())
+            {
+                return;
+            }
+
+            var coords = mapSys.MapToGrid(gridUid, mapCoords);
+            var ent = reagentArgs.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
+
+            var smoke = reagentArgs.EntityManager.System<SmokeSystem>();
+            smoke.StartSmoke(ent, splitSolution, _duration, spreadAmount);
+
+            var audio = reagentArgs.EntityManager.System<SharedAudioSystem>();
+            audio.PlayPvs(_sound, reagentArgs.TargetEntity, AudioHelpers.WithVariation(0.125f));
         }
 
-        var coords = mapSys.MapToGrid(gridUid, mapCoords);
-        var ent = args.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
+        // TODO: Someone needs to figure out how to do this for non-reagent effects. For now this effect does nothing.
 
-        var smoke = args.EntityManager.System<SmokeSystem>();
-        smoke.StartSmoke(ent, splitSolution, _duration, spreadAmount);
-
-        var audio = args.EntityManager.System<SharedAudioSystem>();
-        audio.PlayPvs(_sound, args.TargetEntity, AudioHelpers.WithVariation(0.125f));
     }
 }

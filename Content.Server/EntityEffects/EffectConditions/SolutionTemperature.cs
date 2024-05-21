@@ -14,16 +14,19 @@ public sealed partial class SolutionTemperature : EntityEffectCondition
 
     [DataField]
     public float Max = float.PositiveInfinity;
-    public override bool Condition(EntityEffectArgs args)
+    public override bool Condition(EntityEffectBaseArgs args)
     {
-        if (args.Source == null)
-            return false;
-        if (args.Source.Temperature < Min)
-            return false;
-        if (args.Source.Temperature > Max)
-            return false;
-
-        return true;
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            if (reagentArgs.Source == null)
+                return false;
+            if (reagentArgs.Source.Temperature < Min)
+                return false;
+            if (reagentArgs.Source.Temperature > Max)
+                return false;
+            return true;
+        }
+        return false;
     }
 
     public override string GuidebookExplanation(IPrototypeManager prototype)

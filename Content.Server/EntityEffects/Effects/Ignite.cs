@@ -17,9 +17,15 @@ public sealed partial class Ignite : EntityEffect
 
     public override LogImpact LogImpact => LogImpact.Medium;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var flamSys = args.EntityManager.System<FlammableSystem>();
-        flamSys.Ignite(args.TargetEntity, args.OrganEntity ?? args.TargetEntity);
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            flamSys.Ignite(reagentArgs.TargetEntity, reagentArgs.OrganEntity ?? reagentArgs.TargetEntity);
+        } else
+        {
+            flamSys.Ignite(args.TargetEntity, args.TargetEntity);
+        }
     }
 }

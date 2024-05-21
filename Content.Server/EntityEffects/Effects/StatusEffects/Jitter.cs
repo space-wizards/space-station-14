@@ -27,10 +27,11 @@ public sealed partial class Jitter : EntityEffect
     [DataField]
     public bool Refresh = true;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var time = Time;
-        time *= args.Scale;
+        if (args is EntityEffectReagentArgs reagentArgs)
+            time *= reagentArgs.Scale.Float();
 
         args.EntityManager.EntitySysManager.GetEntitySystem<SharedJitteringSystem>()
             .DoJitter(args.TargetEntity, TimeSpan.FromSeconds(time), Refresh, Amplitude, Frequency);

@@ -57,9 +57,14 @@ public sealed partial class ExplosionReactionEffect : EntityEffect
         => Loc.GetString("reagent-effect-guidebook-explosion-reaction-effect", ("chance", Probability));
     public override LogImpact LogImpact => LogImpact.High;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
-        var intensity = MathF.Min((float) args.Quantity * IntensityPerUnit, MaxTotalIntensity);
+        var intensity = IntensityPerUnit;
+
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            intensity = MathF.Min((float) reagentArgs.Quantity * IntensityPerUnit, MaxTotalIntensity);
+        }
 
         args.EntityManager.System<ExplosionSystem>()
             .QueueExplosion(

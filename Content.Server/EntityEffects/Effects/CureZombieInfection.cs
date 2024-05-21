@@ -18,7 +18,7 @@ public sealed partial class CureZombieInfection : EntityEffect
     }
 
     // Removes the Zombie Infection Components
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var entityManager = args.EntityManager;
         if (entityManager.HasComponent<IncurableZombieComponent>(args.TargetEntity))

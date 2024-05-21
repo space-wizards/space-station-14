@@ -16,14 +16,17 @@ namespace Content.Server.EntityEffects.Effects
                 ("deltasign", MathF.Sign(Amount)),
                 ("amount", MathF.Abs(Amount)));
 
-        public override void Effect(EntityEffectArgs args)
+        public override void Effect(EntityEffectBaseArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.TargetEntity, out TemperatureComponent? temp))
             {
                 var sys = args.EntityManager.EntitySysManager.GetEntitySystem<TemperatureSystem>();
                 var amount = Amount;
 
-                amount *= args.Scale;
+                if (args is EntityEffectReagentArgs reagentArgs)
+                {
+                    amount *= reagentArgs.Scale.Float();
+                }
 
                 sys.ChangeHeat(args.TargetEntity, amount, true, temp);
             }

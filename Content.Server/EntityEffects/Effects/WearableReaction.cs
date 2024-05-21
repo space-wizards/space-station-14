@@ -31,13 +31,19 @@ public sealed partial class WearableReaction : EntityEffect
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
-        if (args.Reagent == null || args.Quantity < AmountThreshold)
-            return;
+
 
         // SpawnItemInSlot returns false if slot is already occupied
         if (args.EntityManager.System<InventorySystem>().SpawnItemInSlot(args.TargetEntity, Slot, PrototypeID))
-            args.Source?.RemoveReagent(args.Reagent.ID, AmountThreshold);
+        {
+            if (args is EntityEffectReagentArgs reagentArgs)
+            {
+                if (reagentArgs.Reagent == null || reagentArgs.Quantity < AmountThreshold)
+                    return;
+                reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.ID, AmountThreshold);
+            }
+        }
     }
 }

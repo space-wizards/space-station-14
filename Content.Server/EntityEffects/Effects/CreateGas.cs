@@ -31,7 +31,7 @@ public sealed partial class CreateGas : EntityEffect
 
     public override LogImpact LogImpact => LogImpact.High;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var atmosSys = args.EntityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
 
@@ -39,7 +39,14 @@ public sealed partial class CreateGas : EntityEffect
 
         if (tileMix != null)
         {
-            tileMix.AdjustMoles(Gas, args.Quantity.Float() * Multiplier);
+            if (args is EntityEffectReagentArgs reagentArgs)
+            {
+                tileMix.AdjustMoles(Gas, reagentArgs.Quantity.Float() * Multiplier);
+            }
+            else
+            {
+                tileMix.AdjustMoles(Gas, Multiplier);
+            }
         }
     }
 }

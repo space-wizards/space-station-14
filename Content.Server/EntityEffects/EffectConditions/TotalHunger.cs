@@ -13,7 +13,7 @@ public sealed partial class Hunger : EntityEffectCondition
     [DataField]
     public float Min = 0;
 
-    public override bool Condition(EntityEffectArgs args)
+    public override bool Condition(EntityEffectBaseArgs args)
     {
         if (args.EntityManager.TryGetComponent(args.TargetEntity, out HungerComponent? hunger))
         {

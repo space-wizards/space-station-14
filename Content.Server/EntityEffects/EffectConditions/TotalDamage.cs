@@ -13,7 +13,7 @@ public sealed partial class TotalDamage : EntityEffectCondition
     [DataField]
     public FixedPoint2 Min = FixedPoint2.Zero;
 
-    public override bool Condition(EntityEffectArgs args)
+    public override bool Condition(EntityEffectBaseArgs args)
     {
         if (args.EntityManager.TryGetComponent(args.TargetEntity, out DamageableComponent? damage))
         {

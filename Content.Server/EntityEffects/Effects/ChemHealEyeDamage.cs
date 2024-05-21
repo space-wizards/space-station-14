@@ -20,10 +20,11 @@ public sealed partial class ChemHealEyeDamage : EntityEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-cure-eye-damage", ("chance", Probability), ("deltasign", MathF.Sign(Amount)));
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
-        if (args.Scale != 1f) // huh?
-            return;
+        if (args is EntityEffectReagentArgs reagentArgs)
+            if (reagentArgs.Scale != 1f) // huh?
+                return;
 
         args.EntityManager.EntitySysManager.GetEntitySystem<BlindableSystem>().AdjustEyeDamage(args.TargetEntity, Amount);
     }

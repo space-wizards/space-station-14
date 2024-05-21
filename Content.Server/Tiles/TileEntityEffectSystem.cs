@@ -26,7 +26,7 @@ public sealed class TileEntityEffectSystem : EntitySystem
 
         foreach (var effect in ent.Comp.Effects)
         {
-            effect.Effect(new EntityEffectArgs(otherUid, null, null, null, 1, EntityManager, 0, 1));
+            effect.Effect(new EntityEffectBaseArgs(otherUid, EntityManager));
         }
     }
 }

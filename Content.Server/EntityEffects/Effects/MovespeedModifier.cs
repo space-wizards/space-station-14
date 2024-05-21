@@ -41,7 +41,7 @@ public sealed partial class MovespeedModifier : EntityEffect
     /// <summary>
     /// Remove reagent at set rate, changes the movespeed modifiers and adds a MovespeedModifierMetabolismComponent if not already there.
     /// </summary>
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var status = args.EntityManager.EnsureComponent<MovespeedModifierMetabolismComponent>(args.TargetEntity);
 
@@ -54,7 +54,11 @@ public sealed partial class MovespeedModifier : EntityEffect
 
         // only going to scale application time
         var statusLifetime = StatusLifetime;
-        statusLifetime *= args.Scale;
+
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            statusLifetime *= reagentArgs.Scale.Float();
+        }
 
         IncreaseTimer(status, statusLifetime);
 

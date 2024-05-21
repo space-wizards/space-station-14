@@ -25,11 +25,13 @@ public sealed partial class CreateEntityReactionEffect : EntityEffect
             ("entname", IoCManager.Resolve<IPrototypeManager>().Index<EntityPrototype>(Entity).Name),
             ("amount", Number));
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var transform = args.EntityManager.GetComponent<TransformComponent>(args.TargetEntity);
         var transformSystem = args.EntityManager.System<SharedTransformSystem>();
-        var quantity = Number * args.Quantity.Int();
+        var quantity = (int)Number;
+        if (args is EntityEffectReagentArgs reagentArgs)
+            quantity *= reagentArgs.Quantity.Int();
 
         for (var i = 0; i < quantity; i++)
         {

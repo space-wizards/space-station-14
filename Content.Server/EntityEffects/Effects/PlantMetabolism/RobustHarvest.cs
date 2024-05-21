@@ -20,7 +20,7 @@ public sealed partial class RobustHarvest : EntityEffect
     [DataField]
     public int PotencySeedlessThreshold = 30;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         if (!args.EntityManager.TryGetComponent(args.TargetEntity, out PlantHolderComponent? plantHolderComp)
                                 || plantHolderComp.Seed == null || plantHolderComp.Dead ||

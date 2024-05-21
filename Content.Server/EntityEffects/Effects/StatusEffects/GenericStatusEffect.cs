@@ -39,12 +39,13 @@ public sealed partial class GenericStatusEffect : EntityEffect
     [DataField]
     public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Add;
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>();
 
         var time = Time;
-        time *= args.Scale;
+        if (args is EntityEffectReagentArgs reagentArgs)
+            time *= reagentArgs.Scale.Float();
 
         if (Type == StatusEffectMetabolismType.Add && Component != String.Empty)
         {

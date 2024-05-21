@@ -15,7 +15,7 @@ public sealed partial class Temperature : EntityEffectCondition
 
     [DataField]
     public float Max = float.PositiveInfinity;
-    public override bool Condition(EntityEffectArgs args)
+    public override bool Condition(EntityEffectBaseArgs args)
     {
         if (args.EntityManager.TryGetComponent(args.TargetEntity, out TemperatureComponent? temp))
         {

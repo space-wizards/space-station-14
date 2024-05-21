@@ -18,10 +18,14 @@ public sealed partial class Paralyze : EntityEffect
             ("chance", Probability),
             ("time", ParalyzeTime));
 
-    public override void Effect(EntityEffectArgs args)
+    public override void Effect(EntityEffectBaseArgs args)
     {
         var paralyzeTime = ParalyzeTime;
-        paralyzeTime *= args.Scale;
+
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            paralyzeTime *= (double)reagentArgs.Scale;
+        }
 
         args.EntityManager.System<StunSystem>().TryParalyze(args.TargetEntity, TimeSpan.FromSeconds(paralyzeTime), Refresh);
     }

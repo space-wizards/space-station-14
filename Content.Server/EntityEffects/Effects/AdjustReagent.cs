@@ -28,33 +28,36 @@ namespace Content.Server.EntityEffects.Effects
         [DataField(required: true)]
         public FixedPoint2 Amount = default!;
 
-        public override void Effect(EntityEffectArgs args)
+        public override void Effect(EntityEffectBaseArgs args)
         {
-            if (args.Source == null)
-                return;
-
-            var amount = Amount;
-            amount *= args.Scale;
-
-            if (Reagent != null)
+            if (args is EntityEffectReagentArgs reagentArgs)
             {
-                if (amount < 0 && args.Source.ContainsPrototype(Reagent))
-                    args.Source.RemoveReagent(Reagent, -amount);
-                if (amount > 0)
-                    args.Source.AddReagent(Reagent, amount);
-            }
-            else if (Group != null)
-            {
-                var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
-                foreach (var quant in args.Source.Contents.ToArray())
+                if (reagentArgs.Source == null)
+                    return;
+
+                var amount = Amount;
+                amount *= reagentArgs.Scale;
+
+                if (Reagent != null)
                 {
-                    var proto = prototypeMan.Index<ReagentPrototype>(quant.Reagent.Prototype);
-                    if (proto.Metabolisms != null && proto.Metabolisms.ContainsKey(Group))
+                    if (amount < 0 && reagentArgs.Source.ContainsPrototype(Reagent))
+                        reagentArgs.Source.RemoveReagent(Reagent, -amount);
+                    if (amount > 0)
+                        reagentArgs.Source.AddReagent(Reagent, amount);
+                }
+                else if (Group != null)
+                {
+                    var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
+                    foreach (var quant in reagentArgs.Source.Contents.ToArray())
                     {
-                        if (amount < 0)
-                            args.Source.RemoveReagent(quant.Reagent, amount);
-                        if (amount > 0)
-                            args.Source.AddReagent(quant.Reagent, amount);
+                        var proto = prototypeMan.Index<ReagentPrototype>(quant.Reagent.Prototype);
+                        if (proto.Metabolisms != null && proto.Metabolisms.ContainsKey(Group))
+                        {
+                            if (amount < 0)
+                                reagentArgs.Source.RemoveReagent(quant.Reagent, amount);
+                            if (amount > 0)
+                                reagentArgs.Source.AddReagent(quant.Reagent, amount);
+                        }
                     }
                 }
             }

@@ -24,17 +24,21 @@ public sealed partial class ReagentThreshold : EntityEffectCondition
     [DataField]
     public string? Reagent;
 
-    public override bool Condition(EntityEffectArgs args)
+    public override bool Condition(EntityEffectBaseArgs args)
     {
-        var reagent = Reagent ?? args.Reagent?.ID;
-        if (reagent == null)
-            return true; // No condition to apply.
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            var reagent = Reagent ?? reagentArgs.Reagent?.ID;
+            if (reagent == null)
+                return true; // No condition to apply.
 
-        var quant = FixedPoint2.Zero;
-        if (args.Source != null)
-            quant = args.Source.GetTotalPrototypeQuantity(reagent);
+            var quant = FixedPoint2.Zero;
+            if (reagentArgs.Source != null)
+                quant = reagentArgs.Source.GetTotalPrototypeQuantity(reagent);
 
-        return quant >= Min && quant <= Max;
+            return quant >= Min && quant <= Max;
+        }
+        return false;
     }
 
     public override string GuidebookExplanation(IPrototypeManager prototype)
