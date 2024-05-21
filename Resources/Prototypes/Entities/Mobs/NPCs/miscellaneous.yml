@@ -145,7 +145,7 @@
     hidden: true
     damage:
       groups:
-        Brute: 6
+        Brute: 9
     animation: WeaponArcBite
   - type: Climbing
   - type: NameIdentifier
