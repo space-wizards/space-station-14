@@ -121,7 +121,11 @@
           FoodMeatTomato:
             min: 1
             max: 2
-      - !type:GibBehavior { }
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: gib
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -162,6 +166,12 @@
   - type: Produce
     seedId: killerTomato
   - type: PassiveDamage # Slight passive damage. 35 hp \ 5 min \ 60 sec = 0.08
+    allowedStates:
+    - Alive
+    - Dead
+    damageCap: 50
     damage:
       types:
         Blunt: 0.11
+  - type: StaticPrice
+    price: 400
