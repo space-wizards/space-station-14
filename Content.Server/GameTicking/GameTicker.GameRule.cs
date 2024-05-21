@@ -46,8 +46,8 @@ public sealed partial class GameTicker
 
         // List game rules command.
         _consoleHost.RegisterCommand("listgamerules",
-            string.Empty,
-            "listgamerules Lists all rules that have been added for the round so far.",
+            "Lists all rules that have been added for the round so far.",
+            "listgamerules - Lists all rules that have been added for the round so far.",
             ListGameRuleCommand);
     }
 
@@ -72,6 +72,13 @@ public sealed partial class GameTicker
 
         var ev = new GameRuleAddedEvent(ruleEntity, ruleId);
         RaiseLocalEvent(ruleEntity, ref ev, true);
+
+        var currentTime = RunLevel == GameRunLevel.PreRoundLobby ? TimeSpan.Zero : RoundDuration();
+        if (!HasComp<RoundstartStationVariationRuleComponent>(ruleEntity) && !HasComp<StationVariationPassRuleComponent>(ruleEntity))
+        {
+            _allPreviousGameRules.Add((currentTime, ruleId + " (Pending)"));
+        }
+
         return ruleEntity;
     }
 
@@ -129,10 +136,18 @@ public sealed partial class GameTicker
 
         var currentTime = RunLevel == GameRunLevel.PreRoundLobby ? TimeSpan.Zero : RoundDuration();
 
+        // Remove the first occurrence of the pending entry before adding the started entry
+        var pendingRuleIndex = _allPreviousGameRules.FindIndex(rule => rule.Item2 == id + " (Pending)");
+        if (pendingRuleIndex >= 0)
+        {
+            _allPreviousGameRules.RemoveAt(pendingRuleIndex);
+        }
+
         if (!HasComp<RoundstartStationVariationRuleComponent>(ruleEntity) && !HasComp<StationVariationPassRuleComponent>(ruleEntity))
         {
             _allPreviousGameRules.Add((currentTime, id));
         }
+
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
         _adminLogger.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(ruleEntity)}");
 
@@ -310,7 +325,7 @@ public sealed partial class GameTicker
             if (shell.Player != null)
             {
                 _adminLogger.Add(LogType.EventStarted, $"{shell.Player} tried to add game rule [{rule}] via command");
-                _chatManager.SendAdminAnnouncement(Loc.GetString("addgamerule-admin", ("admin", shell.Player),("rule", rule)));
+                _chatManager.SendAdminAnnouncement(Loc.GetString("add-gamerule-admin", ("rule", rule), ("admin", shell.Player)));
             }
             else
             {
@@ -368,6 +383,8 @@ public sealed partial class GameTicker
     [AdminCommand(AdminFlags.Admin)]
     private void ListGameRuleCommand(IConsoleShell shell, string argstr, string[] args)
     {
+        _sawmill.Info($"{shell.Player} tried to get list of game rules via command");
+        _adminLogger.Add(LogType.Action, $"{shell.Player} tried to get list of game rules via command");
         var message = GetGameRulesListMessage();
         shell.WriteLine(message);
     }
@@ -376,7 +393,8 @@ public sealed partial class GameTicker
         if (_allPreviousGameRules.Count > 0)
         {
             var sortedRules = _allPreviousGameRules.OrderBy(rule => rule.Item1).ToList();
-            var message = Loc.GetString("list-gamerule-admin-header");
+            var header = Loc.GetString("list-gamerule-admin-header");
+            var message = $"\n{header}\n";
             message += "|------------|------------------\n";
 
             foreach (var (time, rule) in sortedRules)
