@@ -3,6 +3,7 @@
   parent:
   - BaseGunWieldable
   - BaseGunLarge
+  - BaseGunLauncherBallistic
   id: WeaponLauncherChinaLake
   name: china lake
   description: PLOOP
@@ -23,17 +24,12 @@
     whitelist:
       tags:
       - Grenade
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
 
 # RPG-7
 - type: entity
   parent:
   - BaseGunLarge
+  - BaseGunLauncherBallistic
   id: WeaponLauncherRocket
   name: RPG-7
   description: A modified ancient rocket-propelled grenade launcher.
@@ -55,12 +51,6 @@
     whitelist:
       tags:
       - CartridgeRocket
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
   - type: MagazineVisuals
     magState: mag
     steps: 2
@@ -91,6 +81,7 @@
 - type: entity
   parent:
   - BaseGunLarge
+  - BaseGunLauncherBallistic
   id: WeaponLauncherPirateCannon
   name: pirate cannon
   description: Kaboom!
@@ -110,12 +101,6 @@
     whitelist:
       tags:
       - CannonBall
-    soundInsert:
-      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
 
 # tether gun
 - type: entity
