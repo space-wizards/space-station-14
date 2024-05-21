@@ -114,13 +114,18 @@
     - trigger:
         !type:DamageTypeTrigger
         damageType: Blunt
-        damage: 100
+        damage: 40
       behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodMeatTomato:
+            min: 1
+            max: 2
       - !type:GibBehavior { }
   - type: MobThresholds
     thresholds:
       0: Alive
-      24: Dead
+      35: Dead
   - type: Fixtures
     fixtures:
       fix1:
@@ -136,7 +141,7 @@
     hidden: true
     damage:
       groups:
-        Brute: 4
+        Brute: 6
     animation: WeaponArcBite
   - type: Climbing
   - type: NameIdentifier
@@ -156,3 +161,7 @@
   - type: Appearance
   - type: Produce
     seedId: killerTomato
+  - type: PassiveDamage # Slight passive damage. 35 hp \ 5 min \ 60 sec = 0.08
+    damage:
+      types:
+        Blunt: 0.11
