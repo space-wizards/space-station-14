@@ -96,10 +96,10 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
   - type: BallisticAmmoProvider
+    proto: CartridgeRocketSlow
     whitelist:
       tags:
       - CartridgeRocket
-    proto: CartridgeRocketSlow
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: ContainerContainer
@@ -124,10 +124,6 @@
     layers:
     - state: icon
       map: ["enum.GunVisualLayers.Base"]
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
   - type: Gun
@@ -135,13 +131,17 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
   - type: BallisticAmmoProvider
+    proto: CannonBall
+    capacity: 1
     whitelist:
       tags:
       - CannonBall
-    capacity: 1
-    proto: CannonBall
     soundInsert:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   name: tether gun
@@ -151,12 +151,6 @@
   id: WeaponTetherGun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
-  - type: Item
-    storedRotation: -90
-  - type: TetherGun
-    frequency: 5
-    dampingRatio: 4
-  - type: PowerCellDraw
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
     layers:
@@ -165,6 +159,19 @@
       map: [ "unshaded" ]
       shader: unshaded
       visible: false
+  - type: Item
+    storedRotation: -90
+  - type: TetherGun
+    frequency: 5
+    dampingRatio: 4
+  - type: PowerCellDraw
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TetherVisualsStatus.Key:
+        unshaded:
+          True: { visible: true }
+          False: { visible: false }
   - type: ToggleableLightVisuals
     spriteLayer: unshaded
     inhandVisuals:
@@ -174,13 +181,6 @@
       right:
       - state: inhand-right-unshaded
         shader: unshaded
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.TetherVisualsStatus.Key:
-        unshaded:
-          True: { visible: true }
-          False: { visible: false }
 
 - type: entity
   name: force gun
@@ -190,6 +190,14 @@
   id: WeaponForceGun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
+    layers:
+    - state: base
+    - state: base-unshaded
+      map: [ "unshaded" ]
+      shader: unshaded
+      visible: false
   - type: Item
     storedRotation: -90
   - type: ForceGun
@@ -202,14 +210,13 @@
       params:
         volume: 2
   - type: PowerCellDraw
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
-    layers:
-    - state: base
-    - state: base-unshaded
-      map: [ "unshaded" ]
-      shader: unshaded
-      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TetherVisualsStatus.Key:
+        unshaded:
+          True: { visible: true }
+          False: { visible: false }
   - type: ToggleableLightVisuals
     spriteLayer: unshaded
     inhandVisuals:
@@ -219,27 +226,12 @@
       right:
       - state: inhand-right-unshaded
         shader: unshaded
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.TetherVisualsStatus.Key:
-        unshaded:
-          True: { visible: true }
-          False: { visible: false }
 
 - type: entity
   name: grappling gun
   parent: BaseItem
   id: WeaponGrapplingGun
   components:
-  - type: AmmoCounter
-  - type: GrapplingGun
-  - type: Gun
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
-    fireRate: 0.5
-  - type: BasicEntityAmmoProvider
-    proto: GrapplingHook
-    capacity: 1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
     layers:
@@ -248,8 +240,14 @@
       map: [ "unshaded" ]
       shader: unshaded
       visible: true
-  - type: UseDelay
-    delay: 1.5
+  - type: AmmoCounter
+  - type: GrapplingGun
+  - type: Gun
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
+    fireRate: 0.5
+  - type: BasicEntityAmmoProvider
+    proto: GrapplingHook
+    capacity: 1
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -257,6 +255,8 @@
         unshaded:
           True: { state: base-unshaded }
           False: { state: base-unshaded-off }
+  - type: UseDelay
+    delay: 1.5
 
 # Admeme
 - type: entity
@@ -281,6 +281,13 @@
       map: [ "unshaded" ]
       shader: unshaded
       visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TetherVisualsStatus.Key:
+        unshaded:
+          True: { visible: true }
+          False: { visible: false }
   - type: ToggleableLightVisuals
     spriteLayer: unshaded
     inhandVisuals:
@@ -290,13 +297,6 @@
       right:
       - state: inhand-right-unshaded
         shader: unshaded
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.TetherVisualsStatus.Key:
-        unshaded:
-          True: { visible: true }
-          False: { visible: false }
 
 - type: entity
   name: force gun
@@ -323,6 +323,13 @@
       map: [ "unshaded" ]
       shader: unshaded
       visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TetherVisualsStatus.Key:
+        unshaded:
+          True: { visible: true }
+          False: { visible: false }
   - type: ToggleableLightVisuals
     spriteLayer: unshaded
     inhandVisuals:
@@ -332,13 +339,6 @@
       right:
       - state: inhand-right-unshaded
         shader: unshaded
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.TetherVisualsStatus.Key:
-        unshaded:
-          True: { visible: true }
-          False: { visible: false }
 
 - type: entity
   name: meteor launcher
@@ -348,10 +348,10 @@
   description: It fires large meteors
   components:
   - type: BallisticAmmoProvider
+    proto: MeteorLarge
     whitelist:
       tags:
       - CartridgeRocket
-    proto: MeteorLarge
 
 - type: entity
   name: immovable rod launcher
@@ -361,7 +361,7 @@
   description: It fires slow immovable rods.
   components:
   - type: BallisticAmmoProvider
+    proto: ImmovableRodSlow
     whitelist:
       tags:
       - CartridgeRocket
-    proto: ImmovableRodSlow
