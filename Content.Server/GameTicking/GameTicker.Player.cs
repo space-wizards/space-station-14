@@ -203,7 +203,7 @@ namespace Content.Server.GameTicking
                 if (_allPreviousGameRules.Count > 0)
                 {
                     var rulesMessage = GetGameRulesListMessage();
-                    _chatManager.DispatchServerMessage(session, Loc.GetString("starting-rule-selected-preset", ("preset", rulesMessage)));
+                    _chatManager.SendAdminAnnouncementMessage(session, Loc.GetString("starting-rule-selected-preset", ("preset", rulesMessage)));
                 }
             }
 
