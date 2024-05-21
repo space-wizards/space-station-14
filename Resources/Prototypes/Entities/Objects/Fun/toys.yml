@@ -307,7 +307,7 @@
     ports:
       - Trigger
   - type: TriggerOnSignal
-  - type: ActivateOnTrigger
+  - type: InteractOnTrigger
 
 - type: entity
   parent: BasePlushie

@@ -3,7 +3,7 @@ using Content.Shared.Interaction;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed class ActivateOnTriggerSystem : EntitySystem
+public sealed class InteractOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
 
@@ -12,10 +12,10 @@ public sealed class ActivateOnTriggerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ActivateOnTriggerComponent, TriggerEvent>(OnTrigger);
+        SubscribeLocalEvent<InteractOnTriggerComponent, TriggerEvent>(OnTrigger);
     }
 
-    public void OnTrigger(EntityUid uid, ActivateOnTriggerComponent comp, TriggerEvent args)
+    public void OnTrigger(EntityUid uid, InteractOnTriggerComponent comp, TriggerEvent args)
     {
         EntityUid user;
         if (args.User != null)
@@ -26,6 +26,6 @@ public sealed class ActivateOnTriggerSystem : EntitySystem
         {
             user = uid;
         }
-        _sharedInteractionSystem.InteractionActivate(user, uid, false, true, false);
+        _sharedInteractionSystem.InteractHand(user, uid);
     }
 }
