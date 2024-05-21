@@ -267,7 +267,7 @@
 
 # immovable rod launcher [admeme]
 - type: entity
-  parent: WeaponLauncherAdmemeMeteorLarge
+  parent: WeaponLauncherMultipleRocket
   id: WeaponLauncherAdmemeImmovableRodSlow
   name: immovable rod launcher
   suffix: Admeme
