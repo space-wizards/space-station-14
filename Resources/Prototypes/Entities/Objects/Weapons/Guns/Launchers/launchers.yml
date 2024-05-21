@@ -205,7 +205,8 @@
 
 # grappling gun
 - type: entity
-  parent: BaseItem
+  parent:
+  - BaseGunSmall
   id: WeaponGrapplingGun
   name: grappling gun
   components:
