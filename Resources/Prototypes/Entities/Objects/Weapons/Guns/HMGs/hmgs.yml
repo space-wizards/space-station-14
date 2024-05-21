@@ -1,8 +1,9 @@
+# minigun
 - type: entity
-  name: minigun
-  id: WeaponMinigun
   parent:
   - BaseGunHeavy
+  id: WeaponMinigun
+  name: minigun
   description: Vzzzzzt! Rahrahrahrah! Vrrrrr! Uses .10 rifle ammo.
   components:
   - type: Sprite
