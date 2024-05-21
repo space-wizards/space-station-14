@@ -126,3 +126,8 @@
   license: "CC0-1.0"
   copyright: "Created by janbezouska, edited and converted to mono by TheShuEd"
   source: "https://freesound.org/people/janbezouska/sounds/397091/"
+
+- files: ["ambistation.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by pushkin, edited and converted to mono by TheShuEd"
+  source: "https://freesound.org/people/pushkin/sounds/121810/"

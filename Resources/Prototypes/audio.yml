@@ -267,7 +267,7 @@
 - type: soundCollection
   id: AmbientLoopStation
   files:
-    - /Audio/Ambience/shipambience.ogg
+    - /Audio/Ambience/ambistation.ogg
 
 - type: soundCollection
   id: AmbientLoopWind

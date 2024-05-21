@@ -18,7 +18,7 @@ public sealed partial class ContentAudioSystem
     private readonly TimeSpan _ambientLoopUpdateTime = TimeSpan.FromSeconds(5f);
 
     private const float AmbientLoopFadeInTime = 5f;
-    private const float AmbientLoopFadeOutTime = 10f;
+    private const float AmbientLoopFadeOutTime = 8f;
     private TimeSpan _nextLoop;
 
     private void InitializeAmbientLoop()
@@ -67,11 +67,9 @@ public sealed partial class ContentAudioSystem
 
     private void ChangeAmbientLoop(AmbientLoopPrototype newProto)
     {
-        if (!TryGetAudioLoops(newProto.Sound, out var loopsResPaths))
-            return;
+        FadeOut(_ambientLoopStream, duration: AmbientLoopFadeOutTime);
 
         _loopProto = newProto;
-        FadeOut(_ambientLoopStream, duration: AmbientLoopFadeOutTime);
         var newLoop = _audio.PlayGlobal(
             newProto.Sound,
             Filter.Local(),
@@ -82,29 +80,8 @@ public sealed partial class ContentAudioSystem
                 .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
         );
         _ambientLoopStream = newLoop.Value.Entity;
+
         FadeIn(_ambientLoopStream, newLoop.Value.Component, AmbientLoopFadeInTime);
-    }
-
-    private bool TryGetAudioLoops(SoundSpecifier sound, out List<ResPath> sounds)
-    {
-        sounds = new();
-        switch (sound)
-        {
-            case SoundCollectionSpecifier collection:
-                if (collection.Collection == null)
-                    return false;
-
-                var slothCud = _proto.Index<SoundCollectionPrototype>(collection.Collection);
-
-                sounds.AddRange(slothCud.PickFiles);
-                break;
-
-            case SoundPathSpecifier path:
-                sounds.Add(path.Path);
-                break;
-        }
-
-        return true;
     }
 
     private AmbientLoopPrototype? GetAmbientLoop()
