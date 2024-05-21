@@ -5,7 +5,7 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed class UseOnTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly IEntitySystemManager _entSystemManager = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
 
     public override void Initialize()
@@ -17,7 +17,6 @@ public sealed class UseOnTriggerSystem : EntitySystem
 
     public void OnTrigger(EntityUid uid, UseOnTriggerComponent comp, TriggerEvent args)
     {
-        var interactionSystem = _entSystemManager.GetEntitySystem<SharedInteractionSystem>();
         EntityUid user;
         if (args.User != null)
         {
@@ -27,6 +26,6 @@ public sealed class UseOnTriggerSystem : EntitySystem
         {
             user = uid;
         }
-        interactionSystem.InteractionActivate(user, uid, false, true, false);
+        _interactionSystem.UseInHandInteraction(user, uid, false, false, true);
     }
 }

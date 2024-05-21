@@ -6,7 +6,7 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed class ToggleOnTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly IEntitySystemManager _entSystemManager = default!;
+    [Dependency] private readonly SharedItemToggleSystem _itemToggleSystem = default!;
 
 
     public override void Initialize()
@@ -18,7 +18,6 @@ public sealed class ToggleOnTriggerSystem : EntitySystem
 
     public void OnTrigger(EntityUid uid, ToggleOnTriggerComponent triggerComp, TriggerEvent args)
     {
-        var itemToggleSystem = _entSystemManager.GetEntitySystem<SharedItemToggleSystem>();
         EntityUid user;
         if (args.User != null)
         {
@@ -30,6 +29,6 @@ public sealed class ToggleOnTriggerSystem : EntitySystem
         }
 
         TryComp<ItemToggleComponent>(uid, out var toggleComp);
-        itemToggleSystem.Toggle(uid, user, true, toggleComp);
+        _itemToggleSystem.Toggle(uid, user, true, toggleComp);
     }
 }
