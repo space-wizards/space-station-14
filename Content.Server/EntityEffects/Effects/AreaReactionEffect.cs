@@ -80,9 +80,10 @@ public sealed partial class AreaReactionEffect : EntityEffect
 
             var audio = reagentArgs.EntityManager.System<SharedAudioSystem>();
             audio.PlayPvs(_sound, reagentArgs.TargetEntity, AudioHelpers.WithVariation(0.125f));
+            return;
         }
 
-        // TODO: Someone needs to figure out how to do this for non-reagent effects. For now this effect does nothing.
-
+        // TODO: Someone needs to figure out how to do this for non-reagent effects.
+        throw new NotImplementedException();
     }
 }

@@ -24,9 +24,12 @@ namespace Content.Server.EntityEffects.Effects
 
                 if (solutionContainerSystem.TryAddReagent(solutionContainer.Value, reagentArgs.Reagent.ID, reagentArgs.Quantity, out var accepted))
                     reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.ID, accepted);
+
+                return;
             }
 
-            //TODO: Someone needs to figure out how this looks for non-reagent effects.
+            // TODO: Someone needs to figure out how to do this for non-reagent effects.
+            throw new NotImplementedException();
         }
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>

@@ -26,7 +26,9 @@ public sealed partial class SolutionTemperature : EntityEffectCondition
                 return false;
             return true;
         }
-        return false;
+
+        // TODO: Someone needs to figure out how to do this for non-reagent effects.
+        throw new NotImplementedException();
     }
 
     public override string GuidebookExplanation(IPrototypeManager prototype)

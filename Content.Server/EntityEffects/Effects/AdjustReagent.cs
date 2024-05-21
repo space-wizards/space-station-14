@@ -60,7 +60,11 @@ namespace Content.Server.EntityEffects.Effects
                         }
                     }
                 }
+                return;
             }
+
+            // TODO: Someone needs to figure out how to do this for non-reagent effects.
+            throw new NotImplementedException();
         }
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

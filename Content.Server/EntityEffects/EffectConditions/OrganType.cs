@@ -31,8 +31,12 @@ public sealed partial class OrganType : EntityEffectCondition
                 && metabolizer.MetabolizerTypes != null
                 && metabolizer.MetabolizerTypes.Contains(Type))
                 return ShouldHave;
+
+            return !ShouldHave;
         }
-        return !ShouldHave;
+
+        // TODO: Someone needs to figure out how to do this for non-reagent effects.
+        throw new NotImplementedException();
     }
 
     public override string GuidebookExplanation(IPrototypeManager prototype)

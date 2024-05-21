@@ -38,7 +38,9 @@ public sealed partial class ReagentThreshold : EntityEffectCondition
 
             return quant >= Min && quant <= Max;
         }
-        return false;
+
+        // TODO: Someone needs to figure out how to do this for non-reagent effects.
+        throw new NotImplementedException();
     }
 
     public override string GuidebookExplanation(IPrototypeManager prototype)
