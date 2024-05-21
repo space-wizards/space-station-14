@@ -299,6 +299,17 @@
     state: plushie_lizard_mirrored
 
 - type: entity
+  name: remote lizard plushie
+  id: PlushieLizardRemote
+  parent: PlushieLizard
+  components:
+  - type: DeviceLinkSink
+    ports:
+      - Trigger
+  - type: TriggerOnSignal
+  - type: UseOnTrigger
+
+- type: entity
   parent: BasePlushie
   id: PlushieSpaceLizard #ᵂᵉʰ!
   name: space lizard plushie
@@ -1493,3 +1504,15 @@
       params:
         volume: -9
         maxDistance: 3
+
+- type: entity
+  name: remote newton cradle
+  description: A device bored paper pushers use to remind themselves that time did not stop yet. Contains gravity. This one is remote operated!
+  id: NewtonCradleRemote
+  parent: NewtonCradle
+  components:
+  - type: DeviceLinkSink
+    ports:
+      - Trigger
+  - type: TriggerOnSignal
+  - type: ToggleOnTrigger

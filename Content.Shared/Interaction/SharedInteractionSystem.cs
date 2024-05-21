@@ -6,6 +6,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
@@ -968,8 +969,8 @@ namespace Content.Shared.Interaction
             if (checkAccess && !_containerSystem.IsInSameOrParentContainer(user, used) && !CanAccessViaStorage(user, used))
                 return false;
 
-            // Does the user have hands?
-            if (!HasComp<HandsComponent>(user))
+            // Does the user have hands, or is it a device link?
+            if (!HasComp<HandsComponent>(user) && !HasComp<DeviceLinkSourceComponent>(user))
                 return false;
 
             var activateMsg = new ActivateInWorldEvent(user, used);
