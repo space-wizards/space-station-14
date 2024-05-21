@@ -57,26 +57,6 @@
     zeroVisible: false
   - type: Appearance
 
-# multiple rocket launcher
-- type: entity
-  parent: WeaponLauncherRocket
-  id: WeaponLauncherMultipleRocket
-  name: multiple rocket launcher
-  description: A modified ancient rocket-propelled grenade launcher.
-  components:
-  - type: Gun
-    fireRate: 6
-    selectedMode: FullAuto
-    availableModes:
-    - FullAuto
-  - type: BallisticAmmoProvider
-    proto: CartridgeRocketSlow
-    capacity: 30
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-
 # pirate cannon
 - type: entity
   parent:
@@ -250,6 +230,27 @@
       right:
       - state: inhand-right-unshaded
         shader: unshaded
+
+# multiple rocket launcher [admeme]
+- type: entity
+  parent: WeaponLauncherRocket
+  id: WeaponLauncherMultipleRocket
+  name: multiple rocket launcher
+  suffix: Admeme
+  description: A modified ancient rocket-propelled grenade launcher.
+  components:
+  - type: Gun
+    fireRate: 6
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+  - type: BallisticAmmoProvider
+    proto: CartridgeRocketSlow
+    capacity: 30
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
 
 # meteor launcher [admeme]
 - type: entity
