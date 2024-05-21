@@ -9,8 +9,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
     layers:
-      - state: icon
-        map: ["enum.GunVisualLayers.Base"]
+    - state: icon
+      map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
   - type: AmmoCounter
@@ -18,13 +18,13 @@
     fireRate: 1
     selectedMode: SemiAuto
     availableModes:
-      - SemiAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - Grenade
+      - Grenade
     capacity: 3
     proto: GrenadeFrag
     soundInsert:
@@ -44,10 +44,10 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
     layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
@@ -57,7 +57,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeRocket
+      - CartridgeRocket
     proto: CartridgeRocket
     capacity: 1
     soundInsert:
@@ -82,23 +82,23 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
     layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 6
     selectedMode: FullAuto
     availableModes:
-      - FullAuto
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeRocket
+      - CartridgeRocket
     proto: CartridgeRocketSlow
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
@@ -122,8 +122,8 @@
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
       layers:
-        - state: icon
-          map: ["enum.GunVisualLayers.Base"]
+      - state: icon
+        map: ["enum.GunVisualLayers.Base"]
     - type: ContainerContainer
       containers:
         ballistic-ammo: !type:Container
@@ -137,7 +137,7 @@
     - type: BallisticAmmoProvider
       whitelist:
         tags:
-          - CannonBall
+        - CannonBall
       capacity: 1
       proto: CannonBall
       soundInsert:
@@ -160,20 +160,20 @@
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
       layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
-          shader: unshaded
-          visible: false
+      - state: base
+      - state: base-unshaded
+        map: [ "unshaded" ]
+        shader: unshaded
+        visible: false
     - type: ToggleableLightVisuals
       spriteLayer: unshaded
       inhandVisuals:
         left:
-          - state: inhand-left-unshaded
-            shader: unshaded
+        - state: inhand-left-unshaded
+          shader: unshaded
         right:
-          - state: inhand-right-unshaded
-            shader: unshaded
+        - state: inhand-right-unshaded
+          shader: unshaded
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -185,8 +185,8 @@
 - type: entity
   name: force gun
   parent:
-    - BaseItem
-    - PowerCellSlotMediumItem
+  - BaseItem
+  - PowerCellSlotMediumItem
   id: WeaponForceGun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
@@ -205,27 +205,27 @@
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
       layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
+      - state: base
+      - state: base-unshaded
+        map: [ "unshaded" ]
+        shader: unshaded
+        visible: false
+    - type: ToggleableLightVisuals
+      spriteLayer: unshaded
+      inhandVisuals:
+        left:
+        - state: inhand-left-unshaded
           shader: unshaded
-          visible: false
-        - type: ToggleableLightVisuals
-          spriteLayer: unshaded
-          inhandVisuals:
-            left:
-              - state: inhand-left-unshaded
-                shader: unshaded
-            right:
-              - state: inhand-right-unshaded
-                shader: unshaded
-        - type: Appearance
-        - type: GenericVisualizer
-          visuals:
-            enum.TetherVisualsStatus.Key:
-              unshaded:
-                True: { visible: true }
-                False: { visible: false }
+        right:
+        - state: inhand-right-unshaded
+          shader: unshaded
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { visible: true }
+            False: { visible: false }
 
 - type: entity
   name: grappling gun
@@ -243,11 +243,11 @@
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
       layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
-          shader: unshaded
-          visible: true
+      - state: base
+      - state: base-unshaded
+        map: [ "unshaded" ]
+        shader: unshaded
+        visible: true
     - type: UseDelay
       delay: 1.5
     - type: Appearance
@@ -276,20 +276,20 @@
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
       layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
-          shader: unshaded
-          visible: false
+      - state: base
+      - state: base-unshaded
+        map: [ "unshaded" ]
+        shader: unshaded
+        visible: false
     - type: ToggleableLightVisuals
       spriteLayer: unshaded
       inhandVisuals:
         left:
-          - state: inhand-left-unshaded
-            shader: unshaded
+        - state: inhand-left-unshaded
+          shader: unshaded
         right:
-          - state: inhand-right-unshaded
-            shader: unshaded
+        - state: inhand-right-unshaded
+          shader: unshaded
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -318,20 +318,20 @@
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
       layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
-          shader: unshaded
-          visible: false
+      - state: base
+      - state: base-unshaded
+        map: [ "unshaded" ]
+        shader: unshaded
+        visible: false
     - type: ToggleableLightVisuals
       spriteLayer: unshaded
       inhandVisuals:
         left:
-          - state: inhand-left-unshaded
-            shader: unshaded
+        - state: inhand-left-unshaded
+          shader: unshaded
         right:
-          - state: inhand-right-unshaded
-            shader: unshaded
+        - state: inhand-right-unshaded
+          shader: unshaded
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -350,7 +350,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeRocket
+      - CartridgeRocket
     proto: MeteorLarge
 
 - type: entity
@@ -363,5 +363,5 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeRocket
+      - CartridgeRocket
     proto: ImmovableRodSlow
