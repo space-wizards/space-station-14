@@ -1,10 +1,10 @@
-- type: entity
-  name: BaseWeaponLauncher
-  parent: BaseItem
-  id: BaseWeaponLauncher
-  description: A rooty tooty point and shooty.
-  abstract: true
-  components:
+# - type: entity
+#   name: BaseWeaponLauncher
+#   parent: BaseItem
+#   id: BaseWeaponLauncher
+#   description: A rooty tooty point and shooty.
+#   abstract: true
+#   components:
   # - type: Sprite
   # - type: Clothing
   #   sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -15,15 +15,14 @@
   #   size: Huge
   # - type: StaticPrice
   #   price: 500
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
+  # - type: ContainerContainer
+  #   containers:
+  #     ballistic-ammo: !type:Container
+  #       ents: []
 
 - type: entity
   name: china lake
   parent:
-  - BaseWeaponLauncher
   - BaseGunWieldable
   - BaseGunLarge
   id: WeaponLauncherChinaLake
@@ -52,11 +51,14 @@
     proto: GrenadeFrag
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   name: RPG-7
   parent:
-  - BaseWeaponLauncher
   - BaseGunLarge
   id: WeaponLauncherRocket
   description: A modified ancient rocket-propelled grenade launcher.
@@ -82,6 +84,10 @@
     capacity: 1
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
   - type: MagazineVisuals
     magState: mag
     steps: 2
@@ -91,7 +97,6 @@
 - type: entity
   name: multiple rocket launcher
   parent:
-  - BaseWeaponLauncher
   - BaseGunLarge
   id: WeaponLauncherMultipleRocket
   description: A modified ancient rocket-propelled grenade launcher.
@@ -119,6 +124,10 @@
     proto: CartridgeRocketSlow
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -128,7 +137,6 @@
 - type: entity
   name: pirate cannon
   parent:
-  - BaseWeaponLauncher
   - BaseGunLarge
   id: WeaponLauncherPirateCannon
   description: Kaboom!
@@ -139,7 +147,7 @@
         - state: icon
           map: ["enum.GunVisualLayers.Base"]
     - containers:
-        balistic-ammo: !type:Container
+        balistic-ammo: !type:Container 
           ents: []
         ballistic-ammo: !type:Container
           ents: []
