@@ -26,7 +26,7 @@ public sealed class RulesSystem : EntitySystem
                     break;
                 case GridInRangeRule griddy:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform))
+                    if (!TryComp(uid, out TransformComponent? xform))
                     {
                         return false;
                     }
@@ -50,7 +50,7 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case InSpaceRule:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    if (!TryComp(uid, out TransformComponent? xform) ||
                         xform.GridUid != null)
                     {
                         return false;
@@ -146,7 +146,7 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case NearbyEntitiesRule entity:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    if (!TryComp(uid, out TransformComponent? xform) ||
                         xform.MapUid == null)
                     {
                         return false;
@@ -177,7 +177,7 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case NearbyTilesPercentRule tiles:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    if (!TryComp(uid, out TransformComponent? xform) ||
                         !TryComp<MapGridComponent>(xform.GridUid, out var grid))
                     {
                         return false;
@@ -227,7 +227,7 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case OnMapGridRule:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    if (!TryComp(uid, out TransformComponent? xform) ||
                         xform.GridUid != xform.MapUid ||
                         xform.MapUid == null)
                     {
