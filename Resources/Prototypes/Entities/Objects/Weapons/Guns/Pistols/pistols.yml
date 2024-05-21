@@ -1,41 +1,26 @@
+# viper
 - type: entity
-  name: BasePistol
-  parent: BaseItem
-  id: BaseWeaponPistol
-  description: A rooty tooty point and shooty.
-  abstract: true
+  parent:
+  - BaseGunSmall
+  - BaseGunPistolMag
+  id: WeaponPistolViper
+  name: viper
+  description: A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses .35 auto ammo.
   components:
   - type: Sprite
-    layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    size: Small
-    shape:
-    - 0,0,1,0
-    - 0,1,0,1
-  - type: Tag
-    tags:
-    - Sidearm
-  - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
-    quickEquip: false
-    slots:
-    - suitStorage
-    - Belt
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 6
-    selectedMode: SemiAuto
     availableModes:
-      - SemiAuto
-      - FullAuto
+    - SemiAuto
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
-  - type: ChamberMagazineAmmoProvider
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -46,65 +31,29 @@
         priority: 2
         whitelist:
           tags:
-            - MagazinePistol
+          - MagazinePistol
+          - MagazinePistolHighCapacity
       gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
         priority: 1
         whitelist:
           tags:
-            - CartridgePistol
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
+          - CartridgePistol
   - type: MagazineVisuals
     magState: mag
     steps: 1
     zeroVisible: true
   - type: Appearance
-  - type: StaticPrice
-    price: 500
 
+# cobra
 - type: entity
-  name: viper
-  parent: BaseWeaponPistol
-  id: WeaponPistolViper
-  description: A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses .35 auto ammo.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
-    availableModes:
-    - FullAuto
-    - SemiAuto
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazinePistol
-        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazinePistol
-            - MagazinePistolHighCapacity
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgePistol
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgePistol
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
-
-- type: entity
-  name: cobra
-  parent: BaseWeaponPistol
+  parent:
+  - BaseGunSmall
+  - BaseGunPistolMag
+  - BaseGunSilenced
   id: WeaponPistolCobra
+  name: cobra
   description: A rugged, robust operator handgun with inbuilt silencer. Uses .25 caseless ammo.
   components:
   - type: Sprite
@@ -114,18 +63,10 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
-  - type: ChamberMagazineAmmoProvider
-    boltClosed: null
   - type: Gun
     fireRate: 4
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
-      params:
-        volume: -14
-    availableModes:
-    - SemiAuto
+  - type: ChamberMagazineAmmoProvider
+    boltClosed: null
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -136,23 +77,27 @@
         priority: 2
         whitelist:
           tags:
-            - MagazinePistolCaselessRifle
+          - MagazinePistolCaselessRifle
       gun_chamber:
         name: Chamber
         startingItem: CartridgeCaselessRifle
         priority: 1
         whitelist:
           tags:
-            - CartridgeCaselessRifle
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
+          - CartridgeCaselessRifle
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
 
+# mk 58
 - type: entity
-  name: mk 58
-  parent: BaseWeaponPistol
+  parent:
+  - BaseGunSmall
+  - BaseGunPistolMag
   id: WeaponPistolMk58
+  name: mk 58
   description: A cheap, ubiquitous sidearm, produced by a NanoTrasen subsidiary. Uses .35 auto ammo.
   components:
   - type: Sprite
@@ -162,20 +107,24 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Gun
     fireRate: 5
-    availableModes:
-    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
 
+# N1984
 - type: entity
+  parent:
+  - BaseGunSmall
+  - BaseGunPistolMag
+  id: WeaponPistolN1984
   name: N1984
-  parent: BaseWeaponPistol
-  id: WeaponPistolN1984 # the spaces in description are for formatting.
-  description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber.
+  description: The sidearm of any self respecting officer. Comes in .45 magnum, the lord's caliber.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
@@ -184,16 +133,12 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
   - type: Gun
     minAngle: 1
     maxAngle: 20
     angleIncrease: 8
     angleDecay: 9
     fireRate: 4
-    availableModes:
-    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
   - type: ItemSlots
@@ -206,11 +151,16 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineMagnum
+          - MagazineMagnum
       gun_chamber:
         name: Chamber
         startingItem: CartridgeMagnum
         priority: 1
         whitelist:
           tags:
-            - CartridgeMagnum
+          - CartridgeMagnum
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance

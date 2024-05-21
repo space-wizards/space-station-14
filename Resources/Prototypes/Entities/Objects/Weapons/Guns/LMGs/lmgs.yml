@@ -1,40 +1,29 @@
+# L6 SAW
 - type: entity
-  name: BaseWeaponLightMachineGun
-  parent: BaseItem
-  id: BaseWeaponLightMachineGun
-  description: A rooty tooty point and shooty.
-  abstract: true
+  parent:
+  - BaseWeaponL6
+  - BaseGunLarge
+  - BaseGunWieldable
+  id: WeaponLightMachineGunL6
+  name: L6 SAW
+  description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip. Uses .30 rifle ammo.
   components:
   - type: Sprite
-  - type: Item
-    size: Huge
-  - type: Clothing
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
-    quickEquip: false
-    slots:
-    - Back
-  - type: Wieldable
-    unwieldOnUse: false
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-3
+      map: ["enum.GunVisualLayers.Mag"]
   - type: GunWieldBonus
     minAngle: -20
     maxAngle: -20
   - type: Gun
     minAngle: 24
     maxAngle: 45
-    angleIncrease: 4
-    angleDecay: 16
-    fireRate: 8
-    selectedMode: FullAuto
-    availableModes:
-      - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
-  - type: AmmoCounter
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -45,70 +34,42 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineLightRifleBox
+          - MagazineLightRifleBox
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
         priority: 1
         whitelist:
           tags:
-            - CartridgeLightRifle
+          - CartridgeLightRifle
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
-  - type: StaticPrice
-    price: 500
-  - type: UseDelay
-    delay: 1
-
-- type: entity
-  name: L6 SAW
-  id: WeaponLightMachineGunL6
-  parent: BaseWeaponLightMachineGun
-  description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip. Uses .30 rifle ammo.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-3
-      map: ["enum.GunVisualLayers.Mag"]
+  - type: AmmoCounter
   - type: MagazineVisuals
     magState: mag
     steps: 4
     zeroVisible: true
   - type: Appearance
 
+# L6C ROW
 - type: entity
-  name: L6C ROW
+  parent:
+  - BaseWeaponL6
+  - BaseGunBattery
+  - BaseGunSelfRecharger
   id: WeaponLightMachineGunL6C
-  parent: BaseItem
+  name: L6C ROW
   description: A L6 SAW for use by cyborgs. Creates .30 rifle ammo on the fly from an internal ammo fabricator, which slowly self-charges.
   components:
-    - type: Gun
-      minAngle: 4
-      maxAngle: 25
-      angleIncrease: 4
-      angleDecay: 16
-      fireRate: 8
-      selectedMode: FullAuto
-      availableModes:
-        - FullAuto
-      soundGunshot:
-        path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
-      soundEmpty:
-        path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
     - type: Sprite
       sprite: Objects/Weapons/Guns/LMGs/l6.rsi
       layers:
-        - state: base
-          map: [ "enum.GunVisualLayers.Base" ]
-        - state: mag-3
-          map: [ "enum.GunVisualLayers.Mag" ]
-    - type: Item
-      size: Huge
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: mag-3
+        map: [ "enum.GunVisualLayers.Mag" ]
     - type: ContainerContainer
       containers:
         ballistic-ammo: !type:Container
@@ -119,6 +80,4 @@
       maxCharge: 10000
       startingCharge: 10000
     - type: BatterySelfRecharger
-      autoRecharge: true
       autoRechargeRate: 25
-    - type: AmmoCounter
