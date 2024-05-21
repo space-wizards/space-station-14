@@ -1,9 +1,10 @@
+# china lake
 - type: entity
-  name: china lake
   parent:
   - BaseGunWieldable
   - BaseGunLarge
   id: WeaponLauncherChinaLake
+  name: china lake
   description: PLOOP
   components:
   - type: Sprite
@@ -29,11 +30,12 @@
       ballistic-ammo: !type:Container
         ents: []
 
+# RPG-7
 - type: entity
-  name: RPG-7
   parent:
   - BaseGunLarge
   id: WeaponLauncherRocket
+  name: RPG-7
   description: A modified ancient rocket-propelled grenade launcher.
   components:
   - type: Sprite
@@ -65,10 +67,11 @@
     zeroVisible: false
   - type: Appearance
 
+# multiple rocket launcher
 - type: entity
-  name: multiple rocket launcher
   parent: WeaponLauncherRocket
   id: WeaponLauncherMultipleRocket
+  name: multiple rocket launcher
   description: A modified ancient rocket-propelled grenade launcher.
   components:
   - type: Gun
@@ -84,11 +87,12 @@
     steps: 1
     zeroVisible: true
 
+# pirate cannon
 - type: entity
-  name: pirate cannon
   parent:
   - BaseGunLarge
   id: WeaponLauncherPirateCannon
+  name: pirate cannon
   description: Kaboom!
   components:
   - type: Sprite
@@ -113,12 +117,13 @@
       ballistic-ammo: !type:Container
         ents: []
 
+# tether gun
 - type: entity
-  name: tether gun
   parent:
   - BaseItem
   - PowerCellSlotMediumItem
   id: WeaponTetherGun
+  name: tether gun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
   - type: Sprite
@@ -152,12 +157,13 @@
       - state: inhand-right-unshaded
         shader: unshaded
 
+# force gun
 - type: entity
-  name: force gun
   parent:
   - BaseItem
   - PowerCellSlotMediumItem
   id: WeaponForceGun
+  name: force gun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
   - type: Sprite
@@ -197,10 +203,11 @@
       - state: inhand-right-unshaded
         shader: unshaded
 
+# grappling gun
 - type: entity
-  name: grappling gun
   parent: BaseItem
   id: WeaponGrapplingGun
+  name: grappling gun
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
@@ -229,10 +236,11 @@
     delay: 1.5
 
 # Admeme
+# tether gun [admeme]
 - type: entity
-  name: tether gun
   parent: BaseItem
   id: WeaponTetherGunAdmin
+  name: tether gun
   suffix: Admeme
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
@@ -268,10 +276,11 @@
       - state: inhand-right-unshaded
         shader: unshaded
 
+# force gun [admeme]
 - type: entity
-  name: force gun
   parent: BaseItem
   id: WeaponForceGunAdmin
+  name: force gun
   suffix: Admeme
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
@@ -310,10 +319,11 @@
       - state: inhand-right-unshaded
         shader: unshaded
 
+# meteor launcher [admeme]
 - type: entity
-  name: meteor launcher
   parent: WeaponLauncherMultipleRocket
   id: WeaponLauncherAdmemeMeteorLarge
+  name: meteor launcher
   suffix: Admeme
   description: It fires large meteors
   components:
@@ -323,10 +333,11 @@
       tags:
       - CartridgeRocket
 
+# immovable rod launcher [admeme]
 - type: entity
-  name: immovable rod launcher
   parent: WeaponLauncherAdmemeMeteorLarge
   id: WeaponLauncherAdmemeImmovableRodSlow
+  name: immovable rod launcher
   suffix: Admeme
   description: It fires slow immovable rods.
   components:
