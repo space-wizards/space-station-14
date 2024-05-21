@@ -5,10 +5,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Audio;
 
 /// <summary>
-/// Attaches a rules prototype to sound files to play ambience.
+/// Attaches a rules prototype to sound files to play ambience. Allows you to play cyclic ambient background sound.
 /// </summary>
-[Prototype("ambientMusic")]
-public sealed partial class AmbientMusicPrototype : IPrototype
+[Prototype("ambientLoop")]
+public sealed partial class AmbientLoopPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = string.Empty;
 
@@ -17,18 +17,6 @@ public sealed partial class AmbientMusicPrototype : IPrototype
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public int Priority = 0;
-
-    /// <summary>
-    /// Can we interrupt this ambience for a better prototype if possible?
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    public bool Interruptable = false;
-
-    /// <summary>
-    /// Do we fade-in. Useful for songs.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    public bool FadeIn;
 
     [ViewVariables(VVAccess.ReadWrite), DataField(required: true)]
     public SoundSpecifier Sound = default!;
