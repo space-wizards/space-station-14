@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Components;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Prototypes;
@@ -42,6 +43,12 @@ public sealed partial class GameTicker
             string.Empty,
             "cleargamerules",
             ClearGameRulesCommand);
+
+        // List game rules command.
+        _consoleHost.RegisterCommand("listgamerules",
+            string.Empty,
+            "listgamerules Lists all rules that have been added for the round so far.",
+            ListGameRuleCommand);
     }
 
     private void ShutdownGameRules()
@@ -49,6 +56,7 @@ public sealed partial class GameTicker
         _consoleHost.UnregisterCommand("addgamerule");
         _consoleHost.UnregisterCommand("endgamerule");
         _consoleHost.UnregisterCommand("cleargamerules");
+        _consoleHost.UnregisterCommand("listgamerules");
     }
 
     /// <summary>
@@ -110,7 +118,8 @@ public sealed partial class GameTicker
             if (delayTime > TimeSpan.Zero)
             {
                 _sawmill.Info($"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
-                _adminLogger.Add(LogType.EventStarted, $"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
+                _adminLogger.Add(LogType.EventStarted,
+                    $"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
 
                 var delayed = EnsureComp<DelayedStartRuleComponent>(ruleEntity);
                 delayed.RuleStartTime = _gameTiming.CurTime + (delayTime);
@@ -118,7 +127,12 @@ public sealed partial class GameTicker
             }
         }
 
-        _allPreviousGameRules.Add((RoundDuration(), id));
+        var currentTime = RunLevel == GameRunLevel.PreRoundLobby ? TimeSpan.Zero : RoundDuration();
+
+        if (!HasComp<RoundstartStationVariationRuleComponent>(ruleEntity) && !HasComp<StationVariationPassRuleComponent>(ruleEntity))
+        {
+            _allPreviousGameRules.Add((currentTime, id));
+        }
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
         _adminLogger.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(ruleEntity)}");
 
@@ -296,6 +310,7 @@ public sealed partial class GameTicker
             if (shell.Player != null)
             {
                 _adminLogger.Add(LogType.EventStarted, $"{shell.Player} tried to add game rule [{rule}] via command");
+                _chatManager.SendAdminAnnouncement(Loc.GetString("addgamerule-admin", ("admin", shell.Player),("rule", rule)));
             }
             else
             {
@@ -306,6 +321,7 @@ public sealed partial class GameTicker
             // Start rule if we're already in the middle of a round
             if(RunLevel == GameRunLevel.InRound)
                 StartGameRule(ent);
+
         }
     }
 
@@ -347,6 +363,35 @@ public sealed partial class GameTicker
     private void ClearGameRulesCommand(IConsoleShell shell, string argstr, string[] args)
     {
         ClearGameRules();
+    }
+
+    [AdminCommand(AdminFlags.Admin)]
+    private void ListGameRuleCommand(IConsoleShell shell, string argstr, string[] args)
+    {
+        var message = GetGameRulesListMessage();
+        shell.WriteLine(message);
+    }
+    private string GetGameRulesListMessage()
+    {
+        if (_allPreviousGameRules.Count > 0)
+        {
+            var sortedRules = _allPreviousGameRules.OrderBy(rule => rule.Item1).ToList();
+            var message = Loc.GetString("list-gamerule-admin-header");
+            message += "|------------|------------------\n";
+
+            foreach (var (time, rule) in sortedRules)
+            {
+                var formattedTime = time.ToString(@"hh\:mm\:ss");
+                message += $"| {formattedTime,-10} | {rule,-16} \n";
+            }
+
+            return message;
+        }
+        else
+        {
+            return Loc.GetString("list-gamerule-admin-no-rules");
+
+        }
     }
 
     #endregion
