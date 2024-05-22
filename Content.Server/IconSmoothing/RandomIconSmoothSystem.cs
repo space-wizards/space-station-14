@@ -19,6 +19,5 @@ public sealed partial class RandomIconSmoothSystem : SharedRandomIconSmoothSyste
         var state = _random.Pick(ent.Comp.RandomStates);
         ent.Comp.SelectedState = state;
         Dirty(ent);
-        UpdateVisualState(ent, state);
     }
 }

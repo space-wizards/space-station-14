@@ -5,7 +5,7 @@ namespace Content.Shared.IconSmoothing;
 /// <summary>
 /// Allow randomize StateBase of IconSmoothComponent for random visual variation
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class RandomIconSmoothComponent : Component
 {
     /// <summary>

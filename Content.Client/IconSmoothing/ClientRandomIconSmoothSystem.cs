@@ -6,11 +6,18 @@ public abstract class ClientRandomIconSmoothSystem : SharedRandomIconSmoothSyste
 {
     [Dependency] private readonly IconSmoothSystem _iconSmooth = default!;
 
-    protected override void UpdateVisualState(Entity<RandomIconSmoothComponent> ent, string newState)
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<RandomIconSmoothComponent, AfterAutoHandleStateEvent>(OnAfterHandleState);
+    }
+
+    private void OnAfterHandleState(Entity<RandomIconSmoothComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         if (!TryComp<IconSmoothComponent>(ent, out var smooth))
             return;
-        smooth.StateBase = newState;
+        smooth.StateBase = ent.Comp.SelectedState;
 
         _iconSmooth.DirtyNeighbours(ent);
     }
