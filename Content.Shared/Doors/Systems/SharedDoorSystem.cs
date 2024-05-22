@@ -466,7 +466,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         door.Partial = true;
 
-        // Make sure no entity waled into the airlock when it started closing.
+        // Make sure no entity walked into the airlock when it started closing.
         if (!CanClose(uid, door))
         {
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;

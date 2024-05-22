@@ -10,6 +10,8 @@ namespace Content.Shared.Doors.Components
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class FirelockComponent : Component
     {
+        #region Settings
+
         /// <summary>
         /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.
         /// </summary>
@@ -47,6 +49,10 @@ namespace Content.Shared.Doors.Components
         [DataField]
         public TimeSpan EmergencyCloseCooldownDuration = TimeSpan.FromSeconds(2);
 
+        #endregion
+
+        #region Set by system
+
         /// <summary>
         /// When the firelock will be allowed to automatically close again due to a hazardous environment.
         /// </summary>
@@ -56,7 +62,7 @@ namespace Content.Shared.Doors.Components
         /// <summary>
         /// Whether the firelock can open, or is locked due to its environment.
         /// </summary>
-        public bool IsLocked => Pressure || Fire;
+        public bool IsLocked => Pressure || Temperature;
 
         /// <summary>
         /// Whether the firelock is holding back a hazardous pressure.
@@ -65,15 +71,17 @@ namespace Content.Shared.Doors.Components
         public bool Pressure;
 
         /// <summary>
-        /// Whether the firelock is holding back fire.
+        /// Whether the firelock is holding back extreme temperatures.
         /// </summary>
         [DataField, AutoNetworkedField]
-        public bool Fire;
+        public bool Temperature;
 
         /// <summary>
         /// Whether the airlock is powered.
         /// </summary>
         [DataField, AutoNetworkedField]
         public bool Powered;
+
+        #endregion
     }
 }

@@ -73,14 +73,12 @@ namespace Content.Server.Doors.Systems
                 {
                     var (fire, pressure) = CheckPressureAndFire(uid, firelock, xform, airtight, airtightQuery);
                     _appearance.SetData(uid, DoorVisuals.ClosedLights, fire || pressure, appearance);
-                    firelock.Fire = fire;
+                    firelock.Temperature = fire;
                     firelock.Pressure = pressure;
                     Dirty(uid, firelock);
                 }
             }
         }
-
-
 
         private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)
         {

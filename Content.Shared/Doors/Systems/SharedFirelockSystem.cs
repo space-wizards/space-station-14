@@ -31,7 +31,7 @@ public abstract class SharedFirelockSystem : EntitySystem
 
     private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)
     {
-        if (component.Fire)
+        if (component.Temperature)
         {
             _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-fire-message"),
                 uid, args.User, PopupType.MediumCaution);
@@ -47,78 +47,75 @@ public abstract class SharedFirelockSystem : EntitySystem
     }
 
     private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
-        {
-            // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
-            var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
+    {
+        // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
+        var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
 
-            if (!component.Powered || (!overrideAccess && component.IsLocked))
-                args.Cancel();
-        }
+        if (!component.Powered || (!overrideAccess && component.IsLocked))
+            args.Cancel();
+    }
 
-        public bool EmergencyPressureStop(EntityUid uid, FirelockComponent? firelock = null, DoorComponent? door = null)
-        {
-            if (!Resolve(uid, ref firelock, ref door))
-                return false;
-
-            if (door.State != DoorState.Open ||
-                firelock.EmergencyCloseCooldown != null &&
-                _gameTiming.CurTime < firelock.EmergencyCloseCooldown)
-                return false;
-
-            if (_doorSystem.TryClose(uid, door))
-            {
-                return _doorSystem.OnPartialClose(uid, door);
-            }
+    public bool EmergencyPressureStop(EntityUid uid, FirelockComponent? firelock = null, DoorComponent? door = null)
+    {
+        if (!Resolve(uid, ref firelock, ref door))
             return false;
-        }
+
+        if (door.State != DoorState.Open
+            || firelock.EmergencyCloseCooldown != null
+            && _gameTiming.CurTime < firelock.EmergencyCloseCooldown)
+            return false;
+
+        if (!_doorSystem.TryClose(uid, door))
+            return false;
+
+        return _doorSystem.OnPartialClose(uid, door);
+    }
 
 
-        private void OnAfterPried(EntityUid uid, FirelockComponent component, ref PriedEvent args)
+    private void OnAfterPried(EntityUid uid, FirelockComponent component, ref PriedEvent args)
+    {
+        component.EmergencyCloseCooldown = _gameTiming.CurTime + component.EmergencyCloseCooldownDuration;
+    }
+
+    #region Visuals
+
+    protected void UpdateVisuals(EntityUid uid, FirelockComponent component, EntityEventArgs args) => UpdateVisuals(uid, component);
+
+    private void UpdateVisuals(EntityUid uid,
+        FirelockComponent? firelock = null,
+        DoorComponent? door = null,
+        AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref door, ref appearance, false))
+            return;
+
+        // only bother to check pressure on doors that are some variation of closed.
+        if (door.State != DoorState.Closed
+            && door.State != DoorState.Welded
+            && door.State != DoorState.Denying)
         {
-            component.EmergencyCloseCooldown = _gameTiming.CurTime + component.EmergencyCloseCooldownDuration;
+            _appearance.SetData(uid, DoorVisuals.ClosedLights, false, appearance);
+            return;
         }
 
-        #region Visuals
+        if (!Resolve(uid, ref firelock, ref appearance, false))
+            return;
 
-        protected void UpdateVisuals(EntityUid uid, FirelockComponent component, EntityEventArgs args) => UpdateVisuals(uid, component);
+        _appearance.SetData(uid, DoorVisuals.ClosedLights, firelock.IsLocked, appearance);
+    }
 
-        private void UpdateVisuals(EntityUid uid,
-            FirelockComponent? firelock = null,
-            DoorComponent? door = null,
-            AppearanceComponent? appearance = null)
+    #endregion
+
+    private void OnUpdateState(EntityUid uid, FirelockComponent component, DoorStateChangedEvent args)
+    {
+        var ev = new BeforeDoorAutoCloseEvent();
+        RaiseLocalEvent(uid, ev);
+        UpdateVisuals(uid, component, args);
+        if (ev.Cancelled)
         {
-            if (!Resolve(uid, ref door, ref appearance, false))
-                return;
-
-            // only bother to check pressure on doors that are some variation of closed.
-            if (door.State != DoorState.Closed
-                && door.State != DoorState.Welded
-                && door.State != DoorState.Denying)
-            {
-                _appearance.SetData(uid, DoorVisuals.ClosedLights, false, appearance);
-                return;
-            }
-
-            if (!Resolve(uid, ref firelock, ref appearance, false))
-                return;
-
-            _appearance.SetData(uid, DoorVisuals.ClosedLights, firelock.IsLocked, appearance);
+            return;
         }
 
-        #endregion
-
-        private void OnUpdateState(EntityUid uid, FirelockComponent component, DoorStateChangedEvent args)
-        {
-            var ev = new BeforeDoorAutoCloseEvent();
-            RaiseLocalEvent(uid, ev);
-            UpdateVisuals(uid, component, args);
-            if (ev.Cancelled)
-            {
-                return;
-            }
-
-            _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
-        }
+        _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
+    }
 }
-
-
