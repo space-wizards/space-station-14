@@ -19,6 +19,7 @@ namespace Content.Server.Power.EntitySystems
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly PowerNetConnectorSystem _powerNetConnector = default!;
         [Dependency] private readonly IParallelManager _parMan = default!;
+        [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
 
         private readonly PowerState _powerState = new();
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
@@ -302,14 +303,16 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = AllEntityQuery<ApcPowerReceiverComponent>();
             while (enumerator.MoveNext(out var uid, out var apcReceiver))
             {
-                var powered = apcReceiver.Powered;
+                var powered = _powerReceiver.IsPowered(uid, apcReceiver);
                 if (powered == apcReceiver.PoweredLastUpdate)
                     continue;
 
-                if (metaQuery.GetComponent(uid).EntityPaused)
+                if (metaQuery.TryComp(uid, out var metaDataComponent) && metaDataComponent.EntityPaused)
                     continue;
 
                 apcReceiver.PoweredLastUpdate = powered;
+                apcReceiver.Powered = _powerReceiver.IsPowered(uid, apcReceiver);
+                Dirty(uid, apcReceiver, metaDataComponent);
                 var ev = new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower);
 
                 RaiseLocalEvent(uid, ref ev);
