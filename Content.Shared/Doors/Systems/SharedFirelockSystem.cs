@@ -20,6 +20,7 @@ public abstract class SharedFirelockSystem : EntitySystem
 
         SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(OnUpdateState);
 
+        // Access/Prying
         SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
         SubscribeLocalEvent<FirelockComponent, GetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
         SubscribeLocalEvent<FirelockComponent, PriedEvent>(OnAfterPried);
@@ -27,6 +28,46 @@ public abstract class SharedFirelockSystem : EntitySystem
         // Visuals
         SubscribeLocalEvent<FirelockComponent, MapInitEvent>(UpdateVisuals);
         SubscribeLocalEvent<FirelockComponent, ComponentStartup>(UpdateVisuals);
+    }
+
+    public bool EmergencyPressureStop(EntityUid uid, FirelockComponent? firelock = null, DoorComponent? door = null)
+    {
+        if (!Resolve(uid, ref firelock, ref door))
+            return false;
+
+        if (door.State != DoorState.Open
+            || firelock.EmergencyCloseCooldown != null
+            && _gameTiming.CurTime < firelock.EmergencyCloseCooldown)
+            return false;
+
+        if (!_doorSystem.TryClose(uid, door))
+            return false;
+
+        return _doorSystem.OnPartialClose(uid, door);
+    }
+
+    private void OnUpdateState(EntityUid uid, FirelockComponent component, DoorStateChangedEvent args)
+    {
+        var ev = new BeforeDoorAutoCloseEvent();
+        RaiseLocalEvent(uid, ev);
+        UpdateVisuals(uid, component, args);
+        if (ev.Cancelled)
+        {
+            return;
+        }
+
+        _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
+    }
+
+    #region Access/Prying
+
+    private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
+    {
+        // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
+        var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
+
+        if (!component.Powered || (!overrideAccess && component.IsLocked))
+            args.Cancel();
     }
 
     private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)
@@ -46,39 +87,16 @@ public abstract class SharedFirelockSystem : EntitySystem
             args.PryTimeModifier *= component.LockedPryTimeModifier;
     }
 
-    private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
-    {
-        // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
-        var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
-
-        if (!component.Powered || (!overrideAccess && component.IsLocked))
-            args.Cancel();
-    }
-
-    public bool EmergencyPressureStop(EntityUid uid, FirelockComponent? firelock = null, DoorComponent? door = null)
-    {
-        if (!Resolve(uid, ref firelock, ref door))
-            return false;
-
-        if (door.State != DoorState.Open
-            || firelock.EmergencyCloseCooldown != null
-            && _gameTiming.CurTime < firelock.EmergencyCloseCooldown)
-            return false;
-
-        if (!_doorSystem.TryClose(uid, door))
-            return false;
-
-        return _doorSystem.OnPartialClose(uid, door);
-    }
-
     private void OnAfterPried(EntityUid uid, FirelockComponent component, ref PriedEvent args)
     {
         component.EmergencyCloseCooldown = _gameTiming.CurTime + component.EmergencyCloseCooldownDuration;
     }
 
+    #endregion
+
     #region Visuals
 
-    protected void UpdateVisuals(EntityUid uid, FirelockComponent component, EntityEventArgs args) => UpdateVisuals(uid, component);
+    private void UpdateVisuals(EntityUid uid, FirelockComponent component, EntityEventArgs args) => UpdateVisuals(uid, component);
 
     private void UpdateVisuals(EntityUid uid,
         FirelockComponent? firelock = null,
@@ -104,17 +122,4 @@ public abstract class SharedFirelockSystem : EntitySystem
     }
 
     #endregion
-
-    private void OnUpdateState(EntityUid uid, FirelockComponent component, DoorStateChangedEvent args)
-    {
-        var ev = new BeforeDoorAutoCloseEvent();
-        RaiseLocalEvent(uid, ev);
-        UpdateVisuals(uid, component, args);
-        if (ev.Cancelled)
-        {
-            return;
-        }
-
-        _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
-    }
 }
