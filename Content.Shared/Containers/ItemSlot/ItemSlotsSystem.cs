@@ -197,6 +197,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
                 return;
 
+            var slots = new List<ItemSlot>();
             foreach (var slot in itemSlots.Slots.Values)
             {
                 if (!slot.InsertOnInteract)
@@ -205,9 +206,31 @@ namespace Content.Shared.Containers.ItemSlots
                 if (!CanInsert(uid, args.Used, args.User, slot, swap: slot.Swap, popup: args.User))
                     continue;
 
-                // Drop the held item onto the floor. Return if the user cannot drop.
-                if (!_handsSystem.TryDrop(args.User, args.Used, handsComp: hands))
-                    return;
+                slots.Add(slot);
+            }
+
+            if (slots.Count == 0)
+                return;
+
+            slots.Sort(static (a, b) =>
+            {
+                var aEnt = a.ContainerSlot?.ContainedEntity;
+                var bEnt = b.ContainerSlot?.ContainedEntity;
+                if (aEnt == null && bEnt == null)
+                    return a.Priority.CompareTo(b.Priority);
+
+                if (aEnt == null)
+                    return -1;
+
+                return 1;
+            });
+
+            // Drop the held item onto the floor. Return if the user cannot drop.
+            if (!_handsSystem.TryDrop(args.User, args.Used, handsComp: hands))
+                return;
+
+            foreach (var slot in slots)
+            {
 
                 if (slot.Item != null)
                     _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
