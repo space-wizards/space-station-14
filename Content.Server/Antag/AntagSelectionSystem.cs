@@ -325,16 +325,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         var preferredList = new List<ICommonSession>();
         var fallbackList = new List<ICommonSession>();
-        var unwantedList = new List<ICommonSession>();
-        var invalidList = new List<ICommonSession>();
         foreach (var session in sessions)
         {
             if (!IsSessionValid(ent, session, def) ||
                 !IsEntityValid(session.AttachedEntity, def))
-            {
-                invalidList.Add(session);
                 continue;
-            }
 
             var pref = (HumanoidCharacterProfile) _pref.GetPreferences(session.UserId).SelectedCharacter;
             if (def.PrefRoles.Count != 0 && pref.AntagPreferences.Any(p => def.PrefRoles.Contains(p)))
@@ -345,13 +340,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             {
                 fallbackList.Add(session);
             }
-            else
-            {
-                unwantedList.Add(session);
-            }
         }
 
-        return new AntagSelectionPlayerPool(new() { preferredList, fallbackList, unwantedList, invalidList });
+        return new AntagSelectionPlayerPool(new() { preferredList, fallbackList });
     }
 
     /// <summary>
