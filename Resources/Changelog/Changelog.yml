@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MACMAN2003
-  changes:
-  - message: Diagonal windows no longer space you when in a pressurized environment.
-    type: Fix
-  id: 6112
-  time: '2024-03-08T07:50:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25926
 - author: mryikes
   changes:
   - message: New Nuke Detonation Song "Clearly Nuclear".
@@ -3870,3 +3863,15 @@
   id: 6611
   time: '2024-05-22T07:52:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28200
+- author: nikthechampiongr
+  changes:
+  - message: Firelocks can now be pried by hand.
+    type: Tweak
+  - message: Firelocks will now not automatically close for 2 seconds after you pry
+      them open.
+    type: Tweak
+  - message: Firelocks are now properly predicted.
+    type: Fix
+  id: 6612
+  time: '2024-05-22T11:16:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26582
