@@ -111,7 +111,6 @@
     - type: PryUnpowered
       pryModifier: 0.5
 
-
 - type: entity
   id: Firelock
   parent: BaseFirelock

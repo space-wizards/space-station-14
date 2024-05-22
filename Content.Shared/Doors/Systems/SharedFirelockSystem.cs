@@ -71,7 +71,6 @@ public abstract class SharedFirelockSystem : EntitySystem
         return _doorSystem.OnPartialClose(uid, door);
     }
 
-
     private void OnAfterPried(EntityUid uid, FirelockComponent component, ref PriedEvent args)
     {
         component.EmergencyCloseCooldown = _gameTiming.CurTime + component.EmergencyCloseCooldownDuration;

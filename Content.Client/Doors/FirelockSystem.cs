@@ -1,6 +1,5 @@
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
-using Content.Shared.Prying.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Doors;
