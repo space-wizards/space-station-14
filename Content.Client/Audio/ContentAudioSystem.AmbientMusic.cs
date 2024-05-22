@@ -4,9 +4,7 @@ using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Random;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Components;
@@ -33,15 +31,21 @@ public sealed partial class ContentAudioSystem
 
     private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(30);
     private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(60);
+    private readonly TimeSpan _ambientLoopUpdateTime = TimeSpan.FromSeconds(5f);
 
     private const float AmbientMusicFadeTime = 10f;
+    private const float AmbientLoopFadeInTime = 5f;
+    private const float AmbientLoopFadeOutTime = 8f;
     private static float _volumeSlider;
 
     // Don't need to worry about this being serializable or pauseable as it doesn't affect the sim.
     private TimeSpan _nextAudio;
+    private TimeSpan _nextLoop = TimeSpan.Zero;
 
     private EntityUid? _ambientMusicStream;
+    private EntityUid? _ambientLoopStream;
     private AmbientMusicPrototype? _musicProto;
+    private AmbientLoopPrototype? _loopProto;
 
     /// <summary>
     /// If we find a better ambient music proto can we interrupt this one.
@@ -77,9 +81,10 @@ public sealed partial class ContentAudioSystem
         _volumeSlider = SharedAudioSystem.GainToVolume(obj);
 
         if (_ambientMusicStream != null && _musicProto != null)
-        {
             _audio.SetVolume(_ambientMusicStream, _musicProto.Sound.Params.Volume + _volumeSlider);
-        }
+
+        if (_ambientLoopStream != null && _loopProto != null)
+            _audio.SetVolume(_ambientLoopStream, _loopProto.Sound.Params.Volume + _volumeSlider);
     }
 
     private void ShutdownAmbientMusic()
@@ -226,6 +231,54 @@ public sealed partial class ContentAudioSystem
         }
     }
 
+    private void UpdateAmbientLoop()
+    {
+        //Optimization: the environment check code is not run every frame, but with a certain periodicity
+        if (_timing.CurTime < _nextLoop)
+            return;
+        _nextLoop = _timing.CurTime + _ambientLoopUpdateTime;
+
+        //We don't play background ambient in the lobby.
+        if (_state.CurrentState is not GameplayState)
+        {
+            _ambientLoopStream = Audio.Stop(_ambientLoopStream);
+            _loopProto = null;
+            return;
+        }
+
+        //If now there is no background ambient, or it is different from what should play in the current conditions -
+        //we start the process of smooth transition to another ambient
+        var currentLoopProto = GetAmbientLoop();
+        if (currentLoopProto == null)
+            return;
+        if (_loopProto == null || _loopProto.ID != currentLoopProto.ID)
+        {
+            ChangeAmbientLoop(currentLoopProto);
+        }
+    }
+
+    /// <summary>
+    /// Smoothly turns off the current ambient, and smoothly turns on the new ambient
+    /// </summary>
+    private void ChangeAmbientLoop(AmbientLoopPrototype newProto)
+    {
+        FadeOut(_ambientLoopStream, duration: AmbientLoopFadeOutTime);
+
+        _loopProto = newProto;
+        var newLoop = _audio.PlayGlobal(
+            newProto.Sound,
+            Filter.Local(),
+            false,
+            AudioParams.Default
+                .WithLoop(true)
+                .WithVolume(_loopProto.Sound.Params.Volume + _volumeSlider)
+                .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
+        );
+        _ambientLoopStream = newLoop.Value.Entity;
+
+        FadeIn(_ambientLoopStream, newLoop.Value.Component, AmbientLoopFadeInTime);
+    }
+
     private AmbientMusicPrototype? GetAmbience()
     {
         var player = _player.LocalEntity;
@@ -244,13 +297,38 @@ public sealed partial class ContentAudioSystem
 
         foreach (var amb in ambiences)
         {
-            if (!_rules.IsTrue(player.Value, _proto.Index<RulesPrototype>(amb.Rules)))
+            if (!_rules.IsTrue(player.Value, _proto.Index(amb.Rules)))
                 continue;
 
             return amb;
         }
 
         _sawmill.Warning($"Unable to find fallback ambience track");
+        return null;
+    }
+
+    /// <summary>
+    /// Checking the player's environment through the rules. Returns the current ambient to be played.
+    /// </summary>
+    private AmbientLoopPrototype? GetAmbientLoop()
+    {
+        var player = _player.LocalEntity;
+
+        if (player == null)
+            return null;
+
+        var ambientLoops = _proto.EnumeratePrototypes<AmbientLoopPrototype>().ToList();
+        ambientLoops.Sort((x, y) => y.Priority.CompareTo(x.Priority));
+
+        foreach (var loop in ambientLoops)
+        {
+            if (!_rules.IsTrue(player.Value, _proto.Index(loop.Rules)))
+                continue;
+
+            return loop;
+        }
+
+        _sawmill.Warning("Unable to find fallback ambience loop");
         return null;
     }
 

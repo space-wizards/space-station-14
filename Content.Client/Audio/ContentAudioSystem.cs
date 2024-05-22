@@ -37,7 +37,6 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
         UpdatesOutsidePrediction = true;
         InitializeAmbientMusic();
         InitializeLobbyMusic();
-        InitializeAmbientLoop();
         SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
     }
 
