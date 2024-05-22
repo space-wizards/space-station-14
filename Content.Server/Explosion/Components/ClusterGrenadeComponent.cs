@@ -107,11 +107,10 @@ namespace Content.Server.Explosion.Components
         /// </summary>
         public bool CountDown;
     }
+}
 
-    public enum GrenadeType
-    {
-        Throw,
-        Shoot
-    }
-
+public enum ClusterGrenadeType : byte
+{
+    ThrowEntities,
+    ShootProjectiles
 }

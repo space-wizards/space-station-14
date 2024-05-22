@@ -1,0 +1,136 @@
+# ScatteringGrenade is intended for grenades that spawn entities, especially those with timers
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: ScatteringGrenadeBase
+  components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      #behaviors:
+      #- !type:TriggerBehavior
+      #- !type:DoActsBehavior
+      #  acts: ["Destruction"]
+  - type: ScatteringGrenade
+
+- type: entity
+  parent: ScatteringGrenadeBase
+  id: ClusterBang
+  name: clusterbang
+  description: Can be used only with flashbangs. Explodes several times.
+  components:
+  - type: ClusterGrenadeVisuals
+    state: base
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/clusterbang.rsi
+    state: base-0
+  - type: OnUseTimerTrigger
+    delay: 3.5
+
+- type: entity
+  parent: ClusterBang
+  id: ClusterBangFull
+  name: ClusterBang
+  description: Launches three flashbangs after the timer runs out.
+  suffix: Full
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/clusterbang.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ScatteringGrenade
+    fillPrototype: GrenadeFlashBang
+    distance: 7
+    velocity: 7
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: icon }
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Machines/door_lock_off.ogg"
+
+- type: entity
+  parent: ScatteringGrenadeBase
+  id: ClusterGrenade
+  name: clustergrenade
+  description: Why use one grenade when you can use three at once!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/clusterbomb.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ScatteringGrenade
+    fillPrototype: ExGrenade
+    distance: 5
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 0.5
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Machines/door_lock_off.ogg"
+
+- type: entity
+  parent: ScatteringGrenadeBase
+  id: ClusterBananaPeel
+  name: cluster banana peel
+  description: Splits into 6 explosive banana peels after throwing, guaranteed fun!
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: produce
+  - type: ScatteringGrenade
+    fillPrototype: TrashBananaPeelExplosive
+    capacity: 6
+    delayBeforeTriggerContents: 20
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 10
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Items/bikehorn.ogg"
+
+- type: entity
+  parent: SoapSyndie, ScatteringGrenadeBase
+  id: SlipocalypseClusterSoap
+  name: slipocalypse clustersoap
+  description: Spreads small pieces of syndicate soap over an area upon landing on the floor.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    layers:
+    - state: syndie-4
+  - type: ScatteringGrenade
+    fillPrototype: SoapletSyndie
+    capacity: 30
+    delayBeforeTriggerContents: 60
+    randomDistance: true
+    randomDistanceMax: 4
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 10
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+
