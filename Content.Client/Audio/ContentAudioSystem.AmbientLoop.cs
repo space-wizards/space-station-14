@@ -11,6 +11,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Audio;
 
+/// <summary>
+/// A system that constantly plays a quiet background ambient depending on the player's current environment.
+/// An endless looped track or collection is played, and seamlessly changes to another if the player's
+/// environment is changed.
+/// </summary>
 public sealed partial class ContentAudioSystem
 {
     private EntityUid? _ambientLoopStream;
@@ -19,13 +24,13 @@ public sealed partial class ContentAudioSystem
 
     private const float AmbientLoopFadeInTime = 5f;
     private const float AmbientLoopFadeOutTime = 8f;
-    private TimeSpan _nextLoop;
+    private TimeSpan _nextLoop = TimeSpan.Zero;
 
     private void InitializeAmbientLoop()
     {
+        //Subscribe to sound volume changes in the settings menu
+        //The already existing ambient volume parameter is used
         Subs.CVar(_configManager, CCVars.AmbientMusicVolume, AmbienceCVarChangedAmbientLoop, true);
-
-        _nextAudio = TimeSpan.Zero;
     }
 
     private void AmbienceCVarChangedAmbientLoop(float obj)
@@ -40,11 +45,12 @@ public sealed partial class ContentAudioSystem
 
     private void UpdateAmbientLoop()
     {
+        //Optimization: the environment check code is not run every frame, but with a certain periodicity
         if (_timing.CurTime < _nextLoop)
             return;
-
         _nextLoop = _timing.CurTime + _ambientLoopUpdateTime;
 
+        //We don't play background ambient in the lobby.
         if (_state.CurrentState is not GameplayState)
         {
             _ambientLoopStream = Audio.Stop(_ambientLoopStream);
@@ -52,6 +58,8 @@ public sealed partial class ContentAudioSystem
             return;
         }
 
+        //If now there is no background ambient, or it is different from what should play in the current conditions -
+        //we start the process of smooth transition to another ambient
         var currentLoopProto = GetAmbientLoop();
         if (currentLoopProto == null)
             return;
@@ -65,6 +73,9 @@ public sealed partial class ContentAudioSystem
         }
     }
 
+    /// <summary>
+    /// Smoothly turns off the current ambient, and smoothly turns on the new ambient
+    /// </summary>
     private void ChangeAmbientLoop(AmbientLoopPrototype newProto)
     {
         FadeOut(_ambientLoopStream, duration: AmbientLoopFadeOutTime);
@@ -84,6 +95,9 @@ public sealed partial class ContentAudioSystem
         FadeIn(_ambientLoopStream, newLoop.Value.Component, AmbientLoopFadeInTime);
     }
 
+    /// <summary>
+    /// Checking the player's environment through the rules. Returns the current ambient to be played.
+    /// </summary>
     private AmbientLoopPrototype? GetAmbientLoop()
     {
         var player = _player.LocalEntity;
