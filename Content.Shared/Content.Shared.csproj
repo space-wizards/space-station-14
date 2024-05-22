@@ -8,7 +8,7 @@
     <WarningsAsErrors>nullable</WarningsAsErrors>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Tools' Or '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'DebugOpt'">
+  <PropertyGroup Condition="'$(RobustGenerateXMLDocFile)' == 'true'">
     <DocumentationFile>../bin/Content.Shared/Content.Shared.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

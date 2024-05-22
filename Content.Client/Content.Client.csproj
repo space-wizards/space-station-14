@@ -12,7 +12,7 @@
     <Configurations>Debug;Release;Tools;DebugOpt</Configurations>
     <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Tools' Or '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'DebugOpt'">
+  <PropertyGroup Condition="'$(RobustGenerateXMLDocFile)' == 'true'">
     <DocumentationFile>../bin/Content.Client/Content.Client.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>

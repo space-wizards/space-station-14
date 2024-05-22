@@ -13,7 +13,7 @@
     <Nullable>enable</Nullable>
     <ServerGarbageCollection>true</ServerGarbageCollection>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Tools' Or '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'DebugOpt'">
+  <PropertyGroup Condition="'$(RobustGenerateXMLDocFile)' == 'true'">
     <DocumentationFile>../bin/Content.Server/Content.Server.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
