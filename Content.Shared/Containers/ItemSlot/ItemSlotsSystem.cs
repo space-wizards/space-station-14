@@ -363,10 +363,17 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             var slots = ent.Comp.Slots.Values.Where(s => s.ContainerSlot?.ContainedEntity == null).ToList();
-            slots.Sort(SortEmpty);
 
             if (slots.Count == 0)
                 return false;
+
+            if (user != null && _handsSystem.IsHolding(user.Value, item))
+            {
+                if (!_handsSystem.TryDrop(user.Value, item))
+                    return false;
+            }
+
+            slots.Sort(SortEmpty);
 
             foreach (var slot in slots)
             {
