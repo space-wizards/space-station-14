@@ -31,6 +31,7 @@
                ClipText="True"
                Text="{Loc player-tab-antagonist}"
                MouseFilter="Pass"/>
+        <cc:VSeparator/>
         <Label Name="PlaytimeLabel"
                SizeFlagsStretchRatio="2"
                HorizontalExpand="True"
