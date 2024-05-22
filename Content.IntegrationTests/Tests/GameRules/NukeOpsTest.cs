@@ -50,6 +50,9 @@ public sealed class NukeOpsTest
         var invSys = server.System<InventorySystem>();
         var factionSys = server.System<NpcFactionSystem>();
 
+        // test urist is a noob let him be nukie
+        server.CfgMan.SetCVar(CCVars.GameRoleTimers, false);
+
         Assert.That(server.CfgMan.GetCVar(CCVars.GridFill), Is.False);
         server.CfgMan.SetCVar(CCVars.GridFill, true);
 
