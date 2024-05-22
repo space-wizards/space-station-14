@@ -387,17 +387,22 @@ public sealed partial class GameTicker
     {
         _sawmill.Info($"{shell.Player} tried to get list of game rules via command");
         _adminLogger.Add(LogType.Action, $"{shell.Player} tried to get list of game rules via command");
-        var message = GetGameRulesListMessage();
+        var message = GetGameRulesListMessage(false);
         shell.WriteLine(message);
     }
-    private string GetGameRulesListMessage()
+    private string GetGameRulesListMessage(bool forChatWindow)
     {
         if (_allPreviousGameRules.Count > 0)
         {
             var sortedRules = _allPreviousGameRules.OrderBy(rule => rule.Item1).ToList();
-            var header = Loc.GetString("list-gamerule-admin-header");
-            var message = $"\n{header}\n";
-            message += "|------------|------------------\n";
+            var message = "\n";
+
+            if (!forChatWindow)
+            {
+                var header = Loc.GetString("list-gamerule-admin-header");
+                message += $"\n{header}\n";
+                message += "|------------|------------------\n";
+            }
 
             foreach (var (time, rule) in sortedRules)
             {
