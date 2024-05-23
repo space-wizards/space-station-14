@@ -463,7 +463,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 return;
             }
 
-            if (_xformQuery.TryGetComponent(uid, out var transformOwner) && TryComp<TransformComponent>(target, out var transformEnt))
+            if (TryComp(uid, out TransformComponent? transformOwner) && TryComp(target, out TransformComponent? transformEnt))
             {
                 var parent = transformOwner.ParentUid;
 
