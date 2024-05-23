@@ -1,8 +1,7 @@
-# a raffled ghost role using AntagSelection
 - type: entity
   abstract: true
   parent: MarkerBase
-  id: BaseSpawnPointAntag
+  id: BaseAntagSpawner
   components:
   - type: GhostRole
     raffle:
@@ -94,7 +93,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseSpawnPointAntag
+  parent: BaseAntagSpawner
   id: SpawnPointLoneNukeOperative
   name: ghost role spawn point
   components:
@@ -132,7 +131,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseSpawnPointAntag
+  parent: BaseAntagSpawner
   id: SpawnPointGhostSpaceNinja
   components:
   - type: GhostRole
