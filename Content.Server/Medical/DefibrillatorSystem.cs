@@ -102,6 +102,9 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (_mobState.IsAlive(target, mobState))
             return false;
 
+        if (!component.CanDefibCrit && _mobState.IsCritical(target, mobState))
+            return false;
+
         return true;
     }
 
@@ -119,7 +122,8 @@ public sealed class DefibrillatorSystem : EntitySystem
             {
                 BlockDuplicate = true,
                 BreakOnHandChange = true,
-                NeedHand = true
+                NeedHand = true,
+                BreakOnMove = !component.AllowDoAfterMovement
             });
     }
 
@@ -194,6 +198,10 @@ public sealed class DefibrillatorSystem : EntitySystem
         // if we don't have enough power left for another shot, turn it off
         if (!_powerCell.HasActivatableCharge(uid))
             _toggle.TryDeactivate(uid);
+
+        // TODO clean up this clown show above
+        var ev = new TargetDefibrillatedEvent(user, (uid, component));
+        RaiseLocalEvent(target, ref ev);
     }
 
     public override void Update(float frameTime)

@@ -306,7 +306,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (_followerSystem.GetMostFollowed() is not {} target)
+            if (_followerSystem.GetMostGhostFollowed() is not {} target)
                 return;
 
             WarpTo(uid, target);
@@ -409,23 +409,41 @@ namespace Content.Server.Ghost
             return SpawnGhost(mind, spawnPosition, canReturn);
         }
 
+        private bool IsValidSpawnPosition(EntityCoordinates? spawnPosition)
+        {
+            if (spawnPosition?.IsValid(EntityManager) != true)
+                return false;
+
+            var mapUid = spawnPosition?.GetMapUid(EntityManager);
+            var gridUid = spawnPosition?.EntityId;
+            // Test if the map is being deleted
+            if (mapUid == null || TerminatingOrDeleted(mapUid.Value))
+                return false;
+            // Test if the grid is being deleted
+            if (gridUid != null && TerminatingOrDeleted(gridUid.Value))
+                return false;
+
+            return true;
+        }
+
         public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityCoordinates? spawnPosition = null,
             bool canReturn = false)
         {
             if (!Resolve(mind, ref mind.Comp))
                 return null;
 
-            // Test if the map is being deleted
-            var mapUid = spawnPosition?.GetMapUid(EntityManager);
-            if (mapUid == null || TerminatingOrDeleted(mapUid.Value))
+            // Test if the map or grid is being deleted
+            if (!IsValidSpawnPosition(spawnPosition))
                 spawnPosition = null;
 
+            // If it's bad, look for a valid point to spawn
             spawnPosition ??= _ticker.GetObserverSpawnPoint();
 
-            if (!spawnPosition.Value.IsValid(EntityManager))
+            // Make sure the new point is valid too
+            if (!IsValidSpawnPosition(spawnPosition))
             {
                 Log.Warning($"No spawn valid ghost spawn position found for {mind.Comp.CharacterName}"
-                    + " \"{ToPrettyString(mind)}\"");
+                    + $" \"{ToPrettyString(mind)}\"");
                 _minds.TransferTo(mind.Owner, null, createGhost: false, mind: mind.Comp);
                 return null;
             }
