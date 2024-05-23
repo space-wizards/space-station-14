@@ -30,7 +30,7 @@ public sealed class AntagLoadProfileRuleSystem : GameRuleSystem<AntagLoadProfile
         var profile = args.Session != null
             ? _prefs.GetPreferences(args.Session.UserId).SelectedCharacter as HumanoidCharacterProfile
             : HumanoidCharacterProfile.RandomWithSpecies();
-        if (!_proto.TryIndex<SpeciesPrototype>(profile?.Species, out var species))
+        if (profile?.Species is not {} speciesId || !_proto.TryIndex<SpeciesPrototype>(speciesId, out var species))
             species = _proto.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies);
 
         args.Entity = Spawn(species.Prototype);
