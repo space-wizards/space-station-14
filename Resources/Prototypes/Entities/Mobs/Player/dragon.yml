@@ -140,9 +140,9 @@
     - DoorBumpOpener
 
 - type: entity
-  noSpawn: true # it wont have any objectives or role, add the gamerule instead
   parent: BaseMobDragon
   id: MobDragon
+  suffix: No role or objectives
   components:
   - type: Dragon
     spawnRiftAction: ActionSpawnRift
