@@ -8,7 +8,8 @@ using Robust.Shared.Map;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed class ListContainer : Control
+[Virtual]
+public class ListContainer : Control
 {
     public const string StylePropertySeparation = "separation";
     public const string StyleClassListContainerButton = "list-container-button";

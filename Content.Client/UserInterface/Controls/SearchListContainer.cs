@@ -1,14 +1,12 @@
 ﻿using System.Linq;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed class SearchListContainer : Control
+public sealed class SearchListContainer : ListContainer
 {
-    private readonly ListContainer _listContainer = new();
     private LineEdit? _searchBar;
-    private List<ListData> _data = new();
+    private List<ListData> _unfilteredData = new();
 
     /// <summary>
     /// The <see cref="LineEdit"/> that is used to filter the list data.
@@ -30,39 +28,20 @@ public sealed class SearchListContainer : Control
         }
     }
 
-    private void FilterList(LineEdit.LineEditEventArgs obj)
-    {
-        FilterList();
-    }
-
     /// <summary>
     /// Runs over the ListData to determine if it should pass the filter.
     /// </summary>
-    public Func<string, ListData, bool>? DataFilterCondition;
+    public Func<string, ListData, bool>? DataFilterCondition = null;
 
-    #region ListContainer delegates
-
-    public Action<ListData, ListContainerButton>? GenerateItem
+    public override void PopulateList(IReadOnlyList<ListData> data)
     {
-        get => _listContainer.GenerateItem;
-        set => _listContainer.GenerateItem = value;
-    }
-    public Action<BaseButton.ButtonEventArgs, ListData>? ItemPressed
-    {
-        get => _listContainer.ItemPressed;
-        set => _listContainer.ItemPressed = value;
-    }
-    public Action<GUIBoundKeyEventArgs, ListData>? ItemKeyBindDown
-    {
-        get => _listContainer.ItemKeyBindDown;
-        set => _listContainer.ItemKeyBindDown = value;
+        _unfilteredData = data.ToList();
+        FilterList();
     }
 
-    #endregion
-
-    public SearchListContainer()
+    private void FilterList(LineEdit.LineEditEventArgs obj)
     {
-        AddChild(_listContainer);
+        FilterList();
     }
 
     private void FilterList()
@@ -71,12 +50,12 @@ public sealed class SearchListContainer : Control
 
         if (DataFilterCondition is null || string.IsNullOrEmpty(filterText))
         {
-            _listContainer.PopulateList(_data);
+            base.PopulateList(_unfilteredData);
             return;
         }
 
         var filteredData = new List<ListData>();
-        foreach (var data in _data)
+        foreach (var data in _unfilteredData)
         {
             if (!DataFilterCondition(filterText, data))
                 continue;
@@ -84,12 +63,6 @@ public sealed class SearchListContainer : Control
             filteredData.Add(data);
         }
 
-        _listContainer.PopulateList(filteredData);
-    }
-
-    public void PopulateList(IReadOnlyList<ListData> data)
-    {
-        _data = data.ToList();
-        FilterList();
+        base.PopulateList(filteredData);
     }
 }
