@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Metabolism.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;

@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Body.Events;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Metabolism.Components;
 
 namespace Content.Shared.Medical.Metabolism.Systems;

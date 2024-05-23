@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Medical.Pain.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class NervousSystemComponent : Component
+public sealed partial class NervesComponent : Component
 {
 
     [DataField, AutoNetworkedField]

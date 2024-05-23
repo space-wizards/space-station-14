@@ -27,25 +27,25 @@ public sealed partial class TraumaSystem : EntitySystem
 
     private void ApplyPainTrauma(EntityUid uid, PainTraumaComponent pain, ref WoundAppliedToBody args)
     {
-        _painSystem.ChangePain(new Entity<NervousSystemComponent?>(uid, null),
+        _painSystem.ChangePain(new Entity<NervesComponent?>(uid, null),
             -pain.PainDecrease);
-        _painSystem.ChangeCap(new Entity<NervousSystemComponent?>(uid, null),
+        _painSystem.ChangeCap(new Entity<NervesComponent?>(uid, null),
             -pain.PainCapDecrease);
-        _painSystem.ChangeMultiplier(new Entity<NervousSystemComponent?>(uid, null),
+        _painSystem.ChangeMultiplier(new Entity<NervesComponent?>(uid, null),
             -pain.PainMultiplierDecrease);
-        _painSystem.ChangeMitigation(new Entity<NervousSystemComponent?>(uid, null),
+        _painSystem.ChangeMitigation(new Entity<NervesComponent?>(uid, null),
             -pain.PainMultiplierDecrease);
     }
 
     private void RemovePainTrauma(EntityUid uid, PainTraumaComponent pain, ref WoundRemovedFromBody args)
     {
-        _painSystem.ChangePain(new Entity<NervousSystemComponent?>(uid, null),
+        _painSystem.ChangePain(new Entity<NervesComponent?>(uid, null),
             pain.PainDecrease);
-        _painSystem.ChangeCap(new Entity<NervousSystemComponent?>(uid, null),
+        _painSystem.ChangeCap(new Entity<NervesComponent?>(uid, null),
             pain.PainCapDecrease);
-        _painSystem.ChangeMultiplier(new Entity<NervousSystemComponent?>(uid, null),
+        _painSystem.ChangeMultiplier(new Entity<NervesComponent?>(uid, null),
             pain.PainMultiplierDecrease);
-        _painSystem.ChangeMitigation(new Entity<NervousSystemComponent?>(uid, null),
+        _painSystem.ChangeMitigation(new Entity<NervesComponent?>(uid, null),
             pain.PainMultiplierDecrease);
     }
 

@@ -5,4 +5,4 @@ namespace Content.Shared.Medical.Pain.Events;
 
 
 [ByRefEvent]
-public record struct PainChangedEvent(Entity<NervousSystemComponent> NervousSystem, FixedPoint2 PainDelta);
+public record struct PainChangedEvent(Entity<NervesComponent> NervousSystem, FixedPoint2 PainDelta);

@@ -11,12 +11,12 @@ public sealed class PainSystem : EntitySystem
 {
     [Dependency] private readonly HealthConditionSystem _healthConditionSystem = default!;
 
-    public void CheckPainThresholds(Entity<NervousSystemComponent?> nervousSystem)
+    public void CheckPainThresholds(Entity<NervesComponent?> nervousSystem)
     {
         if (!Resolve(nervousSystem,ref nervousSystem.Comp))
             return;
         var pain = nervousSystem.Comp.Pain;
-        var changedThresholds = new List<(FixedPoint2, NervousSystemComponent.MedicalConditionThreshold)>();
+        var changedThresholds = new List<(FixedPoint2, NervesComponent.MedicalConditionThreshold)>();
         var conditionManager = new Entity<HealthConditionManagerComponent?>(nervousSystem, null);
         foreach (var (painPercent, conditionData) in nervousSystem.Comp.ConditionThresholds)
         {
@@ -46,13 +46,13 @@ public sealed class PainSystem : EntitySystem
         Dirty(nervousSystem, nervousSystem.Comp);
     }
 
-    public FixedPoint2 CalculateAdjustedPain(Entity<NervousSystemComponent> nervousSystem, FixedPoint2 rawPain)
+    public FixedPoint2 CalculateAdjustedPain(Entity<NervesComponent> nervousSystem, FixedPoint2 rawPain)
     {
         return FixedPoint2.Clamp(rawPain * nervousSystem.Comp.Multiplier - nervousSystem.Comp.MitigatedPain, 0,
             nervousSystem.Comp.PainCap);
     }
 
-    public void ChangePain(Entity<NervousSystemComponent?> nervousSystem, FixedPoint2 painDelta)
+    public void ChangePain(Entity<NervesComponent?> nervousSystem, FixedPoint2 painDelta)
     {
         if (painDelta == 0 || !Resolve(nervousSystem,ref nervousSystem.Comp))
             return;
@@ -67,7 +67,7 @@ public sealed class PainSystem : EntitySystem
         CheckPainThresholds(nervousSystem);
     }
 
-    public void ChangeCap(Entity<NervousSystemComponent?> nervousSystem, FixedPoint2 painCapDelta)
+    public void ChangeCap(Entity<NervesComponent?> nervousSystem, FixedPoint2 painCapDelta)
     {
         if (painCapDelta == 0 || !Resolve(nervousSystem,ref nervousSystem.Comp))
             return;
@@ -82,7 +82,7 @@ public sealed class PainSystem : EntitySystem
         CheckPainThresholds(nervousSystem);
     }
 
-    public void ChangeMultiplier(Entity<NervousSystemComponent?> nervousSystem, FixedPoint2 painMultDelta)
+    public void ChangeMultiplier(Entity<NervesComponent?> nervousSystem, FixedPoint2 painMultDelta)
     {
         if (painMultDelta == 0 || !Resolve(nervousSystem,ref nervousSystem.Comp))
             return;
@@ -97,7 +97,7 @@ public sealed class PainSystem : EntitySystem
         CheckPainThresholds(nervousSystem);
     }
 
-    public void ChangeMitigation(Entity<NervousSystemComponent?> nervousSystem, FixedPoint2 mitigationPercentDelta)
+    public void ChangeMitigation(Entity<NervesComponent?> nervousSystem, FixedPoint2 mitigationPercentDelta)
     {
         if (mitigationPercentDelta == 0 || !Resolve(nervousSystem,ref nervousSystem.Comp))
             return;
