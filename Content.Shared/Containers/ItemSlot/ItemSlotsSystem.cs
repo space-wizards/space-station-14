@@ -37,7 +37,6 @@ namespace Content.Shared.Containers.ItemSlots
             base.Initialize();
 
             SubscribeLocalEvent<ItemSlotsComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<ItemSlotsComponent, ComponentInit>(Oninitialize);
 
             SubscribeLocalEvent<ItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ItemSlotsComponent, InteractHandEvent>(OnInteractHand);
@@ -61,25 +60,15 @@ namespace Content.Shared.Containers.ItemSlots
         /// </summary>
         private void OnMapInit(EntityUid uid, ItemSlotsComponent itemSlots, MapInitEvent args)
         {
-            foreach (var slot in itemSlots.Slots.Values)
+            foreach (var (id, slot) in itemSlots.Slots)
             {
+                slot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(uid, id);
                 if (slot.HasItem || string.IsNullOrEmpty(slot.StartingItem))
                     continue;
 
                 var item = EntityManager.SpawnEntity(slot.StartingItem, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
                 if (slot.ContainerSlot != null)
                     _containers.Insert(item, slot.ContainerSlot);
-            }
-        }
-
-        /// <summary>
-        ///     Ensure item slots have containers.
-        /// </summary>
-        private void Oninitialize(EntityUid uid, ItemSlotsComponent itemSlots, ComponentInit args)
-        {
-            foreach (var (id, slot) in itemSlots.Slots)
-            {
-                slot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(uid, id);
             }
         }
 
