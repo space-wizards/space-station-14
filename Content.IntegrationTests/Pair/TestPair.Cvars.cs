@@ -46,7 +46,7 @@ public sealed partial class TestPair
             {
                 var flags = Client.CfgMan.GetCVarFlags(name);
                 if (flags.HasFlag(CVar.REPLICATED) && flags.HasFlag(CVar.SERVER))
-                    return;
+                    continue;
 
                 Client.Log.Info($"Resetting cvar {name} to {value}");
                 Client.CfgMan.SetCVar(name, value);
