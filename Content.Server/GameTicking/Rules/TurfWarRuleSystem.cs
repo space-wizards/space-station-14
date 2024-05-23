@@ -116,8 +116,9 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
 
     private void OnObjectivesTextGetInfo(Entity<TurfWarRuleComponent> ent, ref ObjectivesTextGetInfoEvent args)
     {
-        args.Minds = new List<EntityUid>(ent.Comp.Minds.Values);
+        args.Minds = _antag.GetAntagIdentifiers(ent.Owner);
         args.AgentName = Loc.GetString("turf-war-round-end-agent-name");
+        // TODO: add this to AntagSelection after one of my antag refactoring prs then this code is unneeded
         args.HideObjectives = true;
     }
 
