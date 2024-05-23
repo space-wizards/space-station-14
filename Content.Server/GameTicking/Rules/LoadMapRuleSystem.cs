@@ -33,12 +33,14 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         else if (comp.MapPath is {} path)
         {
             var options = new MapLoadOptions { LoadMap = true };
-            if (!_mapLoader.TryLoad(mapId, path.ToString(), out grids, options))
+            if (!_mapLoader.TryLoad(mapId, path.ToString(), out var roots, options))
             {
                 Log.Error($"Failed to load map from {path}!");
                 Del(mapUid);
                 return;
             }
+
+            grids = roots;
         }
         else if (comp.PreloadedGrid is {} preloaded)
         {
