@@ -18,7 +18,6 @@ public abstract class ClientRandomIconSmoothSystem : SharedRandomIconSmoothSyste
         if (!TryComp<IconSmoothComponent>(ent, out var smooth))
             return;
         smooth.StateBase = ent.Comp.SelectedState;
-
-        _iconSmooth.DirtyNeighbours(ent);
+        _iconSmooth.SetStateBase(ent, smooth, ent.Comp.SelectedState);
     }
 }

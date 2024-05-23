@@ -16,6 +16,9 @@ public sealed partial class RandomIconSmoothSystem : SharedRandomIconSmoothSyste
 
     private void OnCompStartup(Entity<RandomIconSmoothComponent> ent, ref ComponentStartup args)
     {
+        if (ent.Comp.RandomStates.Count == 0)
+            return;
+
         var state = _random.Pick(ent.Comp.RandomStates);
         ent.Comp.SelectedState = state;
         Dirty(ent);
