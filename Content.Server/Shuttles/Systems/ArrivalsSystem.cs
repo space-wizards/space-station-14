@@ -316,7 +316,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
         TryGetArrivals(out var arrivals);
 
-        if (TryComp<TransformComponent>(arrivals, out var arrivalsXform))
+        if (TryComp(arrivals, out TransformComponent? arrivalsXform))
         {
             var mapId = arrivalsXform.MapID;
 
@@ -413,7 +413,7 @@ public sealed class ArrivalsSystem : EntitySystem
         var curTime = _timing.CurTime;
         TryGetArrivals(out var arrivals);
 
-        if (TryComp<TransformComponent>(arrivals, out var arrivalsXform))
+        if (TryComp(arrivals, out TransformComponent? arrivalsXform))
         {
             while (query.MoveNext(out var uid, out var comp, out var shuttle, out var xform))
             {
