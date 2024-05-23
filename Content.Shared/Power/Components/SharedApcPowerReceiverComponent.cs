@@ -5,6 +5,6 @@ namespace Content.Shared.Power.Components;
 [NetworkedComponent]
 public abstract partial class SharedApcPowerReceiverComponent : Component
 {
-    [DataField]
+    [ViewVariables]
     public bool Powered;
 }
