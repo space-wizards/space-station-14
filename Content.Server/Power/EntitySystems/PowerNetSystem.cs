@@ -303,22 +303,13 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = AllEntityQuery<ApcPowerReceiverComponent>();
             while (enumerator.MoveNext(out var uid, out var apcReceiver))
             {
-                var powered = _powerReceiver.IsPowered(uid, apcReceiver);
-                if (powered == apcReceiver.PoweredLastUpdate)
-                    continue;
-
                 if (metaQuery.TryComp(uid, out var metaDataComponent) && metaDataComponent.EntityPaused)
                     continue;
 
-                apcReceiver.PoweredLastUpdate = powered;
-                apcReceiver.Powered = _powerReceiver.IsPowered(uid, apcReceiver);
-                Dirty(uid, apcReceiver, metaDataComponent);
-                var ev = new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower);
-
-                RaiseLocalEvent(uid, ref ev);
+                _powerReceiver.UpdateIsPowered((uid, apcReceiver));
 
                 if (appearanceQuery.TryGetComponent(uid, out var appearance))
-                    _appearance.SetData(uid, PowerDeviceVisuals.Powered, powered, appearance);
+                    _appearance.SetData(uid, PowerDeviceVisuals.Powered, apcReceiver.Powered, appearance);
             }
         }
 

@@ -178,6 +178,30 @@ namespace Content.Server.Power.EntitySystems
                        || MathHelper.CloseToPercent(receiver.NetworkLoad.ReceivingPower, receiver.Load));
         }
 
+        public void UpdateIsPowered(Entity<ApcPowerReceiverComponent?, MetaDataComponent?> entity)
+        {
+            SetIsPowered(entity, IsPowered(entity.Owner, entity.Comp1));
+        }
+
+        private void SetIsPowered(Entity<ApcPowerReceiverComponent?, MetaDataComponent?> entity, bool powered)
+        {
+            if (!_recQuery.Resolve(entity.Owner, ref entity.Comp1, false)
+                || !Resolve(entity.Owner, ref entity.Comp2, false))
+                return;
+
+            // If new value is the same as the old, then exit
+            if (!entity.Comp1.Recalculate && entity.Comp1.Powered == powered)
+                return;
+
+            entity.Comp1.Recalculate = false;
+
+            entity.Comp1.Powered = powered;
+            Dirty(entity.Owner, entity.Comp1, entity.Comp2);
+
+            var ev = new PowerChangedEvent(entity.Comp1.Powered, entity.Comp1.NetworkLoad.ReceivingPower);
+            RaiseLocalEvent(entity.Owner, ref ev);
+        }
+
         /// <summary>
         /// Turn this machine on or off.
         /// Returns true if we turned it on, false if we turned it off.

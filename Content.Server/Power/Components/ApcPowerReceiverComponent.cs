@@ -31,7 +31,7 @@ namespace Content.Server.Power.Components
             {
                 _needsPower = value;
                 // Reset this so next tick will do a power update.
-                PoweredLastUpdate = null;
+                Recalculate = true;
             }
         }
 
@@ -48,7 +48,7 @@ namespace Content.Server.Power.Components
             set => NetworkLoad.Enabled = !value;
         }
 
-        public bool? PoweredLastUpdate;
+        public bool Recalculate;
 
         [ViewVariables]
         public PowerState.Load NetworkLoad { get; } = new PowerState.Load
