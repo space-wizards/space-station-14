@@ -42,6 +42,13 @@ public sealed partial class AntagSelectionComponent : Component
     /// Is not serialized.
     /// </summary>
     public HashSet<ICommonSession> SelectedSessions = new();
+
+    /// <summary>
+    /// Locale id for the name of the antag.
+    /// If this is set then the antag is listed in the round-end summary.
+    /// </summary>
+    [DataField]
+    public LocId? AgentName;
 }
 
 [DataDefinition]
