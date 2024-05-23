@@ -122,21 +122,12 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
 
         private void GenerateButton(ListData data, ListContainerButton button)
         {
-            if (data is not PlayerListData { Info: var player, FilteringString: var filteringString })
+            if (data is not PlayerListData { Info: var player})
                 return;
 
-            var entry = new PlayerTabEntry(player.Username,
-                player.CharacterName,
-                player.IdentityName,
-                player.StartingJob,
-                player.Antag ? "YES" : "NO",
-                new StyleBoxFlat(button.Index % 2 == 0 ? _altColor : _defaultColor),
-                player.Connected,
-                player.PlaytimeString);
-            entry.PlayerEntity = player.NetEntity;
-            button.ToolTip = $"{player.Username}, {player.CharacterName}, {player.IdentityName}, {player.StartingJob}";
-
+            var entry = new PlayerTabEntry(player, new StyleBoxFlat(button.Index % 2 == 0 ? _altColor : _defaultColor));
             button.AddChild(entry);
+            button.ToolTip = $"{player.Username}, {player.CharacterName}, {player.IdentityName}, {player.StartingJob}";
         }
 
         /// <summary>
