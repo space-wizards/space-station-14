@@ -106,7 +106,16 @@
     minimumPlayers: 30
   - type: SpaceSpawnRule
   - type: AntagLoadProfileRule
+  - type: AntagObjectives
+    objectives:
+    - StealResearchObjective
+    - DoorjackObjective
+    - SpiderChargeObjective
+    - TerrorObjective
+    - MassArrestObjective
+    - NinjaSurviveObjective
   - type: AntagSelection
+    agentName: ninja-round-end-agent-name
     definitions:
     - spawnerPrototype: SpawnPointGhostSpaceNinja
       min: 1
@@ -119,8 +128,6 @@
         sound: /Audio/Misc/ninja_greeting.ogg
       components:
       - type: SpaceNinja
-      - type: GenericAntag
-        rule: Ninja
       - type: NpcFactionMember
         factions:
         - Syndicate
@@ -131,7 +138,9 @@
         nameSegments:
         - names_ninja_title
         - names_ninja
-      # role added in ninja system as mindComponents get added too late to work
+      mindComponents:
+      - type: NinjaRole
+        prototype: SpaceNinja
 
 - type: entity
   parent: BaseGameRule

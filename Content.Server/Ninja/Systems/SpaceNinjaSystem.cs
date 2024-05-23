@@ -2,7 +2,6 @@ using Content.Server.Communications;
 using Content.Server.Chat.Managers;
 using Content.Server.CriminalRecords.Systems;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.GenericAntag;
 using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Power.Components;
@@ -43,7 +42,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpaceNinjaComponent, GenericAntagCreatedEvent>(OnNinjaCreated);
         SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
         SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
         SubscribeLocalEvent<SpaceNinjaComponent, ThreatCalledInEvent>(OnThreatCalledIn);
@@ -118,22 +116,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     public override bool TryUseCharge(EntityUid user, float charge)
     {
         return GetNinjaBattery(user, out var uid, out var battery) && _battery.TryUseCharge(uid.Value, charge, battery);
-    }
-
-    /// <summary>
-    /// Set up everything for ninja to work and send the greeting message/sound.
-    /// Objectives are added by <see cref="GenericAntagSystem"/>.
-    /// </summary>
-    private void OnNinjaCreated(EntityUid uid, SpaceNinjaComponent comp, ref GenericAntagCreatedEvent args)
-    {
-        var mindId = args.MindId;
-        var mind = args.Mind;
-
-        var role = new NinjaRoleComponent
-        {
-            PrototypeId = "SpaceNinja"
-        };
-        _role.MindAddRole(mindId, role, mind);
     }
 
     /// <summary>
