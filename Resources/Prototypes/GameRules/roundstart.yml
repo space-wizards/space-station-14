@@ -75,6 +75,7 @@
     - operationPrefix
     - operationSuffix
   - type: NukeopsRule
+  - type: RuleGrids
   - type: LoadMapRule
     gameMap: NukieOutpost
   - type: AntagSelection

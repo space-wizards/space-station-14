@@ -10,6 +10,7 @@
     weight: 5
     reoccurrenceDelay: 30
     duration: 1
+  - type: RuleGrids
   - type: LoadMapRule
 
 - type: entity
