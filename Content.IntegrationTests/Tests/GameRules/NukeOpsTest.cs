@@ -50,10 +50,6 @@ public sealed class NukeOpsTest
         var invSys = server.System<InventorySystem>();
         var factionSys = server.System<NpcFactionSystem>();
 
-        // test urist is a noob let him be nukie
-        Assert.That(server.CfgMan.GetCVar(CCVars.GameRoleTimers), Is.True);
-        server.CfgMan.SetCVar(CCVars.GameRoleTimers, false);
-
         Assert.That(server.CfgMan.GetCVar(CCVars.GridFill), Is.False);
         server.CfgMan.SetCVar(CCVars.GridFill, true);
 
@@ -202,7 +198,6 @@ public sealed class NukeOpsTest
 
         ticker.SetGamePreset((GamePresetPrototype?)null);
         server.CfgMan.SetCVar(CCVars.GridFill, false);
-        server.CfgMan.SetCVar(CCVars.GameRoleTimers, true);
         await pair.CleanReturnAsync();
     }
 }
