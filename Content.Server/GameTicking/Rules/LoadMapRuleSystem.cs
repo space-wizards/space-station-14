@@ -19,6 +19,14 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
 
     protected override void Added(EntityUid uid, LoadMapRuleComponent comp, GameRuleComponent rule, GameRuleAddedEvent args)
     {
+        if (comp.PreloadedGrid != null && !_gridPreloader.PreloadingEnabled)
+        {
+            // Preloading will never work if it's disabled, duh
+            Log.Debug($"Immediately ending {ToPrettyString(uid):rule} as preloading grids is disabled by cvar.");
+            ForceEndSelf(uid, rule);
+            return;
+        }
+
         // grid preloading needs map to init after moving it
         var mapUid = _map.CreateMap(out var mapId, runMapInit: comp.PreloadedGrid == null);
 
@@ -37,6 +45,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
             {
                 Log.Error($"Failed to load map from {path}!");
                 Del(mapUid);
+                ForceEndSelf(uid, rule);
                 return;
             }
 
@@ -49,6 +58,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
             {
                 Log.Error($"Failed to get a preloaded grid with {preloaded}!");
                 Del(mapUid);
+                ForceEndSelf(uid, rule);
                 return;
             }
 
@@ -60,6 +70,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         {
             Log.Error($"No valid map prototype or map path associated with the rule {ToPrettyString(uid)}");
             Del(mapUid);
+            ForceEndSelf(uid, rule);
             return;
         }
 

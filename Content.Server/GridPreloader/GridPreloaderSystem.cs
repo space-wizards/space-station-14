@@ -24,6 +24,12 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    // TODO: use the efficient thing in initialize
+    /// <summary>
+    /// Whether the preloading CVar is set or not.
+    /// </summary>
+    public bool PreloadingEnabled => _cfg.GetCVar(CCVars.PreloadGrids);
+
     public override void Initialize()
     {
         base.Initialize();
@@ -52,7 +58,7 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
         if (GetPreloaderEntity() != null)
             return;
 
-        if (!_cfg.GetCVar(CCVars.PreloadGrids))
+        if (!PreloadingEnabled)
             return;
 
         var mapUid = _map.CreateMap(out var mapId, false);
