@@ -570,7 +570,7 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null,
             bool popup = false)
         {
-            if (!TryComp<TransformComponent>(other, out var otherXform))
+            if (!TryComp(other, out TransformComponent? otherXform))
                 return false;
 
             return InRangeUnobstructed(origin, other, otherXform.Coordinates, otherXform.LocalRotation, range, collisionMask, predicate,
@@ -633,7 +633,7 @@ namespace Content.Shared.Interaction
                 fixtureA.FixtureCount > 0 &&
                 TryComp<FixturesComponent>(other, out var fixtureB) &&
                 fixtureB.FixtureCount > 0 &&
-                TryComp<TransformComponent>(origin, out var xformA))
+                TryComp(origin, out TransformComponent? xformA))
             {
                 var (worldPosA, worldRotA) = xformA.GetWorldPositionRotation();
                 var xfA = new Transform(worldPosA, worldRotA);

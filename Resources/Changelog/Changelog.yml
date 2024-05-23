@@ -1,60 +1,4 @@
 ﻿Entries:
-- author: Doctor-Cpu
-  changes:
-  - message: Cargo palllets can no longer be ordered from cargo request terminal
-    type: Remove
-  id: 6105
-  time: '2024-03-07T17:53:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25882
-- author: Beck Thompson
-  changes:
-  - message: Lawdrobe has some new items and new ads!
-    type: Add
-  id: 6106
-  time: '2024-03-07T19:18:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25299
-- author: Blackern5000
-  changes:
-  - message: Salvagers can now pull in overgrown floral anomalies.
-    type: Add
-  id: 6107
-  time: '2024-03-07T19:37:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24650
-- author: Nimfar11
-  changes:
-  - message: Slimes can now drink FourteenLoko without harming their bodies.
-    type: Tweak
-  id: 6108
-  time: '2024-03-07T20:50:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25889
-- author: NakataRin
-  changes:
-  - message: Evacuation shuttle arrives 10 minutes on green alert now.
-    type: Tweak
-  id: 6109
-  time: '2024-03-07T21:01:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25906
-- author: Admiral-Obvious-001
-  changes:
-  - message: Zombies are now tougher to kill.
-    type: Tweak
-  id: 6110
-  time: '2024-03-07T21:02:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25876
-- author: TheShuEd
-  changes:
-  - message: Removed Hamlet, Smile and Pun Pun from Thief objectives
-    type: Remove
-  id: 6111
-  time: '2024-03-07T23:53:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25921
-- author: MACMAN2003
-  changes:
-  - message: Diagonal windows no longer space you when in a pressurized environment.
-    type: Fix
-  id: 6112
-  time: '2024-03-08T07:50:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25926
 - author: mryikes
   changes:
   - message: New Nuke Detonation Song "Clearly Nuclear".
@@ -3868,3 +3812,66 @@
   id: 6604
   time: '2024-05-19T01:35:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27975
+- author: SHOTbyGUN
+  changes:
+  - message: White cane recipe for MedFab
+    type: Add
+  id: 6605
+  time: '2024-05-19T22:22:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28146
+- author: EmoGarbage404
+  changes:
+  - message: Mirrors work again.
+    type: Fix
+  id: 6606
+  time: '2024-05-19T22:35:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28084
+- author: PolterTzi
+  changes:
+  - message: The guidebook now lists the effects reagents have on plants.
+    type: Add
+  id: 6607
+  time: '2024-05-19T23:01:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28038
+- author: Tayrtahn
+  changes:
+  - message: The popup for someone pointing at you is now slightly larger than normal
+      popups.
+    type: Tweak
+  id: 6608
+  time: '2024-05-20T13:32:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28152
+- author: Tayrtahn
+  changes:
+  - message: '"Warp to most followed" ghost option no longer includes admins and non-ghost
+      followers.'
+    type: Fix
+  id: 6609
+  time: '2024-05-20T14:12:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28120
+- author: Killerqu00
+  changes:
+  - message: Sleeper Agents only appear once per round.
+    type: Tweak
+  id: 6610
+  time: '2024-05-21T10:16:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28160
+- author: TheShuEd
+  changes:
+  - message: Artifact portal lifespan reduced from 120 seconds to 1 second
+    type: Tweak
+  id: 6611
+  time: '2024-05-22T07:52:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28200
+- author: nikthechampiongr
+  changes:
+  - message: Firelocks can now be pried by hand.
+    type: Tweak
+  - message: Firelocks will now not automatically close for 2 seconds after you pry
+      them open.
+    type: Tweak
+  - message: Firelocks are now properly predicted.
+    type: Fix
+  id: 6612
+  time: '2024-05-22T11:16:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26582
