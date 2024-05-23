@@ -240,10 +240,6 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
                 effect.Effect(args);
             }
         }
-
-        absorber.Comp.LastUpdate = _timing.CurTime;
-        Dirty(absorber);
-
         if (targetSolutionUpdated) // Dirty/Update the solutions, do this last so absorptions resolve before reactions
             _solutionSystem.UpdateChemicals(targetSolution!.Value, true, false);
         _solutionSystem.UpdateChemicals(solutionEntity, true, false);

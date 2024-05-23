@@ -18,6 +18,9 @@ public sealed partial class RateReactionPrototype : BaseReactionPrototype, IProt
     [DataField]
     public string Name { get; private set; } = string.Empty;
 
+    [DataField("requiredMixerCategories")]
+    public List<ProtoId<MixingCategoryPrototype>>? MixingCategories = null;
+
     [DataField(required: true)]
     public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> Products = new();
 
@@ -91,4 +94,16 @@ public record struct RateReaction(
     List<ChemicalCondition>? Conditions,
     List<ChemicalEffect>? Effects,
     List<ReagentEffect>? ReagentEffects,
-    SoundSpecifier? Sound) : IReactionData;
+    SoundSpecifier? Sound) : IReactionData
+{
+    public int CompareTo(IReactionData? other)
+    {
+        if (other == null)
+            return -1;
+
+        if (Priority != other.Priority)
+            return other.Priority - Priority;
+
+        return string.Compare(ProtoId, other.ProtoId, StringComparison.Ordinal);
+    }
+}

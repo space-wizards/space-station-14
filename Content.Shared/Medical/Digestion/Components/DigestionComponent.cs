@@ -4,18 +4,25 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Digestion.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Medical.Digestion.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DigestionComponent : Component
 {
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    public TimeSpan UpdateRate = new(0,0,0,1);
+
+    [DataField]
+    public TimeSpan LastUpdate;
+
     public const string ContainedEntitiesContainerId = "digestion-contained-entities";
 
     public const string DigestingSolutionId = "digesting";
 
     [DataField(required: true)]
-    public List<ProtoId<DigestionTypePrototype>> SupportedDigestionTypes;
+    public List<ProtoId<DigestionTypePrototype>> SupportedDigestionTypes = new();
 
     [DataField(required: false)]
     public List<ProtoId<DigestionTypePrototype>>? PassThroughDigestionTypes = null;

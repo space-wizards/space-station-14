@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Reaction.Prototypes;
 
-public abstract class BaseReactionPrototype
+public abstract class BaseReactionPrototype : IComparable<ReactionPrototype>
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
@@ -112,7 +112,7 @@ public abstract class BaseReactionPrototype
     }
 }
 
-public interface IReactionData
+public interface IReactionData : IComparable<IReactionData>
 {
     float Rate { get; }
     int Priority { get; }
@@ -129,5 +129,4 @@ public interface IReactionData
     List<ReagentEffect>? ReagentEffects { get; }
 
     SoundSpecifier? Sound { get; }
-
 }

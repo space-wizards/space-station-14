@@ -2,6 +2,8 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction.Prototypes;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -142,5 +144,86 @@ public sealed class ChemicalRateReactionSystem : EntitySystem
         if (reactionRate == 0) //let's not throw an exception shall we
             return 0;
         return duration / reactionRate  * multiplier;
+    }
+
+    public void RunReaction(
+        EntityUid target,
+        Entity<SolutionComponent> targetSolution,
+        RateReaction reaction,
+        TimeSpan lastUpdate,
+        float multiplier = 1.0f,
+        bool ignoreTimeScaling = false)
+    {
+        var unitAbsorptions = GetReactionRate(targetSolution, reaction, lastUpdate, multiplier, ignoreTimeScaling);
+        if (unitAbsorptions <= 0)
+            return;
+
+        foreach (var (reactantName, volume) in reaction.Reactants)
+        {
+            var amountToRemove = unitAbsorptions * volume;
+            targetSolution.Comp.Solution.RemoveReagent(reactantName, amountToRemove);
+        }
+        foreach (var (reactantName, volume) in reaction.Products)
+        {
+            var amountToAdd = unitAbsorptions * volume;
+            targetSolution.Comp.Solution.AddReagent(reactantName, amountToAdd);
+        }
+
+        if (reaction.TransferHeat)
+        {
+            var thermalEnergy = targetSolution.Comp.Solution.GetThermalEnergy(_protoManager);
+            //TODO: actually apply the thermal energy to the reaction entity. Can't do that from shared...
+            // Because for some fucking reason temperatureSystem is server only. Why! Temperature should be predicted!
+        }
+        if (reaction.Impact != null)
+        {
+            var posFound = _transformSystem.TryGetMapOrGridCoordinates(targetSolution, out var gridPos);
+            _adminLogger.Add(LogType.ChemicalReaction,
+                reaction.Impact.Value,
+                $"Chemical absorption {reaction.ProtoId} occurred {unitAbsorptions} times on entity {ToPrettyString(targetSolution)} " +
+                $"at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found]")}");
+        }
+
+        if (reaction.Effects != null)
+        {
+            foreach (var solutionEffect in reaction.Effects)
+            {
+                solutionEffect.RaiseEvent(EntityManager, target, targetSolution);
+            }
+        }
+
+        if (reaction.ReagentEffects != null)
+        {
+            //TODO refactor this when reagentEffects get rewritten to not fucking hardcode organs
+            //TODO: Also remove this once all ReagentEffects are converted to ReagentEvents
+            var args = new ReagentEffectArgs(targetSolution,
+                null,
+                targetSolution.Comp.Solution,
+                null,
+                unitAbsorptions,
+                EntityManager,
+                null,
+                1f);
+            foreach (var effect in reaction.ReagentEffects)
+            {
+                if (!effect.ShouldApply(args))
+                    continue;
+
+                if (effect.ShouldLog)
+                {
+                    var posFound = _transformSystem.TryGetMapOrGridCoordinates(targetSolution, out var gridPos);
+                    var entity = args.SolutionEntity;
+                    _adminLogger.Add(LogType.ReagentEffect,
+                        effect.LogImpact,
+                        $"Absorption effect {effect.GetType().Name:effect} of absorption " +
+                        $"{reaction.ProtoId} applied on entity {ToPrettyString(entity):entity} at Pos:" +
+                        $"{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found")}");
+                }
+
+                effect.Effect(args);
+            }
+        }
+        _solutionSystem.UpdateChemicals(targetSolution, true, false);
+        _audioSystem.PlayPvs(reaction.Sound, targetSolution);
     }
 }

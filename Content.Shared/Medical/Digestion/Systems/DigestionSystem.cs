@@ -1,10 +1,14 @@
 ﻿using Content.Shared.Body.Events;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reaction.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Digestion.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Medical.Digestion.Systems;
 
@@ -12,7 +16,10 @@ public sealed partial class DigestionSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly ChemicalRateReactionSystem _rateReactionSystem = default!;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<DigestionComponent, ComponentInit>(OnCompInit);
@@ -20,7 +27,21 @@ public sealed partial class DigestionSystem : EntitySystem
         SubscribeLocalEvent<DigestionComponent, BodyInitializedEvent>(OnBodyInit);
     }
 
-    private void OnBodyInit(Entity<DigestionComponent> digester, ref BodyInitializedEvent args)
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<DigestionComponent, SolutionContainerManagerComponent>();
+        while (query.MoveNext(out var uid, out var digester, out var solMan))
+        {
+            if (_timing.CurTime < digester.LastUpdate + digester.UpdateRate)
+                continue;
+            UpdateReactions((uid, digester),
+                (digester.CachedDigestionSolution,
+                Comp<SolutionComponent>(digester.CachedDigestionSolution)));
+            digester.LastUpdate = _timing.CurTime;
+        }
+    }
+
+private void OnBodyInit(Entity<DigestionComponent> digester, ref BodyInitializedEvent args)
     {
         if (!digester.Comp.UseBodySolution)
             return;
