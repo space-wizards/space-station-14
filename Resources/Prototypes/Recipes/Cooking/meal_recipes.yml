@@ -157,7 +157,7 @@
   time: 10
   solids:
     FoodBreadBun: 1
-    SheetPlasma1: 2
+    Plasma: 2
 
 - type: microwaveMealRecipe
   id: RecipeCarpBurger
