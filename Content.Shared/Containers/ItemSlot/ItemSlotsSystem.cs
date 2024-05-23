@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -362,7 +361,15 @@ namespace Content.Shared.Containers.ItemSlots
             if (!Resolve(ent, ref ent.Comp, false))
                 return false;
 
-            var slots = ent.Comp.Slots.Values.Where(s => s.ContainerSlot?.ContainedEntity == null).ToList();
+            var slots = new List<ItemSlot>();
+            foreach (var slot in ent.Comp.Slots.Values)
+            {
+                if (slot.ContainerSlot?.ContainedEntity != null)
+                    continue;
+
+                if (CanInsert(ent, item, user, slot))
+                    slots.Add(slot);
+            }
 
             if (slots.Count == 0)
                 return false;
@@ -377,11 +384,8 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in slots)
             {
-                if (!CanInsert(ent, item, user, slot))
-                    return false;
-
-                Insert(ent, slot, item, user, excludeUserAudio: excludeUserAudio);
-                return true;
+                if (TryInsert(ent, slot, item, user, excludeUserAudio: excludeUserAudio))
+                    return true;
             }
 
             return false;
