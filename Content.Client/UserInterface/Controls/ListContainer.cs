@@ -94,7 +94,7 @@ public class ListContainer : Control
     {
         if ((_itemHeight == 0 || _data is {Count: 0}) && data.Count > 0)
         {
-            ListContainerButton control = new(data[0]);
+            ListContainerButton control = new(data[0], 0);
             GenerateItem?.Invoke(data[0], control);
             control.Measure(Vector2Helpers.Infinity);
             _itemHeight = control.DesiredSize.Y;
@@ -134,7 +134,7 @@ public class ListContainer : Control
         if (_buttons.TryGetValue(data, out var button) && Toggle)
             button.Pressed = true;
         _selected = data;
-        button ??= new ListContainerButton(data);
+        button ??= new ListContainerButton(data, _data.IndexOf(data));
         OnItemPressed(new BaseButton.ButtonEventArgs(button,
             new GUIBoundKeyEventArgs(EngineKeyFunctions.UIClick, BoundKeyState.Up,
                 new ScreenCoordinates(0, 0, WindowId.Main), true, Vector2.Zero, Vector2.Zero)));
@@ -278,7 +278,7 @@ public class ListContainer : Control
                         toRemove.Remove(data);
                     else
                     {
-                        button = new ListContainerButton(data);
+                        button = new ListContainerButton(data, i);
                         button.OnPressed += OnItemPressed;
                         button.OnKeyBindDown += args => OnItemKeyBindDown(button, args);
                         button.ToggleMode = Toggle;
@@ -378,11 +378,14 @@ public class ListContainer : Control
 public sealed class ListContainerButton : ContainerButton, IEntityControl
 {
     public readonly ListData Data;
+
+    public readonly int Index;
     // public PanelContainer Background;
 
-    public ListContainerButton(ListData data)
+    public ListContainerButton(ListData data, int index)
     {
         Data = data;
+        Index = index;
         // AddChild(Background = new PanelContainer
         // {
         //     HorizontalExpand = true,

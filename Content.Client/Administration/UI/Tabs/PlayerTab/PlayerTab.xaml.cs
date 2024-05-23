@@ -125,13 +125,12 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
             if (data is not PlayerListData { Info: var player, FilteringString: var filteringString })
                 return;
 
-            var useAltColor = false;
             var entry = new PlayerTabEntry(player.Username,
                 player.CharacterName,
                 player.IdentityName,
                 player.StartingJob,
                 player.Antag ? "YES" : "NO",
-                new StyleBoxFlat(useAltColor ? _altColor : _defaultColor),
+                new StyleBoxFlat(button.Index % 2 == 0 ? _altColor : _defaultColor),
                 player.Connected,
                 player.PlaytimeString);
             entry.PlayerEntity = player.NetEntity;
