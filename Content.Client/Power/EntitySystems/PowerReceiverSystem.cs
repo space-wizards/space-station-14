@@ -5,10 +5,11 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Power.EntitySystems;
 
-public abstract class PowerReceiverSystem : SharedPowerReceiverSystem
+public sealed class PowerReceiverSystem : SharedPowerReceiverSystem
 {
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentHandleState>(OnHandleState);
     }
 
