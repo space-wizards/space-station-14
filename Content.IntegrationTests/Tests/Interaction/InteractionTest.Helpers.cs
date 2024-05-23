@@ -167,7 +167,7 @@ public abstract partial class InteractionTest
             // turn on welders
             if (enableWelder && SEntMan.TryGetComponent(item, out itemToggle) && !itemToggle.Activated)
             {
-                Assert.That(ItemToggleSys.TryActivate(item, playerEnt, itemToggle: itemToggle));
+                Assert.That(ItemToggleSys.TryActivate((item, itemToggle), user: playerEnt);
             }
         });
 
