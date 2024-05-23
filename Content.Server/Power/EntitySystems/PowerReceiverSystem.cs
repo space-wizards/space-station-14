@@ -173,9 +173,9 @@ namespace Content.Server.Power.EntitySystems
             if (!_recQuery.Resolve(uid, ref receiver, false))
                 return true;
 
-            return (MathHelper.CloseToPercent(receiver.NetworkLoad.ReceivingPower, receiver.Load)
-                    || !receiver.NeedsPower)
-                   && !receiver.PowerDisabled;
+            return !receiver.PowerDisabled
+                   && (!receiver.NeedsPower
+                       || MathHelper.CloseToPercent(receiver.NetworkLoad.ReceivingPower, receiver.Load));
         }
 
         /// <summary>
