@@ -134,6 +134,7 @@ public sealed partial class TestPair : IAsyncDisposable
         if (gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
         {
             await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting round.");
+            Server.CfgMan.SetCVar(CCVars.GameDummyTicker, false);
             Assert.That(gameTicker.DummyTicker, Is.False);
             Server.CfgMan.SetCVar(CCVars.GameLobbyEnabled, true);
             await Server.WaitPost(() => gameTicker.RestartRound());
