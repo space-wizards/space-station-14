@@ -1,14 +1,20 @@
 ﻿<Control xmlns="https://spacestation14.io"
-         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         xmlns:ot="clr-namespace:Content.Client.Administration.UI.Tabs.ObjectsTab">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label HorizontalExpand="True" SizeFlagsStretchRatio="0.50"
                    Text="{Loc Object type:}" />
             <OptionButton Name="ObjectTypeOptions" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"/>
         </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <LineEdit Name="SearchBar" PlaceHolder="{Loc Search...}" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
+        </BoxContainer>
         <cc:HSeparator/>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
             <BoxContainer Orientation="Vertical" Name="ObjectList">
+                <ot:ObjectsTabHeader Name="ListHeader" />
+                <cc:HSeparator />
             </BoxContainer>
         </ScrollContainer>
     </BoxContainer>
