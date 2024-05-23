@@ -135,6 +135,8 @@
           prob: 0.05
         - id: PlushiePlyushkina
           prob: 0.05
+        - id: PlushieMatroyshka
+          prob: 0.05
         - id: PlushieHolocarp
           prob: 0.05
           orGroup: carp
@@ -258,6 +260,12 @@
           prob: 0.2
         - id: PlushieSnake
           prob: 0.2
+        - id: PlushieBlackburna
+          prob: 0.05
+        - id: PlushiePlyushkina
+          prob: 0.05
+        - id: PlushieMatroyshka
+          prob: 0.05
         - id: ClothingHandsGlovesColorYellow
           prob: 0.05
         - id: ClothingBeltQuiver
