@@ -78,17 +78,44 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         else
             UpBiasButton.Pressed = true;
 
-        var disabled = !state.ServerConnected || !state.CanScan || state.PointAmount <= 0;
+        ExtractButton.Disabled = false;
+        if (!state.ServerConnected)
+        {
+            ExtractButton.Disabled = true;
+            ExtractButton.ToolTip = Loc.GetString("analysis-console-no-server-connected");
+        }
+        else if (!state.CanScan)
+        {
+            ExtractButton.Disabled = true;
 
-        ExtractButton.Disabled = disabled;
+            // CanScan can be false if either there's no analyzer connected or if there's
+            // no entity on the scanner. The `Information` text will always tell the user
+            // of the former case, but in the latter, it'll only show a message if a scan
+            // has never been performed, so add a tooltip to indicate that the artifact
+            // is gone.
+            if (state.AnalyzerConnected)
+            {
+                ExtractButton.ToolTip = Loc.GetString("analysis-console-no-artifact-placed");
+            }
+            else
+            {
+                ExtractButton.ToolTip = null;
+            }
+        }
+        else if (state.PointAmount <= 0)
+        {
+            ExtractButton.Disabled = true;
+            ExtractButton.ToolTip = Loc.GetString("analysis-console-no-points-to-extract");
+        }
 
-        if (disabled)
+        if (ExtractButton.Disabled)
         {
             ExtractButton.RemoveStyleClass("ButtonColorGreen");
         }
         else
         {
             ExtractButton.AddStyleClass("ButtonColorGreen");
+            ExtractButton.ToolTip = null;
         }
     }
     private void UpdateArtifactIcon(EntityUid? uid)

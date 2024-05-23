@@ -212,12 +212,12 @@
 
 
 - type: entity
-  name: goldschlager bottle
+  name: gildlager bottle
   parent: DrinkBottleBaseEmpty
-  id: DrinkBottleGoldschlager
+  id: DrinkBottleGildlager
   components:
   - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/goldschlagerbottle_empty.rsi
+    sprite: Objects/Consumable/TrashDrinks/gildlagerbottle_empty.rsi
 
 
 - type: entity

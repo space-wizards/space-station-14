@@ -31,8 +31,5 @@ roles-antag-space-ninja-objective = Use your stealth to sabotage the station, no
 roles-antag-thief-name = Thief
 roles-antag-thief-objective = Add some NT property to your personal collection without using violence.
 
-roles-antag-terminator-name = Exterminator
-roles-antag-terminator-objective = Kill the target at all costs, the future depends on it.
-
 roles-antag-turf-tagger-name = Turf Tagger
 roles-antag-turf-tagger-objective = Spray every door to make your department own the station.

@@ -10,6 +10,18 @@
     - type: PermanentBlindness
 
 - type: trait
+  id: PoorVision
+  name: trait-poor-vision-name
+  description: trait-poor-vision-desc
+  traitGear: ClothingEyesGlasses
+  whitelist:
+    components:
+      - Blindable
+  components:
+    - type: PermanentBlindness
+      blindness: 4
+
+- type: trait
   id: Narcolepsy
   name: trait-narcolepsy-name
   description: trait-narcolepsy-desc

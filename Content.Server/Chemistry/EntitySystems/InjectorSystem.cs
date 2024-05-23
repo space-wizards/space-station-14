@@ -124,7 +124,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
             Popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
         }
 
-        if (!SolutionContainers.TryGetSolution(injector.Owner, InjectorComponent.SolutionName, out _, out var solution))
+        if (!SolutionContainers.TryGetSolution(injector.Owner, injector.Comp.SolutionName, out _, out var solution))
             return;
 
         var actualDelay = MathHelper.Max(injector.Comp.Delay, TimeSpan.FromSeconds(1));
@@ -254,7 +254,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
     private void TryInject(Entity<InjectorComponent> injector, EntityUid targetEntity,
         Entity<SolutionComponent> targetSolution, EntityUid user, bool asRefill)
     {
-        if (!SolutionContainers.TryGetSolution(injector.Owner, InjectorComponent.SolutionName, out var soln,
+        if (!SolutionContainers.TryGetSolution(injector.Owner, injector.Comp.SolutionName, out var soln,
                 out var solution) || solution.Volume == 0)
             return;
 
@@ -296,7 +296,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
     private void AfterInject(Entity<InjectorComponent> injector, EntityUid target)
     {
         // Automatically set syringe to draw after completely draining it.
-        if (SolutionContainers.TryGetSolution(injector.Owner, InjectorComponent.SolutionName, out _,
+        if (SolutionContainers.TryGetSolution(injector.Owner, injector.Comp.SolutionName, out _,
                 out var solution) && solution.Volume == 0)
         {
             SetMode(injector, InjectorToggleMode.Draw);
@@ -310,7 +310,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
     private void AfterDraw(Entity<InjectorComponent> injector, EntityUid target)
     {
         // Automatically set syringe to inject after completely filling it.
-        if (SolutionContainers.TryGetSolution(injector.Owner, InjectorComponent.SolutionName, out _,
+        if (SolutionContainers.TryGetSolution(injector.Owner, injector.Comp.SolutionName, out _,
                 out var solution) && solution.AvailableVolume == 0)
         {
             SetMode(injector, InjectorToggleMode.Inject);
@@ -324,7 +324,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
     private void TryDraw(Entity<InjectorComponent> injector, Entity<BloodstreamComponent?> target,
         Entity<SolutionComponent> targetSolution, EntityUid user)
     {
-        if (!SolutionContainers.TryGetSolution(injector.Owner, InjectorComponent.SolutionName, out var soln,
+        if (!SolutionContainers.TryGetSolution(injector.Owner, injector.Comp.SolutionName, out var soln,
                 out var solution) || solution.AvailableVolume == 0)
         {
             return;

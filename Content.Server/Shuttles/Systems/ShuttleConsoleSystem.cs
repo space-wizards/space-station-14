@@ -242,7 +242,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         RaiseLocalEvent(entity.Value, ref getShuttleEv);
         entity = getShuttleEv.Console;
 
-        TryComp<TransformComponent>(entity, out var consoleXform);
+        TryComp(entity, out TransformComponent? consoleXform);
         var shuttleGridUid = consoleXform?.GridUid;
 
         NavInterfaceState navState;

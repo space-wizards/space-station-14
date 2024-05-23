@@ -86,7 +86,6 @@
   - type: ActivatableUI
     key: enum.PdaUiKey.Key
     singleUser: true
-    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
       enum.PdaUiKey.Key:
@@ -659,10 +658,11 @@
   parent: CentcomPDA
   id: AdminPDA
   name: Admin PDA
+  suffix: Admin
   description: If you are not an admin please return this PDA to the nearest admin.
   components:
   - type: Pda
-    id: PassengerIDCard
+    id: UniversalIDCard
   - type: HealthAnalyzer
     scanDelay: 0
   - type: CartridgeLoader

@@ -89,7 +89,7 @@ public sealed partial class StoreSystem
             return;
 
         // TODO: Why is the state not being set unless this?
-        if (!_ui.IsUiOpen(store, StoreUiKey.Key))
+        if (!_ui.HasUi(store, StoreUiKey.Key))
             return;
 
         //this is the person who will be passed into logic for all listing filtering.
@@ -215,11 +215,11 @@ public sealed partial class StoreSystem
             {
                 HandleRefundComp(uid, component, actionId.Value);
 
-                if (listing.ProductUpgradeID != null)
+                if (listing.ProductUpgradeId != null)
                 {
                     foreach (var upgradeListing in component.Listings)
                     {
-                        if (upgradeListing.ID == listing.ProductUpgradeID)
+                        if (upgradeListing.ID == listing.ProductUpgradeId)
                         {
                             upgradeListing.ProductActionEntity = actionId.Value;
                             break;
@@ -229,7 +229,7 @@ public sealed partial class StoreSystem
             }
         }
 
-        if (listing is { ProductUpgradeID: not null, ProductActionEntity: not null })
+        if (listing is { ProductUpgradeId: not null, ProductActionEntity: not null })
         {
             if (listing.ProductActionEntity != null)
             {

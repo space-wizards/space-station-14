@@ -13,7 +13,7 @@
   - type: ActivatableUI
     inHandsOnly: true
     singleUser: true
-    closeOnHandDeselect: false
+    requireActiveHand: false
     key: enum.GasAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:

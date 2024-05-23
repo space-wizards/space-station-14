@@ -7,30 +7,27 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Interaction;
 using Content.Shared.MagicMirror;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Server.MagicMirror;
 
 /// <summary>
 /// Allows humanoids to change their appearance mid-round.
 /// </summary>
-public sealed class MagicMirrorSystem : EntitySystem
+public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly MarkingManager _markings = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<MagicMirrorComponent, ActivatableUIOpenAttemptEvent>(OnOpenUIAttempt);
 
-        Subs.BuiEvents<MagicMirrorComponent>(MagicMirrorUiKey.Key, subs =>
+        Subs.BuiEvents<MagicMirrorComponent>(MagicMirrorUiKey.Key,
+            subs =>
         {
             subs.Event<BoundUIClosedEvent>(OnUiClosed);
             subs.Event<MagicMirrorSelectMessage>(OnMagicMirrorSelect);
@@ -45,16 +42,6 @@ public sealed class MagicMirrorSystem : EntitySystem
         SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorChangeColorDoAfterEvent>(OnChangeColorDoAfter);
         SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorRemoveSlotDoAfterEvent>(OnRemoveSlotDoAfter);
         SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorAddSlotDoAfterEvent>(OnAddSlotDoAfter);
-
-        SubscribeLocalEvent<MagicMirrorComponent, BoundUserInterfaceCheckRangeEvent>(OnMirrorRangeCheck);
-    }
-
-    private void OnMirrorRangeCheck(EntityUid uid, MagicMirrorComponent component, ref BoundUserInterfaceCheckRangeEvent args)
-    {
-        if (!Exists(component.Target) || !_interaction.InRangeUnobstructed(uid, component.Target.Value))
-        {
-            args.Result = BoundUserInterfaceRangeResult.Fail;
-        }
     }
 
     private void OnMagicMirrorInteract(Entity<MagicMirrorComponent> mirror, ref AfterInteractEvent args)
@@ -289,32 +276,9 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     }
 
-    private void UpdateInterface(EntityUid mirrorUid, EntityUid targetUid, MagicMirrorComponent component)
-    {
-        if (!TryComp<HumanoidAppearanceComponent>(targetUid, out var humanoid))
-            return;
-
-        var hair = humanoid.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var hairMarkings)
-            ? new List<Marking>(hairMarkings)
-            : new();
-
-        var facialHair = humanoid.MarkingSet.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings)
-            ? new List<Marking>(facialHairMarkings)
-            : new();
-
-        var state = new MagicMirrorUiState(
-            humanoid.Species,
-            hair,
-            humanoid.MarkingSet.PointsLeft(MarkingCategories.Hair) + hair.Count,
-            facialHair,
-            humanoid.MarkingSet.PointsLeft(MarkingCategories.FacialHair) + facialHair.Count);
-
-        component.Target = targetUid;
-        _uiSystem.SetUiState(mirrorUid, MagicMirrorUiKey.Key, state);
-    }
-
     private void OnUiClosed(Entity<MagicMirrorComponent> ent, ref BoundUIClosedEvent args)
     {
         ent.Comp.Target = null;
+        Dirty(ent);
     }
 }
