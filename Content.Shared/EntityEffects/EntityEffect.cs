@@ -21,11 +21,10 @@ namespace Content.Shared.EntityEffects;
 [MeansImplicitUse]
 public abstract partial class EntityEffect
 {
-    [JsonPropertyName("id")] private protected string _id => this.GetType().Name;
+    private protected string _id => this.GetType().Name;
     /// <summary>
     ///     The list of conditions required for the effect to activate. Not required.
     /// </summary>
-    [JsonPropertyName("conditions")]
     [DataField("conditions")]
     public EntityEffectCondition[]? Conditions;
 
@@ -36,19 +35,14 @@ public abstract partial class EntityEffect
     /// <summary>
     ///     What's the chance, from 0 to 1, that this effect will occur?
     /// </summary>
-    [JsonPropertyName("probability")]
     [DataField("probability")]
     public float Probability = 1.0f;
 
-    [JsonIgnore]
-    [DataField("logImpact")]
     public virtual LogImpact LogImpact { get; private set; } = LogImpact.Low;
 
     /// <summary>
     ///     Should this reagent effect log at all?
     /// </summary>
-    [JsonIgnore]
-    [DataField("shouldLog")]
     public virtual bool ShouldLog { get; private set; } = false;
 
     public abstract void Effect(EntityEffectBaseArgs args);
