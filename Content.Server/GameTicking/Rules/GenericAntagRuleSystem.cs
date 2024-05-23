@@ -1,6 +1,7 @@
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Objectives;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -47,7 +48,8 @@ public sealed class GenericAntagRuleSystem : GameRuleSystem<GenericAntagRuleComp
 
     private void OnObjectivesTextGetInfo(EntityUid uid, GenericAntagRuleComponent comp, ref ObjectivesTextGetInfoEvent args)
     {
-        args.Minds = comp.Minds;
+        // just temporary until this is deleted
+        args.Minds = comp.Minds.Select(mindId => (mindId, Comp<MindComponent>(mind).CharacterName ?? "?")).ToList();
         args.AgentName = Loc.GetString(comp.AgentName);
     }
 }
