@@ -1,7 +1,7 @@
-﻿- type: entity
-  id: UnknownShuttleCargoLost
+- type: entity
+  abstract: true
   parent: BaseGameRule
-  noSpawn: true
+  id: BaseUnknownShuttleRule
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming
@@ -10,65 +10,48 @@
     weight: 5
     reoccurrenceDelay: 30
     duration: 1
+  - type: LoadMapRule
+
+- type: entity
+  noSpawn: true
+  parent: BaseUnknownShuttleRule
+  id: UnknownShuttleCargoLost
+  components:
   - type: LoadMapRule
     preloadedGrid: ShuttleCargoLost
 
 - type: entity
-  id: UnknownShuttleTravelingCuisine
-  parent: BaseGameRule
   noSpawn: true
+  parent: BaseUnknownShuttleRule
+  id: UnknownShuttleTravelingCuisine
   components:
-  - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    weight: 5
-    reoccurrenceDelay: 30
-    duration: 1
   - type: LoadMapRule
     preloadedGrid: TravelingCuisine
 
 - type: entity
-  id: UnknownShuttleDisasterEvacPod
-  parent: BaseGameRule
   noSpawn: true
+  parent: BaseUnknownShuttleRule
+  id: UnknownShuttleDisasterEvacPod
   components:
-  - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    weight: 5
-    reoccurrenceDelay: 30
-    duration: 1
   - type: LoadMapRule
     preloadedGrid: DisasterEvacPod
 
 - type: entity
-  id: UnknownShuttleHonki
-  parent: BaseGameRule
   noSpawn: true
+  parent: BaseUnknownShuttleRule
+  id: UnknownShuttleHonki
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     weight: 2
-    reoccurrenceDelay: 30
-    duration: 1
   - type: LoadMapRule
     preloadedGrid: Honki
 
 - type: entity
-  id: UnknownShuttleSyndieEvacPod
-  parent: BaseGameRule
   noSpawn: true
+  parent: BaseUnknownShuttleRule
+  id: UnknownShuttleSyndieEvacPod
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     weight: 2
-    reoccurrenceDelay: 30
-    duration: 1
   - type: LoadMapRule
     preloadedGrid: SyndieEvacPod
