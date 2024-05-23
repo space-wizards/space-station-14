@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.Components;
+using JetBrains.Annotations;
 
 namespace Content.Shared.Chemistry.Reaction.Events;
 
@@ -7,70 +8,73 @@ namespace Content.Shared.Chemistry.Reaction.Events;
 /// If you need to convert chemicals, just use a reaction!
 
 /// <summary>
-/// Base class for effects that are triggered by chemistry. This should not generally be used outside of the chemistry-related
-/// systems.
-/// </summary>
-[ImplicitDataDefinitionForInheritors]
-public abstract partial class BaseChemistryEffect : HandledEntityEventArgs
-{
-    /// <summary>
-    ///     The entity that contains this solution
-    /// </summary>
-    public EntityUid Target = default;
-
-    public abstract bool CheckCondition();
-
-    public abstract void TriggerEffect();
-}
-
-/// <summary>
 ///     Base class for effects that are triggered by solutions. This should not generally be used outside of the chemistry-related
 ///     systems.
 /// </summary>
+[MeansImplicitUse]
+[ByRefEvent]
 [ImplicitDataDefinitionForInheritors]
-public abstract partial class BaseSolutionEffect : BaseChemistryEffect
+public abstract partial class ChemicalEffect : HandledEntityEventArgs
 {
-    /// <summary>
-    /// The entity that contains the solution that raised this event
-    /// </summary>
-    public Entity<SolutionComponent> SolutionEntity = default!;
+    public Entity<SolutionComponent> SolutionEntity;
 
-    /// <summary>
-    /// The solution that raised this event
-    /// </summary>
-    public Solution Solution => SolutionEntity.Comp.Solution;
+    [DataField]
+    public List<ChemicalCondition>? Conditions = null;
+
+    public void RaiseEvent(EntityManager entityMan,
+        EntityUid targetEntity,
+        Entity<SolutionComponent> solutionEntity,
+        bool broadcast = false)
+    {
+        if (Conditions != null)
+        {
+            foreach (var condition in Conditions)
+            {
+                var check = condition.RaiseEvent(entityMan, GetTargetEntity(targetEntity), solutionEntity, broadcast);
+                if (!check.Valid)
+                    return;
+            }
+        }
+
+        var ev = CreateInstance();
+        ev.SolutionEntity = solutionEntity;
+            entityMan.EventBus.RaiseLocalEvent(GetTargetEntity(targetEntity), ref ev, broadcast);
+            entityMan.EventBus.RaiseLocalEvent(solutionEntity, ref ev, broadcast);
+    }
+
+    protected virtual EntityUid GetTargetEntity(EntityUid oldTarget)
+    {
+        return oldTarget;
+    }
+
+    protected abstract ChemicalEffect CreateInstance();
 }
 
-
-
-/// <summary>
-///     Base class for effects that are triggered by chemistry. This should not generally be used outside of the chemistry-related
-///     systems.
-/// </summary>
+[MeansImplicitUse]
+[ByRefEvent]
 [ImplicitDataDefinitionForInheritors]
-public abstract partial class BaseChemistryCondition : HandledEntityEventArgs
+public abstract partial class ChemicalCondition : HandledEntityEventArgs
 {
-    /// <summary>
-    ///     The entity that contains this solution
-    /// </summary>
-    public EntityUid Target = default;
-    public abstract bool CheckCondition();
-}
+    public Entity<SolutionComponent> SolutionEntity;
 
-/// <summary>
-///     Base class for effects that are triggered by solutions. This should not generally be used outside of the chemistry-related
-///     systems.
-/// </summary>
-[ImplicitDataDefinitionForInheritors]
-public abstract partial class BaseSolutionCondition : BaseChemistryCondition
-{
-    /// <summary>
-    /// The entity that contains the solution that raised this event
-    /// </summary>
-    public Entity<SolutionComponent> SolutionEntity = default!;
+    public bool Valid = false;
 
-    /// <summary>
-    /// The solution that raised this event
-    /// </summary>
-    public Solution Solution => SolutionEntity.Comp.Solution;
+    public ChemicalCondition RaiseEvent(EntityManager entityMan,
+        EntityUid targetEntity,
+        Entity<SolutionComponent> solutionEntity,
+        bool broadcast = false)
+    {
+        var ev = CreateInstance();
+        ev.SolutionEntity = solutionEntity;
+        entityMan.EventBus.RaiseLocalEvent(GetTargetEntity(targetEntity), ref ev, broadcast);
+        entityMan.EventBus.RaiseLocalEvent(solutionEntity, ref ev, broadcast);
+        return ev;
+    }
+
+    protected virtual EntityUid GetTargetEntity(EntityUid oldTarget)
+    {
+        return oldTarget;
+    }
+
+    protected abstract ChemicalCondition CreateInstance();
 }

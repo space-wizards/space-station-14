@@ -34,7 +34,7 @@ public sealed partial class ChemicalAbsorberComponent : Component
     /// SolutionId for our target solution
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string TransferTargetSolutionId = "Bloodstream";
+    public string TransferTargetSolutionId = "bloodReagents";
 
 
     /// <summary>
@@ -43,48 +43,24 @@ public sealed partial class ChemicalAbsorberComponent : Component
     /// And their reaction rate multipliers
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<ProtoId<AbsorptionGroupPrototype>, FixedPoint2> AbsorptionGroups = new();
+    public Dictionary<ProtoId<AbsorptionGroupPrototype>, float> AbsorptionGroups = new();
 
     /// <summary>
     /// A list of individual absorptions to add in addition to the ones contained in the absorption groups
     /// And their reaction rate multipliers
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<ProtoId<AbsorptionPrototype>, FixedPoint2>? AdditionalAbsorptions = null;
+    public Dictionary<ProtoId<AbsorptionPrototype>, float>? AdditionalAbsorptions = null;
 
     /// <summary>
     /// Multiplier for the absorption rate of the chosen absorption (if any)
     /// </summary>
     [DataField, AutoNetworkedField]
-    public FixedPoint2 GlobalRateMultiplier = 1.0;
+    public float GlobalRateMultiplier = 1.0f;
 
     /// <summary>
     /// List of all the reagent absorption reactions in the order they should be checked
     /// </summary>
-    public List<CachedAbsorptionData> CachedAbsorptionOrder = new();
+    [DataField]
+    public List<AbsorptionReaction> CachedAbsorptionOrder = new();
 }
-
-[DataDefinition]
-public partial struct CachedAbsorptionData
-{
-    [DataField] public List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)> RequiredReagents;
-    [DataField] public List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)>? RequiredCatalysts;
-    [DataField] public FixedPoint2 MinTemp;
-    [DataField] public FixedPoint2 MaxTemp;
-    [DataField] public float Rate;
-    [DataField] public bool Quantized;
-    [DataField] public ProtoId<AbsorptionPrototype> ProtoId;
-
-    public CachedAbsorptionData(List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)> requiredReagents,
-        List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)>? requiredCatalysts,
-        AbsorptionPrototype absorptionProto)
-    {
-        RequiredReagents = requiredReagents;
-        RequiredCatalysts = requiredCatalysts;
-        Quantized = absorptionProto.Quantized;
-        MinTemp = absorptionProto.MinTemp;
-        MaxTemp = absorptionProto.MaxTemp;
-        Rate = absorptionProto.Rate;
-        ProtoId = absorptionProto.ID;
-    }
-};

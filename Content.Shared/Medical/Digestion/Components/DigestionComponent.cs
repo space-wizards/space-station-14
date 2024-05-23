@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Reagent;
+﻿using Content.Shared.Chemistry.Reaction.Prototypes;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Digestion.Prototypes;
 using Robust.Shared.GameStates;
@@ -31,12 +32,25 @@ public sealed partial class DigestionComponent : Component
     [DataField]
     public string AbsorberSolutionId = "bloodReagents";
 
+
+    [DataField]
+    public ProtoId<ReagentPrototype>? DissolvingReagent = null;
+
+    [DataField]
+    public float DissolverConcentration = 0;
+
     [DataField]
     public ReagentId? CachedDissolverReagent = null;
+
+    [DataField, AutoNetworkedField]
+    public float CachedDissolverConc = 0;
 
     [DataField, AutoNetworkedField]
     public EntityUid CachedDigestionSolution;
 
     [DataField, AutoNetworkedField]
     public EntityUid CachedAbsorberSolution;
+
+    [DataField]
+    public List<RateReaction> CachedDigestionReactions = new();
 }

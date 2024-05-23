@@ -24,6 +24,7 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly ChemicalRateReactionSystem _rateReactionSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
@@ -67,7 +68,7 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
     {
         absorber.Comp.CachedAbsorptionOrder.Clear();
         HashSet<AbsorptionPrototype> addedAbsorptions = new();
-        SortedList<int, CachedAbsorptionData> absorptions = new();
+        SortedList<int, AbsorptionReaction> absorptions = new();
         foreach (var (absorptionGroupId, multiplier) in absorber.Comp.AbsorptionGroups)
         {
             var absorptionGroup = _protoManager.Index(absorptionGroupId);
@@ -76,7 +77,7 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
                 var absorption = _protoManager.Index(absorptionId);
                 if (!addedAbsorptions.Add(absorption)) //prevent dupes
                     continue;
-                absorptions.Add(absorption.Priority, GetCachedData(absorption, multiplier));
+                absorptions.Add(absorption.Priority, absorption.GetData(multiplier));
             }
         }
         if (absorber.Comp.AdditionalAbsorptions != null)
@@ -86,36 +87,16 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
                 var absorption = _protoManager.Index(absorptionId);
                 if (!addedAbsorptions.Add(absorption)) //prevent dupes
                     continue;
-                absorptions.Add(absorption.Priority, GetCachedData(absorption, multiplier));
+                absorptions.Add(absorption.Priority, absorption.GetData(multiplier));
             }
         }
         absorber.Comp.CachedAbsorptionOrder = absorptions.Values.ToList();
         Dirty(absorber);
     }
 
-    private CachedAbsorptionData GetCachedData(AbsorptionPrototype absorptionProto, FixedPoint2 multiplier)
-    {
-        List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)> reagentAmounts = new();
-        foreach (var (reagentProtoId, quantity) in absorptionProto.Reagents)
-        {
-            reagentAmounts.Add((new ProtoId<ReagentPrototype>(reagentProtoId), quantity, multiplier));
-        }
-
-        List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)>? catalystAmounts = null;
-        if (absorptionProto.Catalysts != null)
-        {
-            catalystAmounts = new();
-            foreach (var (reagentProtoId, quantity) in absorptionProto.Catalysts)
-            {
-                catalystAmounts.Add((new ProtoId<ReagentPrototype>(reagentProtoId), quantity, multiplier));
-            }
-        }
-        return new CachedAbsorptionData(reagentAmounts,
-            catalystAmounts, absorptionProto);
-    }
-
     public bool TryGetCachedAbsorption(Entity<ChemicalAbsorberComponent> absorber,
-        ProtoId<AbsorptionPrototype> absorptionProto, [NotNullWhen(true)] out CachedAbsorptionData? foundCachedData)
+        ProtoId<AbsorptionPrototype> absorptionProto,
+        [NotNullWhen(true)] out AbsorptionReaction? foundCachedData)
     {
         foundCachedData = null;
         foreach (var cachedData in absorber.Comp.CachedAbsorptionOrder)
@@ -174,11 +155,10 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
     private void AbsorbChemical(
         Entity<ChemicalAbsorberComponent> absorber,
         Entity<SolutionComponent> solutionEntity,
-        CachedAbsorptionData cachedAbsorption,
+        AbsorptionReaction cachedAbsorption,
         bool ignoreTimeScaling)
     {
         var unitAbsorptions = GetReactionRate(absorber, solutionEntity, cachedAbsorption, ignoreTimeScaling);
-        var absorption = _protoManager.Index(cachedAbsorption.ProtoId);
         if (unitAbsorptions <= 0)
             return;
         var solution = solutionEntity.Comp.Solution;
@@ -186,9 +166,9 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
         var targetSolutionUpdated = false;
         Entity<SolutionComponent>? targetSolution = null;
 
-        if (absorption.CanTransfer && TryGetTargetSolution(absorber, out targetSolution))
+        if (cachedAbsorption.CanTransfer && TryGetTargetSolution(absorber, out targetSolution))
         {
-            foreach (var (reactantName, volume) in absorption.Reagents)
+            foreach (var (reactantName, volume) in cachedAbsorption.Reactants)
             {
                 var amountToRemove = unitAbsorptions * volume;
                 //TODO: this might run into issues with reagentData
@@ -198,7 +178,7 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
         }
         else
         {
-            foreach (var (reactantName, volume) in absorption.Reagents)
+            foreach (var (reactantName, volume) in cachedAbsorption.Reactants)
             {
                 var amountToRemove = unitAbsorptions * volume;
                 //TODO: this might run into issues with reagentData
@@ -206,50 +186,59 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
             }
         }
 
-        if (absorption.TransferHeat)
+        if (cachedAbsorption.TransferHeat)
         {
             var thermalEnergy = solution.GetThermalEnergy(_protoManager);
             //TODO: actually apply the thermal energy to the absorber entity. Can't do that from shared...
             // Because for some fucking reason temperatureSystem is server only. Why! Temperature should be predicted!
         }
-        if (absorption.Impact != null)
+        if (cachedAbsorption.Impact != null)
         {
             var posFound = _transformSystem.TryGetMapOrGridCoordinates(solutionEntity, out var gridPos);
-            _adminLogger.Add(LogType.ChemicalReaction, absorption.Impact.Value,
-                $"Chemical absorption {absorption.ID} occurred {unitAbsorptions} times on entity {ToPrettyString(solutionEntity)} " +
+            _adminLogger.Add(LogType.ChemicalReaction,
+                cachedAbsorption.Impact.Value,
+                $"Chemical absorption {cachedAbsorption.ProtoId} occurred {unitAbsorptions} times on entity {ToPrettyString(solutionEntity)} " +
                 $"at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found]")}");
         }
 
-        foreach (var solutionEffect in absorption.Effects)
+        if (cachedAbsorption.Effects != null)
         {
-            //inject deps so we don't need to hardcode them or use IOC resolve
-            IoCManager.InjectDependencies(solutionEffect);
-            //TODO Jezi: Inject systems via EntitySystem.InjectSystems when that gets implemented
-            solutionEffect.Target = absorber;
-            solutionEffect.SolutionEntity = solutionEntity;
-            if (solutionEffect.CheckCondition())
-                solutionEffect.TriggerEffect();
+            foreach (var solutionEffect in cachedAbsorption.Effects)
+            {
+                solutionEffect.RaiseEvent(EntityManager, absorber, solutionEntity);
+            }
         }
 
-        //TODO refactor this when reagentEffects get rewritten to not fucking hardcode organs
-        //TODO: Also remove this once all ReagentEffects are converted to ReagentEvents
-        var args = new ReagentEffectArgs(solutionEntity, null, solutionEntity.Comp.Solution,
-            null,  unitAbsorptions, EntityManager, null, 1f);
-        foreach (var effect in absorption.ReagentEffects)
+        if (cachedAbsorption.ReagentEffects != null)
         {
-            if (!effect.ShouldApply(args))
-                continue;
-
-            if (effect.ShouldLog)
+            //TODO refactor this when reagentEffects get rewritten to not fucking hardcode organs
+            //TODO: Also remove this once all ReagentEffects are converted to ReagentEvents
+            var args = new ReagentEffectArgs(solutionEntity,
+                null,
+                solutionEntity.Comp.Solution,
+                null,
+                unitAbsorptions,
+                EntityManager,
+                null,
+                1f);
+            foreach (var effect in cachedAbsorption.ReagentEffects)
             {
-                var posFound = _transformSystem.TryGetMapOrGridCoordinates(solutionEntity, out var gridPos);
-                var entity = args.SolutionEntity;
-                _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
-                    $"Absorption effect {effect.GetType().Name:effect} of absorption " +
-                    $"{absorption.ID} applied on entity {ToPrettyString(entity):entity} at Pos:" +
-                    $"{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found")}");
+                if (!effect.ShouldApply(args))
+                    continue;
+
+                if (effect.ShouldLog)
+                {
+                    var posFound = _transformSystem.TryGetMapOrGridCoordinates(solutionEntity, out var gridPos);
+                    var entity = args.SolutionEntity;
+                    _adminLogger.Add(LogType.ReagentEffect,
+                        effect.LogImpact,
+                        $"Absorption effect {effect.GetType().Name:effect} of absorption " +
+                        $"{cachedAbsorption.ProtoId} applied on entity {ToPrettyString(entity):entity} at Pos:" +
+                        $"{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found")}");
+                }
+
+                effect.Effect(args);
             }
-            effect.Effect(args);
         }
 
         absorber.Comp.LastUpdate = _timing.CurTime;
@@ -258,12 +247,7 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
         if (targetSolutionUpdated) // Dirty/Update the solutions, do this last so absorptions resolve before reactions
             _solutionSystem.UpdateChemicals(targetSolution!.Value, true, false);
         _solutionSystem.UpdateChemicals(solutionEntity, true, false);
-
-        _audioSystem.PlayPvs(absorption.Sound, solutionEntity);
-
-        var ev = new ChemicalAbsorbedEvent(absorption, solutionEntity, absorber);
-        RaiseLocalEvent(absorber, ref ev);
-        RaiseLocalEvent(solutionEntity, ref ev);
+        _audioSystem.PlayPvs(cachedAbsorption.Sound, solutionEntity);
     }
 
     public bool CanAbsorb(
@@ -276,66 +260,29 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
         return GetReactionRate(absorber, solutionEntity, foundData.Value, false) > 0;
     }
 
-    private FixedPoint2 GetReactionRate(
+    private float GetReactionRate(
         Entity<ChemicalAbsorberComponent> absorber,
         Entity<SolutionComponent> solutionEntity,
-        CachedAbsorptionData absorption,
+        AbsorptionReaction absorption,
         bool ignoreTimeScaling)
     {
-        //TODO: Move this over to a shared method in chemSystem after chem gets refactored to use ReactionRates
-        //The logic for this will basically be the same as for reactions after reaction rates are implemented
-        var solution = solutionEntity.Comp.Solution;
-        if (solution.Temperature > absorption.MaxTemp
-            || solution.Temperature < absorption.MinTemp
-            //(when not forced)  Prevent running reactions multiple times in the same tickif we end up calling this
-            //function multiple times This prevents the burning orphanage scenario
-            //(still don't mess with solutions from within solution effects)
-            || !ignoreTimeScaling && absorber.Comp.LastUpdate == _timing.CurTime
-            )
-            return FixedPoint2.Zero;
+        var rate = _rateReactionSystem.GetReactionRate(solutionEntity,
+            absorption,
+            absorber.Comp.LastUpdate,
+            absorber.Comp.GlobalRateMultiplier,
+            ignoreTimeScaling);
+        if (rate == 0)
+            return 0;
 
-        var reactionRate = AdjustReactionRateByTime(absorption.Rate, absorber.Comp.LastUpdate,
-            absorber.Comp.GlobalRateMultiplier, ignoreTimeScaling);
-        if (reactionRate == 0 || absorption.Quantized && reactionRate < 1)
-            return FixedPoint2.Zero;
-
-        if (absorption.RequiredCatalysts != null)
+        if (absorption.Conditions == null)
+            return rate;
+        foreach (var condition in absorption.Conditions)
         {
-            foreach (var (reagentName, requiredVolume, multiplier) in absorption.RequiredCatalysts)
-            {
-                var reactantQuantity = solution.GetTotalPrototypeQuantity(reagentName) * multiplier;
-                if (reactantQuantity == FixedPoint2.Zero || absorption.Quantized && reactantQuantity < requiredVolume)
-                    return FixedPoint2.Zero;
-                //Limit reaction rate by catalysts, technically catalysts would allow you to accelerate a reaction rate past
-                //it's normal rate but that's functionality that someone else can add later. For now, we are assuming that
-                //the rate specified on the reaction/absorption is the maximum catalyzed rate if catalysts are specified.
-                UpdateReactionRateFromReactants(ref reactionRate, reactantQuantity, requiredVolume,
-                    absorber.Comp.LastUpdate,
-                    multiplier * absorber.Comp.GlobalRateMultiplier, absorption.Quantized, ignoreTimeScaling);
-            }
+            var ev = condition.RaiseEvent(EntityManager, absorber, solutionEntity);
+            if (!ev.Valid)
+                return 0;
         }
-
-        foreach (var (reagentName, requiredVolume, multiplier) in absorption.RequiredReagents)
-        {
-            var reactantQuantity = solution.GetTotalPrototypeQuantity(reagentName);
-            if (reactantQuantity <= FixedPoint2.Zero)
-                return FixedPoint2.Zero;
-            UpdateReactionRateFromReactants(ref reactionRate, reactantQuantity, requiredVolume,
-                absorber.Comp.LastUpdate,
-                multiplier * absorber.Comp.GlobalRateMultiplier, absorption.Quantized, ignoreTimeScaling);
-        }
-
-        //Fire a general chemicals absorbed event, I'm not sure this is necessary when chemicalEffects exist
-        //TODO Jezi: double-check if this is even needed before merge
-        var ev = new ChemicalAbsorbAttemptEvent(_protoManager.Index(absorption.ProtoId), solutionEntity, absorber);
-        RaiseLocalEvent(absorber, ref ev);
-        RaiseLocalEvent(solutionEntity, ref ev);
-        if (ev.Canceled)
-            return FixedPoint2.Zero;
-
-        //TODO: condition check
-
-        return reactionRate;
+        return rate;
     }
 
     /// <summary>
