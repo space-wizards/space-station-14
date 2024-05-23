@@ -5,7 +5,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
-using Robust.Shared.Noise;
 
 namespace Content.Client.UserInterface.Controls;
 

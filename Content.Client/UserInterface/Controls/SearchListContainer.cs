@@ -6,8 +6,13 @@ namespace Content.Client.UserInterface.Controls;
 
 public sealed class SearchListContainer : Control
 {
+    private readonly ListContainer _listContainer = new();
     private LineEdit? _searchBar;
+    private List<ListData> _data = new();
 
+    /// <summary>
+    /// The <see cref="LineEdit"/> that is used to filter the list data.
+    /// </summary>
     public LineEdit? SearchBar
     {
         get => _searchBar;
@@ -30,7 +35,13 @@ public sealed class SearchListContainer : Control
         FilterList();
     }
 
+    /// <summary>
+    /// Runs over the ListData to determine if it should pass the filter.
+    /// </summary>
     public Func<string, ListData, bool>? DataFilterCondition;
+
+    #region ListContainer delegates
+
     public Action<ListData, ListContainerButton>? GenerateItem
     {
         get => _listContainer.GenerateItem;
@@ -47,8 +58,7 @@ public sealed class SearchListContainer : Control
         set => _listContainer.ItemKeyBindDown = value;
     }
 
-    private List<ListData> _data = new();
-    private readonly ListContainer _listContainer = new();
+    #endregion
 
     public SearchListContainer()
     {
