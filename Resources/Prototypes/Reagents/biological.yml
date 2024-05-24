@@ -83,6 +83,32 @@
       volume: 6
 
 - type: reagent
+  id: Sap
+  name: reagent-name-sap
+  group: Biological
+  desc: reagent-desc-sap
+  flavor: sweet
+  color: "#cd7314"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-sticky
+  slippery: false
+  viscosity: 0.10
+  tileReactions:
+    - !type:SpillTileReaction
+  metabolisms:
+    Food:
+      # Sweet!
+      effects:
+      - !type:SatiateHunger
+        factor: 1
+      - !type:SatiateThirst
+        factor: 1
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6
+
+- type: reagent
   parent: Blood
   id: CopperBlood
   name: reagent-name-hemocyanin-blood
@@ -201,3 +227,24 @@
     collection: FootstepBlood
     params:
       volume: 6
+
+- type: reagent
+  id: GreyMatter
+  name: reagent-name-grey-matter
+  group: Biological
+  desc: reagent-desc-grey-matter
+  physicalDesc: reagent-physical-desc-neural
+  flavor: mindful
+  color: "#C584B8"
+  slippery: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateHunger
+        factor: 1.5
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 2

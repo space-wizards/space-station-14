@@ -5,6 +5,7 @@
   description: What can be better then late evening under the sky with guitar and friends.
   components:
   - type: Sprite
+    noRot: true
     sprite: Structures/Decoration/bonfire.rsi
     layers:
       - state: bonfire
@@ -22,8 +23,8 @@
           !type:DamageTrigger
           damage: 50
         behaviors:
-          - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: AmbientSound
     volume: -5
     range: 5

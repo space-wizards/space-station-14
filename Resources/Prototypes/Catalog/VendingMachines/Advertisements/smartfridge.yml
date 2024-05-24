@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: SmartFridgeAds
-  advertisements:
+  messages:
   - advertisement-smartfridge-1
   - advertisement-smartfridge-2
   - advertisement-smartfridge-3
@@ -9,5 +9,3 @@
   - advertisement-smartfridge-6
   - advertisement-smartfridge-7
   - advertisement-smartfridge-8
-  thankyous:
-  - vending-machine-thanks

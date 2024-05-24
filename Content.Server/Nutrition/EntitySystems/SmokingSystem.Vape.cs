@@ -13,6 +13,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
 using System.Threading;
+using Content.Shared.Atmos;
 
 /// <summary>
 /// System for vapes
@@ -113,8 +114,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 var vapeDoAfterEvent = new VapeDoAfterEvent(solution, forced);
                 _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, delay, vapeDoAfterEvent, entity.Owner, target: args.Target, used: entity.Owner)
                 {
-                    BreakOnTargetMove = true,
-                    BreakOnUserMove = false,
+                    BreakOnMove = false,
                     BreakOnDamage = true
                 });
             }

@@ -4,6 +4,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -12,7 +13,6 @@ namespace Content.Client.Movement.Systems;
 public sealed class JetpackSystem : SharedJetpackSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ClothingSystem _clothing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -75,7 +75,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
         var coordinates = uidXform.Coordinates;
         var gridUid = coordinates.GetGridUid(EntityManager);
 
-        if (_mapManager.TryGetGrid(gridUid, out var grid))
+        if (TryComp<MapGridComponent>(gridUid, out var grid))
         {
             coordinates = new EntityCoordinates(gridUid.Value, grid.WorldToLocal(coordinates.ToMapPos(EntityManager, _transform)));
         }

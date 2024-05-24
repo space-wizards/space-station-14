@@ -1,0 +1,7 @@
+- type: messagePack
+  id: BodaGoodbyes
+  messages:
+  - vending-machine-thanks
+  - thankyou-sovietsoda-1
+  - thankyou-sovietsoda-2
+  - thankyou-sovietsoda-3

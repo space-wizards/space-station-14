@@ -66,11 +66,11 @@ public partial class BaseShuttleControl : MapGridControl
 
     protected void DrawData(DrawingHandleScreen handle, string text)
     {
-        var coordsDimensions = handle.GetDimensions(Font, text, UIScale);
+        var coordsDimensions = handle.GetDimensions(Font, text, 1f);
         const float coordsMargins = 5f;
 
         handle.DrawString(Font,
-            new Vector2(coordsMargins, Height) - new Vector2(0f, coordsDimensions.Y + coordsMargins),
+            new Vector2(coordsMargins, PixelHeight) - new Vector2(0f, coordsDimensions.Y + coordsMargins),
             text,
             Color.FromSrgb(IFFComponent.SelfColor));
     }
@@ -88,7 +88,6 @@ public partial class BaseShuttleControl : MapGridControl
         var cornerDistance = MathF.Sqrt(WorldRange * WorldRange + WorldRange * WorldRange);
 
         var origin = ScalePosition(-new Vector2(Offset.X, -Offset.Y));
-        var distOffset = -24f;
 
         for (var radius = minDistance; radius <= maxDistance; radius *= EquatorialMultiplier)
         {
@@ -101,7 +100,7 @@ public partial class BaseShuttleControl : MapGridControl
             var textDimensions = handle.GetDimensions(Font, text, UIScale);
 
             handle.DrawCircle(origin, scaledRadius, color, false);
-            handle.DrawString(Font, ScalePosition(new Vector2(0f, -radius)) - new Vector2(0f, textDimensions.Y), text, color);
+            handle.DrawString(Font, ScalePosition(new Vector2(0f, -radius)) - new Vector2(0f, textDimensions.Y), text, UIScale, color);
         }
 
         const int gridLinesRadial = 8;

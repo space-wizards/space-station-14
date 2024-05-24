@@ -59,9 +59,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         public void Set(EntityUid uid, GasValveComponent component, bool value)
         {
             component.Open = value;
-            if (TryComp(uid, out NodeContainerComponent? nodeContainer)
-                && _nodeContainer.TryGetNode(nodeContainer, component.InletName, out PipeNode? inlet)
-                && _nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet))
+
+            if (_nodeContainer.TryGetNodes(uid, component.InletName, component.OutletName, out PipeNode? inlet, out PipeNode? outlet))
             {
                 if (TryComp<AppearanceComponent>(uid, out var appearance))
                 {

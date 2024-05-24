@@ -71,6 +71,12 @@ public sealed partial class ImplanterComponent : Component
     public (string, string) ImplantData;
 
     /// <summary>
+    /// Determines if the same type of implant can be implanted into an entity multiple times.
+    /// </summary>
+    [DataField]
+    public bool AllowMultipleImplants = false;
+
+    /// <summary>
     /// The <see cref="ItemSlot"/> for this implanter
     /// </summary>
     [DataField(required: true)]

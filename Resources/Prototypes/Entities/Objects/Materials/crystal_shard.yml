@@ -19,6 +19,7 @@
           shard3: ""
   - type: SpaceGarbage
   - type: MeleeWeapon
+    wideAnimationRotation: -22.5
     attackRate: 1.5
     damage:
       types:
@@ -133,3 +134,18 @@
     tags:
       - Trash
       - CrystalRed
+
+- type: entity
+  parent: ShardCrystalBase
+  id: ShardCrystalRandom
+  name: random crystal shard
+  components:
+  - type: RandomSpawner
+    prototypes:
+      - ShardCrystalGreen
+      - ShardCrystalPink
+      - ShardCrystalOrange
+      - ShardCrystalBlue
+      - ShardCrystalCyan
+      - ShardCrystalRed
+    chance: 1

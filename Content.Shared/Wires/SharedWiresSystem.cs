@@ -28,15 +28,24 @@ public abstract class SharedWiresSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        TogglePanel(uid, panel, !panel.Open);
+        if (!TogglePanel(uid, panel, !panel.Open, args.User))
+            return;
+
         AdminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} screwed {ToPrettyString(uid):target}'s maintenance panel {(panel.Open ? "open" : "closed")}");
 
         var sound = panel.Open ? panel.ScrewdriverOpenSound : panel.ScrewdriverCloseSound;
         Audio.PlayPredicted(sound, uid, args.User);
+        args.Handled = true;
     }
 
     private void OnInteractUsing(Entity<WiresPanelComponent> ent, ref InteractUsingEvent args)
     {
+        if (!Tool.HasQuality(args.Used, ent.Comp.OpeningTool))
+            return;
+
+        if (!CanTogglePanel(ent, args.User))
+            return;
+
         if (!Tool.UseTool(
                 args.Used,
                 args.User,
@@ -89,14 +98,25 @@ public abstract class SharedWiresSystem : EntitySystem
             Appearance.SetData(uid, WiresVisuals.MaintenancePanelState, panel.Open && panel.Visible, appearance);
     }
 
-    public void TogglePanel(EntityUid uid, WiresPanelComponent component, bool open)
+    public bool TogglePanel(EntityUid uid, WiresPanelComponent component, bool open, EntityUid? user = null)
     {
+        if (!CanTogglePanel((uid, component), user))
+            return false;
+
         component.Open = open;
         UpdateAppearance(uid, component);
         Dirty(uid, component);
 
         var ev = new PanelChangedEvent(component.Open);
         RaiseLocalEvent(uid, ref ev);
+        return true;
+    }
+
+    public bool CanTogglePanel(Entity<WiresPanelComponent> ent, EntityUid? user)
+    {
+        var attempt = new AttemptChangePanelEvent(ent.Comp.Open, user);
+        RaiseLocalEvent(ent, ref attempt);
+        return !attempt.Cancelled;
     }
 
     public bool IsPanelOpen(Entity<WiresPanelComponent?> entity)

@@ -8,13 +8,13 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Rejuvenate;
 
 namespace Content.Shared.Actions;
 
@@ -123,7 +123,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return true;
 
         if (logError)
-            Log.Error($"Failed to get action from action entity: {ToPrettyString(uid.Value)}");
+            Log.Error($"Failed to get action from action entity: {ToPrettyString(uid.Value)}. Trace: {Environment.StackTrace}");
 
         return false;
     }
@@ -144,9 +144,6 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void SetCooldown(EntityUid? actionId, TimeSpan start, TimeSpan end)
     {
-        if (actionId == null)
-            return;
-
         if (!TryGetActionData(actionId, out var action))
             return;
 
@@ -162,9 +159,6 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void ClearCooldown(EntityUid? actionId)
     {
-        if (actionId == null)
-            return;
-
         if (!TryGetActionData(actionId, out var action))
             return;
 
@@ -172,6 +166,27 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         action.Cooldown = (cooldown.Start, GameTiming.CurTime);
+        Dirty(actionId.Value, action);
+    }
+
+    /// <summary>
+    ///     Sets the cooldown for this action only if it is bigger than the one it already has.
+    /// </summary>
+    public void SetIfBiggerCooldown(EntityUid? actionId, TimeSpan? cooldown)
+    {
+        if (cooldown == null ||
+            cooldown.Value <= TimeSpan.Zero ||
+            !TryGetActionData(actionId, out var action))
+        {
+            return;
+        }
+
+        var start = GameTiming.CurTime;
+        var end = start + cooldown;
+        if (action.Cooldown?.End > end)
+            return;
+
+        action.Cooldown = (start, end.Value);
         Dirty(actionId.Value, action);
     }
 
@@ -370,6 +385,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
         BaseActionEvent? performEvent = null;
 
+        if (action.CheckConsciousness && !_actionBlockerSystem.CanConsciouslyPerformAction(user))
+            return;
+
         // Validate request by checking action blockers and the like:
         switch (action)
         {
@@ -385,7 +403,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 var targetWorldPos = _transformSystem.GetWorldPosition(entityTarget);
                 _rotateToFaceSystem.TryFaceCoordinates(user, targetWorldPos);
 
-                if (!ValidateEntityTarget(user, entityTarget, entityAction))
+                if (!ValidateEntityTarget(user, entityTarget, (actionEnt, entityAction)))
                     return;
 
                 _adminLogger.Add(LogType.Action,
@@ -409,7 +427,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 var entityCoordinatesTarget = GetCoordinates(netCoordinatesTarget);
                 _rotateToFaceSystem.TryFaceCoordinates(user, entityCoordinatesTarget.ToMapPos(EntityManager, _transformSystem));
 
-                if (!ValidateWorldTarget(user, entityCoordinatesTarget, worldAction))
+                if (!ValidateWorldTarget(user, entityCoordinatesTarget, (actionEnt, worldAction)))
                     return;
 
                 _adminLogger.Add(LogType.Action,
@@ -435,13 +453,26 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         if (performEvent != null)
+        {
             performEvent.Performer = user;
+            performEvent.Action = actionEnt;
+        }
 
         // All checks passed. Perform the action!
         PerformAction(user, component, actionEnt, action, performEvent, curTime);
     }
 
-    public bool ValidateEntityTarget(EntityUid user, EntityUid target, EntityTargetActionComponent action)
+    public bool ValidateEntityTarget(EntityUid user, EntityUid target, Entity<EntityTargetActionComponent> actionEnt)
+    {
+        if (!ValidateEntityTargetBase(user, target, actionEnt))
+            return false;
+
+        var ev = new ValidateActionEntityTargetEvent(user, target);
+        RaiseLocalEvent(actionEnt, ref ev);
+        return !ev.Cancelled;
+    }
+
+    private bool ValidateEntityTargetBase(EntityUid user, EntityUid target, EntityTargetActionComponent action)
     {
         if (!target.IsValid() || Deleted(target))
             return false;
@@ -480,7 +511,17 @@ public abstract class SharedActionsSystem : EntitySystem
         return _interactionSystem.CanAccessViaStorage(user, target);
     }
 
-    public bool ValidateWorldTarget(EntityUid user, EntityCoordinates coords, WorldTargetActionComponent action)
+    public bool ValidateWorldTarget(EntityUid user, EntityCoordinates coords, Entity<WorldTargetActionComponent> action)
+    {
+        if (!ValidateWorldTargetBase(user, coords, action))
+            return false;
+
+        var ev = new ValidateActionWorldTargetEvent(user, coords);
+        RaiseLocalEvent(action, ref ev);
+        return !ev.Cancelled;
+    }
+
+    private bool ValidateWorldTargetBase(EntityUid user, EntityCoordinates coords, WorldTargetActionComponent action)
     {
         if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
             return false;
@@ -528,13 +569,12 @@ public abstract class SharedActionsSystem : EntitySystem
             handled = actionEvent.Handled;
         }
 
-        _audio.PlayPredicted(action.Sound, performer,predicted ? performer : null);
-        handled |= action.Sound != null;
-
         if (!handled)
             return; // no interaction occurred.
 
-        // reduce charges, start cooldown, and mark as dirty (if required).
+        // play sound, reduce charges, start cooldown, and mark as dirty (if required).
+
+        _audio.PlayPredicted(action.Sound, performer,predicted ? performer : null);
 
         var dirty = toggledBefore == action.Toggled;
 
@@ -557,6 +597,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
         if (dirty && component != null)
             Dirty(performer, component);
+
+        var ev = new ActionPerformedEvent(performer);
+        RaiseLocalEvent(actionId, ref ev);
     }
     #endregion
 
@@ -800,7 +843,7 @@ public abstract class SharedActionsSystem : EntitySystem
                               || !comp.Actions.Contains(actionId.Value));
 
             if (!GameTiming.ApplyingState)
-                Log.Error($"Attempted to remove an action {ToPrettyString(actionId)} from an entity that it was never attached to: {ToPrettyString(performer)}");
+                Log.Error($"Attempted to remove an action {ToPrettyString(actionId)} from an entity that it was never attached to: {ToPrettyString(performer)}. Trace: {Environment.StackTrace}");
             return;
         }
 

@@ -11,6 +11,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Popups;
+using ActivatableUISystem = Content.Shared.UserInterface.ActivatableUISystem;
 
 namespace Content.Server.PowerCell;
 
@@ -179,7 +180,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
             return false;
         }
 
-        _sharedAppearanceSystem.SetData(uid, PowerCellSlotVisuals.Enabled, battery.Charge > 0);
+        _sharedAppearanceSystem.SetData(uid, PowerCellSlotVisuals.Enabled, battery.CurrentCharge > 0);
         return true;
     }
 

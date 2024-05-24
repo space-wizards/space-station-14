@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: RobustSoftdrinksAds
-  advertisements:
+  messages:
   - advertisement-cola-1
   - advertisement-cola-2
   - advertisement-cola-3
@@ -9,9 +9,3 @@
   - advertisement-cola-6
   - advertisement-cola-7
   - advertisement-cola-8
-  thankyous:
-  - vending-machine-thanks
-  - thankyou-cola-1
-  - thankyou-cola-2
-  - thankyou-cola-3
-  - thankyou-cola-4

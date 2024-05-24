@@ -17,11 +17,11 @@ if (!parsed.SkipBuild)
 
 if (parsed.Client)
 {
-    await ClientPackaging.PackageClient(parsed.SkipBuild, logger);
+    await ClientPackaging.PackageClient(parsed.SkipBuild, parsed.Configuration, logger);
 }
 else
 {
-    await ServerPackaging.PackageServer(parsed.SkipBuild, parsed.HybridAcz, logger, parsed.Platforms);
+    await ServerPackaging.PackageServer(parsed.SkipBuild, parsed.HybridAcz, logger, parsed.Configuration, parsed.Platforms);
 }
 
 void WipeBin()

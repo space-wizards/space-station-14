@@ -31,12 +31,13 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpack
-  id: ClothingBackpackFilledDetective
+  parent: ClothingBackpackSecurity
+  id: ClothingBackpackSecurityFilledDetective
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalSecurity
+      - id: Flash
       - id: ForensicPad
       - id: ForensicScanner
 
@@ -96,6 +97,17 @@
   noSpawn: true
   parent: ClothingBackpack
   id: ClothingBackpackHOPFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: Flash
+      #- id: TelescopicBaton
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackIan
+  id: ClothingBackpackHOPIanFilled
   components:
   - type: StorageFill
     contents:
@@ -201,6 +213,16 @@
       - id: BoxSurvival
       - id: Bible
       - id: RubberStampChaplain
+  
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpack
+  id: ClothingBackpackLawyerFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: RubberStampLawyer
 
 - type: entity
   noSpawn: true
@@ -316,6 +338,27 @@
         - id: Soap
         - id: CrowbarRed
         - id: AdvMopItem
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackERTChaplain
+  id: ClothingBackpackERTChaplainFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvivalEngineering
+        - id: BoxCandle
+        - id: BoxBodyBag
+        - id: DrinkWaterMelonJuiceJug
+        - id: Lantern
+        - id: Lantern
+        - id: Bible
+        - id: CrowbarRed
+        - id: FoodBakedBunHotX
+        - id: FoodBakedBunHotX
+        - id: FoodBakedBunHotX
+        - id: FoodBakedBunHotX
+        - id: Lighter
 
 # Death Squad
 

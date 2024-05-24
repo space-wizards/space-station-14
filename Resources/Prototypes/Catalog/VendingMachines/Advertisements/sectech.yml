@@ -1,13 +1,8 @@
-- type: advertisementsPack
+- type: messagePack
   id: SecTechAds
-  advertisements:
+  messages:
     - advertisement-sectech-1
     - advertisement-sectech-2
     - advertisement-sectech-3
     - advertisement-sectech-4
     - advertisement-sectech-5
-  thankyous:
-    - vending-machine-thanks
-    - thankyou-sectech-1
-    - thankyou-sectech-2
-    - thankyou-sectech-3

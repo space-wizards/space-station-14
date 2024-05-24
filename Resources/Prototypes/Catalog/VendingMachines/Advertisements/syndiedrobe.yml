@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: SyndieDrobeAds
-  advertisements:
+  messages:
     - advertisement-syndiedrobe-1
     - advertisement-syndiedrobe-2
     - advertisement-syndiedrobe-3
@@ -32,10 +32,3 @@
     - advertisement-syndiedrobe-29
     - advertisement-syndiedrobe-30
     - advertisement-syndiedrobe-31
-  thankyous:
-    - vending-machine-thanks
-    - thankyou-syndiedrobe-1
-    - thankyou-syndiedrobe-2
-    - thankyou-syndiedrobe-3
-    - thankyou-syndiedrobe-4
-    - thankyou-syndiedrobe-5

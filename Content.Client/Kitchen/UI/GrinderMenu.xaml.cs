@@ -24,6 +24,7 @@ namespace Content.Client.Kitchen.UI
             _entityManager = entityManager;
             _prototypeManager = prototypeManager;
             _owner = owner;
+            AutoModeButton.OnPressed += owner.ToggleAutoMode;
             GrindButton.OnPressed += owner.StartGrinding;
             JuiceButton.OnPressed += owner.StartJuicing;
             ChamberContentBox.EjectButton.OnPressed += owner.EjectAll;
@@ -55,6 +56,19 @@ namespace Content.Client.Kitchen.UI
             ChamberContentBox.EjectButton.Disabled = state.ChamberContents.Length <= 0;
             GrindButton.Disabled = !state.CanGrind || !state.Powered;
             JuiceButton.Disabled = !state.CanJuice || !state.Powered;
+
+            switch (state.AutoMode)
+            {
+                case GrinderAutoMode.Grind:
+                    AutoModeButton.Text = Loc.GetString("grinder-menu-grind-button");
+                    break;
+                case GrinderAutoMode.Juice:
+                    AutoModeButton.Text = Loc.GetString("grinder-menu-juice-button");
+                    break;
+                default:
+                    AutoModeButton.Text = Loc.GetString("grinder-menu-auto-button-off");
+                    break;
+            }
 
             // TODO move this to a component state and ensure the net ids.
             RefreshContentsDisplay(state.ReagentQuantities, _entityManager.GetEntityArray(state.ChamberContents), state.HasBeakerIn);

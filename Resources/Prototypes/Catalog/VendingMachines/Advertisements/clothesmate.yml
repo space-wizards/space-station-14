@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: ClothesMateAds
-  advertisements:
+  messages:
   - advertisement-clothes-1
   - advertisement-clothes-2
   - advertisement-clothes-3
@@ -8,5 +8,3 @@
   - advertisement-clothes-5
   - advertisement-clothes-6
   - advertisement-clothes-7
-  thankyous:
-  - vending-machine-thanks

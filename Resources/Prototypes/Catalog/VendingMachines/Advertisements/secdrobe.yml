@@ -1,10 +1,8 @@
-- type: advertisementsPack
+- type: messagePack
   id: SecDrobeAds
-  advertisements:
+  messages:
     - advertisement-secdrobe-1
     - advertisement-secdrobe-2
     - advertisement-secdrobe-3
     - advertisement-secdrobe-4
     - advertisement-secdrobe-5
-  thankyous:
-    - vending-machine-thanks

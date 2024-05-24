@@ -97,7 +97,8 @@ public sealed partial class AlertsUI : UIWidget
             }
             else
             {
-                if (existingAlertControl != null) AlertContainer.Children.Remove(existingAlertControl);
+                if (existingAlertControl != null)
+                    AlertContainer.Children.Remove(existingAlertControl);
 
                 // this is a new alert + alert key or just a different alert with the same
                 // key, create the control and add it in the appropriate order

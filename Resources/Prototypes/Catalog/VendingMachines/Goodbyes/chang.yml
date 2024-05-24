@@ -1,0 +1,6 @@
+- type: messagePack
+  id: ChangGoodbyes
+  messages:
+  - vending-machine-thanks
+  - thankyou-chang-1
+  - thankyou-chang-2

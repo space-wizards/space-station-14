@@ -1,0 +1,8 @@
+- type: messagePack
+  id: LawDrobeGoodbyes
+  messages:
+  - thankyou-lawdrobe-1
+  - thankyou-lawdrobe-2
+  - thankyou-lawdrobe-3
+  - thankyou-lawdrobe-4
+  - thankyou-lawdrobe-5

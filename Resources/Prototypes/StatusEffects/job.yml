@@ -3,6 +3,7 @@
   abstract: true
   priority: 1
   locationPreference: Right
+  isShaded: true
 
 - type: statusIcon
   parent: JobIcon
@@ -374,3 +375,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Visitor
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconAdmin
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Admin

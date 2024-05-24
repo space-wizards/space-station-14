@@ -26,7 +26,7 @@ public sealed class StorageSystem : SharedStorageSystem
 
         SubscribeLocalEvent<StorageComponent, ComponentShutdown>(OnShutdown);
         SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
-        SubscribeNetworkEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
+        SubscribeAllEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
     }
 
     public override void UpdateUI(Entity<StorageComponent?> entity)
@@ -111,7 +111,7 @@ public sealed class StorageSystem : SharedStorageSystem
         if (!Resolve(entity, ref entity.Comp, false))
             return;
 
-        if (entity.Comp.OpenInterfaces.GetValueOrDefault(StorageComponent.StorageUiKey.Key) is not { } bui)
+        if (entity.Comp.ClientOpenInterfaces.GetValueOrDefault(StorageComponent.StorageUiKey.Key) is not { } bui)
             return;
 
         bui.Close();

@@ -377,7 +377,15 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnRequestDock(EntityUid uid, ShuttleConsoleComponent component, DockRequestMessage args)
         {
-            var shuttleUid = Transform(uid).GridUid;
+            var console = _console.GetDroneConsole(uid);
+
+            if (console == null)
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
+                return;
+            }
+
+            var shuttleUid = Transform(console.Value).GridUid;
 
             if (!CanShuttleDock(shuttleUid))
             {

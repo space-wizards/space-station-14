@@ -1,49 +1,57 @@
 #Hunger
 - type: statusIcon
-  id: HungerIconOverfed
+  id: HungerIcon
+  abstract: true
   priority: 5
+  locationPreference: Right
+  isShaded: true
+
+- type: statusIcon
+  id: HungerIconOverfed
+  parent: HungerIcon
   icon:
     sprite: /Textures/Interface/Misc/food_icons.rsi
     state: overfed
-  locationPreference: Right
 
 - type: statusIcon
   id: HungerIconPeckish
-  priority: 5
+  parent: HungerIcon
   icon:
     sprite: /Textures/Interface/Misc/food_icons.rsi
     state: peckish
-  locationPreference: Right
 
 - type: statusIcon
   id: HungerIconStarving
-  priority: 5
+  parent: HungerIcon
   icon:
     sprite: /Textures/Interface/Misc/food_icons.rsi
     state: starving
-  locationPreference: Right
 
 #Thirst
 - type: statusIcon
-  id: ThirstIconOverhydrated
+  id: ThirstIcon
+  abstract: true
   priority: 5
+  locationPreference: Left
+  isShaded: true
+
+- type: statusIcon
+  id: ThirstIconOverhydrated
+  parent: ThirstIcon
   icon:
     sprite: /Textures/Interface/Misc/food_icons.rsi
     state: overhydrated
-  locationPreference: Left
 
 - type: statusIcon
   id: ThirstIconThirsty
-  priority: 5
+  parent: ThirstIcon
   icon:
     sprite: /Textures/Interface/Misc/food_icons.rsi
     state: thirsty
-  locationPreference: Left
 
 - type: statusIcon
   id: ThirstIconParched
-  priority: 5
+  parent: ThirstIcon
   icon:
     sprite: /Textures/Interface/Misc/food_icons.rsi
     state: parched
-  locationPreference: Left

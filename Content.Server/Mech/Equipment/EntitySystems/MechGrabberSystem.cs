@@ -157,8 +157,7 @@ public sealed class MechGrabberSystem : EntitySystem
         component.AudioStream = _audio.PlayPvs(component.GrabSound, uid).Value.Entity;
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.GrabDelay, new GrabberDoAfterEvent(), uid, target: target, used: uid)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true
+            BreakOnMove = true
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs, out component.DoAfter);

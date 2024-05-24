@@ -24,7 +24,6 @@ public sealed class RadiationCollectorSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly BatterySystem _batterySystem = default!;
 
     private const string GasTankContainer = "gas_tank";
 
@@ -152,7 +151,8 @@ public sealed class RadiationCollectorSystem : EntitySystem
         if (!TryGetLoadedGasTank(uid, out var gasTankComponent))
             return;
 
-        args.GasMixtures = new Dictionary<string, GasMixture?> { { Name(uid), gasTankComponent.Air } };
+        args.GasMixtures ??= new List<(string, GasMixture?)>();
+        args.GasMixtures.Add((Name(uid), gasTankComponent.Air));
     }
 
     public void ToggleCollector(EntityUid uid, EntityUid? user = null, RadiationCollectorComponent? component = null)

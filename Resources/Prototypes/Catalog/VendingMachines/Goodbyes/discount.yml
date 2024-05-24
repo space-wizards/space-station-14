@@ -1,0 +1,12 @@
+- type: messagePack
+  id: DiscountDansGoodbyes
+  messages:
+  - vending-machine-thanks
+  - thankyou-discount-1
+  - thankyou-discount-2
+  - thankyou-discount-3
+  - thankyou-discount-4
+  - thankyou-discount-5
+  - thankyou-discount-6
+  - thankyou-discount-7
+  - thankyou-discount-8

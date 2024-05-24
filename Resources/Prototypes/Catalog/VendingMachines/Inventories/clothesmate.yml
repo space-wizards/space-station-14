@@ -1,3 +1,4 @@
+# DO NOT ADD MORE, USE UNIFORM DYING
 - type: vendingMachineInventory
   id: ClothesMateInventory
   startingInventory:
@@ -5,6 +6,7 @@
     ClothingBackpackDuffel: 5
     ClothingBackpackSatchel: 3
     ClothingBackpackSatchelLeather: 2
+    ClothingRandomSpawner: 8
     ClothingHeadHatBeret: 4
     ClothingHeadBandBlack: 2
     ClothingHeadBandBlue: 2
@@ -24,6 +26,7 @@
     ClothingUniformJumpsuitColorYellow: 2
     ClothingUniformJumpskirtColorYellow: 2
     ClothingUniformJumpsuitColorGreen: 2
+    # DO NOT ADD MORE, USE UNIFORM DYING
     ClothingUniformJumpskirtColorGreen: 2
     ClothingUniformJumpsuitColorOrange: 2
     ClothingUniformJumpskirtColorOrange: 2
@@ -50,6 +53,7 @@
     ClothingUniformJumpskirtCasualPurple: 2
     ClothingUniformJumpsuitCasualRed: 2
     ClothingUniformJumpskirtCasualRed: 2
+    # DO NOT ADD MORE, USE UNIFORM DYING
     ClothingShoesColorBlack: 8
     ClothingShoesColorBrown: 4
     ClothingShoesColorWhite: 3
@@ -66,6 +70,7 @@
     ClothingHeadHatGreensoft: 2
     ClothingHeadHatOrangesoft: 2
     ClothingHeadHatRedsoft: 2
+    # DO NOT ADD MORE, USE UNIFORM DYING
     ClothingHeadHatBlacksoft: 2
     ClothingHeadHatPurplesoft: 2
     ClothingHeadHatCorpsoft: 2
@@ -82,7 +87,10 @@
     ClothingHandsGlovesColorGreen: 2
     ClothingHandsGlovesColorOrange: 2
     ClothingHandsGlovesColorPurple: 2
+    ClothingEyesGlassesCheapSunglasses: 3
+    # DO NOT ADD MORE, USE UNIFORM DYING
   contrabandInventory:
     ClothingMaskNeckGaiter: 2
     ClothingUniformJumpsuitTacticool: 1
     ClothingUniformJumpskirtTacticool: 1
+  # DO NOT ADD MORE, USE UNIFORM DYING

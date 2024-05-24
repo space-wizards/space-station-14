@@ -1,8 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: ViroDrobeAds
-  advertisements:
+  messages:
     - advertisement-virodrobe-1
     - advertisement-virodrobe-2
     - advertisement-virodrobe-3
-  thankyous:
-  - vending-machine-thanks

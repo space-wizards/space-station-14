@@ -212,18 +212,20 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 var distance = gridCentre.Length();
                 var labelText = Loc.GetString("shuttle-console-iff-label", ("name", labelName),
                     ("distance", $"{distance:0.0}"));
-                var labelDimensions = handle.GetDimensions(Font, labelText, UIScale);
+
+                // yes 1.0 scale is intended here.
+                var labelDimensions = handle.GetDimensions(Font, labelText, 1f);
 
                 // y-offset the control to always render below the grid (vertically)
-                var yOffset = Math.Max(gridBounds.Height, gridBounds.Width) * MinimapScale / 1.8f / UIScale;
+                var yOffset = Math.Max(gridBounds.Height, gridBounds.Width) * MinimapScale / 1.8f;
 
                 // The actual position in the UI. We offset the matrix position to render it off by half its width
                 // plus by the offset.
-                var uiPosition = ScalePosition(gridCentre) / UIScale - new Vector2(labelDimensions.X / 2f, -yOffset);
+                var uiPosition = ScalePosition(gridCentre)- new Vector2(labelDimensions.X / 2f, -yOffset);
 
                 // Look this is uggo so feel free to cleanup. We just need to clamp the UI position to within the viewport.
-                uiPosition = new Vector2(Math.Clamp(uiPosition.X, 0f, Width - labelDimensions.X),
-                    Math.Clamp(uiPosition.Y, 0f, Height - labelDimensions.Y));
+                uiPosition = new Vector2(Math.Clamp(uiPosition.X, 0f, PixelWidth - labelDimensions.X ),
+                    Math.Clamp(uiPosition.Y, 0f, PixelHeight - labelDimensions.Y));
 
                 handle.DrawString(Font, uiPosition, labelText, color);
             }

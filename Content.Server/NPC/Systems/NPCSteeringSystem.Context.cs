@@ -56,7 +56,30 @@ public sealed partial class NPCSteeringSystem
             return true;
         }
 
-        return false;
+        // TODO: Ideally for "FreeSpace" we check all entities on the tile and build flags dynamically (pathfinder refactor in future).
+        var ents = _entSetPool.Get();
+        _lookup.GetLocalEntitiesIntersecting(node.GraphUid, node.Box.Enlarged(-0.04f), ents, flags: LookupFlags.Static);
+        var result = true;
+
+        if (ents.Count > 0)
+        {
+            var fixtures = _fixturesQuery.GetComponent(uid);
+            var physics = _physicsQuery.GetComponent(uid);
+
+            foreach (var intersecting in ents)
+            {
+                if (!_physics.IsCurrentlyHardCollidable((uid, fixtures, physics), intersecting))
+                {
+                    continue;
+                }
+
+                result = false;
+                break;
+            }
+        }
+
+        _entSetPool.Return(ents);
+        return result;
     }
 
     /// <summary>
@@ -135,28 +158,6 @@ public sealed partial class NPCSteeringSystem
             }
         }
 
-        // Need to be pretty close if it's just a node to make sure LOS for door bashes or the likes.
-        float arrivalDistance;
-
-        if (targetCoordinates.Equals(steering.Coordinates))
-        {
-            // What's our tolerance for arrival.
-            // If it's a pathfinding node it might be different to the destination.
-            arrivalDistance = steering.Range;
-        }
-        // If next node is a free tile then get within its bounds.
-        // This is to avoid popping it too early
-        else if (steering.CurrentPath.TryPeek(out var node) && IsFreeSpace(uid, steering, node))
-        {
-            arrivalDistance = MathF.Max(0.05f, MathF.Min(node.Box.Width / 2f, node.Box.Height / 2f) - 0.05f);
-        }
-        // Try getting into blocked range I guess?
-        // TODO: Consider melee range or the likes.
-        else
-        {
-            arrivalDistance = SharedInteractionSystem.InteractionRange - 0.05f;
-        }
-
         // Check if mapids match.
         var targetMap = targetCoordinates.ToMap(EntityManager, _transform);
         var ourMap = ourCoordinates.ToMap(EntityManager, _transform);
@@ -169,8 +170,30 @@ public sealed partial class NPCSteeringSystem
 
         var direction = targetMap.Position - ourMap.Position;
 
+        // Need to be pretty close if it's just a node to make sure LOS for door bashes or the likes.
+        bool arrived;
+
+        if (targetCoordinates.Equals(steering.Coordinates))
+        {
+            // What's our tolerance for arrival.
+            // If it's a pathfinding node it might be different to the destination.
+            arrived = direction.Length() <= steering.Range;
+        }
+        // If next node is a free tile then get within its bounds.
+        // This is to avoid popping it too early
+        else if (steering.CurrentPath.TryPeek(out var node) && IsFreeSpace(uid, steering, node))
+        {
+            arrived = node.Box.Contains(ourCoordinates.Position);
+        }
+        // Try getting into blocked range I guess?
+        // TODO: Consider melee range or the likes.
+        else
+        {
+            arrived = direction.Length() <= SharedInteractionSystem.InteractionRange - 0.05f;
+        }
+
         // Are we in range
-        if (direction.Length() <= arrivalDistance)
+        if (arrived)
         {
             // Node needs some kind of special handling like access or smashing.
             if (steering.CurrentPath.TryPeek(out var node) && !IsFreeSpace(uid, steering, node))
@@ -559,7 +582,7 @@ public sealed partial class NPCSteeringSystem
                 (mask & otherBody.CollisionLayer) == 0x0 &&
                 (layer & otherBody.CollisionMask) == 0x0 ||
                 !_factionQuery.TryGetComponent(ent, out var otherFaction) ||
-                !_npcFaction.IsEntityFriendly(uid, ent, ourFaction, otherFaction) ||
+                !_npcFaction.IsEntityFriendly((uid, ourFaction), (ent, otherFaction)) ||
                 // Use <= 0 so we ignore stationary friends in case.
                 Vector2.Dot(otherBody.LinearVelocity, ourVelocity) <= 0f)
             {

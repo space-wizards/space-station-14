@@ -46,7 +46,7 @@
       conditions:
       - !type:EntityAnchored {}
       steps:
-      - tag: DoorElectronics
+      - component: DoorElectronics
         store: board
         name: "door electronics circuit board"
         icon:
@@ -121,7 +121,6 @@
     actions:
     - !type:SetWiresPanelSecurity
       wiresAccessible: true
-      weldingAllowed: true
     edges:
     - to: glassElectronics
       conditions:
@@ -162,7 +161,6 @@
     actions:
     - !type:SetWiresPanelSecurity
       wiresAccessible: true
-      weldingAllowed: true
     edges:
     - to: wired
       conditions:
@@ -201,7 +199,6 @@
     actions:
     - !type:SetWiresPanelSecurity
       wiresAccessible: true
-      weldingAllowed: true
     edges:
     - to: medSecurityUnfinished
       conditions:
@@ -225,7 +222,6 @@
     - !type:SetWiresPanelSecurity
       examine: wires-panel-component-on-examine-security-level1
       wiresAccessible: false
-      weldingAllowed: false
     edges:
     - to: glassAirlock
       completed:
@@ -278,7 +274,6 @@
     - !type:SetWiresPanelSecurity
       examine: wires-panel-component-on-examine-security-level2
       wiresAccessible: false
-      weldingAllowed: false
     edges:
     - to: medSecurityUnfinished
       conditions:
@@ -293,7 +288,6 @@
     - !type:SetWiresPanelSecurity
       examine: wires-panel-component-on-examine-security-level3
       wiresAccessible: false
-      weldingAllowed: false
     edges:
     - to: glassAirlock
       completed:
@@ -346,7 +340,6 @@
     - !type:SetWiresPanelSecurity
       examine: wires-panel-component-on-examine-security-level4
       wiresAccessible: false
-      weldingAllowed: false
     edges:
     - to: highSecurityUnfinished
       conditions:
@@ -369,7 +362,6 @@
     - !type:SetWiresPanelSecurity
       examine: wires-panel-component-on-examine-security-level5
       wiresAccessible: false
-      weldingAllowed: true
     edges:
     - to: highSecurity
       completed:
@@ -397,7 +389,6 @@
     - !type:SetWiresPanelSecurity
       examine: wires-panel-component-on-examine-security-level6
       wiresAccessible: false
-      weldingAllowed: false
     edges:
     - to: maxSecurity
       completed:
@@ -422,7 +413,6 @@
     - !type:SetWiresPanelSecurity
       examine: wires-panel-component-on-examine-security-level7
       wiresAccessible: false
-      weldingAllowed: false
     edges:
     - to: superMaxSecurityUnfinished
       conditions:

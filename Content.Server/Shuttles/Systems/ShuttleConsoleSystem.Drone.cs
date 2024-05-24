@@ -10,7 +10,7 @@ public sealed partial class ShuttleConsoleSystem
     /// <summary>
     /// Gets the drone console target if applicable otherwise returns itself.
     /// </summary>
-    private EntityUid? GetDroneConsole(EntityUid consoleUid)
+    public EntityUid? GetDroneConsole(EntityUid consoleUid)
     {
         var getShuttleEv = new ConsoleShuttleEvent
         {

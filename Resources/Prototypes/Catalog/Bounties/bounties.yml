@@ -22,17 +22,6 @@
       - BaseballBat
 
 - type: cargoBounty
-  id: BountyBoxHug
-  reward: 3000
-  description: bounty-description-box-hugs
-  entries:
-  - name: bounty-item-box-hugs
-    amount: 1
-    whitelist:
-      tags:
-      - BoxHug
-
-- type: cargoBounty
   id: BountyBrain
   reward: 12500
   description: bounty-description-brain
@@ -138,18 +127,6 @@
     whitelist:
       tags:
       - CubanCarp
-
-- type: cargoBounty
-  id: BountyDonkPocket
-  reward: 6000
-  description: bounty-description-donk-pocket
-  idPrefix: CC
-  entries:
-  - name: bounty-item-donk-pocket
-    amount: 12
-    whitelist:
-      tags:
-      - DonkPocket
 
 - type: cargoBounty
   id: BountyDonut
@@ -347,11 +324,11 @@
 
 - type: cargoBounty
   id: BountyRadio
-  reward: 7500
+  reward: 6500
   description: bounty-description-radio
   entries:
   - name: bounty-item-radio
-    amount: 12
+    amount: 7
     whitelist:
       components:
       - Headset
@@ -536,7 +513,7 @@
   description: bounty-description-lasergun
   idPrefix: IV
   entries:
-  - name: bounty-lasergun
+  - name: bounty-item-lasergun
     amount: 6
     whitelist:
       components:
@@ -548,8 +525,185 @@
   description: bounty-description-food
   idPrefix: UNTH
   entries:
-  - name: bounty-food
+  - name: bounty-item-food
     amount: 30
     whitelist:
       tags:
       - Meat
+
+- type: cargoBounty
+  id: BountyFruit
+  reward: 5000
+  description: bounty-description-fruit
+  entries:
+  - name: bounty-item-fruit
+    amount: 12
+    whitelist:
+      tags:
+      - Fruit
+
+- type: cargoBounty
+  id: BountyVegetable
+  reward: 6000
+  description: bounty-description-vegetable
+  entries:
+  - name: bounty-item-vegetable
+    amount: 14
+    whitelist:
+      tags:
+      - Vegetable
+
+- type: cargoBounty
+  id: BountyChili
+  reward: 5555
+  description: bounty-description-chili
+  entries:
+  - name: bounty-item-chili
+    amount: 3
+    whitelist:
+      tags:
+      - ChiliBowl
+
+- type: cargoBounty
+  id: BountyRollerskates
+  reward: 6500
+  description: bounty-description-rollerskates
+  entries:
+  - name: bounty-item-rollerskates
+    amount: 2
+    whitelist:
+      components:
+      - Skates
+
+- type: cargoBounty
+  id: BountyBedsheet
+  reward: 4100
+  description: bounty-description-bedsheet
+  entries:
+  - name: bounty-item-bedsheet
+    amount: 5
+    whitelist:
+      tags:
+      - Bedsheet
+
+- type: cargoBounty
+  id: BountyBandana
+  reward: 4000
+  description: bounty-description-bandana
+  entries:
+  - name: bounty-item-bandana
+    amount: 7
+    whitelist:
+      tags:
+      - Bandana
+
+- type: cargoBounty
+  id: BountySteak
+  reward: 3200
+  description: bounty-description-steak
+  entries:
+  - name: bounty-item-steak
+    amount: 4
+    whitelist:
+      tags:
+      - Steak
+
+- type: cargoBounty
+  id: BountyBanana
+  reward: 6009
+  description: bounty-description-banana
+  entries:
+  - name: bounty-item-banana
+    amount: 9
+    whitelist:
+      tags:
+      - Banana
+
+- type: cargoBounty
+  id: BountyBeer
+  reward: 3100
+  description: bounty-description-beer
+  entries:
+  - name: bounty-item-beer
+    amount: 6
+    whitelist:
+      tags:
+      - Beer
+
+- type: cargoBounty
+  id: BountyHiVizVest
+  reward: 3030
+  description: bounty-description-hi-viz-vest
+  entries:
+  - name: bounty-item-hi-viz-vest
+    amount: 3
+    whitelist:
+      tags:
+      - HiViz
+
+- type: cargoBounty
+  id: BountyTorch
+  reward: 2220
+  description: bounty-description-torch
+  entries:
+  - name: bounty-item-torch
+    amount: 6
+    whitelist:
+      tags:
+      - Torch
+
+- type: cargoBounty
+  id: BountyMedkitBox
+  reward: 2300
+  description: bounty-description-medkit-box
+  entries:
+  - name: bounty-item-medkit-box
+    amount: 4
+    whitelist:
+      tags:
+      - Medkit
+
+- type: cargoBounty
+  id: BountyCardboardBox
+  reward: 1500
+  description: bounty-description-cardobard-box
+  entries:
+  - name: bounty-item-cardboard-box
+    amount: 12
+    whitelist:
+      tags:
+      - BoxCardboard
+
+- type: cargoBounty
+  id: BountyWine
+  reward: 3000
+  description: bounty-description-wine
+  entries:
+  - name: bounty-item-wine
+    amount: 2
+    whitelist:
+      tags:
+      - Wine
+
+- type: cargoBounty
+  id: BountyCottonBoll
+  reward: 8600
+  description: bounty-description-cotton-boll
+  entries:
+  - name: bounty-item-cotton-boll
+    amount: 9
+    whitelist:
+      tags:
+      - CottonBoll
+
+- type: cargoBounty
+  id: BountyMicrowaveMachineBoard
+  reward: 4000
+  description: bounty-description-microwave-machine-board
+  entries:
+  - name: bounty-item-microwave-machine-board
+    amount: 2
+    whitelist:
+      tags:
+      - MicrowaveMachineBoard
+

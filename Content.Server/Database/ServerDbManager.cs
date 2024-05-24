@@ -29,7 +29,11 @@ namespace Content.Server.Database
         void Shutdown();
 
         #region Preferences
-        Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile);
+        Task<PlayerPreferences> InitPrefsAsync(
+            NetUserId userId,
+            ICharacterProfile defaultProfile,
+            CancellationToken cancel);
+
         Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
 
         Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot);
@@ -38,7 +42,7 @@ namespace Content.Server.Database
 
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
-        Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId);
+        Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId, CancellationToken cancel);
         #endregion
 
         #region User Ids
@@ -157,8 +161,9 @@ namespace Content.Server.Database
         /// Look up a player's role timers.
         /// </summary>
         /// <param name="player">The player to get the role timer information from.</param>
+        /// <param name="cancel"></param>
         /// <returns>All role timers belonging to the player.</returns>
-        Task<List<PlayTime>> GetPlayTimes(Guid player);
+        Task<List<PlayTime>> GetPlayTimes(Guid player, CancellationToken cancel = default);
 
         /// <summary>
         /// Update play time information in bulk.
@@ -274,7 +279,15 @@ namespace Content.Server.Database
         Task DeleteAdminMessage(int id, Guid deletedBy, DateTimeOffset deletedAt);
         Task HideServerBanFromNotes(int id, Guid deletedBy, DateTimeOffset deletedAt);
         Task HideServerRoleBanFromNotes(int id, Guid deletedBy, DateTimeOffset deletedAt);
-        Task MarkMessageAsSeen(int id);
+
+        /// <summary>
+        /// Mark an admin message as being seen by the target player.
+        /// </summary>
+        /// <param name="id">The database ID of the admin message.</param>
+        /// <param name="dismissedToo">
+        /// If true, the message is "permanently dismissed" and will not be shown to the player again when they join.
+        /// </param>
+        Task MarkMessageAsSeen(int id, bool dismissedToo);
 
         #endregion
     }
@@ -338,7 +351,10 @@ namespace Content.Server.Database
             _sqliteInMemoryConnection?.Dispose();
         }
 
-        public Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
+        public Task<PlayerPreferences> InitPrefsAsync(
+            NetUserId userId,
+            ICharacterProfile defaultProfile,
+            CancellationToken cancel)
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.InitPrefsAsync(userId, defaultProfile));
@@ -368,10 +384,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.SaveAdminOOCColorAsync(userId, color));
         }
 
-        public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
+        public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId, CancellationToken cancel)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetPlayerPreferencesAsync(userId));
+            return RunDbCommand(() => _db.GetPlayerPreferencesAsync(userId, cancel));
         }
 
         public Task AssignUserIdAsync(string name, NetUserId userId)
@@ -479,10 +495,10 @@ namespace Content.Server.Database
 
         #region Playtime
 
-        public Task<List<PlayTime>> GetPlayTimes(Guid player)
+        public Task<List<PlayTime>> GetPlayTimes(Guid player, CancellationToken cancel)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetPlayTimes(player));
+            return RunDbCommand(() => _db.GetPlayTimes(player, cancel));
         }
 
         public Task UpdatePlayTimes(IReadOnlyCollection<PlayTimeUpdate> updates)
@@ -847,10 +863,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.HideServerRoleBanFromNotes(id, deletedBy, deletedAt));
         }
 
-        public Task MarkMessageAsSeen(int id)
+        public Task MarkMessageAsSeen(int id, bool dismissedToo)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.MarkMessageAsSeen(id));
+            return RunDbCommand(() => _db.MarkMessageAsSeen(id, dismissedToo));
         }
 
         // Wrapper functions to run DB commands from the thread pool.

@@ -13,7 +13,7 @@
     state: base
   product: CrateVendingMachineRestockBoozeFilled
   cost: 3500
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -24,7 +24,7 @@
     state: base
   product: CrateVendingMachineRestockChefvendFilled
   cost: 680
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -33,8 +33,18 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockClothesFilled
-  cost: 4900
-  category: Service
+  cost: 2400
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockAutoDrobe
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockAutoDrobeFilled
+  cost: 1200
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -44,7 +54,7 @@
     state: base
   product: CrateVendingMachineRestockDinnerwareFilled
   cost: 2000
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -55,7 +65,7 @@
     state: base
   product: CrateVendingMachineRestockCondimentStationFilled
   cost: 300
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -65,7 +75,7 @@
     state: base
   product: CrateVendingMachineRestockEngineeringFilled
   cost: 3200
-  category: Engineering
+  category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
@@ -75,7 +85,7 @@
     state: base
   product: CrateVendingMachineRestockGamesFilled
   cost: 750
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -85,7 +95,7 @@
     state: base
   product: CrateVendingMachineRestockHotDrinksFilled
   cost: 1200
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -95,7 +105,7 @@
     state: base
   product: CrateVendingMachineRestockMedicalFilled
   cost: 1750
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -105,7 +115,7 @@
     state: base
   product: CrateVendingMachineRestockChemVendFilled
   cost: 3820
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -115,7 +125,7 @@
     state: base
   product: CrateVendingMachineRestockNutriMaxFilled
   cost: 2400
-  category: Hydroponics
+  category: cargoproduct-category-name-hydroponics
   group: market
 
 - type: cargoProduct
@@ -125,7 +135,7 @@
     state: base
   product: CrateVendingMachineRestockPTechFilled
   cost: 1200
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -135,7 +145,7 @@
     state: base
   product: CrateVendingMachineRestockRobustSoftdrinksFilled
   cost: 1200
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -145,7 +155,7 @@
     state: base
   product: CrateVendingMachineRestockSalvageEquipmentFilled
   cost: 1000
-  category: Engineering
+  category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
@@ -155,7 +165,7 @@
     state: base
   product: CrateVendingMachineRestockSecTechFilled
   cost: 2200
-  category: Security
+  category: cargoproduct-category-name-security
   group: market
 
 - type: cargoProduct
@@ -165,7 +175,7 @@
     state: base
   product: CrateVendingMachineRestockSeedsFilled
   cost: 3375
-  category: Hydroponics
+  category: cargoproduct-category-name-hydroponics
   group: market
 
 - type: cargoProduct
@@ -175,7 +185,7 @@
     state: base
   product: CrateVendingMachineRestockSmokesFilled
   cost: 1200
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -185,7 +195,7 @@
     state: base
   product: CrateVendingMachineRestockVendomatFilled
   cost: 1200
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -195,7 +205,7 @@
     state: base
   product: CrateVendingMachineRestockRoboticsFilled
   cost: 1600
-  category: Science
+  category: cargoproduct-category-name-science
   group: market
 
 - type: cargoProduct
@@ -205,7 +215,7 @@
     state: base
   product: CrateVendingMachineRestockTankDispenserFilled
   cost: 1000
-  category: Atmospherics
+  category: cargoproduct-category-name-atmospherics
   group: market
 
 - type: cargoProduct
@@ -215,7 +225,7 @@
     state: base
   product: CrateVendingMachineRestockHappyHonkFilled
   cost: 2100
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -225,7 +235,7 @@
     state: base
   product: CrateVendingMachineRestockGetmoreChocolateCorpFilled
   cost: 1200
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -235,7 +245,7 @@
     state: base
   product: CrateVendingMachineRestockChangFilled
   cost: 1200
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -245,7 +255,7 @@
     state: base
   product: CrateVendingMachineRestockDiscountDansFilled
   cost: 1200
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -255,5 +265,5 @@
     state: base
   product: CrateVendingMachineRestockDonutFilled
   cost: 1200
-  category: Service
+  category: cargoproduct-category-name-service
   group: market

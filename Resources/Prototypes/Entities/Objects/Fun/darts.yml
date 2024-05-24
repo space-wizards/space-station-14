@@ -28,6 +28,7 @@
     sprite: Objects/Fun/Darts/dart_red.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -45
     damage:
       types:
         Piercing: 2
@@ -52,10 +53,10 @@
     solution: melee
   - type: InjectableSolution
     solution: melee
-  - type: SolutionInjectOnCollide
+  - type: SolutionInjectOnEmbed
     transferAmount: 2
+    solution: melee
     blockSlots: OUTERCLOTHING
-    fixtureId: "throw-fixture"
   - type: SolutionTransfer
     maxTransferAmount: 2
   - type: Damageable
@@ -123,10 +124,9 @@
     solutions:
       melee:
         maxVol: 7
-  - type: SolutionInjectOnCollide
+  - type: SolutionInjectOnEmbed
     transferAmount: 7
-    blockSlots: NONE
-    fixtureId: "throw-fixture"
+    solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 7
 

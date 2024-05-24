@@ -201,6 +201,9 @@ public sealed class RadioDeviceSystem : EntitySystem
 
     private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, ref RadioReceiveEvent args)
     {
+        if (uid == args.RadioSource)
+            return;
+
         var nameEv = new TransformSpeakerNameEvent(args.MessageSource, Name(args.MessageSource));
         RaiseLocalEvent(args.MessageSource, nameEv);
 
@@ -218,25 +221,25 @@ public sealed class RadioDeviceSystem : EntitySystem
 
     private void OnToggleIntercomMic(EntityUid uid, IntercomComponent component, ToggleIntercomMicMessage args)
     {
-        if (component.RequiresPower && !this.IsPowered(uid, EntityManager) || args.Session.AttachedEntity is not { } user)
+        if (component.RequiresPower && !this.IsPowered(uid, EntityManager))
             return;
 
-        SetMicrophoneEnabled(uid, user, args.Enabled, true);
+        SetMicrophoneEnabled(uid, args.Actor, args.Enabled, true);
         UpdateIntercomUi(uid, component);
     }
 
     private void OnToggleIntercomSpeaker(EntityUid uid, IntercomComponent component, ToggleIntercomSpeakerMessage args)
     {
-        if (component.RequiresPower && !this.IsPowered(uid, EntityManager) || args.Session.AttachedEntity is not { } user)
+        if (component.RequiresPower && !this.IsPowered(uid, EntityManager))
             return;
 
-        SetSpeakerEnabled(uid, user, args.Enabled, true);
+        SetSpeakerEnabled(uid, args.Actor, args.Enabled, true);
         UpdateIntercomUi(uid, component);
     }
 
     private void OnSelectIntercomChannel(EntityUid uid, IntercomComponent component, SelectIntercomChannelMessage args)
     {
-        if (component.RequiresPower && !this.IsPowered(uid, EntityManager) || args.Session.AttachedEntity is not { })
+        if (component.RequiresPower && !this.IsPowered(uid, EntityManager))
             return;
 
         if (!_protoMan.TryIndex<RadioChannelPrototype>(args.Channel, out _) || !component.SupportedChannels.Contains(args.Channel))
@@ -259,6 +262,6 @@ public sealed class RadioDeviceSystem : EntitySystem
         var availableChannels = component.SupportedChannels;
         var selectedChannel = micComp?.BroadcastChannel ?? SharedChatSystem.CommonChannel;
         var state = new IntercomBoundUIState(micEnabled, speakerEnabled, availableChannels, selectedChannel);
-        _ui.TrySetUiState(uid, IntercomUiKey.Key, state);
+        _ui.SetUiState(uid, IntercomUiKey.Key, state);
     }
 }

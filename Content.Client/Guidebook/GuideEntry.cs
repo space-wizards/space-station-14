@@ -42,7 +42,7 @@ public class GuideEntry
 }
 
 [Prototype("guideEntry")]
-public sealed class GuideEntryPrototype : GuideEntry, IPrototype
+public sealed partial class GuideEntryPrototype : GuideEntry, IPrototype
 {
     public string ID => Id;
 }

@@ -1,6 +1,9 @@
 trait-blindness-name = Blindness
 trait-blindness-desc = You are legally blind, and can't see clearly past a few meters in front of you.
 
+trait-poor-vision-name = Short-sighted
+trait-poor-vision-desc = Your eyes are not what they once were, you have difficulty seeing things far away without corrective glasses.
+
 trait-narcolepsy-name = Narcolepsy
 trait-narcolepsy-desc = You fall asleep randomly
 
@@ -32,3 +35,12 @@ trait-frontal-lisp-desc = You thpeak with a lithp
 
 trait-socialanxiety-name = Social Anxiety
 trait-socialanxiety-desc = You are anxious when you speak and stutter.
+
+trait-southern-name = Southern Drawl
+trait-southern-desc = You have a different way of speakin'.
+
+trait-snoring-name = Snoring
+trait-snoring-desc = You will snore while sleeping.
+
+trait-liar-name = Pathological liar
+trait-liar-desc = You can hardly bring yourself to tell the truth. Sometimes you lie anyway.

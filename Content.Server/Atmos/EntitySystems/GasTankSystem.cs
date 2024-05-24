@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -17,8 +16,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -33,7 +30,6 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
 
@@ -79,7 +75,7 @@ namespace Content.Server.Atmos.EntitySystems
         public void UpdateUserInterface(Entity<GasTankComponent> ent, bool initialUpdate = false)
         {
             var (owner, component) = ent;
-            _ui.TrySetUiState(owner, SharedGasTankUiKey.Key,
+            _ui.SetUiState(owner, SharedGasTankUiKey.Key,
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = component.Air?.Pressure ?? 0,
@@ -172,7 +168,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void ReleaseGas(Entity<GasTankComponent> gasTank)
         {
             var removed = RemoveAirVolume(gasTank, gasTank.Comp.ValveOutputRate * TimerDelay);
-            var environment = _atmosphereSystem.GetContainingMixture(gasTank, false, true);
+            var environment = _atmosphereSystem.GetContainingMixture(gasTank.Owner, false, true);
             if (environment != null)
             {
                 _atmosphereSystem.Merge(environment, removed);
@@ -363,7 +359,8 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnAnalyzed(EntityUid uid, GasTankComponent component, GasAnalyzerScanEvent args)
         {
-            args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), component.Air} };
+            args.GasMixtures ??= new List<(string, GasMixture?)>();
+            args.GasMixtures.Add((Name(uid), component.Air));
         }
 
         private void OnGasTankPrice(EntityUid uid, GasTankComponent component, ref PriceCalculationEvent args)

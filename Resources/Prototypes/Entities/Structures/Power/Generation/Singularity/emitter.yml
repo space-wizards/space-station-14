@@ -84,6 +84,8 @@
   - type: Lock
     locked: false
   - type: LockVisuals
+  - type: LockedAnchorable
+  - type: LockedWiresPanel
   - type: AccessReader
     access: [[ "Engineering" ]]
   - type: Machine

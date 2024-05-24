@@ -107,7 +107,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 
         _fadingOut.Remove(stream.Value);
         var curVolume = component.Volume;
-        var change = (curVolume - MinVolume) / duration;
+        var change = (MinVolume - curVolume) / duration;
         _fadingIn.Add(stream.Value, (change, component.Volume));
         component.Volume = MinVolume;
     }
@@ -151,8 +151,8 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
                 continue;
             }
 
-            var volume = component.Volume + change * frameTime;
-            volume = MathF.Max(target, volume);
+            var volume = component.Volume - change * frameTime;
+            volume = MathF.Min(target, volume);
             _audio.SetVolume(stream, volume, component);
 
             if (component.Volume.Equals(target))

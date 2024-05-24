@@ -11,10 +11,15 @@
   - type: Clickable
   - type: Transform
     anchored: true
-  - type: MagicMirror
+  - type: MagicMirror #instant and silent
+    changeHairSound: null
+    addSlotTime: 0
+    removeSlotTime: 0
+    selectSlotTime: 0
+    changeSlotTime: 0
   - type: ActivatableUI
     key: enum.MagicMirrorUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.MagicMirrorUiKey.Key
-      type: MagicMirrorBoundUserInterface
+      enum.MagicMirrorUiKey.Key:
+        type: MagicMirrorBoundUserInterface

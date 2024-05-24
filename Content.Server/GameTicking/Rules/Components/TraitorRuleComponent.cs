@@ -1,5 +1,5 @@
-﻿using Content.Server.NPC.Components;
 using Content.Shared.Dataset;
+﻿using Content.Shared.NPC.Prototypes;
 using Content.Shared.Random;
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
@@ -31,6 +31,9 @@ public sealed partial class TraitorRuleComponent : Component
     [DataField]
     public ProtoId<DatasetPrototype> CodewordVerbs = "verbs";
 
+    [DataField]
+    public ProtoId<DatasetPrototype> ObjectiveIssuers = "TraitorCorporations";
+
     public int TotalTraitors => TraitorMinds.Count;
     public string[] Codewords = new string[3];
 
@@ -57,4 +60,19 @@ public sealed partial class TraitorRuleComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
+
+    /// <summary>
+    /// The amount of codewords that are selected.
+    /// </summary>
+    [DataField]
+    public int CodewordCount = 4;
+
+    /// <summary>
+    /// The amount of TC traitors start with.
+    /// </summary>
+    [DataField]
+    public int StartingBalance = 20;
+
+    [DataField]
+    public int MaxDifficulty = 5;
 }

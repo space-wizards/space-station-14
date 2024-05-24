@@ -12,6 +12,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using static Content.Shared.Access.Components.IdCardConsoleComponent;
+using Content.Shared.Access;
 
 namespace Content.Server.Access.Systems;
 
@@ -40,7 +41,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
     private void OnWriteToTargetIdMessage(EntityUid uid, IdCardConsoleComponent component, WriteToTargetIdMessage args)
     {
-        if (args.Session.AttachedEntity is not { Valid: true } player)
+        if (args.Actor is not { Valid: true } player)
             return;
 
         TryWriteToTargetId(uid, args.FullName, args.JobTitle, args.AccessList, args.JobPrototype, player, component);
@@ -54,11 +55,11 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             return;
 
         var privilegedIdName = string.Empty;
-        string[]? possibleAccess = null;
+        List<ProtoId<AccessLevelPrototype>>? possibleAccess = null;
         if (component.PrivilegedIdSlot.Item is { Valid: true } item)
         {
             privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(item).EntityName;
-            possibleAccess = _accessReader.FindAccessTags(item).ToArray();
+            possibleAccess = _accessReader.FindAccessTags(item).ToList();
         }
 
         IdCardConsoleBoundUserInterfaceState newState;
@@ -82,7 +83,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             var targetIdComponent = EntityManager.GetComponent<IdCardComponent>(targetId);
             var targetAccessComponent = EntityManager.GetComponent<AccessComponent>(targetId);
 
-            var jobProto = string.Empty;
+            var jobProto = new ProtoId<AccessLevelPrototype>(string.Empty);
             if (TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
                 && keyStorage.Key is {} key
                 && _record.TryGetRecord<GeneralStationRecord>(key, out var record))
@@ -96,14 +97,14 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 true,
                 targetIdComponent.FullName,
                 targetIdComponent.JobTitle,
-                targetAccessComponent.Tags.ToArray(),
+                targetAccessComponent.Tags.ToList(),
                 possibleAccess,
                 jobProto,
                 privilegedIdName,
                 Name(targetId));
         }
 
-        _userInterface.TrySetUiState(uid, IdCardConsoleUiKey.Key, newState);
+        _userInterface.SetUiState(uid, IdCardConsoleUiKey.Key, newState);
     }
 
     /// <summary>
@@ -113,8 +114,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     private void TryWriteToTargetId(EntityUid uid,
         string newFullName,
         string newJobTitle,
-        List<string> newAccessList,
-        string newJobProto,
+        List<ProtoId<AccessLevelPrototype>> newAccessList,
+        ProtoId<AccessLevelPrototype> newJobProto,
         EntityUid player,
         IdCardConsoleComponent? component = null)
     {
@@ -140,7 +141,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             return;
         }
 
-        var oldTags = _access.TryGetTags(targetId) ?? new List<string>();
+        var oldTags = _access.TryGetTags(targetId) ?? new List<ProtoId<AccessLevelPrototype>>();
         oldTags = oldTags.ToList();
 
         var privilegedId = component.PrivilegedIdSlot.Item;
@@ -189,7 +190,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, uid, reader);
     }
 
-    private void UpdateStationRecord(EntityUid uid, EntityUid targetId, string newFullName, string newJobTitle, JobPrototype? newJobProto)
+    private void UpdateStationRecord(EntityUid uid, EntityUid targetId, string newFullName, ProtoId<AccessLevelPrototype> newJobTitle, JobPrototype? newJobProto)
     {
         if (!TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
             || keyStorage.Key is not { } key

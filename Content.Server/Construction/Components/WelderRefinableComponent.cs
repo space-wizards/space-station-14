@@ -1,22 +1,24 @@
 using Content.Shared.Tools;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
-namespace Content.Server.Construction.Components
+namespace Content.Server.Construction.Components;
+
+/// <summary>
+/// Used for something that can be refined by welder.
+/// For example, glass shard can be refined to glass sheet.
+/// </summary>
+[RegisterComponent]
+public sealed partial class WelderRefinableComponent : Component
 {
-    /// <summary>
-    /// Used for something that can be refined by welder.
-    /// For example, glass shard can be refined to glass sheet.
-    /// </summary>
-    [RegisterComponent]
-    public sealed partial class WelderRefinableComponent : Component
-    {
-        [DataField("refineResult")]
-        public HashSet<string>? RefineResult = new();
+    [DataField]
+    public HashSet<EntProtoId>? RefineResult = new();
 
-        [DataField("refineTime")]
-        public float RefineTime = 2f;
+    [DataField]
+    public float RefineTime = 2f;
 
-        [DataField("qualityNeeded", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        public string QualityNeeded = "Welding";
-    }
+    [DataField]
+    public float RefineFuel;
+
+    [DataField]
+    public ProtoId<ToolQualityPrototype> QualityNeeded = "Welding";
 }

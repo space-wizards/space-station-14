@@ -41,6 +41,18 @@ namespace Content.Server.Construction
                 component.Node == component.DeconstructionNode)
                 return;
 
+            if (!_prototypeManager.TryIndex(component.Graph, out ConstructionGraphPrototype? graph))
+                return;
+
+            if (component.DeconstructionNode == null)
+                return;
+
+            if (GetCurrentNode(uid, component) is not {} currentNode)
+                return;
+
+            if (graph.Path(currentNode.Name, component.DeconstructionNode) is not {} path || path.Length == 0)
+                return;
+
             Verb verb = new();
             //verb.Category = VerbCategories.Construction;
             //TODO VERBS add more construction verbs? Until then, removing construction category

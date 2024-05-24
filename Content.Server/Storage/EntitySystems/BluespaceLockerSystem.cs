@@ -3,6 +3,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Resist;
 using Content.Server.Station.Components;
 using Content.Server.Storage.Components;
+using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.DoAfter;
@@ -14,6 +15,7 @@ using Content.Shared.Tools.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -26,6 +28,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
 
     public override void Initialize()
@@ -137,7 +140,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
     }
 
     /// <returns>True if any HashSet in <paramref name="a"/> would grant access to <paramref name="b"/></returns>
-    private bool AccessMatch(IReadOnlyCollection<HashSet<string>>? a, IReadOnlyCollection<HashSet<string>>? b)
+    private bool AccessMatch(IReadOnlyCollection<HashSet<ProtoId<AccessLevelPrototype>>>? a, IReadOnlyCollection<HashSet<ProtoId<AccessLevelPrototype>>>? b)
     {
         if ((a == null || a.Count == 0) && (b == null || b.Count == 0))
             return true;
@@ -386,7 +389,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         switch (component.BehaviorProperties.DestroyType)
         {
             case BluespaceLockerDestroyType.Explode:
-                _explosionSystem.QueueExplosion(uid.ToCoordinates().ToMap(EntityManager),
+                _explosionSystem.QueueExplosion(uid.ToCoordinates().ToMap(EntityManager, _transformSystem),
                     ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, maxTileBreak: 0);
                 goto case BluespaceLockerDestroyType.Delete;
             case BluespaceLockerDestroyType.Delete:
