@@ -353,13 +353,17 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (session == null)
             return true;
 
-        mind ??= session.GetMind();
-
         if (session.Status is SessionStatus.Disconnected or SessionStatus.Zombie)
             return false;
 
         if (ent.Comp.SelectedSessions.Contains(session))
             return false;
+
+        mind ??= session.GetMind();
+
+        // If the player has not spawned in as any entity (e.g., in the lobby), they can be given an antag role/entity.
+        if (mind == null)
+            return true;
 
         //todo: we need some way to check that we're not getting the same role twice. (double picking thieves or zombies through midrounds)
 
@@ -391,8 +395,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// </summary>
     private bool IsEntityValid(EntityUid? entity, AntagSelectionDefinition def)
     {
+        // If the player has not spawned in as any entity (e.g., in the lobby), they can be given an antag role/entity.
         if (entity == null)
-            return false;
+            return true;
 
         if (HasComp<PendingClockInComponent>(entity))
             return false;
