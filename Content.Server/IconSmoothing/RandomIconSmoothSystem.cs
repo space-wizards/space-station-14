@@ -11,10 +11,10 @@ public sealed partial class RandomIconSmoothSystem : SharedRandomIconSmoothSyste
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RandomIconSmoothComponent, ComponentStartup>(OnCompStartup);
+        SubscribeLocalEvent<RandomIconSmoothComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnCompStartup(Entity<RandomIconSmoothComponent> ent, ref ComponentStartup args)
+    private void OnMapInit(Entity<RandomIconSmoothComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.RandomStates.Count == 0)
             return;

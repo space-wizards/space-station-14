@@ -38,16 +38,6 @@ namespace Content.Client.IconSmoothing
             SubscribeLocalEvent<IconSmoothComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<IconSmoothComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<IconSmoothComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<IconSmoothComponent, MapInitEvent>(OnMapInit);
-        }
-
-        private void OnMapInit(Entity<IconSmoothComponent> ent, ref MapInitEvent args)
-        {
-            //Randomize visual
-            if (TryComp<RandomIconSmoothComponent>(ent, out var randomIcon))
-            {
-                ent.Comp.StateBase = randomIcon.SelectedState;
-            }
         }
 
         private void OnStartup(EntityUid uid, IconSmoothComponent component, ComponentStartup args)
