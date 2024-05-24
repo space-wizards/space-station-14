@@ -1,16 +1,7 @@
 - type: entity
-  name: BaseWeaponRevolver
-  parent: BaseItem
-  id: BaseWeaponRevolver
-  description: A rooty tooty point and shooty.
-  abstract: true
-  components:
-
-- type: entity
   name: Deckard
   parent:
   - BaseGunSmall
-  - BaseWeaponRevolver
   id: WeaponRevolverDeckard
   description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test. Uses .45 magnum ammo.
   components:
@@ -42,7 +33,6 @@
   name: Inspector
   parent:
   - BaseGunSmall
-  - BaseWeaponRevolver
   id: WeaponRevolverInspector
   description: A detective's best friend. Uses .45 magnum ammo.
   components:
@@ -63,7 +53,6 @@
   name: Mateba
   parent:
   - BaseGunSmall
-  - BaseWeaponRevolver
   id: WeaponRevolverMateba
   description: The iconic sidearm of the dreaded death squads. Uses .45 magnum ammo.
   components:
@@ -80,7 +69,6 @@
   name: Python
   parent:
   - BaseGunSmall
-  - BaseWeaponRevolver
   id: WeaponRevolverPython
   description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
   components:
@@ -117,7 +105,6 @@
   name: pirate revolver
   parent:
   - BaseGunSmall
-  - BaseWeaponRevolver
   id: WeaponRevolverPirate
   description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
   components:
