@@ -7,20 +7,8 @@
   components:
   - type: Sprite
     state: icon
-  - type: Item
-    size: Small
-    shape:
-    - 0,0,1,0
-    - 0,1,0,1
-  - type: Tag
-    tags:
-    - Sidearm
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
-    quickEquip: false
-    slots:
-    - suitStorage
-    - Belt
   - type: AmmoCounter
   - type: Gun
     selectedMode: SemiAuto
@@ -52,7 +40,9 @@
 
 - type: entity
   name: Deckard
-  parent: BaseWeaponRevolver
+  parent:
+  - BaseGunSmall
+  - BaseWeaponRevolver
   id: WeaponRevolverDeckard
   description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test. Uses .45 magnum ammo.
   components:
@@ -80,7 +70,9 @@
 
 - type: entity
   name: Inspector
-  parent: BaseWeaponRevolver
+  parent:
+  - BaseGunSmall
+  - BaseWeaponRevolver
   id: WeaponRevolverInspector
   description: A detective's best friend. Uses .45 magnum ammo.
   components:
@@ -95,7 +87,9 @@
 
 - type: entity
   name: Mateba
-  parent: BaseWeaponRevolver
+  parent:
+  - BaseGunSmall
+  - BaseWeaponRevolver
   id: WeaponRevolverMateba
   description: The iconic sidearm of the dreaded death squads. Uses .45 magnum ammo.
   components:
@@ -110,7 +104,9 @@
 
 - type: entity
   name: Python
-  parent: BaseWeaponRevolver
+  parent:
+  - BaseGunSmall
+  - BaseWeaponRevolver
   id: WeaponRevolverPython
   description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
   components:
@@ -145,7 +141,9 @@
 
 - type: entity
   name: pirate revolver
-  parent: BaseWeaponRevolver
+  parent:
+  - BaseGunSmall
+  - BaseWeaponRevolver
   id: WeaponRevolverPirate
   description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
   components:
