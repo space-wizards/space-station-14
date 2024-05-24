@@ -1,9 +1,10 @@
+# Deckard
 - type: entity
-  name: Deckard
   parent:
   - BaseGunSmall
   - BaseGunRevolverCylinder
   id: WeaponRevolverDeckard
+  name: Deckard
   description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test. Uses .45 magnum ammo.
   components:
   - type: Sprite
@@ -31,12 +32,13 @@
   - type: StaticPrice
     price: 1500
 
+# Inspector
 - type: entity
-  name: Inspector
   parent:
   - BaseGunSmall
   - BaseGunRevolverCylinder
   id: WeaponRevolverInspector
+  name: Inspector
   description: A detective's best friend. Uses .45 magnum ammo.
   components:
   - type: Sprite
@@ -49,12 +51,13 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
 
+# Mateba
 - type: entity
-  name: Mateba
   parent:
   - BaseGunSmall
   - BaseGunRevolverCylinder
   id: WeaponRevolverMateba
+  name: Mateba
   description: The iconic sidearm of the dreaded death squads. Uses .45 magnum ammo.
   components:
   - type: Sprite
@@ -67,12 +70,13 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
 
+# Python
 - type: entity
-  name: Python
   parent:
   - BaseGunSmall
   - BaseGunRevolverCylinder
   id: WeaponRevolverPython
+  name: Python
   description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
   components:
   - type: Sprite
@@ -87,23 +91,22 @@
       params:
         volume: 2.25
 
+# Python w/ AP
 - type: entity
-  name: Python
   parent: WeaponRevolverPython
   id: WeaponRevolverPythonAP # For the uplink.
   suffix: armor-piercing
-  description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
   components:
   - type: RevolverAmmoProvider
     proto: CartridgeMagnumAP
 
-
+# pirate revolver
 - type: entity
-  name: pirate revolver
   parent:
   - BaseGunSmall
   - BaseGunRevolverCylinder
   id: WeaponRevolverPirate
+  name: pirate revolver
   description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
   components:
   - type: Sprite
