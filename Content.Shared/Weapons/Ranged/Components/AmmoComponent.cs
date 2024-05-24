@@ -13,8 +13,8 @@ public partial class AmmoComponent : Component, IShootable
 {
     // Muzzle flash stored on ammo because if we swap a gun to whatever we may want to override it.
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("muzzleFlash", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? MuzzleFlash = "MuzzleFlashEffect";
+    [DataField]
+    public EntProtoId? MuzzleFlash = "MuzzleFlashEffect";
 }
 
 /// <summary>
@@ -23,29 +23,29 @@ public partial class AmmoComponent : Component, IShootable
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CartridgeAmmoComponent : AmmoComponent
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Prototype = default!;
+    [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true)]
+    public EntProtoId Prototype;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("spent")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     [AutoNetworkedField]
-    public bool Spent = false;
+    public bool Spent;
 
     /// <summary>
     /// How much the ammo spreads when shot, in degrees. Does nothing if count is 0.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("spread")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public Angle Spread = Angle.FromDegrees(5);
 
     /// <summary>
     /// How many prototypes are spawned when shot.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("count")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public int Count = 1;
 
     /// <summary>
     /// Caseless ammunition.
     /// </summary>
-    [DataField("deleteOnSpawn")]
+    [DataField]
     public bool DeleteOnSpawn;
 
     [DataField("soundEject")]
