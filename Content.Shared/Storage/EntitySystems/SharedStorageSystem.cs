@@ -5,7 +5,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
-using Content.Shared.Ghost;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants.Components;
@@ -247,11 +246,8 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void AddUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)
     {
-        var silent = false;
         if (!CanInteract(args.User, (uid, component), args.CanAccess && args.CanInteract))
             return;
-
-        silent |= HasComp<GhostComponent>(args.User);
 
         // Does this player currently have the storage UI open?
         var uiOpen = _ui.IsUiOpen(uid, StorageComponent.StorageUiKey.Key, args.User);
@@ -266,7 +262,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 }
                 else
                 {
-                    OpenStorageUI(uid, args.User, component, silent);
+                    OpenStorageUI(uid, args.User, component);
                 }
             }
         };
@@ -345,7 +341,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <returns>true if inserted, false otherwise</returns>
     private void OnInteractUsing(EntityUid uid, StorageComponent storageComp, InteractUsingEvent args)
     {
-        if (args.Handled || !CanInteract(args.User, (uid, storageComp), storageComp.ClickInsert))
+        if (args.Handled || !CanInteract(args.User, (uid, storageComp), storageComp.ClickInsert, false))
             return;
 
         if (HasComp<PlaceableSurfaceComponent>(uid))
