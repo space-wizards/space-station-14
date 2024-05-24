@@ -27,6 +27,11 @@ public sealed partial class AntagSelectionSystem
         if (mindCount >= totalTargetCount)
             return false;
 
+        // TODO ANTAG fix this
+        // If here are two definitions with 1/10 and 10/10 slots filled, this will always return the second definition
+        // even though it has already met its target
+        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA I fucking hate game ticker code.
+        // It needs to track selected minds for each definition independently.
         foreach (var def in ent.Comp.Definitions)
         {
             var target = GetTargetAntagCount(ent, null, def);

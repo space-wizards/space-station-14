@@ -25,6 +25,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Antag;
 
@@ -119,11 +120,17 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var query = QueryActiveRules();
         while (query.MoveNext(out var uid, out _, out var antag, out _))
         {
+            // TODO ANTAG
+            // what why aasdiuhasdopiuasdfhksad
+            // stop this insanity please
+            // probability of antag assignment shouldn't depend on the order in which rules are returned by the query.
             if (!RobustRandom.Prob(LateJoinRandomChance))
                 continue;
 
             if (!antag.Definitions.Any(p => p.LateJoinAdditional))
                 continue;
+
+            DebugTools.AssertEqual(antag.SelectionTime, AntagSelectionTime.PostPlayerSpawn);
 
             if (!TryGetNextAvailableDefinition((uid, antag), out var def))
                 continue;
