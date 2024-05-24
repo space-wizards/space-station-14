@@ -339,3 +339,6 @@ DrinkBottleGoldschlager: DrinkBottleGildlager
 # 2024-05-14
 soda_dispenser: SodaDispenser
 chem_master: ChemMaster
+
+# 2024-05-21
+CrateJanitorExplosive: ClosetJanitorBombFilled

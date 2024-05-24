@@ -42,6 +42,9 @@ public sealed class ReflectSystem : EntitySystem
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
 
+    [ValidatePrototypeId<AlertPrototype>]
+    private const string DeflectingAlert = "Deflecting";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -296,11 +299,11 @@ public sealed class ReflectSystem : EntitySystem
 
     private void EnableAlert(EntityUid alertee)
     {
-        _alerts.ShowAlert(alertee, AlertType.Deflecting);
+        _alerts.ShowAlert(alertee, DeflectingAlert);
     }
 
     private void DisableAlert(EntityUid alertee)
     {
-        _alerts.ClearAlert(alertee, AlertType.Deflecting);
+        _alerts.ClearAlert(alertee, DeflectingAlert);
     }
 }

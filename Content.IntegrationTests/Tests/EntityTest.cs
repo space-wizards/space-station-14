@@ -350,7 +350,11 @@ namespace Content.IntegrationTests.Tests
                 "DebrisFeaturePlacerController", // Above.
                 "LoadedChunk", // Worldgen chunk loading malding.
                 "BiomeSelection", // Whaddya know, requires config.
+                "ActivatableUI", // Requires enum key
             };
+
+            // TODO TESTS
+            // auto ignore any components that have a "required" data field.
 
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
