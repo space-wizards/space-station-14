@@ -5,7 +5,6 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: AmmoCounter
   - type: Gun
     selectedMode: SemiAuto
     fireRate: 1.5
@@ -13,24 +12,6 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-  - type: UseDelay
-    delay: 0.66
-  - type: ContainerContainer
-    containers:
-      revolver-ammo: !type:Container
-  - type: RevolverAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeMagnum
-        - SpeedLoaderMagnum
-    proto: CartridgeMagnum
-    capacity: 6
-    chambers: [ True, True, True, True, True, True ]
-    ammoSlots: [ null, null, null, null, null, null ]
-    soundEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
 
 - type: entity
   name: Deckard
