@@ -5,10 +5,6 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sprite
-    state: icon
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
   - type: AmmoCounter
   - type: Gun
     selectedMode: SemiAuto
@@ -35,8 +31,6 @@
       path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-  - type: StaticPrice
-    price: 500
 
 - type: entity
   name: Deckard
