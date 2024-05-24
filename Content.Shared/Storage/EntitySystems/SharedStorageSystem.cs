@@ -290,13 +290,16 @@ public abstract class SharedStorageSystem : EntitySystem
     ///     Opens the storage UI for an entity
     /// </summary>
     /// <param name="entity">The entity to open the UI for</param>
-    public void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false)
+    public void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = true)
     {
         if (!Resolve(uid, ref storageComp, false))
             return;
 
         // prevent spamming bag open / honkerton honk sound
         silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && UseDelay.IsDelayed((uid, useDelay));
+        if (!CanInteract(entity, (uid, storageComp), silent: silent))
+            return;
+
         if (!silent)
         {
             if (!_ui.IsUiOpen(uid, StorageComponent.StorageUiKey.Key))
@@ -370,7 +373,7 @@ public abstract class SharedStorageSystem : EntitySystem
         }
         else
         {
-            OpenStorageUI(uid, args.User, storageComp);
+            OpenStorageUI(uid, args.User, storageComp, false);
         }
 
         args.Handled = true;
@@ -384,7 +387,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Handled)
             return;
 
-        OpenStorageUI(uid, args.Performer, storageComp);
+        OpenStorageUI(uid, args.Performer, storageComp, false);
         args.Handled = true;
     }
 
@@ -1446,7 +1449,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         if (!_ui.IsUiOpen(storageEnt.Value, StorageComponent.StorageUiKey.Key, playerEnt))
         {
-            OpenStorageUI(storageEnt.Value, playerEnt);
+            OpenStorageUI(storageEnt.Value, playerEnt, silent: false);
         }
         else
         {
@@ -1461,7 +1464,7 @@ public abstract class SharedStorageSystem : EntitySystem
 #endif
     }
 
-    private bool CanInteract(EntityUid user, Entity<StorageComponent> storage, bool canInteract = true)
+    private bool CanInteract(EntityUid user, Entity<StorageComponent> storage, bool canInteract = true, bool silent = true)
     {
         if (HasComp<BypassInteractionChecksComponent>(user))
             return true;
@@ -1469,7 +1472,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!canInteract)
             return false;
 
-        var ev = new StorageInteractAttemptEvent();
+        var ev = new StorageInteractAttemptEvent(silent);
         RaiseLocalEvent(storage, ref ev);
 
         return !ev.Cancelled;

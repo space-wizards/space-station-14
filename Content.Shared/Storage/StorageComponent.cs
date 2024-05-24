@@ -228,7 +228,7 @@ namespace Content.Shared.Storage
     }
 
     [ByRefEvent]
-    public record struct StorageInteractAttemptEvent(bool Cancelled);
+    public record struct StorageInteractAttemptEvent(bool Silent, bool Cancelled = false);
 
     [NetSerializable]
     [Serializable]
