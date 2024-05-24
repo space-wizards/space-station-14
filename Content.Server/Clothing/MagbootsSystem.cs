@@ -5,9 +5,9 @@ namespace Content.Server.Clothing;
 
 public sealed class MagbootsSystem : SharedMagbootsSystem
 {
-    protected override void UpdateMagbootEffects(EntityUid user, bool on)
+    protected override void UpdateMagbootEffects(Entity<MagbootsComponent> ent, EntityUid user, bool on)
     {
-        base.UpdateMagbootEffects(user, on);
+        base.UpdateMagbootEffects(ent, user, on);
 
         if (TryComp<MovedByPressureComponent>(user, out var moved))
             moved.Enabled = !on;

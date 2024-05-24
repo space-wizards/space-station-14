@@ -223,7 +223,7 @@ public sealed class PullingSystem : EntitySystem
         if (TryComp<PullerComponent>(oldPuller, out var pullerComp))
         {
             var pullerUid = oldPuller.Value;
-            _alertsSystem.ClearAlert(pullerUid, AlertType.Pulling);
+            _alertsSystem.ClearAlert(pullerUid, pullerComp.PullingAlert);
             pullerComp.Pulling = null;
             Dirty(oldPuller.Value, pullerComp);
 
@@ -237,7 +237,7 @@ public sealed class PullingSystem : EntitySystem
         }
 
 
-        _alertsSystem.ClearAlert(pullableUid, AlertType.Pulled);
+        _alertsSystem.ClearAlert(pullableUid, pullableComp.PulledAlert);
     }
 
     public bool IsPulled(EntityUid uid, PullableComponent? component = null)
@@ -460,8 +460,8 @@ public sealed class PullingSystem : EntitySystem
 
         // Messaging
         var message = new PullStartedMessage(pullerUid, pullableUid);
-        _alertsSystem.ShowAlert(pullerUid, AlertType.Pulling);
-        _alertsSystem.ShowAlert(pullableUid, AlertType.Pulled);
+        _alertsSystem.ShowAlert(pullerUid, pullerComp.PullingAlert);
+        _alertsSystem.ShowAlert(pullableUid, pullableComp.PulledAlert);
 
         RaiseLocalEvent(pullerUid, message);
         RaiseLocalEvent(pullableUid, message);

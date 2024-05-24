@@ -90,6 +90,7 @@
   - type: InventorySlots
   - type: Loadout
     prototypes: [ MobAghostGear ]
+  - type: BypassInteractionChecks
 
 - type: entity
   id: ActionAGhostShowSolar

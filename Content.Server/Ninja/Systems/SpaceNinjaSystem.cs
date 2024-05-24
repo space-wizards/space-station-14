@@ -80,18 +80,18 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         var (uid, comp) = ent;
         if (comp.Deleted || comp.Suit == null)
         {
-            _alerts.ClearAlert(uid, AlertType.SuitPower);
+            _alerts.ClearAlert(uid, comp.SuitPowerAlert);
             return;
         }
 
         if (GetNinjaBattery(uid, out _, out var battery))
         {
             var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, battery.CurrentCharge), battery.MaxCharge, 8);
-            _alerts.ShowAlert(uid, AlertType.SuitPower, (short) severity);
+            _alerts.ShowAlert(uid, comp.SuitPowerAlert, (short) severity);
         }
         else
         {
-            _alerts.ClearAlert(uid, AlertType.SuitPower);
+            _alerts.ClearAlert(uid, comp.SuitPowerAlert);
         }
     }
 

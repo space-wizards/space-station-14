@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mryikes
-  changes:
-  - message: New Nuke Detonation Song "Clearly Nuclear".
-    type: Add
-  id: 6113
-  time: '2024-03-09T01:44:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25765
 - author: Plykiya
   changes:
   - message: Pre-filled syringes start in inject mode now.
@@ -3875,3 +3868,10 @@
   id: 6612
   time: '2024-05-22T11:16:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26582
+- author: blueDev2
+  changes:
+  - message: Watermelon slices are now considered fruit
+    type: Fix
+  id: 6613
+  time: '2024-05-23T20:27:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28226

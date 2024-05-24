@@ -39,7 +39,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
             _inventory.TryGetSlotEntity(container.Owner, "shoes", out var shoes)
             && ent == shoes)
         {
-            UpdateMagbootEffects(container.Owner, args.Activated);
+            UpdateMagbootEffects(ent, container.Owner, args.Activated);
         }
 
         var prefix = args.Activated ? "on" : null;
@@ -49,20 +49,20 @@ public abstract class SharedMagbootsSystem : EntitySystem
 
     private void OnUnequipped(Entity<MagbootsComponent> ent, ref ClothingGotUnequippedEvent args)
     {
-        UpdateMagbootEffects(args.Wearer, false);
+        UpdateMagbootEffects(ent, args.Wearer, false);
     }
 
     private void OnEquipped(Entity<MagbootsComponent> ent, ref ClothingGotEquippedEvent args)
     {
-        UpdateMagbootEffects(args.Wearer, _toggle.IsActivated(ent.Owner));
+        UpdateMagbootEffects(ent, args.Wearer, _toggle.IsActivated(ent.Owner));
     }
 
-    protected virtual void UpdateMagbootEffects(EntityUid user, bool on)
+    protected virtual void UpdateMagbootEffects(Entity<MagbootsComponent> ent, EntityUid user, bool on)
     {
         if (on)
-            _alerts.ShowAlert(user, AlertType.Magboots);
+            _alerts.ShowAlert(user, ent.Comp.MagbootsAlert);
         else
-            _alerts.ClearAlert(user, AlertType.Magboots);
+            _alerts.ClearAlert(user, ent.Comp.MagbootsAlert);
     }
 
     private void OnCheckGravity(Entity<MagbootsComponent> ent, ref CheckGravityEvent args)
