@@ -2,8 +2,6 @@ using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration;
-using Content.Shared.Administration.Managers;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
@@ -13,6 +11,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Lock;
@@ -40,7 +39,6 @@ public abstract class SharedStorageSystem : EntitySystem
 {
     [Dependency] private   readonly IPrototypeManager _prototype = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
-    [Dependency] private readonly ISharedAdminManager _admin = default!;
     [Dependency] protected readonly ActionBlockerSystem ActionBlocker = default!;
     [Dependency] private   readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
@@ -250,14 +248,8 @@ public abstract class SharedStorageSystem : EntitySystem
     private void AddUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)
     {
         var silent = false;
-        if (!args.CanAccess || !args.CanInteract || TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
-        {
-            // we allow admins to open the storage anyways
-            if (!_admin.HasAdminFlag(args.User, AdminFlags.Admin))
-                return;
-
-            silent = true;
-        }
+        if (!CanInteract(args.User, (uid, component), args.CanAccess && args.CanInteract))
+            return;
 
         silent |= HasComp<GhostComponent>(args.User);
 
@@ -326,7 +318,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         var entities = component.Container.ContainedEntities;
 
-        if (entities.Count == 0 || TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
+        if (entities.Count == 0 || !CanInteract(args.User, (uid, component)))
             return;
 
         // if the target is storage, add a verb to transfer storage.
@@ -337,7 +329,7 @@ public abstract class SharedStorageSystem : EntitySystem
             {
                 Text = Loc.GetString("storage-component-transfer-verb"),
                 IconEntity = GetNetEntity(args.Using),
-                Act = () => TransferEntities(uid, args.Target, args.User, component, lockComponent, targetStorage, targetLock)
+                Act = () => TransferEntities(uid, args.Target, args.User, component, null, targetStorage, targetLock)
             };
 
             args.Verbs.Add(verb);
@@ -350,7 +342,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <returns>true if inserted, false otherwise</returns>
     private void OnInteractUsing(EntityUid uid, StorageComponent storageComp, InteractUsingEvent args)
     {
-        if (args.Handled || !storageComp.ClickInsert || TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
+        if (args.Handled || !CanInteract(args.User, (uid, storageComp), storageComp.ClickInsert))
             return;
 
         if (HasComp<PlaceableSurfaceComponent>(uid))
@@ -368,7 +360,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// </summary>
     private void OnActivate(EntityUid uid, StorageComponent storageComp, ActivateInWorldEvent args)
     {
-        if (args.Handled || TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
+        if (args.Handled || !CanInteract(args.User, (uid, storageComp), storageComp.ClickInsert))
             return;
 
         // Toggle
@@ -1403,7 +1395,7 @@ public abstract class SharedStorageSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks if a storage's UI is open by anyone when locked, and closes it unless they're an admin.
+    /// Checks if a storage's UI is open by anyone when locked, and closes it.
     /// </summary>
     private void OnLockToggled(EntityUid uid, StorageComponent component, ref LockToggledEvent args)
     {
@@ -1413,10 +1405,9 @@ public abstract class SharedStorageSystem : EntitySystem
         // Gets everyone looking at the UI
         foreach (var actor in _ui.GetActors(uid, StorageComponent.StorageUiKey.Key).ToList())
         {
-            if (_admin.HasAdminFlag(actor, AdminFlags.Admin))
+            if (!CanInteract(actor, (uid, component)))
                 continue;
 
-            // And closes it unless they're an admin
             _ui.CloseUi(uid, StorageComponent.StorageUiKey.Key, actor);
         }
     }
@@ -1470,6 +1461,20 @@ public abstract class SharedStorageSystem : EntitySystem
 #if DEBUG
         CantFillReasons.Clear();
 #endif
+    }
+
+    private bool CanInteract(EntityUid user, Entity<StorageComponent> storage, bool canInteract = true)
+    {
+        if (HasComp<BypassInteractionChecksComponent>(user))
+            return true;
+
+        if (!canInteract)
+            return false;
+
+        var ev = new StorageInteractAttemptEvent();
+        RaiseLocalEvent(storage, ref ev);
+
+        return !ev.Cancelled;
     }
 
     /// <summary>
