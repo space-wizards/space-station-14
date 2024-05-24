@@ -1405,7 +1405,7 @@ public abstract class SharedStorageSystem : EntitySystem
         // Gets everyone looking at the UI
         foreach (var actor in _ui.GetActors(uid, StorageComponent.StorageUiKey.Key).ToList())
         {
-            if (!CanInteract(actor, (uid, component)))
+            if (CanInteract(actor, (uid, component)))
                 continue;
 
             _ui.CloseUi(uid, StorageComponent.StorageUiKey.Key, actor);
