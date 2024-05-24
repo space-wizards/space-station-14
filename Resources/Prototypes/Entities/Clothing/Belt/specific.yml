@@ -1,0 +1,20 @@
+- type: entity
+  parent: ClothingBeltStorageWaistbag
+  id: ClothingBeltStorageWaistbagChameleon
+  name: leather waist bag
+  description: A leather waist bag meant for carrying small items.
+  suffix: Chameleon
+  components:
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Sprite
+    sprite: Clothing/Belt/waistbag_leather.rsi
+  - type: ChameleonClothing
+    slot: [belt]
+    default: ClothingBeltStorageWaistbag
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.ChameleonUiKey.Key:
+        type: ChameleonBoundUserInterface
