@@ -393,7 +393,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// <summary>
     /// Checks if a given entity (mind/session not included) is valid for a given antagonist.
     /// </summary>
-    private bool IsEntityValid(EntityUid? entity, AntagSelectionDefinition def)
+    public bool IsEntityValid(EntityUid? entity, AntagSelectionDefinition def)
     {
         // If the player has not spawned in as any entity (e.g., in the lobby), they can be given an antag role/entity.
         if (entity == null)
