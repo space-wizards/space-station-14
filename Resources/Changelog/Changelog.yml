@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Removed Hamlet, Smile and Pun Pun from Thief objectives
-    type: Remove
-  id: 6111
-  time: '2024-03-07T23:53:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25921
-- author: MACMAN2003
-  changes:
-  - message: Diagonal windows no longer space you when in a pressurized environment.
-    type: Fix
-  id: 6112
-  time: '2024-03-08T07:50:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25926
-- author: mryikes
-  changes:
-  - message: New Nuke Detonation Song "Clearly Nuclear".
-    type: Add
-  id: 6113
-  time: '2024-03-09T01:44:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25765
 - author: Plykiya
   changes:
   - message: Pre-filled syringes start in inject mode now.
@@ -3870,3 +3849,29 @@
   id: 6610
   time: '2024-05-21T10:16:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28160
+- author: TheShuEd
+  changes:
+  - message: Artifact portal lifespan reduced from 120 seconds to 1 second
+    type: Tweak
+  id: 6611
+  time: '2024-05-22T07:52:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28200
+- author: nikthechampiongr
+  changes:
+  - message: Firelocks can now be pried by hand.
+    type: Tweak
+  - message: Firelocks will now not automatically close for 2 seconds after you pry
+      them open.
+    type: Tweak
+  - message: Firelocks are now properly predicted.
+    type: Fix
+  id: 6612
+  time: '2024-05-22T11:16:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26582
+- author: blueDev2
+  changes:
+  - message: Watermelon slices are now considered fruit
+    type: Fix
+  id: 6613
+  time: '2024-05-23T20:27:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28226

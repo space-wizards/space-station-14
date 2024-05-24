@@ -76,7 +76,7 @@ public sealed partial class ArticleEditorPanel : Control
 
         TextEditPanel.Visible = !_preview;
         PreviewPanel.Visible = _preview;
-        PreviewLabel.SetMarkup(Rope.Collapse(ContentField.TextRope));
+        PreviewLabel.SetMarkupPermissive(Rope.Collapse(ContentField.TextRope));
     }
 
     private void OnCancel(BaseButton.ButtonEventArgs eventArgs)
