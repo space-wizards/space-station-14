@@ -31,7 +31,7 @@ public sealed partial class ContentAudioSystem
 
     private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(30);
     private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(60);
-    private readonly TimeSpan _ambientLoopUpdateTime = TimeSpan.FromSeconds(5f);
+    private readonly TimeSpan _ambientLoopUpdateTime = TimeSpan.FromSeconds(2f);
 
     private const float AmbientMusicFadeTime = 10f;
     private const float AmbientLoopFadeInTime = 5f;
@@ -248,21 +248,30 @@ public sealed partial class ContentAudioSystem
 
         //If now there is no background ambient, or it is different from what should play in the current conditions -
         //we start the process of smooth transition to another ambient
-        var currentLoopProto = GetAmbientLoop();
-        if (currentLoopProto == null)
-            return;
-        if (_loopProto == null || _loopProto.ID != currentLoopProto.ID)
+        //If null - remove loop
+        //WTF what the hell is with the triple if but I haven't figured out how to do it any other way.
+        var newLoopProto = GetAmbientLoop();
+        if ((_loopProto == null && newLoopProto != null) ||
+            (_loopProto != null && newLoopProto == null) ||
+            (_loopProto != null && newLoopProto != null && !_loopProto.ID.Equals(newLoopProto.ID)))
         {
-            ChangeAmbientLoop(currentLoopProto);
+            ChangeAmbientLoop(newLoopProto);
         }
     }
 
     /// <summary>
     /// Smoothly turns off the current ambient, and smoothly turns on the new ambient
     /// </summary>
-    private void ChangeAmbientLoop(AmbientLoopPrototype newProto)
+    private void ChangeAmbientLoop(AmbientLoopPrototype? newProto)
     {
         FadeOut(_ambientLoopStream, duration: AmbientLoopFadeOutTime);
+
+        if (newProto == null)
+        {
+            _loopProto = null;
+            _ambientLoopStream = null;
+            return;
+        }
 
         _loopProto = newProto;
         var newLoop = _audio.PlayGlobal(
@@ -327,8 +336,6 @@ public sealed partial class ContentAudioSystem
 
             return loop;
         }
-
-        _sawmill.Warning("Unable to find fallback ambience loop");
         return null;
     }
 
