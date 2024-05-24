@@ -1,26 +1,66 @@
 using Content.Shared.DoAfter;
+using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Interaction;
+using Content.Shared.UserInterface;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.MagicMirror;
 
 public abstract class SharedMagicMirrorSystem : EntitySystem
 {
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] protected readonly SharedUserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<MagicMirrorComponent, BeforeActivatableUIOpenEvent>(OnBeforeUIOpen);
         SubscribeLocalEvent<MagicMirrorComponent, BoundUserInterfaceCheckRangeEvent>(OnMirrorRangeCheck);
     }
 
     private void OnMirrorRangeCheck(EntityUid uid, MagicMirrorComponent component, ref BoundUserInterfaceCheckRangeEvent args)
     {
-        if (!Exists(component.Target) || !_interaction.InRangeUnobstructed(uid, component.Target.Value))
-        {
+        if (args.Result == BoundUserInterfaceRangeResult.Fail)
+            return;
+
+        DebugTools.Assert(component.Target != null && Exists(component.Target));
+
+        if (!_interaction.InRangeUnobstructed(uid, component.Target.Value))
             args.Result = BoundUserInterfaceRangeResult.Fail;
-        }
+    }
+
+    private void OnBeforeUIOpen(Entity<MagicMirrorComponent> ent, ref BeforeActivatableUIOpenEvent args)
+    {
+        ent.Comp.Target ??= args.User;
+        UpdateInterface(ent, args.User, ent);
+    }
+
+    protected void UpdateInterface(EntityUid mirrorUid, EntityUid targetUid, MagicMirrorComponent component)
+    {
+        if (!TryComp<HumanoidAppearanceComponent>(targetUid, out var humanoid))
+            return;
+
+        var hair = humanoid.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var hairMarkings)
+            ? new List<Marking>(hairMarkings)
+            : new();
+
+        var facialHair = humanoid.MarkingSet.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings)
+            ? new List<Marking>(facialHairMarkings)
+            : new();
+
+        var state = new MagicMirrorUiState(
+            humanoid.Species,
+            hair,
+            humanoid.MarkingSet.PointsLeft(MarkingCategories.Hair) + hair.Count,
+            facialHair,
+            humanoid.MarkingSet.PointsLeft(MarkingCategories.FacialHair) + facialHair.Count);
+
+        // TODO: Component states
+        component.Target = targetUid;
+        _uiSystem.SetUiState(mirrorUid, MagicMirrorUiKey.Key, state);
+        Dirty(mirrorUid, component);
     }
 }
 

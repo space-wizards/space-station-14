@@ -520,10 +520,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (xform.MapID != coords.GetMapId(EntityManager))
             return false;
 
-        if (comp.Range <= 0)
-            return true;
-
-        return coords.InRange(EntityManager, _transform, Transform(user).Coordinates, comp.Range);
+        return _interactionSystem.InRangeAndAccessible(user, target, range: comp.Range);
     }
 
     private void OnInstantSetEvent(Entity<InstantActionComponent> ent, ref ActionSetEventEvent args)
