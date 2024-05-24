@@ -69,6 +69,10 @@ public sealed partial class AntagSelectionSystem
     /// </summary>
     public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool, AntagSelectionDefinition def)
     {
+        // TODO ANTAG
+        // make pool non-nullable
+        // Review uses and ensure that people are INTENTIONALLY including players in the lobby if this is a mid-round
+        // antag selection.
         var poolSize = pool?.Count ?? _playerManager.Sessions
             .Count(s => s.State.Status is not SessionStatus.Disconnected and not SessionStatus.Zombie);
 
