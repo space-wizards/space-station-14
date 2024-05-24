@@ -1,7 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Atmos.Components;
 
@@ -43,7 +42,7 @@ public sealed class GasTileOverlayDeltaState(
     {
         foreach (var key in state.Chunks.Keys)
         {
-            if (!AllChunks!.Contains(key))
+            if (!AllChunks.Contains(key))
                 state.Chunks.Remove(key);
         }
 
@@ -55,7 +54,7 @@ public sealed class GasTileOverlayDeltaState(
 
     public GasTileOverlayState CreateNewFullState(GasTileOverlayState state)
     {
-        var chunks = new Dictionary<Vector2i, GasOverlayChunk>(state.Chunks.Count);
+        var chunks = new Dictionary<Vector2i, GasOverlayChunk>(AllChunks.Count);
 
         foreach (var (chunk, data) in ModifiedChunks)
         {
@@ -64,7 +63,7 @@ public sealed class GasTileOverlayDeltaState(
 
         foreach (var (chunk, data) in state.Chunks)
         {
-            if (AllChunks!.Contains(chunk))
+            if (AllChunks.Contains(chunk))
                 chunks.TryAdd(chunk, new(data));
         }
 
