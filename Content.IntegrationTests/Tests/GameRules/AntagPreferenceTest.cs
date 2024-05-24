@@ -70,6 +70,7 @@ public sealed class AntagPreferenceTest
         pool = sys.GetPlayerPool(rule, sessions, def);
         Assert.That(pool.Count, Is.EqualTo(0));
 
+        await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
         await pair.CleanReturnAsync();
     }
 }
