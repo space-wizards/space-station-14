@@ -16,9 +16,6 @@ namespace Content.IntegrationTests.Tests.GameRules;
 [TestFixture]
 public sealed class AntagPreferenceTest
 {
-    /// <summary>
-    /// Check that a nuke ops game mode can start without issue. I.e., that the nuke station and such all get loaded.
-    /// </summary>
     [Test]
     public async Task TestLobbyPlayersValid()
     {
