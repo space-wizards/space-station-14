@@ -59,8 +59,8 @@ public sealed partial class TestPair
         (Server, ServerLogHandler) = await PoolManager.GenerateServer(settings, testOut);
         ActivateContext(testOut);
 
-        Client.CfgMan.OnCvarValueChanged += OnClientCvarChanged;
-        Server.CfgMan.OnCvarValueChanged += OnServerCvarChanged;
+        Client.CfgMan.OnCVarValueChanged += OnClientCvarChanged;
+        Server.CfgMan.OnCVarValueChanged += OnServerCvarChanged;
 
         if (!settings.NoLoadTestPrototypes)
             await LoadPrototypes(testPrototypes!);
