@@ -5,13 +5,6 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Gun
-    selectedMode: SemiAuto
-    fireRate: 1.5
-    availableModes:
-    - SemiAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
 
 - type: entity
   name: Deckard
@@ -31,6 +24,8 @@
       shader: unshaded
   - type: Gun
     fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
   - type: RevolverAmmoProvider
     capacity: 5
     chambers: [ True, True, True, True, True ]
@@ -55,6 +50,10 @@
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
+  - type: Gun
+    fireRate: 1.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
   - type: RevolverAmmoProvider
     capacity: 6
     chambers: [ True, True, True, True, True, True ]
@@ -128,6 +127,8 @@
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: Gun
     fireRate: 1
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
   - type: ContainerContainer
     containers:
       revolver-ammo: !type:Container
