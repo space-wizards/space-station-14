@@ -13,6 +13,7 @@ using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Antag;
+using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Players;
@@ -82,10 +83,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 continue;
 
             if (comp.SelectionsComplete)
-                return;
+                continue;
 
             ChooseAntags((uid, comp), pool);
-            comp.SelectionsComplete = true;
 
             foreach (var session in comp.SelectedSessions)
             {
@@ -103,11 +103,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (comp.SelectionTime != AntagSelectionTime.PostPlayerSpawn)
                 continue;
 
-            if (comp.SelectionsComplete)
-                continue;
-
-            ChooseAntags((uid, comp));
-            comp.SelectionsComplete = true;
+            ChooseAntags((uid, comp), args.Players);
         }
     }
 
@@ -161,43 +157,40 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         base.Started(uid, component, gameRule, args);
 
-        if (component.SelectionsComplete)
-            return;
-
+        // If the round has not yet started, we defer antag selection until roundstart
         if (GameTicker.RunLevel != GameRunLevel.InRound)
             return;
 
-        if (GameTicker.RunLevel == GameRunLevel.InRound && component.SelectionTime == AntagSelectionTime.PrePlayerSpawn)
+        if (component.SelectionsComplete)
             return;
 
-        ChooseAntags((uid, component));
-        component.SelectionsComplete = true;
-    }
+        var players = _playerManager.Sessions
+            .Where(x => GameTicker.PlayerGameStatuses[x.UserId] == PlayerGameStatus.JoinedGame)
+            .ToList();
 
-    /// <summary>
-    /// Chooses antagonists from the current selection of players
-    /// </summary>
-    public void ChooseAntags(Entity<AntagSelectionComponent> ent)
-    {
-        var sessions = _playerManager.Sessions.ToList();
-        ChooseAntags(ent, sessions);
+        ChooseAntags((uid, component), players);
     }
 
     /// <summary>
     /// Chooses antagonists from the given selection of players
     /// </summary>
-    public void ChooseAntags(Entity<AntagSelectionComponent> ent, List<ICommonSession> pool)
+    public void ChooseAntags(Entity<AntagSelectionComponent> ent, IList<ICommonSession> pool)
     {
+        if (ent.Comp.SelectionsComplete)
+            return;
+
         foreach (var def in ent.Comp.Definitions)
         {
             ChooseAntags(ent, pool, def);
         }
+
+        ent.Comp.SelectionsComplete = true;
     }
 
     /// <summary>
     /// Chooses antagonists from the given selection of players for the given antag definition.
     /// </summary>
-    public void ChooseAntags(Entity<AntagSelectionComponent> ent, List<ICommonSession> pool, AntagSelectionDefinition def)
+    public void ChooseAntags(Entity<AntagSelectionComponent> ent, IList<ICommonSession> pool, AntagSelectionDefinition def)
     {
         var playerPool = GetPlayerPool(ent, pool, def);
         var count = GetTargetAntagCount(ent, playerPool, def);
@@ -321,7 +314,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// <summary>
     /// Gets an ordered player pool based on player preferences and the antagonist definition.
     /// </summary>
-    public AntagSelectionPlayerPool GetPlayerPool(Entity<AntagSelectionComponent> ent, List<ICommonSession> sessions, AntagSelectionDefinition def)
+    public AntagSelectionPlayerPool GetPlayerPool(Entity<AntagSelectionComponent> ent, IList<ICommonSession> sessions, AntagSelectionDefinition def)
     {
         var preferredList = new List<ICommonSession>();
         var fallbackList = new List<ICommonSession>();
