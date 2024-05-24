@@ -498,9 +498,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return targetAction.CheckCanAccess && _interaction.CanAccessViaStorage(user, target);
         }
 
-        // if checking access, don't allow actions to be used outside of a container
-        // for example someone in a closet targeting someone outside and vice versa
-        return !targetAction.CheckCanAccess || _container.IsInSameOrParentContainer(user, target);
+        return _interaction.InRangeAndAccessible(user, target, range: targetAction.Range);
     }
 
     public bool ValidateWorldTarget(EntityUid user, EntityCoordinates target, Entity<WorldTargetActionComponent> ent)
@@ -520,7 +518,10 @@ public abstract class SharedActionsSystem : EntitySystem
         if (xform.MapID != coords.GetMapId(EntityManager))
             return false;
 
-        return _interaction.InRangeAndAccessible(user, coords, range: comp.Range);
+        if (comp.Range <= 0)
+            return true;
+
+        return coords.InRange(EntityManager, _transform, xform.Coordinates, comp.Range);
     }
 
     private void OnInstantSetEvent(Entity<InstantActionComponent> ent, ref ActionSetEventEvent args)
