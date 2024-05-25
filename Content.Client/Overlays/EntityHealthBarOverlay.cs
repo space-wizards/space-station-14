@@ -9,6 +9,9 @@ using Robust.Shared.Enums;
 using System.Numerics;
 using Content.Shared.StatusIcon.Components;
 using Content.Client.UserInterface.Systems;
+using Content.Shared.Ghost;
+using Content.Shared.Stealth.Components;
+using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using static Robust.Shared.Maths.Color;
 
@@ -20,16 +23,20 @@ namespace Content.Client.Overlays;
 public sealed class EntityHealthBarOverlay : Overlay
 {
     private readonly IEntityManager _entManager;
+    private readonly IPlayerManager _playerManager;
+
     private readonly SharedTransformSystem _transform;
     private readonly MobStateSystem _mobStateSystem;
     private readonly MobThresholdSystem _mobThresholdSystem;
     private readonly ProgressColorSystem _progressColor;
+
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
     public HashSet<string> DamageContainers = new();
 
-    public EntityHealthBarOverlay(IEntityManager entManager)
+    public EntityHealthBarOverlay(IEntityManager entManager, IPlayerManager playerManager)
     {
         _entManager = entManager;
+        _playerManager = playerManager;
         _transform = _entManager.System<SharedTransformSystem>();
         _mobStateSystem = _entManager.System<MobStateSystem>();
         _mobThresholdSystem = _entManager.System<MobThresholdSystem>();
@@ -53,31 +60,28 @@ public sealed class EntityHealthBarOverlay : Overlay
             out var damageableComponent,
             out var spriteComponent))
         {
-            if (_entManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
-                metaDataComponent.Flags.HasFlag(MetaDataFlags.InContainer))
-            {
+            var metaDataComponent = _entManager.GetComponent<MetaDataComponent>(uid);
+            if (metaDataComponent.Flags.HasFlag(MetaDataFlags.InContainer))
                 continue;
-            }
+
+            // We want the stealth user to still be able to see his health bar himself
+            var viewer = _playerManager.LocalSession?.AttachedEntity;
+            if (viewer != uid && _entManager.TryGetComponent<StealthComponent>(uid, out var stealth) && stealth.Enabled)
+                continue;
 
             if (!xformQuery.TryGetComponent(uid, out var xform) ||
                 xform.MapID != args.MapId)
-            {
                 continue;
-            }
 
             if (damageableComponent.DamageContainerID == null || !DamageContainers.Contains(damageableComponent.DamageContainerID))
-            {
                 continue;
-            }
 
             // we use the status icon component bounds if specified otherwise use sprite
             var bounds = _entManager.GetComponentOrNull<StatusIconComponent>(uid)?.Bounds ?? spriteComponent.Bounds;
             var worldPos = _transform.GetWorldPosition(xform, xformQuery);
 
             if (!bounds.Translated(worldPos).Intersects(args.WorldAABB))
-            {
                 continue;
-            }
 
             var worldPosition = _transform.GetWorldPosition(xform);
             var worldMatrix = Matrix3.CreateTranslation(worldPosition);

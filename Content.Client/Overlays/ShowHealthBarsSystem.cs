@@ -2,6 +2,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
 using Robust.Client.Graphics;
 using System.Linq;
+using Robust.Client.Player;
 
 namespace Content.Client.Overlays;
 
@@ -11,6 +12,7 @@ namespace Content.Client.Overlays;
 public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComponent>
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     private EntityHealthBarOverlay _overlay = default!;
 
@@ -18,7 +20,7 @@ public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComp
     {
         base.Initialize();
 
-        _overlay = new(EntityManager);
+        _overlay = new(EntityManager, _playerManager);
     }
 
     protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowHealthBarsComponent> component)

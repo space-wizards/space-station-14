@@ -82,11 +82,11 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
         if (data.HideInContainer && (ent.Comp.Flags & MetaDataFlags.InContainer) != 0)
             return false;
 
-        if (data.HideOnStealth && TryComp<StealthComponent>(viewer, out var stealth) && stealth.Enabled)
+        if (data.HideOnStealth && TryComp<StealthComponent>(ent, out var stealth) && stealth.Enabled)
             return false;
 
-        if (data.ShowTo != null && _entityWhitelist.IsValid(data.ShowTo, ent))
-            return true;
+        if (data.ShowTo != null && !_entityWhitelist.IsValid(data.ShowTo, viewer))
+            return false;
 
         return true;
     }
