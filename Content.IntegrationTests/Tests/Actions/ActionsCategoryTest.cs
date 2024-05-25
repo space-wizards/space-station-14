@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.IntegrationTests.Tests.Actions;
 
