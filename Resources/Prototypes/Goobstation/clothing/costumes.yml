@@ -1,3 +1,5 @@
+# caldera items
+
 - type: entity
   parent: ClothingUniformSkirtBase
   id: BKTurtleSkirt
@@ -5,9 +7,9 @@
   description: A uniform consisting of snow coloured Turtleneck sweater with a navy blue skirt and gold belt straps.
   components:
   - type: Sprite
-    sprite: Caldera/clothing/YTS.rsi
+    sprite: Goobstation/clothing/YTS.rsi
   - type: Clothing
-    sprite: Caldera/clothing/YTS.rsi
+    sprite: Goobstation/clothing/YTS.rsi
 
 - type: entity
   parent: ClothingMaskBase
@@ -18,12 +20,14 @@
   - type: Item
     size: Tiny
   - type: Sprite
-    sprite: Caldera/clothing/BKKitsuneMask.rsi
+    sprite: Goobstation/clothing/BKKitsuneMask.rsi
   - type: Clothing
-    sprite: Caldera/clothing/BKKitsuneMask.rsi
+    sprite: Goobstation/clothing/BKKitsuneMask.rsi
   - type: BreathMask
   - type: IngestionBlocker
   - type: Tag
     tags:
     - WhitelistChameleon
     - HidesNose
+
+# caldera items
