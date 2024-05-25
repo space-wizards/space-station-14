@@ -29,16 +29,6 @@
     back:
     - PlushieSpaceLizard
 
-- type: loadout
-  id: PlushieBlackburna
-  equipment: PlushieBlackburna
-
-- type: startingGear
-  id: PlushieBlackburna
-  storage:
-    back:
-    - PlushieBlackburna
-
 # Smokeables
 - type: loadout
   id: Lighter
