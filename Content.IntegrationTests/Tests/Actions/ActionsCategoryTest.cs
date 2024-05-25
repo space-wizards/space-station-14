@@ -35,7 +35,7 @@ public sealed class ActionsCategoryTest
                     Assert.That(proto.Categories, Does.Contain(Actions), $"Action prototype '{proto.ID}' is missing the actions category, make it inherit BaseAction");
                 }
             });
-        }
+        });
 
         await pair.CleanReturnAsync();
     }
