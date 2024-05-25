@@ -946,6 +946,9 @@
     sprite: Structures/Walls/xeno.rsi
   - type: Icon
     sprite: Structures/Walls/xeno.rsi
+  - type: IconSmooth
+    key: chitin
+    base: solid
 
 - type: entity
   parent: WallReinforced
@@ -957,6 +960,9 @@
   - type: Icon
     sprite: Structures/Walls/xeno.rsi
     state: rgeneric
+  - type: IconSmooth
+    key: chitin
+    base: reinf_over
 
 - type: entity
   parent: BaseWall
