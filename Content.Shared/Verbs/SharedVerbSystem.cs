@@ -72,19 +72,7 @@ namespace Content.Shared.Verbs
             extraCategories = new();
 
             // accessibility checks
-            bool canAccess = false;
-            if (force || target == user)
-                canAccess = true;
-            else if (_interactionSystem.InRangeUnobstructed(user, target))
-            {
-                // Note that being in a container does not count as an obstruction for InRangeUnobstructed
-                // Therefore, we need extra checks to ensure the item is actually accessible:
-                if (ContainerSystem.IsInSameOrParentContainer(user, target))
-                    canAccess = true;
-                else
-                    // the item might be in a backpack that the user has open
-                    canAccess = _interactionSystem.CanAccessViaStorage(user, target);
-            }
+            var canAccess = force || _interactionSystem.InRangeAndAccessible(user, target);
 
             // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
             // call ActionBlocker checks, just cache it for the verb request.

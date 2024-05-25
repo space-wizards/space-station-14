@@ -260,8 +260,8 @@ public sealed class NPCUtilitySystem : EntitySystem
             {
                 var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
 
-                if (!TryComp<TransformComponent>(targetUid, out var targetXform) ||
-                    !TryComp<TransformComponent>(owner, out var xform))
+                if (!TryComp(targetUid, out TransformComponent? targetXform) ||
+                    !TryComp(owner, out TransformComponent? xform))
                 {
                     return 0f;
                 }
@@ -308,8 +308,8 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 if (blackboard.TryGetValue<EntityUid>("Target", out var currentTarget, EntityManager) &&
                     currentTarget == targetUid &&
-                    TryComp<TransformComponent>(owner, out var xform) &&
-                    TryComp<TransformComponent>(targetUid, out var targetXform) &&
+                    TryComp(owner, out TransformComponent? xform) &&
+                    TryComp(targetUid, out TransformComponent? targetXform) &&
                     xform.Coordinates.TryDistance(EntityManager, _transform, targetXform.Coordinates, out var distance) &&
                     distance <= radius + bufferRange)
                 {

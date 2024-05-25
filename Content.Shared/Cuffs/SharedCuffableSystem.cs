@@ -172,9 +172,9 @@ namespace Content.Shared.Cuffs
             _actionBlocker.UpdateCanMove(uid);
 
             if (component.CanStillInteract)
-                _alerts.ClearAlert(uid, AlertType.Handcuffed);
+                _alerts.ClearAlert(uid, component.CuffedAlert);
             else
-                _alerts.ShowAlert(uid, AlertType.Handcuffed);
+                _alerts.ShowAlert(uid, component.CuffedAlert);
 
             var ev = new CuffedStateChangeEvent();
             RaiseLocalEvent(uid, ref ev);

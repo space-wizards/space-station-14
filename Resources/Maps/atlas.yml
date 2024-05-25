@@ -89,7 +89,7 @@ entities:
           version: 6
         0,1:
           ind: 0,1
-          tiles: AwAAAAAAAwAAAAAAAwAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAHQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAALAAAAAAAeQAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAHQAAAAAAeQAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAHQAAAAAAeQAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAPgAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAPgAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAPgAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAALgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAWQAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAWQAAAAAA
+          tiles: AwAAAAAAAwAAAAAAAwAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAUAAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAHQAAAAAAeQAAAAAAeQAAAAAAWQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAALAAAAAAAeQAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAHQAAAAAAeQAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAHQAAAAAAeQAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAPgAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAPgAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAPgAAAAAAdgAAAAAAdgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAALgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAWQAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAWQAAAAAA
           version: 6
         1,1:
           ind: 1,1
@@ -3360,6 +3360,13 @@ entities:
     - type: Transform
       pos: -44.5,-15.5
       parent: 30
+- proto: AirlockArmoryGlassLocked
+  entities:
+  - uid: 1448
+    components:
+    - type: Transform
+      pos: 9.5,14.5
+      parent: 30
 - proto: AirlockAtmosphericsGlassLocked
   entities:
   - uid: 241
@@ -3940,6 +3947,9 @@ entities:
     - type: Transform
       pos: 18.5,-6.5
       parent: 30
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
   - uid: 2282
     components:
     - type: Transform
@@ -4053,12 +4063,6 @@ entities:
       parent: 30
 - proto: AirlockHeadOfSecurityGlassLocked
   entities:
-  - uid: 1448
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 9.5,14.5
-      parent: 30
   - uid: 7378
     components:
     - type: Transform
@@ -4239,6 +4243,9 @@ entities:
     - type: Transform
       pos: -6.5,17.5
       parent: 30
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
 - proto: AirlockMedicalGlass
   entities:
   - uid: 2408
@@ -7082,7 +7089,7 @@ entities:
   - uid: 2074
     components:
     - type: Transform
-      pos: -10.5,8.5
+      pos: -7.5,8.5
       parent: 30
   - uid: 2075
     components:
@@ -23899,14 +23906,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -44.5,-16.5
       parent: 30
-- proto: EncryptionKeyCargo
-  entities:
-  - uid: 8041
-    components:
-    - type: Transform
-      parent: 8035
-    - type: Physics
-      canCollide: False
 - proto: EncryptionKeyCommand
   entities:
   - uid: 6716
@@ -23929,14 +23928,6 @@ entities:
     components:
     - type: Transform
       parent: 6972
-    - type: Physics
-      canCollide: False
-- proto: EncryptionKeyMedical
-  entities:
-  - uid: 7916
-    components:
-    - type: Transform
-      parent: 7915
     - type: Physics
       canCollide: False
 - proto: EncryptionKeyScience
@@ -38622,6 +38613,14 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -11.5,-9.5
       parent: 30
+- proto: HydroponicsToolClippers
+  entities:
+  - uid: 7916
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.368904,17.565664
+      parent: 30
 - proto: HydroponicsToolHatchet
   entities:
   - uid: 1498
@@ -41743,14 +41742,6 @@ entities:
       parent: 30
     - type: ApcPowerReceiver
       powerLoad: 0
-  - uid: 7438
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -30.5,-11.5
-      parent: 30
-    - type: ApcPowerReceiver
-      powerLoad: 0
   - uid: 7439
     components:
     - type: Transform
@@ -41772,6 +41763,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,-15.5
+      parent: 30
+  - uid: 8041
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -31.5,-11.5
       parent: 30
   - uid: 8112
     components:
@@ -46316,6 +46313,14 @@ entities:
     - type: Transform
       pos: 10.5,15.5
       parent: 30
+- proto: SpawnMobMonkeyPunpun
+  entities:
+  - uid: 8035
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -18.5,3.5
+      parent: 30
 - proto: SpawnMobMouse
   entities:
   - uid: 1570
@@ -48692,48 +48697,20 @@ entities:
           showEnts: False
           occludes: True
           ents: []
-- proto: TelecomServerFilled
+- proto: TelecomServerFilledCargo
+  entities:
+  - uid: 7438
+    components:
+    - type: Transform
+      pos: -48.5,6.5
+      parent: 30
+- proto: TelecomServerFilledMedical
   entities:
   - uid: 7915
     components:
     - type: Transform
       pos: -47.5,6.5
       parent: 30
-    - type: ContainerContainer
-      containers:
-        key_slots: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7916
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-  - uid: 8035
-    components:
-    - type: Transform
-      pos: -48.5,6.5
-      parent: 30
-    - type: ContainerContainer
-      containers:
-        key_slots: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 8041
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
 - proto: ToiletDirtyWater
   entities:
   - uid: 7674

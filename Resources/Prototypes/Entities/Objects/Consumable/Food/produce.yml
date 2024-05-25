@@ -1647,6 +1647,9 @@
       reagents:
       - ReagentId: JuiceWatermelon
         Quantity: 4
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: grapes
