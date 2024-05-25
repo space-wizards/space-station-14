@@ -77,6 +77,11 @@ namespace Content.Client.IconSmoothing
 
         private void SetCornerLayers(SpriteComponent sprite, IconSmoothComponent component)
         {
+            sprite.LayerMapRemove(CornerLayers.SE);
+            sprite.LayerMapRemove(CornerLayers.NE);
+            sprite.LayerMapRemove(CornerLayers.NW);
+            sprite.LayerMapRemove(CornerLayers.SW);
+
             var state0 = $"{component.StateBase}0";
             sprite.LayerMapSet(CornerLayers.SE, sprite.AddLayerState(state0));
             sprite.LayerSetDirOffset(CornerLayers.SE, DirectionOffset.None);

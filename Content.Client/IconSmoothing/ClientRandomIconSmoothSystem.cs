@@ -2,7 +2,7 @@ using Content.Shared.IconSmoothing;
 
 namespace Content.Client.IconSmoothing;
 
-public abstract class ClientRandomIconSmoothSystem : SharedRandomIconSmoothSystem
+public sealed class ClientRandomIconSmoothSystem : SharedRandomIconSmoothSystem
 {
     [Dependency] private readonly IconSmoothSystem _iconSmooth = default!;
 
