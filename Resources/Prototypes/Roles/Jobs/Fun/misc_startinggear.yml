@@ -68,7 +68,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperative
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsCombatSyndicateFilled
     gloves: ClothingHandsGlovesColorBlack
 
 # Syndicate Operative Outfit - Civilian
