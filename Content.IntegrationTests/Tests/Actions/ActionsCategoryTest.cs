@@ -1,4 +1,4 @@
-using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -20,12 +20,13 @@ public sealed class ActionsCategoryTest
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false});
         var server = pair.Server;
         var protoMan = server.ResolveDependency<IPrototypeManager>();
+        var factory = server.ResolveDependency<IComponentFactory>();
 
         Assert.Multiple(() =>
         {
             foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
             {
-                if (!proto.HasComponent<ActionComponent>())
+                if (!proto.TryGetComponent<ActionComponent>(out _, factory))
                     continue;
 
                 Assert.That(proto.Categories, Does.Contain(Actions), $"Action prototype '{proto.ID}' is missing the actions category, make it inherit BaseAction");
