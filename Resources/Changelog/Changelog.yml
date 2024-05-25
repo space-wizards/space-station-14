@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Remove the buttons for generated debris from shuttle maps.
-    type: Tweak
-  id: 6119
-  time: '2024-03-11T02:11:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25897
 - author: Errant
   changes:
   - message: Species info is now available in the Guidebook and in the character editor.
@@ -3875,3 +3868,10 @@
   id: 6618
   time: '2024-05-25T20:18:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28173
+- author: metalgearsloth
+  changes:
+  - message: Fix water shader getting stuck on sometimes.
+    type: Fix
+  id: 6619
+  time: '2024-05-25T20:23:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28130
