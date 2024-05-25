@@ -13,7 +13,7 @@
   abstract: true
   categories:
   - hideSpawnMenu
-  - objective
+  - objectives
   id: BaseObjective
   components:
   - type: Objective
