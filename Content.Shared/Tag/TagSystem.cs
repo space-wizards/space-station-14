@@ -55,7 +55,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool AddTags(EntityUid entityUid, params ProtoId<TagPrototype>[] tags)
     {
-        return AddTags(entityUid, tags);
+        return AddTags(entityUid,  (IEnumerable<ProtoId<TagPrototype>>)tags);
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool TryAddTags(EntityUid entityUid, params ProtoId<TagPrototype>[] tags)
     {
-        return TryAddTags(entityUid, tags);
+        return TryAddTags(entityUid, (IEnumerable<ProtoId<TagPrototype>>)tags);
     }
 
     /// <summary>
@@ -145,7 +145,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(EntityUid entityUid, params ProtoId<TagPrototype>[] tags)
     {
-        return HasAllTags(entityUid, tags);
+        return HasAllTags(entityUid, (IEnumerable<ProtoId<TagPrototype>>)tags);
     }
 
     /// <summary>
@@ -174,7 +174,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(EntityUid entityUid, params ProtoId<TagPrototype>[] tags)
     {
-        return HasAnyTag(entityUid, tags);
+        return HasAnyTag(entityUid, (IEnumerable<ProtoId<TagPrototype>>)tags);
     }
 
     /// <summary>
@@ -220,7 +220,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(TagComponent component, params ProtoId<TagPrototype>[] tags)
     {
-        return HasAllTags(component, tags);
+        return HasAllTags(component, (IEnumerable<ProtoId<TagPrototype>>)tags);
     }
 
     /// <summary>
@@ -257,7 +257,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(TagComponent component, params ProtoId<TagPrototype>[] tags)
     {
-        return HasAnyTag(component, tags);
+        return HasAnyTag(component, (IEnumerable<ProtoId<TagPrototype>>) tags);
     }
 
     /// <summary>
@@ -309,7 +309,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool RemoveTags(EntityUid entityUid, params ProtoId<TagPrototype>[] tags)
     {
-        return RemoveTags(entityUid, tags);
+        return RemoveTags(entityUid, (IEnumerable<ProtoId<TagPrototype>>)tags);
     }
 
     /// <summary>
@@ -359,7 +359,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool AddTags(Entity<TagComponent> entity, params ProtoId<TagPrototype>[] tags)
     {
-        return AddTags(entity, tags);
+        return AddTags(entity, (IEnumerable<ProtoId<TagPrototype>>)tags);
     }
 
     /// <summary>
@@ -423,7 +423,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool RemoveTags(Entity<TagComponent> entity, params ProtoId<TagPrototype>[] tags)
     {
-        return RemoveTags(entity, tags);
+        return RemoveTags(entity, (IEnumerable<ProtoId<TagPrototype>>)tags);
     }
 
     /// <summary>
