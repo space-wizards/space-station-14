@@ -53,6 +53,20 @@ public sealed class TagSystem : EntitySystem
     /// <exception cref="UnknownPrototypeException">
     /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
     /// </exception>
+    public bool AddTags(EntityUid entityUid, params ProtoId<TagPrototype>[] tags)
+    {
+        return AddTags(entityUid, tags);
+    }
+
+    /// <summary>
+    /// Tries to add the given tags to an entity if the tags don't already exist.
+    /// </summary>
+    /// <returns>
+    /// true if any tags were added, false otherwise even if they all already existed.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
     public bool AddTags(EntityUid entityUid, IEnumerable<ProtoId<TagPrototype>> tags)
     {
         return AddTags((entityUid, EnsureComp<TagComponent>(entityUid)), tags);
@@ -72,6 +86,21 @@ public sealed class TagSystem : EntitySystem
     {
         return _tagQuery.TryComp(entityUid, out var component) &&
                AddTag((entityUid, component), tag);
+    }
+
+    /// <summary>
+    /// Tries to add the given tags to an entity if it has a
+    /// <see cref="TagComponent"/> and the tags don't already exist.
+    /// </summary>
+    /// <returns>
+    /// true if any tags were added, false otherwise even if they all already existed.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool TryAddTags(EntityUid entityUid, params ProtoId<TagPrototype>[] tags)
+    {
+        return TryAddTags(entityUid, tags);
     }
 
     /// <summary>
@@ -114,10 +143,38 @@ public sealed class TagSystem : EntitySystem
     /// <exception cref="UnknownPrototypeException">
     /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
     /// </exception>
+    public bool HasAllTags(EntityUid entityUid, params ProtoId<TagPrototype>[] tags)
+    {
+        return HasAllTags(entityUid, tags);
+    }
+
+    /// <summary>
+    /// Checks if all of the given tags have been added to an entity.
+    /// </summary>
+    /// <returns>
+    /// true if they all exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
     public bool HasAllTags(EntityUid entityUid, IEnumerable<ProtoId<TagPrototype>> tags)
     {
         return _tagQuery.TryComp(entityUid, out var component) &&
                HasAllTags(component, tags);
+    }
+
+    /// <summary>
+    /// Checks if any of the given tags have been added to an entity.
+    /// </summary>
+    /// <returns>
+    /// true if any of them exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAnyTag(EntityUid entityUid, params ProtoId<TagPrototype>[] tags)
+    {
+        return HasAnyTag(entityUid, tags);
     }
 
     /// <summary>
@@ -161,6 +218,20 @@ public sealed class TagSystem : EntitySystem
     /// <exception cref="UnknownPrototypeException">
     /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
     /// </exception>
+    public bool HasAllTags(TagComponent component, params ProtoId<TagPrototype>[] tags)
+    {
+        return HasAllTags(component, tags);
+    }
+
+    /// <summary>
+    /// Checks if all of the given tags have been added to an component.
+    /// </summary>
+    /// <returns>
+    /// true if they all exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
     public bool HasAllTags(TagComponent component, IEnumerable<ProtoId<TagPrototype>> tags)
     {
         foreach (var tag in tags)
@@ -173,6 +244,20 @@ public sealed class TagSystem : EntitySystem
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Checks if any of the given tags have been added to an component.
+    /// </summary>
+    /// <returns>
+    /// true if any of them exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAnyTag(TagComponent component, params ProtoId<TagPrototype>[] tags)
+    {
+        return HasAnyTag(component, tags);
     }
 
     /// <summary>
@@ -222,6 +307,20 @@ public sealed class TagSystem : EntitySystem
     /// <exception cref="UnknownPrototypeException">
     /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
     /// </exception>
+    public bool RemoveTags(EntityUid entityUid, params ProtoId<TagPrototype>[] tags)
+    {
+        return RemoveTags(entityUid, tags);
+    }
+
+    /// <summary>
+    /// Tries to remove a tag from an entity if it exists.
+    /// </summary>
+    /// <returns>
+    /// true if it was removed, false otherwise even if it didn't exist.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
     public bool RemoveTags(EntityUid entityUid, IEnumerable<ProtoId<TagPrototype>> tags)
     {
         return _tagQuery.TryComp(entityUid, out var component) &&
@@ -247,6 +346,20 @@ public sealed class TagSystem : EntitySystem
 
         Dirty(entity);
         return true;
+    }
+
+    /// <summary>
+    /// Tries to add the given tags if they don't already exist.
+    /// </summary>
+    /// <returns>
+    /// true if any tags were added, false if they all already existed.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool AddTags(Entity<TagComponent> entity, params ProtoId<TagPrototype>[] tags)
+    {
+        return AddTags(entity, tags);
     }
 
     /// <summary>
@@ -297,6 +410,20 @@ public sealed class TagSystem : EntitySystem
 
         Dirty(entity);
         return true;
+    }
+
+    /// <summary>
+    /// Tries to remove all of the given tags if they exist.
+    /// </summary>
+    /// <returns>
+    /// true if any tag was removed, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool RemoveTags(Entity<TagComponent> entity, params ProtoId<TagPrototype>[] tags)
+    {
+        return RemoveTags(entity, tags);
     }
 
     /// <summary>
