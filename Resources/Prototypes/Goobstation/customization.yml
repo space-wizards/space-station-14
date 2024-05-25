@@ -4,7 +4,7 @@
   markingCategory: Tail
   speciesRestriction: [Felinid]
   sprites:
-  - sprite: Goobstation/Caldera/Markings/foxtail.rsi
+  - sprite: Goobstation/Markings/foxtail.rsi
     state: base_fox_tail
-  - sprite: Goobstation/Caldera/Markings/foxtail.rsi
+  - sprite: Goobstation/Markings/foxtail.rsi
     state: base_fox_tail_tip
