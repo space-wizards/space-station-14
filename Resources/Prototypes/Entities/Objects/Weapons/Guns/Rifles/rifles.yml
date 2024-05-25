@@ -1,10 +1,10 @@
-- type: entity
+# - type: entity
   # name: BaseWeaponRifle
-  parent: BaseItem
-  id: BaseWeaponRifle
+  # parent: BaseItem
+  # id: BaseWeaponRifle
   # description: A rooty tooty point and shooty.
-  abstract: true
-  components:
+  # abstract: true
+  # components:
   # - type: Sprite
   # - type: Item
   #   size: Huge
@@ -15,13 +15,13 @@
     # - Back
     # - suitStorage
   # - type: AmmoCounter
-  - type: Gun
-    fireRate: 5
-    selectedMode: FullAuto
-    availableModes:
-      - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
+  # - type: Gun
+  #   fireRate: 5
+    # selectedMode: FullAuto
+    # availableModes:
+    #   - FullAuto
+    # soundGunshot:
+    #   path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
   # - type: ChamberMagazineAmmoProvider
   #   soundRack:
   #     path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
@@ -56,7 +56,7 @@
   - BaseGunLarge
   - BaseGunRifleMag
   - BaseGunWieldable
-  - BaseWeaponRifle
+  # - BaseWeaponRifle
   id: WeaponRifleAk
   description: An iconic weapon of war. Uses .30 rifle ammo.
   components:
@@ -69,6 +69,9 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 5
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
   - type: ChamberMagazineAmmoProvider
@@ -108,7 +111,7 @@
   - BaseGunLarge
   - BaseGunRifleMag
   - BaseGunWieldable
-  - BaseWeaponRifle
+  # - BaseWeaponRifle
   id: WeaponRifleM90GrenadeLauncher
   description: An older bullpup carbine model, with an attached underbarrel grenade launcher. Uses .20 rifle ammo.
   components:
@@ -121,6 +124,13 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
+  - type: Gun
+    fireRate: 5
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -155,7 +165,7 @@
   - BaseGunLarge
   - BaseGunRifleMag
   - BaseGunWieldable
-  - BaseWeaponRifle
+  # - BaseWeaponRifle
   id: WeaponRifleLecter
   description: A high end military grade assault rifle. Uses .20 rifle ammo.
   components:
@@ -169,6 +179,10 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
   - type: Gun
+    fireRate: 5
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
   - type: ItemSlots
