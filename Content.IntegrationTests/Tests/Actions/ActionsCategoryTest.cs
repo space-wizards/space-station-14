@@ -18,21 +18,24 @@ public sealed class ActionsCategoryTest
     [Test]
     public async Task TestAllActionsInCategory()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false});
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var factory = server.ResolveDependency<IComponentFactory>();
 
-        Assert.Multiple(() =>
+        await server.WaitAssertion(() =>
         {
-            foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
+            Assert.Multiple(() =>
             {
-                if (!proto.TryGetComponent<ActionComponent>(out _, factory))
-                    continue;
+                foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
+                {
+                    if (!proto.TryGetComponent<ActionComponent>(out _, factory))
+                        continue;
 
-                Assert.That(proto.Categories, Does.Contain(Actions), $"Action prototype '{proto.ID}' is missing the actions category, make it inherit BaseAction");
-            }
-        });
+                    Assert.That(proto.Categories, Does.Contain(Actions), $"Action prototype '{proto.ID}' is missing the actions category, make it inherit BaseAction");
+                }
+            });
+        }
 
         await pair.CleanReturnAsync();
     }
