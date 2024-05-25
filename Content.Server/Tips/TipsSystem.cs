@@ -189,7 +189,7 @@ public sealed class TipsSystem : EntitySystem
             return;
 
         var tip = _random.Pick(tips.Values);
-        var msg = Loc.GetString("tips-system-chat-message-wrap", ("tip", tip));
+        var msg = Loc.GetString("tips-system-chat-message-wrap", ("tip", Loc.GetString(tip)));
 
         if (_random.Prob(_tipTippyChance))
         {
