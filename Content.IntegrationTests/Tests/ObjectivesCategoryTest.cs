@@ -21,12 +21,12 @@ public sealed class ObjectivesCategoryTest
     [Test]
     public async Task TestAllObjectivesInCategory()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false});
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var factory = server.ResolveDependency<IComponentFactory>();
 
-        await server.WaitPost(() =>
+        await server.WaitAssertion(() =>
         {
             Assert.Multiple(() =>
             {
