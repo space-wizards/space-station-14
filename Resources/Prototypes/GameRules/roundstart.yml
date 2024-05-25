@@ -134,16 +134,30 @@
         prototype: Nukeops
 
 - type: entity
-  id: Traitor
+  abstract: true
   parent: BaseGameRule
+  id: BaseTraitorRule
+  components:
+  - type: TraitorRule
+  # TODO: codewords in yml
+  # TODO: uplink in yml
+  - type: AntagRandomObjectives
+    sets:
+    - groups: TraitorObjectiveGroups
+    maxDifficulty: 5
+  - type: AntagSelection
+    agentName: traitor-round-end-agent-name
+
+- type: entity
   noSpawn: true
+  parent: BaseTraitorRule
+  id: Traitor
   components:
   - type: GameRule
     minPlayers: 5
     delay:
       min: 240
       max: 420
-  - type: TraitorRule
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]
