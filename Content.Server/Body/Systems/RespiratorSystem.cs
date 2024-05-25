@@ -173,7 +173,8 @@ public sealed class RespiratorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Check whether or not an entity can metabolize inhaled air without suffocating.
+    /// Check whether or not an entity can metabolize inhaled air without suffocating or taking damage (i.e., no toxic
+    /// gasses).
     /// </summary>
     public bool CanMetabolizeInhaledAir(Entity<RespiratorComponent?> ent)
     {
@@ -191,7 +192,8 @@ public sealed class RespiratorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Check whether or not an entity can metabolize the given gas mixture without suffocating.
+    /// Check whether or not an entity can metabolize the given gas mixture without suffocating or taking damage
+    /// (i.e., no toxic gasses).
     /// </summary>
     public bool CanMetabolizeGas(Entity<RespiratorComponent?> ent, GasMixture gas)
     {
@@ -210,7 +212,9 @@ public sealed class RespiratorSystem : EntitySystem
         float saturation = 0;
         foreach (var organ in organs)
         {
-            saturation += GetSaturation(solution, organ.Comp.Owner);
+            saturation += GetSaturation(solution, organ.Comp.Owner, out var toxic);
+            if (toxic)
+                return false;
         }
 
         return saturation > ent.Comp.UpdateInterval.TotalSeconds;
@@ -223,11 +227,14 @@ public sealed class RespiratorSystem : EntitySystem
     /// This assumes the metabolism rate is unbounded, which generally should be the case for lungs, otherwise we get
     /// back to the old pulmonary edema bug.
     /// </remarks>
-    private float GetSaturation(Solution solution, Entity<MetabolizerComponent?> lung)
+    /// <param name="solution">The reagents to metabolize</param>
+    /// <param name="lung">The entity doing the metabolizing</param>
+    /// <param name="toxic">Whether or not any of the reagents would deal damage to the entity</param>
+    private float GetSaturation(Solution solution, Entity<MetabolizerComponent?> lung, out bool toxic)
     {
+        toxic = false;
         if (!Resolve(lung, ref lung.Comp))
             return 0;
-
 
         if (lung.Comp.MetabolismGroups == null)
             return 0;
@@ -244,27 +251,28 @@ public sealed class RespiratorSystem : EntitySystem
 
             foreach (var effect in entry.Effects)
             {
-                if (effect is not Oxygenate oxy)
-                    continue;
-
-                if (effect.Conditions == null)
-                {
-                    saturation += oxy.Factor * quantity.Float();
-                    continue;
-                }
-
-                var canMetabolize = true;
-                foreach (var cond in effect.Conditions)
-                {
-                    // TODO generalize condition checks
-                    // this is pretty janky, but I just want to bodge a method that checks if an entity can breathe a gas mixture
-                    if (cond is OrganType organ && !organ.Condition(lung, EntityManager))
-                        canMetabolize = false;
-                }
-
-                if (canMetabolize)
+                if (effect is HealthChange health)
+                    toxic |= CanMetabolize(health) && health.Damage.Any();
+                else if (effect is Oxygenate oxy && CanMetabolize(oxy))
                     saturation += oxy.Factor * quantity.Float();
             }
+        }
+
+        // TODO generalize condition checks
+        // this is pretty janky, but I just want to bodge a method that checks if an entity can breathe a gas mixture
+        // Applying actual reaction effects require a full ReagentEffectArgs struct.
+        bool CanMetabolize(ReagentEffect effect)
+        {
+            if (effect.Conditions == null)
+                return true;
+
+            foreach (var cond in effect.Conditions)
+            {
+                if (cond is OrganType organ && !organ.Condition(lung, EntityManager))
+                    return false;
+            }
+
+            return true;
         }
 
         return saturation;
