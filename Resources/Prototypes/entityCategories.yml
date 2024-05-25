@@ -1,4 +1,5 @@
 - type: entityCategory
-  id: objectives
+  id: Objectives
   name: entity-category-name-objectives
   description: entity-category-desc-objectives
+  hideSpawnMenu: true

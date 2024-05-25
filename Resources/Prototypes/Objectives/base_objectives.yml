@@ -12,8 +12,7 @@
 - type: entity
   abstract: true
   categories:
-  - hideSpawnMenu
-  - objectives
+  - Objectives
   id: BaseObjective
   components:
   - type: Objective
