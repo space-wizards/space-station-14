@@ -1,10 +1,11 @@
+# AKMS
 - type: entity
-  name: AKMS
   parent:
   - BaseGunLarge
   - BaseGunRifleMag
   - BaseGunWieldable
   id: WeaponRifleAk
+  name: AKMS
   description: An iconic weapon of war. Uses .30 rifle ammo.
   components:
   - type: Sprite
@@ -52,13 +53,14 @@
     zeroVisible: true
   - type: Appearance
 
+# M-90gl
 - type: entity
-  name: M-90gl
   parent:
   - BaseGunLarge
   - BaseGunRifleMag
   - BaseGunWieldable
   id: WeaponRifleM90GrenadeLauncher
+  name: M-90gl
   description: An older bullpup carbine model, with an attached underbarrel grenade launcher. Uses .20 rifle ammo.
   components:
   - type: Sprite
@@ -105,13 +107,14 @@
     zeroVisible: true
   - type: Appearance
 
+# Lecter
 - type: entity
-  name: Lecter
   parent:
   - BaseGunLarge
   - BaseGunRifleMag
   - BaseGunWieldable
   id: WeaponRifleLecter
+  name: Lecter
   description: A high end military grade assault rifle. Uses .20 rifle ammo.
   components:
   - type: Sprite
