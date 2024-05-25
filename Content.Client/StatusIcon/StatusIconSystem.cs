@@ -3,7 +3,7 @@ using Content.Shared.Ghost;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Content.Shared.Stealth.Components;
-using Robust.Client.GameObjects;
+using Content.Shared.Whitelist;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
@@ -18,6 +18,7 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
 
     private bool _globalEnabled;
     private bool _localEnabled;
@@ -67,21 +68,25 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
     /// <summary>
     /// For overlay to check if an entity can be seen.
     /// </summary>
-    public bool IsVisible(Entity<MetaDataComponent> ent, StatusIconData proto)
+    public bool IsVisible(Entity<MetaDataComponent> ent, StatusIconData data)
     {
-        // ghosties can always see them
         var viewer = _playerManager.LocalSession?.AttachedEntity;
-        if (HasComp<GhostComponent>(viewer))
+
+        // Always show our icons to our entity
+        if (viewer == ent.Owner)
             return true;
 
-        if (proto.HideInContainer && (ent.Comp.Flags & MetaDataFlags.InContainer) != 0)
+        if (data.VisibleToGhosts && HasComp<GhostComponent>(viewer))
+            return true;
+
+        if (data.HideInContainer && (ent.Comp.Flags & MetaDataFlags.InContainer) != 0)
             return false;
 
-        if (proto.HideTo.IsValid(ent, EntityManager))
+        if (data.HideOnStealth && TryComp<StealthComponent>(viewer, out var stealth) && stealth.Enabled)
             return false;
 
-        if (!proto.ShowTo.IsValid(ent, EntityManager))
-            return false;
+        if (data.ShowTo != null && _entityWhitelist.IsValid(data.ShowTo, ent))
+            return true;
 
         return true;
     }

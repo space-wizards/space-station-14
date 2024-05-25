@@ -46,7 +46,7 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
 
     private void OnGetStatusIconsEvent(Entity<DamageableComponent> entity, ref GetStatusIconsEvent args)
     {
-        if (!IsActive || args.InContainer)
+        if (!IsActive)
             return;
 
         var healthIcons = DecideHealthIcons(entity);

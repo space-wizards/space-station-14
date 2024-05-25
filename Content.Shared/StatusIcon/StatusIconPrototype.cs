@@ -1,3 +1,4 @@
+using Content.Shared.Stealth.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -38,30 +39,22 @@ public partial class StatusIconData : IComparable<StatusIconData>
     public bool HideInContainer = true;
 
     /// <summary>
-    /// Entities and components/tags this icon should never display to.
+    /// Whether or not to hide the icon when the entity has an active <see cref="StealthComponent"/>
     /// </summary>
     [DataField]
-    public EntityWhitelist HideTo = new()
-    {
-        Components = ["Stealth"],
-    };
+    public bool HideOnStealth = true;
 
     /// <summary>
-    /// Entities and components/tags this icon can be shown to.
+    /// Specifies what entities and components/tags this icon can be shown to.
     /// </summary>
     [DataField]
-    public EntityWhitelist ShowTo = new();
+    public EntityWhitelist? ShowTo;
 
     /// <summary>
     /// A preference for where the icon will be displayed. None | Left | Right
     /// </summary>
     [DataField]
     public StatusIconLocationPreference LocationPreference = StatusIconLocationPreference.None;
-
-    public int CompareTo(StatusIconData? other)
-    {
-        return Priority.CompareTo(other?.Priority ?? int.MaxValue);
-    }
 
     /// <summary>
     /// The layer the icon is displayed on. Mod is drawn above Base. Base | Mod
@@ -80,6 +73,11 @@ public partial class StatusIconData : IComparable<StatusIconData>
     /// </summary>
     [DataField]
     public bool IsShaded = false;
+
+    public int CompareTo(StatusIconData? other)
+    {
+        return Priority.CompareTo(other?.Priority ?? int.MaxValue);
+    }
 }
 
 /// <summary>

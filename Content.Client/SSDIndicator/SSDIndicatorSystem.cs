@@ -35,7 +35,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
             TryComp<MindContainerComponent>(uid, out var mindContainer) &&
             mindContainer.ShowExamineInfo)
         {
-            args.StatusIcons.Add(_prototype.Index<StatusIconPrototype>(component.Icon));
+            args.StatusIcons.Add(_prototype.Index(component.Icon));
         }
     }
 }
