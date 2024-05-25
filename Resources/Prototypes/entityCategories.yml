@@ -1,0 +1,4 @@
+- type: entityCategory
+  id: objectives
+  name: entity-category-name-objectives
+  description: entity-category-desc-objectives
