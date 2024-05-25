@@ -415,11 +415,11 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (!flammable.OnFire)
                 {
-                    _alertsSystem.ClearAlert(uid, AlertType.Fire);
+                    _alertsSystem.ClearAlert(uid, flammable.FireAlert);
                     continue;
                 }
 
-                _alertsSystem.ShowAlert(uid, AlertType.Fire);
+                _alertsSystem.ShowAlert(uid, flammable.FireAlert);
 
                 if (flammable.FireStacks > 0)
                 {
