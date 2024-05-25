@@ -8,7 +8,8 @@ namespace Content.Shared.Actions.Components;
 /// An action that targets an entity or map.
 /// Requires <see cref="ActionComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedActionsSystem))]
+[EntityCategory("Actions")]
 public sealed partial class TargetActionComponent : Component
 {
     /// <summary>

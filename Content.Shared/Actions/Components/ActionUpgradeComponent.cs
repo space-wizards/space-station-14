@@ -10,6 +10,7 @@ namespace Content.Shared.Actions.Components;
 /// Requires <see cref="ActionComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(ActionUpgradeSystem))]
+[EntityCategory("Actions")]
 public sealed partial class ActionUpgradeComponent : Component
 {
     /// <summary>

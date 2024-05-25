@@ -12,6 +12,7 @@ namespace Content.Shared.Actions.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedActionsSystem))]
 [AutoGenerateComponentState(true)]
+[EntityCategory("Actions")]
 public sealed partial class ActionComponent : Component
 {
     /// <summary>

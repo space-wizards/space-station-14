@@ -8,18 +8,19 @@ namespace Content.Shared.Actions.Components;
 /// An action that targets an entity.
 /// Requires <see cref="TargetActionComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedActionsSystem))]
+[EntityCategory("Actions")]
 public sealed partial class EntityTargetActionComponent : Component
 {
     /// <summary>
     ///     The local-event to raise when this action is performed.
     /// </summary>
-    [DataField(required: true), NonSerialized, AutoNetworkedField]
+    [DataField(required: true), NonSerialized]
     public EntityTargetActionEvent? Event;
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public EntityWhitelist? Whitelist;
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public bool CanTargetSelf = true;
 }

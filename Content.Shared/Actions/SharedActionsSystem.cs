@@ -980,6 +980,11 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(ent, ent.Comp);
     }
 
+    /// <summary>
+    /// Set the event of an action.
+    /// Since the event isn't required to be serializable this is not networked.
+    /// Only use this if it's predicted or for a clientside action.
+    /// </summary>
     public void SetEvent(EntityUid uid, BaseActionEvent ev)
     {
         // now this is meta

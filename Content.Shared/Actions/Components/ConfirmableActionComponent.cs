@@ -12,6 +12,7 @@ namespace Content.Shared.Actions.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(ConfirmableActionSystem))]
 [AutoGenerateComponentState, AutoGenerateComponentPause]
+[EntityCategory("Actions")]
 public sealed partial class ConfirmableActionComponent : Component
 {
     /// <summary>

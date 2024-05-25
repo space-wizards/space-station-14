@@ -7,8 +7,7 @@ namespace Content.Shared.Actions.Components;
 /// <summary>
 /// Lets the player controlling this entity use actions.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedActionsSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedActionsSystem))]
 public sealed partial class ActionsComponent : Component
 {
     /// <summary>

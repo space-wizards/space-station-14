@@ -7,12 +7,13 @@ namespace Content.Shared.Actions.Components;
 /// An action that raises an event as soon as it gets used.
 /// Requires <see cref="ActionComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedActionsSystem))]
+[EntityCategory("Actions")]
 public sealed partial class InstantActionComponent : Component
 {
     /// <summary>
     ///     The local-event to raise when this action is performed.
     /// </summary>
-    [DataField(required: true), NonSerialized, AutoNetworkedField]
+    [DataField(required: true), NonSerialized]
     public InstantActionEvent? Event;
 }

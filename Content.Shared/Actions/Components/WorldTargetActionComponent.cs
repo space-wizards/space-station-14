@@ -7,12 +7,13 @@ namespace Content.Shared.Actions.Components;
 /// An action targeting a position in the world.
 /// Requires <see cref="TargetActionComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedActionsSystem))]
+[EntityCategory("Actions")]
 public sealed partial class WorldTargetActionComponent : Component
 {
     /// <summary>
     ///     The local-event to raise when this action is performed.
     /// </summary>
-    [DataField(required: true), NonSerialized, AutoNetworkedField]
+    [DataField(required: true), NonSerialized]
     public WorldTargetActionEvent? Event;
 }

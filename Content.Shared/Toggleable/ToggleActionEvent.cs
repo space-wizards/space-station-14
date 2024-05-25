@@ -6,7 +6,6 @@ namespace Content.Shared.Toggleable;
 /// <summary>
 ///     Generic action-event for toggle-able components.
 /// </summary>
-[Serializable]
 public sealed partial class ToggleActionEvent : InstantActionEvent;
 
 /// <summary>
