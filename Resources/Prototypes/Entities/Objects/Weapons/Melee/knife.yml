@@ -150,6 +150,8 @@
     damage:
       types:
         Slash: 10
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
   - type: Sprite
     sprite: Clothing/Head/Hats/greyflatcap.rsi
   - type: Clothing
