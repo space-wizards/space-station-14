@@ -1,6 +1,6 @@
 # OBJECTIVE STYLE
 # in comments anything that says final prototype means the objective that isnt abstract.
-# all prototypes inheriting BaseObjective are automatically hideSpawnMenu because inheritance, you don't need noSpawn.
+# you dont need noSpawn because Objectives category is automatically added, which has hideSpawnmenu
 # components are listed in this order:
 # 1. Objective
 # 2. requirement components
@@ -11,8 +11,6 @@
 # then have its icon etc fields set in the final objective prototypes
 - type: entity
   abstract: true
-  categories:
-  - Objectives
   id: BaseObjective
   components:
   - type: Objective
