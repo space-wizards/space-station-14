@@ -26,15 +26,18 @@ public sealed class ObjectivesCategoryTest
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var factory = server.ResolveDependency<IComponentFactory>();
 
-        Assert.Multiple(() =>
+        await server.WaitPost(() =>
         {
-            foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
+            Assert.Multiple(() =>
             {
-                if (!proto.TryGetComponent<ObjectiveComponent>(out _, factory))
-                    continue;
+                foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
+                {
+                    if (!proto.TryGetComponent<ObjectiveComponent>(out _, factory))
+                        continue;
 
-                Assert.That(proto.Categories, Does.Contain(Objectives), $"Objective prototype '{proto.ID}' is missing the objectives category, make it inherit BaseObjective");
-            }
+                    Assert.That(proto.Categories, Does.Contain(Objectives), $"Objective prototype '{proto.ID}' is missing the objectives category, make it inherit BaseObjective");
+                }
+            });
         });
 
         await pair.CleanReturnAsync();
