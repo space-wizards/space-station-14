@@ -3,8 +3,6 @@
 # base prototype for all action entities
 - type: entity
   abstract: true
-  categories:
-  - Actions
   id: BaseAction
   components:
   - type: Action

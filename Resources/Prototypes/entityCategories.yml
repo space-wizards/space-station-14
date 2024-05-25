@@ -1,5 +1,0 @@
-- type: entityCategory
-  id: Actions
-  name: entity-category-name-actions
-  description: entity-category-desc-actions
-  hideSpawnMenu: true
