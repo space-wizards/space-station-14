@@ -3,7 +3,6 @@
   id: ActionViewLaws
   name: View Laws
   description: View the laws that you must follow.
-  noSpawn: true
   components:
   - type: Action
     itemIconStyle: NoItem
@@ -19,7 +18,6 @@
   id: ActionBorgSwapModule
   name: Swap Module
   description: Select this module, enabling you to use the tools it provides.
-  noSpawn: true
   components:
   - type: Action
     itemIconStyle: BigItem

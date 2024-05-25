@@ -8,7 +8,6 @@
     itemIconStyle: NoItem
 
 - type: entity
-  noSpawn: true
   parent: BaseCritAction
   id: ActionCritSuccumb
   name: Succumb
@@ -22,7 +21,6 @@
     event: !type:CritSuccumbEvent
 
 - type: entity
-  noSpawn: true
   parent: BaseCritAction
   id: ActionCritFakeDeath
   name: Fake Death
@@ -37,7 +35,6 @@
     event: !type:CritFakeDeathEvent
 
 - type: entity
-  noSpawn: true
   parent: BaseCritAction
   id: ActionCritLastWords
   name: Say Last Words

@@ -14,7 +14,6 @@
   id: ActionFlashRune
   name: Flash Rune
   description: Summons a rune that flashes if used.
-  noSpawn: true
   components:
   - type: Action
     useDelay: 10
@@ -27,7 +26,6 @@
   id: ActionExplosionRune
   name: Explosion Rune
   description: Summons a rune that explodes if used.
-  noSpawn: true
   components:
   - type: Action
     useDelay: 20
@@ -40,7 +38,6 @@
   id: ActionIgniteRune
   name: Ignite Rune
   description: Summons a rune that ignites if used.
-  noSpawn: true
   components:
   - type: Action
     useDelay: 15
@@ -53,7 +50,6 @@
   id: ActionStunRune
   name: Stun Rune
   description: Summons a rune that stuns if used.
-  noSpawn: true
   components:
   - type: Action
     useDelay: 10

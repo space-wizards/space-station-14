@@ -3,7 +3,6 @@
   id: DionaGibAction
   name: Gib Yourself!
   description: Split apart into 3 nymphs.
-  noSpawn: true
   components:
   - type: Action
     icon:
@@ -17,7 +16,6 @@
   id: DionaReformAction
   name: Reform
   description: Reform back into a whole Diona.
-  noSpawn: true
   components:
   - type: Action
     useDelay: 600 # Once every 10 minutes. Keep them dead for a fair bit before reforming

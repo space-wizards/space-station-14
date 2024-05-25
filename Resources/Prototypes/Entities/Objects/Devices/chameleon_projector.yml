@@ -49,7 +49,6 @@
 
 # actions
 - type: entity
-  noSpawn: true
   parent: BaseAction
   id: ActionDisguiseNoRot
   name: Toggle Rotation
@@ -61,7 +60,6 @@
     event: !type:DisguiseToggleNoRotEvent
 
 - type: entity
-  noSpawn: true
   parent: BaseAction
   id: ActionDisguiseAnchor
   name: Toggle Anchored

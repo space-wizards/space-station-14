@@ -9,7 +9,6 @@
     clientExclusive: true
 
 - type: entity
-  noSpawn: true
   parent: BaseMappingAction
   id: ActionStartPlacement
   components:
@@ -17,7 +16,6 @@
     event: null # set by mapping system
 
 - type: entity
-  noSpawn: true
   parent: BaseMappingAction
   id: ActionPlaceDecal
   components:

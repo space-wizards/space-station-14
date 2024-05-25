@@ -35,7 +35,6 @@
 - type: entity
   parent: BaseAction
   id: ActionRgbLight
-  noSpawn: true
   components:
   - type: Action
     charges: 25

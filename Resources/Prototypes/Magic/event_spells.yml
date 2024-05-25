@@ -1,5 +1,4 @@
 - type: entity
-  noSpawn: true
   parent: BaseAction
   id: ActionSummonGhosts
   name: Summon Ghosts

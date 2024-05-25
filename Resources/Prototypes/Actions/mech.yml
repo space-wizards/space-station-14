@@ -7,7 +7,6 @@
     itemIconStyle: NoItem
 
 - type: entity
-  noSpawn: true
   parent: BaseMechAction
   id: ActionMechCycleEquipment
   name: Cycle
@@ -22,7 +21,6 @@
     event: !type:MechToggleEquipmentEvent
 
 - type: entity
-  noSpawn: true
   parent: BaseMechAction
   id: ActionMechOpenUI
   name: Control Panel
@@ -37,7 +35,6 @@
     event: !type:MechOpenUiEvent
 
 - type: entity
-  noSpawn: true
   parent: BaseMechAction
   id: ActionMechEject
   name: Eject

@@ -155,7 +155,6 @@
     - MinorAntagonists
 
 - type: entity
-  noSpawn: true
   id: DragonsBreathGun
   name: dragon's lung
   description: For dragon's breathing
@@ -205,7 +204,6 @@
   id: ActionSpawnRift
   name: Summon Carp Rift
   description: Summons a carp rift that will periodically spawns carps.
-  noSpawn: true
   components:
   - type: Action
     icon:
@@ -221,7 +219,6 @@
   id: ActionDevour
   name: "[color=red]Devour[/color]"
   description: Attempt to break a structure with your jaws or swallow a creature.
-  noSpawn: true
   components:
   - type: Action
     icon: { sprite : Interface/Actions/devour.rsi, state: icon }
@@ -232,7 +229,6 @@
     event: !type:DevourActionEvent
 
 - type: entity
-  noSpawn: true
   parent: BaseAction
   id: ActionDragonsBreath
   name: "[color=orange]Dragon's Breath[/color]"

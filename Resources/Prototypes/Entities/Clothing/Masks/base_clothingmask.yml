@@ -22,7 +22,6 @@
   id: ActionToggleMask
   name: Toggle Mask
   description: Handy, but prevents insertion of pie into your pie hole.
-  noSpawn: true
   components:
   - type: Action
     icon: { sprite: Clothing/Mask/gas.rsi, state: icon }

@@ -1,0 +1,5 @@
+# anything with ActionComponent should be here, enforced by test
+- type: entityCategory
+  id: actions
+  name: entity-category-name-actions
+  description: entity-category-desc-actions

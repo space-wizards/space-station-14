@@ -3,7 +3,6 @@
   id: ActionRevenantShop
   name: Shop
   description: Opens the ability shop.
-  noSpawn: true
   components:
   - type: Action
     icon: Interface/Actions/shop.png
@@ -15,7 +14,6 @@
   id: ActionRevenantDefile
   name: Defile
   description: Costs 30 Essence.
-  noSpawn: true
   components:
   - type: Action
     useDelay: 15
@@ -28,7 +26,6 @@
   id: ActionRevenantOverloadLights
   name: Overload Lights
   description: Costs 40 Essence.
-  noSpawn: true
   components:
   - type: Action
     icon: Interface/Actions/overloadlight.png
@@ -41,7 +38,6 @@
 #  id: ActionRevenantBlight
 #  name: Blight
 #  description: Costs 50 Essence.
-#  noSpawn: true
 #  components:
 #  - type: Action
 #    icon: Interface/Actions/blight.png
@@ -54,7 +50,6 @@
   id: ActionRevenantMalfunction
   name: Malfunction
   description: Costs 60 Essence.
-  noSpawn: true
   components:
   - type: Action
     icon: Interface/Actions/malfunction.png

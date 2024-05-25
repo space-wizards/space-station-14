@@ -71,7 +71,6 @@
   parent: BaseAction
   id: ActionStethoscope
   name: Listen with stethoscope
-  noSpawn: true
   components:
   - type: Action
     icon:

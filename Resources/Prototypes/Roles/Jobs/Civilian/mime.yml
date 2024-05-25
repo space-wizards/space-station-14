@@ -34,7 +34,6 @@
   id: ActionMimeInvisibleWall
   name: Create Invisible Wall
   description: Create an invisible wall in front of you, if placeable there.
-  noSpawn: true
   components:
   - type: Action
     priority: -1

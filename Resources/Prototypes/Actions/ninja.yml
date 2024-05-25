@@ -4,7 +4,6 @@
   id: ActionToggleNinjaGloves
   name: Toggle ninja gloves
   description: Toggles all glove actions on left click. Includes your doorjack, draining power, stunning enemies, downloading research and calling in a threat.
-  noSpawn: true
   components:
   - type: Action
     priority: -13
@@ -15,7 +14,6 @@
   id: ActionCreateThrowingStar
   name: Create throwing star
   description: Channels suit power into creating a throwing star that deals extra stamina damage.
-  noSpawn: true
   components:
   - type: Action
     useDelay: 0.5
@@ -32,7 +30,6 @@
   id: ActionRecallKatana
   name: Recall katana
   description: Teleports the Energy Katana linked to this suit to its wearer, cost based on distance.
-  noSpawn: true
   components:
   - type: Action
     useDelay: 1
@@ -49,7 +46,6 @@
   id: ActionNinjaEmp
   name: EM Burst
   description: Disable any nearby technology with an electro-magnetic pulse.
-  noSpawn: true
   components:
   - type: Action
     icon:
@@ -65,7 +61,6 @@
   id: ActionTogglePhaseCloak
   name: Phase cloak
   description: Toggles your suit's phase cloak. Beware that if you are hit, all abilities are disabled for 5 seconds, including your cloak!
-  noSpawn: true
   components:
   - type: Action
     # have to plan (un)cloaking ahead of time
@@ -80,7 +75,6 @@
   id: ActionEnergyKatanaDash
   name: Katana dash
   description: Teleport to anywhere you can see, if your Energy Katana is in your hand.
-  noSpawn: true
   components:
   - type: Action
     icon:
