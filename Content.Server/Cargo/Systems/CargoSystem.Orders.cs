@@ -320,7 +320,7 @@ namespace Content.Server.Cargo.Systems
         private void OnOrderBalanceUpdated(Entity<CargoOrderConsoleComponent> ent, ref BankBalanceUpdatedEvent args)
         {
             if (!_uiSystem.IsUiOpen(ent.Owner, CargoConsoleUiKey.Orders))
-                continue;
+                return;
 
             UpdateOrderState(ent, args.Station);
         }
