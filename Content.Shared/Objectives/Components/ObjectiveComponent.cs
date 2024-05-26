@@ -1,6 +1,7 @@
 using Content.Shared.Mind;
 using Content.Shared.Objectives;
 using Content.Shared.Objectives.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Objectives.Components;
@@ -8,33 +9,33 @@ namespace Content.Shared.Objectives.Components;
 /// <summary>
 /// Required component for an objective entity prototype.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedObjectivesSystem))]
+[RegisterComponent, Access(typeof(SharedObjectivesSystem)), NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ObjectiveComponent : Component
 {
     /// <summary>
     /// Difficulty rating used to avoid assigning too many difficult objectives.
     /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float Difficulty;
 
     /// <summary>
     /// Organisation that issued this objective, used for grouping and as a header above common objectives.
     /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public string Issuer = string.Empty;
 
     /// <summary>
     /// Unique objectives can only have 1 per prototype id.
     /// Set this to false if you want multiple objectives of the same prototype.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool Unique = true;
 
     /// <summary>
     /// Icon of this objective to display in the character menu.
     /// Can be specified by an <see cref="ObjectiveGetInfoEvent"/> handler but is usually done in the prototype.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public SpriteSpecifier? Icon;
 }
 

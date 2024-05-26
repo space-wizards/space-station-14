@@ -56,25 +56,39 @@ public sealed class RoleSystem : EntitySystem
     private void SubscribeAntagEvents<T>() where T : Component, IAntagonistRoleComponent
     {
         SubscribeLocalEvent((EntityUid _, T component, ref MindGetAllRolesEvent args) =>
-        {
-            var name = "game-ticker-unknown-role";
-            var prototype = "";
-            if (component.PrototypeId != null && _prototypes.TryIndex(component.PrototypeId, out AntagPrototype? antag))
             {
-                name = antag.Name;
-                prototype = antag.ID;
-            }
-            name = Loc.GetString(name);
+                var name = "game-ticker-unknown-role";
+                var prototype = "";
+                if (component.PrototypeId != null && _prototypes.TryIndex(component.PrototypeId, out AntagPrototype? antag))
+                {
+                    name = antag.Name;
+                    prototype = antag.ID;
+                }
+                name = Loc.GetString(name);
 
-            args.Roles.Add(new RoleInfo(component, name, true, null, prototype));
-        });
+                args.Roles.Add(new RoleInfo(component, name, true, null, prototype));
+            });
 
         SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) =>
             {
-                args.IsAntagonist = true; args.IsExclusiveAntagonist |= typeof(T).TryGetCustomAttribute<ExclusiveAntagonistAttribute>(out _);
+                args.IsAntagonist = true;
+                args.IsExclusiveAntagonist |= typeof(T).TryGetCustomAttribute<ExclusiveAntagonistAttribute>(out _);
             });
 
-        SubscribeLocalEvent((EntityUid _, T comp, ref GetBriefingEvent args) => { args.Append(comp.Briefing, true); });
+        SubscribeLocalEvent((EntityUid _, T comp, ref GetBriefingEvent args) =>
+            {
+                if (comp.Briefing == null)
+                    return;
+
+                // loc if exists --
+                // it might be filled with pre-localized text (from an entitysystem)
+                // or a loc id, from yaml
+                var text = comp.Briefing;
+                if (Loc.HasString(comp.Briefing))
+                    text = Loc.GetString(comp.Briefing);
+                args.Append(text, true);
+            });
+
         _antagTypes.Add(typeof(T));
     }
 
