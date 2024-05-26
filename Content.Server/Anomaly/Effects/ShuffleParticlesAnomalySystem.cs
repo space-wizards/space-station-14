@@ -20,11 +20,11 @@ public sealed class ShuffleParticlesAnomalySystem : EntitySystem
         if (!TryComp<AnomalyComponent>(uid, out var anomaly))
             return;
 
+        if (!HasComp<AnomalousParticleComponent>(args.OtherEntity))
+            return;
+
         if (shuffle.ShuffleOnParticleHit && _random.Prob(shuffle.Prob))
             _anomaly.ShuffleParticlesEffect(anomaly);
-
-        if (!TryComp<AnomalousParticleComponent>(args.OtherEntity, out var particle))
-            return;
     }
 
     private void OnPulse(EntityUid uid, ShuffleParticlesAnomalyComponent shuffle, AnomalyPulseEvent args)
