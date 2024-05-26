@@ -1,0 +1,4 @@
+- type: entityCategory
+  id: GameRules
+  name: entity-category-name-game-rules
+  hideSpawnMenu: true
