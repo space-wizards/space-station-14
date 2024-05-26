@@ -2,14 +2,14 @@ accent-ohio-prefix-1 = Gyatt dang,
 accent-ohio-prefix-2 = Chat...
 accent-ohio-prefix-3 = Epic win,
 
-accent-ohio-suffix-1 =  Like in Ohio.
-accent-ohio-suffix-2 =  From Ohio...
-accent-ohio-suffix-3 =  Like in Fortnite.
-accent-ohio-suffix-4 =  Like from Fortnite.
-accent-ohio-suffix-5 =  For the Rizzler.
-accent-ohio-suffix-6 =  Chat is this real?
-accent-ohio-suffix-7 =  Bro knew what he was doing.
-accent-ohio-suffix-8 =  Goofy ahh.
+accent-ohio-suffix-1 = . Like in Ohio.
+accent-ohio-suffix-2 = . From Ohio...
+accent-ohio-suffix-3 = . Like in Fortnite.
+accent-ohio-suffix-4 = . Like from Fortnite.
+accent-ohio-suffix-5 = . For the Rizzler.
+accent-ohio-suffix-6 = . Chat is this real?
+accent-ohio-suffix-7 = . Bro knew what he was doing.
+accent-ohio-suffix-8 = . Goofy ahh.
 
 accent-ohio-words-1 = charisma
 accent-ohio-words-replace-1 = rizz

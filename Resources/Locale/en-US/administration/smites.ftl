@@ -105,6 +105,7 @@ admin-smite-super-bonk-description = Slams them on every single table on the Sta
 admin-smite-super-bonk-lite-description= Slams them on every single table on the Station and beyond. Stops when the target is dead.
 admin-smite-terminate-description = Creates a Terminator ghost role with the sole objective of killing them.
 admin-smite-super-slip-description = Slips them really, really hard.
+admin-smite-ohio-accent-description = RIZZZZZZZZZZZZZZZZZZZZZZ
 
 ## Tricks descriptions
 
