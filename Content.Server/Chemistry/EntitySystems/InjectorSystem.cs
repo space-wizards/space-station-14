@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Chemistry;
@@ -332,14 +333,10 @@ public sealed class InjectorSystem : SharedInjectorSystem
 
         var applicableTargetSolution = targetSolution.Comp.Solution;
         // If a whitelist exists, remove all non-whitelisted reagents from the target solution temporarily
-        Solution temporarilyRemovedSolution = new();
+        var temporarilyRemovedSolution = new Solution();
         if (injector.Comp.ReagentWhitelist is { } reagentWhitelist)
         {
-            string[] reagentPrototypeWhitelistArray = new string[reagentWhitelist.Count];
-            for (var i = 0; i < reagentWhitelist.Count; ++i)
-            {
-                reagentPrototypeWhitelistArray[i] = reagentWhitelist[i];
-            }
+            var reagentPrototypeWhitelistArray = reagentWhitelist.Select(x => (string) x).ToArray();
             temporarilyRemovedSolution = applicableTargetSolution.SplitSolutionWithout(applicableTargetSolution.Volume, reagentPrototypeWhitelistArray);
         }
 
