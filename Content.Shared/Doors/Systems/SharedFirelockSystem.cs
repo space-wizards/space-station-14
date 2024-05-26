@@ -18,8 +18,6 @@ public abstract class SharedFirelockSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(OnUpdateState);
-
         // Access/Prying
         SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
         SubscribeLocalEvent<FirelockComponent, GetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
@@ -44,19 +42,6 @@ public abstract class SharedFirelockSystem : EntitySystem
             return false;
 
         return _doorSystem.OnPartialClose(uid, door);
-    }
-
-    private void OnUpdateState(EntityUid uid, FirelockComponent component, DoorStateChangedEvent args)
-    {
-        var ev = new BeforeDoorAutoCloseEvent();
-        RaiseLocalEvent(uid, ev);
-        UpdateVisuals(uid, component, args);
-        if (ev.Cancelled)
-        {
-            return;
-        }
-
-        _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
     }
 
     #region Access/Prying
