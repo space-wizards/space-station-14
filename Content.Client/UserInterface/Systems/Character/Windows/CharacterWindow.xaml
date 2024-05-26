@@ -1,67 +1,21 @@
-<cc:FancyWindow
+<windows:CharacterWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Character.Windows"
     Title="{Loc 'character-info-title'}"
-    MinSize="400 550"
-    SetSize="400 550">
-    <BoxContainer
-        VerticalExpand="True"
-        HorizontalExpand="True"
-        Orientation="Horizontal">
-        <BoxContainer Name="LeftPanel"
-                      Orientation="Vertical"
-                      VerticalExpand="True"
-                      HorizontalExpand="True"
-                      MinWidth="400">
-            <cc:StripeBack
-                Name="SpritePanel"
-                SetHeight="120"
-                MinWidth="360"
-                VerticalAlignment="Top">
-                <BoxContainer
-                    Orientation="Horizontal"
-                    Align="Center">
-                    <SpriteView Name="SpriteView" Access="Public" SetSize="96 96" MinSize="96 96" Scale="3 3"/>
-                    <BoxContainer
-                        Orientation="Vertical"
-                        Align="Begin"
-                        Margin="0 10 0 0">
-                        <RichTextLabel Name="NameLabel" Access="Public"/>
-                        <RichTextLabel Name="SubTextLabel" Access="Public"/>
-                    </BoxContainer>
+    MinWidth="400"
+    MinHeight="545">
+    <ScrollContainer>
+        <BoxContainer Orientation="Vertical">
+            <BoxContainer Orientation="Horizontal">
+                <SpriteView OverrideDirection="South" Scale="2 2" Name="SpriteView" Access="Public" SetSize="64 64"/>
+                <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
+                    <Label Name="NameLabel" Access="Public"/>
+                    <Label Name="SubText" VerticalAlignment="Top" StyleClasses="LabelSubText" Access="Public"/>
                 </BoxContainer>
-            </cc:StripeBack>
-            <BoxContainer
-                Name="BriefingContainer"
-                Access="Public"
-                Orientation="Vertical"
-                VerticalExpand="True"
-                Align="Begin"
-                MinSize="360 250"
-                Margin="5 5 5 5">
-                <RichTextLabel VerticalAlignment="Top" VerticalExpand="True" HorizontalExpand="True" Name="BriefingLabel" Access="Public"/>
             </BoxContainer>
+            <Label Name="ObjectivesLabel" Access="Public" Text="{Loc 'character-info-objectives-label'}" HorizontalAlignment="Center"/>
+            <BoxContainer Orientation="Vertical" Name="Objectives" Access="Public"/>
         </BoxContainer>
-        <BoxContainer Name="ObjectivesPanel"
-                      Access="Public"
-                      Orientation="Vertical"
-                      MinSize="300 550"
-                      VerticalExpand="True">
-            <PanelContainer VerticalExpand="True" Margin="5 5 5 5">
-                <PanelContainer.PanelOverride>
-                    <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
-                <ScrollContainer
-                    VerticalExpand="True"
-                    HScrollEnabled="False"
-                    Margin="5 5 5 5">
-                    <BoxContainer
-                        Name="ObjectivesContainer"
-                        Access="Public"
-                        MinSize="300 550"/>
-                </ScrollContainer>
-            </PanelContainer>
-        </BoxContainer>
-    </BoxContainer>
-</cc:FancyWindow>
+    </ScrollContainer>
+</windows:CharacterWindow>

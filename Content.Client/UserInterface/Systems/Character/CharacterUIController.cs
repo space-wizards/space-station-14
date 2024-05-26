@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Client.Gameplay;
 using Content.Client.Message;
@@ -47,8 +48,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenCharacterMenu,
-                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-             .Register<CharacterUIController>();
+                InputCmdHandler.FromDelegate(_ => ToggleWindow()))
+            .Register<CharacterUIController>();
     }
 
     public void OnStateExited(GameplayState state)
@@ -104,33 +105,18 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         var entityName = _entity.GetComponent<MetaDataComponent>(entity).EntityName;
 
         _window.SpriteView.SetEntity(entity);
-        _window.NameLabel.SetMarkup(Loc.GetString("character-info-name-label", ("name", FormattedMessage.EscapeText(entityName))));
 
         // all further info requires a mind more or less
         if (!_minds.TryGetMind(entity, out var mindId, out var mind))
             return;
 
         if (_jobs.MindTryGetJobName(mindId, out var jobName))
-            _window.SubTextLabel.SetMarkup(Loc.GetString("character-info-subtext-label", ("job", FormattedMessage.EscapeText(jobName))));
+            _window.SubText.Text = jobName;
+
+        _window.NameLabel.Text = entityName;
 
         // Get briefing
         var briefings = _roles.MindGetBriefing(mindId);
-
-        // Get all objectives
-        _window.ObjectivesContainer.RemoveAllChildren();
-
-        if (mind.Objectives.Count == 0)
-        {
-            _window.ObjectivesPanel.MinSize = Vector2.Zero;
-            _window.ObjectivesPanel.SetSize = Vector2.Zero;
-            _window.SetSize = new Vector2(360, 300);
-        }
-        else
-        {
-            _window.ObjectivesPanel.MinSize = new Vector2(300, 550);
-            _window.SetSize = new Vector2(660, 300);
-        }
-
         var objectivesSorted = new Dictionary<string, List<ObjectiveInfo>>();
 
         foreach (var objective in mind.Objectives)
@@ -147,6 +133,9 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
                 objectivesSorted[issuer] = new();
             objectivesSorted[issuer].Add(info.Value);
         }
+
+        _window.Objectives.RemoveAllChildren();
+        _window.ObjectivesLabel.Visible = objectivesSorted.Any();
 
         foreach (var (groupId, conditions) in objectivesSorted)
         {
@@ -178,18 +167,22 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
                 objectiveControl.AddChild(conditionControl);
             }
 
-            _window.ObjectivesContainer.AddChild(objectiveControl);
+            _window.Objectives.AddChild(objectiveControl);
         }
 
         if (briefings != null)
         {
-            _window.BriefingLabel.SetMessage(briefings);
+            var briefingControl = new ObjectiveBriefingControl();
+            var text = new FormattedMessage();
+            text.AddMessage(briefings);
+            briefingControl.Label.SetMessage(text);
+            _window.Objectives.AddChild(briefingControl);
         }
 
         var controls = GetCharacterInfoControls(entity);
         foreach (var control in controls)
         {
-            _window.BriefingContainer.AddChild(control);
+            _window.Objectives.AddChild(control);
         }
     }
 
