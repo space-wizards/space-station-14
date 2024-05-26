@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: pigeonpeas
-  changes:
-  - message: added new expedition ambience
-    type: Add
-  id: 6123
-  time: '2024-03-11T06:56:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25983
 - author: Ilya246
   changes:
   - message: The biomass reclaimer may now reclaim plants, and inserting smaller entities
@@ -3871,3 +3864,10 @@
   id: 6622
   time: '2024-05-26T04:46:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28282
+- author: deltanedas
+  changes:
+  - message: Fixed being picked for antag roles while in the lobby or not opted in.
+    type: Fix
+  id: 6623
+  time: '2024-05-26T05:14:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28197
