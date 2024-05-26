@@ -23,7 +23,6 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         base.Initialize();
 
         SubscribeLocalEvent<ThiefRuleComponent, AfterAntagEntitySelectedEvent>(AfterAntagSelected);
-        SubscribeLocalEvent<ThiefRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
     }
 
     private void AfterAntagSelected(Entity<ThiefRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
@@ -31,43 +30,9 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         if (!_mindSystem.TryGetMind(args.EntityUid, out var mindId, out var mind))
             return;
 
-        //Generate objectives
-        GenerateObjectives(mindId, mind, ent);
-
         var comp = Comp<ThiefRoleComponent>(mindId);
         comp.Briefing = MakeBriefing(args.EntityUid);
         Dirty(mindId, comp);
-    }
-
-    private void GenerateObjectives(EntityUid mindId, MindComponent mind, ThiefRuleComponent thiefRule)
-    {
-        // Give thieves their objectives
-        var difficulty = 0f;
-
-        if (_random.Prob(thiefRule.BigObjectiveChance)) // 70% chance to 1 big objective (structure or animal)
-        {
-            var objective = _objectives.GetRandomObjective(mindId, mind, thiefRule.BigObjectiveGroup);
-            if (objective != null)
-            {
-                _mindSystem.AddObjective(mindId, mind, objective.Value);
-                difficulty += Comp<ObjectiveComponent>(objective.Value).Difficulty;
-            }
-        }
-
-        for (var i = 0; i < thiefRule.MaxStealObjectives && thiefRule.MaxObjectiveDifficulty > difficulty; i++)  // Many small objectives
-        {
-            var objective = _objectives.GetRandomObjective(mindId, mind, thiefRule.SmallObjectiveGroup);
-            if (objective == null)
-                continue;
-
-            _mindSystem.AddObjective(mindId, mind, objective.Value);
-            difficulty += Comp<ObjectiveComponent>(objective.Value).Difficulty;
-        }
-
-        //Escape target
-        var escapeObjective = _objectives.GetRandomObjective(mindId, mind, thiefRule.EscapeObjectiveGroup);
-        if (escapeObjective != null)
-            _mindSystem.AddObjective(mindId, mind, escapeObjective.Value);
     }
 
     private string MakeBriefing(EntityUid thief)
