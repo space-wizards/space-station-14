@@ -84,12 +84,14 @@ public sealed partial class CargoSystem : SharedCargoSystem
         var query = EntityQueryEnumerator<TransformComponent, BankClientComponent>();
 
         var ev = new BankBalanceUpdatedEvent(uid, component.Balance);
-        while (query.MoveNext(out var client, out var xform, out _))
+        while (query.MoveNext(out var client, out var xform, out var comp))
         {
             var station = _station.GetOwningStation(client, xform);
             if (station != uid)
                 continue;
 
+            comp.Balance = component.Balance;
+            Dirty(client, comp);
             RaiseLocalEvent(client, ref ev);
         }
     }
