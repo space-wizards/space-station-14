@@ -80,10 +80,4 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         briefing += "\n \n" + Loc.GetString("thief-role-greeting-equipment") + "\n";
         return briefing;
     }
-
-    private void OnObjectivesTextGetInfo(Entity<ThiefRuleComponent> ent, ref ObjectivesTextGetInfoEvent args)
-    {
-        args.Minds = _antag.GetAntagMindEntityUids(ent.Owner);
-        args.AgentName = Loc.GetString("thief-round-end-agent-name");
-    }
 }
