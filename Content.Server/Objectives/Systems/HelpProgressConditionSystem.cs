@@ -50,7 +50,7 @@ public sealed class HelpProgressConditionSystem : EntitySystem
             .ToHashSet();
         var removeList = new List<EntityUid>();
 
-        // cant help anyone who is tasked with helping:
+        // cant help anyone who is tasked with helping/who has no objectives:
         // 1. thats boring
         // 2. no cyclic progress dependencies!!!
         foreach (var traitor in traitors)
@@ -59,9 +59,11 @@ public sealed class HelpProgressConditionSystem : EntitySystem
             if (!TryComp<MindComponent>(traitor, out var mind))
                 continue;
 
+            var objectives = mind.AllObjectives.ToList();
+
             foreach (var objective in mind.AllObjectives)
             {
-                if (HasComp<HelpProgressConditionComponent>(objective))
+                if (HasComp<HelpProgressConditionComponent>(objective) || objectives.Count == 0)
                     removeList.Add(traitor);
             }
         }
@@ -99,10 +101,6 @@ public sealed class HelpProgressConditionSystem : EntitySystem
                 total += info.Value.Progress;
             }
         }
-
-        // no objectives that can be helped with...
-        if (max == 0f)
-            return 1f;
 
         // require 50% completion for this one to be complete
         var completion = total / max;
