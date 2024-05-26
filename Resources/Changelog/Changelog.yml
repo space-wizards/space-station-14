@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: The biomass reclaimer may now reclaim plants, and inserting smaller entities
-      into it is now faster.
-    type: Tweak
-  id: 6124
-  time: '2024-03-11T21:59:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23731
 - author: SlamBamActionman
   changes:
   - message: Moths eating lizard plushies will now start to Weh!
@@ -3871,3 +3863,10 @@
   id: 6623
   time: '2024-05-26T05:14:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28197
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Fix hypodarts not injecting into people with outerclothing equipped.
+    type: Fix
+  id: 6624
+  time: '2024-05-26T14:48:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28301
