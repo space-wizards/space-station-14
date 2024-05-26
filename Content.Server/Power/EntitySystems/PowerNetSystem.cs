@@ -305,11 +305,10 @@ namespace Content.Server.Power.EntitySystems
 
         private void UpdateApcPowerReceiver()
         {
-            var metaQuery = GetEntityQuery<MetaDataComponent>();
-            var enumerator = AllEntityQuery<ApcPowerReceiverComponent>();
-            while (enumerator.MoveNext(out var uid, out var apcReceiver))
+            var enumerator = AllEntityQuery<ApcPowerReceiverComponent, MetaDataComponent>();
+            while (enumerator.MoveNext(out var uid, out var apcReceiver, out var metaDataComponent))
             {
-                if (metaQuery.TryComp(uid, out var metaDataComponent) && metaDataComponent.EntityPaused)
+                if (metaDataComponent.EntityPaused)
                     continue;
 
                 _powerReceiver.UpdateIsPowered((uid, apcReceiver));
