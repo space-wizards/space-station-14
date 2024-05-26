@@ -18,3 +18,35 @@
       interfaces:
         enum.ChameleonUiKey.Key:
           type: ChameleonBoundUserInterface
+
+#Chameleon web vest
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: WebVestChameleon
+  name: vest
+  description: A thick vest with a rubbery, water-resistant shell.
+  suffix: Armored, Chameleon
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Vests/vest.rsi
+    - type: Clothing
+      sprite: Clothing/OuterClothing/Vests/vest.rsi
+    - type: ChameleonClothing
+      slot: [outerClothing]
+      default: ClothingOuterVest
+    - type: UserInterface
+      interfaces:
+        enum.ChameleonUiKey.Key:
+          type: ChameleonBoundUserInterface
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.6 #ballistic plates = better protection
+          Slash: 0.6
+          Piercing: 0.3
+          Heat: 0.9
+    - type: ExplosionResistance
+      damageCoefficient: 0.9
+  

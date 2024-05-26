@@ -297,6 +297,9 @@ uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
 
+uplink-chameleon-armored-name = Armored Chameleon Kit
+uplink-chameleon-armored-desc = A backpack full of more robust Chameleon Items, featuring a stronger vest, mask, and insulated gloves.
+
 uplink-clothing-no-slips-shoes-name = No-slip Shoes
 uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slips.
 
@@ -305,6 +308,9 @@ uplink-clothing-thieving-gloves-desc = Discretely steal from pockets and increas
 
 uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
+
+uplink-clothing-outer-vest-web-chameleon-name = Chameleon Web Vest
+uplink-clothing-outer-vest-web-chameleon-desc = A Web Vest with integrated chameleon technology.
 
 uplink-clothing-shoes-boots-mag-syndie-name = Blood-red Magboots
 uplink-clothing-shoes-boots-mag-syndie-desc = A pair of boots that prevent slipping and, in zero gravity, allow you to move normally, at the cost of a slight slowdown. Additionally, they have jetpack functionality and come fueled, but don't last for long.

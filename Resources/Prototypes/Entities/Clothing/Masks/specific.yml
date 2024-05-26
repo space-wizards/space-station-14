@@ -25,6 +25,41 @@
       - Snout
 
 - type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskGasChameleonArmored
+  name: gas mask
+  description: A face-covering mask that can be connected to an air supply.
+  suffix: Armored, Chameleon
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/Mask/gas.rsi
+    - type: Clothing
+      sprite: Clothing/Mask/gas.rsi
+    - type: ChameleonClothing
+      slot: [mask]
+      default: ClothingMaskGas
+    - type: BreathMask
+    - type: IdentityBlocker # need that for default ClothingMaskGas
+    - type: UserInterface
+      interfaces:
+        enum.ChameleonUiKey.Key:
+          type: ChameleonBoundUserInterface
+    - type: HideLayerClothing
+      slots:
+      - Snout
+    - type: FlashImmunity
+    - type: EyeProtection
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.95
+          Slash: 0.95
+          Piercing: 0.95
+          Heat: 0.95
+             
+- type: entity
   parent: ClothingMaskGasChameleon
   id: ClothingMaskGasVoiceChameleon
   suffix: Voice Mask, Chameleon

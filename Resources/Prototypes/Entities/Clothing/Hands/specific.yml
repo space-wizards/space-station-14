@@ -30,3 +30,28 @@
   - type: Thieving
     stripTimeReduction: 2
     stealthy: true
+   
+- type: entity
+  parent: ClothingHandsButcherable
+  id: ClothingHandsChameleonArmored 
+  name: black gloves
+  description: Regular black gloves that do not keep you from frying.
+  suffix: Armored, Chameleon
+  components:
+    - type: Insulated
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
+    - type: Clothing
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
+    - type: ChameleonClothing
+      slot: [gloves]
+      default: ClothingHandsGlovesColorBlack
+    - type: Fiber
+      fiberMaterial: fibers-chameleon
+    - type: FingerprintMask
+    - type: UserInterface
+      interfaces:
+        enum.ChameleonUiKey.Key:
+          type: ChameleonBoundUserInterface

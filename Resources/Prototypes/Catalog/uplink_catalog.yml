@@ -1226,6 +1226,17 @@
     - UplinkWearables
 
 - type: listing
+  id: UplinkChameleonArmored
+  name: uplink-chameleon-armored-name
+  description: uplink-chameleon-armored-desc
+  productEntity: ClothingBackpackChameleonArmoredFill
+  icon: { sprite: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi, state: icon }
+  cost:
+    Telecrystal: 12
+  categories:
+    - UplinkWearables
+    
+- type: listing
   id: UplinkClothingNoSlipsShoes
   name: uplink-clothing-no-slips-shoes-name
   description: uplink-clothing-no-slips-shoes-desc
@@ -1252,6 +1263,16 @@
   productEntity: ClothingOuterVestWeb
   cost:
     Telecrystal: 3
+  categories:
+  - UplinkWearables
+
+- type: listing
+  id: UplinkClothingOuterWebVestChameleon
+  name: uplink-clothing-outer-vest-web-chameleon-name
+  description: uplink-clothing-outer-vest-web-chameleon-desc
+  productEntity: WebVestChameleon
+  cost:
+    Telecrystal: 6
   categories:
   - UplinkWearables
 

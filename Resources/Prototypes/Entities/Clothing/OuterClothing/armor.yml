@@ -1,5 +1,4 @@
 # Numbers for armor here largely taken from /tg/.
-# NOTE: Half of the kind of armor you're probably thinking of is in vests.yml. These should probably be merged some day.
 
 #Basic armor vest
 - type: entity
