@@ -70,7 +70,7 @@
 - type: entity
   name: armory loot spawner
   suffix: Guns
-  id: LootSpawnerArmory
+  id: LootSpawnerArmoryGunsOnly
   parent: MarkerBase
   components:
     - type: Sprite
@@ -97,7 +97,7 @@
 - type: entity
   name: armory loot spawner
   suffix: Armor
-  id: LootSpawnerArmory
+  id: LootSpawnerArmoryArmorOnly
   parent: MarkerBase
   components:
     - type: Sprite
