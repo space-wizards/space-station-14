@@ -39,6 +39,8 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcPowerReceiverComponent, EntityPausedEvent>(ApcPowerReceiverPaused);
             SubscribeLocalEvent<ApcPowerReceiverComponent, EntityUnpausedEvent>(ApcPowerReceiverUnpaused);
 
+            SubscribeLocalEvent<AppearanceComponent, PowerChangedEvent>(ApcPowerReceiverPowerChanged);
+
             SubscribeLocalEvent<PowerNetworkBatteryComponent, ComponentInit>(BatteryInit);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, ComponentShutdown>(BatteryShutdown);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityPausedEvent>(BatteryPaused);
@@ -85,6 +87,11 @@ namespace Content.Server.Power.EntitySystems
             ref EntityUnpausedEvent args)
         {
             component.NetworkLoad.Paused = false;
+        }
+
+        private void ApcPowerReceiverPowerChanged(Entity<AppearanceComponent> ent, ref PowerChangedEvent args)
+        {
+            _appearance.SetData(ent.Owner, PowerDeviceVisuals.Powered, args.Powered, ent.Comp);
         }
 
         private void BatteryInit(EntityUid uid, PowerNetworkBatteryComponent component, ComponentInit args)
@@ -298,7 +305,6 @@ namespace Content.Server.Power.EntitySystems
 
         private void UpdateApcPowerReceiver()
         {
-            var appearanceQuery = GetEntityQuery<AppearanceComponent>();
             var metaQuery = GetEntityQuery<MetaDataComponent>();
             var enumerator = AllEntityQuery<ApcPowerReceiverComponent>();
             while (enumerator.MoveNext(out var uid, out var apcReceiver))
@@ -307,9 +313,6 @@ namespace Content.Server.Power.EntitySystems
                     continue;
 
                 _powerReceiver.UpdateIsPowered((uid, apcReceiver));
-
-                if (appearanceQuery.TryGetComponent(uid, out var appearance))
-                    _appearance.SetData(uid, PowerDeviceVisuals.Powered, apcReceiver.Powered, appearance);
             }
         }
 
