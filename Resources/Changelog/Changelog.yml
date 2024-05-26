@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lank
-  changes:
-  - message: The detective is no longer independent, and again works under Security.
-    type: Tweak
-  id: 6122
-  time: '2024-03-11T03:33:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25986
 - author: pigeonpeas
   changes:
   - message: added new expedition ambience
@@ -3871,3 +3864,10 @@
   id: 6621
   time: '2024-05-26T02:11:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28291
+- author: EmoGarbage404
+  changes:
+  - message: Properly fix magic mirrors
+    type: Fix
+  id: 6622
+  time: '2024-05-26T04:46:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28282
