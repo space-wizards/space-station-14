@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Dygon
-  changes:
-  - message: 'The following criminal record statuses have been added: Suspect, Discharged,
-      Paroled.'
-    type: Add
-  - message: Security huds now show an icon on entities that have a visible name linked
-      to a criminal record.
-    type: Add
-  id: 6121
-  time: '2024-03-11T03:12:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25192
 - author: Lank
   changes:
   - message: The detective is no longer independent, and again works under Security.
@@ -3875,3 +3864,10 @@
   id: 6620
   time: '2024-05-26T01:17:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28161
+- author: ElectroJr
+  changes:
+  - message: Fixed being unable to interact with items via storage UIs
+    type: Fix
+  id: 6621
+  time: '2024-05-26T02:11:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28291
