@@ -45,7 +45,7 @@
   - type: AmmoCounter
 
 # BASE DOUBLE-BARRELED SHOTGUN
-# The base stats for the double-barreled shotgun.
+# The base qualities for the double-barreled shotgun.
 - type: entity
   abstract: true
   id: BaseWeaponDoubleBarreled
