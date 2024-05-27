@@ -432,15 +432,23 @@
   parent: BaseTraitorRule
   id: SleeperAgentsRule
   components:
+  - type: GameRule
+    canFalseActivate: true
   - type: StationEvent
     earliestStart: 30
     weight: 8
     minimumPlayers: 15
+    alertLevel: blue
     maxOccurrences: 1 # can only happen once per round
     startAnnouncement: station-event-communication-interception
     startAudio:
       path: /Audio/Announcements/intercept.ogg
-  - type: AlertLevelInterceptionRule
+  - type: MassHallucinationsRule # essentially (I hope) does nothing because of duration 0. it's just so that the event can complete, since removing "AlertLevelInterceptionRule" caused a problem with it 
+    minTimeBetweenIncidents: 0.1
+    maxTimeBetweenIncidents: 300
+    maxSoundDistance: 7
+    sounds:
+      collection: Paracusia
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]

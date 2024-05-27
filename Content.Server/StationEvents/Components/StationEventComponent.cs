@@ -42,6 +42,19 @@ public sealed partial class StationEventComponent : Component
     [DataField]
     public int ReoccurrenceDelay = 30;
 
+
+    /// <summary>
+    /// Alert level to set the station to when the event starts.
+    /// </summary>
+    [DataField]
+    public string? AlertLevel;
+
+    /// <summary>
+    /// Alarm level that will NOT be ignored when the event starts
+    /// </summary>
+    [DataField]
+    public string NotIgnoredAlarmLevel = "green";
+
     /// <summary>
     ///     How long after being added does the event start
     /// </summary>
