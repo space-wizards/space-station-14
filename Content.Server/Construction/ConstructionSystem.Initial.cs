@@ -523,6 +523,9 @@ namespace Content.Server.Construction
                 return;
             }
 
+            var xform = Transform(structure);
+            xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, GetNetEntity(structure)));
             _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");
             Cleanup();

@@ -39,7 +39,7 @@ public sealed class PipeRestrictOverlapSystem : EntitySystem
 
         if (HasComp<AnchorableComponent>(ent) && CheckOverlap(ent))
         {
-            _popup.PopupEntity(Loc.GetString("pipe-restrict-overlap-popup-force-unanchor", ("pipe", ent.Owner)), ent);
+            _popup.PopupEntity(Loc.GetString("pipe-restrict-overlap-popup-blocked", ("pipe", ent.Owner)), ent);
             _xform.Unanchor(ent, Transform(ent));
         }
     }
