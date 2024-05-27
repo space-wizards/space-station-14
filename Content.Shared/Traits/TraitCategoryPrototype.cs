@@ -23,10 +23,4 @@ public sealed partial class TraitCategoryPrototype : IPrototype
     /// </summary>
     [DataField]
     public int MaxTraitPoints = -1;
-
-    /// <summary>
-    ///     All the traits in this group.
-    /// </summary>
-    [DataField]
-    public List<ProtoId<TraitPrototype>> Traits = new();
 }

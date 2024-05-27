@@ -54,5 +54,11 @@ public sealed partial class TraitPrototype : IPrototype
     /// </summary>
     [DataField]
     public int Cost = 0;
+
+    /// <summary>
+    /// Adds a trait to a category, allowing you to limit the selection of some traits to the settings of that category.
+    /// </summary>
+    [DataField]
+    public ProtoId<TraitCategoryPrototype>? Category;
 }
 

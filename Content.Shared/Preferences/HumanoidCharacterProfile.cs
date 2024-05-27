@@ -346,11 +346,14 @@ namespace Content.Shared.Preferences
             };
         }
 
-        public HumanoidCharacterProfile WithTraitPreference(string traitId, string categoryId, bool pref)
+        public HumanoidCharacterProfile WithTraitPreference(string traitId, string? categoryId, bool pref)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var categoryProto = prototypeManager.Index<TraitCategoryPrototype>(categoryId);
             var traitProto = prototypeManager.Index<TraitPrototype>(traitId);
+
+            TraitCategoryPrototype? categoryProto = null;
+            if (categoryId != null && categoryId != "default")
+                categoryProto = prototypeManager.Index<TraitCategoryPrototype>(categoryId);
 
             var list = new HashSet<string>(_traitPreferences);
 
@@ -358,7 +361,7 @@ namespace Content.Shared.Preferences
             {
                 list.Add(traitId);
 
-                if (categoryProto.MaxTraitPoints >= 0)
+                if (categoryProto != null && categoryProto.MaxTraitPoints >= 0)
                 {
                     var count = 0;
                     foreach (var trait in list)

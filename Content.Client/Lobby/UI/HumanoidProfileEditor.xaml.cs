@@ -464,10 +464,11 @@ namespace Content.Client.Lobby.UI
         {
             TraitsList.DisposeAllChildren();
 
+            var traits = _prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => Loc.GetString(t.Name)).ToList();
             var categories = _prototypeManager.EnumeratePrototypes<TraitCategoryPrototype>().OrderBy(t => Loc.GetString(t.Name)).ToList();
             TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-traits-tab"));
 
-            if (categories.Count < 1)
+            if (traits.Count < 1)
             {
                 TraitsList.AddChild(new Label
                 {
@@ -477,22 +478,48 @@ namespace Content.Client.Lobby.UI
                 return;
             }
 
-            foreach (var category in categories)
+            //Setup model
+            Dictionary<string, List<string>> model = new();
+            List<string> defaultTraits = new();
+            model.Add("default", defaultTraits);
+
+            foreach (var trait in traits)
             {
-                // Label
-                TraitsList.AddChild(new Label
+                if (trait.Category == null)
                 {
-                    Text = Loc.GetString(category.Name),
-                    Margin = new Thickness(0, 10, 0, 0),
-                    StyleClasses = { StyleBase.StyleClassLabelHeading },
-                });
+                    defaultTraits.Add(trait.ID);
+                    continue;
+                }
+
+                if (!model.ContainsKey(trait.Category))
+                {
+                    model.Add(trait.Category, new());
+                }
+                model[trait.Category].Add(trait.ID);
+            }
+
+            //Create UI view from model
+            foreach (var pair in model)
+            {
+                TraitCategoryPrototype? category = null;
+                if (pair.Key != "default")
+                {
+                    category = _prototypeManager.Index<TraitCategoryPrototype>(pair.Key);
+                    // Label
+                    TraitsList.AddChild(new Label
+                    {
+                        Text = Loc.GetString(category.Name),
+                        Margin = new Thickness(0, 10, 0, 0),
+                        StyleClasses = { StyleBase.StyleClassLabelHeading },
+                    });
+                }
 
                 List<TraitPreferenceSelector?> selectors = new();
                 var selectionCount = 0;
 
-                foreach (var traitProto in category.Traits)
+                foreach (var traitProto in pair.Value)
                 {
-                    var trait = _prototypeManager.Index(traitProto);
+                    var trait = _prototypeManager.Index<TraitPrototype>(traitProto);
                     var selector = new TraitPreferenceSelector(trait);
 
                     selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
@@ -501,7 +528,7 @@ namespace Content.Client.Lobby.UI
 
                     selector.PreferenceChanged += preference =>
                     {
-                        Profile = Profile?.WithTraitPreference(trait.ID, category.ID, preference);
+                        Profile = Profile?.WithTraitPreference(trait.ID, pair.Key, preference);
                         SetDirty();
                         RefreshTraits(); // If too many traits are selected, they will be reset to the real value.
                     };
@@ -509,7 +536,7 @@ namespace Content.Client.Lobby.UI
                 }
 
                 // Selection counter
-                if (category.MaxTraitPoints >= 0)
+                if (category != null && category.MaxTraitPoints >= 0)
                 {
                     TraitsList.AddChild(new Label
                     {

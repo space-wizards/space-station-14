@@ -4,6 +4,7 @@
   id: Accentless
   name: trait-accentless-name
   description: trait-accentless-desc
+  category: SpeechTraits
   components:
   - type: Accentless
     removes:
@@ -18,6 +19,7 @@
   id: SouthernAccent
   name: trait-southern-name
   description: trait-southern-desc
+  category: SpeechTraits
   cost: 1
   components:
     - type: SouthernAccent
@@ -26,6 +28,7 @@
   id: PirateAccent
   name: trait-pirate-accent-name
   description: trait-pirate-accent-desc
+  category: SpeechTraits
   cost: 1
   components:
     - type: PirateAccent
@@ -34,6 +37,7 @@
   id: CowboyAccent
   name: trait-cowboy-name
   description: trait-cowboy-desc
+  category: SpeechTraits
   cost: 1
   components:
     - type: ReplacementAccent
@@ -43,6 +47,7 @@
   id: ItalianAccent
   name: trait-italian-name
   description: trait-italian-desc
+  category: SpeechTraits
   cost: 1
   components:
     - type: ReplacementAccent
@@ -52,6 +57,7 @@
   id: Liar
   name: trait-liar-name
   description: trait-liar-desc
+  category: SpeechTraits
   cost: 1
   components:
     - type: ReplacementAccent
@@ -63,6 +69,7 @@
   id: SocialAnxiety
   name: trait-socialanxiety-name
   description: trait-socialanxiety-desc
+  category: SpeechTraits
   cost: 2
   components:
     - type: StutteringAccent
@@ -75,6 +82,7 @@
   id: FrontalLisp
   name: trait-frontal-lisp-name
   description: trait-frontal-lisp-desc
+  category: SpeechTraits
   cost: 2
   components:
     - type: FrontalLisp

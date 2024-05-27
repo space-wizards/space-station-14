@@ -1,27 +1,8 @@
 - type: traitCategory
   id: Disabilities
   name: trait-category-disabilities
-  traits:
-  - Blindness
-  - PoorVision
-  - Narcolepsy
-  - Pacifist
-  - Unrevivable
-  - Muted
-  - LightweightDrunk
-  - Paracusia
-  - Snoring
 
 - type: traitCategory
   id: SpeechTraits
   name: trait-category-speech
   maxTraitPoints: 2
-  traits:
-  - Accentless
-  - SouthernAccent
-  - PirateAccent
-  - CowboyAccent
-  - ItalianAccent
-  - Liar
-  - SocialAnxiety
-  - FrontalLisp
