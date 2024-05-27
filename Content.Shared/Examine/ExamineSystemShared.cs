@@ -210,8 +210,8 @@ namespace Content.Shared.Examine
         public bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
-            var otherPos = entMan.GetComponent<TransformComponent>(other).MapPosition;
+            var originPos = _transform.GetMapCoordinates(origin);
+            var otherPos = _transform.GetMapCoordinates(other);
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
@@ -219,7 +219,7 @@ namespace Content.Shared.Examine
         public bool InRangeUnOccluded(EntityUid origin, EntityCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
+            var originPos = _transform.GetMapCoordinates(origin);
             var otherPos = other.ToMap(entMan, _transform);
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
@@ -228,7 +228,7 @@ namespace Content.Shared.Examine
         public bool InRangeUnOccluded(EntityUid origin, MapCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
+            var originPos = _transform.GetMapCoordinates(origin);
 
             return InRangeUnOccluded(originPos, other, range, predicate, ignoreInsideBlocker);
         }

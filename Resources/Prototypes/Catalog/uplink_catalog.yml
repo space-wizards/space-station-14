@@ -344,7 +344,7 @@
   id: UplinkExplodingPen
   name: uplink-exploding-pen-name
   description: uplink-exploding-pen-desc
-  icon: { sprite: /Textures/Objects/Misc/bureaucracy.rsi, state: pen }
+  icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
   productEntity: PenExplodingBox
   discountCategory: usualDiscounts
   discountOptions: [ 0.25, 0.5 ]
@@ -540,7 +540,7 @@
   id: UplinkHypopen
   name: uplink-hypopen-name
   description: uplink-hypopen-desc
-  icon: { sprite: /Textures/Objects/Misc/bureaucracy.rsi, state: pen }
+  icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
   productEntity: HypopenBox
   discountCategory: rareDiscounts
   discountOptions: [ 0.16, 0.33 ]
