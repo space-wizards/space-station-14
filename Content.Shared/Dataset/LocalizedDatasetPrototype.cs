@@ -47,7 +47,7 @@ public sealed partial class LocalizedDatasetValues : IReadOnlyList<string>
     {
         get
         {
-            if (index > Count)
+            if (index > Count || index < 0)
                 throw new IndexOutOfRangeException();
             return Prefix + index;
         }
