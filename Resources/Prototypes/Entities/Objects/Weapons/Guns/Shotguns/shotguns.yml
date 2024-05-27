@@ -1,14 +1,14 @@
-- type: entity
-  name: BaseWeaponShotgun
-  parent: BaseItem
-  id: BaseWeaponShotgun
-  description: A rooty tooty point and shooty.
-  abstract: true
-  components:
-  - type: Sprite
-    layers:
-    - state: icon
-      map: [ "enum.GunVisualLayers.Base" ]
+# - type: entity
+#   name: BaseWeaponShotgun
+#   parent: BaseItem
+#   id: BaseWeaponShotgun
+#   description: A rooty tooty point and shooty.
+#   abstract: true
+#   components:
+  # - type: Sprite
+  #   layers:
+  #   - state: icon
+  #     map: [ "enum.GunVisualLayers.Base" ]
   # - type: Item
   #   # If you update this also update the bulldog's size.
   #   size: Large
@@ -19,15 +19,15 @@
     # - Back
     # - suitStorage
   # - type: AmmoCounter
-  - type: Gun
+  # - type: Gun
     # fireRate: 2
     # selectedMode: SemiAuto
     # availableModes:
     # - SemiAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    # soundGunshot:
+    #   path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    # soundEmpty:
+    #   path: /Audio/Weapons/Guns/Empty/empty.ogg
   # - type: BallisticAmmoProvider
   #   whitelist:
   #     tags:
@@ -40,8 +40,8 @@
   #   containers:
   #     ballistic-ammo: !type:Container
   #       ents: []
-  - type: StaticPrice
-    price: 500
+  # - type: StaticPrice
+  #   price: 500
 
 - type: entity
   name: Bulldog
@@ -108,12 +108,14 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
-  - BaseWeaponShotgun
   id: WeaponShotgunDoubleBarreled
   description: An immortal classic. Uses .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     size: Normal
     shape:
@@ -122,6 +124,10 @@
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
@@ -145,17 +151,24 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
-  - BaseWeaponShotgun
   id: WeaponShotgunEnforcer
   description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Item
     size: Large
     sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
 
@@ -173,7 +186,6 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
-  - BaseWeaponShotgun
   id: WeaponShotgunKammerer
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
   components:
@@ -184,9 +196,17 @@
     sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     capacity: 4
   - type: Tag
@@ -198,12 +218,14 @@
   parent:
   - BaseGunSmall
   - BaseGunShotgunBallistic
-  - BaseWeaponShotgun
   id: WeaponShotgunSawn
   description: Groovy! Uses .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Item
@@ -211,6 +233,10 @@
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
   - type: Gun
     fireRate: 4
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
@@ -237,7 +263,6 @@
   parent:
   - BaseGunSmall
   - BaseGunShotgunBallistic
-  - BaseWeaponShotgun
   id: WeaponShotgunHandmade
   description: Looks unreliable. Uses .50 shotgun shells.
   components:
@@ -245,10 +270,17 @@
     storedRotation: 90
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Gun
     fireRate: 4
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     capacity: 1
   - type: Construction
@@ -264,7 +296,6 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
-  - BaseWeaponShotgun
   id: WeaponShotgunBlunderbuss
   suffix: Pirate
   description: Deadly at close range.
@@ -275,9 +306,16 @@
     - 0,0,4,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/blunderbuss.rsi
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     capacity: 1
   - type: StaticPrice
@@ -289,12 +327,14 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
-  - BaseWeaponShotgun
   id: WeaponShotgunImprovised
   description: A shitty, hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Item
@@ -305,6 +345,10 @@
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     capacity: 1
     proto: null
