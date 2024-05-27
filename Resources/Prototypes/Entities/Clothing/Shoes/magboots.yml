@@ -22,7 +22,6 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.8
-    enabled: false
   - type: Appearance
   - type: GenericVisualizer
     visuals:

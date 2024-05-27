@@ -52,7 +52,6 @@
       components:
       - Anomaly
   - type: Beeper
-    enabled: false
     minBeepInterval: 0.15
     maxBeepInterval: 1.00
     beepSound:
