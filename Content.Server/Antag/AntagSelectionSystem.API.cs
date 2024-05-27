@@ -52,12 +52,26 @@ public sealed partial class AntagSelectionSystem
     /// Gets the number of antagonists that should be present for a given rule based on the provided pool.
     /// A null pool will simply use the player count.
     /// </summary>
-    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool = null)
+    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, int? playerCount = null)
     {
         var count = 0;
         foreach (var def in ent.Comp.Definitions)
         {
-            count += GetTargetAntagCount(ent, pool, def);
+            count += GetTargetAntagCount(ent, playerCount, def);
+        }
+
+        return count;
+    }
+
+    public int GetTotalPlayerCount(IList<ICommonSession> pool)
+    {
+        var count = 0;
+        foreach (var session in pool)
+        {
+            if (session.Status is SessionStatus.Disconnected or SessionStatus.Zombie)
+                continue;
+
+            count++;
         }
 
         return count;
@@ -67,14 +81,13 @@ public sealed partial class AntagSelectionSystem
     /// Gets the number of antagonists that should be present for a given antag definition based on the provided pool.
     /// A null pool will simply use the player count.
     /// </summary>
-    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool, AntagSelectionDefinition def)
+    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, int? playerCount, AntagSelectionDefinition def)
     {
         // TODO ANTAG
         // make pool non-nullable
         // Review uses and ensure that people are INTENTIONALLY including players in the lobby if this is a mid-round
         // antag selection.
-        var poolSize = pool?.Count ?? _playerManager.Sessions
-            .Count(s => s.State.Status is not SessionStatus.Disconnected and not SessionStatus.Zombie);
+        var poolSize = playerCount ?? GetTotalPlayerCount(_playerManager.Sessions);
 
         // factor in other definitions' affect on the count.
         var countOffset = 0;
