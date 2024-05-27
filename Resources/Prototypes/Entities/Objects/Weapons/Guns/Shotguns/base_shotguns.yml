@@ -18,3 +18,28 @@
       ballistic-ammo: !type:Container
         ents: []
   - type: AmmoCounter
+
+# SHOTGUN MAG
+# A basic template for a gun that fires shells from a loaded shotgun magazine.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunShotgunMag
+  components:
+  - type: MagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineShotgun
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineShotgun
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: AmmoCounter
