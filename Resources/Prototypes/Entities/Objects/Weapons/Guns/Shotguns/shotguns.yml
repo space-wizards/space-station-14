@@ -40,6 +40,7 @@
   parent:
   - BaseGunLarge
   - BaseGunWieldable
+  - BaseWeaponDoubleBarreled
   - BaseGunShotgunBallistic
   id: WeaponShotgunDoubleBarreled
   name: double-barreled shotgun
@@ -56,12 +57,6 @@
     - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
-  - type: Gun
-    fireRate: 2
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
@@ -152,6 +147,7 @@
 - type: entity
   parent:
   - BaseGunSmall
+  - BaseWeaponDoubleBarreled
   - BaseGunShotgunBallistic
   id: WeaponShotgunSawn
   name: sawn-off shotgun
@@ -167,12 +163,6 @@
   - type: Item
     size: Small
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
-  - type: Gun
-    fireRate: 4
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction

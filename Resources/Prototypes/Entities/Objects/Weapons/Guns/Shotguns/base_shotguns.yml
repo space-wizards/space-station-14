@@ -43,3 +43,16 @@
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
   - type: AmmoCounter
+
+# BASE DOUBLE-BARRELED SHOTGUN
+# The base stats for the double-barreled shotgun.
+- type: entity
+  abstract: true
+  id: BaseWeaponDoubleBarreled
+  components:
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
