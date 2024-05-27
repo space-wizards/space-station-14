@@ -1,3 +1,4 @@
+using Content.Server.Administration.Managers;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
@@ -12,6 +13,7 @@ namespace Content.Server.GameTicking.Commands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
         public string Command => "joingame";
         public string Description => "";
@@ -67,6 +69,12 @@ namespace Content.Server.GameTicking.Commands
                     shell.WriteLine($"{jobPrototype.LocalizedName} has no available slots.");
                     return;
                 }
+
+                if (_adminManager.IsAdmin(player))
+                {
+                    _adminManager.DeAdmin(player);
+                }
+
                 ticker.MakeJoinGame(player, station, id);
                 return;
             }
