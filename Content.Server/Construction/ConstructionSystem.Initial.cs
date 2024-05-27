@@ -92,7 +92,14 @@ namespace Content.Server.Construction
         }
 
         // LEGACY CODE. See warning at the top of the file!
-        private async Task<EntityUid?> Construct(EntityUid user, string materialContainer, ConstructionGraphPrototype graph, ConstructionGraphEdge edge, ConstructionGraphNode targetNode, EntityCoordinates coords)
+        private async Task<EntityUid?> Construct(
+            EntityUid user,
+            string materialContainer,
+            ConstructionGraphPrototype graph,
+            ConstructionGraphEdge edge,
+            ConstructionGraphNode targetNode,
+            EntityCoordinates coords,
+            Angle angle)
         {
             // We need a place to hold our construction items!
             var container = _container.EnsureContainer<Container>(user, materialContainer, out var existed);
@@ -262,7 +269,7 @@ namespace Content.Server.Construction
             }
 
             var newEntityProto = graph.Nodes[edge.Target].Entity.GetId(null, user, new(EntityManager));
-            var newEntity = EntityManager.SpawnEntity(newEntityProto, coords);
+            var newEntity = Spawn(newEntityProto, _transformSystem.ToMapCoordinates(coords), rotation: angle);
 
             if (!TryComp(newEntity, out ConstructionComponent? construction))
             {
@@ -377,7 +384,14 @@ namespace Content.Server.Construction
                 }
             }
 
-            if (await Construct(user, "item_construction", constructionGraph, edge, targetNode, Transform(user).Coordinates) is not { Valid: true } item)
+            if (await Construct(
+                    user,
+                    "item_construction",
+                    constructionGraph,
+                    edge,
+                    targetNode,
+                    Transform(user).Coordinates,
+                    Angle.Zero) is not { Valid: true } item)
                 return false;
 
             // Just in case this is a stack, attempt to merge it. If it isn't a stack, this will just normally pick up
@@ -517,14 +531,12 @@ namespace Content.Server.Construction
                     constructionGraph,
                     edge,
                     targetNode,
-                    GetCoordinates(ev.Location)) is not {Valid: true} structure)
+                    GetCoordinates(ev.Location),
+                    constructionPrototype.CanRotate ? ev.Angle : Angle.Zero) is not {Valid: true} structure)
             {
                 Cleanup();
                 return;
             }
-
-            var xform = Transform(structure);
-            xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, GetNetEntity(structure)));
             _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");
