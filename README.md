@@ -19,8 +19,6 @@ We are happy to accept contributions from anybody. Get in Discord if you want to
 Upstream has a [list of issues](https://github.com/greystation14/GreyStation14/issues) that need to be done and anybody can pick them up. Don't be afraid to ask for help either!  
 Make sure your changes and pull requests are in accordance with the [contribution guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
 
-We are currently accepting translations of the game on our main repository. If you would like to translate the game into another language check the #localization channel in our [Discord](https://discord.gg/VbtzRUR5Zr)
-
 ## Building
 
 1. Clone this repo.
