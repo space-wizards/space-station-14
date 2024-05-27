@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Moths eating lizard plushies will now start to Weh!
-    type: Tweak
-  id: 6125
-  time: '2024-03-11T23:05:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26003
 - author: Ubaser
   changes:
   - message: Unpressurized areas now deal heat damage along with blunt.
@@ -3870,3 +3863,10 @@
   id: 6624
   time: '2024-05-26T14:48:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28301
+- author: metalgearsloth
+  changes:
+  - message: Selectively revert pulling throwing for the short-term.
+    type: Tweak
+  id: 6625
+  time: '2024-05-27T00:11:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28126
