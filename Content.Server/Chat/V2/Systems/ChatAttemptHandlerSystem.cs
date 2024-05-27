@@ -2,6 +2,7 @@
 using Content.Server.Administration.Managers;
 using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
+using Content.Shared.Chat.V2.Systems;
 using Content.Shared.Ghost;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Player;
@@ -14,139 +15,114 @@ namespace Content.Server.Chat.V2.Systems;
 public sealed class ChatAttemptHandlerSystem : EntitySystem
 {
     private const string DeadChatFailed = "chat-system-dead-chat-failed";
-    private const string EmoteFailed = "chat-system-emote-failed";
-    private const string LocalChatFailed = "chat-system-local-chat-failed";
-    private const string RadioFailed = "chat-system-radio-failed";
-    private const string WhisperFailed = "chat-system-whisper-failed";
     private const string EntityNotOwnedBySender = "chat-system-entity-not-owned-by-sender";
+    private const string UnsupportedMessageType = "chat-system-unsupported-message-type";
+    private const string MissingRequiredComponent = "chat-system-missing-required-component";
 
-    [Dependency] private readonly ChatRepositorySystem _repo = default!;
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
     private string _deadChatFailed = "";
-    private string _emoteFailed = "";
-    private string _localChatFailed = "";
-    private string _radioFailed = "";
-    private string _whisperFailed = "";
     private string _entityNotOwnedBySender = "";
+    private string _unsupportedMessageType = "";
+    private string _missingRequiredComponent = "";
 
     public override void Initialize()
     {
         base.Initialize();
 
         _deadChatFailed = Loc.GetString(DeadChatFailed);
-        _emoteFailed = Loc.GetString(EmoteFailed);
-        _localChatFailed = Loc.GetString(LocalChatFailed);
-        _radioFailed = Loc.GetString(RadioFailed);
-        _whisperFailed = Loc.GetString(WhisperFailed);
         _entityNotOwnedBySender = Loc.GetString(EntityNotOwnedBySender);
+        _unsupportedMessageType = Loc.GetString(UnsupportedMessageType);
+        _missingRequiredComponent = Loc.GetString(MissingRequiredComponent);
 
-        SubscribeNetworkEvent<AttemptDeadChatEvent>(OnAttemptDeadChat);
-        SubscribeNetworkEvent<AttemptEmoteEvent>(OnAttemptEmote);
-        SubscribeNetworkEvent<AttemptLocalChatEvent>(OnAttemptLocalChat);
-        SubscribeNetworkEvent<AttemptLoocEvent>(OnAttemptLooc);
-        SubscribeNetworkEvent<AttemptEquipmentRadioEvent>(OnAttemptEquipmentRadio);
-        SubscribeNetworkEvent<AttemptInternalRadioEvent>(OnAttemptInternalRadio);
-        SubscribeNetworkEvent<AttemptWhisperEvent>(OnAttemptWhisper);
+        SubscribeNetworkEvent<AttemptVerbalChatEvent>((ev, args) => OnAttemptChat<CanLocalChatComponent>(ev, args, new VerbalChatFailedEvent()));
+        SubscribeNetworkEvent<AttemptEmoteEvent>((ev, args) => OnAttemptChat<CanEmoteComponent>(ev, args, new EmoteFailedEvent()));
+        SubscribeNetworkEvent<AttemptAnnouncementEvent>(OnAttemptChat);
+        SubscribeNetworkEvent<AttemptOutOfCharacterChatEvent>(OnAttemptChat);
     }
 
-    private void OnAttemptDeadChat(AttemptDeadChatEvent ev, EntitySessionEventArgs args)
+    private void OnAttemptChat<T>(ChatAttemptEvent ev, EntitySessionEventArgs args, ChatFailedEvent failEv) where T : Component
     {
-        var entityUid = GetEntity(ev.Sender);
-
-        if (!ValidateMessage(entityUid, ev, args.SenderSession, out var reason))
+        if (!ValidateMessage(ev, args.SenderSession, out var reason, out T? _))
         {
-            RaiseNetworkEvent(new DeadChatFailedEvent(ev.Sender, reason), args.SenderSession);
+            OnFailedMessage(failEv, ev.Sender, reason, args);
 
             return;
         }
 
+        OnValidatedMessage(ev);
+    }
+
+    private void OnAttemptChat(AttemptAnnouncementEvent ev, EntitySessionEventArgs args)
+    {
+        if (!ValidateMessage(GetEntity(ev.Sender), ev, args.SenderSession, out var reason))
+        {
+            OnFailedMessage(new AnnouncementFailedEvent(), ev.Sender, reason, args);
+
+            return;
+        }
+
+        OnValidatedMessage(ev);
+    }
+
+    private void OnAttemptChat(AttemptOutOfCharacterChatEvent ev, EntitySessionEventArgs args)
+    {
+        var entityUid = GetEntity(ev.Sender);
+
+        switch (ev.Channel)
+        {
+            case OutOfCharacterChatChannel.Dead:
+                if (!IsDeadChatValid(ev, args, entityUid))
+                    return;
+
+                break;
+            case OutOfCharacterChatChannel.OutOfCharacter:
+            case OutOfCharacterChatChannel.System:
+            case OutOfCharacterChatChannel.Admin:
+            default:
+                OnFailedMessage(new OutOfCharacterChatFailed(), ev.Sender, _unsupportedMessageType, args);
+
+                return;
+        }
+
+        OnValidatedMessage(ev);
+    }
+
+    private void OnValidatedMessage(ChatAttemptEvent ev)
+    {
+        SanitizeMessage(ev);
+        RaiseLocalEvent(new ChatAttemptValidatedEvent(ev));
+    }
+
+    private bool IsDeadChatValid(AttemptOutOfCharacterChatEvent ev, EntitySessionEventArgs args, EntityUid entityUid)
+    {
         var isAdmin = _admin.IsAdmin(entityUid);
 
         // Non-admins can only talk on dead chat if they're a ghost or currently dead.
         if (!isAdmin && !HasComp<GhostComponent>(entityUid) && !_mobState.IsDead(entityUid))
         {
-            RaiseNetworkEvent(new DeadChatFailedEvent(ev.Sender, _deadChatFailed),
-                args.SenderSession);
+            OnFailedMessage(new OutOfCharacterChatFailed(), ev.Sender, _deadChatFailed, args);
 
-            return;
+            return false;
+        }
+        // ReSharper disable once InvertIf
+        if (!ValidateMessage(entityUid, ev, args.SenderSession, out var reason))
+        {
+            OnFailedMessage(new OutOfCharacterChatFailed(), ev.Sender, reason, args);
+
+            return false;
         }
 
-        _repo.Add(new DeadChatCreatedEvent(entityUid, SanitizeMessage(ev), isAdmin));
+        return true;
     }
 
-    private void OnAttemptEmote(AttemptEmoteEvent ev, EntitySessionEventArgs args)
+    public void OnFailedMessage(ChatFailedEvent ev, NetEntity entity, string reason, EntitySessionEventArgs args)
     {
-        if (!ValidateMessage(ev, args.SenderSession, out var reason, _emoteFailed, out CanEmoteComponent? comp))
-        {
-            RaiseNetworkEvent(new EmoteFailedEvent(ev.Sender, reason), args.SenderSession);
+        ev.Sender = entity;
+        ev.Reason = reason;
 
-            return;
-        }
-
-        _repo.Add(new EmoteCreatedEvent(GetEntity(ev.Sender), SanitizeMessage(ev), comp.Range));
-    }
-
-    private void OnAttemptLocalChat(AttemptLocalChatEvent ev, EntitySessionEventArgs args)
-    {
-        if (!ValidateMessage(ev, args.SenderSession, out var reason, _localChatFailed, out CanLocalChatComponent? comp))
-        {
-            RaiseNetworkEvent(new LocalChatFailedEvent(ev.Sender, reason), args.SenderSession);
-
-            return;
-        }
-
-        _repo.Add(new LocalChatCreatedEvent(GetEntity(ev.Sender), SanitizeMessage(ev), comp.Range));
-    }
-
-    private void OnAttemptLooc(AttemptLoocEvent ev, EntitySessionEventArgs args)
-    {
-        if (!ValidateMessage(GetEntity(ev.Sender), ev, args.SenderSession, out var reason))
-        {
-            RaiseNetworkEvent(new LoocFailedEvent(ev.Sender, reason), args.SenderSession);
-
-            return;
-        }
-
-        _repo.Add(new LoocCreatedEvent(GetEntity(ev.Sender), SanitizeMessage(ev)));
-    }
-
-    private void OnAttemptEquipmentRadio(AttemptEquipmentRadioEvent ev, EntitySessionEventArgs args)
-    {
-        if (!ValidateMessage(ev, args.SenderSession, out var reason, _radioFailed,
-                out CanRadioUsingEquipmentComponent? comp))
-        {
-            RaiseNetworkEvent(new RadioFailedEvent(ev.Sender, reason), args.SenderSession);
-
-            return;
-        }
-
-        _repo.Add(new RadioCreatedEvent(GetEntity(ev.Sender), SanitizeMessage(ev), ev.Channel));
-    }
-
-    private void OnAttemptInternalRadio(AttemptInternalRadioEvent ev, EntitySessionEventArgs args)
-    {
-        if (!ValidateMessage(ev, args.SenderSession, out var reason, _radioFailed, out CanRadioComponent? comp))
-        {
-            RaiseNetworkEvent(new RadioFailedEvent(ev.Sender, reason), args.SenderSession);
-
-            return;
-        }
-
-        _repo.Add(new RadioCreatedEvent(GetEntity(ev.Sender), SanitizeMessage(ev), ev.Channel));
-    }
-
-    private void OnAttemptWhisper(AttemptWhisperEvent ev, EntitySessionEventArgs args)
-    {
-        if (!ValidateMessage(ev, args.SenderSession, out var reason, _whisperFailed, out CanWhisperComponent? comp))
-        {
-            RaiseNetworkEvent(new WhisperFailedEvent(ev.Sender, reason), args.SenderSession);
-
-            return;
-        }
-
-        _repo.Add(new WhisperCreatedEvent(GetEntity(ev.Sender), SanitizeMessage(ev), comp.MinRange, comp.MaxRange));
+        RaiseNetworkEvent(ev, args.SenderSession);
     }
 
     /// <summary>
@@ -195,7 +171,6 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         T1 ev,
         ICommonSession player,
         out string reason,
-        string invalidCompReason,
         [NotNullWhen(true)] out T2? comp
     ) where T1 : ChatAttemptEvent where T2 : IComponent
     {
@@ -211,7 +186,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         if (TryComp(entityUid, out comp))
             return true;
 
-        reason = Loc.GetString(invalidCompReason);
+        reason = _missingRequiredComponent;
 
         return false;
     }
@@ -219,11 +194,11 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
     /// <summary>
     /// Sanitizes messages. The return string is sanitized.
     /// </summary>
-    private string SanitizeMessage<T>(T evt) where T : ChatAttemptEvent
+    private void SanitizeMessage<T>(T evt) where T : ChatAttemptEvent
     {
         var sanitize = new ChatSanitizationEvent<T>(evt);
         RaiseLocalEvent(sanitize);
 
-        return sanitize.ChatMessageSanitized ?? sanitize.ChatMessageRaw;
+        evt.Message = sanitize.ChatMessageSanitized ?? sanitize.ChatMessageRaw;
     }
 }

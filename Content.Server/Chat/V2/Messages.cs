@@ -1,91 +1,18 @@
 ﻿using Content.Shared.Chat.V2;
+using Content.Shared.Chat.V2.Systems;
 using Content.Shared.Radio;
+using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat.V2;
 
 /// <summary>
-/// Raised locally when a comms announcement is made.
+/// Notifies that a chat attempt input from a player has been validated and sanatized, ready for further processing.
 /// </summary>
-public sealed class CommsAnnouncementCreatedEvent(EntityUid sender, EntityUid console, string message) : IChatEvent
+/// <param name="ev"></param>
+public sealed class ChatAttemptValidatedEvent(ChatAttemptEvent ev) : EntityEventArgs
 {
-    public uint Id { get; set; }
-    public EntityUid Sender { get; set; } = sender;
-    public string Message { get; set; } = message;
-    public MessageType Type => MessageType.Announcement;
-    public EntityUid Console = console;
-}
-
-/// <summary>
-/// Raised locally when a character speaks in Dead Chat.
-/// </summary>
-public sealed class DeadChatCreatedEvent(EntityUid speaker, string message, bool isAdmin) : IChatEvent
-{
-    public uint Id { get; set; }
-    public EntityUid Sender { get; set; } = speaker;
-    public string Message { get; set; } = message;
-    public MessageType Type => MessageType.DeadChat;
-    public bool IsAdmin = isAdmin;
-}
-
-/// <summary>
-/// Raised locally when a character emotes.
-/// </summary>
-public sealed class EmoteCreatedEvent(EntityUid sender, string message, float range) : IChatEvent
-{
-    public uint Id { get; set; }
-    public EntityUid Sender { get; set; } = sender;
-    public string Message { get; set; } = message;
-    public MessageType Type => MessageType.Emote;
-    public float Range = range;
-}
-
-/// <summary>
-/// Raised locally when a character talks in local.
-/// </summary>
-public sealed class LocalChatCreatedEvent(EntityUid speaker, string message, float range) : IChatEvent
-{
-    public uint Id { get; set; }
-    public EntityUid Sender { get; set; } = speaker;
-    public string Message { get; set; } = message;
-    public MessageType Type => MessageType.Local;
-    public float Range = range;
-}
-
-/// <summary>
-/// Raised locally when a character speaks in LOOC.
-/// </summary>
-public sealed class LoocCreatedEvent(EntityUid speaker, string message) : IChatEvent
-{
-    public uint Id { get; set; }
-    public EntityUid Sender { get; set; } = speaker;
-    public string Message { get; set; } = message;
-    public MessageType Type => MessageType.Looc;
-}
-
-/// <summary>
-/// Raised locally when a character speaks on the radio.
-/// </summary>
-public sealed class RadioCreatedEvent(EntityUid speaker, string message, ProtoId<RadioChannelPrototype> channel) : IChatEvent
-{
-    public uint Id { get; set; }
-    public EntityUid Sender { get; set; } = speaker;
-    public string Message { get; set; } = message;
-    public ProtoId<RadioChannelPrototype> Channel = channel;
-    public MessageType Type => MessageType.Radio;
-}
-
-/// <summary>
-/// Raised locally when a character whispers.
-/// </summary>
-public sealed class WhisperCreatedEvent(EntityUid speaker, string message, float minRange, float maxRange) : IChatEvent
-{
-    public uint Id { get; set; }
-    public EntityUid Sender { get; set; } = speaker;
-    public string Message { get; set; } = message;
-    public MessageType Type => MessageType.Whisper;
-    public float MinRange = minRange;
-    public float MaxRange = maxRange;
+    public ChatAttemptEvent Event = ev;
 }
 
 /// <summary>
@@ -134,3 +61,89 @@ public sealed class ChatSanitizationEvent<T>(T attemptEvent) where T : ChatAttem
         ChatMessageSanitized = inMessage;
     }
 }
+
+public abstract class ChatEvent(uint id, ChatContext context, EntityUid sender, string message, MessageType type) : IChatEvent
+{
+    public ChatContext Context { get; } = context;
+    public EntityUid Sender { get; set; } = sender;
+    public string Message { get; set; } = message;
+    public MessageType Type { get; } = type;
+    public uint Id { get; set; } = id;
+}
+
+// /// <summary>
+// /// Raised locally when a comms announcement is made.
+// /// </summary>
+// public sealed class CommsAnnouncementCreatedEvent(uint id, ChatContext context, EntityUid sender, EntityUid console, string message) : ChatEvent(id, context, sender, message, MessageType.Announcement)
+// {
+//     public EntityUid Console = console;
+// }
+//
+// /// <summary>
+// /// Raised locally when a character speaks in Dead Chat.
+// /// </summary>
+// public sealed class DeadChatCreatedEvent(uint id, ChatContext context, EntityUid speaker, string message, bool isAdmin) : ChatEvent(id, context, speaker, message, MessageType.DeadChat)
+// {
+//     public bool IsAdmin = isAdmin;
+// }
+//
+// /// <summary>
+// /// Raised locally when a character emotes.
+// /// </summary>
+// public sealed class EmoteCreatedEvent(uint id, ChatContext context, EntityUid sender, string message, float range) : ChatEvent(id, context, sender, message, MessageType.Emote)
+// {
+//     public float Range = range;
+// }
+//
+// /// <summary>
+// /// Raised locally when a character talks in local.
+// /// </summary>
+// public sealed class VerbalChatCreatedEvent(uint id, ChatContext context, EntityUid speaker, string message, float range) : ChatEvent
+// {
+//     public ChatContext Context { get; } = context;
+//     public uint Id { get; set; }
+//     public EntityUid Sender { get; set; } = speaker;
+//     public string Message { get; set; } = message;
+//     public MessageType Type => MessageType.Local;
+//     public float Range = range;
+//     public VerbalVolume Volume;
+// }
+//
+// /// <summary>
+// /// Raised locally when a character speaks in LOOC.
+// /// </summary>
+// public sealed class LoocCreatedEvent(uint id, ChatContext context, EntityUid speaker, string message) : ChatEvent
+// {
+//     public ChatContext Context { get; } = context;
+//     public uint Id { get; set; }
+//     public EntityUid Sender { get; set; } = speaker;
+//     public string Message { get; set; } = message;
+//     public MessageType Type => MessageType.Looc;
+// }
+//
+// /// <summary>
+// /// Raised locally when a character speaks on the radio.
+// /// </summary>
+// public sealed class RadioCreatedEvent(uint id, ChatContext context, EntityUid speaker, string message, ProtoId<RadioChannelPrototype> channel) : ChatEvent
+// {
+//     public ChatContext Context { get; } = context;
+//     public uint Id { get; set; }
+//     public EntityUid Sender { get; set; } = speaker;
+//     public string Message { get; set; } = message;
+//     public ProtoId<RadioChannelPrototype> Channel = channel;
+//     public MessageType Type => MessageType.Radio;
+// }
+//
+// /// <summary>
+// /// Raised locally when a character whispers.
+// /// </summary>
+// public sealed class WhisperCreatedEvent(uint id, ChatContext context, EntityUid speaker, string message, float minRange, float maxRange) : ChatEvent
+// {
+//     public uint Id { get; set; }
+//     public EntityUid Sender { get; set; } = speaker;
+//     public string Message { get; set; } = message;
+//     public MessageType Type => MessageType.Whisper;
+//     public float MinRange = minRange;
+//     public float MaxRange = maxRange;
+// }
+//

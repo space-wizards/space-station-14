@@ -1,3 +1,5 @@
+using Content.Shared.Chat.V2.Systems;
+
 namespace Content.Shared.Chat.V2;
 
 /// <summary>
@@ -54,10 +56,15 @@ public enum MessageType : byte
 }
 
 /// <summary>
-/// Defines a chat event that can be stored in a chat repository.
+/// Defines a very generic chat event.
 /// </summary>
 public interface IChatEvent
 {
+    public ChatContext Context
+    {
+        get;
+    }
+
     /// <summary>
     /// The sender of the chat message.
     /// </summary>
@@ -91,4 +98,39 @@ public interface IChatEvent
     {
         get;
     }
+
+    public void SetId(uint id)
+    {
+        if (Id != 0)
+        {
+            return;
+        }
+
+        Id = id;
+    }
+}
+
+/// <summary>
+/// Covers the volumes a verbal chat message can be sent with.
+/// </summary>
+public enum VerbalVolume : byte
+{
+    // Thought, not spoken, and thus totally silent. Used for telepathic-like communications using other systems like radio.
+    Internal,
+    // Short-range, obfuscated if too far away, no voice ID if too far away and no visuals
+    Whisper,
+    // Normal range.
+    Talk,
+    // Normal range but BIGGER TEXT!!
+    Shout,
+    // The entity breaks the fourth wall. Works just like Talk but the message is flagged as OOC.
+    OutOfCharacter
+}
+
+public enum OutOfCharacterChatChannel : byte
+{
+    Dead,
+    OutOfCharacter,
+    Admin,
+    System
 }
