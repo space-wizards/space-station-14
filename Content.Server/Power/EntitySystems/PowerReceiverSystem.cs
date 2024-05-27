@@ -168,11 +168,9 @@ namespace Content.Server.Power.EntitySystems
         /// Otherwise, it returns 'true' because if something doesn't take power
         /// it's effectively always powered.
         /// </summary>
-        public bool IsPowered(EntityUid uid, ApcPowerReceiverComponent? receiver = null)
+        /// <returns>Whether the entity is powered.</returns>
+        public bool CalculatePoweredState(EntityUid uid, ApcPowerReceiverComponent receiver)
         {
-            if (!_recQuery.Resolve(uid, ref receiver, false))
-                return true;
-
             return !receiver.PowerDisabled
                    && (!receiver.NeedsPower
                        || MathHelper.CloseToPercent(receiver.NetworkLoad.ReceivingPower, receiver.Load));
