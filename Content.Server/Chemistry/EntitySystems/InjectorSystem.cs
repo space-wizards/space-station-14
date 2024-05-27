@@ -29,7 +29,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
         SubscribeLocalEvent<InjectorComponent, AfterInteractEvent>(OnInjectorAfterInteract);
     }
 
-    private void UseInjector(Entity<InjectorComponent> injector, EntityUid target, EntityUid user)
+    private bool TryUseInjector(Entity<InjectorComponent> injector, EntityUid target, EntityUid user)
     {
         // Handle injecting/drawing for solutions
         if (injector.Comp.ToggleState == InjectorToggleMode.Inject)
@@ -50,7 +50,9 @@ public sealed class InjectorSystem : SharedInjectorSystem
             {
                 Popup.PopupEntity(Loc.GetString("injector-component-cannot-transfer-message",
                     ("target", Identity.Entity(target, EntityManager))), injector, user);
+                return false;
             }
+            return true;
         }
         else if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
         {
@@ -59,20 +61,23 @@ public sealed class InjectorSystem : SharedInjectorSystem
                 SolutionContainers.ResolveSolution(target, stream.BloodSolutionName, ref stream.BloodSolution))
             {
                 TryDraw(injector, (target, stream), stream.BloodSolution.Value, user);
-                return;
+                return true;
             }
 
             // Draw from an object (food, beaker, etc)
             if (SolutionContainers.TryGetDrawableSolution(target, out var drawableSolution, out _))
             {
                 TryDraw(injector, target, drawableSolution.Value, user);
+                return true;
             }
             else
             {
                 Popup.PopupEntity(Loc.GetString("injector-component-cannot-draw-message",
                     ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
+                return false;
             }
         }
+        return false;
     }
 
     private void OnInjectDoAfter(Entity<InjectorComponent> entity, ref InjectorDoAfterEvent args)
@@ -80,8 +85,10 @@ public sealed class InjectorSystem : SharedInjectorSystem
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
-        UseInjector(entity, args.Args.Target.Value, args.Args.User);
-        args.Handled = true;
+        if (TryUseInjector(entity, args.Args.Target.Value, args.Args.User))
+        {
+            args.Handled = true;
+        }
     }
 
     private void OnInjectorAfterInteract(Entity<InjectorComponent> entity, ref AfterInteractEvent args)
@@ -105,8 +112,10 @@ public sealed class InjectorSystem : SharedInjectorSystem
             return;
         }
 
-        UseInjector(entity, target, args.User);
-        args.Handled = true;
+        if (TryUseInjector(entity, target, args.User))
+        {
+            args.Handled = true;
+        }
     }
 
     /// <summary>

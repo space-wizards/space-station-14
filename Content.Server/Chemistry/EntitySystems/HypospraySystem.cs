@@ -35,7 +35,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
         SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
     }
 
-    private void UseHypospray(Entity<HyposprayComponent> entity, EntityUid target, EntityUid user)
+    private bool TryUseHypospray(Entity<HyposprayComponent> entity, EntityUid target, EntityUid user)
     {
         // if target is ineligible but is a container, try to draw from the container
         if (!EligibleEntity(target, EntityManager, entity)
@@ -44,7 +44,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
             TryDraw(entity, target, drawableSolution.Value, user);
         }
 
-        TryDoInject(entity, target, user);
+        return TryDoInject(entity, target, user);
     }
 
     private void OnUseInHand(Entity<HyposprayComponent> entity, ref UseInHandEvent args)
@@ -52,8 +52,10 @@ public sealed class HypospraySystem : SharedHypospraySystem
         if (args.Handled)
             return;
 
-        TryDoInject(entity, args.User, args.User);
-        args.Handled = true;
+        if (TryDoInject(entity, args.User, args.User))
+        {
+            args.Handled = true;
+        }
     }
 
     public void OnAfterInteract(Entity<HyposprayComponent> entity, ref AfterInteractEvent args)
@@ -61,8 +63,10 @@ public sealed class HypospraySystem : SharedHypospraySystem
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
-        UseHypospray(entity, args.Target.Value, args.User);
-        args.Handled = true;
+        if (TryUseHypospray(entity, args.Target.Value, args.User))
+        {
+            args.Handled = true;
+        }
     }
 
     public void OnAttack(Entity<HyposprayComponent> entity, ref MeleeHitEvent args)
@@ -150,12 +154,12 @@ public sealed class HypospraySystem : SharedHypospraySystem
         return true;
     }
 
-    private void TryDraw(Entity<HyposprayComponent> entity, Entity<BloodstreamComponent?> target, Entity<SolutionComponent> targetSolution, EntityUid user)
+    private bool TryDraw(Entity<HyposprayComponent> entity, Entity<BloodstreamComponent?> target, Entity<SolutionComponent> targetSolution, EntityUid user)
     {
         if (!_solutionContainers.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var soln,
                 out var solution) || solution.AvailableVolume == 0)
         {
-            return;
+            return false;
         }
 
         // Get transfer amount. May be smaller than _transferAmount if not enough room, also make sure there's room in the injector
@@ -168,19 +172,20 @@ public sealed class HypospraySystem : SharedHypospraySystem
                 Loc.GetString("injector-component-target-is-empty-message",
                     ("target", Identity.Entity(target, EntityManager))),
                 entity.Owner, user);
-            return;
+            return false;
         }
 
         var removedSolution = _solutionContainers.Draw(target.Owner, targetSolution, realTransferAmount);
 
         if (!_solutionContainers.TryAddSolution(soln.Value, removedSolution))
         {
-            return;
+            return false;
         }
 
         _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
             ("amount", removedSolution.Volume),
             ("target", Identity.Entity(target, EntityManager))), entity.Owner, user);
+        return false;
     }
 
     private bool EligibleEntity(EntityUid entity, IEntityManager entMan, HyposprayComponent component)
