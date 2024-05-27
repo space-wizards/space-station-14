@@ -73,6 +73,6 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
 
     private void OnBatteryChanged(Entity<StunProviderComponent> ent, ref NinjaBatteryChangedEvent args)
     {
-        SetBattery(ent, args.Battery);
+        SetBattery((ent, ent.Comp), args.Battery);
     }
 }
