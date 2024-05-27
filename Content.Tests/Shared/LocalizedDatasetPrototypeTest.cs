@@ -1,3 +1,4 @@
+using System;
 using Content.Shared.Dataset;
 using NUnit.Framework;
 using Robust.Shared.Collections;
@@ -49,6 +50,8 @@ public sealed class LocalizedDatasetPrototypeTest : ContentUnitTest
         Assert.That(values[1], Is.EqualTo("test-dataset-2"));
         Assert.That(values[2], Is.EqualTo("test-dataset-3"));
         Assert.That(values[3], Is.EqualTo("test-dataset-4"));
+        Assert.Throws<IndexOutOfRangeException>(() => { var x = values[4]; });
+        Assert.Throws<IndexOutOfRangeException>(() => { var x = values[-1]; });
 
         // Make sure that the enumerator gets all of the values
         Assert.That(testPrototype.Values[testPrototype.Values.Count], Is.EqualTo("test-dataset-4"));
