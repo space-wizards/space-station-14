@@ -91,7 +91,7 @@
       params:
         volume: 2.25
 
-# Python w/ AP
+# Python [armor-piercing]
 - type: entity
   parent: WeaponRevolverPython
   id: WeaponRevolverPythonAP # For the uplink.
