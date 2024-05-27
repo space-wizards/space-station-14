@@ -43,7 +43,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     {
         var user = args.Wearer;
         if (_ninja.NinjaQuery.TryComp(user, out var ninja));
-            NinjaEquipped(ent, (user, ninja));
+            NinjaEquipped(ent, (user, ninja.Value));
     }
 
     protected virtual void NinjaEquipped(Entity<NinjaSuitComponent> ent, Entity<SpaceNinjaComponent> user)
@@ -112,7 +112,8 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        var (uid, comp) = ent;
+        var uid = ent.Owner;
+        var comp = ent.Comp;
         if (_toggle.TryDeactivate(uid, user) || !disable)
             return;
 
