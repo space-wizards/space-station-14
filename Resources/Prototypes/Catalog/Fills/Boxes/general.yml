@@ -39,10 +39,6 @@
   id: BoxLightbulb
   description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
-  - type: StorageFill
-    contents:
-      - id: LightBulb
-        amount: 12
   - type: Sprite
     layers:
       - state: box
@@ -53,50 +49,40 @@
     whitelist:
       components:
       - LightBulb
+  - type: StorageFill
+    contents:
+      - id: LightBulb
+        amount: 12
 
 - type: entity
   name: lighttube box
-  parent: BoxCardboard
+  parent: BoxLightbulb
   id: BoxLighttube
-  description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
-  - type: StorageFill
-    contents:
-      - id: LightTube
-        amount: 12
   - type: Sprite
     layers:
       - state: box
       - state: lighttube
-  - type: Storage
-    grid:
-    - 0,0,5,3
-    whitelist:
-      components:
-      - LightBulb
+  - type: StorageFill
+    contents:
+      - id: LightTube
+        amount: 12
 
 - type: entity
   name: mixed lights box
-  parent: BoxCardboard
+  parent: BoxLightbulb
   id: BoxLightMixed
-  description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
+  - type: Sprite
+    layers:
+      - state: box
+      - state: lightmixed
   - type: StorageFill
     contents:
       - id: LightTube
         amount: 6
       - id: LightBulb
         amount: 6
-  - type: Sprite
-    layers:
-      - state: box
-      - state: lightmixed
-  - type: Storage
-    grid:
-    - 0,0,5,3
-    whitelist:
-      components:
-      - LightBulb
 
 - type: entity
   name: PDA box
@@ -451,7 +437,7 @@
   name: darts box
   parent: BoxCardboard
   id: BoxDarts
-  description: This box is filled with colorful darts.
+  description: A box filled with colorful darts.
   components:
   - type: Sprite
     layers:
