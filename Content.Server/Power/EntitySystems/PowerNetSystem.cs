@@ -303,7 +303,10 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = AllEntityQuery<ApcPowerReceiverComponent>();
             while (enumerator.MoveNext(out var uid, out var apcReceiver))
             {
-                var powered = _powerReceiver.CalculatePoweredState(uid, apcReceiver);
+                var powered = !apcReceiver.PowerDisabled
+                              && (!apcReceiver.NeedsPower
+                                  || MathHelper.CloseToPercent(apcReceiver.NetworkLoad.ReceivingPower,
+                                      apcReceiver.Load));
 
                 // If new value is the same as the old, then exit
                 if (!apcReceiver.Recalculate && apcReceiver.Powered == powered)
