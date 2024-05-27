@@ -1,6 +1,5 @@
 - type: entity
   name: Bulldog
-  # Don't parent to BaseWeaponShotgun because it differs significantly
   parent:
   - BaseGunLarge
   - BaseGunWieldable
@@ -18,10 +17,6 @@
     size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
-    # quickEquip: false
-    # slots:
-    # - Back
-    # - suitStorage
   - type: AmmoCounter
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
@@ -54,8 +49,6 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
-  # - type: StaticPrice
-  #   price: 500
 
 - type: entity
   name: double-barreled shotgun
@@ -299,7 +292,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
-    fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
+    fireRate: 4
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
