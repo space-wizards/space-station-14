@@ -119,7 +119,6 @@
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
-  - type: BallisticAmmoProvider
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
 
 # Enforcer [Non-Lethal]
@@ -141,16 +140,16 @@
   name: Kammerer
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
   components:
-  - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
-    sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
+    sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
@@ -219,13 +218,13 @@
   name: handmade pistol
   description: Looks unreliable. Uses .50 shotgun shells.
   components:
-  - type: Item
-    storedRotation: 90
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
+  - type: Item
+    storedRotation: 90
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Gun
@@ -254,15 +253,15 @@
   suffix: Pirate
   description: Deadly at close range.
   components:
-  - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/blunderbuss.rsi
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 2
