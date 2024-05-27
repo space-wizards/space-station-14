@@ -305,13 +305,26 @@ namespace Content.Server.Power.EntitySystems
 
         private void UpdateApcPowerReceiver()
         {
-            var enumerator = AllEntityQuery<ApcPowerReceiverComponent, MetaDataComponent>();
-            while (enumerator.MoveNext(out var uid, out var apcReceiver, out var metaDataComponent))
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+            var enumerator = AllEntityQuery<ApcPowerReceiverComponent>();
+            while (enumerator.MoveNext(out var uid, out var apcReceiver))
             {
-                if (metaDataComponent.EntityPaused)
+                var powered = _powerReceiver.IsPowered(uid, apcReceiver);
+
+                // If new value is the same as the old, then exit
+                if (!apcReceiver.Recalculate && apcReceiver.Powered == powered)
                     continue;
 
-                _powerReceiver.UpdateIsPowered((uid, apcReceiver));
+                var metadata = metaQuery.Comp(uid);
+                if (metadata.EntityPaused)
+                    continue;
+
+                apcReceiver.Recalculate = false;
+                apcReceiver.Powered = powered;
+                Dirty(uid, apcReceiver, metadata);
+
+                var ev = new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower);
+                RaiseLocalEvent(uid, ref ev);
             }
         }
 
