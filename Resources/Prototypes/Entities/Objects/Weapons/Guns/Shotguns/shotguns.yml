@@ -89,9 +89,7 @@
 - type: entity
   parent: WeaponShotgunDoubleBarreled
   id: WeaponShotgunDoubleBarreledRubber
-  name: double-barreled shotgun
   suffix: Non-Lethal
-  description: An immortal classic. Uses .50 shotgun shells.
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
@@ -203,9 +201,7 @@
 - type: entity
   parent: WeaponShotgunSawn
   id: WeaponShotgunSawnEmpty
-  name: sawn-off shogun
   suffix: Empty
-  description: Groovy! Uses .50 shotgun shells.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -321,7 +317,6 @@
 - type: entity
   parent: WeaponShotgunImprovised
   id: WeaponShotgunImprovisedLoaded
-  name: improvised shotgun
   suffix: Loaded
   components:
   - type: BallisticAmmoProvider
