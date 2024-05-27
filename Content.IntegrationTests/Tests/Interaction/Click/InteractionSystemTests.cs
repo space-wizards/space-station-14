@@ -407,7 +407,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             await pair.CleanReturnAsync();
         }
 
-        [Reflect(false)]
         public sealed class TestInteractionSystem : EntitySystem
         {
             public EntityEventHandler<InteractUsingEvent>? InteractUsingEvent;

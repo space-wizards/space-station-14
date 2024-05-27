@@ -222,5 +222,29 @@ Entries:
   id: 28
   time: '2024-05-12T15:07:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27883
+- author: Arimah and TsjipTsjip
+  changes:
+  - message: Universal access configurator which can modify all access levels with
+      the correct ID card.
+    type: Add
+  - message: Universal ID card which has all access levels.
+    type: Add
+  - message: Admin PDA's spawn with a universal ID card, admin ghosts get a universal
+      access configurator in their bluespace satchel.
+    type: Tweak
+  id: 29
+  time: '2024-05-19T23:04:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28107
+- author: Repo
+  changes:
+  - message: Added listgamerules command, lists all run game modes for the round.
+    type: Add
+  - message: Added admin anouncement for addgamerule
+    type: Add
+  - message: Gamemode now shows after starting round.
+    type: Fix
+  id: 30
+  time: '2024-05-25T20:18:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28178
 Name: Admin
 Order: 1

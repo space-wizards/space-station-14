@@ -261,7 +261,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         if (!Resolve(stationUid, ref stationShuttle))
             return;
 
-        if (!TryComp<TransformComponent>(stationShuttle.EmergencyShuttle, out var xform) ||
+        if (!TryComp(stationShuttle.EmergencyShuttle, out TransformComponent? xform) ||
             !TryComp<ShuttleComponent>(stationShuttle.EmergencyShuttle, out var shuttle))
         {
             Log.Error($"Attempted to call an emergency shuttle for an uninitialized station? Station: {ToPrettyString(stationUid)}. Shuttle: {ToPrettyString(stationShuttle.EmergencyShuttle)}");
@@ -284,10 +284,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         if (_shuttle.TryFTLDock(stationShuttle.EmergencyShuttle.Value, shuttle, targetGrid.Value, DockTag))
         {
-            if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
+            if (TryComp(targetGrid.Value, out TransformComponent? targetXform))
             {
                 var angle = _dock.GetAngle(stationShuttle.EmergencyShuttle.Value, xform, targetGrid.Value, targetXform, xformQuery);
-                _chatSystem.DispatchStationAnnouncement(stationUid, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}"), ("direction", angle.GetDir())), playDefaultSound: false);
+                var location = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString((stationShuttle.EmergencyShuttle.Value, xform)));
+                _chatSystem.DispatchStationAnnouncement(stationUid, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}"), ("direction", angle.GetDir()), ("location", location)), playDefaultSound: false);
             }
 
             // shuttle timers
@@ -313,8 +314,12 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
         else
         {
-            var location = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString((stationShuttle.EmergencyShuttle.Value, xform)));
-            _chatSystem.DispatchStationAnnouncement(stationUid, Loc.GetString("emergency-shuttle-nearby", ("direction", location)), playDefaultSound: false);
+            if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
+            {
+                var angle = _dock.GetAngle(stationShuttle.EmergencyShuttle.Value, xform, targetGrid.Value, targetXform, xformQuery);
+                var location = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString((stationShuttle.EmergencyShuttle.Value, xform)));
+                _chatSystem.DispatchStationAnnouncement(stationUid, Loc.GetString("emergency-shuttle-nearby", ("time", $"{_consoleAccumulator:0}"), ("direction", angle.GetDir()), ("location", location)), playDefaultSound: false);
+            }
 
             _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid)} unable to find a valid docking port for {ToPrettyString(stationUid)}");
             // TODO: Need filter extensions or something don't blame me.
@@ -330,7 +335,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return;
 
         // Post mapinit? fancy
-        if (TryComp<TransformComponent>(component.Entity, out var xform))
+        if (TryComp(component.Entity, out TransformComponent? xform))
         {
             component.MapEntity = xform.MapUid;
             return;
