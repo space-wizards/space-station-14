@@ -18,7 +18,7 @@
     # slots:
     # - Back
     # - suitStorage
-  - type: AmmoCounter
+  # - type: AmmoCounter
   - type: Gun
     # fireRate: 2
     # selectedMode: SemiAuto
@@ -28,18 +28,18 @@
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-      - ShellShotgun
-    capacity: 7
-    proto: ShellShotgun
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
+  # - type: BallisticAmmoProvider
+  #   whitelist:
+  #     tags:
+  #     - ShellShotgun
+  #   capacity: 7
+  #   proto: ShellShotgun
+  #   soundInsert:
+  #     path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+  # - type: ContainerContainer
+  #   containers:
+  #     ballistic-ammo: !type:Container
+  #       ents: []
   - type: StaticPrice
     price: 500
 
@@ -107,6 +107,7 @@
   parent:
   - BaseGunLarge
   - BaseGunWieldable
+  - BaseGunShotgunBallistic
   - BaseWeaponShotgun
   id: WeaponShotgunDoubleBarreled
   description: An immortal classic. Uses .50 shotgun shells.
@@ -143,6 +144,7 @@
   parent:
   - BaseGunLarge
   - BaseGunWieldable
+  - BaseGunShotgunBallistic
   - BaseWeaponShotgun
   id: WeaponShotgunEnforcer
   description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
@@ -170,6 +172,7 @@
   parent:
   - BaseGunLarge
   - BaseGunWieldable
+  - BaseGunShotgunBallistic
   - BaseWeaponShotgun
   id: WeaponShotgunKammerer
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
@@ -194,6 +197,7 @@
   name: sawn-off shotgun
   parent:
   - BaseGunSmall
+  - BaseGunShotgunBallistic
   - BaseWeaponShotgun
   id: WeaponShotgunSawn
   description: Groovy! Uses .50 shotgun shells.
@@ -232,6 +236,7 @@
   name: handmade pistol
   parent:
   - BaseGunSmall
+  - BaseGunShotgunBallistic
   - BaseWeaponShotgun
   id: WeaponShotgunHandmade
   description: Looks unreliable. Uses .50 shotgun shells.
@@ -258,6 +263,7 @@
   parent:
   - BaseGunLarge
   - BaseGunWieldable
+  - BaseGunShotgunBallistic
   - BaseWeaponShotgun
   id: WeaponShotgunBlunderbuss
   suffix: Pirate
@@ -282,6 +288,7 @@
   parent:
   - BaseGunLarge
   - BaseGunWieldable
+  - BaseGunShotgunBallistic
   - BaseWeaponShotgun
   id: WeaponShotgunImprovised
   description: A shitty, hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.

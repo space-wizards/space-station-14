@@ -1,0 +1,20 @@
+# BALLISTIC SHOTGUN
+# A basic template for a shotgun that uses the BallisticAmmoProvider component.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunShotgunBallistic
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - ShellShotgun
+    capacity: 7
+    proto: ShellShotgun
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: AmmoCounter
