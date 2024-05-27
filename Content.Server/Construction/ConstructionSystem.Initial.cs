@@ -99,7 +99,7 @@ namespace Content.Server.Construction
             ConstructionGraphEdge edge,
             ConstructionGraphNode targetNode,
             EntityCoordinates coords,
-            Angle angle)
+            Angle angle = default)
         {
             // We need a place to hold our construction items!
             var container = _container.EnsureContainer<Container>(user, materialContainer, out var existed);
@@ -390,8 +390,7 @@ namespace Content.Server.Construction
                     constructionGraph,
                     edge,
                     targetNode,
-                    Transform(user).Coordinates,
-                    Angle.Zero) is not { Valid: true } item)
+                    Transform(user).Coordinates) is not { Valid: true } item)
                 return false;
 
             // Just in case this is a stack, attempt to merge it. If it isn't a stack, this will just normally pick up
