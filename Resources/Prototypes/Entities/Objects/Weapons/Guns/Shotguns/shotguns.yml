@@ -20,10 +20,10 @@
     # - suitStorage
   - type: AmmoCounter
   - type: Gun
-    fireRate: 2
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
+    # fireRate: 2
+    # selectedMode: SemiAuto
+    # availableModes:
+    # - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
