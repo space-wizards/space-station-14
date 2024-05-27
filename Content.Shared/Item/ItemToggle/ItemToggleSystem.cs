@@ -59,7 +59,7 @@ public sealed class ItemToggleSystem : EntitySystem
 
         args.Handled = true;
 
-        Toggle(ent, args.User, predicted: ent.Comp.Predictable);
+        Toggle((ent, ent.Comp), args.User, predicted: ent.Comp.Predictable);
     }
 
     /// <summary>
@@ -95,7 +95,8 @@ public sealed class ItemToggleSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        var (uid, comp) = ent;
+        var uid = ent.Owner;
+        var comp = ent.Comp;
         if (comp.Activated)
             return true;
 
@@ -124,7 +125,7 @@ public sealed class ItemToggleSystem : EntitySystem
             return false;
         }
 
-        Activate(ent, predicted, user);
+        Activate((uid, comp), predicted, user);
 
         return true;
     }
@@ -137,7 +138,8 @@ public sealed class ItemToggleSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        var (uid, comp) = ent;
+        var uid = ent.Owner;
+        var comp = ent.Comp;
         if (!comp.Activated)
             return true;
 
@@ -151,7 +153,7 @@ public sealed class ItemToggleSystem : EntitySystem
             return false;
 
         if (!comp.Predictable) predicted = false;
-        Deactivate(ent, predicted, user);
+        Deactivate((uid, comp), predicted, user);
         return true;
     }
 
@@ -217,7 +219,7 @@ public sealed class ItemToggleSystem : EntitySystem
     /// </summary>
     private void TurnOffOnUnwielded(Entity<ItemToggleComponent> ent, ref ItemUnwieldedEvent args)
     {
-        TryDeactivate(ent, args.User);
+        TryDeactivate((ent, ent.Comp), args.User);
     }
 
     /// <summary>
@@ -226,7 +228,7 @@ public sealed class ItemToggleSystem : EntitySystem
     private void TurnOnOnWielded(Entity<ItemToggleComponent> ent, ref ItemWieldedEvent args)
     {
         // FIXME: for some reason both client and server play sound
-        TryActivate(ent);
+        TryActivate((ent, ent.Comp));
     }
 
     public bool IsActivated(Entity<ItemToggleComponent?> ent)

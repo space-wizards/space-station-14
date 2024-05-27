@@ -38,7 +38,7 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     /// </summary>
     public void AssignSuit(Entity<SpaceNinjaComponent> ent, EntityUid? suit)
     {
-        if (!NinjaQuery.Resolve(ent, ref ent.Comp) || ent.Comp.Suit == suit)
+        if (ent.Comp.Suit == suit)
             return;
 
         ent.Comp.Suit = suit;
@@ -50,7 +50,7 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     /// </summary>
     public void AssignGloves(Entity<SpaceNinjaComponent> ent, EntityUid? gloves)
     {
-        if (!NinjaQuery.Resolve(ent, ref ent.Comp) || ent.Comp.Gloves == gloves)
+        if (ent.Comp.Gloves == gloves)
             return;
 
         ent.Comp.Gloves = gloves;
