@@ -13,7 +13,7 @@ public sealed class BluespaceArtifactRule : StationEventSystem<BluespaceArtifact
 
         var str = Loc.GetString("bluespace-artifact-event-announcement",
             ("sighting", Loc.GetString(RobustRandom.Pick(component.PossibleSighting))));
-        ChatSystem.DispatchGlobalAnnouncement(str, colorOverride: Color.FromHex("#18abf5"));
+        ChatSystem.DispatchGlobalAnnouncement(str, playSound: false, colorOverride: Color.FromHex("#18abf5"));
     }
 
     protected override void Started(EntityUid uid, BluespaceArtifactRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)

@@ -4,6 +4,8 @@
   noSpawn: true
   components:
   - type: StationEvent
+    startAudio:
+      path: /Audio/Announcements/announce.ogg
     weight: 8
     startDelay: 30
     duration: 35
@@ -15,6 +17,8 @@
   noSpawn: true
   components:
   - type: StationEvent
+    startAudio:
+      path: /Audio/Announcements/announce.ogg
     weight: 8
     startDelay: 30
     duration: 35
