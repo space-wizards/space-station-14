@@ -1,9 +1,10 @@
+# Bulldog
 - type: entity
-  name: Bulldog
   parent:
   - BaseGunLarge
   - BaseGunWieldable
   id: WeaponShotgunBulldog
+  name: Bulldog
   description: It's a magazine-fed shotgun designed for close quarters combat. Uses .50 shotgun shells.
   components:
   - type: Sprite
@@ -50,13 +51,14 @@
     zeroVisible: true
   - type: Appearance
 
+# double-barreled shotgun
 - type: entity
-  name: double-barreled shotgun
   parent:
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
   id: WeaponShotgunDoubleBarreled
+  name: double-barreled shotgun
   description: An immortal classic. Uses .50 shotgun shells.
   components:
   - type: Sprite
@@ -83,23 +85,25 @@
     node: start
     deconstructionTarget: null
 
+# double-barreled shotgun [Non-Lethal]
 - type: entity
-  name: double-barreled shotgun
   parent: WeaponShotgunDoubleBarreled
   id: WeaponShotgunDoubleBarreledRubber
-  description: An immortal classic. Uses .50 shotgun shells.
+  name: double-barreled shotgun
   suffix: Non-Lethal
+  description: An immortal classic. Uses .50 shotgun shells.
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
 
+# Enforcer
 - type: entity
-  name: Enforcer
   parent:
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
   id: WeaponShotgunEnforcer
+  name: Enforcer
   description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
   components:
   - type: Sprite
@@ -120,6 +124,7 @@
   - type: BallisticAmmoProvider
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
 
+# Enforcer [Non-Lethal]
 - type: entity
   parent: WeaponShotgunEnforcer
   id: WeaponShotgunEnforcerRubber
@@ -128,13 +133,14 @@
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
 
+# Kammerer
 - type: entity
-  name: Kammerer
   parent:
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
   id: WeaponShotgunKammerer
+  name: Kammerer
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
   components:
   - type: Item
@@ -161,12 +167,13 @@
     tags:
     - WeaponShotgunKammerer
 
+# sawn-off shotgun
 - type: entity
-  name: sawn-off shotgun
   parent:
   - BaseGunSmall
   - BaseGunShotgunBallistic
   id: WeaponShotgunSawn
+  name: sawn-off shotgun
   description: Groovy! Uses .50 shotgun shells.
   components:
   - type: Sprite
@@ -192,12 +199,13 @@
     node: shotgunsawn
     deconstructionTarget: null
 
+# sawn-off shogun [Empty]
 - type: entity
-  name: sawn-off shogun
   parent: WeaponShotgunSawn
   id: WeaponShotgunSawnEmpty
-  description: Groovy! Uses .50 shotgun shells.
+  name: sawn-off shogun
   suffix: Empty
+  description: Groovy! Uses .50 shotgun shells.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -206,12 +214,13 @@
     node: shotgunsawn
     deconstructionTarget: null
 
+# handmade pistol
 - type: entity
-  name: handmade pistol
   parent:
   - BaseGunSmall
   - BaseGunShotgunBallistic
   id: WeaponShotgunHandmade
+  name: handmade pistol
   description: Looks unreliable. Uses .50 shotgun shells.
   components:
   - type: Item
@@ -238,13 +247,14 @@
   - type: StaticPrice
     price: 0
 
+# blunderbuss [Pirate]
 - type: entity
-  name: blunderbuss
   parent:
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
   id: WeaponShotgunBlunderbuss
+  name: blunderbuss
   suffix: Pirate
   description: Deadly at close range.
   components:
@@ -269,13 +279,14 @@
   - type: StaticPrice
     price: 0
 
+# improvised shotgun
 - type: entity
-  name: improvised shotgun
   parent:
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
   id: WeaponShotgunImprovised
+  name: improvised shotgun
   description: A shitty, hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
   components:
   - type: Sprite
@@ -306,11 +317,12 @@
   - type: StaticPrice
     price: 20
 
+# improvised shotgun [Loaded]
 - type: entity
-  name: improvised shotgun
   parent: WeaponShotgunImprovised
-  suffix: Loaded
   id: WeaponShotgunImprovisedLoaded
+  name: improvised shotgun
+  suffix: Loaded
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunImprovised
