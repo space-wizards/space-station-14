@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
+using Content.Shared.Chat.V2.Systems;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 
@@ -16,23 +17,17 @@ public sealed class RadioChannelValidationSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChatValidationEvent<AttemptEquipmentRadioEvent>>(OnValidateAttemptEquipmentRadioEvent);
-        SubscribeLocalEvent<ChatValidationEvent<AttemptInternalRadioEvent>>(OnValidateAttemptInternalRadioEvent);
+        SubscribeLocalEvent<ChatValidationEvent<AttemptVerbalChatEvent>>(OnValidateAttemptVerbalChatEvent);
     }
 
-    private void OnValidateAttemptEquipmentRadioEvent(ChatValidationEvent<AttemptEquipmentRadioEvent> msg, EntitySessionEventArgs args)
+    private void OnValidateAttemptVerbalChatEvent(ChatValidationEvent<AttemptVerbalChatEvent> msg, EntitySessionEventArgs args)
     {
+        if (msg.Event.Channel == null)
+            return;
+
         if (!_proto.TryIndex(msg.Event.Channel, out _) ||
             !TryComp<CanRadioUsingEquipmentComponent>(GetEntity(msg.Event.Sender), out var comp) ||
-            !comp.Channels.Contains(msg.Event.Channel))
-            msg.Cancel(Loc.GetString(RadioChannelFailed, (RadioChannelKey, msg.Event.Channel)));
-    }
-
-    private void OnValidateAttemptInternalRadioEvent(ChatValidationEvent<AttemptInternalRadioEvent> msg, EntitySessionEventArgs args)
-    {
-        if (!_proto.TryIndex(msg.Event.Channel, out _) ||
-            !TryComp<CanRadioComponent>(GetEntity(msg.Event.Sender), out var comp) ||
-            !comp.SendChannels.Contains(msg.Event.Channel)
+            !comp.Channels.Contains(msg.Event.Channel)
         )
             msg.Cancel(Loc.GetString(RadioChannelFailed, (RadioChannelKey, msg.Event.Channel)));
     }
