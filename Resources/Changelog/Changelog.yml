@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Unpressurized areas now deal heat damage along with blunt.
-    type: Tweak
-  id: 6126
-  time: '2024-03-12T02:38:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25770
 - author: nikthechampiongr
   changes:
   - message: Recyclers now leave logs when they gib people.
@@ -3870,3 +3863,12 @@
   id: 6625
   time: '2024-05-27T00:11:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28126
+- author: EmoGarbage404
+  changes:
+  - message: Multiple pipes facing the same direction can no longer be placed on the
+      same tile. You can still have overlapping straight pipes or corners going in
+      opposite directions.
+    type: Fix
+  id: 6626
+  time: '2024-05-27T22:37:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28308
