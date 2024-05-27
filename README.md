@@ -7,10 +7,6 @@ Space Station 14 is a remake of SS13 that runs on [Robust Toolbox](https://githu
 
 ### Grey Station 14 is a continuation of the [Nyanotrasen](https://www.nyanotrasen.moe/) fork. Any work done in a non-base namespace may contain incorrect attributes due to rewrites and recommitting.
 
-## Links
-
-[Discord](https://discord.gg/VbtzRUR5Zr)
-
 #### Space Station 14
 
 [Website](https://spacestation14.io/) | [Discord](https://discord.ss14.io/) | [Forum](https://forum.spacestation14.io/) | [Steam](https://store.steampowered.com/app/1255460/Space_Station_14/) | [Standalone Download](https://spacestation14.io/about/nightlies/)
