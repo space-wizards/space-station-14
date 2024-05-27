@@ -48,6 +48,7 @@ namespace Content.Server.Power.Components
             set => NetworkLoad.Enabled = !value;
         }
 
+        // TODO Is this needed? It forces a PowerChangedEvent when NeedsPower is toggled even if it changes to the same state.
         public bool Recalculate;
 
         [ViewVariables]
@@ -64,10 +65,5 @@ namespace Content.Server.Power.Components
     /// Does nothing on the client.
     /// </summary>
     [ByRefEvent]
-    public readonly record struct PowerChangedEvent(bool Powered, float ReceivingPower)
-    {
-        public readonly bool Powered = Powered;
-        public readonly float ReceivingPower = ReceivingPower;
-    }
-
+    public readonly record struct PowerChangedEvent(bool Powered, float ReceivingPower);
 }
