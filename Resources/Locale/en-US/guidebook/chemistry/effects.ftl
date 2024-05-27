@@ -367,7 +367,7 @@ reagent-effect-guidebook-plant-phalanximine =
     { $chance ->
         [1] Restores
         *[other] restore
-    } viability to a plant rendered nonviable by a mutation.
+    } viability to a plant rendered nonviable by a mutation
 
 reagent-effect-guidebook-plant-diethylamine =
     { $chance ->
