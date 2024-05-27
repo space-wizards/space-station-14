@@ -43,7 +43,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     {
         var user = args.Wearer;
         if (_ninja.NinjaQuery.TryComp(user, out var ninja));
-            NinjaEquipped(ent, (user, ninja.Value));
+            NinjaEquipped(ent, (user, ninja!));
     }
 
     protected virtual void NinjaEquipped(Entity<NinjaSuitComponent> ent, Entity<SpaceNinjaComponent> user)
