@@ -404,6 +404,7 @@
   name: candle box
   parent: BoxCardboard
   id: BoxCandle
+  description: This box is specifically moulded to only carry candles.
   components:
   - type: Sprite
     layers:
@@ -411,51 +412,51 @@
       - state: candle
   - type: Storage
     grid:
-    - 0,0,9,2
+    - 0,0,5,3
+    whitelist:
+      tags:
+      - Candle
   - type: StorageFill
     contents:
       - id: Candle
-        amount: 3
+        amount: 4
       - id: CandleBlue
-        amount: 3
+        amount: 2
       - id: CandleRed
-        amount: 3
+        amount: 2
       - id: CandleGreen
-        amount: 3
+        amount: 2
       - id: CandlePurple
-        amount: 3
+        amount: 2
 
 - type: entity
   name: small candle box
-  parent: BoxCardboard
+  parent: BoxCandle
   id: BoxCandleSmall
   components:
-  - type: Sprite
-    layers:
-      - state: box
-      - state: candle
-  - type: Storage
-    grid:
-    - 0,0,9,2
   - type: StorageFill
     contents:
       - id: CandleSmall
-        amount: 5
+        amount: 8
       - id: CandleBlueSmall
-        amount: 5
+        amount: 4
       - id: CandleRedSmall
-        amount: 5
+        amount: 4
       - id: CandleGreenSmall
-        amount: 5
+        amount: 4
       - id: CandlePurpleSmall
-        amount: 5
+        amount: 4
 
 - type: entity
   name: darts box
   parent: BoxCardboard
   id: BoxDarts
-  description: This box filled with colorful darts.
+  description: This box is filled with colorful darts.
   components:
+  - type: Sprite
+    layers:
+      - state: box
+      - state: darts
   - type: StorageFill
     contents:
       - id: Dart
@@ -466,7 +467,4 @@
         amount: 2
       - id: DartYellow
         amount: 2
-  - type: Sprite
-    layers:
-      - state: box
-      - state: darts
+
