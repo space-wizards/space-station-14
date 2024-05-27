@@ -1,5 +1,5 @@
 # BASE L6
-# The base qualities for the L6 light machine gun.
+# The base stats for the L6 light machine gun.
 - type: entity
   abstract: true
   id: BaseWeaponL6
