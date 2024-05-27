@@ -40,8 +40,8 @@
   parent:
   - BaseGunLarge
   - BaseGunWieldable
-  - BaseWeaponDoubleBarreled
   - BaseGunShotgunBallistic
+  - BaseWeaponDoubleBarreled
   id: WeaponShotgunDoubleBarreled
   name: double-barreled shotgun
   description: An immortal classic. Uses .50 shotgun shells.
@@ -88,11 +88,11 @@
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Item
     size: Large
     sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
@@ -147,8 +147,8 @@
 - type: entity
   parent:
   - BaseGunSmall
-  - BaseWeaponDoubleBarreled
   - BaseGunShotgunBallistic
+  - BaseWeaponDoubleBarreled
   id: WeaponShotgunSawn
   name: sawn-off shotgun
   description: Groovy! Uses .50 shotgun shells.
@@ -158,11 +158,11 @@
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Item
     size: Small
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
