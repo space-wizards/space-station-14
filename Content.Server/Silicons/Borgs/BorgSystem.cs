@@ -275,24 +275,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
     }
 
     /// <summary>
-    /// Activates the borg, enabling all of its modules.
-    /// </summary>
-    [Obsolete("Use ItemToggleSystem directly")]
-    public void EnableBorgAbilities(EntityUid uid, BorgChassisComponent component, PowerCellDrawComponent? powerCell = null)
-    {
-        Toggle.TryActivate(uid);
-    }
-
-    /// <summary>
-    /// Deactivates the borg, disabling all of its modules and decreasing its speed.
-    /// </summary>
-    [Obsolete("Use ItemToggleSystem directly")]
-    public void DisableBorgAbilities(EntityUid uid, BorgChassisComponent component)
-    {
-        Toggle.TryDeactivate(uid);
-    }
-
-    /// <summary>
     /// Activates a borg when a player occupies it
     /// </summary>
     public void BorgActivate(EntityUid uid, BorgChassisComponent component)
