@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Gyrandola
-  changes:
-  - message: Clicking yourself with a knife no longer triggers a butchering popup
-    type: Fix
-  id: 6135
-  time: '2024-03-13T03:52:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26051
 - author: maylokana
   changes:
   - message: Italicized whisper bubbles
@@ -3867,3 +3860,10 @@
   id: 6634
   time: '2024-05-28T18:17:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28002
+- author: lzk228
+  changes:
+  - message: Gasp and deathgasp emotes now have a sound.
+    type: Tweak
+  id: 6635
+  time: '2024-05-28T23:56:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27736
