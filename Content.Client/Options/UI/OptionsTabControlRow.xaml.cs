@@ -54,6 +54,15 @@ public sealed partial class OptionsTabControlRow : Control
         return AddOption(new OptionSliderIntCVar(this, _cfg, cVar, slider, min, max, FormatInt));
     }
 
+    public OptionDropDownCVar<T> AddOptionDropDown<T>(
+        CVarDef<T> cVar,
+        OptionDropDown dropDown,
+        IReadOnlyCollection<OptionDropDownCVar<T>.ValueOption> options)
+        where T : notnull
+    {
+        return AddOption(new OptionDropDownCVar<T>(this, _cfg, cVar, dropDown, options));
+    }
+
     public void ValueChanged()
     {
         UpdateButtonState();
@@ -312,5 +321,76 @@ public sealed class OptionSliderIntCVar : BaseOptionCVar<int>
     private void UpdateLabelValue()
     {
         _slider.ValueLabel.Text = _format(this, (int) _slider.Slider.Value);
+    }
+}
+
+public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
+{
+    private readonly CVarDef<T> _cVar;
+    private readonly OptionDropDown _dropDown;
+    private readonly ItemEntry[] _entries;
+
+    protected override T Value
+    {
+        get => (T)_dropDown.Button.SelectedMetadata!;
+        set => _dropDown.Button.SelectId(FindValueId(value));
+    }
+
+    public OptionDropDownCVar(
+        OptionsTabControlRow controller,
+        IConfigurationManager cfg,
+        CVarDef<T> cVar,
+        OptionDropDown dropDown,
+        IReadOnlyCollection<ValueOption> options) : base(controller, cfg, cVar)
+    {
+        if (options.Count == 0)
+            throw new ArgumentException("Need at least one option!");
+
+        _cVar = cVar;
+        _dropDown = dropDown;
+        _entries = new ItemEntry[options.Count];
+
+        var button = dropDown.Button;
+        var i = 0;
+        foreach (var option in options)
+        {
+            _entries[i] = new ItemEntry
+            {
+                Key = option.Key,
+            };
+
+            button.AddItem(option.Label, i);
+            button.SetItemMetadata(button.GetIdx(i), option.Key);
+            i += 1;
+        }
+
+        dropDown.Button.OnItemSelected += args =>
+        {
+            dropDown.Button.SelectId(args.Id);
+            ValueChanged();
+        };
+    }
+
+    private int FindValueId(T value)
+    {
+        for (var i = 0; i < _entries.Length; i++)
+        {
+            if (IsValueEqual(_entries[i].Key, value))
+                return i;
+        }
+
+        // This will just default select the first entry or whatever.
+        return 0;
+    }
+
+    public sealed class ValueOption(T key, string label)
+    {
+        public readonly T Key = key;
+        public readonly string Label = label;
+    }
+
+    private struct ItemEntry
+    {
+        public T Key;
     }
 }
