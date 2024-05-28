@@ -8,6 +8,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
 using Content.Shared.PowerCell;
@@ -35,7 +36,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<HealthAnalyzerComponent, HealthAnalyzerDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<HealthAnalyzerComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
-        SubscribeLocalEvent<HealthAnalyzerComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
+        SubscribeLocalEvent<HealthAnalyzerComponent, ItemToggledEvent>(OnToggled);
         SubscribeLocalEvent<HealthAnalyzerComponent, DroppedEvent>(OnDropped);
     }
 
@@ -107,16 +108,16 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     private void OnInsertedIntoContainer(Entity<HealthAnalyzerComponent> uid, ref EntGotInsertedIntoContainerMessage args)
     {
         if (uid.Comp.ScannedEntity is { } patient)
-            StopAnalyzingEntity(uid, patient);
+            _toggle.TryDeactivate(uid.Owner);
     }
 
     /// <summary>
-    /// Disable continuous updates once battery is dead
+    /// Disable continuous updates once turned off
     /// </summary>
-    private void OnPowerCellSlotEmpty(Entity<HealthAnalyzerComponent> uid, ref PowerCellSlotEmptyEvent args)
+    private void OnToggled(Entity<HealthAnalyzerComponent> ent, ref ItemToggledEvent args)
     {
-        if (uid.Comp.ScannedEntity is { } patient)
-            StopAnalyzingEntity(uid, patient);
+        if (!args.Activated && ent.Comp.ScannedEntity is { } patient)
+            StopAnalyzingEntity(ent, patient);
     }
 
     /// <summary>
@@ -125,7 +126,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     private void OnDropped(Entity<HealthAnalyzerComponent> uid, ref DroppedEvent args)
     {
         if (uid.Comp.ScannedEntity is { } patient)
-            StopAnalyzingEntity(uid, patient);
+            _toggle.TryDeactivate(uid.Owner);
     }
 
     private void OpenUserInterface(EntityUid user, EntityUid analyzer)

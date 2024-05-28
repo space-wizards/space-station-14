@@ -21,6 +21,7 @@
     interfaces:
       enum.HealthAnalyzerUiKey.Key:
         type: HealthAnalyzerBoundUserInterface
+  - type: ItemToggle
   - type: HealthAnalyzer
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
