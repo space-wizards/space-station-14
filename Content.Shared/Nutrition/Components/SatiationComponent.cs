@@ -11,11 +11,7 @@ public sealed partial class SatiationComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public Satiation Hunger = new();
-
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public Satiation Thirst = new();
+    public Dictionary<string, Satiation> Satiations = new();
 
     /// <summary>
     /// The time when the thirst will update next.
