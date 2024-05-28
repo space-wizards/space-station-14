@@ -42,11 +42,12 @@ namespace Content.Shared.Gravity
                 return false;
             }
 
-            var hasGrav = gravity != null || mapGravity != null;
+            // If there's no gravity comp at all (i.e. space) then nothing can hold you down
+            if (gravity == null && mapGravity == null)
+                return true;
 
             // Check for something holding us down
             // If the planet has gravity component and no gravity it will still give gravity
-            // If there's no gravity comp at all (i.e. space) then they don't work.
             var ev = new CheckGravityEvent();
             RaiseLocalEvent(uid, ref ev);
             if (ev.Handled)
@@ -59,7 +60,8 @@ namespace Content.Shared.Gravity
                     return false;
             }
 
-            return !hasGrav;
+            // on a grid without gravity and no magboots, floating time
+            return true;
         }
 
         public override void Initialize()
