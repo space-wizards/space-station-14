@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Added Improvised Shotgun Shell Recipe
-    type: Add
-  id: 6131
-  time: '2024-03-12T23:52:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25545
 - author: NakataRin
   changes:
   - message: Skeletons can only spawn with 10 people on the server now.
@@ -3867,3 +3860,10 @@
   id: 6630
   time: '2024-05-28T00:51:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28255
+- author: Repo
+  changes:
+  - message: NanoMed, wall vends will spawn items the correct direction.
+    type: Fix
+  id: 6631
+  time: '2024-05-28T14:02:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28279
