@@ -109,6 +109,7 @@
   id: BaseMedicalPDA
   abstract: true
   components:
+  - type: ItemToggle
   - type: HealthAnalyzer
     scanDelay: 1
     scanningEndSound:
