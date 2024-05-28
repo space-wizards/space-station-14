@@ -4,6 +4,7 @@
   abstract: true
   components:
   - type: Wieldable
+    unwieldOnUse: false
   - type: GunWieldBonus
     minAngle: -20
     maxAngle: -30
