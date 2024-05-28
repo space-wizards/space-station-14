@@ -5,9 +5,11 @@ namespace Content.Shared.PowerCell;
 
 /// <summary>
 /// Indicates that the entity's ActivatableUI requires power or else it closes.
+/// </summary>
+/// <remarks>
 /// With ActivatableUI it will activate and deactivate when the ui is opened and closed, drawing power inbetween.
 /// Requires <see cref="ItemToggleComponent"/> to work.
-/// </summary>
+/// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class PowerCellDrawComponent : Component
 {

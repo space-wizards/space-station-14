@@ -5,8 +5,10 @@ namespace Content.Shared.Toggleable;
 
 /// <summary>
 /// Generic action-event for toggle-able components.
-/// If you are using <c>ItemToggleComponent</c> subscribe to <c>ItemToggledEvent</c> instead.
 /// </summary>
+/// <remarks>
+/// If you are using <c>ItemToggleComponent</c> subscribe to <c>ItemToggledEvent</c> instead.
+/// </remarks>
 public sealed partial class ToggleActionEvent : InstantActionEvent;
 
 /// <summary>

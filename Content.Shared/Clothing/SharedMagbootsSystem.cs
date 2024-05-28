@@ -35,7 +35,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
     private void OnToggled(Entity<MagbootsComponent> ent, ref ItemToggledEvent args)
     {
         // only stick to the floor if being worn in the correct slot
-        if (_container.TryGetContainingContainer(ent, out var container) &&
+        if (_container.TryGetContainingContainer(ent.Owner, out var container) &&
             _inventory.TryGetSlotEntity(container.Owner, "shoes", out var shoes)
             && ent == shoes)
         {

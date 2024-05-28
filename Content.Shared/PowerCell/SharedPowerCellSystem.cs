@@ -82,12 +82,6 @@ public abstract class SharedPowerCellSystem : EntitySystem
         ent.Comp.NextUpdateTime = Timing.CurTime;
     }
 
-    [Obsolete("Use ItemToggleSystem directly")]
-    public void SetPowerCellDrawEnabled(EntityUid uid, bool enabled, PowerCellDrawComponent? component = null)
-    {
-        Toggle.TrySetActive(uid, enabled);
-    }
-
     public void SetDrawEnabled(Entity<PowerCellDrawComponent?> ent, bool enabled)
     {
         if (!Resolve(ent, ref ent.Comp, false) || ent.Comp.Enabled == enabled)

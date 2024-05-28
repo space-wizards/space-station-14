@@ -8,8 +8,10 @@ namespace Content.Shared.Ninja.Components;
 
 /// <summary>
 /// Component for toggling glove powers.
-/// Requires <c>ItemToggleComponent</c>.
 /// </summary>
+/// <remarks>
+/// Requires <c>ItemToggleComponent</c>.
+/// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedNinjaGlovesSystem))]
 public sealed partial class NinjaGlovesComponent : Component

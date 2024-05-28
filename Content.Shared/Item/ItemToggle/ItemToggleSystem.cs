@@ -166,8 +166,6 @@ public sealed class ItemToggleSystem : EntitySystem
         else
             _audio.PlayPvs(soundToPlay, uid);
 
-        // END FIX HARDCODING
-
         var toggleUsed = new ItemToggledEvent(predicted, Activated: true, user);
         RaiseLocalEvent(uid, ref toggleUsed);
 

@@ -10,6 +10,9 @@ namespace Content.Shared.Beeper.Components;
 /// This is used for an item that beeps based on
 /// proximity to a specified component.
 /// </summary>
+/// <remarks>
+/// Requires <c>ItemToggleComponent</c> to control it.
+/// </remarks>
 [RegisterComponent, NetworkedComponent, Access(typeof(BeeperSystem)), AutoGenerateComponentState]
 public sealed partial class BeeperComponent : Component
 {

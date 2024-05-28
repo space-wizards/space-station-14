@@ -20,7 +20,6 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
-    [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -42,8 +41,8 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     private void OnEquipped(Entity<NinjaSuitComponent> ent, ref ClothingGotEquippedEvent args)
     {
         var user = args.Wearer;
-        if (_ninja.NinjaQuery.TryComp(user, out var ninja));
-            NinjaEquipped(ent, (user, ninja!));
+        if (_ninja.NinjaQuery.TryComp(user, out var ninja))
+            NinjaEquipped(ent, (user, ninja));
     }
 
     protected virtual void NinjaEquipped(Entity<NinjaSuitComponent> ent, Entity<SpaceNinjaComponent> user)
