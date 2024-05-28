@@ -41,7 +41,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
         if (!EligibleEntity(target, EntityManager, entity)
             && _solutionContainers.TryGetDrawableSolution(target, out var drawableSolution, out _))
         {
-            TryDraw(entity, target, drawableSolution.Value, user);
+            return TryDraw(entity, target, drawableSolution.Value, user);
         }
 
         return TryDoInject(entity, target, user);
