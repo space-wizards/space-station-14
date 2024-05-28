@@ -203,7 +203,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     public void ChooseAntags(Entity<AntagSelectionComponent> ent, IList<ICommonSession> pool, AntagSelectionDefinition def)
     {
         var playerPool = GetPlayerPool(ent, pool, def);
-        var count = GetTargetAntagCount(ent, playerPool, def);
+        var count = GetTargetAntagCount(ent, GetTotalPlayerCount(pool), def);
 
         for (var i = 0; i < count; i++)
         {

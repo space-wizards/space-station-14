@@ -365,9 +365,9 @@ reagent-effect-guidebook-plant-cryoxadone =
 
 reagent-effect-guidebook-plant-phalanximine =
     { $chance ->
-        [1] Makes
-        *[other] make
-    } a plant not viable due to mutation viable again
+        [1] Restores
+        *[other] restore
+    } viability to a plant rendered nonviable by a mutation
 
 reagent-effect-guidebook-plant-diethylamine =
     { $chance ->
