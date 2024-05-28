@@ -25,52 +25,9 @@ public sealed class SatiationSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
-    private (string, StatusIconPrototype?)[] HungerIcons = new (string, StatusIconPrototype?)[] {
-        ("HungerIconOverfed", null),
-        ("HungerIconPeckish", null),
-        ("HungerIconStarving", null)
-    };
-    /// <summary>
-    /// A dictionary relating hunger thresholds to corresponding alerts.
-    /// </summary>
-    private Dictionary<SatiationThreashold, AlertType> HungerAlertThresholds = new()
-    {
-        { SatiationThreashold.Concerned, AlertType.Peckish },
-        { SatiationThreashold.Desperate, AlertType.Starving },
-        { SatiationThreashold.Dead, AlertType.Starving }
-    };
-    private AlertCategory HungerAlertCategory = AlertCategory.Hunger;
-
-    private (string, StatusIconPrototype?)[] ThirstIcons = new (string, StatusIconPrototype?)[] {
-        ("ThirstIconOverhydrated", null),
-        ("ThirstIconThirsty", null),
-        ("ThirstIconParched", null)
-    };
-    /// <summary>
-    /// A dictionary relating hunger thresholds to corresponding alerts.
-    /// </summary>
-    private Dictionary<SatiationThreashold, AlertType> ThirstAlertThresholds = new()
-    {
-        { SatiationThreashold.Concerned, AlertType.Thirsty },
-        { SatiationThreashold.Desperate, AlertType.Parched },
-        { SatiationThreashold.Dead, AlertType.Parched }
-    };
-    private AlertCategory ThirstAlertCategory = AlertCategory.Thirst;
-
     public override void Initialize()
     {
         base.Initialize();
-
-        foreach (var pair in ThirstIcons)
-        {
-            var (iconId, prototype) = pair;
-            DebugTools.Assert(_prototype.TryIndex(iconId, out prototype));
-        }
-        foreach (var pair in HungerIcons)
-        {
-            var (iconId, prototype) = pair;
-            DebugTools.Assert(_prototype.TryIndex(iconId, out prototype));
-        }
 
         SubscribeLocalEvent<SatiationComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SatiationComponent, ComponentShutdown>(OnShutdown);
