@@ -4,8 +4,11 @@
   abstract: true
   components:
   - type: StationEvent
+    startColor: "#18abf5"
     startAudio:
       path: /Audio/Announcements/announce.ogg
+  - type: CargoGiftsRule
+    sender: cargo-gift-default-sender
 
 - type: entity
   id: GiftsPizzaPartySmall
@@ -19,7 +22,6 @@
     earliestStart: 20
   - type: CargoGiftsRule
     description: cargo-gift-pizza-small
-    sender: cargo-gift-default-sender
     dest: cargo-gift-dest-bar
     gifts:
       FoodPizzaLarge: 1              # 16 pizzas
@@ -39,7 +41,6 @@
     earliestStart: 20
   - type: CargoGiftsRule
     description: cargo-gift-pizza-large
-    sender: cargo-gift-default-sender
     dest: cargo-gift-dest-bar
     gifts:
       FoodPizzaLarge: 4              # 64 pizzas
@@ -59,7 +60,6 @@
     minimumPlayers: 10
   - type: CargoGiftsRule
     description: cargo-gift-eng
-    sender: cargo-gift-default-sender
     dest: cargo-gift-dest-eng
     gifts:
       EngineeringCableBulk: 1
@@ -82,7 +82,6 @@
     earliestStart: 30
   - type: CargoGiftsRule
     description: cargo-gift-vending
-    sender: cargo-gift-default-sender
     dest: cargo-gift-dest-supp
     gifts:
       CrateVendingMachineRestockHotDrinks: 3
@@ -105,7 +104,6 @@
     earliestStart: 20
   - type: CargoGiftsRule
     description: cargo-gift-cleaning
-    sender: cargo-gift-default-sender
     dest: cargo-gift-dest-janitor
     gifts:
       ServiceJanitorial: 2
@@ -125,7 +123,6 @@
     minimumPlayers: 30
   - type: CargoGiftsRule
     description: cargo-gift-medical-supply
-    sender: cargo-gift-default-sender
     dest: cargo-gift-dest-med
     gifts:
       MedicalSupplies: 1
@@ -147,7 +144,6 @@
     minimumPlayers: 40
   - type: CargoGiftsRule
     description: cargo-gift-space-protection
-    sender: cargo-gift-default-sender
     dest: cargo-gift-dest-supp
     gifts:
       EmergencyInternalsLarge: 2
@@ -169,7 +165,6 @@
     minimumPlayers: 40
   - type: CargoGiftsRule
     description: cargo-gift-fire-protection
-    sender: cargo-gift-default-sender
     dest: cargo-gift-dest-supp
     gifts:
       EmergencyFire: 2
@@ -189,7 +184,6 @@
     minimumPlayers: 50
   - type: CargoGiftsRule
     description: cargo-gift-security-guns
-    sender: cargo-gift-default-sender
     dest: cargo-gift-dest-sec
     gifts:
       SecurityArmor: 3
@@ -210,7 +204,6 @@
     minimumPlayers: 50
   - type: CargoGiftsRule
     description: cargo-gift-security-riot
-    sender: cargo-gift-default-sender
     dest: cargo-gift-dest-sec
     gifts:
       SecurityRiot: 2

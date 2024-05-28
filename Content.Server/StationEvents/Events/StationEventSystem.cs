@@ -1,14 +1,11 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -20,7 +17,6 @@ namespace Content.Server.StationEvents.Events;
 public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : IComponent
 {
     [Dependency] protected readonly IAdminLogManager AdminLogManager = default!;
-    [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly ChatSystem ChatSystem = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
@@ -36,19 +32,18 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
     }
 
     /// <inheritdoc/>
-    protected override void Added(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    protected override void AfterAdded(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleAfterAddedEvent args)
     {
-        base.Added(uid, component, gameRule, args);
+        base.AfterAdded(uid, component, gameRule, args);
 
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
-
 
         AdminLogManager.Add(LogType.EventAnnounced, $"Event added / announced: {ToPrettyString(uid)}");
 
         if (stationEvent.StartAnnouncement != null)
         {
-            ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.StartAnnouncement), playSound: false, colorOverride: Color.Gold);
+            ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.StartAnnouncement), playSound: false, colorOverride: stationEvent.StartColor);
         }
 
         Audio.PlayGlobal(stationEvent.StartAudio, Filter.Broadcast(), true);
@@ -87,7 +82,7 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
 
         if (stationEvent.EndAnnouncement != null)
         {
-            ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.EndAnnouncement), playSound: false, colorOverride: Color.Gold);
+            ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.EndAnnouncement), playSound: false, colorOverride: stationEvent.EndColor);
         }
 
         Audio.PlayGlobal(stationEvent.EndAudio, Filter.Broadcast(), true);

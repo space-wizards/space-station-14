@@ -25,6 +25,12 @@ public sealed partial class StationEventComponent : Component
     public string? EndAnnouncement;
 
     [DataField]
+    public Color StartColor = Color.Gold;
+
+    [DataField]
+    public Color EndColor = Color.Gold;
+
+    [DataField]
     public SoundSpecifier? StartAudio;
 
     [DataField]

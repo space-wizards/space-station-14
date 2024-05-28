@@ -1,6 +1,5 @@
 ﻿using Content.Server.Anomaly;
 using Content.Server.GameTicking.Components;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
 
@@ -14,9 +13,12 @@ public sealed class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleCompon
     {
         base.Added(uid, component, gameRule, args);
 
+        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
+            return;
+
         var str = Loc.GetString("anomaly-spawn-event-announcement",
             ("sighting", Loc.GetString($"anomaly-spawn-sighting-{RobustRandom.Next(1, 6)}")));
-        ChatSystem.DispatchGlobalAnnouncement(str, playSound: false, colorOverride: Color.FromHex("#18abf5"));
+        stationEvent.StartAnnouncement = str;
     }
 
     protected override void Started(EntityUid uid, AnomalySpawnRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
