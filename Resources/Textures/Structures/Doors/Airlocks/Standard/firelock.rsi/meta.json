@@ -154,6 +154,12 @@
           0.4
         ]
       ]
+    },
+    {
+        "name": "pressure_unlit"
+    },
+    {
+        "name": "temperature_unlit"
     }
   ]
 }
