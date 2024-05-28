@@ -22,7 +22,7 @@ public sealed partial class ComponentTogglerComponent : Component
     /// If this is null <see cref="Components"/> is reused.
     /// </summary>
     [DataField]
-    public ComponentRegistry? RemoveComponents = new();
+    public ComponentRegistry? RemoveComponents;
 
     /// <summary>
     /// If true, adds components on the entity's parent instead of the entity itself.
