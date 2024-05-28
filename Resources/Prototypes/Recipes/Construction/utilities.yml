@@ -737,6 +737,22 @@
     - !type:NoUnstackableInTile
 
 - type: construction
+  id: GasFilterInline
+  name: inline gas filter
+  description: Filters gases from a pipenet without splitting it in two.
+  graph: GasTrinary
+  startNode: start
+  targetNode: inline_filter
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/inlinegasfilter.rsi
+    state: gasFilter
+  conditions:
+  - !type:NoUnstackableInTile
+
+- type: construction
   id: GasMixer
   name: gas mixer
   description: Very useful for mixing gases.
