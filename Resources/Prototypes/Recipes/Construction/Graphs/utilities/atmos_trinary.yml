@@ -17,6 +17,13 @@
         amount: 2
         doAfter: 1
 
+    # Inline Filter
+    - to: inline_filter
+      steps:
+      - material: Steel
+        amount: 8
+        doAfter: 3
+
     # Mixer
     - to: mixer
       steps:
