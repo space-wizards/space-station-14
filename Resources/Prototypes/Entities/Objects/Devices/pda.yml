@@ -110,6 +110,7 @@
   abstract: true
   components:
   - type: ItemToggle
+    toggleLight: false
   - type: HealthAnalyzer
     scanDelay: 1
     scanningEndSound:
