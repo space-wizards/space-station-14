@@ -45,54 +45,60 @@
         nodeGroupID: Pipe
         pipeDirection: North
 
+# a non-flippable filter
 - type: entity
+  abstract: true
   parent: GasTrinaryBase
+  id: GasFilterBase
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeTrinaryConnectors
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: gasFilter
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.FilterVisuals.Enabled:
+        enabled:
+          True: { state: gasFilterOn }
+          False: { state: gasFilter }
+  - type: PipeColorVisuals
+  - type: UserInterface
+    interfaces:
+      enum.GasFilterUiKey.Key:
+        type: GasFilterBoundUserInterface
+  - type: GasFilter
+    enabled: false
+    transferRate: 1000
+    maxTransferRate: 1000
+  - type: Construction
+    graph: GasTrinary
+    node: filter
+  - type: AmbientSound
+    enabled: false
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_hiss.ogg
+
+- type: entity
+  parent: GasFilterBase
   id: GasFilter
   name: gas filter
   description: Very useful for filtering gases.
   components:
-    - type: Sprite
-      sprite: Structures/Piping/Atmospherics/gasfilter.rsi
-      layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeTrinaryConnectors
-          map: [ "enum.PipeVisualLayers.Pipe" ]
-        - state: gasFilter
-          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.FilterVisuals.Enabled:
-          enabled:
-            True: { state: gasFilterOn }
-            False: { state: gasFilter }
-    - type: PipeColorVisuals
-    - type: UserInterface
-      interfaces:
-        enum.GasFilterUiKey.Key:
-          type: GasFilterBoundUserInterface
-    - type: GasFilter
-      enabled: false
-      transferRate: 1000
-      maxTransferRate: 1000
-    - type: Flippable
-      mirrorEntity: GasFilterFlipped
-    - type: Construction
-      graph: GasTrinary
-      node: filter
-    - type: AmbientSound
-      enabled: false
-      volume: -9
-      range: 5
-      sound:
-        path: /Audio/Ambience/Objects/gas_hiss.ogg
+  - type: Flippable
+    mirrorEntity: GasFilterFlipped
 
 - type: entity
   parent: [GasFilter, GasTrinaryFlippedBase]
   id: GasFilterFlipped
   components:
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/gasfilter.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
       state: pipeTrinaryConnectors
@@ -109,6 +115,32 @@
           False: { state: gasFilterF }
   - type: Construction
     node: filterflipped
+
+# inline filter: feel free to remove this if filters are made to require flow like radiators
+# since then the "unpacked" version wouldn't work
+- type: entity
+  parent: GasFilterBase
+  id: GasFilterInline
+  name: inline gas filter
+  description: Filters gases from a pipenet without splitting it in two.
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/inlinegasfilter.rsi
+  - type: GasFilter
+    inlet: pipe
+    outlet: pipe
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Longitudinal
+      filter:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: West
+  - type: Construction
+    node: inline_filter
 
 - type: entity
   parent: GasTrinaryBase
