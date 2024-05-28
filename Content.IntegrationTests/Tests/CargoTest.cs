@@ -222,6 +222,7 @@ public sealed class CargoTest
 
                 entManager.DeleteEntity(ent);
             }
+            mapManager.DeleteMap(mapId);
         });
 
         await pair.CleanReturnAsync();
