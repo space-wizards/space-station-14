@@ -80,7 +80,7 @@
     price: 3000
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: ClothingShoesBootsMag
   id: ClothingShoesBootsMagSyndie
   name: blood-red magboots
   description: Reverse-engineered magnetic boots that have a heavy magnetic pull and integrated thrusters.
@@ -120,9 +120,6 @@
     weightlessAcceleration: 1
     weightlessFriction: 0.3
     weightlessModifier: 1.2
-  - type: Tag
-    tags:
-      - WhitelistChameleon
 
 - type: entity
   noSpawn: true
