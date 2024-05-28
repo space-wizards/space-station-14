@@ -8,7 +8,7 @@ namespace Content.Shared.Dataset;
 /// A variant of <see cref="DatasetPrototype"/> intended to specify a sequence of LocId strings
 /// without having to copy-paste a ton of LocId strings into the YAML.
 /// </summary>
-[Prototype("localizedDataset")]
+[Prototype]
 public sealed partial class LocalizedDatasetPrototype : IPrototype
 {
     /// <summary>
