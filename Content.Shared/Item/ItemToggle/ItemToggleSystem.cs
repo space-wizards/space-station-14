@@ -166,12 +166,12 @@ public sealed class ItemToggleSystem : EntitySystem
         else
             _audio.PlayPvs(soundToPlay, uid);
 
-        var toggleUsed = new ItemToggledEvent(predicted, Activated: true, user);
-        RaiseLocalEvent(uid, ref toggleUsed);
-
         comp.Activated = true;
         UpdateVisuals((uid, comp));
         Dirty(uid, comp);
+
+        var toggleUsed = new ItemToggledEvent(predicted, Activated: true, user);
+        RaiseLocalEvent(uid, ref toggleUsed);
     }
 
     /// <summary>
@@ -185,14 +185,13 @@ public sealed class ItemToggleSystem : EntitySystem
             _audio.PlayPredicted(soundToPlay, uid, user);
         else
             _audio.PlayPvs(soundToPlay, uid);
-        // END FIX HARDCODING
-
-        var toggleUsed = new ItemToggledEvent(predicted, Activated: false, user);
-        RaiseLocalEvent(uid, ref toggleUsed);
 
         comp.Activated = false;
         UpdateVisuals((uid, comp));
         Dirty(uid, comp);
+
+        var toggleUsed = new ItemToggledEvent(predicted, Activated: false, user);
+        RaiseLocalEvent(uid, ref toggleUsed);
     }
 
     private void UpdateVisuals(Entity<ItemToggleComponent> ent)
