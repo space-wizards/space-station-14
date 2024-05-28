@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: NakataRin
-  changes:
-  - message: Skeletons can only spawn with 10 people on the server now.
-    type: Tweak
-  id: 6132
-  time: '2024-03-13T01:00:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26050
 - author: SlamBamActionman
   changes:
   - message: Syndicate implanters can no longer be recycled.
@@ -3867,3 +3860,10 @@
   id: 6631
   time: '2024-05-28T14:02:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28279
+- author: ShadowCommander
+  changes:
+  - message: Added pressure and temperature warnings to firelock examine text.
+    type: Add
+  id: 6632
+  time: '2024-05-28T14:59:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28341
