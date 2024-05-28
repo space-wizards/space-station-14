@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: UnicornOnLSD
-  changes:
-  - message: brought back the classic crew cut as an alternative to the current one
-      !
-    type: Add
-  id: 6130
-  time: '2024-03-12T18:47:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25935
 - author: FungiFellow
   changes:
   - message: Added Improvised Shotgun Shell Recipe
@@ -3868,3 +3860,10 @@
   id: 6629
   time: '2024-05-28T00:04:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28330
+- author: slarticodefast
+  changes:
+  - message: Corrected some cargo bounties.
+    type: Fix
+  id: 6630
+  time: '2024-05-28T00:51:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28255
