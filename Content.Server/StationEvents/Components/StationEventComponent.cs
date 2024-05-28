@@ -1,5 +1,7 @@
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Content.Server.AlertLevel;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -47,13 +49,13 @@ public sealed partial class StationEventComponent : Component
     /// Alert level to set the station to when the event starts.
     /// </summary>
     [DataField]
-    public string? AlertLevel;
+    public ProtoId<AlertLevelPrototype>? AlertLevel;
 
     /// <summary>
     /// Alarm level that will NOT be ignored when the event starts
     /// </summary>
     [DataField]
-    public string NotIgnoredAlarmLevel = "green";
+    public ProtoId<AlertLevelPrototype>? NotIgnoredAlarmLevel = "green";
 
     /// <summary>
     ///     How long after being added does the event start

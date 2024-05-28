@@ -155,14 +155,11 @@ public sealed partial class GameTicker
         	var i = _robustRandom.Next(1, 3);
         	switch (i)
         	{
-        	    case 1:
-        	        break;
+        	    case 1: break;
         	    case 2:
-        	    {
         	        _adminLogger.Add(LogType.EventStarted, LogImpact.High, $"Event fake started: {ToPrettyString(ruleEntity)}");
                     EndGameRule(ruleEntity, ruleData);
         	        return false;
-        	    }
         	}
 	    }
 
