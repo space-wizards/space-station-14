@@ -203,18 +203,26 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     public void ChooseAntags(Entity<AntagSelectionComponent> ent, IList<ICommonSession> pool, AntagSelectionDefinition def)
     {
         var playerPool = GetPlayerPool(ent, pool, def);
-        var count = GetTargetAntagCount(ent, playerPool, def);
+        var count = GetTargetAntagCount(ent, GetTotalPlayerCount(pool), def);
 
+        // if there is both a spawner and players getting picked, let it fall back to a spawner.
+        var noSpawner = def.SpawnerPrototype == null;
         for (var i = 0; i < count; i++)
         {
             var session = (ICommonSession?) null;
             if (def.PickPlayer)
             {
-                if (!playerPool.TryPickAndTake(RobustRandom, out session))
+                if (!playerPool.TryPickAndTake(RobustRandom, out session) && noSpawner)
+                {
+                    Log.Warning($"Couldn't pick a player for {ToPrettyString(ent):rule}, no longer choosing antags for this definition");
                     break;
+                }
 
-                if (ent.Comp.SelectedSessions.Contains(session))
+                if (session != null && ent.Comp.SelectedSessions.Contains(session))
+                {
+                    Log.Warning($"Somehow picked {session} for an antag when this rule already selected them previously");
                     continue;
+                }
             }
 
             MakeAntag(ent, session, def);
