@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Gyrandola
   changes:
-  - message: Adding Sky Blue carpets to tables no longer results in red carpet ones.
-    type: Fix
-  id: 6134
-  time: '2024-03-13T02:03:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26049
-- author: Gyrandola
-  changes:
   - message: Clicking yourself with a knife no longer triggers a butchering popup
     type: Fix
   id: 6135
@@ -3867,3 +3860,10 @@
   id: 6633
   time: '2024-05-28T15:35:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28316
+- author: WarMechanic
+  changes:
+  - message: Guns will now cycle when interacting with them in-hand after wielding.
+    type: Tweak
+  id: 6634
+  time: '2024-05-28T18:17:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28002
