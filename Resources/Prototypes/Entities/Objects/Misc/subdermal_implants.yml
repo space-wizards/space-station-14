@@ -317,7 +317,7 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: MindShieldImplant
-  name: mind-shield implant
+  name: mindshield implant
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
   noSpawn: true
   components:

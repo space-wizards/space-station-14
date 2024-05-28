@@ -28,8 +28,6 @@ namespace Content.Server.Doors.Systems
         {
             base.Initialize();
 
-
-            SubscribeLocalEvent<FirelockComponent, BeforeDoorAutoCloseEvent>(OnBeforeDoorAutoclose);
             SubscribeLocalEvent<FirelockComponent, AtmosAlarmEvent>(OnAtmosAlarm);
 
             SubscribeLocalEvent<FirelockComponent, PowerChangedEvent>(PowerChanged);
@@ -71,26 +69,13 @@ namespace Content.Server.Doors.Systems
                     && xformQuery.TryGetComponent(uid, out var xform)
                     && appearanceQuery.TryGetComponent(uid, out var appearance))
                 {
-                    var (fire, pressure) = CheckPressureAndFire(uid, firelock, xform, airtight, airtightQuery);
+                    var (pressure, fire) = CheckPressureAndFire(uid, firelock, xform, airtight, airtightQuery);
                     _appearance.SetData(uid, DoorVisuals.ClosedLights, fire || pressure, appearance);
                     firelock.Temperature = fire;
                     firelock.Pressure = pressure;
                     Dirty(uid, firelock);
                 }
             }
-        }
-
-        private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)
-        {
-            if (!this.IsPowered(uid, EntityManager))
-                args.Cancel();
-
-            // Make firelocks autoclose, but only if the last alarm type it
-            // remembers was a danger. This is to prevent people from
-            // flooding hallways with endless bad air/fire.
-            if (component.AlarmAutoClose &&
-                (_atmosAlarmable.TryGetHighestAlert(uid, out var alarm) && alarm != AtmosAlarmType.Danger || alarm == null))
-                args.Cancel();
         }
 
         private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosAlarmEvent args)
