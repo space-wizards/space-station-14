@@ -2,7 +2,7 @@ using Content.Shared.Damage;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
-namespace Content.Shared.Nutrition.Components;
+namespace Content.Shared.Nutrition;
 
 [DataDefinition]
 [Serializable, NetSerializable]
