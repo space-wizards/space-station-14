@@ -157,10 +157,6 @@ namespace Content.Server.Power.EntitySystems
         {
             var comp = receiver.Comp;
             comp.NetworkLoad.LinkedNetwork = default;
-            var ev = new PowerChangedEvent(comp.Powered, comp.NetworkLoad.ReceivingPower);
-
-            RaiseLocalEvent(receiver, ref ev);
-            _appearance.SetData(receiver, PowerDeviceVisuals.Powered, comp.Powered);
         }
 
         /// <summary>
