@@ -1,8 +1,10 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -14,6 +16,7 @@ namespace Content.Server.GameTicking.Commands
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         public string Command => "joingame";
         public string Description => "";
@@ -70,7 +73,7 @@ namespace Content.Server.GameTicking.Commands
                     return;
                 }
 
-                if (_adminManager.IsAdmin(player))
+                if (_adminManager.IsAdmin(player) && _cfg.GetCVar(CCVars.AdminDeadminOnJoin))
                 {
                     _adminManager.DeAdmin(player);
                 }
