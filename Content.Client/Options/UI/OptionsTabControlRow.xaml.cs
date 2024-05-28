@@ -28,23 +28,30 @@ public sealed partial class OptionsTabControlRow : Control
         DefaultButton.OnPressed += DefaultButtonPressed;
     }
 
-    public void AddOption(BaseOption option)
+    public T AddOption<T>(T option) where T : BaseOption
     {
         _options.Add(option);
+        return option;
     }
 
-    public void AddOptionCheckBox(CVarDef<bool> cVar, CheckBox checkBox)
+    public OptionCheckboxCVar AddOptionCheckBox(CVarDef<bool> cVar, CheckBox checkBox)
     {
-        AddOption(new OptionCheckboxCVar(this, _cfg, cVar, checkBox));
+        return AddOption(new OptionCheckboxCVar(this, _cfg, cVar, checkBox));
     }
 
-    public void AddOptionPercentSlider(CVarDef<float> cVar, OptionSlider slider)
+    public OptionSliderFloatCVar AddOptionPercentSlider(
+        CVarDef<float> cVar,
+        OptionSlider slider,
+        float min = 0,
+        float max = 1,
+        float scale = 1)
     {
-        AddOption(new OptionSliderFloatCVar(this, _cfg, cVar, slider, 0, 1, FormatPercent));
+        return AddOption(new OptionSliderFloatCVar(this, _cfg, cVar, slider, min, max, scale, FormatPercent));
     }
 
-    public void AddOptionSlider(CVarDef<int> cVar, OptionSlider slider)
+    public OptionSliderIntCVar AddOptionSlider(CVarDef<int> cVar, OptionSlider slider, float min, float max)
     {
+        return AddOption(new OptionSliderIntCVar(this, _cfg, cVar, slider, min, max, FormatInt));
     }
 
     public void ValueChanged()
@@ -94,9 +101,14 @@ public sealed partial class OptionsTabControlRow : Control
         UpdateButtonState();
     }
 
-    private string FormatPercent(float value)
+    private string FormatPercent(OptionSliderFloatCVar slider, float value)
     {
         return _loc.GetString("ui-options-value-percent", ("value", value));
+    }
+
+    private static string FormatInt(OptionSliderIntCVar slider, int value)
+    {
+        return value.ToString();
     }
 
     public void Initialize()
@@ -112,7 +124,7 @@ public sealed partial class OptionsTabControlRow : Control
 
 public abstract class BaseOption(OptionsTabControlRow controller)
 {
-    protected void ValueChanged()
+    protected virtual void ValueChanged()
     {
         controller.ValueChanged();
     }
@@ -129,6 +141,8 @@ public abstract class BaseOption(OptionsTabControlRow controller)
 public abstract class BaseOptionCVar<TValue> : BaseOption
     where TValue : notnull
 {
+    public event Action<TValue>? ImmediateValueChanged;
+
     private readonly IConfigurationManager _cfg;
     private readonly CVarDef<TValue> _cVar;
 
@@ -173,6 +187,13 @@ public abstract class BaseOptionCVar<TValue> : BaseOption
     {
         return EqualityComparer<TValue>.Default.Equals(a, b);
     }
+
+    protected override void ValueChanged()
+    {
+        base.ValueChanged();
+
+        ImmediateValueChanged?.Invoke(Value);
+    }
 }
 
 public sealed class OptionCheckboxCVar : BaseOptionCVar<bool>
@@ -202,14 +223,20 @@ public sealed class OptionCheckboxCVar : BaseOptionCVar<bool>
 
 public sealed class OptionSliderFloatCVar : BaseOptionCVar<float>
 {
+    public float Scale { get; }
+
     private readonly CVarDef<float> _cVar;
     private readonly OptionSlider _slider;
-    private readonly Func<float, string> _format;
+    private readonly Func<OptionSliderFloatCVar, float, string> _format;
 
     protected override float Value
     {
-        get => _slider.Slider.Value;
-        set => _slider.Slider.Value = value;
+        get => _slider.Slider.Value * Scale;
+        set
+        {
+            _slider.Slider.Value = value / Scale;
+            UpdateLabelValue();
+        }
     }
 
     public OptionSliderFloatCVar(
@@ -219,7 +246,54 @@ public sealed class OptionSliderFloatCVar : BaseOptionCVar<float>
         OptionSlider slider,
         float minValue,
         float maxValue,
-        Func<float, string> format) : base(controller, cfg, cVar)
+        float scale,
+        Func<OptionSliderFloatCVar, float, string> format) : base(controller, cfg, cVar)
+    {
+        Scale = scale;
+        _cVar = cVar;
+        _slider = slider;
+        _format = format;
+
+        slider.Slider.MinValue = minValue;
+        slider.Slider.MaxValue = maxValue;
+
+        slider.Slider.OnValueChanged += _ =>
+        {
+            ValueChanged();
+            UpdateLabelValue();
+        };
+    }
+
+    private void UpdateLabelValue()
+    {
+        _slider.ValueLabel.Text = _format(this, _slider.Slider.Value);
+    }
+}
+
+public sealed class OptionSliderIntCVar : BaseOptionCVar<int>
+{
+    private readonly CVarDef<int> _cVar;
+    private readonly OptionSlider _slider;
+    private readonly Func<OptionSliderIntCVar, int, string> _format;
+
+    protected override int Value
+    {
+        get => (int) _slider.Slider.Value;
+        set
+        {
+            _slider.Slider.Value = value;
+            UpdateLabelValue();
+        }
+    }
+
+    public OptionSliderIntCVar(
+        OptionsTabControlRow controller,
+        IConfigurationManager cfg,
+        CVarDef<int> cVar,
+        OptionSlider slider,
+        float minValue,
+        float maxValue,
+        Func<OptionSliderIntCVar, int, string> format) : base(controller, cfg, cVar)
     {
         _cVar = cVar;
         _slider = slider;
@@ -237,6 +311,6 @@ public sealed class OptionSliderFloatCVar : BaseOptionCVar<float>
 
     private void UpdateLabelValue()
     {
-        _slider.ValueLabel.Text = _format(_slider.Slider.Value);
+        _slider.ValueLabel.Text = _format(this, (int) _slider.Slider.Value);
     }
 }
