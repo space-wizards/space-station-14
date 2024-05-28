@@ -52,10 +52,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
         if (args.Handled)
             return;
 
-        if (TryDoInject(entity, args.User, args.User))
-        {
-            args.Handled = true;
-        }
+        args.Handled = TryDoInject(entity, args.User, args.User);
     }
 
     public void OnAfterInteract(Entity<HyposprayComponent> entity, ref AfterInteractEvent args)
@@ -63,10 +60,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
-        if (TryUseHypospray(entity, args.Target.Value, args.User))
-        {
-            args.Handled = true;
-        }
+        args.Handled = TryUseHypospray(entity, args.Target.Value, args.User);
     }
 
     public void OnAttack(Entity<HyposprayComponent> entity, ref MeleeHitEvent args)
@@ -185,7 +179,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
         _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
             ("amount", removedSolution.Volume),
             ("target", Identity.Entity(target, EntityManager))), entity.Owner, user);
-        return false;
+        return true;
     }
 
     private bool EligibleEntity(EntityUid entity, IEntityManager entMan, HyposprayComponent component)
