@@ -20,11 +20,11 @@ public abstract class SharedItemCreatorSystem : EntitySystem
 
     private void OnMapInit(Entity<ItemCreatorComponent> ent, ref MapInitEvent args)
     {
+        var (uid, comp) = ent;
         // test funny dont mind me
         if (string.IsNullOrEmpty(comp.Action))
             return;
 
-        var (uid, comp) = ent;
         _actionContainer.EnsureAction(uid, ref comp.ActionEntity, comp.Action);
         Dirty(uid, comp);
     }
