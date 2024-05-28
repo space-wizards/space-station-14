@@ -2,8 +2,6 @@
   parent: GasPipeBase
   abstract: true
   id: GasTrinaryBase
-  placement:
-    mode: SnapgridCenter
   components:
     - type: AtmosDevice
     - type: Tag
@@ -28,12 +26,30 @@
           pipeDirection: South
 
 - type: entity
+  abstract: true
+  id: GasTrinaryFlippedBase
+  suffix: Flipped
+  components:
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+      filter:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: West
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+
+- type: entity
   parent: GasTrinaryBase
   id: GasFilter
   name: gas filter
   description: Very useful for filtering gases.
-  placement:
-    mode: SnapgridCenter
   components:
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/gasfilter.rsi
@@ -72,12 +88,8 @@
         path: /Audio/Ambience/Objects/gas_hiss.ogg
 
 - type: entity
-  parent: GasFilter
+  parent: [GasFilter, GasTrinaryFlippedBase]
   id: GasFilterFlipped
-  name: gas filter
-  suffix: Flipped
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gasfilter.rsi
@@ -89,7 +101,6 @@
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
   - type: Flippable
     mirrorEntity: GasFilter
-  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.FilterVisuals.Enabled:
@@ -99,29 +110,11 @@
   - type: Construction
     node: filterflipped
 
-  - type: PipeColorVisuals
-  - type: NodeContainer
-    nodes:
-      inlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: South
-      filter:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: West
-      outlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: North
-
 - type: entity
   parent: GasTrinaryBase
   id: GasMixer
   name: gas mixer
   description: Very useful for mixing gases.
-  placement:
-    mode: SnapgridCenter
   components:
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/gasmixer.rsi
@@ -160,12 +153,9 @@
         path: /Audio/Ambience/Objects/gas_hiss.ogg
 
 - type: entity
-  parent: GasMixer
+  parent: [GasMixer, GasTrinaryFlippedBase]
   id: GasMixerFlipped
   name: gas mixer
-  suffix: Flipped
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gasmixer.rsi
@@ -175,30 +165,14 @@
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasMixerF
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.FilterVisuals.Enabled:
         enabled:
           True: { state: gasMixerFOn }
           False: { state: gasMixerF }
-  - type: PipeColorVisuals
   - type: Flippable
     mirrorEntity: GasMixer
-  - type: NodeContainer
-    nodes:
-      inlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: South
-      filter:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: West
-      outlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: North
   - type: Construction
     node: mixerflipped
 
@@ -207,8 +181,6 @@
   id: PressureControlledValve
   name: pneumatic valve
   description: Valve controlled by pressure.
-  placement:
-    mode: SnapgridCenter
   components:
     - type: AtmosDevice
     - type: Tag
