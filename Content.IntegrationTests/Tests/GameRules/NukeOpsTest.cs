@@ -58,6 +58,9 @@ public sealed class NukeOpsTest
         Assert.That(client.AttachedEntity, Is.Null);
         Assert.That(ticker.PlayerGameStatuses[client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
 
+        // Opt into the nukies role.
+        await pair.SetAntagPref("NukeopsCommander", true);
+
         // There are no grids or maps
         Assert.That(entMan.Count<MapComponent>(), Is.Zero);
         Assert.That(entMan.Count<MapGridComponent>(), Is.Zero);
@@ -198,6 +201,7 @@ public sealed class NukeOpsTest
 
         ticker.SetGamePreset((GamePresetPrototype?)null);
         server.CfgMan.SetCVar(CCVars.GridFill, false);
+        await pair.SetAntagPref("NukeopsCommander", false);
         await pair.CleanReturnAsync();
     }
 }

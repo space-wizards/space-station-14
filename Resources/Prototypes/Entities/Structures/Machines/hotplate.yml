@@ -15,7 +15,9 @@
         mask:
         - TabletopMachineMask
         layer:
-        - TabletopMachineLayer
+        - Impassable
+        - MidImpassable
+        - LowImpassable
         hard: false
   - type: ApcPowerReceiver
     powerLoad: 300
