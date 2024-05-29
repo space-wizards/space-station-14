@@ -85,7 +85,7 @@
   desc: reagent-desc-fluorine
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
-  color: "#808080"
+  color: "#6ead00"
   boilingPoint: -188.11
   meltingPoint: -219.67
   plantMetabolism:
@@ -123,7 +123,7 @@
   desc: reagent-desc-hydrogen
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
-  color: "#808080"
+  color: "#cccccc"
   boilingPoint: -253.0
   meltingPoint: -259.2
 
@@ -235,7 +235,7 @@
   desc: reagent-desc-phosphorus
   physicalDesc: reagent-physical-desc-powdery
   flavor: metallic
-  color: "#ede4e4"
+  color: "#f5da9a"
   meltingPoint: 44.2
   boilingPoint: 280.5
   plantMetabolism:
