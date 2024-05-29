@@ -89,8 +89,7 @@ namespace Content.Client.PDA
 
             if (_menu == null)
             {
-
-                _pdaSystem.Log.Error($"No IdCardConsole component found for {EntMan.ToPrettyString(Owner)}!");
+                _pdaSystem.Log.Error("PDA state received before menu was created.");
                 return;
             }
 
