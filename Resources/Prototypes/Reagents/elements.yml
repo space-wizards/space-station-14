@@ -85,7 +85,7 @@
   desc: reagent-desc-fluorine
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
-  color: "#6ead00"
+  color: "#ba85cc"
   boilingPoint: -188.11
   meltingPoint: -219.67
   plantMetabolism:
