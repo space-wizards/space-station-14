@@ -1,8 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: GoodCleanFunGoodbyes
-  messages:
-  - vending-machine-thanks
-  - thankyou-goodcleanfun-1
-  - thankyou-goodcleanfun-2
-  - thankyou-goodcleanfun-3
-  - thankyou-goodcleanfun-4
+  values:
+    prefix: thankyou-goodcleanfun-
+    count: 4

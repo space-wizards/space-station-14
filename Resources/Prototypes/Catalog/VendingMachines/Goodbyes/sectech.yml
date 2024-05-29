@@ -1,7 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: SecTechGoodbyes
-  messages:
-  - vending-machine-thanks
-  - thankyou-sectech-1
-  - thankyou-sectech-2
-  - thankyou-sectech-3
+  values:
+    prefix: thankyou-sectech-
+    count: 3

@@ -1,6 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: ViroDrobeAds
-  messages:
-    - advertisement-virodrobe-1
-    - advertisement-virodrobe-2
-    - advertisement-virodrobe-3
+  values:
+    prefix: advertisement-virodrobe-
+    count: 3

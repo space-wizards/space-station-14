@@ -1,6 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: SciDrobeAds
-  messages:
-    - advertisement-scidrobe-1
-    - advertisement-scidrobe-2
-    - advertisement-scidrobe-3
+  values:
+    prefix: advertisement-scidrobe-
+    count: 3

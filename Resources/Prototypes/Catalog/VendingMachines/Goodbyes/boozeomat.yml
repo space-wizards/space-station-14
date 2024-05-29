@@ -1,7 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: BoozeOMatGoodbyes
-  messages:
-  - vending-machine-thanks
-  - thankyou-boozeomat-1
-  - thankyou-boozeomat-2
-  - thankyou-boozeomat-3
+  values:
+    prefix: thankyou-boozeomat-
+    count: 3

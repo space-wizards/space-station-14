@@ -1,7 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: BodaGoodbyes
-  messages:
-  - vending-machine-thanks
-  - thankyou-sovietsoda-1
-  - thankyou-sovietsoda-2
-  - thankyou-sovietsoda-3
+  values:
+    prefix: thankyou-sovietsoda-
+    count: 3

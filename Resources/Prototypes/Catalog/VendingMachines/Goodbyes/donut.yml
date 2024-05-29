@@ -1,8 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: DonutGoodbyes
-  messages:
-  - vending-machine-thanks
-  - thankyou-donut-1
-  - thankyou-donut-2
-  - thankyou-donut-3
-  - thankyou-donut-4
+  values:
+    prefix: thankyou-donut-
+    count: 4

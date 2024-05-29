@@ -1,6 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: ChefDrobeAds
-  messages:
-    - advertisement-chefdrobe-1
-    - advertisement-chefdrobe-2
-    - advertisement-chefdrobe-3
+  values:
+    prefix: advertisement-chefdrobe-
+    count: 3

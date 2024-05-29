@@ -1,6 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: DetDrobeAds
-  messages:
-    - advertisement-detdrobe-1
-    - advertisement-detdrobe-2
-    - advertisement-detdrobe-3
+  values:
+    prefix: advertisement-detdrobe-
+    count: 3

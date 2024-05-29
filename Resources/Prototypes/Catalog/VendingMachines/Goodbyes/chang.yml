@@ -1,6 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: ChangGoodbyes
-  messages:
-  - vending-machine-thanks
-  - thankyou-chang-1
-  - thankyou-chang-2
+  values:
+    prefix: thankyou-chang-
+    count: 2

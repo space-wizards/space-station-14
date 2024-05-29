@@ -1,5 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: BarDrobeAds
-  messages:
-    - advertisement-bardrobe-1
-    - advertisement-bardrobe-2
+  values:
+    prefix: advertisement-bardrobe-
+    count: 2

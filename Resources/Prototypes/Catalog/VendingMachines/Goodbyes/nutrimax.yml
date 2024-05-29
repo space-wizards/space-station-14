@@ -1,6 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: NutriMaxGoodbyes
-  messages:
-  - vending-machine-thanks
-  - thankyou-nutrimax-1
-  - thankyou-nutrimax-2
+  values:
+    prefix: thankyou-nutrimax-
+    count: 2

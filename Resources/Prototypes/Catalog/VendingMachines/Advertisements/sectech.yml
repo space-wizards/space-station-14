@@ -1,8 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: SecTechAds
-  messages:
-    - advertisement-sectech-1
-    - advertisement-sectech-2
-    - advertisement-sectech-3
-    - advertisement-sectech-4
-    - advertisement-sectech-5
+  values:
+    prefix: advertisement-sectech-
+    count: 5

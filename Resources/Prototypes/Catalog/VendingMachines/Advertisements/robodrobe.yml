@@ -1,7 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: RoboDrobeAds
-  messages:
-    - advertisement-robodrobe-1
-    - advertisement-robodrobe-2
-    - advertisement-robodrobe-3
-    - advertisement-robodrobe-4
+  values:
+    prefix: advertisement-robodrobe-
+    count: 4

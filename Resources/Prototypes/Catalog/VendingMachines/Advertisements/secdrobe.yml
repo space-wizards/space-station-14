@@ -1,8 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: SecDrobeAds
-  messages:
-    - advertisement-secdrobe-1
-    - advertisement-secdrobe-2
-    - advertisement-secdrobe-3
-    - advertisement-secdrobe-4
-    - advertisement-secdrobe-5
+  values:
+    prefix: advertisement-secdrobe-
+    count: 5

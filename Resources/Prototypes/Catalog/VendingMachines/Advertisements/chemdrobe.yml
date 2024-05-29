@@ -1,6 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: ChemDrobeAds
-  messages:
-    - advertisement-chemdrobe-1
-    - advertisement-chemdrobe-2
-    - advertisement-chemdrobe-3
+  values:
+    prefix: advertisement-chemdrobe-
+    count: 3

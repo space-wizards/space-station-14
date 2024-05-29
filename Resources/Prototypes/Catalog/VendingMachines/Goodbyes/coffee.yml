@@ -1,8 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: HotDrinksMachineGoodbyes
-  messages:
-  - vending-machine-thanks
-  - thankyou-coffee-1
-  - thankyou-coffee-2
-  - thankyou-coffee-3
-  - thankyou-coffee-4
+  values:
+    prefix: thankyou-coffee-
+    count: 4

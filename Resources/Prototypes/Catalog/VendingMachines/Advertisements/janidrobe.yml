@@ -1,6 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: JaniDrobeAds
-  messages:
-    - advertisement-janidrobe-1
-    - advertisement-janidrobe-2
-    - advertisement-janidrobe-3
+  values:
+    prefix: advertisement-janidrobe-
+    count: 3

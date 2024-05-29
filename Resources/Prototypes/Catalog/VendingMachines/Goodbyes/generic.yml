@@ -1,4 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: GenericVendGoodbyes
-  messages:
-  - vending-machine-thanks
+  values:
+    prefix: vending-machine-thanks-
+    count: 1

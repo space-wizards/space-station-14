@@ -1,5 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: GeneDrobeAds
-  messages:
-    - advertisement-genedrobe-1
-    - advertisement-genedrobe-2
+  values:
+    prefix: advertisement-genedrobe-
+    count: 2

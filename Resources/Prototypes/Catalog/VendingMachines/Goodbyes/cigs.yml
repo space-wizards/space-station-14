@@ -1,7 +1,5 @@
-- type: messagePack
+- type: localizedDataset
   id: CigaretteMachineGoodbyes
-  messages:
-  - vending-machine-thanks
-  - thankyou-cigs-1
-  - thankyou-cigs-2
-  - thankyou-cigs-3
+  values:
+    prefix: thankyou-cigs-
+    count: 3
