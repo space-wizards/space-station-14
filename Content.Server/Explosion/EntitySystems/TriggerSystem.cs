@@ -270,7 +270,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (!Resolve(ent, ref ent.Comp, false))
                 return;
 
-            var comp = ent.Comp.Value;
+            var comp = ent.Comp;
             HandleTimerTrigger(ent, user, comp.Delay, comp.BeepInterval, comp.InitialBeepDelay, comp.BeepSound);
         }
 
