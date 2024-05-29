@@ -22,6 +22,7 @@ public sealed class ItemCabinetSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ItemCabinetComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<ItemCabinetComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ItemCabinetComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
         SubscribeLocalEvent<ItemCabinetComponent, EntRemovedFromContainerMessage>(OnContainerModified);
         SubscribeLocalEvent<ItemCabinetComponent, OpenableOpenedEvent>(OnOpened);
@@ -30,10 +31,13 @@ public sealed class ItemCabinetSystem : EntitySystem
 
     private void OnStartup(Entity<ItemCabinetComponent> ent, ref ComponentStartup args)
     {
-        // update at startup to avoid copy pasting locked: true and locked: false for each closed/open prototype
-        SetSlotLock(ent, !_openable.IsOpen(ent));
-
         UpdateAppearance(ent);
+    }
+
+    private void OnMapInit(Entity<ItemCabinetComponent> ent, ref MapInitEvent args)
+    {
+        // update at mapinit to avoid copy pasting locked: true and locked: false for each closed/open prototype
+        SetSlotLock(ent, !_openable.IsOpen(ent));
     }
 
     private void UpdateAppearance(Entity<ItemCabinetComponent> ent)
