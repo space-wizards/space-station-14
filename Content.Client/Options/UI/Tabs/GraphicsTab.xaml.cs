@@ -53,8 +53,8 @@ public sealed partial class GraphicsTab : Control
         Control.AddOptionSlider(
             CCVars.ViewportWidth,
             ViewportWidthSlider,
-            ViewportWidthSlider.Slider.MinValue,
-            ViewportWidthSlider.Slider.MaxValue);
+            (int)ViewportWidthSlider.Slider.MinValue,
+            (int)ViewportWidthSlider.Slider.MaxValue);
 
         Control.AddOption(new OptionIntegerScaling(Control, _cfg, IntegerScalingCheckBox));
         Control.AddOptionCheckBox(CCVars.ViewportScaleRender, ViewportLowResCheckBox, invert: true);
