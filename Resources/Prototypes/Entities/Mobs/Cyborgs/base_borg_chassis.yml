@@ -282,3 +282,5 @@
   - type: Vocal
     sounds:
       Unsexed: UnisexSiliconSyndicate
+  - type: PointLight
+    color: "#dd200b"
