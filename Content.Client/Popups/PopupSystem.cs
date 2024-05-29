@@ -67,7 +67,7 @@ namespace Content.Client.Popups
                 .RemoveOverlay<PopupOverlay>();
         }
 
-        private void IncrementRepeatsAndPopup(PopupLabel existingLabel, string popupMessage)
+        private void WrapAndRepeatPopup(PopupLabel existingLabel, string popupMessage)
         {
             existingLabel.TotalTime = 0;
             existingLabel.Repeats += 1;
@@ -92,7 +92,7 @@ namespace Content.Client.Popups
             var popupData = new WorldPopupData(message, type, coordinates, entity);
             if (_aliveWorldLabels.TryGetValue(popupData, out var existingLabel))
             {
-                IncrementRepeatsAndPopup(existingLabel, popupData.Message);
+                WrapAndRepeatPopup(existingLabel, popupData.Message);
                 return;
             }
 
@@ -134,7 +134,7 @@ namespace Content.Client.Popups
             var popupData = new CursorPopupData(message, type);
             if (_aliveCursorLabels.TryGetValue(popupData, out var existingLabel))
             {
-                IncrementRepeatsAndPopup(existingLabel, popupData.Message);
+                WrapAndRepeatPopup(existingLabel, popupData.Message);
                 return;
             }
 
