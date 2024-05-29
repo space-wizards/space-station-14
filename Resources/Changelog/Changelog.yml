@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Additional syringe doafter delay is now based on syringe contents rather
-      than transfer amount setting.
-    type: Tweak
-  id: 6139
-  time: '2024-03-13T09:35:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25890
 - author: SlamBamActionman
   changes:
   - message: Renamed Uplink categories and moved items to fit new category names.
@@ -3866,3 +3858,10 @@
   id: 6638
   time: '2024-05-29T05:21:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28370
+- author: lzk228
+  changes:
+  - message: Salvage access has been replaced with Cargo for the artifact container.
+    type: Tweak
+  id: 6639
+  time: '2024-05-29T16:46:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28386
