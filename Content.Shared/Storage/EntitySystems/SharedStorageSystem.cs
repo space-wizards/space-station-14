@@ -349,9 +349,6 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Handled || !CanInteract(args.User, (uid, storageComp), storageComp.ClickInsert, false))
             return;
 
-        if (HasComp<PlaceableSurfaceComponent>(uid))
-            return;
-
         PlayerInsertHeldEntity(uid, args.User, storageComp);
         // Always handle it, even if insertion fails.
         // We don't want to trigger any AfterInteract logic here.

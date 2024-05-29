@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 
 namespace Content.Shared.Placeable;
@@ -14,6 +15,7 @@ public sealed class PlaceableSurfaceSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<PlaceableSurfaceComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
+        SubscribeLocalEvent<PlaceableSurfaceComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
     }
 
     public void SetPlaceable(EntityUid uid, bool isPlaceable, PlaceableSurfaceComponent? surface = null)
@@ -65,5 +67,10 @@ public sealed class PlaceableSurfaceSystem : EntitySystem
             Transform(args.Used).Coordinates = args.ClickLocation;
 
         args.Handled = true;
+    }
+
+    private void OnStorageInteractAttempt(Entity<PlaceableSurfaceComponent> ent, ref StorageInteractAttemptEvent args)
+    {
+        args.Cancelled = true;
     }
 }
