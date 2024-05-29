@@ -4,7 +4,7 @@
   id: BaseNinjaObjective
   components:
   - type: Objective
-    # difficulty isn't used all since objectives are picked
+    # difficulty isn't used since all objectives are picked
     difficulty: 1.5
     issuer: spiderclan
   - type: RoleRequirement

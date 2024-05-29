@@ -9,7 +9,6 @@ namespace Content.Client.Audio.Jukebox;
 
 public sealed class JukeboxBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     [ViewVariables]

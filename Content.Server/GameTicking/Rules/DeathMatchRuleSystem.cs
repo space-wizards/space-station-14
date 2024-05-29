@@ -9,6 +9,7 @@ using Content.Server.RoundEnd;
 using Content.Server.Station.Systems;
 using Content.Shared.Points;
 using Content.Shared.Storage;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Utility;
 
@@ -25,6 +26,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
     [Dependency] private readonly RespawnRuleSystem _respawn = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -97,7 +99,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
                 _point.AdjustPointValue(assist.PlayerId, 1, uid, point);
 
             var spawns = EntitySpawnCollection.GetSpawns(dm.RewardSpawns).Cast<string?>().ToList();
-            EntityManager.SpawnEntities(Transform(ev.Entity).MapPosition, spawns);
+            EntityManager.SpawnEntities(_transform.GetMapCoordinates(ev.Entity), spawns);
         }
     }
 

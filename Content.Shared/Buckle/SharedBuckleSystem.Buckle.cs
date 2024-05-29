@@ -40,6 +40,9 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, UpdateCanMoveEvent>(OnBuckleUpdateCanMove);
     }
 
+    [ValidatePrototypeId<AlertCategoryPrototype>]
+    public const string BuckledAlertCategory = "Buckled";
+
     private void OnBuckleComponentStartup(EntityUid uid, BuckleComponent component, ComponentStartup args)
     {
         UpdateBuckleStatus(uid, component);
@@ -61,7 +64,7 @@ public abstract partial class SharedBuckleSystem
             return;
 
         var strapPosition = Transform(strapUid).Coordinates;
-        if (ev.NewPosition.InRange(EntityManager, _transform, strapPosition, strapComp.MaxBuckleDistance))
+        if (ev.NewPosition.EntityId.IsValid() && ev.NewPosition.InRange(EntityManager, _transform, strapPosition, strapComp.MaxBuckleDistance))
             return;
 
         TryUnbuckle(uid, uid, true, component);
@@ -165,7 +168,7 @@ public abstract partial class SharedBuckleSystem
         }
         else
         {
-            _alerts.ClearAlertCategory(uid, AlertCategory.Buckled);
+            _alerts.ClearAlertCategory(uid, BuckledAlertCategory);
         }
     }
 

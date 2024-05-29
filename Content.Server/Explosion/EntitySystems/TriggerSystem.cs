@@ -166,7 +166,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleGibTrigger(EntityUid uid, GibOnTriggerComponent component, TriggerEvent args)
         {
-            if (!TryComp<TransformComponent>(uid, out var xform))
+            if (!TryComp(uid, out TransformComponent? xform))
                 return;
             if (component.DeleteItems)
             {

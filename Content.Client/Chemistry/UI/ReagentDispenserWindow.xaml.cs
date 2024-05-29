@@ -121,28 +121,4 @@ namespace Content.Client.Chemistry.UI
             }
         }
     }
-
-    public sealed class DispenseReagentButton : Button
-    {
-        public string ReagentId { get; }
-
-        public DispenseReagentButton(string reagentId, string text, string amount)
-        {
-            AddStyleClass("OpenRight");
-            ReagentId = reagentId;
-            Text = text + " " + amount;
-        }
-    }
-
-    public sealed class EjectJugButton : Button
-    {
-        public string ReagentId { get; }
-
-        public EjectJugButton(string reagentId)
-        {
-            AddStyleClass("OpenLeft");
-            ReagentId = reagentId;
-            Text = "⏏";
-        }
-    }
 }
