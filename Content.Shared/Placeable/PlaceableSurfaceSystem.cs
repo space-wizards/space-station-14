@@ -16,7 +16,7 @@ public sealed class PlaceableSurfaceSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<PlaceableSurfaceComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
-        SubscribeLocalEvent<PlaceableSurfaceComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
+        SubscribeLocalEvent<PlaceableSurfaceComponent, StorageInteractUsingAttemptEvent>(OnStorageInteractUsingAttempt);
         SubscribeLocalEvent<PlaceableSurfaceComponent, StorageAfterOpenEvent>(OnStorageAfterOpen);
         SubscribeLocalEvent<PlaceableSurfaceComponent, StorageAfterCloseEvent>(OnStorageAfterClose);
     }
@@ -70,7 +70,7 @@ public sealed class PlaceableSurfaceSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnStorageInteractAttempt(Entity<PlaceableSurfaceComponent> ent, ref StorageInteractAttemptEvent args)
+    private void OnStorageInteractUsingAttempt(Entity<PlaceableSurfaceComponent> ent, ref StorageInteractUsingAttemptEvent args)
     {
         args.Cancelled = true;
     }
