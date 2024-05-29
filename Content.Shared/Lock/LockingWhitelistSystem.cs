@@ -4,7 +4,7 @@ namespace Content.Shared.Lock;
 
 public sealed class LockingWhitelistSystem : EntitySystem
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -15,7 +15,7 @@ public sealed class LockingWhitelistSystem : EntitySystem
 
     private void OnLockToggleAttempt(Entity<LockingWhitelistComponent> ent, ref LockToggleAttemptEvent args)
     {
-        if (!_whitelist.CheckBoth(args.Target, ent.Comp.Blacklist, ent.Comp.Whitelist))
+        if (!_whitelistSystem.CheckBoth(args.Target, ent.Comp.Blacklist, ent.Comp.Whitelist))
             args.Cancelled = true;
     }
 }
