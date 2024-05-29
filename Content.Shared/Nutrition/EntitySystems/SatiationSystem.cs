@@ -43,7 +43,7 @@ public sealed class SatiationSystem : EntitySystem
                 (int) satiation.Prototype.Thresholds[SatiationThreashold.Concerned] + 10,
                 (int) satiation.Prototype.Thresholds[SatiationThreashold.Okay]);
             SetSatiation(satiation, amount);
-            UpdateCurrentThreshold(satiation);
+            UpdateCurrentThreshold(uid, satiation);
             DoThresholdEffects(uid, satiation, satiation.Prototype.alertThresholds, satiation.Prototype.alertCategory, false);
 
             satiation.CurrentThreshold = GetThreshold(satiation, satiation.Current);
@@ -78,13 +78,15 @@ public sealed class SatiationSystem : EntitySystem
     {
         foreach(var (_, satiation) in component.Satiations)
         {
-            args.ModifySpeed(satiation.Prototype.SlowdownModifier, satiation.Prototype.SlowdownModifier);
             SetSatiation((uid, component), satiation.Prototype.Thresholds[SatiationThreashold.Okay]);
         }
     }
 
-    public void ModifySatiation(Satiation satiation, float amount)
+    public void ModifySatiation(Entity<SatiationComponent> ent, ProtoId<SatiationTypePrototype> satiationType, float amount)
     {
+        if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
+            return;
+
         SetSatiation(satiation, satiation.Current + amount);
     }
 
@@ -163,12 +165,18 @@ public sealed class SatiationSystem : EntitySystem
     /// <summary>
     /// A check that returns if the entity is below a satiation threshold.
     /// </summary>
-    public bool IsSatiationBelowState(Entity<SatiationComponent?> ent, string type, SatiationThreashold threshold, float? thirst = null)
+    public bool IsSatiationBelowState(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, SatiationThreashold threshold, float? thirst = null)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
             return false; // It's never going to go unsatiated, so it's probably fine to assume that it's satiated.
 
-        return GetThreshold(ent.Comp.Satiations[type], thirst) < threshold;
+        if (ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
+            return false; // It's never going to go unsatiated, so it's probably fine to assume that it's satiated.
+
+        if (satiation == null)
+            return false;
+
+        return GetThreshold(satiation, thirst) < threshold;
     }
 
     private bool GetMovementThreshold(SatiationThreashold threshold)
@@ -219,9 +227,9 @@ public sealed class SatiationSystem : EntitySystem
                 continue;
             component.NextUpdateTime = _timing.CurTime + component.UpdateRate;
 
-            foreach (var (_, satiation) in component.Satiations)
+            foreach (var (satiationType, satiation) in component.Satiations)
             {
-                ModifySatiation(satiation, -satiation.ActualDecayRate);
+                ModifySatiation((uid, component), satiationType, -satiation.ActualDecayRate);
                 DoContinuousEffects(uid, satiation);
             }
         }

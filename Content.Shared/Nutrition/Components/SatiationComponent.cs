@@ -1,6 +1,7 @@
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.Components;
 
@@ -11,7 +12,7 @@ public sealed partial class SatiationComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public Dictionary<string, Satiation> Satiations = new();
+    public Dictionary<ProtoId<SatiationTypePrototype>, Satiation> Satiations = new();
 
     /// <summary>
     /// The time when the thirst will update next.
