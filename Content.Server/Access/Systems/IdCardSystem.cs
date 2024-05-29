@@ -27,6 +27,9 @@ public sealed class IdCardSystem : SharedIdCardSystem
 
     private void OnMicrowaved(EntityUid uid, IdCardComponent component, BeingMicrowavedEvent args)
     {
+        if (!component.CanMicrowave)
+            return;
+
         if (TryComp<AccessComponent>(uid, out var access))
         {
             float randomPick = _random.NextFloat();

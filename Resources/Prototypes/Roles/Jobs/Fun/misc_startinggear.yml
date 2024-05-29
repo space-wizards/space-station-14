@@ -71,6 +71,17 @@
     shoes: ClothingShoesBootsCombatFilled
     gloves: ClothingHandsGlovesColorBlack
 
+# Syndicate Operative Outfit - Civilian
+- type: startingGear
+  id: SyndicateOperativeGearCivilian
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSyndieFormal
+    back: ClothingBackpackDuffelSyndicate
+    shoes: ClothingShoesBootsCombat
+    gloves: ClothingHandsGlovesColorBlack
+    id: SyndiPDA
+    ears: ClothingHeadsetAltSyndicate
+
 #Syndicate Operative Outfit - Basic
 - type: startingGear
   id: SyndicateOperativeGearBasic
@@ -309,6 +320,140 @@
 - type: startingGear
   id: BananaClown
   equipment:
+    id: ClownPDA
+    back: ClothingBackpackClown
     shoes: ClothingShoesClownBanana
     jumpsuit: ClothingUniformJumpsuitClownBanana
     mask: ClothingMaskClownBanana
+    ears: ClothingHeadsetService
+    pocket1: BikeHorn
+    pocket2: ClownRecorder
+
+#Clown Troupe
+- type: startingGear
+  id: ClownTroupe
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitClown
+    shoes: ClothingShoesClown
+    id: ClownPDA
+    back: ClothingBackpackClown
+    ears: ClothingHeadsetService
+    mask: ClothingMaskClown
+    pocket1: BikeHorn
+    pocket2: ClownRecorder
+
+#Lost Cargo Tech
+- type: startingGear
+  id: LostCargoTechGearSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargo
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatCargosoft
+    id: CargoPDA
+    back: ClothingBackpackCargo
+    ears: ClothingHeadsetCargo
+    pocket1: AppraisalTool
+
+- type: startingGear
+  id: LostCargoTechGearCoat
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargo
+    shoes: ClothingShoesBootsWinterCargo
+    head: ClothingHeadHatCargosoft
+    id: CargoPDA
+    back: ClothingBackpackDuffelCargo
+    ears: ClothingHeadsetCargo
+    pocket1: AppraisalTool
+    outerClothing: ClothingOuterWinterCargo
+
+#Traveling Chef
+- type: startingGear
+  id: TravelingChef
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChef
+    shoes: ClothingShoesColorWhite
+    id: ChefPDA
+    back: ClothingBackpackSatchel
+    ears: ClothingHeadsetService
+    belt: ClothingBeltChef
+
+#CMO Disaster Victim
+- type: startingGear
+  id: DisasterVictimCMO
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMO
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadMirror
+    neck: ClothingCloakCmo
+    id: CMOPDA
+    back: ClothingBackpackMedical
+    ears: ClothingHeadsetCMO
+    belt: ClothingBeltMedical
+    outerClothing: ClothingOuterCoatLabCmo
+
+- type: startingGear
+  id: DisasterVictimCMOAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMOTurtle
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatBeretCmo
+    neck: ClothingNeckMantleCMO
+    id: CMOPDA
+    back: ClothingBackpackSatchelMedical
+    ears: ClothingHeadsetCMO
+    belt: ClothingBeltMedical
+    outerClothing: ClothingOuterCoatLabCmo
+
+#Captain Disaster Victim
+- type: startingGear
+  id: DisasterVictimCaptain
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptain
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    head: ClothingHeadHatCaptain
+    neck: ClothingNeckCloakCap
+    id: CaptainPDA
+    back: ClothingBackpackCaptain
+    ears: ClothingHeadsetAltCommand
+    outerClothing: ClothingOuterArmorCaptainCarapace
+
+- type: startingGear
+  id: DisasterVictimCaptainAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCapFormal
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    head: ClothingHeadHatCapcap
+    neck: ClothingNeckMantleCap
+    id: CaptainPDA
+    back: ClothingBackpackSatchelCaptain
+    ears: ClothingHeadsetAltCommand
+    outerClothing: ClothingOuterArmorCaptainCarapace
+
+#RD Disaster Victim
+- type: startingGear
+  id: DisasterVictimRD
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirector
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatBeretRND
+    neck: ClothingNeckCloakRd
+    id: RnDPDA
+    back: ClothingBackpackScience
+    ears: ClothingHeadsetRD
+    outerClothing: ClothingOuterCoatRD
+
+- type: startingGear
+  id: DisasterVictimRDAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirector
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatBeretRND
+    neck: ClothingNeckMantleRD
+    id: RnDPDA
+    back: ClothingBackpackSatchelScience
+    ears: ClothingHeadsetRD
+    outerClothing: ClothingOuterCoatRD
