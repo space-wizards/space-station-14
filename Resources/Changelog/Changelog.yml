@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: maylokana
-  changes:
-  - message: Italicized whisper bubbles
-    type: Tweak
-  id: 6136
-  time: '2024-03-13T08:03:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25602
 - author: Slava0135
   changes:
   - message: Fixed pie bomb not detonating when eaten or sliced (remember to keep
@@ -3867,3 +3860,11 @@
   id: 6635
   time: '2024-05-28T23:56:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27736
+- author: Cojoke-dot
+  changes:
+  - message: The syndicate Medical and Sabatour borgs now come with medical and diagnostics
+      HUDs  respectively.
+    type: Tweak
+  id: 6636
+  time: '2024-05-29T00:16:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27875
