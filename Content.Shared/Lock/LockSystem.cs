@@ -230,7 +230,7 @@ public sealed class LockSystem : EntitySystem
         if (!HasComp<HandsComponent>(user))
             return false;
 
-        var ev = new LockToggleAttemptEvent(user, quiet);
+        var ev = new LockToggleAttemptEvent(user, uid, quiet);
         RaiseLocalEvent(uid, ref ev, true);
         RaiseLocalEvent(user, ref ev, true);
         return !ev.Cancelled;
@@ -377,4 +377,3 @@ public sealed class LockSystem : EntitySystem
         _activatableUI.CloseAll(uid);
     }
 }
-

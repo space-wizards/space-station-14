@@ -15,7 +15,7 @@ public sealed class LockingWhitelistSystem : EntitySystem
 
     private void OnLockToggleAttempt(Entity<LockingWhitelistComponent> ent, ref LockToggleAttemptEvent args)
     {
-        if (args.User == ent.Owner && !_whitelist.CheckBoth(ent, ent.Comp.Blacklist, ent.Comp.Whitelist))
+        if (!_whitelist.CheckBoth(args.Target, ent.Comp.Blacklist, ent.Comp.Whitelist))
             args.Cancelled = true;
     }
 }

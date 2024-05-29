@@ -84,7 +84,7 @@ public sealed partial class LockComponent : Component
 /// Can be cancelled to prevent it.
 /// </summary>
 [ByRefEvent]
-public record struct LockToggleAttemptEvent(EntityUid User, bool Silent = false, bool Cancelled = false);
+public record struct LockToggleAttemptEvent(EntityUid User, EntityUid Target, bool Silent = false, bool Cancelled = false);
 
 /// <summary>
 /// Event raised on a lock after it has been toggled.
