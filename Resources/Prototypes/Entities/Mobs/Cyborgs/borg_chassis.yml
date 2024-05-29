@@ -248,6 +248,12 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHoverBorg
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers: 
+    - Biological
 
 - type: entity
   id: BorgChassisService
