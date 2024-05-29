@@ -508,7 +508,7 @@
       - PillCanister
   - type: Storage
     whitelist:
-      component:
+      tags:
         - Pill
     grid:
     - 0,0,4,1
