@@ -29,6 +29,6 @@
                 <!-- <CheckBox Name="ToggleWalk" Text="{Loc 'ui-options-hotkey-toggle-walk'}" /> -->
             </BoxContainer>
         </ScrollContainer>
-        <ui:OptionsTabControlRow Name="Control" />
+        <ui:OptionsTabControlRow Name="Control" Access="Public" />
     </BoxContainer>
 </tabs:MiscTab>

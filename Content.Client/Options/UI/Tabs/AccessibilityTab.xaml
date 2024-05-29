@@ -11,6 +11,6 @@
                 <ui:OptionSlider Name="ScreenShakeIntensitySlider" Title="{Loc 'ui-options-screen-shake-intensity'}" />
             </BoxContainer>
         </ScrollContainer>
-        <ui:OptionsTabControlRow Name="Control" />
+        <ui:OptionsTabControlRow Name="Control" Access="Public" />
     </BoxContainer>
 </Control>

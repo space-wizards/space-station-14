@@ -34,9 +34,9 @@ public sealed partial class OptionsTabControlRow : Control
         return option;
     }
 
-    public OptionCheckboxCVar AddOptionCheckBox(CVarDef<bool> cVar, CheckBox checkBox)
+    public OptionCheckboxCVar AddOptionCheckBox(CVarDef<bool> cVar, CheckBox checkBox, bool invert = false)
     {
-        return AddOption(new OptionCheckboxCVar(this, _cfg, cVar, checkBox));
+        return AddOption(new OptionCheckboxCVar(this, _cfg, cVar, checkBox, invert));
     }
 
     public OptionSliderFloatCVar AddOptionPercentSlider(
@@ -49,9 +49,14 @@ public sealed partial class OptionsTabControlRow : Control
         return AddOption(new OptionSliderFloatCVar(this, _cfg, cVar, slider, min, max, scale, FormatPercent));
     }
 
-    public OptionSliderIntCVar AddOptionSlider(CVarDef<int> cVar, OptionSlider slider, float min, float max)
+    public OptionSliderIntCVar AddOptionSlider(
+        CVarDef<int> cVar,
+        OptionSlider slider,
+        float min,
+        float max,
+        Func<OptionSliderIntCVar, int, string>? format = null)
     {
-        return AddOption(new OptionSliderIntCVar(this, _cfg, cVar, slider, min, max, FormatInt));
+        return AddOption(new OptionSliderIntCVar(this, _cfg, cVar, slider, min, max, format ?? FormatInt));
     }
 
     public OptionDropDownCVar<T> AddOptionDropDown<T>(
@@ -129,6 +134,11 @@ public sealed partial class OptionsTabControlRow : Control
 
         UpdateButtonState();
     }
+
+    public void ReloadValues()
+    {
+        Initialize();
+    }
 }
 
 public abstract class BaseOption(OptionsTabControlRow controller)
@@ -194,6 +204,9 @@ public abstract class BaseOptionCVar<TValue> : BaseOption
 
     protected virtual bool IsValueEqual(TValue a, TValue b)
     {
+        if (typeof(TValue) == typeof(float))
+            return MathHelper.CloseToPercent((float) (object) a, (float) (object) b);
+
         return EqualityComparer<TValue>.Default.Equals(a, b);
     }
 
@@ -208,21 +221,23 @@ public abstract class BaseOptionCVar<TValue> : BaseOption
 public sealed class OptionCheckboxCVar : BaseOptionCVar<bool>
 {
     private readonly CheckBox _checkBox;
+    private readonly bool _invert;
 
     protected override bool Value
     {
-        get => _checkBox.Pressed;
-        set => _checkBox.Pressed = value;
+        get => _checkBox.Pressed ^ _invert;
+        set => _checkBox.Pressed = value ^ _invert;
     }
 
-    public OptionCheckboxCVar(
-        OptionsTabControlRow controller,
+    public OptionCheckboxCVar(OptionsTabControlRow controller,
         IConfigurationManager cfg,
         CVarDef<bool> cVar,
-        CheckBox checkBox)
+        CheckBox checkBox,
+        bool invert)
         : base(controller, cfg, cVar)
     {
         _checkBox = checkBox;
+        _invert = invert;
         checkBox.OnToggled += _ =>
         {
             ValueChanged();
@@ -310,6 +325,7 @@ public sealed class OptionSliderIntCVar : BaseOptionCVar<int>
 
         slider.Slider.MinValue = minValue;
         slider.Slider.MaxValue = maxValue;
+        slider.Slider.Rounded = true;
 
         slider.Slider.OnValueChanged += _ =>
         {

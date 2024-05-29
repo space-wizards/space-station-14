@@ -21,6 +21,6 @@
                 <CheckBox Name="AdminSoundsCheckBox" Text="{Loc 'ui-options-admin-sounds'}" />
             </BoxContainer>
         </BoxContainer>
-        <ui:OptionsTabControlRow Name="Control" />
+        <ui:OptionsTabControlRow Name="Control" Access="Public" />
     </BoxContainer>
 </Control>
