@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Senior uniforms have been added to the Uniform Printer, visit your local
-      hop today!
-    type: Add
-  id: 6138
-  time: '2024-03-13T08:45:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25668
 - author: Plykiya
   changes:
   - message: Additional syringe doafter delay is now based on syringe contents rather
@@ -3865,3 +3857,12 @@
   id: 6637
   time: '2024-05-29T04:05:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27978
+- author: notafet
+  changes:
+  - message: Slightly increase spacing speed to fix under-pressure lockout.
+    type: Tweak
+  - message: Fix vent under-pressure lockout.
+    type: Fix
+  id: 6638
+  time: '2024-05-29T05:21:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28370
