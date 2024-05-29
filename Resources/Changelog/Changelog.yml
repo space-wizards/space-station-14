@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Slava0135
-  changes:
-  - message: Fixed pie bomb not detonating when eaten or sliced (remember to keep
-      hungry mice away from it)!
-    type: Fix
-  - message: Pie bomb now cannot be ejected or swapped (just hope there is no bomb
-      inside)
-    type: Tweak
-  id: 6137
-  time: '2024-03-13T08:36:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25928
 - author: Cojoke-dot
   changes:
   - message: Senior uniforms have been added to the Uniform Printer, visit your local
@@ -3868,3 +3857,11 @@
   id: 6636
   time: '2024-05-29T00:16:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27875
+- author: ShadowCommander
+  changes:
+  - message: Popups with the same message now stack together and append a x# to the
+      end.
+    type: Tweak
+  id: 6637
+  time: '2024-05-29T04:05:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27978
