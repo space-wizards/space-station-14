@@ -135,6 +135,9 @@ public sealed partial class FaxPrintout
     [DataField(required: true)]
     public string Name { get; private set; } = default!;
 
+    [DataField]
+    public string? Label { get; private set; }
+
     [DataField(required: true)]
     public string Content { get; private set; } = default!;
 
@@ -151,10 +154,11 @@ public sealed partial class FaxPrintout
     {
     }
 
-    public FaxPrintout(string content, string name, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null)
+    public FaxPrintout(string content, string name, string? label = null, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null)
     {
         Content = content;
         Name = name;
+        Label = label;
         PrototypeId = prototypeId ?? "";
         StampState = stampState;
         StampedBy = stampedBy ?? new List<StampDisplayInfo>();

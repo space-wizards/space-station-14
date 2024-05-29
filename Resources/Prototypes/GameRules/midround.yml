@@ -12,6 +12,7 @@
     - DoorjackObjective
     - SpiderChargeObjective
     - TerrorObjective
+    - MassArrestObjective
     - NinjaSurviveObjective
   - type: NinjaRule
     threats: NinjaThreats
@@ -34,15 +35,28 @@
   id: Thief
   components:
   - type: ThiefRule
+  - type: AntagObjectives
+    objectives:
+    - EscapeThiefShuttleObjective
+  - type: AntagRandomObjectives
+    sets:
+    - groups: ThiefBigObjectiveGroups
+      prob: 0.7
+      maxPicks: 1
+    - groups: ThiefObjectiveGroups
+      maxPicks: 10
+    maxDifficulty: 2.5
   - type: AntagSelection
+    agentName: thief-round-end-agent-name
     definitions:
     - prefRoles: [ Thief ]
       maxRange:
         min: 1
         max: 3
       playerRatio: 1
+      lateJoinAdditional: true
       allowNonHumans: true
-      multiAntagSetting: All
+      multiAntagSetting: NotExclusive
       startingGear: ThiefGear
       components:
       - type: Pacified
@@ -51,14 +65,3 @@
         prototype: Thief
       briefing:
         sound: "/Audio/Misc/thief_greeting.ogg"
-
-- type: entity
-  noSpawn: true
-  parent: BaseGameRule
-  id: Exterminator
-  components:
-  - type: GenericAntagRule
-    agentName: terminator-round-end-agent-name
-    objectives:
-    - TerminateObjective
-    - ShutDownObjective

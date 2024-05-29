@@ -1148,6 +1148,27 @@
         conditions:
         - !type:ReagentThreshold
           min: 12
+          
+- type: reagent
+  id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
+  name: reagent-name-opporozidone
+  group: Medicine
+  desc: reagent-desc-opporozidone
+  physicalDesc: reagent-physical-desc-sickly
+  flavor: acid
+  color: "#b5e36d"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:ReduceRotting
+          seconds: 20
+          conditions:
+          #Patient must be dead and in a cryo tube (or something cold)
+          - !type:Temperature
+            max: 150.0
+          - !type:MobStateCondition
+            mobstate: Dead
 
 - type: reagent
   id: Necrosol

@@ -271,6 +271,9 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnContentUpdate(EntityUid uid, MicrowaveComponent component, ContainerModifiedMessage args) // For some reason ContainerModifiedMessage just can't be used at all with Entity<T>. TODO: replace with Entity<T> syntax once that's possible
         {
+            if (component.Storage != args.Container)
+                return;
+
             UpdateUserInterfaceState(uid, component);
         }
 

@@ -339,8 +339,44 @@ reagent-effect-guidebook-innoculate-zombie-infection =
         *[other] cure
     } an ongoing zombie infection, and provides immunity to future infections
 
+reagent-effect-guidebook-reduce-rotting =
+    { $chance ->
+        [1] Regenerates
+        *[other] regenerate
+    } {NATURALFIXED($time, 3)} {MANY("second", $time)} of rotting
+
 reagent-effect-guidebook-missing =
     { $chance ->
         [1] Causes
         *[other] cause
     } an unknown effect as nobody has written this effect yet
+
+reagent-effect-guidebook-plant-attribute =
+    { $chance ->
+        [1] Adjusts
+        *[other] adjust
+    } {$attribute} by [color={$colorName}]{$amount}[/color]
+
+reagent-effect-guidebook-plant-cryoxadone =
+    { $chance ->
+        [1] Ages back
+        *[other] age back
+    } the plant, depending on the plant's age and time to grow
+
+reagent-effect-guidebook-plant-phalanximine =
+    { $chance ->
+        [1] Restores
+        *[other] restore
+    } viability to a plant rendered nonviable by a mutation
+
+reagent-effect-guidebook-plant-diethylamine =
+    { $chance ->
+        [1] Increases
+        *[other] increase
+    } the plant's lifespan and/or base health with 10% chance for each.
+
+reagent-effect-guidebook-plant-robust-harvest =
+    { $chance ->
+        [1] Increases
+        *[other] increase
+    } the plant's potency by {$increase} up to a maximum of {$limit}. Causes the plant to lose its seeds once the potency reaches {$seedlesstreshold}. Trying to add potency over {$limit} may cause decrease in yield at a 10% chance.
