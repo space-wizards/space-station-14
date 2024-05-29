@@ -2,6 +2,30 @@
 - type: entity
   name: security loot spawner
   suffix: Gear, Simple
+  id: LootSpawnerSecurityBasic
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+    - type: RandomSpawner
+      rarePrototypes:
+        - ClothingEyesGlassesSunglasses
+        - BoxHandcuff
+      rareChance: 0.05
+      prototypes:
+        - Flash
+        - Handcuffs
+        - Zipties
+        - FlashlightSeclite
+        - Tourniquet
+      chance: 0.85
+
+- type: entity
+  name: security loot spawner
+  suffix: Gear, Better
   id: LootSpawnerSecurity
   parent: MarkerBase
   components:
@@ -14,7 +38,10 @@
       rarePrototypes:
         - ClothingEyesGlassesSunglasses
         - BoxHandcuff
+        - BoxFlashbang
         - TearGasGrenade
+        - WeaponDisabler
+        - StunBaton
       rareChance: 0.05
       prototypes:
         - Flash
@@ -25,8 +52,7 @@
         - SecurityWhistle
         - Tourniquet
       chance: 0.85
-      offset: 0.0
-
+ 
 # Armory loot spawner
 # Automatics are a complete mess right now, so the AK-MS And WT-550 have been commented out for consistency's sake. I have no idea what role these guns are supposed to fufill.
 - type: entity
