@@ -8,9 +8,11 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -23,6 +25,8 @@ public sealed class FatExtractorSystem : EntitySystem
     [Dependency] private readonly SatiationSystem _satiation = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+
+    private readonly ProtoId<SatiationTypePrototype> satiationType = "hungerPrototype";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -99,10 +103,10 @@ public sealed class FatExtractorSystem : EntitySystem
         if (!TryComp<SatiationComponent>(occupant, out var satiation))
             return false;
 
-        if (satiation.Hunger.Current < component.NutritionPerSecond)
+        if (satiation.Satiations[satiationType].Current < component.NutritionPerSecond)
             return false;
 
-        if (satiation.Hunger.CurrentThreshold < component.MinHungerThreshold && !HasComp<EmaggedComponent>(uid))
+        if (satiation.Satiations[satiationType].CurrentThreshold < component.MinHungerThreshold && !HasComp<EmaggedComponent>(uid))
             return false;
 
         return true;
@@ -133,7 +137,7 @@ public sealed class FatExtractorSystem : EntitySystem
                 continue;
             fat.NextUpdate += fat.UpdateTime;
 
-            _satiation.ModifyHunger(occupant.Value, -fat.NutritionPerSecond);
+            _satiation.ModifySatiation((occupant.Value, null), satiationType, -fat.NutritionPerSecond);
             fat.NutrientAccumulator += fat.NutritionPerSecond;
             if (fat.NutrientAccumulator >= fat.NutrientPerMeat)
             {

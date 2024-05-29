@@ -110,7 +110,7 @@ namespace Content.Client.HealthAnalyzer.UI
             DrawDiagnosticGroups(damageSortedGroups, damagePerType);
 
             if (_entityManager.TryGetComponent(target, out SatiationComponent? satiation)
-                && satiation.Hunger.CurrentThresholdDamage != null)
+                && satiation.Satiations["hungerSatiation"]?.CurrentThresholdDamage != null)
             {
                 var box = new Control { Margin = new Thickness(0, 0, 0, 15) };
 

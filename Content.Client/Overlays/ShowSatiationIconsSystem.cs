@@ -21,9 +21,9 @@ public sealed class ShowSatiationIconsSystem : EquipmentHudSystem<ShowHungerIcon
         if (!IsActive || ev.InContainer)
             return;
 
-        if (_satiation.TryGetStatusHungerIconPrototype(component, out var hungerIconPrototype))
+        if (_satiation.TryGetStatusIconPrototype(component, "hungerSatiation", out var hungerIconPrototype))
             ev.StatusIcons.Add(hungerIconPrototype);
-        if (_satiation.TryGetStatusThirstIconPrototype(component, out var thirstIconPrototype))
+        if (_satiation.TryGetStatusIconPrototype(component, "thirstSatiation", out var thirstIconPrototype))
             ev.StatusIcons.Add(thirstIconPrototype);
     }
 }

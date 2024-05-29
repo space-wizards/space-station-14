@@ -93,8 +93,11 @@ public sealed class SatiationSystem : EntitySystem
         }
     }
 
-    public void ModifySatiation(Entity<SatiationComponent> ent, ProtoId<SatiationTypePrototype> satiationType, float amount)
+    public void ModifySatiation(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, float amount)
     {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return;
+
         if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
             return;
 
@@ -195,7 +198,7 @@ public sealed class SatiationSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp))
             return false; // It's never going to go unsatiated, so it's probably fine to assume that it's satiated.
 
-        if (ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
+        if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
             return false; // It's never going to go unsatiated, so it's probably fine to assume that it's satiated.
 
         if (satiation == null)
@@ -203,6 +206,38 @@ public sealed class SatiationSystem : EntitySystem
 
         return GetThreshold(satiation, thirst) < threshold;
     }
+    ///
+    /// <summary>
+    /// A check that returns if the entity is below a satiation threshold.
+    /// </summary>
+    public bool IsCurrentSatiationBelowState(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, SatiationThreashold threshold, float delta = 0)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false; // It's never going to go unsatiated, so it's probably fine to assume that it's satiated.
+
+        if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
+            return false; // It's never going to go unsatiated, so it's probably fine to assume that it's satiated.
+
+        if (satiation == null)
+            return false;
+
+        return GetThreshold(satiation, satiation.Current + delta) < threshold;
+    }
+
+    public bool TryGetStatusIconPrototype(SatiationComponent component, ProtoId<SatiationTypePrototype> satiationType, [NotNullWhen(true)] out StatusIconPrototype? prototype)
+    {
+        prototype = null;
+
+        if (!component.Satiations.TryGetValue(satiationType, out var satiation)
+                || !_prototype.TryIndex(satiation.Prototype, out var satiationProto))
+            return false;
+
+        if (_prototype.TryIndex<StatusIconPrototype>(satiationProto.Icons[satiation.CurrentThreshold], out var iconProto))
+            prototype = iconProto;
+
+        return prototype != null;
+    }
+
 
     private bool GetMovementThreshold(SatiationThreashold threshold)
     {

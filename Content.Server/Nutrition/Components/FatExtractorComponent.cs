@@ -1,5 +1,5 @@
 using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
