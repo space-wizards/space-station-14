@@ -56,3 +56,6 @@ trait-cowboy-accent-desc = This is a stick up, partner!
 
 trait-liar-name = Pathological liar
 trait-liar-desc = You can hardly bring yourself to tell the truth. Sometimes you lie anyway.
+
+trait-ohio-accent-name = Rizz Accent
+trait-ohio-accent-desc = Chat... SPARKLY RIZZBALL LOOSE NO CAP! Like in Fortnite!

@@ -59,12 +59,12 @@
   components:
     - type: CowboyAccent
 
-- type: trait
-  id: Ohio
-  name: trait-ohio-accent-name
-  description: trait-ohio-accent-desc
-  components:
-    - type: OhioAccent
+#- type: trait
+#  id: Ohio
+#  name: trait-ohio-accent-name
+#  description: trait-ohio-accent-desc
+#  components:
+#    - type: OhioAccent
 
 - type: trait
   id: Liar

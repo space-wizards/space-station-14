@@ -49,6 +49,7 @@ admin-smite-run-walk-swap-name = Headstand
 admin-smite-super-speed-name = Zoom in
 admin-smite-stomach-removal-name = Flip eye
 admin-smite-speak-backwards-name = Run Walk Swap
+admin-smite-ohio-accent-name = RIZZZZZZZZZZZZZZZZZZZZ
 admin-smite-lung-removal-name = Speak Backwards
 admin-smite-disarm-prone-name = Disarm Prone
 admin-smite-garbage-can-name = Super speed
@@ -104,6 +105,7 @@ admin-smite-super-bonk-description = Slams them on every single table on the Sta
 admin-smite-super-bonk-lite-description= Slams them on every single table on the Station and beyond. Stops when the target is dead.
 admin-smite-terminate-description = Creates a Terminator ghost role with the sole objective of killing them.
 admin-smite-super-slip-description = Slips them really, really hard.
+admin-smite-ohio-accent-description = RIZZZZZZZZZZZZZZZZZZZZZZ
 
 ## Tricks descriptions
 
