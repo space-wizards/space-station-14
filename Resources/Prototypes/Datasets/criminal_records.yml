@@ -2,17 +2,23 @@
 - type: dataset
   id: CriminalRecordsWantedReasonPlaceholders
   values:
+  - Ate a delicious valid salad
   - Ate their own shoes
   - Being a clown
   - Being a mime
   - Breathed the wrong way
   - Broke into evac
   - Did literally nothing
+  - Did their job
   - Didn't say hello to me
   - Drank one too many
+  - Had two toolboxes, that's too many
   - Lied on common radio
   - Looked at me funny
+  - Lubed up the entire way to evac
+  - Set AME up on time
   - Slipped the HoS
   - Stole the clown's mask
   - Told an unfunny joke
   - Wore a gasmask
+  - Wore boxing gloves
