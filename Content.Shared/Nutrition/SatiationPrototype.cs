@@ -52,9 +52,18 @@ public sealed partial class SatiationPrototype : IPrototype
 
     public AlertCategory AlertCategory = AlertCategory.Hunger;
 
-    private string[] Icons = new string[] {
-        "HungerIconOverfed",
-        "HungerIconPeckish",
-        "HungerIconStarving"
+    public Dictionary<SatiationThreashold, AlertType> Alerts = new()
+    {
+        { SatiationThreashold.Concerned, AlertType.Peckish},
+        { SatiationThreashold.Desperate, AlertType.Starving},
+        { SatiationThreashold.Dead, AlertType.Starving}
+    };
+
+    public Dictionary<SatiationThreashold, string> Icons = new()
+    {
+        { SatiationThreashold.Full, "HungerIconOverfed"},
+        { SatiationThreashold.Concerned, "HungerIconPeckish"},
+        { SatiationThreashold.Desperate, "HungerIconStarving"},
+        { SatiationThreashold.Dead, "HungerIconStarving"}
     };
 }

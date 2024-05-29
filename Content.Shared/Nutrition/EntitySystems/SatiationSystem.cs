@@ -39,12 +39,15 @@ public sealed class SatiationSystem : EntitySystem
     {
         foreach (var (_, satiation) in component.Satiations)
         {
+            if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
+                continue;
+
             var amount = _random.Next(
-                (int) satiation.Prototype.Thresholds[SatiationThreashold.Concerned] + 10,
-                (int) satiation.Prototype.Thresholds[SatiationThreashold.Okay]);
+                (int) proto.Thresholds[SatiationThreashold.Concerned] + 10,
+                (int) proto.Thresholds[SatiationThreashold.Okay]);
             SetSatiation(satiation, amount);
             UpdateCurrentThreshold(uid, satiation);
-            DoThresholdEffects(uid, satiation, satiation.Prototype.alertThresholds, satiation.Prototype.alertCategory, false);
+            DoThresholdEffects(uid, satiation, false);
 
             satiation.CurrentThreshold = GetThreshold(satiation, satiation.Current);
             satiation.LastThreshold = SatiationThreashold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
@@ -59,7 +62,9 @@ public sealed class SatiationSystem : EntitySystem
     {
         foreach(var (_, satiation) in component.Satiations)
         {
-            _alerts.ClearAlertCategory(uid, satiation.Prototype.AlertCategory);
+            if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
+                continue;
+            _alerts.ClearAlertCategory(uid, proto.AlertCategory);
         }
     }
 
@@ -70,7 +75,10 @@ public sealed class SatiationSystem : EntitySystem
 
         foreach(var (_, satiation) in component.Satiations)
         {
-            args.ModifySpeed(satiation.Prototype.SlowdownModifier, satiation.Prototype.SlowdownModifier);
+            if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
+                continue;
+
+            args.ModifySpeed(proto.SlowdownModifier, proto.SlowdownModifier);
         }
     }
 
@@ -78,7 +86,10 @@ public sealed class SatiationSystem : EntitySystem
     {
         foreach(var (_, satiation) in component.Satiations)
         {
-            SetSatiation((uid, component), satiation.Prototype.Thresholds[SatiationThreashold.Okay]);
+            if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
+                continue;
+
+            SetSatiation(satiation, proto.Thresholds[SatiationThreashold.Okay]);
         }
     }
 
@@ -92,18 +103,24 @@ public sealed class SatiationSystem : EntitySystem
 
     private void SetSatiation(Satiation satiation, float amount)
     {
+        if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
+            return;
+
         satiation.Current = Math.Clamp(amount,
-            satiation.Prototype.Thresholds[SatiationThreashold.Dead],
-            satiation.Prototype.Thresholds[SatiationThreashold.Full]);
+            proto.Thresholds[SatiationThreashold.Dead],
+            proto.Thresholds[SatiationThreashold.Full]);
     }
 
     private void UpdateCurrentThreshold(EntityUid uid, Satiation satiation)
     {
+            if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
+                return;
+
             var calculatedNutritionThreshold = GetThreshold(satiation);
             if (calculatedNutritionThreshold == satiation.CurrentThreshold)
                 return;
             satiation.CurrentThreshold = calculatedNutritionThreshold;
-            if (satiation.Prototype.ThresholdDamage.TryGetValue(satiation.CurrentThreshold, out var damage))
+            if (proto.ThresholdDamage.TryGetValue(satiation.CurrentThreshold, out var damage))
                 satiation.CurrentThresholdDamage = damage;
             else
                 satiation.CurrentThresholdDamage = null;
@@ -112,6 +129,9 @@ public sealed class SatiationSystem : EntitySystem
 
     private bool DoThresholdEffects(EntityUid uid, Satiation satiation, bool force = false)
     {
+        if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
+            return false;
+
         if (satiation.CurrentThreshold == satiation.LastThreshold && !force)
             return false;
 
@@ -119,19 +139,19 @@ public sealed class SatiationSystem : EntitySystem
         {
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
         }
-        if (satiation.Prototype.ThresholdDecayModifiers.TryGetValue(satiation.CurrentThreshold, out var modifier))
+        if (proto.ThresholdDecayModifiers.TryGetValue(satiation.CurrentThreshold, out var modifier))
         {
             satiation.ActualDecayRate = satiation.BaseDecayRate * modifier;
         }
         satiation.LastThreshold = satiation.CurrentThreshold;
 
-        if (satiation.Prototype.AlertCategory.TryGetValue(satiation.CurrentThreshold, out var alertId))
+        if (proto.Alerts.TryGetValue(satiation.CurrentThreshold, out var alertId))
         {
             _alerts.ShowAlert(uid, alertId);
         }
         else
         {
-            _alerts.ClearAlertCategory(uid, satiation.Prototype.AlertCategory);
+            _alerts.ClearAlertCategory(uid, proto.AlertCategory);
         }
 
         return true;
@@ -148,10 +168,15 @@ public sealed class SatiationSystem : EntitySystem
 
     private SatiationThreashold GetThreshold(Satiation satiation, float? level = null)
     {
+
         level ??= satiation.Current;
         var result = SatiationThreashold.Dead;
-        var value = satiation.Prototype.Thresholds[SatiationThreashold.Full];
-        foreach (var threshold in satiation.Prototype.Thresholds)
+
+        if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
+            return result;
+
+        var value = proto.Thresholds[SatiationThreashold.Full];
+        foreach (var threshold in proto.Thresholds)
         {
             if (threshold.Value <= value && threshold.Value >= level)
             {
@@ -193,27 +218,6 @@ public sealed class SatiationSystem : EntitySystem
             default:
                 throw new ArgumentOutOfRangeException(nameof(threshold), threshold, null);
         }
-    }
-
-    private bool TryGetStatusIconPrototype(Satiation satiation, [NotNullWhen(true)] out StatusIconPrototype? prototype)
-    {
-        switch (satiation.CurrentThreshold)
-        {
-            case SatiationThreashold.Full:
-                prototype = satiation.Prototype.Icons?[0].Item2;
-                break;
-            case SatiationThreashold.Concerned:
-                prototype = satiation.Prototype.Icons?[1].Item2;
-                break;
-            case SatiationThreashold.Desperate:
-                prototype = satiation.Prototype.Icons?[2].Item2;
-                break;
-            default:
-                prototype = null;
-                break;
-        }
-
-        return prototype != null;
     }
 
     public override void Update(float frameTime)

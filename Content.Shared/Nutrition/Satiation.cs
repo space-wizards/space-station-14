@@ -1,6 +1,6 @@
 using Content.Shared.Damage;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition;
 
