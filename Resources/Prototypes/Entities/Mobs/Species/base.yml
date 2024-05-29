@@ -149,6 +149,7 @@
   - type: Identity
   - type: IdExaminable
   - type: Hands
+  - type: ComplexInteraction
   - type: Internals
   - type: Inventory
   - type: InventorySlots
@@ -309,6 +310,7 @@
   abstract: true
   components:
   - type: Hands
+  - type: ComplexInteraction
   - type: Inventory
   - type: InventorySlots
   - type: ContainerContainer

@@ -105,7 +105,7 @@ public abstract class SharedItemCabinetSystem : EntitySystem
 
     private void OnActivateInWorld(EntityUid uid, ItemCabinetComponent comp, ActivateInWorldEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !args.Complex)
             return;
 
         args.Handled = true;

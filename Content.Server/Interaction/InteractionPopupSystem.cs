@@ -31,6 +31,9 @@ public sealed class InteractionPopupSystem : EntitySystem
 
     private void OnActivateInWorld(EntityUid uid, InteractionPopupComponent component, ActivateInWorldEvent args)
     {
+        if (!args.Complex)
+            return;
+
         if (!component.OnActivate)
             return;
 

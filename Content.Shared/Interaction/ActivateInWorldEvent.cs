@@ -19,13 +19,19 @@ public sealed class ActivateInWorldEvent : HandledEntityEventArgs, ITargetedInte
     public EntityUid Target { get; }
 
     /// <summary>
+    ///     Whether or not <see cref="User"/> can perform complex interactions or only basic ones.
+    /// </summary>
+    public bool Complex;
+
+    /// <summary>
     ///     Set to true when the activation is logged by a specific logger.
     /// </summary>
     public bool WasLogged { get; set; }
 
-    public ActivateInWorldEvent(EntityUid user, EntityUid target)
+    public ActivateInWorldEvent(EntityUid user, EntityUid target, bool complex)
     {
         User = user;
         Target = target;
+        Complex = complex;
     }
 }
