@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Containers;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
@@ -66,6 +67,15 @@ namespace Content.Client.Popups
                 .RemoveOverlay<PopupOverlay>();
         }
 
+        private void IncrementRepeatsAndPopup(PopupLabel existingLabel, string popupMessage)
+        {
+            existingLabel.TotalTime = 0;
+            existingLabel.Repeats += 1;
+            existingLabel.Text = Loc.GetString("popup-system-repeated-popup-stacking-wrap",
+                ("popup-message", popupMessage),
+                ("count", existingLabel.Repeats));
+        }
+
         private void PopupMessage(string? message, PopupType type, EntityCoordinates coordinates, EntityUid? entity, bool recordReplay)
         {
             if (message == null)
@@ -82,9 +92,7 @@ namespace Content.Client.Popups
             var popupData = new WorldPopupData(message, type, coordinates, entity);
             if (_aliveWorldLabels.TryGetValue(popupData, out var existingLabel))
             {
-                existingLabel.TotalTime = 0;
-                existingLabel.Repeats += 1;
-                existingLabel.Text = $"{popupData.Message} x{existingLabel.Repeats}";
+                IncrementRepeatsAndPopup(existingLabel, popupData.Message);
                 return;
             }
 
@@ -126,9 +134,7 @@ namespace Content.Client.Popups
             var popupData = new CursorPopupData(message, type);
             if (_aliveCursorLabels.TryGetValue(popupData, out var existingLabel))
             {
-                existingLabel.TotalTime = 0;
-                existingLabel.Repeats += 1;
-                existingLabel.Text = $"{popupData.Message} x{existingLabel.Repeats}";
+                IncrementRepeatsAndPopup(existingLabel, popupData.Message);
                 return;
             }
 
