@@ -4,19 +4,20 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.PDA;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using Robust.Shared.Configuration;
-using Serilog;
 
 namespace Content.Client.PDA
 {
     [UsedImplicitly]
     public sealed class PdaBoundUserInterface : CartridgeLoaderBoundUserInterface
     {
+        private readonly PdaSystem _pdaSystem;
+
         [ViewVariables]
         private PdaMenu? _menu;
 
         public PdaBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+            _pdaSystem = EntMan.System<PdaSystem>();
         }
 
         protected override void Open()
@@ -88,7 +89,8 @@ namespace Content.Client.PDA
 
             if (_menu == null)
             {
-                Log.Error("Received PDA state before PDA menu is opened");
+
+                _pdaSystem.Log.Error($"No IdCardConsole component found for {EntMan.ToPrettyString(Owner)}!");
                 return;
             }
 
