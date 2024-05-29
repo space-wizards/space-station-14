@@ -176,7 +176,7 @@
   desc: reagent-desc-lithium
   physicalDesc: reagent-physical-desc-shiny
   flavor: metallic
-  color: "#c6c8cc"
+  color: "#d6c0a7"
   meltingPoint: 180.5
   boilingPoint: 1330.0
   metabolisms:
@@ -312,7 +312,7 @@
   desc: reagent-desc-sodium
   physicalDesc: reagent-physical-desc-metallic
   flavor: bitter
-  color: "#c6c8cc"
+  color: "#a7b3d6"
   meltingPoint: 97.8
   boilingPoint: 883.0
 
