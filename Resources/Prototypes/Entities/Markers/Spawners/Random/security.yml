@@ -64,7 +64,7 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Clothing/Outerclothing/Armor/security.rsi
+        - sprite: Clothing/OuterClothing/Armor/security.rsi
           state: icon
         - sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
           state: icon
@@ -129,7 +129,7 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Clothing/Outerclothing/Armor/security.rsi
+        - sprite: Clothing/OuterClothing/Armor/security.rsi
           state: icon
     - type: RandomSpawner
       rarePrototypes:
