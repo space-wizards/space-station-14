@@ -230,12 +230,14 @@ public sealed class LockSystem : EntitySystem
         if (!HasComp<HandsComponent>(user))
             return false;
 
-        var ev = new LockToggleAttemptEvent(user, uid, quiet);
+        var ev = new LockToggleAttemptEvent(user, quiet);
         RaiseLocalEvent(uid, ref ev, true);
         if (ev.Cancelled)
             return false;
-        RaiseLocalEvent(user, ref ev, true);
-        return !ev.Cancelled;
+
+        var userEv = new UserLockToggleAttemptEvent(uid, quiet);
+        RaiseLocalEvent(user, ref userEv, true);
+        return !userEv.Cancelled;
     }
 
     private bool HasUserAccess(EntityUid uid, EntityUid user, AccessReaderComponent? reader = null, bool quiet = true)

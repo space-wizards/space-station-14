@@ -12,16 +12,16 @@ public sealed class LockingWhitelistSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LockingWhitelistComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
+        SubscribeLocalEvent<LockingWhitelistComponent, UserLockToggleAttemptEvent>(OnUserLockToggleAttempt);
     }
 
-    private void OnLockToggleAttempt(Entity<LockingWhitelistComponent> ent, ref LockToggleAttemptEvent args)
+    private void OnUserLockToggleAttempt(Entity<LockingWhitelistComponent> ent, ref UserLockToggleAttemptEvent args)
     {
         if (_whitelistSystem.CheckBoth(args.Target, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
         if (!args.Silent)
-            _popupSystem.PopupClient(Loc.GetString("locking-whitelist-component-lock-toggle-deny"), args.User);
+            _popupSystem.PopupClient(Loc.GetString("locking-whitelist-component-lock-toggle-deny"), ent.Owner);
 
         args.Cancelled = true;
     }
