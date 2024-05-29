@@ -5,6 +5,7 @@ using Content.Shared.PDA;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
+using Serilog;
 
 namespace Content.Client.PDA
 {
@@ -85,7 +86,13 @@ namespace Content.Client.PDA
             if (state is not PdaUpdateState updateState)
                 return;
 
-            _menu?.UpdateState(updateState);
+            if (_menu == null)
+            {
+                Log.Error("Received PDA state before PDA menu is opened");
+                return;
+            }
+
+            _menu.UpdateState(updateState);
         }
 
 
