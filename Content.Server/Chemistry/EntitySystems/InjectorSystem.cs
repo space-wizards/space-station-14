@@ -35,25 +35,20 @@ public sealed class InjectorSystem : SharedInjectorSystem
         if (injector.Comp.ToggleState == InjectorToggleMode.Inject)
         {
             if (SolutionContainers.TryGetInjectableSolution(target, out var injectableSolution, out _))
-            {
                 return TryInject(injector, target, injectableSolution.Value, user, false);
-            }
-            else if (SolutionContainers.TryGetRefillableSolution(target, out var refillableSolution, out _))
-            {
+
+            if (SolutionContainers.TryGetRefillableSolution(target, out var refillableSolution, out _))
                 return TryInject(injector, target, refillableSolution.Value, user, true);
-            }
-            else if (TryComp<BloodstreamComponent>(target, out var bloodstream))
-            {
+
+            if (TryComp<BloodstreamComponent>(target, out var bloodstream))
                 return TryInjectIntoBloodstream(injector, (target, bloodstream), user);
-            }
-            else
-            {
-                Popup.PopupEntity(Loc.GetString("injector-component-cannot-transfer-message",
-                    ("target", Identity.Entity(target, EntityManager))), injector, user);
-                return false;
-            }
+
+            Popup.PopupEntity(Loc.GetString("injector-component-cannot-transfer-message",
+                ("target", Identity.Entity(target, EntityManager))), injector, user);
+            return false;
         }
-        else if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
+
+        if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
         {
             // Draw from a bloodstream, if the target has that
             if (TryComp<BloodstreamComponent>(target, out var stream) &&
@@ -64,15 +59,11 @@ public sealed class InjectorSystem : SharedInjectorSystem
 
             // Draw from an object (food, beaker, etc)
             if (SolutionContainers.TryGetDrawableSolution(target, out var drawableSolution, out _))
-            {
                 return TryDraw(injector, target, drawableSolution.Value, user);
-            }
-            else
-            {
-                Popup.PopupEntity(Loc.GetString("injector-component-cannot-draw-message",
-                    ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
-                return false;
-            }
+
+            Popup.PopupEntity(Loc.GetString("injector-component-cannot-draw-message",
+                ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
+            return false;
         }
         return false;
     }
