@@ -35,6 +35,25 @@ public sealed class SatiationSystem : EntitySystem
         SubscribeLocalEvent<SatiationComponent, RejuvenateEvent>(OnRejuvenate);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<SatiationComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            if (_timing.CurTime < component.NextUpdateTime)
+                continue;
+            component.NextUpdateTime = _timing.CurTime + component.UpdateRate;
+
+            foreach (var (satiationType, satiation) in component.Satiations)
+            {
+                ModifySatiation((uid, component), satiationType, -satiation.ActualDecayRate);
+                DoContinuousEffects(uid, satiation);
+            }
+        }
+    }
+
     private void OnMapInit(EntityUid uid, SatiationComponent component, MapInitEvent args)
     {
         foreach (var (_, satiation) in component.Satiations)
@@ -280,25 +299,6 @@ public sealed class SatiationSystem : EntitySystem
                 return false;
             default:
                 throw new ArgumentOutOfRangeException(nameof(threshold), threshold, null);
-        }
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<SatiationComponent>();
-        while (query.MoveNext(out var uid, out var component))
-        {
-            if (_timing.CurTime < component.NextUpdateTime)
-                continue;
-            component.NextUpdateTime = _timing.CurTime + component.UpdateRate;
-
-            foreach (var (satiationType, satiation) in component.Satiations)
-            {
-                ModifySatiation((uid, component), satiationType, -satiation.ActualDecayRate);
-                DoContinuousEffects(uid, satiation);
-            }
         }
     }
 }
