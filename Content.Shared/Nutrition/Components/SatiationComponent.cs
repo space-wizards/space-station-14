@@ -12,7 +12,7 @@ public sealed partial class SatiationComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public Dictionary<ProtoId<SatiationTypePrototype>, Satiation> Satiations = new();
+    public Dictionary<string, Satiation> Satiations = new();
 
     /// <summary>
     /// The time when the thirst will update next.
