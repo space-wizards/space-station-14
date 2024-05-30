@@ -15,29 +15,28 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
     public sealed class GasTankWindow
         : BaseWindow
     {
-        private GasTankBoundUserInterface _owner;
         private readonly Label _lblName;
         private readonly BoxContainer _topContainer;
         private readonly Control _contentContainer;
 
-
-        private readonly IResourceCache _resourceCache = default!;
         private readonly RichTextLabel _lblPressure;
         private readonly FloatSpinBox _spbPressure;
         private readonly RichTextLabel _lblInternals;
         private readonly Button _btnInternals;
 
-        public GasTankWindow(GasTankBoundUserInterface owner)
+        public event Action<float>? OnOutputPressure;
+        public event Action? OnToggleInternals;
+
+        public GasTankWindow()
         {
             TextureButton btnClose;
-            _resourceCache = IoCManager.Resolve<IResourceCache>();
-            _owner = owner;
+            var resourceCache = IoCManager.Resolve<IResourceCache>();
             var rootContainer = new LayoutContainer {Name = "GasTankRoot"};
             AddChild(rootContainer);
 
             MouseFilter = MouseFilterMode.Stop;
 
-            var panelTex = _resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
+            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var back = new StyleBoxTexture
             {
                 Texture = panelTex,
@@ -84,7 +83,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
 
             LayoutContainer.SetAnchorPreset(topContainerWrap, LayoutContainer.LayoutPreset.Wide);
 
-            var font = _resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
+            var font = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
 
             var topRow = new BoxContainer
             {
@@ -174,12 +173,12 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
             // Handlers
             _spbPressure.OnValueChanged += args =>
             {
-                _owner.SetOutputPressure(args.Value);
+                OnOutputPressure?.Invoke(args.Value);
             };
 
             _btnInternals.OnPressed += args =>
             {
-                _owner.ToggleInternals();
+                OnToggleInternals?.Invoke();
             };
 
             btnClose.OnPressed += _ => Close();

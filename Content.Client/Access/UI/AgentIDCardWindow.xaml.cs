@@ -17,19 +17,17 @@ namespace Content.Client.Access.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         private readonly SpriteSystem _spriteSystem;
-        private readonly AgentIDCardBoundUserInterface _bui;
 
         private const int JobIconColumnCount = 10;
 
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
 
-        public AgentIDCardWindow(AgentIDCardBoundUserInterface bui)
+        public AgentIDCardWindow()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
             _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
-            _bui = bui;
 
             NameLineEdit.OnTextEntered += e => OnNameChanged?.Invoke(e.Text);
             NameLineEdit.OnFocusExit += e => OnNameChanged?.Invoke(e.Text);

@@ -1,5 +1,6 @@
 using Content.Shared.Atmos.Piping.Portable.Components;
 using JetBrains.Annotations;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Atmos.UI;
@@ -21,14 +22,7 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = new SpaceHeaterWindow();
-
-        if (State != null)
-            UpdateState(State);
-
-        _window.OpenCentered();
-
-        _window.OnClose += Close;
+        _window = this.CreateWindow<SpaceHeaterWindow>();
 
         _window.ToggleStatusButton.OnPressed += _ => OnToggleStatusButtonPressed();
         _window.IncreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(_window.TemperatureChangeDelta);

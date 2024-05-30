@@ -2,6 +2,7 @@ using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
 using Robust.Client.UserInterface.Controls;
 using System.Linq;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.VendingMachines
 {
@@ -28,15 +29,14 @@ namespace Content.Client.VendingMachines
 
             _cachedInventory = vendingMachineSys.GetAllInventory(Owner);
 
-            _menu = new VendingMachineMenu { Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName };
+            _menu = this.CreateWindow<VendingMachineMenu>();
+            _menu.OpenCenteredLeft();
+            _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
-            _menu.OnClose += Close;
             _menu.OnItemSelected += OnItemSelected;
             _menu.OnSearchChanged += OnSearchChanged;
 
             _menu.Populate(_cachedInventory, out _cachedFilteredIndex);
-
-            _menu.OpenCenteredLeft();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

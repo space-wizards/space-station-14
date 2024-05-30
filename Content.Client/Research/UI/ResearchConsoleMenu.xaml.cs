@@ -25,14 +25,13 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-    private readonly TechnologyDatabaseComponent? _technologyDatabase;
     private readonly ResearchSystem _research;
     private readonly SpriteSystem _sprite;
     private readonly AccessReaderSystem _accessReader;
 
-    public readonly EntityUid Entity;
+    public EntityUid Entity;
 
-    public ResearchConsoleMenu(EntityUid entity)
+    public ResearchConsoleMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -40,14 +39,16 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         _research = _entity.System<ResearchSystem>();
         _sprite = _entity.System<SpriteSystem>();
         _accessReader = _entity.System<AccessReaderSystem>();
-        Entity = entity;
 
         ServerButton.OnPressed += _ => OnServerButtonPressed?.Invoke();
-
-        _entity.TryGetComponent(entity, out _technologyDatabase);
     }
 
-    public void  UpdatePanels(ResearchConsoleBoundInterfaceState state)
+    public void SetEntity(EntityUid entity)
+    {
+        Entity = entity;
+    }
+
+    public void UpdatePanels(ResearchConsoleBoundInterfaceState state)
     {
         TechnologyCardsContainer.Children.Clear();
 

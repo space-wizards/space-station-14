@@ -2,6 +2,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -18,7 +19,7 @@ namespace Content.Client.Chemistry.UI
         protected override void Open()
         {
             base.Open();
-            _window = new TransferAmountWindow();
+            _window = this.CreateWindow<TransferAmountWindow>();
 
             _window.ApplyButton.OnPressed += _ =>
             {
@@ -28,15 +29,6 @@ namespace Content.Client.Chemistry.UI
                     _window.Close();
                 }
             };
-            _window.OnClose += Close;
-            _window.OpenCentered();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _window?.Dispose();
         }
     }
 }

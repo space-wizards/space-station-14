@@ -26,10 +26,9 @@ namespace Content.Client.Atmos.UI
         public event Action<string>? FilterTransferRateChanged;
         public event Action? SelectGasPressed;
 
-        public GasFilterWindow(IEnumerable<GasPrototype> gases)
+        public GasFilterWindow()
         {
             RobustXamlLoader.Load(this);
-            PopulateGasList(gases);
 
             ToggleStatusButton.OnPressed += _ => SetFilterStatus(!FilterStatus);
             ToggleStatusButton.OnPressed += _ => ToggleStatusButtonPressed?.Invoke();
@@ -73,7 +72,7 @@ namespace Content.Client.Atmos.UI
             SelectGasButton.Disabled = true;
         }
 
-        private void PopulateGasList(IEnumerable<GasPrototype> gases)
+        public void PopulateGasList(IEnumerable<GasPrototype> gases)
         {
             GasList.Add(new ItemList.Item(GasList)
             {
@@ -81,7 +80,7 @@ namespace Content.Client.Atmos.UI
                 Text = Loc.GetString("comp-gas-filter-ui-filter-gas-none")
             });
 
-            foreach (GasPrototype gas in gases)
+            foreach (var gas in gases)
             {
                 var gasName = Loc.GetString(gas.Name);
                 GasList.Add(GetGasItem(gas.ID, gasName, GasList));

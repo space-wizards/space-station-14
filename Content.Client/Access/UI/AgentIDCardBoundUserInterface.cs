@@ -1,5 +1,6 @@
 using Content.Shared.Access.Systems;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Access.UI
 {
@@ -18,14 +19,8 @@ namespace Content.Client.Access.UI
         {
             base.Open();
 
-            _window?.Dispose();
-            _window = new AgentIDCardWindow(this);
-            if (State != null)
-                UpdateState(State);
+            _window = this.CreateWindow<AgentIDCardWindow>();
 
-            _window.OpenCentered();
-
-            _window.OnClose += Close;
             _window.OnNameChanged += OnNameChanged;
             _window.OnJobChanged += OnJobChanged;
         }

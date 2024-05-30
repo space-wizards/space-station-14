@@ -1,6 +1,7 @@
 using Content.Shared.Research.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Research.UI;
 
@@ -20,7 +21,8 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
 
         var owner = Owner;
 
-        _consoleMenu = new ResearchConsoleMenu(owner);
+        _consoleMenu = this.CreateWindow<ResearchConsoleMenu>();
+        _consoleMenu.SetEntity(owner);
 
         _consoleMenu.OnTechnologyCardPressed += id =>
         {
@@ -31,10 +33,6 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
         {
             SendMessage(new ConsoleServerSelectionMessage());
         };
-
-        _consoleMenu.OnClose += Close;
-
-        _consoleMenu.OpenCentered();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -45,13 +43,5 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
             return;
         _consoleMenu?.UpdatePanels(castState);
         _consoleMenu?.UpdateInformationPanel(castState);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-        _consoleMenu?.Dispose();
     }
 }

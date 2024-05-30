@@ -27,7 +27,7 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
     private string? _selected;
     private Dictionary<string, CyborgControlData> _cyborgs = new();
 
-    public RoboticsConsoleWindow(EntityUid console)
+    public RoboticsConsoleWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
