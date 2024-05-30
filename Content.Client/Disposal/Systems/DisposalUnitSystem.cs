@@ -153,7 +153,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             }
         }
         else if (state == VisualState.OverlayCharging)
-            sprite.LayerSetState(DisposalUnitVisualLayers.OverlayFlush, new RSI.StateId("disposal-charging"));
+            sprite.LayerSetState(DisposalUnitVisualLayers.OverlayFlush, chargingState);
         else
             _animationSystem.Stop(uid, AnimationKey);
 

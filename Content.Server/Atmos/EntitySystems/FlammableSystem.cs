@@ -226,8 +226,8 @@ namespace Content.Server.Atmos.EntitySystems
                 ? (-1f, 1f)
                 : (1f, -1f);
             // bring each entity to the same firestack mass, firestacks being scaled by the other's mass
-            AdjustFireStacks(uid, src * avg * mass2, flammable);
-            AdjustFireStacks(otherUid, dest * avg * mass1, otherFlammable);
+            AdjustFireStacks(uid, src * avg * mass2, flammable, ignite: true);
+            AdjustFireStacks(otherUid, dest * avg * mass1, otherFlammable, ignite: true);
         }
 
         private void OnIsHot(EntityUid uid, FlammableComponent flammable, IsHotEvent args)
@@ -265,15 +265,15 @@ namespace Content.Server.Atmos.EntitySystems
             _appearance.SetData(uid, ToggleableLightVisuals.Enabled, flammable.OnFire, appearance);
         }
 
-        public void AdjustFireStacks(EntityUid uid, float relativeFireStacks, FlammableComponent? flammable = null)
+        public void AdjustFireStacks(EntityUid uid, float relativeFireStacks, FlammableComponent? flammable = null, bool ignite = false)
         {
             if (!Resolve(uid, ref flammable))
                 return;
 
-            SetFireStacks(uid, flammable.FireStacks + relativeFireStacks, flammable);
+            SetFireStacks(uid, flammable.FireStacks + relativeFireStacks, flammable, ignite);
         }
 
-        public void SetFireStacks(EntityUid uid, float stacks, FlammableComponent? flammable = null)
+        public void SetFireStacks(EntityUid uid, float stacks, FlammableComponent? flammable = null, bool ignite = false)
         {
             if (!Resolve(uid, ref flammable))
                 return;
@@ -286,7 +286,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
             else
             {
-                flammable.OnFire = true;
+                flammable.OnFire = ignite;
                 UpdateAppearance(uid, flammable);
             }
         }
@@ -415,11 +415,11 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (!flammable.OnFire)
                 {
-                    _alertsSystem.ClearAlert(uid, AlertType.Fire);
+                    _alertsSystem.ClearAlert(uid, flammable.FireAlert);
                     continue;
                 }
 
-                _alertsSystem.ShowAlert(uid, AlertType.Fire);
+                _alertsSystem.ShowAlert(uid, flammable.FireAlert);
 
                 if (flammable.FireStacks > 0)
                 {
@@ -447,7 +447,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                     _damageableSystem.TryChangeDamage(uid, flammable.Damage * flammable.FireStacks * ev.Multiplier, interruptsDoAfters: false);
 
-                    AdjustFireStacks(uid, flammable.FirestackFade * (flammable.Resisting ? 10f : 1f), flammable);
+                    AdjustFireStacks(uid, flammable.FirestackFade * (flammable.Resisting ? 10f : 1f), flammable, flammable.OnFire);
                 }
                 else
                 {
