@@ -60,6 +60,7 @@ namespace Content.Client.Inventory
             base.Open();
 
             _strippingMenu = this.CreateWindow<StrippingMenu>();
+            _strippingMenu.OnDirty += UpdateMenu;
             _strippingMenu.Title = Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner, EntMan)));
 
             _strippingMenu?.OpenCenteredLeft();
@@ -67,12 +68,14 @@ namespace Content.Client.Inventory
 
         protected override void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
-
             if (!disposing)
                 return;
 
+            if (_strippingMenu != null)
+                _strippingMenu.OnDirty -= UpdateMenu;
+
             EntMan.DeleteEntity(_virtualHiddenEntity);
+            base.Dispose(disposing);
         }
 
         public void DirtyMenu()

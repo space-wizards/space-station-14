@@ -38,9 +38,19 @@ namespace Content.Client.Access.UI
             }
 
             _window = this.CreateWindow<AccessOverriderWindow>();
+            _window.SetAccessLevels(accessLevels);
             _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
             _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
+        }
+
+        public override void OnProtoReload(PrototypesReloadedEventArgs args)
+        {
+            base.OnProtoReload(args);
+            if (!args.WasModified<AccessLevelPrototype>())
+                return;
+
+            // weh
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

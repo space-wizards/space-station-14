@@ -17,6 +17,8 @@ public sealed class ThiefBackpackBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<ThiefBackpackMenu>();
+        _window.OnApprove += SendApprove;
+        _window.OnSetChange += SendChangeSelected;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

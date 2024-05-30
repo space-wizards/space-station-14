@@ -9,6 +9,8 @@ namespace Content.Client.Crayon.UI
 {
     public sealed class CrayonBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+
         [ViewVariables]
         private CrayonWindow? _menu;
 
@@ -20,10 +22,24 @@ namespace Content.Client.Crayon.UI
         {
             base.Open();
             _menu = this.CreateWindow<CrayonWindow>();
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var crayonDecals = prototypeManager.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("crayon"));
-            _menu.Populate(crayonDecals);
+            PopulateCrayons();
             _menu.OpenCenteredLeft();
+        }
+
+        private void PopulateCrayons()
+        {
+            var crayonDecals = _protoManager.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("crayon"));
+            _menu?.Populate(crayonDecals);
+        }
+
+        public override void OnProtoReload(PrototypesReloadedEventArgs args)
+        {
+            base.OnProtoReload(args);
+
+            if (!args.WasModified<DecalPrototype>())
+                return;
+
+            PopulateCrayons();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

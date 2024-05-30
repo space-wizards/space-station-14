@@ -10,6 +10,8 @@ namespace Content.Client.Cargo.BUI;
 [UsedImplicitly]
 public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+
     [ViewVariables]
     private CargoShuttleMenu? _menu;
 
@@ -29,6 +31,6 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
         if (state is not CargoShuttleConsoleBoundUserInterfaceState cargoState) return;
         _menu?.SetAccountName(cargoState.AccountName);
         _menu?.SetShuttleName(cargoState.ShuttleName);
-        _menu?.SetOrders(cargoState.Orders);
+        _menu?.SetOrders(EntMan.System<SpriteSystem>(), _protoManager, cargoState.Orders);
     }
 }

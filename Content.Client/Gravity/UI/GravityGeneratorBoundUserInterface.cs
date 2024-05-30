@@ -1,6 +1,5 @@
 using Content.Shared.Gravity;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Gravity.UI
@@ -20,6 +19,7 @@ namespace Content.Client.Gravity.UI
             base.Open();
 
             _window = this.CreateWindow<GravityGeneratorWindow>();
+            _window.SetEntity(Owner);
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

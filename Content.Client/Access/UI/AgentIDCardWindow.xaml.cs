@@ -67,7 +67,7 @@ namespace Content.Client.Access.UI
                 };
 
                 // Generate buttons textures
-                TextureRect jobIconTexture = new TextureRect
+                var jobIconTexture = new TextureRect
                 {
                     Texture = _spriteSystem.Frame0(jobIcon.Icon),
                     TextureScale = new Vector2(2.5f, 2.5f),

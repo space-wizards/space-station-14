@@ -18,17 +18,13 @@ namespace Content.Client.Crayon.UI
     [GenerateTypedNameReferences]
     public sealed partial class CrayonWindow : DefaultWindow
     {
-        public CrayonBoundUserInterface Owner { get; }
-
         private Dictionary<string, Texture>? _decals;
         private string? _selected;
         private Color _color;
 
-        public CrayonWindow(CrayonBoundUserInterface owner)
+        public CrayonWindow()
         {
             RobustXamlLoader.Load(this);
-
-            Owner = owner;
 
             Search.OnTextChanged += _ => RefreshList();
             ColorSelector.OnColorChanged += SelectColor;

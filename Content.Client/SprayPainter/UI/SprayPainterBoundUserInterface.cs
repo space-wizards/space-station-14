@@ -25,13 +25,6 @@ public sealed class SprayPainterBoundUserInterface : BoundUserInterface
         _window.Populate(EntMan.System<SprayPainterSystem>().Entries, comp.Index, comp.PickedColor, comp.ColorPalette);
     }
 
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        _window?.Dispose();
-    }
-
     private void OnSpritePicked(ItemList.ItemListSelectedEventArgs args)
     {
         SendMessage(new SprayPainterSpritePickedMessage(args.ItemIndex));

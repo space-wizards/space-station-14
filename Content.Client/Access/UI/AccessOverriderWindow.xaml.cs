@@ -13,24 +13,21 @@ namespace Content.Client.Access.UI
     [GenerateTypedNameReferences]
     public sealed partial class AccessOverriderWindow : DefaultWindow
     {
-        [Dependency] private readonly ILogManager _logManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-        private readonly AccessOverriderBoundUserInterface _owner;
         private readonly Dictionary<string, Button> _accessButtons = new();
 
-        public AccessOverriderWindow(AccessOverriderBoundUserInterface owner, IPrototypeManager prototypeManager,
-            List<ProtoId<AccessLevelPrototype>> accessLevels)
+        public AccessOverriderWindow()
         {
             RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
-            var logMill = _logManager.GetSawmill(SharedAccessOverriderSystem.Sawmill);
+        }
 
-            _owner = owner;
+        public void SetAccessLevels(IPrototypeManager protoManager, List<ProtoId<AccessLevelPrototype>> accessLevels)
+        {
+            _accessButtons.Clear();
+            AccessLevelGrid.DisposeAllChildren();
 
             foreach (var access in accessLevels)
             {
-                if (!prototypeManager.TryIndex(access, out var accessLevel))
+                if (!protoManager.TryIndex(access, out var accessLevel))
                 {
                     logMill.Error($"Unable to find accesslevel for {access}");
                     continue;
