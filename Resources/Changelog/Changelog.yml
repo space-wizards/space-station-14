@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Krunk
-  changes:
-  - message: Clown & Jester shoes can now hold plastic knives and cap guns! All clowning,
-      all the time!
-    type: Add
-  id: 6143
-  time: '2024-03-13T10:03:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25661
 - author: 778b
   changes:
   - message: Guns which use battery as magazines now display ammo. Like Svalinn pistol.
@@ -3864,3 +3856,10 @@
   id: 6642
   time: '2024-05-30T04:18:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28317
+- author: metalgearsloth
+  changes:
+  - message: Predict opening even more interfaces.
+    type: Tweak
+  id: 6643
+  time: '2024-05-30T07:32:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28405
