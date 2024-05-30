@@ -1593,7 +1593,6 @@
         prototype: mouseHunger
       thirst:
         prototype: animalThirst
-    id: animal
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
