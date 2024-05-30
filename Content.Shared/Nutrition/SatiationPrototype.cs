@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Alert;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 using Robust.Shared.Prototypes;
 
@@ -57,8 +58,10 @@ public sealed partial class SatiationPrototype : IPrototype
     [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationThreashold, DamageSpecifier>))]
     public Dictionary<SatiationThreashold, DamageSpecifier> ThresholdDamage = new();
 
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public AlertCategory AlertCategory = AlertCategory.Hunger;
 
+    [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationThreashold, AlertType>)), ViewVariables(VVAccess.ReadWrite)]
     public Dictionary<SatiationThreashold, AlertType> Alerts = new()
     {
         { SatiationThreashold.Concerned, AlertType.Peckish},
@@ -66,6 +69,7 @@ public sealed partial class SatiationPrototype : IPrototype
         { SatiationThreashold.Dead, AlertType.Starving}
     };
 
+    [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationThreashold, string>)), ViewVariables(VVAccess.ReadWrite)]
     public Dictionary<SatiationThreashold, string> Icons = new()
     {
         { SatiationThreashold.Full, "HungerIconOverfed"},
