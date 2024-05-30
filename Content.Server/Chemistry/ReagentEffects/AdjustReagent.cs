@@ -78,7 +78,7 @@ namespace Content.Server.Chemistry.ReagentEffects
                     ("amount", MathF.Abs(Amount.Float())));
             }
 
-            throw new NotImplementedException($"{Reagent}");
+            throw new NotImplementedException();
         }
     }
 }
