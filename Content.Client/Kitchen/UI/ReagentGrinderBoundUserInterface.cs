@@ -1,6 +1,7 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Kitchen;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
 
@@ -21,20 +22,7 @@ namespace Content.Client.Kitchen.UI
         {
             base.Open();
 
-            _menu = new GrinderMenu(this, EntMan, _prototypeManager);
-            _menu.OpenCentered();
-            _menu.OnClose += Close;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-            {
-                return;
-            }
-
-            _menu?.Dispose();
+            _menu = this.CreateWindow<GrinderMenu>();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

@@ -1,6 +1,7 @@
 ﻿using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Communications;
+using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 
@@ -44,9 +45,7 @@ namespace Content.Client.Communications.UI
         {
             base.Open();
 
-            _menu = new CommunicationsConsoleMenu(this);
-            _menu.OnClose += Close;
-            _menu.OpenCentered();
+            _menu = this.CreateWindow<CommunicationsConsoleMenu>();
         }
 
         public void AlertLevelSelected(string level)
@@ -112,14 +111,6 @@ namespace Content.Client.Communications.UI
                 _menu.AnnounceButton.Disabled = !CanAnnounce;
                 _menu.BroadcastButton.Disabled = !CanBroadcast;
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-
-            _menu?.Dispose();
         }
     }
 }

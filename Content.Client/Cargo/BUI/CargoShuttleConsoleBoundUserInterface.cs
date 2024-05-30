@@ -2,6 +2,7 @@ using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.BUI;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Cargo.BUI;
@@ -19,24 +20,7 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        var collection = IoCManager.Instance;
-
-        if (collection == null)
-            return;
-
-        _menu = new CargoShuttleMenu(collection.Resolve<IPrototypeManager>(), collection.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>());
-        _menu.OnClose += Close;
-
-        _menu.OpenCentered();
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (disposing)
-        {
-            _menu?.Dispose();
-        }
+        _menu = this.CreateWindow<CargoShuttleMenu>();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

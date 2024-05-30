@@ -47,10 +47,7 @@ namespace Content.Client.Instruments.UI
                 return;
 
             Instrument = instrument;
-            _instrumentMenu = new InstrumentMenu(this);
-            _instrumentMenu.OnClose += Close;
-
-            _instrumentMenu.OpenCentered();
+            _instrumentMenu = this.CreateWindow<InstrumentMenu>();
         }
 
         protected override void Dispose(bool disposing)
@@ -58,7 +55,7 @@ namespace Content.Client.Instruments.UI
             base.Dispose(disposing);
             if (!disposing)
                 return;
-            _instrumentMenu?.Dispose();
+
             _bandMenu?.Dispose();
             _channelsMenu?.Dispose();
         }

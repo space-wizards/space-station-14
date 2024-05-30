@@ -3,6 +3,7 @@ using Content.Shared.Kitchen.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
 
@@ -23,11 +24,8 @@ namespace Content.Client.Kitchen.UI
 
         public MicrowaveUpdateUserInterfaceState currentState = default!;
 
-        private IEntityManager _entManager;
-
         public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-            _entManager = IoCManager.Resolve<IEntityManager>();
         }
 
         public TimeSpan GetCurrentTime()
@@ -38,9 +36,7 @@ namespace Content.Client.Kitchen.UI
         protected override void Open()
         {
             base.Open();
-            _menu = new MicrowaveMenu(this);
-            _menu.OpenCentered();
-            _menu.OnClose += Close;
+            _menu = this.CreateWindow<MicrowaveMenu>();
             _menu.StartButton.OnPressed += _ => SendPredictedMessage(new MicrowaveStartCookMessage());
             _menu.EjectButton.OnPressed += _ => SendPredictedMessage(new MicrowaveEjectMessage());
             _menu.IngredientsList.OnItemSelected += args =>
@@ -74,19 +70,6 @@ namespace Content.Client.Kitchen.UI
             };
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (!disposing)
-            {
-                return;
-            }
-
-            _solids.Clear();
-            _menu?.Dispose();
-        }
-
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
@@ -95,17 +78,16 @@ namespace Content.Client.Kitchen.UI
                 return;
             }
 
-
             _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0);
             currentState = cState;
 
             // TODO move this to a component state and ensure the net ids.
-            RefreshContentsDisplay(_entManager.GetEntityArray(cState.ContainedSolids));
+            RefreshContentsDisplay(EntMan.GetEntityArray(cState.ContainedSolids));
 
             if (_menu == null) return;
 
             //Set the cook time info label
-            var cookTime = cState.ActiveButtonIndex == 0 
+            var cookTime = cState.ActiveButtonIndex == 0
                 ? Loc.GetString("microwave-menu-instant-button")
                 : cState.CurrentCookTime.ToString();
 

@@ -28,11 +28,6 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
         _window = this.CreateWindow<SurveillanceCameraMonitorWindow>();
 
-        if (State != null)
-        {
-            UpdateState(State);
-        }
-
         _window.CameraSelected += OnCameraSelected;
         _window.SubnetOpened += OnSubnetRequest;
         _window.CameraRefresh += OnCameraRefresh;
