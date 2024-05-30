@@ -84,7 +84,7 @@
       prototypes:
         - CrateEngineering
         - CrateElectrical
-        - CrateElectricalEngineeringSupplies
+        - CrateEngineeringElectricalSupplies
         - CrateRCDAmmo
         - CrateEngineeringCableLV
         - CrateEngineeringCableMV

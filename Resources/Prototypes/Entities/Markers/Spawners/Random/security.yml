@@ -41,14 +41,14 @@
         - BoxFlashbang
         - TearGasGrenade
         - WeaponDisabler
-        - StunBaton
+        - Stunbaton
       rareChance: 0.05
       prototypes:
         - Flash
         - Handcuffs
         - Zipties
         - FlashlightSeclite
-        - Flashbang
+        - GrenadeFlashbang
         - SecurityWhistle
         - Tourniquet
       chance: 0.85
@@ -70,7 +70,7 @@
           state: icon
     - type: RandomSpawner
       rarePrototypes:
-        - ClothingHeadHelmetSWAT
+        - ClothingHeadHelmetSwat
         - WeaponShotgunEnforcer
 #        - WeaponRifleAk
       rareChance: 0.05
@@ -133,7 +133,7 @@
           state: icon
     - type: RandomSpawner
       rarePrototypes:
-        - ClothingHeadHelmetSWAT
+        - ClothingHeadHelmetSwat
       rareChance: 0.05
       prototypes:
         - RiotShield
