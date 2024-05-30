@@ -40,7 +40,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("underPressureLockoutThreshold")]
-        public float UnderPressureLockoutThreshold = 2;
+        public float UnderPressureLockoutThreshold = 60; // this must be tuned in conjunction with atmos.mmos_spacing_speed
 
         /// <summary>
         ///     Pressure locked vents still leak a little (leading to eventual pressurization of sealed sections)

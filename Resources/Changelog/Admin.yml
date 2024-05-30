@@ -235,5 +235,25 @@ Entries:
   id: 29
   time: '2024-05-19T23:04:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28107
+- author: Repo
+  changes:
+  - message: Added listgamerules command, lists all run game modes for the round.
+    type: Add
+  - message: Added admin anouncement for addgamerule
+    type: Add
+  - message: Gamemode now shows after starting round.
+    type: Fix
+  id: 30
+  time: '2024-05-25T20:18:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28178
+- author: Repo
+  changes:
+  - message: Option to admin or play on observe for admins
+    type: Tweak
+  - message: de-admin on late join
+    type: Fix
+  id: 31
+  time: '2024-05-28T18:00:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28319
 Name: Admin
 Order: 1

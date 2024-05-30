@@ -150,6 +150,14 @@ namespace Content.Server.Chat.Managers
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin announcement: {message}");
         }
 
+        public void SendAdminAnnouncementMessage(ICommonSession player, string message, bool suppressLog = true)
+        {
+            var wrappedMessage = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
+                ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
+                ("message", FormattedMessage.EscapeText(message)));
+            ChatMessageToOne(ChatChannel.Admin, message, wrappedMessage, default, false, player.Channel);
+        }
+
         public void SendAdminAlert(string message)
         {
             var clients = _adminManager.ActiveAdmins.Select(p => p.Channel);
