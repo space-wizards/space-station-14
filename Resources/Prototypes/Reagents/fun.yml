@@ -166,8 +166,6 @@
       - !type:Electrocute
         probability: 0.35
 
--
-
 - type: reagent
   id: Fresium
   name: reagent-name-fresium
