@@ -1,17 +1,23 @@
 using Content.Shared.Damage;
 using Content.Shared.Alert;
-using Content.Shared.StatusIcon;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition;
 
 [Prototype]
-public sealed partial class SatiationPrototype : IPrototype
+public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototype
 {
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<SatiationPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    [AbstractDataField]
+    public bool Abstract { get; }
 
     /// <summary>
     /// The base amount at which <see cref="Current"/> decays.

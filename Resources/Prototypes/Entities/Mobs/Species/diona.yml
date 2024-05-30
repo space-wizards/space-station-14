@@ -8,10 +8,11 @@
   - type: HumanoidAppearance
     species: Diona
   - type: Satiation
-    hunger:
-      prototype: dionaHunger
-    thirst:
-      prototype: dionaThirst
+    satiations:
+      hunger:
+        prototype: dionaHunger
+      thirst:
+        prototype: dionaThirst
   - type: Icon
     sprite: Mobs/Species/Diona/parts.rsi
     state: full
