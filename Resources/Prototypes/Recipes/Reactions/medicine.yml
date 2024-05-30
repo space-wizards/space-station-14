@@ -413,7 +413,7 @@
   impact: Medium
   minTemp: 335
   reactants:
-    Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
+    Bicaridine:
       amount: 1
     Benzene:
       amount: 1
@@ -425,7 +425,7 @@
   impact: Medium
   minTemp: 325
   reactants:
-    Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
+    Bicaridine:
       amount: 1
     Hydroxide:
       amount: 1
@@ -436,7 +436,7 @@
   id: Bruizine
   impact: Medium
   reactants:
-    Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
+    Bicaridine:
       amount: 1
     Lithium:
       amount: 0.9
@@ -445,71 +445,6 @@
   products:
     Bruizine: 2
 
-- type: reaction
-  id: BicarLacerinol # mixing any two brute medications will make Razorium
-  impact: Medium
-  reactants:
-    Lacerinol:
-      amount: 1
-    Bicaridine:
-      amount: 1
-  products:
-    Razorium: 1
-
-- type: reaction
-  id: BicarPuncturase # mixing any two brute medications will make Razorium
-  impact: Medium
-  reactants:
-    Puncturase:
-      amount: 1
-    Bicaridine:
-      amount: 1
-  products:
-    Razorium: 1
-
-- type: reaction
-  id: BicarBruizine # mixing any two brute medications will make Razorium
-  impact: Medium
-  reactants:
-    Bruizine:
-      amount: 1
-    Bicaridine:
-      amount: 1
-  products:
-    Razorium: 1
-
-- type: reaction
-  id: BruizineLacerinol # mixing any two brute medications will make Razorium
-  impact: Medium
-  reactants:
-    Lacerinol:
-      amount: 1
-    Bruizine:
-      amount: 1
-  products:
-    Razorium: 1
-
-- type: reaction
-  id: BruizinePuncturase # mixing any two brute medications will make Razorium
-  impact: Medium
-  reactants:
-    Puncturase:
-      amount: 1
-    Bruizine:
-      amount: 1
-  products:
-    Razorium: 1
-
-- type: reaction
-  id: PuncturaseLacerinol # mixing any two brute medications will make Razorium
-  impact: Medium
-  reactants:
-    Lacerinol:
-      amount: 1
-    Puncturase:
-      amount: 1
-  products:
-    Razorium: 1
 
 - type: reaction
   id: Diphenhydramine
@@ -561,7 +496,7 @@
   id: Opporozidone
   minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
   reactants:
-    Cognizine: 
+    Cognizine:
       amount: 1
     Plasma:
       amount: 2
