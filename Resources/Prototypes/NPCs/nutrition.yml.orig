@@ -1,0 +1,74 @@
+- type: htnCompound
+  id: FoodCompound
+  branches:
+    # Picks a nearby food, moves into range, then eats it and waits the idle time.
+    - tasks:
+        - !type:HTNPrimitiveTask
+          preconditions:
+<<<<<<< HEAD
+            - !type:SatiationPrecondition
+              satiationType: hunger
+              minSatiationState: Desperate  # See SatiationThreshold enum
+=======
+            - !type:HungryPrecondition
+              minHungerState: Desperate  # See SatiationThreshold enum
+>>>>>>> parent of d1a7feaef1 (Something is wrong)
+          operator: !type:UtilityOperator
+            proto: NearbyFood
+
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MeleeRange
+
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+          operator: !type:AltInteractOperator
+
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: IdleTime
+          operator: !type:WaitOperator
+            key: IdleTime
+
+    # Picks nearby drink then consumes it and waits idle time
+    - tasks:
+        - !type:HTNPrimitiveTask
+          preconditions:
+<<<<<<< HEAD
+            - !type:SatiationPrecondition
+              satiationType: thirst
+              minSatiationState: Desperate  # See SatiationThreshold enum
+=======
+            - !type:ThirstyPrecondition
+              minThirstState: Desperate  # See SatiationThreshold enum
+>>>>>>> parent of d1a7feaef1 (Something is wrong)
+          operator: !type:UtilityOperator
+            proto: NearbyDrink
+
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MeleeRange
+
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+          operator: !type:AltInteractOperator
+
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: IdleTime
+          operator: !type:WaitOperator
+            key: IdleTime

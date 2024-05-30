@@ -1,0 +1,121 @@
+- type: entity
+  save: false
+  parent:
+  - BaseMob
+  - MobDamageable
+  - MobAtmosExposed
+  id: BaseSimpleMob
+  suffix: AI
+  abstract: true
+  components:
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+      Acidic: [Touch, Ingestion]
+  - type: Internals
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 4
+  - type: StatusEffects
+    allowed:
+    - SlowedDown
+    - Stutter
+    - Electrocution
+    - ForcedSleep
+    - TemporaryBlindness
+    - Pacified
+  - type: Buckle
+  - type: StandingState
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+
+- type: entity
+  abstract: true
+  parent:
+  - BaseSimpleMob
+  - MobCombat
+  - MobBloodstream
+  - MobFlammable
+  id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
+  suffix: AI
+  components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcBite
+  - type: Body
+    prototype: Animal
+  - type: Climbing
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.7
+      80: 0.5
+  - type: MobPrice
+    price: 1000 # Living critters are valuable in space.
+  - type: Perishable
+
+- type: entity
+  parent:
+  - MobRespirator
+  - MobAtmosStandard
+  - SimpleSpaceMobBase
+  id: SimpleMobBase # for air breathers
+  suffix: AI
+  abstract: true
+  components:
+  - type: Satiation
+<<<<<<< HEAD
+    satiations:
+      hunger:
+        prototype: simpleMobHunger
+      thirst:
+        prototype: simpleMobThirst
+=======
+    hunger:
+      thresholds: # only animals and rats are derived from this prototype so let's override it here and in rats' proto
+        Full: 100
+        Okay: 50
+        Concerned: 25
+        Desperate: 10
+        Dead: 0
+      baseDecayRate: 0.00925925925926 # it is okay for animals to eat and drink less than humans, but more frequently
+    thirst:
+      thresholds:
+        Full: 200
+        Okay: 150
+        Concerned: 100
+        Desperate: 50
+        Dead: 0
+      baseDecayRate: 0.04
+      thresholdDecayModifiers:
+        Full: 1.2
+        Okay: 1.0
+        Concerned: 0.8
+        Desperate: 0.6
+        Dead: 0
+>>>>>>> parent of d1a7feaef1 (Something is wrong)
+  - type: StatusEffects
+    allowed:
+      - Stun
+      - KnockedDown
+      - SlowedDown
+      - Stutter
+      - Electrocution
+      - ForcedSleep
+      - TemporaryBlindness
+      - Pacified
+      - StaminaModifier
+  - type: Bloodstream
+    bloodMaxVolume: 150
+  - type: MobPrice
+    price: 150
+  - type: FloatingVisuals

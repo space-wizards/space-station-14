@@ -1,0 +1,135 @@
+- type: entity
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobVox
+  abstract: true
+  components:
+  - type: Satiation
+<<<<<<< HEAD
+    Satiations:
+      hunger:
+        prototype: normalSatiationHunger
+      thirst:
+        prototype: normalSatiationThirst
+=======
+    thirst:
+      thresholds:
+        Full: 600.0
+        Okay: 450.0
+        Concerned: 300.0
+        Desperate: 150.0
+        Dead: 0.0
+      thresholdDecayModifiers:
+        Full: 1.2
+        Okay: 1.0
+        Concerned: 0.8
+        Desperate: 0.6
+        Dead: 0.0
+>>>>>>> parent of d1a7feaef1 (Something is wrong)
+  - type: Icon
+    sprite: Mobs/Species/Vox/parts.rsi
+    state: vox_m
+  - type: Body
+    prototype: Vox
+    requiredLegs: 2
+  - type:  HumanoidAppearance
+    species: Vox
+    #- type: VoxAccent # Not yet coded
+  - type: Inventory
+    speciesId: vox
+    displacements:
+      jumpsuit:
+        layer:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: jumpsuit
+          copyToShaderParameters:
+            # Value required, provide a dummy. Gets overridden when applied.
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
+  - type: Speech
+    speechVerb: Vox
+    speechSounds: Vox
+  - type: TypingIndicator
+    proto: vox
+  - type: Vocal
+    sounds:
+      Male: UnisexVox
+      Female: UnisexVox
+      Unsexed: UnisexVox
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatChicken
+      amount: 5
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Vox
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#7a8bf2"
+  - type: Bloodstream
+    bloodReagent: AmmoniaBlood
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5 # Reduce?
+  - type: Sprite # Need to redefine the whole order to draw the tail over their gas tank
+    layers:
+    - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    - map: [ "enum.HumanoidVisualLayers.Head" ]
+    - map: [ "enum.HumanoidVisualLayers.Snout" ]
+    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+    - map: [ "enum.HumanoidVisualLayers.RArm" ]
+    - map: [ "enum.HumanoidVisualLayers.LArm" ]
+    - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+    - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+    - map: [ "jumpsuit" ]
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+    - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+    - map: [ "enum.HumanoidVisualLayers.LHand" ]
+    - map: [ "enum.HumanoidVisualLayers.RHand" ]
+    - map: [ "gloves" ]
+    - map: [ "shoes" ]
+    - map: [ "ears" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "belt" ]
+    - map: [ "id" ]
+    - map: [ "neck" ]
+    - map: [ "back" ]
+    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+    - map: [ "enum.HumanoidVisualLayers.Hair" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+    - map: [ "suitstorage" ] # This is not in the default order
+    - map: [ "enum.HumanoidVisualLayers.Tail" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "pocket1" ]
+    - map: [ "pocket2" ]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_vox" # Not default
+      visible: false
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobVoxDummy
+  noSpawn: true
+  components:
+  - type: HumanoidAppearance
+    species: Vox
+  - type: Body
+    prototype: Vox
+

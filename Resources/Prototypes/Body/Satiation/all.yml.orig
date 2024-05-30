@@ -1,0 +1,144 @@
+- type: satiation
+  id: normalSatiationHunger
+
+  thresholds:
+    Full: 200
+    Okay: 150
+    Concerned: 100
+    Desperate: 50
+    Dead: 0
+  thresholdDecayModifiers:
+    Full: 1.2
+    Okay: 1.0
+    Concerned: 0.8
+    Desperate: 0.6
+    Dead: 0.6
+  slowdownModifier: 0.75
+  alertCategory: Hunger
+  alerts:
+    Concerned: Peckish
+    Desperate: Starving
+    Dead: Starving
+  icons:
+    Full: "HungerIconOverfed"
+    Concerned: "HungerIconPeckish"
+    Desperate: "HungerIconStarving"
+    Dead: "HungerIconStarving"
+
+- type: satiation
+  id: normalSatiationThirst
+
+  thresholds:
+    Full: 600.0
+    Okay: 450.0
+    Concerned: 300.0
+    Desperate: 150.0
+    Dead: 0.0
+  thresholdDecayModifiers:
+    Full: 1.2
+    Okay: 1.0
+    Concerned: 0.8
+    Desperate: 0.6
+    Dead: 0.6
+  slowdownModifier: 0.75
+  alertCategory: Thirst
+  alerts:
+    Concerned: Thirsty
+    Desperate: Parched
+    Dead: Parched
+  icons:
+    Full: "ThirstIconOverhydrated"
+    Concerned: "ThirstIconThirsty"
+    Desperate: "ThirstIconParched"
+    Dead: "ThirstIconParched"
+
+- type: satiation
+  id: animalHunger
+  parent: normalSatiationHunger
+
+  baseDecayRate: 0.3
+  thresholds:
+    Full: 35
+    Okay: 25
+    Concerned: 15
+    Desperate: 10
+    Dead: 0
+
+- type: satiation
+  id: cockroachHunger
+  parent: animalHunger
+
+  baseDecayRate: 0.25
+
+- type: satiation
+  id: animalThirst
+  parent: normalSatiationThirst
+
+  thresholds:
+    Full: 35.0
+    Okay: 25.0
+    Concerned: 15.0
+    Desperate: 10.0
+    Dead: 0.0
+
+- type: satiation
+  id: simpleMobHunger
+  parent: normalSatiationHunger
+
+  thresholds:
+    Full: 100
+    Okay: 50
+    Concerned: 25
+    Desperate: 10
+    Dead: 0
+
+- type: satiation
+  id: simpleMobThirst
+  parent: normalSatiationThirst
+
+  thresholds:
+    Full: 200.0
+    Okay: 150.0
+    Concerned: 100.0
+    Desperate: 50.0
+    Dead: 0.0
+
+- type: satiation
+  id: critterHunger
+  parent: normalSatiationHunger
+
+  thresholds:
+    Full: 200
+    Okay: 150
+    Concerned: 100
+    Desperate: 50
+    Dead: 0
+
+- type: satiation
+  id: critterThirst
+  parent: normalSatiationThirst
+
+  thresholds:
+    Full: 600.0
+    Okay: 450.0
+    Concerned: 300.0
+    Desperate: 150.0
+    Dead: 0.0
+
+- type: satiation
+  id: dionaHunger
+  parent: normalSatiationHunger
+
+  baseDecayRate: 0.0083
+  thresholds:
+    Full: 200
+    Okay: 150
+    Concerned: 100
+    Desperate: 50
+    Dead: 0
+
+- type: satiation
+  id: dionaThirst
+  parent: normalSatiationThirst
+
+  baseDecayRate: 0.0083

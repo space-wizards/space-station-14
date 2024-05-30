@@ -1,0 +1,132 @@
+- type: entity
+  save: false
+  name: Urist McPlants
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobDiona
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: Diona
+  - type: Satiation
+    hunger:
+<<<<<<< HEAD
+      prototype: dionaHunger
+    thirst:
+      prototype: dionaThirst
+=======
+      baseDecayRate: 0.0083
+    thirst:
+      baseDecayRate: 0.0083
+      thresholds:
+        Full: 600.0
+        Okay: 450.0
+        Concerned: 300.0
+        Desperate: 150.0
+        Dead: 0.0
+      thresholdDecayModifiers:
+        Full: 1.2
+        Okay: 1.0
+        Concerned: 0.8
+        Desperate: 0.6
+        Dead: 0.0
+>>>>>>> parent of d1a7feaef1 (Something is wrong)
+  - type: Icon
+    sprite: Mobs/Species/Diona/parts.rsi
+    state: full
+  - type: Body
+    prototype: Diona
+    requiredLegs: 2
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Diona
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#cd7314"
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodMeatPlant
+        amount: 5
+  - type: Bloodstream
+    bloodReagent: Sap
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
+    reactions:
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPieReaction
+    - reagents: [ PlantBGone ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          types:
+            Blunt: 2
+            Slash: 2
+            Piercing: 3
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "diona-hurt-by-herbicide-popup" ]
+        probability: 0.66
+    - reagents: [ WeedKiller ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          types:
+            Poison: 5
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "diona-hurt-by-herbicide-popup" ]
+        probability: 0.66
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 300 #weighs more than humans because wood
+        restitution: 0.0
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+  - type: Inventory
+    templateId: diona
+  - type: Speech
+    speechVerb: Plant
+  - type: Vocal
+    sounds:
+      Male: UnisexDiona
+      Female: UnisexDiona
+      Unsexed: UnisexDiona
+  - type: BodyEmotes
+    soundsId: DionaBodyEmotes
+  - type: IgnoreKudzu
+  - type: IgniteOnHeatDamage
+    fireStacks: 1
+    threshold: 12
+  - type: GibAction
+    actionPrototype: DionaGibAction
+    allowedStates:
+    - Dead
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobDionaDummy
+  noSpawn: true
+  components:
+  - type: Inventory
+    templateId: diona
+  - type: HumanoidAppearance
+    species: Diona
