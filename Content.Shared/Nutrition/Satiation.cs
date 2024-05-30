@@ -15,12 +15,6 @@ public sealed partial class Satiation
     public float Current;
 
     /// <summary>
-    /// The base amount at which <see cref="Current"/> decays.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float BaseDecayRate = 0.01666666666f;
-
-    /// <summary>
     /// The actual amount at which <see cref="Current"/> decays.
     /// Affected by <seealso cref="CurrentThreshold"/>
     /// </summary>

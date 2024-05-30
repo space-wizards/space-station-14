@@ -13,6 +13,12 @@ public sealed partial class SatiationPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
+    /// The base amount at which <see cref="Current"/> decays.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float BaseDecayRate = 0.01666666666f;
+
+    /// <summary>
     /// A dictionary relating SatiationThreshold to the amount of <see cref="Current"/> needed for each one
     /// </summary>
     [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationThreashold, float>))]

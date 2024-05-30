@@ -156,7 +156,7 @@ public sealed class SatiationSystem : EntitySystem
         }
         if (proto.ThresholdDecayModifiers.TryGetValue(satiation.CurrentThreshold, out var modifier))
         {
-            satiation.ActualDecayRate = satiation.BaseDecayRate * modifier;
+            satiation.ActualDecayRate = proto.BaseDecayRate * modifier;
         }
         satiation.LastThreshold = satiation.CurrentThreshold;
 
