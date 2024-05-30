@@ -26,7 +26,7 @@ public sealed partial class SatiationPrecondition : HTNPrecondition
         if (!_entManager.TryGetComponent<SatiationComponent>(owner, out var component))
             return false;
 
-        if (!component.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
+        if (!component.Satiations.AsReadOnly().TryGetValue(SatiationHunger, out var satiation))
             return false;
 
         return satiation.CurrentThreshold <= MinSatiationState;

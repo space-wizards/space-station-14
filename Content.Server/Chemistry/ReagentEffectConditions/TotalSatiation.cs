@@ -14,14 +14,14 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         public float Min = 0;
 
         [DataField]
-        public ProtoId<SatiationTypePrototype> SatiationType = "hunger";
+        public ProtoId<SatiationTypePrototype> SatiationHunger = "hunger";
 
         public override bool Condition(ReagentEffectArgs args)
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out SatiationComponent? component))
                 return false;
 
-            if (!component.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
+            if (!component.Satiations.AsReadOnly().TryGetValue(SatiationHunger, out var satiation))
                 return false;
 
             var total = satiation.Current;
@@ -33,7 +33,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
             return Loc.GetString("reagent-effect-condition-guidebook-total-satiation",
                 ("max", float.IsPositiveInfinity(Max) ? (float) int.MaxValue : Max),
                 ("min", Min),
-                ("type", Loc.GetString($"satiation-type-{SatiationType}")));
+                ("type", Loc.GetString($"satiation-type-{SatiationHunger}")));
         }
     }
 }
