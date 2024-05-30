@@ -8,7 +8,7 @@
   - type: HumanoidAppearance
     species: Moth
   - type: Satiation
-    Satiations:
+    satiations:
       hunger:
         prototype: normalSatiationHunger
       thirst:

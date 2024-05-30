@@ -11,7 +11,7 @@
   - type: HumanoidAppearance
     species: Arachnid
   - type: Satiation
-    Satiations:
+    satiations:
       hunger:
         prototype: normalSatiationHunger
       thirst:

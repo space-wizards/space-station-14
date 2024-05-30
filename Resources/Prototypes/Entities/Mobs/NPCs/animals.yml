@@ -345,7 +345,7 @@
     bloodMaxVolume: 20
   - type: Food
   - type: Satiation
-    Satiations:
+    satiations:
       hunger:
         prototype: cockroachHunger
       thirst:

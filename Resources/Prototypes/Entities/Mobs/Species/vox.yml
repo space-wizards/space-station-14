@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Satiation
-    Satiations:
+    satiations:
       hunger:
         prototype: normalSatiationHunger
       thirst:

@@ -9,7 +9,7 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: full
   - type: Satiation
-    Satiations:
+    satiations:
       hunger:
         prototype: normalSatiationHunger
       thirst:
