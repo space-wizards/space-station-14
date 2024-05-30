@@ -199,6 +199,7 @@
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
   - type: Puller
+    needsHands: false
   - type: Speech
     speechSounds: Alto
   - type: DamageForceSay
