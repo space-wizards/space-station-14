@@ -43,7 +43,7 @@ public abstract class SharedMechSystem : EntitySystem
     {
         SubscribeLocalEvent<MechComponent, MechToggleEquipmentEvent>(OnToggleEquipmentAction);
         SubscribeLocalEvent<MechComponent, MechEjectPilotEvent>(OnEjectPilotEvent);
-        SubscribeLocalEvent<MechComponent, InteractNoHandEvent>(RelayInteractionEvent);
+        SubscribeLocalEvent<MechComponent, UserActivateInWorldEvent>(RelayInteractionEvent);
         SubscribeLocalEvent<MechComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<MechComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<MechComponent, GetAdditionalAccessEvent>(OnGetAdditionalAccess);
@@ -71,7 +71,7 @@ public abstract class SharedMechSystem : EntitySystem
         TryEject(uid, component);
     }
 
-    private void RelayInteractionEvent(EntityUid uid, MechComponent component, InteractNoHandEvent args)
+    private void RelayInteractionEvent(EntityUid uid, MechComponent component, UserActivateInWorldEvent args)
     {
         var pilot = component.PilotSlot.ContainedEntity;
         if (pilot == null)

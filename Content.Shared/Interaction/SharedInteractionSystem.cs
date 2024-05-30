@@ -403,21 +403,6 @@ namespace Content.Shared.Interaction
                 ? !checkAccess || InRangeUnobstructed(user, coordinates)
                 : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
-            // Does the user have hands?
-            if (!_handsQuery.TryComp(user, out var hands) || hands.ActiveHand == null)
-            {
-                var ev = new InteractNoHandEvent(user, target, coordinates);
-                RaiseLocalEvent(user, ev);
-
-                if (target != null)
-                {
-                    var interactedEv = new InteractedNoHandEvent(target.Value, user, coordinates);
-                    RaiseLocalEvent(target.Value, interactedEv);
-                    DoContactInteraction(user, target.Value, ev);
-                }
-                return;
-            }
-
             // empty-hand interactions
             // combat mode hand interactions will always be true here -- since
             // they check this earlier before returning in
@@ -1037,7 +1022,9 @@ namespace Content.Shared.Interaction
             complexInteractions ??= SupportsComplexInteractions(user);
             var activateMsg = new ActivateInWorldEvent(user, used, complexInteractions.Value);
             RaiseLocalEvent(used, activateMsg, true);
-            if (!activateMsg.Handled)
+            var userEv = new UserActivateInWorldEvent(user, used, complexInteractions.Value);
+            RaiseLocalEvent(user, userEv, true);
+            if (!activateMsg.Handled && !userEv.Handled)
                 return false;
 
             DoContactInteraction(user, used, activateMsg);

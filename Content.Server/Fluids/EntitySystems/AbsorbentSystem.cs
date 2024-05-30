@@ -34,7 +34,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         base.Initialize();
         SubscribeLocalEvent<AbsorbentComponent, ComponentInit>(OnAbsorbentInit);
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<AbsorbentComponent, ActivateInWorldEvent>(OnActivateInWorld);
+        SubscribeLocalEvent<AbsorbentComponent, UserActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<AbsorbentComponent, SolutionContainerChangedEvent>(OnAbsorbentSolutionChange);
     }
 
@@ -84,7 +84,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         Dirty(uid, component);
     }
 
-    private void OnActivateInWorld(EntityUid uid, AbsorbentComponent component, ActivateInWorldEvent args)
+    private void OnActivateInWorld(EntityUid uid, AbsorbentComponent component, UserActivateInWorldEvent args)
     {
         if (args.Handled)
             return;
