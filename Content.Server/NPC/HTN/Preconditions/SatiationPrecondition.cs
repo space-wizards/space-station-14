@@ -14,7 +14,7 @@ public sealed partial class SatiationPrecondition : HTNPrecondition
     [DataField(required: true)]
     public SatiationThreashold MinSatiationState = SatiationThreashold.Desperate;
     [DataField(required: true)]
-    public ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
+    public ProtoId<SatiationTypePrototype> SatiationType = "hunger";
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
@@ -26,7 +26,7 @@ public sealed partial class SatiationPrecondition : HTNPrecondition
         if (!_entManager.TryGetComponent<SatiationComponent>(owner, out var component))
             return false;
 
-        if (!component.Satiations.AsReadOnly().TryGetValue(_satiationHunger, out var satiation))
+        if (!component.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
             return false;
 
         return satiation.CurrentThreshold <= MinSatiationState;
