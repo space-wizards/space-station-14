@@ -23,6 +23,8 @@ namespace Content.Client.Access.UI
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
 
+        public event Action<string>? OnJobIconChanged;
+
         public AgentIDCardWindow()
         {
             RobustXamlLoader.Load(this);
@@ -75,7 +77,7 @@ namespace Content.Client.Access.UI
                 };
 
                 jobIconButton.AddChild(jobIconTexture);
-                jobIconButton.OnPressed += _ => _bui.OnJobIconChanged(jobIcon.ID);
+                jobIconButton.OnPressed += _ => OnJobIconChanged?.Invoke(jobIcon.ID);
                 IconGrid.AddChild(jobIconButton);
 
                 if (jobIconId.Equals(currentJobIconId))

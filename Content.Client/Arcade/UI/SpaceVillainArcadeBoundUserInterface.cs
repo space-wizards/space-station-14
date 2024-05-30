@@ -10,8 +10,6 @@ public sealed class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
 {
     [ViewVariables] private SpaceVillainArcadeMenu? _menu;
 
-    //public SharedSpaceVillainArcadeComponent SpaceVillainArcade;
-
     public SpaceVillainArcadeBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         SendAction(PlayerAction.RequestData);

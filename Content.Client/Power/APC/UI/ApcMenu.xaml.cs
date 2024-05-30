@@ -17,13 +17,19 @@ namespace Content.Client.Power.APC.UI
     [GenerateTypedNameReferences]
     public sealed partial class ApcMenu : FancyWindow
     {
-        public ApcMenu(ApcBoundUserInterface owner)
+        public event Action? OnBreaker;
+
+        public ApcMenu()
         {
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
 
-            EntityView.SetEntity(owner.Owner);
-            BreakerButton.OnPressed += _ => owner.BreakerPressed();
+            BreakerButton.OnPressed += _ => OnBreaker?.Invoke();
+        }
+
+        public void SetEntity(EntityUid entity)
+        {
+            EntityView.SetEntity(entity);
         }
 
         public void UpdateState(BoundUserInterfaceState state)

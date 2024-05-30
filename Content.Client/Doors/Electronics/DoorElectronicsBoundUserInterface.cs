@@ -19,6 +19,23 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
+        _window = this.CreateWindow<DoorElectronicsConfigurationMenu>();
+        _window.OnAccessChanged += UpdateConfiguration;
+        Reset();
+    }
+
+    public override void OnProtoReload(PrototypesReloadedEventArgs args)
+    {
+        base.OnProtoReload(args);
+
+        if (!args.WasModified<AccessLevelPrototype>())
+            return;
+
+        Reset();
+    }
+
+    private void Reset()
+    {
         List<ProtoId<AccessLevelPrototype>> accessLevels = new();
 
         foreach (var accessLevel in _prototypeManager.EnumeratePrototypes<AccessLevelPrototype>())
@@ -30,8 +47,7 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
         }
 
         accessLevels.Sort();
-
-        _window = this.CreateWindow<DoorElectronicsConfigurationMenu>();
+        _window?.Reset(_prototypeManager, accessLevels);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

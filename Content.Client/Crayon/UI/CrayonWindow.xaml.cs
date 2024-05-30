@@ -22,6 +22,8 @@ namespace Content.Client.Crayon.UI
         private string? _selected;
         private Color _color;
 
+        public event Action<Color>? OnColorSelected;
+
         public CrayonWindow()
         {
             RobustXamlLoader.Load(this);
@@ -34,6 +36,7 @@ namespace Content.Client.Crayon.UI
         {
             _color = color;
 
+            OnColorSelected?.Invoke(color);
             Owner.SelectColor(color);
 
             RefreshList();
@@ -42,8 +45,9 @@ namespace Content.Client.Crayon.UI
         private void RefreshList()
         {
             // Clear
-            Grid.RemoveAllChildren();
-            if (_decals == null) return;
+            Grid.DisposeAllChildren();
+            if (_decals == null)
+                return;
 
             var filter = Search.Text;
             foreach (var (decal, tex) in _decals)

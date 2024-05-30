@@ -15,6 +15,8 @@ namespace Content.Client.Access.UI
     {
         private readonly Dictionary<string, Button> _accessButtons = new();
 
+        public event Action<List<ProtoId<AccessLevelPrototype>>>? OnSubmit;
+
         public AccessOverriderWindow()
         {
             RobustXamlLoader.Load(this);
@@ -29,7 +31,6 @@ namespace Content.Client.Access.UI
             {
                 if (!protoManager.TryIndex(access, out var accessLevel))
                 {
-                    logMill.Error($"Unable to find accesslevel for {access}");
                     continue;
                 }
 
@@ -41,11 +42,16 @@ namespace Content.Client.Access.UI
 
                 AccessLevelGrid.AddChild(newButton);
                 _accessButtons.Add(accessLevel.ID, newButton);
-                newButton.OnPressed += _ => SubmitData();
+                newButton.OnPressed += _ =>
+                {
+                    OnSubmit?.Invoke(
+                        // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
+                        _accessButtons.Where(x => x.Value.Pressed).Select(x => new ProtoId<AccessLevelPrototype>(x.Key)).ToList());
+                };
             }
         }
 
-        public void UpdateState(AccessOverriderBoundUserInterfaceState state)
+        public void UpdateState(IPrototypeManager protoManager, AccessOverriderBoundUserInterfaceState state)
         {
             PrivilegedIdLabel.Text = state.PrivilegedIdName;
             PrivilegedIdButton.Text = state.IsPrivilegedIdPresent
@@ -63,11 +69,11 @@ namespace Content.Client.Access.UI
 
             if (state.MissingPrivilegesList != null && state.MissingPrivilegesList.Any())
             {
-                List<string> missingPrivileges = new List<string>();
+                var missingPrivileges = new List<string>();
 
                 foreach (string tag in state.MissingPrivilegesList)
                 {
-                    string privilege = Loc.GetString(_prototypeManager.Index<AccessLevelPrototype>(tag)?.Name ?? "generic-unknown");
+                    var privilege = Loc.GetString(protoManager.Index<AccessLevelPrototype>(tag)?.Name ?? "generic-unknown");
                     missingPrivileges.Add(privilege);
                 }
 
@@ -86,14 +92,6 @@ namespace Content.Client.Access.UI
                     button.Disabled = (!state.AllowedModifyAccessList?.Contains(accessName)) ?? true;
                 }
             }
-        }
-
-        private void SubmitData()
-        {
-            _owner.SubmitData(
-
-                // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
-                _accessButtons.Where(x => x.Value.Pressed).Select(x => new ProtoId<AccessLevelPrototype>(x.Key)).ToList());
         }
     }
 }

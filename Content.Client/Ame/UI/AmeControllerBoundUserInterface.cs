@@ -18,6 +18,7 @@ namespace Content.Client.Ame.UI
             base.Open();
 
             _window = this.CreateWindow<AmeWindow>();
+            _window.OnAmeButton += ButtonPressed;
         }
 
         /// <summary>

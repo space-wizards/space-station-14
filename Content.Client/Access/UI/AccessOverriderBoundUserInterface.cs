@@ -24,6 +24,28 @@ namespace Content.Client.Access.UI
         {
             base.Open();
 
+            _window = this.CreateWindow<AccessOverriderWindow>();
+            RefreshAccess();
+            _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+            _window.OnSubmit += SubmitData;
+
+            _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
+        }
+
+        public override void OnProtoReload(PrototypesReloadedEventArgs args)
+        {
+            base.OnProtoReload(args);
+            if (!args.WasModified<AccessLevelPrototype>())
+                return;
+
+            RefreshAccess();
+
+            if (State != null)
+                _window?.UpdateState(_prototypeManager, (AccessOverriderBoundUserInterfaceState) State);
+        }
+
+        private void RefreshAccess()
+        {
             List<ProtoId<AccessLevelPrototype>> accessLevels;
 
             if (EntMan.TryGetComponent<AccessOverriderComponent>(Owner, out var accessOverrider))
@@ -37,27 +59,14 @@ namespace Content.Client.Access.UI
                 _accessOverriderSystem.Log.Error($"No AccessOverrider component found for {EntMan.ToPrettyString(Owner)}!");
             }
 
-            _window = this.CreateWindow<AccessOverriderWindow>();
-            _window.SetAccessLevels(accessLevels);
-            _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
-
-            _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
-        }
-
-        public override void OnProtoReload(PrototypesReloadedEventArgs args)
-        {
-            base.OnProtoReload(args);
-            if (!args.WasModified<AccessLevelPrototype>())
-                return;
-
-            // weh
+            _window?.SetAccessLevels(_prototypeManager, accessLevels);
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
             var castState = (AccessOverriderBoundUserInterfaceState) state;
-            _window?.UpdateState(castState);
+            _window?.UpdateState(_prototypeManager, castState);
         }
 
         public void SubmitData(List<ProtoId<AccessLevelPrototype>> newAccessList)

@@ -14,16 +14,12 @@ namespace Content.Client.Kitchen.UI
     {
         private readonly IEntityManager _entityManager;
         private readonly IPrototypeManager _prototypeManager;
-        private readonly ReagentGrinderBoundUserInterface _owner;
 
         private readonly Dictionary<int, EntityUid> _chamberVisualContents = new();
 
-        public GrinderMenu(ReagentGrinderBoundUserInterface owner, IEntityManager entityManager, IPrototypeManager prototypeManager)
+        public GrinderMenu()
         {
             RobustXamlLoader.Load(this);
-            _entityManager = entityManager;
-            _prototypeManager = prototypeManager;
-            _owner = owner;
             AutoModeButton.OnPressed += owner.ToggleAutoMode;
             GrindButton.OnPressed += owner.StartGrinding;
             JuiceButton.OnPressed += owner.StartJuicing;

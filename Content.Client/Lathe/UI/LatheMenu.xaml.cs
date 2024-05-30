@@ -37,17 +37,14 @@ public sealed partial class LatheMenu : DefaultWindow
 
     public ProtoId<LatheCategoryPrototype>? CurrentCategory;
 
-    public LatheMenu(LatheBoundUserInterface owner)
+    public LatheMenu()
     {
-        _owner = owner.Owner;
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
         _spriteSystem = _entityManager.System<SpriteSystem>();
         _lathe = _entityManager.System<LatheSystem>();
         _materialStorage = _entityManager.System<MaterialStorageSystem>();
-
-        Title = _entityManager.GetComponent<MetaDataComponent>(owner.Owner).EntityName;
 
         SearchBar.OnTextChanged += _ =>
         {

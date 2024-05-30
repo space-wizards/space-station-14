@@ -9,25 +9,16 @@ namespace Content.Client.Power.Generator;
 [GenerateTypedNameReferences]
 public sealed partial class GeneratorWindow : FancyWindow
 {
-    private readonly EntityUid _entity;
-
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly ILocalizationManager _loc = default!;
 
-    private readonly SharedPowerSwitchableSystem _switchable;
-    private readonly FuelGeneratorComponent? _component;
-    private PortableGeneratorComponentBuiState? _lastState;
+    private EntityUid _entity;
 
-    public GeneratorWindow(PortableGeneratorBoundUserInterface bui, EntityUid entity)
+    public GeneratorWindow()
     {
-        _entity = entity;
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _entityManager.TryGetComponent(entity, out _component);
-        _switchable = _entityManager.System<SharedPowerSwitchableSystem>();
-
-        EntityView.SetEntity(entity);
         TargetPower.IsValid += IsValid;
         TargetPower.ValueChanged += (args) =>
         {
@@ -38,6 +29,12 @@ public sealed partial class GeneratorWindow : FancyWindow
         StopButton.OnPressed += _ => bui.Stop();
         OutputSwitchButton.OnPressed += _ => bui.SwitchOutput();
         FuelEject.OnPressed += _ => bui.EjectFuel();
+    }
+
+    public void SetEntity(EntityUid entity)
+    {
+        _entity = entity;
+        EntityView.SetEntity(entity);
     }
 
     private bool IsValid(int arg)
@@ -53,10 +50,6 @@ public sealed partial class GeneratorWindow : FancyWindow
 
     public void Update(PortableGeneratorComponentBuiState state)
     {
-        if (_component == null)
-            return;
-
-        _lastState = state;
         if (!TargetPower.LineEditControl.HasKeyboardFocus())
             TargetPower.OverrideValue((int)(state.TargetPower / 1000.0f));
         var efficiency = SharedGeneratorSystem.CalcFuelEfficiency(state.TargetPower, state.OptimalPower, _component);

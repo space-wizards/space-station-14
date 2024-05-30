@@ -21,6 +21,7 @@ namespace Content.Client.Power.APC
             base.Open();
 
             _menu = this.CreateWindow<ApcMenu>();
+            _menu.OnBreaker += BreakerPressed;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

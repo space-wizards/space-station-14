@@ -20,6 +20,7 @@ public sealed class AnomalyGeneratorBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<AnomalyGeneratorWindow>();
+        _window.SetEntity(Owner);
 
         _window.OnGenerateButtonPressed += () =>
         {
@@ -34,11 +35,6 @@ public sealed class AnomalyGeneratorBoundUserInterface : BoundUserInterface
         if (state is not AnomalyGeneratorUserInterfaceState msg)
             return;
         _window?.UpdateState(msg);
-    }
-
-    public void SetPowerSwitch(bool on)
-    {
-        SendMessage(new SharedGravityGeneratorComponent.SwitchGeneratorMessage(on));
     }
 }
 
