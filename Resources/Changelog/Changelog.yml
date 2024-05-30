@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Zombies can now wideswing, similar to how a space carp would.
-    type: Tweak
-  id: 6142
-  time: '2024-03-13T10:02:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26064
 - author: Krunk
   changes:
   - message: Clown & Jester shoes can now hold plastic knives and cap guns! All clowning,
@@ -3864,3 +3857,10 @@
   id: 6641
   time: '2024-05-30T04:15:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28314
+- author: blueDev2
+  changes:
+  - message: Epipens can be disposed
+    type: Fix
+  id: 6642
+  time: '2024-05-30T04:18:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28317
