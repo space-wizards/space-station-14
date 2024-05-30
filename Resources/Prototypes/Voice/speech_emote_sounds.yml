@@ -354,7 +354,7 @@
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
-      collection: DeathGasp
+      collection: moth_DeathGasp
 
 - type: emoteSounds
   id: UnisexSilicon
