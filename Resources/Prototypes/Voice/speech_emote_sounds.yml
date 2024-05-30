@@ -37,8 +37,7 @@
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
-      collection: MaleDeathGasp
-
+      collection: DeathGasp
 - type: emoteSounds
   id: FemaleHuman
   params:
@@ -77,7 +76,7 @@
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
-      collection: FemaleDeathGasp
+      collection: DeathGasp
 
 - type: emoteSounds
   id: MaleReptilian
@@ -157,7 +156,7 @@
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
-      collection: MaleDeathGasp
+      collection: DeathGasp
   params:
     variation: 0.125
 
@@ -199,7 +198,7 @@
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
-      collection: FemaleDeathGasp
+      collection: DeathGasp
   params:
     variation: 0.125
 
@@ -288,7 +287,7 @@
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
-      collection: MaleDeathGasp
+      collection: DeathGasp
   params:
     variation: 0.125
     pitch: 0.75
@@ -329,7 +328,7 @@
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
-      collection: FemaleDeathGasp
+      collection: DeathGasp
   params:
     variation: 0.125
     pitch: 0.75
