@@ -27,6 +27,6 @@
 
 - files:
   - moth_DeathGasp.ogg
-  license: "CC 0 license"
+  license: "CC0-1.0"
   copyright: "Taken from tgstation at https://github.com/tgstation/tgstation/commit/948ad3dd5b22803a01cd74c27f37e509dc61395b"
   source: "https://github.com/tgstation/tgstation"
