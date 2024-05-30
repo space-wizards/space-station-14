@@ -1590,9 +1590,9 @@
   - type: Satiation
     satiations:
       hunger:
-        prototype: normalSatiationHunger
+        prototype: mouseHunger
       thirst:
-        prototype: normalSatiationThirst
+        prototype: animalThirst
     id: animal
   - type: Extractable
     grindableSolutionName: food

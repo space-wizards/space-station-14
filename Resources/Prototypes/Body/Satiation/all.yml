@@ -65,6 +65,12 @@
     Dead: 0
 
 - type: satiation
+  id: mouseHunger
+  parent: animalHunger
+
+  baseDecayRate: 0.5
+
+- type: satiation
   id: cockroachHunger
   parent: animalHunger
 
@@ -85,6 +91,7 @@
   id: simpleMobHunger
   parent: normalSatiationHunger
 
+  baseDecayRate: 0.00925925925926
   thresholds:
     Full: 100
     Okay: 50
@@ -96,6 +103,7 @@
   id: simpleMobThirst
   parent: normalSatiationThirst
 
+  baseDecayRate: 0.04
   thresholds:
     Full: 200.0
     Okay: 150.0
@@ -107,6 +115,7 @@
   id: critterHunger
   parent: normalSatiationHunger
 
+  baseDecayRate: 0.01666666666
   thresholds:
     Full: 200
     Okay: 150
@@ -118,6 +127,7 @@
   id: critterThirst
   parent: normalSatiationThirst
 
+  baseDecayRate: 0.1
   thresholds:
     Full: 600.0
     Okay: 450.0
