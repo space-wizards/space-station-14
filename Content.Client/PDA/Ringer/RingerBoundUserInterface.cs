@@ -1,6 +1,7 @@
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
 using JetBrains.Annotations;
+using Robust.Client.UserInterface;
 using Robust.Shared.Timing;
 
 namespace Content.Client.PDA.Ringer
@@ -18,9 +19,8 @@ namespace Content.Client.PDA.Ringer
         protected override void Open()
         {
             base.Open();
-            _menu = new RingtoneMenu();
+            _menu = this.CreateWindow<RingtoneMenu>();
             _menu.OpenToLeft();
-            _menu.OnClose += Close;
 
             _menu.TestRingerButton.OnPressed += _ =>
             {
