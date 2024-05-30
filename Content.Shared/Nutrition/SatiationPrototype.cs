@@ -59,17 +59,17 @@ public sealed partial class SatiationPrototype : IPrototype
     public Dictionary<SatiationThreashold, DamageSpecifier> ThresholdDamage = new();
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public AlertCategory AlertCategory = AlertCategory.Hunger;
+    public ProtoId<AlertCategoryPrototype> AlertCategory = "Hunger";
 
-    [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationThreashold, AlertType>)), ViewVariables(VVAccess.ReadWrite)]
-    public Dictionary<SatiationThreashold, AlertType> Alerts = new()
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public Dictionary<SatiationThreashold, ProtoId<AlertPrototype>> Alerts = new()
     {
-        { SatiationThreashold.Concerned, AlertType.Peckish},
-        { SatiationThreashold.Desperate, AlertType.Starving},
-        { SatiationThreashold.Dead, AlertType.Starving}
+        { SatiationThreashold.Concerned, "Peckish"},
+        { SatiationThreashold.Desperate, "Starving"},
+        { SatiationThreashold.Dead, "Starving"}
     };
 
-    [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationThreashold, string>)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public Dictionary<SatiationThreashold, string> Icons = new()
     {
         { SatiationThreashold.Full, "HungerIconOverfed"},
