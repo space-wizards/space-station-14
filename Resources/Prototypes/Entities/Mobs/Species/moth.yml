@@ -9,10 +9,10 @@
     species: Moth
   - type: Satiation
     Satiations:
-    - hunger:
-      id: normalSatiationHunger
-    - thirst:
-      id: normalSatiationThirst
+      hunger:
+        prototype: normalSatiationHunger
+      thirst:
+        prototype: normalSatiationThirst
   - type: Icon
     sprite: Mobs/Species/Moth/parts.rsi
     state: full

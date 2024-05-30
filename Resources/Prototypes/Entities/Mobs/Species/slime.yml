@@ -6,10 +6,10 @@
   components:
   - type: Satiation
     Satiations:
-    - hunger:
-      id: normalSatiationHunger
-    - thirst:
-      id: normalSatiationThirst
+      hunger:
+        prototype: normalSatiationHunger
+      thirst:
+        prototype: normalSatiationThirst
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi
     state: full

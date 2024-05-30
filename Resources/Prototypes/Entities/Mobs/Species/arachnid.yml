@@ -12,10 +12,10 @@
     species: Arachnid
   - type: Satiation
     Satiations:
-    - hunger:
-      id: normalSatiationHunger
-    - thirst:
-      id: normalSatiationThirst
+      hunger:
+        prototype: normalSatiationHunger
+      thirst:
+        prototype: normalSatiationThirst
   - type: Sericulture
     action: ActionSericulture
     productionLength: 2

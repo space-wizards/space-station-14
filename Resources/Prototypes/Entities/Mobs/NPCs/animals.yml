@@ -346,10 +346,10 @@
   - type: Food
   - type: Satiation
     Satiations:
-    - hunger:
-      id: cockroachHunger
-    - thirst:
-      id: animalThirst
+      hunger:
+        prototype: cockroachHunger
+      thirst:
+        prototype: animalThirst
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -1589,10 +1589,10 @@
   - type: Food
   - type: Satiation
     satiations:
-    - hunger:
-      id: normalSatiationHunger
-    - thirst:
-      id: normalSatiationThirst
+      hunger:
+        prototype: normalSatiationHunger
+      thirst:
+        prototype: normalSatiationThirst
     id: animal
   - type: Extractable
     grindableSolutionName: food
@@ -3137,10 +3137,10 @@
   - type: Food
   - type: Satiation
     satiations:
-    - hunger:
-      id: animalHunger
-    - thirst:
-      id: animalThirst
+      hunger:
+        prototype: animalHunger
+      thirst:
+        prototype: animalThirst
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager

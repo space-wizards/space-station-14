@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition;
 
-[Prototype]
+[Prototype("satiationType")]
 public sealed partial class SatiationTypePrototype : IPrototype
 {
     [ViewVariables]

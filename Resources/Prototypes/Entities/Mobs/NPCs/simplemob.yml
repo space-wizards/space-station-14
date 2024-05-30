@@ -74,10 +74,10 @@
   components:
   - type: Satiation
     satiations:
-    - hunger:
-      id: simpleMobHunger
-    - thirst:
-      id: simpleMobThirst
+      hunger:
+        prototype: simpleMobHunger
+      thirst:
+        prototype: simpleMobThirst
   - type: StatusEffects
     allowed:
       - Stun

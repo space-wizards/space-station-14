@@ -9,9 +9,9 @@
     species: Diona
   - type: Satiation
     hunger:
-      id: dionaHunger
+      prototype: dionaHunger
     thirst:
-      id: dionaThirst
+      prototype: dionaThirst
   - type: Icon
     sprite: Mobs/Species/Diona/parts.rsi
     state: full
