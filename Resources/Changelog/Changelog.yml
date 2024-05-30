@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Renamed Uplink categories and moved items to fit new category names.
-    type: Tweak
-  id: 6140
-  time: '2024-03-13T09:47:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25079
 - author: veprolet
   changes:
   - message: Injectors like the syringe can now toggle their transfer amount using
@@ -3865,3 +3858,10 @@
   id: 6639
   time: '2024-05-29T16:46:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28386
+- author: notafet
+  changes:
+  - message: Fix passive gate flow rate display.
+    type: Fix
+  id: 6640
+  time: '2024-05-30T00:34:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28372
