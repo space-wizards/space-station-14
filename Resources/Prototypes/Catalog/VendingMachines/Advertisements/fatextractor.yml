@@ -1,5 +1,0 @@
-- type: localizedDataset
-  id: FatExtractorFacts
-  values:
-    prefix: fat-extractor-fact-
-    count: 6
