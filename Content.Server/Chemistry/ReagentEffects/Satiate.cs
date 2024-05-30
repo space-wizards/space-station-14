@@ -36,6 +36,6 @@ namespace Content.Server.Chemistry.ReagentEffects
             => Loc.GetString("reagent-effect-guidebook-satiate",
                     ("chance", Probability),
                     ("relative",  SatiationFactor / DefaultSatiationFactor),
-                    ("type", Loc.GetString($"satiation-type-{SatiationType}")));
+                    ("type", Loc.GetString(prototype.Index(SatiationType).Name)));
     }
 }

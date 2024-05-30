@@ -33,7 +33,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
             return Loc.GetString("reagent-effect-condition-guidebook-total-satiation",
                 ("max", float.IsPositiveInfinity(Max) ? (float) int.MaxValue : Max),
                 ("min", Min),
-                ("type", Loc.GetString($"satiation-type-{SatiationType}")));
+                ("type", Loc.GetString(prototype.Index(SatiationType).Name)));
         }
     }
 }
