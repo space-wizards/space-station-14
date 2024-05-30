@@ -1,4 +1,4 @@
-﻿-create-3rd-person =
+-create-3rd-person =
     { $chance ->
         [1] Creates
         *[other] create
@@ -49,22 +49,13 @@ reagent-effect-guidebook-smoke-area-reaction-effect =
         *[other] create
     } large quantities of smoke
 
-reagent-effect-guidebook-satiate-thirst =
+reagent-effect-guidebook-satiate =
     { $chance ->
         [1] Satiates
         *[other] satiate
     } { $relative ->
-        [1] thirst averagely
-        *[other] thirst at {NATURALFIXED($relative, 3)}x the average rate
-    }
-
-reagent-effect-guidebook-satiate-hunger =
-    { $chance ->
-        [1] Satiates
-        *[other] satiate
-    } { $relative ->
-        [1] hunger averagely
-        *[other] hunger at {NATURALFIXED($relative, 3)}x the average rate
+        [1] {$type} averagely
+        *[other] {$type} at {NATURALFIXED($relative, 3)}x the average rate
     }
 
 reagent-effect-guidebook-health-change =
