@@ -12,6 +12,11 @@ namespace Content.Shared.Random.Helpers
             return random.Pick(prototype.Values);
         }
 
+        public static string Pick(this IRobustRandom random, LocalizedDatasetPrototype prototype)
+        {
+            return random.Pick(prototype.Values);
+        }
+
         public static string Pick(this IWeightedRandomPrototype prototype, System.Random random)
         {
             var picks = prototype.Weights;
