@@ -1,0 +1,5 @@
+- type: SatiationType
+  id: hunger
+
+- type: SatiationType
+  id: thirst

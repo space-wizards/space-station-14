@@ -5,7 +5,8 @@
     - tasks:
         - !type:HTNPrimitiveTask
           preconditions:
-            - !type:HungryPrecondition
+            - !type:SatiationPrecondition
+              SatiationType: hungerSatiation
               minHungerState: Desperate  # See SatiationThreshold enum
           operator: !type:UtilityOperator
             proto: NearbyFood
@@ -35,7 +36,8 @@
     - tasks:
         - !type:HTNPrimitiveTask
           preconditions:
-            - !type:ThirstyPrecondition
+            - !type:SatiationPrecondition
+              SatiationType: thirstSatiation
               minThirstState: Desperate  # See SatiationThreshold enum
           operator: !type:UtilityOperator
             proto: NearbyDrink

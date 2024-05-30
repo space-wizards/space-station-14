@@ -60,22 +60,11 @@
     prototype: Rat
     requiredLegs: 1 # TODO: More than 1 leg
   - type: Satiation
-    hunger: # probably should be prototyped
-      thresholds:
-        Full: 200
-        Okay: 150
-        Concerned: 100
-        Desperate: 50
-        Dead: 0
-      baseDecayRate: 0.01666666666
-    thirst:
-      thresholds:
-        Full: 600
-        Okay: 450
-        Concerned: 300
-        Desperate: 150
-        Dead: 0
-      baseDecayRate: 0.1
+    satiations:
+    - hunger:
+      id: critterHunger
+    - thirst:
+      id: critterThirst
   - type: DamageStateVisuals
     rotate: true
     states:
@@ -238,23 +227,12 @@
   - type: Body
     prototype: Rat
     requiredLegs: 1 # TODO: More than 1 leg
-  - type: Satiation # probably should be prototyped
-    hunger:
-      thresholds:
-        Full: 200
-        Okay: 150
-        Concerned: 100
-        Desperate: 50
-        Dead: 0
-      baseDecayRate: 0.01666666666
-    thirst:
-      thresholds:
-        Full: 600
-        Okay: 450
-        Concerned: 300
-        Desperate: 150
-        Dead: 0
-      baseDecayRate: 0.1
+  - type: Satiation
+    satiations:
+    - hunger:
+      id: critterHunger
+    - thirst:
+      id: critterThirst
   - type: DamageStateVisuals
     states:
       Alive:

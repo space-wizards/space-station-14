@@ -73,28 +73,11 @@
   abstract: true
   components:
   - type: Satiation
-    hunger:
-      thresholds: # only animals and rats are derived from this prototype so let's override it here and in rats' proto
-        Full: 100
-        Okay: 50
-        Concerned: 25
-        Desperate: 10
-        Dead: 0
-      baseDecayRate: 0.00925925925926 # it is okay for animals to eat and drink less than humans, but more frequently
-    thirst:
-      thresholds:
-        Full: 200
-        Okay: 150
-        Concerned: 100
-        Desperate: 50
-        Dead: 0
-      baseDecayRate: 0.04
-      thresholdDecayModifiers:
-        Full: 1.2
-        Okay: 1.0
-        Concerned: 0.8
-        Desperate: 0.6
-        Dead: 0
+    satiations:
+    - hunger:
+      id: simpleMobHunger
+    - thirst:
+      id: simpleMobThirst
   - type: StatusEffects
     allowed:
       - Stun
