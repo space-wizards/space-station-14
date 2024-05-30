@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: icekot8
-  changes:
-  - message: Foxes are now neutral and deal 8 piercing damage
-    type: Tweak
-  id: 6145
-  time: '2024-03-13T15:02:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25992
 - author: Mangohydra
   changes:
   - message: The lawyer now spawns with their own lawyer stamp for stamping very important
@@ -3864,3 +3857,10 @@
   id: 6644
   time: '2024-05-30T17:25:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28415
+- author: moonheart08
+  changes:
+  - message: The hand teleporter can no longer create portal links between grids.
+    type: Remove
+  id: 6645
+  time: '2024-05-30T20:45:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28423
