@@ -2,7 +2,9 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition;
 using Robust.Shared.Console;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nutrition
 {
@@ -10,6 +12,9 @@ namespace Content.Server.Nutrition
     public sealed class Hungry : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IPrototypeManager _prototypes = default!;
+
+        private readonly ProtoId<SatiationTypePrototype> SatiationType = "hungerSatiation";
 
         public string Command => "hungry";
         public string Description => "Makes you hungry.";
@@ -30,14 +35,26 @@ namespace Content.Server.Nutrition
                 return;
             }
 
-            if (!_entities.TryGetComponent(playerEntity, out SatiationComponent? satiation))
+            if (!_entities.TryGetComponent(playerEntity, out SatiationComponent? component))
             {
                 shell.WriteLine($"Your entity does not have a {nameof(SatiationComponent)} component.");
                 return;
             }
 
-            var hungryThreshold = satiation.Hunger.Thresholds[SatiationThreashold.Desperate];
-            _entities.System<SatiationSystem>().SetHunger((playerEntity, satiation), hungryThreshold);
+            if (!component.Satiations.TryGetValue(SatiationType, out var satiation))
+            {
+                shell.WriteLine($"Your entity does not have a {SatiationType} satiation meter.");
+                return;
+            }
+
+            if (!_prototypes.TryIndex(satiation.Prototype, out var prototype))
+            {
+                shell.WriteLine($"Your entity has invalid satiation prototype id.");
+                return;
+            }
+
+            var hungryThreshold = prototype.Thresholds[SatiationThreashold.Desperate];
+            _entities.System<SatiationSystem>().SetSatiation((playerEntity, component), SatiationType, hungryThreshold);
         }
     }
 }

@@ -9,6 +9,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition;
 using Content.Shared.StatusEffect;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
@@ -28,6 +29,9 @@ namespace Content.Server.Medical
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly ForensicsSystem _forensics = default!;
 
+        private readonly ProtoId<SatiationTypePrototype> SatiationTypeHunger = "hungerSatiation";
+        private readonly ProtoId<SatiationTypePrototype> SatiationTypeThirst = "thirstSatiation";
+
         /// <summary>
         /// Make an entity vomit, if they have a stomach.
         /// </summary>
@@ -41,8 +45,8 @@ namespace Content.Server.Medical
             // Vomiting makes you hungrier and thirstier
             if (TryComp<SatiationComponent>(uid, out var satiation))
             {
-                _satiation.ModifyHunger((uid, satiation), hungerAdded);
-                _satiation.ModifyThirst((uid, satiation), thirstAdded);
+                _satiation.ModifySatiation((uid, satiation), SatiationTypeHunger, hungerAdded);
+                _satiation.ModifySatiation((uid, satiation), SatiationTypeThirst, thirstAdded);
             }
 
 

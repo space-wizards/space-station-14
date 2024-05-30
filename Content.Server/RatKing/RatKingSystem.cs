@@ -9,10 +9,12 @@ using Content.Shared.Atmos;
 using Content.Shared.Dataset;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition;
 using Content.Shared.Pointing;
 using Content.Shared.RatKing;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.RatKing
 {
@@ -25,6 +27,8 @@ namespace Content.Server.RatKing
         [Dependency] private readonly SatiationSystem _satiation = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+
+        private readonly ProtoId<SatiationTypePrototype> SatiationType = "hungerSatiation";
 
         public override void Initialize()
         {
@@ -43,17 +47,20 @@ namespace Content.Server.RatKing
             if (args.Handled)
                 return;
 
-            if (!TryComp<SatiationComponent>(uid, out var satiation))
+            if (!TryComp<SatiationComponent>(uid, out var satiationComponent))
+                return;
+
+            if (!satiationComponent.Satiations.TryGetValue(SatiationType, out var satiation))
                 return;
 
             //make sure the hunger doesn't go into the negatives
-            if (satiation.Hunger.Current < component.HungerPerArmyUse)
+            if (satiation.Current < component.HungerPerArmyUse)
             {
                 _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, uid);
                 return;
             }
             args.Handled = true;
-            _satiation.ModifyHunger((uid, satiation), -component.HungerPerArmyUse);
+            _satiation.ModifySatiation((uid, satiationComponent), SatiationType, -component.HungerPerArmyUse);
             var servant = Spawn(component.ArmyMobSpawnId, Transform(uid).Coordinates);
             var comp = EnsureComp<RatKingServantComponent>(servant);
             comp.King = uid;
@@ -73,17 +80,20 @@ namespace Content.Server.RatKing
             if (args.Handled)
                 return;
 
-            if (!TryComp<SatiationComponent>(uid, out var satiation))
+            if (!TryComp<SatiationComponent>(uid, out var satiationComponent))
+                return;
+
+            if (!satiationComponent.Satiations.TryGetValue(SatiationType, out var satiation))
                 return;
 
             //make sure the hunger doesn't go into the negatives
-            if (satiation.Hunger.Current < component.HungerPerDomainUse)
+            if (satiation.Current < component.HungerPerDomainUse)
             {
                 _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, uid);
                 return;
             }
             args.Handled = true;
-            _satiation.ModifyHunger((uid, satiation), -component.HungerPerDomainUse);
+            _satiation.ModifySatiation((uid, satiationComponent), SatiationType, -component.HungerPerDomainUse);
 
             _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid);
             var tileMix = _atmos.GetTileMixture(uid, excite: true);

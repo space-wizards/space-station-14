@@ -4,7 +4,9 @@ using Content.Server.Nutrition;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition;
 using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Animals.Systems;
 
@@ -18,6 +20,8 @@ public sealed class WoolySystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+
+    public ProtoId<SatiationTypePrototype> SatiationType = "hungerSatiation";
 
     public override void Initialize()
     {
@@ -46,10 +50,11 @@ public sealed class WoolySystem : EntitySystem
             if (EntityManager.TryGetComponent(uid, out SatiationComponent? satiation))
             {
                 // Is there enough nutrition to produce reagent?
-                if (_satiation.GetHungerThreshold(satiation) < SatiationThreashold.Okay)
+                if (!_satiation.TryGetSatiationThreshold((uid, satiation), SatiationType, out var threshold)
+                        || threshold < SatiationThreashold.Okay)
                     continue;
 
-                _satiation.ModifyHunger((uid, satiation), -wooly.HungerUsage);
+                _satiation.ModifySatiation((uid, satiation), SatiationType, -wooly.HungerUsage);
             }
 
             if (!_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution))

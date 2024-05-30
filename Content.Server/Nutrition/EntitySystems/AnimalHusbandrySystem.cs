@@ -8,6 +8,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -15,6 +16,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -36,6 +38,8 @@ public sealed class AnimalHusbandrySystem : EntitySystem
 
     private readonly HashSet<EntityUid> _failedAttempts = new();
     private readonly HashSet<EntityUid> _birthQueue = new();
+    private readonly ProtoId<SatiationTypePrototype> SatiationTypeHunger = "hungerSatiation";
+    private readonly ProtoId<SatiationTypePrototype> SatiationTypeThirst = "thirstSatiation";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -126,8 +130,8 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         if (TryComp<InteractionPopupComponent>(uid, out var interactionPopup))
             _audio.PlayPvs(interactionPopup.InteractSuccessSound, uid);
 
-        _satiation.ModifyHunger(uid, -component.HungerPerBirth);
-        _satiation.ModifyHunger(partner, -component.HungerPerBirth);
+        _satiation.ModifySatiation(uid, SatiationTypeHunger, -component.HungerPerBirth);
+        _satiation.ModifySatiation(partner, SatiationTypeThirst, -component.HungerPerBirth);
 
         component.GestationEndTime = _timing.CurTime + component.GestationDuration;
         component.Gestating = true;
@@ -154,8 +158,8 @@ public sealed class AnimalHusbandrySystem : EntitySystem
             return false;
 
         if (TryComp<SatiationComponent>(uid, out var satiation)
-            && _satiation.GetHungerThreshold(satiation) < SatiationThreashold.Okay
-            && _satiation.GetThirstThreshold(satiation) < SatiationThreashold.Okay)
+            && _satiation.TryGetSatiationThreshold((uid, satiation), SatiationTypeHunger, out var hunger) && hunger < SatiationThreashold.Okay
+            && _satiation.TryGetSatiationThreshold((uid, satiation), SatiationTypeThirst, out var thirst) && thirst < SatiationThreashold.Okay)
             return false;
 
         return true;

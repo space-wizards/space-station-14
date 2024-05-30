@@ -6,11 +6,13 @@ using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Udder;
 using Content.Shared.Verbs;
 using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Animals.Systems;
 
@@ -26,6 +28,8 @@ internal sealed class UdderSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+
+    private readonly ProtoId<SatiationTypePrototype> SatiationType = "hungerSatiation";
 
     public override void Initialize()
     {
@@ -55,10 +59,11 @@ internal sealed class UdderSystem : EntitySystem
             if (EntityManager.TryGetComponent(uid, out SatiationComponent? satiation))
             {
                 // Is there enough nutrition to produce reagent?
-                if (_satiation.GetHungerThreshold(satiation) < SatiationThreashold.Okay)
+                if (!_satiation.TryGetSatiationThreshold((uid, satiation), SatiationType, out var threshold)
+                        || threshold < SatiationThreashold.Okay)
                     continue;
 
-                _satiation.ModifyHunger((uid, satiation), -udder.HungerUsage);
+                _satiation.ModifySatiation((uid, satiation), SatiationType, -udder.HungerUsage);
             }
 
             if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution))

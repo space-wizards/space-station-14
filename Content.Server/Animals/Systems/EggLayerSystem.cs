@@ -5,11 +5,13 @@ using Content.Shared.Actions.Events;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition;
 using Content.Shared.Storage;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Animals.Systems;
 
@@ -25,6 +27,8 @@ public sealed class EggLayerSystem : EntitySystem
     [Dependency] private readonly SatiationSystem _satiation = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+
+    private readonly ProtoId<SatiationTypePrototype> SatiationType = "hungerSatiation";
 
     public override void Initialize()
     {
@@ -77,15 +81,18 @@ public sealed class EggLayerSystem : EntitySystem
             return false;
 
         // Allow infinitely laying eggs if they can't get hungry
-        if (TryComp<SatiationComponent>(uid, out var satiation))
+        if (TryComp<SatiationComponent>(uid, out var component))
         {
-            if (satiation.Hunger.Current < egglayer.HungerUsage)
+            if (!component.Satiations.TryGetValue(SatiationType, out var satiation))
+                return false;
+
+            if (satiation.Current < egglayer.HungerUsage)
             {
                 _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), uid, uid);
                 return false;
             }
 
-            _satiation.ModifyHunger((uid, satiation), -egglayer.HungerUsage);
+            _satiation.ModifySatiation((uid, component), SatiationType, -egglayer.HungerUsage);
         }
 
         foreach (var ent in EntitySpawnCollection.GetSpawns(egglayer.EggSpawn, _random))

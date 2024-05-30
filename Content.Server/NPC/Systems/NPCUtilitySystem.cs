@@ -15,6 +15,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
@@ -23,6 +24,7 @@ using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 using System.Linq;
 
 namespace Content.Server.NPC.Systems;
@@ -57,6 +59,9 @@ public sealed class NPCUtilitySystem : EntitySystem
     private List<EntityUid> _entityList = new();
     private HashSet<Entity<IComponent>> _entitySet = new();
     private List<EntityPrototype.ComponentRegistryEntry> _compTypes = new();
+
+    private readonly ProtoId<SatiationTypePrototype> SatiationTypeHunger = "hungerSatiation";
+    private readonly ProtoId<SatiationTypePrototype> SatiationTypeThirst = "thirstSatiation";
 
     public override void Initialize()
     {
@@ -175,7 +180,9 @@ public sealed class NPCUtilitySystem : EntitySystem
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
 
                 // only eat when hungry or if it will eat anything
-                if (TryComp<SatiationComponent>(owner, out var satiation) && satiation.Hunger.CurrentThreshold > SatiationThreashold.Okay && avoidBadFood)
+                if (TryComp<SatiationComponent>(owner, out var component)
+                        && component.Satiations.TryGetValue(SatiationTypeHunger, out var hunger)
+                        && hunger.CurrentThreshold > SatiationThreashold.Okay && avoidBadFood)
                     return 0f;
 
                 // no mouse don't eat the uranium-235
@@ -194,7 +201,9 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
 
                 // only drink when thirsty
-                if (TryComp<SatiationComponent>(owner, out var satiation) && satiation.Thirst.CurrentThreshold > SatiationThreashold.Okay)
+                if (TryComp<SatiationComponent>(owner, out var component)
+                        && component.Satiations.TryGetValue(SatiationTypeThirst, out var thirst)
+                        && thirst.CurrentThreshold > SatiationThreashold.Okay)
                     return 0f;
 
                 // no janicow don't drink the blood puddle

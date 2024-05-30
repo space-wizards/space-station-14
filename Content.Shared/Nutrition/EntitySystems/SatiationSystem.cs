@@ -104,6 +104,18 @@ public sealed class SatiationSystem : EntitySystem
         SetSatiation(satiation, satiation.Current + amount);
     }
 
+    public void SetSatiation(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, float amount)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return;
+
+        if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
+            return;
+
+        SetSatiation(satiation, amount);
+        Dirty(ent);
+    }
+
     private void SetSatiation(Satiation satiation, float amount)
     {
         if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
@@ -167,6 +179,20 @@ public sealed class SatiationSystem : EntitySystem
         {
             _damageable.TryChangeDamage(uid, damage, true, false);
         }
+    }
+
+    public bool TryGetSatiationThreshold(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, [NotNullWhen(true)] out SatiationThreashold? threshold, float? level = null)
+    {
+        threshold = null;
+
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
+            return false;
+
+        threshold = GetThreshold(satiation, level);
+        return true;
     }
 
     private SatiationThreashold GetThreshold(Satiation satiation, float? level = null)

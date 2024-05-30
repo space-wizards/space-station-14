@@ -1,16 +1,20 @@
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
 /// <summary>
 /// Returns true if the active hand entity has the specified components.
 /// </summary>
-public sealed partial class HungryPrecondition : HTNPrecondition
+public sealed partial class SatiationPrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     [DataField(required: true)]
     public SatiationThreashold MinHungerState = SatiationThreashold.Desperate;
+    [DataField(required: true)]
+    public ProtoId<SatiationTypePrototype> SatiationType = "hungerSatiation";
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
@@ -19,6 +23,12 @@ public sealed partial class HungryPrecondition : HTNPrecondition
             return false;
         }
 
-        return _entManager.TryGetComponent<SatiationComponent>(owner, out var satiation) ? satiation.Hunger.CurrentThreshold <= MinHungerState : false;
+        if (!_entManager.TryGetComponent<SatiationComponent>(owner, out var component))
+            return false;
+
+        if (!component.Satiations.TryGetValue(SatiationType, out var satiation))
+            return false;
+
+        return satiation.CurrentThreshold <= MinHungerState;
     }
 }
