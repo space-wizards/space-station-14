@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: veprolet
-  changes:
-  - message: Injectors like the syringe can now toggle their transfer amount using
-      alternative interactions.
-    type: Tweak
-  id: 6141
-  time: '2024-03-13T10:00:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25566
 - author: Dutch-VanDerLinde
   changes:
   - message: Zombies can now wideswing, similar to how a space carp would.
@@ -3865,3 +3857,10 @@
   id: 6640
   time: '2024-05-30T00:34:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28372
+- author: Lamrr
+  changes:
+  - message: Candle boxes can now only hold candles.
+    type: Tweak
+  id: 6641
+  time: '2024-05-30T04:15:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28314
