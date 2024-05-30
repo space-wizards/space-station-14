@@ -12,7 +12,7 @@ public sealed partial class SatiationPrecondition : HTNPrecondition
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     [DataField(required: true)]
-    public SatiationThreashold MinHungerState = SatiationThreashold.Desperate;
+    public SatiationThreashold MinSatiationState = SatiationThreashold.Desperate;
     [DataField(required: true)]
     public ProtoId<SatiationTypePrototype> SatiationType = "hungerSatiation";
 
@@ -29,6 +29,6 @@ public sealed partial class SatiationPrecondition : HTNPrecondition
         if (!component.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
             return false;
 
-        return satiation.CurrentThreshold <= MinHungerState;
+        return satiation.CurrentThreshold <= MinSatiationState;
     }
 }
