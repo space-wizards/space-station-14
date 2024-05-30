@@ -14,7 +14,7 @@ namespace Content.Server.Nutrition
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
-        private readonly ProtoId<SatiationTypePrototype> SatiationType = "hungerSatiation";
+        private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
 
         public string Command => "hungry";
         public string Description => "Makes you hungry.";
@@ -41,9 +41,9 @@ namespace Content.Server.Nutrition
                 return;
             }
 
-            if (!component.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
+            if (!component.Satiations.AsReadOnly().TryGetValue(_satiationHunger, out var satiation))
             {
-                shell.WriteLine($"Your entity does not have a {SatiationType} satiation meter.");
+                shell.WriteLine($"Your entity does not have a {_satiationHunger} satiation meter.");
                 return;
             }
 
@@ -54,7 +54,7 @@ namespace Content.Server.Nutrition
             }
 
             var hungryThreshold = prototype.Thresholds[SatiationThreashold.Desperate];
-            _entities.System<SatiationSystem>().SetSatiation((playerEntity, component), SatiationType, hungryThreshold);
+            _entities.System<SatiationSystem>().SetSatiation((playerEntity, component), _satiationHunger, hungryThreshold);
         }
     }
 }

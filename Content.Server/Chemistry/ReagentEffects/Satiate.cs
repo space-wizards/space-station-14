@@ -20,7 +20,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         public float SatiationFactor { get; set; } = DefaultSatiationFactor;
 
         [DataField]
-        public ProtoId<SatiationTypePrototype> SatiationType = "hungerSatiation";
+        public ProtoId<SatiationTypePrototype> SatiationType = "hunger";
 
         /// Satiate thirst if a ThirstComponent can be found
         public override void Effect(ReagentEffectArgs args)

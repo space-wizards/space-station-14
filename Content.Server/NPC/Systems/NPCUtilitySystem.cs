@@ -60,8 +60,8 @@ public sealed class NPCUtilitySystem : EntitySystem
     private HashSet<Entity<IComponent>> _entitySet = new();
     private List<EntityPrototype.ComponentRegistryEntry> _compTypes = new();
 
-    private readonly ProtoId<SatiationTypePrototype> SatiationTypeHunger = "hungerSatiation";
-    private readonly ProtoId<SatiationTypePrototype> SatiationTypeThirst = "thirstSatiation";
+    private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
+    private readonly ProtoId<SatiationTypePrototype> _satiationThirst = "thirst";
 
     public override void Initialize()
     {
@@ -181,7 +181,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 // only eat when hungry or if it will eat anything
                 if (TryComp<SatiationComponent>(owner, out var component)
-                        && component.Satiations.AsReadOnly().TryGetValue(SatiationTypeHunger, out var hunger)
+                        && component.Satiations.AsReadOnly().TryGetValue(_satiationHunger, out var hunger)
                         && hunger.CurrentThreshold > SatiationThreashold.Okay && avoidBadFood)
                     return 0f;
 
@@ -202,7 +202,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 // only drink when thirsty
                 if (TryComp<SatiationComponent>(owner, out var component)
-                        && component.Satiations.AsReadOnly().TryGetValue(SatiationTypeThirst, out var thirst)
+                        && component.Satiations.AsReadOnly().TryGetValue(_satiationThirst, out var thirst)
                         && thirst.CurrentThreshold > SatiationThreashold.Okay)
                     return 0f;
 

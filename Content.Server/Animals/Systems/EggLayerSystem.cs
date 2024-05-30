@@ -28,7 +28,7 @@ public sealed class EggLayerSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
-    private readonly ProtoId<SatiationTypePrototype> SatiationType = "hungerSatiation";
+    private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
 
     public override void Initialize()
     {
@@ -83,7 +83,7 @@ public sealed class EggLayerSystem : EntitySystem
         // Allow infinitely laying eggs if they can't get hungry
         if (TryComp<SatiationComponent>(uid, out var component))
         {
-            if (!component.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
+            if (!component.Satiations.AsReadOnly().TryGetValue(_satiationHunger, out var satiation))
                 return false;
 
             if (satiation.Current < egglayer.HungerUsage)
@@ -92,7 +92,7 @@ public sealed class EggLayerSystem : EntitySystem
                 return false;
             }
 
-            _satiation.ModifySatiation((uid, component), SatiationType, -egglayer.HungerUsage);
+            _satiation.ModifySatiation((uid, component), _satiationHunger, -egglayer.HungerUsage);
         }
 
         foreach (var ent in EntitySpawnCollection.GetSpawns(egglayer.EggSpawn, _random))

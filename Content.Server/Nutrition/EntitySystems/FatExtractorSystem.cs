@@ -26,7 +26,7 @@ public sealed class FatExtractorSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
-    private readonly ProtoId<SatiationTypePrototype> satiationType = "hungerPrototype";
+    private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -103,10 +103,10 @@ public sealed class FatExtractorSystem : EntitySystem
         if (!TryComp<SatiationComponent>(occupant, out var satiation))
             return false;
 
-        if (satiation.Satiations[satiationType].Current < component.NutritionPerSecond)
+        if (satiation.Satiations[_satiationHunger].Current < component.NutritionPerSecond)
             return false;
 
-        if (satiation.Satiations[satiationType].CurrentThreshold < component.MinHungerThreshold && !HasComp<EmaggedComponent>(uid))
+        if (satiation.Satiations[_satiationHunger].CurrentThreshold < component.MinHungerThreshold && !HasComp<EmaggedComponent>(uid))
             return false;
 
         return true;
@@ -137,7 +137,7 @@ public sealed class FatExtractorSystem : EntitySystem
                 continue;
             fat.NextUpdate += fat.UpdateTime;
 
-            _satiation.ModifySatiation((occupant.Value, null), satiationType, -fat.NutritionPerSecond);
+            _satiation.ModifySatiation((occupant.Value, null), _satiationHunger, -fat.NutritionPerSecond);
             fat.NutrientAccumulator += fat.NutritionPerSecond;
             if (fat.NutrientAccumulator >= fat.NutrientPerMeat)
             {

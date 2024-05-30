@@ -29,8 +29,8 @@ namespace Content.Server.Medical
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly ForensicsSystem _forensics = default!;
 
-        private readonly ProtoId<SatiationTypePrototype> SatiationTypeHunger = "hungerSatiation";
-        private readonly ProtoId<SatiationTypePrototype> SatiationTypeThirst = "thirstSatiation";
+        private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
+        private readonly ProtoId<SatiationTypePrototype> _satiationThirst = "thirst";
 
         /// <summary>
         /// Make an entity vomit, if they have a stomach.
@@ -45,8 +45,8 @@ namespace Content.Server.Medical
             // Vomiting makes you hungrier and thirstier
             if (TryComp<SatiationComponent>(uid, out var satiation))
             {
-                _satiation.ModifySatiation((uid, satiation), SatiationTypeHunger, hungerAdded);
-                _satiation.ModifySatiation((uid, satiation), SatiationTypeThirst, thirstAdded);
+                _satiation.ModifySatiation((uid, satiation), _satiationHunger, hungerAdded);
+                _satiation.ModifySatiation((uid, satiation), _satiationThirst, thirstAdded);
             }
 
 
