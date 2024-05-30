@@ -45,17 +45,14 @@ public sealed class SatiationSystem : EntitySystem
             var amount = _random.Next(
                 (int) proto.Thresholds[SatiationThreashold.Concerned] + 10,
                 (int) proto.Thresholds[SatiationThreashold.Okay]);
-            SetSatiation(satiation, amount);
-            UpdateCurrentThreshold(uid, satiation);
+            SetSatiation((uid, component), satiation, amount);
+            UpdateCurrentThreshold((uid, component), satiation);
             DoThresholdEffects(uid, satiation, false);
 
             satiation.CurrentThreshold = GetThreshold(satiation, satiation.Current);
             satiation.LastThreshold = SatiationThreashold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
         }
         Dirty(uid, component);
-
-        if (TryComp(uid, out MovementSpeedModifierComponent? moveMod))
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(uid, moveMod);
     }
 
     private void OnShutdown(EntityUid uid, SatiationComponent component, ComponentShutdown args)
@@ -75,6 +72,9 @@ public sealed class SatiationSystem : EntitySystem
 
         foreach(var (_, satiation) in component.Satiations)
         {
+            if (satiation.CurrentThreshold > SatiationThreashold.Concerned)
+                continue;
+
             if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
                 continue;
 
@@ -89,8 +89,9 @@ public sealed class SatiationSystem : EntitySystem
             if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
                 continue;
 
-            SetSatiation(satiation, proto.Thresholds[SatiationThreashold.Okay]);
+            SetSatiation((uid, component), satiation, proto.Thresholds[SatiationThreashold.Okay]);
         }
+        Dirty(uid, component);
     }
 
     public void ModifySatiation(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, float amount)
@@ -101,7 +102,7 @@ public sealed class SatiationSystem : EntitySystem
         if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
             return;
 
-        SetSatiation(satiation, satiation.Current + amount);
+        SetSatiation((ent.Owner, ent.Comp), satiation, satiation.Current + amount);
     }
 
     public void SetSatiation(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, float amount)
@@ -112,11 +113,10 @@ public sealed class SatiationSystem : EntitySystem
         if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
             return;
 
-        SetSatiation(satiation, amount);
-        Dirty(ent);
+        SetSatiation((ent.Owner, ent.Comp), satiation, amount);
     }
 
-    private void SetSatiation(Satiation satiation, float amount)
+    private void SetSatiation(Entity<SatiationComponent> ent, Satiation satiation, float amount)
     {
         if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
             return;
@@ -124,31 +124,35 @@ public sealed class SatiationSystem : EntitySystem
         satiation.Current = Math.Clamp(amount,
             proto.Thresholds[SatiationThreashold.Dead],
             proto.Thresholds[SatiationThreashold.Full]);
+
+        UpdateCurrentThreshold((ent.Owner, ent.Comp), satiation);
+        Dirty(ent);
     }
 
-    private void UpdateCurrentThreshold(EntityUid uid, Satiation satiation)
-    {
-            if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
-                return;
-
-            var calculatedNutritionThreshold = GetThreshold(satiation);
-            if (calculatedNutritionThreshold == satiation.CurrentThreshold)
-                return;
-            satiation.CurrentThreshold = calculatedNutritionThreshold;
-            if (proto.ThresholdDamage.TryGetValue(satiation.CurrentThreshold, out var damage))
-                satiation.CurrentThresholdDamage = damage;
-            else
-                satiation.CurrentThresholdDamage = null;
-            DoThresholdEffects(uid, satiation);
-    }
-
-    private bool DoThresholdEffects(EntityUid uid, Satiation satiation, bool force = false)
+    private void UpdateCurrentThreshold(Entity<SatiationComponent> ent, Satiation satiation)
     {
         if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
-            return false;
+            return;
+
+        var calculatedNutritionThreshold = GetThreshold(satiation);
+        if (calculatedNutritionThreshold == satiation.CurrentThreshold)
+            return;
+        satiation.CurrentThreshold = calculatedNutritionThreshold;
+        if (proto.ThresholdDamage.TryGetValue(satiation.CurrentThreshold, out var damage))
+            satiation.CurrentThresholdDamage = damage;
+        else
+            satiation.CurrentThresholdDamage = null;
+        DoThresholdEffects(ent.Owner, satiation);
+        Dirty(ent);
+    }
+
+    private void DoThresholdEffects(EntityUid uid, Satiation satiation, bool force = false)
+    {
+        if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
+            return;
 
         if (satiation.CurrentThreshold == satiation.LastThreshold && !force)
-            return false;
+            return;
 
         if (GetMovementThreshold(satiation.CurrentThreshold) != GetMovementThreshold(satiation.LastThreshold))
         {
@@ -168,8 +172,6 @@ public sealed class SatiationSystem : EntitySystem
         {
             _alerts.ClearAlertCategory(uid, proto.AlertCategory);
         }
-
-        return true;
     }
 
     private void DoContinuousEffects(EntityUid uid, Satiation satiation)
