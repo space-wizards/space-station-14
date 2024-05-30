@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: 778b
-  changes:
-  - message: Guns which use battery as magazines now display ammo. Like Svalinn pistol.
-    type: Fix
-  id: 6144
-  time: '2024-03-13T11:13:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26009
 - author: icekot8
   changes:
   - message: Foxes are now neutral and deal 8 piercing damage
@@ -3863,3 +3856,11 @@
   id: 6643
   time: '2024-05-30T07:32:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28405
+- author: ShadowCommander
+  changes:
+  - message: Fixed firelocks with warnings enabled opening immediately for characters
+      without engineering access.
+    type: Fix
+  id: 6644
+  time: '2024-05-30T17:25:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28415
