@@ -1,5 +1,7 @@
 - type: satiationType
   id: hunger
+  name: satiation-type-hunger
 
 - type: satiationType
   id: thirst
+  name: satiation-type-thirst
