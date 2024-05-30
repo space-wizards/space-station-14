@@ -1,7 +1,7 @@
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.Components;
 
@@ -10,7 +10,7 @@ namespace Content.Shared.Nutrition.Components;
 [AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class SatiationComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<Satiation, SatiationTypePrototype>)), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public Dictionary<string, Satiation> Satiations = new();
 
