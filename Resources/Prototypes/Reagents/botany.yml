@@ -31,7 +31,7 @@
     - !type:PlantAdjustHealth
       amount: -0.5
     - !type:PlantAdjustMutationMod
-      probability 0.3
+      probability: 0.3
       amount: 0.4
   metabolisms:
     Medicine:
