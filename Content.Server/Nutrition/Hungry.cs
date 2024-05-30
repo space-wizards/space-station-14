@@ -41,7 +41,7 @@ namespace Content.Server.Nutrition
                 return;
             }
 
-            if (!component.Satiations.TryGetValue(SatiationType, out var satiation))
+            if (!component.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
             {
                 shell.WriteLine($"Your entity does not have a {SatiationType} satiation meter.");
                 return;

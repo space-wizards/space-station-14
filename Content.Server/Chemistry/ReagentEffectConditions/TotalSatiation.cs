@@ -21,7 +21,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out SatiationComponent? component))
                 return false;
 
-            if (!component.Satiations.TryGetValue(SatiationType, out var satiation))
+            if (!component.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
                 return false;
 
             var total = satiation.Current;

@@ -181,7 +181,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 // only eat when hungry or if it will eat anything
                 if (TryComp<SatiationComponent>(owner, out var component)
-                        && component.Satiations.TryGetValue(SatiationTypeHunger, out var hunger)
+                        && component.Satiations.AsReadOnly().TryGetValue(SatiationTypeHunger, out var hunger)
                         && hunger.CurrentThreshold > SatiationThreashold.Okay && avoidBadFood)
                     return 0f;
 
@@ -202,7 +202,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 // only drink when thirsty
                 if (TryComp<SatiationComponent>(owner, out var component)
-                        && component.Satiations.TryGetValue(SatiationTypeThirst, out var thirst)
+                        && component.Satiations.AsReadOnly().TryGetValue(SatiationTypeThirst, out var thirst)
                         && thirst.CurrentThreshold > SatiationThreashold.Okay)
                     return 0f;
 

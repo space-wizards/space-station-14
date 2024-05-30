@@ -50,7 +50,7 @@ namespace Content.Server.RatKing
             if (!TryComp<SatiationComponent>(uid, out var satiationComponent))
                 return;
 
-            if (!satiationComponent.Satiations.TryGetValue(SatiationType, out var satiation))
+            if (!satiationComponent.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
                 return;
 
             //make sure the hunger doesn't go into the negatives
@@ -83,7 +83,7 @@ namespace Content.Server.RatKing
             if (!TryComp<SatiationComponent>(uid, out var satiationComponent))
                 return;
 
-            if (!satiationComponent.Satiations.TryGetValue(SatiationType, out var satiation))
+            if (!satiationComponent.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
                 return;
 
             //make sure the hunger doesn't go into the negatives

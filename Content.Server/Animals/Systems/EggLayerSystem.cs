@@ -83,7 +83,7 @@ public sealed class EggLayerSystem : EntitySystem
         // Allow infinitely laying eggs if they can't get hungry
         if (TryComp<SatiationComponent>(uid, out var component))
         {
-            if (!component.Satiations.TryGetValue(SatiationType, out var satiation))
+            if (!component.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
                 return false;
 
             if (satiation.Current < egglayer.HungerUsage)
