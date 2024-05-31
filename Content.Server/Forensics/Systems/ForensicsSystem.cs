@@ -107,10 +107,10 @@ namespace Content.Server.Forensics
 
         private void OnAfterInteract(Entity<CleansForensicsComponent> cleanForensicsEntity, ref AfterInteractEvent args)
         {
-            if (args.Handled || !args.CanReach)
+            if (args.Handled || !args.CanReach || args.Target == null)
                 return;
 
-            args.Handled = TryStartCleaning(cleanForensicsEntity, args.User, args.Target);
+            args.Handled = TryStartCleaning(cleanForensicsEntity, args.User, args.Target.Value);
         }
 
         private void OnUtilityVerb(Entity<CleansForensicsComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
@@ -124,13 +124,7 @@ namespace Content.Server.Forensics
 
             var verb = new UtilityVerb()
             {
-                Act = () =>
-                {
-                    if (!TryStartCleaning(entity, user, target))
-                    {
-                        _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning-cannot-clean", ("target", target)), user, user, PopupType.MediumCaution);
-                    }
-                },
+                Act = () => TryStartCleaning(entity, user, target),
                 IconEntity = GetNetEntity(entity),
                 Text = Loc.GetString(Loc.GetString("forensics-verb-text")),
                 Message = Loc.GetString(Loc.GetString("forensics-verb-message")),
@@ -148,10 +142,13 @@ namespace Content.Server.Forensics
         /// <param name="user">The user that is using the cleanForensicsEntity.</param>
         /// <param name="target">The target of the forensics clean.</param>
         /// <returns>True if the target can be cleaned and has some sort of DNA or fingerprints / fibers and false otherwise.</returns>
-        public bool TryStartCleaning(Entity<CleansForensicsComponent> cleanForensicsEntity, EntityUid user, EntityUid? target)
+        public bool TryStartCleaning(Entity<CleansForensicsComponent> cleanForensicsEntity, EntityUid user, EntityUid target)
         {
             if (!TryComp<ForensicsComponent>(target, out var forensicsComp))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning-cannot-clean", ("target", target)), user, user, PopupType.MediumCaution);
                 return false;
+            }
 
             var totalPrintsAndFibers = forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count;
             var hasRemovableDNA = forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned;
@@ -176,7 +173,10 @@ namespace Content.Server.Forensics
                 return true;
             }
             else
+            {
+                _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning-cannot-clean", ("target", target)), user, user, PopupType.MediumCaution);
                 return false;
+            }
 
         }
 
