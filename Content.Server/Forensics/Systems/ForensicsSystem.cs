@@ -109,7 +109,7 @@ namespace Content.Server.Forensics
             if (args.Handled || !args.CanReach)
                 return;
 
-            args.Handled = StartClean(cleanForensicsEntity, args.User, args.Target);
+            args.Handled = TryStartCleaning(cleanForensicsEntity, args.User, args.Target);
         }
 
         private void OnUtilityVerb(Entity<CleansForensicsComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
@@ -123,7 +123,7 @@ namespace Content.Server.Forensics
 
             var verb = new UtilityVerb()
             {
-                Act = () => StartClean(entity, user, target),
+                Act = () => TryStartCleaning(entity, user, target),
                 IconEntity = GetNetEntity(entity),
                 Text = Loc.GetString(Loc.GetString("forensics-verb-text")),
                 Message = Loc.GetString(Loc.GetString("forensics-verb-message"))
@@ -139,7 +139,7 @@ namespace Content.Server.Forensics
         /// <param name="user">The user that is using the cleanForensicsEntity.</param>
         /// <param name="target">The target of the forensics clean.</param>
         /// <returns>True if the target can be cleaned and has some sort of DNA or fingerprints / fibers and false otherwise.</returns>
-        public bool StartClean(Entity<CleansForensicsComponent> cleanForensicsEntity, EntityUid user, EntityUid? target)
+        public bool TryStartCleaning(Entity<CleansForensicsComponent> cleanForensicsEntity, EntityUid user, EntityUid? target)
         {
             if (!TryComp<ForensicsComponent>(target, out var forensicsComp))
                 return false;
