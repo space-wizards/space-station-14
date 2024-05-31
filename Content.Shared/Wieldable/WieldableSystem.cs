@@ -94,11 +94,11 @@ public sealed class WieldableSystem : EntitySystem
 
     private void OnDeselectWieldable(EntityUid uid, WieldableComponent component, HandDeselectedEvent args)
     {
-        if (!component.Wielded)
+        if (!component.Wielded ||
+            TryComp(args.User, out HandsComponent? hands) && hands.Hands.Count == 2)
             return;
 
-        if(TryComp(args.User, out HandsComponent? hands) && hands.Hands.Count == 2)
-            TryUnwield(uid, component, args.User);
+        TryUnwield(uid, component, args.User);
     }
 
     private void OnGunRefreshModifiers(Entity<GunWieldBonusComponent> bonus, ref GunRefreshModifiersEvent args)
