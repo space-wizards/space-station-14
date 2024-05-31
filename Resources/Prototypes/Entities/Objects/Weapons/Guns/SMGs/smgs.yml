@@ -5,15 +5,15 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sprite
-  - type: Item
-    size: Large
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
-    quickEquip: false
-    slots:
-    - Back
-    - suitStorage
+  # - type: Sprite
+  # - type: Item
+  #   size: Large
+  # - type: Clothing
+  #   sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
+  #   quickEquip: false
+  #   slots:
+  #   - Back
+  #   - suitStorage
   - type: AmmoCounter
   - type: Gun
     minAngle: 2
@@ -52,12 +52,14 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
-  - type: StaticPrice
-    price: 500
+  # - type: StaticPrice
+  #   price: 500
 
 - type: entity
   name: Atreides
-  parent: BaseWeaponSubMachineGun
+  parent:
+  - BaseGunLarge
+  - BaseWeaponSubMachineGun
   id: WeaponSubMachineGunAtreides
   description: Pla-ket-ket-ket-ket! Uses .35 auto ammo.
   components:
@@ -68,6 +70,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Large
   - type: Gun
     fireRate: 10
     soundGunshot:
@@ -80,7 +84,9 @@
 
 - type: entity
   name: C-20r sub machine gun
-  parent: BaseWeaponSubMachineGun
+  parent:
+  - BaseGunLarge
+  - BaseWeaponSubMachineGun
   id: WeaponSubMachineGunC20r
   description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.
   components:
@@ -91,6 +97,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
   - type: Wieldable
@@ -117,7 +125,9 @@
 
 - type: entity
   name: Drozd
-  parent: BaseWeaponSubMachineGun
+  parent:
+  - BaseGunLarge
+  - BaseWeaponSubMachineGun
   id: WeaponSubMachineGunDrozd
   description: An excellent fully automatic Heavy SMG.
   components:
@@ -128,6 +138,8 @@
           map: ["enum.GunVisualLayers.Base"]
         - state: mag-0
           map: ["enum.GunVisualLayers.Mag"]
+    - type: Item
+      size: Large
     - type: Clothing
       sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
     - type: Wieldable
@@ -169,7 +181,9 @@
 
 - type: entity
   name: Vector
-  parent: BaseWeaponSubMachineGun
+  parent:
+  - BaseGunLarge
+  - BaseWeaponSubMachineGun
   id: WeaponSubMachineGunVector
   suffix: Deprecated use Drozd
   description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
@@ -181,6 +195,8 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/vector.rsi
   - type: Gun
@@ -216,7 +232,9 @@
 
 - type: entity
   name: WT550
-  parent: BaseWeaponSubMachineGun
+  parent:
+  - BaseGunLarge
+  - BaseWeaponSubMachineGun
   id: WeaponSubMachineGunWt550
   description: An excellent SMG, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo.
   components:
@@ -233,6 +251,8 @@
       - state: mag-unshaded-0
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
+  - type: Item
+    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
   - type: ChamberMagazineAmmoProvider
