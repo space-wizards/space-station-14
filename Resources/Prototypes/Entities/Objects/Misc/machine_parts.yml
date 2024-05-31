@@ -28,7 +28,7 @@
       tags:
         - CapacitorStockPart
     - type: Stack
-      stackType: MachinePart
+      stackType: Capacitor
 
 - type: entity
   id: MicroManipulatorStockPart
@@ -43,7 +43,7 @@
       part: Manipulator
       rating: 1
     - type: Stack
-      stackType: MachinePart
+      stackType: MicroManipulator
 
 - type: entity
   id: MatterBinStockPart
@@ -58,4 +58,4 @@
       part: MatterBin
       rating: 1
     - type: Stack
-      stackType: MachinePart
+      stackType: MatterBin
