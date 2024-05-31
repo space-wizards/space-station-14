@@ -104,7 +104,6 @@ namespace Content.Server.Forensics
             }
         }
 
-        // Try: "Entity<CleansForensicsComponent> cleanitemcomp" or something!
         private void OnAfterInteract(Entity<CleansForensicsComponent> cleanForensicsEntity, ref AfterInteractEvent args)
         {
             if (args.Handled || !args.CanReach)
