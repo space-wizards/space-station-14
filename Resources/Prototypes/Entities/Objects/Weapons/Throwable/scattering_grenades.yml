@@ -130,7 +130,7 @@
     capacity: 30
     delayBeforeTriggerContents: 60
     randomDistance: true
-    randomDistanceMax: 6
+    randomThrowDistanceMax: 6
   - type: DamageOnLand
     damage:
       types:
