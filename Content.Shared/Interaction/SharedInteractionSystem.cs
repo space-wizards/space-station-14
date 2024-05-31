@@ -159,7 +159,7 @@ namespace Content.Shared.Interaction
             if (uiComp == null)
                 return;
 
-            if (uiComp.SingleUser && uiComp.CurrentSingleUser != ev.Actor)
+            if (uiComp.SingleUser && uiComp.CurrentSingleUser != null && uiComp.CurrentSingleUser != ev.Actor)
             {
                 ev.Cancel();
                 return;
@@ -1167,7 +1167,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return _ui.IsUiOpen(target, StorageComponent.StorageUiKey.Key, user);
+            return _ui.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, user);
         }
 
         /// <summary>
