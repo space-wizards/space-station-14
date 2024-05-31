@@ -3,6 +3,7 @@ using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics.Components;
 using Content.Server.Popups;
+using Content.Shared.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
@@ -123,10 +124,18 @@ namespace Content.Server.Forensics
 
             var verb = new UtilityVerb()
             {
-                Act = () => TryStartCleaning(entity, user, target),
+                Act = () =>
+                {
+                    if (!TryStartCleaning(entity, user, target))
+                    {
+                        _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning-cannot-clean", ("target", target)), user, user, PopupType.MediumCaution);
+                    }
+                },
                 IconEntity = GetNetEntity(entity),
                 Text = Loc.GetString(Loc.GetString("forensics-verb-text")),
-                Message = Loc.GetString(Loc.GetString("forensics-verb-message"))
+                Message = Loc.GetString(Loc.GetString("forensics-verb-message")),
+                // This is important because if its true using the cleaning device will count as touching the object.
+                DoContactInteraction = false
             };
 
             args.Verbs.Add(verb);
