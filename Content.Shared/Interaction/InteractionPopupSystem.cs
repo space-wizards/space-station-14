@@ -1,26 +1,27 @@
-using Content.Server.Interaction.Components;
-using Content.Server.Popups;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Interaction;
+namespace Content.Shared.Interaction;
 
 public sealed class InteractionPopupSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
     {
@@ -53,14 +54,9 @@ public sealed class InteractionPopupSystem : EntitySystem
             return;
 
         //Handling does nothing and this thing annoyingly plays way too often.
+        // HUH? What does this comment even mean?
+
         if (HasComp<SleepingComponent>(uid))
-            return;
-
-        args.Handled = true;
-
-        var curTime = _gameTiming.CurTime;
-
-        if (curTime < component.LastInteractTime + component.InteractDelay)
             return;
 
         if (TryComp<MobStateComponent>(uid, out var state)
@@ -69,11 +65,27 @@ public sealed class InteractionPopupSystem : EntitySystem
             return;
         }
 
+        args.Handled = true;
+
+        var curTime = _gameTiming.CurTime;
+
+        if (curTime < component.LastInteractTime + component.InteractDelay)
+            return;
+
+        component.LastInteractTime = curTime;
+
         // TODO: Should be an attempt event
         // TODO: Need to handle pausing with an accumulator.
 
-        string msg = ""; // Stores the text to be shown in the popup message
+        var msg = ""; // Stores the text to be shown in the popup message
         SoundSpecifier? sfx = null; // Stores the filepath of the sound to be played
+
+        var predict = component.SuccessChance is 0 or 1
+                      && component.InteractSuccessSpawn == null
+                      && component.InteractFailureSpawn == null;
+
+        if (_netMan.IsClient && !predict)
+            return;
 
         if (_random.Prob(component.SuccessChance))
         {
@@ -102,20 +114,39 @@ public sealed class InteractionPopupSystem : EntitySystem
         {
             var msgOthers = Loc.GetString(component.MessagePerceivedByOthers,
                 ("user", Identity.Entity(user, EntityManager)), ("target", Identity.Entity(uid, EntityManager)));
-            _popupSystem.PopupEntity(msg, uid, user);
             _popupSystem.PopupEntity(msgOthers, uid, Filter.PvsExcept(user, entityManager: EntityManager), true);
         }
-        else
-            _popupSystem.PopupEntity(msg, uid, user); //play only for the initiating entity.
 
-        if (sfx is not null) //not all cases will have sound.
+        if (!predict)
         {
+            _popupSystem.PopupEntity(msg, uid, user);
+
             if (component.SoundPerceivedByOthers)
-                _audio.PlayPvs(sfx, target); //play for everyone in range
+                _audio.PlayPvs(sfx, target);
             else
-                _audio.PlayEntity(sfx, Filter.Entities(user, target), target, true); //play only for the initiating entity and its target.
+                _audio.PlayEntity(sfx, Filter.Entities(user, target), target, false);
+            return;
         }
 
-        component.LastInteractTime = curTime;
+        _popupSystem.PopupPredicted(msg, uid, user);
+
+        if (sfx == null)
+            return;
+
+        if (component.SoundPerceivedByOthers)
+        {
+            _audio.PlayPredicted(sfx, target, user);
+            return;
+        }
+
+        if (_netMan.IsClient)
+        {
+            if (_gameTiming.IsFirstTimePredicted)
+                _audio.PlayEntity(sfx, Filter.Local(), target, true);
+        }
+        else
+        {
+            _audio.PlayEntity(sfx, Filter.Empty().FromEntities(target), target, false);
+        }
     }
 }
