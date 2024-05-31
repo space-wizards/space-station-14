@@ -148,7 +148,7 @@ public sealed class GuidebookSystem : EntitySystem
 
     public void FakeClientActivateInWorld(EntityUid activated)
     {
-        var activateMsg = new ActivateInWorldEvent(GetGuidebookUser(), activated);
+        var activateMsg = new ActivateInWorldEvent(GetGuidebookUser(), activated, true);
         RaiseLocalEvent(activated, activateMsg);
     }
 
