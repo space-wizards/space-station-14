@@ -59,23 +59,24 @@ public sealed class MachineFrameSystem : EntitySystem
             return;
         }
 
-        // Machine parts cannot currently satisfy stack/component/tag restrictions. Similarly stacks cannot satisfy
-        // component/tag restrictions. However, there is no reason this cannot be supported in the future. If this
-        // changes, then RegenerateProgress() also needs to be updated.
-        //
-        // Note that one entity is ALLOWED to satisfy more than one kind of component or tag requirements. This is
-        // necessary in order to avoid weird entity-ordering shenanigans in RegenerateProgress().
+        var stack = CompOrNull<StackComponent>(args.Used);
+        var machinePart = CompOrNull<MachinePartComponent>(args.Used);
+        if (stack != null && machinePart != null)
+        {
+            if (TryInsertPartStack(uid, args.Used, component, machinePart, stack))
+                args.Handled = true;
+            return;
+        }
 
         // Handle parts
-        if (TryComp<MachinePartComponent>(args.Used, out var machinePart))
+        if (machinePart != null)
         {
             if (TryInsertPart(uid, args.Used, component, machinePart))
                 args.Handled = true;
             return;
         }
 
-        // Handle stacks
-        if (TryComp<StackComponent>(args.Used, out var stack))
+        if (stack != null)
         {
             if (TryInsertStack(uid, args.Used, component, stack))
                 args.Handled = true;
@@ -192,6 +193,44 @@ public sealed class MachineFrameSystem : EntitySystem
     }
 
     /// <returns>Whether or not the function had any effect. Does not indicate success.</returns>
+    private bool TryInsertPartStack(EntityUid uid, EntityUid used, MachineFrameComponent component, MachinePartComponent machinePart, StackComponent stack)
+    {
+        if (!component.Requirements.ContainsKey(machinePart.PartType))
+            return false;
+
+        var progress = component.Progress[machinePart.PartType];
+        var requirement = component.Requirements[machinePart.PartType];
+
+        var needed = requirement - progress;
+        if (needed <= 0)
+            return false;
+
+        var count = stack.Count;
+        if (count < needed)
+        {
+            if (!_container.Insert(used, component.PartContainer))
+                return true;
+
+            component.Progress[machinePart.PartType] += count;
+            return true;
+        }
+
+        var splitStack = _stack.Split(used, needed, Transform(uid).Coordinates, stack);
+
+        if (splitStack == null)
+            return false;
+
+        if (!_container.Insert(splitStack.Value, component.PartContainer))
+            return true;
+
+        component.Progress[machinePart.PartType] += needed;
+        if (IsComplete(component))
+            _popupSystem.PopupEntity(Loc.GetString("machine-frame-component-on-complete"), uid);
+
+        return true;
+    }
+
+    /// <returns>Whether or not the function had any effect. Does not indicate success.</returns>
     private bool TryInsertStack(EntityUid uid, EntityUid used, MachineFrameComponent component, StackComponent stack)
     {
         var type = stack.StackTypeId;
@@ -209,9 +248,6 @@ public sealed class MachineFrameSystem : EntitySystem
         var count = stack.Count;
         if (count < needed)
         {
-            if (!_container.TryRemoveFromContainer(used))
-                return false;
-
             if (!_container.Insert(used, component.PartContainer))
                 return true;
 
@@ -328,17 +364,22 @@ public sealed class MachineFrameSystem : EntitySystem
         {
             if (TryComp<MachinePartComponent>(part, out var machinePart))
             {
-                DebugTools.Assert(!HasComp<StackComponent>(part));
-
                 // Check this is part of the requirements...
                 if (!component.Requirements.ContainsKey(machinePart.PartType))
                     continue;
+
+                if (TryComp<StackComponent>(part, out var partStack))
+                {
+                    if (!component.Progress.ContainsKey(machinePart.PartType))
+                        component.Progress[machinePart.PartType] = partStack.Count;
+                    else
+                        component.Progress[machinePart.PartType] += partStack.Count;
+                }
 
                 if (!component.Progress.ContainsKey(machinePart.PartType))
                     component.Progress[machinePart.PartType] = 1;
                 else
                     component.Progress[machinePart.PartType]++;
-
                 continue;
             }
 
