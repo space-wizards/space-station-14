@@ -10,7 +10,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
+using Serilog;
 
 namespace Content.Server.Players.JobWhitelist;
 
@@ -23,7 +23,7 @@ public sealed class JobWhitelistManager : IPostInjectInit
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly UserDbDataManager _userDb = default!;
 
-    private readonly Dictionary<Guid, HashSet<string>> _whitelists = new();
+    private readonly Dictionary<NetUserId, HashSet<string>> _whitelists = new();
 
     public void Initialize()
     {
@@ -32,7 +32,8 @@ public sealed class JobWhitelistManager : IPostInjectInit
 
     private async Task LoadData(ICommonSession session, CancellationToken cancel)
     {
-        var whitelists = await _db.GetJobWhitelists(session.UserId);
+        var whitelists = await _db.GetJobWhitelists(session.UserId, cancel);
+        cancel.ThrowIfCancellationRequested();
         _whitelists[session.UserId] = whitelists.ToHashSet();
     }
 
@@ -46,24 +47,18 @@ public sealed class JobWhitelistManager : IPostInjectInit
         _whitelists.Remove(session.UserId);
     }
 
-    public async void AddWhitelist(Guid player, ProtoId<JobPrototype> job)
+    public async void AddWhitelist(NetUserId player, ProtoId<JobPrototype> job)
     {
-        _whitelists.GetOrNew(player).Add(job);
+        if (_whitelists.TryGetValue(player, out var whitelists))
+            whitelists.Add(job);
 
-        try
-        {
-            await _db.AddJobWhitelist(player, job);
-        }
-        catch
-        {
-            // ignored
-        }
+        await _db.AddJobWhitelist(player, job);
 
-        if (_player.TryGetSessionById(new NetUserId(player), out var session))
+        if (_player.TryGetSessionById(player, out var session))
             SendJobWhitelist(session);
     }
 
-    public bool IsAllowed(Guid player, ProtoId<JobPrototype> job)
+    public bool IsAllowed(ICommonSession session, ProtoId<JobPrototype> job)
     {
         if (!_config.GetCVar(CCVars.GameRoleWhitelist))
             return true;
@@ -74,27 +69,27 @@ public sealed class JobWhitelistManager : IPostInjectInit
             return true;
         }
 
-        return IsWhitelisted(player, job);
+        return IsWhitelisted(session.UserId, job);
     }
 
-    public bool IsWhitelisted(Guid player, ProtoId<JobPrototype> job)
+    public bool IsWhitelisted(NetUserId player, ProtoId<JobPrototype> job)
     {
-        return _whitelists.TryGetValue(player, out var whitelists) &&
-               whitelists.Contains(job);
+        if (!_whitelists.TryGetValue(player, out var whitelists))
+        {
+            Log.Error("Unable to check if player {Player} is whitelisted for {Job}. Stack trace:\\n{StackTrace}",
+                player,
+                job,
+                Environment.StackTrace);
+            return false;
+        }
+
+        return whitelists.Contains(job);
     }
 
-    public async void RemoveWhitelist(Guid player, ProtoId<JobPrototype> job)
+    public async void RemoveWhitelist(NetUserId player, ProtoId<JobPrototype> job)
     {
         _whitelists.GetValueOrDefault(player)?.Remove(job);
-
-        try
-        {
-            await _db.RemoveJobWhitelist(player, job);
-        }
-        catch
-        {
-            // ignored
-        }
+        await _db.RemoveJobWhitelist(player, job);
 
         if (_player.TryGetSessionById(new NetUserId(player), out var session))
             SendJobWhitelist(session);

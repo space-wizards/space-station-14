@@ -71,10 +71,10 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         return true;
     }
 
-    public HashSet<ProtoId<JobPrototype>>? GetRoleBans(NetUserId playerUserId)
+    public HashSet<string>? GetRoleBans(NetUserId playerUserId)
     {
         return _cachedRoleBans.TryGetValue(playerUserId, out var roleBans)
-            ? roleBans.Select(banDef => new ProtoId<JobPrototype>(banDef.Role)).ToHashSet()
+            ? roleBans.Select(banDef => banDef.Role).ToHashSet()
             : null;
     }
 

@@ -12,6 +12,7 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Ban)]
 public sealed class JobWhitelistAddCommand : LocalizedCommands
 {
+    [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly JobWhitelistManager _jobWhitelist = default!;
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
@@ -43,7 +44,7 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
         if (data != null)
         {
             var guid = data.UserId;
-            var isWhitelisted = _jobWhitelist.IsWhitelisted(guid, job);
+            var isWhitelisted = await _db.IsJobWhitelisted(guid, job);
             if (isWhitelisted)
             {
                 shell.WriteLine(Loc.GetString("cmd-jobwhitelist-already-whitelisted",
@@ -139,6 +140,7 @@ public sealed class GetJobWhitelistCommand : LocalizedCommands
 [AdminCommand(AdminFlags.Ban)]
 public sealed class RemoveJobWhitelistCommand : LocalizedCommands
 {
+    [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly JobWhitelistManager _jobWhitelist = default!;
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
@@ -170,7 +172,7 @@ public sealed class RemoveJobWhitelistCommand : LocalizedCommands
         if (data != null)
         {
             var guid = data.UserId;
-            var isWhitelisted = _jobWhitelist.IsWhitelisted(guid, job);
+            var isWhitelisted = await _db.IsJobWhitelisted(guid, job);
             if (!isWhitelisted)
             {
                 shell.WriteError(Loc.GetString("cmd-jobwhitelistremove-was-not-whitelisted",

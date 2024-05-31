@@ -297,8 +297,8 @@ namespace Content.Server.Database
 
         Task AddJobWhitelist(Guid player, ProtoId<JobPrototype> job);
 
-        Task<List<string>> GetJobWhitelists(Guid player);
 
+        Task<List<string>> GetJobWhitelists(Guid player, CancellationToken cancel = default);
         Task<bool> IsJobWhitelisted(Guid player, ProtoId<JobPrototype> job);
 
         Task<bool> RemoveJobWhitelist(Guid player, ProtoId<JobPrototype> job);
@@ -889,10 +889,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.AddJobWhitelist(player, job));
         }
 
-        public Task<List<string>> GetJobWhitelists(Guid player)
+        public Task<List<string>> GetJobWhitelists(Guid player, CancellationToken cancel = default)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetJobWhitelists(player));
+            return RunDbCommand(() => _db.GetJobWhitelists(player, cancel));
         }
 
         public Task<bool> IsJobWhitelisted(Guid player, ProtoId<JobPrototype> job)

@@ -1588,29 +1588,29 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             var exists = await db.DbContext.JobWhitelists
                 .Where(w => w.PlayerUserId == player)
-                .Where(w => w.Job == job.Id)
+                .Where(w => w.RoleId == job.Id)
                 .AnyAsync();
 
             if (exists)
                 return false;
 
-            var whitelist = new JobWhitelist
+            var whitelist = new RoleWhitelist
             {
                 PlayerUserId = player,
-                Job = job
+                RoleId = job
             };
             db.DbContext.JobWhitelists.Add(whitelist);
             await db.DbContext.SaveChangesAsync();
             return true;
         }
 
-        public async Task<List<string>> GetJobWhitelists(Guid player)
+        public async Task<List<string>> GetJobWhitelists(Guid player, CancellationToken cancel)
         {
-            await using var db = await GetDb();
+            await using var db = await GetDb(cancel);
             return await db.DbContext.JobWhitelists
                 .Where(w => w.PlayerUserId == player)
-                .Select(w => w.Job)
-                .ToListAsync();
+                .Select(w => w.RoleId)
+                .ToListAsync(cancellationToken: cancel);
         }
 
         public async Task<bool> IsJobWhitelisted(Guid player, ProtoId<JobPrototype> job)
@@ -1618,7 +1618,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             return await db.DbContext.JobWhitelists
                 .Where(w => w.PlayerUserId == player)
-                .Where(w => w.Job == job.Id)
+                .Where(w => w.RoleId == job.Id)
                 .AnyAsync();
         }
 
@@ -1627,7 +1627,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             var entry = await db.DbContext.JobWhitelists
                 .Where(w => w.PlayerUserId == player)
-                .Where(w => w.Job == job.Id)
+                .Where(w => w.RoleId == job.Id)
                 .SingleOrDefaultAsync();
 
             if (entry == null)
