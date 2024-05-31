@@ -203,6 +203,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     {
                         string? itemID = null;
 
+                        // If an entity has a stack component, use the stacktype instead of prototype id
                         if (TryComp<StackComponent>(item, out var stackComp))
                         {
                             itemID = stackComp.StackTypeId;
@@ -227,18 +228,14 @@ namespace Content.Server.Kitchen.EntitySystems
                             if (stackComp.Count == 1)
                             {
                                 _container.Remove(item, component.Storage);
-                                EntityManager.DeleteEntity(item);
-                                break;
                             }
-                            else
-                            {
-                                _stack.Use(item, 1, stackComp);
-                            }
+                            _stack.Use(item, 1, stackComp);
+                            break;
                         }
                         else
                         {
                             _container.Remove(item, component.Storage);
-                            EntityManager.DeleteEntity(item);
+                            Del(item);
                             break;
                         }
                     }
