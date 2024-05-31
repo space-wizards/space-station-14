@@ -18,7 +18,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Players;
-using Content.Shared.Preferences;
+using Content.Shared.Whitelist;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -42,6 +42,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -121,12 +122,15 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         // something to figure out later.
 
         var query = QueryActiveRules();
+        var rules = new List<(EntityUid, AntagSelectionComponent)>();
         while (query.MoveNext(out var uid, out _, out var antag, out _))
         {
-            // TODO ANTAG
-            // what why aasdiuhasdopiuasdfhksad
-            // stop this insanity please
-            // probability of antag assignment shouldn't depend on the order in which rules are returned by the query.
+            rules.Add((uid, antag));
+        }
+        RobustRandom.Shuffle(rules);
+
+        foreach (var (uid, antag) in rules)
+        {
             if (!RobustRandom.Prob(LateJoinRandomChance))
                 continue;
 
@@ -232,13 +236,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// <summary>
     /// Tries to makes a given player into the specified antagonist.
     /// </summary>
-    public bool TryMakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false)
+    public bool TryMakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false, bool checkPref = true)
     {
-        if (!IsSessionValid(ent, session, def) ||
-            !IsEntityValid(session?.AttachedEntity, def))
-        {
+        if (checkPref && !HasPrimaryAntagPreference(session, def))
             return false;
-        }
+
+        if (!IsSessionValid(ent, session, def) || !IsEntityValid(session?.AttachedEntity, def))
+            return false;
 
         MakeAntag(ent, session, def, ignoreSpawner);
         return true;
@@ -338,16 +342,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var fallbackList = new List<ICommonSession>();
         foreach (var session in sessions)
         {
-            if (!IsSessionValid(ent, session, def) ||
-                !IsEntityValid(session.AttachedEntity, def))
+            if (!IsSessionValid(ent, session, def) || !IsEntityValid(session.AttachedEntity, def))
                 continue;
 
-            var pref = (HumanoidCharacterProfile) _pref.GetPreferences(session.UserId).SelectedCharacter;
-            if (def.PrefRoles.Count != 0 && pref.AntagPreferences.Any(p => def.PrefRoles.Contains(p)))
+            if (HasPrimaryAntagPreference(session, def))
             {
                 preferredList.Add(session);
             }
-            else if (def.FallbackRoles.Count != 0 && pref.AntagPreferences.Any(p => def.FallbackRoles.Contains(p)))
+            else if (HasFallbackAntagPreference(session, def))
             {
                 fallbackList.Add(session);
             }
@@ -418,13 +420,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (def.Whitelist != null)
         {
-            if (!def.Whitelist.IsValid(entity.Value, EntityManager))
+            if (!_whitelist.IsValid(def.Whitelist, entity.Value))
                 return false;
         }
 
         if (def.Blacklist != null)
         {
-            if (def.Blacklist.IsValid(entity.Value, EntityManager))
+            if (_whitelist.IsValid(def.Blacklist, entity.Value))
                 return false;
         }
 
