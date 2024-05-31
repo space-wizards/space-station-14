@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: You must now wait 30 seconds before attempting to reconnect to a full
-      server.
-    type: Tweak
-  id: 6153
-  time: '2024-03-14T08:00:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/20972
 - author: Crotalus
   changes:
   - message: Sort agents by success rate in end game summary
@@ -3854,3 +3846,11 @@
   id: 6652
   time: '2024-05-31T14:49:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28447
+- author: ShadowCommander
+  changes:
+  - message: Opening a firelock when temperature or pressure warnings are active,
+      now always shows the warning popup.
+    type: Tweak
+  id: 6653
+  time: '2024-05-31T14:56:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28420
