@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Mangohydra
-  changes:
-  - message: The lawyer now spawns with their own lawyer stamp for stamping very important
-      documents.
-    type: Add
-  id: 6146
-  time: '2024-03-13T15:05:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26012
 - author: Errant
   changes:
   - message: Clothes with alternate sprites for vox once again show the alternate
@@ -3864,3 +3856,10 @@
   id: 6645
   time: '2024-05-30T20:45:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28423
+- author: Ghagliiarghii
+  changes:
+  - message: Cargo Sale Computer now correctly uses its own computer board
+    type: Fix
+  id: 6646
+  time: '2024-05-31T00:28:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28425
