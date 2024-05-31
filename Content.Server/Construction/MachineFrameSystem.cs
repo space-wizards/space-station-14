@@ -59,6 +59,9 @@ public sealed class MachineFrameSystem : EntitySystem
             return;
         }
 
+        // If this changes in the future, then RegenerateProgress() also needs to be updated.
+        // Note that one entity is ALLOWED to satisfy more than one kind of component or tag requirements. This is
+        // necessary in order to avoid weird entity-ordering shenanigans in RegenerateProgress().
         var stack = CompOrNull<StackComponent>(args.Used);
         var machinePart = CompOrNull<MachinePartComponent>(args.Used);
         if (stack != null && machinePart != null)
@@ -248,6 +251,9 @@ public sealed class MachineFrameSystem : EntitySystem
         var count = stack.Count;
         if (count < needed)
         {
+            if (!_container.TryRemoveFromContainer(used))
+                return false;
+
             if (!_container.Insert(used, component.PartContainer))
                 return true;
 
@@ -374,6 +380,7 @@ public sealed class MachineFrameSystem : EntitySystem
                         component.Progress[machinePart.PartType] = partStack.Count;
                     else
                         component.Progress[machinePart.PartType] += partStack.Count;
+                    continue;
                 }
 
                 if (!component.Progress.ContainsKey(machinePart.PartType))
