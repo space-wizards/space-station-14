@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
+using Content.Shared.Lock;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition.Components;
@@ -16,6 +17,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// </summary>
 public sealed partial class OpenableSystem : EntitySystem
 {
+    [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -26,26 +28,49 @@ public sealed partial class OpenableSystem : EntitySystem
 
         SubscribeLocalEvent<OpenableComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<OpenableComponent, UseInHandEvent>(OnUse);
+        // always try to unlock first before opening
+        SubscribeLocalEvent<OpenableComponent, ActivateInWorldEvent>(OnActivated, after: new[] { typeof(LockSystem) });
         SubscribeLocalEvent<OpenableComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<OpenableComponent, MeleeHitEvent>(HandleIfClosed);
         SubscribeLocalEvent<OpenableComponent, AfterInteractEvent>(HandleIfClosed);
-        SubscribeLocalEvent<OpenableComponent, GetVerbsEvent<Verb>>(AddOpenCloseVerbs);
+        SubscribeLocalEvent<OpenableComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
         SubscribeLocalEvent<OpenableComponent, AttemptShakeEvent>(OnAttemptShake);
         SubscribeLocalEvent<OpenableComponent, AttemptAddFizzinessEvent>(OnAttemptAddFizziness);
+        SubscribeLocalEvent<OpenableComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
+
+#if DEBUG
+        SubscribeLocalEvent<OpenableComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnInit(EntityUid uid, OpenableComponent comp, ComponentInit args)
+    private void OnMapInit(Entity<OpenableComponent> ent, ref MapInitEvent args)
     {
-        UpdateAppearance(uid, comp);
+        if (ent.Comp.Opened && _lock.IsLocked(ent.Owner))
+            Log.Error($"Entity {ent} spawned locked open, this is a prototype mistake.");
+    }
+#else
+    }
+#endif
+
+    private void OnInit(Entity<OpenableComponent> ent, ref ComponentInit args)
+    {
+        UpdateAppearance(ent, ent.Comp);
     }
 
-    private void OnUse(EntityUid uid, OpenableComponent comp, UseInHandEvent args)
+    private void OnUse(Entity<OpenableComponent> ent, ref UseInHandEvent args)
     {
-        if (args.Handled || !comp.OpenableByHand)
+        if (args.Handled || !ent.Comp.OpenableByHand)
             return;
 
-        args.Handled = TryOpen(uid, comp, args.User);
+        args.Handled = TryToggle(ent, args.User);
+    }
+
+    private void OnActivated(Entity<OpenableComponent> ent, ref ActivateInWorldEvent args)
+    {
+        if (args.Handled || !ent.Comp.OpenOnActivate)
+            return;
+
+        args.Handled = TryToggle(ent, args.User);
     }
 
     private void OnExamined(EntityUid uid, OpenableComponent comp, ExaminedEvent args)
@@ -63,12 +88,12 @@ public sealed partial class OpenableSystem : EntitySystem
         args.Handled = !comp.Opened;
     }
 
-    private void AddOpenCloseVerbs(EntityUid uid, OpenableComponent comp, GetVerbsEvent<Verb> args)
+    private void OnGetVerbs(EntityUid uid, OpenableComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+        if (args.Hands == null || !args.CanAccess || !args.CanInteract || _lock.IsLocked(uid))
             return;
 
-        Verb verb;
+        AlternativeVerb verb;
         if (comp.Opened)
         {
             if (!comp.Closeable)
@@ -78,7 +103,8 @@ public sealed partial class OpenableSystem : EntitySystem
             {
                 Text = Loc.GetString(comp.CloseVerbText),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/close.svg.192dpi.png")),
-                Act = () => TryClose(args.Target, comp, args.User)
+                Act = () => TryClose(args.Target, comp, args.User),
+                // this verb is lower priority than drink verb (2) so it doesn't conflict
             };
         }
         else
@@ -113,6 +139,13 @@ public sealed partial class OpenableSystem : EntitySystem
     {
         // Can't add fizziness to an open container
         if (entity.Comp.Opened)
+            args.Cancelled = true;
+    }
+
+    private void OnLockToggleAttempt(Entity<OpenableComponent> ent, ref LockToggleAttemptEvent args)
+    {
+        // can't lock something while it's open
+        if (ent.Comp.Opened)
             args.Cancelled = true;
     }
 
@@ -189,7 +222,12 @@ public sealed partial class OpenableSystem : EntitySystem
     /// <returns>Whether it got opened</returns>
     public bool TryOpen(EntityUid uid, OpenableComponent? comp = null, EntityUid? user = null)
     {
-        if (!Resolve(uid, ref comp, false) || comp.Opened)
+        if (!Resolve(uid, ref comp, false) || comp.Opened || _lock.IsLocked(uid))
+            return false;
+
+        var ev = new OpenableOpenAttemptEvent(user);
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.Cancelled)
             return false;
 
         SetOpen(uid, true, comp, user);
@@ -211,6 +249,18 @@ public sealed partial class OpenableSystem : EntitySystem
             _audio.PlayPredicted(comp.CloseSound, uid, user);
         return true;
     }
+
+    /// <summary>
+    /// If opened, tries closing it if it's closeable.
+    /// If closed, tries opening it.
+    /// </summary>
+    public bool TryToggle(Entity<OpenableComponent> ent, EntityUid? user)
+    {
+        if (ent.Comp.Opened && ent.Comp.Closeable)
+            return TryClose(ent, ent.Comp, user);
+
+        return TryOpen(ent, ent.Comp, user);
+    }
 }
 
 /// <summary>
@@ -224,3 +274,9 @@ public record struct OpenableOpenedEvent(EntityUid? User = null);
 /// </summary>
 [ByRefEvent]
 public record struct OpenableClosedEvent(EntityUid? User = null);
+
+/// <summary>
+/// Raised before trying to open an Openable.
+/// </summary>
+[ByRefEvent]
+public record struct OpenableOpenAttemptEvent(EntityUid? User, bool Cancelled = false);

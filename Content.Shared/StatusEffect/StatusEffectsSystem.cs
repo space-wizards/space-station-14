@@ -219,7 +219,7 @@ namespace Content.Shared.StatusEffect
         ///     This is mostly for stuns, since Stun and Knockdown share an alert key. Other times this pretty much
         ///     will not be useful.
         /// </remarks>
-        private (TimeSpan, TimeSpan)? GetAlertCooldown(EntityUid uid, AlertType alert, StatusEffectsComponent status)
+        private (TimeSpan, TimeSpan)? GetAlertCooldown(EntityUid uid, ProtoId<AlertPrototype> alert, StatusEffectsComponent status)
         {
             (TimeSpan, TimeSpan)? maxCooldown = null;
             foreach (var kvp in status.ActiveEffects)
