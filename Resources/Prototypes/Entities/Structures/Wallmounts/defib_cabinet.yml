@@ -1,100 +1,74 @@
-﻿- type: entity
+# TODO: same as other wallmount cabinets they should use a base structure prototype
+- type: entity
+  parent: BaseItemCabinet
   id: DefibrillatorCabinet
   name: defibrillator cabinet
   description: A small wall mounted cabinet designed to hold a defibrillator.
+  placement:
+    mode: SnapgridCenter
   components:
-    - type: WallMount
-      arc: 175
-    - type: Transform
-      anchored: true
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Sprite
-      sprite: Structures/Wallmounts/defib_cabinet.rsi
-      noRot: false
-      layers:
-      - state: frame
-      - state: fill
-        map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
-        visible: true
-      - state: closed
-        map: ["enum.ItemCabinetVisualLayers.Door"]
-    - type: ItemCabinet
-      cabinetSlot:
+  - type: WallMount
+    arc: 175
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Wallmounts/defib_cabinet.rsi
+    noRot: false
+    layers:
+    - state: frame
+    - state: fill
+      map: ["enum.ItemCabinetVisuals.Layer"]
+      visible: true
+    - state: closed
+      map: ["enum.OpenableVisuals.Layer"]
+  - type: ItemSlots
+    slots:
+      ItemCabinet:
         ejectOnInteract: true
         whitelist:
           components:
           - Defibrillator
-      doorSound:
-        path: /Audio/Machines/machine_switch.ogg
-      openState: open
-      closedState: closed
-    - type: Appearance
-    - type: ItemSlots
-    - type: ContainerContainer
-      containers:
-        ItemCabinet: !type:ContainerSlot
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 80
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 40
-          behaviors:
-            - !type:EmptyAllContainersBehaviour
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalGlassBreak
-  placement:
-    mode: SnapgridCenter
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger: !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
 
 - type: entity
-  id: DefibrillatorCabinetOpen
   parent: DefibrillatorCabinet
+  id: DefibrillatorCabinetOpen
   suffix: Open
   components:
-  - type: ItemCabinet
+  - type: Openable
     opened: true
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: open
-    closedState: closed
 
 - type: entity
-  id: DefibrillatorCabinetFilled
   parent: DefibrillatorCabinet
+  id: DefibrillatorCabinetFilled
   suffix: Filled
   components:
-  - type: ItemCabinet
-    cabinetSlot:
-      ejectOnInteract: true
-      startingItem: Defibrillator
-      whitelist:
-        components:
-        - Defibrillator
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: open
-    closedState: closed
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - Defibrillator
 
 - type: entity
+  parent: [DefibrillatorCabinetFilled, DefibrillatorCabinetOpen]
   id: DefibrillatorCabinetFilledOpen
-  parent: DefibrillatorCabinetFilled
   suffix: Filled, Open
-  components:
-  - type: ItemCabinet
-    opened: true
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: open
-    closedState: closed

@@ -170,8 +170,9 @@
     node: shotgunsawn
     deconstructionTarget: null
 
-# sawn-off shogun [Empty]
+# sawn-off shotgun [Empty]
 - type: entity
+  name: sawn-off shogun
   parent: WeaponShotgunSawn
   id: WeaponShotgunSawnEmpty
   suffix: Empty

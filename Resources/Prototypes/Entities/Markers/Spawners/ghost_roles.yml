@@ -103,6 +103,33 @@
         state: radiation
 
 - type: entity
+  noSpawn: true
+  parent: SpawnPointLoneNukeOperative
+  id: SpawnPointNukeopsCommander
+  components:
+  - type: GhostRole
+    name: roles-antag-nuclear-operative-commander-name
+    description: roles-antag-nuclear-operative-commander-objective
+
+- type: entity
+  noSpawn: true
+  parent: SpawnPointLoneNukeOperative
+  id: SpawnPointNukeopsMedic
+  components:
+  - type: GhostRole
+    name: roles-antag-nuclear-operative-agent-name
+    description: roles-antag-nuclear-operative-agent-objective
+
+- type: entity
+  noSpawn: true
+  parent: SpawnPointLoneNukeOperative
+  id: SpawnPointNukeopsOperative
+  components:
+  - type: GhostRole
+    name: roles-antag-nuclear-operative-name
+    description: roles-antag-nuclear-operative-objective
+
+- type: entity
   parent: MarkerBase
   id: SpawnPointGhostDragon
   noSpawn: true
