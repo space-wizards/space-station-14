@@ -4,14 +4,14 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Explosion.Components;
 
-[RegisterComponent, Access(typeof(ClusterGrenadeSystem))]
+[RegisterComponent, Access(typeof(FragmentingGrenadeSystem))]
 
 /// <summary>
 /// Use this component if the grenade splits into shootable projectiles
 /// </summary>
 public sealed partial class FragmentingGrenadeComponent : Component
 {
-    public Container GrenadesContainer = default!;
+    public Container Container = default!;
 
     /// <summary>
     /// The kind of projectile that the prototype is filled with.
@@ -40,5 +40,5 @@ public sealed partial class FragmentingGrenadeComponent : Component
     ///     The speed the projectiles are shot at
     /// </summary>
     [DataField]
-    public float Velocity = 3;
+    public float Velocity = 1.5f;
 }

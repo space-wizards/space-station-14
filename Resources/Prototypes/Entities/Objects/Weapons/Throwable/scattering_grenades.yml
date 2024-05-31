@@ -15,10 +15,8 @@
     - trigger:
         !type:DamageTrigger
         damage: 10
-      #behaviors:
-      #- !type:TriggerBehavior
-      #- !type:DoActsBehavior
-      #  acts: ["Destruction"]
+      behaviors:
+      - !type:TriggerBehavior
   - type: ScatteringGrenade
 
 - type: entity
@@ -27,6 +25,10 @@
   name: clusterbang
   description: Can be used only with flashbangs. Explodes several times.
   components:
+  - type: ScatteringGrenade
+    whitelist:
+      tags:
+        - GrenadeFlashBang
   - type: ClusterGrenadeVisuals
     state: base
   - type: Sprite
@@ -48,6 +50,9 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ScatteringGrenade
+    whitelist:
+      tags:
+        - GrenadeFlashBang
     fillPrototype: GrenadeFlashBang
     distance: 7
     velocity: 7
@@ -77,7 +82,7 @@
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ScatteringGrenade
     fillPrototype: ExGrenade
-    distance: 5
+    distance: 4
   - type: OnUseTimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
@@ -111,7 +116,7 @@
       path: "/Audio/Items/bikehorn.ogg"
 
 - type: entity
-  parent: SoapSyndie, ScatteringGrenadeBase
+  parent: [SoapSyndie, ScatteringGrenadeBase]
   id: SlipocalypseClusterSoap
   name: slipocalypse clustersoap
   description: Spreads small pieces of syndicate soap over an area upon landing on the floor.
@@ -125,7 +130,7 @@
     capacity: 30
     delayBeforeTriggerContents: 60
     randomDistance: true
-    randomDistanceMax: 4
+    randomDistanceMax: 6
   - type: DamageOnLand
     damage:
       types:

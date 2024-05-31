@@ -1,10 +1,11 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Explosion.Components;
 
-[RegisterComponent, Access(typeof(ClusterGrenadeSystem))]
+[RegisterComponent, Access(typeof(ScatteringGrenadeSystem))]
 
 /// <summary>
 /// Use this component if the grenade splits into entities that make use of Timers
@@ -12,12 +13,15 @@ namespace Content.Server.Explosion.Components;
 /// </summary>
 public sealed partial class ScatteringGrenadeComponent : Component
 {
-    public Container GrenadesContainer = default!;
+    public Container Container = default!;
+
+    [DataField]
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     ///     What we fill our prototype with if we want to pre-spawn with entities.
     /// </summary>
-    [DataField("fillPrototype")]
+    [DataField]
     public EntProtoId? FillPrototype;
 
     /// <summary>
@@ -44,19 +48,20 @@ public sealed partial class ScatteringGrenadeComponent : Component
     public float DelayBeforeTriggerContents = 1.0f;
 
     /// <summary>
-    ///     Maximum delay in seconds between individual entity triggers
+    ///     Maximum delay in seconds to add between individual entity triggers
     /// </summary>
     [DataField]
     public float IntervalBetweenTriggersMax = 0f;
 
     /// <summary>
-    ///     Minimum delay in seconds between individual entity triggers
+    ///     Minimum delay in seconds to add between individual entity triggers
     /// </summary>
     [DataField]
     public float IntervalBetweenTriggersMin = 0f;
 
     /// <summary>
     ///     Should the angle the entities get thrown at be random
+    ///     instead of uniformly distributed
     /// </summary>
     [DataField]
     public bool RandomAngle = false;
@@ -69,7 +74,7 @@ public sealed partial class ScatteringGrenadeComponent : Component
 
 
     /// <summary>
-    ///     Static distance grenades will be thrown to.
+    ///     Static distance grenades will be thrown to if RandomDistance is false.
     /// </summary>
     [DataField]
     public float Distance = 1f;
