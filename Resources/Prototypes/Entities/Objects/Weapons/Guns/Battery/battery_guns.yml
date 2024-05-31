@@ -17,6 +17,9 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -43,6 +46,9 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -71,6 +77,9 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -133,6 +142,9 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
