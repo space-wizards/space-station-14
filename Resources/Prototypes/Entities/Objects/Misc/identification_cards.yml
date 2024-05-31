@@ -100,7 +100,7 @@
     - state: idintern-service
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseGrandTheftContraband]
   id: CaptainIDCard
   name: captain ID card
   components:

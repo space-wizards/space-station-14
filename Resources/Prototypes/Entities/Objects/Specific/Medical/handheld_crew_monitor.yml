@@ -4,6 +4,7 @@
   parent:
   - BaseItem
   - PowerCellSlotSmallItem
+  - BaseGrandTheftContraband
   # CMO-only bud, don't add more.
   id: HandheldCrewMonitor
   description: A hand-held crew monitor displaying the status of suit sensors.

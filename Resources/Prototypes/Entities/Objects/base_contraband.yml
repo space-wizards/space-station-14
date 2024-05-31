@@ -11,3 +11,10 @@
   components:
   - type: ContrabandExamine
     severity: Minor
+
+- type: entity
+  id: BaseGrandTheftContraband
+  abstract: true
+  components:
+  - type: ContrabandExamine
+    severity: GrandTheft

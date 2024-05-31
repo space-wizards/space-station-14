@@ -547,7 +547,7 @@
 
 - type: entity
   name: antique laser pistol
-  parent: BaseWeaponBatterySmall
+  parent: [BaseWeaponBatterySmall, BaseGrandTheftContraband]
   id: WeaponAntiqueLaser
   description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:

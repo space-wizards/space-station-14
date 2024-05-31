@@ -288,7 +288,7 @@
 - type: entity
   name: prime-cut corgi meat
   # can't rot since that would be very bad for syndies
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, BaseGrandTheftContraband]
   id: FoodMeatCorgi
   description: The tainted gift of an evil crime. The meat may be delicious, but at what cost?
   components:
