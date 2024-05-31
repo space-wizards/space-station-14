@@ -29,7 +29,7 @@
   components:
   - type: Instrument
   - type: ActivatableUI
-    allowSpectator: false # otherwise they can play client-side music
+    blockSpectators: true # otherwise they can play client-side music
     inHandsOnly: false
     singleUser: true
     requireHands: true

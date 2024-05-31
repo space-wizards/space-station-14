@@ -64,7 +64,7 @@ public abstract partial class SharedBuckleSystem
             return;
 
         var strapPosition = Transform(strapUid).Coordinates;
-        if (ev.NewPosition.InRange(EntityManager, _transform, strapPosition, strapComp.MaxBuckleDistance))
+        if (ev.NewPosition.EntityId.IsValid() && ev.NewPosition.InRange(EntityManager, _transform, strapPosition, strapComp.MaxBuckleDistance))
             return;
 
         TryUnbuckle(uid, uid, true, component);

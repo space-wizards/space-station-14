@@ -19,6 +19,7 @@ using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.UserInterface;
 using Content.Shared.VendingMachines;
+using Content.Shared.Wall;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -38,6 +39,8 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly SpeakOnUIClosedSystem _speakOnUIClosed = default!;
+
+        private const float WallVendEjectDistanceFromWall = 1f;
 
         public override void Initialize()
         {
@@ -384,7 +387,20 @@ namespace Content.Server.VendingMachines
                 return;
             }
 
-            var ent = Spawn(vendComponent.NextItemToEject, Transform(uid).Coordinates);
+            // Default spawn coordinates
+            var spawnCoordinates = Transform(uid).Coordinates;
+
+            //Make sure the wallvends spawn outside of the wall.
+
+            if (TryComp<WallMountComponent>(uid, out var wallMountComponent))
+            {
+
+                var offset = wallMountComponent.Direction.ToWorldVec() * WallVendEjectDistanceFromWall;
+                spawnCoordinates = spawnCoordinates.Offset(offset);
+            }
+
+            var ent = Spawn(vendComponent.NextItemToEject, spawnCoordinates);
+
             if (vendComponent.ThrowNextItem)
             {
                 var range = vendComponent.NonLimitedEjectRange;

@@ -447,7 +447,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                     _damageableSystem.TryChangeDamage(uid, flammable.Damage * flammable.FireStacks * ev.Multiplier, interruptsDoAfters: false);
 
-                    AdjustFireStacks(uid, flammable.FirestackFade * (flammable.Resisting ? 10f : 1f), flammable);
+                    AdjustFireStacks(uid, flammable.FirestackFade * (flammable.Resisting ? 10f : 1f), flammable, flammable.OnFire);
                 }
                 else
                 {
