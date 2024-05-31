@@ -114,7 +114,7 @@ namespace Content.Server.Forensics
 
         private void OnUtilityVerb(Entity<CleansForensicsComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
         {
-            if (!args.CanInteract || !args.CanAccess || !args.CanInteract)
+            if (!args.CanInteract || !args.CanAccess)
                 return;
 
             // These need to be set outside for the anonymous method!
