@@ -12,7 +12,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "job_whitelists",
+                name: "role_whitelists",
                 columns: table => new
                 {
                     player_user_id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -20,9 +20,9 @@ namespace Content.Server.Database.Migrations.Sqlite
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_job_whitelists", x => new { x.player_user_id, x.role_id });
+                    table.PrimaryKey("PK_role_whitelists", x => new { x.player_user_id, x.role_id });
                     table.ForeignKey(
-                        name: "FK_job_whitelists_player_player_user_id",
+                        name: "FK_role_whitelists_player_player_user_id",
                         column: x => x.player_user_id,
                         principalTable: "player",
                         principalColumn: "user_id",
@@ -34,7 +34,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "job_whitelists");
+                name: "role_whitelists");
         }
     }
 }

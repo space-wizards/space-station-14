@@ -15,7 +15,7 @@ using NpgsqlTypes;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20240531003533_RoleWhitelist")]
+    [Migration("20240531011555_RoleWhitelist")]
     partial class RoleWhitelist
     {
         /// <inheritdoc />
@@ -914,9 +914,9 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnName("role_id");
 
                     b.HasKey("PlayerUserId", "RoleId")
-                        .HasName("PK_job_whitelists");
+                        .HasName("PK_role_whitelists");
 
-                    b.ToTable("job_whitelists", (string)null);
+                    b.ToTable("role_whitelists", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Round", b =>
@@ -1650,7 +1650,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasPrincipalKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_job_whitelists_player_player_user_id");
+                        .HasConstraintName("FK_role_whitelists_player_player_user_id");
 
                     b.Navigation("Player");
                 });

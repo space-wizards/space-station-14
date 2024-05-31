@@ -858,9 +858,9 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnName("role_id");
 
                     b.HasKey("PlayerUserId", "RoleId")
-                        .HasName("PK_job_whitelists");
+                        .HasName("PK_role_whitelists");
 
-                    b.ToTable("job_whitelists", (string)null);
+                    b.ToTable("role_whitelists", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Round", b =>
@@ -1572,7 +1572,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasPrincipalKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_job_whitelists_player_player_user_id");
+                        .HasConstraintName("FK_role_whitelists_player_player_user_id");
 
                     b.Navigation("Player");
                 });
