@@ -1,7 +1,7 @@
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Interaction.Components;
+namespace Content.Shared.Interaction.Components;
 
 [RegisterComponent, Access(typeof(InteractionPopupSystem))]
 public sealed partial class InteractionPopupComponent : Component
