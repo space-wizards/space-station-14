@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: The radio jammer is now able to jam the signal of suit sensors.
-    type: Tweak
-  id: 6155
-  time: '2024-03-14T15:55:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26046
 - author: deltanedas
   changes:
   - message: Holocarp and Magicarp plushies can now be found in maintenance.
@@ -3854,3 +3847,10 @@
   id: 6654
   time: '2024-05-31T17:25:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28432
+- author: aspiringLich
+  changes:
+  - message: Some chemicals have been made more colorful and child-friendly.
+    type: Tweak
+  id: 6655
+  time: '2024-05-31T19:44:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28367
