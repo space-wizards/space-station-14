@@ -105,7 +105,7 @@ public sealed class JobWhitelistManager : IPostInjectInit
         _net.ServerSendMessage(msg, player.Channel);
     }
 
-    public void PostInject()
+    void IPostInjectInit.PostInject()
     {
         _userDb.AddOnLoadPlayer(LoadData);
         _userDb.AddOnFinishLoad(FinishLoad);

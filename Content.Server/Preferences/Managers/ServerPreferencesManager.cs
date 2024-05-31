@@ -323,7 +323,7 @@ namespace Content.Server.Preferences.Managers
             public PlayerPreferences? Prefs;
         }
 
-        public void PostInject()
+        void IPostInjectInit.PostInject()
         {
             _userDb.AddOnLoadPlayer(LoadData);
             _userDb.AddOnFinishLoad(FinishLoad);
