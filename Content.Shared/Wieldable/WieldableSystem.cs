@@ -95,7 +95,7 @@ public sealed class WieldableSystem : EntitySystem
     private void OnDeselectWieldable(EntityUid uid, WieldableComponent component, HandDeselectedEvent args)
     {
         if (!component.Wielded ||
-            TryComp(args.User, out HandsComponent? hands) && hands.Hands.Count == 2)
+            TryComp(args.User, out HandsComponent? hands) && hands.Hands.Count > 2)
             return;
 
         TryUnwield(uid, component, args.User);
