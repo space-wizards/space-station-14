@@ -119,6 +119,7 @@
     contents:
     - id: HydroponicsToolMiniHoe
     - id: HydroponicsToolSpade
+    - id: HydroponicsToolClippers
     - id: RobustHarvestChemistryBottle
 
 - type: entity
