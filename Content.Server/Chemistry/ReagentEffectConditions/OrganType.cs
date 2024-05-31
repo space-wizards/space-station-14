@@ -25,9 +25,15 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
             if (args.OrganEntity == null)
                 return false;
 
-            if (args.EntityManager.TryGetComponent<MetabolizerComponent>(args.OrganEntity.Value, out var metabolizer)
-                && metabolizer.MetabolizerTypes != null
-                && metabolizer.MetabolizerTypes.Contains(Type))
+            return Condition(args.OrganEntity.Value, args.EntityManager);
+        }
+
+        public bool Condition(Entity<MetabolizerComponent?> metabolizer, IEntityManager entMan)
+        {
+            metabolizer.Comp ??= entMan.GetComponentOrNull<MetabolizerComponent>(metabolizer.Owner);
+            if (metabolizer.Comp != null
+                && metabolizer.Comp.MetabolizerTypes != null
+                && metabolizer.Comp.MetabolizerTypes.Contains(Type))
                 return ShouldHave;
             return !ShouldHave;
         }

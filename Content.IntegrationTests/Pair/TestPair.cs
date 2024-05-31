@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Shared.Players;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -57,6 +58,9 @@ public sealed partial class TestPair
         (Client, ClientLogHandler) = await PoolManager.GenerateClient(settings, testOut);
         (Server, ServerLogHandler) = await PoolManager.GenerateServer(settings, testOut);
         ActivateContext(testOut);
+
+        Client.CfgMan.OnCVarValueChanged += OnClientCvarChanged;
+        Server.CfgMan.OnCVarValueChanged += OnServerCvarChanged;
 
         if (!settings.NoLoadTestPrototypes)
             await LoadPrototypes(testPrototypes!);
