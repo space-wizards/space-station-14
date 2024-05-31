@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Gyrandola
-  changes:
-  - message: Fireaxe and Shotgun cabinets can now be destroyed.
-    type: Add
-  id: 6148
-  time: '2024-03-13T15:09:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25962
 - author: lzk228
   changes:
   - message: Surgery tools can be placed in medical belt.
@@ -3862,3 +3855,11 @@
   id: 6647
   time: '2024-05-31T01:55:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28368
+- author: ShadowCommander
+  changes:
+  - message: Tweaked the player tab column widths so that usernames and character
+      names are more visible.
+    type: Tweak
+  id: 6648
+  time: '2024-05-31T01:59:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28029
