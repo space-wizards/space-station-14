@@ -374,15 +374,6 @@ public sealed class MachineFrameSystem : EntitySystem
                 if (!component.Requirements.ContainsKey(machinePart.PartType))
                     continue;
 
-                if (TryComp<StackComponent>(part, out var partStack))
-                {
-                    if (!component.Progress.ContainsKey(machinePart.PartType))
-                        component.Progress[machinePart.PartType] = partStack.Count;
-                    else
-                        component.Progress[machinePart.PartType] += partStack.Count;
-                    continue;
-                }
-
                 if (!component.Progress.ContainsKey(machinePart.PartType))
                     component.Progress[machinePart.PartType] = 1;
                 else
