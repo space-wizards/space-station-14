@@ -13,7 +13,7 @@
     sender: cargo-gift-default-sender
     dest: cargo-gift-dest-bar
     gifts:
-      FoodPizzaLarge: 1              # 16 pizzas
+      FoodPizza: 1              # 4 pizzas
       FoodBarSupply: 1
       FoodSoftdrinks: 1
       CrateVendingMachineRestockRobustSoftdrinks: 1
@@ -28,12 +28,13 @@
       startDelay: 10
       duration: 240
       earliestStart: 20
+      minimumPlayers: 40
     - type: CargoGiftsRule
       description: cargo-gift-pizza-large
       sender: cargo-gift-default-sender
       dest: cargo-gift-dest-bar
       gifts:
-        FoodPizzaLarge: 4              # 64 pizzas
+        FoodPizzaLarge: 1              # 16 pizzas
         FoodBarSupply: 1
         FoodSoftdrinksLarge: 1
 

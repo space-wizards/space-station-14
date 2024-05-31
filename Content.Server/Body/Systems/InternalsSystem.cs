@@ -23,6 +23,7 @@ public sealed class InternalsSystem : EntitySystem
     [Dependency] private readonly GasTankSystem _gasTank = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly RespiratorSystem _respirator = default!;
 
     private EntityQuery<InternalsComponent> _internalsQuery;
 
@@ -38,15 +39,30 @@ public sealed class InternalsSystem : EntitySystem
         SubscribeLocalEvent<InternalsComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
         SubscribeLocalEvent<InternalsComponent, InternalsDoAfterEvent>(OnDoAfter);
 
-        SubscribeLocalEvent<StartingGearEquippedEvent>(OnStartingGear);
+        SubscribeLocalEvent<InternalsComponent, StartingGearEquippedEvent>(OnStartingGear);
     }
 
-    private void OnStartingGear(ref StartingGearEquippedEvent ev)
+    private void OnStartingGear(EntityUid uid, InternalsComponent component, ref StartingGearEquippedEvent args)
     {
-        if (!_internalsQuery.TryComp(ev.Entity, out var internals) || internals.BreathToolEntity == null)
+        if (component.BreathToolEntity == null)
             return;
 
-        ToggleInternals(ev.Entity, ev.Entity, force: false, internals);
+        if (component.GasTankEntity != null)
+            return; // already connected
+
+        // Can the entity breathe the air it is currently exposed to?
+        if (_respirator.CanMetabolizeInhaledAir(uid))
+            return;
+
+        var tank = FindBestGasTank(uid);
+        if (tank == null)
+            return;
+
+        // Could the entity metabolise the air in the linked gas tank?
+        if (!_respirator.CanMetabolizeGas(uid, tank.Value.Comp.Air))
+            return;
+
+        ToggleInternals(uid, uid, force: false, component);
     }
 
     private void OnGetInteractionVerbs(
@@ -243,6 +259,7 @@ public sealed class InternalsSystem : EntitySystem
     public Entity<GasTankComponent>? FindBestGasTank(
         Entity<HandsComponent?, InventoryComponent?, ContainerManagerComponent?> user)
     {
+        // TODO use _respirator.CanMetabolizeGas() to prioritize metabolizable gasses
         // Prioritise
         // 1. back equipped tanks
         // 2. exo-slot tanks
