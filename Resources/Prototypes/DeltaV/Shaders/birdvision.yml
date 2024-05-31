@@ -1,4 +1,0 @@
-- type: shader
-  id: UltraVision
-  kind: source
-  path: "/Textures/DeltaV/Shaders/ultravision.swsl"

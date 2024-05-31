@@ -33,7 +33,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Item;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -128,8 +127,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (user == null ||
             !_combatMode.IsInCombatMode(user) ||
-            !TryGetGun(user.Value, out var ent, out var gun) ||
-            HasComp<ItemComponent>(user))
+            !TryGetGun(user.Value, out var ent, out var gun))
         {
             return;
         }

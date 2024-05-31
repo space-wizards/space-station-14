@@ -661,24 +661,3 @@
             Poison: 2
       - !type:SatiateHunger
         factor: -6
-
-- type: reagent
-  id: Lingium
-  name: reagent-name-lingium
-  group: Toxins
-  desc: reagent-desc-lingium
-  flavor: bitter
-  color: "#437298"
-  physicalDesc: reagent-physical-desc-exotic-smelling
-  plantMetabolism:
-  - !type:PlantAdjustToxins
-    amount: 10
-  - !type:PlantAdjustHealth
-    amount: -1
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Cellular: 1.5

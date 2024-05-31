@@ -271,20 +271,9 @@
       Critical:
         reagent: SpaceDrugs
         quantity: 25
-  - type: RandomSprite
-    available:
-        - enum.DamageStateVisualLayers.Base:
-            medibot: ""
-          enum.DamageStateVisualLayers.BaseUnshaded:
-            powered: Rainbow
   - type: Sprite
     sprite: Mobs/Silicon/Bots/medibot.rsi
-    layers:
-      - state: medibot
-        map: [ "enum.DamageStateVisualLayers.Base" ]
-      - state: powered
-        map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-        shader: unshaded
+    state: medibot
   - type: HTN
     rootTask:
       task: MedibotCompound
@@ -296,9 +285,8 @@
   - type: InteractionPopup
     interactSuccessString: petting-success-medibot
     interactFailureString: petting-failure-medibot
-    interactSuccessSpawn: EffectHearts
     interactSuccessSound:
-      path: /Audio/Animals/cat_meow.ogg
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: ShowHealthBars
     damageContainers:
     - Biological

@@ -2,7 +2,7 @@
   id: Fland
   mapName: 'Fland Installation'
   mapPath: /Maps/fland.yml
-  minPlayers: 0
+  minPlayers: 70
   stations:
     Fland:
       stationProto: StandardNanotrasenStation
@@ -22,8 +22,6 @@
           availableJobs:
             #service
             Captain: [ 1, 1 ]
-            BlueshieldOfficer: [ 1, 1 ]
-            NanotrasenRepresentative: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 2, 2 ]
             Botanist: [ 4, 4 ]

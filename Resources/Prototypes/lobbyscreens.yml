@@ -1,62 +1,38 @@
 - type: lobbyBackground
-  id: Goob
-  background: /Textures/LobbyScreens/goob.webp
+  id: Robotics
+  background: /Textures/LobbyScreens/robotics.webp
 
 - type: lobbyBackground
-  id: Valve
-  background: /Textures/LobbyScreens/Valve.webp
+  id: Supermatter
+  background: /Textures/LobbyScreens/supermatter.webp
 
 - type: lobbyBackground
-  id: Goob2
-  background: /Textures/LobbyScreens/Goob2.webp
+  id: Warden
+  background: /Textures/LobbyScreens/warden.webp
 
 - type: lobbyBackground
-  id: gugel
-  background: /Textures/LobbyScreens/gugel.webp
+  id: Pharmacy
+  background: /Textures/LobbyScreens/pharmacy.webp
 
 - type: lobbyBackground
-  id: gigaclown
-  background: /Textures/LobbyScreens/gigaclown.webp
+  id: SSXIV
+  background: /Textures/LobbyScreens/ssxiv.webp
 
 - type: lobbyBackground
-  id: rdsyndi
-  background: /Textures/LobbyScreens/rdsyndi.webp
+  id: Susstation
+  background: /Textures/LobbyScreens/susstation.webp
 
 - type: lobbyBackground
-  id: reporting_a_crime
-  background: /Textures/LobbyScreens/reporting_a_crime.webp
+  id: SkellyVsTheRev
+  background: /Textures/LobbyScreens/skellyvstherev.webp
 
 - type: lobbyBackground
-  id: secsquad
-  background: /Textures/LobbyScreens/secsquad.webp
+  id: Doomed
+  background: /Textures/LobbyScreens/doomed.webp
 
 - type: lobbyBackground
-  id: THRONGLER
-  background: /Textures/LobbyScreens/THRONGLER.webp
-
-- type: lobbyBackground
-  id: mime
-  background: /Textures/LobbyScreens/mime.webp
-
-- type: lobbyBackground
-  id: breakingchem
-  background: /Textures/LobbyScreens/breakingchem.webp
-
-- type: lobbyBackground
-  id: clown
-  background: /Textures/LobbyScreens/clown.webp
-
-- type: lobbyBackground
-  id: monkeyops
-  background: /Textures/LobbyScreens/monkeyops.webp
-
-- type: lobbyBackground
-  id: command
-  background: /Textures/LobbyScreens/command.webp
-
-- type: lobbyBackground
-  id: combine
-  background: /Textures/LobbyScreens/combine.webp
+  id: Blueprint
+  background: /Textures/LobbyScreens/blueprint.webp
 
 - type: lobbyBackground
   id: Behonker

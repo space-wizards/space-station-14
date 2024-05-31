@@ -641,13 +641,13 @@
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.75
+    damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.6
         Slash: 0.6
-        Piercing: 0.5
+        Piercing: 0.4
         Heat: 0.25
         Radiation: 0.25
         Caustic: 0.75

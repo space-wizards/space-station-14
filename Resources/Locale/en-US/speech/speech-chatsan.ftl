@@ -120,6 +120,3 @@ chatsan-replacement-43 = i guess
 
 chatsan-word-44 = tbf
 chatsan-replacement-44 = to be fair
-
-chatsan-word-44 = kys
-chatsan-replacement-44 = Kill yourself

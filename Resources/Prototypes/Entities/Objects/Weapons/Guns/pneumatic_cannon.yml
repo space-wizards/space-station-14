@@ -104,48 +104,6 @@
       storagebase: !type:Container
         ents: []
 
-- type: entity
-  name: pie cannon
-  parent: BaseStorageItem
-  id: LauncherCreamPieRegenerating
-  description: Regenerates banana cream pie.
-  suffix: Regenerating
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
-    layers:
-    - state: piecannon
-  - type: Gun
-    fireRate: 4
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
-    - FullAuto
-    soundGunshot:
-      path: /Audio/Effects/thunk.ogg
-    soundEmpty:
-      path: /Audio/Items/hiss.ogg
-    clumsyProof: true
-  - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 10
-    rechargeSound:
-      path: /Audio/Items/bikehorn.ogg
-  - type: BasicEntityAmmoProvider
-    proto: FoodPieBananaCream
-    capacity: 2
-    count: 2
-  - type: Item
-    size: Normal
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
-    quickEquip: false
-    slots:
-    - Back
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
-
 # shoots bullets instead of throwing them, no other changes
 - type: entity
   parent: WeaponImprovisedPneumaticCannon

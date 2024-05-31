@@ -181,7 +181,6 @@
       - id: BikeHorn
       - id: ClownPDA
       - id: ClothingHeadsetService
-      - id: BookHowToClown
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

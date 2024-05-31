@@ -1047,7 +1047,7 @@ namespace Content.Shared.CCVar
         ///     1.0 for instant spacing, 0.2 means 20% of remaining air lost each time
         /// </summary>
         public static readonly CVarDef<float> AtmosSpacingEscapeRatio =
-            CVarDef.Create("atmos.mmos_spacing_speed", 0.05f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.mmos_spacing_speed", 0.15f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Minimum amount of air allowed on a spaced tile before it is reset to 0 immediately in kPa
@@ -1251,7 +1251,7 @@ namespace Content.Shared.CCVar
         ///     Config for when the restart vote should be allowed to be called based on percentage of ghosts.
         ///
         public static readonly CVarDef<int> VoteRestartGhostPercentage =
-            CVarDef.Create("vote.restart_ghost_percentage", 75, CVar.SERVERONLY);
+            CVarDef.Create("vote.restart_ghost_percentage", 55, CVar.SERVERONLY);
 
         /// <summary>
         ///     See vote.enabled, but specific to preset votes
@@ -1427,7 +1427,7 @@ namespace Content.Shared.CCVar
         /// Is the emergency shuttle allowed to be early launched.
         /// </summary>
         public static readonly CVarDef<bool> EmergencyEarlyLaunchAllowed =
-            CVarDef.Create("shuttle.emergency_early_launch_allowed", true, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.emergency_early_launch_allowed", false, CVar.SERVERONLY);
 
         /// <summary>
         /// How long the emergency shuttle remains docked with the station, in seconds.

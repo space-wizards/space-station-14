@@ -10,7 +10,6 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: full
   - type: Thirst
-  - type: Carriable
   - type: Butcherable
     butcheringType: Spike
     spawned:

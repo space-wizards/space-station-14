@@ -129,11 +129,9 @@ chat-speech-verb-name-monkey = Monkey
 chat-speech-verb-monkey-1 = chimpers
 chat-speech-verb-monkey-2 = screeches
 
-
 chat-speech-verb-name-cluwne = Cluwne
 
 chat-speech-verb-name-parrot = Parrot
-
 chat-speech-verb-parrot-1 = squawks
 chat-speech-verb-parrot-2 = tweets
 chat-speech-verb-parrot-3 = chirps
@@ -152,7 +150,3 @@ chat-speech-verb-name-electricity = Electricity
 chat-speech-verb-electricity-1 = crackles
 chat-speech-verb-electricity-2 = buzzes
 chat-speech-verb-electricity-3 = screeches
-
-chat-speech-verb-name-gondola = Gondola
-chat-speech-verb-gondola-1 = stares
-chat-speech-verb-gondola-2 = breathes

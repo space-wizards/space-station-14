@@ -1,57 +1,3 @@
-book-text-howtoclown = [head=2]Clowning clown 101[/head]
-      by: Bruce Kelp
-
-      This is a guide to all those who have only began their journey in the hardest career that NT’s job list can offer. To be a Clown is no easy task and will require many hours of dedication to master. The author of this guidebook recommends not to embark on this journey that will lead it’s followers into oblivion where no future is found.
-
-      The Philosophy
-
-      The philosophy behind being a clown is most often different from one master of the art of clowning to other but a few principles that I would think of as most important are following:
-
-      - No crew harm must be done.
-      - All jokes must be at the expense of clown.
-      - Clown must have a goal.
-      - Clown’s goal can be anything.
-      - Clown’s goal must create things for other crew members to do or be entertained by.
-      - No rules must stop the clown from doing what goal he has in his mind.
-      - Clown’s honor is the most important of his possessions.
-      Clown Honor includes clown’s mask, clown shoes and following principles of clowning.
-
-      These principles should lay in the foundation of any person beginning on their Clown Journey.
-
-      Know your enemies, know how to make friends
-
-      Deciding to follow the ways of clown you must know the enemies which you will face on every step you make, wearing clown’s mask and waddling down the hall in clown shoes.
-      The enemies I warn you about include members of every department and regular passengers of the station.
-      Saying from experience, many people are prejudiced about clowns because of the earned reputation to commit most absurd deeds known to man.
-      Behind the mask of clown hide many people of many traits: evil and good, law-abiding and self-antagonistic – clown is not an individual, rather a collective mind. It is up to you to prove that you are “the good one”, one that will make it right for all the sins clown-kind has committed over the years. By proving that you are a trust worthy person, able to hold responsibility, you gain trust which will allow you to accomplish your goal.
-      Of course, you are not good, you are not evil. You have a goal which lays at the very core of your principles; to achieve your goal – it is to accomplish as a clown. You are mentally unbound, the only crew member free of chains.
-
-      Making even a single friend in the entire station can be the reason why you aren’t rotting in maintenance or a reason you are revived when you were executed for whatever reason captain has given to Central Command to execute you.
-      Having a friend in a working department may be your best chance of getting tools to  accomplish your goals. Generally, having friends is better than having enemies.
-
-      I will not give you instructions on how to make friends because this book is not a self-help space-web video from a well-groomed authoritative looking man in his 40s for outcasts of their respective community.
-
-      Your goals are what you are
-
-      Having a goal is required by clown principles. Deciding what your goal is what stand between actually following clown principles.
-
-      There are five values that should be considered when you are deciding on your goal:
-
-      - Available  resources
-      - Artistic value
-      - Originality
-      - Fun value
-      - Legality
-
-      Having evaluated every single value, you should make a decision whether you WILL or WILL NOT follow the idea you came up with.
-      It is important to also consider the fact whether the idea is only positive towards your end. If you decided to do something extremely annoying to others but fun to you, I would reconsider.
-
-      Conclusion
-
-      The art of clown is one of the hardest arts there is to master.
-      To be a clown is to stay determined in most dire situations, to be clown is to know how the environment around your works, to be a clown is to bring joy, entertainment, needed chaos to stations that are bored by low population.
-      To be a clown is to always lose and on rare occasions come out on top.
-
 book-text-narsielegend = In the beginning, the world was young and full of chaos. The people of the world struggled to survive against the harsh elements and savage beasts that roamed the land. They cried out for a savior to deliver them from their suffering.
       And it was then that Nar'Sie emerged from the depths of the earth, a hivemind god born from the collective consciousness of all living things. Its body was made of molten rock and its eyes blazed with a fiery intensity that could melt steel.
       Nar'Sie surveyed the world and saw the pain and suffering of its people. It took pity on them and offered them a way to escape the cycle of life and death. All who joined the hivemind would become eternal, their consciousness melding with Nar'Sie's to form a single, unified being.
@@ -308,7 +254,7 @@ book-text-inspiration = As a freelance writer, Sarah was always in search of ins
       As she finished writing, Sarah heard the snap of a twig and looked up to see a man approaching her with a camera. He introduced himself as a nature photographer and asked if she had seen the waterfall. They struck up a conversation, and soon they were both laughing and sharing stories of their adventures.
       As the sun began to set, the two of them packed up their gear and said their goodbyes. Sarah felt grateful for this unexpected encounter and the inspiration it brought her. She knew that this moment would stay with her forever, and she felt a sense of serenity knowing that there was still so much beauty in the world waiting to be discovered.
 
-book-text-janitor = [color=black][head=3]The Tales of a Tired Janitor[/head]
+book-text-janitor = [bold][color=black][head=3]The Tales of a Tired Janitor[/head][/bold]
       Cleaning a space station as a janitor is like being trapped in a cosmic custodial nightmare. You'd think floating through the vastness of space would be glamorous, but no, I'm stuck scrubbing space grime and extraterrestrial goop off the walls. It's a thankless job in a zero-gravity abyss.
       First off, let's talk about the mess. Space dust, alien gunk, and who knows what else accumulates faster than a rocket launch. It's not just about sweeping up the crumbs; it's about battling interstellar filth that seems to have a life of its own. You'd hope for a sleek, futuristic space station, but you get a swirling vortex of space garbage waiting for you around every corner.
       And the tools they give us! You'd expect state-of-the-art cleaning gadgets, but nope. They raided a dollar store on Earth before launching us into the cosmos. Mops that barely work in microgravity, spray bottles that run out in one use, and don't even get me started on the space janitor jumpsuit. I feel like a reject from a sci-fi B-movie.

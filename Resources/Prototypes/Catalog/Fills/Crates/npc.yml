@@ -245,16 +245,6 @@
         - id: MobLizard
 
 - type: entity
-  id: CrateNPCGondola
-  parent: CrateLivestock
-  name: gondola crate
-  description: A crate containing a gondola.
-  components:
-    - type: StorageFill
-      contents:
-        - id: MobGondola
-
-- type: entity
   id: CrateNPCKangaroo
   parent: CrateLivestock
   name: kangaroo crate

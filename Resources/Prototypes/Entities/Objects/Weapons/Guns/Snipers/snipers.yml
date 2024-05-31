@@ -130,22 +130,3 @@
   - type: StaticPrice
     price: 0
 
-- type: entity
-  name: a gun with one bullet
-  parent: BaseWeaponSniper
-  id: WeaponFaithGun
-  description: Have faith in your aim.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Snipers/faithgun.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/faithgun.rsi
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-      - CartridgeMortis
-    capacity: 1
-    proto: CartridgeMortis
-  - type: Gun
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/mortis.ogg

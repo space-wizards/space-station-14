@@ -394,14 +394,14 @@
         prototype: InitialInfected
 
 - type: entity
-  id: LoneOpsSpawn
-  parent: BaseGameRule
   noSpawn: true
+  parent: BaseNukeopsRule
+  id: LoneOpsSpawn
   components:
   - type: StationEvent
     earliestStart: 35
     weight: 5.5
-    minimumPlayers: 10
+    minimumPlayers: 20
     duration: 1
   - type: LoadMapRule
     preloadedGrid: ShuttleStriker
@@ -428,20 +428,19 @@
         prototype: Nukeops
 
 - type: entity
-  id: SleeperAgentsRule
-  parent: BaseGameRule
   noSpawn: true
+  parent: BaseTraitorRule
+  id: SleeperAgentsRule
   components:
   - type: StationEvent
-    earliestStart: 25
+    earliestStart: 30
     weight: 8
     minimumPlayers: 15
-    reoccurrenceDelay: 30
+    maxOccurrences: 1 # can only happen once per round
     startAnnouncement: station-event-communication-interception
     startAudio:
       path: /Audio/Announcements/intercept.ogg
   - type: AlertLevelInterceptionRule
-  - type: TraitorRule
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]
@@ -527,7 +526,7 @@
   components:
     - type: StationEvent
       earliestStart: 0
-      minimumPlayers: 10
+      minimumPlayers: 20
       maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
       weight: 5
     - type: MobReplacementRule

@@ -45,8 +45,6 @@
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
-  - BlueshieldOfficer
-  - NanotrasenRepresentative
   primary: false
   weight: 100
 

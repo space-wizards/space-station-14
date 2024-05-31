@@ -85,6 +85,17 @@
       price: 750
 
 - type: entity
+  parent: BaseComputerCircuitboard
+  id: CargoSaleComputerCircuitboard
+  name: cargo sale computer board
+  description: A computer printed circuit board for a cargo sale computer.
+  components:
+    - type: Sprite
+      state: cpu_supply
+    - type: ComputerBoard
+      prototype: ComputerPalletConsole
+
+- type: entity
   id: CargoBountyComputerCircuitboard
   parent: BaseComputerCircuitboard
   name: cargo bounty computer board
@@ -254,15 +265,6 @@
       state: cpu_command
     - type: ComputerBoard
       prototype: ComputerComms
-
-- type: entity
-  parent: BaseComputerCircuitboard
-  id: WizardCommsComputerCircuitboard
-  name: wizard communications computer board
-  description: A computer printed circuit board for a wizard communications console.
-  components:
-    - type: ComputerBoard
-      prototype: WizardComputerComms
 
 - type: entity
   parent: BaseComputerCircuitboard

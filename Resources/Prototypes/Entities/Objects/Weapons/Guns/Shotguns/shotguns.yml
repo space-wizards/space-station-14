@@ -201,7 +201,7 @@
     deconstructionTarget: null
 
 - type: entity
-  name: sawn-off shogun
+  name: sawn-off shotgun
   parent: WeaponShotgunSawn
   id: WeaponShotgunSawnEmpty
   description: Groovy! Uses .50 shotgun shells.
@@ -283,9 +283,6 @@
   - type: Construction
     graph: ImprovisedShotgunGraph
     node: shotgun
-  - type: Tag
-    tags:
-    - WeaponShotgunImprovised
   - type: StaticPrice
     price: 20
 

@@ -1,5 +1,5 @@
 {
-   "copyright" : "Taken from https://github.com/tgstation/tgstation, modified by marvelousjoker",
+   "copyright" : "Taken from https://github.com/tgstation/tgstation",
    "license" : "CC-BY-SA-3.0",
    "size" : {
       "x" : 32,
@@ -9,10 +9,6 @@
       {
          "directions" : 1,
          "name" : "medibot"
-      },
-      {
-         "directions" : 1,
-         "name" : "powered"
       }
    ],
    "version" : 1

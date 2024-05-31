@@ -376,25 +376,6 @@
         Heat: 10
 
 - type: entity
-  name: spellsword bolt
-  id: SpellswordBolt
-  parent: BaseBullet
-  noSpawn: true
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
-    layers:
-    - state: omnilaser_greyscale
-      shader: unshaded
-      color: orangered
-  - type: Projectile
-    #   soundHit:  Waiting on serv3
-    impactEffect: BulletImpactEffectOrangeDisabler
-    damage:
-      types:
-        Heat: 15
-
-- type: entity
   id: BulletKinetic
   name: kinetic bolt
   parent: BaseBullet

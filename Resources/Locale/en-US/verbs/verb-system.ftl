@@ -17,7 +17,6 @@ verb-categories-buckle = Buckle
 verb-categories-unbuckle = Unbuckle
 verb-categories-rotate = Rotate
 verb-categories-smite = Smite
-verb-categories-polymorph = Polymorph
 verb-categories-tricks = Tricks
 verb-categories-transfer = Set Transfer Amount
 verb-categories-split = Split

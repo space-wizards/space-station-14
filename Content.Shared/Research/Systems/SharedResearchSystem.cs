@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
@@ -134,10 +134,10 @@ public abstract class SharedResearchSystem : EntitySystem
             if (percent < techDiscipline.TierPrerequisites[tier])
                 break;
 
-           /* if (tier >= techDiscipline.LockoutTier &&
+            if (tier >= techDiscipline.LockoutTier &&
                 component.MainDiscipline != null &&
                 techDiscipline.ID != component.MainDiscipline)
-                break;*/
+                break;
             tier++;
         }
 

@@ -1039,21 +1039,6 @@
     state: pda-pirate
 
 - type: entity
-  parent: SyndiPDA
-  id: WizardPDA
-  name: wizard PDA
-  description: Abra Kadabra!
-  components:
-  - type: Pda
-    id: WizardIDCard
-    state: pda-wizard
-  - type: Icon
-    state: pda-wizard
-  - type: PdaBorderColor
-    borderColor: "#46008C"
-    accentVColor: "#01043B"
-
-- type: entity
   parent: BaseMedicalPDA
   id: SyndiAgentPDA
   name: syndicate agent PDA

@@ -180,9 +180,6 @@
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/catears.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 0.80
-    sprintModifier: 1.1
   - type: AddAccentClothing
     accent: OwOAccent
 

@@ -102,7 +102,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void UpdateUI(EntityUid owner, VoiceMaskComponent? component = null)
     {
-        if (!Resolve(owner, ref component, logMissing: false))
+        if (!Resolve(owner, ref component))
         {
             return;
         }

@@ -136,7 +136,6 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
-    - HidesHarpyWings
   - type: ClothingRequiredStepTriggerImmune
     slots: WITHOUT_POCKET
 
@@ -159,10 +158,6 @@
     size: Huge
   - type: ClothingRequiredStepTriggerImmune
     slots: WITHOUT_POCKET
-  - type: Tag
-    tags:
-    - HidesHarpyWings
-  - type: AllowSuitStorage
 
 - type: entity
   parent: ClothingOuterBase

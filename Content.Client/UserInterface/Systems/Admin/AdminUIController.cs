@@ -177,12 +177,15 @@ public sealed class AdminUIController : UIController,
         }
     }
 
-    private void PlayerTabEntryKeyBindDown(PlayerTabEntry entry, GUIBoundKeyEventArgs args)
+    private void PlayerTabEntryKeyBindDown(GUIBoundKeyEventArgs args, ListData? data)
     {
-        if (entry.PlayerEntity == null)
+        if (data is not PlayerListData {Info: var info})
             return;
 
-        var entity = entry.PlayerEntity.Value;
+        if (info.NetEntity == null)
+            return;
+
+        var entity = info.NetEntity.Value;
         var function = args.Function;
 
         if (function == EngineKeyFunctions.UIClick)

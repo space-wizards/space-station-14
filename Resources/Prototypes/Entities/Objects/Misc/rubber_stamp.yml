@@ -271,16 +271,3 @@
     stampState: "paper_stamp-detective"
   - type: Sprite
     state: stamp-detective
-
-- type: entity
-  name: wizards's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampWizard
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-wizard
-    stampedColor: "#700098"
-    stampState: "paper_stamp-wizard"
-  - type: Sprite
-    state: stamp-wizard

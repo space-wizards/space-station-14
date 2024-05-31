@@ -34,9 +34,6 @@
         - ToyMouse
         - PlushieDiona
         - PlushieArachind
-        - PlushieBlackburna
-        - PlushiePlyushkina
-        - PlushieLouie
       chance: 0.5
       offset: 0.2
 
@@ -104,7 +101,7 @@
       - ToyFigurineLawyer
       - ToyFigurineCargoTech
       - ToyFigurineSalvage
-      - ToyFigurineQuartermaster
+      - ToyFigurineQuartermaster   
       - ToyFigurineChiefEngineer
       - ToyFigurineAtmosTech
       - ToyFigurineEngineer

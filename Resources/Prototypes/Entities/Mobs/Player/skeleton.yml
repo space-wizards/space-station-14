@@ -9,31 +9,6 @@
     interactSuccessSound: /Audio/Effects/thudswoosh.ogg
     messagePerceivedByOthers: hugging-success-generic-others
 
-
-- type: entity
-  name: angry skeleton
-  parent: MobSkeletonPerson
-  id: MobSkeletonAngry
-  components:
-  - type: GhostRole
-    name: ghost-role-information-skeleton-pirate-name
-    description: ghost-role-information-skeleton-pirate-description
-  - type: GhostTakeoverAvailable
-  - type: RandomHumanoidAppearance
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      75: Critical
-      100: Dead
-  - type: TransferMindOnGib
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:GibBehavior { }
-
 - type: entity
   name: skeleton pirate
   parent: MobSkeletonPerson

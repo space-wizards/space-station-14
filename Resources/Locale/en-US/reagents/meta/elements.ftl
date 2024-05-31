@@ -61,15 +61,6 @@ reagent-desc-sodium = A silvery-white alkali metal. Highly reactive in its pure 
 reagent-name-uranium = uranium
 reagent-desc-uranium = A grey metallic chemical element in the actinide series, weakly radioactive.
 
-reagent-name-uranium-235 = uranium-235
-reagent-desc-uranium-235 = A scarce isotope of uranium. Grey, metallic, and weakly radioactive.
-
-reagent-name-uranium-238 = uranium-238
-reagent-desc-uranium-238 = A common isotope of uranium. Grey, metallic, and weakly radioactive.
-
-reagent-name-uranium-234 = uranium-234
-reagent-desc-uranium-234 = An extremely scarce isotope of uranium. Grey, metallic, and extemely radioactive.
-
 reagent-name-bananium = bananium
 reagent-desc-bananium = A yellow radioactive organic solid.
 

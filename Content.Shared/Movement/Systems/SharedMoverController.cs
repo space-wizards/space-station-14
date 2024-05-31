@@ -23,7 +23,6 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
-using Content.Shared.StepTrigger.Components;
 
 namespace Content.Shared.Movement.Systems
 {
@@ -47,7 +46,6 @@ namespace Content.Shared.Movement.Systems
         [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
         [Dependency] private   readonly SharedTransformSystem _transform = default!;
         [Dependency] private   readonly TagSystem _tags = default!;
-        [Dependency] private   readonly IEntityManager _entities = default!;
 
         protected EntityQuery<InputMoverComponent> MoverQuery;
         protected EntityQuery<MobMoverComponent> MobMoverQuery;

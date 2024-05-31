@@ -31,15 +31,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
 
-    public const int MaxPicks = 20;
-
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<TraitorRuleComponent, AfterAntagEntitySelectedEvent>(AfterEntitySelected);
 
-        SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
         SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
     }
 
@@ -67,7 +64,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
     }
 
-    public bool MakeTraitor(EntityUid traitor, TraitorRuleComponent component, bool giveUplink = true, bool giveObjectives = true)
+    public bool MakeTraitor(EntityUid traitor, TraitorRuleComponent component, bool giveUplink = true)
     {
         //Grab the mind if it wasnt provided
         if (!_mindSystem.TryGetMind(traitor, out var mindId, out var mind))
@@ -112,37 +109,16 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         _npcFaction.RemoveFaction(traitor, component.NanoTrasenFaction, false);
         _npcFaction.AddFaction(traitor, component.SyndicateFaction);
 
-        // Give traitors their objectives
-        if (giveObjectives)
-        {
-            var difficulty = 0f;
-            for (var pick = 0; pick < MaxPicks && component.MaxDifficulty > difficulty; pick++)
-            {
-                var objective = _objectives.GetRandomObjective(mindId, mind, component.ObjectiveGroup);
-                if (objective == null)
-                    continue;
-
-                _mindSystem.AddObjective(mindId, mind, objective.Value);
-                var adding = Comp<ObjectiveComponent>(objective.Value).Difficulty;
-                difficulty += adding;
-                Log.Debug($"Added objective {ToPrettyString(objective):objective} with {adding} difficulty");
-            }
-        }
-
         return true;
     }
 
-    private void OnObjectivesTextGetInfo(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextGetInfoEvent args)
-    {
-        args.Minds = _antag.GetAntagMindEntityUids(uid);
-        args.AgentName = Loc.GetString("traitor-round-end-agent-name");
-    }
-
+    // TODO: AntagCodewordsComponent
     private void OnObjectivesTextPrepend(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextPrependEvent args)
     {
         args.Text += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", comp.Codewords)));
     }
 
+    // TODO: figure out how to handle this? add priority to briefing event?
     private string GenerateBriefing(string[] codewords, Note[]? uplinkCode, string? objectiveIssuer = null)
     {
         var sb = new StringBuilder();

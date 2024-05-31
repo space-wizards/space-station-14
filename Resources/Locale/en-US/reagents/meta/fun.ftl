@@ -27,7 +27,3 @@ reagent-desc-laughter = Some say that this is the best medicine, but recent stud
 
 reagent-name-weh = juice that makes you Weh
 reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
-
-reagent-name-tranquility = tranquility
-reagent-desc-tranquility = You feel oddly calm...
-reagent-popup-tranquility = You feel oddly calm...

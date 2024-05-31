@@ -754,9 +754,6 @@
     sprite: Clothing/Head/Hardsuits/mime.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/mime.rsi
-  - type: Tag
-    tags:
-    - WhitelistChameleon
 
 #Santas Hardsuit
 - type: entity

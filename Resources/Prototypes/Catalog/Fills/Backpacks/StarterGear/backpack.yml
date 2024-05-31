@@ -17,7 +17,6 @@
       - id: BoxHug
       - id: RubberStampClown
       - id: CrayonRainbow
-      - id: BookHowToClown
 
 - type: entity
   noSpawn: true
@@ -214,8 +213,7 @@
       - id: BoxSurvival
       - id: Bible
       - id: RubberStampChaplain
-      - id: WeaponGodGun
-
+  
 - type: entity
   noSpawn: true
   parent: ClothingBackpack
@@ -225,7 +223,6 @@
     contents:
       - id: BoxSurvival
       - id: RubberStampLawyer
-
 
 - type: entity
   noSpawn: true

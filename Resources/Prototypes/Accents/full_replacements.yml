@@ -174,9 +174,3 @@
   - accent-words-nymph-2
   - accent-words-nymph-3
   - accent-words-nymph-4
-
-- type: accent
-  id: gondola
-  fullReplacements:
-  - accent-words-gondola-1
-

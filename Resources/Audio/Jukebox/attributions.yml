@@ -1,16 +1,16 @@
 - files: ["sector11.ogg"]
   license: "CC-BY-NC-SA-3.0"
-  copyright: "-Sector11 by MashedByMachines. Converted in mono OGG."
+  copyright: "-Sector11 by MashedByMachines. Converted to mono OGG."
   source: "https://www.newgrounds.com/audio/listen/312622"
 
 - files: ["mod.flip-flap.ogg"]
   license: "Custom"
-  copyright: "Flip Flap by X-ceed is licensed under a short but clear license (see flip-flap.txt in Audio/Lobby) and is free for non-commercial use. Converted in mono OGG."
+  copyright: "Flip Flap by X-ceed is licensed under a short but clear license (see flip-flap.txt in Audio/Lobby) and is free for non-commercial use. Converted to mono OGG."
   source: "http://aminet.net/package/mods/xceed/Flipflap"
 
 - files: ["title3.ogg"]
   license: "CC-BY-NC-SA-3.0"
-  copyright: "Title3 by Cuboos. It is a remix of the song 'Tintin on the Moon'. Converted in mono OGG."
+  copyright: "Title3 by Cuboos. It is a remix of the song 'Tintin on the Moon'. Converted to mono OGG."
   source: "https://www.youtube.com/watch?v=YKVmXn-Gv0M"
 
 - files:
@@ -18,58 +18,10 @@
   - "drifting.ogg"
   - "starlight.ogg"
   license: "CC-BY-3.0"
-  copyright: "Constellations by Qwertyquerty. Converted in mono OGG."
+  copyright: "Constellations by Qwertyquerty. Converted to mono OGG."
   source: "https://www.youtube.com/channel/UCPYbhBUGhH7n_G4HLK2YipQ"
 
 - files: ["sunset.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Sunset by PigeonBeans. Exported in Mono OGG."
   source: "https://soundcloud.com/pigeonbeans/sunset"
-
-- files: ["A_Good_Man_Is_Hard_to_Find.ogg"]
-  license: "Custom"
-  copyright: "Unknown"
-  source: "https://x329436.invisionservice.com/"
-
-- files: ["Ain_t_Misbehavin_.ogg"]
-  license: "Custom"
-  copyright: "Unknown"
-  source: "https://x329436.invisionservice.com/"
-
-- files: ["And_All_the_While_I_m_Loving_You.ogg"]
-  license: "Custom"
-  copyright: "Unknown"
-  source: "https://x329436.invisionservice.com/"
-
-  #I just got told that the jukebox is frozen on upstream so all songs past this point are for goobstation and copyright does NOT matter (yay)
-
-- files: ["Yankee_Doodle.ogg"]
-  license: "Custom"
-  copyright: "Unknown"
-  source: "https://x329436.invisionservice.com/"
-
-- files: ["Worry_Worry_Worry.ogg"]
-  license: "Custom"
-  copyright: "Unknown"
-  source: "https://x329436.invisionservice.com/"
-
-- files: ["Ac-Cent-Tchu-Ate_The_Positive.ogg"]
-  license: "Custom"
-  copyright: "Unknown"
-  source: "https://x329436.invisionservice.com/"
-
-- files: ["Big_Iron.ogg"]
-  license: "Custom"
-  copyright: "Unknown"
-  source: "https://x329436.invisionservice.com/"
-
-- files: ["Blue_Moon_-_1998_Digital_Remaster.ogg"]
-  license: "Custom"
-  copyright: "Unknown"
-  source: "https://x329436.invisionservice.com/"
-
-- files: ["Ain_t_That_A_Kick_In_The_Head.ogg"]
-  license: "Custom"
-  copyright: "Unknown"
-  source: "https://x329436.invisionservice.com/"
-

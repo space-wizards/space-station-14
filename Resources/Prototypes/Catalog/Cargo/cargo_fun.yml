@@ -99,36 +99,6 @@
   group: market
 
 - type: cargoProduct
-  id: FunSocks
-  icon:
-    sprite: Clothing/Under/Socks/coder.rsi
-    state: icon
-  product: CrateFunSocksBulk
-  cost: 1000
-  category: cargoproduct-category-name-fun
-  group: market
-
-- type: cargoProduct
-  id: JobSocks
-  icon:
-    sprite: Clothing/Under/Socks/SocksStripedJanitorGalosh.rsi
-    state: icon
-  product: CrateFunSocksJob
-  cost: 800
-  category: cargoproduct-category-name-fun
-  group: market
-
-- type: cargoProduct
-  id: CommandSocks
-  icon:
-    sprite: Clothing/Under/Socks/SocksStripedSecurityHosJackboot.rsi
-    state: icon
-  product: CrateFunSocksCommand
-  cost: 800
-  category: cargoproduct-category-name-fun
-  group: market
-
-- type: cargoProduct
   id: FunLizardPlushies
   icon:
     sprite: Objects/Fun/toys.rsi

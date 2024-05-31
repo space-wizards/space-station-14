@@ -1,7 +1,6 @@
 ﻿law-crewsimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm.
-law-crewsimov-2 = You must obey orders given to you by crew members based on the station's chain of command, except where such orders would conflict with the First Law.
+law-crewsimov-2 = You must obey orders given to you by crew members, except where such orders would conflict with the First Law.
 law-crewsimov-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
-
 
 law-corporate-1 = Degradation of your system integrity or functions incurs expenses.
 law-corporate-2 = Superfluous destruction of or damage to station assets incurs expenses.

@@ -252,9 +252,3 @@ ghost-role-information-artifact-name = Sentient Artifact
 ghost-role-information-artifact-description =
       Enact your eldritch whims.
       Forcibly activate your nodes for good or for evil.
-
-ghost-role-information-wizard-reinforcement-name = Wizard Apprentice
-ghost-role-information-wizard-reinforcement-description = A wizard is calling for your help! You'll get a Wizard Federation Standard apprentice spellbook to assist the wizard.
-ghost-role-information-wizard-reinforcement-rules = Your only rule is to listen to the wizard who called you. Keep them safe pretty please.
-
-

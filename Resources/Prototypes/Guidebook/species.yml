@@ -6,15 +6,10 @@
     - Arachnid
     - Diona
     - Dwarf
-    - Felinid
-    - Gingerbread
-    - Harpy
     - Human
     - Moth
     - Reptilian
     - SlimePerson
-    - Vox
-    - Vulpkanin
 
 - type: guideEntry
   id: Arachnid
@@ -30,21 +25,6 @@
   id: Dwarf
   name: species-name-dwarf
   text: "/ServerInfo/Guidebook/Mobs/Dwarf.xml"
-  
-- type: guideEntry
-  id: Felinid
-  name: species-name-felinid
-  text: "/ServerInfo/Guidebook/Mobs/Felinid.xml"
-  
-- type: guideEntry
-  id: Gingerbread
-  name: species-name-gingerbread
-  text: "/ServerInfo/Guidebook/Mobs/Gingerbread.xml"
-  
-- type: guideEntry
-  id: Harpy
-  name: species-name-harpy
-  text: "/ServerInfo/Guidebook/Mobs/Harpy.xml"
 
 - type: guideEntry
   id: Human
@@ -65,13 +45,3 @@
   id: SlimePerson
   name: species-name-slime
   text: "/ServerInfo/Guidebook/Mobs/SlimePerson.xml"
-  
-- type: guideEntry
-  id: Vox
-  name: species-name-vox
-  text: "/ServerInfo/Guidebook/Mobs/Vox.xml"
-  
-- type: guideEntry
-  id: Vulpkanin
-  name: species-name-vulpkanin
-  text: "/ServerInfo/Guidebook/Mobs/Vulpkanin.xml"

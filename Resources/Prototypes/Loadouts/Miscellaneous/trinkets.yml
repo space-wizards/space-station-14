@@ -18,7 +18,7 @@
   storage:
     back:
     - PlushieLizard
-
+    
 - type: loadout
   id: PlushieSpaceLizard
   equipment: PlushieSpaceLizard
@@ -208,11 +208,11 @@
     - ClothingNeckAutismPin
 
 - type: loadout
-  id: EmergencyNitrogenTank
-  equipment: EmergencyNitrogenTank
+  id: ClothingNeckGoldAutismPin
+  equipment: ClothingNeckGoldAutismPin
 
 - type: startingGear
-  id: EmergencyNitrogenTank
+  id: ClothingNeckGoldAutismPin
   storage:
     back:
-    - EmergencyNitrogenTank
+    - ClothingNeckGoldAutismPin

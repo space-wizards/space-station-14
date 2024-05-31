@@ -100,7 +100,7 @@
     id: ERTEngineerPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltStorageWaistbag
-    pocket1: WeaponERTGodGun
+    pocket1: Flare
     pocket2: DrinkWaterBottleFull
 
 - type: startingGear
@@ -118,7 +118,7 @@
     id: ERTChaplainPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltStorageWaistbag
-    pocket1: WeaponERTGodGun
+    pocket1: Flare
     pocket2: DrinkWaterBottleFull
 
 # Engineer

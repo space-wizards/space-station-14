@@ -39,9 +39,3 @@
   name: ui-options-hud-theme-ashen
   path: Ashen
   order: 5
-
-- type: hudTheme
-  id: SS14GlassTheme
-  name: ui-options-hud-theme-glass
-  path: Glass
-  order: 7
