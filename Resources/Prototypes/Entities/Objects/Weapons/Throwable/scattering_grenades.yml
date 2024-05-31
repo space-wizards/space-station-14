@@ -29,6 +29,8 @@
     whitelist:
       tags:
         - GrenadeFlashBang
+    distance: 6
+    velocity: 6
   - type: ClusterGrenadeVisuals
     state: base
   - type: Sprite
@@ -54,8 +56,8 @@
       tags:
         - GrenadeFlashBang
     fillPrototype: GrenadeFlashBang
-    distance: 7
-    velocity: 7
+    distance: 6
+    velocity: 6
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
@@ -130,7 +132,7 @@
     capacity: 30
     delayBeforeTriggerContents: 60
     randomDistance: true
-    randomThrowDistanceMax: 6
+    randomThrowDistanceMax: 3
   - type: DamageOnLand
     damage:
       types:
