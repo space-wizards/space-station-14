@@ -252,7 +252,7 @@ public sealed class RespiratorSystem : EntitySystem
             foreach (var effect in entry.Effects)
             {
                 if (effect is HealthChange health)
-                    toxic |= CanMetabolize(health) && health.Damage.Any();
+                    toxic |= CanMetabolize(health) && health.Damage.AnyPositive();
                 else if (effect is Oxygenate oxy && CanMetabolize(oxy))
                     saturation += oxy.Factor * quantity.Float();
             }
