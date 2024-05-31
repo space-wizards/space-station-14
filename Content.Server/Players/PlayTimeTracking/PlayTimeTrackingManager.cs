@@ -447,7 +447,7 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
         public readonly HashSet<string> DbTrackersDirty = new();
     }
 
-    public void PostInject()
+    void IPostInjectInit.PostInject()
     {
         _userDb.AddOnLoadPlayer(LoadData);
         _userDb.AddOnPlayerDisconnect(ClientDisconnected);
