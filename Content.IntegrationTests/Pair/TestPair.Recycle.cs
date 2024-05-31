@@ -40,6 +40,8 @@ public sealed partial class TestPair : IAsyncDisposable
             TestMap = null;
         }
 
+        await RevertModifiedCvars();
+
         var usageTime = Watch.Elapsed;
         Watch.Restart();
         await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: Test borrowed pair {Id} for {usageTime.TotalMilliseconds} ms");
@@ -132,6 +134,7 @@ public sealed partial class TestPair : IAsyncDisposable
         if (gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
         {
             await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting round.");
+            Server.CfgMan.SetCVar(CCVars.GameDummyTicker, false);
             Assert.That(gameTicker.DummyTicker, Is.False);
             Server.CfgMan.SetCVar(CCVars.GameLobbyEnabled, true);
             await Server.WaitPost(() => gameTicker.RestartRound());

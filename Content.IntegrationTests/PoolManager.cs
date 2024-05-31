@@ -270,6 +270,8 @@ public static partial class PoolManager
             $"{nameof(GetServerClientPair)}: Retrieving pair {pair.Id} from pool took {poolRetrieveTime.TotalMilliseconds} ms");
         await testOut.WriteLineAsync(
             $"{nameof(GetServerClientPair)}: Returning pair {pair.Id}");
+
+        pair.ClearModifiedCvars();
         pair.Settings = poolSettings;
         pair.TestHistory.Add(currentTestName);
         pair.Watch.Restart();
