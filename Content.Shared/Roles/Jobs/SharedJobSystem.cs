@@ -146,8 +146,10 @@ public abstract class SharedJobSystem : EntitySystem
 
     public bool CanBeAntag(ICommonSession player)
     {
+        // If the player does not have any mind associated with them (e.g., has not spawned in or is in the lobby), then
+        // they are eligible to be given an antag role/entity.
         if (_playerSystem.ContentData(player) is not { Mind: { } mindId })
-            return false;
+            return true;
 
         if (!MindTryGetJob(mindId, out _, out var prototype))
             return true;
