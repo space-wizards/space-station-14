@@ -78,7 +78,7 @@ public sealed partial class RateReactionPrototype : BaseReactionPrototype, IProt
     }
 }
 
-[DataRecord, NetSerializable]
+[DataRecord, NetSerializable, Serializable]
 public record struct RateReaction(
     float Rate,
     int Priority,

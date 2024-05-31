@@ -54,7 +54,7 @@ public sealed partial class AbsorptionPrototype : BaseReactionPrototype, IProtot
     }
 }
 
-[DataRecord, NetSerializable]
+[DataRecord, NetSerializable, Serializable]
 public record struct AbsorptionReaction(
     float Rate,
     int Priority,
