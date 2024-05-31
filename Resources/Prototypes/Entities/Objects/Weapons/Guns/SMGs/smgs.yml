@@ -1,10 +1,10 @@
-- type: entity
-  name: BaseSMG
-  parent: BaseItem
-  id: BaseWeaponSubMachineGun
-  description: A rooty tooty point and shooty.
-  abstract: true
-  components:
+# - type: entity
+#   name: BaseSMG
+#   parent: BaseItem
+#   id: BaseWeaponSubMachineGun
+#   description: A rooty tooty point and shooty.
+#   abstract: true
+#   components:
   # - type: Sprite
   # - type: Item
   #   size: Large
@@ -14,7 +14,7 @@
   #   slots:
   #   - Back
   #   - suitStorage
-  - type: AmmoCounter
+  # - type: AmmoCounter
   # - type: Gun
   #   minAngle: 2
   #   maxAngle: 16
@@ -27,31 +27,31 @@
   #   - FullAuto
   #   soundGunshot:
   #     path: /Audio/Weapons/Guns/Gunshots/smg.ogg
-  - type: ChamberMagazineAmmoProvider
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazinePistolSubMachineGun
-        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazinePistolSubMachineGun
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgePistol
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgePistol
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
+  # - type: ChamberMagazineAmmoProvider
+  #   soundRack:
+  #     path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+  # - type: ItemSlots
+  #   slots:
+  #     gun_magazine:
+  #       name: Magazine
+  #       startingItem: MagazinePistolSubMachineGun
+  #       insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+  #       ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+  #       priority: 2
+  #       whitelist:
+  #         tags:
+  #           - MagazinePistolSubMachineGun
+  #     gun_chamber:
+  #       name: Chamber
+  #       startingItem: CartridgePistol
+  #       priority: 1
+  #       whitelist:
+  #         tags:
+  #           - CartridgePistol
+  # - type: ContainerContainer
+  #   containers:
+  #     gun_magazine: !type:ContainerSlot
+  #     gun_chamber: !type:ContainerSlot
   # - type: StaticPrice
   #   price: 500
 
@@ -59,7 +59,7 @@
   name: Atreides
   parent:
   - BaseGunLarge
-  - BaseWeaponSubMachineGun
+  - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunAtreides
   description: Pla-ket-ket-ket-ket! Uses .35 auto ammo.
   components:
@@ -95,7 +95,7 @@
   parent:
   - BaseGunLarge
   - BaseGunWieldable
-  - BaseWeaponSubMachineGun
+  - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunC20r
   description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.
   components:
@@ -141,7 +141,7 @@
   parent:
   - BaseGunLarge
   - BaseGunWieldable
-  - BaseWeaponSubMachineGun
+  - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunDrozd
   description: An excellent fully automatic Heavy SMG.
   components:
@@ -202,7 +202,7 @@
   name: Vector
   parent:
   - BaseGunLarge
-  - BaseWeaponSubMachineGun
+  - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunVector
   suffix: Deprecated use Drozd
   description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
@@ -258,7 +258,7 @@
   name: WT550
   parent:
   - BaseGunLarge
-  - BaseWeaponSubMachineGun
+  - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunWt550
   description: An excellent SMG, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo.
   components:
