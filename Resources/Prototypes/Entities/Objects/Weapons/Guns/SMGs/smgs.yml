@@ -1,7 +1,7 @@
 # Atreides
 - type: entity
   parent:
-  - BaseGunLarge
+  - BaseGunMedium
   - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunAtreides
   name: Atreides
@@ -14,8 +14,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    size: Large
   - type: Gun
     fireRate: 10
     minAngle: 2
@@ -37,7 +35,7 @@
 # C-20r sub machine gun
 - type: entity
   parent:
-  - BaseGunLarge
+  - BaseGunMedium
   - BaseGunWieldable
   - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunC20r
@@ -51,8 +49,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
   - type: GunWieldBonus
@@ -81,7 +77,7 @@
 # Drozd
 - type: entity
   parent:
-  - BaseGunLarge
+  - BaseGunMedium
   - BaseGunWieldable
   - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunDrozd
@@ -95,8 +91,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
   - type: GunWieldBonus
@@ -121,7 +115,7 @@
 # Vector [Deprecated use Drozd]
 - type: entity
   parent:
-  - BaseGunLarge
+  - BaseGunMedium
   - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunVector
   name: Vector
@@ -135,8 +129,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/vector.rsi
   - type: Gun
@@ -178,7 +170,7 @@
 # WT550
 - type: entity
   parent:
-  - BaseGunLarge
+  - BaseGunMedium
   - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunWt550
   name: WT550
@@ -197,8 +189,6 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
-    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
   - type: ChamberMagazineAmmoProvider
