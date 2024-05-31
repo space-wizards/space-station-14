@@ -2,6 +2,7 @@
   abstract: true
   parent: MarkerBase
   id: BaseAntagSpawner
+  name: ghost role spawn point
   components:
   - type: GhostRole
     raffle:
@@ -95,7 +96,6 @@
   noSpawn: true
   parent: BaseAntagSpawner
   id: SpawnPointLoneNukeOperative
-  name: ghost role spawn point
   components:
   - type: GhostRole
     name: ghost-role-information-loneop-name
@@ -136,20 +136,14 @@
     description: roles-antag-nuclear-operative-objective
 
 - type: entity
-  parent: MarkerBase
-  id: SpawnPointGhostDragon
   noSpawn: true
-  name: ghost role spawn point
-  suffix: dragon
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostDragon
   components:
   - type: GhostRole
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
     rules: ghost-role-component-default-rules
-    raffle:
-      settings: default
-  - type: GhostRoleMobSpawner
-    prototype: MobDragon
   - type: Sprite
     layers:
     - state: green
