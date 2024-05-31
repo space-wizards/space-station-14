@@ -33,6 +33,21 @@
     - Belt
     - suitStorage
 
+# MEDIUM
+# A basic template for a large gun that can be equipped in the back slot.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunMedium
+  components:
+  - type: Item
+    size: Large
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+
 # LARGE
 # A basic template for a gun that is large enough to not fit well in bags and be equipped on the back.
 - type: entity
