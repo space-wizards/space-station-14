@@ -165,12 +165,12 @@
   physicalDesc: reagent-physical-desc-dark-brown
   plantMetabolism:
     - !type:PlantAdjustHealth
-      amount: -3
+      amount: -2
     - !type:PlantAdjustSeeds
-      prob: 0.1
+      prob: 0.25
       amount: 1
     - !type:PlantAdjustPotency
-      amount: -7
+      amount: -3 # Match this with current rate of Robust Harvest potency increase
 
 - type: reagent
   id: WeedKiller
