@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Surgery tools can be placed in medical belt.
-    type: Tweak
-  - message: Lantern can be placed in utility belt.
-    type: Tweak
-  - message: Hand labeler can be placed in utility and botanical belt
-    type: Tweak
-  id: 6149
-  time: '2024-03-13T18:55:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26085
 - author: wafehling
   changes:
   - message: The trading outpost now has dedicated buy-only and sell-only pallets.
@@ -3863,3 +3852,11 @@
   id: 6648
   time: '2024-05-31T01:59:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28029
+- author: EmoGarbage404
+  changes:
+  - message: Fixed latejoin antagonists not respecting antag preferences (for real
+      this time)
+    type: Fix
+  id: 6649
+  time: '2024-05-31T02:06:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28430
