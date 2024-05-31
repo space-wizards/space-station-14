@@ -76,6 +76,7 @@ namespace Content.Shared.Interaction
         private EntityQuery<WallMountComponent> _wallMountQuery;
         private EntityQuery<UseDelayComponent> _delayQuery;
         private EntityQuery<ActivatableUIComponent> _uiQuery;
+        private EntityQuery<ComplexInteractionComponent> _complexInteractionQuery;
 
         private const CollisionGroup InRangeUnobstructedMask = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
@@ -98,6 +99,7 @@ namespace Content.Shared.Interaction
             _wallMountQuery = GetEntityQuery<WallMountComponent>();
             _delayQuery = GetEntityQuery<UseDelayComponent>();
             _uiQuery = GetEntityQuery<ActivatableUIComponent>();
+            _complexInteractionQuery = GetEntityQuery<ComplexInteractionComponent>();
 
             SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
             SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
@@ -1264,7 +1266,7 @@ namespace Content.Shared.Interaction
         /// Gets the entity that is currently being "used" for the interaction.
         /// In most cases, this refers to the entity in the character's active hand.
         /// </summary>
-        /// <returns>if there is an entity being used</returns>
+        /// <returns>If there is an entity being used.</returns>
         public bool TryGetUsedEntity(EntityUid user, [NotNullWhen(true)] out EntityUid? used, bool checkCanUse = true)
         {
             var ev = new GetUsedEntityEvent();
@@ -1290,7 +1292,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool SupportsComplexInteractions(EntityUid user)
         {
-            return HasComp<ComplexInteractionComponent>(user);
+            return _complexInteractionQuery.HasComp(user);
         }
     }
 
