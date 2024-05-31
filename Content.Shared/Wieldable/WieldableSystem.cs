@@ -97,7 +97,8 @@ public sealed class WieldableSystem : EntitySystem
         if (!component.Wielded)
             return;
 
-        TryUnwield(uid, component, args.User);
+        if(TryComp(args.User, out HandsComponent? hands) && hands.Hands.Count == 2)
+            TryUnwield(uid, component, args.User);
     }
 
     private void OnGunRefreshModifiers(Entity<GunWieldBonusComponent> bonus, ref GunRefreshModifiersEvent args)
