@@ -89,7 +89,7 @@ public sealed class ScatteringGrenadeSystem : EntitySystem
         while (query.MoveNext(out var uid, out var component))
         {
             var totalCount = component.Container.ContainedEntities.Count + component.UnspawnedCount;
-            
+
             if (component.IsTriggered && totalCount > 0)
             {
                 var grenadeCoord = _transformSystem.GetMapCoordinates(uid);
