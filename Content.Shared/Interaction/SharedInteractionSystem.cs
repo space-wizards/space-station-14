@@ -159,7 +159,7 @@ namespace Content.Shared.Interaction
             if (uiComp == null)
                 return;
 
-            if (uiComp.SingleUser && uiComp.CurrentSingleUser != ev.Actor)
+            if (uiComp.SingleUser && uiComp.CurrentSingleUser != null && uiComp.CurrentSingleUser != ev.Actor)
             {
                 ev.Cancel();
                 return;

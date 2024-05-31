@@ -104,6 +104,7 @@ public partial struct AntagSelectionDefinition()
 
     /// <summary>
     /// Whether or not players should be picked to inhabit this antag or not.
+    /// If no players are left and <see cref="SpawnerPrototype"/> is set, it will make a ghost role.
     /// </summary>
     [DataField]
     public bool PickPlayer = true;
