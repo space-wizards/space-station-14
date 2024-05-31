@@ -1,9 +1,10 @@
+# Atreides
 - type: entity
-  name: Atreides
   parent:
   - BaseGunLarge
   - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunAtreides
+  name: Atreides
   description: Pla-ket-ket-ket-ket! Uses .35 auto ammo.
   components:
   - type: Sprite
@@ -33,13 +34,14 @@
     zeroVisible: true
   - type: Appearance
 
+# C-20r sub machine gun
 - type: entity
-  name: C-20r sub machine gun
   parent:
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunC20r
+  name: C-20r sub machine gun
   description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.
   components:
   - type: Sprite
@@ -76,13 +78,14 @@
     zeroVisible: true
   - type: Appearance
 
+# Drozd
 - type: entity
-  name: Drozd
   parent:
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunDrozd
+  name: Drozd
   description: An excellent fully automatic Heavy SMG.
   components:
   - type: Sprite
@@ -115,12 +118,13 @@
     zeroVisible: true
   - type: Appearance
 
+# Vector [Deprecated use Drozd]
 - type: entity
-  name: Vector
   parent:
   - BaseGunLarge
   - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunVector
+  name: Vector
   suffix: Deprecated use Drozd
   description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
   components:
@@ -171,12 +175,13 @@
     zeroVisible: true
   - type: Appearance
 
+# WT550
 - type: entity
-  name: WT550
   parent:
   - BaseGunLarge
   - BaseGunSubMachineGunMag
   id: WeaponSubMachineGunWt550
+  name: WT550
   description: An excellent SMG, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo.
   components:
   - type: Sprite
