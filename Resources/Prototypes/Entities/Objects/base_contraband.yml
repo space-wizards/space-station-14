@@ -1,11 +1,13 @@
 ﻿- type: entity
   id: BaseSyndicateContraband
+  abstract: true
   components:
   - type: ContrabandExamine
     severity: Syndicate
 
 - type: entity
   id: BaseMinorContraband
+  abstract: true
   components:
   - type: ContrabandExamine
     severity: Minor

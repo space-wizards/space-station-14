@@ -49,8 +49,8 @@
 
 # Uplinks
 - type: entity
-  parent: BaseItem
-  id: [BaseUplinkRadio, BaseSyndicateContraband]
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BaseUplinkRadio
   name: syndicate uplink
   description: Suspiciously looking old radio...
   suffix: Empty
