@@ -53,13 +53,10 @@
     size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
-  # - type: Wieldable
   - type: GunWieldBonus
     minAngle: -19
     maxAngle: -16
   - type: Gun
-    # minAngle: 21
-    # maxAngle: 32
     fireRate: 8
     angleIncrease: 3
     angleDecay: 16
@@ -112,24 +109,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazinePistolSubMachineGun
-        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-          - MagazinePistolSubMachineGun
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgePistol
-        priority: 1
-        whitelist:
-          tags:
-          - CartridgePistol
   - type: MagazineVisuals
     magState: mag
     steps: 1
