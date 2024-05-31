@@ -89,7 +89,7 @@
 - type: entity
   id: MedkitCombatFilled
   suffix: Filled
-  parent: MedkitCombat
+  parent: [MedkitCombat, BaseSyndicateContraband]
   components:
   - type: StorageFill
     contents:

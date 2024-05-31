@@ -711,7 +711,7 @@
       sprite: Clothing/Uniforms/Jumpsuit/lawyergood.rsi
 
 - type: entity
-  parent: UnsensoredClothingUniformBase
+  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
   id: ClothingUniformJumpsuitPyjamaSyndicateBlack
   name: black syndicate pyjamas
   description: For those long nights in perma.
@@ -722,7 +722,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicateblack.rsi
 
 - type: entity
-  parent: UnsensoredClothingUniformBase
+  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
   id: ClothingUniformJumpsuitPyjamaSyndicatePink
   name: pink syndicate pyjamas
   description: For those long nights in perma.
@@ -733,7 +733,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatepink.rsi
 
 - type: entity
-  parent: UnsensoredClothingUniformBase
+  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
   id: ClothingUniformJumpsuitPyjamaSyndicateRed
   name: red syndicate pyjamas
   description: For those long nights in perma.
@@ -788,7 +788,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/hosformal.rsi
 
 - type: entity
-  parent: UnsensoredClothingUniformBase
+  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
   id: ClothingUniformJumpsuitOperative
   name: operative jumpsuit
   description: Uniform for elite syndicate operatives performing tactical operations in deep space.

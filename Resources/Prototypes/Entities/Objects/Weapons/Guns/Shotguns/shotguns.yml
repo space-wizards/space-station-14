@@ -46,7 +46,7 @@
 - type: entity
   name: Bulldog
   # Don't parent to BaseWeaponShotgun because it differs significantly
-  parent: [BaseItem, BaseGunWieldable]
+  parent: [BaseItem, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponShotgunBulldog
   description: It's a magazine-fed shotgun designed for close quarters combat. Uses .50 shotgun shells.
   components:

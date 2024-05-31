@@ -108,7 +108,7 @@
 #Empty black
 - type: entity
   id: JetpackBlack
-  parent: BaseJetpack
+  parent: [BaseJetpack, BaseSyndicateContraband]
   name: jetpack
   suffix: Empty
   components:

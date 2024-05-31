@@ -1,6 +1,7 @@
+
 - type: entity
   name: telecrystal
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: Telecrystal
   suffix: 20 TC
   description: It seems to be pulsing with suspiciously enticing energies.
@@ -49,7 +50,7 @@
 # Uplinks
 - type: entity
   parent: BaseItem
-  id: BaseUplinkRadio
+  id: [BaseUplinkRadio, BaseSyndicateContraband]
   name: syndicate uplink
   description: Suspiciously looking old radio...
   suffix: Empty

@@ -1,0 +1,11 @@
+﻿- type: entity
+  id: BaseSyndicateContraband
+  components:
+  - type: ContrabandExamine
+    severity: Syndicate
+
+- type: entity
+  id: BaseMinorContraband
+  components:
+  - type: ContrabandExamine
+    severity: Minor

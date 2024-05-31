@@ -596,7 +596,7 @@
         orGroup: GiftPool
 
 - type: entity
-  parent: HappyHonkNukie
+  parent: []appyHonkNukie, BaseSyndicateContraband]
   id: HappyHonkNukieSnacks
   suffix: Toy Unsafe, Snacks
   name: syndicate snack box

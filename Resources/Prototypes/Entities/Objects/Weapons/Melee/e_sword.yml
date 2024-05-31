@@ -1,6 +1,6 @@
 - type: entity
   name: energy sword
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: EnergySword
   description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
@@ -162,7 +162,7 @@
     malus: 0
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: EnergyDaggerBox
   name: e-dagger box
   suffix: E-Dagger

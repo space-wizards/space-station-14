@@ -110,7 +110,7 @@
 
 - type: entity
   name: Python
-  parent: BaseWeaponRevolver
+  parent: [BaseWeaponRevolver, BaseSyndicateContraband]
   id: WeaponRevolverPython
   description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
   components:

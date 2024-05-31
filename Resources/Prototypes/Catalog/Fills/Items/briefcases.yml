@@ -10,7 +10,7 @@
 
 - type: entity
   id: BriefcaseSyndieSniperBundleFilled
-  parent: BriefcaseSyndie
+  parent: [BriefcaseSyndie, BaseSyndicateContraband]
   suffix: Syndicate, Sniper Bundle
   components:
   - type: Item

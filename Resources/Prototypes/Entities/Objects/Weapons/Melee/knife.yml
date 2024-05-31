@@ -131,7 +131,7 @@
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
 
 - type: entity
-  parent: ClothingHeadHatGreyFlatcap
+  parent: [ClothingHeadHatGreyFlatcap, BaseSyndicateContraband]
   id: BladedFlatcapGrey
   name: grey flatcap
   description: Fashionable for both the working class and old man Jenkins. It has glass shards hidden in the brim.
@@ -170,7 +170,7 @@
 
 - type: entity
   name: shiv
-  parent: BaseKnife
+  parent: [BaseKnife, BaseMinorContraband]
   id: Shiv
   description: A crude weapon fashioned from a piece of cloth and a glass shard.
   components:
@@ -255,7 +255,7 @@
 
 - type: entity
   name: throwing knife
-  parent: BaseKnife
+  parent: [BaseKnife, BaseSyndicateContraband]
   id: ThrowingKnife
   description: This bloodred knife is very aerodynamic and easy to throw, but good luck trying to fight someone hand-to-hand.
   components:

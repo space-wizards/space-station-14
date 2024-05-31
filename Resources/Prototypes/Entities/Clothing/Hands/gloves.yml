@@ -79,7 +79,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsGlovesBoxingBlue
+  parent: [ClothingHandsGlovesBoxingBlue, BaseSyndicateContraband]
   id: ClothingHandsGlovesBoxingRigged
   suffix: Rigged
   components:
@@ -352,7 +352,7 @@
   - type: Unremoveable
 
 - type: entity
-  parent: ClothingHandsButcherable
+  parent: [ClothingHandsButcherable, BaseSyndicateContraband]
   id: ClothingHandsGlovesNorthStar
   name: gloves of the north star
   description: These gloves allow you to punch incredibly fast.
