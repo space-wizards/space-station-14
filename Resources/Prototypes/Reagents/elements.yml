@@ -334,7 +334,7 @@
   - !type:PlantAdjustHealth
     amount: -1.5
   - !type:PlantAdjustMutationMod
-    prob: 0.2
+    probability: 0.2
     amount: 0.1
   metabolisms:
     Poison:
