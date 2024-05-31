@@ -19,6 +19,7 @@ namespace Content.Server.Power.EntitySystems
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly PowerNetConnectorSystem _powerNetConnector = default!;
         [Dependency] private readonly IParallelManager _parMan = default!;
+        [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
 
         private readonly PowerState _powerState = new();
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
@@ -302,19 +303,27 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = AllEntityQuery<ApcPowerReceiverComponent>();
             while (enumerator.MoveNext(out var uid, out var apcReceiver))
             {
-                var powered = apcReceiver.Powered;
-                if (powered == apcReceiver.PoweredLastUpdate)
+                var powered = !apcReceiver.PowerDisabled
+                              && (!apcReceiver.NeedsPower
+                                  || MathHelper.CloseToPercent(apcReceiver.NetworkLoad.ReceivingPower,
+                                      apcReceiver.Load));
+
+                // If new value is the same as the old, then exit
+                if (!apcReceiver.Recalculate && apcReceiver.Powered == powered)
                     continue;
 
-                if (metaQuery.GetComponent(uid).EntityPaused)
+                var metadata = metaQuery.Comp(uid);
+                if (metadata.EntityPaused)
                     continue;
 
-                apcReceiver.PoweredLastUpdate = powered;
-                var ev = new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower);
+                apcReceiver.Recalculate = false;
+                apcReceiver.Powered = powered;
+                Dirty(uid, apcReceiver, metadata);
 
+                var ev = new PowerChangedEvent(powered, apcReceiver.NetworkLoad.ReceivingPower);
                 RaiseLocalEvent(uid, ref ev);
 
-                if (appearanceQuery.TryGetComponent(uid, out var appearance))
+                if (appearanceQuery.TryComp(uid, out var appearance))
                     _appearance.SetData(uid, PowerDeviceVisuals.Powered, powered, appearance);
             }
         }

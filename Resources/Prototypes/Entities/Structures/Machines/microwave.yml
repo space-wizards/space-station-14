@@ -58,7 +58,6 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
-        hard: false
   - type: Sprite
     sprite: Structures/Machines/microwave.rsi
     drawdepth: SmallObjects
