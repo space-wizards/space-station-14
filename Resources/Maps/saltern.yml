@@ -783,7 +783,7 @@ entities:
             2: 57344
           8,5:
             0: 272
-            4: 17472
+            3: 17472
           8,6:
             2: 65345
           8,7:
@@ -824,10 +824,10 @@ entities:
             0: 53759
           11,2:
             0: 4319
-            3: 49152
+            4: 49152
           11,3:
             0: 61457
-            3: 204
+            4: 204
           11,-1:
             0: 30583
           11,4:
@@ -839,9 +839,9 @@ entities:
             0: 28791
           12,2:
             0: 119
-            3: 28672
+            4: 28672
           12,3:
-            3: 119
+            4: 119
             0: 61440
           12,-1:
             0: 29311
@@ -1260,16 +1260,16 @@ entities:
             2: 65534
           9,5:
             5: 4368
-            3: 17472
+            4: 17472
           9,6:
             2: 7936
           10,5:
-            3: 4368
+            4: 4368
             6: 17472
           10,6:
             2: 3840
           11,5:
-            3: 21840
+            4: 21840
           11,6:
             2: 3856
           12,5:
@@ -1429,7 +1429,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -1444,7 +1444,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -31676,13 +31676,6 @@ entities:
     - type: Transform
       pos: 29.614664,-1.306627
       parent: 31
-- proto: Dresser
-  entities:
-  - uid: 9049
-    components:
-    - type: Transform
-      pos: 7.5,16.5
-      parent: 31
 - proto: DresserCaptainFilled
   entities:
   - uid: 11383
@@ -31706,10 +31699,10 @@ entities:
       parent: 31
 - proto: DresserHeadOfPersonnelFilled
   entities:
-  - uid: 11384
+  - uid: 7085
     components:
     - type: Transform
-      pos: 9.5,16.5
+      pos: 7.5,16.5
       parent: 31
 - proto: DresserHeadOfSecurityFilled
   entities:
@@ -32398,8 +32391,6 @@ entities:
     - type: Transform
       pos: 9.5,12.5
       parent: 31
-    - type: ItemCabinet
-      opened: True
   - uid: 4916
     components:
     - type: Transform
