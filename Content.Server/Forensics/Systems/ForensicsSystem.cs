@@ -144,7 +144,10 @@ namespace Content.Server.Forensics
             if (!TryComp<ForensicsComponent>(target, out var forensicsComp))
                 return false;
 
-            if ((forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned) || (forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count > 0))
+            var totalPrintsAndFibers = forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count;
+            var hasRemovableDNA = forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned;
+
+            if (hasRemovableDNA || totalPrintsAndFibers > 0)
             {
                 var cleanDelay = cleanForensicsEntity.Comp.CleanDelay;
                 var doAfterArgs = new DoAfterArgs(EntityManager, user, cleanDelay, new CleanForensicsDoAfterEvent(), cleanForensicsEntity, target: target, used: cleanForensicsEntity)
