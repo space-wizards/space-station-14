@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Gunpowder can now be made by chemists with 6 parts potassium, 2 parts
-      sulfur and charcoal.
-    type: Add
-  - message: Pipebombs may now be crafted with a pipe, gunpowder and LV cable.
-    type: Add
-  - message: IEDs have been reworked, they are now called "fire bombs" and generate
-      a weak explosion that ignites nearby objects.
-    type: Tweak
-  id: 6152
-  time: '2024-03-14T04:27:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25705
 - author: PJB3005
   changes:
   - message: You must now wait 30 seconds before attempting to reconnect to a full
@@ -3859,3 +3846,11 @@
   id: 6651
   time: '2024-05-31T08:44:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28441
+- author: NazrinNya
+  changes:
+  - message: Disposal pipes are now blocked from constructing underneath impassable
+      objects.
+    type: Fix
+  id: 6652
+  time: '2024-05-31T14:49:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28447
