@@ -15,18 +15,18 @@
   #   - Back
   #   - suitStorage
   - type: AmmoCounter
-  - type: Gun
-    minAngle: 2
-    maxAngle: 16
-    fireRate: 8
-    angleIncrease: 3
-    angleDecay: 16
-    selectedMode: FullAuto
-    availableModes:
-    - SemiAuto
-    - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/smg.ogg
+  # - type: Gun
+  #   minAngle: 2
+  #   maxAngle: 16
+  #   fireRate: 8
+  #   angleIncrease: 3
+  #   angleDecay: 16
+  #   selectedMode: FullAuto
+  #   availableModes:
+  #   - SemiAuto
+  #   - FullAuto
+  #   soundGunshot:
+  #     path: /Audio/Weapons/Guns/Gunshots/smg.ogg
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
@@ -74,6 +74,14 @@
     size: Large
   - type: Gun
     fireRate: 10
+    minAngle: 2
+    maxAngle: 16
+    angleIncrease: 3
+    angleDecay: 16
+    selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
   - type: MagazineVisuals
@@ -108,8 +116,12 @@
     maxAngle: -16
   - type: Gun
     # minAngle: 21
-    # maxAngle: 32 
+    # maxAngle: 32
+    fireRate: 8
+    angleIncrease: 3
+    angleDecay: 16
     shotsPerBurst: 5
+    selectedMode: FullAuto
     availableModes:
     - SemiAuto
     - Burst
@@ -152,7 +164,12 @@
       # minAngle: 21
       # maxAngle: 32
       fireRate: 6
+      angleIncrease: 3
+      angleDecay: 16
       selectedMode: FullAuto
+      availableModes:
+      - SemiAuto
+      - FullAuto
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
       availableModes:
@@ -203,11 +220,16 @@
     sprite: Objects/Weapons/Guns/SMGs/vector.rsi
   - type: Gun
     fireRate: 6
+    minAngle: 2
+    maxAngle: 16
+    angleIncrease: 3
+    angleDecay: 16
     selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
-    availableModes:
-    - FullAuto
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -271,6 +293,8 @@
     - SemiAuto
     - Burst
     - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/smg.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
