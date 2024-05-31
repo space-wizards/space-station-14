@@ -11,14 +11,14 @@ public sealed partial class InteractWithOperator : HTNOperator
     /// <summary>
     /// Key that contains the target entity.
     /// </summary>
-    [DataField("targetKey", required: true)]
+    [DataField(required: true)]
     public string TargetKey = default!;
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (_entManager.System<UseDelaySystem>().ActiveDelay(owner) ||
+        if (_entManager.TryGetComponent<UseDelayComponent>(owner, out var useDelay) && _entManager.System<UseDelaySystem>().IsDelayed((owner, useDelay)) ||
             !blackboard.TryGetValue<EntityUid>(TargetKey, out var moveTarget, _entManager) ||
             !_entManager.TryGetComponent<TransformComponent>(moveTarget, out var targetXform))
         {

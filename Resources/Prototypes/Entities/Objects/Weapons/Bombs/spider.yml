@@ -10,7 +10,7 @@
     state: icon
   - type: Item
     sprite: Objects/Weapons/Bombs/spidercharge.rsi
-    size: 10
+    size: Small
   - type: SpiderCharge
   - type: OnUseTimerTrigger
     delay: 10

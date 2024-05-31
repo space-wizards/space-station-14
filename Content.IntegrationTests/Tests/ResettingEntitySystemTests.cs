@@ -9,7 +9,6 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(RoundRestartCleanupEvent))]
     public sealed class ResettingEntitySystemTests
     {
-        [Reflect(false)]
         public sealed class TestRoundRestartCleanupEvent : EntitySystem
         {
             public bool HasBeenReset { get; set; }
@@ -33,7 +32,8 @@ namespace Content.IntegrationTests.Tests
             await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {
                 DummyTicker = false,
-                Connected = true
+                Connected = true,
+                Dirty = true
             });
             var server = pair.Server;
 
@@ -47,8 +47,6 @@ namespace Content.IntegrationTests.Tests
                 var system = entitySystemManager.GetEntitySystem<TestRoundRestartCleanupEvent>();
 
                 system.HasBeenReset = false;
-
-                Assert.That(system.HasBeenReset, Is.False);
 
                 gameTicker.RestartRound();
 

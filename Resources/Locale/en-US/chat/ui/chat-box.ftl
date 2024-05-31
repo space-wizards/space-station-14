@@ -1,4 +1,7 @@
 hud-chatbox-info = {$talk-key} to talk, {$cycle-key} to cycle channels.
+hud-chatbox-info-talk = {$talk-key} to talk.
+hud-chatbox-info-cycle = Click here to talk, {$cycle-key} to cycle channels.
+hud-chatbox-info-unbound = Click here to talk.
 
 hud-chatbox-select-name-prefixed = {$prefix} {$name}
 hud-chatbox-select-channel-Admin = Admin
@@ -23,6 +26,7 @@ hud-chatbox-channel-Whisper = Whisper
 hud-chatbox-channel-LOOC = LOOC
 hud-chatbox-channel-OOC = OOC
 hud-chatbox-channel-Radio = Radio
+hud-chatbox-channel-Notifications = Notifications
 hud-chatbox-channel-Server = Server
 hud-chatbox-channel-Visual = Actions
 hud-chatbox-channel-Damage = Damage

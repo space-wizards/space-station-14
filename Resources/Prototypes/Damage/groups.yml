@@ -1,5 +1,6 @@
 - type: damageGroup
   id: Brute
+  name: damage-group-brute
   damageTypes:
     - Blunt
     - Slash
@@ -7,6 +8,7 @@
 
 - type: damageGroup
   id: Burn
+  name: damage-group-burn
   damageTypes:
     - Heat
     - Shock
@@ -19,6 +21,7 @@
 # bloodloss, not this whole group, unless you have a wonder drug that affects both.
 - type: damageGroup
   id: Airloss
+  name: damage-group-airloss
   damageTypes:
     - Asphyxiation
     - Bloodloss
@@ -27,11 +30,13 @@
 # Though there are probably some radioactive poisons.
 - type: damageGroup
   id: Toxin
+  name: damage-group-toxin
   damageTypes:
     - Poison
     - Radiation
 
 - type: damageGroup
   id: Genetic
+  name: damage-group-genetic
   damageTypes:
     - Cellular

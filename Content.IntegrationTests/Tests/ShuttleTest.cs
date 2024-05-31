@@ -29,7 +29,7 @@ namespace Content.IntegrationTests.Tests
             await server.WaitAssertion(() =>
             {
                 var mapId = mapMan.CreateMap();
-                var grid = mapMan.CreateGrid(mapId);
+                var grid = mapMan.CreateGridEntity(mapId);
                 gridEnt = grid.Owner;
 
                 Assert.Multiple(() =>

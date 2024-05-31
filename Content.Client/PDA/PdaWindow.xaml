@@ -25,7 +25,7 @@
         </Control>
         <!--Footer-->
         <BoxContainer Orientation="Horizontal" SetHeight="28">
-            <Label Text="Personal Digital Assistant" StyleClasses="PdaWindowFooterText" Margin="32 0 0 6"/>
+            <Label Text="{Loc 'comp-pda-ui-footer'}" StyleClasses="PdaWindowFooterText" Margin="32 0 0 6"/>
         </BoxContainer>
     </BoxContainer>
 </pda:PdaWindow>

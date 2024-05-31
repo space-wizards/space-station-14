@@ -30,7 +30,7 @@ namespace Content.Server.Objectives.Commands
                 return;
             }
 
-            if (!minds.TryGetMind(session, out _, out var mind))
+            if (!minds.TryGetMind(session, out var mindId, out var mind))
             {
                 shell.WriteLine("Can't find the mind.");
                 return;
@@ -39,7 +39,7 @@ namespace Content.Server.Objectives.Commands
             if (int.TryParse(args[1], out var i))
             {
                 var mindSystem = _entityManager.System<SharedMindSystem>();
-                shell.WriteLine(mindSystem.TryRemoveObjective(mind, i)
+                shell.WriteLine(mindSystem.TryRemoveObjective(mindId, mind, i)
                     ? "Objective successfully removed!"
                     : "Objective removing failed. Maybe the index is out of bounds? Check lsobjectives!");
             }

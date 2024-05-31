@@ -1,6 +1,6 @@
 - type: entity
   name: behonker
-  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
   id: BaseMobBehonker
   abstract: true
   description: A floating demon aspect of the honkmother.
@@ -10,10 +10,31 @@
       makeSentient: true
       name: ghost-role-information-behonker-name
       description: ghost-role-information-behonker-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: HTN
       rootTask:
-        task: SimpleHostileCompound
+        task: SimpleRangedHostileCompound
+    - type: HitscanBatteryAmmoProvider
+      proto: RedLaser
+      fireCost: 62.5
+    - type: Battery
+      maxCharge: 1000
+      startingCharge: 1000
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 40
+    - type: Gun
+      fireRate: 0.75
+      useKey: false
+      selectedMode: SemiAuto
+      availableModes:
+        - SemiAuto
+      soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_clown.ogg
+    - type: SpamEmitSound
+      sound:
+        collection: BikeHorn
     - type: NpcFactionMember
       factions:
         - SimpleHostile
@@ -57,15 +78,15 @@
         - id: BikeHorn
     - type: UserInterface
       interfaces:
-      - key: enum.StrippingUiKey.Key
-        type: StrippableBoundUserInterface
+        enum.StrippingUiKey.Key:
+          type: StrippableBoundUserInterface
     - type: MobThresholds
       thresholds:
         0: Alive
         500: Dead
     - type: Metabolizer
       solutionOnBody: false
-      updateFrequency: 0.25
+      updateInterval: 0.25
       metabolizerTypes: [ Dragon ]
       groups:
         - id: Medicine
@@ -74,8 +95,9 @@
       spawned:
         - id: MaterialBananium1
           amount: 2
+        - id: WeaponBehonkerLaser
+          amount: 1
     - type: MeleeWeapon
-      hidden: true
       soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
       damage:
@@ -92,10 +114,9 @@
           Radiation: 10
     - type: Input
       context: "human"
-    - type: Hands
-      showInHands: false
-    - type: Body
-      prototype: Behonker
+    - type: Bloodstream
+      bloodMaxVolume: 300
+      bloodReagent: Laughter
 
 - type: entity
   name: behonker
@@ -146,7 +167,6 @@
     explosionMaxTileIntensity: 10
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileIcicle
-    targetNonSentientChance: 0.1
   - type: TempAffectingAnomaly
     tempChangePerSecond: -25
     hotspotExposeTemperature: -1000

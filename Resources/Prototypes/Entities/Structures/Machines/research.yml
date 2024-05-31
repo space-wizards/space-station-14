@@ -8,23 +8,20 @@
     sprite: Structures/Machines/server.rsi
     layers:
       - state: server
+      - state: variant-research
       - state: server_o
         map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ResearchServer
   - type: TechnologyDatabase
     supportedDisciplines:
     - Industrial
-    - Biochemical
     - Arsenal
     - Experimental
     - CivilianServices
   - type: ApcPowerReceiver
     powerLoad: 200
-    priority: Low
   - type: ExtensionCableReceiver
   - type: WiresPanel
-  - type: Wires
-    LayoutId: rndserver
   - type: WiresVisuals
   - type: Machine
     board: ResearchAndDevelopmentServerMachineCircuitboard
@@ -44,7 +41,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -86,8 +83,8 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.ResearchClientUiKey.Key
-      type: ResearchClientBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -111,7 +108,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:

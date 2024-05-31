@@ -62,19 +62,26 @@ public abstract partial class SharedGunSystem
     }
 
     #region Public API
+    public bool ChangeBasicEntityAmmoCount(EntityUid uid, int delta, BasicEntityAmmoProviderComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false) || component.Count == null)
+            return false;
+
+        return UpdateBasicEntityAmmoCount(uid, component.Count.Value + delta, component);
+    }
 
     public bool UpdateBasicEntityAmmoCount(EntityUid uid, int count, BasicEntityAmmoProviderComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, false))
             return false;
 
         if (count > component.Capacity)
             return false;
 
         component.Count = count;
-        Dirty(uid, component);
         UpdateBasicEntityAppearance(uid, component);
         UpdateAmmoCount(uid);
+        Dirty(uid, component);
 
         return true;
     }

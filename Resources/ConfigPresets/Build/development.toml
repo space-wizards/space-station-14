@@ -5,6 +5,9 @@ lobbyenabled = false
 map = "Dev"
 role_timers = false
 
+[gateway]
+generator_enabled = false
+
 [physics]
 # Makes mapping annoying
 grid_splitting = false
@@ -14,13 +17,13 @@ preload = false
 
 [salvage]
 expedition_cooldown = 30.0
-expedition_failed_cooldown = 30.0
 
 [shuttle]
 grid_fill = false
 auto_call_time = 0
 emergency = false
 arrivals = false
+preload_grids = false
 
 [admin]
 see_own_notes = true

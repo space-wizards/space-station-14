@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
@@ -11,13 +11,13 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     /// </summary>
     public sealed partial class OrganType : ReagentEffectCondition
     {
-        [DataField("type", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<MetabolizerTypePrototype>))]
+        [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<MetabolizerTypePrototype>))]
         public string Type = default!;
 
         /// <summary>
         ///     Does this condition pass when the organ has the type, or when it doesn't have the type?
         /// </summary>
-        [DataField("shouldHave")]
+        [DataField]
         public bool ShouldHave = true;
 
         public override bool Condition(ReagentEffectArgs args)
@@ -25,9 +25,15 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
             if (args.OrganEntity == null)
                 return false;
 
-            if (args.EntityManager.TryGetComponent<MetabolizerComponent>(args.OrganEntity.Value, out var metabolizer)
-                && metabolizer.MetabolizerTypes != null
-                && metabolizer.MetabolizerTypes.Contains(Type))
+            return Condition(args.OrganEntity.Value, args.EntityManager);
+        }
+
+        public bool Condition(Entity<MetabolizerComponent?> metabolizer, IEntityManager entMan)
+        {
+            metabolizer.Comp ??= entMan.GetComponentOrNull<MetabolizerComponent>(metabolizer.Owner);
+            if (metabolizer.Comp != null
+                && metabolizer.Comp.MetabolizerTypes != null
+                && metabolizer.Comp.MetabolizerTypes.Contains(Type))
                 return ShouldHave;
             return !ShouldHave;
         }
@@ -35,7 +41,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         public override string GuidebookExplanation(IPrototypeManager prototype)
         {
             return Loc.GetString("reagent-effect-condition-guidebook-organ-type",
-                ("name", prototype.Index<MetabolizerTypePrototype>(Type).Name),
+                ("name", prototype.Index<MetabolizerTypePrototype>(Type).LocalizedName),
                 ("shouldhave", ShouldHave));
         }
     }

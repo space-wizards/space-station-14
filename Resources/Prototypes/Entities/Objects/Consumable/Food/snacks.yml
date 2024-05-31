@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_snack.yml
 # Base
 
 - type: entity
@@ -21,7 +22,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
-    size: 3
+    size: Tiny
 # Snacks
 
 # "Snacks" means food in a packet. Down the line this stuff can have multiple
@@ -101,7 +102,7 @@
     state: chocolatebar
   - type: Item
     heldPrefix: chocolatebar
-    size: 3
+    size: Tiny
   - type: Tag
     tags:
       - FoodSnack
@@ -183,6 +184,9 @@
   - type: Item
   - type: Food
     trash: FoodPacketPistachioTrash
+  - type: Tag
+    tags:
+    - Fruit # Seed of a fruit, you can yell at me
 
 - type: entity
   name: popcorn
@@ -216,6 +220,9 @@
   - type: Item
   - type: Food
     trash: FoodPacketRaisinsTrash
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: bob's semki sunflower seeds
@@ -246,6 +253,9 @@
   - type: Item
   - type: Food
     trash: FoodPacketSusTrash
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: syndi-cakes
@@ -337,7 +347,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
-    size: 1
+    size: Tiny
   - type: Food
     trash: FoodCookieFortune
 
@@ -348,7 +358,7 @@
   description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
   components:
   - type: Item
-    size: 10
+    size: Small
   - type: Tag
     tags:
       - FoodSnack
@@ -372,17 +382,20 @@
     flavors:
       - nutribrick
   - type: Item
-    size: 10
+    size: Small
+  - type: Tag
+    tags:
+      - ReptilianFood
   - type: Sprite
     state: nutribrick-open
   - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
+          Quantity: 20
 
 - type: entity
   id: FoodSnackMREBrownie
@@ -434,12 +447,14 @@
   parent: BaseItem
   id: FoodPacketTrash
   description: This is rubbish.
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
+    size: Tiny
   - type: Tag
     tags:
     - Trash
@@ -458,7 +473,6 @@
   components:
   - type: Sprite
     state: boritos-trash
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -468,7 +482,6 @@
   components:
   - type: Sprite
     state: cnds-trash
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -478,7 +491,6 @@
   components:
   - type: Sprite
     state: cheesiehonkers-trash
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -488,7 +500,6 @@
   components:
   - type: Sprite
     state: chips-trash
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -498,7 +509,6 @@
   components:
   - type: Sprite
     state: chocolatebar-trash
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -508,7 +518,6 @@
   components:
   - type: Sprite
     state: energybar-trash
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -518,7 +527,6 @@
   components:
   - type: Sprite
     state: pistachio-trash
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -528,7 +536,6 @@
   components:
   - type: Sprite
     state: popcorn-trash
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -538,7 +545,6 @@
   components:
   - type: Sprite
     state: raisins-trash
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -548,7 +554,6 @@
   components:
   - type: Sprite
     state: semki-trash
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -558,7 +563,6 @@
   components:
   - type: Sprite
     state: susjerky-trash
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -568,7 +572,6 @@
   components:
   - type: Sprite
     state: syndicakes-trash
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -578,7 +581,6 @@
   components:
   - type: Sprite
     state: chinese1
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -588,7 +590,6 @@
   components:
   - type: Sprite
     state: chinese2
-  - type: Item
 
 - type: entity
   noSpawn: true
@@ -610,5 +611,18 @@
   name: MRE wrapper
   description: A general purpose wrapper for a variety of military food goods.
   components:
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 40
+  - type: Tag
+    tags:
+    - ClothMade
+    - Trash
   - type: Sprite
     state: mre-wrapper

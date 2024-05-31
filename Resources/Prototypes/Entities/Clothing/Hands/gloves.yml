@@ -20,6 +20,7 @@
     soundHit:
       collection: BoxingHit
     animation: WeaponArcFist
+    mustBeEquippedToUse: true
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-red
@@ -83,12 +84,14 @@
   suffix: Rigged
   components:
   - type: StaminaDamageOnHit
-    damage: 30
+    damage: 25
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1.4
     damage:
       types:
         Blunt: 8
+    bluntStaminaDamageFactor: 0.0 # so blunt doesn't deal stamina damage at all
+    mustBeEquippedToUse: true
 
 - type: entity
   parent: ClothingHandsBase
@@ -108,9 +111,28 @@
     fiberColor: fibers-regal-blue
   - type: FingerprintMask
 
-#### Medical
 - type: entity
   parent: ClothingHandsBase
+  id: ClothingHandsGlovesHop
+  name: papercut-proof gloves
+  description: Perfect for dealing with paperwork and matters with bureaucracy.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/hop.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/hop.rsi
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-black
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+  - type: FingerprintMask
+
+#### Medical
+- type: entity
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesLatex
   name: latex gloves
   description: Thin sterile latex gloves. Basic PPE for any doctor.
@@ -124,21 +146,21 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesNitrile
   name: nitrile gloves
   description: High-quality nitrile gloves. Expensive medical PPE.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+    sprite: Clothing/Hands/Gloves/nitrile.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+    sprite: Clothing/Hands/Gloves/nitrile.rsi
   - type: Fiber
     fiberMaterial: fibers-nitrile
   - type: FingerprintMask
 ####
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesLeather
   name: botanist's leather gloves
   description: These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They're also quite warm.
@@ -169,7 +191,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesRobohands
   name: robohands gloves
   description: Beep boop borp!
@@ -213,29 +235,26 @@
     stripTimeReduction: 1
     stealthy: true
   - type: NinjaGloves
-  # not actually electrified, just used to make stun ability work
-  - type: Electrified
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesColorBlack
   id: ClothingHandsGlovesCombat
   name: combat gloves
   description: These tactical gloves are fireproof and shock resistant.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/Color/black.rsi
+    sprite: Clothing/Hands/Gloves/combat.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Color/black.rsi
+    sprite: Clothing/Hands/Gloves/combat.rsi
   - type: GloveHeatResistance
     heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative
-    fiberColor: fibers-black
-  - type: FingerprintMask
 
+# can't parent combat gloves since they are butcherable
 - type: entity
-  parent: ClothingHandsGlovesCombat
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsTacticalMaidGloves
   name: tactical maid gloves
   description: Tactical maid gloves, every self-respecting maid should be able to discreetly eliminate her goals.
@@ -244,27 +263,32 @@
     sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberColor: fibers-black
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesCombat
   id: ClothingHandsMercGlovesCombat
   name: mercenary combat gloves
   description: High-quality combat gloves to protect hands from mechanical damage during combat.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/Color/olive.rsi
+    sprite: Clothing/Hands/Gloves/mercbattle.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Color/olive.rsi
-  - type: GloveHeatResistance
-    heatResistance: 1400
-  - type: Insulated
+    sprite: Clothing/Hands/Gloves/mercbattle.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingHandsGlovesMercFingerless
   - type: Fiber
     fiberMaterial: fibers-insulative
     fiberColor: fibers-olive
-  - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesFingerless
   name: fingerless gloves
   description: Plain black gloves without fingertips for the hard working.
@@ -292,7 +316,7 @@
     fiberColor: fibers-yellow
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesMercFingerless
   name: mercenary fingerless gloves
   description: Gloves that may not protect you from finger burns, but will make you cooler.
@@ -302,29 +326,21 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/mercfingerless.rsi
   - type: Fiber
-    fiberMaterial: fibers-synthetic
+    fiberMaterial: fibers-insulative
     fiberColor: fibers-olive
 
 - type: entity
-  parent: ClothingHandsBase
+  # Intentionally named after regular gloves, they're meant to be sneaky.
+  # This means they can also be butchered if you need to look un-sus before a very thorough search...
+  parent: ClothingHandsGlovesColorBlack
   id: ThievingGloves
   suffix: Thieving
-  name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
-  description: Regular black gloves that do not keep you from frying.
   components:
-    - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
-    - type: Sprite
-      sprite: Clothing/Hands/Gloves/Color/black.rsi
-    - type: Clothing
-      sprite: Clothing/Hands/Gloves/Color/black.rsi
-    - type: Thieving
-      stripTimeReduction: 1.5
-      stealthy: true
-    - type: Fiber
-      fiberMaterial: fibers-synthetic
-      fiberColor: fibers-black
-    - type: FingerprintMask
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Thieving
+    stripTimeReduction: 1.5
+    stealthy: true
 
 - type: entity
   parent: ClothingHandsGlovesColorWhite
@@ -335,9 +351,8 @@
   components:
   - type: Unremoveable
 
-
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesNorthStar
   name: gloves of the north star
   description: These gloves allow you to punch incredibly fast.
@@ -347,13 +362,15 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/northstar.rsi
   - type: MeleeWeapon
+    autoAttack: true
     attackRate: 4
     damage:
       types:
-       Blunt: 7
+       Blunt: 8
     soundHit:
       collection: Punch
     animation: WeaponArcFist
+    mustBeEquippedToUse: true
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-blue
@@ -361,12 +378,11 @@
   - type: MeleeSpeech
   - type: ActivatableUI
     key: enum.MeleeSpeechUiKey.Key
-    closeOnHandDeselect: false
-    rightClickOnly: true
+    verbOnly: true
   - type: Actions
   - type: UserInterface
     interfaces:
-      - key: enum.MeleeSpeechUiKey.Key
+      enum.MeleeSpeechUiKey.Key:
         type: MeleeSpeechBoundUserInterface
   - type: StaticPrice
     price: 0
@@ -384,4 +400,20 @@
   - type: FingerprintMask
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics
+
+# TODO Make lubed items not slip in hands
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesJanitor
+  name: rubber gloves
+  description: High-quality rubber gloves, squeaky to do some cleaning!
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/janitor.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/janitor.rsi
+  - type: Fiber
+    fiberMaterial: fibers-rubber
+    fiberColor: fibers-yellow
+  - type: FingerprintMask

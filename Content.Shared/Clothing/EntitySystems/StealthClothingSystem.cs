@@ -12,6 +12,7 @@ namespace Content.Shared.Clothing.EntitySystems;
 public sealed class StealthClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -21,6 +22,13 @@ public sealed class StealthClothingSystem : EntitySystem
         SubscribeLocalEvent<StealthClothingComponent, ToggleStealthEvent>(OnToggleStealth);
         SubscribeLocalEvent<StealthClothingComponent, AfterAutoHandleStateEvent>(OnHandleState);
         SubscribeLocalEvent<StealthClothingComponent, GotUnequippedEvent>(OnUnequipped);
+        SubscribeLocalEvent<StealthClothingComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, StealthClothingComponent component, MapInitEvent args)
+    {
+        _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -106,7 +114,7 @@ public sealed class StealthClothingSystem : EntitySystem
 /// <summary>
 /// Raised on the stealth clothing when attempting to add an action.
 /// </summary>
-public class AddStealthActionEvent : CancellableEntityEventArgs
+public sealed class AddStealthActionEvent : CancellableEntityEventArgs
 {
     /// <summary>
     /// User that equipped the stealth clothing.
@@ -122,7 +130,7 @@ public class AddStealthActionEvent : CancellableEntityEventArgs
 /// <summary>
 /// Raised on the stealth clothing when the user is attemping to enable it.
 /// </summary>
-public class AttemptStealthEvent : CancellableEntityEventArgs
+public sealed class AttemptStealthEvent : CancellableEntityEventArgs
 {
     /// <summary>
     /// User that is attempting to enable the stealth clothing.

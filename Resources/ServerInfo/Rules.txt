@@ -13,7 +13,7 @@ This is the "short" form of the rules, which has all the information any regular
 
 [color=#ff0000]ZERO TOLERANCE RULES[/color]
 
-[color=#a4885c]02.[/color] Absolutely no hate speech, slurs, bigotry, racism, specism (demeaning other characters in-game due to their in-game race), sexism, or anything even remotely similar. (YOU WILL GET PERMABANNED)
+[color=#a4885c]02.[/color] Absolutely no hate speech, slurs, bigotry, racism, specism (demeaning other characters in-game due to their in-game race), sexism, disability-related or anything even remotely similar. (YOU WILL GET PERMABANNED)
 
 [color=#a4885c]03.[/color] Absolutely no Erotic Roleplay (ERP) or sexual content, including direct or indirect mentions of sexual behavior or actions. (YOU WILL GET PERMABANNED) (Leeway is given to insults, ex: 'You are a dickhead', do not push it)
 
@@ -79,7 +79,7 @@ If you regularly play Security or Command roles and got this far, we applaud you
     - Do not willingly and openly cooperate with terrorists/antagonists. Do not give away your objective items. Some leeway is given to making deals with antagonists if the deal benefits the safety or situation of the station as a whole and not just yourself.
     - Uphold the Law & maintain order. Do not engage in lawbreaking activity or troublemaker behavior. Security is expected to intervene into criminal activity where possible. Heads of Staff are at minimum expected to report criminal activity to Security.
     - Do not immediately abandon your position as a Command role and go do whatever you want instead of managing your department/the station. Do not abuse your position or use it to make arbitrary choices to the detriment of the station.
-    - Do not hire random crew to be your bodyguards or promote random to Captain or a Head of Staff at random. If you need bodyguards, talk to your security department. If you need a new Command role, talk to the personnel in that related department.
+    - Do not hire random crew to be your bodyguards or promote them to Captain or a Head of Staff at random. If you need bodyguards, talk to your security department. If you need a new Command role, talk to the personnel in that related department.
     - '''Do not abandon the station during Nuclear Operatives. You are supposed to protect the station, not let operatives kill everyone on it without a fight.'''
 
 [color=#a4885c]20.[/color] Security/Command should try to remain non-lethal and effect arrests, except in the following special circumstances, where they may choose to use lethal force:
@@ -109,7 +109,7 @@ These rules also apply to any individual who is a silicon, including cyborgs and
     - Each individual silicon must remain consistent in their interpretations of laws through the round.
     - Any silicon role not following their laws, or having laws that are a danger to the crew or station may be disabled or destroyed. Any silicon role posing a danger or disruption to the crew may be disabled or destroyed if there is no other reasonable and less severe way of dealing with them.
     - Characters who are turned into cyborgs can remember their former lives, however they are still bound to their laws.
-    - Syndicate Agents and Revolutionaries are considered "crewmembers" for the purpose of laws that refer to crewmembers. Generally speaking, if the person appears on the crew manifest, they can be considered a crewmember. The captain or acting captain may hire or fire crewmembers by making it clear that they are no longer crew. Simply demoting someone to passenger is not sufficient to consider them fired.
+    - Everyone that the borg's HUD indicates have a job, including passenger, are considered "crewmembers" for the purpose of laws that refer to crewmembers. Borgs may not do anything to remove the indicator from someone, including removing their ID, but someone else removing a crewmember's ID is not crew harm.
     - "Harm" is at minimum seen as physical violence or damage against someone or something. If the player wishes, they may choose to interpret psychological harm or similar aspects as harm as well. If two actions are likely to cause harm via action or inaction, silicons will be expected to try and pursue the option with the least potential for harm, however silicons instructed to prevent harm are still forbidden from directly causing harm. You can take an action or not act in cases that might result in eventual harm if it minimizes harm, but you cannot do so if it results in immediate harm. Silicons should default to inaction if neither action nor inaction can prevent harm.
     - When receiving orders or directives from crewmembers and with a law that instructs you must obey, conflicting orders typically defer the choice to the silicon player of which directive you choose to obey if they conflict (taking into account the priorities of your other laws).
     - Orders to silicons that are clearly unreasonable or obnoxious are a violation of the "Don't be a dick" rule. They can be ignored and can be ahelped.

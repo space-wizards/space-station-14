@@ -1,6 +1,7 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -12,7 +13,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    private ISawmill _sawmill = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public const string InvokedPort = "link_port";
 
@@ -24,7 +25,6 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentStartup>(OnSinkStartup);
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentRemove>(OnSourceRemoved);
         SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentRemove>(OnSinkRemoved);
-        _sawmill = Logger.GetSawmill("devicelink");
     }
 
     #region Link Validation
@@ -49,7 +49,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         List<EntityUid> invalidSinks = new();
         foreach (var sinkUid  in sourceComponent.LinkedPorts.Keys)
         {
-            if (!TryComp<DeviceLinkSinkComponent?>(sinkUid, out var sinkComponent))
+            if (!TryComp<DeviceLinkSinkComponent>(sinkUid, out var sinkComponent))
             {
                 invalidSinks.Add(sinkUid);
                 foreach (var savedSinks in sourceComponent.Outputs.Values)
@@ -148,8 +148,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// </summary>
     public void EnsureSourcePorts(EntityUid uid, params string[] ports)
     {
+        if (ports.Length == 0)
+            return;
+
         var comp = EnsureComp<DeviceLinkSourceComponent>(uid);
-        comp.Ports ??= new HashSet<string>();
+        comp.Ports ??= new HashSet<ProtoId<SourcePortPrototype>>();
 
         foreach (var port in ports)
         {
@@ -163,6 +166,9 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// </summary>
     public void EnsureSinkPorts(EntityUid uid, params string[] ports)
     {
+        if (ports.Length == 0)
+            return;
+
         var comp = EnsureComp<DeviceLinkSinkComponent>(uid);
         comp.Ports ??= new HashSet<string>();
 
@@ -226,10 +232,10 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// Returns the links of a source
     /// </summary>
     /// <returns>A list of sink and source port ids that are linked together</returns>
-    public HashSet<(string source, string sink)> GetLinks(EntityUid sourceUid, EntityUid sinkUid, DeviceLinkSourceComponent? sourceComponent = null)
+    public HashSet<(ProtoId<SourcePortPrototype> source, ProtoId<SinkPortPrototype> sink)> GetLinks(EntityUid sourceUid, EntityUid sinkUid, DeviceLinkSourceComponent? sourceComponent = null)
     {
         if (!Resolve(sourceUid, ref sourceComponent) || !sourceComponent.LinkedPorts.TryGetValue(sinkUid, out var links))
-            return new HashSet<(string source, string sink)>();
+            return new HashSet<(ProtoId<SourcePortPrototype>, ProtoId<SinkPortPrototype>)>();
 
         return links;
     }
@@ -379,12 +385,12 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         if (sourceComponent == null)
         {
-            _sawmill.Error($"Attempted to remove link between {ToPrettyString(sourceUid)} and {ToPrettyString(sinkUid)}, but the source component was missing.");
+            Log.Error($"Attempted to remove link between {ToPrettyString(sourceUid)} and {ToPrettyString(sinkUid)}, but the source component was missing.");
             sinkComponent!.LinkedSources.Remove(sourceUid);
         }
         else
         {
-            _sawmill.Error($"Attempted to remove link between {ToPrettyString(sourceUid)} and {ToPrettyString(sinkUid)}, but the sink component was missing.");
+            Log.Error($"Attempted to remove link between {ToPrettyString(sourceUid)} and {ToPrettyString(sinkUid)}, but the sink component was missing.");
             sourceComponent.LinkedPorts.Remove(sourceUid);
         }
     }
@@ -524,7 +530,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     private bool InRange(EntityUid sourceUid, EntityUid sinkUid, float range)
     {
         // TODO: This should be using an existing method and also coordinates inrange instead.
-        return Transform(sourceUid).MapPosition.InRange(Transform(sinkUid).MapPosition, range);
+        return _transform.GetMapCoordinates(sourceUid).InRange(_transform.GetMapCoordinates(sinkUid), range);
     }
 
     private void SendNewLinkEvent(EntityUid? user, EntityUid sourceUid, string source, EntityUid sinkUid, string sink)
@@ -548,6 +554,22 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         _popupSystem.PopupCursor(Loc.GetString(locString, ("machine1", sourceUid), ("port1", PortName<SourcePortPrototype>(source)),
                 ("machine2", sinkUid), ("port2", PortName<SinkPortPrototype>(sink))), userId.Value, PopupType.Medium);
+    }
+    #endregion
+
+    #region Sending & Receiving
+    /// <summary>
+    /// Sends a network payload directed at the sink entity.
+    /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>
+    /// </summary>
+    /// <param name="uid">The source uid that invokes the port</param>
+    /// <param name="port">The port to invoke</param>
+    /// <param name="data">Optional data to send along</param>
+    /// <param name="sourceComponent"></param>
+    public virtual void InvokePort(EntityUid uid, string port, NetworkPayload? data = null,
+        DeviceLinkSourceComponent? sourceComponent = null)
+    {
+        // NOOP on client for the moment.
     }
     #endregion
 }

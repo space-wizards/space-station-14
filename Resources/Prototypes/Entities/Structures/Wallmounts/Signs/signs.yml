@@ -99,6 +99,15 @@
 
 - type: entity
   parent: BaseSignDirectional
+  id: SignDirectionalExam
+  name: exam sign
+  description: A direction sign, pointing out which way the examination room(s) are.
+  components:
+  - type: Sprite
+    state: direction_exam
+
+- type: entity
+  parent: BaseSignDirectional
   id: SignDirectionalFood
   name: food sign
   description: A direction sign, pointing out which way the kitchen is.
@@ -132,6 +141,15 @@
   components:
   - type: Sprite
     state: direction_hydro
+
+- type: entity
+  parent: BaseSignDirectional
+  id: SignDirectionalIcu
+  name: icu sign
+  description: A direction sign, pointing out which way the ICU is.
+  components:
+  - type: Sprite
+    state: direction_icu
 
 - type: entity
   parent: BaseSignDirectional
@@ -227,6 +245,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignArcade
+  name: arcade sign
+  description: A sign indicating the arcade.
+  components:
+  - type: Sprite
+    state: arcade
+
+- type: entity
+  parent: BaseSign
   id: SignArmory
   name: armory sign
   description: A sign indicating the armory.
@@ -287,6 +314,15 @@
   components:
   - type: Sprite
     state: bar
+
+- type: entity
+  parent: BaseSign
+  id: SignBarbershop
+  name: barbershop sign
+  description: A sign indicating the barbershop.
+  components:
+  - type: Sprite
+    state: barbershop
 
 - type: entity
   parent: BaseSign
@@ -395,6 +431,15 @@
   components:
   - type: Sprite
     state: conference_room
+
+- type: entity
+  parent: BaseSign
+  id: SignCourt
+  name: court sign
+  description: A sign labelling the courtroom.
+  components:
+  - type: Sprite
+    state: court
 
 - type: entity
   parent: BaseSign
@@ -542,6 +587,33 @@
 
 - type: entity
   parent: BaseSign
+  id: SignJanitor
+  name: janitor sign
+  description: A sign labelling an area where the janitor works.
+  components:
+  - type: Sprite
+    state: janitor
+
+- type: entity
+  parent: BaseSign
+  id: SignLaundromat
+  name: laundromat sign
+  description: A sign indicating the laundromat.
+  components:
+  - type: Sprite
+    state: laundromat
+
+- type: entity
+  parent: BaseSign
+  id: SignLawyer
+  name: lawyer sign
+  description: A sign labelling an area where the Lawyers work.
+  components:
+  - type: Sprite
+    state: law
+
+- type: entity
+  parent: BaseSign
   id: SignLibrary
   name: library sign
   description: A sign indicating the library.
@@ -587,6 +659,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignNews
+  name: news sign
+  description: A sign indicating where the Reporter works.
+  components:
+  - type: Sprite
+    state: news
+
+- type: entity
+  parent: BaseSign
   id: SignNosmoking
   name: nosmoking sign
   description: A sign indicating that smoking is not allowed in the vicinity.
@@ -605,6 +686,24 @@
 
 - type: entity
   parent: BaseSign
+  id: SignPsychology
+  name: psychology sign
+  description: A sign labelling an area where the Psychologist works.
+  components:
+  - type: Sprite
+    state: psychology
+
+- type: entity
+  parent: BaseSign
+  id: SignReception
+  name: reception sign
+  description: A sign indicating the reception.
+  components:
+  - type: Sprite
+    state: reception
+
+- type: entity
+  parent: BaseSign
   id: SignRND
   name: research and development sign
   description: A sign indicating the research and development lab.
@@ -620,6 +719,15 @@
   components:
   - type: Sprite
     state: robo
+
+- type: entity
+  parent: BaseSign
+  id: SignSalvage
+  name: salvage sign
+  description: A sign indicating the salvage area.
+  components:
+  - type: Sprite
+    state: salvage
 
 - type: entity
   parent: BaseSign
@@ -1273,3 +1381,21 @@
   components:
   - type: Sprite
     state: zero
+
+- type: entity
+  parent: BaseSign
+  id: SignSurvival
+  name: survival sign
+  description: A sign. "Survival" is written on it.
+  components:
+  - type: Sprite
+    state: survival
+
+- type: entity
+  parent: BaseSign
+  id: SignNTMine
+  name: mine sign
+  description: A sign. "Mine" is written on it.
+  components:
+  - type: Sprite
+    state: ntmining

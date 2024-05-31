@@ -5,10 +5,25 @@ ghost-gui-toggle-ghost-visibility-popup = Toggled visibility of ghosts.
 ghost-gui-toggle-lighting-manager-popup = Toggled all lighting.
 ghost-gui-toggle-fov-popup = Toggled field-of-view.
 
+ghost-gui-toggle-hearing-popup-on = You can now hear all messages.
+ghost-gui-toggle-hearing-popup-off = You can now only hear radio and nearby messages.
+
 ghost-target-window-title = Ghost Warp
 ghost-target-window-current-button = Warp: {$name}
+ghost-target-window-warp-to-most-followed = Warp to Most Followed
 
 ghost-roles-window-title = Ghost Roles
+ghost-roles-window-join-raffle-button = Join raffle
+ghost-roles-window-raffle-in-progress-button =
+    Join raffle ({$time} left, { $players ->
+         [one] {$players} player
+        *[other] {$players} players
+    })
+ghost-roles-window-leave-raffle-button =
+    Leave raffle ({$time} left, { $players ->
+         [one] {$players} player
+        *[other] {$players} players
+    })
 ghost-roles-window-request-role-button = Request
 ghost-roles-window-request-role-button-timer = Request ({$time}s)
 ghost-roles-window-follow-role-button = Follow

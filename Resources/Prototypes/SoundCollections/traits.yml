@@ -20,9 +20,9 @@
   - /Audio/Effects/bodyfall4.ogg
   - /Audio/Effects/demon_dies.ogg
   - /Audio/Effects/demon_attack1.ogg
-  - /Audio/Effects/bang.ogg
   - /Audio/Effects/clang.ogg
-  - /Audio/Effects/metalbreak.ogg
+  - /Audio/Effects/metal_slam1.ogg
+  - /Audio/Effects/metal_slam5.ogg
   - /Audio/Effects/minibombcountdown.ogg
   - /Audio/Effects/sadtrombone.ogg
   - /Audio/Effects/sparks1.ogg
@@ -41,9 +41,11 @@
   - /Audio/Machines/phasein.ogg
   - /Audio/Machines/vending_restock_start.ogg
   - /Audio/Machines/vending_restock_done.ogg
+  - /Audio/Magic/blink.ogg
   - /Audio/Magic/disintegrate.ogg
   - /Audio/Magic/staff_animation.ogg
   - /Audio/Weapons/ebladeon.ogg
+  - /Audio/Weapons/flash.ogg
   - /Audio/Weapons/smash.ogg
   - /Audio/Weapons/bladeslice.ogg
   - /Audio/Weapons/punch1.ogg

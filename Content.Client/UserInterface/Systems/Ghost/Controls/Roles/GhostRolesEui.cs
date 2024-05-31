@@ -1,8 +1,11 @@
 using System.Linq;
 using Content.Client.Eui;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 {
@@ -17,13 +20,24 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
         {
             _window = new GhostRolesWindow();
 
-            _window.OnRoleRequested += info =>
+            _window.OnRoleRequestButtonClicked += info =>
             {
-                if (_windowRules != null)
-                    _windowRules.Close();
+                _windowRules?.Close();
+
+                if (info.Kind == GhostRoleKind.RaffleJoined)
+                {
+                    SendMessage(new LeaveGhostRoleRaffleMessage(info.Identifier));
+                    return;
+                }
+
                 _windowRules = new GhostRoleRulesWindow(info.Rules, _ =>
                 {
-                    SendMessage(new GhostRoleTakeoverRequestMessage(info.Identifier));
+                    SendMessage(new RequestGhostRoleMessage(info.Identifier));
+
+                    // if raffle role, close rules window on request, otherwise do
+                    // old behavior of waiting for the server to close it
+                    if (info.Kind != GhostRoleKind.FirstComeFirstServe)
+                        _windowRules?.Close();
                 });
                 _windowRulesId = info.Identifier;
                 _windowRules.OnClose += () =>
@@ -35,7 +49,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 
             _window.OnRoleFollow += info =>
             {
-                SendMessage(new GhostRoleFollowRequestMessage(info.Identifier));
+                SendMessage(new FollowGhostRoleMessage(info.Identifier));
             };
 
             _window.OnClose += () =>
@@ -61,17 +75,30 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
         {
             base.HandleState(state);
 
-            if (state is not GhostRolesEuiState ghostState) return;
+            if (state is not GhostRolesEuiState ghostState)
+                return;
             _window.ClearEntries();
 
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var sysManager = entityManager.EntitySysManager;
+            var spriteSystem = sysManager.GetEntitySystem<SpriteSystem>();
+            var requirementsManager = IoCManager.Resolve<JobRequirementsManager>();
+
             var groupedRoles = ghostState.GhostRoles.GroupBy(
-                role => (role.Name, role.Description));
+                role => (role.Name, role.Description, role.Requirements));
             foreach (var group in groupedRoles)
             {
                 var name = group.Key.Name;
                 var description = group.Key.Description;
+                bool hasAccess = true;
+                FormattedMessage? reason;
 
-                _window.AddEntry(name, description, group);
+                if (!requirementsManager.CheckRoleTime(group.Key.Requirements, out reason))
+                {
+                    hasAccess = false;
+                }
+
+                _window.AddEntry(name, description, hasAccess, reason, group, spriteSystem);
             }
 
             var closeRulesWindow = ghostState.GhostRoles.All(role => role.Identifier != _windowRulesId);

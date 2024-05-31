@@ -11,7 +11,7 @@
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Label Text="{Loc comp-gas-pump-ui-pump-output-pressure}"/>
             <Control MinSize="5 0" />
-            <LineEdit Name="PumpPressureOutputInput" MinSize="60 0" />
+            <LineEdit Name="PumpPressureOutputInput" MinSize="70 0" />
             <Control MinSize="5 0" />
             <Button Name="SetMaxPressureButton" Text="{Loc comp-gas-pump-ui-pump-set-max}" />
             <Control MinSize="5 0" />

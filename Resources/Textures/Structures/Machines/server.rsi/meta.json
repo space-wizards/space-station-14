@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/machines/excelsior/autolathe.dmi at 40b254106b46981b8ad95ccd5589deb8fa56e765",
+    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/machines/excelsior/autolathe.dmi at 40b254106b46981b8ad95ccd5589deb8fa56e765. Variant-research made for Space Station 14 by Nairod(github)",
     "states": [
         {
             "name": "server"
@@ -29,6 +29,10 @@
         },
         {
             "name": "variant-crew"
+
+        },
+        {
+            "name": "variant-research"
 
         }
     ]

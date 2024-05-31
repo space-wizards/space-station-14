@@ -1,0 +1,33 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:xNamespace="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:style="clr-namespace:Content.Client.Stylesheets"
+    Title="{Loc 'cryostorage-ui-window-title'}"
+    MinSize="350 350"
+    SetSize="450 400">
+    <BoxContainer
+        Orientation="Vertical"
+        VerticalExpand="True"
+        HorizontalExpand="True">
+        <PanelContainer
+            VerticalExpand="True"
+            HorizontalExpand="True"
+            Margin="15">
+            <PanelContainer.PanelOverride>
+                <graphics:StyleBoxFlat BackgroundColor="{xNamespace:Static style:StyleNano.PanelDark}" />
+            </PanelContainer.PanelOverride>
+            <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                <Control>
+                    <Label Text="{Loc 'cryostorage-ui-label-no-bodies'}" Name="EmptyLabel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <BoxContainer Name="EntriesContainer"
+                                  Orientation="Vertical"
+                                  Margin="10"
+                                  VerticalExpand="True"
+                                  HorizontalExpand="True"/>
+                </Control>
+            </ScrollContainer>
+        </PanelContainer>
+    </BoxContainer>
+</controls:FancyWindow>

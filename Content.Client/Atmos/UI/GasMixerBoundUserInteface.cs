@@ -1,5 +1,6 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Localizations;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -47,7 +48,7 @@ namespace Content.Client.Atmos.UI
 
         private void OnMixerOutputPressurePressed(string value)
         {
-            var pressure = float.TryParse(value, out var parsed) ? parsed : 0f;
+            var pressure = UserInputParser.TryFloat(value, out var parsed) ? parsed : 0f;
             if (pressure > MaxPressure)
                 pressure = MaxPressure;
 
@@ -57,7 +58,7 @@ namespace Content.Client.Atmos.UI
         private void OnMixerSetPercentagePressed(string value)
         {
             // We don't need to send both nodes because it's just 100.0f - node
-            var node = float.TryParse(value, out var parsed) ? parsed : 1.0f;
+            var node = UserInputParser.TryFloat(value, out var parsed) ? parsed : 1.0f;
 
             node = Math.Clamp(node, 0f, 100.0f);
 

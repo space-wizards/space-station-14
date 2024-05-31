@@ -1,7 +1,7 @@
 ﻿using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
-using Content.Shared.Objectives;
+using Content.Shared.Objectives.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
@@ -39,16 +39,17 @@ namespace Content.Server.Objectives.Commands
             }
 
             if (!IoCManager.Resolve<IPrototypeManager>()
-                .TryIndex<ObjectivePrototype>(args[1], out var objectivePrototype))
+                .TryIndex<EntityPrototype>(args[1], out var proto) ||
+                !proto.TryGetComponent<ObjectiveComponent>(out _))
             {
-                shell.WriteLine($"Can't find matching ObjectivePrototype {objectivePrototype}");
+                shell.WriteLine($"Can't find matching objective prototype {args[1]}");
                 return;
             }
 
-            var mindSystem = _entityManager.System<SharedMindSystem>();
-            if (!mindSystem.TryAddObjective(mindId, mind, objectivePrototype))
+            if (!minds.TryAddObjective(mindId, mind, args[1]))
             {
-                shell.WriteLine("Objective requirements dont allow that objective to be added.");
+                // can fail for other reasons so dont pretend to be right
+                shell.WriteLine("Failed to add the objective. Maybe requirements dont allow that objective to be added.");
             }
         }
     }

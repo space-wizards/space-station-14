@@ -25,19 +25,9 @@
 /Resources/Prototypes/Entities/Mobs/Species/ @DrSmugleaf
 /Content.*/Body/ @DrSmugleaf
 /Content.YAMLLinter @DrSmugleaf
+/Content.Shared/Damage/ @DrSmugleaf
 
-/Content.*/Verbs/ @ElectroJr
-/Content.Client/ContextMenu/ @ElectroJr
-/Content.Shared/Damage/ @ElectroJr @DrSmugleaf
-/Content.Shared/Containers/ItemSlot/ @ElectroJr
-/Content.*/PowerCell/ @ElectroJr
-/Content.*/Doors/ @ElectroJr
-/Content.*/Interaction/ @ElectroJr
-/Content.*/Hands/ @ElectroJr
-/Content.*/Actions/ @ElectroJr
-/Content.*/Explosion/ @ElectroJr
-
-/Content.*/Anomaly/ @EmoGarbage404
+/Content.*/Anomaly/ @EmoGarbage404 @TheShuEd
 /Content.*/Lathe/ @EmoGarbage404
 /Content.*/Materials/ @EmoGarbage404
 /Content.*/Mech/ @EmoGarbage404
@@ -45,7 +35,7 @@
 /Content.*/Stack/ @EmoGarbage404
 /Content.*/Xenoarchaeology/ @EmoGarbage404
 /Content.*/Zombies/ @EmoGarbage404
-/Resources/Prototypes/Entities/Structures/Specific/anomalies.yml @EmoGarbage404
+/Resources/Prototypes/Entities/Structures/Specific/anomalies.yml @EmoGarbage404 @TheShuEd
 /Resources/Prototypes/Research/ @EmoGarbage404
 
 /Content.*/Forensics/ @ficcialfaint
@@ -60,3 +50,6 @@
 /Content.*/Atmos/ @Partmedia
 /Content.*/Botany/ @Partmedia
 
+#Jezi
+/Content.*/Medical @Jezithyr
+/Content.*/Body @Jezithyr

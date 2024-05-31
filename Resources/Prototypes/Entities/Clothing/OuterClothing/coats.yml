@@ -10,7 +10,7 @@
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
   id: ClothingOuterCoatDetective
   name: detective trenchcoat
   description: A rugged canvas trenchcoat, designed and created by TX Fabrication Corp. Wearing it makes you feel for the plight of the Tibetans.
@@ -22,6 +22,7 @@
   - type: StorageFill
     contents:
     - id: SmokingPipeFilledTobacco
+    - id: FlippoEngravedLighter
   - type: Armor #same as regular sec armor
     modifiers:
       coefficients:
@@ -29,6 +30,15 @@
         Slash: 0.70
         Piercing: 0.70
         Heat: 0.80
+
+- type: entity
+  parent: ClothingOuterCoatDetective
+  id: ClothingOuterCoatDetectiveLoadout
+  components:
+  - type: StorageFill
+    contents:
+    - id: SmokingPipeFilledTobacco
+    - id: FlippoLighter #Not the steal objective, only difference from normal detective trenchcoat
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -42,7 +52,38 @@
     sprite: Clothing/OuterClothing/Coats/gentlecoat.rsi
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  abstract: true
+  parent: AllowSuitStorageClothing
+  id: ClothingOuterArmorHoS
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.7
+        Caustic: 0.75 # not the full 90% from ss13 because of the head
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+
+- type: entity
+  abstract: true
+  parent: AllowSuitStorageClothing
+  id: ClothingOuterArmorWarden
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+
+- type: entity
+  parent: [ClothingOuterArmorHoS, ClothingOuterStorageBase]
   id: ClothingOuterCoatHoSTrench
   name: head of security's armored trenchcoat
   description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
@@ -51,16 +92,6 @@
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.70
-        Slash: 0.70
-        Piercing: 0.70
-        Heat: 0.70
-        Caustic: 0.75 #not the full 90% from ss13 because of the head
-  - type: ExplosionResistance
-    damageCoefficient: 0.90
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -74,7 +105,7 @@
     sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterStorageToggleableBase
   id: ClothingOuterCoatJensen
   name: jensen coat
   description: A jensen coat.
@@ -83,9 +114,37 @@
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodChaplainHood
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatTrench
+  name: trench coat
+  description: A comfy trench coat.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/trenchcoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/trenchcoat.rsi
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 20
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLab
   name: lab coat
   description: A suit that protects against minor chemical spills.
@@ -100,7 +159,12 @@
         Caustic: 0.75
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLab]
+  id: ClothingOuterCoatLabOpened
+  name: lab coat
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabChem
   name: chemist lab coat
   description: A suit that protects against minor chemical spills. Has an orange stripe on the shoulder.
@@ -115,7 +179,12 @@
         Caustic: 0.75
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabChem]
+  id: ClothingOuterCoatLabChemOpened
+  name: chemist lab coat
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabViro
   name: virologist lab coat
   description: A suit that protects against bacteria and viruses. Has an green stripe on the shoulder.
@@ -129,9 +198,13 @@
       coefficients:
         Caustic: 0.75
 
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabViro]
+  id: ClothingOuterCoatLabViroOpened
+  name: virologist lab coat
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabGene
   name: geneticist lab coat
   description: A suit that protects against minor chemical spills. Has an blue stripe on the shoulder.
@@ -145,12 +218,16 @@
       coefficients:
         Caustic: 0.75
 
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabGene]
+  id: ClothingOuterCoatLabGeneOpened
+  name: geneticist lab coat
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabCmo
   name: chief medical officer's lab coat
-  description: Bluer than the standard model.
+  description: Custom made blue lab coat for the Chief Medical Officer, offers improved protection against chemical spills and minor cuts
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
@@ -159,25 +236,37 @@
   - type: Armor
     modifiers:
       coefficients:
-        Caustic: 0.75
+        Slash: 0.95
+        Heat: 0.95
+        Caustic: 0.65
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabCmo]
+  id: ClothingOuterCoatLabCmoOpened
+  name: chief medical officer's lab coat
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatRnd
   name: scientist lab coat
   description: A suit that protects against minor chemical spills. Has a purple stripe on the shoulder.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/rndcoat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/rndcoat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
   - type: Armor
     modifiers:
       coefficients:
         Caustic: 0.75
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatRnd]
+  id: ClothingOuterCoatRndOpened
+  name: scientist lab coat
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatRobo
   name: roboticist lab coat
   description: More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads.
@@ -192,6 +281,32 @@
         Caustic: 0.75
 
 - type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatRobo]
+  id: ClothingOuterCoatRoboOpened
+  name: roboticist lab coat
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
+  id: ClothingOuterCoatRD
+  name: research director lab coat
+  description: Woven with top of the line technology, this labcoat helps protect against radiation in similar way to the experimental hardsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_rd.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_rd.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+        Radiation: 0.9
+
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatRD]
+  id: ClothingOuterCoatRDOpened
+  name: research director lab coat
+
+- type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatPirate
   name: pirate garb
@@ -203,7 +318,7 @@
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterArmorWarden, ClothingOuterStorageBase]
   id: ClothingOuterCoatWarden
   name: warden's armored jacket
   description: A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.
@@ -212,15 +327,6 @@
     sprite: Clothing/OuterClothing/Coats/warden.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/warden.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.70
-        Slash: 0.70
-        Piercing: 0.70
-        Heat: 0.70
-  - type: ExplosionResistance
-    damageCoefficient: 0.90
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -342,3 +448,25 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatSpaceAsshole
+  name: the coat of space asshole
+  description: And there he was...
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatExpensive
+  name: expensive coat
+  description: Very fluffy pink coat, made out of very expensive fur (clearly).
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi

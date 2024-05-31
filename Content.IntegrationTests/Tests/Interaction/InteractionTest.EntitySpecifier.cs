@@ -3,6 +3,7 @@ using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using static Robust.UnitTesting.RobustIntegrationTest;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -54,7 +55,7 @@ public abstract partial class InteractionTest
         /// <summary>
         /// Convert applicable entity prototypes into stack prototypes.
         /// </summary>
-        public void ConvertToStack(IPrototypeManager protoMan, IComponentFactory factory)
+        public async Task ConvertToStack(IPrototypeManager protoMan, IComponentFactory factory, ServerIntegrationInstance server)
         {
             if (Converted)
                 return;
@@ -73,11 +74,14 @@ public abstract partial class InteractionTest
                 return;
             }
 
-            if (entProto.TryGetComponent<StackComponent>(factory.GetComponentName(typeof(StackComponent)),
-                    out var stackComp))
+            StackComponent? stack = null;
+            await server.WaitPost(() =>
             {
-                Prototype = stackComp.StackTypeId;
-            }
+                entProto.TryGetComponent(factory.GetComponentName(typeof(StackComponent)), out stack);
+            });
+
+            if (stack != null)
+                Prototype = stack.StackTypeId;
         }
     }
 
@@ -100,11 +104,14 @@ public abstract partial class InteractionTest
             return default;
         }
 
-        if (entProto.TryGetComponent<StackComponent>(Factory.GetComponentName(typeof(StackComponent)),
-                out var stackComp))
+        StackComponent? stack = null;
+        await Server.WaitPost(() =>
         {
-            return await SpawnEntity((stackComp.StackTypeId, spec.Quantity), coords);
-        }
+            entProto.TryGetComponent(Factory.GetComponentName(typeof(StackComponent)), out stack);
+        });
+
+        if (stack != null)
+            return await SpawnEntity((stack.StackTypeId, spec.Quantity), coords);
 
         Assert.That(spec.Quantity, Is.EqualTo(1), "SpawnEntity only supports returning a singular entity");
         await Server.WaitPost(() => uid = SEntMan.SpawnEntity(spec.Prototype, coords));
@@ -112,17 +119,19 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    /// Convert an entity-uid to a matching entity specifier. Usefull when doing entity lookups & checking that the
-    /// right quantity of entities/materials werre produced.
+    /// Convert an entity-uid to a matching entity specifier. Useful when doing entity lookups & checking that the
+    /// right quantity of entities/materials werre produced. Returns null if passed an entity with a null prototype.
     /// </summary>
-    protected EntitySpecifier ToEntitySpecifier(EntityUid uid)
+    protected EntitySpecifier? ToEntitySpecifier(EntityUid uid)
     {
         if (SEntMan.TryGetComponent(uid, out StackComponent? stack))
             return new EntitySpecifier(stack.StackTypeId, stack.Count) { Converted = true };
 
         var meta = SEntMan.GetComponent<MetaDataComponent>(uid);
-        Assert.That(meta.EntityPrototype, Is.Not.Null);
 
-        return new(meta.EntityPrototype!.ID, 1) { Converted = true };
+        if (meta.EntityPrototype is null)
+            return null;
+
+        return new(meta.EntityPrototype.ID, 1) { Converted = true };
     }
 }

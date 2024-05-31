@@ -7,10 +7,10 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class ModifyBleedAmount : ReagentEffect
 {
-    [DataField("scaled")]
+    [DataField]
     public bool Scaled = false;
 
-    [DataField("amount")]
+    [DataField]
     public float Amount = -1.0f;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
@@ -21,7 +21,7 @@ public sealed partial class ModifyBleedAmount : ReagentEffect
     {
         if (args.EntityManager.TryGetComponent<BloodstreamComponent>(args.SolutionEntity, out var blood))
         {
-            var sys = EntitySystem.Get<BloodstreamSystem>();
+            var sys = args.EntityManager.System<BloodstreamSystem>();
             var amt = Scaled ? Amount * args.Quantity.Float() : Amount;
             amt *= args.Scale;
 

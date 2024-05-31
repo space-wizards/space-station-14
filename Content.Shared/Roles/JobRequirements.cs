@@ -3,6 +3,7 @@ using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles.Jobs;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
@@ -12,9 +13,11 @@ namespace Content.Shared.Roles
     /// Abstract class for playtime and other requirements for role gates.
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
+    [Serializable, NetSerializable]
     public abstract partial class JobRequirement{}
 
     [UsedImplicitly]
+    [Serializable, NetSerializable]
     public sealed partial class DepartmentTimeRequirement : JobRequirement
     {
         /// <summary>
@@ -39,6 +42,7 @@ namespace Content.Shared.Roles
     }
 
     [UsedImplicitly]
+    [Serializable, NetSerializable]
     public sealed partial class RoleTimeRequirement : JobRequirement
     {
         /// <summary>
@@ -55,6 +59,7 @@ namespace Content.Shared.Roles
     }
 
     [UsedImplicitly]
+    [Serializable, NetSerializable]
     public sealed partial class OverallPlaytimeRequirement : JobRequirement
     {
         /// <inheritdoc cref="DepartmentTimeRequirement.Time"/>
@@ -91,7 +96,7 @@ namespace Content.Shared.Roles
         /// </summary>
         public static bool TryRequirementMet(
             JobRequirement requirement,
-            Dictionary<string, TimeSpan> playTimes,
+            IReadOnlyDictionary<string, TimeSpan> playTimes,
             [NotNullWhen(false)] out FormattedMessage? reason,
             IEntityManager entManager,
             IPrototypeManager prototypes)
@@ -127,7 +132,7 @@ namespace Content.Shared.Roles
 
                         reason = FormattedMessage.FromMarkup(Loc.GetString(
                             "role-timer-department-insufficient",
-                            ("time", deptDiff),
+                            ("time", Math.Ceiling(deptDiff)),
                             ("department", Loc.GetString(deptRequirement.Department)),
                             ("departmentColor", department.Color.ToHex())));
                         return false;
@@ -156,7 +161,9 @@ namespace Content.Shared.Roles
                         if (overallDiff <= 0 || overallTime >= overallRequirement.Time)
                             return true;
 
-                        reason = FormattedMessage.FromMarkup(Loc.GetString("role-timer-overall-insufficient", ("time", overallDiff)));
+                        reason = FormattedMessage.FromMarkup(Loc.GetString(
+                              "role-timer-overall-insufficient",
+                              ("time", Math.Ceiling(overallDiff))));
                         return false;
                     }
                     else
@@ -192,7 +199,7 @@ namespace Content.Shared.Roles
 
                         reason = FormattedMessage.FromMarkup(Loc.GetString(
                             "role-timer-role-insufficient",
-                            ("time", roleDiff),
+                            ("time", Math.Ceiling(roleDiff)),
                             ("job", Loc.GetString(proto)),
                             ("departmentColor", departmentColor.ToHex())));
                         return false;
@@ -208,7 +215,6 @@ namespace Content.Shared.Roles
                                 ("departmentColor", departmentColor.ToHex())));
                             return false;
                         }
-
 
                         return true;
                     }

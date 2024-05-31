@@ -1,4 +1,4 @@
-﻿# Tier 1
+# Tier 1
 
 - type: technology
   id: SalvageEquipment
@@ -12,48 +12,49 @@
   recipeUnlocks:
   - MiningDrill
   - BorgModuleMining
-  - OreProcessorMachineCircuitboard
+  - OreProcessorIndustrialMachineCircuitboard
+  - OreBagOfHolding
+  - ClothingMaskWeldingGas
 
 - type: technology
   id: AdvancedPowercells
   name: research-technology-advanced-powercells
   icon:
-    sprite: Objects/Power/power_cells.rsi
-    state: medium
-  discipline: Industrial
-  tier: 1
-  cost: 5000
-  recipeUnlocks:
-  - PowerCellMedium
-
-- type: technology
-  id: CompactPower
-  name: research-technology-compact-power
-  icon:
-    sprite: Structures/Power/Generation/wallmount_generator.rsi
-    state: panel
+    sprite: Structures/Power/turbo_recharger.rsi
+    state: empty
   discipline: Industrial
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - WallmountSubstationElectronics
-  - WallmountGeneratorElectronics
-  - WallmountGeneratorAPUElectronics
+  - PowerCellHigh
+  - TurboItemRechargerCircuitboard
+
+- type: technology
+  id: MechanicalCompression
+  name: research-technology-mechanical-compression
+  icon:
+    sprite: Structures/Machines/flatpacker.rsi
+    state: base
+  discipline: Industrial
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - FlatpackerMachineCircuitboard
 
 - type: technology
   id: IndustrialEngineering
   name: research-technology-industrial-engineering
   icon:
-    sprite: Structures/Machines/protolathe.rsi
-    state: icon
+    sprite: Structures/Machines/protolathe_hypercon.rsi
+    state: building
   discipline: Industrial
   tier: 1
-  cost: 7500
+  cost: 10000
   recipeUnlocks:
-  - ProtolatheMachineCircuitboard
-  - AutolatheMachineCircuitboard
-  - CircuitImprinterMachineCircuitboard
-  - MaterialReclaimerMachineCircuitboard
+  - AutolatheHyperConvectionMachineCircuitboard
+  - ProtolatheHyperConvectionMachineCircuitboard
+  - CircuitImprinterHyperConvectionMachineCircuitboard
+  - SheetifierMachineCircuitboard
 
 - type: technology
   id: PowerGeneration
@@ -83,54 +84,8 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - BorgModuleGasAnalyzer
   - ThermomachineFreezerMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
-
-# Tier 2
-
-- type: technology
-  id: Grappling
-  name: research-technology-grappling
-  icon:
-    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
-    state: base
-  discipline: Industrial
-  tier: 2
-  cost: 5000
-  recipeUnlocks:
-  - WeaponGrapplingGun
-  - BorgModuleGrapplingGun
-
-- type: technology
-  id: RapidConstruction
-  name: research-technology-rapid-construction
-  icon:
-    sprite: Objects/Tools/rcd.rsi
-    state: icon
-  discipline: Industrial
-  tier: 2
-  cost: 10000
-  recipeUnlocks:
-  - RCD
-  - RCDAmmo
-  - BorgModuleRCD
-
-- type: technology
-  id: Shuttlecraft
-  name: research-technology-shuttlecraft
-  icon:
-    sprite: Structures/Shuttles/gyroscope.rsi
-    state: base
-  discipline: Industrial
-  tier: 2
-  cost: 10000
-  recipeUnlocks:
-  - ShuttleConsoleCircuitboard
-  - RadarConsoleCircuitboard
-  - ThrusterMachineCircuitboard
-  - GyroscopeMachineCircuitboard
-  - MiniGravityGeneratorCircuitboard
 
 - type: technology
   id: RipleyAPLU
@@ -139,7 +94,7 @@
     sprite: Objects/Specific/Mech/mecha.rsi
     state: ripley
   discipline: Industrial
-  tier: 2
+  tier: 1
   cost: 7500
   recipeUnlocks:
   - RipleyHarness
@@ -152,6 +107,50 @@
   - MechEquipmentGrabber
 
 - type: technology
+  id: Grappling
+  name: research-technology-grappling
+  icon:
+    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+    state: base
+  discipline: Industrial
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - WeaponGrapplingGun
+  - BorgModuleGrapplingGun
+
+# Tier 2
+
+- type: technology
+  id: SpaceScanning
+  name: research-technology-space-scanning
+  icon:
+    sprite: Objects/Tools/handheld_mass_scanner.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - RadarConsoleCircuitboard
+  - HandHeldMassScanner
+  - BorgModuleGPS
+
+- type: technology
+  id: Shuttlecraft
+  name: research-technology-shuttlecraft
+  icon:
+    sprite: Structures/Shuttles/gyroscope.rsi
+    state: base
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - ShuttleConsoleCircuitboard
+  - ThrusterMachineCircuitboard
+  - GyroscopeMachineCircuitboard
+  - MiniGravityGeneratorCircuitboard
+
+- type: technology
   id: AdvancedAtmospherics
   name: research-technology-advanced-atmospherics
   icon:
@@ -159,24 +158,11 @@
     state: icon
   discipline: Industrial
   tier: 2
-  cost: 5000
-  recipeUnlocks:
-  - HolofanProjector
-  - PortableScrubberMachineCircuitBoard
-
-- type: technology
-  id: SuperPowercells
-  name: research-technology-super-powercells
-  icon:
-    sprite: Objects/Power/power_cells.rsi
-    state: high
-  discipline: Industrial
-  tier: 2
   cost: 7500
   recipeUnlocks:
-  - PowerCellHigh
-  technologyPrerequisites:
-  - AdvancedPowercells
+  - HellfireFreezerMachineCircuitBoard
+  - PortableScrubberMachineCircuitBoard
+  - HolofanProjector
 
 - type: technology
   id: AdvancedToolsTechnology
@@ -192,6 +178,7 @@
     - PowerDrill
     - JawsOfLife
     - BorgModuleAdvancedTool
+    - BorgModuleRCD
 
 # Tier 3
 
@@ -208,3 +195,17 @@
   - ClothingBackpackHolding
   - ClothingBackpackSatchelHolding
   - ClothingBackpackDuffelHolding
+
+- type: technology
+  id: PortableFission
+  name: research-technology-portable-fission
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: microreactor
+  discipline: Industrial
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - PowerCellMicroreactor
+  technologyPrerequisites:
+  - AdvancedPowercells

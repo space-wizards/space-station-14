@@ -1,5 +1,5 @@
 - type: entity
-  id: BaseHumanOrgan
+  id: BaseHumanOrganUnGibbable
   parent: BaseItem
   abstract: true
   components:
@@ -15,10 +15,28 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - people
+  - type: Tag
+    tags:
+      - Meat
+
+- type: entity
+  id: BaseHumanOrgan
+  parent: BaseHumanOrganUnGibbable
+  abstract: true
+  components:
+  - type: Gibbable
 
 - type: entity
   id: OrganHumanBrain
-  parent: BaseHumanOrgan
+  parent: BaseHumanOrganUnGibbable
   name: brain
   description: "The source of incredible, unending intelligence. Honk."
   components:
@@ -28,8 +46,28 @@
   - type: Input
     context: "ghost"
   - type: Brain
+  - type: InputMover
+  - type: Examiner
   - type: BlockMovement
-
+  - type: BadFood
+  - type: Tag
+    tags:
+      - Meat
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - people
+  
 - type: entity
   id: OrganHumanEyes
   parent: BaseHumanOrgan
@@ -98,6 +136,11 @@
       Lung:
         maxVol: 100.0
         canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
 
 - type: entity
   id: OrganHumanHeart
@@ -130,6 +173,11 @@
     solutions:
       stomach:
         maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
   - type: Stomach
   # The stomach metabolizes stuff like foods and drinks.
   # TODO: Have it work off of the ent's solution container, and move this

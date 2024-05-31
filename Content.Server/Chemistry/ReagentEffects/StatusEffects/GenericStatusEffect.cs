@@ -17,25 +17,25 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
     [UsedImplicitly]
     public sealed partial class GenericStatusEffect : ReagentEffect
     {
-        [DataField("key", required: true)]
+        [DataField(required: true)]
         public string Key = default!;
 
-        [DataField("component")]
+        [DataField]
         public string Component = String.Empty;
 
-        [DataField("time")]
+        [DataField]
         public float Time = 2.0f;
 
         /// <remarks>
         ///     true - refresh status effect time,  false - accumulate status effect time
         /// </remarks>
-        [DataField("refresh")]
+        [DataField]
         public bool Refresh = true;
 
         /// <summary>
         ///     Should this effect add the status effect, remove time from it, or set its cooldown?
         /// </summary>
-        [DataField("type")]
+        [DataField]
         public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Add;
 
         public override void Effect(ReagentEffectArgs args)

@@ -9,13 +9,15 @@ using Content.Shared.Movement.Components;
 using Content.Shared.NPC;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using ClimbingComponent = Content.Shared.Climbing.Components.ClimbingComponent;
 
 namespace Content.Server.NPC.Systems;
 
 public sealed partial class NPCSteeringSystem
 {
-    private void ApplySeek(float[] interest, Vector2 direction, float weight)
+    private void ApplySeek(Span<float> interest, Vector2 direction, float weight)
     {
         if (weight == 0f || direction == Vector2.Zero)
             return;
@@ -24,13 +26,10 @@ public sealed partial class NPCSteeringSystem
 
         for (var i = 0; i < InterestDirections; i++)
         {
-            if (interest[i].Equals(-1f))
-                continue;
-
             var angle = i * InterestRadians;
             var dot = MathF.Cos(directionAngle - angle);
-            dot = (dot + 1) * 0.5f;
-            interest[i] += dot * weight;
+            dot = (dot + 1f) * 0.5f;
+            interest[i] = Math.Clamp(interest[i] + dot * weight, 0f, 1f);
         }
     }
 
@@ -57,7 +56,30 @@ public sealed partial class NPCSteeringSystem
             return true;
         }
 
-        return false;
+        // TODO: Ideally for "FreeSpace" we check all entities on the tile and build flags dynamically (pathfinder refactor in future).
+        var ents = _entSetPool.Get();
+        _lookup.GetLocalEntitiesIntersecting(node.GraphUid, node.Box.Enlarged(-0.04f), ents, flags: LookupFlags.Static);
+        var result = true;
+
+        if (ents.Count > 0)
+        {
+            var fixtures = _fixturesQuery.GetComponent(uid);
+            var physics = _physicsQuery.GetComponent(uid);
+
+            foreach (var intersecting in ents)
+            {
+                if (!_physics.IsCurrentlyHardCollidable((uid, fixtures, physics), intersecting))
+                {
+                    continue;
+                }
+
+                result = false;
+                break;
+            }
+        }
+
+        _entSetPool.Return(ents);
+        return result;
     }
 
     /// <summary>
@@ -71,7 +93,7 @@ public sealed partial class NPCSteeringSystem
         TransformComponent xform,
         Angle offsetRot,
         float moveSpeed,
-        float[] interest,
+        Span<float> interest,
         float frameTime,
         ref bool forceSteer)
     {
@@ -136,28 +158,6 @@ public sealed partial class NPCSteeringSystem
             }
         }
 
-        // Need to be pretty close if it's just a node to make sure LOS for door bashes or the likes.
-        float arrivalDistance;
-
-        if (targetCoordinates.Equals(steering.Coordinates))
-        {
-            // What's our tolerance for arrival.
-            // If it's a pathfinding node it might be different to the destination.
-            arrivalDistance = steering.Range;
-        }
-        // If next node is a free tile then get within its bounds.
-        // This is to avoid popping it too early
-        else if (steering.CurrentPath.TryPeek(out var node) && IsFreeSpace(uid, steering, node))
-        {
-            arrivalDistance = MathF.Max(0.05f, MathF.Min(node.Box.Width / 2f, node.Box.Height / 2f) - 0.05f);
-        }
-        // Try getting into blocked range I guess?
-        // TODO: Consider melee range or the likes.
-        else
-        {
-            arrivalDistance = SharedInteractionSystem.InteractionRange - 0.05f;
-        }
-
         // Check if mapids match.
         var targetMap = targetCoordinates.ToMap(EntityManager, _transform);
         var ourMap = ourCoordinates.ToMap(EntityManager, _transform);
@@ -170,8 +170,30 @@ public sealed partial class NPCSteeringSystem
 
         var direction = targetMap.Position - ourMap.Position;
 
+        // Need to be pretty close if it's just a node to make sure LOS for door bashes or the likes.
+        bool arrived;
+
+        if (targetCoordinates.Equals(steering.Coordinates))
+        {
+            // What's our tolerance for arrival.
+            // If it's a pathfinding node it might be different to the destination.
+            arrived = direction.Length() <= steering.Range;
+        }
+        // If next node is a free tile then get within its bounds.
+        // This is to avoid popping it too early
+        else if (steering.CurrentPath.TryPeek(out var node) && IsFreeSpace(uid, steering, node))
+        {
+            arrived = node.Box.Contains(ourCoordinates.Position);
+        }
+        // Try getting into blocked range I guess?
+        // TODO: Consider melee range or the likes.
+        else
+        {
+            arrived = direction.Length() <= SharedInteractionSystem.InteractionRange - 0.05f;
+        }
+
         // Are we in range
-        if (direction.Length() <= arrivalDistance)
+        if (arrived)
         {
             // Node needs some kind of special handling like access or smashing.
             if (steering.CurrentPath.TryPeek(out var node) && !IsFreeSpace(uid, steering, node))
@@ -273,7 +295,8 @@ public sealed partial class NPCSteeringSystem
         }
 
         // If not in LOS and no path then get a new one fam.
-        if (!inLos && steering.CurrentPath.Count == 0)
+        if ((!inLos && steering.ArriveOnLineOfSight && steering.CurrentPath.Count == 0) ||
+            (!steering.ArriveOnLineOfSight && steering.CurrentPath.Count == 0))
         {
             needsPath = true;
         }
@@ -464,18 +487,20 @@ public sealed partial class NPCSteeringSystem
         int layer,
         int mask,
         TransformComponent xform,
-        float[] danger)
+        Span<float> danger)
     {
-        var objectRadius = 0.15f;
+        var objectRadius = 0.25f;
         var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
+        var ents = _entSetPool.Get();
+        _lookup.GetEntitiesInRange(uid, detectionRadius, ents, LookupFlags.Dynamic | LookupFlags.Static);
 
-        foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Static))
+        foreach (var ent in ents)
         {
             // TODO: If we can access the door or smth.
-            if (ent == uid ||
-                !_physicsQuery.TryGetComponent(ent, out var otherBody) ||
+            if (!_physicsQuery.TryGetComponent(ent, out var otherBody) ||
                 !otherBody.Hard ||
                 !otherBody.CanCollide ||
+                otherBody.BodyType == BodyType.KinematicController ||
                 (mask & otherBody.CollisionLayer) == 0x0 &&
                 (layer & otherBody.CollisionMask) == 0x0)
             {
@@ -504,7 +529,7 @@ public sealed partial class NPCSteeringSystem
             }
             else
             {
-                weight = distance / detectionRadius;
+                weight = (detectionRadius - distance) / detectionRadius;
             }
 
             if (obstacleDirection == Vector2.Zero)
@@ -520,6 +545,7 @@ public sealed partial class NPCSteeringSystem
             }
         }
 
+        _entSetPool.Return(ents);
     }
 
     #endregion
@@ -538,24 +564,25 @@ public sealed partial class NPCSteeringSystem
         int mask,
         PhysicsComponent body,
         TransformComponent xform,
-        float[] danger)
+        Span<float> danger)
     {
         var objectRadius = 0.25f;
         var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
         var ourVelocity = body.LinearVelocity;
         _factionQuery.TryGetComponent(uid, out var ourFaction);
+        var ents = _entSetPool.Get();
+        _lookup.GetEntitiesInRange(uid, detectionRadius, ents, LookupFlags.Dynamic);
 
-        foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Dynamic))
+        foreach (var ent in ents)
         {
             // TODO: If we can access the door or smth.
-            if (ent == uid ||
-                !_physicsQuery.TryGetComponent(ent, out var otherBody) ||
+            if (!_physicsQuery.TryGetComponent(ent, out var otherBody) ||
                 !otherBody.Hard ||
                 !otherBody.CanCollide ||
                 (mask & otherBody.CollisionLayer) == 0x0 &&
                 (layer & otherBody.CollisionMask) == 0x0 ||
                 !_factionQuery.TryGetComponent(ent, out var otherFaction) ||
-                !_npcFaction.IsEntityFriendly(uid, ent, ourFaction, otherFaction) ||
+                !_npcFaction.IsEntityFriendly((uid, ourFaction), (ent, otherFaction)) ||
                 // Use <= 0 so we ignore stationary friends in case.
                 Vector2.Dot(otherBody.LinearVelocity, ourVelocity) <= 0f)
             {
@@ -601,6 +628,8 @@ public sealed partial class NPCSteeringSystem
                 danger[i] = MathF.Max(dot * weight, danger[i]);
             }
         }
+
+        _entSetPool.Return(ents);
     }
 
     #endregion
@@ -608,4 +637,35 @@ public sealed partial class NPCSteeringSystem
     // TODO: Alignment
 
     // TODO: Cohesion
+    private void Blend(NPCSteeringComponent steering, float frameTime, Span<float> interest, Span<float> danger)
+    {
+        /*
+         * Future sloth notes:
+         * Pathfinder cleanup:
+            - Cleanup whatever the fuck is happening in pathfinder
+            - Use Flee for melee behavior / actions and get the seek direction from that rather than bulldozing
+            - Must always have a path
+            - Path should return the full version + the snipped version
+            - Pathfinder needs to do diagonals
+            - Next node is either <current node + 1> or <nearest node + 1> (on the full path)
+            - If greater than <1.5m distance> repath
+         */
+
+        // IDK why I didn't do this sooner but blending is a lot better than lastdir for fixing stuttering.
+        const float BlendWeight = 10f;
+        var blendValue = Math.Min(1f, frameTime * BlendWeight);
+
+        for (var i = 0; i < InterestDirections; i++)
+        {
+            var currentInterest = interest[i];
+            var lastInterest = steering.Interest[i];
+            var interestDiff = (currentInterest - lastInterest) * blendValue;
+            steering.Interest[i] = lastInterest + interestDiff;
+
+            var currentDanger = danger[i];
+            var lastDanger = steering.Danger[i];
+            var dangerDiff = (currentDanger - lastDanger) * blendValue;
+            steering.Danger[i] = lastDanger + dangerDiff;
+        }
+    }
 }

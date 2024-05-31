@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Weapons.Ranged;
 
 [Prototype("hitscan")]
-public sealed class HitscanPrototype : IPrototype, IShootable
+public sealed partial class HitscanPrototype : IPrototype, IShootable
 {
     [ViewVariables]
     [IdDataField]

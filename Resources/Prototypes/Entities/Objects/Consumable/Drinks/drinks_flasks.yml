@@ -7,6 +7,8 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 300
+  - type: FitsInDispenser
+    solution: drink
 
 - type: entity
   parent: FlaskBase
@@ -31,7 +33,7 @@
         reagents:
         - ReagentId: Water
           Quantity: 50
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity

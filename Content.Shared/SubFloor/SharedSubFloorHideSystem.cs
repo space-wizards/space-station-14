@@ -15,7 +15,6 @@ namespace Content.Shared.SubFloor
     [UsedImplicitly]
     public abstract class SharedSubFloorHideSystem : EntitySystem
     {
-        [Dependency] protected readonly IMapManager MapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
@@ -24,7 +23,6 @@ namespace Content.Shared.SubFloor
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GridModifiedEvent>(OnGridChanged);
             SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
@@ -35,7 +33,7 @@ namespace Content.Shared.SubFloor
             SubscribeLocalEvent<SubFloorHideComponent, GetExplosionResistanceEvent>(OnGetExplosionResistance);
         }
 
-        private void OnGetExplosionResistance(EntityUid uid, SubFloorHideComponent component, GetExplosionResistanceEvent args)
+        private void OnGetExplosionResistance(EntityUid uid, SubFloorHideComponent component, ref GetExplosionResistanceEvent args)
         {
             if (component.BlockInteractions && component.IsUnderCover)
                 args.DamageCoefficient = 0;
@@ -94,15 +92,7 @@ namespace Content.Shared.SubFloor
             if (args.NewTile.Tile.IsEmpty)
                 return; // Anything that was here will be unanchored anyways.
 
-            UpdateTile(MapManager.GetGrid(args.NewTile.GridUid), args.NewTile.GridIndices);
-        }
-
-        private void OnGridChanged(GridModifiedEvent args)
-        {
-            foreach (var modified in args.Modified)
-            {
-                UpdateTile(args.Grid, modified.position);
-            }
+            UpdateTile(Comp<MapGridComponent>(args.NewTile.GridUid), args.NewTile.GridIndices);
         }
 
         /// <summary>
@@ -113,7 +103,7 @@ namespace Content.Shared.SubFloor
             if (!Resolve(uid, ref component, ref xform))
                 return;
 
-            if (xform.Anchored && MapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (xform.Anchored && TryComp<MapGridComponent>(xform.GridUid, out var grid))
                 component.IsUnderCover = HasFloorCover(grid, grid.TileIndicesFor(xform.Coordinates));
             else
                 component.IsUnderCover = false;

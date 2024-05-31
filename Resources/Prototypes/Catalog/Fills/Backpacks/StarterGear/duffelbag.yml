@@ -27,7 +27,7 @@
       - id: BoxSurvivalSecurity
       - id: Flash
       - id: MagazinePistol
-      
+
 - type: entity
   noSpawn: true
   parent: ClothingBackpackDuffelSecurity
@@ -47,7 +47,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvivalBrigmedic
       - id: Flash
 
 - type: entity
@@ -58,6 +57,16 @@
   - type: StorageFill
     contents:
       - id: BoxSurvivalMedical
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffelMedical
+  id: ClothingBackpackDuffelParamedicFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalMedical
+      - id: EmergencyRollerBedSpawnFolded
 
 - type: entity
   noSpawn: true
@@ -202,6 +211,16 @@
       - id: BoxSurvival
       - id: Bible
       - id: RubberStampChaplain
+  
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelLawyerFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: RubberStampLawyer
 
 - type: entity
   noSpawn: true

@@ -1,25 +1,21 @@
-﻿using System.Linq;
+using System.Linq;
+using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
-using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Content.Shared.Zombies;
 using Robust.Client.GameObjects;
-using Robust.Client.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Zombies;
 
-public sealed class ZombieSystem : SharedZombieSystem
+public sealed class ZombieSystem : EntitySystem
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<ZombieComponent, GetStatusIconsEvent>(OnGetStatusIcon);
+        SubscribeLocalEvent<ZombieComponent, CanDisplayStatusIconsEvent>(OnCanDisplayStatusIcons);
+        SubscribeLocalEvent<InitialInfectedComponent, CanDisplayStatusIconsEvent>(OnCanDisplayStatusIcons);
     }
 
     private void OnStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
@@ -36,11 +32,28 @@ public sealed class ZombieSystem : SharedZombieSystem
         }
     }
 
-    private void OnGetStatusIcon(EntityUid uid, ZombieComponent component, ref GetStatusIconsEvent args)
+    /// <summary>
+    /// Determines whether a player should be able to see the StatusIcon for zombies.
+    /// </summary>
+    private void OnCanDisplayStatusIcons(EntityUid uid, ZombieComponent component, ref CanDisplayStatusIconsEvent args)
     {
-        if (!HasComp<ZombieComponent>(_player.LocalPlayer?.ControlledEntity))
+        if (HasComp<ZombieComponent>(args.User) || HasComp<InitialInfectedComponent>(args.User) || HasComp<ShowZombieIconsComponent>(args.User))
             return;
 
-        args.StatusIcons.Add(_prototype.Index<StatusIconPrototype>(component.ZombieStatusIcon));
+        if (component.IconVisibleToGhost && HasComp<GhostComponent>(args.User))
+            return;
+
+        args.Cancelled = true;
+    }
+
+    private void OnCanDisplayStatusIcons(EntityUid uid, InitialInfectedComponent component, ref CanDisplayStatusIconsEvent args)
+    {
+        if (HasComp<InitialInfectedComponent>(args.User) && !HasComp<ZombieComponent>(args.User))
+            return;
+
+        if (component.IconVisibleToGhost && HasComp<GhostComponent>(args.User))
+            return;
+
+        args.Cancelled = true;
     }
 }

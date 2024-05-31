@@ -19,6 +19,9 @@ signal-port-description-right = This port is invoked whenever the lever is moved
 signal-port-name-doorstatus = Door status
 signal-port-description-doorstatus = This port is invoked with HIGH when the door opens and LOW when the door finishes closing.
 
+signal-port-name-dockstatus = Dock status
+signal-port-description-dockstatus = This port is invoked with HIGH when docked and LOW when undocked.
+
 signal-port-name-middle = Middle
 signal-port-description-middle = This port is invoked whenever the lever is moved to the neutral position.
 
@@ -45,3 +48,24 @@ signal-port-description-air-warning = This port is invoked with HIGH when in war
 
 signal-port-name-air-normal = Normal
 signal-port-description-air-normal = This port is invoked with HIGH when in normal mode and LOW when not.
+
+signal-port-name-decaying = Decaying
+signal-port-description-decaying = This port is invoked when a bound anomaly starts to decay.
+
+signal-port-name-stabilize = Stabilize
+signal-port-description-stabilize = This port is invoked when a bound anomaly is normalized.
+
+signal-port-name-growing = Growing
+signal-port-description-growing = This port is invoked when a bound anomaly starts to grow.
+
+signal-port-name-pulse = Pulse
+signal-port-description-pulse = This port is invoked when a bound anomaly is pulsing.
+
+signal-port-name-supercrit = Supercritical
+signal-port-description-supercrit = This port is invoked when a bound anomaly explode after supercrit state.
+
+signal-port-name-power-charging = Charging
+signal-port-description-power-charging = This port is invoked with HIGH when the battery is gaining charge and LOW when not.
+
+signal-port-name-power-discharging = Discharging
+signal-port-description-power-discharging = This port is invoked with HIGH when the battery is losing charge and LOW when not.

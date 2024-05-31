@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -15,7 +17,7 @@ namespace Content.YAMLLinter
     {
         private static async Task<int> Main(string[] _)
         {
-            PoolManager.Startup(null);
+            PoolManager.Startup();
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -77,16 +79,39 @@ namespace Content.YAMLLinter
 
             await instance.WaitPost(() =>
             {
+                var engineErrors = protoMan.ValidateDirectory(new ResPath("/EnginePrototypes"), out var engPrototypes);
                 yamlErrors = protoMan.ValidateDirectory(new ResPath("/Prototypes"), out var prototypes);
-                fieldErrors = protoMan.ValidateFields(prototypes);
+
+                // Merge engine & content prototypes
+                foreach (var (kind, instances) in engPrototypes)
+                {
+                    if (prototypes.TryGetValue(kind, out var existing))
+                        existing.UnionWith(instances);
+                    else
+                        prototypes[kind] = instances;
+                }
+
+                foreach (var (kind, set) in engineErrors)
+                {
+                    if (yamlErrors.TryGetValue(kind, out var existing))
+                        existing.UnionWith(set);
+                    else
+                        yamlErrors[kind] = set;
+                }
+
+                fieldErrors = protoMan.ValidateStaticFields(prototypes);
             });
 
             return (yamlErrors, fieldErrors);
         }
 
-        public static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors , List<string> FieldErrors)>
+        public static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
             RunValidation()
         {
+            var (clientAssemblies, serverAssemblies) = await GetClientServerAssemblies();
+            var serverTypes = serverAssemblies.SelectMany(n => n.GetTypes()).Select(t => t.Name).ToHashSet();
+            var clientTypes = clientAssemblies.SelectMany(n => n.GetTypes()).Select(t => t.Name).ToHashSet();
+
             var yamlErrors = new Dictionary<string, HashSet<ErrorNode>>();
 
             var serverErrors = await ValidateServer();
@@ -98,8 +123,17 @@ namespace Content.YAMLLinter
                 var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
 
                 // We include sometimes-relevant errors if they exist both for the client & server
-                if (clientErrors.Item1.TryGetValue(key, out var clientVal))
+                if (clientErrors.YamlErrors.TryGetValue(key, out var clientVal))
                     newErrors.UnionWith(val.Intersect(clientVal));
+
+                // Include any errors that relate to server-only types
+                foreach (var errorNode in val)
+                {
+                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !clientTypes.Contains(fieldNotFoundNode.FieldType.Name))
+                    {
+                        newErrors.Add(errorNode);
+                    }
+                }
 
                 if (newErrors.Count != 0)
                     yamlErrors[key] = newErrors;
@@ -116,6 +150,15 @@ namespace Content.YAMLLinter
                     errors.UnionWith(val.Where(n => n.AlwaysRelevant));
                 else
                     yamlErrors[key] = newErrors;
+
+                // Include any errors that relate to client-only types
+                foreach (var errorNode in val)
+                {
+                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !serverTypes.Contains(fieldNotFoundNode.FieldType.Name))
+                    {
+                        newErrors.Add(errorNode);
+                    }
+                }
             }
 
             // Finally, combine the prototype ID field errors.
@@ -125,6 +168,24 @@ namespace Content.YAMLLinter
                 .ToList();
 
             return (yamlErrors, fieldErrors);
+        }
+
+        private static async Task<(Assembly[] clientAssemblies, Assembly[] serverAssemblies)>
+            GetClientServerAssemblies()
+        {
+            await using var pair = await PoolManager.GetServerClient();
+
+            var result = (GetAssemblies(pair.Client), GetAssemblies(pair.Server));
+
+            await pair.CleanReturnAsync();
+
+            return result;
+
+            Assembly[] GetAssemblies(RobustIntegrationTest.IntegrationInstance instance)
+            {
+                var refl = instance.ResolveDependency<IReflectionManager>();
+                return refl.Assemblies.ToArray();
+            }
         }
     }
 }

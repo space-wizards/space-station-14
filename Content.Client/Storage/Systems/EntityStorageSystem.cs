@@ -17,6 +17,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<EntityStorageComponent, EntityUnpausedEvent>(OnEntityUnpausedEvent);
         SubscribeLocalEvent<EntityStorageComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<EntityStorageComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<EntityStorageComponent, ActivateInWorldEvent>(OnInteract, after: new[] { typeof(LockSystem) });

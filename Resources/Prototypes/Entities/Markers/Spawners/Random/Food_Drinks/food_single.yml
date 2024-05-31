@@ -46,6 +46,14 @@
       - FoodPizzaSassysageSlice
       - FoodPizzaPineappleSlice
       - FoodPizzaMoldySlice
+      - FoodBakedDumplings
+      - FoodBakedChevreChaud
+      - FoodBakedNugget
+      - FoodTacoBeef
+      - FoodTacoChicken
+      - FoodTacoFish
+      - FoodTacoBeefSupreme
+      - FoodTacoChickenSupreme
     chance: 0.8
     offset: 0.0
     #rare
@@ -66,5 +74,7 @@
       - FoodMeatLizardtailKebab
       - FoodMeatRatKebab
       - FoodMeatRatdoubleKebab
+      - FoodMeatSnakeKebab
       - FoodPizzaArnoldSlice
+      - FoodTacoRat
     rareChance: 0.05

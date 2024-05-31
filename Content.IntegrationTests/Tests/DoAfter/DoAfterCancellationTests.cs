@@ -3,8 +3,6 @@ using Content.IntegrationTests.Tests.Construction.Interaction;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.IntegrationTests.Tests.Weldable;
 using Content.Shared.Tools.Components;
-using Content.Server.Tools.Components;
-using Content.Shared.DoAfter;
 
 namespace Content.IntegrationTests.Tests.DoAfter;
 
@@ -38,10 +36,10 @@ public sealed class DoAfterCancellationTests : InteractionTest
         AssertAnchored(false);
 
         // Repeat for screwdriver interaction.
-        AssertDeleted(false);
+        AssertExists();
         await Interact(Screw, awaitDoAfters: false);
         await CancelDoAfters();
-        AssertDeleted(false);
+        AssertExists();
         await Interact(Screw);
         AssertDeleted();
     }

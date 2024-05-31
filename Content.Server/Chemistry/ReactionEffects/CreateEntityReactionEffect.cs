@@ -11,13 +11,13 @@ public sealed partial class CreateEntityReactionEffect : ReagentEffect
     /// <summary>
     ///     What entity to create.
     /// </summary>
-    [DataField("entity", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Entity = default!;
 
     /// <summary>
     ///     How many entities to create per unit reaction.
     /// </summary>
-    [DataField("number")]
+    [DataField]
     public uint Number = 1;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
@@ -34,7 +34,7 @@ public sealed partial class CreateEntityReactionEffect : ReagentEffect
 
         for (var i = 0; i < quantity; i++)
         {
-            var uid = args.EntityManager.SpawnEntity(Entity, transform.MapPosition);
+            var uid = args.EntityManager.SpawnEntity(Entity, transformSystem.GetMapCoordinates(args.SolutionEntity, xform: transform));
             transformSystem.AttachToGridOrMap(uid);
 
             // TODO figure out how to properly spawn inside of containers

@@ -18,10 +18,15 @@ public sealed class FluidSpill
 {
     private static PuddleComponent? GetPuddle(IEntityManager entityManager, MapGridComponent mapGrid, Vector2i pos)
     {
+        return GetPuddleEntity(entityManager, mapGrid, pos)?.Comp;
+    }
+
+    private static Entity<PuddleComponent>? GetPuddleEntity(IEntityManager entityManager, MapGridComponent mapGrid, Vector2i pos)
+    {
         foreach (var uid in mapGrid.GetAnchoredEntities(pos))
         {
             if (entityManager.TryGetComponent(uid, out PuddleComponent? puddleComponent))
-                return puddleComponent;
+                return (uid, puddleComponent);
         }
 
         return null;
@@ -48,26 +53,26 @@ public sealed class FluidSpill
         await server.WaitPost(() =>
         {
             mapId = mapManager.CreateMap();
-            var grid = mapManager.CreateGrid(mapId);
+            var grid = mapManager.CreateGridEntity(mapId);
             gridId = grid.Owner;
 
             for (var x = 0; x < 3; x++)
             {
                 for (var y = 0; y < 3; y++)
                 {
-                    grid.SetTile(new Vector2i(x, y), new Tile(1));
+                    grid.Comp.SetTile(new Vector2i(x, y), new Tile(1));
                 }
             }
 
-            entityManager.SpawnEntity("WallReinforced", grid.GridTileToLocal(new Vector2i(0, 1)));
-            entityManager.SpawnEntity("WallReinforced", grid.GridTileToLocal(new Vector2i(1, 0)));
+            entityManager.SpawnEntity("WallReinforced", grid.Comp.GridTileToLocal(new Vector2i(0, 1)));
+            entityManager.SpawnEntity("WallReinforced", grid.Comp.GridTileToLocal(new Vector2i(1, 0)));
         });
 
 
         var puddleOrigin = new Vector2i(0, 0);
         await server.WaitAssertion(() =>
         {
-            var grid = mapManager.GetGrid(gridId);
+            var grid = entityManager.GetComponent<MapGridComponent>(gridId);
             var solution = new Solution("Blood", FixedPoint2.New(100));
             var tileRef = grid.GetTileRef(puddleOrigin);
 #pragma warning disable NUnit2045 // Interdependent tests
@@ -81,13 +86,12 @@ public sealed class FluidSpill
 
         await server.WaitAssertion(() =>
         {
-            var grid = mapManager.GetGrid(gridId);
-            var puddle = GetPuddle(entityManager, grid, puddleOrigin);
-
+            var grid = entityManager.GetComponent<MapGridComponent>(gridId);
+            var puddle = GetPuddleEntity(entityManager, grid, puddleOrigin);
 
 #pragma warning disable NUnit2045 // Interdependent tests
             Assert.That(puddle, Is.Not.Null);
-            Assert.That(puddleSystem.CurrentVolume(puddle!.Owner, puddle), Is.EqualTo(FixedPoint2.New(100)));
+            Assert.That(puddleSystem.CurrentVolume(puddle!.Value.Owner, puddle), Is.EqualTo(FixedPoint2.New(100)));
 #pragma warning restore NUnit2045
 
             for (var x = 0; x < 3; x++)

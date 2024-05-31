@@ -1,0 +1,98 @@
+- type: entity
+  parent: BaseItem
+  id: Cane
+  name: cane
+  description: A wooden cane.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cane.rsi
+    state: cane
+  - type: Item
+    size: Normal
+    sprite: Objects/Weapons/Melee/cane.rsi
+  - type: Appearance
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Blunt: 5
+  - type: StaminaDamageOnHit
+    damage: 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 3
+  - type: UseDelay
+    delay: 1
+
+- type: entity
+  name: cane blade
+  parent: BaseItem
+  id: CaneBlade
+  description: A sharp blade with a cane shaped hilt.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cane_blade.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: 65
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 14
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Normal
+    sprite: Objects/Weapons/Melee/cane_blade.rsi
+  - type: Tag
+    tags:
+      - CaneBlade
+  - type: DisarmMalus
+
+- type: entity
+  parent: Cane
+  id: CaneSheath
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cane.rsi
+    state: cane-empty
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      item: !type:ContainerSlot
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: ItemSlots
+    slots:
+      item:
+        name: CaneBlade
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        whitelist:
+          tags:
+          - CaneBlade
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+  - type: ItemMapper
+    mapLayers:
+      cane:
+        whitelist:
+          tags:
+          - CaneBlade
+
+- type: entity
+  id: CaneSheathFilled
+  parent: CaneSheath
+  suffix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - CaneBlade

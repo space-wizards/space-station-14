@@ -6,7 +6,7 @@ namespace Content.Shared.PowerCell;
 /// <summary>
 /// Indicates that the entity's ActivatableUI requires power or else it closes.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class PowerCellDrawComponent : Component
 {
     #region Prediction
@@ -49,5 +49,6 @@ public sealed partial class PowerCellDrawComponent : Component
     /// When the next automatic power draw will occur
     /// </summary>
     [DataField("nextUpdate", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextUpdateTime;
 }

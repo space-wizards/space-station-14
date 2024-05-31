@@ -76,3 +76,35 @@
       tags:
       - Document
       - Write
+
+- type: entity
+  parent: PaperBin
+  id: PaperBin20
+  suffix: 20
+  components:
+  - type: Bin
+    initialContents:
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    whitelist:
+      tags:
+      - Document
+      - Write

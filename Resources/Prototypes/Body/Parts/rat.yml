@@ -13,3 +13,8 @@
   - type: Tag
     tags:
       - Trash
+  # TODO get a proper rat king & servant torso sprite.
+  # currently their torso is just a small dead rat....
+  - type: Sprite
+    sprite: Mobs/Animals/mouse.rsi
+    state: splat-0

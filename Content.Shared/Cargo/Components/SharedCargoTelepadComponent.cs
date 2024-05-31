@@ -1,4 +1,3 @@
-using Content.Shared.Construction.Prototypes;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -13,29 +12,14 @@ namespace Content.Shared.Cargo.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedCargoSystem))]
 public sealed partial class CargoTelepadComponent : Component
 {
-    /// <summary>
-    /// The base amount of time it takes to teleport from the telepad
-    /// </summary>
-    [DataField("baseDelay"), ViewVariables(VVAccess.ReadWrite)]
-    public float BaseDelay = 10f;
+    [DataField]
+    public List<CargoOrderData> CurrentOrders = new();
 
     /// <summary>
     /// The actual amount of time it takes to teleport from the telepad
     /// </summary>
     [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
-    public float Delay = 10f;
-
-    /// <summary>
-    /// The machine part that affects <see cref="Delay"/>
-    /// </summary>
-    [DataField("machinePartTeleportDelay", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string MachinePartTeleportDelay = "Capacitor";
-
-    /// <summary>
-    /// A multiplier applied to <see cref="Delay"/> for each level of <see cref="MachinePartTeleportDelay"/>
-    /// </summary>
-    [DataField("partRatingTeleportDelay"), ViewVariables(VVAccess.ReadWrite)]
-    public float PartRatingTeleportDelay = 0.8f;
+    public float Delay = 5f;
 
     /// <summary>
     /// How much time we've accumulated until next teleport.

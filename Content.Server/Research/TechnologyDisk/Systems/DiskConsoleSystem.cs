@@ -1,8 +1,9 @@
-﻿using Content.Server.Research.Systems;
+using Content.Server.Research.Systems;
 using Content.Server.Research.TechnologyDisk.Components;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Research;
 using Content.Shared.Research.Components;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 
@@ -90,7 +91,7 @@ public sealed class DiskConsoleSystem : EntitySystem
                        totalPoints >= component.PricePerDisk;
 
         var state = new DiskConsoleBoundUserInterfaceState(totalPoints, component.PricePerDisk, canPrint);
-        _ui.TrySetUiState(uid, DiskConsoleUiKey.Key, state);
+        _ui.SetUiState(uid, DiskConsoleUiKey.Key, state);
     }
 
     private void OnShutdown(EntityUid uid, DiskConsolePrintingComponent component, ComponentShutdown args)

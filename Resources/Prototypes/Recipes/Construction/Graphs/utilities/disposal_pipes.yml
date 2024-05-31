@@ -51,6 +51,23 @@
       - material: Steel
         amount: 2
         doAfter: 1
+    # DisposalSignalRouter
+    - to: signal_router
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+      - material: Cable
+        amount: 1
+        doAfter: 1
+    - to: signal_router_flipped
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+      - material: Cable
+        amount: 1
+        doAfter: 1
   - node: broken
     entity: DisposalPipeBroken
     edges:
@@ -184,6 +201,35 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  # DisposalRouter
+  - node: signal_router
+    entity: DisposalSignalRouter
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  - node: signal_router_flipped
+    entity: DisposalSignalRouterFlipped
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
       - !type:DeleteEntity
       steps:
       - tool: Welding

@@ -1,3 +1,14 @@
+# base actions
+
+- type: entity
+  id: BaseSuicideAction
+  abstract: true
+  components:
+  - type: ConfirmableAction
+    popup: suicide-action-popup
+
+# actions
+
 - type: entity
   id: ActionScream
   name: Scream
@@ -18,6 +29,7 @@
   components:
   - type: InstantAction
     checkCanInteract: false
+    checkConsciousness: false
     icon: Interface/Actions/zombie-turn.png
     event: !type:ZombifySelfActionEvent
 
@@ -29,7 +41,7 @@
   components:
   - type: InstantAction
     icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-    iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+    iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
     event: !type:ToggleActionEvent
 
 - type: entity
@@ -47,6 +59,7 @@
     event: !type:OpenStorageImplantEvent
 
 - type: entity
+  parent: BaseSuicideAction
   id: ActionActivateMicroBomb
   name: Activate Microbomb
   description: Activates your internal microbomb, completely destroying you and your equipment
@@ -54,11 +67,29 @@
   components:
   - type: InstantAction
     checkCanInteract: false
+    checkConsciousness: false
     itemIconStyle: BigAction
     priority: -20
     icon:
       sprite: Actions/Implants/implants.rsi
       state: explosive
+    event: !type:ActivateImplantEvent
+
+- type: entity
+  parent: BaseSuicideAction
+  id: ActionActivateDeathAcidifier
+  name: Activate Death-Acidifier
+  description: Activates your death-acidifier, completely melting you and your equipment
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: gib
     event: !type:ActivateImplantEvent
 
 - type: entity
@@ -98,6 +129,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    checkCanInteract: false
     charges: 3
     useDelay: 5
     itemIconStyle: BigAction
@@ -106,6 +138,23 @@
       sprite: Objects/Weapons/Grenades/empgrenade.rsi
       state: icon
     event: !type:ActivateImplantEvent
+
+- type: entity
+  id: ActionActivateScramImplant
+  name: SCRAM!
+  description: Randomly teleports you within a large distance.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    charges: 2
+    useDelay: 5
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Structures/Specific/anomaly.rsi
+      state: anom4
+    event: !type:UseScramImplantEvent
 
 - type: entity
   id: ActionActivateDnaScramblerImplant
@@ -121,6 +170,21 @@
       sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
       state: icon
     event: !type:UseDnaScramblerImplantEvent
+
+- type: entity
+  id: ActionMorphGeras
+  name: Morph into Geras
+  description:  Morphs you into a Geras - a miniature version of you which allows you to move fast, at the cost of your inventory.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    useDelay: 10 # prevent spam
+    priority: -20
+    icon:
+      sprite: Mobs/Aliens/slimes.rsi
+      state: blue_adult_slime
+    event: !type:MorphIntoGeras
 
 - type: entity
   id: ActionToggleSuitPiece
@@ -141,6 +205,7 @@
   components:
   - type: InstantAction
     checkCanInteract: false
+    checkConsciousness: false
     icon: Interface/Actions/harmOff.png
     iconOn: Interface/Actions/harm.png
     event: !type:ToggleCombatActionEvent
@@ -162,9 +227,10 @@
   id: ActionChangeVoiceMask
   name: Set name
   description: Change the name others hear to something else.
+  noSpawn: true
   components:
   - type: InstantAction
-    icon: Interface/Actions/scream.png # somebody else can figure out a better icon for this
+    icon: { sprite: Interface/Actions/voice-mask.rsi, state: icon }
     event: !type:VoiceMaskSetNameEvent
 
 - type: entity
@@ -208,6 +274,10 @@
   noSpawn: true
   components:
   - type: InstantAction
+    clientExclusive: true
+    checkCanInteract: false
+    checkConsciousness: false
+    temporary: true
     icon: { sprite: Objects/Tools/multitool.rsi, state: icon }
     event: !type:ClearAllOverlaysEvent
 
@@ -230,6 +300,7 @@
   components:
   - type: InstantAction
     checkCanInteract: false
+    checkConsciousness: false
     icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
     event: !type:SleepActionEvent
 
@@ -242,6 +313,7 @@
   - type: InstantAction
     icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
     checkCanInteract: false
+    checkConsciousness: false
     event: !type:WakeActionEvent
 
 - type: entity
@@ -254,3 +326,42 @@
     icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
     event: !type:ActivateImplantEvent
     useDelay: 1
+
+- type: entity
+  id: ActionFireStarter
+  name: Ignite
+  description: Ignites enemies in a radius around you.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    priority: -1
+    useDelay: 30
+    icon: Interface/Actions/firestarter.png
+    event: !type:FireStarterActionEvent
+
+- type: entity
+  id: ActionToggleEyes
+  name: Open/Close eyes
+  description: Close your eyes to protect your peepers, or open your eyes to enjoy the pretty lights.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/eyeopen.png
+    iconOn: Interface/Actions/eyeclose.png
+    event: !type:ToggleEyesActionEvent
+    useDelay: 1 # so u cant give yourself and observers eyestrain by rapidly spamming the action
+    checkCanInteract: false
+    checkConsciousness: false
+
+- type: entity
+  id: ActionToggleWagging
+  name: action-name-toggle-wagging
+  description: action-description-toggle-wagging
+  noSpawn: true
+  components:
+    - type: InstantAction
+      icon: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
+      iconOn: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
+      itemIconStyle: NoItem
+      useDelay: 1 # emote spam
+      event: !type:ToggleActionEvent

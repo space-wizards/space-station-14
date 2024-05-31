@@ -1,4 +1,5 @@
 using Content.Shared.Decals;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Sprite;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -26,7 +27,7 @@ public sealed class RandomSpriteSystem: SharedRandomSpriteSystem
         if (component.Available.Count == 0)
             return;
 
-        var groups = new List<Dictionary<string, (string, string?)>>();
+        var groups = new List<Dictionary<string, Dictionary<string, string?>>>();
         if (component.GetAllGroups)
         {
             groups = component.Available;
@@ -38,20 +39,31 @@ public sealed class RandomSpriteSystem: SharedRandomSpriteSystem
 
         component.Selected.EnsureCapacity(groups.Count);
 
+        Color? previousColor = null;
+
         foreach (var group in groups)
         {
             foreach (var layer in group)
             {
                 Color? color = null;
 
-                if (!string.IsNullOrEmpty(layer.Value.Item2))
-                    color = _random.Pick(_prototype.Index<ColorPalettePrototype>(layer.Value.Item2).Colors.Values);
+                var selectedState = _random.Pick(layer.Value);
+                if (!string.IsNullOrEmpty(selectedState.Value))
+                {
+                    if (selectedState.Value == $"Inherit")
+                        color = previousColor;
+                    else
+                    {
+                        color = _random.Pick(_prototype.Index<ColorPalettePrototype>(selectedState.Value).Colors.Values);
+                        previousColor = color;
+                    }
+                }
 
-                component.Selected.Add(layer.Key, (layer.Value.Item1, color));
+                component.Selected.Add(layer.Key, (selectedState.Key, color));
             }
         }
 
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnGetState(EntityUid uid, RandomSpriteComponent component, ref ComponentGetState args)

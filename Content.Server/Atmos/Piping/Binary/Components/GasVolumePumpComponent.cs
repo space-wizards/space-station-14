@@ -9,6 +9,9 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 
+        [DataField("blocked")]
+        public bool Blocked { get; set; } = false;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Overclocked { get; set; } = false;
 

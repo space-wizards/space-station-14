@@ -16,9 +16,6 @@ using Robust.Client.State;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Melee;
 
@@ -44,6 +41,12 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         UpdatesOutsidePrediction = true;
     }
 
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+        UpdateEffects();
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -51,7 +54,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
-        var entityNull = _player.LocalPlayer?.ControlledEntity;
+        var entityNull = _player.LocalEntity;
 
         if (entityNull == null)
             return;
@@ -61,7 +64,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!TryGetWeapon(entity, out var weaponUid, out var weapon))
             return;
 
-        if (!CombatMode.IsInCombatMode(entity) || !Blocker.CanAttack(entity))
+        if (!CombatMode.IsInCombatMode(entity) || !Blocker.CanAttack(entity, weapon: (weaponUid, weapon)))
         {
             weapon.Attacking = false;
             return;
@@ -70,7 +73,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var useDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
         var altDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.UseSecondary);
 
-        if (useDown != BoundKeyState.Down && altDown != BoundKeyState.Down)
+        if (weapon.AutoAttack || useDown != BoundKeyState.Down && altDown != BoundKeyState.Down)
         {
             if (weapon.Attacking)
             {
@@ -137,7 +140,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Light attack
         if (useDown == BoundKeyState.Down)
         {
-            var attackerPos = Transform(entity).MapPosition;
+            var attackerPos = TransformSystem.GetMapCoordinates(entity);
 
             if (mousePos.MapId != attackerPos.MapId ||
                 (attackerPos.Position - mousePos.Position).Length() > weapon.Range)
@@ -151,6 +154,10 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             {
                 target = screen.GetClickedEntity(mousePos);
             }
+
+            // Don't light-attack if interaction will be handling this instead
+            if (Interaction.CombatModeCanHandInteract(entity, target))
+                return;
 
             RaisePredictiveEvent(new LightAttackEvent(GetNetEntity(target), GetNetEntity(weaponUid), GetNetCoordinates(coordinates)));
         }
@@ -231,9 +238,10 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     private void OnMeleeLunge(MeleeLungeEvent ev)
     {
         var ent = GetEntity(ev.Entity);
+        var entWeapon = GetEntity(ev.Weapon);
 
         // Entity might not have been sent by PVS.
-        if (Exists(ent))
-            DoLunge(ent, ev.Angle, ev.LocalPos, ev.Animation);
+        if (Exists(ent) && Exists(entWeapon))
+            DoLunge(ent, entWeapon, ev.Angle, ev.LocalPos, ev.Animation);
     }
 }

@@ -13,7 +13,6 @@ public sealed class DamageOnHoldingSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<DamageOnHoldingComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<DamageOnHoldingComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -24,11 +23,6 @@ public sealed class DamageOnHoldingSystem : EntitySystem
             component.Enabled = enabled;
             component.NextDamage = _timing.CurTime;
         }
-    }
-
-    private void OnUnpaused(EntityUid uid, DamageOnHoldingComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextDamage += args.PausedTime;
     }
 
     private void OnMapInit(EntityUid uid, DamageOnHoldingComponent component, MapInitEvent args)

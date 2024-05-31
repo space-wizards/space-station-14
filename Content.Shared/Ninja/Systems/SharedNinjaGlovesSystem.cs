@@ -1,20 +1,16 @@
 using Content.Shared.Actions;
 using Content.Shared.CombatMode;
 using Content.Shared.Communications;
-using Content.Shared.Doors.Components;
-using Content.Shared.DoAfter;
+using Content.Shared.CriminalRecords.Components;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
-using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Robust.Shared.Timing;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -26,11 +22,9 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
-    [Dependency] protected readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
-    [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -39,6 +33,13 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         SubscribeLocalEvent<NinjaGlovesComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<NinjaGlovesComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<NinjaGlovesComponent, GotUnequippedEvent>(OnUnequipped);
+        SubscribeLocalEvent<NinjaGlovesComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, NinjaGlovesComponent component, MapInitEvent args)
+    {
+        _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -62,6 +63,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         RemComp<StunProviderComponent>(user);
         RemComp<ResearchStealerComponent>(user);
         RemComp<CommsHackerComponent>(user);
+        RemComp<CriminalRecordsHackerComponent>(user);
     }
 
     /// <summary>
@@ -108,7 +110,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         target = args.Target;
         return _timing.IsFirstTimePredicted
             && !_combatMode.IsInCombatMode(uid)
-            && !_useDelay.ActiveDelay(uid)
             && TryComp<HandsComponent>(uid, out var hands)
             && hands.ActiveHandEntity == null
             && Interaction.InRangeUnobstructed(uid, target);

@@ -12,7 +12,6 @@
     - type: Clothing
       sprite: Clothing/Shoes/Boots/magboots.rsi
     - type: Magboots
-      toggleAction: ActionToggleMagboots
     - type: ClothingSpeedModifier
       walkModifier: 0.85
       sprintModifier: 0.8
@@ -54,6 +53,19 @@
     - HighRiskItem
   - type: StaticPrice
     price: 750
+  - type: StealTarget
+    stealGroup: ClothingShoesBootsMagAdv
+
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagSci
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/magboots-science.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/magboots-science.rsi
+  - type: Magboots
+    toggleAction: ActionToggleMagbootsSci
 
 - type: entity
   parent: ClothingShoesBootsMag
@@ -98,13 +110,14 @@
     key: enum.SharedGasTankUiKey.Key
   - type: UserInterface
     interfaces:
-      - key: enum.SharedGasTankUiKey.Key
+      enum.SharedGasTankUiKey.Key:
         type: GasTankBoundUserInterface
   - type: Explosive
     explosionType: Default
     maxIntensity: 20
   - type: Jetpack
     moleUsage: 0.00085
+  - type: CanMoveInAir
   - type: InputMover
     toParent: true
   - type: MovementSpeedModifier
@@ -142,6 +155,15 @@
   - type: InstantAction
     icon: { sprite: Clothing/Shoes/Boots/magboots-advanced.rsi, state: icon }
     iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
+
+- type: entity
+  id: ActionToggleMagbootsSci
+  parent: ActionBaseToggleMagboots
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Shoes/Boots/magboots-science.rsi, state: icon }
+    iconOn: Clothing/Shoes/Boots/magboots-science.rsi/icon-on.png
 
 - type: entity
   id: ActionToggleMagbootsSyndie

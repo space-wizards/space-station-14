@@ -1,8 +1,6 @@
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
-
 
 namespace Content.Server.Administration.Commands
 {
@@ -15,7 +13,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             if (player == null)
             {
                 shell.WriteLine("You cannot use this command from the server console.");

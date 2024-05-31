@@ -1,7 +1,5 @@
 ﻿using Content.Server.DeviceNetwork.Components;
 using Content.Shared.SensorMonitoring;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Collections;
 using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBoundInterfaceState;
 using IncrementalUIState = Content.Shared.SensorMonitoring.SensorMonitoringIncrementalUpdate;
@@ -12,32 +10,34 @@ public sealed partial class SensorMonitoringConsoleSystem
 {
     private void InitUI()
     {
-        SubscribeLocalEvent<SensorMonitoringConsoleComponent, BoundUIClosedEvent>(ConsoleUIClosed);
+        Subs.BuiEvents<SensorMonitoringConsoleComponent>(SensorMonitoringConsoleUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIClosedEvent>(ConsoleUIClosed);
+        });
     }
 
     private void UpdateConsoleUI(EntityUid uid, SensorMonitoringConsoleComponent comp)
     {
-        if (!_userInterface.TryGetUi(uid, SensorMonitoringConsoleUiKey.Key, out var ui))
+        if (!_userInterface.IsUiOpen(uid, SensorMonitoringConsoleUiKey.Key))
+        {
             return;
-
-        if (ui.SubscribedSessions.Count == 0)
-            return;
+        }
 
         ConsoleUIState? fullState = null;
         SensorMonitoringIncrementalUpdate? incrementalUpdate = null;
 
-        foreach (var session in ui.SubscribedSessions)
+        foreach (var actorUid in _userInterface.GetActors(uid, SensorMonitoringConsoleUiKey.Key))
         {
-            if (comp.InitialUIStateSent.Contains(session))
+            if (comp.InitialUIStateSent.Contains(actorUid))
             {
                 incrementalUpdate ??= CalculateIncrementalUpdate();
-                _userInterface.TrySendUiMessage(ui, incrementalUpdate, session);
+                _userInterface.ServerSendUiMessage(uid, SensorMonitoringConsoleUiKey.Key, incrementalUpdate, actorUid);
             }
             else
             {
                 fullState ??= CalculateFullState();
-                _userInterface.SetUiState(ui, fullState, session);
-                comp.InitialUIStateSent.Add(session);
+                _userInterface.SetUiState(uid, SensorMonitoringConsoleUiKey.Key, fullState);
+                comp.InitialUIStateSent.Add(actorUid);
             }
         }
 
@@ -130,9 +130,6 @@ public sealed partial class SensorMonitoringConsoleSystem
         if (!args.UiKey.Equals(SensorMonitoringConsoleUiKey.Key))
             return;
 
-        if (args.Session is not IPlayerSession player)
-            return;
-
-        component.InitialUIStateSent.Remove(player);
+        component.InitialUIStateSent.Remove(args.Actor);
     }
 }

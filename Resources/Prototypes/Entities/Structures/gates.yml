@@ -25,6 +25,8 @@
     - state: or
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
+  - type: UseDelay
+    delay: 0.5
   - type: DeviceLinkSink
     ports:
     - InputA
@@ -32,6 +34,8 @@
   - type: DeviceLinkSource
     ports:
     - Output
+    lastSignals:
+      Output: false
   - type: Construction
     graph: LogicGate
     node: logic_gate
@@ -63,6 +67,55 @@
     ports:
     - OutputHigh
     - OutputLow
+    lastSignals:
+      OutputHigh: false
+      OutputLow: false
   - type: Construction
     graph: LogicGate
     node: edge_detector
+
+- type: entity
+  parent: BaseLogicItem
+  id: PowerSensor
+  name: power sensor
+  description: Generates signals in response to powernet changes. Can be cycled between cable voltages.
+  components:
+  - type: Sprite
+    state: power_sensor
+  - type: PowerSensor
+  - type: PowerSwitchable
+    examineText: power-sensor-voltage-examine
+    switchText: power-sensor-voltage-switch
+    cables:
+    - voltage: HV
+      node: hv
+    - voltage: MV
+      node: mv
+    - voltage: LV
+      node: lv
+  - type: UseDelay
+    delay: 1
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      mv:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+        enabled: false
+      lv:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+        enabled: false
+  - type: DeviceLinkSource
+    ports:
+    - PowerCharging
+    - PowerDischarging
+    lastSignals:
+      PowerCharging: false
+      PowerDischarging: false
+  - type: Construction
+    graph: LogicGate
+    node: power_sensor

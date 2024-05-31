@@ -20,7 +20,13 @@
     fadeOutBehaviourID: fade_out
     litSound:
       path: /Audio/Items/Flare/flare_on.ogg
-    loopedSound: /Audio/Items/Flare/flare_burn.ogg
+    loopedSound:
+      path: /Audio/Items/Flare/flare_burn.ogg
+      params:
+        loop: true
+        volume: -10
+        maxDistance: 5
+
   - type: Sprite
     sprite: Objects/Misc/flare.rsi
     layers:
@@ -40,6 +46,7 @@
   - type: Item
     sprite: Objects/Misc/flare.rsi
     heldPrefix: unlit
+    size: Tiny
   - type: Appearance
   - type: PointLight
     enabled: false
@@ -53,11 +60,9 @@
     behaviours:
       - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
         id: turn_on
-        interpolate: Linear
         maxDuration: 45.0
         startValue: 2.5
         endValue: 10.0
-        property: Radius
       - !type:RandomizeBehaviour # weaker flicker as it fades out
         id: fade_out
         interpolate: Nearest
@@ -69,8 +74,28 @@
         isLooped: true
       - !type:FadeBehaviour # fade out radius as it burns out
         id: fade_out
-        interpolate: Linear
         maxDuration: 15.0
         startValue: 10.0
         endValue: 1.0
-        property: Radius
+  - type: Extractable
+    grindableSolutionName: flare
+  - type: SolutionContainerManager
+    solutions:
+      flare:
+        maxVol: 20
+        reagents:
+        # flare casing
+        - ReagentId: Iron
+          Quantity: 10
+        # red phosphorus = red flare trust
+        - ReagentId: Phosphorus
+          Quantity: 3
+        - ReagentId: Carbon
+          Quantity: 1
+        - ReagentId: Oxygen
+          Quantity: 2
+        # fuel or something
+        - ReagentId: Charcoal
+          Quantity: 2
+        - ReagentId: Sulfur
+          Quantity: 2

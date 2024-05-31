@@ -3,6 +3,7 @@ using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Access.Systems
 {
@@ -22,19 +23,6 @@ namespace Content.Shared.Access.Systems
 
             SubscribeLocalEvent<IdCardConsoleComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<IdCardConsoleComponent, ComponentRemove>(OnComponentRemove);
-            SubscribeLocalEvent<IdCardConsoleComponent, ComponentGetState>(OnGetState);
-            SubscribeLocalEvent<IdCardConsoleComponent, ComponentHandleState>(OnHandleState);
-        }
-
-        private void OnHandleState(EntityUid uid, IdCardConsoleComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not IdCardConsoleComponentState state) return;
-            component.AccessLevels = state.AccessLevels;
-        }
-
-        private void OnGetState(EntityUid uid, IdCardConsoleComponent component, ref ComponentGetState args)
-        {
-            args.State = new IdCardConsoleComponentState(component.AccessLevels);
         }
 
         private void OnComponentInit(EntityUid uid, IdCardConsoleComponent component, ComponentInit args)

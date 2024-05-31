@@ -1,7 +1,5 @@
-using Content.Server.GameTicking.Presets;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Announcements;
 
@@ -9,7 +7,7 @@ namespace Content.Server.Announcements;
 /// Used for any announcements on the start of a round.
 /// </summary>
 [Prototype("roundAnnouncement")]
-public sealed class RoundAnnouncementPrototype : IPrototype
+public sealed partial class RoundAnnouncementPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

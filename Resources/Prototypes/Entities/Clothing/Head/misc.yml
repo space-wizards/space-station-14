@@ -35,34 +35,23 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatFlowerCrown
-  name: flower crown
-  description: A coronet of fresh and fragrant flowers.
+  id: ClothingHeadHatFlowerWreath
+  name: flower wreath
+  description: A wreath of colourful flowers. Can be worn both on head and neck.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Misc/flower-crown.rsi
+    sprite: Clothing/Head/Misc/flower-wreath.rsi
   - type: Clothing
-    sprite: Clothing/Head/Misc/flower-crown.rsi
+    sprite: Clothing/Head/Misc/flower-wreath.rsi
+    slots:
+    - HEAD
+    - neck
   - type: Construction
-    graph: flowercrown
-    node: flowercrown
+    graph: flowerwreath
+    node: flowerwreath
 
 - type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatHairflower
-  name: hairflower
-  description: A red flower for beautiful ladies.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Misc/hairflower.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Misc/hairflower.rsi
-  - type: Construction
-    graph: hairflower
-    node: hairflower
-
-- type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadLightBase
   id: ClothingHeadHatPumpkin
   name: pumpkin hat
   description: A jack o' lantern! Believed to ward off evil spirits.
@@ -73,6 +62,18 @@
     sprite: Clothing/Head/Misc/pumpkin.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: PointLight
+    enabled: false
+    radius: 3
+    energy: 1
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    color: "#cc6600"
+    netsync: false
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
 
 - type: entity
   parent: ClothingHeadBase
@@ -84,6 +85,17 @@
     sprite: Clothing/Head/Misc/pwig.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/pwig.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadMirror
+  name: head mirror
+  description: I doubt even the CMO knows how to use this thing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/head_mirror.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/head_mirror.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -163,14 +175,27 @@
   suffix: DO NOT MAP
   components:
   - type: Tag
-    tags: # ignore "WhitelistChameleon" tag
-      - DroneUsable
+    tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/catears.rsi
   - type: AddAccentClothing
     accent: OwOAccent
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatDogEars
+  name: doggy ears
+  description: Only for good boys.
+  suffix: DO NOT MAP
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/dogears.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/dogears.rsi
+  - type: AddAccentClothing
+    accent: BarkAccent
 
 - type: entity
   parent: ClothingHeadBase
@@ -184,3 +209,72 @@
     sprite: Clothing/Head/Misc/squiddy.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRedRacoon
+  name: red racoon hat
+  description: Fluffy hat of red racoon!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/red_racoon.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/red_racoon.rsi
+
+- type: entity
+  parent: Clothing
+  id: WaterDropletHat
+  name: water droplet
+  description: Makes 8-eyed friends 8 times more adorable!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/waterdroplet.rsi
+    state: icon
+  - type: Item
+    sprite: Clothing/Head/Misc/waterdroplet.rsi
+    size: Tiny
+    storedRotation: -90
+  - type: Clothing
+    slots:
+    - HEAD
+  - type: Food
+    solution: drink
+    useSound: /Audio/Items/drink.ogg
+    eatMessage: drink-component-try-use-drink-success-slurp
+    delay: 0.5
+    forceFeedDelay: 1.5
+  - type: FlavorProfile
+    flavors:
+      - water
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 2
+        reagents:
+        - ReagentId: Water
+          Quantity: 2
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+      - !type:SpillBehavior
+        solution: drink
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+      - WhitelistChameleon
+  - type: StaticPrice
+    price: 1

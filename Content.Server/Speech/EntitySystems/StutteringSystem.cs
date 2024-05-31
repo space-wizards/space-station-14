@@ -31,10 +31,10 @@ namespace Content.Server.Speech.EntitySystems
 
         private void OnAccent(EntityUid uid, StutteringAccentComponent component, AccentGetEvent args)
         {
-            args.Message = Accentuate(args.Message);
+            args.Message = Accentuate(args.Message, component);
         }
 
-        public string Accentuate(string message)
+        public string Accentuate(string message, StutteringAccentComponent component)
         {
             var length = message.Length;
 
@@ -45,17 +45,17 @@ namespace Content.Server.Speech.EntitySystems
             for (var i = 0; i < length; i++)
             {
                 newLetter = message[i].ToString();
-                if (Stutter.IsMatch(newLetter) && _random.Prob(0.8f))
+                if (Stutter.IsMatch(newLetter) && _random.Prob(component.MatchRandomProb))
                 {
-                    if (_random.Prob(0.1f))
+                    if (_random.Prob(component.FourRandomProb))
                     {
                         newLetter = $"{newLetter}-{newLetter}-{newLetter}-{newLetter}";
                     }
-                    else if (_random.Prob(0.2f))
+                    else if (_random.Prob(component.ThreeRandomProb))
                     {
                         newLetter = $"{newLetter}-{newLetter}-{newLetter}";
                     }
-                    else if (_random.Prob(0.05f))
+                    else if (_random.Prob(component.CutRandomProb))
                     {
                         newLetter = "";
                     }

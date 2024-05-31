@@ -8,7 +8,9 @@ using Content.Shared.Verbs;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Shared.Collections;
 using Robust.Shared.Input;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Verbs.UI
 {
@@ -23,14 +25,14 @@ namespace Content.Client.Verbs.UI
     public sealed class VerbMenuUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly ContextMenuUIController _context = default!;
 
         [UISystemDependency] private readonly CombatModeSystem _combatMode = default!;
         [UISystemDependency] private readonly VerbSystem _verbSystem = default!;
 
-        public EntityUid CurrentTarget;
+        public NetEntity CurrentTarget;
         public SortedSet<Verb> CurrentVerbs = new();
+        public List<VerbCategory> ExtraCategories = new();
 
         /// <summary>
         ///     Separate from <see cref="ContextMenuUIController.RootMenu"/>, since we can open a verb menu as a submenu
@@ -64,8 +66,25 @@ namespace Content.Client.Verbs.UI
         /// </param>
         public void OpenVerbMenu(EntityUid target, bool force = false, ContextMenuPopup? popup=null)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} user ||
-                _combatMode.IsInCombatMode(user))
+            DebugTools.Assert(target.IsValid());
+            OpenVerbMenu(EntityManager.GetNetEntity(target), force, popup);
+        }
+
+        /// <summary>
+        ///     Open a verb menu and fill it with verbs applicable to the given target entity.
+        /// </summary>
+        /// <param name="target">Entity to get verbs on.</param>
+        /// <param name="force">Used to force showing all verbs. Only works on networked entities if the user is an admin.</param>
+        /// <param name="popup">
+        ///     If this is not null, verbs will be placed into the given popup instead.
+        /// </param>
+        public void OpenVerbMenu(NetEntity target, bool force = false, ContextMenuPopup? popup=null)
+        {
+            DebugTools.Assert(target.IsValid());
+            if (_playerManager.LocalEntity is not {Valid: true} user)
+                return;
+
+            if (!force && _combatMode.IsInCombatMode(user))
                 return;
 
             Close();
@@ -74,18 +93,11 @@ namespace Content.Client.Verbs.UI
             menu.MenuBody.DisposeAllChildren();
 
             CurrentTarget = target;
-            CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes, force);
+            CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes, out ExtraCategories, force);
             OpenMenu = menu;
 
             // Fill in client-side verbs.
             FillVerbPopup(menu);
-
-            // Add indicator that some verbs may be missing.
-            // I long for the day when verbs will all be predicted and this becomes unnecessary.
-            if (!EntityManager.IsClientSide(target))
-            {
-                _context.AddElement(menu, new ContextMenuElement(Loc.GetString("verb-system-waiting-on-server-text")));
-            }
 
             // if popup isn't null (ie we are opening out of an entity menu element),
             // assume that that is going to handle opening the submenu properly
@@ -94,7 +106,7 @@ namespace Content.Client.Verbs.UI
 
             // Show the menu at mouse pos
             menu.SetPositionLast();
-            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, new Vector2(1, 1));
+            var box = UIBox2.FromDimensions(UIManager.MousePositionScaled.Position, new Vector2(1, 1));
             menu.Open(box);
         }
 
@@ -104,6 +116,13 @@ namespace Content.Client.Verbs.UI
         private void FillVerbPopup(ContextMenuPopup popup)
         {
             HashSet<string> listedCategories = new();
+            var extras = new ValueList<string>(ExtraCategories.Count);
+
+            foreach (var cat in ExtraCategories)
+            {
+                extras.Add(cat.Text);
+            }
+
             foreach (var verb in CurrentVerbs)
             {
                 if (verb.Category == null)
@@ -111,9 +130,15 @@ namespace Content.Client.Verbs.UI
                     var element = new VerbMenuElement(verb);
                     _context.AddElement(popup, element);
                 }
-
-                else if (listedCategories.Add(verb.Category.Text))
+                // Add the category if it's not an extra (this is to avoid shuffling if we're filling from server verbs response).
+                else if (!extras.Contains(verb.Category.Text) && listedCategories.Add(verb.Category.Text))
                     AddVerbCategory(verb.Category, popup);
+            }
+
+            foreach (var category in ExtraCategories)
+            {
+                if (listedCategories.Add(category.Text))
+                    AddVerbCategory(category, popup);
             }
 
             popup.InvalidateMeasure();
@@ -136,10 +161,11 @@ namespace Content.Client.Verbs.UI
                 }
             }
 
-            if (verbsInCategory.Count == 0)
+            if (verbsInCategory.Count == 0 && !ExtraCategories.Contains(category))
                 return;
 
-            var element = new VerbMenuElement(category, verbsInCategory[0].TextStyleClass);
+            var style = verbsInCategory.FirstOrDefault()?.TextStyleClass ?? Verb.DefaultTextStyleClass;
+            var element = new VerbMenuElement(category, style);
             _context.AddElement(popup, element);
 
             // Create the pop-up that appears when hovering over this element
@@ -216,21 +242,25 @@ namespace Content.Client.Verbs.UI
                     return;
             }
 
-            if (verb.ConfirmationPopup)
-            {
-                if (verbElement.SubMenu == null)
-                {
-                    var popupElement = new ConfirmationMenuElement(verb, "Confirm");
-                    verbElement.SubMenu = new ContextMenuPopup(_context, verbElement);
-                    _context.AddElement(verbElement.SubMenu, popupElement);
-                }
-
-                _context.OpenSubMenu(verbElement);
-            }
-            else
+#if DEBUG
+            // No confirmation pop-ups in debug mode.
+            ExecuteVerb(verb);
+#else
+            if (!verb.ConfirmationPopup)
             {
                 ExecuteVerb(verb);
+                return;
             }
+
+            if (verbElement.SubMenu == null)
+            {
+                var popupElement = new ConfirmationMenuElement(verb, "Confirm");
+                verbElement.SubMenu = new ContextMenuPopup(_context, verbElement);
+                _context.AddElement(verbElement.SubMenu, popupElement);
+            }
+
+            _context.OpenSubMenu(verbElement);
+#endif
         }
 
         private void Close()
@@ -244,7 +274,7 @@ namespace Content.Client.Verbs.UI
 
         private void HandleVerbsResponse(VerbsResponseEvent msg)
         {
-            if (OpenMenu == null || !OpenMenu.Visible || CurrentTarget != EntityManager.GetEntity(msg.Entity))
+            if (OpenMenu == null || !OpenMenu.Visible || CurrentTarget != msg.Entity)
                 return;
 
             AddServerVerbs(msg.Verbs, OpenMenu);
@@ -252,6 +282,7 @@ namespace Content.Client.Verbs.UI
 
         private void ExecuteVerb(Verb verb)
         {
+            UIManager.ClickSound();
             _verbSystem.ExecuteVerb(CurrentTarget, verb);
 
             if (verb.CloseMenu ?? verb.CloseMenuDefault)

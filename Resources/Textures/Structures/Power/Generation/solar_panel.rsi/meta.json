@@ -1,1 +1,30 @@
-{"version":1,"license":"CC-BY-SA-3.0","copyright":"Taken from https://github.com/discordia-space/CEV-Eris/blob/d1e0161af146835f4fb79d21a6200caa9cc842d0/icons/obj/power.dmi and modified.","size":{"x":32,"y":32},"states":[{"name":"normal","select":[],"flags":{},"directions":8},{"name":"broken","select":[],"flags":{},"directions":1},{"name": "solar_assembly"},{"name": "solar_tracker"}]}
+{
+	"version":1,
+	"license":"CC-BY-SA-3.0",
+	"copyright":"Taken from https://github.com/discordia-space/CEV-Eris/blob/d1e0161af146835f4fb79d21a6200caa9cc842d0/icons/obj/power.dmi and modified.",
+	"size":{"x":32,"y":32},
+	"states":
+	[
+		{
+			"name": "normal",
+			"select": [],
+			"flags": {},
+			"directions": 8
+		},
+		{
+			"name": "broken",
+			"select": [],
+			"flags": {},
+			"directions": 1
+		},
+		{
+			"name": "static"
+		},
+		{
+			"name": "solar_assembly"
+		},
+		{
+			"name": "solar_tracker"
+		}
+	]
+}

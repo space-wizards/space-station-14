@@ -1,7 +1,5 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Audio;
-using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
@@ -11,15 +9,12 @@ using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
-using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
-using Robust.Shared.Player;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Stunnable;
 
@@ -81,19 +76,19 @@ public abstract class SharedStunSystem : EntitySystem
         switch (args.NewMobState)
         {
             case MobState.Alive:
-            {
-                break;
-            }
+                {
+                    break;
+                }
             case MobState.Critical:
-            {
-                _statusEffect.TryRemoveStatusEffect(uid, "Stun");
-                break;
-            }
+                {
+                    _statusEffect.TryRemoveStatusEffect(uid, "Stun");
+                    break;
+                }
             case MobState.Dead:
-            {
-                _statusEffect.TryRemoveStatusEffect(uid, "Stun");
-                break;
-            }
+                {
+                    _statusEffect.TryRemoveStatusEffect(uid, "Stun");
+                    break;
+                }
             case MobState.Invalid:
             default:
                 return;
@@ -155,6 +150,10 @@ public abstract class SharedStunSystem : EntitySystem
 
         if (!_statusEffect.TryAddStatusEffect<StunnedComponent>(uid, "Stun", time, refresh))
             return false;
+
+        var ev = new StunnedEvent();
+        RaiseLocalEvent(uid, ref ev);
+
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} stunned for {time.Seconds} seconds");
         return true;
     }
@@ -171,7 +170,13 @@ public abstract class SharedStunSystem : EntitySystem
         if (!Resolve(uid, ref status, false))
             return false;
 
-        return _statusEffect.TryAddStatusEffect<KnockedDownComponent>(uid, "KnockedDown", time, refresh);
+        if (!_statusEffect.TryAddStatusEffect<KnockedDownComponent>(uid, "KnockedDown", time, refresh))
+            return false;
+
+        var ev = new KnockedDownEvent();
+        RaiseLocalEvent(uid, ref ev);
+
+        return true;
     }
 
     /// <summary>
@@ -227,11 +232,11 @@ public abstract class SharedStunSystem : EntitySystem
             return;
 
         // Set it to half the help interval so helping is actually useful...
-        knocked.HelpTimer = knocked.HelpInterval/2f;
+        knocked.HelpTimer = knocked.HelpInterval / 2f;
 
         _statusEffect.TryRemoveTime(uid, "KnockedDown", TimeSpan.FromSeconds(knocked.HelpInterval));
         _audio.PlayPredicted(knocked.StunAttemptSound, uid, args.User);
-        Dirty(knocked);
+        Dirty(uid, knocked);
 
         args.Handled = true;
     }
@@ -271,5 +276,16 @@ public abstract class SharedStunSystem : EntitySystem
     }
 
     #endregion
-
 }
+
+/// <summary>
+///     Raised directed on an entity when it is stunned.
+/// </summary>
+[ByRefEvent]
+public record struct StunnedEvent;
+
+/// <summary>
+///     Raised directed on an entity when it is knocked down.
+/// </summary>
+[ByRefEvent]
+public record struct KnockedDownEvent;

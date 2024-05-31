@@ -17,17 +17,17 @@ public sealed class BlindfoldSystem : EntitySystem
         SubscribeLocalEvent<BlindfoldComponent, InventoryRelayedEvent<CanSeeAttemptEvent>>(OnBlindfoldTrySee);
     }
 
-    private void OnBlindfoldTrySee(EntityUid uid, BlindfoldComponent component, InventoryRelayedEvent<CanSeeAttemptEvent> args)
+    private void OnBlindfoldTrySee(Entity<BlindfoldComponent> blindfold, ref InventoryRelayedEvent<CanSeeAttemptEvent> args)
     {
         args.Args.Cancel();
     }
 
-    private void OnEquipped(EntityUid uid, BlindfoldComponent component, GotEquippedEvent args)
+    private void OnEquipped(Entity<BlindfoldComponent> blindfold, ref GotEquippedEvent args)
     {
         _blindableSystem.UpdateIsBlind(args.Equipee);
     }
 
-    private void OnUnequipped(EntityUid uid, BlindfoldComponent component, GotUnequippedEvent args)
+    private void OnUnequipped(Entity<BlindfoldComponent> blindfold, ref GotUnequippedEvent args)
     {
         _blindableSystem.UpdateIsBlind(args.Equipee);
     }

@@ -1,4 +1,5 @@
-﻿using Content.Server.Singularity.Components;
+using Content.Server.Physics.Components;
+using Content.Server.Singularity.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
 using Content.Shared.Anomaly.Effects.Components;
@@ -19,21 +20,31 @@ public sealed class GravityAnomalySystem : SharedGravityAnomalySystem
         SubscribeLocalEvent<GravityAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
     }
 
-    private void OnSeverityChanged(EntityUid uid, GravityAnomalyComponent component, ref AnomalySeverityChangedEvent args)
+    private void OnSeverityChanged(Entity<GravityAnomalyComponent> anomaly, ref AnomalySeverityChangedEvent args)
     {
-        if (TryComp<RadiationSourceComponent>(uid, out var radSource))
-            radSource.Intensity = component.MaxRadiationIntensity * args.Severity;
+        if (TryComp<RadiationSourceComponent>(anomaly, out var radSource))
+            radSource.Intensity = anomaly.Comp.MaxRadiationIntensity * args.Severity;
 
-        if (!TryComp<GravityWellComponent>(uid, out var gravityWell))
-            return;
-        var accel = (component.MaxAccel - component.MinAccel) * args.Severity + component.MinAccel;
-        gravityWell.BaseRadialAcceleration = accel;
-        gravityWell.BaseTangentialAcceleration = accel * 0.2f;
+        if (TryComp<GravityWellComponent>(anomaly, out var gravityWell))
+        {
+            var accel = MathHelper.Lerp(anomaly.Comp.MinAccel, anomaly.Comp.MaxAccel, args.Severity);
+            gravityWell.BaseRadialAcceleration = accel;
+
+            var radialAccel = MathHelper.Lerp(anomaly.Comp.MinRadialAccel, anomaly.Comp.MaxRadialAccel, args.Severity);
+            gravityWell.BaseTangentialAcceleration = radialAccel;
+        }
+
+        if (TryComp<RandomWalkComponent>(anomaly, out var randomWalk))
+        {
+            var speed = MathHelper.Lerp(anomaly.Comp.MinSpeed, anomaly.Comp.MaxSpeed, args.Severity);
+            randomWalk.MinSpeed = speed - anomaly.Comp.SpeedVariation;
+            randomWalk.MaxSpeed = speed + anomaly.Comp.SpeedVariation;
+        }
     }
 
-    private void OnStabilityChanged(EntityUid uid, GravityAnomalyComponent component, ref AnomalyStabilityChangedEvent args)
+    private void OnStabilityChanged(Entity<GravityAnomalyComponent> anomaly, ref AnomalyStabilityChangedEvent args)
     {
-        if (TryComp<GravityWellComponent>(uid, out var gravityWell))
-            gravityWell.MaxRange = component.MaxGravityWellRange * args.Stability;
+        if (TryComp<GravityWellComponent>(anomaly, out var gravityWell))
+            gravityWell.MaxRange = anomaly.Comp.MaxGravityWellRange * args.Stability;
     }
 }

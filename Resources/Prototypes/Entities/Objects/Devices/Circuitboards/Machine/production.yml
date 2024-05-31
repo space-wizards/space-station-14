@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board
@@ -11,6 +11,24 @@
         Manipulator: 1
       materialRequirements:
         Glass: 1
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: AutolatheHyperConvectionMachineCircuitboard
+  name: hyper convection autolathe machine board
+  description: A machine printed circuit board for a hyper convection autolathe
+  components:
+  - type: MachineBoard
+    prototype: AutolatheHyperConvection
+    requirements:
+      MatterBin: 3
+    materialRequirements:
+      Glass: 1
+    tagRequirements:
+      Igniter:
+        Amount: 1
+        DefaultPrototype: Igniter
+        ExamineName: Igniter
 
 - type: entity
   id: ProtolatheMachineCircuitboard
@@ -28,6 +46,39 @@
           Amount: 2
           DefaultPrototype: Beaker
           ExamineName: Glass Beaker
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: ProtolatheHyperConvectionMachineCircuitboard
+  name: hyper convection protolathe machine board
+  description: A machine printed circuit board for a hyper convection protolathe.
+  components:
+  - type: MachineBoard
+    prototype: ProtolatheHyperConvection
+    requirements:
+      MatterBin: 2
+    tagRequirements:
+      GlassBeaker:
+        Amount: 2
+        DefaultPrototype: Beaker
+        ExamineName: Glass Beaker
+      Igniter:
+        Amount: 1
+        DefaultPrototype: Igniter
+        ExamineName: Igniter
+
+- type: entity
+  id: BiofabricatorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: biofabricator machine board
+  description: A machine printed circuit board for a biofabricator.
+  components:
+    - type: MachineBoard
+      prototype: Biofabricator
+      requirements:
+        MatterBin: 4
+      materialRequirements:
+        Glass: 1
 
 - type: entity
   id: SecurityTechFabCircuitboard
@@ -80,6 +131,8 @@
           Amount: 2
           DefaultPrototype: Beaker
           ExamineName: Glass Beaker
+    - type: StealTarget
+      stealGroup: MedicalTechFabCircuitboard
 
 - type: entity
   id: CircuitImprinterMachineCircuitboard
@@ -98,6 +151,28 @@
         Amount: 2
         DefaultPrototype: Beaker
         ExamineName: Glass Beaker
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: CircuitImprinterHyperConvectionMachineCircuitboard
+  name: hyper convection circuit imprinter machine board
+  description: A machine printed circuit board for a hyper convection circuit imprinter.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: CircuitImprinterHyperConvection
+    requirements:
+      MatterBin: 2
+    tagRequirements:
+      GlassBeaker:
+        Amount: 2
+        DefaultPrototype: Beaker
+        ExamineName: Glass Beaker
+      Igniter:
+        Amount: 1
+        DefaultPrototype: Igniter
+        ExamineName: Igniter
 
 - type: entity
   id: ExosuitFabricatorMachineCircuitboard
@@ -201,21 +276,20 @@
         Glass: 5
 
 - type: entity
-  id: TraversalDistorterMachineCircuitboard
+  id: ArtifactCrusherMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: traversal distorter machine board
-  description: A machine printed circuit board for a traversal distorter.
+  name: artifact crusher machine board
+  description: A machine printed circuit board for an artifact crusher.
   components:
-    - type: Sprite
-      state: science
-    - type: MachineBoard
-      prototype: MachineTraversalDistorter
-      requirements:
-        Manipulator: 1
-        Capacitor: 2
-      materialRequirements:
-        Steel: 5
-        Cable: 1
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: MachineArtifactCrusher
+    requirements:
+      Manipulator: 2
+    materialRequirements:
+      Glass: 1
+      Steel: 5
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -228,10 +302,44 @@
     - type: MachineBoard
       prototype: MachineAnomalyVessel
       requirements:
-        Capacitor: 5
+        Capacitor: 3
       materialRequirements:
         Cable: 1
         PlasmaGlass: 10
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: AnomalyVesselExperimentalCircuitboard
+  name: experimental anomaly vessel machine board
+  description: A machine printed circuit board for an experimental anomaly vessel.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: MachineAnomalyVesselExperimental
+    requirements:
+      Capacitor: 3
+    materialRequirements:
+      Cable: 5
+      PlasmaGlass: 15
+      MetalRod: 4
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: AnomalySynchronizerCircuitboard
+  name: anomaly synchronizer machine board
+  description: A machine printed circuit board for an anomaly synchronizer.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineAnomalySynchronizer
+      requirements:
+        Manipulator: 2
+        Capacitor: 5
+      materialRequirements:
+        PlasmaGlass: 5
+        Cable: 5
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -290,10 +398,65 @@
     node: heater
 
 - type: entity
+  parent: BaseMachineCircuitboard
+  id: HellfireFreezerMachineCircuitBoard
+  name: hellfire freezer machine board
+  description: Looks like you could use a screwdriver to change the board type.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: GasThermoMachineHellfireFreezer
+    requirements:
+      MatterBin: 2
+      Capacitor: 2
+    materialRequirements:
+      Plasma: 1
+  - type: Construction
+    deconstructionTarget: null
+    graph: ThermomachineBoard
+    node: hellfirefreezer
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: HellfireHeaterMachineCircuitBoard
+  name: hellfire heater machine board
+  description: Looks like you could use a screwdriver to change the board type.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: GasThermoMachineHellfireHeater
+    requirements:
+      MatterBin: 2
+      Capacitor: 2
+    materialRequirements:
+      Plasma: 1
+  - type: Construction
+    graph: ThermomachineBoard
+    deconstructionTarget: null
+    node: hellfireheater
+
+- type: entity
+  id: CondenserMachineCircuitBoard
+  parent: BaseMachineCircuitboard
+  name: condenser machine board
+  description: A machine printed circuit board for a condenser.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: BaseGasCondenser
+    requirements:
+      MatterBin: 1
+    materialRequirements:
+      Glass: 1
+
+- type: entity
   id: PortableScrubberMachineCircuitBoard
   parent: BaseMachineCircuitboard
   name: portable scrubber machine board
-  description: A PCB for a portable scrubber.
+  description: A machine printed circuit board for a portable scrubber.
   components:
   - type: Sprite
     state: engineering
@@ -305,6 +468,22 @@
     materialRequirements:
       Cable: 5
       Glass: 2
+
+- type: entity
+  id: SpaceHeaterMachineCircuitBoard
+  parent: BaseMachineCircuitboard
+  name: space heater machine board
+  description: A machine printed circuit board for a space heater.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: SpaceHeater
+    requirements:
+      MatterBin: 1
+      Capacitor: 2
+    materialRequirements:
+      Cable: 5
 
 - type: entity
   id: CloningPodMachineCircuitboard
@@ -374,7 +553,7 @@
     - type: Sprite
       state: medical
     - type: MachineBoard
-      prototype: chem_master
+      prototype: ChemMaster
       requirements:
         Capacitor: 1
       materialRequirements:
@@ -395,7 +574,7 @@
     - type: Sprite
       state: medical
     - type: MachineBoard
-      prototype: ChemDispenser
+      prototype: ChemDispenserEmpty
       requirements:
         Capacitor: 1
       materialRequirements:
@@ -476,7 +655,10 @@
     - type: MachineBoard
       prototype: SMESBasicEmpty
       requirements:
-        Capacitor: 5
+        Capacitor: 1
+        PowerCell: 4
+      materialRequirements:
+        CableHV: 10
 
 - type: entity
   id: CellRechargerCircuitboard
@@ -499,6 +681,29 @@
         Plastic: 30
     - type: StaticPrice
       price: 15
+
+- type: entity
+  id: PowerCageRechargerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cage recharger machine board
+  description: A machine printed circuit board for a energy cage recharger.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+    - type: MachineBoard
+      prototype: PowerCageRecharger
+      requirements:
+        Capacitor: 4
+      materialRequirements:
+        Steel: 5
+        Cable: 10
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 30
+        Plastic: 30
+    - type: StaticPrice
+      price: 30
 
 - type: entity
   id: BorgChargerCircuitboard
@@ -545,6 +750,26 @@
       price: 15
 
 - type: entity
+  id: TurboItemRechargerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: turbo recharger machine board
+  description: A machine printed circuit board for a turbo recharger.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: charger_APC
+  - type: MachineBoard
+    prototype: TurboItemRecharger
+    requirements:
+      Capacitor: 2
+    materialRequirements:
+      CableMV: 5
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 30
+      Plastic: 30
+
+- type: entity
   id: SubstationMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: substation machine board
@@ -553,7 +778,8 @@
     - type: MachineBoard
       prototype: SubstationBasicEmpty
       requirements:
-        Capacitor: 3
+        Capacitor: 1
+        PowerCell: 1
       materialRequirements:
         CableMV: 5
         CableHV: 5
@@ -616,6 +842,8 @@
         Glass: 200
       chemicalComposition:
         Silicon: 20
+    - type: StaticPrice
+      price: 40
 
 - type: entity
   id: ThrusterMachineCircuitboard
@@ -660,6 +888,8 @@
         Glass: 200
       chemicalComposition:
         Silicon: 20
+    - type: StaticPrice
+      price: 40
 
 - type: entity
   id: PortableGeneratorJrPacmanMachineCircuitboard
@@ -679,6 +909,8 @@
         Glass: 200
       chemicalComposition:
         Silicon: 20
+    - type: StaticPrice
+      price: 40
 
 - type: entity
   id: ReagentGrinderMachineCircuitboard
@@ -711,9 +943,23 @@
         Glass: 1
 
 - type: entity
+  parent: BaseMachineCircuitboard
+  id: ElectricGrillMachineCircuitboard
+  name: electric grill machine board
+  description: A machine printed circuit board for an electric grill.
+  components:
+  - type: MachineBoard
+    prototype: KitchenElectricGrill
+    requirements:
+      Capacitor: 4
+    materialRequirements:
+      Glass: 2
+      Cable: 5
+
+- type: entity
   id: StasisBedMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Stasis Bed (Machine Board)
+  name: stasis bed machine board
   components:
     - type: Sprite
       state: medical
@@ -721,17 +967,40 @@
       prototype: StasisBed
       requirements:
         Capacitor: 1
+        Manipulator: 1
       materialRequirements:
         Cable: 3
-      tagRequirements:
-        Pipe:
-          Amount: 1
-          DefaultPrototype: GasPipeStraight
-          ExamineName: Pipe
-        Cryobeaker:
-          Amount: 2
-          DefaultPrototype: CryostasisBeaker
-          ExamineName: Cryostasis Beaker
+        Steel: 2
+
+- type: entity
+  id: ElectrolysisUnitMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: electrolysis unit machine board
+  description: A machine printed circuit board for an electrolysis unit.
+  components:
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: MachineElectrolysisUnit
+    requirements:
+      Capacitor: 2
+    materialRequirements:
+      Cable: 1
+
+- type: entity
+  id: CentrifugeMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: centrifuge machine board
+  description: A machine printed circuit board for a centrifuge.
+  components:
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: MachineCentrifuge
+    requirements:
+      Manipulator: 1
+    materialRequirements:
+      Steel: 1
 
 - type: entity
   id: MaterialReclaimerMachineCircuitboard
@@ -764,6 +1033,21 @@
         Glass: 1
 
 - type: entity
+  parent: BaseMachineCircuitboard
+  id: OreProcessorIndustrialMachineCircuitboard
+  name: industrial ore processor machine board
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: OreProcessorIndustrial
+    requirements:
+      MatterBin: 1
+      Manipulator: 3
+    materialRequirements:
+      Glass: 1
+
+- type: entity
   id: SheetifierMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: sheet-meister 2000 machine board
@@ -788,6 +1072,9 @@
       materialRequirements:
         Glass: 2
         Cable: 2
+    - type: Tag
+      tags:
+      - MicrowaveMachineBoard
 
 - type: entity
   id: FatExtractorMachineCircuitboard
@@ -805,6 +1092,19 @@
           Amount: 1
           DefaultPrototype: ForkPlastic
           ExamineName: Utensil
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: FlatpackerMachineCircuitboard
+  name: Flatpacker 1001 machine board
+  components:
+  - type: MachineBoard
+    prototype: MachineFlatpacker
+    requirements:
+      Manipulator: 2
+      MatterBin: 1
+    materialRequirements:
+      Steel: 1
 
 - type: entity
   id: EmitterCircuitboard
@@ -892,7 +1192,7 @@
     - type: Sprite
       state: service
     - type: MachineBoard
-      prototype: BoozeDispenser
+      prototype: BoozeDispenserEmpty
       materialRequirements:
         Steel: 5
       tagRequirements:
@@ -925,7 +1225,7 @@
     - type: Sprite
       state: service
     - type: MachineBoard
-      prototype: soda_dispenser
+      prototype: SodaDispenserEmpty
       materialRequirements:
         Steel: 5
       tagRequirements:
@@ -976,3 +1276,30 @@
       Steel: 5
       CableHV: 5
       Uranium: 2
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: ReagentGrinderIndustrialMachineCircuitboard
+  name: industrial reagent grinder machine board
+  components:
+  - type: MachineBoard
+    prototype: ReagentGrinderIndustrial
+    requirements:
+      MatterBin: 1
+      Manipulator: 3
+    materialRequirements:
+      Glass: 1
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: JukeboxCircuitBoard
+  name: jukebox machine board
+  description: A machine printed circuit board for a jukebox.
+  components:
+  - type: MachineBoard
+    prototype: Jukebox
+    materialRequirements:
+      WoodPlank: 5
+      Steel: 2
+      Glass: 5
+      Cable: 2

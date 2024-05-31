@@ -49,7 +49,7 @@ namespace Content.Client.Atmos.UI
 
         public void SetTransferRate(float rate)
         {
-            FilterTransferRateInput.Text = rate.ToString(CultureInfo.InvariantCulture);
+            FilterTransferRateInput.Text = rate.ToString(CultureInfo.CurrentCulture);
         }
 
         public void SetFilterStatus(bool enabled)

@@ -17,7 +17,7 @@
       scale: "3, 3"
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Objects/Power/AME/ame_part.rsi/box.png"
+        path: "/Textures/Objects/Devices/flatpack.rsi/ame-part.png"
       slowness: 0.995
       tiled: false
       controlHomePosition: "-128, -128"
@@ -38,7 +38,7 @@
       scale: "1, 1"
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Objects/Power/AME/ame_part.rsi/box.png"
+        path: "/Textures/Objects/Devices/flatpack.rsi/ame-part.png"
       slowness: 0.0
       tiled: false
       controlHomePosition: "0, 32"

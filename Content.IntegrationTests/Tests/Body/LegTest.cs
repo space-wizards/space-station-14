@@ -38,6 +38,7 @@ namespace Content.IntegrationTests.Tests.Body
             var entityManager = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var appearanceSystem = entityManager.System<SharedAppearanceSystem>();
+            var xformSystem = entityManager.System<SharedTransformSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -60,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 foreach (var leg in legs)
                 {
-                    bodySystem.DropPart(leg.Id, leg.Component);
+                    xformSystem.DetachParentToNull(leg.Id, entityManager.GetComponent<TransformComponent>(leg.Id));
                 }
             });
 

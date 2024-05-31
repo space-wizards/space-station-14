@@ -4,8 +4,8 @@
     sprite: Mobs/Animals/bee.rsi
     state: 0
   product: CrateNPCBee
-  cost: 4000
-  category: Livestock
+  cost: 7000
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -14,8 +14,8 @@
     sprite: Mobs/Animals/butterfly.rsi
     state: butterfly
   product: CrateNPCButterflies
-  cost: 2500
-  category: Livestock
+  cost: 4400
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -24,8 +24,8 @@
     sprite: Mobs/Pets/cat.rsi
     state: cat
   product: CrateNPCCat
-  cost: 1000
-  category: Livestock
+  cost: 1200
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -34,8 +34,8 @@
     sprite: Mobs/Animals/chicken.rsi
     state: icon-1
   product: CrateNPCChicken
-  cost: 2500
-  category: Livestock
+  cost: 4000
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -44,8 +44,8 @@
     sprite: Mobs/Animals/crab.rsi
     state: crab
   product: CrateNPCCrab
-  cost: 1800
-  category: Livestock
+  cost: 3000
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -54,8 +54,8 @@
     sprite: Mobs/Animals/duck.rsi
     state: icon-0
   product: CrateNPCDuck
-  cost: 3500
-  category: Livestock
+  cost: 4000
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -64,8 +64,18 @@
     sprite: Mobs/Pets/corgi.rsi
     state: corgi
   product: CrateNPCCorgi
-  cost: 1000
-  category: Livestock
+  cost: 1200
+  category: cargoproduct-category-name-livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockPupCorgi
+  icon:
+    sprite: Mobs/Pets/corgi.rsi
+    state: puppy
+  product: CrateNPCPuppyCorgi
+  cost: 1200
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -75,7 +85,7 @@
     state: cow
   product: CrateNPCCow
   cost: 3200
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -84,8 +94,8 @@
     sprite: Mobs/Animals/goat.rsi
     state: goat
   product: CrateNPCGoat
-  cost: 1000
-  category: Livestock
+  cost: 1200
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -94,8 +104,8 @@
     sprite: Mobs/Animals/goose.rsi
     state: goose
   product: CrateNPCGoose
-  cost: 1500
-  category: Livestock
+  cost: 2100
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -104,18 +114,28 @@
     sprite: Mobs/Animals/gorilla.rsi
     state: icon
   product: CrateNPCGorilla
-  cost: 1000
-  category: Livestock
+  cost: 1100
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
   id: LivestockMonkeyCube
   icon:
-    sprite: Mobs/Animals/monkey.rsi
-    state: monkey
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box
   product: CrateNPCMonkeyCube
   cost: 2000
-  category: Livestock
+  category: cargoproduct-category-name-livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockKoboldCube
+  icon:
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box_kobold
+  product: CrateNPCKoboldCube
+  cost: 2000
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -124,8 +144,8 @@
     sprite: Mobs/Animals/mouse.rsi
     state: icon-0
   product: CrateNPCMouse
-  cost: 2500
-  category: Livestock
+  cost: 4400
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -134,8 +154,8 @@
     sprite: Mobs/Animals/parrot.rsi
     state: parrot
   product: CrateNPCParrot
-  cost: 2000
-  category: Livestock
+  cost: 3000
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -144,8 +164,8 @@
     sprite: Mobs/Animals/penguin.rsi
     state: penguin
   product: CrateNPCPenguin
-  cost: 1500
-  category: Livestock
+  cost: 2100
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -154,8 +174,8 @@
     sprite: Mobs/Animals/pig.rsi
     state: pig
   product: CrateNPCPig
-  cost: 1000
-  category: Livestock
+  cost: 1100
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -164,8 +184,8 @@
     sprite: Mobs/Animals/snake.rsi
     state: snake
   product: CrateNPCSnake
-  cost: 2000
-  category: Livestock
+  cost: 3000
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -175,7 +195,7 @@
     state: icon-0
   product: CrateNPCHamster
   cost: 2800
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -184,8 +204,8 @@
     sprite: Mobs/Animals/lizard.rsi
     state: lizard
   product: CrateNPCLizard
-  cost: 1000
-  category: Livestock
+  cost: 1100
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -195,5 +215,15 @@
     state: kangaroo
   product: CrateNPCKangaroo
   cost: 2800
-  category: Livestock
+  category: cargoproduct-category-name-livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockMothroach
+  icon:
+    sprite: Mobs/Animals/mothroach.rsi
+    state: mothroach
+  product: CrateNPCMothroach
+  cost: 5000
+  category: cargoproduct-category-name-livestock
   group: market

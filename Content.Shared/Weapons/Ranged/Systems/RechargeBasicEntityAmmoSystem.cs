@@ -1,5 +1,7 @@
 using Content.Shared.Examine;
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -19,17 +21,8 @@ public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, ExaminedEvent>(OnExamined);
-    }
-
-    private void OnUnpaused(EntityUid uid, RechargeBasicEntityAmmoComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.NextCharge == null)
-            return;
-
-        component.NextCharge = component.NextCharge.Value + args.PausedTime;
     }
 
     public override void Update(float frameTime)
@@ -56,19 +49,19 @@ public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
             if (ammo.Count == ammo.Capacity)
             {
                 recharge.NextCharge = null;
-                Dirty(recharge);
+                Dirty(uid, recharge);
                 continue;
             }
 
             recharge.NextCharge = recharge.NextCharge.Value + TimeSpan.FromSeconds(recharge.RechargeCooldown);
-            Dirty(recharge);
+            Dirty(uid, recharge);
         }
     }
 
     private void OnInit(EntityUid uid, RechargeBasicEntityAmmoComponent component, MapInitEvent args)
     {
         component.NextCharge = _timing.CurTime;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnExamined(EntityUid uid, RechargeBasicEntityAmmoComponent component, ExaminedEvent args)
@@ -93,7 +86,7 @@ public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
         if (recharge.NextCharge == null || recharge.NextCharge < _timing.CurTime)
         {
             recharge.NextCharge = _timing.CurTime + TimeSpan.FromSeconds(recharge.RechargeCooldown);
-            Dirty(recharge);
+            Dirty(uid, recharge);
         }
     }
 }

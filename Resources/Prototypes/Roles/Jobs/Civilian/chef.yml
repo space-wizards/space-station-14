@@ -21,14 +21,7 @@
 - type: startingGear
   id: ChefGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitChef
-    head: ClothingHeadHatChef
-    back: ClothingBackpackFilled
-    mask: ClothingMaskItalianMoustache
     shoes: ClothingShoesColorBlack
     id: ChefPDA
     ears: ClothingHeadsetService
-    outerClothing: ClothingOuterApronChef
-  innerclothingskirt: ClothingUniformJumpskirtChef
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+    belt: ClothingBeltChefFilled

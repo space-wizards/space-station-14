@@ -6,9 +6,12 @@
       edges:
         - to: bola
           steps:
-            - material: Cable
-              amount: 5
-              doAfter: 2
+            - tag: Handcuffs
+              icon:
+                sprite: Objects/Misc/cablecuffs.rsi
+                state: cuff
+                color: red
+              name: cuffs
             - material: Steel
               amount: 6
               doAfter: 2

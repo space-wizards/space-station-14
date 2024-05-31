@@ -8,24 +8,24 @@ public sealed partial class SleepEmitSoundComponent : Component
     /// <summary>
     /// Sound to play when sleeping
     /// </summary>
-    [DataField("snore"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier Snore = new SoundCollectionSpecifier("Snores", AudioParams.Default.WithVariation(0.2f));
 
     /// <summary>
-    /// Interval between snore attempts in seconds
+    /// Minimum interval between snore attempts in seconds
     /// </summary>
-    [DataField("interval"), ViewVariables(VVAccess.ReadWrite)]
-    public float Interval = 5f;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan Interval = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// Chance for snore attempt to succeed
+    /// Maximum interval between snore attempts in seconds
     /// </summary>
-    [DataField("chance"), ViewVariables(VVAccess.ReadWrite)]
-    public float Chance = 0.33f;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan MaxInterval = TimeSpan.FromSeconds(15);
 
     /// <summary>
     /// Popup for snore (e.g. Zzz...)
     /// </summary>
-    [DataField("popUp"), ViewVariables(VVAccess.ReadWrite)]
-    public string PopUp = "sleep-onomatopoeia";
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public LocId PopUp = "sleep-onomatopoeia";
 }

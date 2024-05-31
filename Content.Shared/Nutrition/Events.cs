@@ -1,6 +1,6 @@
-﻿using Content.Shared.DoAfter;
+﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
-using Content.Shared.Chemistry.Components;
 
 namespace Content.Shared.Nutrition;
 
@@ -47,9 +47,15 @@ public sealed partial class VapeDoAfterEvent : DoAfterEvent
 
     public VapeDoAfterEvent(Solution solution, bool forced)
     {
-            Solution = solution;
-            Forced = forced;
+        Solution = solution;
+        Forced = forced;
     }
 
     public override DoAfterEvent Clone() => this;
 }
+
+/// <summary>
+/// Raised before food is sliced
+/// </summary>
+[ByRefEvent]
+public record struct SliceFoodEvent();

@@ -9,7 +9,7 @@ namespace Content.Shared.Audio;
 /// Attaches a rules prototype to sound files to play ambience.
 /// </summary>
 [Prototype("ambientMusic")]
-public sealed class AmbientMusicPrototype : IPrototype
+public sealed partial class AmbientMusicPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = string.Empty;
 

@@ -39,6 +39,12 @@ public sealed partial class PneumaticCannonComponent : Component
     public float BaseProjectileSpeed = 20f;
 
     /// <summary>
+    ///     The current projectile speed setting.
+    /// </summary>
+    [DataField]
+    public float? ProjectileSpeed;
+
+    /// <summary>
     /// If true, will throw ammo rather than shoot it.
     /// </summary>
     [DataField("throwItems"), ViewVariables(VVAccess.ReadWrite)]

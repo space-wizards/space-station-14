@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Interaction;
 using Robust.Shared.Random;
@@ -13,6 +14,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -20,38 +22,69 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
         SubscribeLocalEvent<ActionOnInteractComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<ActionOnInteractComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<ActionOnInteractComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, ActionOnInteractComponent component, MapInitEvent args)
+    {
+        if (component.Actions == null)
+            return;
+
+        var comp = EnsureComp<ActionsContainerComponent>(uid);
+        foreach (var id in component.Actions)
+        {
+            _actionContainer.AddAction(uid, id, comp);
+        }
     }
 
     private void OnActivate(EntityUid uid, ActionOnInteractComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled || component.ActionEntities == null)
+        if (args.Handled)
             return;
 
-        var options = GetValidActions<InstantActionComponent>(component.ActionEntities);
+        if (component.ActionEntities is not {} actionEnts)
+        {
+            if (!TryComp<ActionsContainerComponent>(uid,  out var actionsContainerComponent))
+                return;
+
+            actionEnts = actionsContainerComponent.Container.ContainedEntities.ToList();
+        }
+
+        var options = GetValidActions<InstantActionComponent>(actionEnts);
         if (options.Count == 0)
             return;
 
         var (actId, act) = _random.Pick(options);
         if (act.Event != null)
+        {
             act.Event.Performer = args.User;
+            act.Event.Action = actId;
+        }
 
-        act.Provider = uid;
         _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
     }
 
     private void OnAfterInteract(EntityUid uid, ActionOnInteractComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || component.ActionEntities == null)
+        if (args.Handled)
             return;
+
+        if (component.ActionEntities is not {} actionEnts)
+        {
+            if (!TryComp<ActionsContainerComponent>(uid,  out var actionsContainerComponent))
+                return;
+
+            actionEnts = actionsContainerComponent.Container.ContainedEntities.ToList();
+        }
 
         // First, try entity target actions
         if (args.Target != null)
         {
-            var entOptions = GetValidActions<EntityTargetActionComponent>(component.ActionEntities, args.CanReach);
+            var entOptions = GetValidActions<EntityTargetActionComponent>(actionEnts, args.CanReach);
             for (var i = entOptions.Count - 1; i >= 0; i--)
             {
-                var action = entOptions[i].Comp;
+                var action = entOptions[i];
                 if (!_actions.ValidateEntityTarget(args.User, args.Target.Value, action))
                     entOptions.RemoveAt(i);
             }
@@ -62,10 +95,10 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 if (entAct.Event != null)
                 {
                     entAct.Event.Performer = args.User;
+                    entAct.Event.Action = entActId;
                     entAct.Event.Target = args.Target.Value;
                 }
 
-                entAct.Provider = uid;
                 _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
                 args.Handled = true;
                 return;
@@ -76,7 +109,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
         var options = GetValidActions<WorldTargetActionComponent>(component.ActionEntities, args.CanReach);
         for (var i = options.Count - 1; i >= 0; i--)
         {
-            var action = options[i].Comp;
+            var action = options[i];
             if (!_actions.ValidateWorldTarget(args.User, args.ClickLocation, action))
                 options.RemoveAt(i);
         }
@@ -88,10 +121,10 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (act.Event != null)
         {
             act.Event.Performer = args.User;
+            act.Event.Action = actId;
             act.Event.Target = args.ClickLocation;
         }
 
-        act.Provider = uid;
         _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
     }

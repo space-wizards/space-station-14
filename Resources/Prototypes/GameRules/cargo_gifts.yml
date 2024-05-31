@@ -4,7 +4,7 @@
   noSpawn: true
   components:
   - type: StationEvent
-    weight: 10
+    weight: 5
     startDelay: 10
     duration: 120
     earliestStart: 20
@@ -13,7 +13,7 @@
     sender: cargo-gift-default-sender
     dest: cargo-gift-dest-bar
     gifts:
-      FoodPizzaLarge: 1              # 16 pizzas
+      FoodPizza: 1              # 4 pizzas
       FoodBarSupply: 1
       FoodSoftdrinks: 1
       CrateVendingMachineRestockRobustSoftdrinks: 1
@@ -24,17 +24,17 @@
   noSpawn: true
   components:
     - type: StationEvent
-      weight: 6
+      weight: 2
       startDelay: 10
       duration: 240
-      minimumPlayers: 50
-      earliestStart: 40
+      earliestStart: 20
+      minimumPlayers: 40
     - type: CargoGiftsRule
       description: cargo-gift-pizza-large
       sender: cargo-gift-default-sender
       dest: cargo-gift-dest-bar
       gifts:
-        FoodPizzaLarge: 4              # 64 pizzas
+        FoodPizzaLarge: 1              # 16 pizzas
         FoodBarSupply: 1
         FoodSoftdrinksLarge: 1
 
@@ -44,7 +44,7 @@
   noSpawn: true
   components:
     - type: StationEvent
-      weight: 4
+      weight: 5
       startDelay: 10
       duration: 240
       earliestStart: 30
@@ -90,7 +90,7 @@
   noSpawn: true
   components:
     - type: StationEvent
-      weight: 8
+      weight: 6
       startDelay: 10
       duration: 120
       minimumPlayers: 30
@@ -132,7 +132,7 @@
   noSpawn: true
   components:
     - type: StationEvent
-      weight: 6
+      weight: 4
       startDelay: 10
       duration: 120
       earliestStart: 10
@@ -154,7 +154,7 @@
   noSpawn: true
   components:
     - type: StationEvent
-      weight: 3
+      weight: 4
       startDelay: 10
       duration: 120
       earliestStart: 20
@@ -174,7 +174,7 @@
   noSpawn: true
   components:
     - type: StationEvent
-      weight: 2
+      weight: 3
       startDelay: 10
       duration: 120
       earliestStart: 20

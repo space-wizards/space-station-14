@@ -14,8 +14,13 @@ public abstract partial class SharedGunSystem
         if (!args.IsInDetailsRange || !component.ShowExamineText)
             return;
 
-        args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", ModeExamineColor), ("mode", GetLocSelector(component.SelectedMode))));
-        args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor), ("fireRate", $"{component.FireRate:0.0}")));
+        using (args.PushGroup(nameof(GunComponent)))
+        {
+            args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", ModeExamineColor),
+                ("mode", GetLocSelector(component.SelectedMode))));
+            args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor),
+                ("fireRate", $"{component.FireRateModified:0.0}")));
+        }
     }
 
     private string GetLocSelector(SelectiveFire mode)
@@ -75,7 +80,7 @@ public abstract partial class SharedGunSystem
                 component.NextFire += cooldown;
         }
 
-        Audio.PlayPredicted(component.SoundModeToggle, uid, user);
+        Audio.PlayPredicted(component.SoundMode, uid, user);
         Popup(Loc.GetString("gun-selected-mode", ("mode", GetLocSelector(fire))), uid, user);
         Dirty(uid, component);
     }
@@ -97,7 +102,7 @@ public abstract partial class SharedGunSystem
     // TODO: Actions need doing for guns anyway.
     private sealed partial class CycleModeEvent : InstantActionEvent
     {
-        public SelectiveFire Mode;
+        public SelectiveFire Mode = default;
     }
 
     private void OnCycleMode(EntityUid uid, GunComponent component, CycleModeEvent args)
@@ -107,7 +112,13 @@ public abstract partial class SharedGunSystem
 
     private void OnGunSelected(EntityUid uid, GunComponent component, HandSelectedEvent args)
     {
-        var fireDelay = 1f / component.FireRate;
+        if (Timing.ApplyingState)
+             return;
+
+        if (component.FireRateModified <= 0)
+            return;
+
+        var fireDelay = 1f / component.FireRateModified;
         if (fireDelay.Equals(0f))
             return;
 

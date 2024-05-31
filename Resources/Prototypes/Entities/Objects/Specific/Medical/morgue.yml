@@ -1,11 +1,11 @@
 - type: entity
-  id: BodyBag_Container
+  id: BodyBag
   parent: BaseFoldable
   name: body bag
-  description: A plastic bag designed for the storage and transportation of cadavers.
+  description: A plastic bag designed for the storage and transportation of cadavers to stop body decomposition.
   components:
   - type: Item
-    size: 6
+    size: Small
   - type: Sprite
     drawdepth: SmallObjects # I guess body bags need appear above a coroner's table?
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
@@ -17,8 +17,8 @@
       visible: false
     - state: open_overlay
       map: ["enum.StorageVisualLayers.Door"]
-    - state: label_overlay
-      map: ["enum.BodyBagVisualLayers.Label"]
+    - state: paper
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     state: bag
@@ -40,7 +40,7 @@
           bounds: "-0.25,-0.4,0.25,0.1"
         density: 20
         mask:
-        - Impassable
+        - ItemMask
   - type: EntityStorage
     capacity: 1
     isCollidableWhenOpen: true
@@ -62,9 +62,15 @@
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:
-        enum.BodyBagVisualLayers.Label:
+        enum.PaperLabelVisuals.Layer:
           True: {visible: true}
           False: {visible: false}
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
       enum.FoldedVisuals.State:
         foldedLayer:
           True: {visible: true}
@@ -83,10 +89,10 @@
     price: 50
 
 - type: entity
-  id: BodyBag_Folded
+  id: BodyBagFolded
   name: body bag
-  description: A plastic bag designed for the storage and transportation of cadavers.
-  parent: BodyBag_Container
+  description: A plastic bag designed for the storage and transportation of cadavers to stop body decomposition.
+  parent: BodyBag
   suffix: folded
   components:
   - type: Foldable
@@ -102,6 +108,8 @@
   name: ash
   description: This used to be something, but now it's not.
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
     state: ash
@@ -118,7 +126,8 @@
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true
-  - type: DeleteOnTrigger
+  - type: ScoopableSolution
+    solution: food
   - type: Extractable
     grindableSolutionName: food
 
@@ -141,9 +150,9 @@
           maxVol: 50
           reagents:
             - ReagentId: Ash
-              Quantity: 5
-            - ReagentId: SpaceLube
-              Quantity: 5
+              Quantity: 25
+            - ReagentId: Necrosol
+              Quantity: 25
     - type: GuideHelp
       guides:
       - MinorAntagonists

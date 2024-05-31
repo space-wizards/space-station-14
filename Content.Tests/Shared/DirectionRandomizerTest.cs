@@ -54,7 +54,7 @@ public sealed class DirectionRandomizerTest : RobustUnitTest
         // Because of above foreach this asserts
         // rand[1,2,3] - [1,2,3] == {}
         // i.e. randomized set minus original set is empty
-        Assert.IsTrue(set.Count == 0, "Each element must appear once ");
+        Assert.That(set.Count == 0, "Each element must appear once ");
 
     }
 }

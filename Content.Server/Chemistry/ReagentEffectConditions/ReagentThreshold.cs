@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
@@ -13,14 +13,14 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     /// </summary>
     public sealed partial class ReagentThreshold : ReagentEffectCondition
     {
-        [DataField("min")]
+        [DataField]
         public FixedPoint2 Min = FixedPoint2.Zero;
 
-        [DataField("max")]
+        [DataField]
         public FixedPoint2 Max = FixedPoint2.MaxValue;
 
         // TODO use ReagentId
-        [DataField("reagent")]
+        [DataField]
         public string? Reagent;
 
         public override bool Condition(ReagentEffectArgs args)
@@ -43,7 +43,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
                 prototype.TryIndex(Reagent, out reagentProto);
 
             return Loc.GetString("reagent-effect-condition-guidebook-reagent-threshold",
-                ("reagent", reagentProto?.LocalizedName ?? "this reagent"),
+                ("reagent", reagentProto?.LocalizedName ?? Loc.GetString("reagent-effect-condition-guidebook-this-reagent")),
                 ("max", Max == FixedPoint2.MaxValue ? (float) int.MaxValue : Max.Float()),
                 ("min", Min.Float()));
         }

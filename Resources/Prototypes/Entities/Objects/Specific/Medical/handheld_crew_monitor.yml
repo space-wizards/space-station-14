@@ -1,8 +1,10 @@
 - type: entity
   name: handheld crew monitor
+  suffix: DO NOT MAP
   parent:
   - BaseItem
   - PowerCellSlotSmallItem
+  # CMO-only bud, don't add more.
   id: HandheldCrewMonitor
   description: A hand-held crew monitor displaying the status of suit sensors.
   components:
@@ -15,10 +17,9 @@
   - type: ActivatableUIRequiresPowerCell
   - type: ActivatableUI
     key: enum.CrewMonitoringUIKey.Key
-    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
-      - key: enum.CrewMonitoringUIKey.Key
+      enum.CrewMonitoringUIKey.Key:
         type: CrewMonitoringBoundUserInterface
   - type: CrewMonitoringConsole
   - type: DeviceNetwork
@@ -29,6 +30,11 @@
   - type: StationLimitedNetwork
   - type: StaticPrice
     price: 500
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StealTarget
+    stealGroup: HandheldCrewMonitor
 
 - type: entity
   id: HandheldCrewMonitorEmpty
@@ -38,4 +44,4 @@
   - type: ItemSlots
     slots:
       cell_slot:
-        name: power-cell-slot-component-slot-name-default 
+        name: power-cell-slot-component-slot-name-default

@@ -22,7 +22,8 @@ public sealed class BanListEui : BaseEui
 
     private Guid BanListPlayer { get; set; }
     private string BanListPlayerName { get; set; } = string.Empty;
-    private List<SharedServerBan> Bans { get; set; } = new();
+    private List<SharedServerBan> Bans { get; } = new();
+    private List<SharedServerRoleBan> RoleBans { get; } = new();
 
     public override void Opened()
     {
@@ -40,7 +41,7 @@ public sealed class BanListEui : BaseEui
 
     public override EuiStateBase GetNewState()
     {
-        return new BanListEuiState(BanListPlayerName, Bans);
+        return new BanListEuiState(BanListPlayerName, Bans, RoleBans);
     }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
@@ -51,14 +52,8 @@ public sealed class BanListEui : BaseEui
         }
     }
 
-    private async Task LoadFromDb()
+    private async Task LoadBans(NetUserId userId)
     {
-        Bans.Clear();
-
-        var userId = new NetUserId(BanListPlayer);
-        BanListPlayerName = (await _playerLocator.LookupIdAsync(userId))?.Username ??
-                            string.Empty;
-
         foreach (var ban in await _db.GetServerBansAsync(null, userId, null))
         {
             SharedServerUnban? unban = null;
@@ -86,6 +81,51 @@ public sealed class BanListEui : BaseEui
                 unban
             ));
         }
+    }
+
+    private async Task LoadRoleBans(NetUserId userId)
+    {
+        foreach (var ban in await _db.GetServerRoleBansAsync(null, userId, null))
+        {
+            SharedServerUnban? unban = null;
+            if (ban.Unban is { } unbanDef)
+            {
+                var unbanningAdmin = unbanDef.UnbanningAdmin == null
+                    ? null
+                    : (await _playerLocator.LookupIdAsync(unbanDef.UnbanningAdmin.Value))?.Username;
+                unban = new SharedServerUnban(unbanningAdmin, ban.Unban.UnbanTime.UtcDateTime);
+            }
+
+            RoleBans.Add(new SharedServerRoleBan(
+                ban.Id,
+                ban.UserId,
+                ban.Address is { } address
+                    ? (address.address.ToString(), address.cidrMask)
+                    : null,
+                ban.HWId == null ? null : Convert.ToBase64String(ban.HWId.Value.AsSpan()),
+                ban.BanTime.UtcDateTime,
+                ban.ExpirationTime?.UtcDateTime,
+                ban.Reason,
+                ban.BanningAdmin == null
+                    ? null
+                    : (await _playerLocator.LookupIdAsync(ban.BanningAdmin.Value))?.Username,
+                unban,
+                ban.Role
+            ));
+        }
+    }
+
+    private async Task LoadFromDb()
+    {
+        Bans.Clear();
+        RoleBans.Clear();
+
+        var userId = new NetUserId(BanListPlayer);
+        BanListPlayerName = (await _playerLocator.LookupIdAsync(userId))?.Username ??
+                            string.Empty;
+
+        await LoadBans(userId);
+        await LoadRoleBans(userId);
 
         StateDirty();
     }

@@ -2,27 +2,24 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 
-namespace Content.Client.Commands
+namespace Content.Client.Commands;
+
+[AnyCommand]
+public sealed class ToggleOutlineCommand : LocalizedCommands
 {
-    [AnyCommand]
-    public sealed class ToggleOutlineCommand : IConsoleCommand
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+
+    public override string Command => "toggleoutline";
+
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "toggleoutline";
+        var cvar = CCVars.OutlineEnabled;
+        var old = _configurationManager.GetCVar(cvar);
 
-        public string Description => "Toggles outline drawing on entities.";
-
-        public string Help => "";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
-        {
-            var configurationManager = IoCManager.Resolve<IConfigurationManager>();
-            var cvar = CCVars.OutlineEnabled;
-            var old = configurationManager.GetCVar(cvar);
-
-            configurationManager.SetCVar(cvar, !old);
-            shell.WriteLine($"Draw outlines set to: {configurationManager.GetCVar(cvar)}");
-        }
+        _configurationManager.SetCVar(cvar, !old);
+        shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-notify", ("state", _configurationManager.GetCVar(cvar))));
     }
 }

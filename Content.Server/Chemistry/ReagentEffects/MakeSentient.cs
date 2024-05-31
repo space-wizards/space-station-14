@@ -23,7 +23,7 @@ public sealed partial class MakeSentient : ReagentEffect
         entityManager.RemoveComponent<MonkeyAccentComponent>(uid);
 
         // Stops from adding a ghost role to things like people who already have a mind
-        if (entityManager.HasComponent<MindContainerComponent>(uid))
+        if (entityManager.TryGetComponent<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind)
         {
             return;
         }

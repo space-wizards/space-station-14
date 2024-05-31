@@ -11,11 +11,34 @@
           - type: MeleeWeapon
             damage:
               types:
-                Brute: 0
+                Blunt: 0
           invert: true
       tasks:
         - !type:HTNCompoundTask
           task: PickupMeleeCompound
+
+    - preconditions:
+      - !type:BuckledPrecondition
+        isBuckled: true
+      tasks:
+      - !type:HTNPrimitiveTask
+        operator: !type:UnbuckleOperator
+          shutdownState: TaskFinished
+
+    - preconditions:
+      - !type:InContainerPrecondition
+        isInContainer: true
+      tasks:
+      - !type:HTNCompoundTask
+        task: EscapeCompound
+
+    - preconditions:
+      - !type:PulledPrecondition
+        isPulled: true
+      tasks:
+      - !type:HTNPrimitiveTask
+        operator: !type:UnPullOperator
+          shutdownState: TaskFinished
 
     # Melee combat (unarmed or otherwise)
     - tasks:
@@ -24,6 +47,28 @@
             proto: NearbyMeleeTargets
         - !type:HTNCompoundTask
           task: MeleeAttackTargetCompound
+
+- type: htnCompound
+  id: RatServantCombatCompound
+  branches:
+    - preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: MeleeWeapon
+              damage:
+                types:
+                  Blunt: 0
+          invert: true
+      tasks:
+        - !type:HTNCompoundTask
+          task: PickupMeleeCompound
+
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: OrderedTargets
+        - !type:HTNCompoundTask
+          task: MeleeAttackOrderedTargetCompound
 
 - type: htnCompound
   id: PickupMeleeCompound
@@ -48,12 +93,11 @@
 # Tries to melee attack our target.
 - type: htnCompound
   id: MeleeAttackTargetCompound
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: Target
   branches:
-    # Move to melee range and hit them
-    - tasks:
+    - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+      tasks:
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             shutdownState: PlanFinished
@@ -78,4 +122,52 @@
             - !type:UtilityService
               id: MeleeService
               proto: NearbyMeleeTargets
+              key: Target
+
+- type: htnCompound
+  id: EscapeCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:ContainerOperator
+        targetKey: Target
+        shutdownState: TaskFinished
+    - !type:HTNPrimitiveTask
+      operator: !type:EscapeOperator
+        targetKey: Target
+      preconditions:
+      - !type:InContainerPrecondition
+        isInContainer: true
+
+- type: htnCompound
+  id: MeleeAttackOrderedTargetCompound
+  branches:
+    - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            shutdownState: PlanFinished
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MeleeRange
+        - !type:HTNPrimitiveTask
+          operator: !type:JukeOperator
+            jukeType: Away
+        - !type:HTNPrimitiveTask
+          operator: !type:MeleeOperator
+            targetKey: Target
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: MeleeRange
+          services:
+            - !type:UtilityService
+              id: MeleeService
+              proto: OrderedTargets
               key: Target

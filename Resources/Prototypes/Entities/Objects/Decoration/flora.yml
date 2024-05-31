@@ -1,10 +1,12 @@
 - type: entity
   id: BaseRock
+  name: boulder
   description: Heavy as a really heavy thing.
   abstract: true
   components:
   - type: Clickable
   - type: Sprite
+    noRot: true
     sprite: Objects/Decoration/Flora/flora_rockssolid.rsi
   - type: Physics
     bodyType: Static
@@ -31,16 +33,15 @@
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
 
-
 - type: entity
   id: BaseTree
   description: Yep, it's a tree.
   abstract: true
   components:
-  - type: IgnoreWeather
   - type: SpriteFade
   - type: Clickable
   - type: Sprite
+    noRot: true
     sprite: Objects/Decoration/Flora/flora_trees.rsi
     drawdepth: Overdoors
     offset: 0,0.9
@@ -147,7 +148,6 @@
 - type: entity
   parent: BaseRock
   id: FloraRockSolid01
-  name: rock
   components:
   - type: Sprite
     state: rocksolid01
@@ -155,7 +155,6 @@
 - type: entity
   parent: BaseRock
   id: FloraRockSolid02
-  name: rock
   components:
   - type: Sprite
     state: rocksolid02
@@ -163,10 +162,119 @@
 - type: entity
   parent: BaseRock
   id: FloraRockSolid03
-  name: rock
   components:
   - type: Sprite
     state: rocksolid03
+
+- type: entity
+  name: stalagmite
+  description: Natural stone spikes.
+  parent: BaseRock
+  id: FloraStalagmite1
+  components:
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 5
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: GlassBreak
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite1
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraStalagmite2
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite2
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraStalagmite3
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite3
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraStalagmite4
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite4
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraStalagmite5
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite5
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraStalagmite6
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite6
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraGreyStalagmite1
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite1
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite2
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite2
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite3
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite3
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite4
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite4
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite5
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite5
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite6
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite6
+
 
 - type: entity
   parent: BaseTree
@@ -365,7 +473,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.8,-1.5,0.8,-0.8"
+          bounds: "-0.5,0,0.5,0.75"
         density: 4500
         layer:
         - WallLayer
@@ -373,11 +481,11 @@
     spawnEntries:
       - id: PresentRandom
         orGroup: present
-      - id: PresentRandomUnsafe
-        prob: 0.5
+      - id: PresentRandomCash
+        prob: 0.20
         orGroup: present
-      - id: PresentRandomInsane
-        prob: 0.2
+      - id: PresentRandomAsh
+        prob: 0.05
         orGroup: present
     receivedPopup: christmas-tree-got-gift
     deniedPopup: christmas-tree-no-gift
@@ -390,3 +498,132 @@
   components:
   - type: Sprite
     state: treestumpconifer
+
+- type: entity
+  parent: FloraTree01
+  id: ShadowTree01
+  name: dark wood
+  description: The leaves are whispering about you.
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_shadow_trees.rsi
+    state: tree01
+
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree02
+  components:
+  - type: Sprite
+    state: tree02
+
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree03
+  components:
+  - type: Sprite
+    state: tree03
+
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree04
+  components:
+  - type: Sprite
+    state: tree04
+
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree05
+  components:
+  - type: Sprite
+    state: tree05
+
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree06
+  components:
+  - type: Sprite
+    state: tree06
+
+- type: entity
+  parent: BaseTree
+  id: LightTree01
+  name: glowing tree
+  description: a marvelous tree filled with strange energy.
+  components:
+  - type: PointLight
+    radius: 2.0
+    energy: 4.5
+    color: "#6270bb"
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
+    state: tree01
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/tree_fell.ogg
+          params:
+            volume: 5
+            variation: 0.05
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Log:
+            min: 0
+            max: 1
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MobLuminousObject:
+            min: 0
+            max: 1
+
+- type: entity
+  parent: LightTree01
+  id: LightTree02
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
+    state: tree02
+
+- type: entity
+  parent: LightTree01
+  id: LightTree03
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
+    state: tree03
+
+- type: entity
+  parent: LightTree01
+  id: LightTree04
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
+    state: tree04
+
+- type: entity
+  parent: LightTree01
+  id: LightTree05
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
+    state: tree05
+
+- type: entity
+  parent: LightTree01
+  id: LightTree06
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
+    state: tree06

@@ -73,9 +73,18 @@
   group: Foods
   desc: reagent-desc-ketchunaise
   physicalDesc: reagent-physical-desc-saucey
-  #I love it when people just make up fake prototypes.
-  #flavor: piquant
+  flavor: ketchunaise
   color: "#fba399"
+  recognizable: true
+
+- type: reagent
+  id: LaughinSyrup
+  name: reagent-name-laughin-syrup
+  group: Foods
+  desc: reagent-desc-laughin-syrup
+  physicalDesc: reagent-physical-desc-funny
+  flavor: sweet
+  color: "#803280"
   recognizable: true
 
 - type: reagent
@@ -84,7 +93,7 @@
   group: Foods
   desc: reagent-desc-mayo
   physicalDesc: reagent-physical-desc-thick
-  flavor: sour
+  flavor: mayonnaise
   color: "#f9f5e5"
   recognizable: true
 
@@ -94,7 +103,7 @@
   group: Foods
   desc: reagent-desc-mustard
   physicalDesc: reagent-physical-desc-thick
-  flavor: sour
+  flavor: mustard
   color: "#ffdb58"
   recognizable: true
 
@@ -155,3 +164,27 @@
       # eating salt on its own kinda sucks, kids
       - !type:SatiateThirst
         factor: -0.5
+
+- type: reagent
+  id: Syrup
+  name: reagent-name-syrup
+  group: Foods
+  desc: reagent-desc-syrup
+  flavor: sweet
+  color: "#fb7125"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-sticky
+  slippery: false
+  viscosity: 0.55 #Start using syrup to attach your remote recievers to your microwaves!
+  tileReactions:
+    - !type:SpillTileReaction
+  metabolisms:
+    Food:
+      # 12 diona blood for 1 unit of syrup, this stuff better be worthwhile.
+      effects:
+      - !type:SatiateHunger
+        factor: 6.0 #Stronger than cookedramen
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6

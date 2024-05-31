@@ -22,7 +22,7 @@ public sealed partial class PowerCellSystem
             if (!comp.Drawing)
                 continue;
 
-            if (_timing.CurTime < comp.NextUpdateTime)
+            if (Timing.CurTime < comp.NextUpdateTime)
                 continue;
 
             comp.NextUpdateTime += Delay;
@@ -37,11 +37,6 @@ public sealed partial class PowerCellSystem
             var ev = new PowerCellSlotEmptyEvent();
             RaiseLocalEvent(uid, ref ev);
         }
-    }
-
-    private void OnUnpaused(EntityUid uid, PowerCellDrawComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextUpdateTime += args.PausedTime;
     }
 
     private void OnDrawChargeChanged(EntityUid uid, PowerCellDrawComponent component, ref ChargeChangedEvent args)
@@ -72,7 +67,7 @@ public sealed partial class PowerCellSystem
         {
             component.CanDraw = canDraw;
             component.CanUse = canUse;
-            Dirty(component);
+            Dirty(uid, component);
         }
     }
 
@@ -85,7 +80,7 @@ public sealed partial class PowerCellSystem
         {
             component.CanDraw = canDraw;
             component.CanUse = canUse;
-            Dirty(component);
+            Dirty(uid, component);
         }
     }
 }

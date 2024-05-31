@@ -8,10 +8,14 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.Defusable;
 using Content.Shared.Examine;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Explosion.Components.OnTrigger;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Defusable.Systems;
 
@@ -44,7 +48,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
     /// </summary>
     private void OnGetAltVerbs(EntityUid uid, DefusableComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract || !args.CanAccess || args.Hands == null)
             return;
 
         args.Verbs.Add(new AlternativeVerb
@@ -64,25 +68,28 @@ public sealed class DefusableSystem : SharedDefusableSystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (!comp.Usable)
+        using (args.PushGroup(nameof(DefusableComponent)))
         {
-            args.PushMarkup(Loc.GetString("defusable-examine-defused", ("name", uid)));
-        }
-        else if (comp.Activated && TryComp<ActiveTimerTriggerComponent>(uid, out var activeComp))
-        {
-            if (comp.DisplayTime)
+            if (!comp.Usable)
             {
-                args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid),
-                    ("time", MathF.Floor(activeComp.TimeRemaining))));
+                args.PushMarkup(Loc.GetString("defusable-examine-defused", ("name", uid)));
+            }
+            else if (comp.Activated && TryComp<ActiveTimerTriggerComponent>(uid, out var activeComp))
+            {
+                if (comp.DisplayTime)
+                {
+                    args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid),
+                        ("time", MathF.Floor(activeComp.TimeRemaining))));
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString("defusable-examine-live-display-off", ("name", uid)));
+                }
             }
             else
             {
-                args.PushMarkup(Loc.GetString("defusable-examine-live-display-off", ("name", uid)));
+                args.PushMarkup(Loc.GetString("defusable-examine-inactive", ("name", uid)));
             }
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString("defusable-examine-inactive", ("name", uid)));
         }
 
         args.PushMarkup(Loc.GetString("defusable-examine-bolts", ("down", comp.Bolted)));
@@ -136,7 +143,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
         {
             _trigger.HandleTimerTrigger(
                 uid,
-                null,
+                user,
                 timerTrigger.Delay,
                 timerTrigger.BeepInterval,
                 timerTrigger.InitialBeepDelay,
@@ -147,14 +154,12 @@ public sealed class DefusableSystem : SharedDefusableSystem
         RaiseLocalEvent(uid, new BombArmedEvent(uid));
 
         _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
-        _adminLogger.Add(LogType.Explosion, LogImpact.High,
-            $"{ToPrettyString(user):entity} begun a countdown on {ToPrettyString(uid):entity}");
 
         if (TryComp<WiresPanelComponent>(uid, out var wiresPanelComponent))
             _wiresSystem.TogglePanel(uid, wiresPanelComponent, false);
     }
 
-    public void TryDetonateBomb(EntityUid uid, DefusableComponent comp)
+    public void TryDetonateBomb(EntityUid uid, EntityUid detonator, DefusableComponent comp)
     {
         if (!comp.Activated)
             return;
@@ -163,13 +168,10 @@ public sealed class DefusableSystem : SharedDefusableSystem
 
         RaiseLocalEvent(uid, new BombDetonatedEvent(uid));
 
-        _explosion.TriggerExplosive(uid);
+        _explosion.TriggerExplosive(uid, user:detonator);
         QueueDel(uid);
 
         _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
-
-        _adminLogger.Add(LogType.Explosion, LogImpact.High,
-            $"{ToPrettyString(uid):entity} has been detonated.");
     }
 
     public void TryDefuseBomb(EntityUid uid, DefusableComponent comp)
@@ -204,8 +206,6 @@ public sealed class DefusableSystem : SharedDefusableSystem
             _transform.Unanchor(uid, xform);
 
         _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
-        _adminLogger.Add(LogType.Explosion, LogImpact.High,
-            $"{ToPrettyString(uid):entity} has been defused!");
     }
 
     // jesus christ
@@ -249,9 +249,6 @@ public sealed class DefusableSystem : SharedDefusableSystem
         _trigger.TryDelay(wire.Owner, 30f);
         _popup.PopupEntity(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner);
         comp.DelayWireUsed = true;
-
-        _adminLogger.Add(LogType.Explosion, LogImpact.High,
-            $"{ToPrettyString(user):user} pulsed the DeLAY wire of {ToPrettyString(wire.Owner):entity}.");
     }
 
     public bool ProceedWireCut(EntityUid user, Wire wire, DefusableComponent comp)
@@ -261,9 +258,6 @@ public sealed class DefusableSystem : SharedDefusableSystem
 
         _popup.PopupEntity(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", wire.Owner)), wire.Owner);
         SetDisplayTime(comp, false);
-
-        _adminLogger.Add(LogType.Explosion, LogImpact.High,
-            $"{ToPrettyString(user):user} cut the PRoCeeD wire of {ToPrettyString(wire.Owner):entity}.");
 
         comp.ProceedWireCut = true;
         return true;
@@ -276,9 +270,6 @@ public sealed class DefusableSystem : SharedDefusableSystem
             comp.ProceedWireUsed = true;
             _trigger.TryDelay(wire.Owner, -15f);
         }
-
-        _adminLogger.Add(LogType.Explosion, LogImpact.High,
-            $"{ToPrettyString(user):user} pulsed the PRoCeeD wire of {ToPrettyString(wire.Owner):entity}.");
 
         _popup.PopupEntity(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", wire.Owner)), wire.Owner);
     }
@@ -295,9 +286,6 @@ public sealed class DefusableSystem : SharedDefusableSystem
                 $"{ToPrettyString(user):user} has defused {ToPrettyString(wire.Owner):entity}!");
         }
 
-        _adminLogger.Add(LogType.Explosion, LogImpact.High,
-            $"{ToPrettyString(user):user} cut the LIVE wire of {ToPrettyString(wire.Owner):entity}.");
-
         return true;
     }
 
@@ -313,15 +301,11 @@ public sealed class DefusableSystem : SharedDefusableSystem
                 _trigger.TryDelay(wire.Owner, 30f);
                 _popup.PopupEntity(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner);
                 comp.ActivatedWireUsed = true;
-                _adminLogger.Add(LogType.Explosion, LogImpact.High,
-                    $"{ToPrettyString(user):user} pulsed the LIVE wire of {ToPrettyString(wire.Owner):entity}.");
             }
         }
         else
         {
             TryStartCountdown(wire.Owner, user, comp);
-            _adminLogger.Add(LogType.Explosion, LogImpact.High,
-                $"{ToPrettyString(user):user} pulsed the LIVE wire of {ToPrettyString(wire.Owner):entity} and begun the countdown.");
         }
     }
 
@@ -329,15 +313,11 @@ public sealed class DefusableSystem : SharedDefusableSystem
     {
         if (comp.Activated)
         {
-            EntityManager.System<DefusableSystem>().TryDetonateBomb(wire.Owner, comp);
-            _adminLogger.Add(LogType.Explosion, LogImpact.Extreme,
-                $"{ToPrettyString(user):user} cut the BOOM wire of {ToPrettyString(wire.Owner):entity} and caused it to detonate!");
+            TryDetonateBomb(wire.Owner, user, comp);
         }
         else
         {
-            EntityManager.System<DefusableSystem>().SetUsable(comp, false);
-            _adminLogger.Add(LogType.Explosion, LogImpact.High,
-                $"{ToPrettyString(user):user} cut the BOOM wire of {ToPrettyString(wire.Owner):entity}.");
+            SetUsable(comp, false);
         }
         return true;
     }
@@ -347,9 +327,6 @@ public sealed class DefusableSystem : SharedDefusableSystem
         if (comp is { Activated: false, Usable: false })
         {
             SetUsable(comp, true);
-
-            _adminLogger.Add(LogType.Explosion, LogImpact.High,
-                $"{ToPrettyString(user):user} mended the BOOM wire of {ToPrettyString(wire.Owner):entity}.");
         }
         // you're already dead lol
         return true;
@@ -359,10 +336,8 @@ public sealed class DefusableSystem : SharedDefusableSystem
     {
         if (comp.Activated)
         {
-            TryDetonateBomb(wire.Owner, comp);
+            TryDetonateBomb(wire.Owner, user, comp);
         }
-        _adminLogger.Add(LogType.Explosion, LogImpact.Extreme,
-            $"{ToPrettyString(user):user} pulsed the BOOM wire of {ToPrettyString(wire.Owner):entity} and caused it to detonate!");
     }
 
     public bool BoltWireMend(EntityUid user, Wire wire, DefusableComponent comp)
@@ -373,9 +348,6 @@ public sealed class DefusableSystem : SharedDefusableSystem
         SetBolt(comp, true);
         _audio.PlayPvs(comp.BoltSound, wire.Owner);
         _popup.PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
-
-        _adminLogger.Add(LogType.Explosion, LogImpact.High,
-            $"{ToPrettyString(user):user} mended the BOLT wire of {ToPrettyString(wire.Owner):entity}!");
 
         return true;
     }
@@ -389,18 +361,12 @@ public sealed class DefusableSystem : SharedDefusableSystem
         _audio.PlayPvs(comp.BoltSound, wire.Owner);
         _popup.PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
 
-        _adminLogger.Add(LogType.Explosion, LogImpact.High,
-            $"{ToPrettyString(user):user} cut the BOLT wire of {ToPrettyString(wire.Owner):entity}!");
-
         return true;
     }
 
     public void BoltWirePulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
         _popup.PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
-
-        _adminLogger.Add(LogType.Explosion, LogImpact.High,
-            $"{ToPrettyString(user):user} pulsed the BOLT wire of {ToPrettyString(wire.Owner):entity}!");
     }
 
     #endregion

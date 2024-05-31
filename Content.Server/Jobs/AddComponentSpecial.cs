@@ -27,7 +27,8 @@ namespace Content.Server.Jobs
 
                 var temp = (object) component;
                 serializationManager.CopyTo(data.Component, ref temp);
-                entityManager.AddComponent(mob, (Component) temp!, true);
+                entityManager.RemoveComponent(mob, temp!.GetType());
+                entityManager.AddComponent(mob, (Component) temp);
             }
         }
     }

@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by TheShuEd (github) for ss14",
+  "size": {
+    "x": 32,
+    "y": 48
+  },
+  "states": [
+    {
+      "name": "anom",
+      "delays": [
+        [
+          0.25625,
+          0.25625,
+          0.25625
+        ]
+      ]
+    },
+    {
+      "name": "pulse",
+      "delays": [
+        [
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625
+        ]
+      ]
+    }
+  ]
+}

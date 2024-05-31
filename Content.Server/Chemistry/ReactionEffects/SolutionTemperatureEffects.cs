@@ -1,7 +1,5 @@
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
-using static Robust.Shared.Physics.DynamicTree;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
@@ -121,5 +119,3 @@ namespace Content.Server.Chemistry.ReactionEffects
     }
 
 }
-
-

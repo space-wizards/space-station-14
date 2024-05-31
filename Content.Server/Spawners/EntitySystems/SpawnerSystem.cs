@@ -12,6 +12,7 @@ public sealed class SpawnerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<TimedSpawnerComponent, ComponentInit>(OnSpawnerInit);
+        SubscribeLocalEvent<TimedSpawnerComponent, ComponentShutdown>(OnTimedSpawnerShutdown);
     }
 
     private void OnSpawnerInit(EntityUid uid, TimedSpawnerComponent component, ComponentInit args)
@@ -32,7 +33,12 @@ public sealed class SpawnerSystem : EntitySystem
         for (var i = 0; i < number; i++)
         {
             var entity = _random.Pick(component.Prototypes);
-            Spawn(entity, coordinates);
+            SpawnAtPosition(entity, coordinates);
         }
+    }
+
+    private void OnTimedSpawnerShutdown(EntityUid uid, TimedSpawnerComponent component, ComponentShutdown args)
+    {
+        component.TokenSource?.Cancel();
     }
 }

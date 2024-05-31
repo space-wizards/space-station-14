@@ -1,0 +1,63 @@
+- type: soundCollection
+  id: GlassBreak
+  files:
+  - /Audio/Effects/glass_break1.ogg
+  - /Audio/Effects/glass_break2.ogg
+  - /Audio/Effects/glass_break3.ogg
+  - /Audio/Effects/glass_break4.ogg
+
+- type: soundCollection
+  id: GlassCrack
+  files:
+  - /Audio/Effects/glass_crack1.ogg
+  - /Audio/Effects/glass_crack2.ogg
+  - /Audio/Effects/glass_crack3.ogg
+  - /Audio/Effects/glass_crack4.ogg
+
+- type: soundCollection
+  id: WindowShatter
+  files:
+  - /Audio/Effects/window_shatter1.ogg
+  - /Audio/Effects/window_shatter2.ogg
+  - /Audio/Effects/window_shatter3.ogg
+
+- type: soundCollection
+  id: WoodDestroy
+  files:
+  - /Audio/Effects/wood_destroy1.ogg
+  - /Audio/Effects/wood_destroy2.ogg
+  - /Audio/Effects/wood_destroy3.ogg
+
+- type: soundCollection
+  id: WoodDestroyHeavy
+  files:
+  - /Audio/Effects/wood_destroy_heavy1.ogg
+
+- type: soundCollection
+  id: MetalCrunch
+  files:
+  - /Audio/Effects/metal_crunch.ogg
+
+- type: soundCollection
+  id: MetalBreak
+  files:
+  - /Audio/Effects/metal_break1.ogg
+  - /Audio/Effects/metal_break2.ogg
+  - /Audio/Effects/metal_break3.ogg
+  - /Audio/Effects/metal_break4.ogg
+  - /Audio/Effects/metal_break5.ogg
+
+- type: soundCollection
+  id: MetalGlassBreak
+  files:
+  - /Audio/Effects/metal_glass_break1.ogg
+  - /Audio/Effects/metal_glass_break2.ogg
+
+- type: soundCollection
+  id: MetalSlam
+  files:
+  - /Audio/Effects/metal_slam1.ogg
+  - /Audio/Effects/metal_slam2.ogg
+  - /Audio/Effects/metal_slam3.ogg
+  - /Audio/Effects/metal_slam4.ogg
+  - /Audio/Effects/metal_slam5.ogg

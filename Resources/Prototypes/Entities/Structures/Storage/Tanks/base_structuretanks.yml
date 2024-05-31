@@ -2,7 +2,7 @@
   id: StorageTank
   parent: BaseStructureDynamic
   name: storage tank
-  description: "A liquids storage tank."
+  description: A liquids storage tank.
   abstract: true
   components:
   - type: Sprite
@@ -53,7 +53,7 @@
         solution: tank
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SolutionContainerManager
@@ -65,3 +65,21 @@
   - type: ReagentTank
   - type: Transform
     noRot: true
+
+# For highcap tanks
+- type: entity
+  id: StorageTankBig
+  parent: StorageTank
+  abstract: true
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 455 #very heavy, they store 10k units of reagents after all.
+        mask:
+        - MachineMask
+        layer:
+        - WallLayer

@@ -44,7 +44,7 @@ namespace Content.Shared.Interaction
                 if (Math.Abs(rotationDiff) > maxRotate)
                 {
                     var goalTheta = worldRot + Math.Sign(rotationDiff) * maxRotate;
-                    _transform.SetWorldRotation(xform, goalTheta);
+                    TryFaceAngle(uid, goalTheta, xform);
                     rotationDiff = (goalRotation - goalTheta);
 
                     if (Math.Abs(rotationDiff) > tolerance)
@@ -55,11 +55,11 @@ namespace Content.Shared.Interaction
                     return true;
                 }
 
-                _transform.SetWorldRotation(xform, goalRotation);
+                TryFaceAngle(uid, goalRotation, xform);
             }
             else
             {
-                _transform.SetWorldRotation(xform, goalRotation);
+                TryFaceAngle(uid, goalRotation, xform);
             }
 
             return true;
@@ -70,7 +70,7 @@ namespace Content.Shared.Interaction
             if (!Resolve(user, ref xform))
                 return false;
 
-            var diff = coordinates - xform.MapPosition.Position;
+            var diff = coordinates - _transform.GetMapCoordinates(user, xform: xform).Position;
             if (diff.LengthSquared() <= 0.01f)
                 return true;
 
@@ -80,14 +80,8 @@ namespace Content.Shared.Interaction
 
         public bool TryFaceAngle(EntityUid user, Angle diffAngle, TransformComponent? xform = null)
         {
-            if (_actionBlockerSystem.CanChangeDirection(user))
-            {
-                if (!Resolve(user, ref xform))
-                    return false;
-
-                xform.WorldRotation = diffAngle;
-                return true;
-            }
+            if (!_actionBlockerSystem.CanChangeDirection(user))
+                return false;
 
             if (EntityManager.TryGetComponent(user, out BuckleComponent? buckle) && buckle.Buckled)
             {
@@ -101,13 +95,20 @@ namespace Content.Shared.Interaction
                         // (Since the user being buckled to it holds it down with their weight.)
                         // This is logically equivalent to RotateWhileAnchored.
                         // Barstools and office chairs have independent wheels, while regular chairs don't.
-                        Transform(rotatable.Owner).WorldRotation = diffAngle;
+                        _transform.SetWorldRotation(Transform(suid.Value), diffAngle);
                         return true;
                     }
                 }
+
+                return false;
             }
 
-            return false;
+            // user is not buckled in; apply to their transform
+            if (!Resolve(user, ref xform))
+                return false;
+
+            _transform.SetWorldRotation(xform, diffAngle);
+            return true;
         }
     }
 }

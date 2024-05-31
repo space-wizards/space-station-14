@@ -1,7 +1,0 @@
-The following sounds are taken from TGstation github (licensed under CC by 3.0):
-
-	hyperspace_begin.ogg taken from https://github.com/tgstation/tgstation/tree/71a79f1f75902d2ccab27cbffb971b12b7ab042d/sound/runtime/hyperspace
-
-	hyperspace_end.ogg taken from https://github.com/tgstation/tgstation/tree/71a79f1f75902d2ccab27cbffb971b12b7ab042d/sound/runtime/hyperspace
-
-	hyperspace_progress.ogg taken and modified for looping by metalgearsloth from https://github.com/tgstation/tgstation/tree/71a79f1f75902d2ccab27cbffb971b12b7ab042d/sound/runtime/hyperspace

@@ -5,7 +5,7 @@
     state: icon
   product: CrateFunInstrumentsVariety
   cost: 2000
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: tuba
   product: CrateFunInstrumentsBrass
   cost: 2500
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -25,7 +25,7 @@
     state: icon
   product: CrateFunInstrumentsString
   cost: 2500
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -35,7 +35,7 @@
     state: icon
   product: CrateFunInstrumentsWoodwind
   cost: 2500
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -45,7 +45,7 @@
     state: icon
   product: CrateFunInstrumentsKeyedPercussion
   cost: 2500
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -55,7 +55,7 @@
     state: icon
   product: CrateFunInstrumentsSpecial
   cost: 10000
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -65,7 +65,7 @@
     state: box
   product: CrateFunArtSupplies
   cost: 500
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -75,7 +75,7 @@
     state: birthday
   product: CrateFunParty
   cost: 1000
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -85,7 +85,7 @@
     state: display
   product: CrateFunWaterGuns
   cost: 750
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -95,7 +95,17 @@
     state: plushie_h
   product: CrateFunPlushie
   cost: 1000
-  category: Fun
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: FunLizardPlushies
+  icon:
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_lizard
+  product: CrateFunLizardPlushieBulk
+  cost: 500
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -105,37 +115,27 @@
     state: d6_6
   product: CrateFunBoardGames
   cost: 1500
-  category: Fun
-  group: market
-
-- type: cargoProduct
-  id: FunATV
-  icon:
-    sprite: Objects/Vehicles/atv.rsi
-    state: vehicle
-  product: CrateFunATV
-  cost: 1500
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
   id: FunSadTromboneImplants
   icon:
-    sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: syringe_base0
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
   product: CrateFunSadTromboneImplants
   cost: 1000
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
   id: FunLightImplants
   icon:
-    sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: syringe_base0
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
   product: CrateFunLightImplants
   cost: 1000
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -145,7 +145,7 @@
     state: icon
   product: CrateFunBoxing
   cost: 500
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -155,7 +155,7 @@
     state: crate_icon
   product: CrateFunPirate
   cost: 400
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -165,17 +165,17 @@
     state: crate_icon
   product: CrateFunToyBox
   cost: 900
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
   id: FunBikeHornImplants
   icon:
-    sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: syringe_base0
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
   product: CrateFunBikeHornImplants
   cost: 1000
-  category: Fun
+  category: cargoproduct-category-name-fun
   group: market
 
 - type: cargoProduct
@@ -185,5 +185,25 @@
     state: fig_box
   product: CrateFunMysteryFigurines
   cost: 4000
-  category: Fun
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: FunDartsSet
+  icon:
+    sprite: Objects/Fun/Darts/dart_red.rsi
+    state: icon
+  product: CrateFunDartsSet
+  cost: 900
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: FunCrateGambling
+  icon:
+    sprite: Objects/Economy/cash.rsi
+    state: cash_1000000
+  product: CrateCargoGambling
+  cost: 10000
+  category: cargoproduct-category-name-fun
   group: market

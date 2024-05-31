@@ -3,6 +3,7 @@
   parent: BaseStructureDynamic
   name: closet
   description: A standard-issue Nanotrasen storage unit.
+  abstract: true
   components:
   - type: ResistLocker
   - type: Transform
@@ -32,7 +33,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/bang.ogg
+      collection: MetalThud
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -56,8 +57,8 @@
     placeCentered: true
     isPlaceable: false
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -74,7 +75,9 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -85,6 +88,19 @@
     stateBaseClosed: generic
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
+  - type: StaticPrice
+    price: 50
+
+# steel closet base (that can be constructed/deconstructed)
+- type: entity
+  id: ClosetSteelBase
+  parent: ClosetBase
+  components:
+  - type: Construction
+    graph: ClosetSteel
+    node: done
+    containers:
+    - entity_storage
 
 #Wall Closet
 - type: entity
@@ -100,7 +116,7 @@
   - type: ResistLocker
   - type: Weldable
   - type: WallMount
-    arc: 180
+    arc: 175
   - type: StaticPrice
     price: 50
   - type: Transform
@@ -147,12 +163,19 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
             min: 1
             max: 1
+  - type: Construction
+    graph: ClosetWall
+    node: done
+    containers:
+    - entity_storage
 
 #Wall locker
 - type: entity
@@ -162,6 +185,7 @@
   components:
   - type: AccessReader
   - type: Lock
+  - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/wall_locker.rsi
     layers:
@@ -170,7 +194,7 @@
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
     - state: welded
       visible: false
@@ -184,6 +208,8 @@
   name: suit storage unit
   description: A fancy hi-tech storage unit made for storing space suits.
   components:
+  - type: AccessReader
+  - type: Lock
   - type: Anchorable
     delay: 2
   - type: StaticPrice
@@ -196,18 +222,21 @@
     sprite: Structures/Storage/suit_storage.rsi
     layers:
     - state: base
-    - state: closed
+    - state: door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     damage:
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/bang.ogg
+      collection: MetalThud
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -248,7 +277,9 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -258,4 +289,5 @@
   - type: EntityStorageVisuals
     stateBase: base
     stateDoorOpen: base
-    stateDoorClosed: closed
+    stateDoorClosed: door
+  - type: LockVisuals

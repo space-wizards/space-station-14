@@ -17,13 +17,8 @@ public sealed class HandheldLightSystem : SharedHandheldLightSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HandheldLightComponent, ItemStatusCollectMessage>(OnGetStatusControl);
+        Subs.ItemStatus<HandheldLightComponent>(ent => new HandheldLightStatus(ent));
         SubscribeLocalEvent<HandheldLightComponent, AppearanceChangeEvent>(OnAppearanceChange);
-    }
-
-    private static void OnGetStatusControl(EntityUid uid, HandheldLightComponent component, ItemStatusCollectMessage args)
-    {
-        args.Controls.Add(new HandheldLightStatus(component));
     }
 
     private void OnAppearanceChange(EntityUid uid, HandheldLightComponent? component, ref AppearanceChangeEvent args)

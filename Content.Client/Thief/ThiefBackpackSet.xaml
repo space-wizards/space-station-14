@@ -1,0 +1,23 @@
+<Control xmlns="https://spacestation14.io"
+		xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+		xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+	<!-- Name and button -->
+	<PanelContainer Margin="5 5 0 5">
+			<PanelContainer.PanelOverride>
+				<gfx:StyleBoxFlat BackgroundColor="#18211b" />
+			</PanelContainer.PanelOverride>
+			<BoxContainer Orientation="Vertical" HorizontalExpand="True">
+			<GridContainer Margin="5" Columns="2" MinSize="600 0">
+				<Label Name="SetName" Text="Set" StyleClasses="StatusFieldTitle"></Label>
+				<Button Margin="0 10" Name="SetButton" Text="Select" StyleClasses="OpenRight" Access="Public" HorizontalAlignment="Right"/>
+			</GridContainer>
+			<controls:HLine Color="#404040" Thickness="1" Margin="0 5"/>
+			<!-- Icon and Description -->
+			<GridContainer Margin="0 5" Columns="2">
+				<TextureRect Name="Icon" Margin="10" Stretch="KeepAspectCentered"
+							VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="64 64"/>
+				<Label Name="SetDescription" Text="Description"></Label>
+			</GridContainer>
+		</BoxContainer>
+	</PanelContainer>
+</Control>

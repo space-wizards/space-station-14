@@ -44,10 +44,11 @@
     name: ghost-role-information-cerberus-name
     description: ghost-role-information-cerberus-description
     rules: ghost-role-information-cerberus-rules
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: MeleeWeapon
-    hidden: true
-    angle: 0
+    altDisarm: false
     animation: WeaponArcBite
     damage:
       types:
@@ -55,9 +56,12 @@
         Slash: 7
   - type: InputMover
   - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
-    - SimpleNeutral
+    - Syndicate
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-corrupted-corgi

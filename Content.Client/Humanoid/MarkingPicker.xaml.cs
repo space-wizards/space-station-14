@@ -35,6 +35,7 @@ public sealed partial class MarkingPicker : Control
     private List<MarkingCategories> _markingCategories = Enum.GetValues<MarkingCategories>().ToList();
 
     private string _currentSpecies = SharedHumanoidAppearanceSystem.DefaultSpecies;
+    private Sex _currentSex = Sex.Unsexed;
     public Color CurrentSkinColor = Color.White;
     public Color CurrentEyeColor = Color.Black;
     public Marking? HairMarking;
@@ -77,7 +78,7 @@ public sealed partial class MarkingPicker : Control
         }
     }
 
-    public void SetData(List<Marking> newMarkings, string species, Color skinColor, Color eyeColor)
+    public void SetData(List<Marking> newMarkings, string species, Sex sex, Color skinColor, Color eyeColor)
     {
         var pointsProto = _prototypeManager
             .Index<SpeciesPrototype>(species).MarkingPoints;
@@ -89,6 +90,7 @@ public sealed partial class MarkingPicker : Control
         }
 
         _currentSpecies = species;
+        _currentSex = sex;
         CurrentSkinColor = skinColor;
         CurrentEyeColor = eyeColor;
 
@@ -96,7 +98,7 @@ public sealed partial class MarkingPicker : Control
         PopulateUsed();
     }
 
-    public void SetData(MarkingSet set, string species, Color skinColor, Color eyeColor)
+    public void SetData(MarkingSet set, string species, Sex sex, Color skinColor, Color eyeColor)
     {
         _currentMarkings = set;
 
@@ -106,6 +108,7 @@ public sealed partial class MarkingPicker : Control
         }
 
         _currentSpecies = species;
+        _currentSex = sex;
         CurrentSkinColor = skinColor;
         CurrentEyeColor = eyeColor;
 
@@ -121,17 +124,16 @@ public sealed partial class MarkingPicker : Control
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        SetupCategoryButtons();
         CMarkingCategoryButton.OnItemSelected +=  OnCategoryChange;
         CMarkingsUnused.OnItemSelected += item =>
             _selectedUnusedMarking = CMarkingsUnused[item.ItemIndex];
 
-        CMarkingAdd.OnPressed += args =>
+        CMarkingAdd.OnPressed += _ =>
             MarkingAdd();
 
         CMarkingsUsed.OnItemSelected += OnUsedMarkingSelected;
 
-        CMarkingRemove.OnPressed += args =>
+        CMarkingRemove.OnPressed += _ =>
             MarkingRemove();
 
         CMarkingRankUp.OnPressed += _ => SwapMarkingUp();
@@ -143,16 +145,34 @@ public sealed partial class MarkingPicker : Control
     private void SetupCategoryButtons()
     {
         CMarkingCategoryButton.Clear();
+
+        var validCategories = new List<MarkingCategories>();
         for (var i = 0; i < _markingCategories.Count; i++)
         {
-            if (_ignoreCategories.Contains(_markingCategories[i]))
+            var category = _markingCategories[i];
+            var markings = GetMarkings(category);
+            if (_ignoreCategories.Contains(category) ||
+                markings.Count == 0)
             {
                 continue;
             }
 
-            CMarkingCategoryButton.AddItem(Loc.GetString($"markings-category-{_markingCategories[i].ToString()}"), i);
+            validCategories.Add(category);
+            CMarkingCategoryButton.AddItem(Loc.GetString($"markings-category-{category.ToString()}"), i);
         }
-        CMarkingCategoryButton.SelectId(_markingCategories.IndexOf(_selectedMarkingCategory));
+
+        if (validCategories.Contains(_selectedMarkingCategory))
+        {
+            CMarkingCategoryButton.SelectId(_markingCategories.IndexOf(_selectedMarkingCategory));
+        }
+        else if (validCategories.Count > 0)
+        {
+            _selectedMarkingCategory = validCategories[0];
+        }
+        else
+        {
+            _selectedMarkingCategory = MarkingCategories.Chest;
+        }
     }
 
     private string GetMarkingName(MarkingPrototype marking) => Loc.GetString($"marking-{marking.ID}");
@@ -176,16 +196,21 @@ public sealed partial class MarkingPicker : Control
         return result;
     }
 
+    private IReadOnlyDictionary<string, MarkingPrototype> GetMarkings(MarkingCategories category)
+    {
+        return IgnoreSpecies
+            ? _markingManager.MarkingsByCategoryAndSex(category, _currentSex)
+            : _markingManager.MarkingsByCategoryAndSpeciesAndSex(category, _currentSpecies, _currentSex);
+    }
+
     public void Populate(string filter)
     {
+        SetupCategoryButtons();
+
         CMarkingsUnused.Clear();
         _selectedUnusedMarking = null;
 
-        var markings = IgnoreSpecies
-            ? _markingManager.MarkingsByCategory(_selectedMarkingCategory)
-            : _markingManager.MarkingsByCategoryAndSpecies(_selectedMarkingCategory, _currentSpecies);
-
-        var sortedMarkings = markings.Values.Where(m =>
+        var sortedMarkings = GetMarkings(_selectedMarkingCategory).Values.Where(m =>
             m.ID.ToLower().Contains(filter.ToLower()) ||
             GetMarkingName(m).ToLower().Contains(filter.ToLower())
         ).OrderBy(p => Loc.GetString(GetMarkingName(p)));
@@ -319,6 +344,22 @@ public sealed partial class MarkingPicker : Control
 
         _currentMarkings = new(markingList, speciesPrototype.MarkingPoints, _markingManager, _prototypeManager);
         _currentMarkings.EnsureSpecies(species, null, _markingManager);
+        _currentMarkings.EnsureSexes(_currentSex, _markingManager);
+
+        Populate(CMarkingSearch.Text);
+        PopulateUsed();
+    }
+
+    public void SetSex(Sex sex)
+    {
+        _currentSex = sex;
+        var markingList = _currentMarkings.GetForwardEnumerator().ToList();
+
+        var speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(_currentSpecies);
+
+        _currentMarkings = new(markingList, speciesPrototype.MarkingPoints, _markingManager, _prototypeManager);
+        _currentMarkings.EnsureSpecies(_currentSpecies, null, _markingManager);
+        _currentMarkings.EnsureSexes(_currentSex, _markingManager);
 
         Populate(CMarkingSearch.Text);
         PopulateUsed();

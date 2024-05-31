@@ -22,6 +22,9 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
+  - type: GuideHelp
+    guides:
+      - Cyborgs
 
 - type: entity
   id: BaseBorgArmLeft

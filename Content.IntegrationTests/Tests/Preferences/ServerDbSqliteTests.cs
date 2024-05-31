@@ -4,13 +4,16 @@ using Content.Server.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
+using Content.Shared.Preferences.Loadouts.Effects;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
+using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests.Preferences
 {
@@ -36,50 +39,41 @@ namespace Content.IntegrationTests.Tests.Preferences
 
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
-            return new(
-                "Charlie Charlieson",
-                "The biggest boy around.",
-                "Human",
-                21,
-                Sex.Male,
-                Gender.Epicene,
-                new HumanoidCharacterAppearance(
+            return new()
+            {
+                Name = "Charlie Charlieson",
+                FlavorText = "The biggest boy around.",
+                Species = "Human",
+                Age = 21,
+                Appearance = new(
                     "Afro",
                     Color.Aqua,
                     "Shaved",
                     Color.Aquamarine,
                     Color.Azure,
                     Color.Beige,
-                    new ()
-                ),
-                ClothingPreference.Jumpskirt,
-                BackpackPreference.Backpack,
-                new Dictionary<string, JobPriority>
-                {
-                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
-                },
-                PreferenceUnavailableMode.StayInLobby,
-                new List<string> (),
-                new List<string>()
-            );
+                    new ())
+            };
         }
 
-        private static ServerDbSqlite GetDb(IConfigurationManager cfgManager)
+        private static ServerDbSqlite GetDb(RobustIntegrationTest.ServerIntegrationInstance server)
         {
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            var opsLog = server.ResolveDependency<ILogManager>().GetSawmill("db.ops");
             var builder = new DbContextOptionsBuilder<SqliteServerDbContext>();
             var conn = new SqliteConnection("Data Source=:memory:");
             conn.Open();
             builder.UseSqlite(conn);
-            return new ServerDbSqlite(() => builder.Options, true, cfgManager, true);
+            return new ServerDbSqlite(() => builder.Options, true, cfg, true, opsLog);
         }
 
         [Test]
         public async Task TestUserDoesNotExist()
         {
             var pair = await PoolManager.GetServerClient();
-            var db = GetDb(pair.Server.ResolveDependency<IConfigurationManager>());
+            var db = GetDb(pair.Server);
             // Database should be empty so a new GUID should do it.
-            Assert.Null(await db.GetPlayerPreferencesAsync(NewUserId()));
+            Assert.That(await db.GetPlayerPreferencesAsync(NewUserId()), Is.Null);
 
             await pair.CleanReturnAsync();
         }
@@ -88,7 +82,7 @@ namespace Content.IntegrationTests.Tests.Preferences
         public async Task TestInitPrefs()
         {
             var pair = await PoolManager.GetServerClient();
-            var db = GetDb(pair.Server.ResolveDependency<IConfigurationManager>());
+            var db = GetDb(pair.Server);
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
             const int slot = 0;
             var originalProfile = CharlieCharlieson();
@@ -103,7 +97,7 @@ namespace Content.IntegrationTests.Tests.Preferences
         {
             var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
-            var db = GetDb(server.ResolveDependency<IConfigurationManager>());
+            var db = GetDb(server);
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
             await db.InitPrefsAsync(username, new HumanoidCharacterProfile());
             await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), 1);
@@ -111,6 +105,17 @@ namespace Content.IntegrationTests.Tests.Preferences
             await db.SaveCharacterSlotAsync(username, null, 1);
             var prefs = await db.GetPlayerPreferencesAsync(username);
             Assert.That(!prefs.Characters.Any(p => p.Key != 0));
+            await pair.CleanReturnAsync();
+        }
+
+        [Test]
+        public async Task TestNoPendingDatabaseChanges()
+        {
+            var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var db = GetDb(server);
+            Assert.That(async () => await db.HasPendingModelChanges(), Is.False,
+                "The database has pending model changes. Add a new migration to apply them. See https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations");
             await pair.CleanReturnAsync();
         }
 

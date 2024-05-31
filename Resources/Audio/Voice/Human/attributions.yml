@@ -49,3 +49,66 @@
   license: "CC-BY-NC-4.0"
   copyright: "Taken from https://freesound.org/. Convert from WAV to OGG, is divided into several parts."
   source: "https://freesound.org/people/Idalize/sounds/408211/"
+
+- files:
+  - femalescream_1.ogg
+  - femalescream_2.ogg
+  - femalescream_3.ogg
+  - femalescream_4.ogg
+  - femalescream_5.ogg
+  - malescream_1.ogg
+  - malescream_2.ogg
+  - malescream_3.ogg
+  - malescream_4.ogg
+  - malescream_5.ogg
+  - malescream_6.ogg
+  - manlaugh_1.ogg
+  - manlaugh_2.ogg
+  - wilhelm_scream.ogg
+  - womanlaugh.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "/tg/station"
+  source: "https://github.com/tgstation/tgstation/commit/3d049e69fe71a0be2133005e65ea469135d648c8"
+
+- files: ["female_cough_1.ogg"]
+  license: "CC0-1.0"
+  copyright: "Ashe Kirk"
+  source: "https://freesound.org/people/OwlStorm/sounds/151213/"
+
+- files: ["female_cough_2.ogg"]
+  license: "CC0-1.0"
+  copyright: "thatkellytrna on freesound.org"
+  source: "https://freesound.org/people/thatkellytrna/sounds/425777/"
+
+- files: ["male_cough_2.ogg"]
+  license: "CC0-1.0"
+  copyright: "Harris85 on freesound.org"
+  source: "https://freesound.org/people/Harris85/sounds/208761/"
+
+- files: ["female_sneeze_1.ogg"]
+  license: "CC0-1.0"
+  copyright: "sherby168 on freesound.org"
+  source: "https://freesound.org/people/sherby168/sounds/540771/"
+
+- files: ["male_sneeze_1.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "InspectorJ (www.jshaw.co.uk) of Freesound.org"
+  source: "https://freesound.org/people/InspectorJ/sounds/352177/"
+
+- files: ["male_yawn_1.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "ckvoiceover on freesound.org"
+  source: "https://freesound.org/people/ckvoiceover/sounds/401338/"
+
+- files: ["female_yawn_1.ogg"]
+  license: "CC0-1.0"
+  copyright: "Reitanna on freesound.org"
+  source: "https://freesound.org/people/Reitanna/sounds/252239/"
+
+- files:
+  - snore1.ogg
+  - snore2.ogg
+  - snore3.ogg
+  license: "CC0-1.0"
+  copyright: "mattyharm on freesound.org"
+  source: "https://freesound.org/people/mattyharm/sounds/432995/"

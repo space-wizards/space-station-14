@@ -44,11 +44,11 @@
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <ui:MenuButton
-        Name="InventoryButton"
+        Name="EmotesButton"
         Access="Internal"
-        Icon="{xe:Tex '/Textures/Interface/inventory.svg.192dpi.png'}"
-        BoundKey = "{x:Static is:ContentKeyFunctions.OpenInventoryMenu}"
-        ToolTip="{Loc 'game-hud-open-inventory-menu-button-tooltip'}"
+        Icon="{xe:Tex '/Textures/Interface/emotes.svg.192dpi.png'}"
+        ToolTip="{Loc 'game-hud-open-emotes-menu-button-tooltip'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenEmotesMenu}"
         MinSize="42 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"

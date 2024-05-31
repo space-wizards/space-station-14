@@ -3,16 +3,19 @@
   id: WeaponMeleeToolboxRobust
   name: robust toolbox
   description: A tider's weapon.
-  suffix: Do Not Map
+  suffix: DO NOT MAP
   components:
   - type: Sprite
     sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
     state: icon
   - type: Item
-    size: 150
+    size: Ginormous
     sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 1.5
     damage:
       types:
         Blunt: 20
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"

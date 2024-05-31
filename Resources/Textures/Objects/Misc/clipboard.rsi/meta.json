@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Clipboard sprites are by WJohn (Github) for tgstation, taken from https://github.com/tgstation/tgstation/commit/3cc10b1785bff95e861d722b5164189951761921. Inhand sprites by nmajask (Github) for SS14. clipboard_paper is a modified version of paper from bureaucracy.rsi.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "clipboard"
+    },
+    {
+      "name": "clipboard_over"
+    },
+    {
+      "name": "clipboard_paper"
+    },
+    {
+      "name": "clipboard_pen"
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

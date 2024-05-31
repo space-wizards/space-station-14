@@ -4,13 +4,12 @@ using Content.Client.Radiation.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Client.Radiation.Overlays;
 
 public sealed class RadiationDebugOverlay : Overlay
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     private readonly RadiationSystem _radiation;
 
@@ -63,7 +62,7 @@ public sealed class RadiationDebugOverlay : Overlay
             {
                 var gridUid = _entityManager.GetEntity(netGrid);
 
-                if (!_mapManager.TryGetGrid(gridUid, out var grid))
+                if (!_entityManager.TryGetComponent<MapGridComponent>(gridUid, out var grid))
                     continue;
 
                 foreach (var (tile, rads) in blockers)
@@ -88,7 +87,7 @@ public sealed class RadiationDebugOverlay : Overlay
         {
             var gridUid = _entityManager.GetEntity(netGrid);
 
-            if (!_mapManager.TryGetGrid(gridUid, out var grid))
+            if (!_entityManager.TryGetComponent<MapGridComponent>(gridUid, out var grid))
                 continue;
             if (query.TryGetComponent(gridUid, out var trs) && trs.MapID != args.MapId)
                 continue;
@@ -127,7 +126,7 @@ public sealed class RadiationDebugOverlay : Overlay
             {
                 var gridUid = _entityManager.GetEntity(netGrid);
 
-                if (!_mapManager.TryGetGrid(gridUid, out var grid))
+                if (!_entityManager.TryGetComponent<MapGridComponent>(gridUid, out var grid))
                     continue;
                 var (destTile, _) = blockers.Last();
                 var destWorld = grid.GridTileToWorldPos(destTile);

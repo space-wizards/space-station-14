@@ -1,11 +1,12 @@
 using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Doors;
 
-public sealed class FirelockSystem : EntitySystem
+public sealed class FirelockSystem : SharedFirelockSystem
 {
-    [Dependency] protected readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {

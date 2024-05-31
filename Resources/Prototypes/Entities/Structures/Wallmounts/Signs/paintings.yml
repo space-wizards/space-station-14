@@ -12,7 +12,7 @@
 - type: entity
   parent: PaintingBase
   id: PaintingEmpty
-  name: Empty Frame
+  name: empty frame
   description: An empty frame, waiting to be filled with art.
   components:
   - type: Sprite

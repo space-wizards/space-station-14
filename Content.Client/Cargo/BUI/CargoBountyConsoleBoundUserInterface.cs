@@ -1,7 +1,6 @@
 using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.Cargo.BUI;
 
@@ -28,6 +27,11 @@ public sealed class CargoBountyConsoleBoundUserInterface : BoundUserInterface
             SendMessage(new BountyPrintLabelMessage(id));
         };
 
+        _menu.OnSkipButtonPressed += id =>
+        {
+            SendMessage(new BountySkipMessage(id));
+        };
+
         _menu.OpenCentered();
     }
 
@@ -38,7 +42,7 @@ public sealed class CargoBountyConsoleBoundUserInterface : BoundUserInterface
         if (message is not CargoBountyConsoleState state)
             return;
 
-        _menu?.UpdateEntries(state.Bounties);
+        _menu?.UpdateEntries(state.Bounties, state.UntilNextSkip);
     }
 
     protected override void Dispose(bool disposing)

@@ -3,14 +3,13 @@ using Content.Shared.Light.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
 
-namespace Content.Client.Light.Systems;
+namespace Content.Client.Light.EntitySystems;
 
 public sealed class RotatingLightSystem : SharedRotatingLightSystem
 {
+    [Dependency] private readonly AnimationPlayerSystem _animations = default!;
+
     private Animation GetAnimation(float speed)
     {
         var third = 120f / speed;
@@ -64,7 +63,7 @@ public sealed class RotatingLightSystem : SharedRotatingLightSystem
         }
         else
         {
-            player.Stop(AnimKey);
+            _animations.Stop(uid, player, AnimKey);
         }
     }
 
@@ -81,9 +80,9 @@ public sealed class RotatingLightSystem : SharedRotatingLightSystem
         if (!Resolve(uid, ref comp, ref player) || !comp.Enabled)
             return;
 
-        if (!player.HasRunningAnimation(AnimKey))
+        if (!_animations.HasRunningAnimation(uid, player, AnimKey))
         {
-            player.Play(GetAnimation(comp.Speed), AnimKey);
+            _animations.Play(uid, player, GetAnimation(comp.Speed), AnimKey);
         }
     }
 }

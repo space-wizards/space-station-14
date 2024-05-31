@@ -1,1 +1,50 @@
-{"name":1,"size":{"x":32,"y":32},"states":[{"name":"closing","directions":1,"delays":[[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.4]]},{"name":"opening","directions":1,"delays":[[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.4]]},{"name":"open","directions":1},{"name":"closed","directions":1}],"license":"CC-BY-SA-3.0","copyright":"Tgstation at 97b4295aca9f31a750456e40730d05b5837e39fc","version":1}
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Tgstation at 97b4295aca9f31a750456e40730d05b5837e39fc",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "assembly"
+        },
+        {
+            "name": "closing",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "opening",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "open"
+        },
+        {
+            "name": "closed"
+        }
+    ]
+}

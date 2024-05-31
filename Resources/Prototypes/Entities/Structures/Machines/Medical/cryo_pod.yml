@@ -51,8 +51,8 @@
   - type: WiresVisuals
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-cryopod
-    LayoutId: CryoPod
+    boardName: wires-board-name-cryopod
+    layoutId: CryoPod
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -63,6 +63,9 @@
         damage: 100
       behaviors:
         - !type:EmptyAllContainersBehaviour
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WindowShatter
         - !type:ChangeConstructionNodeBehavior
           node: machineFrame
         - !type:DoActsBehavior
@@ -82,11 +85,13 @@
         whitelist:
           components:
             - FitsInDispenser
+  - type: HealthAnalyzer
+    scanDelay: 0
   - type: UserInterface
     interfaces:
-      - key: enum.HealthAnalyzerUiKey.Key
+      enum.HealthAnalyzerUiKey.Key:
         type: HealthAnalyzerBoundUserInterface
-      - key: enum.WiresUiKey.Key
+      enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key

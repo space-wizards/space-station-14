@@ -10,9 +10,21 @@
     - type: PermanentBlindness
 
 - type: trait
+  id: PoorVision
+  name: trait-poor-vision-name
+  description: trait-poor-vision-desc
+  traitGear: ClothingEyesGlasses
+  whitelist:
+    components:
+      - Blindable
+  components:
+    - type: PermanentBlindness
+      blindness: 4
+
+- type: trait
   id: Narcolepsy
   name: trait-narcolepsy-name
-  description: trait-narcolepsy-decs
+  description: trait-narcolepsy-desc
   components:
     - type: Narcolepsy
       timeBetweenIncidents: 300, 600
@@ -21,6 +33,7 @@
 - type: trait
   id: Pacifist
   name: trait-pacifist-name
+  description: trait-pacifist-desc
   components:
     - type: Pacified
 
@@ -37,23 +50,32 @@
         collection: Paracusia
 
 - type: trait
+  id: Unrevivable
+  name: trait-unrevivable-name
+  description: trait-unrevivable-desc
+  components:
+    - type: Unrevivable
+
+- type: trait
   id: Muted
   name: trait-muted-name
   description: trait-muted-desc
+  blacklist:
+    components:
+      - BorgChassis
   components:
     - type: Muted
 
 - type: trait
-  id: Uncloneable
-  name: trait-uncloneable-name
-  description: trait-uncloneable-desc
+  id: FrontalLisp
+  name: trait-frontal-lisp-name
+  description: trait-frontal-lisp-desc
   components:
-    - type: Uncloneable
+    - type: FrontalLisp
 
 - type: trait
-  id: WheelchairBound
-  name: trait-wheelchair-bound-name
-  description: trait-wheelchair-bound-desc
+  id: Snoring
+  name: trait-snoring-name
+  description: trait-snoring-desc
   components:
-    - type: WheelchairBound
-    - type: LegsParalyzed
+    - type: Snoring

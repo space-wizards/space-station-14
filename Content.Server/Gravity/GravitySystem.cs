@@ -41,7 +41,7 @@ namespace Content.Server.Gravity
                 gravity.Enabled = enabled;
                 var ev = new GravityChangedEvent(uid, enabled);
                 RaiseLocalEvent(uid, ref ev, true);
-                Dirty(gravity);
+                Dirty(uid, gravity);
 
                 if (HasComp<MapGridComponent>(uid))
                 {
@@ -71,7 +71,7 @@ namespace Content.Server.Gravity
             gravity.Enabled = true;
             var ev = new GravityChangedEvent(uid, true);
             RaiseLocalEvent(uid, ref ev, true);
-            Dirty(gravity);
+            Dirty(uid, gravity);
 
             if (HasComp<MapGridComponent>(uid))
             {

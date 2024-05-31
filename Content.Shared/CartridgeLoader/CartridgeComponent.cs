@@ -7,23 +7,20 @@ namespace Content.Shared.CartridgeLoader;
 /// <summary>
 /// This is used for defining values used for displaying in the program ui in yaml
 /// </summary>
-[NetworkedComponent]
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CartridgeComponent : Component
 {
-    [DataField("programName", required: true)]
-    public string ProgramName = "default-program-name";
+    [DataField]
+    public EntityUid? LoaderUid;
 
-    [DataField("icon")]
+    [DataField(required: true)]
+    public LocId ProgramName = "default-program-name";
+
+    [DataField]
     public SpriteSpecifier? Icon;
 
+    [AutoNetworkedField]
     public InstallationStatus InstallationStatus = InstallationStatus.Cartridge;
-}
-
-[Serializable, NetSerializable]
-public sealed class CartridgeComponentState : ComponentState
-{
-    public InstallationStatus InstallationStatus;
 }
 
 [Serializable, NetSerializable]

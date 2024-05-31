@@ -11,9 +11,10 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Server.Crayon;
 
@@ -74,7 +75,8 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
         // Decrease "Ammo"
         component.Charges--;
-        Dirty(component);
+        Dirty(uid, component);
+
         _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} drew a {component.Color:color} {component.SelectedState}");
         args.Handled = true;
 
@@ -88,42 +90,36 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (args.Handled)
             return;
 
-        if (!TryComp<ActorComponent>(args.User, out var actor) ||
-            component.UserInterface == null)
+        if (!_uiSystem.HasUi(uid, SharedCrayonComponent.CrayonUiKey.Key))
         {
             return;
         }
 
-        _uiSystem.ToggleUi(component.UserInterface, actor.PlayerSession);
+        _uiSystem.TryToggleUi(uid, SharedCrayonComponent.CrayonUiKey.Key, args.User);
 
-        if (component.UserInterface?.SubscribedSessions.Contains(actor.PlayerSession) == true)
-        {
-            // Tell the user interface the selected stuff
-            _uiSystem.SetUiState(component.UserInterface, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color));
-        }
-
+        _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color));
         args.Handled = true;
     }
 
     private void OnCrayonBoundUI(EntityUid uid, CrayonComponent component, CrayonSelectMessage args)
     {
         // Check if the selected state is valid
-        if (!_prototypeManager.TryIndex<DecalPrototype>(args.State, out var prototype) || !prototype.Tags.Contains("crayon")) return;
+        if (!_prototypeManager.TryIndex<DecalPrototype>(args.State, out var prototype) || !prototype.Tags.Contains("crayon"))
+            return;
 
         component.SelectedState = args.State;
 
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnCrayonBoundUIColor(EntityUid uid, CrayonComponent component, CrayonColorMessage args)
     {
         // you still need to ensure that the given color is a valid color
-        if (component.SelectableColor && args.Color != component.Color)
-        {
-            component.Color = args.Color;
+        if (!component.SelectableColor || args.Color == component.Color)
+            return;
 
-            Dirty(component);
-        }
+        component.Color = args.Color;
+        Dirty(uid, component);
 
     }
 
@@ -134,13 +130,13 @@ public sealed class CrayonSystem : SharedCrayonSystem
         // Get the first one from the catalog and set it as default
         var decal = _prototypeManager.EnumeratePrototypes<DecalPrototype>().FirstOrDefault(x => x.Tags.Contains("crayon"));
         component.SelectedState = decal?.ID ?? string.Empty;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnCrayonDropped(EntityUid uid, CrayonComponent component, DroppedEvent args)
     {
-        if (TryComp<ActorComponent>(args.User, out var actor))
-            _uiSystem.TryClose(uid, SharedCrayonComponent.CrayonUiKey.Key, actor.PlayerSession);
+        // TODO: Use the existing event.
+        _uiSystem.CloseUi(uid, SharedCrayonComponent.CrayonUiKey.Key, args.User);
     }
 
     private void UseUpCrayon(EntityUid uid, EntityUid user)

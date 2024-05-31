@@ -9,6 +9,8 @@ using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -53,7 +55,7 @@ public sealed class GuidebookSystem : EntitySystem
     /// </summary>
     public EntityUid GetGuidebookUser()
     {
-        var user = _playerManager.LocalPlayer!.ControlledEntity;
+        var user = _playerManager.LocalEntity;
         if (user != null)
             return user.Value;
 
@@ -76,6 +78,11 @@ public sealed class GuidebookSystem : EntitySystem
             ClientExclusive = true,
             CloseMenu = true
         });
+    }
+
+    public void OpenHelp(List<string> guides)
+    {
+        OnGuidebookOpen?.Invoke(guides, null, null, true, guides[0]);
     }
 
     private void OnInteract(EntityUid uid, GuideHelpComponent component, ActivateInWorldEvent args)

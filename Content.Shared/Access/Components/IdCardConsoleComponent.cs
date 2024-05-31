@@ -1,12 +1,12 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Access.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedIdCardConsoleSystem))]
 public sealed partial class IdCardConsoleComponent : Component
 {
@@ -16,10 +16,10 @@ public sealed partial class IdCardConsoleComponent : Component
     public static string PrivilegedIdCardSlotId = "IdCardConsole-privilegedId";
     public static string TargetIdCardSlotId = "IdCardConsole-targetId";
 
-    [DataField("privilegedIdSlot")]
+    [DataField]
     public ItemSlot PrivilegedIdSlot = new();
 
-    [DataField("targetIdSlot")]
+    [DataField]
     public ItemSlot TargetIdSlot = new();
 
     [Serializable, NetSerializable]
@@ -27,10 +27,10 @@ public sealed partial class IdCardConsoleComponent : Component
     {
         public readonly string FullName;
         public readonly string JobTitle;
-        public readonly List<string> AccessList;
-        public readonly string JobPrototype;
+        public readonly List<ProtoId<AccessLevelPrototype>> AccessList;
+        public readonly ProtoId<AccessLevelPrototype> JobPrototype;
 
-        public WriteToTargetIdMessage(string fullName, string jobTitle, List<string> accessList, string jobPrototype)
+        public WriteToTargetIdMessage(string fullName, string jobTitle, List<ProtoId<AccessLevelPrototype>> accessList, ProtoId<AccessLevelPrototype> jobPrototype)
         {
             FullName = fullName;
             JobTitle = jobTitle;
@@ -41,8 +41,8 @@ public sealed partial class IdCardConsoleComponent : Component
 
     // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
 
-    [DataField("accessLevels", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
-    public List<string> AccessLevels = new()
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<AccessLevelPrototype>> AccessLevels = new()
     {
         "Armory",
         "Atmospherics",
@@ -56,6 +56,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "ChiefEngineer",
         "ChiefMedicalOfficer",
         "Command",
+        "Cryogenics",
         "Engineering",
         "External",
         "HeadOfPersonnel",
@@ -63,6 +64,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "Hydroponics",
         "Janitor",
         "Kitchen",
+        "Lawyer",
         "Maintenance",
         "Medical",
         "Quartermaster",
@@ -84,18 +86,18 @@ public sealed partial class IdCardConsoleComponent : Component
         public readonly string TargetIdName;
         public readonly string? TargetIdFullName;
         public readonly string? TargetIdJobTitle;
-        public readonly string[]? TargetIdAccessList;
-        public readonly string[]? AllowedModifyAccessList;
-        public readonly string TargetIdJobPrototype;
+        public readonly List<ProtoId<AccessLevelPrototype>>? TargetIdAccessList;
+        public readonly List<ProtoId<AccessLevelPrototype>>? AllowedModifyAccessList;
+        public readonly ProtoId<AccessLevelPrototype> TargetIdJobPrototype;
 
         public IdCardConsoleBoundUserInterfaceState(bool isPrivilegedIdPresent,
             bool isPrivilegedIdAuthorized,
             bool isTargetIdPresent,
             string? targetIdFullName,
             string? targetIdJobTitle,
-            string[]? targetIdAccessList,
-            string[]? allowedModifyAccessList,
-            string targetIdJobPrototype,
+            List<ProtoId<AccessLevelPrototype>>? targetIdAccessList,
+            List<ProtoId<AccessLevelPrototype>>? allowedModifyAccessList,
+            ProtoId<AccessLevelPrototype> targetIdJobPrototype,
             string privilegedIdName,
             string targetIdName)
         {

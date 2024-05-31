@@ -11,13 +11,12 @@ machine-upgrade-not-upgraded = [color=yellow]{CAPITALIZE($upgraded)}[/color] not
 machine-part-name-capacitor = Capacitor
 machine-part-name-manipulator = Manipulator
 machine-part-name-matter-bin = Matter Bin
-
-upgrade-power-draw = power draw
-upgrade-max-charge = max charge
-upgrade-power-supply = power supply
+machine-part-name-power-cell = Power Cell
 
 two-way-lever-left = push left
 two-way-lever-right = push right
 two-way-lever-cant = can't push the lever that way!
 
 recycler-count-items = Recycled {$items} objects.
+
+machine-already-in-use = {CAPITALIZE(THE($machine))} is already in use.

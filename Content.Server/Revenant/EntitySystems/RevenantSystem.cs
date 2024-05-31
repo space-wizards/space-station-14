@@ -77,9 +77,9 @@ public sealed partial class RevenantSystem : EntitySystem
 
         if (_ticker.RunLevel == GameRunLevel.PostRound && TryComp<VisibilityComponent>(uid, out var visibility))
         {
-            _visibility.AddLayer(visibility, (int) VisibilityFlags.Ghost, false);
-            _visibility.RemoveLayer(visibility, (int) VisibilityFlags.Normal, false);
-            _visibility.RefreshVisibility(visibility);
+            _visibility.AddLayer(uid, visibility, (int) VisibilityFlags.Ghost, false);
+            _visibility.RemoveLayer(uid, visibility, (int) VisibilityFlags.Normal, false);
+            _visibility.RefreshVisibility(uid, visibility);
         }
 
         //ghost vision
@@ -91,7 +91,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, RevenantComponent component, MapInitEvent args)
     {
-        _action.AddAction(uid, Spawn(RevenantShopId), null);
+        _action.AddAction(uid, ref component.Action, RevenantShopId);
     }
 
     private void OnStatusAdded(EntityUid uid, RevenantComponent component, StatusEffectAddedEvent args)
@@ -120,7 +120,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (!HasComp<CorporealComponent>(uid) || args.DamageDelta == null)
             return;
 
-        var essenceDamage = args.DamageDelta.Total.Float() * component.DamageToEssenceCoefficient * -1;
+        var essenceDamage = args.DamageDelta.GetTotal().Float() * component.DamageToEssenceCoefficient * -1;
         ChangeEssenceAmount(uid, essenceDamage, component);
     }
 
@@ -133,6 +133,7 @@ public sealed partial class RevenantSystem : EntitySystem
             return false;
 
         component.Essence += amount;
+        Dirty(uid, component);
 
         if (regenCap)
             FixedPoint2.Min(component.Essence, component.EssenceRegenCap);
@@ -140,7 +141,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (TryComp<StoreComponent>(uid, out var store))
             _store.UpdateUserInterface(uid, uid, store);
 
-        _alerts.ShowAlert(uid, AlertType.Essence, (short) Math.Clamp(Math.Round(component.Essence.Float() / 10f), 0, 16));
+        _alerts.ShowAlert(uid, component.EssenceAlert);
 
         if (component.Essence <= 0)
         {
@@ -185,19 +186,20 @@ public sealed partial class RevenantSystem : EntitySystem
 
     public void MakeVisible(bool visible)
     {
-        foreach (var (_, vis) in EntityQuery<RevenantComponent, VisibilityComponent>())
+        var query = EntityQueryEnumerator<RevenantComponent, VisibilityComponent>();
+        while (query.MoveNext(out var uid, out _, out var vis))
         {
             if (visible)
             {
-                _visibility.AddLayer(vis, (int) VisibilityFlags.Normal, false);
-                _visibility.RemoveLayer(vis, (int) VisibilityFlags.Ghost, false);
+                _visibility.AddLayer(uid, vis, (int) VisibilityFlags.Normal, false);
+                _visibility.RemoveLayer(uid, vis, (int) VisibilityFlags.Ghost, false);
             }
             else
             {
-                _visibility.AddLayer(vis, (int) VisibilityFlags.Ghost, false);
-                _visibility.RemoveLayer(vis, (int) VisibilityFlags.Normal, false);
+                _visibility.AddLayer(uid, vis, (int) VisibilityFlags.Ghost, false);
+                _visibility.RemoveLayer(uid, vis, (int) VisibilityFlags.Normal, false);
             }
-            _visibility.RefreshVisibility(vis);
+            _visibility.RefreshVisibility(uid, vis);
         }
     }
 
@@ -205,7 +207,8 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var rev in EntityQuery<RevenantComponent>())
+        var query = EntityQueryEnumerator<RevenantComponent>();
+        while (query.MoveNext(out var uid, out var rev))
         {
             rev.Accumulator += frameTime;
 
@@ -215,7 +218,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
             if (rev.Essence < rev.EssenceRegenCap)
             {
-                ChangeEssenceAmount(rev.Owner, rev.EssencePerSecond, rev, regenCap: true);
+                ChangeEssenceAmount(uid, rev.EssencePerSecond, rev, regenCap: true);
             }
         }
     }

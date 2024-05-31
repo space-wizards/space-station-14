@@ -1,13 +1,13 @@
 - type: entity
   name: BaseWeaponRifle
-  parent: BaseItem
+  parent: [BaseItem, BaseGunWieldable]
   id: BaseWeaponRifle
   description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
   - type: Item
-    size: 50
+    size: Huge
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     quickEquip: false

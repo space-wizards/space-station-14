@@ -12,7 +12,7 @@ namespace Content.Client.Administration.UI
 
         public AdminMenuWindow()
         {
-            MinSize = new Vector2(500, 250);
+            MinSize = new Vector2(650, 250);
             Title = Loc.GetString("admin-menu-title");
             RobustXamlLoader.Load(this);
             MasterTabContainer.SetTabTitle(0, Loc.GetString("admin-menu-admin-tab"));
@@ -20,8 +20,9 @@ namespace Content.Client.Administration.UI
             MasterTabContainer.SetTabTitle(2, Loc.GetString("admin-menu-atmos-tab"));
             MasterTabContainer.SetTabTitle(3, Loc.GetString("admin-menu-round-tab"));
             MasterTabContainer.SetTabTitle(4, Loc.GetString("admin-menu-server-tab"));
-            MasterTabContainer.SetTabTitle(5, Loc.GetString("admin-menu-players-tab"));
-            MasterTabContainer.SetTabTitle(6, Loc.GetString("admin-menu-objects-tab"));
+            MasterTabContainer.SetTabTitle(5, Loc.GetString("admin-menu-panic-bunker-tab"));
+            MasterTabContainer.SetTabTitle(6, Loc.GetString("admin-menu-players-tab"));
+            MasterTabContainer.SetTabTitle(7, Loc.GetString("admin-menu-objects-tab"));
         }
 
         protected override void Dispose(bool disposing)

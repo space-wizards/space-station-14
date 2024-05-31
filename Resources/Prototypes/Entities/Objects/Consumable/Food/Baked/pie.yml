@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_baked_whole.yml & food_baked_single.yml
 # Base
 
 - type: entity
@@ -5,6 +6,8 @@
   id: FoodPieBase
   abstract: true
   components:
+  - type: Item
+    storedRotation: -90
   - type: FlavorProfile
     flavors:
       - sweet
@@ -19,6 +22,8 @@
           Quantity: 11
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Food #All pies here made with a pie tin; unless you're some kind of savage, you're probably not destroying this when you eat or slice the pie!
+    trash: FoodPlateTin
   - type: SliceableFood
     count: 4
   - type: Tag
@@ -31,6 +36,8 @@
   abstract: true
   description: A slice of pie. Tasty!
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - sweet
@@ -45,6 +52,10 @@
           Quantity: 1.2
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Pie
+    - Slice
 
 # Pie
 
@@ -64,6 +75,10 @@
     - state: apple
   - type: SliceableFood
     slice: FoodPieAppleSlice
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
 
 - type: entity
   name: slice of apple pie
@@ -79,6 +94,11 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: orange
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
+    - Slice
 # Tastes like pie, apple.
 
 - type: entity
@@ -123,8 +143,6 @@
       - sweet
       - banana
       - creamy
-  - type: Food
-    trash: FoodPlateTin
   - type: Sprite
     layers:
     - state: tin
@@ -143,6 +161,33 @@
           path: /Audio/Weapons/Guns/Empty/empty.ogg
         ejectSound:
           path: /Audio/Weapons/Guns/Empty/empty.ogg
+        swap: false
+        disableEject: true
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
+  - type: SliceableFood
+    slice: FoodPieBananaCreamSlice
+
+- type: entity
+  name: slice of banana cream pie
+  parent: FoodPieSliceBase
+  id: FoodPieBananaCreamSlice
+  description: Just like back home, on clown planet! HONK!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - banana
+      - creamy
+  - type: Sprite
+    state: bananapie-slice
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
+    - Slice
 # Tastes like pie, cream, banana.
 
 - type: entity
@@ -154,8 +199,7 @@
   - type: FlavorProfile
     flavors:
       - sweet
-      - banana
-      - creamy
+      - berry
   - type: Sprite
     layers:
     - state: tin
@@ -163,6 +207,10 @@
     - state: berryclafoutis
   - type: SliceableFood
     slice: FoodPieClafoutisSlice
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
 
 - type: entity
   name: slice of berry clafoutis
@@ -172,11 +220,17 @@
   - type: FlavorProfile
     flavors:
       - sweet
+      - berry
   - type: Sprite
     layers:
     - state: plain-slice
     - state: alpha-slice-filling
       color: pink
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
+    - Slice
 # Tastes like pie, blackberries.
 
 - type: entity
@@ -194,6 +248,10 @@
     - state: cherry
   - type: SliceableFood
     slice: FoodPieCherrySlice
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
 
 - type: entity
   name: slice of cherry pie
@@ -208,6 +266,11 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: red
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
+    - Slice
 # Tastes like pie, cherries.
 
 - type: entity
@@ -225,6 +288,10 @@
     - state: meat
   - type: SliceableFood
     slice: FoodPieMeatSlice
+  - type: Tag
+    tags:
+    - Meat
+    - Pie
 
 - type: entity
   name: slice of meat pie
@@ -239,6 +306,11 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: brown
+  - type: Tag
+    tags:
+    - Meat
+    - Pie
+    - Slice
 # Tastes like pie, meat.
 
 - type: entity
@@ -256,6 +328,10 @@
     - state: xeno
   - type: SliceableFood
     slice: FoodPieXenoSlice
+  - type: Tag
+    tags:
+    - Meat
+    - Pie
 
 - type: entity
   name: slice of xeno pie
@@ -271,6 +347,11 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: green
+  - type: Tag
+    tags:
+    - Meat
+    - Pie
+    - Slice
 # Tastes like pie, meat, acid.
 
 - type: entity
@@ -303,6 +384,37 @@
     - state: alpha-slice-filling
       color: blue
 # Tastes like pie, mint.
+
+- type: entity
+  name: mime tart
+  parent: FoodPieBase
+  id: FoodTartMime
+  description: "\"      \""
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nothing
+  - type: Sprite
+    state: mime
+  - type: Item
+    heldPrefix: mime
+  - type: SliceableFood
+    slice: FoodTartMimeSlice
+
+- type: entity
+  name: slice of mime tart
+  parent: FoodPieSliceBase
+  id: FoodTartMimeSlice
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nothing
+  - type: Sprite
+    layers:
+    - state: mimetart-slice
+  - type: Item
+    heldPrefix: mime
+# Tastes like nothing.
 
 # No Slice
 
@@ -356,20 +468,11 @@
       - sweet
   - type: Sprite
     state: grape
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
 # Tastes like tart, grape.
-
-- type: entity
-  name: mime tart
-  parent: FoodPieBase
-  id: FoodTartMime
-  description: "\"      \""
-  components:
-  - type: FlavorProfile
-    flavors:
-      - nothing
-  - type: Sprite
-    state: mime
-# Tastes like nothing.
 
 - type: entity
   name: golden apple streusel tart
@@ -382,6 +485,10 @@
       - apple
   - type: Sprite
     state: gapple
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
 # Tastes like tart, apple, expensive metal.
 
 - type: entity

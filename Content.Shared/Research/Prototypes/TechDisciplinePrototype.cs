@@ -8,7 +8,7 @@ namespace Content.Shared.Research.Prototypes;
 /// that governs how <see cref="TechnologyPrototype"/>s are unlocked.
 /// </summary>
 [Prototype("techDiscipline")]
-public sealed class TechDisciplinePrototype : IPrototype
+public sealed partial class TechDisciplinePrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]

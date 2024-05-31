@@ -1,4 +1,4 @@
-﻿- type: gasReaction
+- type: gasReaction
   id: PlasmaFire
   priority: -2
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
@@ -34,7 +34,7 @@
   - 0     # plasma
   - 0     # tritium
   - 0     # vapor
-  - 0     # miasma
+  - 0     # ammonia
   - 0     # n2o
   - 0.01  # frezon
   effects:
@@ -51,16 +51,33 @@
   - 0     # plasma
   - 0.01  # tritium
   - 0     # vapor
-  - 0     # miasma
+  - 0     # ammonia
   - 0     # n2o
   - 0     # frezon
   effects:
   - !type:FrezonProductionReaction {}
 
 - type: gasReaction
-  id: MiasmicSubsumation
+  id: AmmoniaOxygenReaction
+  priority: 2
+  minimumTemperature: 323.149
+  minimumRequirements:
+  - 0.01  # oxygen
+  - 0     # nitrogen
+  - 0     # carbon dioxide
+  - 0     # plasma
+  - 0     # tritium
+  - 0     # vapor
+  - 0.01  # ammonia
+  - 0     # n2o
+  - 0     # frezon
+  effects:
+  - !type:AmmoniaOxygenReaction {}
+
+- type: gasReaction
+  id: N2ODecomposition
   priority: 0
-  maximumTemperature: 5066.25
+  minimumTemperature: 850
   minimumRequirements:
   - 0     # oxygen
   - 0     # nitrogen
@@ -68,11 +85,11 @@
   - 0     # plasma
   - 0     # tritium
   - 0     # vapor
-  - 0.01  # miasma
-  - 0     # n2o
-  - 0.01  # frezon
+  - 0     # ammonia
+  - 0.01  # n2o
+  - 0     # frezon
   effects:
-  - !type:MiasmicSubsumationReaction {}
+  - !type:N2ODecompositionReaction {}
 
 #- type: gasReaction
 #  id: WaterVaporPuddle

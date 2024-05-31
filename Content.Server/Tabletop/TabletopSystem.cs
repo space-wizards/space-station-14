@@ -1,6 +1,5 @@
 using Content.Server.Popups;
 using Content.Server.Tabletop.Components;
-using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -10,9 +9,9 @@ using Content.Shared.Tabletop.Events;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Tabletop
@@ -43,7 +42,7 @@ namespace Content.Server.Tabletop
 
         private void OnTabletopRequestTakeOut(TabletopRequestTakeOut msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession is not IPlayerSession playerSession)
+            if (args.SenderSession is not { } playerSession)
                 return;
 
             var table = GetEntity(msg.TableUid);
@@ -106,7 +105,7 @@ namespace Content.Server.Tabletop
 
         protected override void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession is not IPlayerSession playerSession)
+            if (args.SenderSession is not { } playerSession)
                 return;
 
             if (!TryComp(GetEntity(msg.TableUid), out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
@@ -156,7 +155,7 @@ namespace Content.Server.Tabletop
 
         private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
         {
-            CloseSessionFor((IPlayerSession)args.SenderSession, GetEntity(msg.TableUid));
+            CloseSessionFor(args.SenderSession, GetEntity(msg.TableUid));
         }
 
         private void OnPlayerDetached(EntityUid uid, TabletopGamerComponent component, PlayerDetachedEvent args)
@@ -178,20 +177,19 @@ namespace Content.Server.Tabletop
         {
             base.Update(frameTime);
 
-            foreach (var gamer in EntityManager.EntityQuery<TabletopGamerComponent>())
+            var query = EntityQueryEnumerator<TabletopGamerComponent>();
+            while (query.MoveNext(out var uid, out var gamer))
             {
-                if (!EntityManager.EntityExists(gamer.Tabletop))
+                if (!Exists(gamer.Tabletop))
                     continue;
 
-                if (!EntityManager.TryGetComponent(gamer.Owner, out ActorComponent? actor))
+                if (!TryComp(uid, out ActorComponent? actor))
                 {
-                    EntityManager.RemoveComponent<TabletopGamerComponent>(gamer.Owner);
+                    EntityManager.RemoveComponent<TabletopGamerComponent>(uid);
                     return;
                 }
 
-                var gamerUid = (gamer).Owner;
-
-                if (actor.PlayerSession.Status != SessionStatus.InGame || !CanSeeTable(gamerUid, gamer.Tabletop))
+                if (actor.PlayerSession.Status != SessionStatus.InGame || !CanSeeTable(uid, gamer.Tabletop))
                     CloseSessionFor(actor.PlayerSession, gamer.Tabletop);
             }
         }

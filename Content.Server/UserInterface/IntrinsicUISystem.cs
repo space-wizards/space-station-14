@@ -1,7 +1,7 @@
 ﻿using Content.Server.Actions;
-using Content.Shared.Actions;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.UserInterface;
 
@@ -12,59 +12,37 @@ public sealed class IntrinsicUISystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<IntrinsicUIComponent, ComponentStartup>(OnGetActions);
+        SubscribeLocalEvent<IntrinsicUIComponent, MapInitEvent>(InitActions);
         SubscribeLocalEvent<IntrinsicUIComponent, ToggleIntrinsicUIEvent>(OnActionToggle);
     }
 
     private void OnActionToggle(EntityUid uid, IntrinsicUIComponent component, ToggleIntrinsicUIEvent args)
     {
+        if (args.Key == null)
+            return;
+
         args.Handled = InteractUI(uid, args.Key, component);
     }
 
-    private void OnGetActions(EntityUid uid, IntrinsicUIComponent component, ComponentStartup args)
+    private void InitActions(EntityUid uid, IntrinsicUIComponent component, MapInitEvent args)
     {
-        if (!TryComp<ActionsComponent>(uid, out var actions))
-            return;
-
-        foreach (var entry in component.UIs)
+        foreach (var entry in component.UIs.Values)
         {
-            _actionsSystem.AddAction(uid, ref entry.ToggleActionEntity, entry.ToggleAction, null, actions);
+            _actionsSystem.AddAction(uid, ref entry.ToggleActionEntity, entry.ToggleAction);
         }
     }
 
-    public bool InteractUI(EntityUid uid, Enum? key, IntrinsicUIComponent? iui = null, ActorComponent? actor = null)
+    public bool InteractUI(EntityUid uid, Enum key, IntrinsicUIComponent? iui = null, ActorComponent? actor = null)
     {
         if (!Resolve(uid, ref iui, ref actor))
             return false;
 
-        if (key is null)
-        {
-            Logger.ErrorS("bui", $"Entity {ToPrettyString(uid)} has an invalid intrinsic UI.");
-        }
-
-        var ui = GetUIOrNull(uid, key, iui);
-
-        if (ui is null)
-        {
-            Logger.ErrorS("bui", $"Couldn't get UI {key} on {ToPrettyString(uid)}");
-            return false;
-        }
-
         var attempt = new IntrinsicUIOpenAttemptEvent(uid, key);
-        RaiseLocalEvent(uid, attempt, false);
+        RaiseLocalEvent(uid, attempt);
         if (attempt.Cancelled)
             return false;
 
-        _uiSystem.ToggleUi(ui, actor.PlayerSession);
-        return true;
-    }
-
-    private PlayerBoundUserInterface? GetUIOrNull(EntityUid uid, Enum? key, IntrinsicUIComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return null;
-
-        return key is null ? null : uid.GetUIOrNull(key);
+        return _uiSystem.TryToggleUi(uid, key, actor.PlayerSession);
     }
 }
 

@@ -1,0 +1,43 @@
+- type: palette
+  id: KoboldColors
+  name: KoboldColors
+  colors:
+    ForestA: "#71a457"
+    ForestB: "#536f18"
+    ForestC: "#1e5026"
+    ForestD: "#519b71"
+    ForestE: "#61a003"
+    ForestF: "#729953"
+    DesertA: "#999453"
+    DesertB: "#daa976"
+    DesertC: "#a4582f"
+    DesertD: "#af9369"
+    DesertE: "#c27d3b"
+    DesertF: "#ddc3a1"
+    SwampA: "#635033"
+    SwampB: "#455132"
+    SwampC: "#4a4d12"
+    SwampD: "#452d1d"
+    SwampE: "#5f544c"
+    SwampF: "#413b0a"
+    CaveA: "#4a4260"
+    CaveB: "#3f3330"
+    CaveC: "#4a4542"
+    CaveD: "#413d32"
+    CaveE: "#726f6a"
+    CaveF: "#d4c8bf"
+    TechniRed: "#b32828"
+    TechniOrange: "#da8929"
+    TechniGreen: "#28df58"
+    TechniBlue: "#144bb3"
+    TechniCyan: "#1ddfbe"
+    TechniPurple: "#792da9"
+    TechniFuchsia: "#d11a82"
+
+- type: palette
+  id: KoboldHornColors
+  name: KoboldHornColors
+  colors:
+    HornA: "#d4c8bf"
+    hornB: "#eec7ab"
+    hornC: "#ad9584"

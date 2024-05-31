@@ -1,6 +1,5 @@
 using Content.Shared.Construction.Components;
 using Content.Shared.Examine;
-using JetBrains.Annotations;
 
 namespace Content.Shared.Construction.Steps;
 
@@ -10,14 +9,14 @@ public sealed partial class PartAssemblyConstructionGraphStep : ConstructionGrap
     /// <summary>
     /// A valid ID on <see cref="PartAssemblyComponent"/>'s dictionary of strings to part lists.
     /// </summary>
-    [DataField("assemblyId")]
+    [DataField]
     public string AssemblyId = string.Empty;
 
     /// <summary>
-    /// A localization string used for
+    /// A localization string used when examining and for the guidebook.
     /// </summary>
-    [DataField("guideString")]
-    public string GuideString = "construction-guide-condition-part-assembly";
+    [DataField]
+    public LocId GuideString = "construction-guide-condition-part-assembly";
 
     public bool Condition(EntityUid uid, IEntityManager entityManager)
     {

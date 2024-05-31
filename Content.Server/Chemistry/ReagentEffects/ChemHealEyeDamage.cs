@@ -15,7 +15,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// <summary>
         /// How much eye damage to add.
         /// </summary>
-        [DataField("amount")]
+        [DataField]
         public int Amount = -1;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

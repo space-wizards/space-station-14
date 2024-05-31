@@ -70,6 +70,14 @@
     {
       "name": "short_secondary",
       "directions": 4
+    },
+    {
+      "name": "freaky_primary",
+      "directions": 4
+    },
+    {
+      "name": "freaky_secondary",
+      "directions": 4
     }
   ]
 }

@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "tgstation at a373b4cb08298523d40acc14f9c390a0c403fc31, sprites modified and cut into layers by mirrorcult",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "tail"
+    },
+    {
+      "name": "rod"
+    },
+    {
+      "name": "tip"
+    },
+    {
+      "name": "solution1"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

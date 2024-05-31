@@ -65,3 +65,17 @@
       minimumEntitiesSpawned: 1
       maximumEntitiesSpawned: 1
 
+- type: entity
+  name: Cockroach Timed Spawner
+  id: CockroachTimedSpawner
+  parent: MouseTimedSpawner
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Mobs/Animals/cockroach.rsi
+          state: cockroach_icon
+        - state: timed
+    - type: TimedSpawner
+      prototypes:
+        - MobCockroach

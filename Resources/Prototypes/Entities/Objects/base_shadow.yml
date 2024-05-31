@@ -1,0 +1,26 @@
+- type: entity
+  id: BaseShadow
+  abstract: true
+  components:
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Items/hiss.ogg
+              params:
+                variation: 0.08
+  - type: Flashable
+    collisionGroup:
+    - None
+  - type: DamagedByFlashing
+    flashDamage:
+      types:
+        Heat: 10
+  - type: Damageable
+    damageContainer: ShadowHaze

@@ -3,6 +3,8 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Item;
 using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Light;
@@ -27,7 +29,7 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         UpdateVisuals(uid, component);
 
         // Want to make sure client has latest data on level so battery displays properly.
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnHandleState(EntityUid uid, HandheldLightComponent component, ref ComponentHandleState args)
@@ -52,10 +54,10 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         if (makeNoise)
         {
             var sound = component.Activated ? component.TurnOnSound : component.TurnOffSound;
-            _audio.PlayPvs(sound, component.Owner);
+            _audio.PlayPvs(sound, uid);
         }
 
-        Dirty(component);
+        Dirty(uid, component);
         UpdateVisuals(uid, component);
     }
 

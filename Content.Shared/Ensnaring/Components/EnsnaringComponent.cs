@@ -37,6 +37,13 @@ public sealed partial class EnsnaringComponent : Component
     public float SprintSpeed = 0.9f;
 
     /// <summary>
+    /// How much stamina does the ensnare sap
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("staminaDamage")]
+    public float StaminaDamage = 55f;
+
+    /// <summary>
     /// Should this ensnare someone when thrown?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]

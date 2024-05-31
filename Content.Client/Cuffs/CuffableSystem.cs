@@ -17,15 +17,6 @@ public sealed class CuffableSystem : SharedCuffableSystem
 
         SubscribeLocalEvent<CuffableComponent, ComponentShutdown>(OnCuffableShutdown);
         SubscribeLocalEvent<CuffableComponent, ComponentHandleState>(OnCuffableHandleState);
-        SubscribeLocalEvent<HandcuffComponent, ComponentHandleState>(OnHandcuffHandleState);
-    }
-
-    private void OnHandcuffHandleState(EntityUid uid, HandcuffComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not HandcuffComponentState state)
-            return;
-
-        component.OverlayIconState = state.IconState;
     }
 
     private void OnCuffableShutdown(EntityUid uid, CuffableComponent component, ComponentShutdown args)

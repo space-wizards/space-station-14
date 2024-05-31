@@ -1,0 +1,31 @@
+- type: constructionGraph
+  id: StrawHat
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: strawhat
+          steps:
+            - tag: Wheat
+              name: Wheat Bushel
+              icon:
+                sprite: Objects/Specific/Hydroponics/wheat.rsi
+                state: produce
+            - tag: Wheat
+              name: Wheat Bushel
+              icon:
+                sprite: Objects/Specific/Hydroponics/wheat.rsi
+                state: produce
+            - tag: Wheat
+              name: Wheat Bushel
+              icon:
+                sprite: Objects/Specific/Hydroponics/wheat.rsi
+                state: produce
+            - tag: Wheat
+              name: Wheat Bushel
+              icon:
+                sprite: Objects/Specific/Hydroponics/wheat.rsi
+                state: produce
+              doAfter: 10
+    - node: strawhat
+      entity: ClothingHeadHatStrawHat

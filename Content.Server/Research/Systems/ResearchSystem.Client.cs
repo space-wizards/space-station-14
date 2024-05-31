@@ -1,8 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Research.Components;
-using Robust.Server.Player;
 
 namespace Content.Server.Research.Systems;
 
@@ -47,7 +45,7 @@ public sealed partial class ResearchSystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
+        _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, args.Actor);
     }
     #endregion
 
@@ -58,9 +56,15 @@ public sealed partial class ResearchSystem
 
     private void OnClientMapInit(EntityUid uid, ResearchClientComponent component, MapInitEvent args)
     {
-        var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
-        if (allServers.Length > 0)
-            RegisterClient(uid, allServers[0].Owner, component, allServers[0]);
+        var allServers = new List<Entity<ResearchServerComponent>>();
+        var query = AllEntityQuery<ResearchServerComponent>();
+        while (query.MoveNext(out var serverUid, out var serverComp))
+        {
+            allServers.Add((serverUid, serverComp));
+        }
+
+        if (allServers.Count > 0)
+            RegisterClient(uid, allServers[0], component, allServers[0]);
     }
 
     private void OnClientShutdown(EntityUid uid, ResearchClientComponent component, ComponentShutdown args)
@@ -78,14 +82,13 @@ public sealed partial class ResearchSystem
         if (!Resolve(uid, ref component, false))
             return;
 
-        if (!TryGetClientServer(uid, out _, out var serverComponent, component))
-            return;
+        TryGetClientServer(uid, out _, out var serverComponent, component);
 
         var names = GetServerNames();
         var state = new ResearchClientBoundInterfaceState(names.Length, names,
-            GetServerIds(), component.ConnectedToServer ? serverComponent.Id : -1);
+            GetServerIds(), serverComponent?.Id ?? -1);
 
-        _uiSystem.TrySetUiState(uid, ResearchClientUiKey.Key, state);
+        _uiSystem.SetUiState(uid, ResearchClientUiKey.Key, state);
     }
 
     /// <summary>

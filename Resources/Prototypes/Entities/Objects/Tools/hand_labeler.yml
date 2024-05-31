@@ -9,6 +9,7 @@
       state: hand_labeler
     - type: Item
       sprite: Objects/Tools/hand_labeler.rsi
+      storedRotation: -90
     - type: UseDelay
       delay: 2.0
     - type: ActivatableUI
@@ -16,7 +17,7 @@
       inHandsOnly: true
     - type: UserInterface
       interfaces:
-        - key: enum.HandLabelerUiKey.Key
+        enum.HandLabelerUiKey.Key:
           type: HandLabelerBoundUserInterface
     - type: HandLabeler
       whitelist:

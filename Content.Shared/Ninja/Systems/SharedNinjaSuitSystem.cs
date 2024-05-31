@@ -3,11 +3,9 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
-using Content.Shared.Timing;
-using Robust.Shared.Audio;
-using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Content.Shared.Popups;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -16,20 +14,32 @@ namespace Content.Shared.Ninja.Systems;
 /// </summary>
 public abstract class SharedNinjaSuitSystem : EntitySystem
 {
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
-    [Dependency] protected readonly SharedSpaceNinjaSystem _ninja = default!;
+    [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] protected readonly StealthClothingSystem StealthClothing = default!;
-    [Dependency] protected readonly UseDelaySystem UseDelay = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<NinjaSuitComponent, MapInitEvent>(OnMapInit);
+
         SubscribeLocalEvent<NinjaSuitComponent, GotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<NinjaSuitComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<NinjaSuitComponent, AddStealthActionEvent>(OnAddStealthAction);
         SubscribeLocalEvent<NinjaSuitComponent, GotUnequippedEvent>(OnUnequipped);
+    }
+
+    private void OnMapInit(EntityUid uid, NinjaSuitComponent component, MapInitEvent args)
+    {
+        _actionContainer.EnsureAction(uid, ref component.RecallKatanaActionEntity, component.RecallKatanaAction);
+        _actionContainer.EnsureAction(uid, ref component.CreateThrowingStarActionEntity, component.CreateThrowingStarAction);
+        _actionContainer.EnsureAction(uid, ref component.EmpActionEntity, component.EmpAction);
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -90,7 +100,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     /// <summary>
     /// Force uncloaks the user and disables suit abilities.
     /// </summary>
-    public void RevealNinja(EntityUid uid, EntityUid user, NinjaSuitComponent? comp = null, StealthClothingComponent? stealthClothing = null)
+    public void RevealNinja(EntityUid uid, EntityUid user, bool disable = true, NinjaSuitComponent? comp = null, StealthClothingComponent? stealthClothing = null)
     {
         if (!Resolve(uid, ref comp, ref stealthClothing))
             return;
@@ -98,12 +108,13 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         if (!StealthClothing.SetEnabled(uid, user, false, stealthClothing))
             return;
 
+        if (!disable)
+            return;
+
         // previously cloaked, disable abilities for a short time
         _audio.PlayPredicted(comp.RevealSound, uid, user);
-        // all abilities check for a usedelay on the ninja
-        var useDelay = EnsureComp<UseDelayComponent>(user);
-        useDelay.Delay = comp.DisableTime;
-        UseDelay.BeginDelay(user, useDelay);
+        Popup.PopupClient(Loc.GetString("ninja-revealed"), user, user, PopupType.MediumCaution);
+        comp.DisableCooldown = GameTiming.CurTime + comp.DisableTime;
     }
 
     // TODO: modify PowerCellDrain

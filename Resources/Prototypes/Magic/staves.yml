@@ -4,7 +4,7 @@
 - type: entity
   id: RGBStaff
   parent: BaseItem
-  name: RGB Staff
+  name: RGB staff
   description: Helps fix the underabundance of RGB gear on the station.
   components:
   - type: Sprite
@@ -17,6 +17,7 @@
     actions:
     - ActionRgbLight
   - type: Item
+    size: Normal
     inhandVisuals:
       left:
       - state: staff-inhand-left

@@ -1,6 +1,6 @@
-﻿using System.Linq;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Teleportation.Components;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -19,22 +19,6 @@ public sealed class LinkedEntitySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LinkedEntityComponent, ComponentShutdown>(OnLinkShutdown);
-
-        SubscribeLocalEvent<LinkedEntityComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<LinkedEntityComponent, ComponentHandleState>(OnHandleState);
-    }
-
-    private void OnGetState(EntityUid uid, LinkedEntityComponent component, ref ComponentGetState args)
-    {
-        args.State = new LinkedEntityComponentState(GetNetEntitySet(component.LinkedEntities));
-    }
-
-    private void OnHandleState(EntityUid uid, LinkedEntityComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is LinkedEntityComponentState state)
-        {
-            component.LinkedEntities = EnsureEntitySet<LinkedEntityComponent>(state.LinkedEntities, uid);
-        }
     }
 
     private void OnLinkShutdown(EntityUid uid, LinkedEntityComponent component, ComponentShutdown args)
@@ -70,11 +54,27 @@ public sealed class LinkedEntitySystem : EntitySystem
         _appearance.SetData(first, LinkedEntityVisuals.HasAnyLinks, true);
         _appearance.SetData(second, LinkedEntityVisuals.HasAnyLinks, true);
 
-        Dirty(firstLink);
-        Dirty(secondLink);
+        Dirty(first, firstLink);
+        Dirty(second, secondLink);
 
         return firstLink.LinkedEntities.Add(second)
             && secondLink.LinkedEntities.Add(first);
+    }
+
+    /// <summary>
+    /// Does a one-way link from source to target.
+    /// </summary>
+    /// <param name="deleteOnEmptyLinks">Whether both entities should now delete once their links are removed</param>
+    public bool OneWayLink(EntityUid source, EntityUid target, bool deleteOnEmptyLinks=false)
+    {
+        var firstLink = EnsureComp<LinkedEntityComponent>(source);
+        firstLink.DeleteOnEmptyLinks = deleteOnEmptyLinks;
+
+        _appearance.SetData(source, LinkedEntityVisuals.HasAnyLinks, true);
+
+        Dirty(source, firstLink);
+
+        return firstLink.LinkedEntities.Add(target);
     }
 
     /// <summary>
@@ -87,7 +87,7 @@ public sealed class LinkedEntitySystem : EntitySystem
     /// <param name="secondLink">Resolve comp</param>
     /// <returns>Whether unlinking was successful (e.g. they both were actually linked to one another)</returns>
     public bool TryUnlink(EntityUid first, EntityUid second,
-        LinkedEntityComponent? firstLink=null, LinkedEntityComponent? secondLink=null)
+        LinkedEntityComponent? firstLink = null, LinkedEntityComponent? secondLink = null)
     {
         if (!Resolve(first, ref firstLink))
             return false;
@@ -101,8 +101,8 @@ public sealed class LinkedEntitySystem : EntitySystem
         _appearance.SetData(first, LinkedEntityVisuals.HasAnyLinks, firstLink.LinkedEntities.Any());
         _appearance.SetData(second, LinkedEntityVisuals.HasAnyLinks, secondLink.LinkedEntities.Any());
 
-        Dirty(firstLink);
-        Dirty(secondLink);
+        Dirty(first, firstLink);
+        Dirty(second, secondLink);
 
         if (firstLink.LinkedEntities.Count == 0 && firstLink.DeleteOnEmptyLinks)
             QueueDel(first);
@@ -111,6 +111,26 @@ public sealed class LinkedEntitySystem : EntitySystem
             QueueDel(second);
 
         return success;
+    }
+
+    /// <summary>
+    /// Get the first entity this entity is linked to.
+    /// If multiple are linked only the first one is picked.
+    /// </summary>
+    public bool GetLink(EntityUid uid, [NotNullWhen(true)] out EntityUid? dest, LinkedEntityComponent? comp = null)
+    {
+        dest = null;
+        if (!Resolve(uid, ref comp, false))
+            return false;
+
+        var first = comp.LinkedEntities.FirstOrDefault();
+        if (first != default)
+        {
+            dest = first;
+            return true;
+        }
+
+        return false;
     }
 
     #endregion

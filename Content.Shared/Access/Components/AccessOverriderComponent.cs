@@ -2,22 +2,22 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Access.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedAccessOverriderSystem))]
 public sealed partial class AccessOverriderComponent : Component
 {
     public static string PrivilegedIdCardSlotId = "AccessOverrider-privilegedId";
 
-    [DataField("privilegedIdSlot")]
+    [DataField]
     public ItemSlot PrivilegedIdSlot = new();
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("denialSound")]
+    [DataField]
     public SoundSpecifier? DenialSound;
 
     public EntityUid TargetAccessReaderId = new();
@@ -25,20 +25,20 @@ public sealed partial class AccessOverriderComponent : Component
     [Serializable, NetSerializable]
     public sealed class WriteToTargetAccessReaderIdMessage : BoundUserInterfaceMessage
     {
-        public readonly List<string> AccessList;
+        public readonly List<ProtoId<AccessLevelPrototype>> AccessList;
 
-        public WriteToTargetAccessReaderIdMessage(List<string> accessList)
+        public WriteToTargetAccessReaderIdMessage(List<ProtoId<AccessLevelPrototype>> accessList)
         {
             AccessList = accessList;
         }
     }
 
-    [DataField("accessLevels", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
-    public List<string> AccessLevels = new();
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<AccessLevelPrototype>> AccessLevels = new();
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("doAfter")]
-    public float DoAfterTime = 0f;
+    [DataField]
+    public float DoAfter;
 
     [Serializable, NetSerializable]
     public sealed class AccessOverriderBoundUserInterfaceState : BoundUserInterfaceState
@@ -48,15 +48,15 @@ public sealed partial class AccessOverriderComponent : Component
         public readonly string PrivilegedIdName;
         public readonly bool IsPrivilegedIdPresent;
         public readonly bool IsPrivilegedIdAuthorized;
-        public readonly string[]? TargetAccessReaderIdAccessList;
-        public readonly string[]? AllowedModifyAccessList;
-        public readonly string[]? MissingPrivilegesList;
+        public readonly ProtoId<AccessLevelPrototype>[]? TargetAccessReaderIdAccessList;
+        public readonly ProtoId<AccessLevelPrototype>[]? AllowedModifyAccessList;
+        public readonly ProtoId<AccessLevelPrototype>[]? MissingPrivilegesList;
 
         public AccessOverriderBoundUserInterfaceState(bool isPrivilegedIdPresent,
             bool isPrivilegedIdAuthorized,
-            string[]? targetAccessReaderIdAccessList,
-            string[]? allowedModifyAccessList,
-            string[]? missingPrivilegesList,
+            ProtoId<AccessLevelPrototype>[]? targetAccessReaderIdAccessList,
+            ProtoId<AccessLevelPrototype>[]? allowedModifyAccessList,
+            ProtoId<AccessLevelPrototype>[]? missingPrivilegesList,
             string privilegedIdName,
             string targetLabel,
             Color targetLabelColor)

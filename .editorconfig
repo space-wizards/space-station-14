@@ -12,6 +12,7 @@ tab_width = 4
 #end_of_line = crlf
 insert_final_newline = true
 trim_trailing_whitespace = true
+max_line_length = 120
 
 #### .NET Coding Conventions ####
 
@@ -196,7 +197,7 @@ csharp_preserve_single_line_blocks = true
 #dotnet_naming_style.begins_with_i.word_separator =
 #dotnet_naming_style.begins_with_i.capitalization = pascal_case
 
-dotnet_diagnostic.IDE0055.severity = warning
+dotnet_diagnostic.ide0055.severity = warning
 
 dotnet_naming_rule.constants_rule.severity = warning
 dotnet_naming_rule.constants_rule.style = upper_camel_case_style
@@ -336,6 +337,17 @@ dotnet_naming_symbols.type_parameters_symbols.applicable_kinds = type_parameter
 
 # ReSharper properties
 resharper_braces_for_ifelse = required_for_multiline
+resharper_csharp_wrap_arguments_style = chop_if_long
+resharper_csharp_wrap_parameters_style = chop_if_long
+resharper_keep_existing_attribute_arrangement = true
+resharper_wrap_chained_binary_patterns = chop_if_long
+resharper_wrap_chained_method_calls = chop_if_long
 
-[*.{csproj,xml,yml,dll.config,msbuildproj,targets}]
+[*.{csproj,xml,yml,yaml,dll.config,msbuildproj,targets,props}]
 indent_size = 2
+
+[nuget.config]
+indent_size = 2
+
+[{*.yaml,*.yml}]
+ij_yaml_indent_sequence_value = false

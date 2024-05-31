@@ -7,12 +7,15 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Pulling;
 using Content.Shared.Standing;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Buckle;
 
@@ -33,7 +36,7 @@ public abstract partial class SharedBuckleSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPullingSystem _pulling = default!;
+    [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -65,7 +68,7 @@ public abstract partial class SharedBuckleSystem : EntitySystem
             || !Resolve(buckleUid, ref buckleComp, false))
             return;
 
-        _transform.SetCoordinates(buckleUid, new EntityCoordinates(strapUid, strapComp.BuckleOffset));
+        _transform.SetCoordinates(buckleUid, new EntityCoordinates(strapUid, strapComp.BuckleOffsetClamped));
 
         var buckleTransform = Transform(buckleUid);
 
@@ -75,7 +78,7 @@ public abstract partial class SharedBuckleSystem : EntitySystem
             return;
 
         _transform.SetLocalRotation(buckleUid, Angle.Zero, buckleTransform);
-        _joints.RefreshRelay(buckleUid, strapUid);
+        _joints.SetRelay(buckleUid, strapUid);
 
         switch (strapComp.Position)
         {

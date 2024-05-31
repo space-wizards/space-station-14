@@ -95,25 +95,14 @@
   parent: BaseBullet
   noSpawn: true
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: practice
   - type: Projectile
     damage:
       types:
-        Blunt: 2
-
-- type: entity
-  id: BaseBulletRubber
-  name: base bullet rubber
-  parent: BaseBullet
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 3
-    soundHit:
-      path: /Audio/Weapons/Guns/Hits/snap.ogg
-  - type: StaminaDamageOnCollide
-    damage: 22 # 5 hits to stun sounds reasonable
+        Blunt: 1
 
 - type: entity
   id: BaseBulletIncendiary
@@ -131,7 +120,7 @@
     radius: 2.0
     energy: 7.0
   - type: IgniteOnCollide
-    fireStacks: 1
+    fireStacks: 0.25
 
 - type: entity
   id: BaseBulletAP
@@ -139,11 +128,30 @@
   parent: BaseBullet
   noSpawn: true
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: piercing
   - type: Projectile
     damage:
       types:
         Piercing: 11 # 20% decrease
     ignoreResistances: true
+
+- type: entity
+  id: BaseBulletUranium
+  name: base bullet uranium
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: uranium
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 11
 
 # Energy projectiles
 - type: entity
@@ -183,7 +191,7 @@
         Heat: 5
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
-    soundForce: true
+    forceSound: true
   - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 5
@@ -228,8 +236,8 @@
       types:
         Heat: 5
     soundHit:
-      path: "/Audio/Weapons/tap.ogg"
-    soundForce: true
+      collection: WeakHit
+    forceSound: true
 
 - type: entity
   name : disabler bolt practice
@@ -261,15 +269,15 @@
       fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
-    damage: 5
+    damage: 1
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
       types:
         Heat: 1
     soundHit:
-      path: "/Audio/Weapons/tap.ogg"
-    soundForce: true
+      collection: WeakHit
+    forceSound: true
 
 - type: entity
   name: emitter bolt
@@ -300,6 +308,8 @@
     damage:
       types:
         Heat: 14
+  # mining laser real
+  - type: GatheringProjectile
   - type: Tag
     tags:
     - EmitterBolt
@@ -381,15 +391,42 @@
     layers:
     - state: chronobolt
       shader: unshaded
-  - type: GatheringProjectile
   - type: Projectile
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
         Blunt: 25
+        Structural: 30
   # Short lifespan
   - type: TimedDespawn
     lifetime: 0.4
+
+- type: entity
+  id: BulletKineticShuttle
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: chronobolt
+      shader: unshaded
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Blunt: 30
+        Structural: 35
+  - type: Ammo
+    muzzleFlash: HitscanEffect
+  - type: TimedDespawn
+    lifetime: 1.5
+  - type: PointLight
+    radius: 2.5
+    color: white
+    energy: 0.5
+  - type: GatheringProjectile
 
 - type: entity
   id: BulletCharge
@@ -431,6 +468,11 @@
   name: delta particles
   noSpawn: true
   components:
+  - type: PointLight
+    enabled: true
+    color: "#c2385d"
+    radius: 2.0
+    energy: 7.0
   - type: AnomalousParticle
     particleType: Delta
   - type: Sprite
@@ -457,6 +499,9 @@
         Heat: 5
   - type: TimedDespawn
     lifetime: 3
+  - type: Reflective
+    reflective:
+    - Energy
 
 
 - type: entity
@@ -477,6 +522,11 @@
   name: epsilon particles
   noSpawn: true
   components:
+  - type: PointLight
+    enabled: true
+    color: "#38c296"
+    radius: 2.0
+    energy: 7.0
   - type: Sprite
     layers:
       - state: magicm_cyan
@@ -502,6 +552,11 @@
   name: zeta particles
   noSpawn: true
   components:
+  - type: PointLight
+    enabled: true
+    color: "#b9c238"
+    radius: 2.0
+    energy: 7.0
   - type: Sprite
     layers:
       - state: magicm_yellow
@@ -527,6 +582,11 @@
   name: omega particles
   noSpawn: true
   components:
+  - type: PointLight
+    enabled: true
+    color: "#38c24f"
+    radius: 2.0
+    energy: 7.0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
@@ -544,6 +604,33 @@
     damage:
       types:
         Heat: 20
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleSigma
+  name: sigma particles
+  noSpawn: true
+  components:
+  - type: PointLight
+    enabled: true
+    color: "#8d38c2"
+    radius: 2.0
+    energy: 7.0
+  - type: Sprite
+    layers:
+      - state: magicm
+        shader: unshaded
+  - type: AnomalousParticle
+    particleType: Sigma
+
+- type: entity
+  parent: AnomalousParticleSigma
+  id: AnomalousParticleSigmaStrong
+  name: sigma particles
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Sigma
 
 # Launcher projectiles (grenade / rocket)
 - type: entity
@@ -639,6 +726,11 @@
       - state: grenade
   - type: FlashOnTrigger
     range: 7
+  - type: SpawnOnTrigger
+    proto: GrenadeFlashEffect
+  - type: ActiveTimerTrigger
+    timeRemaining: 0.3
+  - type: DeleteOnTrigger
 
 # This is supposed to spawn shrapnel and stuff so uhh... TODO?
 - type: entity
@@ -657,6 +749,27 @@
     totalIntensity: 175 # about a ~6 tile radius
     intensitySlope: 1
     maxIntensity: 10
+
+- type: entity
+  id: BulletGrenadeEMP
+  name: EMP rocket
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
+  - type: EmpOnTrigger
+    range: 5
+    energyConsumption: 50000
+    disableDuration: 10
+  - type: Ammo
+    muzzleFlash: null
+  - type: PointLight
+    radius: 3.5
+    color: blue
+    energy: 0.5
 
 - type: entity
   id: BulletCap
@@ -720,14 +833,14 @@
         maxVol: 50
   - type: Fixtures
     fixtures:
-      fix1:
+      projectile:
         shape:
           !type:PhysShapeAabb
           bounds: "-0.10,-0.30,0.10,0.15"
         hard: false
         mask:
-        - FullTileMask
-        - Opaque
+        - Impassable
+        - BulletImpassable
   - type: Vapor
     active: true
   - type: Appearance
@@ -789,3 +902,79 @@
             - Impassable
             - HighImpassable
     - type: GrapplingProjectile
+
+- type: entity
+  name : disabler bolt smg
+  id: BulletDisablerSmg
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
+  - type: Ammo
+  - type: StaminaDamageOnCollide
+    damage: 15
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Heat: 2
+    soundHit:
+      collection: WeakHit
+    forceSound: true
+
+- type: entity
+  name: tesla gun lightning
+  id: TeslaGunBullet
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 5
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
+    layers:
+    - state: tesla_projectile
+      shader: unshaded
+  - type: StaminaDamageOnCollide
+    damage: 15
+  - type: EmbeddableProjectile
+  - type: Projectile
+    deleteOnCollide: false
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+  - type: LightningArcShooter
+    arcDepth: 1
+    maxLightningArc: 3
+    shootMinInterval: 2.5
+    shootMaxInterval: 4.5
+    shootRange: 5
+    lightningPrototype: Lightning
+  - type: Electrified
+    requirePower: false
+  - type: Tag
+    tags:
+      - HideContextMenu

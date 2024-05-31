@@ -8,26 +8,42 @@ using Robust.Shared.GameObjects;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class RoundEndTest : IEntityEventSubscriber
+    public sealed class RoundEndTest
     {
+        private sealed class RoundEndTestSystem : EntitySystem
+        {
+            public int RoundCount;
+
+            public override void Initialize()
+            {
+                base.Initialize();
+                SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnRoundEnd);
+            }
+
+            private void OnRoundEnd(RoundEndSystemChangedEvent ev)
+            {
+                Interlocked.Increment(ref RoundCount);
+            }
+        }
+
         [Test]
         public async Task Test()
         {
             await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {
                 DummyTicker = false,
-                Connected = true
+                Connected = true,
+                Dirty = true
             });
 
             var server = pair.Server;
 
-            var entManager = server.ResolveDependency<IEntityManager>();
             var config = server.ResolveDependency<IConfigurationManager>();
             var sysManager = server.ResolveDependency<IEntitySystemManager>();
             var ticker = sysManager.GetEntitySystem<GameTicker>();
             var roundEndSystem = sysManager.GetEntitySystem<RoundEndSystem>();
-
-            var eventCount = 0;
+            var sys = server.System<RoundEndTestSystem>();
+            sys.RoundCount = 0;
 
             await server.WaitAssertion(() =>
             {
@@ -42,11 +58,6 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                var bus = entManager.EventBus;
-                bus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, _ =>
-                {
-                    Interlocked.Increment(ref eventCount);
-                });
 
                 // Press the shuttle call button
                 roundEndSystem.RequestRoundEnd();
@@ -117,8 +128,8 @@ namespace Content.IntegrationTests.Tests
             async Task WaitForEvent()
             {
                 var timeout = Task.Delay(TimeSpan.FromSeconds(10));
-                var currentCount = Thread.VolatileRead(ref eventCount);
-                while (currentCount == Thread.VolatileRead(ref eventCount) && !timeout.IsCompleted)
+                var currentCount = Thread.VolatileRead(ref sys.RoundCount);
+                while (currentCount == Thread.VolatileRead(ref sys.RoundCount) && !timeout.IsCompleted)
                 {
                     await pair.RunTicksSync(5);
                 }

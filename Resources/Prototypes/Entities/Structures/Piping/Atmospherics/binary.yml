@@ -51,8 +51,8 @@
     enabled: false
   - type: UserInterface
     interfaces:
-      - key: enum.GasPressurePumpUiKey.Key
-        type: GasPressurePumpBoundUserInterface
+        enum.GasPressurePumpUiKey.Key:
+          type: GasPressurePumpBoundUserInterface
   - type: Construction
     graph: GasBinary
     node: pressurepump
@@ -82,16 +82,17 @@
     - type: Appearance
     - type: GenericVisualizer
       visuals:
-        enum.PumpVisuals.Enabled:
+        enum.GasVolumePumpVisuals.State:
           enabled:
-            True: { state: pumpVolumeOn }
-            False: { state: pumpVolume }
+            On: { state: pumpVolumeOn }
+            Off: { state: pumpVolume }
+            Blocked: { state: pumpVolumeBlocked }
     - type: PipeColorVisuals
     - type: GasVolumePump
       enabled: false
     - type: UserInterface
       interfaces:
-        - key: enum.GasVolumePumpUiKey.Key
+        enum.GasVolumePumpUiKey.Key:
           type: GasVolumePumpBoundUserInterface
     - type: Construction
       graph: GasBinary
@@ -357,6 +358,7 @@
   - type: PipeColorVisuals
   - type: Rotatable
   - type: GasRecycler
+  - type: PipeRestrictOverlap
   - type: NodeContainer
     nodes:
       inlet:
@@ -381,6 +383,9 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
       - !type:DoActsBehavior

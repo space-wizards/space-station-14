@@ -20,6 +20,7 @@
         <pda:PdaNavigationButton Name="FlashLightToggleButton" Access="Public" ToggleMode="True" ActiveFgColor="#EAEFBB" SetWidth="32"/>
         <pda:PdaNavigationButton Name="EjectPenButton" Access="Public" SetWidth="32"/>
         <pda:PdaNavigationButton Name="EjectIdButton" Access="Public" SetWidth="32"/>
+        <pda:PdaNavigationButton Name="EjectPaiButton" Access="Public" SetWidth="32"/>
     </BoxContainer>
     <BoxContainer Name="ViewContainer" HorizontalExpand="True" VerticalExpand="True" Access="Public">
         <BoxContainer Orientation="Vertical"
@@ -27,20 +28,24 @@
                       HorizontalExpand="True"
                       MinSize="50 50"
                       Margin="8">
-            <RichTextLabel Name="PdaOwnerLabel" Access="Public" />
-            <RichTextLabel Name="IdInfoLabel"
-                           Access="Public"
-                           HorizontalExpand="True" />
-            <PanelContainer>
-                <BoxContainer Orientation="Horizontal">
-                    <RichTextLabel Name="StationNameLabel"
-                                   Access="Public"
-                                   HorizontalExpand="True" />
-                </BoxContainer>
-            </PanelContainer>
-            <RichTextLabel Name="StationAlertLevelLabel" Access="Public" />
-            <RichTextLabel Name="StationTimeLabel" Access="Public" />
-            <RichTextLabel Name="StationAlertLevelInstructions" Access="Public" />
+            <ContainerButton Name="PdaOwnerButton">
+                <RichTextLabel Name="PdaOwnerLabel" Access="Public"/>
+            </ContainerButton>
+            <ContainerButton Name="IdInfoButton">
+                <RichTextLabel Name="IdInfoLabel" Access="Public"/>
+            </ContainerButton>
+            <ContainerButton Name="StationNameButton">
+                <RichTextLabel Name="StationNameLabel" Access="Public"/>
+            </ContainerButton>
+            <ContainerButton Name="StationAlertLevelButton">
+                <RichTextLabel Name="StationAlertLevelLabel" Access="Public"/>
+            </ContainerButton>
+            <ContainerButton Name="StationTimeButton">
+                <RichTextLabel Name="StationTimeLabel" Access="Public"/>
+            </ContainerButton>
+            <ContainerButton Name="StationAlertLevelInstructionsButton">
+                <RichTextLabel Name="StationAlertLevelInstructions" Access="Public"/>
+            </ContainerButton>
         </BoxContainer>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
             <BoxContainer Orientation="Vertical"

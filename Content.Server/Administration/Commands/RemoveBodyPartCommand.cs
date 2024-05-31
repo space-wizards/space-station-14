@@ -27,16 +27,10 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var bodySystem = _entManager.System<BodySystem>();
-
-            if (bodySystem.DropPart(entityUid))
-            {
-                shell.WriteLine($"Removed body part {_entManager.ToPrettyString(entityUid.Value)}.");
-            }
-            else
-            {
-                shell.WriteError("Was not a body part, or did not have a parent.");
-            }
+            // TODO: THIS IS JUST A MECHANISM COPYPASTE
+            var xformSystem = _entManager.System<SharedTransformSystem>();
+            xformSystem.AttachToGridOrMap(entityUid.Value);
+            shell.WriteLine($"Removed body part {_entManager.ToPrettyString(entityUid.Value)}");
         }
     }
 }

@@ -3,16 +3,17 @@ using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Eui;
 using Content.Client.Flash;
+using Content.Client.Fullscreen;
 using Content.Client.GhostKick;
 using Content.Client.Guidebook;
 using Content.Client.Info;
 using Content.Client.Input;
 using Content.Client.IoC;
 using Content.Client.Launcher;
+using Content.Client.Lobby;
 using Content.Client.MainMenu;
 using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;
-using Content.Client.Preferences;
 using Content.Client.Radiation.Overlays;
 using Content.Client.Replay;
 using Content.Client.Screenshot;
@@ -20,7 +21,7 @@ using Content.Client.Singularity;
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
-using Content.Shared.Ame;
+using Content.Shared.Ame.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Localizations;
 using Robust.Client;
@@ -49,6 +50,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IStylesheetManager _stylesheetManager = default!;
         [Dependency] private readonly IScreenshotHook _screenshotHook = default!;
+        [Dependency] private readonly FullscreenHook _fullscreenHook = default!;
         [Dependency] private readonly ChangelogManager _changelogManager = default!;
         [Dependency] private readonly RulesManager _rulesManager = default!;
         [Dependency] private readonly ViewportManager _viewportManager = default!;
@@ -68,6 +70,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly IResourceManager _resourceManager = default!;
         [Dependency] private readonly IReplayLoadManager _replayLoad = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly ContentReplayPlaybackManager _replayMan = default!;
 
         public override void Init()
         {
@@ -98,15 +101,11 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("seed"); // Seeds prototypes are server-only.
             _prototypeManager.RegisterIgnore("objective");
             _prototypeManager.RegisterIgnore("holiday");
-            _prototypeManager.RegisterIgnore("aiFaction");
             _prototypeManager.RegisterIgnore("htnCompound");
             _prototypeManager.RegisterIgnore("htnPrimitive");
             _prototypeManager.RegisterIgnore("gameMap");
             _prototypeManager.RegisterIgnore("gameMapPool");
-            _prototypeManager.RegisterIgnore("npcFaction");
             _prototypeManager.RegisterIgnore("lobbyBackground");
-            _prototypeManager.RegisterIgnore("advertisementsPack");
-            _prototypeManager.RegisterIgnore("salvageMap");
             _prototypeManager.RegisterIgnore("gamePreset");
             _prototypeManager.RegisterIgnore("noiseChannel");
             _prototypeManager.RegisterIgnore("spaceBiome");
@@ -119,10 +118,12 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("wireLayout");
             _prototypeManager.RegisterIgnore("alertLevels");
             _prototypeManager.RegisterIgnore("nukeopsRole");
+            _prototypeManager.RegisterIgnore("ghostRoleRaffleDecider");
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
             _screenshotHook.Initialize();
+            _fullscreenHook.Initialize();
             _changelogManager.Initialize();
             _rulesManager.Initialize();
             _viewportManager.Initialize();
@@ -191,6 +192,7 @@ namespace Content.Client.Entry
                     _resourceManager,
                     ReplayConstants.ReplayZipFolder.ToRootedPath());
 
+                _replayMan.LastLoad = (null, ReplayConstants.ReplayZipFolder.ToRootedPath());
                 _replayLoad.LoadAndStartReplay(reader);
             }
             else if (_gameController.LaunchState.FromLauncher)

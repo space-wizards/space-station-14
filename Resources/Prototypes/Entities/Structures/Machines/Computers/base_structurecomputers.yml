@@ -8,8 +8,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Effects/glass_hit.ogg"
+        collection: GlassSmash
   - type: Construction
     graph: Computer
     node: computer
@@ -53,7 +52,11 @@
   - type: EmitSoundOnUIOpen
     sound:
       collection: Keyboard
+      params:
+        volume: -1
   - type: ContainerContainer
     containers:
       board: !type:Container
         ents: []
+  - type: LightningTarget
+    priority: 1

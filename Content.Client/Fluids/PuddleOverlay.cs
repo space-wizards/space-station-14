@@ -1,15 +1,14 @@
-﻿using System.Numerics;
-using Content.Shared.FixedPoint;
+﻿using Content.Shared.FixedPoint;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Client.Fluids;
 
 public sealed class PuddleOverlay : Overlay
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
@@ -52,7 +51,7 @@ public sealed class PuddleOverlay : Overlay
 
         foreach (var gridId in _debugOverlaySystem.TileData.Keys)
         {
-            if (!_mapManager.TryGetGrid(gridId, out var mapGrid))
+            if (!_entityManager.TryGetComponent(gridId, out MapGridComponent? mapGrid))
                 continue;
 
             var gridXform = xformQuery.GetComponent(gridId);
@@ -60,7 +59,7 @@ public sealed class PuddleOverlay : Overlay
             gridBounds = invWorldMatrix.TransformBox(args.WorldBounds).Enlarged(mapGrid.TileSize * 2);
             drawHandle.SetTransform(worldMatrix);
 
-            foreach (var debugOverlayData in _debugOverlaySystem.GetData(mapGrid.Owner))
+            foreach (var debugOverlayData in _debugOverlaySystem.GetData(gridId))
             {
                 var centre = (debugOverlayData.Pos + Vector2Helpers.Half) * mapGrid.TileSize;
 
@@ -85,14 +84,14 @@ public sealed class PuddleOverlay : Overlay
 
         foreach (var gridId in _debugOverlaySystem.TileData.Keys)
         {
-            if (!_mapManager.TryGetGrid(gridId, out var mapGrid))
+            if (!_entityManager.TryGetComponent(gridId, out MapGridComponent? mapGrid))
                 continue;
 
             var gridXform = xformQuery.GetComponent(gridId);
             var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
             var gridBounds = invMatrix.TransformBox(args.WorldBounds).Enlarged(mapGrid.TileSize * 2);
 
-            foreach (var debugOverlayData in _debugOverlaySystem.GetData(mapGrid.Owner))
+            foreach (var debugOverlayData in _debugOverlaySystem.GetData(gridId))
             {
                 var centre = (debugOverlayData.Pos + Vector2Helpers.Half) * mapGrid.TileSize;
 

@@ -67,7 +67,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                     Assert.That(spawnEntitiesBehavior.Spawn.Values.Single(), Is.EqualTo(new MinMax { Min = 1, Max = 1 }));
                 });
 
-                var entitiesInRange = sEntityManager.System<EntityLookupSystem>().GetEntitiesInRange(coordinates, 2);
+                var entitiesInRange = sEntityManager.System<EntityLookupSystem>().GetEntitiesInRange(coordinates, 3, LookupFlags.All | LookupFlags.Approximate);
                 var found = false;
 
                 foreach (var entity in entitiesInRange)
@@ -86,7 +86,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                     break;
                 }
 
-                Assert.That(found, Is.True);
+                Assert.That(found, Is.True, $"Unable to find {SpawnedEntityId} nearby for destructible test; found {entitiesInRange.Count} entities.");
             });
             await pair.CleanReturnAsync();
         }

@@ -7,7 +7,7 @@ using Content.Shared.Radiation.Systems;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -34,7 +34,7 @@ public partial class RadiationSystem
         }
 
         var ev = new OnRadiationOverlayToggledEvent(isEnabled);
-        RaiseNetworkEvent(ev, session.ConnectedClient);
+        RaiseNetworkEvent(ev, session.Channel);
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public partial class RadiationSystem
         {
             if (session.Status != SessionStatus.InGame)
                 _debugSessions.Remove(session);
-            RaiseNetworkEvent(ev, session.ConnectedClient);
+            RaiseNetworkEvent(ev, session.Channel);
         }
     }
 

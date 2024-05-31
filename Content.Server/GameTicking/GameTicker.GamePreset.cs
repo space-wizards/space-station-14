@@ -7,16 +7,21 @@ using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
+        [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+
         public const float PresetFailedCooldownIncrease = 30f;
 
         /// <summary>
@@ -29,7 +34,7 @@ namespace Content.Server.GameTicking
         /// </summary>
         public GamePresetPrototype? CurrentPreset { get; private set; }
 
-        private bool StartPreset(IPlayerSession[] origReadyPlayers, bool force)
+        private bool StartPreset(ICommonSession[] origReadyPlayers, bool force)
         {
             var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
             RaiseLocalEvent(startAttempt);
@@ -95,15 +100,15 @@ namespace Content.Server.GameTicking
             SetGamePreset(LobbyEnabled ? _configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset) : "sandbox");
         }
 
-        public void SetGamePreset(GamePresetPrototype preset, bool force = false)
+        public void SetGamePreset(GamePresetPrototype? preset, bool force = false)
         {
             // Do nothing if this game ticker is a dummy!
             if (DummyTicker)
                 return;
 
             Preset = preset;
-            UpdateInfoText();
             ValidateMap();
+            UpdateInfoText();
 
             if (force)
             {
@@ -183,7 +188,7 @@ namespace Content.Server.GameTicking
             return true;
         }
 
-        private void StartGamePresetRules()
+        public void StartGamePresetRules()
         {
             // May be touched by the preset during init.
             var rules = new List<EntityUid>(GetAddedGameRules());
@@ -214,7 +219,7 @@ namespace Content.Server.GameTicking
             {
                 if (mind.Session != null) // Logging is suppressed to prevent spam from ghost attempts caused by movement attempts
                 {
-                    _chatManager.DispatchServerMessage((IPlayerSession) mind.Session, Loc.GetString("comp-mind-ghosting-prevented"),
+                    _chatManager.DispatchServerMessage(mind.Session, Loc.GetString("comp-mind-ghosting-prevented"),
                         true);
                 }
 
@@ -254,40 +259,28 @@ namespace Content.Server.GameTicking
 
                     //todo: what if they dont breathe lol
                     //cry deeply
-                    DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 200);
+
+                    FixedPoint2 dealtDamage = 200;
+                    if (TryComp<DamageableComponent>(playerEntity, out var damageable)
+                        && TryComp<MobThresholdsComponent>(playerEntity, out var thresholds))
+                    {
+                        var playerDeadThreshold = _mobThresholdSystem.GetThresholdForState(playerEntity.Value, MobState.Dead, thresholds);
+                        dealtDamage = playerDeadThreshold - damageable.TotalDamage;
+                    }
+
+                    DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), dealtDamage);
+
                     _damageable.TryChangeDamage(playerEntity, damage, true);
                 }
             }
 
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var coords = _transform.GetMoverCoordinates(position, xformQuery);
-
-            var ghost = Spawn("MobObserver", coords);
-
-            // Try setting the ghost entity name to either the character name or the player name.
-            // If all else fails, it'll default to the default entity prototype name, "observer".
-            // However, that should rarely happen.
-            if (!string.IsNullOrWhiteSpace(mind.CharacterName))
-                _metaData.SetEntityName(ghost, mind.CharacterName);
-            else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                _metaData.SetEntityName(ghost, mind.Session.Name);
-
-            var ghostComponent = Comp<GhostComponent>(ghost);
-
-            if (mind.TimeOfDeath.HasValue)
-            {
-                _ghost.SetTimeOfDeath(ghost, mind.TimeOfDeath!.Value, ghostComponent);
-            }
+            var ghost = _ghost.SpawnGhost((mindId, mind), position, canReturn);
+            if (ghost == null)
+                return false;
 
             if (playerEntity != null)
                 _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
-            _ghost.SetCanReturnToBody(ghostComponent, canReturn);
-
-            if (canReturn)
-                _mind.Visit(mindId, ghost, mind);
-            else
-                _mind.TransferTo(mindId, ghost, mind: mind);
             return true;
         }
 
@@ -301,7 +294,7 @@ namespace Content.Server.GameTicking
             // This whole setup logic should be made asynchronous so we can properly wait on the DB AAAAAAAAAAAAAH
             var task = Task.Run(async () =>
             {
-                var server = await _db.AddOrGetServer(serverName);
+                var server = await _dbEntryManager.ServerEntity;
                 return await _db.AddNewRound(server, playerIds);
             });
 

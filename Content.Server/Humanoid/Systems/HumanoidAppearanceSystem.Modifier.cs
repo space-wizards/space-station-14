@@ -3,7 +3,7 @@ using Content.Shared.Administration;
 using Content.Shared.Humanoid;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Humanoid;
@@ -29,14 +29,15 @@ public sealed partial class HumanoidAppearanceSystem
         {
             Text = "Modify markings",
             Category = VerbCategory.Tricks,
-            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Customization/reptilian_parts.rsi"), "tail_smooth"),
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Customization/reptilian_parts.rsi"), "tail_smooth"),
             Act = () =>
             {
-                _uiSystem.TryOpen(uid, HumanoidMarkingModifierKey.Key, actor.PlayerSession);
-                _uiSystem.TrySetUiState(
+                _uiSystem.OpenUi(uid, HumanoidMarkingModifierKey.Key, actor.PlayerSession);
+                _uiSystem.SetUiState(
                     uid,
                     HumanoidMarkingModifierKey.Key,
                     new HumanoidMarkingModifierState(component.MarkingSet, component.Species,
+                        component.Sex,
                         component.SkinColor,
                         component.CustomBaseLayers
                     ));
@@ -47,8 +48,7 @@ public sealed partial class HumanoidAppearanceSystem
     private void OnBaseLayersSet(EntityUid uid, HumanoidAppearanceComponent component,
         HumanoidMarkingModifierBaseLayersSetMessage message)
     {
-        if (message.Session is not IPlayerSession player
-            || !_adminManager.HasAdminFlag(player, AdminFlags.Fun))
+        if (!_adminManager.HasAdminFlag(message.Actor, AdminFlags.Fun))
         {
             return;
         }
@@ -62,14 +62,15 @@ public sealed partial class HumanoidAppearanceSystem
             component.CustomBaseLayers[message.Layer] = message.Info.Value;
         }
 
-        Dirty(component);
+        Dirty(uid, component);
 
         if (message.ResendState)
         {
-            _uiSystem.TrySetUiState(
+            _uiSystem.SetUiState(
                 uid,
                 HumanoidMarkingModifierKey.Key,
                 new HumanoidMarkingModifierState(component.MarkingSet, component.Species,
+                        component.Sex,
                         component.SkinColor,
                         component.CustomBaseLayers
                     ));
@@ -79,21 +80,21 @@ public sealed partial class HumanoidAppearanceSystem
     private void OnMarkingsSet(EntityUid uid, HumanoidAppearanceComponent component,
         HumanoidMarkingModifierMarkingSetMessage message)
     {
-        if (message.Session is not IPlayerSession player
-            || !_adminManager.HasAdminFlag(player, AdminFlags.Fun))
+        if (!_adminManager.HasAdminFlag(message.Actor, AdminFlags.Fun))
         {
             return;
         }
 
         component.MarkingSet = message.MarkingSet;
-        Dirty(component);
+        Dirty(uid, component);
 
         if (message.ResendState)
         {
-            _uiSystem.TrySetUiState(
+            _uiSystem.SetUiState(
                 uid,
                 HumanoidMarkingModifierKey.Key,
                 new HumanoidMarkingModifierState(component.MarkingSet, component.Species,
+                        component.Sex,
                         component.SkinColor,
                         component.CustomBaseLayers
                     ));

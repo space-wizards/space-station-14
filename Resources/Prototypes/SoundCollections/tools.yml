@@ -1,8 +1,8 @@
 - type: soundCollection
   id: WelderOn
   files:
-    - /Audio/Items/lighter1.ogg
-    - /Audio/Items/lighter2.ogg
+    - /Audio/Items/Lighters/lighter1.ogg
+    - /Audio/Items/Lighters/lighter2.ogg
 
 - type: soundCollection
   id: WelderOff

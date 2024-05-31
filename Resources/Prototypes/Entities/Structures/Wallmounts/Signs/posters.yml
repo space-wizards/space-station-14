@@ -590,6 +590,15 @@
   components:
     - type: Sprite
       state: poster62_contraband
+      
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandMissingSpacepen
+  name: "Missing Spacepen"
+  description: "This poster depicts something you will never find."
+  components:
+    - type: Sprite
+      state: poster63_contraband
 
 # Legit
 - type: entity
@@ -865,7 +874,7 @@
 - type: entity
   parent: PosterBase
   id: PosterLegit12Gauge
-  name: "12 Gauge"
+  name: "12 gauge"
   description: "A poster boasting about the superiority of 12 gauge shotgun shells."
   components:
   - type: Sprite

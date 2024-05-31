@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Physics;
 using Robust.Client.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Eye;
@@ -30,7 +31,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         SubscribeLocalEvent<EyeAttachedEvent>(OnAttached);
 
         SubscribeLocalEvent<LerpingEyeComponent, EntParentChangedMessage>(HandleMapChange);
-        SubscribeLocalEvent<LerpingEyeComponent, PlayerDetachedEvent>(OnDetached);
+        SubscribeLocalEvent<LerpingEyeComponent, LocalPlayerDetachedEvent>(OnDetached);
 
         UpdatesAfter.Add(typeof(TransformSystem));
         UpdatesAfter.Add(typeof(PhysicsSystem));
@@ -40,7 +41,7 @@ public sealed class EyeLerpingSystem : EntitySystem
 
     private void OnEyeStartup(EntityUid uid, EyeComponent component, ComponentStartup args)
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity == uid)
+        if (_playerManager.LocalEntity == uid)
             AddEye(uid, component, true);
     }
 
@@ -76,7 +77,7 @@ public sealed class EyeLerpingSystem : EntitySystem
             return;
 
         // If this is the currently controlled entity, we keep the component.
-        if (_playerManager.LocalPlayer?.ControlledEntity == uid)
+        if (_playerManager.LocalEntity == uid)
             lerp.ManuallyAdded = false;
         else
             RemComp(uid, lerp);
@@ -85,7 +86,7 @@ public sealed class EyeLerpingSystem : EntitySystem
     private void HandleMapChange(EntityUid uid, LerpingEyeComponent component, ref EntParentChangedMessage args)
     {
         // Is this actually a map change? If yes, stop any lerps
-        if (args.OldMapId != args.Transform.MapID)
+        if (args.OldMapId != args.Transform.MapUid)
             component.LastRotation = GetRotation(uid, args.Transform);
     }
 
@@ -94,7 +95,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         AddEye(ev.Entity, ev.Component, true);
     }
 
-    private void OnDetached(EntityUid uid, LerpingEyeComponent component, PlayerDetachedEvent args)
+    private void OnDetached(EntityUid uid, LerpingEyeComponent component, LocalPlayerDetachedEvent args)
     {
         if (!component.ManuallyAdded)
             RemCompDeferred(uid, component);
@@ -132,7 +133,7 @@ public sealed class EyeLerpingSystem : EntitySystem
             return content.TargetZoom;
         }
 
-        var change = diff * 8f * frameTime;
+        var change = diff * Math.Min(8f * frameTime, 1);
 
         return eye.Zoom + change;
     }

@@ -14,14 +14,7 @@ public sealed class TwoStageTriggerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TwoStageTriggerComponent, EntityUnpausedEvent>(OnTriggerUnpaused);
         SubscribeLocalEvent<TwoStageTriggerComponent, TriggerEvent>(OnTrigger);
-    }
-
-    private void OnTriggerUnpaused(EntityUid uid, TwoStageTriggerComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.NextTriggerTime != null)
-            component.NextTriggerTime = component.NextTriggerTime.Value + args.PausedTime;
     }
 
     private void OnTrigger(EntityUid uid, TwoStageTriggerComponent component, TriggerEvent args)

@@ -26,6 +26,9 @@ public sealed class StressTestMovementSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var stressTest, out var transform))
         {
+            if (!transform.ParentUid.IsValid())
+                continue;
+
             stressTest.Progress += frameTime;
 
             if (stressTest.Progress > 1)

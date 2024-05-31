@@ -1,4 +1,5 @@
-﻿using Content.Shared.Silicons.Borgs;
+﻿using Content.Shared.Mobs;
+using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Containers;
@@ -22,7 +23,7 @@ public sealed class BorgSystem : SharedBorgSystem
     {
         if (args.Sprite == null)
             return;
-        UpdateBorgAppearnce(uid, component, args.Component, args.Sprite);
+        UpdateBorgAppearance(uid, component, args.Component, args.Sprite);
     }
 
     protected override void OnInserted(EntityUid uid, BorgChassisComponent component, EntInsertedIntoContainerMessage args)
@@ -31,7 +32,7 @@ public sealed class BorgSystem : SharedBorgSystem
             return;
 
         base.OnInserted(uid, component, args);
-        UpdateBorgAppearnce(uid, component);
+        UpdateBorgAppearance(uid, component);
     }
 
     protected override void OnRemoved(EntityUid uid, BorgChassisComponent component, EntRemovedFromContainerMessage args)
@@ -40,16 +41,25 @@ public sealed class BorgSystem : SharedBorgSystem
             return;
 
         base.OnRemoved(uid, component, args);
-        UpdateBorgAppearnce(uid, component);
+        UpdateBorgAppearance(uid, component);
     }
 
-    private void UpdateBorgAppearnce(EntityUid uid,
+    private void UpdateBorgAppearance(EntityUid uid,
         BorgChassisComponent? component = null,
         AppearanceComponent? appearance = null,
         SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref component, ref appearance, ref sprite))
             return;
+
+        if (_appearance.TryGetData<MobState>(uid, MobStateVisuals.State, out var state, appearance))
+        {
+            if (state != MobState.Alive)
+            {
+                sprite.LayerSetVisible(BorgVisualLayers.Light, false);
+                return;
+            }
+        }
 
         if (!_appearance.TryGetData<bool>(uid, BorgVisuals.HasPlayer, out var hasPlayer, appearance))
             hasPlayer = false;

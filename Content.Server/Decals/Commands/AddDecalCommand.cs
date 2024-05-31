@@ -3,8 +3,10 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
+using Robust.Server.GameObjects;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Decals.Commands
@@ -13,7 +15,6 @@ namespace Content.Server.Decals.Commands
     public sealed class AddDecalCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
         public string Command => "adddecal";
@@ -46,14 +47,15 @@ namespace Content.Server.Decals.Commands
 
             if (!NetEntity.TryParse(args[3], out var gridIdNet) ||
                 !_entManager.TryGetEntity(gridIdNet, out var gridIdRaw) ||
-                !_mapManager.TryGetGrid(gridIdRaw, out var grid))
+                !_entManager.TryGetComponent(gridIdRaw, out MapGridComponent? grid))
             {
                 shell.WriteError($"Failed parsing gridId '{args[3]}'.");
                 return;
             }
 
-            var coordinates = new EntityCoordinates(grid.Owner, new Vector2(x, y));
-            if (grid.GetTileRef(coordinates).IsSpace())
+            var mapSystem = _entManager.System<MapSystem>();
+            var coordinates = new EntityCoordinates(gridIdRaw.Value, new Vector2(x, y));
+            if (mapSystem.GetTileRef(gridIdRaw.Value, grid, coordinates).IsSpace())
             {
                 shell.WriteError($"Cannot create decal on space tile at {coordinates}.");
                 return;

@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
@@ -109,13 +108,13 @@ public abstract partial class SharedHandsSystem : EntitySystem
             var xform = Transform(uid);
             var coordinateEntity = xform.ParentUid.IsValid() ? xform.ParentUid : uid;
             var itemXform = Transform(entity);
-            var itemPos = itemXform.MapPosition;
+            var itemPos = TransformSystem.GetMapCoordinates(entity, xform: itemXform);
 
             if (itemPos.MapId == xform.MapID
-                && (itemPos.Position - xform.MapPosition.Position).Length() <= MaxAnimationRange
+                && (itemPos.Position - TransformSystem.GetMapCoordinates(uid, xform: xform).Position).Length() <= MaxAnimationRange
                 && MetaData(entity).VisibilityMask == MetaData(uid).VisibilityMask) // Don't animate aghost pickups.
             {
-                var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, EntityManager);
+                var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, TransformSystem, EntityManager);
                 _storage.PlayPickupAnimation(entity, initialPosition, xform.Coordinates, itemXform.LocalRotation, uid);
             }
         }
@@ -180,7 +179,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             return false;
 
         // check can insert (including raising attempt events).
-        return _containerSystem.CanInsert(entity, handContainer);
+        return ContainerSystem.CanInsert(entity, handContainer);
     }
 
     /// <summary>
@@ -202,7 +201,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         {
             // TODO make this check upwards for any container, and parent to that.
             // Currently this just checks the direct parent, so items can still teleport through containers.
-            Transform(entity).AttachParentToContainerOrGrid(EntityManager);
+            ContainerSystem.AttachParentToContainerOrGrid((entity, Transform(entity)));
         }
     }
 
@@ -218,7 +217,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (handContainer == null || handContainer.ContainedEntity != null)
             return;
 
-        if (!handContainer.Insert(entity, EntityManager))
+        if (!ContainerSystem.Insert(entity, handContainer))
         {
             Log.Error($"Failed to insert {ToPrettyString(entity)} into users hand container when picking up. User: {ToPrettyString(uid)}. Hand: {hand.Name}.");
             return;

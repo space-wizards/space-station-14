@@ -11,7 +11,7 @@
           map: [ "enabled" ]
   - type: Item
     sprite: Objects/Misc/fire_extinguisher.rsi
-    size: 10
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       spray:
@@ -24,9 +24,10 @@
   - type: DrainableSolution
     solution: spray
   - type: SolutionTransfer
-  - type: ItemCooldown
+  - type: UseDelay
   - type: Spray
     transferAmount: 10
+    pushbackAmount: 60
     spraySound:
       path: /Audio/Effects/extinguish.ogg
     sprayedPrototype: ExtinguisherSpray
@@ -36,11 +37,16 @@
   - type: FireExtinguisher
     hasSafety: true
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     damage:
       types:
         Blunt: 10
     soundHit:
       path: /Audio/Weapons/smash.ogg
+  - type: Tool
+    qualities:
+    - Rolling
+    speed: 0.5 # its very big, akward to use
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -48,6 +54,9 @@
         enabled:
           True: { state: fire_extinguisher_closed }
           False: { state: fire_extinguisher_open }
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   name: extinguisher spray

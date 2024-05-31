@@ -40,6 +40,12 @@ public sealed partial class DoAfterArgs
 
     public NetEntity? NetUsed;
 
+    /// <summary>
+    /// Whether the progress bar for this DoAfter should be hidden from other players.
+    /// </summary>
+    [DataField]
+    public bool Hidden;
+
     #region Event options
     /// <summary>
     ///     The event that will get raised when the DoAfter has finished. If null, this will simply raise a <see cref="SimpleDoAfterEvent"/>
@@ -86,29 +92,23 @@ public sealed partial class DoAfterArgs
     public bool BreakOnHandChange = true;
 
     /// <summary>
-    ///     If do_after stops when the user moves
+    ///     If do_after stops when the user or target moves
     /// </summary>
-    [DataField("breakOnUserMove")]
-    public bool BreakOnUserMove;
+    [DataField]
+    public bool BreakOnMove;
 
     /// <summary>
-    ///     If this is true then any movement, even when weightless, will break the doafter.
-    ///     When there is no gravity, BreakOnUserMove is ignored. If it is false to begin with nothing will change.
+    ///     Whether to break on movement when the user is weightless.
+    ///     This does nothing if <see cref="BreakOnMove"/> is false.
     /// </summary>
-    [DataField("breakOnWeightlessMove")]
-    public bool BreakOnWeightlessMove;
-
-    /// <summary>
-    ///     If do_after stops when the target moves (if there is a target)
-    /// </summary>
-    [DataField("breakOnTargetMove")]
-    public bool BreakOnTargetMove;
+    [DataField]
+    public bool BreakOnWeightlessMove = true;
 
     /// <summary>
     ///     Threshold for user and target movement
     /// </summary>
     [DataField("movementThreshold")]
-    public float MovementThreshold = 0.1f;
+    public float MovementThreshold = 0.3f;
 
     /// <summary>
     ///     Threshold for distance user from the used OR target entities.
@@ -239,13 +239,13 @@ public sealed partial class DoAfterArgs
         Delay = other.Delay;
         Target = other.Target;
         Used = other.Used;
+        Hidden = other.Hidden;
         EventTarget = other.EventTarget;
         Broadcast = other.Broadcast;
         NeedHand = other.NeedHand;
         BreakOnHandChange = other.BreakOnHandChange;
-        BreakOnUserMove = other.BreakOnUserMove;
+        BreakOnMove = other.BreakOnMove;
         BreakOnWeightlessMove = other.BreakOnWeightlessMove;
-        BreakOnTargetMove = other.BreakOnTargetMove;
         MovementThreshold = other.MovementThreshold;
         DistanceThreshold = other.DistanceThreshold;
         BreakOnDamage = other.BreakOnDamage;

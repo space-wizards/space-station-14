@@ -1,6 +1,3 @@
-using Content.Shared.Roles;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-
 namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
@@ -9,14 +6,5 @@ namespace Content.Server.GameTicking.Rules.Components;
 /// TODO: Remove once systems can request spawns from the ghost role system directly.
 /// </summary>
 [RegisterComponent]
-public sealed partial class NukeOperativeSpawnerComponent : Component
-{
-    [DataField("name", required:true)]
-    public string OperativeName = default!;
+public sealed partial class NukeOperativeSpawnerComponent : Component;
 
-    [DataField("rolePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<AntagPrototype>), required:true)]
-    public string OperativeRolePrototype = default!;
-
-    [DataField("startingGearPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<StartingGearPrototype>), required:true)]
-    public string OperativeStartingGear = default!;
-}

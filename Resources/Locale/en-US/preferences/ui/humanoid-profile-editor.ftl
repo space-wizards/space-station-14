@@ -19,8 +19,8 @@ humanoid-profile-editor-pronouns-neuter-text = It / It
 humanoid-profile-editor-import-button = Import
 humanoid-profile-editor-export-button = Export
 humanoid-profile-editor-save-button = Save
-humanoid-profile-editor-clothing-label = Clothing:
-humanoid-profile-editor-backpack-label = Backpack:
+humanoid-profile-editor-reset-button = Reset
+humanoid-profile-editor-spawn-priority-label = Spawn priority:
 humanoid-profile-editor-eyes-label = Eye color:
 humanoid-profile-editor-jobs-tab = Jobs
 humanoid-profile-editor-preference-unavailable-stay-in-lobby-button = Stay in lobby if preference unavailable.
@@ -30,9 +30,18 @@ humanoid-profile-editor-preference-jumpskirt = Jumpskirt
 humanoid-profile-editor-preference-backpack = Backpack
 humanoid-profile-editor-preference-satchel = Satchel
 humanoid-profile-editor-preference-duffelbag = Duffelbag
+humanoid-profile-editor-guidebook-button-tooltip = Click for more info
+
+# Spawn priority
+humanoid-profile-editor-preference-spawn-priority-none = None
+humanoid-profile-editor-preference-spawn-priority-arrivals = Arrivals
+humanoid-profile-editor-preference-spawn-priority-cryosleep = Cryosleep
+
 humanoid-profile-editor-jobs-amount-in-department-tooltip = Jobs in the {$departmentName} department
 humanoid-profile-editor-department-jobs-label = {$departmentName} jobs
 humanoid-profile-editor-antags-tab = Antags
+humanoid-profile-editor-antag-preference-yes-button = Yes
+humanoid-profile-editor-antag-preference-no-button = No
 humanoid-profile-editor-traits-tab = Traits
 humanoid-profile-editor-job-priority-high-button = High
 humanoid-profile-editor-job-priority-medium-button = Medium

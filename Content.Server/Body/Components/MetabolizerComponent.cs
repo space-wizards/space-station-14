@@ -1,8 +1,8 @@
-﻿using Content.Server.Body.Systems;
+using Content.Server.Body.Systems;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Body.Components
 {
@@ -12,20 +12,24 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Access(typeof(MetabolizerSystem))]
     public sealed partial class MetabolizerComponent : Component
     {
-        public float AccumulatedFrametime = 0.0f;
+        /// <summary>
+        ///     The next time that reagents will be metabolized.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan NextUpdate;
 
         /// <summary>
-        ///     How often to metabolize reagents, in seconds.
+        ///     How often to metabolize reagents.
         /// </summary>
         /// <returns></returns>
-        [DataField("updateFrequency")]
-        public float UpdateFrequency = 1.0f;
+        [DataField]
+        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
         /// <summary>
         ///     From which solution will this metabolizer attempt to metabolize chemicals
         /// </summary>
         [DataField("solution")]
-        public string SolutionName { get; set; } = BloodstreamComponent.DefaultChemicalsSolutionName;
+        public string SolutionName = BloodstreamComponent.DefaultChemicalsSolutionName;
 
         /// <summary>
         ///     Does this component use a solution on it's parent entity (the body) or itself
@@ -33,21 +37,21 @@ namespace Content.Server.Body.Components
         /// <remarks>
         ///     Most things will use the parent entity (bloodstream).
         /// </remarks>
-        [DataField("solutionOnBody")]
+        [DataField]
         public bool SolutionOnBody = true;
 
         /// <summary>
         ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
-        [DataField("metabolizerTypes", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<MetabolizerTypePrototype>))]
+        [DataField]
         [Access(typeof(MetabolizerSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
-        public HashSet<string>? MetabolizerTypes = null;
+        public HashSet<ProtoId<MetabolizerTypePrototype>>? MetabolizerTypes = null;
 
         /// <summary>
         ///     Should this metabolizer remove chemicals that have no metabolisms defined?
         ///     As a stop-gap, basically.
         /// </summary>
-        [DataField("removeEmpty")]
+        [DataField]
         public bool RemoveEmpty = false;
 
         /// <summary>
@@ -72,8 +76,8 @@ namespace Content.Server.Body.Components
     [DataDefinition]
     public sealed partial class MetabolismGroupEntry
     {
-        [DataField("id", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<MetabolismGroupPrototype>))]
-        public string Id = default!;
+        [DataField(required: true)]
+        public ProtoId<MetabolismGroupPrototype> Id = default!;
 
         [DataField("rateModifier")]
         public FixedPoint2 MetabolismRateModifier = 1.0;

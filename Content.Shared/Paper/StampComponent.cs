@@ -32,8 +32,9 @@ public sealed partial class StampComponent : Component
     /// </summary>
     [DataField("stampedName")]
     public string StampedName { get; set; } = "stamp-component-stamped-name-default";
+
     /// <summary>
-    ///     Tne sprite state of the stamp to display on the paper from bureacracy.rsi.
+    ///     Tne sprite state of the stamp to display on the paper from paper Sprite path.
     /// </summary>
     [DataField("stampState")]
     public string StampState { get; set; } = "paper_stamp-generic";
@@ -44,9 +45,9 @@ public sealed partial class StampComponent : Component
     [DataField("stampedColor")]
     public Color StampedColor = Color.FromHex("#BB3232"); // StyleNano.DangerousRedFore
 
+    /// <summary>
+    /// The sound when stamp stamped
+    /// </summary>
     [DataField("sound")]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Items/Stamp/thick_stamp_sub.ogg")
-    {
-        Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(5f)
-    };
+    public SoundSpecifier? Sound = null;
 }

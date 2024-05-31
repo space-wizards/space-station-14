@@ -40,4 +40,18 @@ public sealed partial class GameMapPrototype : IPrototype
     /// The stations this map contains. The names should match with the BecomesStation components.
     /// </summary>
     public IReadOnlyDictionary<string, StationConfig> Stations => _stations;
+
+    /// <summary>
+    /// Performs a shallow clone of this map prototype, replacing <c>MapPath</c> with the argument.
+    /// </summary>
+    public GameMapPrototype Persistence(ResPath mapPath)
+    {
+        return new()
+        {
+            ID = ID,
+            MapName = MapName,
+            MapPath = mapPath,
+            _stations = _stations
+        };
+    }
 }

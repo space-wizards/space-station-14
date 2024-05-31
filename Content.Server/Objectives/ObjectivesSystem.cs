@@ -1,22 +1,27 @@
-﻿using Content.Server.GameTicking;
-﻿using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Mind;
+using Content.Server.GameTicking;
+using Content.Server.Shuttles.Systems;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.Mind;
-using Content.Shared.Objectives;
+using Content.Shared.Objectives.Components;
+using Content.Shared.Objectives.Systems;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Server.GameTicking.Components;
+using System.Text;
+using Robust.Server.Player;
 
 namespace Content.Server.Objectives;
 
-public sealed class ObjectivesSystem : EntitySystem
+public sealed class ObjectivesSystem : SharedObjectivesSystem
 {
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
 
     public override void Initialize()
     {
@@ -30,101 +35,156 @@ public sealed class ObjectivesSystem : EntitySystem
     /// </summary>
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
+        // go through each gamerule getting data for the roundend summary.
+        var summaries = new Dictionary<string, Dictionary<string, List<(EntityUid, string)>>>();
         var query = EntityQueryEnumerator<GameRuleComponent>();
         while (query.MoveNext(out var uid, out var gameRule))
         {
             if (!_gameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
 
-            var info = new ObjectivesTextGetInfoEvent(new List<EntityUid>(), string.Empty);
+            var info = new ObjectivesTextGetInfoEvent(new List<(EntityUid, string)>(), string.Empty);
             RaiseLocalEvent(uid, ref info);
             if (info.Minds.Count == 0)
                 continue;
 
+            // first group the gamerules by their agents, for example 2 different dragons
             var agent = info.AgentName;
-            var result = Loc.GetString("objectives-round-end-result", ("count", info.Minds.Count), ("agent", agent));
-            var prepend = new ObjectivesTextPrependEvent(result);
+            if (!summaries.ContainsKey(agent))
+                summaries[agent] = new Dictionary<string, List<(EntityUid, string)>>();
+
+            var prepend = new ObjectivesTextPrependEvent("");
             RaiseLocalEvent(uid, ref prepend);
-            // space between the start text and player list
-            result = prepend.Text + "\n";
 
-            foreach (var mindId in info.Minds)
+            // next group them by their prepended texts
+            // for example with traitor rule, group them by the codewords they share
+            var summary = summaries[agent];
+            if (summary.ContainsKey(prepend.Text))
             {
-                if (!TryComp(mindId, out MindComponent? mind))
-                    continue;
+                // same prepended text (usually empty) so combine them
+                summary[prepend.Text].AddRange(info.Minds);
+            }
+            else
+            {
+                summary[prepend.Text] = info.Minds;
+            }
+        }
 
-                var name = mind.CharacterName;
-                _mind.TryGetSession(mindId, out var session);
-                var username = session?.Name;
+        // convert the data into summary text
+        foreach (var (agent, summary) in summaries)
+        {
+            // first get the total number of players that were in these game rules combined
+            var total = 0;
+            var totalInCustody = 0;
+            foreach (var (_, minds) in summary)
+            {
+                total += minds.Count;
+                totalInCustody += minds.Where(pair => IsInCustody(pair.Item1)).Count();
+            }
 
-                string title;
-                if (username != null)
+            var result = new StringBuilder();
+            result.AppendLine(Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agent)));
+            if (agent == Loc.GetString("traitor-round-end-agent-name"))
+            {
+                result.AppendLine(Loc.GetString("objectives-round-end-result-in-custody", ("count", total), ("custody", totalInCustody), ("agent", agent)));
+            }
+            // next add all the players with its own prepended text
+            foreach (var (prepend, minds) in summary)
+            {
+                if (prepend != string.Empty)
+                    result.Append(prepend);
+
+                // add space between the start text and player list
+                result.AppendLine();
+
+                AddSummary(result, agent, minds);
+            }
+
+            ev.AddLine(result.AppendLine().ToString());
+        }
+    }
+
+    private void AddSummary(StringBuilder result, string agent, List<(EntityUid, string)> minds)
+    {
+        var agentSummaries = new List<(string summary, float successRate, int completedObjectives)>();
+
+        foreach (var (mindId, name) in minds)
+        {
+            if (!TryComp<MindComponent>(mindId, out var mind))
+                continue;
+
+            var title = GetTitle((mindId, mind), name);
+            var custody = IsInCustody(mindId, mind) ? Loc.GetString("objectives-in-custody") : string.Empty;
+
+            var objectives = mind.Objectives;
+            if (objectives.Count == 0)
+            {
+                agentSummaries.Add((Loc.GetString("objectives-no-objectives", ("custody", custody), ("title", title), ("agent", agent)), 0f, 0));
+                continue;
+            }
+
+            var completedObjectives = 0;
+            var totalObjectives = 0;
+            var agentSummary = new StringBuilder();
+            agentSummary.AppendLine(Loc.GetString("objectives-with-objectives", ("custody", custody), ("title", title), ("agent", agent)));
+
+            foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
+            {
+                //TO DO:
+                //check for the right group here. Getting the target issuer is easy: objectiveGroup.Key
+                //It should be compared to the type of the group's issuer.
+                agentSummary.AppendLine(Loc.GetString($"objective-issuer-{objectiveGroup.Key}"));
+
+                foreach (var objective in objectiveGroup)
                 {
-                    if (name != null)
-                        title = Loc.GetString("objectives-player-user-named", ("user", username), ("name", name));
-                    else
-                        title = Loc.GetString("objectives-player-user", ("user", username));
-                }
-                else
-                {
-                    // nothing to identify the player by, just give up
-                    if (name == null)
+                    var info = GetInfo(objective, mindId, mind);
+                    if (info == null)
                         continue;
 
-                    title = Loc.GetString("objectives-player-named", ("name", name));
-                }
+                    var objectiveTitle = info.Value.Title;
+                    var progress = info.Value.Progress;
+                    totalObjectives++;
 
-                result += "\n";
-
-                var objectives = mind.AllObjectives.ToArray();
-                if (objectives.Length == 0)
-                {
-                    result += Loc.GetString("objectives-no-objectives", ("title", title), ("agent", agent));
-                    continue;
-                }
-
-                result += Loc.GetString("objectives-with-objectives", ("title", title), ("agent", agent));
-
-                foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
-                {
-                    result += "\n" + Loc.GetString($"objective-issuer-{objectiveGroup.Key}");
-
-                    foreach (var objective in objectiveGroup)
+                    agentSummary.Append("- ");
+                    if (progress > 0.99f)
                     {
-                        foreach (var condition in objective.Conditions)
-                        {
-                            var progress = condition.Progress;
-                            if (progress > 0.99f)
-                            {
-                                result += "\n- " + Loc.GetString(
-                                    "objectives-condition-success",
-                                    ("condition", condition.Title),
-                                    ("markupColor", "green")
-                                );
-                            }
-                            else
-                            {
-                                result += "\n- " + Loc.GetString(
-                                    "objectives-condition-fail",
-                                    ("condition", condition.Title),
-                                    ("progress", (int) (progress * 100)),
-                                    ("markupColor", "red")
-                                );
-                            }
-                        }
+                        agentSummary.AppendLine(Loc.GetString(
+                            "objectives-objective-success",
+                            ("objective", objectiveTitle),
+                            ("markupColor", "green")
+                        ));
+                        completedObjectives++;
+                    }
+                    else
+                    {
+                        agentSummary.AppendLine(Loc.GetString(
+                            "objectives-objective-fail",
+                            ("objective", objectiveTitle),
+                            ("progress", (int) (progress * 100)),
+                            ("markupColor", "red")
+                        ));
                     }
                 }
             }
 
-            ev.AddLine(result + "\n");
+            var successRate = totalObjectives > 0 ? (float) completedObjectives / totalObjectives : 0f;
+            agentSummaries.Add((agentSummary.ToString(), successRate, completedObjectives));
+        }
+
+        var sortedAgents = agentSummaries.OrderByDescending(x => x.successRate)
+                                       .ThenByDescending(x => x.completedObjectives);
+
+        foreach (var (summary, _, _) in sortedAgents)
+        {
+            result.AppendLine(summary);
         }
     }
 
-    public ObjectivePrototype? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
+    public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
     {
         if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(objectiveGroupProto, out var groups))
         {
-            Log.Error("Tried to get a random objective, but can't index WeightedRandomPrototype " + objectiveGroupProto);
+            Log.Error($"Tried to get a random objective, but can't index WeightedRandomPrototype {objectiveGroupProto}");
             return null;
         }
 
@@ -137,18 +197,57 @@ public sealed class ObjectivesSystem : EntitySystem
 
             if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(groupName, out var group))
             {
-                Log.Error("Couldn't index objective group prototype" + groupName);
+                Log.Error($"Couldn't index objective group prototype {groupName}");
                 return null;
             }
 
-            if (_prototypeManager.TryIndex<ObjectivePrototype>(group.Pick(_random), out var objective)
-                && objective.CanBeAssigned(mindId, mind))
+            var proto = group.Pick(_random);
+            var objective = TryCreateObjective(mindId, mind, proto);
+            if (objective != null)
                 return objective;
-            else
-                tries++;
+
+            tries++;
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Returns whether a target is considered 'in custody' (cuffed on the shuttle).
+    /// </summary>
+    private bool IsInCustody(EntityUid mindId, MindComponent? mind = null)
+    {
+        if (!Resolve(mindId, ref mind))
+            return false;
+
+        // Ghosting will not save you
+        bool originalEntityInCustody = false;
+        EntityUid? originalEntity = GetEntity(mind.OriginalOwnedEntity);
+        if (originalEntity.HasValue && originalEntity != mind.OwnedEntity)
+        {
+            originalEntityInCustody = TryComp<CuffableComponent>(originalEntity, out var origCuffed) && origCuffed.CuffedHandCount > 0
+                   && _emergencyShuttle.IsTargetEscaping(originalEntity.Value);
+        }
+
+        return originalEntityInCustody || (TryComp<CuffableComponent>(mind.OwnedEntity, out var cuffed) && cuffed.CuffedHandCount > 0
+               && _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value));
+    }
+
+    /// <summary>
+    /// Get the title for a player's mind used in round end.
+    /// Pass in the original entity name which is shown alongside username.
+    /// </summary>
+    public string GetTitle(Entity<MindComponent?> mind, string name)
+    {
+        if (Resolve(mind, ref mind.Comp) &&
+            mind.Comp.OriginalOwnerUserId != null &&
+            _player.TryGetPlayerData(mind.Comp.OriginalOwnerUserId.Value, out var sessionData))
+        {
+            var username = sessionData.UserName;
+            return Loc.GetString("objectives-player-user-named", ("user", username), ("name", name));
+        }
+
+        return Loc.GetString("objectives-player-named", ("name", name));
     }
 }
 
@@ -161,7 +260,7 @@ public sealed class ObjectivesSystem : EntitySystem
 /// The objectives system already checks if the game rule is added so you don't need to check that in this event's handler.
 /// </remarks>
 [ByRefEvent]
-public record struct ObjectivesTextGetInfoEvent(List<EntityUid> Minds, string AgentName);
+public record struct ObjectivesTextGetInfoEvent(List<(EntityUid, string)> Minds, string AgentName);
 
 /// <summary>
 /// Raised on the game rule before text for each agent's objectives is added, letting you prepend something.

@@ -116,6 +116,13 @@
         damage:
           types:
             Poison: 1
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 1
+        reagent: ChloralHydrate
+        amount: -10
       - !type:GenericStatusEffect
         key: Stun
         time: 3
@@ -129,6 +136,10 @@
         component: StaminaModifier
         time: 3
         type: Add
+      - !type:GenericStatusEffect
+        key: ForcedSleep
+        time: 3
+        type: Remove
     Medicine:
       metabolismRate: 1.0
       effects:
@@ -161,25 +172,6 @@
     amount: -5
   - !type:PlantAdjustHealth
     amount: -1
-  metabolisms:
-    Narcotic:
-      effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
-        time: 16
-        refresh: false
-
-- type: reagent
-  id: THCOil # deprecated in favor of THC, preserved here for forks
-  name: reagent-name-thc-oil
-  group: Narcotics
-  desc: reagent-desc-thc-oil
-  physicalDesc: reagent-physical-desc-skunky
-  flavor: bitter
-  flavorMinimum: 0.05
-  color: "#DAA520"
   metabolisms:
     Narcotic:
       effects:
@@ -240,6 +232,24 @@
   physicalDesc: reagent-physical-desc-syrupy
   flavor: bitter
   color: "#63806e"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+
+- type: reagent
+  id: Bananadine
+  name: reagent-name-bananadine
+  group: Narcotics
+  desc: reagent-desc-bananadine
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: bitter
+  color: "#ffff00"
   metabolisms:
     Narcotic:
       effects:
@@ -332,3 +342,99 @@
         conditions:
         - !type:ReagentThreshold
           min: 20
+
+- type: reagent
+  id: TearGas
+  name: reagent-name-tear-gas
+  group: Narcotics
+  desc: reagent-desc-tear-gas
+  physicalDesc: reagent-physical-desc-milky
+  flavor: salty
+  color: "#96a8b5"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:PopupMessage
+        type: Local
+        probability: 0.08
+        messages:
+        - generic-reagent-effect-burning-eyes
+        - generic-reagent-effect-burning-eyes-a-bit
+        - generic-reagent-effect-tearing-up
+        - norepinephricacid-effect-eyelids
+        - norepinephricacid-effect-eyes-itch
+        - norepinephricacid-effect-vision-fade
+        - norepinephricacid-effect-vision-fail
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        probability: 0.03
+        messages:
+        - norepinephricacid-effect-eye-disconnect
+        - norepinephricacid-effect-eye-pain
+        - norepinephricacid-effect-darkness
+        - norepinephricacid-effect-blindness
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+      - !type:Emote
+        emote: Scream
+        probability: 0.08
+      - !type:GenericStatusEffect
+        key: TemporaryBlindness
+        component: TemporaryBlindness
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+
+- type: reagent
+  id: Happiness
+  name: reagent-name-happiness
+  group: Narcotics
+  desc: reagent-desc-happiness
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: paintthinner
+  color: "#EE35FF"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:Emote
+        emote: Laugh
+        showInChat: true
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          max: 20
+      - !type:Emote
+        emote: Whistle
+        showInChat: true
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          max: 20
+      - !type:Emote
+        emote: Crying
+        showInChat: true
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:PopupMessage # we dont have sanity/mood so this will have to do
+        type: Local
+        visualType: Medium
+        messages:
+        - "psicodine-effect-fearless"
+        - "psicodine-effect-anxieties-wash-away"
+        - "psicodine-effect-at-peace"
+        probability: 0.2
+        conditions:
+        - !type:ReagentThreshold
+          max: 20
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false

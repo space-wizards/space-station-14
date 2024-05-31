@@ -14,6 +14,7 @@
             <ColorSelectorSliders Name="ColorPicker" IsAlphaVisible="True" />
             <Button Name="PickerOpen" Text="{Loc 'decal-placer-window-palette'}" />
         </BoxContainer>
+        <CheckBox Name="EnableAuto" Text="{Loc 'decal-placer-window-enable-auto'}" Margin="0 0 0 10"/>
         <CheckBox Name="EnableColor" Text="{Loc 'decal-placer-window-use-color'}" />
         <CheckBox Name="EnableSnap" Text="{Loc 'decal-placer-window-enable-snap'}" />
         <CheckBox Name="EnableCleanable" Text="{Loc 'decal-placer-window-enable-cleanable'}" />

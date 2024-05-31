@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Robust.Shared.GameStates;
@@ -48,7 +49,7 @@ namespace Content.Shared.Decals
                     data[index] = chunk;
             }
 
-            args.State = new DecalGridState(data) { AllChunks = new(component.ChunkCollection.ChunkCollection.Keys) };
+            args.State = new DecalGridDeltaState(data, new(component.ChunkCollection.ChunkCollection.Keys));
         }
 
         private void OnGridInitialize(GridInitializeEvent msg)
@@ -68,7 +69,7 @@ namespace Content.Shared.Decals
 
             // This **shouldn't** be required, but just in case we ever get entity prototypes that have decal grids, we
             // need to ensure that we send an initial full state to players.
-            Dirty(component);
+            Dirty(uid, component);
         }
 
         protected Dictionary<Vector2i, DecalChunk>? ChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
@@ -107,38 +108,17 @@ namespace Content.Shared.Decals
         {
             // used by client-side overlay code
         }
-    }
 
-    // TODO: Pretty sure paul was moving this somewhere but just so people know
-    public struct ChunkIndicesEnumerator
-    {
-        private Vector2i _chunkLB;
-        private Vector2i _chunkRT;
-
-        private int _xIndex;
-        private int _yIndex;
-
-        public ChunkIndicesEnumerator(Box2 localAABB, int chunkSize)
+        public virtual HashSet<(uint Index, Decal Decal)> GetDecalsInRange(EntityUid gridId, Vector2 position, float distance = 0.75f, Func<Decal, bool>? validDelegate = null)
         {
-            _chunkLB = new Vector2i((int)Math.Floor(localAABB.Left / chunkSize), (int)Math.Floor(localAABB.Bottom / chunkSize));
-            _chunkRT = new Vector2i((int)Math.Floor(localAABB.Right / chunkSize), (int)Math.Floor(localAABB.Top / chunkSize));
-
-            _xIndex = _chunkLB.X;
-            _yIndex = _chunkLB.Y;
+            // NOOP on client atm.
+            return new HashSet<(uint Index, Decal Decal)>();
         }
 
-        public bool MoveNext([NotNullWhen(true)] out Vector2i? indices)
+        public virtual bool RemoveDecal(EntityUid gridId, uint decalId, DecalGridComponent? component = null)
         {
-            if (_yIndex > _chunkRT.Y)
-            {
-                _yIndex = _chunkLB.Y;
-                _xIndex += 1;
-            }
-
-            indices = new Vector2i(_xIndex, _yIndex);
-            _yIndex += 1;
-
-            return _xIndex <= _chunkRT.X;
+            // NOOP on client atm.
+            return true;
         }
     }
 

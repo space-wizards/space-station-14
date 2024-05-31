@@ -3,16 +3,23 @@ using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
 using Content.Server.Chat.Systems;
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
+using Content.Server.Screens;
+using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Chat;
 using Content.Shared.Communications;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Emag.Components;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -26,6 +33,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly InteractionSystem _interaction = default!;
         [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -35,8 +43,6 @@ namespace Content.Server.Communications
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-        private const int MaxMessageLength = 256;
-        private const int MaxMessageNewlines = 2;
         private const float UIUpdateInterval = 5.0f;
 
         public override void Initialize()
@@ -50,8 +56,12 @@ namespace Content.Server.Communications
             // Messages from the BUI
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleSelectAlertLevelMessage>(OnSelectAlertLevelMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleAnnounceMessage>(OnAnnounceMessage);
+            SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleBroadcastMessage>(OnBroadcastMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleCallEmergencyShuttleMessage>(OnCallShuttleMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleRecallEmergencyShuttleMessage>(OnRecallShuttleMessage);
+
+            // On console init, set cooldown
+            SubscribeLocalEvent<CommunicationsConsoleComponent, MapInitEvent>(OnCommunicationsConsoleMapInit);
         }
 
         public override void Update(float frameTime)
@@ -72,11 +82,16 @@ namespace Content.Server.Communications
 
                 comp.UIUpdateAccumulator -= UIUpdateInterval;
 
-                if (comp.UserInterface is { } ui && ui.SubscribedSessions.Count > 0)
+                if (_uiSystem.IsUiOpen(uid, CommunicationsConsoleUiKey.Key))
                     UpdateCommsConsoleInterface(uid, comp);
             }
 
             base.Update(frameTime);
+        }
+
+        public void OnCommunicationsConsoleMapInit(EntityUid uid, CommunicationsConsoleComponent comp, MapInitEvent args)
+        {
+            comp.AnnouncementCooldownRemaining = comp.InitialDelay;
         }
 
         /// <summary>
@@ -121,7 +136,6 @@ namespace Content.Server.Communications
         /// <summary>
         /// Updates the UI for a particular comms console.
         /// </summary>
-        /// <param name="comp"></param>
         public void UpdateCommsConsoleInterface(EntityUid uid, CommunicationsConsoleComponent comp)
         {
             var stationUid = _stationSystem.GetOwningStation(uid);
@@ -151,15 +165,14 @@ namespace Content.Server.Communications
                 }
             }
 
-            if (comp.UserInterface is not null)
-                _uiSystem.SetUiState(comp.UserInterface, new CommunicationsConsoleInterfaceState(
-                    CanAnnounce(comp),
-                    CanCallOrRecall(comp),
-                    levels,
-                    currentLevel,
-                    currentDelay,
-                    _roundEndSystem.ExpectedCountdownEnd
-                ));
+            _uiSystem.SetUiState(uid, CommunicationsConsoleUiKey.Key, new CommunicationsConsoleInterfaceState(
+                CanAnnounce(comp),
+                CanCallOrRecall(comp),
+                levels,
+                currentLevel,
+                currentDelay,
+                _roundEndSystem.ExpectedCountdownEnd
+            ));
         }
 
         private static bool CanAnnounce(CommunicationsConsoleComponent comp)
@@ -188,7 +201,7 @@ namespace Content.Server.Communications
 
             // Calling shuttle checks
             if (_roundEndSystem.ExpectedCountdownEnd is null)
-                return comp.CanCallShuttle;
+                return comp.CanShuttle;
 
             // Recalling shuttle checks
             var recallThreshold = _cfg.GetCVar(CCVars.EmergencyRecallTurningPoint);
@@ -203,10 +216,12 @@ namespace Content.Server.Communications
 
         private void OnSelectAlertLevelMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleSelectAlertLevelMessage message)
         {
-            if (message.Session.AttachedEntity is not { Valid: true } mob) return;
+            if (message.Actor is not { Valid: true } mob)
+                return;
+
             if (!CanUse(mob, uid))
             {
-                _popupSystem.PopupCursor(Loc.GetString("comms-console-permission-denied"), message.Session, PopupType.Medium);
+                _popupSystem.PopupCursor(Loc.GetString("comms-console-permission-denied"), message.Actor, PopupType.Medium);
                 return;
             }
 
@@ -220,24 +235,10 @@ namespace Content.Server.Communications
         private void OnAnnounceMessage(EntityUid uid, CommunicationsConsoleComponent comp,
             CommunicationsConsoleAnnounceMessage message)
         {
-            var msgWords = message.Message.Trim();
-            var msgChars = (msgWords.Length <= MaxMessageLength ? msgWords : $"{msgWords[0..MaxMessageLength]}...").ToCharArray();
-
-            var newlines = 0;
-            for (var i = 0; i < msgChars.Length; i++)
-            {
-                if (msgChars[i] != '\n')
-                    continue;
-
-                if (newlines >= MaxMessageNewlines)
-                    msgChars[i] = ' ';
-
-                newlines++;
-            }
-
-            var msg = new string(msgChars);
+            var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
+            var msg = SharedChatSystem.SanitizeAnnouncement(message.Message, maxLength);
             var author = Loc.GetString("comms-console-announcement-unknown-sender");
-            if (message.Session.AttachedEntity is { Valid: true } mob)
+            if (message.Actor is { Valid: true } mob)
             {
                 if (!CanAnnounce(comp))
                 {
@@ -246,49 +247,66 @@ namespace Content.Server.Communications
 
                 if (!CanUse(mob, uid))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
+                    _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Actor);
                     return;
                 }
 
                 if (_idCardSystem.TryFindIdCard(mob, out var id))
                 {
-                    author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
+                    author = $"{id.Comp.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.Comp.JobTitle ?? string.Empty)})".Trim();
                 }
             }
 
-            comp.AnnouncementCooldownRemaining = comp.DelayBetweenAnnouncements;
+            comp.AnnouncementCooldownRemaining = comp.Delay;
             UpdateCommsConsoleInterface(uid, comp);
 
-            var ev = new CommunicationConsoleAnnouncementEvent(uid, comp, msg, message.Session.AttachedEntity);
+            var ev = new CommunicationConsoleAnnouncementEvent(uid, comp, msg, message.Actor);
             RaiseLocalEvent(ref ev);
 
             // allow admemes with vv
-            Loc.TryGetString(comp.AnnouncementDisplayName, out var title);
-            title ??= comp.AnnouncementDisplayName;
+            Loc.TryGetString(comp.Title, out var title);
+            title ??= comp.Title;
 
             msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author;
-            if (comp.AnnounceGlobal)
+            if (comp.Global)
             {
-                _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.AnnouncementSound, colorOverride: comp.AnnouncementColor);
+                _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.Sound, colorOverride: comp.Color);
 
-                if (message.Session.AttachedEntity != null)
-                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following global announcement: {msg}");
-
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following global announcement: {msg}");
                 return;
             }
-            _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
 
-            if (message.Session.AttachedEntity != null)
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following station announcement: {msg}");
+            _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.Color);
+
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following station announcement: {msg}");
+
+        }
+
+        private void OnBroadcastMessage(EntityUid uid, CommunicationsConsoleComponent component, CommunicationsConsoleBroadcastMessage message)
+        {
+            if (!TryComp<DeviceNetworkComponent>(uid, out var net))
+                return;
+
+            var payload = new NetworkPayload
+            {
+                [ScreenMasks.Text] = message.Message
+            };
+
+            _deviceNetworkSystem.QueuePacket(uid, null, payload, net.TransmitFrequency);
+
+            _adminLogger.Add(LogType.DeviceNetwork, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following broadcast: {message.Message:msg}");
         }
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)
         {
-            if (!CanCallOrRecall(comp)) return;
-            if (message.Session.AttachedEntity is not { Valid: true } mob) return;
+            if (!CanCallOrRecall(comp))
+                return;
+
+            var mob = message.Actor;
+
             if (!CanUse(mob, uid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Actor);
                 return;
             }
 
@@ -296,7 +314,7 @@ namespace Content.Server.Communications
             RaiseLocalEvent(ref ev);
             if (ev.Cancelled)
             {
-                _popupSystem.PopupEntity(ev.Reason ?? Loc.GetString("comms-console-shuttle-unavailable"), uid, message.Session);
+                _popupSystem.PopupEntity(ev.Reason ?? Loc.GetString("comms-console-shuttle-unavailable"), uid, message.Actor);
                 return;
             }
 
@@ -306,16 +324,17 @@ namespace Content.Server.Communications
 
         private void OnRecallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleRecallEmergencyShuttleMessage message)
         {
-            if (!CanCallOrRecall(comp)) return;
-            if (message.Session.AttachedEntity is not { Valid: true } mob) return;
-            if (!CanUse(mob, uid))
+            if (!CanCallOrRecall(comp))
+                return;
+
+            if (!CanUse(message.Actor, uid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Actor);
                 return;
             }
 
             _roundEndSystem.CancelRoundEndCountdown(uid);
-            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(mob):player} has recalled the shuttle.");
+            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(message.Actor):player} has recalled the shuttle.");
         }
     }
 

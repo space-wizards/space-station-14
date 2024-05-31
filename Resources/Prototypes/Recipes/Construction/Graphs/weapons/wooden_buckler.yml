@@ -6,18 +6,14 @@
       edges:
         - to: woodenBuckler
           steps:
-            - tag: Handcuffs
-              icon:
-                sprite: Objects/Misc/cablecuffs.rsi
-                state: cuff
-                color: red
-              name: cuffs
+            - material: Cable
+              amount: 5
               doAfter: 2
             - material: WoodPlank
-              amount: 20
+              amount: 5
               doAfter: 2
             - material: Steel
-              amount: 10
+              amount: 5
               doAfter: 2
 
     - node: woodenBuckler

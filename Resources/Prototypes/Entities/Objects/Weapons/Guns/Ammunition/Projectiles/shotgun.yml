@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: PelletShotgunSlug
   name: pellet (.50 slug)
   noSpawn: true
@@ -10,7 +10,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 8  # Should have the same or less damage than a regular pellet
+        Piercing: 28
 
 - type: entity
   id: PelletShotgunBeanbag
@@ -26,7 +26,7 @@
       types:
         Blunt: 10
   - type: StaminaDamageOnCollide
-    damage: 55 # 2 hits to stun
+    damage: 40 # 3 hits to stun
 
 - type: entity
   id: PelletShotgun
@@ -40,7 +40,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 12
+        Piercing: 10
 
 - type: entity
   id: PelletShotgunIncendiary
@@ -53,8 +53,11 @@
     state: buckshot-flare
   - type: Projectile
     damage:
-      groups:
-        Burn: 7
+      types:
+        Blunt: 3
+        Heat: 7
+  - type: IgnitionSource
+    ignited: true
 
 - type: entity
   id: PelletShotgunPractice
@@ -74,16 +77,17 @@
   id: PelletShotgunImprovised
   name: improvised pellet
   noSpawn: true
-  parent: BaseBullet 
+  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    state: shard
   - type: Projectile
     damage:
       types:
         Piercing: 3
-        Slash: 3 #remember, it's metal shrapnel!
+        Slash: 3
+
 
 - type: entity
   id: PelletShotgunTranquilizer
@@ -106,9 +110,9 @@
     solution: ammo
   - type: DrainableSolution
     solution: ammo
-  - type: SolutionInjectOnCollide
+  - type: SolutionInjectOnProjectileHit
     transferAmount: 15
-    blockSlots: NONE #tranquillizer darts shouldn't be blocked by a mask
+    solution: ammo
   - type: InjectableSolution
     solution: ammo
 
@@ -117,27 +121,24 @@
   name: pellet (.50 flare)
   noSpawn: true
   components:
-  - type: CollisionWake
-  - type: TileFrictionModifier
-    modifier: 0.5
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
+  - type: EmbeddableProjectile
+    deleteOnRemove: true
   - type: Fixtures
     fixtures:
-      fix1:
+      projectile:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-        density: 20
+          bounds: "-0.1,-0.1,0.1,0.1"
         mask:
-          - ItemMask
-        restitution: 0.3
-        friction: 0.2
+          - BulletImpassable
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot-flare
   - type: IgnitionSource
+    ignited: true
     temperature: 1000
   - type: TimedDespawn
     lifetime: 240
@@ -156,3 +157,61 @@
     color: "#FF8080"
     radius: 15.0
     energy: 9.0
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Heat: 5
+
+- type: entity
+  id: PelletShotgunUranium
+  name: pellet (.50 uranium)
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: depleted-uranium
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 5
+        Piercing: 5
+
+- type: entity
+  id: PelletGrapeshot #tally fucking ho
+  name: grapeshot pellet
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: grapeshot
+      shader: unshaded
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 25
+        Structural: 5
+
+- type: entity
+  id: PelletGlass
+  name: glass shard
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: shard
+      shader: unshaded
+  - type: EmbeddableProjectile
+    deleteOnRemove: true
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Slash: 25

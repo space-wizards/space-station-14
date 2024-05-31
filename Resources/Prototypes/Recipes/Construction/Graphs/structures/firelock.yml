@@ -80,7 +80,9 @@
               doAfter: 0.25
         - to: frame2
           completed:
-            - !type:EmptyAllContainers {}
+            - !type:EmptyAllContainers
+              pickup: true
+              emptyAtUser: true
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -100,6 +102,14 @@
           steps:
             - tool: Anchoring
               doAfter: 1
+
+        - to: FirelockEdge
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Welding
+              doAfter: 0.5
 
         - to: FirelockGlassFrame
           conditions:
@@ -158,3 +168,14 @@
           steps:
             - tool: Anchoring
               doAfter: 1
+
+    - node: FirelockEdge
+      entity: FirelockEdge
+      edges:
+        - to: frame4
+          conditions:
+            - !type:DoorWelded
+              welded: true
+          steps:
+            - tool: Anchoring
+              doAfter: 0.25

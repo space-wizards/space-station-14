@@ -2,6 +2,8 @@
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Systems;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
@@ -22,9 +24,8 @@ public sealed class ChasmSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChasmComponent, StepTriggeredEvent>(OnStepTriggered);
+        SubscribeLocalEvent<ChasmComponent, StepTriggeredOffEvent>(OnStepTriggered);
         SubscribeLocalEvent<ChasmComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
-        SubscribeLocalEvent<ChasmFallingComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<ChasmFallingComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
     }
 
@@ -46,7 +47,7 @@ public sealed class ChasmSystem : EntitySystem
         }
     }
 
-    private void OnStepTriggered(EntityUid uid, ChasmComponent component, ref StepTriggeredEvent args)
+    private void OnStepTriggered(EntityUid uid, ChasmComponent component, ref StepTriggeredOffEvent args)
     {
         // already doomed
         if (HasComp<ChasmFallingComponent>(args.Tripper))
@@ -69,11 +70,6 @@ public sealed class ChasmSystem : EntitySystem
     private void OnStepTriggerAttempt(EntityUid uid, ChasmComponent component, ref StepTriggerAttemptEvent args)
     {
         args.Continue = true;
-    }
-
-    private void OnUnpaused(EntityUid uid, ChasmFallingComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextDeletionTime += args.PausedTime;
     }
 
     private void OnUpdateCanMove(EntityUid uid, ChasmFallingComponent component, UpdateCanMoveEvent args)

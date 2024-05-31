@@ -39,6 +39,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
@@ -53,9 +55,11 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.10,-0.10,0.10,0.10"
-        density: 3
+        density: 20
         mask:
-          - TabletopMachineMask
+        - TabletopMachineMask
+        restitution: 0.3
+        friction: 0.2
   - type: InteractionOutline
   - type: ItemMapper
     sprite: Objects/Misc/candy_bowl.rsi

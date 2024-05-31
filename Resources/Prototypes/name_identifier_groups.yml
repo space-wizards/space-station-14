@@ -4,15 +4,12 @@
   prefix: MK
 
 - type: nameIdentifierGroup
-  id: Holoparasite
-  prefix: HOLO
+  id: Kobold
+  prefix: KB
 
 - type: nameIdentifierGroup
-  id: Drone
-  prefix: DR
-  fullName: true
-  minValue: 10000
-  maxValue: 99999
+  id: Holoparasite
+  prefix: HOLO
 
 - type: nameIdentifierGroup
   id: MMI
@@ -35,3 +32,14 @@
 # Used to suffix a number to any mob to identify player controlled mob griefing.
 - type: nameIdentifierGroup
   id: GenericNumber
+
+- type: nameIdentifierGroup
+  id: Bounty
+  minValue: 0
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: CargoTelepads
+  prefix: TELE
+  minValue: 0
+  maxValue: 999

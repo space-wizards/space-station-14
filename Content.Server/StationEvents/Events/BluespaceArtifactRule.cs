@@ -1,4 +1,5 @@
-﻿using Content.Server.GameTicking.Rules.Components;
+﻿using Content.Server.GameTicking.Components;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
 using Robust.Shared.Random;
 
@@ -19,7 +20,7 @@ public sealed class BluespaceArtifactRule : StationEventSystem<BluespaceArtifact
     {
         base.Started(uid, component, gameRule, args);
 
-        var amountToSpawn = Math.Max(1, (int) MathF.Round(GetSeverityModifier() / 1.5f));
+        var amountToSpawn = 1;
         for (var i = 0; i < amountToSpawn; i++)
         {
             if (!TryFindRandomTile(out _, out _, out _, out var coords))

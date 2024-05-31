@@ -13,7 +13,7 @@ public sealed partial class GameTicker
     [ViewVariables]
     private List<ResPath>? _lobbyBackgrounds;
 
-    private static readonly string[] WhitelistedBackgroundExtensions = new string[] {"png", "jpg", "jpeg"};
+    private static readonly string[] WhitelistedBackgroundExtensions = new string[] {"png", "jpg", "jpeg", "webp"};
 
     private void InitializeLobbyBackground()
     {
