@@ -1,6 +1,5 @@
 using Content.Server.CharacterAppearance.Components;
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
 
 namespace Content.Server.Humanoid.Systems;
