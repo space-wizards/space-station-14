@@ -193,6 +193,10 @@ public class TableContainer : Container
             for (var c = 0; c < _columns; c++)
             {
                 ref var column = ref _columnDataCache[c];
+                var index = c + r * _columns;
+
+                if (index >= ChildCount) // Quit early if we don't actually fill out the row.
+                    break;
                 var child = GetChild(c + r * _columns);
 
                 child.Arrange(UIBox2.FromDimensions(column.ArrangedX, arrangeY, column.ArrangedWidth, row.MeasuredHeight));
