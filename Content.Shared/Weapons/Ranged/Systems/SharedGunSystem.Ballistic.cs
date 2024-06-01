@@ -5,6 +5,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -41,8 +42,12 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticInteractUsing(EntityUid uid, BallisticAmmoProviderComponent component, InteractUsingEvent args)
     {
-        if (args.Handled || component.Whitelist?.IsValid(args.Used, EntityManager) != true)
+        if (args.Handled)
             return;
+
+        if (component.Whitelist != null)
+            if (!_whitelist.IsValid(component.Whitelist, args.Used))
+                return;
 
         if (GetBallisticShots(component) >= component.Capacity)
             return;

@@ -55,6 +55,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
     private EntityQuery<StackComponent> _stackQuery;
@@ -860,13 +861,13 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
         }
 
-        if (storageComp.Whitelist?.IsValid(insertEnt, EntityManager) == false)
+        if (storageComp.Whitelist != null && !_whitelist.IsValid(storageComp.Whitelist, insertEnt))
         {
             reason = "comp-storage-invalid-container";
             return false;
         }
 
-        if (storageComp.Blacklist?.IsValid(insertEnt, EntityManager) == true)
+        if (storageComp.Blacklist != null && _whitelist.IsValid(storageComp.Blacklist, insertEnt))
         {
             reason = "comp-storage-invalid-container";
             return false;

@@ -6,6 +6,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Item;
 using Content.Shared.Throwing;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -25,6 +26,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly MetaDataSystem Metadata = default!;
     [Dependency] protected readonly SharedJointSystem Joints = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
@@ -113,10 +115,10 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!storable && !HasComp<BodyComponent>(entity))
             return false;
 
-        if (component.Blacklist?.IsValid(entity, EntityManager) == true)
+        if (component.Blacklist != null && _whitelist.IsValid(component.Blacklist, entity))
             return false;
 
-        if (component.Whitelist != null && component.Whitelist?.IsValid(entity, EntityManager) != true)
+        if (component.Whitelist != null && !_whitelist.IsValid(component.Whitelist, entity))
             return false;
 
         if (TryComp<PhysicsComponent>(entity, out var physics) && (physics.CanCollide) || storable)

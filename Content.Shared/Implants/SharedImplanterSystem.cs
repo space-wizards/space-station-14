@@ -20,6 +20,7 @@ public abstract class SharedImplanterSystem : EntitySystem
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -105,8 +106,8 @@ public abstract class SharedImplanterSystem : EntitySystem
 
     protected bool CheckTarget(EntityUid target, EntityWhitelist? whitelist, EntityWhitelist? blacklist)
     {
-        return whitelist?.IsValid(target, EntityManager) != false &&
-            blacklist?.IsValid(target, EntityManager) != true;
+        return whitelist != null && _whitelist.IsValid(whitelist, target) &&
+            blacklist != null && !_whitelist.IsValid(blacklist, target);
     }
 
     //Draw the implant out of the target

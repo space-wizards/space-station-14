@@ -81,9 +81,9 @@ public partial class ChatSystem
         bool ignoreActionBlocker = false
         )
     {
-        if (!(emote.Whitelist?.IsValid(source, EntityManager) ?? true))
+        if (emote.Whitelist != null ? !_whitelist.IsValid(emote.Whitelist, source) : true)
             return;
-        if (emote.Blacklist?.IsValid(source, EntityManager) ?? false)
+        if (emote.Blacklist != null ? _whitelist.IsValid(emote.Blacklist, source) : false)
             return;
 
         if (!emote.Available &&

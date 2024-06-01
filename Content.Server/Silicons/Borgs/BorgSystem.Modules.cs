@@ -267,7 +267,7 @@ public sealed partial class BorgSystem
             return false;
         }
 
-        if (component.ModuleWhitelist?.IsValid(module, EntityManager) == false)
+        if (component.ModuleWhitelist != null && !_whitelist.IsValid(component.ModuleWhitelist, module))
         {
             if (user != null)
                 Popup.PopupEntity(Loc.GetString("borg-module-whitelist-deny"), uid, user.Value);
