@@ -28,7 +28,6 @@
     state: security
   - type: MachineBoard
     prototype: ShuttleGunPerforator
-    requirements:
     materialRequirements:
       MatterBin: 4
       Manipulator: 6
