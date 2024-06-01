@@ -244,7 +244,15 @@
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/rag.rsi
-      state: rag
+      layers:
+      - state: rag
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: fill-3
+        visible: false
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 3
+      fillBaseName: fill-
     - type: Spillable
       solution: absorbed
     - type: MeleeWeapon
