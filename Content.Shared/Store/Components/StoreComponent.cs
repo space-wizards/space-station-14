@@ -1,46 +1,41 @@
 using Content.Shared.FixedPoint;
-using Content.Shared.Store;
 using Robust.Shared.Audio;
-using Robust.Shared.Map;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
-namespace Content.Server.Store.Components;
+namespace Content.Shared.Store.Components;
 
 /// <summary>
 /// This component manages a store which players can use to purchase different listings
 /// through the ui. The currency, listings, and categories are defined in yaml.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class StoreComponent : Component
 {
-    /// <summary>
-    /// The default preset for the store. Is overriden by default values specified on the component.
-    /// </summary>
-    [DataField("preset", customTypeSerializer: typeof(PrototypeIdSerializer<StorePresetPrototype>))]
-    public string? Preset;
+    [DataField]
+    public LocId Name = "store-ui-default-title";
 
     /// <summary>
     /// All the listing categories that are available on this store.
     /// The available listings are partially based on the categories.
     /// </summary>
-    [DataField("categories", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<StoreCategoryPrototype>))]
-    public HashSet<string> Categories = new();
+    [DataField]
+    public HashSet<ProtoId<StoreCategoryPrototype>> Categories = new();
 
     /// <summary>
     /// The total amount of currency that can be used in the store.
     /// The string represents the ID of te currency prototype, where the
     /// float is that amount.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("balance", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
-    public Dictionary<string, FixedPoint2> Balance = new();
+    [DataField]
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance = new();
 
     /// <summary>
     /// The list of currencies that can be inserted into this store.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), DataField("currencyWhitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<CurrencyPrototype>))]
-    public HashSet<string> CurrencyWhitelist = new();
+    [DataField]
+    public HashSet<ProtoId<CurrencyPrototype>> CurrencyWhitelist = new();
 
     /// <summary>
     /// The person who "owns" the store/account. Used if you want the listings to be fixed
@@ -52,6 +47,7 @@ public sealed partial class StoreComponent : Component
     /// <summary>
     /// All listings, including those that aren't available to the buyer
     /// </summary>
+    [DataField]
     public HashSet<ListingData> Listings = new();
 
     /// <summary>
@@ -70,7 +66,7 @@ public sealed partial class StoreComponent : Component
     ///     The total balance spent in this store. Used for refunds.
     /// </summary>
     [ViewVariables, DataField]
-    public Dictionary<string, FixedPoint2> BalanceSpent = new();
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> BalanceSpent = new();
 
     /// <summary>
     ///     Controls if the store allows refunds
@@ -95,7 +91,7 @@ public sealed partial class StoreComponent : Component
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.
     /// </summary>
-    [DataField("buySuccessSound")]
+    [DataField]
     public SoundSpecifier BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");
     #endregion
 }
