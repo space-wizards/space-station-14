@@ -135,6 +135,18 @@ public sealed class TagSystem : EntitySystem
     }
 
     /// <summary>
+    /// Checks if a tag has been added to an entity.
+    /// </summary>
+    /// <returns>
+    /// true if it exists, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if no <see cref="TagPrototype"/> exists with the given id.
+    /// </exception>
+    public bool HasAllTags(EntityUid entityUid, ProtoId<TagPrototype> tag) =>
+        HasTag(entityUid, tag);
+
+    /// <summary>
     /// Checks if all of the given tags have been added to an entity.
     /// </summary>
     /// <returns>
@@ -162,6 +174,18 @@ public sealed class TagSystem : EntitySystem
         return _tagQuery.TryComp(entityUid, out var component) &&
                HasAllTags(component, tags);
     }
+
+    /// <summary>
+    /// Checks if a tag has been added to an entity.
+    /// </summary>
+    /// <returns>
+    /// true if it exists, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if no <see cref="TagPrototype"/> exists with the given id.
+    /// </exception>
+    public bool HasAnyTag(EntityUid entityUid, ProtoId<TagPrototype> tag) =>
+        HasTag(entityUid, tag);
 
     /// <summary>
     /// Checks if any of the given tags have been added to an entity.
@@ -210,6 +234,18 @@ public sealed class TagSystem : EntitySystem
     }
 
     /// <summary>
+    /// Checks if a tag has been added to an component.
+    /// </summary>
+    /// <returns>
+    /// true if it exists, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if no <see cref="TagPrototype"/> exists with the given id.
+    /// </exception>
+    public bool HasAllTags(TagComponent component, ProtoId<TagPrototype> tag) =>
+        HasTag(component, tag);
+
+    /// <summary>
     /// Checks if all of the given tags have been added to an component.
     /// </summary>
     /// <returns>
@@ -245,6 +281,18 @@ public sealed class TagSystem : EntitySystem
 
         return true;
     }
+
+    /// <summary>
+    /// Checks if a tag has been added to an component.
+    /// </summary>
+    /// <returns>
+    /// true if it exists, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if no <see cref="TagPrototype"/> exists with the given id.
+    /// </exception>
+    public bool HasAnyTag(TagComponent component, ProtoId<TagPrototype> tag) =>
+        HasTag(component, tag);
 
     /// <summary>
     /// Checks if any of the given tags have been added to an component.
