@@ -3,6 +3,10 @@
   parent: BaseGameRule
   abstract: true
   components:
+  - type: GameRule
+    delay:
+      min: 10
+      max: 10
   - type: StationEvent
     startColor: "#18abf5"
     startAudio:
@@ -17,7 +21,6 @@
   components:
   - type: StationEvent
     weight: 5
-    startDelay: 10
     duration: 120
     earliestStart: 20
   - type: CargoGiftsRule
@@ -36,7 +39,6 @@
   components:
   - type: StationEvent
     weight: 2
-    startDelay: 10
     duration: 240
     earliestStart: 20
     minimumPlayers: 40
@@ -55,7 +57,6 @@
   components:
   - type: StationEvent
     weight: 5
-    startDelay: 10
     duration: 240
     earliestStart: 30
     minimumPlayers: 10
@@ -77,7 +78,6 @@
   components:
   - type: StationEvent
     weight: 4
-    startDelay: 10
     duration: 120
     minimumPlayers: 40
     earliestStart: 30
@@ -99,7 +99,6 @@
   components:
   - type: StationEvent
     weight: 6
-    startDelay: 10
     duration: 120
     minimumPlayers: 30
     earliestStart: 20
@@ -118,7 +117,6 @@
   components:
   - type: StationEvent
     weight: 8
-    startDelay: 10
     duration: 120
     earliestStart: 20
     minimumPlayers: 30
@@ -139,7 +137,6 @@
   components:
   - type: StationEvent
     weight: 4
-    startDelay: 10
     duration: 120
     earliestStart: 10
     minimumPlayers: 40
@@ -160,7 +157,6 @@
   components:
   - type: StationEvent
     weight: 4
-    startDelay: 10
     duration: 120
     earliestStart: 20
     minimumPlayers: 40
@@ -179,7 +175,6 @@
   components:
   - type: StationEvent
     weight: 3
-    startDelay: 10
     duration: 120
     earliestStart: 20
     minimumPlayers: 50
@@ -199,7 +194,6 @@
   components:
   - type: StationEvent
     weight: 4
-    startDelay: 10
     duration: 120
     earliestStart: 20
     minimumPlayers: 50

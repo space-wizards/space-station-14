@@ -25,10 +25,10 @@ public sealed partial class StationEventComponent : Component
     public string? EndAnnouncement;
 
     [DataField]
-    public Color StartColor = Color.Gold;
+    public Color StartAnnouncementColor = Color.Gold;
 
     [DataField]
-    public Color EndColor = Color.Gold;
+    public Color EndAnnouncementColor = Color.Gold;
 
     [DataField]
     public SoundSpecifier? StartAudio;
@@ -47,12 +47,6 @@ public sealed partial class StationEventComponent : Component
     /// </summary>
     [DataField]
     public int ReoccurrenceDelay = 30;
-
-    /// <summary>
-    ///     How long after being added does the event start
-    /// </summary>
-    [DataField]
-    public TimeSpan StartDelay = TimeSpan.Zero;
 
     /// <summary>
     ///     How long the event lasts.
@@ -80,13 +74,6 @@ public sealed partial class StationEventComponent : Component
     /// </summary>
     [DataField]
     public int? MaxOccurrences;
-
-    /// <summary>
-    /// When the station event starts.
-    /// </summary>
-    [DataField("startTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
-    public TimeSpan StartTime;
 
     /// <summary>
     /// When the station event ends.

@@ -42,12 +42,9 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
         AdminLogManager.Add(LogType.EventAnnounced, $"Event added / announced: {ToPrettyString(uid)}");
 
         if (stationEvent.StartAnnouncement != null)
-        {
-            ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.StartAnnouncement), playSound: false, colorOverride: stationEvent.StartColor);
-        }
+            ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.StartAnnouncement), playSound: false, colorOverride: stationEvent.StartAnnouncementColor);
 
         Audio.PlayGlobal(stationEvent.StartAudio, Filter.Broadcast(), true);
-        stationEvent.StartTime = Timing.CurTime + stationEvent.StartDelay;
     }
 
     /// <inheritdoc/>
@@ -81,9 +78,7 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
         AdminLogManager.Add(LogType.EventStopped, $"Event ended: {ToPrettyString(uid)}");
 
         if (stationEvent.EndAnnouncement != null)
-        {
-            ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.EndAnnouncement), playSound: false, colorOverride: stationEvent.EndColor);
-        }
+            ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.EndAnnouncement), playSound: false, colorOverride: stationEvent.EndAnnouncementColor);
 
         Audio.PlayGlobal(stationEvent.EndAudio, Filter.Broadcast(), true);
     }
@@ -103,11 +98,7 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
             if (!GameTicker.IsGameRuleAdded(uid, ruleData))
                 continue;
 
-            if (!GameTicker.IsGameRuleActive(uid, ruleData) && Timing.CurTime >= stationEvent.StartTime)
-            {
-                GameTicker.StartGameRule(uid, ruleData);
-            }
-            else if (stationEvent.EndTime != null && Timing.CurTime >= stationEvent.EndTime && GameTicker.IsGameRuleActive(uid, ruleData))
+            if (stationEvent.EndTime != null && Timing.CurTime >= stationEvent.EndTime && GameTicker.IsGameRuleActive(uid, ruleData))
             {
                 GameTicker.EndGameRule(uid, ruleData);
             }

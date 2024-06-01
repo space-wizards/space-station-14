@@ -10,6 +10,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind;
 using Content.Shared.Store;
+using Content.Shared.Store.Components;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -82,14 +83,9 @@ public sealed partial class StoreSystem
     /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
     /// <param name="store">The store entity itself</param>
     /// <param name="component">The store component being refreshed.</param>
-    /// <param name="ui"></param>
     public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null)
     {
         if (!Resolve(store, ref component))
-            return;
-
-        // TODO: Why is the state not being set unless this?
-        if (!_ui.HasUi(store, StoreUiKey.Key))
             return;
 
         //this is the person who will be passed into logic for all listing filtering.
@@ -259,7 +255,8 @@ public sealed partial class StoreSystem
         }
 
         //log dat shit.
-        _admin.Add(LogType.StorePurchase, LogImpact.Low,
+        _admin.Add(LogType.StorePurchase,
+            LogImpact.Low,
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager)}\" from {ToPrettyString(uid)}");
 
         listing.PurchaseAmount++; //track how many times something has been purchased

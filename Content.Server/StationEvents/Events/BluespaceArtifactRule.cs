@@ -8,7 +8,8 @@ public sealed class BluespaceArtifactRule : StationEventSystem<BluespaceArtifact
 {
     protected override void Added(EntityUid uid, BluespaceArtifactRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
-        base.Added(uid, component, gameRule, args);
+        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
+            return;
 
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
@@ -16,6 +17,8 @@ public sealed class BluespaceArtifactRule : StationEventSystem<BluespaceArtifact
         var str = Loc.GetString("bluespace-artifact-event-announcement",
             ("sighting", Loc.GetString(RobustRandom.Pick(component.PossibleSighting))));
         stationEvent.StartAnnouncement = str;
+
+        base.Added(uid, component, gameRule, args);
     }
 
     protected override void Started(EntityUid uid, BluespaceArtifactRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
