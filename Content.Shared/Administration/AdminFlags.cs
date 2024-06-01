@@ -110,6 +110,21 @@
         Pii = 1 << 18,
 
         /// <summary>
+        ///     Lets you take moderator actions on the game server.
+        /// </summary>
+        Moderator = 1 << 19,
+
+        /// <summary>
+        ///     Lets you check currently online admins.
+        /// </summary>
+        AdminWho = 1 << 20,
+
+        /// <summary>
+        ///     Lets you set the color of your OOC name.
+        /// </summary>
+        NameColor = 1 << 21,
+
+        /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>
         Host = 1u << 31,
