@@ -81,7 +81,7 @@ namespace Content.Client.Construction.UI
             // This is a lot easier than a factory
             IoCManager.InjectDependencies(this);
             _constructionView = new ConstructionMenu();
-            _whitelist = _entManager.System<EntityWhitelistSystem>();
+            _whitelistSystem = _entManager.System<EntityWhitelistSystem>();
 
             // This is required so that if we load after the system is initialized, we can bind to it immediately
             if (_systemManager.TryGetEntitySystem<ConstructionSystem>(out var constructionSystem))
