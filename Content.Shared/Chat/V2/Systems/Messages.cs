@@ -21,9 +21,9 @@ public struct ChatContext
 /// <param name="sender">Who sent the message</param>
 /// <param name="message">The message sent.</param>
 [Serializable, NetSerializable]
-public abstract class ChatAttemptEvent(NetEntity sender, string message) : EntityEventArgs
+public abstract class ChatAttemptEvent(ChatContext context, NetEntity sender, string message) : EntityEventArgs
 {
-    public ChatContext Context;
+    public ChatContext Context = context;
     public NetEntity Sender = sender;
     public string Message = message;
 }
@@ -33,13 +33,19 @@ public abstract class ChatAttemptEvent(NetEntity sender, string message) : Entit
 /// </summary>
 /// <param name="sender">Who sent the message</param>
 /// <param name="message">The message sent</param>
-/// <param name="volume">How loud the message is</param>
-/// <param name="channel">What specific channel to send the message on, if any</param>
+/// <param name="chatChannel">How loud the message is</param>
+/// <param name="radioChannel">What specific channel to send the message on, if any</param>
 [Serializable, NetSerializable]
-public sealed class AttemptVerbalChatEvent(NetEntity sender, string message, VerbalVolume volume, ProtoId<RadioChannelPrototype>? channel) : ChatAttemptEvent(sender, message)
+public sealed class AttemptVerbalChatEvent(
+    ChatContext context,
+    NetEntity sender,
+    string message,
+    VerbalChatChannel chatChannel,
+    ProtoId<RadioChannelPrototype>? radioChannel
+) : ChatAttemptEvent(context, sender, message)
 {
-    public ProtoId<RadioChannelPrototype>? Channel = channel;
-    public VerbalVolume Volume = volume;
+    public ProtoId<RadioChannelPrototype>? RadioChannel = radioChannel;
+    public VerbalChatChannel ChatChannel = chatChannel;
 }
 
 /// <summary>
@@ -48,7 +54,15 @@ public sealed class AttemptVerbalChatEvent(NetEntity sender, string message, Ver
 /// <param name="sender">Who sent the message</param>
 /// <param name="message">The message sent</param>
 [Serializable, NetSerializable]
-public sealed class AttemptEmoteEvent(NetEntity sender, string message) : ChatAttemptEvent(sender, message);
+public sealed class AttemptVisualChatEvent(
+    ChatContext context,
+    NetEntity sender,
+    VisualChatChannel channel,
+    string message
+) : ChatAttemptEvent(context, sender, message)
+{
+    public VisualChatChannel Channel = channel;
+}
 
 /// <summary>
 /// Attempt an announcement via a communications console.
@@ -57,7 +71,12 @@ public sealed class AttemptEmoteEvent(NetEntity sender, string message) : ChatAt
 /// <param name="sender">Who sent the message</param>
 /// <param name="message">The message sent</param>
 [Serializable, NetSerializable]
-public sealed class AttemptAnnouncementEvent(NetEntity sender, string message, NetEntity console) : ChatAttemptEvent(sender, message)
+public sealed class AttemptAnnouncementEvent(
+    ChatContext context,
+    NetEntity sender,
+    string message,
+    NetEntity console
+) : ChatAttemptEvent(context, sender, message)
 {
     public NetEntity Console = console;
 }
@@ -69,7 +88,12 @@ public sealed class AttemptAnnouncementEvent(NetEntity sender, string message, N
 /// <param name="message"></param>
 /// <param name="channel"></param>
 [Serializable, NetSerializable]
-public sealed class AttemptOutOfCharacterChatEvent(NetEntity sender, string message, OutOfCharacterChatChannel channel) : ChatAttemptEvent(sender, message)
+public sealed class AttemptOutOfCharacterChatEvent(
+    ChatContext context,
+    NetEntity sender,
+    string message,
+    OutOfCharacterChatChannel channel
+) : ChatAttemptEvent(context, sender, message)
 {
     public OutOfCharacterChatChannel Channel = channel;
 }
@@ -81,14 +105,12 @@ public sealed class AttemptOutOfCharacterChatEvent(NetEntity sender, string mess
 /// <summary>
 /// Defines the abstract concept of chat attempts failing.
 /// </summary>
-/// <param name="sender">The speaker</param>
-/// <param name="reason">Why the attempt failed</param>
 [Serializable, NetSerializable]
-public abstract class ChatFailedEvent : EntityEventArgs
+public abstract class ChatFailedEvent(ChatContext context, NetEntity sender, string? reason) : EntityEventArgs
 {
-    public ChatContext Context;
-    public NetEntity Sender;
-    public string? Reason;
+    public ChatContext Context = context;
+    public NetEntity Sender = sender;
+    public string? Reason = reason;
 }
 
 /// <summary>
@@ -97,7 +119,7 @@ public abstract class ChatFailedEvent : EntityEventArgs
 /// <param name="sender">Who sent the message</param>
 /// <param name="reason">The failure reason</param>
 [Serializable, NetSerializable]
-public sealed class VerbalChatFailedEvent : ChatFailedEvent;
+public sealed class VerbalChatFailedEvent(ChatContext context, NetEntity sender, string? reason) : ChatFailedEvent(context, sender, reason);
 
 /// <summary>
 /// Raised when a mob has failed to emote.
@@ -105,7 +127,7 @@ public sealed class VerbalChatFailedEvent : ChatFailedEvent;
 /// <param name="sender">Who sent the message</param>
 /// <param name="reason">The failure reason</param>
 [Serializable, NetSerializable]
-public sealed class EmoteFailedEvent : ChatFailedEvent;
+public sealed class VisualChatFailedEvent(ChatContext context, NetEntity sender, string? reason) : ChatFailedEvent(context, sender, reason);
 
 /// <summary>
 /// Raised when an announcement is attempted by a communications console, and it fails for some reason.
@@ -113,9 +135,9 @@ public sealed class EmoteFailedEvent : ChatFailedEvent;
 /// <param name="sender">Who sent the message</param>
 /// <param name="reason">The failure reason</param>
 [Serializable, NetSerializable]
-public sealed class AnnouncementFailedEvent : ChatFailedEvent;
+public sealed class AnnouncementFailedEvent(ChatContext context, NetEntity sender, string? reason) : ChatFailedEvent(context, sender, reason);
 
-public sealed class OutOfCharacterChatFailed : ChatFailedEvent;
+public sealed class OutOfCharacterChatFailed(ChatContext context, NetEntity sender, string? reason) : ChatFailedEvent(context, sender, reason);
 
 #endregion
 
@@ -129,9 +151,9 @@ public sealed class OutOfCharacterChatFailed : ChatFailedEvent;
 /// <param name="message">The message, possibly altered from when it was sent</param>
 /// <param name="id">The round-unique ID of the message</param>
 [Serializable, NetSerializable]
-public abstract class ChatSuccessEvent(NetEntity speaker, string asName, string message, uint id) : EntityEventArgs
+public abstract class ChatSuccessEvent(ChatContext context, NetEntity speaker, string asName, string message, uint id) : EntityEventArgs
 {
-    public ChatContext Context;
+    public ChatContext Context = context;
     public NetEntity Speaker = speaker;
     public string AsName = asName;
     public readonly string Message = message;
@@ -143,13 +165,15 @@ public abstract class ChatSuccessEvent(NetEntity speaker, string asName, string 
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class VerbalChatEvent(
+    ChatContext context,
     NetEntity speaker,
     string asName,
     string message,
     uint id,
-    VerbalVolume volume) : ChatSuccessEvent(speaker, asName, message, id)
+    VerbalChatChannel chatChannel
+) : ChatSuccessEvent(context, speaker, asName, message, id)
 {
-    public VerbalVolume Volume = volume;
+    public VerbalChatChannel ChatChannel = chatChannel;
 }
 
 /// <summary>
@@ -160,17 +184,43 @@ public sealed class VerbalChatEvent(
 /// <param name="message">The message, possibly altered from when it was sent</param>
 /// <param name="id">The round-unique ID of the message</param>
 [Serializable, NetSerializable]
-public sealed class EmoteEvent(NetEntity speaker, string asName, string message, uint id) : ChatSuccessEvent(speaker, asName, message, id);
+public sealed class VisualChatEvent(
+    ChatContext context,
+    NetEntity speaker,
+    string asName,
+    string message,
+    uint id,
+    VisualChatChannel chatChannel
+) : ChatSuccessEvent(context, speaker, asName, message, id)
+{
+    public VisualChatChannel ChatChannel = chatChannel;
+}
 
 /// <summary>
 /// Raised when an announcement is made.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class AnnouncementEvent(string asName, string message, Color? messageColorOverride = null) : EntityEventArgs
+public sealed class AnnouncementEvent(
+    ChatContext context,
+    string asName,
+    string message,
+    uint id,
+    Color? messageColorOverride = null
+) : ChatSuccessEvent(context, NetEntity.Invalid, asName, message, id)
 {
-    public string AsName = asName;
-    public readonly string Message = message;
     public Color? MessageColorOverride = messageColorOverride;
+}
+
+public sealed class OutOfCharacterChatEvent(
+    ChatContext context,
+    NetEntity speaker,
+    string asName,
+    string message,
+    uint id,
+    OutOfCharacterChatChannel chatChannel
+) : ChatSuccessEvent(context, speaker, asName, message, id)
+{
+    public OutOfCharacterChatChannel ChatChannel = chatChannel;
 }
 
 #endregion
@@ -186,7 +236,14 @@ public sealed class AnnouncementEvent(string asName, string message, Color? mess
 /// <param name="id">The round-unique ID of the message</param>
 /// <param name="channel">The channel the message is on</param>
 [Serializable, NetSerializable]
-public sealed class RadioEvent(NetEntity speaker, string asName, string message, ProtoId<RadioChannelPrototype> channel, uint id) : ChatSuccessEvent(speaker, asName, message, id)
+public sealed class RadioEvent(
+    ChatContext context,
+    NetEntity speaker,
+    string asName,
+    string message,
+    ProtoId<RadioChannelPrototype> channel,
+    uint id
+) : ChatSuccessEvent(context, speaker, asName, message, id)
 {
     public readonly ProtoId<RadioChannelPrototype> Channel = channel;
 }
@@ -210,13 +267,19 @@ public sealed class SubtleChatEvent(NetEntity target, string message) : EntityEv
 /// <param name="asName">What name the speaker should present as</param>
 /// <param name="message">The message, possibly altered from when it was sent - although for automated messages this is unlikely.</param>
 [Serializable, NetSerializable]
-public sealed class BackgroundChatEvent(NetEntity speaker, string message, string asName, VerbalVolume volume) : EntityEventArgs
+public sealed class BackgroundChatEvent(
+    ChatContext context,
+    NetEntity speaker,
+    string message,
+    string asName,
+    VerbalChatChannel chatChannel
+) : EntityEventArgs
 {
-    public ChatContext Context;
+    public ChatContext Context = context;
     public NetEntity Speaker = speaker;
     public string AsName = asName;
     public readonly string Message = message;
-    public VerbalVolume Volume = volume;
+    public VerbalChatChannel ChatChannel = chatChannel;
 }
 
 #endregion

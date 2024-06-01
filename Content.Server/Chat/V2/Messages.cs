@@ -10,9 +10,9 @@ namespace Content.Server.Chat.V2;
 /// Notifies that a chat attempt input from a player has been validated and sanatized, ready for further processing.
 /// </summary>
 /// <param name="ev"></param>
-public sealed class ChatAttemptValidatedEvent(ChatAttemptEvent ev) : EntityEventArgs
+public sealed class ChatAttemptValidatedEvent(IChatEvent ev) : EntityEventArgs
 {
-    public ChatAttemptEvent Event = ev;
+    public IChatEvent Event = ev;
 }
 
 /// <summary>
@@ -44,7 +44,7 @@ public sealed class ChatValidationEvent<T>(T attemptEvent) where T : ChatAttempt
 /// should be used instead of the non-sanitized message.
 /// </summary>
 /// <param name="attemptEvent">The chat message to sanitize.</param>
-public sealed class ChatSanitizationEvent<T>(T attemptEvent) where T : ChatAttemptEvent
+public sealed class ChatSanitizationEvent<T>(T attemptEvent) where T : IChatEvent
 {
     public string ChatMessageRaw = attemptEvent.Message;
     public bool IsCancelled;
@@ -62,88 +62,64 @@ public sealed class ChatSanitizationEvent<T>(T attemptEvent) where T : ChatAttem
     }
 }
 
-public abstract class ChatEvent(uint id, ChatContext context, EntityUid sender, string message, MessageType type) : IChatEvent
+public abstract class ChatEvent(ChatContext context, EntityUid sender, string message) : IChatEvent
 {
     public ChatContext Context { get; } = context;
     public EntityUid Sender { get; set; } = sender;
     public string Message { get; set; } = message;
-    public MessageType Type { get; } = type;
-    public uint Id { get; set; } = id;
+    public uint Id { get; set; }
 }
 
-// /// <summary>
-// /// Raised locally when a comms announcement is made.
-// /// </summary>
-// public sealed class CommsAnnouncementCreatedEvent(uint id, ChatContext context, EntityUid sender, EntityUid console, string message) : ChatEvent(id, context, sender, message, MessageType.Announcement)
-// {
-//     public EntityUid Console = console;
-// }
-//
-// /// <summary>
-// /// Raised locally when a character speaks in Dead Chat.
-// /// </summary>
-// public sealed class DeadChatCreatedEvent(uint id, ChatContext context, EntityUid speaker, string message, bool isAdmin) : ChatEvent(id, context, speaker, message, MessageType.DeadChat)
-// {
-//     public bool IsAdmin = isAdmin;
-// }
-//
-// /// <summary>
-// /// Raised locally when a character emotes.
-// /// </summary>
-// public sealed class EmoteCreatedEvent(uint id, ChatContext context, EntityUid sender, string message, float range) : ChatEvent(id, context, sender, message, MessageType.Emote)
-// {
-//     public float Range = range;
-// }
-//
-// /// <summary>
-// /// Raised locally when a character talks in local.
-// /// </summary>
-// public sealed class VerbalChatCreatedEvent(uint id, ChatContext context, EntityUid speaker, string message, float range) : ChatEvent
-// {
-//     public ChatContext Context { get; } = context;
-//     public uint Id { get; set; }
-//     public EntityUid Sender { get; set; } = speaker;
-//     public string Message { get; set; } = message;
-//     public MessageType Type => MessageType.Local;
-//     public float Range = range;
-//     public VerbalVolume Volume;
-// }
-//
-// /// <summary>
-// /// Raised locally when a character speaks in LOOC.
-// /// </summary>
-// public sealed class LoocCreatedEvent(uint id, ChatContext context, EntityUid speaker, string message) : ChatEvent
-// {
-//     public ChatContext Context { get; } = context;
-//     public uint Id { get; set; }
-//     public EntityUid Sender { get; set; } = speaker;
-//     public string Message { get; set; } = message;
-//     public MessageType Type => MessageType.Looc;
-// }
-//
-// /// <summary>
-// /// Raised locally when a character speaks on the radio.
-// /// </summary>
-// public sealed class RadioCreatedEvent(uint id, ChatContext context, EntityUid speaker, string message, ProtoId<RadioChannelPrototype> channel) : ChatEvent
-// {
-//     public ChatContext Context { get; } = context;
-//     public uint Id { get; set; }
-//     public EntityUid Sender { get; set; } = speaker;
-//     public string Message { get; set; } = message;
-//     public ProtoId<RadioChannelPrototype> Channel = channel;
-//     public MessageType Type => MessageType.Radio;
-// }
-//
-// /// <summary>
-// /// Raised locally when a character whispers.
-// /// </summary>
-// public sealed class WhisperCreatedEvent(uint id, ChatContext context, EntityUid speaker, string message, float minRange, float maxRange) : ChatEvent
-// {
-//     public uint Id { get; set; }
-//     public EntityUid Sender { get; set; } = speaker;
-//     public string Message { get; set; } = message;
-//     public MessageType Type => MessageType.Whisper;
-//     public float MinRange = minRange;
-//     public float MaxRange = maxRange;
-// }
-//
+/// <summary>
+/// Raised locally when a comms announcement is made.
+/// </summary>
+public sealed class CommsAnnouncementCreatedEvent(
+    ChatContext context,
+    EntityUid sender,
+    EntityUid console,
+    string message
+) : ChatEvent(context, sender, message)
+{
+    public EntityUid Console = console;
+}
+
+/// <summary>
+/// Raised locally when an OOC message is created.
+/// </summary>
+public sealed class OutOfCharacterChatCreatedEvent(
+    ChatContext context,
+    EntityUid sender,
+    OutOfCharacterChatChannel channel,
+    string message
+) : ChatEvent(context, sender, message)
+{
+    public OutOfCharacterChatChannel Channel = channel;
+}
+
+/// <summary>
+/// Raised locally when a character emotes.
+/// </summary>
+public sealed class VisualChatCreatedEvent(
+    ChatContext context,
+    EntityUid sender,
+    VisualChatChannel channel,
+    string message
+) : ChatEvent(context, sender, message)
+{
+    public VisualChatChannel Channel = channel;
+}
+
+/// <summary>
+/// Raised locally when something talks.
+/// </summary>
+public sealed class VerbalChatCreatedEvent(
+    ChatContext context,
+    EntityUid sender,
+    VerbalChatChannel chatChannel,
+    ProtoId<RadioChannelPrototype>? radioChannel,
+    string message
+) : ChatEvent(context, sender, message)
+{
+    public ProtoId<RadioChannelPrototype>? RadioChannel = radioChannel;
+    public VerbalChatChannel ChatChannel = chatChannel;
+}

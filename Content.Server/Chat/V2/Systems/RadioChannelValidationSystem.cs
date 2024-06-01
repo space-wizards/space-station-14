@@ -22,13 +22,13 @@ public sealed class RadioChannelValidationSystem : EntitySystem
 
     private void OnValidateAttemptVerbalChatEvent(ChatValidationEvent<AttemptVerbalChatEvent> msg, EntitySessionEventArgs args)
     {
-        if (msg.Event.Channel == null)
+        if (msg.Event.RadioChannel == null)
             return;
 
-        if (!_proto.TryIndex(msg.Event.Channel, out _) ||
+        if (!_proto.TryIndex(msg.Event.RadioChannel, out _) ||
             !TryComp<CanRadioUsingEquipmentComponent>(GetEntity(msg.Event.Sender), out var comp) ||
-            !comp.Channels.Contains(msg.Event.Channel)
+            !comp.Channels.Contains(msg.Event.RadioChannel)
         )
-            msg.Cancel(Loc.GetString(RadioChannelFailed, (RadioChannelKey, msg.Event.Channel)));
+            msg.Cancel(Loc.GetString(RadioChannelFailed, (RadioChannelKey, msg.Event.RadioChannel)));
     }
 }

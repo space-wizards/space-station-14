@@ -36,34 +36,46 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         _unsupportedMessageType = Loc.GetString(UnsupportedMessageType);
         _missingRequiredComponent = Loc.GetString(MissingRequiredComponent);
 
-        SubscribeNetworkEvent<AttemptVerbalChatEvent>((ev, args) => OnAttemptChat<CanLocalChatComponent>(ev, args, new VerbalChatFailedEvent()));
-        SubscribeNetworkEvent<AttemptEmoteEvent>((ev, args) => OnAttemptChat<CanEmoteComponent>(ev, args, new EmoteFailedEvent()));
+        SubscribeNetworkEvent<AttemptVerbalChatEvent>(OnAttemptChat);
+        SubscribeNetworkEvent<AttemptVisualChatEvent>(OnAttemptChat);
         SubscribeNetworkEvent<AttemptAnnouncementEvent>(OnAttemptChat);
         SubscribeNetworkEvent<AttemptOutOfCharacterChatEvent>(OnAttemptChat);
     }
 
-    private void OnAttemptChat<T>(ChatAttemptEvent ev, EntitySessionEventArgs args, ChatFailedEvent failEv) where T : Component
+    private void OnAttemptChat(AttemptVerbalChatEvent ev, EntitySessionEventArgs args)
     {
-        if (!ValidateMessage(ev, args.SenderSession, out var reason, out T? _))
+        if (!ValidateMessage(ev, args.SenderSession, out var reason, out CanVerbalChatComponent? _))
         {
-            OnFailedMessage(failEv, ev.Sender, reason, args);
+            OnFailedMessage(new VerbalChatFailedEvent(ev.Context, ev.Sender, ev.Message), args);
 
             return;
         }
 
-        OnValidatedMessage(ev);
+        OnValidatedMessage(new VerbalChatCreatedEvent(ev.Context, GetEntity(ev.Sender), ev.ChatChannel, ev.RadioChannel, ev.Message));
+    }
+
+    private void OnAttemptChat(AttemptVisualChatEvent ev, EntitySessionEventArgs args)
+    {
+        if (!ValidateMessage(ev, args.SenderSession, out var reason, out CanVisualChatComponent? _))
+        {
+            OnFailedMessage(new VisualChatFailedEvent(ev.Context, ev.Sender, ev.Message), args);
+
+            return;
+        }
+
+        OnValidatedMessage(new VisualChatCreatedEvent(ev.Context, GetEntity(ev.Sender), ev.Channel, ev.Message));
     }
 
     private void OnAttemptChat(AttemptAnnouncementEvent ev, EntitySessionEventArgs args)
     {
         if (!ValidateMessage(GetEntity(ev.Sender), ev, args.SenderSession, out var reason))
         {
-            OnFailedMessage(new AnnouncementFailedEvent(), ev.Sender, reason, args);
+            OnFailedMessage(new AnnouncementFailedEvent(ev.Context, ev.Sender, reason), args);
 
             return;
         }
 
-        OnValidatedMessage(ev);
+        OnValidatedMessage(new CommsAnnouncementCreatedEvent(ev.Context, GetEntity(ev.Sender), GetEntity(ev.Console), ev.Message));
     }
 
     private void OnAttemptChat(AttemptOutOfCharacterChatEvent ev, EntitySessionEventArgs args)
@@ -81,15 +93,15 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
             case OutOfCharacterChatChannel.System:
             case OutOfCharacterChatChannel.Admin:
             default:
-                OnFailedMessage(new OutOfCharacterChatFailed(), ev.Sender, _unsupportedMessageType, args);
+                OnFailedMessage(new OutOfCharacterChatFailed(ev.Context, ev.Sender, _unsupportedMessageType), args);
 
                 return;
         }
 
-        OnValidatedMessage(ev);
+        OnValidatedMessage(new OutOfCharacterChatCreatedEvent(ev.Context, GetEntity(ev.Sender), ev.Channel, ev.Message));
     }
 
-    private void OnValidatedMessage(ChatAttemptEvent ev)
+    private void OnValidatedMessage(IChatEvent ev)
     {
         SanitizeMessage(ev);
         RaiseLocalEvent(new ChatAttemptValidatedEvent(ev));
@@ -102,14 +114,14 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         // Non-admins can only talk on dead chat if they're a ghost or currently dead.
         if (!isAdmin && !HasComp<GhostComponent>(entityUid) && !_mobState.IsDead(entityUid))
         {
-            OnFailedMessage(new OutOfCharacterChatFailed(), ev.Sender, _deadChatFailed, args);
+            OnFailedMessage(new OutOfCharacterChatFailed(ev.Context, ev.Sender, _deadChatFailed), args);
 
             return false;
         }
         // ReSharper disable once InvertIf
         if (!ValidateMessage(entityUid, ev, args.SenderSession, out var reason))
         {
-            OnFailedMessage(new OutOfCharacterChatFailed(), ev.Sender, reason, args);
+            OnFailedMessage(new OutOfCharacterChatFailed(ev.Context, ev.Sender, reason), args);
 
             return false;
         }
@@ -117,11 +129,8 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         return true;
     }
 
-    public void OnFailedMessage(ChatFailedEvent ev, NetEntity entity, string reason, EntitySessionEventArgs args)
+    public void OnFailedMessage(ChatFailedEvent ev, EntitySessionEventArgs args)
     {
-        ev.Sender = entity;
-        ev.Reason = reason;
-
         RaiseNetworkEvent(ev, args.SenderSession);
     }
 
@@ -194,7 +203,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
     /// <summary>
     /// Sanitizes messages. The return string is sanitized.
     /// </summary>
-    private void SanitizeMessage<T>(T evt) where T : ChatAttemptEvent
+    private void SanitizeMessage<T>(T evt) where T : IChatEvent
     {
         var sanitize = new ChatSanitizationEvent<T>(evt);
         RaiseLocalEvent(sanitize);
