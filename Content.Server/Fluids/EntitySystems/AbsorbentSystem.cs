@@ -35,7 +35,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         base.Initialize();
         SubscribeLocalEvent<AbsorbentComponent, ComponentInit>(OnAbsorbentInit);
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<AbsorbentComponent, InteractNoHandEvent>(OnInteractNoHand);
+        SubscribeLocalEvent<AbsorbentComponent, UserActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<AbsorbentComponent, SolutionContainerChangedEvent>(OnAbsorbentSolutionChange);
     }
 
@@ -85,12 +85,12 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         Dirty(uid, component);
     }
 
-    private void OnInteractNoHand(EntityUid uid, AbsorbentComponent component, InteractNoHandEvent args)
+    private void OnActivateInWorld(EntityUid uid, AbsorbentComponent component, UserActivateInWorldEvent args)
     {
-        if (args.Handled || args.Target == null)
+        if (args.Handled)
             return;
 
-        Mop(uid, args.Target.Value, uid, component);
+        Mop(uid, args.Target, uid, component);
         args.Handled = true;
     }
 

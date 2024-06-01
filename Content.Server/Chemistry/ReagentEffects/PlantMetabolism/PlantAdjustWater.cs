@@ -7,6 +7,8 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [UsedImplicitly]
     public sealed partial class PlantAdjustWater : PlantAdjustAttribute
     {
+        public override string GuidebookAttributeName { get; set; } = "plant-attribute-water";
+
         public override void Effect(ReagentEffectArgs args)
         {
             if (!CanMetabolize(args.SolutionEntity, out var plantHolderComp, args.EntityManager, mustHaveAlivePlant: false))

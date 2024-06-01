@@ -222,5 +222,64 @@ Entries:
   id: 28
   time: '2024-05-12T15:07:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27883
+- author: Arimah and TsjipTsjip
+  changes:
+  - message: Universal access configurator which can modify all access levels with
+      the correct ID card.
+    type: Add
+  - message: Universal ID card which has all access levels.
+    type: Add
+  - message: Admin PDA's spawn with a universal ID card, admin ghosts get a universal
+      access configurator in their bluespace satchel.
+    type: Tweak
+  id: 29
+  time: '2024-05-19T23:04:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28107
+- author: Repo
+  changes:
+  - message: Added listgamerules command, lists all run game modes for the round.
+    type: Add
+  - message: Added admin anouncement for addgamerule
+    type: Add
+  - message: Gamemode now shows after starting round.
+    type: Fix
+  id: 30
+  time: '2024-05-25T20:18:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28178
+- author: Repo
+  changes:
+  - message: Option to admin or play on observe for admins
+    type: Tweak
+  - message: de-admin on late join
+    type: Fix
+  id: 31
+  time: '2024-05-28T18:00:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28319
+- author: ShadowCommander
+  changes:
+  - message: Added a search bar to the admin menu player tab.
+    type: Add
+  - message: Changed the player tab entry tooltip to be the player name, character
+      name, identity, and job. Moved the time tooltip to the header.
+    type: Tweak
+  id: 32
+  time: '2024-05-31T06:28:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28030
+- author: Geekyhobo
+  changes:
+  - message: Added a PII admin flag to hide personal identification information.
+    type: Add
+  id: 33
+  time: '2024-06-01T07:23:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27776
+- author: ShadowCommander, EmoGarbage
+  changes:
+  - message: 'Added new permissions: moderator, adminwho, and namecolor'
+    type: Add
+  - message: Changed various command perms from admin to moderator & fun.
+    type: Tweak
+  id: 34
+  time: '2024-06-01T08:14:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28451
 Name: Admin
 Order: 1
