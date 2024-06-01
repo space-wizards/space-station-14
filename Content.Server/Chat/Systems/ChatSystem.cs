@@ -823,7 +823,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 recipients.Add(player, new ICChatRecipientData(-1, true));
         }
 
-        RaiseLocalEvent(new ExpandICChatRecipientstEvent(source, voiceGetRange, recipients));
+        RaiseLocalEvent(new ExpandICChatRecipientsEvent(source, voiceGetRange, recipients));
         return recipients;
     }
 
@@ -868,7 +868,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 ///     This event is raised before chat messages are sent out to clients. This enables some systems to send the chat
 ///     messages to otherwise out-of view entities (e.g. for multiple viewports from cameras).
 /// </summary>
-public record ExpandICChatRecipientstEvent(EntityUid Source, float VoiceRange, Dictionary<ICommonSession, ChatSystem.ICChatRecipientData> Recipients)
+public record ExpandICChatRecipientsEvent(EntityUid Source, float VoiceRange, Dictionary<ICommonSession, ChatSystem.ICChatRecipientData> Recipients)
 {
 }
 
