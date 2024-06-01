@@ -108,21 +108,9 @@ public sealed partial class LatheMenu : DefaultWindow
         RecipeList.Children.Clear();
         foreach (var prototype in sortedRecipesToShow)
         {
-            List<Texture> textures;
-            if (_prototypeManager.TryIndex(prototype.Result, out EntityPrototype? entityProto) && entityProto != null)
-            {
-                textures = SpriteComponent.GetPrototypeTextures(entityProto, _resources).Select(o => o.Default).ToList();
-            }
-            else
-            {
-                textures = prototype.Icon == null
-                    ? new List<Texture> { _spriteSystem.GetPrototypeIcon(prototype.Result).Default }
-                    : new List<Texture> { _spriteSystem.Frame0(prototype.Icon) };
-            }
-
             var canProduce = _lathe.CanProduce(_owner, prototype, quantity);
 
-            var control = new RecipeControl(prototype, () => GenerateTooltipText(prototype), canProduce, textures);
+            var control = new RecipeControl(prototype, () => GenerateTooltipText(prototype), canProduce, GetTexturesFromProto(prototype));
             control.OnButtonPressed += s =>
             {
                 if (!int.TryParse(AmountLineEdit.Text, out var amount) || amount <= 0)
