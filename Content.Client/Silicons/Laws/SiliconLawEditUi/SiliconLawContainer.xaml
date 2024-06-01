@@ -1,0 +1,25 @@
+﻿<BoxContainer
+    xmlns="https://spacestation14.io"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    HorizontalExpand="True"
+    Orientation="Vertical"
+    >
+    <PanelContainer
+        Margin="20 10 0 0"
+        MinHeight="128"
+    >
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BackgroundColor="#1B1B1B"></graphics:StyleBoxFlat>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Horizontal" SeparationOverride="5">
+            <Label StyleClasses="SiliconLawPositionLabel" Name="PositionText" Margin="5 0 0 0"></Label>
+            <TextEdit Name="LawContent" HorizontalExpand="True" Editable="True" MinWidth="500" MinHeight="80"></TextEdit>
+        </BoxContainer>
+    </PanelContainer>
+    <BoxContainer Orientation="Horizontal" Margin="0 5 0 0" MaxHeight="64" Align="Center">
+        <Button Name="MoveUp" Text="{Loc silicon-law-ui-minus-one}" StyleClasses="OpenRight"></Button>
+        <Button Name="MoveDown" Text="{Loc silicon-law-ui-plus-one}" StyleClasses="OpenBoth"></Button>
+        <Button Name="Delete" Text="{Loc silicon-law-ui-delete}" StyleClasses="OpenLeft"></Button>
+        <CheckBox Name="Corrupted" Text="{Loc silicon-law-ui-check-corrupted}" ToolTip="{Loc silicon-law-ui-check-corrupted-tooltip}"></CheckBox>
+    </BoxContainer>
+</BoxContainer>
