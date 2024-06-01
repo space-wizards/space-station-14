@@ -102,7 +102,8 @@ public sealed partial class PowerMonitoringWindow
         button.ToolTip = Loc.GetString(name);
 
         // Update power value
-        button.PowerValue.Text = Loc.GetString("power-monitoring-window-value", ("value", entry.PowerValue));
+        // Don't use SI prefixes, just give the number in W, so that it is readily apparent which consumer is using a lot of power.
+        button.PowerValue.Text = Loc.GetString("power-monitoring-window-button-value", ("value", Math.Round(entry.PowerValue).ToString("N0")));
     }
 
     private void UpdateEntrySourcesOrLoads(BoxContainer masterContainer, BoxContainer currentContainer, PowerMonitoringConsoleEntry[]? entries, SpriteSpecifier.Texture icon)
@@ -480,6 +481,7 @@ public sealed class PowerMonitoringButton : Button
         PowerValue = new Label()
         {
             HorizontalAlignment = HAlignment.Right,
+            Align = Label.AlignMode.Right,
             SetWidth = 72f,
             Margin = new Thickness(10, 0, 0, 0),
             ClipText = true,

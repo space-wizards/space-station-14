@@ -142,11 +142,10 @@
 - type: entity
   parent: BaseMobDragon
   id: MobDragon
+  suffix: No role or objectives
   components:
   - type: Dragon
     spawnRiftAction: ActionSpawnRift
-  - type: GenericAntag
-    rule: Dragon
   - type: ActionGun
     action: ActionDragonsBreath
     gunProto: DragonsBreathGun

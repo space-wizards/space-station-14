@@ -14,9 +14,11 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
+using Content.Shared.Roles;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Database
@@ -1575,6 +1577,65 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             }
 
             return bans;
+        }
+
+        #endregion
+
+        #region Job Whitelists
+
+        public async Task<bool> AddJobWhitelist(Guid player, ProtoId<JobPrototype> job)
+        {
+            await using var db = await GetDb();
+            var exists = await db.DbContext.RoleWhitelists
+                .Where(w => w.PlayerUserId == player)
+                .Where(w => w.RoleId == job.Id)
+                .AnyAsync();
+
+            if (exists)
+                return false;
+
+            var whitelist = new RoleWhitelist
+            {
+                PlayerUserId = player,
+                RoleId = job
+            };
+            db.DbContext.RoleWhitelists.Add(whitelist);
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<string>> GetJobWhitelists(Guid player, CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+            return await db.DbContext.RoleWhitelists
+                .Where(w => w.PlayerUserId == player)
+                .Select(w => w.RoleId)
+                .ToListAsync(cancellationToken: cancel);
+        }
+
+        public async Task<bool> IsJobWhitelisted(Guid player, ProtoId<JobPrototype> job)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.RoleWhitelists
+                .Where(w => w.PlayerUserId == player)
+                .Where(w => w.RoleId == job.Id)
+                .AnyAsync();
+        }
+
+        public async Task<bool> RemoveJobWhitelist(Guid player, ProtoId<JobPrototype> job)
+        {
+            await using var db = await GetDb();
+            var entry = await db.DbContext.RoleWhitelists
+                .Where(w => w.PlayerUserId == player)
+                .Where(w => w.RoleId == job.Id)
+                .SingleOrDefaultAsync();
+
+            if (entry == null)
+                return false;
+
+            db.DbContext.RoleWhitelists.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
+            return true;
         }
 
         #endregion
