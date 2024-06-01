@@ -59,7 +59,7 @@ namespace Content.IntegrationTests.Tests.Tag
             {
                 sTagDummy = sEntityManager.SpawnEntity(TagEntityId, MapCoordinates.Nullspace);
                 sTagComponent = sEntityManager.GetComponent<TagComponent>(sTagDummy);
-                sTagEntity = new Entity<TagComponent>(sTagDummy, sTagEntity);
+                sTagEntity = new Entity<TagComponent>(sTagDummy, sTagComponent);
             });
 
             await server.WaitAssertion(() =>
