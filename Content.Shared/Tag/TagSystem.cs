@@ -3,6 +3,17 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Tag;
 
+/// <summary>
+/// The system that is responsible for working with tags.
+/// Checking the existence of the <see cref="TagPrototype"/> only happens in DEBUG builds,
+/// to improve performance, so don't forget to check it.
+/// </summary>
+/// <summary>
+/// The methods to add or remove a list of tags have only an implementation with the <see cref="IEnumerable{T}"/> type,
+/// it's not much, but it takes away performance,
+/// if you need to use them often, it's better to make a proper implementation,
+/// you can read more <a href="https://github.com/space-wizards/space-station-14/pull/28272">HERE</a>.
+/// </summary>
 public sealed class TagSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -157,7 +168,38 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(EntityUid entityUid, params ProtoId<TagPrototype>[] tags)
     {
-        return HasAllTags(entityUid, (IEnumerable<ProtoId<TagPrototype>>)tags);
+        return _tagQuery.TryComp(entityUid, out var component) &&
+               HasAllTags(component, tags);
+    }
+
+    /// <summary>
+    /// Checks if all of the given tags have been added to an entity.
+    /// </summary>
+    /// <returns>
+    /// true if they all exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAllTags(EntityUid entityUid, HashSet<ProtoId<TagPrototype>> tags)
+    {
+        return _tagQuery.TryComp(entityUid, out var component) &&
+               HasAllTags(component, tags);
+    }
+
+    /// <summary>
+    /// Checks if all of the given tags have been added to an entity.
+    /// </summary>
+    /// <returns>
+    /// true if they all exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAllTags(EntityUid entityUid, List<ProtoId<TagPrototype>> tags)
+    {
+        return _tagQuery.TryComp(entityUid, out var component) &&
+               HasAllTags(component, tags);
     }
 
     /// <summary>
@@ -198,7 +240,38 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(EntityUid entityUid, params ProtoId<TagPrototype>[] tags)
     {
-        return HasAnyTag(entityUid, (IEnumerable<ProtoId<TagPrototype>>)tags);
+        return _tagQuery.TryComp(entityUid, out var component) &&
+               HasAnyTag(component, tags);
+    }
+
+    /// <summary>
+    /// Checks if any of the given tags have been added to an entity.
+    /// </summary>
+    /// <returns>
+    /// true if any of them exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAnyTag(EntityUid entityUid, HashSet<ProtoId<TagPrototype>> tags)
+    {
+        return _tagQuery.TryComp(entityUid, out var component) &&
+               HasAnyTag(component, tags);
+    }
+
+    /// <summary>
+    /// Checks if any of the given tags have been added to an entity.
+    /// </summary>
+    /// <returns>
+    /// true if any of them exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAnyTag(EntityUid entityUid, List<ProtoId<TagPrototype>> tags)
+    {
+        return _tagQuery.TryComp(entityUid, out var component) &&
+               HasAnyTag(component, tags);
     }
 
     /// <summary>
@@ -256,7 +329,85 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(TagComponent component, params ProtoId<TagPrototype>[] tags)
     {
-        return HasAllTags(component, (IEnumerable<ProtoId<TagPrototype>>)tags);
+        foreach (var tag in tags)
+        {
+#if DEBUG
+            AssertValidTag(tag);
+#endif
+            if (!component.Tags.Contains(tag))
+                return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if all of the given tags have been added to an component.
+    /// </summary>
+    /// <returns>
+    /// true if they all exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAllTagsArray(TagComponent component, ProtoId<TagPrototype>[] tags)
+    {
+        foreach (var tag in tags)
+        {
+#if DEBUG
+            AssertValidTag(tag);
+#endif
+            if (!component.Tags.Contains(tag))
+                return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if all of the given tags have been added to an component.
+    /// </summary>
+    /// <returns>
+    /// true if they all exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAllTags(TagComponent component, List<ProtoId<TagPrototype>> tags)
+    {
+        foreach (var tag in tags)
+        {
+#if DEBUG
+            AssertValidTag(tag);
+#endif
+            if (!component.Tags.Contains(tag))
+                return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if all of the given tags have been added to an component.
+    /// </summary>
+    /// <returns>
+    /// true if they all exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAllTags(TagComponent component, HashSet<ProtoId<TagPrototype>> tags)
+    {
+        foreach (var tag in tags)
+        {
+#if DEBUG
+            AssertValidTag(tag);
+#endif
+            if (!component.Tags.Contains(tag))
+                return false;
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -305,7 +456,62 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(TagComponent component, params ProtoId<TagPrototype>[] tags)
     {
-        return HasAnyTag(component, (IEnumerable<ProtoId<TagPrototype>>) tags);
+        foreach (var tag in tags)
+        {
+#if DEBUG
+            AssertValidTag(tag);
+#endif
+            if (component.Tags.Contains(tag))
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Checks if any of the given tags have been added to an component.
+    /// </summary>
+    /// <returns>
+    /// true if any of them exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAnyTag(TagComponent component, HashSet<ProtoId<TagPrototype>> tags)
+    {
+        foreach (var tag in tags)
+        {
+#if DEBUG
+            AssertValidTag(tag);
+#endif
+            if (component.Tags.Contains(tag))
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Checks if any of the given tags have been added to an component.
+    /// </summary>
+    /// <returns>
+    /// true if any of them exist, false otherwise.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    /// Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAnyTag(TagComponent component, List<ProtoId<TagPrototype>> tags)
+    {
+        foreach (var tag in tags)
+        {
+#if DEBUG
+            AssertValidTag(tag);
+#endif
+            if (component.Tags.Contains(tag))
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>
