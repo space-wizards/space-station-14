@@ -106,8 +106,8 @@ public abstract class SharedImplanterSystem : EntitySystem
 
     protected bool CheckTarget(EntityUid target, EntityWhitelist? whitelist, EntityWhitelist? blacklist)
     {
-        return whitelist != null && _whitelist.IsValid(whitelist, target) &&
-            blacklist != null && !_whitelist.IsValid(blacklist, target);
+        return whitelist == null ? true : _whitelist.IsValid(whitelist, target) &&
+            (blacklist == null ? true : !_whitelist.IsValid(blacklist, target));
     }
 
     //Draw the implant out of the target

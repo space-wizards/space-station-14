@@ -32,7 +32,7 @@ public sealed partial class GatherableSystem : EntitySystem
 
     private void OnAttacked(Entity<GatherableComponent> gatherable, ref AttackedEvent args)
     {
-        if (gatherable.Comp.ToolWhitelist != null && !_whitelist.IsValid(gatherable.Comp.ToolWhitelist, args.Used))
+        if (gatherable.Comp.ToolWhitelist == null ? true : !_whitelist.IsValid(gatherable.Comp.ToolWhitelist, args.Used))
             return;
 
         Gather(gatherable, args.User);
@@ -43,7 +43,7 @@ public sealed partial class GatherableSystem : EntitySystem
         if (args.Handled || !args.Complex)
             return;
 
-        if (gatherable.Comp.ToolWhitelist != null && !_whitelist.IsValid(gatherable.Comp.ToolWhitelist, args.User))
+        if (gatherable.Comp.ToolWhitelist == null ? true : !_whitelist.IsValid(gatherable.Comp.ToolWhitelist, args.User))
             return;
 
         Gather(gatherable, args.User);

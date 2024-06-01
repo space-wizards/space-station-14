@@ -65,7 +65,7 @@ public sealed class DamageContactsSystem : EntitySystem
         if (HasComp<DamagedByContactComponent>(otherUid))
             return;
 
-        if (component.IgnoreWhitelist != null ? _whitelist.IsValid(component.IgnoreWhitelist, otherUid) : false)
+        if (component.IgnoreWhitelist == null ? false : _whitelist.IsValid(component.IgnoreWhitelist, otherUid))
             return;
 
         var damagedByContact = EnsureComp<DamagedByContactComponent>(otherUid);

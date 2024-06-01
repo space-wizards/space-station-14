@@ -115,10 +115,10 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!storable && !HasComp<BodyComponent>(entity))
             return false;
 
-        if (component.Blacklist != null && _whitelist.IsValid(component.Blacklist, entity))
+        if (component.Blacklist == null ? false : _whitelist.IsValid(component.Blacklist, entity))
             return false;
 
-        if (component.Whitelist != null && !_whitelist.IsValid(component.Whitelist, entity))
+        if (component.Whitelist == null ? true : !_whitelist.IsValid(component.Whitelist, entity))
             return false;
 
         if (TryComp<PhysicsComponent>(entity, out var physics) && (physics.CanCollide) || storable)

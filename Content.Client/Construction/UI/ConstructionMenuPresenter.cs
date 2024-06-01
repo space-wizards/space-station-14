@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Tag;
-using Content.Shared.Whitelist;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Placement;
@@ -29,7 +28,6 @@ namespace Content.Client.Construction.UI
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
         private readonly IConstructionMenuView _constructionView;
 
@@ -159,7 +157,7 @@ namespace Content.Client.Construction.UI
 
                 if (_playerManager.LocalSession == null
                 || _playerManager.LocalEntity == null
-                || (recipe.EntityWhitelist != null && _whitelist.IsValid(recipe.EntityWhitelist, _playerManager.LocalEntity.Value)))
+                || (recipe.EntityWhitelist != null && !recipe.EntityWhitelist.IsValid(_playerManager.LocalEntity.Value)))
                     continue;
 
                 if (!string.IsNullOrEmpty(search))

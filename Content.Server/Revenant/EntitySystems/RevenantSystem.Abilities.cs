@@ -333,10 +333,10 @@ public sealed partial class RevenantSystem
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
         {
-            if (component.MalfunctionWhitelist != null && !_whitelist.IsValid(component.MalfunctionWhitelist, ent))
+            if (component.MalfunctionWhitelist == null ? false : !_whitelist.IsValid(component.MalfunctionWhitelist, ent))
                 continue;
 
-            if (component.MalfunctionBlacklist != null && _whitelist.IsValid(component.MalfunctionBlacklist, ent))
+            if (component.MalfunctionBlacklist == null ? false : _whitelist.IsValid(component.MalfunctionBlacklist, ent))
                 continue;
 
             _emag.DoEmagEffect(uid, ent); //it does not emag itself. adorable.

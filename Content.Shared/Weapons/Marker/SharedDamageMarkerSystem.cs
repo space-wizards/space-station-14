@@ -60,7 +60,7 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
         if (!args.OtherFixture.Hard ||
             args.OurFixtureId != SharedProjectileSystem.ProjectileFixture ||
             component.Amount <= 0 ||
-            component.Whitelist != null && !_whitelist.IsValid(component.Whitelist, args.OtherEntity) ||
+            (component.Whitelist == null ? false : !_whitelist.IsValid(component.Whitelist, args.OtherEntity)) ||
             !TryComp<ProjectileComponent>(uid, out var projectile) ||
             projectile.Weapon == null)
         {

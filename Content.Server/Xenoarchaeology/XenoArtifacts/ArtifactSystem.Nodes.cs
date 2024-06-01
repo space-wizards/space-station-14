@@ -82,8 +82,8 @@ public sealed partial class ArtifactSystem
     private string GetRandomTrigger(EntityUid artifact, ref ArtifactNode node)
     {
         var allTriggers = _prototype.EnumeratePrototypes<ArtifactTriggerPrototype>()
-            .Where(x => (x.Whitelist != null ? _whitelist.IsValid(x.Whitelist, artifact) : true) &&
-            x.Blacklist != null ? !_whitelist.IsValid(x.Blacklist, artifact) : true).ToList();
+            .Where(x => (x.Whitelist == null ? true : _whitelist.IsValid(x.Whitelist, artifact)) &&
+            (x.Blacklist == null ? true : !_whitelist.IsValid(x.Blacklist, artifact))).ToList();
         var validDepth = allTriggers.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
@@ -97,8 +97,8 @@ public sealed partial class ArtifactSystem
     private string GetRandomEffect(EntityUid artifact, ref ArtifactNode node)
     {
         var allEffects = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>()
-            .Where(x => (x.Whitelist != null ? _whitelist.IsValid(x.Whitelist, artifact) : true) &&
-            x.Blacklist != null ? !_whitelist.IsValid(x.Blacklist, artifact) : true).ToList();
+            .Where(x => (x.Whitelist == null ? true : _whitelist.IsValid(x.Whitelist, artifact)) &&
+            (x.Blacklist == null ? true : !_whitelist.IsValid(x.Blacklist, artifact))).ToList();
         var validDepth = allEffects.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);

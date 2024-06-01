@@ -29,7 +29,7 @@ public sealed partial class NPCImprintingOnSpawnBehaviourSystem : SharedNPCImpri
 
         foreach (var friend in friends)
         {
-            if (imprinting.Comp.Whitelist != null && _whitelist.IsValid(imprinting.Comp.Whitelist, friend))
+            if (imprinting.Comp.Whitelist == null ? true : _whitelist.IsValid(imprinting.Comp.Whitelist, friend))
             {
                 AddImprintingTarget(imprinting, friend, imprinting.Comp);
             }

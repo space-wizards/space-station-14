@@ -51,8 +51,8 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     /// </summary>
     public bool IsInvalid(ChameleonProjectorComponent comp, EntityUid target)
     {
-        return (comp.Whitelist != null && !_whitelist.IsValid(comp.Whitelist, target))
-            || (comp.Blacklist != null && _whitelist.IsValid(comp.Blacklist, target));
+        return comp.Whitelist == null ? false : !_whitelist.IsValid(comp.Whitelist, target)
+            || comp.Blacklist == null ? false : _whitelist.IsValid(comp.Blacklist, target);
     }
 
     /// <summary>

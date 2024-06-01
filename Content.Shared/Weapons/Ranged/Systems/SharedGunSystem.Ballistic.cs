@@ -44,9 +44,8 @@ public abstract partial class SharedGunSystem
         if (args.Handled)
             return;
 
-        if (component.Whitelist != null)
-            if (!_whitelist.IsValid(component.Whitelist, args.Used))
-                return;
+        if (component.Whitelist == null ? true : !_whitelist.IsValid(component.Whitelist, args.Used))
+            return;
 
         if (GetBallisticShots(component) >= component.Capacity)
             return;

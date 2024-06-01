@@ -268,8 +268,8 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.ContainerSlot == null)
                 return false;
 
-            if ((slot.Whitelist != null ? !_whitelist.IsValid(slot.Whitelist, usedUid) : false) ||
-                (slot.Blacklist != null ? _whitelist.IsValid(slot.Blacklist, usedUid) : false))
+            if ((slot.Whitelist == null ? false : !_whitelist.IsValid(slot.Whitelist, usedUid)) ||
+                (slot.Blacklist == null ? false : _whitelist.IsValid(slot.Blacklist, usedUid)))
             {
                 if (popup.HasValue && slot.WhitelistFailPopup.HasValue)
                     _popupSystem.PopupClient(Loc.GetString(slot.WhitelistFailPopup), uid, popup.Value);

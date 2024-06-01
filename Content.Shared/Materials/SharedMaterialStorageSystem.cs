@@ -123,7 +123,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (!CanTakeVolume(uid, volume, component))
             return false;
 
-        if (component.MaterialWhiteList != null && !component.MaterialWhiteList.Contains(materialId))
+        if (component.MaterialWhiteList == null ? true : !_whitelist.IsValid(component.MaterialWhiteList, materialId))
             return false;
 
         var amount = component.Storage.GetValueOrDefault(materialId);
@@ -241,7 +241,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (!Resolve(toInsert, ref material, ref composition, false))
             return false;
 
-        if (storage.Whitelist != null && !_whitelist.IsValid(storage.Whitelist, toInsert))
+        if (storage.Whitelist == null ? false : !_whitelist.IsValid(storage.Whitelist, toInsert))
             return false;
 
         if (HasComp<UnremoveableComponent>(toInsert))

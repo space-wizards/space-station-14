@@ -861,13 +861,13 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
         }
 
-        if (storageComp.Whitelist != null && !_whitelist.IsValid(storageComp.Whitelist, insertEnt))
+        if (storageComp.Whitelist == null ? false : !_whitelist.IsValid(storageComp.Whitelist, insertEnt))
         {
             reason = "comp-storage-invalid-container";
             return false;
         }
 
-        if (storageComp.Blacklist != null && _whitelist.IsValid(storageComp.Blacklist, insertEnt))
+        if (storageComp.Blacklist == null ? false : _whitelist.IsValid(storageComp.Blacklist, insertEnt))
         {
             reason = "comp-storage-invalid-container";
             return false;

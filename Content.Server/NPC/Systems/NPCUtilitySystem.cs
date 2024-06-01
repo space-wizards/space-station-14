@@ -251,7 +251,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
                 }
 
-                if (heldGun.Whitelist != null && !_whitelist.IsValid(heldGun.Whitelist, targetUid))
+                if (heldGun.Whitelist == null ? true : !_whitelist.IsValid(heldGun.Whitelist, targetUid))
                 {
                     return 0f;
                 }

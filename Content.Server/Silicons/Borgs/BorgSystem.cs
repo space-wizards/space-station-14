@@ -91,7 +91,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     private void OnChassisInteractUsing(EntityUid uid, BorgChassisComponent component, AfterInteractUsingEvent args)
     {
-        if (!args.CanReach || args.Handled || uid == args.User )
+        if (!args.CanReach || args.Handled || uid == args.User)
             return;
 
         var used = args.Used;
@@ -109,8 +109,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         if (component.BrainEntity == null &&
             brain != null &&
-            component.BrainWhitelist != null &&
-            _whitelist.IsValid(component.BrainWhitelist, used))
+            (component.BrainWhitelist == null ? true : _whitelist.IsValid(component.BrainWhitelist, used)))
         {
             if (_mind.TryGetMind(used, out _, out var mind) && mind.Session != null)
             {

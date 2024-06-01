@@ -32,7 +32,7 @@ public sealed class PickRandomSystem : EntitySystem
 
         var user = args.User;
 
-        var enabled = storage.Container.ContainedEntities.Any(item => comp.Whitelist != null ? _whitelist.IsValid(comp.Whitelist, item) : true);
+        var enabled = storage.Container.ContainedEntities.Any(item => comp.Whitelist == null ? true : _whitelist.IsValid(comp.Whitelist, item));
 
         // alt-click / alt-z to pick an item
         args.Verbs.Add(new AlternativeVerb
@@ -50,7 +50,7 @@ public sealed class PickRandomSystem : EntitySystem
 
     private void TryPick(EntityUid uid, PickRandomComponent comp, StorageComponent storage, EntityUid user)
     {
-        var entities = storage.Container.ContainedEntities.Where(item => comp.Whitelist != null ? _whitelist.IsValid(comp.Whitelist, item) : true).ToArray();
+        var entities = storage.Container.ContainedEntities.Where(item => comp.Whitelist == null ? true : _whitelist.IsValid(comp.Whitelist, item)).ToArray();
 
         if (!entities.Any())
             return;

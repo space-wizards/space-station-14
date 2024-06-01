@@ -184,7 +184,7 @@ public sealed class SmartEquipSystem : EntitySystem
             foreach (var slot in slots.Slots.Values)
             {
                 if (!slot.HasItem
-                    && (slot.Whitelist != null ? _whitelist.IsValid(slot.Whitelist, handItem.Value) : true)
+                    && (slot.Whitelist == null ? true : _whitelist.IsValid(slot.Whitelist, handItem.Value))
                     && slot.Priority > (toInsertTo?.Priority ?? int.MinValue))
                 {
                     toInsertTo = slot;

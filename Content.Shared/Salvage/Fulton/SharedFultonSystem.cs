@@ -178,7 +178,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
         if (!CanFulton(targetUid))
             return false;
 
-        if (component.Whitelist != null && !_whitelist.IsValid(component.Whitelist, targetUid))
+        if (component.Whitelist == null ? true : !_whitelist.IsValid(component.Whitelist, targetUid))
             return false;
 
         return true;
