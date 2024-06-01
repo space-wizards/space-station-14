@@ -32,7 +32,7 @@ namespace Content.Client.Construction.UI
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         private readonly IConstructionMenuView _constructionView;
-        private readonly EntityWhitelistSystem _whitelist;
+        private readonly EntityWhitelistSystem _whitelistSystem;
 
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
@@ -161,7 +161,7 @@ namespace Content.Client.Construction.UI
 
                 if (_playerManager.LocalSession == null
                 || _playerManager.LocalEntity == null
-                || (recipe.EntityWhitelist == null ? false : !_whitelist.IsValid(recipe.EntityWhitelist, _playerManager.LocalEntity.Value)))
+                || _whitelistSystem.IsWhitelistFail(recipe.EntityWhitelist, _playerManager.LocalEntity.Value))
                     continue;
 
                 if (!string.IsNullOrEmpty(search))

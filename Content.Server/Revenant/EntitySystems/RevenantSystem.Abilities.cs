@@ -41,7 +41,7 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
     [Dependency] private readonly TileSystem _tile = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     private void InitializeAbilities()
     {
@@ -333,10 +333,8 @@ public sealed partial class RevenantSystem
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
         {
-            if (component.MalfunctionWhitelist == null ? false : !_whitelist.IsValid(component.MalfunctionWhitelist, ent))
-                continue;
-
-            if (component.MalfunctionBlacklist == null ? false : _whitelist.IsValid(component.MalfunctionBlacklist, ent))
+            if (_whitelistSystem.IsWhitelistFail(component.MalfunctionWhitelist, ent) ||
+                _whitelistSystem.IsBlacklistPass(component.MalfunctionBlacklist, ent))
                 continue;
 
             _emag.DoEmagEffect(uid, ent); //it does not emag itself. adorable.

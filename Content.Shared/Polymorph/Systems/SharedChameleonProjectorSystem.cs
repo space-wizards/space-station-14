@@ -19,7 +19,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ISerializationManager _serMan = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -51,8 +51,8 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     /// </summary>
     public bool IsInvalid(ChameleonProjectorComponent comp, EntityUid target)
     {
-        return comp.Whitelist == null ? false : !_whitelist.IsValid(comp.Whitelist, target)
-            || comp.Blacklist == null ? false : _whitelist.IsValid(comp.Blacklist, target);
+        return _whitelistSystem.IsWhitelistFail(comp.Whitelist, target)
+            || _whitelistSystem.IsBlacklistPass(comp.Blacklist, target);
     }
 
     /// <summary>
