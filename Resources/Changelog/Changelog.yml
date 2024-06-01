@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nairodian
-  changes:
-  - message: Added a new red neck gaiter to the AutoDrobe.
-    type: Add
-  id: 6159
-  time: '2024-03-15T10:11:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25891
 - author: Tayrtahn
   changes:
   - message: Reflected tranquilizer rounds no longer inject the character who reflected
@@ -3853,3 +3846,10 @@
   id: 6658
   time: '2024-06-01T04:58:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28101
+- author: notafet
+  changes:
+  - message: Increase power output from Tesla coils.
+    type: Tweak
+  id: 6659
+  time: '2024-06-01T05:51:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28424
