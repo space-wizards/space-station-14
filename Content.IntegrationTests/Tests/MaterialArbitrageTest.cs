@@ -61,7 +61,7 @@ public sealed class MaterialArbitrageTest
 
         // Lets assume the possible lathe for resource multipliers:
         // TODO: each recipe can technically have its own cost multiplier associated with it, so this test needs redone to factor that in.
-        var multiplier = MathF.Pow(0.85f, 4);
+        var multiplier = MathF.Pow(0.85f, 3);
 
         // create construction dictionary
         Dictionary<string, ConstructionComponent> constructionRecipes = new();
