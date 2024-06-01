@@ -24,9 +24,8 @@
       prototype: ParticleAcceleratorFuelChamberUnfinished
       componentRequirements:
         AmeFuelContainer:
-          Amount: 1
-          DefaultPrototype: AmeJar
-          ExamineName: AME Fuel Jar
+          amount: 1
+          defaultPrototype: AmeJar
       materialRequirements:
         Glass: 10
         Steel: 10

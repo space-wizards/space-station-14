@@ -6,10 +6,9 @@
   components:
     - type: MachineBoard
       prototype: Autolathe
-      requirements:
+      materialRequirements:
         MatterBin: 3
         Manipulator: 1
-      materialRequirements:
         Glass: 1
 
 - type: entity
@@ -20,15 +19,13 @@
   components:
   - type: MachineBoard
     prototype: AutolatheHyperConvection
-    requirements:
-      MatterBin: 3
     materialRequirements:
+      MatterBin: 3
       Glass: 1
     tagRequirements:
       Igniter:
-        Amount: 1
-        DefaultPrototype: Igniter
-        ExamineName: Igniter
+        amount: 1
+        defaultPrototype: Igniter
 
 - type: entity
   id: ProtolatheMachineCircuitboard
@@ -38,14 +35,13 @@
   components:
     - type: MachineBoard
       prototype: Protolathe
-      requirements:
+      materialRequirements:
         MatterBin: 2
         Manipulator: 2
       tagRequirements:
         GlassBeaker:
-          Amount: 2
-          DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          amount: 2
+          defaultPrototype: Beaker
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -55,17 +51,15 @@
   components:
   - type: MachineBoard
     prototype: ProtolatheHyperConvection
-    requirements:
+    materialRequirements:
       MatterBin: 2
     tagRequirements:
       GlassBeaker:
-        Amount: 2
-        DefaultPrototype: Beaker
-        ExamineName: Glass Beaker
+        amount: 2
+        defaultPrototype: Beaker
       Igniter:
-        Amount: 1
-        DefaultPrototype: Igniter
-        ExamineName: Igniter
+        amount: 1
+        defaultPrototype: Igniter
 
 - type: entity
   id: BiofabricatorMachineCircuitboard
@@ -75,9 +69,8 @@
   components:
     - type: MachineBoard
       prototype: Biofabricator
-      requirements:
-        MatterBin: 4
       materialRequirements:
+        MatterBin: 4
         Glass: 1
 
 - type: entity
@@ -90,14 +83,13 @@
       state: security
     - type: MachineBoard
       prototype: SecurityTechFab
-      requirements:
+      materialRequirements:
         MatterBin: 2
         Manipulator: 2
       tagRequirements:
         GlassBeaker:
-          Amount: 2
-          DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          amount: 2
+          defaultPrototype: Beaker
 
 - type: entity
   id: AmmoTechFabCircuitboard
@@ -109,7 +101,7 @@
       state: security
     - type: MachineBoard
       prototype: AmmoTechFab
-      requirements:
+      materialRequirements:
         MatterBin: 1
         Manipulator: 1
 
@@ -123,14 +115,13 @@
       state: medical
     - type: MachineBoard
       prototype: MedicalTechFab
-      requirements:
+      materialRequirements:
         MatterBin: 2
         Manipulator: 2
       tagRequirements:
         GlassBeaker:
-          Amount: 2
-          DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          amount: 2
+          defaultPrototype: Beaker
     - type: StealTarget
       stealGroup: MedicalTechFabCircuitboard
 
@@ -143,14 +134,13 @@
     state: science
   - type: MachineBoard
     prototype: CircuitImprinter
-    requirements:
+    materialRequirements:
       MatterBin: 1
       Manipulator: 1
     tagRequirements:
       GlassBeaker:
-        Amount: 2
-        DefaultPrototype: Beaker
-        ExamineName: Glass Beaker
+        amount: 2
+        defaultPrototype: Beaker
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -162,17 +152,15 @@
     state: science
   - type: MachineBoard
     prototype: CircuitImprinterHyperConvection
-    requirements:
+    materialRequirements:
       MatterBin: 2
     tagRequirements:
       GlassBeaker:
-        Amount: 2
-        DefaultPrototype: Beaker
-        ExamineName: Glass Beaker
+        amount: 2
+        defaultPrototype: Beaker
       Igniter:
-        Amount: 1
-        DefaultPrototype: Igniter
-        ExamineName: Igniter
+        amount: 1
+        defaultPrototype: Igniter
 
 - type: entity
   id: ExosuitFabricatorMachineCircuitboard
@@ -183,10 +171,9 @@
     state: science
   - type: MachineBoard
     prototype: ExosuitFabricator
-    requirements:
+    materialRequirements:
       MatterBin: 1
       Manipulator: 3
-    materialRequirements:
       Glass: 5
   - type: GuideHelp
     guides:
@@ -213,7 +200,7 @@
   components:
   - type: MachineBoard
     prototype: UniformPrinter
-    requirements:
+    materialRequirements:
       MatterBin: 1
       Manipulator: 2
 
@@ -226,16 +213,14 @@
     state: medical
   - type: MachineBoard
     prototype: Vaccinator
-    requirements:
+    materialRequirements:
       MatterBin: 1
       Manipulator: 1
-    materialRequirements:
       Cable: 5
     tagRequirements:
         GlassBeaker:
-          Amount: 1
-          DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          amount: 1
+          defaultPrototype: Beaker
 
 - type: entity
   id: DiagnoserMachineCircuitboard
@@ -250,14 +235,12 @@
       Cable: 5
     tagRequirements:
       GlassBeaker:
-        Amount: 1
-        DefaultPrototype: Beaker
-        ExamineName: Glass Beaker
+        amount: 1
+        defaultPrototype: Beaker
     componentRequirements:
       DiseaseSwab:
-        Amount: 1
-        DefaultPrototype: DiseaseSwab
-        ExamineName: Swab
+        amount: 1
+        defaultPrototype: DiseaseSwab
 
 - type: entity
   id: ArtifactAnalyzerMachineCircuitboard
@@ -269,10 +252,9 @@
       state: science
     - type: MachineBoard
       prototype: MachineArtifactAnalyzer
-      requirements:
+      materialRequirements:
         Manipulator: 3
         Capacitor: 1
-      materialRequirements:
         Glass: 5
 
 - type: entity
@@ -285,9 +267,8 @@
     state: science
   - type: MachineBoard
     prototype: MachineArtifactCrusher
-    requirements:
-      Manipulator: 2
     materialRequirements:
+      Manipulator: 2
       Glass: 1
       Steel: 5
 
@@ -301,9 +282,8 @@
       state: science
     - type: MachineBoard
       prototype: MachineAnomalyVessel
-      requirements:
-        Capacitor: 3
       materialRequirements:
+        Capacitor: 3
         Cable: 1
         PlasmaGlass: 10
 
@@ -317,9 +297,8 @@
     state: science
   - type: MachineBoard
     prototype: MachineAnomalyVesselExperimental
-    requirements:
-      Capacitor: 3
     materialRequirements:
+      Capacitor: 3
       Cable: 5
       PlasmaGlass: 15
       MetalRod: 4
@@ -334,10 +313,9 @@
       state: science
     - type: MachineBoard
       prototype: MachineAnomalySynchronizer
-      requirements:
+      materialRequirements:
         Manipulator: 2
         Capacitor: 5
-      materialRequirements:
         PlasmaGlass: 5
         Cable: 5
 
@@ -351,9 +329,8 @@
       state: science
     - type: MachineBoard
       prototype: MachineAPE
-      requirements:
-        Capacitor: 2
       materialRequirements:
+        Capacitor: 2
         Cable: 1
         Glass: 1
 
@@ -367,10 +344,9 @@
     state: engineering
   - type: MachineBoard
     prototype: GasThermoMachineFreezer
-    requirements:
+    materialRequirements:
       MatterBin: 2
       Capacitor: 2
-    materialRequirements:
       Cable: 5
   - type: Construction
     deconstructionTarget: null
@@ -387,10 +363,9 @@
     state: engineering
   - type: MachineBoard
     prototype: GasThermoMachineHeater
-    requirements:
+    materialRequirements:
       MatterBin: 2
       Capacitor: 2
-    materialRequirements:
       Cable: 5
   - type: Construction
     graph: ThermomachineBoard
@@ -407,10 +382,9 @@
     state: engineering
   - type: MachineBoard
     prototype: GasThermoMachineHellfireFreezer
-    requirements:
+    materialRequirements:
       MatterBin: 2
       Capacitor: 2
-    materialRequirements:
       Plasma: 1
   - type: Construction
     deconstructionTarget: null
@@ -427,10 +401,9 @@
     state: engineering
   - type: MachineBoard
     prototype: GasThermoMachineHellfireHeater
-    requirements:
+    materialRequirements:
       MatterBin: 2
       Capacitor: 2
-    materialRequirements:
       Plasma: 1
   - type: Construction
     graph: ThermomachineBoard
@@ -447,9 +420,8 @@
     state: engineering
   - type: MachineBoard
     prototype: BaseGasCondenser
-    requirements:
-      MatterBin: 1
     materialRequirements:
+      MatterBin: 1
       Glass: 1
 
 - type: entity
@@ -462,10 +434,9 @@
     state: engineering
   - type: MachineBoard
     prototype: PortableScrubber
-    requirements:
+    materialRequirements:
       MatterBin: 1
       Manipulator: 2
-    materialRequirements:
       Cable: 5
       Glass: 2
 
@@ -479,10 +450,9 @@
     state: engineering
   - type: MachineBoard
     prototype: SpaceHeater
-    requirements:
+    materialRequirements:
       MatterBin: 1
       Capacitor: 2
-    materialRequirements:
       Cable: 5
 
 - type: entity
@@ -495,10 +465,9 @@
       state: medical
     - type: MachineBoard
       prototype: CloningPod
-      requirements:
+      materialRequirements:
         MatterBin: 2
         Manipulator: 2
-      materialRequirements:
         Glass: 1
         Cable: 1
 
@@ -512,9 +481,8 @@
       state: medical
     - type: MachineBoard
       prototype: MedicalScanner
-      requirements:
-        Capacitor: 1
       materialRequirements:
+        Capacitor: 1
         Glass: 5
         Cable: 1
 
@@ -554,16 +522,14 @@
       state: medical
     - type: MachineBoard
       prototype: ChemMaster
-      requirements:
-        Capacitor: 1
       materialRequirements:
+        Capacitor: 1
         Glass: 1
         Cable: 1
       tagRequirements:
         GlassBeaker:
-          Amount: 2
-          DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          amount: 2
+          defaultPrototype: Beaker
 
 - type: entity
   id: ChemDispenserMachineCircuitboard
@@ -575,16 +541,14 @@
       state: medical
     - type: MachineBoard
       prototype: ChemDispenserEmpty
-      requirements:
-        Capacitor: 1
       materialRequirements:
+        Capacitor: 1
         Glass: 1
         Steel: 3
       tagRequirements:
         GlassBeaker:
-          Amount: 2
-          DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          amount: 2
+          defaultPrototype: Beaker
 
 - type: entity
   id: BiomassReclaimerMachineCircuitboard
@@ -594,16 +558,15 @@
   components:
     - type: MachineBoard
       prototype: BiomassReclaimer
-      requirements:
+      materialRequirements:
         MatterBin: 2
         Manipulator: 1
+        Steel: 5
       tagRequirements:
         Knife:
-          Amount: 2
-          DefaultPrototype: KitchenKnife
-          ExamineName: Knife
-      materialRequirements:
-        Steel: 5
+          amount: 2
+          defaultPrototype: KitchenKnife
+          examineName: construction-insert-info-examine-name-knife
 
 - type: entity
   id: HydroponicsTrayMachineCircuitboard
@@ -621,9 +584,8 @@
         Cable: 2
       tagRequirements:
         GlassBeaker:
-          Amount: 2
-          DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          amount: 2
+          defaultPrototype: Beaker
 
 - type: entity
   id: SeedExtractorMachineCircuitboard
@@ -635,10 +597,9 @@
       state: service
     - type: MachineBoard
       prototype: SeedExtractor
-      requirements:
+      materialRequirements:
         Manipulator: 2
         Capacitor: 1
-      materialRequirements:
         # replacing the console screen
         Glass: 1
         Cable: 2
@@ -654,11 +615,13 @@
       state: power_mod
     - type: MachineBoard
       prototype: SMESBasicEmpty
-      requirements:
-        Capacitor: 1
-        PowerCell: 4
       materialRequirements:
+        Capacitor: 1
         CableHV: 10
+      componentRequirements:
+        PowerCell:
+          amount: 4
+          defaultPrototype: PowerCellSmall
 
 - type: entity
   id: CellRechargerCircuitboard
@@ -671,9 +634,8 @@
       state: charger_APC
     - type: MachineBoard
       prototype: PowerCellRecharger
-      requirements:
-        Capacitor: 2
       materialRequirements:
+        Capacitor: 2
         Cable: 5
     - type: PhysicalComposition
       materialComposition:
@@ -693,9 +655,8 @@
       state: charger_APC
     - type: MachineBoard
       prototype: PowerCageRecharger
-      requirements:
-        Capacitor: 4
       materialRequirements:
+        Capacitor: 4
         Steel: 5
         Cable: 10
     - type: PhysicalComposition
@@ -716,9 +677,8 @@
       state: charger_APC
     - type: MachineBoard
       prototype: BorgCharger
-      requirements:
-        Capacitor: 2
       materialRequirements:
+        Capacitor: 2
         Cable: 5
     - type: PhysicalComposition
       materialComposition:
@@ -738,9 +698,8 @@
       state: charger_APC
     - type: MachineBoard
       prototype: WeaponCapacitorRecharger
-      requirements:
-        Capacitor: 2
       materialRequirements:
+        Capacitor: 2
         CableMV: 5
     - type: PhysicalComposition
       materialComposition:
@@ -760,9 +719,8 @@
     state: charger_APC
   - type: MachineBoard
     prototype: TurboItemRecharger
-    requirements:
-      Capacitor: 2
     materialRequirements:
+      Capacitor: 2
       CableMV: 5
   - type: PhysicalComposition
     materialComposition:
@@ -777,12 +735,14 @@
   components:
     - type: MachineBoard
       prototype: SubstationBasicEmpty
-      requirements:
-        Capacitor: 1
-        PowerCell: 1
       materialRequirements:
+        Capacitor: 1
         CableMV: 5
         CableHV: 5
+      componentRequirements:
+        PowerCell:
+          amount: 1
+          defaultPrototype: PowerCellSmall
     - type: PhysicalComposition
       materialComposition:
         Glass: 200
@@ -804,25 +764,25 @@
       tagRequirements:
 #      One instrument to bring them all and in the darkness bind them...
        KeyedInstrument:
-          Amount: 1
-          DefaultPrototype: SynthesizerInstrument
-          ExamineName: Keyed Instrument
+          amount: 1
+          defaultPrototype: SynthesizerInstrument
+          examineName: construction-insert-info-examine-name-instrument-keyed
        StringInstrument:
-          Amount: 1
-          DefaultPrototype: AcousticGuitarInstrument
-          ExamineName: String Instrument
+          amount: 1
+          defaultPrototype: AcousticGuitarInstrument
+          examineName: construction-insert-info-examine-name-instrument-string
        PercussionInstrument:
-          Amount: 1
-          DefaultPrototype: GlockenspielInstrument
-          ExamineName: Percussion Instrument
+          amount: 1
+          defaultPrototype: GlockenspielInstrument
+          examineName: construction-insert-info-examine-name-instrument-percussion
        BrassInstrument:
-          Amount: 1
-          DefaultPrototype: TrumpetInstrument
-          ExamineName: Brass Instrument
+          amount: 1
+          defaultPrototype: TrumpetInstrument
+          examineName: construction-insert-info-examine-name-instrument-brass
        WoodwindInstrument:
-          Amount: 1
-          DefaultPrototype: SaxophoneInstrument
-          ExamineName: Woodwind Instrument
+          amount: 1
+          defaultPrototype: SaxophoneInstrument
+          examineName: construction-insert-info-examine-name-instrument-woodwind
 
 - type: entity
   id: PortableGeneratorPacmanMachineCircuitboard
@@ -833,9 +793,8 @@
       state: engineering
     - type: MachineBoard
       prototype: PortableGeneratorPacman
-      requirements:
-        Capacitor: 1
       materialRequirements:
+        Capacitor: 1
         CableHV: 5
     - type: PhysicalComposition
       materialComposition:
@@ -852,9 +811,8 @@
   components:
   - type: MachineBoard
     prototype: Thruster
-    requirements:
-      Capacitor: 4
     materialRequirements:
+      Capacitor: 4
       Steel: 5
 
 - type: entity
@@ -864,10 +822,9 @@
   components:
   - type: MachineBoard
     prototype: Gyroscope
-    requirements:
+    materialRequirements:
       Manipulator: 2
       Capacitor: 1
-    materialRequirements:
       Glass: 2
 
 - type: entity
@@ -879,9 +836,8 @@
       state: engineering
     - type: MachineBoard
       prototype: PortableGeneratorSuperPacman
-      requirements:
-        Capacitor: 2
       materialRequirements:
+        Capacitor: 2
         CableHV: 10
     - type: PhysicalComposition
       materialComposition:
@@ -900,9 +856,8 @@
       state: engineering
     - type: MachineBoard
       prototype: PortableGeneratorJrPacman
-      requirements:
-        Capacitor: 1
       materialRequirements:
+        Capacitor: 1
         Cable: 10
     - type: PhysicalComposition
       materialComposition:
@@ -920,14 +875,13 @@
   components:
     - type: MachineBoard
       prototype: KitchenReagentGrinder
-      requirements:
+      materialRequirements:
         MatterBin: 2
         Manipulator: 2
       tagRequirements:
         GlassBeaker:
-          Amount: 1
-          DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          amount: 1
+          defaultPrototype: Beaker
 
 - type: entity
   id: HotplateMachineCircuitboard
@@ -937,9 +891,8 @@
   components:
     - type: MachineBoard
       prototype: ChemistryHotplate
-      requirements:
-        Capacitor: 2
       materialRequirements:
+        Capacitor: 2
         Glass: 1
 
 - type: entity
@@ -950,9 +903,8 @@
   components:
   - type: MachineBoard
     prototype: KitchenElectricGrill
-    requirements:
-      Capacitor: 4
     materialRequirements:
+      Capacitor: 4
       Glass: 2
       Cable: 5
 
@@ -965,10 +917,9 @@
       state: medical
     - type: MachineBoard
       prototype: StasisBed
-      requirements:
+      materialRequirements:
         Capacitor: 1
         Manipulator: 1
-      materialRequirements:
         Cable: 3
         Steel: 2
 
@@ -982,9 +933,8 @@
     state: medical
   - type: MachineBoard
     prototype: MachineElectrolysisUnit
-    requirements:
-      Capacitor: 2
     materialRequirements:
+      Capacitor: 2
       Cable: 1
 
 - type: entity
@@ -997,9 +947,8 @@
     state: medical
   - type: MachineBoard
     prototype: MachineCentrifuge
-    requirements:
-      Manipulator: 1
     materialRequirements:
+      Manipulator: 1
       Steel: 1
 
 - type: entity
@@ -1011,9 +960,8 @@
       state: supply
     - type: MachineBoard
       prototype: MaterialReclaimer
-      requirements:
-        Manipulator: 2
       materialRequirements:
+        Manipulator: 2
         Steel: 5
         Plastic: 5
 
@@ -1026,10 +974,9 @@
       state: supply
     - type: MachineBoard
       prototype: OreProcessor
-      requirements:
+      materialRequirements:
         MatterBin: 1
         Manipulator: 3
-      materialRequirements:
         Glass: 1
 
 - type: entity
@@ -1041,10 +988,9 @@
     state: supply
   - type: MachineBoard
     prototype: OreProcessorIndustrial
-    requirements:
+    materialRequirements:
       MatterBin: 1
       Manipulator: 3
-    materialRequirements:
       Glass: 1
 
 - type: entity
@@ -1054,7 +1000,7 @@
   components:
   - type: MachineBoard
     prototype: Sheetifier
-    requirements:
+    materialRequirements:
       MatterBin: 1
       Manipulator: 1
 
@@ -1067,9 +1013,8 @@
       state: service
     - type: MachineBoard
       prototype: KitchenMicrowave
-      requirements:
-        Capacitor: 1
       materialRequirements:
+        Capacitor: 1
         Glass: 2
         Cable: 2
     - type: Tag
@@ -1085,13 +1030,13 @@
       state: service
     - type: MachineBoard
       prototype: FatExtractor
-      requirements:
+      materialRequirements:
         Manipulator: 1
       componentRequirements:
         Utensil:
-          Amount: 1
-          DefaultPrototype: ForkPlastic
-          ExamineName: Utensil
+          amount: 1
+          defaultPrototype: ForkPlastic
+          examineName: construction-insert-info-examine-name-utensil
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -1100,10 +1045,9 @@
   components:
   - type: MachineBoard
     prototype: MachineFlatpacker
-    requirements:
+    materialRequirements:
       Manipulator: 2
       MatterBin: 1
-    materialRequirements:
       Steel: 1
 
 - type: entity
@@ -1115,9 +1059,8 @@
       state: engineering
     - type: MachineBoard
       prototype: Emitter
-      requirements:
-        Capacitor: 2
       materialRequirements:
+        Capacitor: 2
         CableHV: 5
         Glass: 2
 
@@ -1176,10 +1119,9 @@
   components:
   - type: MachineBoard
     prototype: GasRecycler
-    requirements:
+    materialRequirements:
       Capacitor: 1
       Manipulator: 1
-    materialRequirements:
       Steel: 10
       Plasma: 5
 
@@ -1197,9 +1139,8 @@
         Steel: 5
       tagRequirements:
           GlassBeaker:
-            Amount: 1
-            DefaultPrototype: Beaker
-            ExamineName: Glass Beaker
+            amount: 1
+            defaultPrototype: Beaker
 
 - type: entity
   id: CargoTelepadMachineCircuitboard
@@ -1211,9 +1152,8 @@
       state: supply
     - type: MachineBoard
       prototype: CargoTelepad
-      requirements:
-        Capacitor: 2
       materialRequirements:
+        Capacitor: 2
         Steel: 5
 
 - type: entity
@@ -1230,9 +1170,8 @@
         Steel: 5
       tagRequirements:
           GlassBeaker:
-            Amount: 1
-            DefaultPrototype: Beaker
-            ExamineName: Glass Beaker
+            amount: 1
+            defaultPrototype: Beaker
 
 - type: entity
   id: TelecomServerCircuitboard
@@ -1254,9 +1193,8 @@
   components:
   - type: MachineBoard
     prototype: SalvageMagnet
-    requirements:
-      Capacitor: 4
     materialRequirements:
+      Capacitor: 4
       Steel: 5
       CableHV: 5
       Cable: 2
@@ -1269,10 +1207,9 @@
   components:
   - type: MachineBoard
     prototype: GravityGeneratorMini
-    requirements:
+    materialRequirements:
       Capacitor: 4
       MatterBin: 3
-    materialRequirements:
       Steel: 5
       CableHV: 5
       Uranium: 2
@@ -1284,10 +1221,9 @@
   components:
   - type: MachineBoard
     prototype: ReagentGrinderIndustrial
-    requirements:
+    materialRequirements:
       MatterBin: 1
       Manipulator: 3
-    materialRequirements:
       Glass: 1
 
 - type: entity
