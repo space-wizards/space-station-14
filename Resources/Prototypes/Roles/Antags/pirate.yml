@@ -8,46 +8,18 @@
     id: PiratePDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
-  storage:
-    back:
-    - BoxSurvival
-    - Cutlass
-    - WeaponRevolverPirate
-    - ClothingEyesEyepatch
 
 - type: startingGear
   id: PirateCaptainGear
+  parent: PirateGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitPirate
-    back: ClothingBackpackSatchelLeather
     head: ClothingHeadHatPirate
-    shoes: ClothingShoesBootsLaceup
-    id: PiratePDA
-    belt: ClothingBeltUtility
-    pocket1: AppraisalTool
     pocket2: EnergyCutlass
     outerClothing: ClothingOuterCoatPirate
-  storage:
-    back:
-    - BoxSurvival
-    - Cutlass
-    - WeaponRevolverPirate
-    - ClothingEyesEyepatch
 
 - type: startingGear
   id: PirateFirstmateGear
+  parent: PirateGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitPirate
-    back: ClothingBackpackSatchelLeather
     head: ClothingHeadHatPirateTricord
-    shoes: ClothingShoesBootsLaceup
-    id: PiratePDA
-    belt: ClothingBeltUtility
-    pocket1: AppraisalTool
     outerClothing: ClothingOuterCoatGentle
-  storage:
-    back:
-    - BoxSurvival
-    - Cutlass
-    - WeaponRevolverPirate
-    - ClothingEyesEyepatch
