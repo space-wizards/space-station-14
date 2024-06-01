@@ -2,7 +2,7 @@
 - type: entity
   parent:
   - BaseGunLarge
-  - BaseGunRifleMag
+  - BaseGunLightRifleMag
   - BaseGunWieldable
   id: WeaponRifleAk
   name: AKMS
@@ -15,6 +15,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
   - type: Gun
     fireRate: 5
     selectedMode: FullAuto
@@ -22,27 +24,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
-  - type: ChamberMagazineAmmoProvider
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineLightRifle
-        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-          - MagazineLightRifle
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeLightRifle
-        priority: 1
-        whitelist:
-          tags:
-          - CartridgeLightRifle
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -75,24 +56,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineRifle
-        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-          - MagazineRifle
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeRifle
-        priority: 1
-        whitelist:
-          tags:
-          - CartridgeRifle
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -125,24 +88,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineRifle
-        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-          - MagazineRifle
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeRifle
-        priority: 1
-        whitelist:
-          tags:
-          - CartridgeRifle
   - type: MagazineVisuals
     magState: mag
     steps: 1
