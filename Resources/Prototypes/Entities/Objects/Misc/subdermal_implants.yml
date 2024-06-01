@@ -126,7 +126,7 @@
           ents: [ ]
     - type: UserInterface
       interfaces:
-        - key: enum.StorageUiKey.Key
+        enum.StorageUiKey.Key:
           type: StorageBoundUserInterface
 
 - type: entity
@@ -160,8 +160,8 @@
       Telecrystal: 0
   - type: UserInterface
     interfaces:
-    - key: enum.StoreUiKey.Key
-      type: StoreBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -317,7 +317,7 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: MindShieldImplant
-  name: mind-shield implant
+  name: mindshield implant
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
   noSpawn: true
   components:

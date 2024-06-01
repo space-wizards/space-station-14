@@ -1,4 +1,4 @@
-- type: trait
+﻿- type: trait
   id: PirateAccent
   name: trait-pirate-accent-name
   description: trait-pirate-accent-desc
@@ -23,3 +23,11 @@
   description: trait-southern-desc
   components:
     - type: SouthernAccent
+
+- type: trait
+  id: Liar
+  name: trait-liar-name
+  description: trait-liar-desc
+  components:
+    - type: ReplacementAccent
+      accent: liar

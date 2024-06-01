@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
@@ -16,7 +17,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
-using Content.Server.Atmos.EntitySystems;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -396,7 +396,7 @@ public sealed partial class ExplosionSystem
 
         // don't raise BeforeExplodeEvent if the entity is completely immune to explosions
         var thisDamage = GetDamage(uid, prototype, originalDamage);
-        if (!thisDamage.Any())
+        if (thisDamage.Empty)
             return;
 
         _toDamage.Add((uid, thisDamage));
@@ -490,7 +490,9 @@ public sealed partial class ExplosionSystem
         if (_tileDefinitionManager[tileRef.Tile.TypeId] is not ContentTileDefinition tileDef)
             return;
 
-        if (tileDef.MapAtmosphere)
+        if (!CanCreateVacuum)
+            canCreateVacuum = false;
+        else if (tileDef.MapAtmosphere)
             canCreateVacuum = true; // is already a vacuum.
 
         int tileBreakages = 0;

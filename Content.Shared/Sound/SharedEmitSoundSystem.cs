@@ -72,7 +72,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     private void OnEmitSoundOnLand(EntityUid uid, BaseEmitSoundComponent component, ref LandEvent args)
     {
         if (!args.PlaySound ||
-            !TryComp<TransformComponent>(uid, out var xform) ||
+            !TryComp(uid, out TransformComponent? xform) ||
             !TryComp<MapGridComponent>(xform.GridUid, out var grid))
         {
             return;

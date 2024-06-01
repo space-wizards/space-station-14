@@ -1,15 +1,14 @@
-using Content.Shared.Prying.Components;
-using Content.Shared.Verbs;
-using Content.Shared.DoAfter;
-using Robust.Shared.Serialization;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
+using Content.Shared.Prying.Components;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Serialization;
 using PryUnpoweredComponent = Content.Shared.Prying.Components.PryUnpoweredComponent;
 
 namespace Content.Shared.Prying.Systems;
@@ -94,25 +93,27 @@ public sealed class PryingSystem : EntitySystem
         id = null;
 
         // We don't care about displaying a message if no tool was used.
-        if (!CanPry(target, user, out _))
+        if (!TryComp<PryUnpoweredComponent>(target, out var unpoweredComp) || !CanPry(target, user, out _, unpoweredComp: unpoweredComp))
             // If we have reached this point we want the event that caused this
             // to be marked as handled.
             return true;
 
-        return StartPry(target, user, null, 0.1f, out id); // hand-prying is much slower
+        // hand-prying is much slower
+        var modifier = CompOrNull<PryingComponent>(user)?.SpeedModifier ?? unpoweredComp.PryModifier;
+        return StartPry(target, user, null, modifier, out id);
     }
 
-    private bool CanPry(EntityUid target, EntityUid user, out string? message, PryingComponent? comp = null)
+    private bool CanPry(EntityUid target, EntityUid user, out string? message, PryingComponent? comp = null, PryUnpoweredComponent? unpoweredComp = null)
     {
         BeforePryEvent canev;
 
-        if (comp != null)
+        if (comp != null || Resolve(user, ref comp, false))
         {
             canev = new BeforePryEvent(user, comp.PryPowered, comp.Force);
         }
         else
         {
-            if (!TryComp<PryUnpoweredComponent>(target, out _))
+            if (!Resolve(target, ref unpoweredComp))
             {
                 message = null;
                 return false;

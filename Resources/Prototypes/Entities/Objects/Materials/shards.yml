@@ -63,7 +63,7 @@
         acts: [ "Destruction" ]
   - type: StepTrigger
     intersectRatio: 0.2
-  - type: ShoesRequiredStepTrigger
+  - type: ClothingRequiredStepTrigger
   - type: Slippery
     slipSound:
       path: /Audio/Effects/glass_step.ogg
@@ -87,7 +87,7 @@
     color: "#bbeeff"
   - type: WelderRefinable
     refineResult:
-    - SheetGlass1
+    - id: SheetGlass1
   - type: DamageUserOnTrigger
     damage:
       types:
@@ -122,8 +122,8 @@
         Slash: 4.5
   - type: WelderRefinable
     refineResult:
-    - SheetGlass1
-    - PartRodMetal1
+    - id: SheetGlass1
+    - id: PartRodMetal1
   - type: DamageUserOnTrigger
     damage:
       types:
@@ -158,8 +158,8 @@
         Slash: 5.5
   - type: WelderRefinable
     refineResult:
-    - SheetGlass1
-    - SheetPlasma1
+    - id: SheetGlass1
+    - id: SheetPlasma1
   - type: DamageUserOnTrigger
     damage:
       types:
@@ -197,8 +197,8 @@
         Radiation: 2
   - type: WelderRefinable
     refineResult:
-    - SheetGlass1
-    - SheetUranium1
+    - id: SheetGlass1
+    - id: SheetUranium1
   - type: DamageUserOnTrigger
     damage:
       types:
@@ -232,8 +232,8 @@
     color: "#e0aa36"
   - type: WelderRefinable
     refineResult:
-    - SheetGlass1
-    - SheetBrass1
+    - id: SheetGlass1
+    - id: SheetBrass1
   - type: DamageUserOnTrigger
     damage:
       types:

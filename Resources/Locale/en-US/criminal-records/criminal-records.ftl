@@ -33,12 +33,12 @@ criminal-records-permission-denied = Permission denied
 
 criminal-records-console-wanted = {$name} is wanted by {$officer} for: {$reason}.
 criminal-records-console-suspected = {$officer} marked {$name} as suspicious because of: {$reason}
-criminal-records-console-not-suspected = {$name} is no longer a suspect.
+criminal-records-console-not-suspected = {$name} has been cleared as a suspect by {$officer}.
 criminal-records-console-detained = {$name} has been detained by {$officer}.
 criminal-records-console-released = {$name} has been released by {$officer}.
-criminal-records-console-not-wanted = {$name} is no longer wanted.
+criminal-records-console-not-wanted = {$name} is no longer wanted, according to {$officer}.
 criminal-records-console-paroled = {$name} has been released on parole by {$officer}.
-criminal-records-console-not-parole = {$name} is no longer on parole.
+criminal-records-console-not-parole = {$name}'s parole status has been lifted by {$officer}.
 criminal-records-console-unknown-officer = <unknown officer>
 
 ## Filters

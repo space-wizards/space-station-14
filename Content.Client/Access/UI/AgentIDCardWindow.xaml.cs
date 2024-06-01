@@ -38,7 +38,7 @@ namespace Content.Client.Access.UI
             JobLineEdit.OnFocusExit += e => OnJobChanged?.Invoke(e.Text);
         }
 
-        public void SetAllowedIcons(HashSet<string> icons)
+        public void SetAllowedIcons(HashSet<string> icons, string currentJobIconId)
         {
             IconGrid.DisposeAllChildren();
 
@@ -79,6 +79,10 @@ namespace Content.Client.Access.UI
                 jobIconButton.AddChild(jobIconTexture);
                 jobIconButton.OnPressed += _ => _bui.OnJobIconChanged(jobIcon.ID);
                 IconGrid.AddChild(jobIconButton);
+
+                if (jobIconId.Equals(currentJobIconId))
+                    jobIconButton.Pressed = true;
+
                 i++;
             }
         }

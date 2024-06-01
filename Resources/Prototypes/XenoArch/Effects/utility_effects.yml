@@ -214,8 +214,8 @@
   permanentComponents:
   - type: UserInterface
     interfaces:
-      - key: enum.SignalLinkerUiKey.Key
-        type: SignalPortSelectorBoundUserInterface
+        enum.SignalLinkerUiKey.Key:
+          type: SignalPortSelectorBoundUserInterface
   - type: ToolTileCompatible
   - type: Tool
     qualities:

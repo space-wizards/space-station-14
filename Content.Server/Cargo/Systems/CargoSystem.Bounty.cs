@@ -11,6 +11,7 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Stacks;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -23,6 +24,7 @@ public sealed partial class CargoSystem
 {
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly NameIdentifierSystem _nameIdentifier = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSys = default!;
 
     [ValidatePrototypeId<NameIdentifierGroupPrototype>]
     private const string BountyNameIdentifierGroup = "Bounty";
@@ -52,7 +54,7 @@ public sealed partial class CargoSystem
             return;
 
         var untilNextSkip = bountyDb.NextSkipTime - _timing.CurTime;
-        _uiSystem.TrySetUiState(uid, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDb.Bounties, untilNextSkip));
+        _uiSystem.SetUiState(uid, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDb.Bounties, untilNextSkip));
     }
 
     private void OnPrintLabelMessage(EntityUid uid, CargoBountyConsoleComponent component, BountyPrintLabelMessage args)
@@ -83,7 +85,7 @@ public sealed partial class CargoSystem
         if (!TryGetBountyFromId(station, args.BountyId, out var bounty))
             return;
 
-        if (args.Session.AttachedEntity is not { Valid: true } mob)
+        if (args.Actor is not { Valid: true } mob)
             return;
 
         if (TryComp<AccessReaderComponent>(uid, out var accessReaderComponent) &&
@@ -99,7 +101,7 @@ public sealed partial class CargoSystem
         FillBountyDatabase(station);
         db.NextSkipTime = _timing.CurTime + db.SkipDelay;
         var untilNextSkip = db.NextSkipTime - _timing.CurTime;
-        _uiSystem.TrySetUiState(uid, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(db.Bounties, untilNextSkip));
+        _uiSystem.SetUiState(uid, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(db.Bounties, untilNextSkip));
         _audio.PlayPvs(component.SkipSound, uid);
     }
 
@@ -311,7 +313,7 @@ public sealed partial class CargoSystem
             var temp = new HashSet<EntityUid>();
             foreach (var entity in entities)
             {
-                if (!entry.Whitelist.IsValid(entity, EntityManager))
+                if (!_whitelistSys.IsValid(entry.Whitelist, entity) || (entry.Blacklist != null && _whitelistSys.IsValid(entry.Blacklist, entity)))
                     continue;
 
                 count += _stackQuery.CompOrNull(entity)?.Count ?? 1;
@@ -462,10 +464,12 @@ public sealed partial class CargoSystem
         {
             if (_station.GetOwningStation(uid) is not { } station ||
                 !TryComp<StationCargoBountyDatabaseComponent>(station, out var db))
+            {
                 continue;
+            }
 
             var untilNextSkip = db.NextSkipTime - _timing.CurTime;
-            _uiSystem.TrySetUiState(uid, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(db.Bounties, untilNextSkip), ui: ui);
+            _uiSystem.SetUiState((uid, ui), CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(db.Bounties, untilNextSkip));
         }
     }
 

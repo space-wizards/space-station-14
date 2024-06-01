@@ -34,6 +34,15 @@
   - type: Appearance
 
 - type: entity
+  id: MagazineShotgunEmpty
+  name: ammo drum (.50 shells any)
+  suffix: empty
+  parent: BaseMagazineShotgun
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+
+- type: entity
   id: MagazineShotgun
   name: ammo drum (.50 pellet)
   parent: BaseMagazineShotgun

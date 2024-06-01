@@ -10,7 +10,7 @@
       tags:
         - CartridgeLightRifle
     proto: CartridgeLightRifle
-    capacity: 50
+    capacity: 60
   - type: Item
     size: Small
   - type: ContainerContainer

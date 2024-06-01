@@ -15,7 +15,7 @@ public partial class InventorySystem : EntitySystem
     private void InitializeSlots()
     {
         SubscribeLocalEvent<InventoryComponent, ComponentInit>(OnInit);
-        SubscribeNetworkEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
+        SubscribeAllEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
 
         _vvm.GetTypeHandler<InventoryComponent>()
             .AddHandler(HandleViewVariablesSlots, ListViewVariablesSlots);
@@ -25,6 +25,31 @@ public partial class InventorySystem : EntitySystem
     {
         _vvm.GetTypeHandler<InventoryComponent>()
             .RemoveHandler(HandleViewVariablesSlots, ListViewVariablesSlots);
+    }
+
+    /// <summary>
+    /// Tries to find an entity in the specified slot with the specified component.
+    /// </summary>
+    public bool TryGetInventoryEntity<T>(Entity<InventoryComponent?> entity, out EntityUid targetUid)
+        where T : IComponent, IClothingSlots
+    {
+        if (TryGetContainerSlotEnumerator(entity.Owner, out var containerSlotEnumerator))
+        {
+            while (containerSlotEnumerator.NextItem(out var item, out var slot))
+            {
+                if (!TryComp<T>(item, out var required))
+                    continue;
+
+                if ((((IClothingSlots) required).Slots & slot.SlotFlags) == 0x0)
+                    continue;
+
+                targetUid = item;
+                return true;
+            }
+        }
+
+        targetUid = EntityUid.Invalid;
+        return false;
     }
 
     protected virtual void OnInit(EntityUid uid, InventoryComponent component, ComponentInit args)
@@ -50,7 +75,7 @@ public partial class InventorySystem : EntitySystem
 
         if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<StorageComponent>(entityUid, out var storageComponent))
         {
-            _storageSystem.OpenStorageUI(entityUid.Value, uid, storageComponent);
+            _storageSystem.OpenStorageUI(entityUid.Value, uid, storageComponent, false);
         }
     }
 
@@ -126,7 +151,6 @@ public partial class InventorySystem : EntitySystem
             slotDefinitions = null;
             return false;
         }
-
         slotDefinitions = inv.Slots;
         return true;
     }

@@ -19,6 +19,7 @@
     RiotShield: 2
     RiotLaserShield: 2
     RiotBulletShield: 2
+    RadioHandheldSecurity: 5
   # security officers need to follow a diet regimen!
   contrabandInventory:
     FoodDonutHomer: 12

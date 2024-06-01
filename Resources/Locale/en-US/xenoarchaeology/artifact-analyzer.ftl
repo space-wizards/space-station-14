@@ -30,6 +30,9 @@ analysis-console-progress-text = {$seconds ->
     [one] T-{$seconds} second
     *[other] T-{$seconds} seconds
 }
+analysis-console-no-server-connected = Cannot extract. No server connected.
+analysis-console-no-artifact-placed = No artifact on scanner.
+analysis-console-no-points-to-extract = No points to extract.
 
 analyzer-artifact-component-upgrade-analysis = analysis duration
 

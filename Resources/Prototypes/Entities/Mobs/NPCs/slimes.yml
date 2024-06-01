@@ -37,6 +37,7 @@
   - type: Tag
     tags:
     - FootstepSound
+    - DoorBumpOpener
   - type: Butcherable
     butcheringType: Knife
     spawned:
@@ -92,6 +93,7 @@
     prototype: Slimes
     requiredLegs: 1
   - type: MeleeWeapon
+    altDisarm: false
     soundHit:
         path: /Audio/Weapons/punch3.ogg
     angle: 0
@@ -125,6 +127,14 @@
     makeSentient: true
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
+    raffle:
+      settings: short
+  - type: Speech
+    speechVerb: Slime
+    speechSounds: Slime
+    allowedEmotes: ['Squish']
+  - type: TypingIndicator
+    proto: slime
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
@@ -140,6 +150,16 @@
   noSpawn: true
   components:
   # they portable...
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 5 # +.5 from normal movement speed
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      80: Dead # weak af tho
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
   - type: MultiHandedItem
   - type: Item
     size: Huge
@@ -180,6 +200,8 @@
         - SimpleHostile
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
+      raffle:
+        settings: short
 
 - type: entity
   name: green slime
@@ -215,6 +237,8 @@
         - SimpleHostile
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
+      raffle:
+        settings: short
 
 - type: entity
   name: yellow slime
@@ -250,3 +274,5 @@
         - SimpleHostile
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
+      raffle:
+        settings: short

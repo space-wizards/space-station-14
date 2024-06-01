@@ -41,7 +41,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
     private void OnWriteToTargetIdMessage(EntityUid uid, IdCardConsoleComponent component, WriteToTargetIdMessage args)
     {
-        if (args.Session.AttachedEntity is not { Valid: true } player)
+        if (args.Actor is not { Valid: true } player)
             return;
 
         TryWriteToTargetId(uid, args.FullName, args.JobTitle, args.AccessList, args.JobPrototype, player, component);
@@ -104,7 +104,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 Name(targetId));
         }
 
-        _userInterface.TrySetUiState(uid, IdCardConsoleUiKey.Key, newState);
+        _userInterface.SetUiState(uid, IdCardConsoleUiKey.Key, newState);
     }
 
     /// <summary>
@@ -134,6 +134,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
             _idCard.TryChangeJobDepartment(targetId, job);
         }
+
+        UpdateStationRecord(uid, targetId, newFullName, newJobTitle, job);
 
         if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
         {
@@ -168,8 +170,6 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following accesses: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
-
-        UpdateStationRecord(uid, targetId, newFullName, newJobTitle, job);
     }
 
     /// <summary>

@@ -56,8 +56,8 @@
   - type: Appearance
   - type: UserInterface
     interfaces:
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Airtight
   - type: RadiationBlocker
     resistance: 2
