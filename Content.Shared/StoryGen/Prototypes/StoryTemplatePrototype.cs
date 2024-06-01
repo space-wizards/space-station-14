@@ -24,10 +24,10 @@ public sealed partial class StoryTemplatePrototype : IPrototype
 
     /// <summary>
     /// Dictionary containing the name of each variable to pass to the template and the ID of the
-    /// <see cref="DatasetPrototype"/> from which a random entry will be selected as its value.
+    /// <see cref="LocalizedDatasetPrototype"/> from which a random entry will be selected as its value.
     /// For example, <c>name: book_character</c> will pick a random entry from the book_character
     /// dataset which can then be used in the template by <c>{$name}</c>.
     /// </summary>
     [DataField]
-    public Dictionary<string, ProtoId<DatasetPrototype>> Variables { get; } = default!;
+    public Dictionary<string, ProtoId<LocalizedDatasetPrototype>> Variables { get; } = default!;
 }

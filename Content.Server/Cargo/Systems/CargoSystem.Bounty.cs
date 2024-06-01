@@ -11,6 +11,7 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Stacks;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -23,6 +24,7 @@ public sealed partial class CargoSystem
 {
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly NameIdentifierSystem _nameIdentifier = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSys = default!;
 
     [ValidatePrototypeId<NameIdentifierGroupPrototype>]
     private const string BountyNameIdentifierGroup = "Bounty";
@@ -311,7 +313,7 @@ public sealed partial class CargoSystem
             var temp = new HashSet<EntityUid>();
             foreach (var entity in entities)
             {
-                if (!entry.Whitelist.IsValid(entity, EntityManager))
+                if (!_whitelistSys.IsValid(entry.Whitelist, entity) || (entry.Blacklist != null && _whitelistSys.IsValid(entry.Blacklist, entity)))
                     continue;
 
                 count += _stackQuery.CompOrNull(entity)?.Count ?? 1;

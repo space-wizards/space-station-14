@@ -1,21 +1,19 @@
 ﻿<Control xmlns="https://spacestation14.io"
          xmlns:pt="clr-namespace:Content.Client.Administration.UI.Tabs.PlayerTab"
-         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         xmlns:co="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Name="PlayerCount" HorizontalExpand="True" SizeFlagsStretchRatio="0.50"
-                   Text="{Loc Player Count}" />
-            <Button Name="ShowDisconnectedButton" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"
-                    Text="{Loc player-tab-show-disconnected}" ToggleMode="True"/>
-            <Button Name="OverlayButton" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"
-                    Text="{Loc player-tab-overlay}" ToggleMode="True"/>
+            <Label Name="PlayerCount" HorizontalExpand="True" Text="{Loc Player Count}" />
+            <LineEdit Name="SearchLineEdit" HorizontalExpand="True"
+                      PlaceHolder="{Loc player-tab-filter-line-edit-placeholder}" />
+            <Button Name="ShowDisconnectedButton" HorizontalExpand="True"
+                    Text="{Loc player-tab-show-disconnected}" ToggleMode="True" />
+            <Button Name="OverlayButton" HorizontalExpand="True" Text="{Loc player-tab-overlay}" ToggleMode="True" />
         </BoxContainer>
-        <Control MinSize="0 5" />
-        <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
-            <BoxContainer Orientation="Vertical" Name="PlayerList">
-                <pt:PlayerTabHeader Name="ListHeader" />
-                <cc:HSeparator />
-            </BoxContainer>
-        </ScrollContainer>
+        <Control MinSize="0 5"/>
+        <pt:PlayerTabHeader Name="ListHeader"/>
+        <cc:HSeparator/>
+        <co:SearchListContainer Name="SearchList" Access="Public" VerticalExpand="True"/>
     </BoxContainer>
 </Control>

@@ -24,7 +24,7 @@
     description: cargo-gift-pizza-small
     dest: cargo-gift-dest-bar
     gifts:
-      FoodPizzaLarge: 1              # 16 pizzas
+      FoodPizza: 1              # 4 pizzas
       FoodBarSupply: 1
       FoodSoftdrinks: 1
       CrateVendingMachineRestockRobustSoftdrinks: 1
@@ -34,18 +34,19 @@
   parent: CargoGiftsBase
   noSpawn: true
   components:
-  - type: StationEvent
-    weight: 2
-    startDelay: 10
-    duration: 240
-    earliestStart: 20
-  - type: CargoGiftsRule
-    description: cargo-gift-pizza-large
-    dest: cargo-gift-dest-bar
-    gifts:
-      FoodPizzaLarge: 4              # 64 pizzas
-      FoodBarSupply: 1
-      FoodSoftdrinksLarge: 1
+    - type: StationEvent
+      weight: 2
+      startDelay: 10
+      duration: 240
+      earliestStart: 20
+      minimumPlayers: 40
+    - type: CargoGiftsRule
+      description: cargo-gift-pizza-large
+      dest: cargo-gift-dest-bar
+      gifts:
+        FoodPizzaLarge: 1              # 16 pizzas
+        FoodBarSupply: 1
+        FoodSoftdrinksLarge: 1
 
 - type: entity
   id: GiftsEngineering
