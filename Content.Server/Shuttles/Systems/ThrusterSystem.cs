@@ -128,15 +128,20 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnActivateThruster(EntityUid uid, ThrusterComponent component, ActivateInWorldEvent args)
     {
+        if (args.Handled || !args.Complex)
+            return;
+
         component.Enabled ^= true;
 
         if (!component.Enabled)
         {
             DisableThruster(uid, component);
+            args.Handled = true;
         }
         else if (CanEnable(uid, component))
         {
             EnableThruster(uid, component);
+            args.Handled = true;
         }
     }
 

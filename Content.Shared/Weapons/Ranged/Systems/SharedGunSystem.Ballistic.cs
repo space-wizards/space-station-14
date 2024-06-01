@@ -186,6 +186,7 @@ public abstract partial class SharedGunSystem
             !Paused(uid))
         {
             gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRateModified);
+            Dirty(uid, gunComp);
         }
 
         Dirty(uid, component);
