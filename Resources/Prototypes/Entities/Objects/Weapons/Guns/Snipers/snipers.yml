@@ -5,10 +5,10 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
+  # - type: Sprite
+  #   layers:
+  #   - state: base
+  #     map: ["enum.GunVisualLayers.Base"]
   # - type: Item
   #   size: Huge
   # - type: Clothing
@@ -17,24 +17,24 @@
     # slots:
     # - Back
     # - suitStorage
-  - type: AmmoCounter
-  - type: Gun
-    fireRate: 0.75
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
-  - type: BallisticAmmoProvider
-    capacity: 10
-    proto: CartridgeLightRifle
-    whitelist:
-      tags:
-      - CartridgeLightRifle
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
+  # - type: AmmoCounter
+  # - type: Gun
+  #   fireRate: 0.75
+    # selectedMode: SemiAuto
+    # availableModes:
+    # - SemiAuto
+    # soundGunshot:
+    #   path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  # - type: BallisticAmmoProvider
+  #   capacity: 10
+  #   proto: CartridgeLightRifle
+  #   whitelist:
+  #     tags:
+  #     - CartridgeLightRifle
+  # - type: ContainerContainer
+  #   containers:
+  #     ballistic-ammo: !type:Container
+  #       ents: []
   # - type: StaticPrice
   #   price: 500
 
@@ -49,6 +49,24 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Gun
+    fireRate: 0.75
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  - type: BallisticAmmoProvider
+    capacity: 10
+    proto: CartridgeLightRifle
+    whitelist:
+      tags:
+      - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: AmmoCounter
 
 - type: entity
   name: Hristov
@@ -61,14 +79,26 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+  - type: Gun
+    fireRate: 0.75
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
     whitelist:
       tags:
       - CartridgeAntiMateriel
     capacity: 5
     proto: CartridgeAntiMateriel
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: AmmoCounter
 
 - type: entity
   name: musket
@@ -82,12 +112,19 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
     state: base
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
   - type: Gun
+    fireRate: 0.75
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  - type: AmmoCounter
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 8 #it's a musket
@@ -97,6 +134,10 @@
       - CartridgeAntiMateriel
     capacity: 1
     proto: CartridgeAntiMateriel
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -115,13 +156,19 @@
   description: A pirate's companion. Yarrr! Uses .60 anti-materiel ammo.
   components:
   - type: Gun
+    fireRate: 0.75
     minAngle: 0
     maxAngle: 30 #miss him entirely because the barrel is smoothbore
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: Item
     size: Small
     storedRotation: 90
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: UseDelayOnShoot
@@ -133,6 +180,11 @@
         - CartridgeAntiMateriel
     capacity: 1
     proto: CartridgeAntiMateriel
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: AmmoCounter
   - type: StaticPrice
     price: 0
 
