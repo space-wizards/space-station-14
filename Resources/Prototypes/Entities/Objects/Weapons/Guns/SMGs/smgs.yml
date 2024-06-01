@@ -171,7 +171,7 @@
 - type: entity
   parent:
   - BaseGunMedium
-  - BaseGunSubMachineGunMag
+  - BaseGunSubMachineGunTopMountedMag
   id: WeaponSubMachineGunWt550
   name: WT550
   description: An excellent SMG, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo.
@@ -207,24 +207,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/smg.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazinePistolSubMachineGunTopMounted
-        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-          - MagazinePistolSubMachineGunTopMounted
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgePistol
-        priority: 1
-        whitelist:
-          tags:
-          - CartridgePistol
   - type: MagazineVisuals
     magState: mag
     steps: 6
