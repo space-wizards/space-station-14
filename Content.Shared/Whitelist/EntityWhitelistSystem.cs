@@ -73,7 +73,7 @@ public sealed class EntityWhitelistSystem : EntitySystem
         if (whitelist == null)
             return false;
 
-        return IsValid(whitelist, uid) == true;
+        return IsValid(whitelist, uid);
     }
 
     /// <summary>
@@ -84,7 +84,7 @@ public sealed class EntityWhitelistSystem : EntitySystem
         if (whitelist == null)
             return false;
 
-        return IsValid(whitelist, uid) == false;
+        return !IsValid(whitelist, uid);
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ public sealed class EntityWhitelistSystem : EntitySystem
         if (whitelist == null)
             return true;
 
-        return IsValid(whitelist, uid) == true;
+        return IsValid(whitelist, uid);
     }
 
     /// <summary>
@@ -106,51 +106,43 @@ public sealed class EntityWhitelistSystem : EntitySystem
         if (whitelist == null)
             return true;
 
-        return IsValid(whitelist, uid) == false;
+        return !IsValid(whitelist, uid);
     }
 
     /// <summary>
     /// Helper function to determine if Blacklist is not null and entity is on list
+    /// Duplicate of equivalent Whitelist function
     /// </summary>
     public bool IsBlacklistPass(EntityWhitelist? blacklist, EntityUid uid)
     {
-        if (blacklist == null)
-            return false;
-
-        return IsValid(blacklist, uid) == true;
+        return IsWhitelistPass(blacklist, uid);
     }
 
     /// <summary>
     /// Helper function to determine if Blacklist is not null and entity is not on the list
+    /// Duplicate of equivalent Whitelist function
     /// </summary>
     public bool IsBlacklistFail(EntityWhitelist? blacklist, EntityUid uid)
     {
-        if (blacklist == null)
-            return false;
-
-        return IsValid(blacklist, uid) == false;
+        return IsWhitelistFail(blacklist, uid);
     }
 
     /// <summary>
     /// Helper function to determine if Blacklist is either null or the entity is on the list
+    /// Duplicate of equivalent Whitelist function
     /// </summary>
     public bool IsBlacklistPassOrNull(EntityWhitelist? blacklist, EntityUid uid)
     {
-        if (blacklist == null)
-            return true;
-
-        return IsValid(blacklist, uid) == true;
+        return IsWhitelistPassOrNull(blacklist, uid);
     }
 
     /// <summary>                                        
     /// Helper function to determine if Blacklist is either null or the entity is not on the list
+    /// Duplicate of equivalent Whitelist function
     /// </summary>
     public bool IsBlacklistFailOrNull(EntityWhitelist? blacklist, EntityUid uid)
     {
-        if (blacklist == null)
-            return true;
-
-        return IsValid(blacklist, uid) == false;
+        return IsWhitelistFailOrNull(blacklist, uid);
     }
 
     private void EnsureRegistrations(EntityWhitelist list)
