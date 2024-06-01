@@ -61,7 +61,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
     {
         if (_dragging == null) return;
 
-        if (_lastMousePosition != null && TryComp<TransformComponent>(_dragging.Value, out var xform) &&
+        if (_lastMousePosition != null && TryComp(_dragging.Value, out TransformComponent? xform) &&
             TryComp<PhysicsComponent>(_dragging.Value, out var body) &&
             xform.MapID == _lastMousePosition.Value.MapId)
         {
@@ -104,7 +104,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             StartDragging(gridUid, Transform(gridUid).InvWorldMatrix.Transform(mousePos.Position));
         }
 
-        if (!TryComp<TransformComponent>(_dragging, out var xform))
+        if (!TryComp(_dragging, out TransformComponent? xform))
         {
             StopDragging();
             return;
