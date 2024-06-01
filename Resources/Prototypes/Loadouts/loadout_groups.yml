@@ -141,7 +141,7 @@
 
 - type: loadoutGroup
   id: CommonBackpack
-  name: loadout-group-passenger-backpack
+  name: loadout-group-backpack
   loadouts:
   - CommonBackpack
   - CommonSatchel
