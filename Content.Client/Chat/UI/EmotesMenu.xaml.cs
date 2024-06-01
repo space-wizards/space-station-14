@@ -18,9 +18,9 @@ public sealed partial class EmotesMenu : RadialMenu
     [Dependency] private readonly EntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     private readonly SpriteSystem _spriteSystem;
+    private readonly EntityWhitelistSystem _whitelist;
 
     public event Action<ProtoId<EmotePrototype>>? OnPlayEmote;
 
@@ -30,6 +30,7 @@ public sealed partial class EmotesMenu : RadialMenu
         RobustXamlLoader.Load(this);
 
         _spriteSystem = _entManager.System<SpriteSystem>();
+        _whitelist = _entManager.System<EntityWhitelistSystem>();
 
         var main = FindControl<RadialContainer>("Main");
 
