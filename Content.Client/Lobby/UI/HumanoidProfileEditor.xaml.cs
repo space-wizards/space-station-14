@@ -829,16 +829,16 @@ namespace Content.Client.Lobby.UI
                             // Sync other selectors with the same job in case of multiple department jobs
                             if (jobId == job.ID)
                             {
-                                jobSelector.Priority = priority;
+                                other.Select(selectedPrio);
                                 continue;
                             }
 
-                            if (priority != JobPriority.High || jobSelector.Priority != JobPriority.High)
+                            if (selectedJobPrio != JobPriority.High || (JobPriority) other.Selected != JobPriority.High)
                                 continue;
 
                             // Lower any other high priorities to medium.
-                            jobSelector.Priority = JobPriority.Medium;
-                            Profile = Profile?.WithJobPriority(jobSelector.Proto.ID, JobPriority.Medium);
+                            other.Select((int)JobPriority.Medium);
+                            Profile = Profile?.WithJobPriority(jobId, JobPriority.Medium);
                         }
 
                         // TODO: Only reload on high change (either to or from).
