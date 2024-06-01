@@ -73,9 +73,7 @@ public sealed partial class GameTicker
         _adminLogger.Add(LogType.EventStarted, $"Added game rule {ToPrettyString(ruleEntity)}");
 
         var ev = new GameRuleAddedEvent(ruleEntity, ruleId);
-        var afterEv = new GameRuleAfterAddedEvent(ruleEntity, ruleId);
         RaiseLocalEvent(ruleEntity, ref ev, true);
-        RaiseLocalEvent(ruleEntity, ref afterEv, true);
 
         var currentTime = RunLevel == GameRunLevel.PreRoundLobby ? TimeSpan.Zero : RoundDuration();
         if (!HasComp<RoundstartStationVariationRuleComponent>(ruleEntity) && !HasComp<StationVariationPassRuleComponent>(ruleEntity))

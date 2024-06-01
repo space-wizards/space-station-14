@@ -20,9 +20,6 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
 
-        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
-            return;
-
         var str = Loc.GetString(component.Announce,
             ("sender", Loc.GetString(component.Sender)), ("description", Loc.GetString(component.Description)), ("dest", Loc.GetString(component.Dest)));
         stationEvent.StartAnnouncement = str;

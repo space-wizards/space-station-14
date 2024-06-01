@@ -24,7 +24,6 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<T, GameRuleAddedEvent>(OnGameRuleAdded);
-        SubscribeLocalEvent<T, GameRuleAfterAddedEvent>(OnGameRuleAfterAdded);
         SubscribeLocalEvent<T, GameRuleStartedEvent>(OnGameRuleStarted);
         SubscribeLocalEvent<T, GameRuleEndedEvent>(OnGameRuleEnded);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
@@ -57,13 +56,6 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         Added(uid, component, ruleData, args);
     }
 
-    private void OnGameRuleAfterAdded(EntityUid uid, T component, ref GameRuleAfterAddedEvent args)
-    {
-        if (!TryComp<GameRuleComponent>(uid, out var ruleData))
-            return;
-        AfterAdded(uid, component, ruleData, args);
-    }
-
     private void OnGameRuleStarted(EntityUid uid, T component, ref GameRuleStartedEvent args)
     {
         if (!TryComp<GameRuleComponent>(uid, out var ruleData))
@@ -94,14 +86,6 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     /// Called when the gamerule is added
     /// </summary>
     protected virtual void Added(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleAddedEvent args)
-    {
-
-    }
-
-    /// <summary>
-    /// Called after the gamerule is added
-    /// </summary>
-    protected virtual void AfterAdded(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleAfterAddedEvent args)
     {
 
     }

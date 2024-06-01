@@ -37,12 +37,6 @@ public sealed partial class GameRuleComponent : Component
 public readonly record struct GameRuleAddedEvent(EntityUid RuleEntity, string RuleId);
 
 /// <summary>
-/// Raised after the rule is added.
-/// </summary>
-[ByRefEvent]
-public readonly record struct GameRuleAfterAddedEvent(EntityUid RuleEntity, string RuleId);
-
-/// <summary>
 /// Raised when the rule actually begins.
 /// Player-facing logic should begin here.
 /// </summary>

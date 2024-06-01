@@ -32,9 +32,9 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
     }
 
     /// <inheritdoc/>
-    protected override void AfterAdded(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleAfterAddedEvent args)
+    protected override void Added(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
-        base.AfterAdded(uid, component, gameRule, args);
+        base.Added(uid, component, gameRule, args);
 
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;

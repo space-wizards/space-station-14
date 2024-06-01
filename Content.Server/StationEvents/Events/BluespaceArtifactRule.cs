@@ -11,9 +11,6 @@ public sealed class BluespaceArtifactRule : StationEventSystem<BluespaceArtifact
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
 
-        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
-            return;
-
         var str = Loc.GetString("bluespace-artifact-event-announcement",
             ("sighting", Loc.GetString(RobustRandom.Pick(component.PossibleSighting))));
         stationEvent.StartAnnouncement = str;
