@@ -246,7 +246,7 @@
       path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
-  parent: MobSiliconBase
+  parent: [MobSiliconBase, ShowMedicalIcons]
   id: MobMedibot
   name: medibot
   description: No substitute for a doctor, but better than nothing.
@@ -287,12 +287,6 @@
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: ShowHealthBars
-    damageContainers:
-    - Biological
-  - type: ShowHealthIcons
-    damageContainers:
-    - Biological
 
 - type: entity
   parent: MobSiliconBase

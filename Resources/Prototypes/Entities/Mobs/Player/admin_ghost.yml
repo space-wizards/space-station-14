@@ -18,6 +18,7 @@
     canInteract: true
   - type: GhostHearing
   - type: Hands
+  - type: ComplexInteraction
   - type: Puller
   - type: CombatMode
   - type: Physics
