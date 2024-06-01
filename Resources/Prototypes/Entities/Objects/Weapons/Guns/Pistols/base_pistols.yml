@@ -19,6 +19,7 @@
         whitelist:
           tags:
           - MagazinePistol
+          - MagazinePistolHighCapacity
       gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
@@ -26,6 +27,72 @@
         whitelist:
           tags:
           - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+
+# CASELESS PISTOL MAG
+# A basic template for a gun that feeds ammo to a chamber from a loaded caseless pistol magazine.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunPistolCaselessMag
+  components:
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolCaselessRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazinePistolCaselessRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeCaselessRifle
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeCaselessRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+
+# MAGNUM MAG
+# A basic template for a gun that feeds ammo to a chamber from a loaded magnum magazine.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunMagnumMag
+  components:
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineMagnum
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineMagnum
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeMagnum
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeMagnum
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot

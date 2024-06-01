@@ -21,25 +21,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazinePistol
-        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-          - MagazinePistol
-          - MagazinePistolHighCapacity
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgePistol
-        priority: 1
-        whitelist:
-          tags:
-          - CartridgePistol
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -50,7 +31,7 @@
 - type: entity
   parent:
   - BaseGunSmall
-  - BaseGunPistolMag
+  - BaseGunPistolCaselessMag
   - BaseGunSilenced
   id: WeaponPistolCobra
   name: cobra
@@ -67,24 +48,6 @@
     fireRate: 4
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazinePistolCaselessRifle
-        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-          - MagazinePistolCaselessRifle
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeCaselessRifle
-        priority: 1
-        whitelist:
-          tags:
-          - CartridgeCaselessRifle
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -121,7 +84,7 @@
 - type: entity
   parent:
   - BaseGunSmall
-  - BaseGunPistolMag
+  - BaseGunMagnumMag
   id: WeaponPistolN1984
   name: N1984
   description: The sidearm of any self respecting officer. Comes in .45 magnum, the lord's caliber.
@@ -141,24 +104,6 @@
     fireRate: 4
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineMagnum
-        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-          - MagazineMagnum
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeMagnum
-        priority: 1
-        whitelist:
-          tags:
-          - CartridgeMagnum
   - type: MagazineVisuals
     magState: mag
     steps: 1
