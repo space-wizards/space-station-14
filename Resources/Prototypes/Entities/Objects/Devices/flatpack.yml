@@ -195,3 +195,12 @@
     - state: overlay
       color: "#cec8ac"
     - state: icon-default
+
+- type: entity
+  parent: BaseFlatpack
+  id: SpaceHeaterFlatpack
+  name: space heater flatpack
+  description: A flatpack used for constructing a space heater.
+  components:
+  - type: Flatpack
+    entity: SpaceHeaterAnchored

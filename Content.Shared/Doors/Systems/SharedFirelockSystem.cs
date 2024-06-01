@@ -1,5 +1,6 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors.Components;
+using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
 using Robust.Shared.Timing;
@@ -26,6 +27,8 @@ public abstract class SharedFirelockSystem : EntitySystem
         // Visuals
         SubscribeLocalEvent<FirelockComponent, MapInitEvent>(UpdateVisuals);
         SubscribeLocalEvent<FirelockComponent, ComponentStartup>(UpdateVisuals);
+
+        SubscribeLocalEvent<FirelockComponent, ExaminedEvent>(OnExamined);
     }
 
     public bool EmergencyPressureStop(EntityUid uid, FirelockComponent? firelock = null, DoorComponent? door = null)
@@ -53,23 +56,34 @@ public abstract class SharedFirelockSystem : EntitySystem
 
         if (!component.Powered || (!overrideAccess && component.IsLocked))
             args.Cancel();
+        else if (args.User != null)
+            WarnPlayer((uid, component), args.User.Value);
     }
 
     private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)
     {
-        if (component.Temperature)
-        {
-            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-fire-message"),
-                uid, args.User, PopupType.MediumCaution);
-        }
-        else if (component.Pressure)
-        {
-            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-pressure-message"),
-                uid, args.User, PopupType.MediumCaution);
-        }
+        WarnPlayer((uid, component), args.User);
 
         if (component.IsLocked)
             args.PryTimeModifier *= component.LockedPryTimeModifier;
+    }
+
+    private void WarnPlayer(Entity<FirelockComponent> ent, EntityUid user)
+    {
+        if (ent.Comp.Temperature)
+        {
+            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-fire-message"),
+                ent.Owner,
+                user,
+                PopupType.MediumCaution);
+        }
+        else if (ent.Comp.Pressure)
+        {
+            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-pressure-message"),
+                ent.Owner,
+                user,
+                PopupType.MediumCaution);
+        }
     }
 
     private void OnAfterPried(EntityUid uid, FirelockComponent component, ref PriedEvent args)
@@ -107,4 +121,15 @@ public abstract class SharedFirelockSystem : EntitySystem
     }
 
     #endregion
+
+    private void OnExamined(Entity<FirelockComponent> ent, ref ExaminedEvent args)
+    {
+        using (args.PushGroup(nameof(FirelockComponent)))
+        {
+            if (ent.Comp.Pressure)
+                args.PushMarkup(Loc.GetString("firelock-component-examine-pressure-warning"));
+            if (ent.Comp.Temperature)
+                args.PushMarkup(Loc.GetString("firelock-component-examine-temperature-warning"));
+        }
+    }
 }

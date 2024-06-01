@@ -90,8 +90,7 @@
     definitions:
     - prefRoles: [ NukeopsCommander ]
       fallbackRoles: [ Nukeops, NukeopsMedic ]
-      max: 1
-      playerRatio: 10
+      spawnerPrototype: SpawnPointNukeopsCommander
       startingGear: SyndicateCommanderGearFull
       components:
       - type: NukeOperative
@@ -107,8 +106,7 @@
         prototype: NukeopsCommander
     - prefRoles: [ NukeopsMedic ]
       fallbackRoles: [ Nukeops, NukeopsCommander ]
-      max: 1
-      playerRatio: 10
+      spawnerPrototype: SpawnPointNukeopsMedic
       startingGear: SyndicateOperativeMedicFull
       components:
       - type: NukeOperative
@@ -124,7 +122,7 @@
         prototype: NukeopsMedic
     - prefRoles: [ Nukeops ]
       fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
-      min: 0
+      spawnerPrototype: SpawnPointNukeopsOperative
       max: 3
       playerRatio: 10
       startingGear: SyndicateOperativeGearFull
