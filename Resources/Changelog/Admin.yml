@@ -265,5 +265,12 @@ Entries:
   id: 32
   time: '2024-05-31T06:28:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28030
+- author: Geekyhobo
+  changes:
+  - message: Added a PII admin flag to hide personal identification information.
+    type: Add
+  id: 33
+  time: '2024-06-01T07:23:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27776
 Name: Admin
 Order: 1
