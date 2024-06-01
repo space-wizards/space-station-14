@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Added random colored jumpsuits to the mixed wardrobes. Each costume is
-      randomly generated from parts painted in random colors, which gives a huge number
-      of combinations of the appearance of such costumes.
-    type: Add
-  id: 6157
-  time: '2024-03-15T07:37:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25888
 - author: Nopey
   changes:
   - message: Dead players can no longer spin on a bar stool.
@@ -3855,3 +3846,10 @@
   id: 6656
   time: '2024-06-01T04:51:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27997
+- author: Cojoke-dot
+  changes:
+  - message: Medical Borgs now have medical huds
+    type: Add
+  id: 6657
+  time: '2024-06-01T04:54:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28391
