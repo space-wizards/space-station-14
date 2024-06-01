@@ -60,6 +60,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly HandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedStackSystem _stack = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         private const string MalfunctionSpark = "Spark";
@@ -206,7 +207,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         // If an entity has a stack component, use the stacktype instead of prototype id
                         if (TryComp<StackComponent>(item, out var stackComp))
                         {
-                            itemID = stackComp.StackTypeId;
+                            itemID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
                         }
                         else
                         {
@@ -478,10 +479,10 @@ namespace Content.Server.Kitchen.EntitySystems
                 string? solidID = null;
                 int amountToAdd = 1;
 
-                // If a microwave recipe uses a stacked item, use the stacktype instead of prototype id
+                // If a microwave recipe uses a stacked item, use the default stack prototype id instead of prototype id
                 if (TryComp<StackComponent>(item, out var stackComp))
                 {
-                    solidID = stackComp.StackTypeId;
+                    solidID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
                     amountToAdd = stackComp.Count;
                 }
                 else
