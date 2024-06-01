@@ -8,7 +8,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Math;
 /// </summary>
 public sealed partial class SetFloatOperator : HTNOperator
 {
-    [DataField(required: true)]
+    [DataField(required: true), ViewVariables]
     public string TargetKey = string.Empty;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]

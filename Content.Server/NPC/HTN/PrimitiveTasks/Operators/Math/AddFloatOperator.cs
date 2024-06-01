@@ -10,7 +10,7 @@ public sealed partial class AddFloatOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    [DataField(required: true)]
+    [DataField(required: true), ViewVariables]
     public string TargetKey = string.Empty;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
