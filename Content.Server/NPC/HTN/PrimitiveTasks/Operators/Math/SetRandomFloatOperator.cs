@@ -5,7 +5,9 @@ using Robust.Shared.Random;
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Math;
 
 /// <summary>
-/// Sets a random float from MinAmount to MaxAmount to blackboard
+/// Set random float value between <see cref="SetRandomFloatOperator.MinAmount"/> and
+/// <see cref="SetRandomFloatOperator.MaxAmount"/> specified <see cref="SetRandomFloatOperator.TargetKey"/>
+/// in the <see cref="NPCBlackboard"/>.
 /// </summary>
 public sealed partial class SetRandomFloatOperator : HTNOperator
 {

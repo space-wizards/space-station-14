@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Math;
 
 /// <summary>
-/// Gets the key, and adds the value to that float
+/// Added <see cref="AddFloatOperator.Amount"/> to float value for the
+/// specified <see cref="AddFloatOperator.TargetKey"/> in the <see cref="NPCBlackboard"/>.
 /// </summary>
 public sealed partial class AddFloatOperator : HTNOperator
 {

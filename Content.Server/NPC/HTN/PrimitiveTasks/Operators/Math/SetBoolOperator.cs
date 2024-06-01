@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Math;
 
 /// <summary>
-/// Just sets a blackboard key to a bool
+/// Set <see cref="SetBoolOperator.Value"/> to bool value for the
+/// specified <see cref="SetFloatOperator.TargetKey"/> in the <see cref="NPCBlackboard"/>.
 /// </summary>
 public sealed partial class SetBoolOperator : HTNOperator
 {
