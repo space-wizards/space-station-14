@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
 using System.Linq;
 using Robust.Shared.Threading;
@@ -56,7 +58,11 @@ namespace Content.Server.Power.Pow3r
                 // suppliers + discharger) Then decide based on total layer size whether its worth parallelizing that
                 // layer?
                 _networkJob.Networks = group;
-                parallel.ProcessNow(_networkJob, group.Count);
+                IConfigurationManager _cfg = IoCManager.Resolve<IConfigurationManager>();
+                if (_cfg.GetCVar(CCVars.DebugPow3rDisableParallel))
+                    parallel.ProcessSerialNow(_networkJob, group.Count);
+                else
+                    parallel.ProcessNow(_networkJob, group.Count);
             }
 
             ClearBatteries(state);
