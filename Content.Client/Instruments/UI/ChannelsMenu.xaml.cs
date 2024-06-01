@@ -57,8 +57,8 @@ public sealed partial class ChannelsMenu : DefaultWindow
 
         for (int i = 0; i < RobustMidiEvent.MaxChannels; i++)
         {
-            var item = ChannelList.AddItem(_owner.Loc.GetString("instrument-component-channel-name",
-                ("number", i)), null, true, i);
+            var item = ChannelList.AddItem(text: _owner.Loc.GetString("instrument-component-channel-name",
+                ("number", i)), metadata: i);
 
             item.Selected = !_owner.Instrument?.FilteredChannels[i] ?? false;
         }

@@ -100,12 +100,12 @@
                             Margin="5 0 0 0"
                             Text="{Loc 'lathe-menu-fabricating-message'}">
                         </Label>
-                        <TextureRect
+                        <LayeredTextureRect
                             Name="Icon"
                             HorizontalExpand="True"
                             SizeFlagsStretchRatio="2"
                             Margin="100 0 0 0">
-                        </TextureRect>
+                        </LayeredTextureRect>
                         <Label
                             Name="NameLabel"
                             RectClipContent="True"

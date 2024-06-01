@@ -8,6 +8,8 @@ using Content.Client.Stylesheets;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
+using System.Linq;
+using Robust.Client.ResourceManagement;
 
 namespace Content.Client.VendingMachines.UI
 {
@@ -15,6 +17,7 @@ namespace Content.Client.VendingMachines.UI
     public sealed partial class VendingMachineMenu : FancyWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IResourceCache _resources = default!;
 
         public event Action<ItemList.ItemListSelectedEventArgs>? OnItemSelected;
         public event Action<string>? OnSearchChanged;
@@ -70,14 +73,14 @@ namespace Content.Client.VendingMachines.UI
                 var entry = inventory[i];
                 var vendingItem = VendingContents[i - filterCount];
                 vendingItem.Text = string.Empty;
-                vendingItem.Icon = null;
+                vendingItem.IconTextures = null;
 
                 var itemName = entry.ID;
-                Texture? icon = null;
-                if (_prototypeManager.TryIndex<EntityPrototype>(entry.ID, out var prototype))
+                List<Texture>? textures = null;
+                if (_prototypeManager.TryIndex(entry.ID, out EntityPrototype? entityProto))
                 {
-                    itemName = prototype.Name;
-                    icon = spriteSystem.GetPrototypeIcon(prototype).Default;
+                    itemName = entityProto.Name;
+                    textures = SpriteComponent.GetPrototypeTextures(entityProto, _resources).Select(o => o.Default).ToList();
                 }
 
                 // search filter
@@ -93,7 +96,7 @@ namespace Content.Client.VendingMachines.UI
                     longestEntry = itemName;
 
                 vendingItem.Text = $"{itemName} [{entry.Amount}]";
-                vendingItem.Icon = icon;
+                vendingItem.IconTextures = textures;
                 filteredInventory.Add(i);
             }
 

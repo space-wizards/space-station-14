@@ -256,7 +256,7 @@ namespace Content.Client.Construction.UI
             {
                 Metadata = recipe,
                 Text = recipe.Name,
-                Icon = recipe.Icon.Frame0(),
+                IconTextures = new List<Texture> { recipe.Icon.Frame0() },
                 TooltipEnabled = true,
                 TooltipText = recipe.Description
             };

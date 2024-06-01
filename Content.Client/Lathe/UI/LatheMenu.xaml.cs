@@ -223,10 +223,7 @@ public sealed partial class LatheMenu : DefaultWindow
         var idx = 1;
         foreach (var recipe in queue)
         {
-            var icon = recipe.Icon == null
-                ? _spriteSystem.GetPrototypeIcon(recipe.Result).Default
-                : _spriteSystem.Frame0(recipe.Icon);
-            QueueList.AddItem($"{idx}. {recipe.Name}", icon);
+            QueueList.AddItem($"{idx}. {recipe.Name}", GetTexturesFromProto(recipe));
             idx++;
         }
     }
@@ -236,10 +233,25 @@ public sealed partial class LatheMenu : DefaultWindow
         FabricatingContainer.Visible = recipe != null;
         if (recipe == null)
             return;
-        Icon.Texture = recipe.Icon == null
-            ? _spriteSystem.GetPrototypeIcon(recipe.Result).Default
-            : _spriteSystem.Frame0(recipe.Icon);
+
+        Icon.Textures = GetTexturesFromProto(recipe);
         NameLabel.Text = $"{recipe.Name}";
+    }
+
+    private List<Texture> GetTexturesFromProto(LatheRecipePrototype recipe)
+    {
+        List<Texture> textures;
+        if (_prototypeManager.TryIndex(recipe.Result, out EntityPrototype? entityProto) && entityProto != null)
+        {
+            textures = SpriteComponent.GetPrototypeTextures(entityProto, _resources).Select(o => o.Default).ToList();
+        }
+        else
+        {
+            textures = recipe.Icon == null
+                ? new List<Texture> { _spriteSystem.GetPrototypeIcon(recipe.Result).Default }
+                : new List<Texture> { _spriteSystem.Frame0(recipe.Icon) };
+        }
+        return textures;
     }
 
     private void OnItemSelected(OptionButton.ItemSelectedEventArgs obj)
