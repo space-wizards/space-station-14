@@ -255,5 +255,15 @@ Entries:
   id: 31
   time: '2024-05-28T18:00:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28319
+- author: ShadowCommander
+  changes:
+  - message: Added a search bar to the admin menu player tab.
+    type: Add
+  - message: Changed the player tab entry tooltip to be the player name, character
+      name, identity, and job. Moved the time tooltip to the header.
+    type: Tweak
+  id: 32
+  time: '2024-05-31T06:28:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28030
 Name: Admin
 Order: 1

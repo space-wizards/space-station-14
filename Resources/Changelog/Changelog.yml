@@ -1,54 +1,4 @@
 ﻿Entries:
-- author: wafehling
-  changes:
-  - message: The trading outpost now has dedicated buy-only and sell-only pallets.
-      No more accidentally selling orders you just bought. Cargonians rejoice!
-    type: Tweak
-  id: 6150
-  time: '2024-03-13T23:26:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25955
-- author: maylokana
-  changes:
-  - message: Entities can no longer drink from closed containers
-    type: Fix
-  id: 6151
-  time: '2024-03-14T04:10:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26103
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Gunpowder can now be made by chemists with 6 parts potassium, 2 parts
-      sulfur and charcoal.
-    type: Add
-  - message: Pipebombs may now be crafted with a pipe, gunpowder and LV cable.
-    type: Add
-  - message: IEDs have been reworked, they are now called "fire bombs" and generate
-      a weak explosion that ignites nearby objects.
-    type: Tweak
-  id: 6152
-  time: '2024-03-14T04:27:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25705
-- author: PJB3005
-  changes:
-  - message: You must now wait 30 seconds before attempting to reconnect to a full
-      server.
-    type: Tweak
-  id: 6153
-  time: '2024-03-14T08:00:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/20972
-- author: Crotalus
-  changes:
-  - message: Sort agents by success rate in end game summary
-    type: Tweak
-  id: 6154
-  time: '2024-03-14T15:52:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26058
-- author: nikthechampiongr
-  changes:
-  - message: The radio jammer is now able to jam the signal of suit sensors.
-    type: Tweak
-  id: 6155
-  time: '2024-03-14T15:55:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26046
 - author: deltanedas
   changes:
   - message: Holocarp and Magicarp plushies can now be found in maintenance.
@@ -3860,3 +3810,47 @@
   id: 6649
   time: '2024-05-31T02:06:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28430
+- author: Ubaser
+  changes:
+  - message: Botanists now spawn with a plant clipper.
+    type: Tweak
+  id: 6650
+  time: '2024-05-31T07:37:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28439
+- author: Ubaser
+  changes:
+  - message: Janitors now spawn with a light replacer.
+    type: Tweak
+  id: 6651
+  time: '2024-05-31T08:44:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28441
+- author: NazrinNya
+  changes:
+  - message: Disposal pipes are now blocked from constructing underneath impassable
+      objects.
+    type: Fix
+  id: 6652
+  time: '2024-05-31T14:49:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28447
+- author: ShadowCommander
+  changes:
+  - message: Opening a firelock when temperature or pressure warnings are active,
+      now always shows the warning popup.
+    type: Tweak
+  id: 6653
+  time: '2024-05-31T14:56:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28420
+- author: ElectroJr
+  changes:
+  - message: Hugging a player no longer briefly opens the mugging UI
+    type: Fix
+  id: 6654
+  time: '2024-05-31T17:25:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28432
+- author: aspiringLich
+  changes:
+  - message: Some chemicals have been made more colorful and child-friendly.
+    type: Tweak
+  id: 6655
+  time: '2024-05-31T19:44:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28367

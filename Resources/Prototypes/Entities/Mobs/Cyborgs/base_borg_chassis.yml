@@ -84,6 +84,7 @@
   - type: Hands
     showInHands: false
     disableExplosionRecursion: true
+  - type: ComplexInteraction
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
