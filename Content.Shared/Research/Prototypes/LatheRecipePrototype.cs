@@ -39,42 +39,17 @@ public sealed partial class LatheRecipePrototype : IPrototype
     [DataField("materials", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
     private Dictionary<string, int> _requiredMaterials = new();
 
-    //todo make these function calls because we're eating tons of resolves here.
     /// <summary>
     ///     Name displayed in the lathe GUI.
     /// </summary>
     [ViewVariables]
-    public string Name
-    {
-        get
-        {
-            if (_name.Trim().Length != 0)
-                return _name;
-            var protoMan = IoCManager.Resolve<IPrototypeManager>();
-            protoMan.TryIndex(Result, out EntityPrototype? prototype);
-            if (prototype?.Name != null)
-                _name = prototype.Name;
-            return _name;
-        }
-    }
+    public string Name => GetName();
 
     /// <summary>
     ///     Short description displayed in the lathe GUI.
     /// </summary>
     [ViewVariables]
-    public string Description
-    {
-        get
-        {
-            if (_description.Trim().Length != 0)
-                return _description;
-            var protoMan = IoCManager.Resolve<IPrototypeManager>();
-            protoMan.TryIndex(Result, out EntityPrototype? prototype);
-            if (prototype?.Description != null)
-                _description = prototype.Description;
-            return _description;
-        }
-    }
+    public string Description => GetDescription();
 
     /// <summary>
     ///     The materials required to produce this recipe.
@@ -103,4 +78,30 @@ public sealed partial class LatheRecipePrototype : IPrototype
     /// </summary>
     [DataField]
     public ProtoId<LatheCategoryPrototype>? Category;
+
+    private string GetName()
+    {
+        if (_name.Trim().Length != 0)
+            return _name;
+
+        var protoMan = IoCManager.Resolve<IPrototypeManager>();
+        protoMan.TryIndex(Result, out EntityPrototype? prototype);
+        if (prototype?.Name != null)
+            _name = prototype.Name;
+
+        return _name;
+    }
+
+    private string GetDescription()
+    {
+        if (_description.Trim().Length != 0)
+            return _description;
+
+        var protoMan = IoCManager.Resolve<IPrototypeManager>();
+        protoMan.TryIndex(Result, out EntityPrototype? prototype);
+        if (prototype?.Description != null)
+            _description = prototype.Description;
+
+        return _description;
+    }
 }
