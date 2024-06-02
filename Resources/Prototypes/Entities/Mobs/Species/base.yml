@@ -223,6 +223,8 @@
     - CanPilot
     - FootstepSound
     - DoorBumpOpener
+  - type: RequireProjectileTarget
+    active: False
 
 - type: entity
   save: false

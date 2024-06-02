@@ -89,7 +89,7 @@
     node: crategenericsteel
     containers:
       - entity_storage
-  - type: RequireTarget
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: CrateGeneric
