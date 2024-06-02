@@ -17,6 +17,7 @@ using Content.Shared.Popups;
 using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
 using Content.Shared.StatusEffect;
+using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
