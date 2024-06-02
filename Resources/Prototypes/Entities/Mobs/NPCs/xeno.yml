@@ -40,6 +40,7 @@
     factions:
     - Xeno
   - type: Hands
+  - type: ComplexInteraction
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/burrower.rsi

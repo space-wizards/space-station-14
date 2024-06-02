@@ -298,8 +298,8 @@ public sealed partial class ExplosionSystem
     ///     Same as <see cref="ExplodeTile"/>, but for SPAAAAAAACE.
     /// </summary>
     internal void ExplodeSpace(BroadphaseComponent lookup,
-        Matrix3 spaceMatrix,
-        Matrix3 invSpaceMatrix,
+        Matrix3x2 spaceMatrix,
+        Matrix3x2 invSpaceMatrix,
         Vector2i tile,
         float throwForce,
         DamageSpecifier damage,
@@ -341,7 +341,7 @@ public sealed partial class ExplosionSystem
     }
 
     private static bool SpaceQueryCallback(
-        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox, SharedTransformSystem System) state,
+        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3x2 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox, SharedTransformSystem System) state,
         in EntityUid uid)
     {
         if (state.Processed.Contains(uid))
@@ -352,7 +352,7 @@ public sealed partial class ExplosionSystem
         if (xform.ParentUid == state.LookupOwner)
         {
             // parented directly to the map, use local position
-            if (state.GridBox.Contains(state.InvSpaceMatrix.Transform(xform.LocalPosition)))
+            if (state.GridBox.Contains(Vector2.Transform(xform.LocalPosition, state.InvSpaceMatrix)))
                 state.List.Add((uid, xform));
 
             return true;
@@ -360,14 +360,14 @@ public sealed partial class ExplosionSystem
 
         // finally check if it intersects our tile
         var wpos = state.System.GetWorldPosition(xform);
-        if (state.GridBox.Contains(state.InvSpaceMatrix.Transform(wpos)))
+        if (state.GridBox.Contains(Vector2.Transform(wpos, state.InvSpaceMatrix)))
             state.List.Add((uid, xform));
 
         return true;
     }
 
     private static bool SpaceQueryCallback(
-        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox, SharedTransformSystem System) state,
+        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3x2 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox, SharedTransformSystem System) state,
         in FixtureProxy proxy)
     {
         var uid = proxy.Entity;
@@ -585,12 +585,12 @@ sealed class Explosion
     /// <summary>
     ///     The matrix that defines the reference frame for the explosion in space.
     /// </summary>
-    private readonly Matrix3 _spaceMatrix;
+    private readonly Matrix3x2 _spaceMatrix;
 
     /// <summary>
     ///     Inverse of <see cref="_spaceMatrix"/>
     /// </summary>
-    private readonly Matrix3 _invSpaceMatrix;
+    private readonly Matrix3x2 _invSpaceMatrix;
 
     /// <summary>
     ///     Have all the tiles on all the grids been processed?
@@ -656,7 +656,7 @@ sealed class Explosion
         List<ExplosionGridTileFlood> gridData,
         List<float> tileSetIntensity,
         MapCoordinates epicenter,
-        Matrix3 spaceMatrix,
+        Matrix3x2 spaceMatrix,
         int area,
         float tileBreakScale,
         int maxTileBreak,
@@ -695,7 +695,7 @@ sealed class Explosion
             });
 
             _spaceMatrix = spaceMatrix;
-            _invSpaceMatrix = Matrix3.Invert(spaceMatrix);
+            Matrix3x2.Invert(spaceMatrix, out _invSpaceMatrix);
         }
 
         foreach (var grid in gridData)

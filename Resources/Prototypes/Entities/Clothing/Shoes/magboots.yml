@@ -122,7 +122,6 @@
     weightlessModifier: 1.2
 
 - type: entity
-  noSpawn: true
   id: ActionToggleMagboots
   name: Toggle Magboots
   description: Toggles the magboots on and off.
