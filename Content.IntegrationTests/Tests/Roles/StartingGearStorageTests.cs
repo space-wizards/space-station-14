@@ -1,14 +1,13 @@
 using System.Linq;
 using System.Numerics;
+using Content.Shared.Roles;
+using Content.Shared.Storage;
+using Content.Server.Storage.EntitySystems;
 using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Content.Shared.Roles;
-using Content.Shared.Inventory;
-using Content.Shared.Storage;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
-using Content.Server.Storage.EntitySystems;
 
 namespace Content.IntegrationTests.Tests.Roles;
 
