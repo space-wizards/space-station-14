@@ -1,14 +1,24 @@
 - type: entity
-  parent: ClothingHeadBase
-  id: WeldingMaskBase
+  parent: [ClothingHeadBase, BaseFoldable]
+  id: WeldingMaskBaseFlippable
   name: welding mask
   abstract: true
   components:
+  - type: Appearance
   - type: Item
     storedRotation: 0
+  - type: Foldable
+    canFoldInsideContainer: true
+  - type: FoldableClothing
+    foldedEquippedPrefix: flipped
+    foldedHeldPrefix: flipped
   - type: IngestionBlocker
+  - type: Mask
+  - type: Blindfold
   - type: FlashImmunity
   - type: IdentityBlocker
+    coverage: FULL
+
   - type: EyeProtection
   - type: PhysicalComposition
     materialComposition:
@@ -16,6 +26,13 @@
       Glass: 100
   - type: StaticPrice
     price: 50
+  - type: Sprite
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+    - state: icon-up
+      map: ["foldedLayer"]
+      visible: false
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -25,7 +42,54 @@
     - Snout
 
 - type: entity
-  parent: WeldingMaskBase
+  parent: WeldingMaskBaseFlippable
+  id: WeldingMaskBaseFlipped
+  name: welding mask
+  suffix: up
+  abstract: true
+  components:
+  - type: Foldable
+    folded: true
+  - type: IngestionBlocker
+    enabled: false
+  - type: Mask
+    isToggled: true
+    isToggleLocked: true
+  - type: Blindfold
+    enabled: false
+  - type: FlashImmunity
+    enabled: false
+  - type: IdentityBlocker
+    enabled: false
+    coverage: NONE
+  - type: EyeProtection
+    enabled: false
+    protectionTime: 0
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200
+      Glass: 100
+  - type: StaticPrice
+    price: 50
+  - type: Clothing
+    equippedPrefix: flipped
+  - type: Item
+    heldPrefix: flipped
+  - type: Sprite
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+      visible: false
+    - state: icon-up
+      map: ["foldedLayer"]
+      visible: true
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - WeldingMask
+
+- type: entity
+  parent: WeldingMaskBaseFlippable
   id: ClothingHeadHatWelding
   name: welding mask
   description: A head-mounted face cover designed to protect the wearer completely from space-arc eye.
@@ -41,7 +105,12 @@
     - WeldingMask
 
 - type: entity
-  parent: WeldingMaskBase
+  parent: [WeldingMaskBaseFlipped, ClothingHeadHatWelding]
+  id: ClothingHeadHatWeldingFlipped
+  name: welding mask
+
+- type: entity
+  parent: WeldingMaskBaseFlippable
   id: ClothingHeadHatWeldingMaskFlame
   name: flame welding mask
   description: A painted welding helmet, this one has flames on it.
@@ -52,7 +121,12 @@
     sprite: Clothing/Head/Welding/flame_welding_mask.rsi
 
 - type: entity
-  parent: WeldingMaskBase
+  parent: [WeldingMaskBaseFlipped, ClothingHeadHatWeldingMaskFlame]
+  id: ClothingHeadHatWeldingMaskFlameFlipped
+  name: flame welding mask
+
+- type: entity
+  parent: WeldingMaskBaseFlippable
   id: ClothingHeadHatWeldingMaskFlameBlue
   name: blue-flame welding mask
   description: A painted welding helmet, this one has blue flames on it.
@@ -63,7 +137,12 @@
     sprite: Clothing/Head/Welding/blue_flame_welding_mask.rsi
 
 - type: entity
-  parent: WeldingMaskBase
+  parent: [WeldingMaskBaseFlipped, ClothingHeadHatWeldingMaskFlameBlue]
+  id: ClothingHeadHatWeldingMaskFlameBlueFlipped
+  name: blue-flame welding mask
+
+- type: entity
+  parent: WeldingMaskBaseFlippable
   id: ClothingHeadHatWeldingMaskPainted
   name: painted welding mask
   description: A welding helmet, painted in crimson.
@@ -72,3 +151,8 @@
     sprite: Clothing/Head/Welding/paintedwelding.rsi
   - type: Clothing
     sprite: Clothing/Head/Welding/paintedwelding.rsi
+
+- type: entity
+  parent: [WeldingMaskBaseFlipped, ClothingHeadHatWeldingMaskPainted]
+  id: ClothingHeadHatWeldingMaskPaintedFlipped
+  name: painted welding mask

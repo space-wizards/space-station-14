@@ -21,5 +21,8 @@ public sealed partial class MaskComponent : Component
     public bool IsToggled;
 
     [DataField, AutoNetworkedField]
+    public bool IsToggleLocked { get; set; } = false;
+
+    [DataField, AutoNetworkedField]
     public string EquippedPrefix = "toggled";
 }

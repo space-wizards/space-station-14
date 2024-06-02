@@ -19,14 +19,16 @@ public sealed class BlindfoldSystem : EntitySystem
 
     private void OnBlindfoldTrySee(Entity<BlindfoldComponent> blindfold, ref InventoryRelayedEvent<CanSeeAttemptEvent> args)
     {
-        args.Args.Cancel();
+        if (blindfold.Comp.Enabled)
+        {
+            args.Args.Cancel();
+        }
     }
 
     private void OnEquipped(Entity<BlindfoldComponent> blindfold, ref GotEquippedEvent args)
     {
         _blindableSystem.UpdateIsBlind(args.Equipee);
     }
-
     private void OnUnequipped(Entity<BlindfoldComponent> blindfold, ref GotUnequippedEvent args)
     {
         _blindableSystem.UpdateIsBlind(args.Equipee);
