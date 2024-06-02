@@ -142,11 +142,10 @@
 - type: entity
   parent: BaseMobDragon
   id: MobDragon
+  suffix: No role or objectives
   components:
   - type: Dragon
     spawnRiftAction: ActionSpawnRift
-  - type: GenericAntag
-    rule: Dragon
   - type: ActionGun
     action: ActionDragonsBreath
     gunProto: DragonsBreathGun
@@ -235,7 +234,7 @@
   description: Spew out flames at anyone foolish enough to attack you!
   components:
   - type: Action
-    # TODO: actual sprite
+    # TODO: actual sprite and iconOn
     icon: { sprite : Objects/Weapons/Guns/Projectiles/magic.rsi, state: fireball }
     priority: 2
   - type: TargetAction

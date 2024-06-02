@@ -365,18 +365,18 @@ reagent-effect-guidebook-plant-cryoxadone =
 
 reagent-effect-guidebook-plant-phalanximine =
     { $chance ->
-        [1] Makes
-        *[other] make
-    } a plant not viable due to mutation viable again
+        [1] Restores
+        *[other] restore
+    } viability to a plant rendered nonviable by a mutation
 
 reagent-effect-guidebook-plant-diethylamine =
     { $chance ->
         [1] Increases
         *[other] increase
-    } the plant's lifespan and/or base health with 10% chance for each.
+    } the plant's lifespan and/or base health with 10% chance for each
 
 reagent-effect-guidebook-plant-robust-harvest =
     { $chance ->
         [1] Increases
         *[other] increase
-    } the plant's potency by {$increase} up to a maximum of {$limit}. Causes the plant to lose its seeds once the potency reaches {$seedlesstreshold}. Trying to add potency over {$limit} may cause decrease in yield at a 10% chance.
+    } the plant's potency by {$increase} up to a maximum of {$limit}. Causes the plant to lose its seeds once the potency reaches {$seedlesstreshold}. Trying to add potency over {$limit} may cause decrease in yield at a 10% chance

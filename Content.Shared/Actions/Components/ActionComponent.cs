@@ -32,7 +32,8 @@ public sealed partial class ActionComponent : Component
     /// <summary>
     ///     For toggle actions only, background to show when toggled on.
     /// </summary>
-    [DataField] public SpriteSpecifier? BackgroundOn;
+    [DataField]
+    public SpriteSpecifier? BackgroundOn;
 
     /// <summary>
     ///     If not null, this color will modulate the action icon color.

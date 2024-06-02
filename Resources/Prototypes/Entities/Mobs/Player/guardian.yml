@@ -225,6 +225,7 @@
     - type: Inventory
       templateId: holoclown
     - type: Hands
+    - type: ComplexInteraction
     - type: Clumsy
       clumsyDamage:
         types:
@@ -259,7 +260,6 @@
   id: ActionToggleGuardian
   name: Toggle Guardian
   description: Either manifests the guardian or recalls it back into your body
-  noSpawn: true
   components:
   - type: Action
     icon: Interface/Actions/manifest.png

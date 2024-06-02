@@ -104,7 +104,7 @@ public abstract class SharedActionsSystem : EntitySystem
         bool logError = true)
     {
         result = null;
-        if (!Exists(uid))
+        if (uid == null || TerminatingOrDeleted(uid.Value))
             return false;
 
         if (_actionQuery.TryComp(uid, out result))

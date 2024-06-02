@@ -43,8 +43,6 @@ public sealed class PullingSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSys = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
 
     public override void Initialize()
     {
@@ -66,7 +64,6 @@ public sealed class PullingSystem : EntitySystem
         SubscribeLocalEvent<PullerComponent, DropHandItemsEvent>(OnDropHandItems);
 
         CommandBinds.Builder
-            .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(OnRequestMovePulledObject))
             .Bind(ContentKeyFunctions.ReleasePulledObject, InputCmdHandler.FromDelegate(OnReleasePulledObject, handle: false))
             .Register<PullingSystem>();
     }
@@ -243,47 +240,6 @@ public sealed class PullingSystem : EntitySystem
     public bool IsPulled(EntityUid uid, PullableComponent? component = null)
     {
         return Resolve(uid, ref component, false) && component.BeingPulled;
-    }
-
-    private bool OnRequestMovePulledObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-    {
-        if (session?.AttachedEntity is not { } player ||
-            !player.IsValid())
-        {
-            return false;
-        }
-
-        if (!TryComp<PullerComponent>(player, out var pullerComp))
-            return false;
-
-        var pulled = pullerComp.Pulling;
-
-        if (!HasComp<PullableComponent>(pulled))
-            return false;
-
-        if (_containerSystem.IsEntityInContainer(player))
-            return false;
-
-        // Cooldown buddy
-        if (_timing.CurTime < pullerComp.NextThrow)
-            return false;
-
-        pullerComp.NextThrow = _timing.CurTime + pullerComp.ThrowCooldown;
-
-        // Cap the distance
-        const float range = 2f;
-        var fromUserCoords = coords.WithEntityId(player, EntityManager);
-        var userCoords = new EntityCoordinates(player, Vector2.Zero);
-
-        if (!userCoords.InRange(EntityManager, _xformSys, fromUserCoords, range))
-        {
-            var userDirection = fromUserCoords.Position - userCoords.Position;
-            fromUserCoords = userCoords.Offset(userDirection.Normalized() * range);
-        }
-
-        Dirty(player, pullerComp);
-        _throwing.TryThrow(pulled.Value, fromUserCoords, user: player, strength: 4f, animated: false, recoil: false, playSound: false, doSpin: false);
-        return false;
     }
 
     public bool IsPulling(EntityUid puller, PullerComponent? component = null)
