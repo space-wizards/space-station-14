@@ -98,7 +98,11 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
             if (!GameTicker.IsGameRuleAdded(uid, ruleData))
                 continue;
 
-            if (stationEvent.EndTime != null && Timing.CurTime >= stationEvent.EndTime && GameTicker.IsGameRuleActive(uid, ruleData))
+            if (!GameTicker.IsGameRuleActive(uid, ruleData) && !HasComp<DelayedStartRuleComponent>(uid))
+            {
+                GameTicker.StartGameRule(uid, ruleData);
+            }
+            else if (stationEvent.EndTime != null && Timing.CurTime >= stationEvent.EndTime && GameTicker.IsGameRuleActive(uid, ruleData))
             {
                 GameTicker.EndGameRule(uid, ruleData);
             }
