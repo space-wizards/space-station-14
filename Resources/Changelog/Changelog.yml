@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Food and drink stocks in vending machines has been reduced to encourage
-      people to use the kitchen and bar.
-    type: Tweak
-  id: 6162
-  time: '2024-03-15T23:28:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25999
 - author: Plykiya
   changes:
   - message: Ion storms now have a chance of happening from the start of shift.
@@ -3853,3 +3845,11 @@
   id: 6661
   time: '2024-06-01T17:49:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28434
+- author: DrSmugleaf
+  changes:
+  - message: Disabled the seeing rainbows screen effect when reduced motion is enabled
+      in the options menu.
+    type: Tweak
+  id: 6662
+  time: '2024-06-02T01:41:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28496
