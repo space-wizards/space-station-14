@@ -10,15 +10,14 @@
   - type: Foldable
     canFoldInsideContainer: true
   - type: FoldableClothing
-    foldedEquippedPrefix: flipped
-    foldedHeldPrefix: flipped
-  - type: IngestionBlocker
+    foldedEquippedPrefix: up
+    foldedHeldPrefix: up
   - type: Mask
+  - type: IngestionBlocker
   - type: Blindfold
   - type: FlashImmunity
   - type: IdentityBlocker
     coverage: FULL
-
   - type: EyeProtection
   - type: PhysicalComposition
     materialComposition:
@@ -26,6 +25,7 @@
       Glass: 100
   - type: StaticPrice
     price: 50
+  - type: WeldingMask
   - type: Sprite
     layers:
     - state: icon
@@ -54,7 +54,6 @@
     enabled: false
   - type: Mask
     isToggled: true
-    isToggleLocked: true
   - type: Blindfold
     enabled: false
   - type: FlashImmunity
@@ -107,7 +106,7 @@
 - type: entity
   parent: [WeldingMaskBaseFlipped, ClothingHeadHatWelding]
   id: ClothingHeadHatWeldingFlipped
-  name: welding mask
+  name: lifted welding mask
 
 - type: entity
   parent: WeldingMaskBaseFlippable
@@ -123,7 +122,7 @@
 - type: entity
   parent: [WeldingMaskBaseFlipped, ClothingHeadHatWeldingMaskFlame]
   id: ClothingHeadHatWeldingMaskFlameFlipped
-  name: flame welding mask
+  name: lifted flame welding mask
 
 - type: entity
   parent: WeldingMaskBaseFlippable
@@ -139,7 +138,7 @@
 - type: entity
   parent: [WeldingMaskBaseFlipped, ClothingHeadHatWeldingMaskFlameBlue]
   id: ClothingHeadHatWeldingMaskFlameBlueFlipped
-  name: blue-flame welding mask
+  name: lifted blue-flame welding mask
 
 - type: entity
   parent: WeldingMaskBaseFlippable
@@ -155,4 +154,4 @@
 - type: entity
   parent: [WeldingMaskBaseFlipped, ClothingHeadHatWeldingMaskPainted]
   id: ClothingHeadHatWeldingMaskPaintedFlipped
-  name: painted welding mask
+  name: lifted painted welding mask

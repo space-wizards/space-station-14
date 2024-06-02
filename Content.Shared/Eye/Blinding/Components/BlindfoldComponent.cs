@@ -6,14 +6,9 @@ namespace Content.Shared.Eye.Blinding.Components;
 ///     Blinds a person when an item with this component is equipped to the eye, head, or mask slot.
 /// </summary>
 [RegisterComponent]
-[NetworkedComponent]
+[NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class BlindfoldComponent : Component
 {
-    /// <summary>
-    ///   Determines if this component is allowed to blind someone.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("enabled")]
-    public bool Enabled { get; set; } = true;
-
+    [DataField, AutoNetworkedField]
+    public bool Override { get; set; } = false;
 }

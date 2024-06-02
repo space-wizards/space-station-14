@@ -19,16 +19,25 @@ public sealed class BlindfoldSystem : EntitySystem
 
     private void OnBlindfoldTrySee(Entity<BlindfoldComponent> blindfold, ref InventoryRelayedEvent<CanSeeAttemptEvent> args)
     {
-        if (blindfold.Comp.Enabled)
-        {
+        if (!blindfold.Comp.Override)
             args.Args.Cancel();
-        }
     }
 
     private void OnEquipped(Entity<BlindfoldComponent> blindfold, ref GotEquippedEvent args)
     {
         _blindableSystem.UpdateIsBlind(args.Equipee);
     }
+
+    public void SetOverride(EntityUid uid, BlindfoldComponent blindfold, bool bit, EntityUid equipee)
+    {
+        Dirty(uid, blindfold);
+        blindfold.Override = bit;
+        if (equipee.IsValid())
+        {
+            _blindableSystem.UpdateIsBlind(equipee);
+        }
+    }
+
     private void OnUnequipped(Entity<BlindfoldComponent> blindfold, ref GotUnequippedEvent args)
     {
         _blindableSystem.UpdateIsBlind(args.Equipee);
