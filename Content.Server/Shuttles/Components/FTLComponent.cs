@@ -51,5 +51,8 @@ public sealed partial class FTLComponent : Component
     };
 
     [DataField]
+    public EntityUid? StartupStream;
+
+    [DataField]
     public EntityUid? TravelStream;
 }

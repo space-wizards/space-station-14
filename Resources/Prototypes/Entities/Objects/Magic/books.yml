@@ -31,7 +31,7 @@
   id: WizardsGrimoire
   name: wizards grimoire
   suffix: Wizard
-  parent: BaseItem
+  parent: [ BaseItem, StorePresetSpellbook ]
   components:
     - type: Sprite
       sprite: Objects/Misc/books.rsi
@@ -52,7 +52,6 @@
     - type: Store
       refundAllowed: true
       ownerOnly: true # get your own tome!
-      preset: StorePresetSpellbook
       balance:
         WizCoin: 10 # prices are balanced around this 10 point maximum and how strong the spells are
 
@@ -61,12 +60,11 @@
   id: WizardsGrimoireNoRefund
   name: wizards grimoire
   suffix: Wizard, No Refund
-  parent: WizardsGrimoire
+  parent: [ WizardsGrimoire, StorePresetSpellbook ]
   components:
     - type: Store
       refundAllowed: false
       ownerOnly: true # get your own tome!
-      preset: StorePresetSpellbook
       balance:
         WizCoin: 10 # prices are balanced around this 10 point maximum and how strong the spells are
 

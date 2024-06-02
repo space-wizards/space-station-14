@@ -719,8 +719,17 @@ namespace Content.Client.Lobby.UI
             _jobPriorities.Clear();
             var firstCategory = true;
 
-            var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>().ToArray();
-            Array.Sort(departments, DepartmentUIComparer.Instance);
+            // Get all displayed departments
+            var departments = new List<DepartmentPrototype>();
+            foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
+            {
+                if (department.EditorHidden)
+                    continue;
+
+                departments.Add(department);
+            }
+
+            departments.Sort(DepartmentUIComparer.Instance);
 
             var items = new[]
             {
@@ -774,7 +783,7 @@ namespace Content.Client.Lobby.UI
                     JobList.AddChild(category);
                 }
 
-                var jobs = department.Roles.Select(jobId => _prototypeManager.Index<JobPrototype>(jobId))
+                var jobs = department.Roles.Select(jobId => _prototypeManager.Index(jobId))
                     .Where(job => job.SetPreference)
                     .ToArray();
 
@@ -821,13 +830,15 @@ namespace Content.Client.Lobby.UI
                             if (jobId == job.ID)
                             {
                                 other.Select(selectedPrio);
+                                continue;
                             }
-                            else if (selectedJobPrio == JobPriority.High && (JobPriority) other.Selected == JobPriority.High)
-                            {
-                                // Lower any other high priorities to medium.
-                                other.Select((int) JobPriority.Medium);
-                                Profile = Profile?.WithJobPriority(jobId, JobPriority.Medium);
-                            }
+
+                            if (selectedJobPrio != JobPriority.High || (JobPriority) other.Selected != JobPriority.High)
+                                continue;
+
+                            // Lower any other high priorities to medium.
+                            other.Select((int)JobPriority.Medium);
+                            Profile = Profile?.WithJobPriority(jobId, JobPriority.Medium);
                         }
 
                         // TODO: Only reload on high change (either to or from).
@@ -932,6 +943,11 @@ namespace Content.Client.Lobby.UI
                 SetDirty();
                 ReloadPreview();
             };
+
+            if (Profile is null)
+                return;
+
+            UpdateJobPriorities();
         }
 
         private void OnFlavorTextChange(string content)

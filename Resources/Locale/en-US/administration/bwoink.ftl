@@ -12,3 +12,5 @@ bwoink-system-typing-indicator = {$players} {$count ->
 } typing...
 
 admin-bwoink-play-sound = Bwoink?
+
+bwoink-title-none-selected = None selected
