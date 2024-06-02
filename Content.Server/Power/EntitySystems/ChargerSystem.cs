@@ -65,7 +65,7 @@ internal sealed class ChargerSystem : EntitySystem
                         return;
 
                     var chargePercentage = (battery.CurrentCharge / battery.MaxCharge) * 100;
-                    args.PushMarkup(Loc.GetString("charger-content", ("color", "yellow"), ("chargePercentage", (int) chargePercentage)));
+                    args.PushMarkup(Loc.GetString("charger-content", ("chargePercentage", (int) chargePercentage)));
                 }
             }
         }
