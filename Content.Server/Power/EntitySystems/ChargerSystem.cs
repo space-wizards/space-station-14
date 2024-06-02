@@ -41,32 +41,34 @@ internal sealed class ChargerSystem : EntitySystem
 
     private void OnChargerExamine(EntityUid uid, ChargerComponent component, ExaminedEvent args)
     {
-        // rate at which the charger charges
-        args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", (int) component.ChargeRate)));
-
-        // try to get contents of the charger
-        if (!_container.TryGetContainer(uid, component.SlotId, out var container))
-            return;
-
-        // if charger is empty and not a power cell type charger, add empty message
-        // power cells have their own empty message by default, for things like flash lights
-        if (container.ContainedEntities.Count == 0 && !HasComp<PowerCellSlotComponent>(uid))
+        using (args.PushGroup(nameof(ChargerComponent)))
         {
-            args.PushMarkup(Loc.GetString("charger-empty"));
-        }
-        else
-        {
-            // add how much each item is charged it 
-            foreach (var contained in container.ContainedEntities)
+            // rate at which the charger charges
+            args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", (int) component.ChargeRate)));
+
+            // try to get contents of the charger
+            if (!_container.TryGetContainer(uid, component.SlotId, out var container))
+                return;
+
+            // if charger is empty and not a power cell type charger, add empty message
+            // power cells have their own empty message by default, for things like flash lights
+            if (container.ContainedEntities.Count == 0 && !HasComp<PowerCellSlotComponent>(uid))
             {
-                if (!TryComp<BatteryComponent>(contained, out var battery))
-                    return;
+                args.PushMarkup(Loc.GetString("charger-empty"));
+            }
+            else
+            {
+                // add how much each item is charged it 
+                foreach (var contained in container.ContainedEntities)
+                {
+                    if (!TryComp<BatteryComponent>(contained, out var battery))
+                        return;
 
-                var chargePercentage = (battery.CurrentCharge / battery.MaxCharge) * 100;
-                args.PushMarkup(Loc.GetString("charger-content", ("color", "yellow"), ("chargePercentage", (int) chargePercentage)));
+                    var chargePercentage = (battery.CurrentCharge / battery.MaxCharge) * 100;
+                    args.PushMarkup(Loc.GetString("charger-content", ("color", "yellow"), ("chargePercentage", (int) chargePercentage)));
+                }
             }
         }
-        
     }
 
     public override void Update(float frameTime)
