@@ -1,0 +1,133 @@
+- type: entity
+  name: Vasquez
+  description: A rather small xeno wearing a maid outfit. Stop asking them to lay eggs for you.
+  parent:
+  - BaseSimpleMob
+  - MobCombat
+  - MobBloodstream
+  - MobFlammable
+  id: MobXenoMaid
+  suffix: AI
+  components:
+  - type: InstantAction
+    useDelay: 10
+    icon: Interface/Actions/scream.png
+    event: !type:ScreamActionEvent
+    checkCanInteract: false
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2.5
+    weightlessModifier: 1.5
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcBite
+  - type: Body
+    prototype: Animal
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.75
+  - type: BasicEntityAmmoProvider
+    proto: BulletAcid
+    capacity: 1
+    count: 1
+  - type: Gun
+    fireRate: 0.75
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: GreyStation/Mobs/Aliens/Xenos/xenomaid.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+    scale: 1.4, 1.3
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: .49
+        density: 300
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: running
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Bloodstream
+    bloodReagent: FluorosulfuricAcid
+  - type: Hands
+  - type: Puller
+    needsHands: false
+  - type: Prying
+    pryPowered: false
+    force: true
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-vasquez-name
+    description: ghost-role-information-vasquez-description
+  - type: GhostTakeoverAvailable
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 3
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: Speech
+    speechVerb: Arachnid
+    speechSounds: Arachnid
+  - type: Vocal
+    sounds:
+      Male: UnisexArachnid
+      Female: UnisexArachnid
+      Unsexed: UnisexArachnid
+  - type: TypingIndicator
+    proto: alien
+  - type: Climbing
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.7
+      80: 0.5
+  - type: MobPrice
+    price: 1000 # Living critters are valuable in space.
+  - type: Perishable
+  - type: Temperature
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-vasquez
+    interactFailureString: petting-failure-vasquez
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - FootstepSound
+      - DoorBumpOpener

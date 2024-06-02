@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Riot bullet shields made by JoeHammad1844 (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "riot_bullet-icon"
+    },
+    {
+      "name": "riot_bullet-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "riot_bullet-inhand-left",
+      "directions": 4
+    }
+  ]
+}

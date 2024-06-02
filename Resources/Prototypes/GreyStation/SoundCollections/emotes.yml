@@ -1,0 +1,10 @@
+- type: soundCollection
+  id: Fart
+  files:
+    - /Audio/GreyStation/Effects/Fart/fart1.ogg
+    - /Audio/GreyStation/Effects/Fart/fart2.ogg
+    - /Audio/GreyStation/Effects/Fart/fart3.ogg
+    - /Audio/GreyStation/Effects/Fart/fart4.ogg
+    - /Audio/GreyStation/Effects/Fart/fart5.ogg
+    - /Audio/Effects/Emotes/parp1.ogg
+    - /Audio/GreyStation/Effects/Fart/superfart.ogg

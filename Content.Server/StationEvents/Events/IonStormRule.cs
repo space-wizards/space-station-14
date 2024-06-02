@@ -1,5 +1,5 @@
+using Content.Server.GameTicking.Components;
 using System.Linq;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Silicons.Laws;
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
@@ -53,6 +53,8 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
     private const string Allergies = "IonStormAllergies";
     [ValidatePrototypeId<DatasetPrototype>]
     private const string AllergySeverities = "IonStormAllergySeverities";
+    [ValidatePrototypeId<DatasetPrototype>]
+    private const string Species = "IonStormSpecies";
     [ValidatePrototypeId<DatasetPrototype>]
     private const string Concepts = "IonStormConcepts";
     [ValidatePrototypeId<DatasetPrototype>]

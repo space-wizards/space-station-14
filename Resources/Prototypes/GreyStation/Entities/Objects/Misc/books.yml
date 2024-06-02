@@ -1,0 +1,28 @@
+- type: entity
+  parent: BaseItem
+  id: BookSpaceLaw
+  name: "Space Law"
+  description: The law of the station. Prepare for screaming and arguing.
+  components:
+    - type: Sprite
+      sprite: Nyanotrasen/Objects/Misc/books.rsi
+      layers:
+        - state: law_space
+    - type: Tag
+      tags:
+      - Book
+    - type: MeleeWeapon
+      wideAnimationRotation: 180
+      damage:
+        types:
+          Blunt: 6
+    - type: GuideHelp
+      openOnActivation: true
+      guides:
+      - Spacelaw
+    - type: EmitSoundOnPickup # GreyStation - Sound PR
+      sound: /Audio/SimpleStation14/Items/Handling/book_pickup.ogg
+    - type: EmitSoundOnDrop
+      sound: /Audio/SimpleStation14/Items/Handling/book_drop.ogg
+    - type: EmitSoundOnLand
+      sound: /Audio/SimpleStation14/Items/Handling/book_drop.ogg

@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingEyesGlassesMeson
+  id: ClothingEyesGlassesWelding
+  name: welding goggles
+  description: Tinted goggles using a proprietary polymer that provides protection from eye damage of all types.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Eyes/Glasses/welding_goggles.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Eyes/Glasses/welding_goggles.rsi

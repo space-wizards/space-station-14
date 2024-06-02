@@ -1,0 +1,50 @@
+- type: construction
+  name: reinforced wood table
+  id: TableWoodReinforced
+  graph: Table
+  startNode: start
+  targetNode: TableWoodReinforced
+  category: construction-category-furniture
+  description: A square piece of wood standing on four metal legs. Extra robust.
+  icon:
+    sprite: Nyanotrasen/Structures/Furniture/Tables/rwood.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: tatami square
+  id: tatamisingle
+  graph: tatami
+  startNode: start
+  targetNode: tatamiSquare
+  category: construction-category-furniture
+  description: It's tatami, but a square.
+  icon:
+    sprite: Nyanotrasen/Structures/Furniture/tatami.rsi
+    state: tatami_1x1
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: tatami mat
+  id: tatamimat
+  graph: tatami
+  startNode: start
+  targetNode: tatamiPart
+  category: construction-category-furniture
+  description: It's a portion of a tatami mat.
+  icon:
+    sprite: Nyanotrasen/Structures/Furniture/tatami.rsi
+    state: tatami_1x1P
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

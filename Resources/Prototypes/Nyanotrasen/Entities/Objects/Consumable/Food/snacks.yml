@@ -1,0 +1,233 @@
+# Snacks and Entrees
+
+- type: entity
+  name: squeaking stir fry
+  parent: FoodMealBase
+  id: FoodMothSqueakingFry
+  description: A mothic classic made with cheese curds and tofu (amongst other things).
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - tofu
+      - leafy
+  - type: Food
+    trash: FoodPlateSmall
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Snacks/moth.rsi
+    state: squeakingstirfry
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 6
+        - ReagentId: Protein
+          Quantity: 8
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like cheese, tofu and veggies
+
+- type: entity
+  name: toasted seeds
+  parent: FoodBakingBase
+  id: FoodMothToastedSeeds
+  description: While they're far from filling, toasted seeds are a popular snack amongst the moths. Some more exotic flavours may be added for some extra pep.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - seeds
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Snacks/moth.rsi
+    state: toastedseeds
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Protein
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 6
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+- type: entity
+  name: engine fodder
+  parent: FoodBakingBase
+  id: FoodMothEngineFodder
+  description: A common snack for moth engineers, made of seeds, nuts, chocolate, popcorn, and potato chips	designed to be dense with calories and easy to snack on when an extra boost is needed.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - seeds
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Snacks/moth.rsi
+    state: enginefodder
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40 # Very compact food
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 18
+        - ReagentId: Sugar
+          Quantity: 5
+        - ReagentId: TableSalt
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 6
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+- type: entity
+  name: fueljack's lunch
+  parent: FoodBakingBase
+  id: FoodMothFueljackLunch
+  description: A dish made from fried vegetables. Popular amongst the brave moths that faces the dangers of space.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - seeds
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Snacks/moth.rsi
+    state: fueljacklunch
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 10
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+- type: entity
+  name: sweet chili cabbage wrap
+  parent: FoodMealBase
+  id: FoodMothChiliCabbageWrap
+  description: Grilled cheese and salad in a cabbage wrap, topped with delicious sweet chili sauce.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - cabbage
+      - sweet
+      - spicy
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Snacks/moth.rsi
+    state: sweetchilicabbagewrap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 6
+        - ReagentId: CapsaicinOil
+          Quantity: 1
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like cheese, salad, sweet chili
+
+- type: entity
+  name: baked cheese wheel
+  parent: FoodBakingBase
+  id: FoodMothBakedCheese
+  description: A baked cheese wheel, melty and delicious...
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 1
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Snacks/moth.rsi
+    state: bakedcheese
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+- type: entity
+  name: baked cheese platter
+  parent: FoodBakingBase
+  id: FoodMothBakedCheesePlatter
+  description: A favourite for sharing. Usually served with crispy bread slices for dipping, because the only thing better than good cheese is good cheese on bread.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - bread
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Snacks/moth.rsi
+    state: bakedcheeseplatter
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 16
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 2
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+- type: entity
+  name: borito pie
+  parent: FoodMealBase
+  id: FoodBoritoPie
+  description: For when you are bored of normal meals while sitting in brig.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - cheesy
+      - boritos
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Snacks/boritopie.rsi
+    state: borito-pie
+  - type: Food
+    trash: FoodPacketBoritosTrash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 13
+        - ReagentId: CapsaicinOil
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 4
+  - type: Tag
+    tags:
+    - Meat

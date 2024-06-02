@@ -9,6 +9,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -17,6 +18,7 @@ using Prometheus;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
@@ -29,7 +31,11 @@ namespace Content.Server.Database
         void Shutdown();
 
         #region Preferences
-        Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile);
+        Task<PlayerPreferences> InitPrefsAsync(
+            NetUserId userId,
+            ICharacterProfile defaultProfile,
+            CancellationToken cancel);
+
         Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
 
         Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot);
@@ -38,7 +44,7 @@ namespace Content.Server.Database
 
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
-        Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId);
+        Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId, CancellationToken cancel);
         #endregion
 
         #region User Ids
@@ -157,8 +163,9 @@ namespace Content.Server.Database
         /// Look up a player's role timers.
         /// </summary>
         /// <param name="player">The player to get the role timer information from.</param>
+        /// <param name="cancel"></param>
         /// <returns>All role timers belonging to the player.</returns>
-        Task<List<PlayTime>> GetPlayTimes(Guid player);
+        Task<List<PlayTime>> GetPlayTimes(Guid player, CancellationToken cancel = default);
 
         /// <summary>
         /// Update play time information in bulk.
@@ -285,6 +292,18 @@ namespace Content.Server.Database
         Task MarkMessageAsSeen(int id, bool dismissedToo);
 
         #endregion
+
+        #region Job Whitelists
+
+        Task AddJobWhitelist(Guid player, ProtoId<JobPrototype> job);
+
+
+        Task<List<string>> GetJobWhitelists(Guid player, CancellationToken cancel = default);
+        Task<bool> IsJobWhitelisted(Guid player, ProtoId<JobPrototype> job);
+
+        Task<bool> RemoveJobWhitelist(Guid player, ProtoId<JobPrototype> job);
+
+        #endregion
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -346,7 +365,10 @@ namespace Content.Server.Database
             _sqliteInMemoryConnection?.Dispose();
         }
 
-        public Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
+        public Task<PlayerPreferences> InitPrefsAsync(
+            NetUserId userId,
+            ICharacterProfile defaultProfile,
+            CancellationToken cancel)
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.InitPrefsAsync(userId, defaultProfile));
@@ -376,10 +398,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.SaveAdminOOCColorAsync(userId, color));
         }
 
-        public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
+        public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId, CancellationToken cancel)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetPlayerPreferencesAsync(userId));
+            return RunDbCommand(() => _db.GetPlayerPreferencesAsync(userId, cancel));
         }
 
         public Task AssignUserIdAsync(string name, NetUserId userId)
@@ -487,10 +509,10 @@ namespace Content.Server.Database
 
         #region Playtime
 
-        public Task<List<PlayTime>> GetPlayTimes(Guid player)
+        public Task<List<PlayTime>> GetPlayTimes(Guid player, CancellationToken cancel)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetPlayTimes(player));
+            return RunDbCommand(() => _db.GetPlayTimes(player, cancel));
         }
 
         public Task UpdatePlayTimes(IReadOnlyCollection<PlayTimeUpdate> updates)
@@ -859,6 +881,30 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.MarkMessageAsSeen(id, dismissedToo));
+        }
+
+        public Task AddJobWhitelist(Guid player, ProtoId<JobPrototype> job)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddJobWhitelist(player, job));
+        }
+
+        public Task<List<string>> GetJobWhitelists(Guid player, CancellationToken cancel = default)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetJobWhitelists(player, cancel));
+        }
+
+        public Task<bool> IsJobWhitelisted(Guid player, ProtoId<JobPrototype> job)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.IsJobWhitelisted(player, job));
+        }
+
+        public Task<bool> RemoveJobWhitelist(Guid player, ProtoId<JobPrototype> job)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
         }
 
         // Wrapper functions to run DB commands from the thread pool.

@@ -1,0 +1,73 @@
+﻿- type: entity
+  parent: VendingMachine
+  id: VendingMachineBoxingDrobe
+  name: Boxing Drobe
+  description: Always short on stock.
+  components:
+  - type: VendingMachine
+    pack: BoxingDrobeInventory
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Machines/VendingMachines/boxingdrobe.rsi
+    layers:
+    - state: off
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: normal-unshaded
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["Boxer"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineRepDrobe
+  name: RepDrobe
+  description: A machine for all your reporting needs, as long as you need clothes.
+  components:
+  - type: VendingMachine
+    pack: RepDrobeInventory
+  - type: Advertise
+    pack: DetDrobeAds
+  - type: SpeakOnUIClosed
+    pack: GenericVendGoodbyes
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/detdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: WiresVisuals
+  - type: AccessReader
+    access: [["Reporter"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineMNKDrobe
+  name: MNK Drobe
+  description: Quality garments provided by MoNoKrome.
+  components:
+  - type: VendingMachine
+    pack: MNKDrobeInventory
+    offState: off
+    brokenState: broken
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Machines/VendingMachines/mnkdrobe.rsi
+    layers:
+    - state: off
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+
+- type: entity
+  parent: VendingMachineRoboDrobe
+  id: VendingMachineAutomatrobe
+  name: Automatrobe
+  description: Automatically good.
+  components:
+  - type: VendingMachine
+    pack: AutomatrobeInventory

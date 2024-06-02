@@ -1,0 +1,56 @@
+- type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
+  id: DrinkSakeBottleFull
+  name: sake bottle
+  description: |
+    Clear, or sometimes foggy
+    Chilled like ice cream alcohol
+    Fill a cup, drink up!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Sake
+          Quantity: 100
+  - type: Label
+    currentLabel: sake
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/sakebottle.rsi
+  - type: Sealable
+
+- type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
+  id: DrinkSojuBottleFull
+  name: soju bottle
+  description: It's like sake but if you're trying to get FUCKED. UP.
+  components:
+  - type: Item
+    size: Small
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Soju
+          Quantity: 100
+  - type: Label
+    currentLabel: soju
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/sojubottle.rsi
+  - type: Sealable
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkTokkuri
+  name: tokkuri
+  description: Floral and full of osake!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Sake
+          Quantity: 100
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/saketokkuri.rsi

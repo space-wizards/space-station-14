@@ -22,11 +22,10 @@
     contentSize: 12000
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
-    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
-    - key: enum.PaperUiKey.Key
-      type: PaperBoundUserInterface
+      enum.PaperUiKey.Key:
+        type: PaperBoundUserInterface
   - type: Tag
     tags:
       - Book
@@ -34,6 +33,12 @@
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_book.svg.96dpi.png"
     backgroundPatchMargin: 23.0, 16.0, 14.0, 15.0
     contentMargin: 20.0, 20.0, 20.0, 20.0
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/book_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/book_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/book_drop.ogg
 
 - type: entity
   id: BookSpaceEncyclopedia
@@ -49,7 +54,7 @@
       color: "#0a2a6b"
     - state: decor_wingette
       color: "#082561"
-    - state: icon_text 
+    - state: icon_text
       color: gold
     - state: icon_planet
       color: "#42b6f5"
@@ -361,9 +366,9 @@
   description: Each book is unique! What is hidden in this one?
   components:
   - type: RandomMetadata
-    nameSegments: 
-    - book_hint_appearance
-    - book_type
+    nameSegments:
+    - BookHintAppearances
+    - BookTypes
   - type: RandomSprite
     available:
       - cover:
@@ -410,7 +415,7 @@
           icon_skull: ""
           icon_text: ""
           icon_text2: ""
-          icon_text3: "" 
+          icon_text3: ""
         overlay:
           overlay_blood: ""
           overlay_dirt: Sixteen
@@ -424,34 +429,8 @@
   suffix: random visual, random story
   components:
   - type: PaperRandomStory
-    storySegments:
-    - "This is a "
-    - book_genre
-    - " about a "
-    - book_character_trait
-    - " "
-    - book_character
-    - " and "
-    - book_character_trait
-    - " "
-    - book_character
-    - ". Due to "
-    - book_event
-    - ", they "
-    - book_action_trait
-    - " "
-    - book_action
-    - " "
-    - book_character
-    - " "
-    - book_location
-    - ". \n\n"
-    - book_story_element
-    - " is "
-    - book_story_element_trait
-    - "."
-    storySeparator: ""
-    
+    template: GenericStory
+
 - type: entity
   parent: BookBase
   id: BookAtmosDistro

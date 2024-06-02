@@ -21,6 +21,7 @@ using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -79,7 +80,7 @@ namespace Content.Server.Zombies
         /// <param name="target">the entity being zombified</param>
         /// <param name="mobState"></param>
         /// <remarks>
-        ///     ALRIGHT BIG BOY. YOU'VE COME TO THE LAYER OF THE BEAST. THIS IS YOUR WARNING.
+        ///     ALRIGHT BIG BOYS, GIRLS AND ANYONE ELSE. YOU'VE COME TO THE LAYER OF THE BEAST. THIS IS YOUR WARNING.
         ///     This function is the god function for zombie stuff, and it is cursed. I have
         ///     attempted to label everything thouroughly for your sanity. I have attempted to
         ///     rewrite this, but this is how it shall lie eternal. Turn back now.
@@ -106,6 +107,7 @@ namespace Content.Server.Zombies
             RemComp<ReproductiveComponent>(target);
             RemComp<ReproductivePartnerComponent>(target);
             RemComp<LegsParalyzedComponent>(target);
+            RemComp<ComplexInteractionComponent>(target);
 
             //funny voice
             var accentType = "zombie";
@@ -226,6 +228,11 @@ namespace Content.Server.Zombies
 
             _identity.QueueIdentityUpdate(target);
 
+            var htn = EnsureComp<HTNComponent>(target);
+            htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
+            htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
+            _npc.SleepNPC(target, htn);
+
             //He's gotta have a mind
             var hasMind = _mind.TryGetMind(target, out var mindId, out _);
             if (hasMind && _mind.TryGetSession(mindId, out var session))
@@ -241,9 +248,6 @@ namespace Content.Server.Zombies
             }
             else
             {
-                var htn = EnsureComp<HTNComponent>(target);
-                htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
-                htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
                 _npc.WakeNPC(target, htn);
             }
 

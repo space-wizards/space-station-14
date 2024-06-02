@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [ BaseItem, StorePresetUplink ] #PDA's have uplinks so they have to inherit the data.
   id: BasePDA
   name: PDA
   description: Personal Data Assistant.
@@ -86,24 +86,29 @@
   - type: ActivatableUI
     key: enum.PdaUiKey.Key
     singleUser: true
-    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
-    - key: enum.PdaUiKey.Key
-      type: PdaBoundUserInterface
-    - key: enum.StoreUiKey.Key
-      type: StoreBoundUserInterface
-    - key: enum.RingerUiKey.Key
-      type: RingerBoundUserInterface
-    - key: enum.InstrumentUiKey.Key
-      type: InstrumentBoundUserInterface
-    - key: enum.HealthAnalyzerUiKey.Key
-      type: HealthAnalyzerBoundUserInterface
+      enum.PdaUiKey.Key:
+        type: PdaBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+      enum.RingerUiKey.Key:
+        type: RingerBoundUserInterface
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+      enum.HealthAnalyzerUiKey.Key:
+        type: HealthAnalyzerBoundUserInterface
   - type: Tag
     tags:
     - DoorBumpOpener
   - type: Input
     context: "human"
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/multitool_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/multitool_drop.ogg
 
 - type: entity
   parent: BasePDA
@@ -659,10 +664,11 @@
   parent: CentcomPDA
   id: AdminPDA
   name: Admin PDA
+  suffix: Admin
   description: If you are not an admin please return this PDA to the nearest admin.
   components:
   - type: Pda
-    id: PassengerIDCard
+    id: UniversalIDCard
   - type: HealthAnalyzer
     scanDelay: 0
   - type: CartridgeLoader

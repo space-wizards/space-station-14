@@ -28,7 +28,7 @@
 
 - type: statusIcon
   id: MindShieldIcon
-  priority: 1
+  priority: 2
   locationPreference: Right
   layer: Mod
   isShaded: true

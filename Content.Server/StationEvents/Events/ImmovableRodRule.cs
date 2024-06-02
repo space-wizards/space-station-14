@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.ImmovableRod;
 using Content.Server.StationEvents.Components;
@@ -27,7 +28,9 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
 
         if (proto.TryGetComponent<ImmovableRodComponent>(out var rod) && proto.TryGetComponent<TimedDespawnComponent>(out var despawn))
         {
-            TryFindRandomTile(out _, out _, out _, out var targetCoords);
+            if (!TryFindRandomTile(out _, out _, out _, out var targetCoords))
+                return;
+
             var speed = RobustRandom.NextFloat(rod.MinSpeed, rod.MaxSpeed);
             var angle = RobustRandom.NextAngle();
             var direction = angle.ToVec();

@@ -1,8 +1,8 @@
 - type: statusIcon
   id: HealthIcon
   abstract: true
-  priority: 1
-  locationPreference: Right
+  priority: 3
+  locationPreference: Left
   isShaded: true
 
 - type: statusIcon

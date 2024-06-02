@@ -1,0 +1,31 @@
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSpooky
+  name: SpookyDrobe
+  description: The best place to enjoy the cold!
+  components:
+  - type: VendingMachine
+    pack: SpookyDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
+  - type: Advertise
+    pack: SpookyDrobeAds
+  - type: SpeakOnUIClosed
+    pack: GenericVendGoodbyes
+  - type: Speech
+  - type: Sprite
+    sprite: GreyStation/Structures/Machines/VendingMachines/spookydrobe.rsi
+    layers:
+    - state: "off"
+      map: [ "enum.VendingMachineVisualLayers.Base" ]
+    - state: "off"
+      map: [ "enum.VendingMachineVisualLayers.BaseUnshaded" ]
+      shader: unshaded
+    - state: panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: PointLight
+    radius: 1.8
+    energy: 1.6
+    color: "#3db83b"

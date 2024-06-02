@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/BeeStation/BeeStation-Hornet/commit/2e05b943a9d832360a895b48778aa652f7f20774",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "safetymoth_1"
+        },
+        {
+            "name": "safetymoth_2"
+        },
+        {
+            "name": "safetymoth_3"
+        },
+        {
+            "name": "safetymoth_4"
+        }
+    ]
+}

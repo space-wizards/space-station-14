@@ -1,0 +1,6 @@
+﻿- type: stealTargetGroup
+  id: WeaponEnergyGunMultiphase
+  name: x-01 multiphase energy gun
+  sprite:
+    sprite: DeltaV/Objects/Weapons/Guns/Battery/multiphase_energygun.rsi
+    state: base

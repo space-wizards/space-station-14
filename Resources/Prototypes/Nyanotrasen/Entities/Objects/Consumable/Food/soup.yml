@@ -1,0 +1,355 @@
+# Soups and Stews
+
+
+- type: entity
+  name: cotton soup
+  parent: FoodBowlBase
+  id: FoodMothCottonSoup
+  description: A soup made from raw cotton in a flavourful vegetable broth. Enjoyed only by moths and the criminally tasteless.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cotton
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/soup.rsi
+    state: cottonsoup
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 6
+        - ReagentId: Water
+          Quantity: 3
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags:
+      - ClothMade
+#Tastes like cotton and broth
+
+- type: entity
+  name: cheese soup
+  parent: FoodBowlBase
+  id: FoodMothCheeseSoup
+  description: A simple and filling soup made from homemade cheese and sweet potato.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - creamy
+      - potatoes
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/soup.rsi
+    state: cheesesoup
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Milk
+          Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+- type: entity
+  name: seed soup
+  parent: FoodBowlBase
+  id: FoodMothSeedSoup
+  description: A seed based soup, made by germinating seeds and then boiling them.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bitter
+      - sour
+      - seeds
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/soup.rsi
+    state: seedsoup
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 3
+        - ReagentId: Water
+          Quantity: 5
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+- type: entity
+  name: moth eyeball soup
+  parent: FoodBowlBase
+  id: FoodMothEyeballSoup
+  description: It's looking back at you...
+  components:
+  - type: FlavorProfile
+    flavors:
+      - tomato
+      - metallic
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/soup.rsi
+    state: eyesoup
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 5
+          - ReagentId: Vitamin
+            Quantity: 3
+# Tastes like tomato, squirming.
+
+- type: entity
+  name: bean stew
+  parent: FoodBowlBase
+  id: FoodMothBeanStew
+  description: A spicy bean stew with lots of veggies, commonly served as a filling and satisfying meal with rice or bread.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - salty
+      - cabbage
+      - spicy
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/soup.rsi
+    state: beanstew
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 12
+        - ReagentId: Vitamin
+          Quantity: 8
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Water
+          Quantity: 2
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like beans, cabbage and spicy sauce
+
+- type: entity
+  name: oat stew
+  parent: FoodBowlBase
+  id: FoodMothOatStew
+  description: A hearty oat stew, prepared with oats, sweet potatoes, and various winter vegetables.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - oats
+      - potatoes
+      - carrot
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/soup.rsi
+    state: oatstew
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 10
+        - ReagentId: Water
+          Quantity: 5
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like oats, sweet potato, carrot and parsnip
+
+- type: entity
+  name: heartburn soup
+  parent: FoodBowlBase
+  id: FoodMothHeartburnSoup
+  description: The heartburn soup is named after two things; it's rosy pink colour and it's scorchingly hot chili heat.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - spicy
+      - pink
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/soup.rsi
+    state: heartburnsoup
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 4
+        - ReagentId: CapsaicinOil
+          Quantity: 1
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like oats, sweet potato, carrot and parsnip
+
+- type: entity
+  name: mulan congee
+  parent: FoodBowlBase
+  id: FoodMothHuaMulanCongee
+  description: A smiley bowl of rice porridge with eggs and bacon.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - eggs
+      - bacon
+      - rice
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/soup.rsi
+    state: huamulancongee
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 22
+        - ReagentId: Protein
+          Quantity: 8
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+- type: entity
+  name: cornmeal porridge
+  parent: FoodBowlBase
+  id: FoodMothCornmealPorridge
+  description: A plate of cornmeal porridge. It's more flavourful than most porridges, and makes a good base for other flavours, too.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - corn
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/soup.rsi
+    state: cornmealporridge
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 9
+        - ReagentId: Vitamin
+          Quantity: 2
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like cornmeal.
+
+- type: entity
+  name: cheesy porridge
+  parent: FoodBowlBase
+  id: FoodMothCheesyPorridge
+  description: A rich and creamy bowl of cheesy cornmeal porridge.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - corn
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/soup.rsi
+    state: cheesyporridge
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 12
+        - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 4
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like cornmeal, cheese, more cheese, lots of cheese.
+
+- type: entity
+  name: fried eggplant and polenta
+  parent: FoodBowlBase
+  id: FoodMothEggplantPolenta
+  description: Polenta loaded with cheese, served with a few discs of fried eggplant and some tomato sauce.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - corn
+      - cheesy
+      - eggplant
+      - tomato
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/soup.rsi
+    state: eggplantpolenta
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 6
+        - ReagentId: Protein
+          Quantity: 12
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like cornmeal, cheese, eggplant and tomato sauce
+
+- type: entity
+  name: vegetarian chili
+  parent: FoodBowlBase
+  id: FoodMothVegetarianChili
+  description: For the hombres who don't want carne.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bitter
+      - sour
+      - tomato
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bowl.rsi
+    layers:
+    - state: bowl
+    - state: chili-hot
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: CapsaicinOil
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 3
+        - ReagentId: JuiceTomato
+          Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food

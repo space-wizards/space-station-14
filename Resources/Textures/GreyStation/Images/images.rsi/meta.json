@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "made by ps3moira#9488 on discord",
+  "size": {
+    "x": 35,
+    "y": 36
+  },
+  "states": [
+    {
+      "name": "nukie"
+    },
+    {
+      "name": "revolutionary"
+    },
+    {
+      "name": "spaceninja"
+    },
+    {
+      "name": "securityofficer"
+    },
+    {
+      "name": "headofsecurity"
+    },
+    {
+      "name": "terminator"
+    }
+  ]
+}

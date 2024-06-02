@@ -1,0 +1,36 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckSunflowerSpray
+  name: sunflower
+  description: A seemingly normal sun flower with a seemingly normal squirt pump.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Neck/Misc/spray_flower.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Neck/Misc/spray_flower.rsi
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 10
+        reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: RefillableSolution
+    solution: spray
+  - type: DrainableSolution
+    solution: spray
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UseDelay
+  - type: Spray
+    transferAmount: 1
+    sprayVelocity: 2
+    spraySound:
+      path: /Audio/Effects/spray2.ogg
+  - type: TrashOnSolutionEmpty
+    solution: spray
+  - type: Tag
+    tags:
+    - Spray
+    - ClothMade
+    - WhitelistChameleon

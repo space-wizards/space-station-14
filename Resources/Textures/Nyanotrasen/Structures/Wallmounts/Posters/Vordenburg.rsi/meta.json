@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "@Vordenburg",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "poster_saucer1"
+        },
+        {
+            "name": "poster_dejavu"
+        },
+        {
+            "name": "poster_dontpanic"
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by Daemon",
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "wielded-inhand-left",
+      "directions": 4
+    },
+	{
+      "name": "wielded-inhand-right",
+      "directions": 4
+    }
+  ]
+}

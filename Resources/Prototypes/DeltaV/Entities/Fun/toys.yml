@@ -1,0 +1,47 @@
+- type: entity
+  parent: BasePlushie
+  id: ToyRenault
+  name: renault toy
+  description: Almost as cute and adorable as the real Renault!
+  components:
+  - type: Sprite
+    sprite: DeltaV/Objects/Fun/Toys/renaulttoy.rsi
+    state: base
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/fox_squeak.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/fox_squeak.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Animals/fox_squeak.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: ToySiobhan
+  name: arctic fox toy
+  description: Nearly as fluffy as the real ones!
+  components:
+  - type: Sprite
+    sprite: DeltaV/Objects/Fun/Toys/siobhantoy.rsi
+    state: base
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/fox_squeak.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/fox_squeak.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Animals/fox_squeak.ogg
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyZero
+  name: toy zero
+  description: whirrrrrrrrr taktaktaktaktak BOOM whirrrrrrr
+  components:
+  - type: Sprite
+    sprite: DeltaV/Objects/Fun/Toys/zerotoy.rsi
+    state: icon

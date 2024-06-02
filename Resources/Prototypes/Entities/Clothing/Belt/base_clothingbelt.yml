@@ -9,12 +9,20 @@
     size: Normal
   - type: Clothing
     slots: [belt]
+    equipSound:
+      path: /Audio/Items/belt_equip.ogg
     quickEquip: false
   - type: PhysicalComposition
     materialComposition:
       Cloth: 50
   - type: StaticPrice
     price: 20
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/toolbelt_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/toolbelt_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/toolbelt_drop.ogg
 
 - type: entity
   abstract: true
@@ -34,8 +42,8 @@
         ents: []
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
 
 - type: entity
   abstract: true

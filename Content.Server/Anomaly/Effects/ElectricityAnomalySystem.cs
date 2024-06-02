@@ -61,7 +61,7 @@ public sealed class ElectricityAnomalySystem : EntitySystem
             var damage = (int) (elec.MaxElectrocuteDamage * anom.Severity);
             var duration = elec.MaxElectrocuteDuration * anom.Severity;
 
-            foreach (var (ent, comp) in _lookup.GetEntitiesInRange<StatusEffectsComponent>(xform.MapPosition, range))
+            foreach (var (ent, comp) in _lookup.GetEntitiesInRange<StatusEffectsComponent>(_transform.GetMapCoordinates(uid, xform), range))
             {
                 _electrocution.TryDoElectrocution(ent, uid, damage, duration, true, statusEffects: comp, ignoreInsulation: true);
             }

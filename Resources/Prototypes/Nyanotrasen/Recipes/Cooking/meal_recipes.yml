@@ -1,0 +1,519 @@
+## Moldy Bread
+#- type: microwaveMealRecipe
+#  id: RecipeMoldyBread
+#  name: moldy bread recipe
+#  result: FoodBreadMoldy
+#  time: 20
+#3  solids:
+#3    FoodBreadPlain: 1
+#3    FoodFlyAmanita: 3
+
+# Cheese Curds
+- type: microwaveMealRecipe
+  id: RecipeCheeseCurds
+  name: cheese curds recipe
+  result: FoodCheeseCurds
+  time: 5
+  solids:
+    FoodCurdCheese: 1
+
+# Borito Pie
+- type: microwaveMealRecipe
+  id: RecipeBoritoPie
+  name: borito pie recipe
+  result: FoodBoritoPie
+  time: 15
+  solids:
+    FoodSnackBoritos: 1
+    FoodCheeseSlice: 1
+    FoodChiliPepper: 1
+    FoodMeatMeatball: 1
+
+# Base ingredients: Should be moved out of microwave as soon as possible.
+
+- type: microwaveMealRecipe
+  id: RecipeMothHerbyCheese
+  name: herby cheese recipe
+  result: FoodMothHerbyCheese
+  time: 5
+  solids:
+    FoodCurdCheese: 1
+    FoodAmbrosiaVulgaris: 1 #Herbs
+
+- type: microwaveMealRecipe
+  id: RecipeMothMothicSalad
+  name: mothic salad recipe
+  result: FoodMothSaladBase
+  time: 10
+  solids:
+    FoodCabbage: 1
+    FoodOnionRedSlice: 1
+    FoodTomato: 1
+
+# Entrees
+
+- type: microwaveMealRecipe
+  id: RecipeMothSqueakingFry
+  name: squeaking stir fry recipe
+  result: FoodMothSqueakingFry
+  time: 15
+  reagents:
+    OilOlive: 5
+  solids:
+    FoodTofuSlice: 2
+    FoodOnionSlice: 1
+    FoodChiliPepper: 1
+    FoodCarrot: 1
+    FoodCheeseCurds: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothToastedSeeds
+  name: toasted seeds recipe
+  result: FoodMothToastedSeeds
+  time: 15
+  reagents:
+    OilOlive: 5
+  solids:
+    WheatSeeds: 1
+    CarrotSeeds: 1
+    PoppySeeds: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothEngineFodder
+  name: engine fodder recipe
+  result: FoodMothEngineFodder
+  time: 30
+  solids:
+    FoodMothToastedSeeds: 1
+    FoodSnackChips: 1
+    FoodSnackCnDs: 1
+    FoodSnackPopcorn: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothFueljackLunch
+  name: fueljack lunch recipe
+  result: FoodMothFueljackLunch
+  time: 15
+  solids:
+    FoodCheeseSlice: 1
+    FoodCabbage: 1
+    FoodChiliPepper: 1
+    FoodPotato: 1
+    FoodOnionSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeMothChiliCabbageWrap
+  name: sweet chili cabbage wrap recipe
+  result: FoodMothChiliCabbageWrap
+  time: 15
+  reagents:
+    Sugar: 5 #Honey
+  solids:
+    FoodCheeseSlice: 1 #Grilled cheese slice
+    FoodMothSaladBase: 1
+    FoodChiliPepper: 1
+    FoodCabbage: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothBakedCheese
+  name: baked cheese recipe
+  result: FoodMothBakedCheese
+  time: 15
+  solids:
+    FoodCheese: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothBakedCheesePlatter
+  name: baked cheese platter recipe
+  result: FoodMothBakedCheesePlatter
+  time: 5
+  solids:
+    FoodMothBakedCheese: 1
+    FoodBreadPlainSlice: 3 #3 toasts
+
+# Meals
+
+- type: microwaveMealRecipe
+  id: RecipeMothBakedRice
+  name: baked rice recipe
+  result: FoodMothBakedRice
+  time: 15
+  solids:
+    FoodRiceBoiled: 1
+    FoodPotato: 2
+    FoodCabbage: 1
+    FoodChiliPepper: 1
+    #Herbs: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothGreenLasagne
+  name: green lasagne recipe
+  result: FoodMothGreenLasagne
+  time: 20
+  reagents:
+    Bechamel: 10
+    Pesto: 5
+  solids:
+    FoodNoodlesBoiled: 1
+    FoodCheeseSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothBakedCorn
+  name: baked corn recipe
+  result: FoodMothBakedCorn
+  time: 15
+  solids:
+    FoodCorn: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothButteredBakedCorn
+  name: buttered baked corn recipe
+  result: FoodMothButteredBakedCorn
+  time: 5
+  # reagents: # Whenever we can actually melt butter
+  #   Butter: 5
+  solids:
+    FoodMothBakedCorn: 1
+    FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothMozzarellaSticks
+  name: mozzarella sticks recipe
+  result: FoodMothMozzarellaSticks
+  time: 15
+  reagents:
+    TomatoSauce: 10
+  solids:
+    FoodMozzarella: 1
+    FoodBreadPlainSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothMacBalls
+  name: mac balls recipe
+  result: FoodMothMacBalls
+  time: 15
+  reagents:
+    TomatoSauce: 10
+    Cornmeal: 5
+  solids:
+    FoodDonkpocket: 1 #macncheese donk
+
+- type: microwaveMealRecipe
+  id: RecipeFishChips
+  name: fish and chips recipe
+  result: FoodMealFishChips
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodPotato: 1
+    FoodMeatFish: 1
+
+# Soups and stews
+
+- type: microwaveMealRecipe
+  id: RecipeMothCottonSoup
+  name: cotton soup recipe
+  result: FoodMothCottonSoup
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodEggplant: 1
+    FoodOnion: 1
+    FoodCarrot: 1
+    FoodMothBakedCorn: 1
+    MaterialCotton1: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothCheeseSoup
+  name: cheese soup recipe
+  result: FoodMothCheeseSoup
+  time: 10
+  reagents:
+    Milk: 5
+    Flour: 5
+    Cream: 5 # Butter when it gets meltable
+  solids:
+    FoodBowlBig: 1
+    FoodCheeseSlice: 1
+    FoodPotato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothSeedSoup
+  name: seed soup recipe
+  result: FoodMothSeedSoup
+  time: 10
+  reagents:
+    Water: 5
+    Vinaigrette: 5
+  solids:
+    FoodBowlBig: 1
+    AmbrosiaVulgarisSeeds: 1
+    PoppySeeds: 1
+    WheatSeeds: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothBeanStew
+  name: bean stew recipe
+  result: FoodMothBeanStew
+  time: 10
+  reagents:
+    Water: 5
+  solids:
+    FoodBowlBig: 1
+    FoodTinBeans: 1
+    FoodCabbage: 1
+    FoodTomato: 1
+    FoodOnion: 1
+    FoodMothBakedCorn: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothOatStew
+  name: oat stew recipe
+  result: FoodMothOatStew
+  time: 10
+  reagents:
+    Water: 5
+    Oats: 5
+  solids:
+    FoodBowlBig: 1
+    FoodCarrot: 2 #1 when Parsnip
+    FoodPotato: 1
+    #FoodParsnip: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothHeartburnSoup
+  name: heartburn soup recipe
+  result: FoodMothHeartburnSoup
+  time: 10
+  reagents:
+    Vinegar: 5
+    Milk: 5
+    Cream: 5
+  solids:
+    FoodBowlBig: 1
+    FoodTofuSlice: 1
+    FoodChiliPepper: 1
+    #FoodYogurt: 1 #Milk and Cream placeholder
+
+- type: microwaveMealRecipe
+  id: RecipeMothHuaMulanCongee
+  name: mulan congee recipe
+  result: FoodMothHuaMulanCongee
+  time: 10
+  solids:
+    FoodRiceBoiled: 1
+    FoodEgg: 2 #FoodMealFriedegg when we can actually fry eggs buh
+    FoodMeatCutlet: 1 #FoodMeatBacon when it's actually findable
+
+- type: microwaveMealRecipe
+  id: RecipeMothCornmealPorridge
+  name: cornmeal porridge recipe
+  result: FoodMothCornmealPorridge
+  time: 10
+  reagents:
+    Water: 10
+    Cornmeal: 10
+  solids:
+    FoodBowlBig: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothCheesyPorridge
+  name: cheesy porridge recipe
+  result: FoodMothCheesyPorridge
+  time: 10
+  reagents:
+    Milk: 5
+    Cream: 5 # Butter when it's meltable
+  solids:
+    FoodMothCornmealPorridge: 1
+    FoodCurdCheese: 1
+    FoodCheeseSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothEggplantPolenta
+  name: fried eggplant and polenta recipe
+  result: FoodMothEggplantPolenta
+  time: 10
+  reagents:
+    TomatoSauce: 5
+  solids:
+    FoodMothCheesyPorridge: 1
+    FoodEggplant: 1
+    FoodBreadPlainSlice: 2
+    FoodMozzarella: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothVegetarianChili
+  name: vegetarian chili recipe
+  result: FoodMothVegetarianChili
+  time: 10
+  reagents:
+    Water: 10
+    TableSalt: 5
+  solids:
+    FoodBowlBig: 1
+    FoodTomato: 1
+    FoodChiliPepper: 1
+
+# Salads: These should be moved out of the microwave as soon as possible
+
+- type: microwaveMealRecipe
+  id: RecipeMothCapreseSalad
+  name: caprese salad recipe
+  result: FoodMothCapreseSalad
+  time: 10
+  reagents:
+    Vinaigrette: 5
+  solids:
+    FoodTomato: 1
+    FoodMozzarella: 1
+    FoodAmbrosiaVulgaris: 1 #Herbs
+
+- type: microwaveMealRecipe
+  id: RecipeMothFleetSalad
+  name: fleet salad recipe
+  result: FoodMothFleetSalad
+  time: 10
+  reagents:
+    Vinaigrette: 5
+  solids:
+    FoodBowlBig: 1
+    FoodMothSaladBase: 1
+    FoodCarrot: 1
+    FoodBreadPlainSlice: 1
+    FoodCheeseSlice: 1 #Grilled cheese slice
+
+- type: microwaveMealRecipe
+  id: RecipeMothCottonSalad
+  name: cotton salad recipe
+  result: FoodMothCottonSalad
+  time: 10
+  reagents:
+    Vinaigrette: 5
+  solids:
+    FoodBowlBig: 1
+    FoodMothSaladBase: 1
+    MaterialCotton1: 1
+    FoodCarrot: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothKachumbariSalad
+  name: kachumbari salad recipe
+  result: FoodMothKachumbariSalad
+  time: 10
+  reagents:
+    JuiceLime: 5
+  solids:
+    FoodBowlBig: 1
+    FoodMothSaladBase: 1
+    FoodChiliPepper: 1
+    FoodOnionRed: 1
+    FoodAmbrosiaVulgaris: 1 #Herbs
+
+# Pizzas
+
+- type: microwaveMealRecipe
+  id: RecipeMothFirecrackerPizza
+  name: firecracker pizza recipe
+  result: FoodMothPizzaFirecracker
+  time: 30
+  reagents:
+    BbqSauce: 10
+  solids:
+    FoodDoughFlat: 1
+    FoodCheeseSlice: 1
+    FoodMothBakedCorn: 1
+    FoodChiliPepper: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothFiveCheesePizza
+  name: quattro formaggi pizza recipe
+  result: FoodMothPizzaFiveCheese
+  time: 30
+  reagents:
+    TomatoSauce: 10
+  solids:
+    FoodDoughFlat: 1
+    FoodMozzarella: 1
+    FoodCheeseSlice: 1
+    FoodCurdCheese: 1
+    FoodCheeseCurds: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothPestoPizza
+  name: pesto pizza recipe
+  result: FoodMothPizzaPesto
+  time: 30
+  reagents:
+    Pesto: 10
+  solids:
+    FoodDoughFlat: 1
+    FoodTomato: 2
+    FoodMozzarella: 2
+
+- type: microwaveMealRecipe
+  id: RecipeMothCottonPizza
+  name: cotton pizza recipe
+  result: FoodMothPizzaCotton
+  time: 30
+  reagents:
+    Cornoil: 5
+  solids:
+    FoodDoughFlat: 1
+    FoodMozzarella: 1
+    FoodCurdCheese: 1
+    MaterialCotton1: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCorncobPizza
+  name: corncob crust pizza recipe
+  result: FoodPizzaCorncob
+  time: 30
+  solids:
+    FoodDoughFlat: 1
+    FoodCorn: 6
+    FoodCheeseSlice: 1
+    FoodTomato: 1
+    FoodButter: 1
+
+# Sweets: Get them out of microwave when proper oven.
+
+- type: microwaveMealRecipe
+  id: RecipeMothCheesecakeBalls
+  name: cheesecake balls recipe
+  result: FoodMothCheesecakeBalls
+  time: 10
+  reagents:
+    Sugar: 5
+    Flour: 5
+    #Honey: 5
+  solids:
+    FoodCurdCheese: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothMothmallow
+  name: mothmallow recipe
+  result: FoodMothMothmallow
+  time: 10
+  reagents:
+    Sugar: 10
+    Rum: 5
+    MilkSoy: 5
+    #Vanilla: 5
+  solids:
+    FoodSoybeans: 1
+
+#Eventually use the pastry dough
+- type: microwaveMealRecipe
+  id: RecipeMothMoffin
+  name: moffin recipe
+  result: FoodMothMoffin
+  time: 5
+  reagents:
+    Flour: 5
+    Milk: 5
+    Egg: 6
+  solids:
+    MaterialCloth1: 1

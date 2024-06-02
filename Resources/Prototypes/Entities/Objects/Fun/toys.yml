@@ -709,6 +709,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+
 - type: entity
   parent: BasePlushie
   id: PlushiePenguin
@@ -756,19 +757,22 @@
     state: plushie_moth
   - type: EmitSoundOnUse
     sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
+      path: /Audio/Voice/Moth/moth_squeak.ogg # DeltaV - Give back the mothplushie the squeak
   - type: EmitSoundOnLand
     sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
+      path: /Audio/Voice/Moth/moth_scream.ogg # DeltaV - Make the mothplushie scream on landing
   - type: EmitSoundOnActivate
     sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
+      path: /Audio/Voice/Moth/moth_squeak.ogg # DeltaV - Give back the mothplushie the squeak
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
   - type: MeleeWeapon
     soundHit:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
+      path: /Audio/Voice/Moth/moth_squeak.ogg # DeltaV - Give back the mothplushie the squeak
+  - type: Construction # DeltaV - Mothroach hide craft, see Prototypes/Nyanotrasen/Recipes/Crafting/Graphs/fun/mothplushie.yml
+    graph: MothPlushie
+    node: plush
   - type: Food
     requiresSpecialDigestion: true
     useSound:

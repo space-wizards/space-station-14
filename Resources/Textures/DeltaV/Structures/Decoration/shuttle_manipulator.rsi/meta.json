@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from monkeystation13 at https://github.com/MonkeyStation13/MonkeyStation/blob/8f80d0398bbc8155d1253d15596d0ae5c82f96f9/icons/obj/machines/shuttle_manipulator.dmi edited by ps3moira#9488 on discord",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "holograph_station",
+      "delays": [
+        [
+      0.3,
+      0.3,
+      0.3,
+      0.3, 
+      0.3,
+      0.3,
+      0.3, 
+      0.3,
+      0.3,
+      0.3, 
+      0.3,
+      0.3
+    ]
+      ]
+    }
+  ]
+}

@@ -15,9 +15,11 @@
     ClothingUniformJumpsuitSecGrey: 3
     ClothingUniformJumpskirtSecGrey: 3
     ClothingUniformJumpsuitSecBlue: 3
+    ClothingUniformJumpsuitSecSummer: 3 # GreyStation - Clothing addition
+    ClothingUniformRedOveralls: 2 # GreyStation - Clothing addition
     ClothingHeadsetSecurity: 3
     ClothingOuterWinterSec: 2
-    ClothingOuterArmorBasic: 2
+    ClothingOuterArmorPlateCarrier: 2 # GreyStation - Replaced ClothingOuterArmorBasic
     ClothingNeckScarfStripedRed: 3
     ClothingOuterArmorBasicSlim: 2 
     ClothingEyesBlindfold: 1

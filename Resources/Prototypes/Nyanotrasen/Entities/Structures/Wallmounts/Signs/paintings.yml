@@ -1,0 +1,9 @@
+- type: entity
+  parent: PaintingBase
+  id: PaintingMothBigCatch
+  name: Big Catch
+  description: Depicts a blue moth wearing a tophat who caught a relatively large space carp. 
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Paintings/wabungus.rsi
+    state: bigcatch

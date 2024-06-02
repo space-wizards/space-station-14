@@ -237,8 +237,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
-        - ReagentId: CarpoToxin
-          Quantity: 3
+        #- ReagentId: CarpoToxin # GreyStation - Removed toxin
+          #Quantity: 3
   - type: Tag
     tags:
     - CubanCarp
@@ -507,7 +507,7 @@
   name: sashimi
   parent: FoodMealBase
   id: FoodMealSashimi
-  description: Its taste can only be described as "Exotic". The poisoning though? That's pretty common.
+  description: Its taste can only be described as "Exotic".
   components:
   - type: FlavorProfile
     flavors:
@@ -521,8 +521,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
-        - ReagentId: CarpoToxin
-          Quantity: 15
+        #- ReagentId: CarpoToxin # GreyStation - Removed toxin and changed description
+          #Quantity: 15
   - type: Tag
     tags:
     - Meat

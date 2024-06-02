@@ -1,0 +1,11 @@
+﻿- type: barSign
+  id: WhiskeyEcho
+  name: barsign-prototype-name-whiskeyecho
+  icon: "whiskeyechoes"
+  description: barsign-prototype-description-whiskeyecho
+
+- type: barSign
+  id: KlubSkub
+  name: barsign-prototype-name-klubskub
+  icon: "klubskub"
+  description: barsign-prototype-description-klubskub

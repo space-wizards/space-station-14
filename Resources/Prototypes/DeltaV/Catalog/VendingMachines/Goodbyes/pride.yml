@@ -1,0 +1,7 @@
+- type: messagePack
+  id: PrideDrobeGoodbyes
+  messages:
+  - thankyou-pride-1
+  - thankyou-pride-2
+  - thankyou-pride-3
+  - thankyou-pride-4

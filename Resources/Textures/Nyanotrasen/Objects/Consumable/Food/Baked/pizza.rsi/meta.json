@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Pizza sprites edited by FluffiestFloof. Corncob pizza by rosysyntax#6514.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "firecracker"
+    },
+    {
+      "name": "firecracker-slice"
+    },
+    {
+      "name": "fivecheese"
+    },
+    {
+      "name": "fivecheese-slice"
+    },
+    {
+      "name": "pesto"
+    },
+    {
+      "name": "pesto-slice"
+    },
+    {
+      "name": "garlic"
+    },
+    {
+      "name": "garlic-slice"
+    },
+    {
+      "name": "cotton"
+    },
+    {
+      "name": "cotton-slice"
+    },
+    {
+      "name": "corncob"
+    },
+    {
+      "name": "corncob-slice"
+    }
+  ]
+}

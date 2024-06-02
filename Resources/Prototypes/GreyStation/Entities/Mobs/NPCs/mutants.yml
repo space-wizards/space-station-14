@@ -1,0 +1,259 @@
+- type: entity
+  name: Lil' Honker
+  id: MobClownMutant
+  parent: SimpleMobBase
+  description: Surprise. # When this gets a proper write this should use the object's actual description >:)
+  components:
+  - type: Tag
+    tags:
+    - FootstepSound
+  - type: InputMover
+  - type: MobMover
+  - type: NpcFactionMember
+    factions:
+    - Xeno
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: Hands
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: GreyStation/Mobs/Mutants/clownmutant.rsi
+    state: mutant
+  - type: Icon
+    sprite: GreyStation/Mobs/Mutants/clownmutant.rsi
+    state: mutant
+  - type: Physics
+    bodyType: Dynamic
+  - type: Butcherable
+    spawned:
+      - id: MaterialBananium1
+        amount: 15
+      - id: FoodMeatClown
+        amount: 6
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 500
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Tool
+    speed: 1.5
+    qualities:
+      - Prying
+    useSound:
+        path: /Audio/Items/crowbar.ogg
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      125: Dead
+  - type: AnimationPlayer
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Blunt: 40
+        Structural: 200
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+  - type: Input
+    context: "human"
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 4
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClownFast
+  - type: Speech
+    speechVerb: Cluwne
+  - type: SpamEmitSound
+    sound:
+      collection: BikeHorn
+
+- type: entity
+  name: Chlown
+  id: MobClownChad
+  parent: MobClownMutant
+  description: Shitsec is nothing to him.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: GreyStation/Mobs/Mutants/clownmutant.rsi
+    state: chlown
+  - type: Icon
+    sprite: GreyStation/Mobs/Mutants/clownmutant.rsi
+    state: chlown
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcSmash
+    damage:
+      types:
+        Blunt: 40
+        Structural: 200
+    soundHit:
+      collection: GenericHit
+
+- type: entity
+  name: Long Face
+  id: MobClownLongFace
+  parent: MobClownMutant
+  description: Why the long..uh..face?
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: GreyStation/Mobs/Mutants/clownmutant.rsi
+    state: long_face
+  - type: Icon
+    sprite: GreyStation/Mobs/Mutants/clownmutant.rsi
+    state: long_face
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcSmash
+    damage:
+      types:
+        Blunt: 10
+        Structural: 40
+    soundHit:
+      collection: GenericHit
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 100
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+
+- type: entity
+  name: Honk Hulk
+  id: MobClownHonkHulk
+  parent: MobClownMutant
+  description: A hulkin, honking clown.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: GreyStation/Mobs/Mutants/clownmutant.rsi
+    state: honkhulk
+  - type: Icon
+    sprite: GreyStation/Mobs/Mutants/clownmutant.rsi
+    state: honkhulk
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcSmash
+    damage:
+      types:
+        Blunt: 9999
+        Heat: 9999
+        Structural: 9999
+    soundHit:
+      collection: GenericHit
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.70
+        density: 500
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepThud
+  - type: SpamEmitSound
+    sound:
+      path: /Audio/Items/bikehorn.ogg
+      params:
+        variation: 0.250
+        pitch: .8
+        volume: -10
+
+- type: entity
+  name: Honk Destroyer
+  id: MobClownHonkDestroyer
+  parent: MobClownHonkHulk
+  description: Most unrobust clown of Honk Mother.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: GreyStation/Mobs/Mutants/clownmutant.rsi
+    state: destroyer
+  - type: Icon
+    sprite: GreyStation/Mobs/Mutants/clownmutant.rsi
+    state: destroyer
+
+- type: entity
+  name: Glutton
+  id: MobClownGlutton
+  parent: MobClownMutant
+  description: He looks at you while he flicks his tongue and breathes heavily...
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: GreyStation/Mobs/Mutants/clownmutant.rsi
+    state: glutton_tongue
+  - type: Icon
+    sprite: GreyStation/Mobs/Mutants/clownmutant.rsi
+    state: glutton_tongue
+  - type: Devourer
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: Ichor
+    healRate: 15.0
+    whitelist:
+      components:
+      - MobState
+      - Door
+      - Item
+      - Machine
+      - Computer
+      tags:
+      - Wall
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.60
+        density: 15500
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : .5
+    baseSprintSpeed : 1
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepMonsterGlutton
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Blunt: 40
+        Structural: 120
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+  - type: SpamEmitSound
+    sound:
+      path: /Audio/GreyStation/Effects/monstergurgle.ogg

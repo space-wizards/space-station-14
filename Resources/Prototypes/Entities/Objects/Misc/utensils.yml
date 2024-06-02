@@ -120,3 +120,28 @@
     - Plastic
     - Trash
     - Knife
+
+- type: entity
+  parent: UtensilBase
+  id: BarSpoon
+  name: bar spoon
+  description: Your personal helper to mix drinks and changes lives.
+  components:
+  - type: Tag
+    tags:
+    - Metal
+  - type: Sprite
+    state: bar_spoon
+  - type: Item
+    heldPrefix: spoon
+  - type: Utensil
+    types:
+    - Spoon
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    attackRate: 2
+    damage:
+      types:
+        Blunt: 2
+  - type: Shovel
+    speedModifier: 0.05 # nah

@@ -11,6 +11,12 @@
       - WhitelistChameleon
   - type: StaticPrice
     price: 10
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_drop.ogg
 
 - type: entity
   abstract: true
@@ -18,6 +24,12 @@
   components:
     - type: Geiger
       attachedToSuit: true
+
+- type: entity
+  abstract: true
+  id: AllowSuitStorageClothing
+  components:
+  - type: AllowSuitStorage
 
 # for clothing that has a single item slot to insert and alt click out.
 # inheritors add a whitelisted slot named item

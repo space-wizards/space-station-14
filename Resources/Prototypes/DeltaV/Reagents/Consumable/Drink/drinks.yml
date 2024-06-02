@@ -1,0 +1,171 @@
+- type: reagent
+  id: Gunmetal #Credit to DinkusMcsplinkus for inspiring this drink. This could've also been called "Creamy Ignition"
+  name: reagent-name-gunmetal
+  parent: BaseDrink
+  desc: reagent-desc-gunmetal
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: gunmetal
+  color: "#994422"
+  metamorphicSprite:
+    sprite: DeltaV/Objects/Consumable/Drinks/gunmetal.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.20
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.5
+
+- type: reagent
+  id: LemonDrop
+  name: reagent-name-lemondrop
+  parent: BaseDrink
+  desc: reagent-desc-lemondrop
+  physicalDesc: reagent-physical-desc-lemony-fresh
+  flavor: lemondrop
+  color: "#fff789"
+  metamorphicSprite:
+    sprite: DeltaV/Objects/Consumable/Drinks/lemondrop.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+
+- type: reagent
+  id: GreenGrass
+  name: reagent-name-greengrass
+  parent: BaseDrink
+  desc: reagent-desc-greengrass
+  physicalDesc: reagent-physical-desc-tangy
+  flavor: greengrass
+  color: "#66aa55"
+  metamorphicSprite:
+    sprite: DeltaV/Objects/Consumable/Drinks/greengrass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.05
+
+- type: reagent
+  id: Daiquiri
+  name: reagent-name-daiquiri
+  parent: BaseDrink
+  desc: reagent-desc-daiquiri
+  physicalDesc: reagent-physical-desc-tart
+  flavor: daiquiri
+  color: "#ddffdd"
+  metamorphicSprite:
+    sprite: DeltaV/Objects/Consumable/Drinks/daiquiri.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.25
+
+- type: reagent
+  id: ArsonistsBrew
+  name: reagent-name-arsonistsbrew
+  parent: BaseDrink
+  desc: reagent-desc-arsonistsbrew
+  physicalDesc: reagent-physical-desc-volatile
+  flavor: arsonistsbrew
+  color: "#fff789"
+  metamorphicSprite:
+    sprite: DeltaV/Objects/Consumable/Drinks/arsonist.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.30
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 2
+      - !type:FlammableReaction
+        multiplier: 0.5
+      - !type:Ignite
+      - !type:Emote
+        emote: Laugh
+        probability: 0.25
+
+- type: reagent
+  id: Kvass
+  name: reagent-name-kvass
+  parent: BaseDrink
+  desc: reagent-desc-kvass
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: bread
+  color: "#381600"
+  metamorphicSprite:
+    sprite: DeltaV/Objects/Consumable/Drinks/kvass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: Mothamphetamine
+  name: reagent-name-mothamphetamine
+  parent: BaseDrink
+  desc: reagent-desc-mothamphetamine
+  physicalDesc: reagent-physical-desc-fuzzy
+  flavor: cotton
+  color: "#2fa1ef"
+  metamorphicSprite:
+    sprite: DeltaV/Objects/Consumable/Drinks/mothamphetamine.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.25
+    Poison:
+      effects:
+      - !type:Jitter

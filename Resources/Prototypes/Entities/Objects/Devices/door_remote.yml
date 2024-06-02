@@ -144,24 +144,6 @@
 
 - type: entity
   parent: DoorRemoteDefault
-  id: DoorRemoteFirefight
-  name: fire-fighting door remote
-  description: A gadget which can open and bolt FireDoors remotely.
-  components:
-    - type: Sprite
-      layers:
-        - state: door_remotebase
-        - state: door_remotelightscolour
-          color: "#ff9900"
-        - state: door_remotescreencolour
-          color: "#e02020"
-
-    - type: Access
-      groups:
-        - FireFight
-
-- type: entity
-  parent: DoorRemoteDefault
   id: DoorRemoteAll
   name: super door remote
   suffix: Admeme

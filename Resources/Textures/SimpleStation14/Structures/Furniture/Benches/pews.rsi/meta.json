@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TGStation at https://github.com/lessthnthree/tgstation/blob/2ca948b578cdb46b60d19e029782483b1218004e/icons/obj/sofa.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "left",
+      "directions": 4
+    },
+    {
+      "name": "right",
+      "directions": 4
+    },
+    {
+      "name": "middle",
+      "directions": 4
+    },
+    {
+      "name": "arm_left",
+      "directions": 4
+    },
+    {
+      "name": "arm_right",
+      "directions": 4
+    }
+  ]
+}

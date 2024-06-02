@@ -14,6 +14,8 @@ namespace Content.Server.Shuttles.Components;
 [RegisterComponent]
 public sealed partial class FTLComponent : Component
 {
+    // TODO Full game save / add datafields
+
     [ViewVariables]
     public FTLState State = FTLState.Available;
 
@@ -23,6 +25,7 @@ public sealed partial class FTLComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float StartupTime = 0f;
 
+    // Because of sphagetti, actual travel time is Math.Max(TravelTime, DefaultArrivalTime)
     [ViewVariables(VVAccess.ReadWrite)]
     public float TravelTime = 0f;
 
@@ -42,10 +45,13 @@ public sealed partial class FTLComponent : Component
     public ProtoId<TagPrototype>? PriorityTag;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("soundTravel")]
-    public SoundSpecifier? TravelSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_progress.ogg")
+    public SoundSpecifier? TravelSound = new SoundPathSpecifier("/Audio/GreyStation/Effects/Shuttle/hyperspace_progress.ogg") // GreyStation - Replace FTL sound w/Nyanotrasen FTL Sound
     {
         Params = AudioParams.Default.WithVolume(-3f).WithLoop(true)
     };
+
+    [DataField]
+    public EntityUid? StartupStream;
 
     [DataField]
     public EntityUid? TravelStream;

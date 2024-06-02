@@ -31,6 +31,7 @@
         - AppraisalTool
         - JawsOfLife
         - GPS
+        - WeldingMask
       components:
         - SprayPainter
         - NetworkConfigurator
@@ -472,12 +473,20 @@
         - Sidearm
         - MagazinePistol
         - MagazineMagnum
+        - CombatKnife
+        - Truncheon
       components:
         - Stunbaton
         - FlashOnTrigger
         - SmokeOnTrigger
         - Flash
         - Handcuff
+        - BallisticAmmoProvider
+        - CartridgeAmmo
+        - DoorRemote
+        - Whistle
+        - HolosignProjector
+        - BalloonPopper
   - type: ItemMapper
     mapLayers:
       flashbang:
@@ -514,6 +523,8 @@
         name: Sabre
         insertVerbText: sheath-insert-verb
         ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
         whitelist:
           tags:
           - CaptainSabre
@@ -597,7 +608,7 @@
         - CartridgeAmmo
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: ClothingBeltSecurity
   id: ClothingBeltSecurityWebbing
   name: security webbing
   description: Unique and versatile chest rig, can hold security gear.
@@ -606,17 +617,29 @@
     sprite: Clothing/Belt/securitywebbing.rsi
   - type: Clothing
     sprite: Clothing/Belt/securitywebbing.rsi
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_drop.ogg
 
 - type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltMercWebbing
-  name: mercenarie webbing
+  name: mercenary webbing
   description: Ideal for storing everything from ammo to weapons and combat essentials.
   components:
   - type: Sprite
     sprite: Clothing/Belt/mercwebbing.rsi
   - type: Clothing
     sprite: Clothing/Belt/mercwebbing.rsi
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_drop.ogg
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -628,6 +651,12 @@
     sprite: Clothing/Belt/salvagewebbing.rsi
   - type: Clothing
     sprite: Clothing/Belt/salvagewebbing.rsi
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_drop.ogg
 
 - type: entity
   parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase]
@@ -641,6 +670,12 @@
     sprite: Clothing/Belt/militarywebbing.rsi
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_drop.ogg
 
 - type: entity
   parent: ClothingBeltMilitaryWebbing
@@ -656,6 +691,12 @@
     size: Huge
   - type: ExplosionResistance
     damageCoefficient: 0.1
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/cloth_drop.ogg
 
 - type: entity
   parent: ClothingBeltBase

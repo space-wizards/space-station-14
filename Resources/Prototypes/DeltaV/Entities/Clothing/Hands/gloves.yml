@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesInspection
+  name: inspection gloves
+  description: A fancy pair of white gloves, both durable and delicate.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Hands/Gloves/inspection.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Hands/Gloves/inspection.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-white
+  - type: FingerprintMask

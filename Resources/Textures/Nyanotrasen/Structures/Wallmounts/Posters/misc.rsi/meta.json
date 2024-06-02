@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Nyanotrasen at commit https://github.com/Nyanotrasen/Nyanotrasen/commit/acb71563f75ee7ecfa8a8fda4469982de92f0938",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "poster_ayaya"
+        }
+    ]
+}

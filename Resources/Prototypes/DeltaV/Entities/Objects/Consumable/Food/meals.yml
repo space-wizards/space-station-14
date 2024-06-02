@@ -1,0 +1,22 @@
+- type: entity
+  name: grilled cheese
+  parent: FoodMealBase
+  id: FoodMealGrilledCheese
+  description: Two slices of bread cooked in butter with a lofty wedge of cheese in the middle.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - butter
+      - cheesy
+  - type: Sprite
+    sprite: DeltaV/Objects/Consumable/Food/Baked/grilledcheese.rsi
+    state: grilledcheese
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2

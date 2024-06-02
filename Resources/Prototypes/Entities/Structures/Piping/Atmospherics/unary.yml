@@ -239,13 +239,14 @@
     - type: AtmosDevice
     - type: UserInterface
       interfaces:
-      - key: enum.ThermomachineUiKey.Key
-        type: GasThermomachineBoundUserInterface
+        enum.ThermomachineUiKey.Key:
+          type: GasThermomachineBoundUserInterface
     - type: ActivatableUI
       inHandsOnly: false
       key: enum.ThermomachineUiKey.Key
     - type: WiresPanel
     - type: WiresVisuals
+    - type: PipeRestrictOverlap
     - type: NodeContainer
       nodes:
         pipe:
@@ -420,6 +421,7 @@
   - type: GasCondenser
   - type: AtmosPipeColor
   - type: AtmosDevice
+  - type: PipeRestrictOverlap
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Machine
@@ -457,7 +459,8 @@
     solutions:
       tank:
         maxVol: 400
-        canMix: true
+  - type: MixableSolution
+    solution: tank
   - type: DrainableSolution
     solution: tank
   - type: ExaminableSolution

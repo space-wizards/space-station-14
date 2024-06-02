@@ -1,0 +1,60 @@
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterGorillaSuit
+  name: gorilla suit
+  description: A thick gorilla costume, its muscles are made of thick padded foam.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Misc/gorillasuit.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Misc/gorillasuit.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterXenoSuit
+  name: xeno costume
+  description: A costume made from spray-painted foam pads taped onto a black spandex suit that resembles a Xeno.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Misc/xenosuit.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Misc/xenosuit.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterLobsterSuit
+  name: lobster suit
+  description: A smelly lobster suit. Woop woop woop woop!
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Misc/lobstersuit.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Misc/lobstersuit.rsi
+
+- type: entity
+  parent: ClothingOuterStorageToggleableBase
+  id: ClothingOuterAmongGrandeSuit
+  name: among grande
+  description: Sospechoso...
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Misc/amonggrande.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Misc/amonggrande.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHoodAmongGrande
+  - type: TypingIndicatorClothing
+    proto: lawyer
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterRobCopSuit
+  name: robocop suit
+  description: A robotic suit. More machine than man when you put this on!
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Misc/robcopsuit.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Misc/robcopsuit.rsi
+  - type: TypingIndicatorClothing
+    proto: robot

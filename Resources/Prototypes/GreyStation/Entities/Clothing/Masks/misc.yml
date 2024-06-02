@@ -1,0 +1,128 @@
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskHockeyMask
+  name: hockey mask
+  description: It's a dirty-looking hockey mask, with some red markings on it, presumably painted. Whoever wore this was an aggressive player.
+  components:
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: BreathMask
+  - type: Sprite
+    sprite: GreyStation/Clothing/Mask/hockey_mask.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Mask/hockey_mask.rsi
+  - type: HideLayerClothing
+    slots:
+    - Snout
+
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskRetroHockeyMask
+  name: retro hockey mask
+  description: A retro version of a hockey mask. Makes you want to kill people in videogames.
+  components:
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: BreathMask
+  - type: Sprite
+    sprite: GreyStation/Clothing/Mask/retro_hockey_mask.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Mask/retro_hockey_mask.rsi
+  - type: HideLayerClothing
+    slots:
+    - Snout
+
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskMummyMask
+  name: facial bandages
+  description: Some tathered used bandages. Once worn by the bringer of death.
+  components:
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: Sprite
+    sprite: GreyStation/Clothing/Mask/facial_bandages.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Mask/facial_bandages.rsi
+
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskScarecrowMask
+  name: scarecrow hood
+  description: A scarecrow sack. Can be worn as a hood. It has a little smiley face on it.
+  components:
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: Sprite
+    sprite: GreyStation/Clothing/Mask/scarecrow_hood.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Mask/scarecrow_hood.rsi
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskGasJinRoh
+  name: panzer gas mask
+  description: A face-covering mask that can be connected to an air supply.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Mask/jinroh_mask.rsi
+    layers:
+    - state: icon
+    - state: icon-flash
+      shader: unshaded
+      map: [ "light" ]
+  - type: Clothing
+    equippedPrefix: off
+    sprite: GreyStation/Clothing/Mask/jinroh_mask.rsi
+    clothingVisuals:
+      mask:
+      - state: off-equipped-MASK
+  - type: Item
+    sprite: GreyStation/Clothing/Mask/jinroh_mask.rsi
+    heldPrefix: off
+  - type: ToggleableLightVisuals # Eventually make it so the helmet has built-in night vision that's always on.
+    spriteLayer: light
+    clothingVisuals:
+      mask:
+      - state: on-equipped-MASK
+      - state: equipped-mask-unshaded
+        shader: unshaded
+    inhandVisuals:
+      left:
+      - state: on-inhand-left
+      - state: on-inhand-left-unshaded
+        shader: unshaded
+      right:
+      - state: on-inhand-right
+      - state: on-inhand-right-unshaded
+        shader: unshaded
+  - type: Appearance
+  - type: PointLight
+    enabled: false
+    radius: 1.7
+    energy: 1.5
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    netsync: false
+    color: "red"
+  - type: HandheldLight
+    addPrefix: true
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot {}
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Snout
+  - type: Tag
+    tags:
+    - WhitelistChameleon

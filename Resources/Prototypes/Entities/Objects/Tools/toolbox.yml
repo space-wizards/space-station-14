@@ -32,6 +32,10 @@
           True: { state: icon-open }
           False: { state: icon }
   - type: Appearance
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/toolbox_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/toolbox_drop.ogg
 
 - type: entity
   name: emergency toolbox
@@ -167,5 +171,5 @@
     key: enum.ThiefBackpackUIKey.Key
   - type: UserInterface
     interfaces:
-      - key: enum.ThiefBackpackUIKey.Key
+      enum.ThiefBackpackUIKey.Key:
         type: ThiefBackpackBoundUserInterface

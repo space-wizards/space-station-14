@@ -68,3 +68,33 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "every light is blinking at once by Alexander Divine."
   source: "https://soundcloud.com/alexanderdivine/every-light-is-blinking-at-once"
+
+- files: ["tintin2.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Tintin on the Moon by Fred Gray/Tomas Danko."
+  source: "https://www.youtube.com/watch?v=J6J7BAno_s4"
+
+- files: ["deja_vu.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Deja Vu by Mort Garson."
+  source: "https://www.youtube.com/watch?v=AumYP6Np1eI"
+
+- files: ["horse_steppin.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Horse Steppin’ by Sun Araw."
+  source: "https://www.youtube.com/watch?v=vXv9cjW9HR0"
+
+- files: ["clown.wmv.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Clown.wmv by Admiral Hippie."
+  source: "https://www.youtube.com/watch?v=9whQIbNmu9s"
+
+- files: ["Monument.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Monument by Six Umbrellas."
+  source: "https://sixumbrellas.bandcamp.com/album/the-psychedelic-and"
+
+- files: ["carmen_mirandas_ghost.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Carmen Miranda's Ghost by Leslie Fish."
+  source: "https://www.youtube.com/watch?v=hbs4Ei--Gk4"

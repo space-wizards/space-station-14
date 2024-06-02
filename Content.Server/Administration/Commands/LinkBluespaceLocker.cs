@@ -4,7 +4,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
 
-[AdminCommand(AdminFlags.Admin)]
+[AdminCommand(AdminFlags.Fun)]
 public sealed class LinkBluespaceLocker : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;

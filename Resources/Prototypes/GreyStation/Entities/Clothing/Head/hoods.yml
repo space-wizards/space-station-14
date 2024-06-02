@@ -1,0 +1,54 @@
+#Explorer Suit
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHoodSuitExplorer
+  name: explorer hood
+  description: A sturdy hood capable of protecting your head from most hazardous conditions.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Hoods/explorer.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    # Will soon replace with new sound effects
+    equipSound: /Audio/Effects/rustle5.ogg
+    unequipSound: /Audio/Effects/rustle5.ogg
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+  - type: TemperatureProtection
+    coefficient: 0.005
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.95
+        Heat: 0.95
+        Radiation: 0.55
+  - type: Tag
+    tags:
+    - HidesHair
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHoodAmongGrande
+  name: among grande hood
+  description: Sospechoso...
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Hoods/amonggrande.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    # Will soon replace with new sound effects
+    equipSound: /Audio/Effects/rustle5.ogg
+    unequipSound: /Audio/Effects/rustle5.ogg
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+  - type: Tag
+    tags:
+    - HidesHair
+    - WhitelistChameleon

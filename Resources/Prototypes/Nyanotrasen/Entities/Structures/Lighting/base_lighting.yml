@@ -1,0 +1,180 @@
+- type: entity
+  parent: PoweredlightExterior
+  id: PoweredLightBlueInterior
+  suffix: Blue Exterior
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: BlueLightTube
+    damage:
+      types:
+        Heat: 0.2
+
+- type: entity
+  parent: AlwaysPoweredWallLight
+  id: AlwaysPoweredLightBlueInterior
+  suffix: Always Powered, Blue Exterior
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  components:
+  - type: PointLight
+    radius: 12
+    energy: 3
+    softness: 0.5
+    color: "#B4FCF0"
+
+- type: entity
+  parent: PoweredSmallLight
+  id: PoweredSmallLightMaintenance
+  suffix: Maintenance
+  description: "A light fixture. Draws power and produces light when equipped with a light bulb."
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightBulbMaintenance
+    damage:
+      types:
+        Heat: 0.2
+
+- type: entity
+  parent: SmallLight
+  id: AlwaysPoweredSmallLightMaintenance
+  suffix: Always Powered, Maintenance
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  components:
+  - type: PointLight
+    radius: 1.5
+    energy: 0.7
+    softness: 1.1
+    color: "#FFD1A3"
+
+#Colored lights
+
+- type: entity
+  id: PoweredLightColoredRed
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Red
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: ColoredLightTubeRed
+    damage:
+      types:
+        Heat: 0.2
+
+- type: entity
+  id: AlwaysPoweredLightColoredRed
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Always Powered, Red
+  parent: AlwaysPoweredWallLight
+  components:
+  - type: PointLight
+    radius: 10
+    energy: 0.9
+    softness: 0.5
+    color: "#FF6666"
+
+- type: entity
+  id: PoweredLightColoredFrostyBlue
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Frosty
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: ColoredLightTubeFrostyBlue
+    damage:
+      types:
+        Heat: 0.2
+
+- type: entity
+  id: AlwaysPoweredLightColoredFrostyBlue
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Always Powered, Frosty
+  parent: AlwaysPoweredWallLight
+  components:
+  - type: PointLight
+    radius: 10
+    energy: 0.8
+    softness: 1
+    color: "#00FFFF"
+
+- type: entity
+  id: PoweredLightColoredBlack
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Black
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: ColoredLightTubeBlackLight
+    damage:
+      types:
+        Heat: 0.2
+
+- type: entity
+  id: AlwaysPoweredLightColoredBlack
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Always Powered, Black
+  parent: AlwaysPoweredWallLight
+  components:
+  - type: PointLight
+    radius: 10
+    energy: 1.1
+    softness: 1
+    color: "#5D0CED"
+
+- type: entity
+  id: PoweredLightPostSmallRed
+  name: post light
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Red
+  parent: PoweredLightPostSmallEmpty
+  components:
+  - type: Sprite
+    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
+    state: empty
+  - type: PoweredLight
+    hasLampOnSpawn: ColoredLightTubeRed
+    damage:
+      types:
+        Heat: 2
+  - type: StaticPrice #DynamicPrice
+    price: 25
+
+- type: entity
+  id: AlwaysPoweredLightPostSmallRed
+  name: post light
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Always Powered, Red
+  parent: LightPostSmall
+  components:
+  - type: Sprite
+    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
+    state: empty
+  - type: PointLight
+    radius: 10
+    energy: 0.9
+    softness: 1
+    offset: "0, -0.5"
+    color: "#FF6666"
+
+- type: entity
+  parent: PoweredSmallLight
+  id: PoweredSmallLightMaintenanceRed
+  suffix: Maintenance, Red
+  description: "A light fixture. Draws power and produces light when equipped with a light bulb."
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightBulbMaintenanceRed
+    damage:
+      types:
+        Heat: 0.2
+
+- type: entity
+  parent: SmallLight
+  id: AlwaysPoweredSmallLightMaintenanceRed
+  suffix: Always Powered, Maintenance, Red
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  components:
+  - type: PointLight
+    radius: 1.5
+    energy: 1.1
+    softness: 1.1
+    color: "#FF6666"

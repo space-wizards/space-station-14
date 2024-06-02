@@ -1,0 +1,21 @@
+# Panzer Officer
+
+- type: startingGear
+  id: PanzerOfficerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBrownShirtPants
+    back: ClothingBackpackPanzerOfficerFilled
+    head: ClothingHeadHelmetJinRoh
+    mask: ClothingMaskGasJinRoh
+    shoes: ClothingShoesBootsCombatFilled
+    neck: SyndicateWhistle
+    eyes: ClothingEyesEyepatchHudSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterArmorJinRoh
+    suitstorage: AirTankFilled
+    id: DeathsquadPDA
+    pocket1: RadioHandheld
+    pocket2: BruteAutoInjector
+    belt: ClothingBeltSecurityWebbing
+  inhand:
+    - WeaponRifleLecter

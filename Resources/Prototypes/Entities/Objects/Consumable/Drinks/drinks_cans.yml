@@ -14,13 +14,15 @@
         - ReagentId: Cola
           Quantity: 30
         maxVol: 30
+  - type: MixableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 15
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
     layers:
@@ -64,6 +66,12 @@
   - type: Tag
     tags:
     - DrinkCan
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/drinkglass_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/drinkglass_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/drinkglass_drop.ogg
 
 - type: entity
   parent: DrinkCanBaseFull

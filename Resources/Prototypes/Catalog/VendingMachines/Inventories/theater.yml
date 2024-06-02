@@ -14,6 +14,8 @@
     ClothingOuterCardborg: 2
     ClothingHeadHatSombrero: 2
     ClothingOuterPonchoClassic: 2
+    ClothingUniformJumpsuitKilt: 3 # DeltaV - SCOTTTTLANDDDDD FURREVERRRRR!!
+    ClothingEyesEyepatch: 2 # Delta-V Yarrr
     ClothingHeadHatPwig: 2
     ClothingOuterRobesJudge: 2
     ClothingOuterPoncho: 2
@@ -24,6 +26,20 @@
     ClothingHeadHatBeretFrench: 2
     ClothingOuterSuitChicken: 2
     ClothingHeadHatChickenhead: 2
+    ClothingOuterGorillaSuit: 2 # GreyStation - Clothing addition
+    ClothingHeadHoodGorillaMask: 2 # GreyStation - Clothing addition
+    ClothingOuterLobsterSuit: 2 # GreyStation - Clothing addition
+    ClothingHeadHoodLobsterHelm: 2 # GreyStation - Clothing addition
+    ClothingHeadHatRichard: 1 # GreyStation - Clothing addition
+    ClothingHeadHoodPigMask: 2 # GreyStation - Clothing addition
+    ClothingHeadHoodCowMask: 2 # GreyStation - Clothing addition
+    ClothingMaskBat: 1 # GreyStation - Clothing addition
+    ClothingMaskBear: 1 # GreyStation - Clothing addition
+    ClothingMaskFox: 1 # GreyStation - Clothing addition
+    ClothingMaskRat: 1 # GreyStation - Clothing addition
+    ClothingMaskJackal: 2 # GreyStation - Clothing addition
+    ClothingMaskRaven: 1 # GreyStation - Clothing addition
+    ClothingMaskBee: 1 # GreyStation - Clothing addition
     ClothingOuterSuitMonkey: 2
     ClothingHeadHatPumpkin: 2
     ClothingHeadHatShrineMaidenWig: 2
@@ -46,6 +62,27 @@
     FoodPoppy: 1
     ClothingHeadHatGladiator: 1
     ClothingUniformJumpsuitGladiator: 1
+    ClothingUniformSkirtTurtle: 2 # Nyano - Clothing addition
+    ClothingUniformSwimsuitBlue: 2 # Nyano - Clothing addition
+    ClothingCostumeBunnySuit: 2 # Nyano - Clothing addition
+    ClothingHeadHatBunny: 2 # Nyano - Clothing addition
+    ClothingUniformDressRed: 1 # Nyano - Clothing addition
+    ClothingHeadHatCake: 2 # Nyano - Clothing addition
+    ClothingUniformSchoolGakuranBlack: 2 # Nyano - Clothing addition
+    UniformSchoolgirlDusk: 1 # Nyano - Clothing addition
+    UniformSchoolgirlBlazerTan: 1 # Nyano - Clothing addition
+    UniformGeisha: 1 # Nyano - Clothing addition
+    ClothingKimonoBlue: 2 # Nyano - Clothing addition
+    ClothingKimonoPink: 2 # Nyano - Clothing addition
+    ClothingKimonoPurple: 2 # Nyano - Clothing addition
+    ClothingKimonoSky: 2 # Nyano - Clothing addition
+    ClothingKimonoGreen: 2 # Nyano - Clothing addition
+    ClothingMaskOniBlue: 1 # Nyano - Clothing addition
+    ClothingMaskOniRed: 1 # Nyano - Clothing addition
+    ClothingCostumeArcDress: 1 # Nyano - Clothing addition
+    ClothingCostumeMioSkirt: 1 # Nyano - Clothing addition
+    ClothingCostumeNaota: 1 # Nyano - Clothing addition
+    ClothingOuterSuitCarp: 2 # DeltaV - Move carp suit out of syndicate uplink into the AutoDrobe
     ClothingHeadHatCowboyBrown: 1
     ClothingHeadHatCowboyBlack: 1
     ClothingHeadHatCowboyWhite: 1
@@ -57,7 +94,9 @@
   emaggedInventory:
     ClothingShoesBling: 1
     ClothingShoesBootsCowboyFancy: 1
-    ClothingOuterDogi: 1
+    #ClothingOuterDogi: 1 GreyStation - swapped out in favor of TouseiGusoku + Kabuto
+    ClothingHeadHelmetKabuto: 1 # Nyano - Clothing addition
+    ClothingOuterArmorTouseiGusoku: 1 # Nyano - Clothing addition
     ClothingMaskSexyClown: 1
     ClothingMaskSexyMime: 1
     ClothingHeadHatCowboyBountyHunter: 1

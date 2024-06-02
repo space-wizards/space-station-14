@@ -1,0 +1,84 @@
+- type: entity
+  parent: BaseWall
+  id: WallPaper
+  name: paper wall
+  description: Helps to contain the repeated screams of martial artists.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Walls/paper.rsi
+  - type: Icon
+    sprite: Nyanotrasen/Structures/Walls/paper.rsi
+  - type: Construction
+    graph: Girder
+    node: paperWall
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300 # #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+  - type: IconSmooth
+    key: walls
+    base: paperwall
+
+# TODO: construction graph, material, better sounds
+- type: entity
+  parent: BaseWall
+  id: WallDrywall
+  name: drywall
+  description: It looks sturdy enough.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Walls/drywall.rsi
+  - type: Icon
+    sprite: Nyanotrasen/Structures/Walls/drywall.rsi
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: IconSmooth
+    key: walls
+    base: drywall
+  - type: Tag
+    tags:
+      - Wall

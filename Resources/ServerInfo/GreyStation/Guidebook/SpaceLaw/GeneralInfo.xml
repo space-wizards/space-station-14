@@ -1,0 +1,39 @@
+﻿<Document>
+  # General Info
+  General info every security member should know and understand.
+
+  <Box>
+  <GuideEntityEmbed Entity="BannerSecurity" Caption=""/>
+  <GuideEntityEmbed Entity="BookImageSecurityOfficer" Caption=""/>
+  <GuideEntityEmbed Entity="BookImageHeadOfSecurity" Caption=""/>
+  <GuideEntityEmbed Entity="BookImageSecurityOfficer" Caption=""/>
+  <GuideEntityEmbed Entity="BannerSecurity" Caption=""/>
+  </Box>
+## General info
+  1. Confiscated items must be placed in [bold][color=#fcdf03]evidence[/color][/bold], not left on the brig floor or your personal use, until they can be returned to their rightful owners.
+  
+  2. [bold][color=#a83232]Security[/color][/bold] is prohibited from using [bold][color=#fcdf03]most[/color][/bold] Syndicate contraband. [color=#a4885c]See Security Policies section for further info.[/color]
+  
+  3. Intent is important in determining the level of some crimes. If intent can’t be determined, the lesser charge should be given.
+  
+  4. Criminals who commit multiple crimes may have charges stacked. The sentences for multiple crimes should run consecutively, not concurrently.
+  
+  - Charges in the same row should not be stacked for the same count; instead, charge the crew member with the highest applicable offense per count.
+  
+  5. If a crew member is de-converted from revolutionary or cult groups, all charges related to their time in the organization should be dropped, and they should be given a mindshield (if possible).
+  
+  6. The warden is responsible for ensuring that all prisoners are safe and that the brig is secure. Failure to do this can result in demotion.
+  
+  7. A crew member cannot be held for more than 10 minutes without being processed. If 10 minutes elapses and no evidence is provided, the crew member should be set free.
+
+## Arresting a Head of Staff
+  
+  1. Warrants for heads of staff must be approved by the Head of Security, Captain, or CentCom.
+  
+  2. Warrants for the Captain must be approved by CentCom.
+  
+  3. Demotion of a command member and promotion of acting command must be approved by the Captain.
+  
+  It can safely be assumed that a head of staff is threatening to arrest. Bring backup.
+
+</Document>

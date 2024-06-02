@@ -3,13 +3,6 @@
   name: job-name-cadet
   description: job-description-cadet
   playTimeTracker: JobSecurityCadet
-  requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 36000 #10 hrs
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 54000 #15 hrs
-      inverted: true # stop playing intern if you're good at security!
   startingGear: SecurityCadetGear
   icon: "JobIconSecurityCadet"
   supervisors: job-supervisors-security

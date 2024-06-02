@@ -24,8 +24,8 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsSalvage
-  name: salvage boots
-  description: Steel-toed salvage boots for salvaging in hazardous environments.
+  name: steel-toed boots #GreyStation - Remove job specific titles to regular clothes
+  description: Steel-toed boots for hazardous environments. #GreyStation - Remove job specific titles to regular clothes
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/explorer.rsi

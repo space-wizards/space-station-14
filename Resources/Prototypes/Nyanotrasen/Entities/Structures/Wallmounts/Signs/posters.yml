@@ -1,0 +1,215 @@
+# Contraband
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandSaucerNumberOne
+  name: "Saucer #1!"
+  description: "Out of every station in the NyanoTrasen jurisdiction, Saucer was rated #1 out of 5! Congratulations!"
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Vordenburg.rsi
+    state: poster_saucer1
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandBreadLies
+  name: "Bread Lies"
+  description: "You have been lied to. There is no \"Big Bread.\" It is not real. Please stop looking for it."
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Huvy.rsi
+    state: BreadLies
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandAyaya
+  name: "Ayaya"
+  description: "Ayayayaya."
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/misc.rsi
+    state: poster_ayaya
+
+# Legit
+- type: entity
+  parent: PosterBase
+  id: PosterLegitDejaVu
+  name: "Deja Vu Area"
+  description: "This is your first time here. If this station feels familiar, immediately alert a NanoTrasen employee."
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Vordenburg.rsi
+    state: poster_dejavu
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitDontPanic
+  name: "Don't Panic"
+  description: "If there was ever something so soothing enough to keep me from panicking, it was a green blob floating through space with a pair of hands, a shiny red tongue, and big round teeth."
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Vordenburg.rsi
+    state: poster_dontpanic
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitBarDrinks
+  name: "Bar Poster"
+  description: "The Bartender is always there to hear your woes and get you plastered all at the same time. Go have a visit!"
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Huvy.rsi
+    state: BAR
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitBotanyFood
+  name: "Fruit Basket"
+  description: "Botany is always hard at work! Stop by and enjoy the best they can offer!"
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Huvy.rsi
+    state: BotanyFood
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitHotDonkExplosion
+  name: "Donk!"
+  description: "Bite into a blast of flavour with any of our #1 rated fattening and unhealthy products for your enjoyment! DONK!"
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Huvy.rsi
+    state: DONK
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitEatMeat
+  name: "Eat Meat!"
+  description: "Who needs fruit or veggies? EAT MEAT! Build those muscles and go fight in the arena to show them gains!"
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Huvy.rsi
+    state: EATMEAT
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitMoreBread
+  name: "More Bread!"
+  description: "There is not enough bread! MAKE MORE!"
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Huvy.rsi
+    state: MoreBread
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitPieSlice
+  name: "Pie Poster"
+  description: "Pies are healthy and delicious! Beg your chef to start making some."
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Huvy.rsi
+    state: PIE
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitPizzaHope
+  name: "Pizza Hope"
+  description: "In the darkest of times there is only one hope, PIZZA! Harass your local Logistics Officer to order an emergency crate of pizza now!" # DeltaV - Logistics Department replacing Cargo
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Huvy.rsi
+    state: PIZZA
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitMedicate
+  name: "Take Your Meds"
+  description: "Possible side effects may include: nausea, upset stomach, inflammation, swelling of the face/throat, rash, fever, headache, dizziness, vomiting and/or diarrhea, easy bruising, seizures, insuppressible yawning, general feeling of discomfort or illness, hives, loss of voice, bleeding gums and/or eyeballs, loss of appetite, increased appetite, sudden onset of explosive crying, x-ray vision, slurred speech, impromptu levitation, incontinence, abrupt uncontrollable outburst of yodeling, insomnia, narcolepsy, leprosy, spontaneous growth of new limbs/genitalia, unstoppable back hair growth, weight loss, weight gain, shrinkage, colorblindness, rectal numbness, acute ability to taste colors, unquenchable bloodlust, restless fingernails, light-sensitivity, compulsion to wear schoolgirl uniforms, scurvy, eagerness to pursue mercenary life, violent craving for goat's blood, insurgent desire to develop a gambling addiction, itchy bumhole. Call your doctor for medical advice about these or any other side effects you may experience." #credit Chris Zappa
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Velcroboy.rsi
+    state: poster_medicate
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitNoTouching
+  name: "No Touching"
+  description: "No touching!"
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Velcroboy.rsi
+    state: poster_notouching
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitChknDnnr
+  name: "Winner Winner Chicken Dinner"
+  description: "An advertisement for crispy fried chicken."
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/CerebralError.rsi
+    state: poster_ChknDnnr
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitShoukou
+  name: "Shōkō poster"
+  description: "Funny symbols that can be read as Shōkō or Xiaogang, depending on who you ask."
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/Hyenh.rsi
+    state: shoukouposter
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitCornzza
+  name: "Corncob Crust!"
+  description: "NEW Cornzza! Corn pizza, with a corncob crust that'll make you say 'why does this exist?'."
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/rosysyntax.rsi
+    state: poster_corncobpizza
+
+# SAFETY MOTH
+# Actual original art credit to AspEv
+# Some posters are in the upstream posters.yml
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothPoisoning
+  name: Safety Moth - Poisoning
+  description: Safety Moth™ tells the viewer not to poison the station donuts.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/safetymoth.rsi
+    state: safetymoth_1
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothBoH
+  name: Safety Moth - Bag of Holding
+  description: Safety Moth™ informs the viewer of the dangers of Bags of Holding. "Remember! Bags of Holding may be pretty, but they're also pretty dangerous! Never put one inside another!"
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/safetymoth.rsi
+    state: safetymoth_2
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothFires
+  name: Safety Moth - Fires
+  description: Safety Moth™ promotes safe handling of plasma and to keep firefighting equipment within hand reach.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/safetymoth.rsi
+    state: safetymoth_3
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothPills
+  name: Safety Moth - Pill Bottles
+  description: Safety Moth™ informs the viewer that leaving pills unsupervised on tables could lead to unforeseen consequences. "Hungry critters love to eat everything! Keep your pills safe in crates and pill bottles!"
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/Posters/safetymoth.rsi
+    state: safetymoth_4

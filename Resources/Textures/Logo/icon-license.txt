@@ -1,0 +1,20 @@
+The ten files below are licensed under CC-BY-SA-3.0 and made by @ps3moira (DISCORD SS14).
+Sprites Credits
+Gas Mask - Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e
+Yellow Gloves - Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e
+Ancient Suit - (Will update when PR'd)
+Black Shoes - Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/7e4e9d432d88981fb9bb463970c5b98ce85c0abe
+Red Crowbar - Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/eea0599511b088fdab9d43e562210cdbd51c6a98
+Blue Toolbox - Taken from baystation at commit https://github.com/Baystation12/Baystation12/commit/a929584d9db319eb7484113221be25cfa1d5dc09 , held sprites redone by Alekshhh
+Human Sprite - Taken from tgstation at commit https://github.com/tgstation/tgstation/blob/8024397cc81c5f47f74cf4279e35728487d0a1a7/icons/mob/human_parts_greyscale.dmi
+
+logo.png
+logo.svg
+icon.ico
+icon/icon-128x128.png
+icon/icon-16x16.png
+icon/icon-24x24.png
+icon/icon-256x256.png
+icon/icon-32x32.png
+icon/icon-48x48.png
+icon/icon-64x64.png

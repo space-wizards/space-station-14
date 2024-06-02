@@ -136,6 +136,8 @@ namespace Content.Client.Stylesheets
         public const string StyleClassPowerStateGood = "PowerStateGood";
 
         public const string StyleClassItemStatus = "ItemStatus";
+        public const string StyleClassItemStatusNotHeld = "ItemStatusNotHeld";
+        public static readonly Color ItemStatusNotHeldColor = Color.Gray;
 
         //Background
         public const string StyleClassBackgroundBaseDark = "PanelBackgroundBaseDark";
@@ -1234,6 +1236,16 @@ namespace Content.Client.Stylesheets
                     new StyleProperty("font", notoSans10),
                 }),
 
+                Element()
+                    .Class(StyleClassItemStatusNotHeld)
+                    .Prop("font", notoSansItalic10)
+                    .Prop("font-color", ItemStatusNotHeldColor),
+
+                Element<RichTextLabel>()
+                    .Class(StyleClassItemStatus)
+                    .Prop(nameof(RichTextLabel.LineHeightScale), 0.7f)
+                    .Prop(nameof(Control.Margin), new Thickness(0, 0, 0, -6)),
+
                 // Slider
                 new StyleRule(SelectorElement.Type(typeof(Slider)), new []
                 {
@@ -1376,6 +1388,17 @@ namespace Content.Client.Stylesheets
 
                 Element<PanelContainer>().Class("WindowHeadingBackgroundLight")
                     .Prop("panel", new StyleBoxTexture(BaseButtonOpenLeft) { Padding = default }),
+
+                // Window Header Help Button
+                Element<TextureButton>().Class(FancyWindow.StyleClassWindowHelpButton)
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/help.png"))
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#4B596A")),
+
+                Element<TextureButton>().Class(FancyWindow.StyleClassWindowHelpButton).Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
+
+                Element<TextureButton>().Class(FancyWindow.StyleClassWindowHelpButton).Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
 
                 //The lengths you have to go through to change a background color smh
                 Element<PanelContainer>().Class("PanelBackgroundBaseDark")

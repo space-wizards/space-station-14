@@ -42,18 +42,27 @@
     ClothingUniformJumpskirtColorDarkGreen: 2
     ClothingUniformJumpsuitColorTeal: 2
     ClothingUniformJumpskirtColorTeal: 2
+    ClothingUniformJumpsuitLostTourist: 2 # GreyStation - Clothing addition
     ClothingUniformJumpsuitHawaiBlack: 2
     ClothingUniformJumpsuitHawaiBlue: 2
     ClothingUniformJumpsuitHawaiRed: 2
     ClothingUniformJumpsuitHawaiYellow: 2
     ClothingUniformJumpsuitFlannel: 2
-    ClothingUniformJumpsuitCasualBlue: 2
-    ClothingUniformJumpskirtCasualBlue: 2
-    ClothingUniformJumpsuitCasualPurple: 2
-    ClothingUniformJumpskirtCasualPurple: 2
-    ClothingUniformJumpsuitCasualRed: 2
-    ClothingUniformJumpskirtCasualRed: 2
-    # DO NOT ADD MORE, USE UNIFORM DYING
+    ClothingUniformJumpsuitSober: 2 # GreyStation - Clothing addition
+    ClothingUniformJumpsuitBlackShirtJeans: 2 # GreyStation - Clothing addition
+    ClothingUniformJumpsuitWhiteShirtJeans: 2 # GreyStation - Clothing addition
+    ClothingUniformTShirtKhakiPants: 2 # GreyStation - Clothing addition
+    ClothingUniformJumpsuitBrownShirtPants: 2 # GreyStation - Clothing addition
+    ClothingShoesBootsLaceup: 2 # GreyStation - Clothing addition
+    ClothingShoesMiscWhite: 2 # GreyStation - Clothing addition
+    ClothingShoesLeather: 2 # GreyStation - Clothing addition
+    ClothingShoesBootsSalvage: 2 # GreyStation - Clothing addition
+    #ClothingUniformJumpsuitCasualBlue: 2 # GreyStation - Replaced clothes
+    #ClothingUniformJumpskirtCasualBlue: 2 # GreyStation - Replaced clothes
+    #ClothingUniformJumpsuitCasualPurple: 2 # GreyStation - Replaced clothes
+    #ClothingUniformJumpskirtCasualPurple: 2 # GreyStation - Replaced clothes
+    #ClothingUniformJumpsuitCasualRed: 2 # GreyStation - Replaced clothes
+    #ClothingUniformJumpskirtCasualRed: 2 # GreyStation - Replaced clothes
     ClothingShoesColorBlack: 8
     ClothingShoesColorBrown: 4
     ClothingShoesColorWhite: 3
@@ -74,8 +83,18 @@
     ClothingHeadHatBlacksoft: 2
     ClothingHeadHatPurplesoft: 2
     ClothingHeadHatCorpsoft: 2
+    ClothingOuterDenimJacket: 2 # GreyStation - Clothing addition
+    ClothingOuterCoatLetterman: 2 # GreyStation - Clothing addition
+    ClothingOuterCoatLettermanBlue: 2 # Nyano - Clothing addition
+    ClothingOuterCoatLettermanRed: 2 # Nyano - Clothing addition
+    ClothingOuterWinterCoat: 2 # Nyano - Clothing addition
+    ClothingOuterWinterCoatLong: 2 # Nyano - Clothing addition
+    ClothingOuterWinterCoatPlaid: 2 # Nyano - Clothing addition
+    ClothingOuterCoatHyenhSweater: 2 # Nyano - Clothing addition
     ClothingHeadFishCap: 2
+    ClothingUniformOveralls: 2 # GreyStation - Clothing addition
     ClothingHeadRastaHat: 2
+    ClothingShoeCrocs: 3
     ClothingBeltStorageWaistbag: 3
     ClothingEyesGlasses: 6
     ClothingHandsGlovesColorBlack: 4

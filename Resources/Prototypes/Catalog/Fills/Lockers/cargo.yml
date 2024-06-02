@@ -5,7 +5,9 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterHardsuitSpatio
+      - id: ClothingOuterSuitExplorer # GreyStation - Replaces the Spatio suit
+      - id: OxygenTankFilled
+      - id: NitrogenTankFilled
       - id: ClothingShoesBootsMag
       - id: ClothingMaskGasExplorer
       - id: ClothingBeltUtilityFilled

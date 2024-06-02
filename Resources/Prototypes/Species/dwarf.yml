@@ -1,7 +1,7 @@
 - type: species
   id: Dwarf
   name: species-name-dwarf
-  roundStart: true
+  roundStart: false # GreyStation - Only Humans PR
   prototype: MobDwarf
   sprites: MobHumanSprites
   markingLimits: MobHumanMarkingLimits

@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC0-1.0",
+  "copyright": "Original work by TJohnson.",
+  "states": [
+    {
+      "name": "arcticfox",
+      "directions": 4,
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    },
+    {
+      "name": "arcticfox_crit",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "arcticfox_dead",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}

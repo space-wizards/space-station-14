@@ -130,9 +130,27 @@
 - type: entity
   id: ClosetJanitorBombFilled
   parent: ClosetJanitorBomb
-  suffix: Filled
+  suffix: DO NOT MAP, Filled
   components:
   - type: StorageFill
     contents:
       - id: ClothingHeadHelmetJanitorBombSuit
       - id: ClothingOuterSuitJanitorBomb
+
+- type: entity # GreyStation
+  id: LockerClownFilled
+  suffix: Filled
+  parent: LockerClown
+  components:
+  - type: StorageFill
+    contents:
+      - id: FoodPieBananaCream
+        amount: 3
+      - id: LauncherCreamPie
+      - id: BananaPhoneInstrument
+      - id: BikeHornInstrument
+      - id: FoodMeatClown
+      - id: ClothingMaskSexyClown
+      - id: ClothingOuterClownPriest
+      - id: ClothingShoesClownLarge
+      - id: WhoopieCushion

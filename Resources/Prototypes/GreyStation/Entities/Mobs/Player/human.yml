@@ -1,0 +1,36 @@
+## Panzer Officer
+
+- type: entity
+  id: RandomHumanoidSpawnerPanzerOfficer
+  name: Panzer Offier
+  suffix: ERTRole, Panzer Officer
+  components:
+    - type: Sprite
+      sprite: GreyStation/Markers/jobs.rsi
+      state: panzer
+    - type: RandomMetadata
+      nameSegments:
+        - NamesFirstMilitaryLeader
+        - NamesLastMilitary
+    - type: RandomHumanoidSpawner
+      settings: PanzerOfficer
+    - type: InitialInfectedExempt
+
+- type: randomHumanoidSettings
+  id: PanzerOfficer
+  randomizeName: false
+  components:
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+  - type: MindShield
+  - type: GhostRole
+    name: ghost-role-information-Death-Squad-name
+    description: ghost-role-information-Death-Squad-description
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ PanzerOfficerGear ]
+  - type: RandomMetadata
+    nameSegments:
+      - NamesFirstMilitaryLeader
+      - NamesLastMilitary
+  - type: InitialInfectedExempt

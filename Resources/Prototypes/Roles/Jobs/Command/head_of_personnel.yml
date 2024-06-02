@@ -3,19 +3,6 @@
   name: job-name-hop
   description: job-description-hop
   playTimeTracker: JobHeadOfPersonnel
-  requirements:
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 36000 # 10 hours
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 36000 # 10 hours
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 36000 # 10 hrs
-    - !type:DepartmentTimeRequirement
-      department: Command
-      time: 36000 # 10 hours
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
@@ -49,6 +36,13 @@
   - Cargo
   - Atmospherics
   - Medical
+  - Boxer # DeltaV - Add Boxer access
+  - Clown # DeltaV - Add Clown access
+  - Library # DeltaV - Add Library access
+  - Mime # DeltaV - Add Mime access
+  - Musician # DeltaV - Add Musician access
+  - Reporter # DeltaV - Add Reporter access
+  - Zookeeper # DeltaV - Add Zookeeper access
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

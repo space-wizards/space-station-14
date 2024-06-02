@@ -1,7 +1,8 @@
 - type: vendingMachineInventory
   id: EngiVendInventory
   startingInventory:
-    ClothingEyesGlassesMeson: 4
+    ClothingEyesGlassesWelding: 2 # GreyStation - Clothing addition
+    ClothingEyesGlassesMeson: 2 # GreyStation - Halved Meson glasses with the welding goggles
     ClothingHeadHatWelding: 6
     Multitool: 4
     NetworkConfigurator: 5

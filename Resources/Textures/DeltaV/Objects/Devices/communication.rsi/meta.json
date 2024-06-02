@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Inspired by the cheese wedge sprite from tg station https://github.com/tgstation/tgstation/blob/master/icons/obj/food/food.dmi modified by @ps3moira",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cheese-radio",
+      "delays": [[ 1.8, 1.8, 1.8, 1.8, 1.8, 1.8, 1.8 ]]
+    }
+  ]
+}

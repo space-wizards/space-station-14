@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/BeeStation/BeeStation-Hornet/commit/ecf8ff1138fa975fadbc58c98b6ca97241fde850, moffbartender edited by Floofers",
+    "states": [
+        {
+            "name": "moff1"
+        },
+        {
+            "name": "moff2"
+        },
+        {
+            "name": "moff3"
+        },
+        {
+            "name": "moff4"
+        },
+        {
+            "name": "moff5"
+        },
+        {
+            "name": "moff6"
+        },
+        {
+            "name": "moff7"
+        },
+        {
+            "name": "moff8"
+        },
+        {
+            "name": "moff9"
+        },
+        {
+            "name": "moff10"
+        },
+        {
+            "name": "moff11"
+        },
+        {
+            "name": "moff12"
+        },
+        {
+            "name": "moff13"
+        },
+        {
+            "name": "moff14"
+        },
+        {
+            "name": "moffmusician"
+        },
+        {
+            "name": "moffbartender"
+        }
+    ]
+}

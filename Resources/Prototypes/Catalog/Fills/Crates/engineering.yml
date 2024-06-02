@@ -194,3 +194,13 @@
     contents:
     - id: WeaponParticleDecelerator
       amount: 3
+
+- type: entity
+  id: CrateEngineeringSpaceHeater
+  parent: CrateEngineering
+  name: space heater crate
+  description: Contains a space heater for climate control.
+  components:
+  - type: StorageFill
+    contents:
+      - id: SpaceHeaterFlatpack

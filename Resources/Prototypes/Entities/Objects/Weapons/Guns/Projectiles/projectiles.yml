@@ -105,25 +105,6 @@
         Blunt: 1
 
 - type: entity
-  id: BaseBulletRubber
-  name: base bullet rubber
-  parent: BaseBullet
-  noSpawn: true
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    layers:
-    - state: rubber
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 3
-    soundHit:
-      path: /Audio/Weapons/Guns/Hits/snap.ogg
-  - type: StaminaDamageOnCollide
-    damage: 22 # 5 hits to stun sounds reasonable
-
-- type: entity
   id: BaseBulletIncendiary
   name: base bullet incendiary
   parent: BaseBullet
@@ -997,3 +978,47 @@
   - type: Tag
     tags:
       - HideContextMenu
+
+# DeltaV projectiles
+# For whatever magical reasons, I cannot put those in the DeltaV folders without having errors.
+
+# Because Hitscan lasers aren't fun to shoot in my opinion, we give the HoS pistol a special lethal laser that moves
+- type: entity
+  name: energy bolt
+  id: BulletEnergyGunLaser
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser_greyscale
+      shader: unshaded
+      color: red
+  - type: Ammo
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Opaque
+      fly-by: *flybyfixture
+  - type: Projectile
+    impactEffect: BulletImpactEffectRedDisabler
+    damage:
+      types:
+        Heat: 20 # Slightly more damage than the 17heat from the Captain's Hitscan lasgun
+    soundHit:
+      collection: MeatLaserImpact

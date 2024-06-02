@@ -1,0 +1,43 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBlackShirtJeans
+  name: black shirt and jeans
+  description: Baggy jeans and a black t-shirt.
+  components:
+    - type: Sprite
+      sprite: GreyStation/Clothing/Uniforms/Jumpsuit/casualblack.rsi
+    - type: Clothing
+      sprite: GreyStation/Clothing/Uniforms/Jumpsuit/casualblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBrownShirtPants
+  name: brown shirt and jeans
+  description: Jeans and a brown t-shirt.
+  components:
+    - type: Sprite
+      sprite: GreyStation/Clothing/Uniforms/Jumpsuit/casualbrown.rsi
+    - type: Clothing
+      sprite: GreyStation/Clothing/Uniforms/Jumpsuit/casualbrown.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitWhiteShirtJeans
+  name: white shirt and mustang jeans
+  description: Mustang jeans and a white t-shirt.
+  components:
+    - type: Sprite
+      sprite: GreyStation/Clothing/Uniforms/Jumpsuit/casualwhite.rsi
+    - type: Clothing
+      sprite: GreyStation/Clothing/Uniforms/Jumpsuit/casualwhite.rsi
+
+- type: entity
+  parent: ClothingUniformOveralls
+  id: ClothingUniformRedOveralls
+  name: red overalls
+  description: Good pair of brown overalls with a red shirt. Kneepads for when you're on your knees for hours on end.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Uniforms/Jumpsuit/redoveralls.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Uniforms/Jumpsuit/redoveralls.rsi

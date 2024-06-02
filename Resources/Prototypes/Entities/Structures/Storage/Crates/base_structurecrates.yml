@@ -34,7 +34,7 @@
           bounds: "-0.4,-0.4,0.4,0.29"
         density: 50
         mask:
-        - SmallMobMask #this is so they can go under plastic flaps
+        - CrateMask #this is so they can go under plastic flaps
         layer:
         - MachineLayer
   - type: EntityStorage

@@ -4,6 +4,10 @@
   id: Welder
   description: "Melts anything as long as it's fueled, don't forget your eye protection!"
   components:
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/welder_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/welder_drop.ogg
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/welder_drop.ogg

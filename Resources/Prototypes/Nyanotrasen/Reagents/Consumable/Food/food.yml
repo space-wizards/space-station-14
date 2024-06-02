@@ -1,0 +1,24 @@
+- type: reagent
+  id: Nausium
+  name: reagent-name-nausium
+  group: Foods
+  desc: reagent-desc-nausium
+  physicalDesc: reagent-physical-desc-sickly
+  color: brown
+  metabolisms:
+    Food:
+      effects:
+      - !type:ChemVomit
+        probability: 0.9
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Nausium
+          min: 5
+      - !type:PopupMessage
+        type: Local
+        messages: [ "disease-sick-stomach" ]
+        probability: 0.25
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Nausium
+          min: 2.5

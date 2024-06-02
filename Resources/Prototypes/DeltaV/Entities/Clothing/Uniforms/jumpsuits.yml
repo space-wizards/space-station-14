@@ -1,0 +1,166 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBoatswain
+  name: boatswain's turtleneck
+  description: A comfortable rollneck and slacks. Suitable attire for a pipe-smoking bosun.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/boatswain.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/boatswain.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSuitBlack
+  name: black suit
+  description: A crisp white shirt and charcoal slacks. Reminds you of the old times.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitblack.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSuitBlackAlt
+  name: dark suit
+  description: A crisp grey shirt and charcoal slacks. Reminds you of overcast days.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitblackalt.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitblackalt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSuitBlackMob
+  name: mobster's attire
+  description: A crisp red shirt and charcoal slacks. Reminds you of your debts.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitblackmob.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitblackmob.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSuitBrown
+  name: brown suit
+  description: A crisp white shirt and chocolate slacks. Reminds you of dusty offices.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitbrown.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitbrown.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSuitBrownAlt
+  name: suspicious suit
+  description: A crisp grey shirt and chocolate slacks. Reminds you of clandestine operators.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitbrownalt.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitbrownalt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSuitBrownMob
+  name: gangster's attire
+  description: A crisp red shirt and chocolate slacks. Reminds you of drivebys.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitbrownmob.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitbrownmob.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSuitWhite
+  name: white suit
+  description: A crisp white shirt and ivory slacks. Reminds you of swans.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitwhite.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitwhite.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSuitWhiteAlt
+  name: negative suit
+  description: A crisp grey shirt and ivory slacks. Reminds you of daguerreotypes.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitwhitealt.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitwhitealt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSuitWhiteMob
+  name: mafioso's attire
+  description: A crisp red shirt and ivory slacks. Reminds you of family.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitwhitemob.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/suitwhitemob.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSober
+  name: sober sweater
+  description: For the more lucid moments.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/sober.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/sober.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLostTourist
+  name: lost tourist uniform
+  description: The uniform of those who just want to relax on a beach... Where is the beach anyway?
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/lost_tourist.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/lost_tourist.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformCourier
+  name: courier's uniform
+  description:
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/courier.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/courier.rsi
+
+# Central Command Uniform - ported from Velta
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomDirector
+  name: director's jumpsuit
+  description: A sharp and professional jumpsuit worn by a high-ranking member of Central Command.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/centcom_officer.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/centcom_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitKilt
+  name: kilt
+  description: A fine bit o' garb for the lad an' lasses.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/kilt.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/kilt.rsi

@@ -1,0 +1,26 @@
+- type: entity
+  parent: ClothingHandsGlovesColorYellow
+  id: ClothingHandGlovesColorYellowOrange
+  name: right handed insulated glove
+  description: This right-handed insulated glove is pretty useful. It's only one glove though.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Hands/Gloves/Color/righthanded_insulated_glove.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Hands/Gloves/Color/righthanded_insulated_glove.rsi
+  - type: GloveHeatResistance
+    # can't take out lights using budgets
+    heatResistance: 0
+  - type: RandomInsulation
+    # Why repeated numbers? So some numbers are more common, of course!
+    list:
+      - 0
+      - 0.5
+      - 0.5
+      - 0.75
+      - 1.25
+      - 1.25
+      - 1.5
+      - 1.5
+      - 1.5
+      - 1.5

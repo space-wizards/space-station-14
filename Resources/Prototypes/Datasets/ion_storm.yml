@@ -837,6 +837,17 @@
   - TRAITORS
   - VEGETABLES
 
+# Species, for when the law holder has to commit genocide. Plural.
+- type: dataset # GreyStation Re-Added
+  id: IonStormSpecies
+  values:
+  - CYBORGS
+  - HUMANS
+  - MONKEYS
+  - SKELETONS
+  - MALES
+  - FEMALES
+
 # Specific actions that either harm humans or must be done to not
 # harm humans. Make sure they're plural and "not" can be tacked
 # onto the front of them.

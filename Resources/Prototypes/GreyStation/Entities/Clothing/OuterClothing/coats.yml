@@ -1,0 +1,28 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLetterman
+  name: brown letterman jacket
+  description: It's a brown letterman jacket.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Coats/letterman.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Coats/letterman.rsi
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.75
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterCCLong
+  name: central command's long winter coat
+  description: A variation of the regular central command winter coat, for the officers of Central Command.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Coats/cc_large_winter_coat.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Coats/cc_large_winter_coat.rsi

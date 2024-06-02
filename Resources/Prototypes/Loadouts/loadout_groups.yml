@@ -6,6 +6,14 @@
   maxLimit: 3
   loadouts:
   - PlushieLizard
+  - PlushieSpaceLizard
+  - Lighter
+  - CigPackGreen
+  - CigPackRed
+  - CigPackBlue
+  - CigPackBlack
+  - CigarCase
+  - CigarGold
   - ClothingNeckLGBTPin
   - ClothingNeckAromanticPin
   - ClothingNeckAsexualPin
@@ -17,6 +25,15 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+
+- type: loadoutGroup
+  id: Glasses
+  name: loadout-group-glasses
+  minLimit: 0
+  loadouts:
+  - Glasses
+  - GlassesJamjar
+  - GlassesJensen
 
 # Command
 - type: loadoutGroup
@@ -105,6 +122,7 @@
   loadouts:
   - GreyJumpsuit
   - GreyJumpskirt
+  - RainbowJumpsuit
   - AncientJumpsuit
 
 - type: loadoutGroup
@@ -230,6 +248,14 @@
   - LawyerNeck
 
 - type: loadoutGroup
+  id: LawyerBackpack
+  name: loadout-group-lawyer-backpack
+  loadouts:
+  - LawyerBackpack
+  - LawyerSatchel
+  - LawyerDuffel
+
+- type: loadoutGroup
   id: ChaplainHead
   name: loadout-group-chaplain-head
   minLimit: 0
@@ -300,9 +326,9 @@
   name: loadout-group-janitor-gloves
   minLimit: 0
   loadouts:
-  - JanitorGlovesRubber
-  - JanitorGlovesOrange
-  - JanitorGlovesPurple
+  - JanitorRubberGloves
+  - OrangeGloves
+  - PurpleGloves
 
 - type: loadoutGroup
   id: JanitorOuterClothing
@@ -727,6 +753,8 @@
   name: loadout-group-scientist-head
   minLimit: 0
   loadouts:
+  - RoboticistCap
+  - SkullBandana
   - ScientificBeret
 
 - type: loadoutGroup
@@ -742,6 +770,8 @@
   loadouts:
   - ScientistJumpsuit
   - ScientistJumpskirt
+  - RoboticistJumpsuit
+  - RoboticistJumpskirt
   - SeniorResearcherJumpsuit
   - SeniorResearcherJumpskirt
 
@@ -761,6 +791,8 @@
   - RegularLabCoat
   - ScienceLabCoat
   - ScienceWintercoat
+  - RoboticistLabCoat
+  - RoboticistWintercoat
   - SeniorResearcherLabCoat
 
 - type: loadoutGroup
@@ -768,7 +800,17 @@
   name: loadout-group-scientist-shoes
   loadouts:
   - WhiteShoes
+  - BlackShoes
   - ScienceWinterBoots
+
+- type: loadoutGroup
+  id: ScientistGloves
+  name: loadout-group-scientist-gloves
+  minLimit: 0
+  loadouts:
+  - LatexGloves
+  - PurpleGloves
+  - RobohandsGloves
 
 - type: loadoutGroup
   id: ScientistPDA
@@ -870,6 +912,13 @@
   - SecurityDuffel
 
 - type: loadoutGroup
+  id: SecurityBelt
+  name: loadout-group-security-belt
+  loadouts:
+  - SecurityBelt
+  - SecurityWebbing
+
+- type: loadoutGroup
   id: SecurityOuterClothing
   name: loadout-group-security-outerclothing
   loadouts:
@@ -945,6 +994,7 @@
   minLimit: 0
   loadouts:
   - ChiefMedicalOfficerBeret
+  - CMOMedicalHeadMirror
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerJumpsuit
@@ -952,6 +1002,8 @@
   loadouts:
   - ChiefMedicalOfficerJumpsuit
   - ChiefMedicalOfficerJumpskirt
+  - ChiefMedicalOfficerTurtleneckJumpsuit
+  - ChiefMedicalOfficerTurtleneckJumpskirt
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerOuterClothing
@@ -991,9 +1043,11 @@
   loadouts:
   - MedicalBeret
   - SeniorPhysicianBeret
+  - MedicalHeadMirror
   - BlueSurgeryCap
   - GreenSurgeryCap
   - PurpleSurgeryCap
+  - NurseHat
 
 - type: loadoutGroup
   id: MedicalDoctorJumpsuit
@@ -1037,6 +1091,21 @@
   loadouts:
   - MedicalDoctorPDA
   - SeniorPhysicianPDA
+
+- type: loadoutGroup
+  id: MedicalGloves
+  name: loadout-group-medical-gloves
+  minLimit: 0
+  loadouts:
+  - LatexGloves
+  - NitrileGloves
+
+- type: loadoutGroup
+  id: MedicalMask
+  name: loadout-group-medical-mask
+  minLimit: 0
+  loadouts:
+  - SterileMask
 
 - type: loadoutGroup
   id: MedicalInternJumpsuit

@@ -1,0 +1,13 @@
+- type: vendingMachineInventory
+  id: MNKDrobeInventory
+  startingInventory:
+    ClothingUniformMNKOfficeSkirt: 3
+    ClothingUniformMNKUnderGarment: 3
+    ClothingUniformMNKDressBlack: 3
+    ClothingUniformMNKGymBra: 3
+    ClothingUniformMNKBlackOveralls: 3
+    ClothingUniformMNKBlackShoulder: 3
+    ClothingUniformMNKTracksuitBlack: 3
+    ClothingOuterCoatMNKBlackJacket: 3
+    ClothingOuterCoatMNKWhiteHoodie: 3
+    ClothingOuterCoatMNKBlackTopCoat: 3

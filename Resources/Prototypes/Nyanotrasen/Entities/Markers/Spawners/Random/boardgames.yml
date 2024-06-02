@@ -1,0 +1,40 @@
+- type: entity
+  name: Board Game Spawner
+  id: BoardGameSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Fun/Tabletop/chessboard.rsi
+          state: chessboard
+    - type: RandomSpawner
+      prototypes:
+        - BackgammonBoard
+        - CheckerBoard
+        - ChessBoard
+        - ParchisBoard
+        - BattlemapBoardSpawner
+        # - ShogiBoard # Needs to be ported from Nyano
+      chance: 1
+      offset: 0.0
+
+- type: entity
+  name: Battlemap Board Spawner
+  id: BattlemapBoardSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Fun/Tabletop/Battlemaps/grassbm.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+        - GrassBattlemap
+        - MoonBattlemap
+        - SandBattlemap
+        - SnowBattlemap
+        - ShipBattlemap
+      chance: 1
+      offset: 0.0

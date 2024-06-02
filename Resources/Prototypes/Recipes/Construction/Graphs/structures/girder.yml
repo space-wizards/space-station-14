@@ -145,6 +145,17 @@
               amount: 2
               doAfter: 2
 
+        - to: paperWall #Nyano
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Paper
+              amount: 2
+              doAfter: 2
+
         - to: shuttleInteriorWall
           completed:
             - !type:SnapToGrid
@@ -513,3 +524,15 @@
           steps:
             - tool: Welding
               doAfter: 5
+
+    - node: paperWall #Nyano
+      entity: WallPaper
+      edges:
+        - to: girder
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPaper1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 10

@@ -1,0 +1,96 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadMailCarrier
+  name: mail carrier's hat
+  description: Smells like a good pension.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Hats/mailman.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Hats/mailman.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHoodBrown
+  name: brown hood
+  description: Spooky.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Hats/brownhood.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Hats/brownhood.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadAreopagite
+  name: areopagite hat
+  description: Intimidating.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Hats/areopagite.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Hats/areopagite.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadTechPriest
+  name: automaturge hood
+  description: Protects the mind that makes artificial minds.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Hats/techpriest.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Hats/techpriest.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPrisonGuard
+  name: prison guard's hat
+  description: Grants full immunity from denying others basic human rights, dignity, or respect.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Hats/prisonguard.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Hats/prisonguard.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetKendoMen
+  name: men
+  description: The quintessential head armor of the kendo practitioner.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Helmets/men.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Helmets/men.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.95
+        Piercing: 0.95
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretCap
+  name: captain's beret
+  description: A blue beret with a captain's rank emblem. For captains that are more inclined towards style than safety.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Hats/beret_cap.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Hats/beret_cap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretCentcomm
+  name: CentCom beret
+  description: A green beret with an admiral's rank emblem.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Hats/beret_cent.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Hats/beret_cent.rsi

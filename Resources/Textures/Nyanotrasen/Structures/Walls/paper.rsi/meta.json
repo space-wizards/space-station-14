@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Hyenh#6078",
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "paperwall0",
+            "directions": 4
+        },
+        {
+            "name": "paperwall1",
+            "directions": 4
+        },
+        {
+            "name": "paperwall2",
+            "directions": 4
+        },
+        {
+            "name": "paperwall3",
+            "directions": 4
+        },
+        {
+            "name": "paperwall4",
+            "directions": 4
+        },
+        {
+            "name": "paperwall5",
+            "directions": 4
+        },
+        {
+            "name": "paperwall6",
+            "directions": 4
+        },
+        {
+            "name": "paperwall7",
+            "directions": 4
+        }
+    ]
+}

@@ -1,0 +1,47 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltKatanaSheath
+  name: katana sheaths
+  description: An ornate belt designed to hold a pair of samurai's blades, or daisho.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Belt/katanasheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Belt/katanasheath.rsi
+  - type: Storage
+    grid:
+      - 0,0,3,1
+    whitelist:
+      tags:
+        - Katana
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - Katana
+  - type: Appearance
+  - type: Tag
+    tags:
+      - BeltSlotNotBelt
+
+- type: entity
+  parent: ClothingBeltBase
+  id: ClothingBeltMartialBlack
+  name: black belt
+  description: This is the most martial of all the belts.
+  components:
+  - type: MeleeWeapon
+    attackRate: 1.25
+    range: 1.65
+    damage:
+      types:
+        Blunt: 1
+        Slash: 1
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Belt/Martial/black.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Belt/Martial/black.rsi

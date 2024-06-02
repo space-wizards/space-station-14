@@ -124,9 +124,9 @@
   description: A black beret with a commander's rank emblem. For officers that are more inclined towards style than safety.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/beret_hos.rsi
+    sprite: DeltaV/Clothing/Head/Hats/beret_hos.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: Clothing/Head/Hats/beret_hos.rsi
+    sprite: DeltaV/Clothing/Head/Hats/beret_hos.rsi # Grey Station - Resprited
   - type: Tag
     tags:
     - ClothMade
@@ -245,7 +245,7 @@
     - 0,0,0,0
   - type: UserInterface
     interfaces:
-      - key: enum.StorageUiKey.Key
+      enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
   - type: ContainerContainer
     containers:
@@ -317,9 +317,9 @@
   description: "There's a new sheriff in station."
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/hoshat.rsi
+    sprite: GreyStation/Clothing/Head/Hats/hoshat.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: Clothing/Head/Hats/hoshat.rsi
+    sprite: GreyStation/Clothing/Head/Hats/hoshat.rsi # Grey Station - Resprited
   - type: Tag
     tags:
     - ClothMade
@@ -382,12 +382,15 @@
     sprite: Clothing/Head/Hats/plaguedoctor.rsi
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
     - ClothMade
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHatWizardBase
   id: ClothingHeadHatRedwizard
   name: red wizard hat
   description: Strange-looking red hat-wear that most certainly belongs to a real magic user.
@@ -502,7 +505,7 @@
 
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHatWizardBase
   id: ClothingHeadHatVioletwizard
   name: violet wizard hat
   description: "Strange-looking violet hat-wear that most certainly belongs to a real magic user."
@@ -519,11 +522,14 @@
   description: A police officer's Hat. This hat emphasizes that you are THE LAW
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/warden.rsi
+    sprite: GreyStation/Clothing/Head/Hats/warden.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: Clothing/Head/Hats/warden.rsi
+    sprite: GreyStation/Clothing/Head/Hats/warden.rsi # Grey Station - Resprited
   - type: StealTarget
     stealGroup: ClothingHeadHatWarden
+  - type: Tag # Grey Station
+    tags:
+    - HamsterWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -531,15 +537,18 @@
   name: witch hat
   description: A witch hat.
   components:
+  - type: WizardClothes #Yes this will count
   - type: Sprite
     sprite: Clothing/Head/Hats/witch.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/witch.rsi
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
     - ClothMade
+  - type: HideLayerClothing
+    slots:
+    - Hair
 
 - type: entity
   parent: ClothingHeadBase
@@ -553,7 +562,14 @@
     sprite: Clothing/Head/Hats/wizard_fake.rsi
 
 - type: entity
+  abstract: true
   parent: ClothingHeadBase
+  id: ClothingHeadHatWizardBase
+  components:
+  - type: WizardClothes
+
+- type: entity
+  parent: ClothingHeadHatWizardBase
   id: ClothingHeadHatWizard
   name: wizard hat
   description: Strange-looking blue hat-wear that most certainly belongs to a powerful magic user.
@@ -829,8 +845,8 @@
     - 0,0,0,0
   - type: UserInterface
     interfaces:
-      - key: enum.StorageUiKey.Key
-        type: StorageBoundUserInterface
+        enum.StorageUiKey.Key:
+          type: StorageBoundUserInterface
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

@@ -1,0 +1,169 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatScarecrow
+  name: scarecrow hat
+  description: An old straw-hat a scarecrow would don.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/scarecrowhat.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/scarecrowhat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatJackoLanternMask
+  name: jack-o'-lantern mask
+  description: A jack o' lantern mask! Its eyes glow with a trickster aura...
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/jackolantern.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/jackolantern.rsi
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: PointLight
+    radius: 1.2
+    energy: 3.8
+    color: "#EBAB34"
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHoodGigaPompodour
+  name: giga pompodour
+  description: The kind of wig that gives you immense confidence to overshadow your lack of hair.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/gigapompodour.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/gigapompodour.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHoodBlondeGigaPompodour
+  name: blonde giga pompodour
+  description: The kind of wig that makes you want to say, "Hey there pretty mama, what's shakin'?".
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/gigapompodour.rsi
+    state: blonde-icon
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/gigapompodour.rsi
+    equippedPrefix: blonde
+  - type: Item
+    sprite: GreyStation/Clothing/Head/Misc/gigapompodour.rsi
+    heldPrefix: blonde
+  - type: HideLayerClothing
+    slots:
+    - Hair
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHoodGorillaMask
+  name: gorilla mask
+  description: A mask of a gorilla, perfect to wear while eating bananas.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/gorillamask.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/gorillamask.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHoodCowMask
+  name: cow mask
+  description: Putting this on gives you the urge to eat some grass.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/cowmask.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/cowmask.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHoodPigMask
+  name: pig mask
+  description: The pig goes, "Oinkyay Oinkyay". Wait, what?
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/pigmask.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/pigmask.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHoodXenoHelm
+  name: xeno head-piece
+  description: A head-piece that resembles a Xeno.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/xeno_helm.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/xeno_helm.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHoodLobsterHelm
+  name: lobster head-piece
+  description: A head-piece that resembles a lobster. It reminds you of another lobster named Larry.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/lobster_helm.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/lobster_helm.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHoodNemesHeaddress
+  name: nemes headdress
+  description: Walk like an Egyptian.~ ♫
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/nemes_headdress.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/nemes_headdress.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRobCop
+  name: robocop hat
+  description: A robotic head-piece with a single visor.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/robcop_helm.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/robcop_helm.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout

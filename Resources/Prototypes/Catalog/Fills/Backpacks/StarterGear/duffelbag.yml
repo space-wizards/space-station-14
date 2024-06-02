@@ -16,6 +16,8 @@
     contents:
       - id: BoxHug
       - id: RubberStampClown
+      - id: CrayonRainbow # GreyStation
+      - id: ClothingNeckSunflowerSpray # GreyStation
 
 - type: entity
   noSpawn: true

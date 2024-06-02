@@ -30,6 +30,9 @@
         maxVol: 100
   - type: UseDelay
     delay: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
   - type: Tag
     tags:
       - Mop
@@ -103,6 +106,9 @@
       coefficients:
         Blunt: 0.95
         Slash: 0.95
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
   - type: Tag
     tags:
       - WetFloorSign

@@ -12,3 +12,43 @@
   license: "CC-BY-3.0"
   copyright: "https://github.com/tgstation/tgstation/commit/95731342b97167d7883ff091d389f79c36442ee6"
   source: "https://github.com/tgstation/tgstation/blob/ea4870f6d1c0d6b553bb0540d3f4d6efd6f4a3a3/sound/ai/intern/alerts/9.ogg"
+
+- files: ["notevenpaidforthis.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "https://github.com/tgstation/tgstation/commit/95731342b97167d7883ff091d389f79c36442ee6"
+  source: "https://github.com/tgstation/tgstation/blob/ea4870f6d1c0d6b553bb0540d3f4d6efd6f4a3a3/sound/ai/intern/alerts/9.ogg"
+
+- files: ["this_drink.ogg"]
+  license: "Custom"
+  copyright: "Ian Ziering as Edison Trent, Freelancer (2003)"
+  source: "https://en.wikipedia.org/wiki/Freelancer_(video_game)"
+
+- files: ["susguyeatscrew.ogg"]
+  license: "Custom"
+  copyright: "Jerma984's Viva Las Vegas Video on Youtube (2019)"
+  source: "https://www.youtube.com/watch?v=T4YmdEEl2m0&t=0s"
+
+- files: ["safescience.ogg"]
+  license: "Custom"
+  copyright: "J.K. Simmons as Cave Johnson, Portal 2 (2011)"
+  source: "https://en.wikipedia.org/wiki/Portal_2"
+
+- files: ["never_trust_a_traitor.ogg"]
+  license: "Custom"
+  copyright: "Ian McNeice as Baron Vladimir Harkonnen, Frank Herbert's Dune (2000)"
+  source: "https://en.wikipedia.org/wiki/Frank_Herbert%27s_Dune"
+
+- files: ["samhydeantagstrat.ogg"]
+  license: "Custom"
+  copyright: "Clip of Sam Hyde from his sketch First Date"
+  source: "https://www.youtube.com/watch?v=gH6kzLTUUMk"
+
+- files: ["its_only_game.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "https://github.com/tgstation/tgstation/commit/9693fb456a3f8f63e73e6e504fe75de1d148d271n"
+  source: "https://github.com/tgstation/tgstation/blob/ea4870f6d1c0d6b553bb0540d3f4d6efd6f4a3a3/config/reboot_themes/its_only_game.ogg"
+
+- files: ["newroundsexy.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "https://github.com/tgstation/tgstation/commit/9693fb456a3f8f63e73e6e504fe75de1d148d271n"
+  source: "https://github.com/tgstation/tgstation/blob/ea4870f6d1c0d6b553bb0540d3f4d6efd6f4a3a3/config/reboot_themes/newroundsexy.ogg"

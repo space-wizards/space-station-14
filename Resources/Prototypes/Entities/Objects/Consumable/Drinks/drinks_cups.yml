@@ -10,7 +10,8 @@
     solutions:
       drink:
         maxVol: 20
-        canMix: true
+  - type: MixableSolution
+    solution: drink
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -24,8 +25,8 @@
     maxTransferAmount: 10
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Drink
   - type: Sprite
     state: icon
@@ -37,6 +38,12 @@
     damage:
       types:
         Blunt: 0
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/drinkglass_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/drinkglass_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/drinkglass_drop.ogg
 
 - type: entity
   parent: DrinkBaseCup

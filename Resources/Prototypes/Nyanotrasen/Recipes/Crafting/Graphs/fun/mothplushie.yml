@@ -1,0 +1,18 @@
+- type: constructionGraph
+  id: MothPlushie
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: plush
+      steps:
+      - tag: MothroachHide
+        icon:
+          sprite: Nyanotrasen/Objects/Materials/mothroach.rsi
+          state: mothroachhide
+        name: mothroach hide
+      - material: Cloth
+        amount: 3
+        doAfter: 5
+  - node: plush
+    entity: PlushieMoth

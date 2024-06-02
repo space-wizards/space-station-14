@@ -11,6 +11,12 @@
   - type: GuideHelp
     guides:
     - Science
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/disk_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/disk_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/disk_drop.ogg
 
 - type: entity
   parent: ResearchDisk
@@ -61,6 +67,12 @@
     price: 100
   - type: StealTarget
     stealGroup: TechnologyDisk
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/disk_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/disk_drop.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/SimpleStation14/Items/Handling/disk_drop.ogg
 
 - type: entity
   parent: TechnologyDisk
