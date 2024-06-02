@@ -42,7 +42,8 @@
   # GreyStation - hailer functionality
   - type: Speech
   - type: Hailer
-    action: SecurityHailerShout
+    pickerAction: SecurityHailerShout
+    randomAction: SecurityHailerShoutRandom
     normal:
     - message: Stop in the name of the Law.
       sound:
@@ -94,6 +95,10 @@
     - message: FUCK YOUR CUNT YOU SHIT EATING COCKSUCKER MAN EAT A DONG FUCKING ASS RAMMING SHIT FUCK EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS OF FUCK AND DO SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT.
       sound:
         path: /Audio/GreyStation/Hailer/Emagged/binsult.ogg
+  - type: UserInterface
+    interfaces:
+      enum.HailerUiKey.Key:
+        type: HailerBoundUserInterface
 
 - type: entity
   parent: ClothingMaskGas

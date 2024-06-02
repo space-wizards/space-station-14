@@ -1,7 +1,27 @@
 - type: entity
+  noSpawn: true
   id: SecurityHailerShout
   name: Use Hailer
   description: Activate your mask's hailer to shout at suspects for you during a chase!
   components:
   - type: InstantAction
+    useDelay: 15
+    priority: 1
+    icon:
+      sprite: GreyStation/Interface/Actions/hailer.rsi
+      state: picker
     event: !type:HailerActionEvent
+
+- type: entity
+  noSpawn: true
+  parent: SecurityHailerShout
+  id: SecurityHailerShoutRandom
+  name: Random Hailer Line
+  components:
+  - type: InstantAction
+    priority: 2
+    icon:
+      sprite: Interface/Actions/voice-mask.rsi
+      state: icon
+    event: !type:HailerActionEvent
+      random: true

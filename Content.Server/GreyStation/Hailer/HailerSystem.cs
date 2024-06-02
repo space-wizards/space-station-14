@@ -9,6 +9,6 @@ public sealed class HailerSystem : SharedHailerSystem
 
     protected override void Say(Entity<HailerComponent> ent, string message)
     {
-        _chat.TrySendInGameICMessage(ent, line.Message, InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit, checkRadioPrefix: false);
+        _chat.TrySendInGameICMessage(ent, message, InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit, checkRadioPrefix: false);
     }
 }
