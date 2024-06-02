@@ -212,11 +212,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         if (action.ClientExclusive)
         {
-            if (world.Event != null)
-            {
-                world.Event.Target = coords;
-                world.Event.Performer = user;
-            }
+            if (world.Event is {} ev)
+                ev.Target = coords;
 
             _actionsSystem.PerformAction(user, user.Comp, uid, action, world.Event, _timing.CurTime);
         }
@@ -247,11 +244,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         if (action.ClientExclusive)
         {
-            if (entityTarget.Event != null)
-            {
-                entityTarget.Event.Target = entity;
-                entityTarget.Event.Performer = user;
-            }
+            if (entityTarget.Event is {} ev)
+                ev.Target = entity;
 
             _actionsSystem.PerformAction(user, user.Comp, uid, action, entityTarget.Event, _timing.CurTime);
         }
