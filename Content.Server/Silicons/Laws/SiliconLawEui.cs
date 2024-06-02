@@ -59,7 +59,7 @@ public sealed class SiliconLawEui : BaseEui
     private bool IsAllowed()
     {
         var adminData = _adminManager.GetAdminData(Player);
-        if (adminData == null || !adminData.HasFlag(AdminFlags.Admin))
+        if (adminData == null || !adminData.HasFlag(AdminFlags.Moderator))
         {
             _sawmill.Warning("Player {0} tried to open / use silicon law UI without permission.", Player.UserId);
             return false;
