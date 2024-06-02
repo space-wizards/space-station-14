@@ -1,3 +1,4 @@
+using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
 using Robust.Shared.Console;
@@ -8,6 +9,7 @@ namespace Content.Server.GameTicking.Commands
     sealed class ObserveCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
         public string Command => "observe";
         public string Description => "";
@@ -26,6 +28,13 @@ namespace Content.Server.GameTicking.Commands
             {
                 shell.WriteError("Wait until the round starts.");
                 return;
+            }
+
+            var isAdminCommand = args.Length > 0 && args[0].ToLower() == "admin";
+
+            if (!isAdminCommand && _adminManager.IsAdmin(player))
+            {
+                _adminManager.DeAdmin(player);
             }
 
             if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) &&

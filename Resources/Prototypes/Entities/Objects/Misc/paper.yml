@@ -79,9 +79,14 @@
   description: 'A crumpled up piece of white paper.'
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: scrap
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
 
 - type: entity
   name: office paper
@@ -102,7 +107,6 @@
   description: 'The readout of a device forgotten to time'
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: paper_dotmatrix
     - state: paper_dotmatrix_words
@@ -133,7 +137,6 @@
   description: "A page of the captain's journal. In luxurious lavender."
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: paper
       color: "#e6e6fa"
@@ -160,7 +163,6 @@
   description: 'A single unit of bureaucracy.'
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: paper
       color: "#9ef5ff"
@@ -190,7 +192,6 @@
   description: A paper label designating a crate as containing a bounty. Selling a crate with this label will fulfill the bounty.
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: paper
       color: "#f7e574"
@@ -230,7 +231,6 @@
     escapeFormatting: false
     content: book-cnc-sheet
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
       - state: paper
         color: "#cccccc"
@@ -254,18 +254,11 @@
   id: PaperWritten
   noSpawn: true
   components:
-  - type: Paper
   - type: Sprite
     layers:
     # Changing it here is fine - if the PaperStatus key is actually added,
     #  something happened, so that ought to override this either way.
     - state: paper_words
-  - type: ActivatableUI
-    key: enum.PaperUiKey.Key
-  - type: UserInterface
-    interfaces:
-      enum.PaperUiKey.Key:
-        type: PaperBoundUserInterface
 
 - type: entity
   parent: Paper
@@ -274,7 +267,6 @@
   components:
   - type: NukeCodePaper
     allNukesAvailable: true
-  - type: Paper
 
 - type: entity
   parent: NukeCodePaper
@@ -346,7 +338,6 @@
   suffix: Red
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: folder-colormap
       color: "#cc2323"
@@ -358,7 +349,6 @@
   suffix: Blue
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: folder-colormap
       color: "#355d99"
@@ -370,7 +360,6 @@
   suffix: Yellow
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: folder-colormap
       color: "#b38e3c"
@@ -382,7 +371,6 @@
   suffix: White
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: folder-white
     - state: folder-base
@@ -393,7 +381,6 @@
   suffix: Grey
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: folder-colormap
       color: "#999999"
@@ -405,7 +392,6 @@
   suffix: Black
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: folder-colormap
       color: "#3f3f3f"
@@ -417,7 +403,6 @@
   suffix: Green
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: folder-colormap
       color: "#43bc38"
@@ -431,7 +416,6 @@
   description: CentCom's miserable little pile of secrets!
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: folder-centcom
     - state: folder-base
@@ -514,15 +498,12 @@
     - state: clipboard_over
   - type: Item
     sprite: Objects/Misc/cc-clipboard.rsi
-    size: Small
   - type: Clothing
-    slots: [belt]
-    quickEquip: false
     sprite: Objects/Misc/cc-clipboard.rsi
 
 - type: entity
   id: BoxFolderQmClipboard
-  parent: BoxFolderBase
+  parent: BoxFolderClipboard
   name: requisition digi-board
   description: A bulky electric clipboard, filled with shipping orders and financing details. With so many compromising documents, you ought to keep this safe.
   components:
@@ -537,11 +518,6 @@
       map: ["qm_clipboard_pen"]
       visible: false
     - state: qm_clipboard_over
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
-      pen_slot: !type:ContainerSlot {}
   - type: ItemSlots
     slots:
       pen_slot:
@@ -554,18 +530,13 @@
     sprite: Objects/Misc/qm_clipboard.rsi
     size: Normal
   - type: Clothing
-    slots: [belt]
-    quickEquip: false
     sprite: Objects/Misc/qm_clipboard.rsi
   - type: Storage
     grid:
     - 0,0,4,3
     quickInsert: true
-    whitelist:
-      tags:
-        - Document
   - type: StorageFill
-    contents: [] #to override base folder fill
+    contents: [] #to override base clipboard fill
   - type: ItemMapper
     mapLayers:
       qm_clipboard_paper:
@@ -587,7 +558,6 @@
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     damage:
       types:
         Blunt: 10

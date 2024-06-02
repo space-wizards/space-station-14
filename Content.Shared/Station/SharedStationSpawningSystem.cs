@@ -142,7 +142,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
         if (raiseEvent)
         {
             var ev = new StartingGearEquippedEvent(entity);
-            RaiseLocalEvent(entity, ref ev, true);
+            RaiseLocalEvent(entity, ref ev);
         }
     }
 }
