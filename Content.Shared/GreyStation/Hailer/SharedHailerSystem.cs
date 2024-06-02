@@ -74,7 +74,7 @@ public abstract class SharedHailerSystem : EntitySystem
         if (args.Index >= lines.Count)
             return;
 
-        PlayLine(ent, lines[(int) args.Index], args.Actor);
+        PlayLine(ent, lines[(int) args.Index], args.Actor, predicted: true);
     }
 
     public void PlayLine(Entity<HailerComponent> ent, HailerLine line, EntityUid user, bool predicted)
