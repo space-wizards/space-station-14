@@ -81,7 +81,7 @@ public abstract class SharedHailerSystem : EntitySystem
     {
         if (predicted)
             _audio.PlayPredicted(line.Sound, ent, user);
-        else
+        else if (_net.IsServer)
             _audio.PlayPvs(line.Sound, ent);
 
         _actions.StartUseDelay(ent.Comp.PickerActionEntity);
