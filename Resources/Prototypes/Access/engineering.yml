@@ -16,3 +16,9 @@
   - ChiefEngineer
   - Engineering
   - Atmospherics
+
+- type: accessGroup
+  id: FireFight
+  tags:
+    - Engineering
+    - Atmospherics
