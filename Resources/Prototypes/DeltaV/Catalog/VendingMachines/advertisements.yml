@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: PrideDrobeAds
+  values:
+    prefix: advertisement-pride-
+    count: 3

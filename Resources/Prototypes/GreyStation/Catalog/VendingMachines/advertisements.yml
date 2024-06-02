@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: SpookyDrobeAds
+  values:
+    prefix: advertisement-spookydrobe-
+    count: 8
