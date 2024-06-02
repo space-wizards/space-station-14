@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: LordCarve
-  changes:
-  - message: Decayed anomalies no longer show as having gone supercritical in logs.
-    type: Fix
-  id: 6166
-  time: '2024-03-16T17:31:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26180
 - author: Velcroboy
   changes:
   - message: Tweaked gas canisters to pass through cargo flaps.
@@ -3853,3 +3846,10 @@
   id: 6665
   time: '2024-06-02T16:52:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28523
+- author: Errant-4
+  changes:
+  - message: Map labels no longer suddenly disappear for the rest of the round.
+    type: Fix
+  id: 6666
+  time: '2024-06-02T17:30:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28518
