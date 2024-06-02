@@ -25,7 +25,6 @@ public sealed class LoadoutTests
         var settings = new PoolSettings { Connected = true, Dirty = true };
         await using var pair = await PoolManager.GetServerClient(settings);
         var mapManager = pair.Server.ResolveDependency<IMapManager>();
-        var protoManager = pair.Server.ResolveDependency<PrototypeManager>();
         var transformSystem = pair.Server.ResolveDependency<SharedTransformSystem>();
         var storageSystem = pair.Server.ResolveDependency<StorageSystem>();
         var server = pair.Server;
@@ -54,7 +53,7 @@ public sealed class LoadoutTests
 
         foreach (var protoId in protoIds)
         {
-            protoManager.TryIndex(protoId, out StartingGearPrototype gearProto);
+            server.ProtoMan.TryIndex(protoId, out StartingGearPrototype gearProto);
 
             var backpackProto = gearProto.GetGear("Back");
 
