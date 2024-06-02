@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Ion storms now have a chance of happening from the start of shift.
-    type: Tweak
-  id: 6163
-  time: '2024-03-16T03:47:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26165
-- author: Krunk
-  changes:
-  - message: Zombies and animals can be stripped once again.
-    type: Fix
-  - message: Dead or critical mobs can no longer be stripped instantly.
-    type: Fix
-  id: 6164
-  time: '2024-03-16T03:50:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26166
 - author: metalgearsloth
   changes:
   - message: Fix store refunds.
@@ -3853,3 +3837,19 @@
   id: 6662
   time: '2024-06-02T01:41:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28496
+- author: Cojoke-dot
+  changes:
+  - message: Lasers now pass through Glass External Airlocks and Glass Shuttle Airlocks
+    type: Fix
+  id: 6663
+  time: '2024-06-02T04:13:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28065
+- author: slarticodefast
+  changes:
+  - message: Fixed the flash effect getting darker with each appearence.
+    type: Fix
+  - message: Fixed short-sightedness making you immune to flashes.
+    type: Fix
+  id: 6664
+  time: '2024-06-02T04:17:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27369

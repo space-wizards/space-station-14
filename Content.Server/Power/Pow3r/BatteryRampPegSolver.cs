@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Robust.Shared.Utility;
 using System.Linq;
 using Robust.Shared.Threading;
@@ -37,6 +38,7 @@ namespace Content.Server.Power.Pow3r
             DebugTools.Assert(state.GroupedNets.Select(x => x.Count).Sum() == state.Networks.Count);
             _networkJob.State = state;
             _networkJob.FrameTime = frameTime;
+            ValidateNetworkGroups(state, state.GroupedNets);
 
             // Each network height layer can be run in parallel without issues.
             foreach (var group in state.GroupedNets)
@@ -321,7 +323,67 @@ namespace Content.Server.Power.Pow3r
                     RecursivelyEstimateNetworkDepth(state, network, groupedNetworks);
             }
 
+            ValidateNetworkGroups(state, groupedNetworks);
             return groupedNetworks;
+        }
+
+        /// <summary>
+        /// Validate that network grouping is up to date. I.e., that it is safe to solve each networking in a given
+        /// group in parallel. This assumes that batteries are the only device that connects to multiple networks, and
+        /// is thus the only obstacle to solving everything in parallel.
+        /// </summary>
+        [Conditional("DEBUG")]
+        private void ValidateNetworkGroups(PowerState state, List<List<Network>> groupedNetworks)
+        {
+            HashSet<Network> nets = new();
+            HashSet<NodeId> netIds = new();
+            foreach (var layer in groupedNetworks)
+            {
+                nets.Clear();
+                netIds.Clear();
+
+                foreach (var net in layer)
+                {
+                    foreach (var batteryId in net.BatteryLoads)
+                    {
+                        var battery = state.Batteries[batteryId];
+                        if (battery.LinkedNetworkDischarging == default)
+                            continue;
+
+                        var subNet = state.Networks[battery.LinkedNetworkDischarging];
+                        if (battery.LinkedNetworkDischarging == net.Id)
+                        {
+                            DebugTools.Assert(subNet == net);
+                            continue;
+                        }
+
+                        DebugTools.Assert(!nets.Contains(subNet));
+                        DebugTools.Assert(!netIds.Contains(subNet.Id));
+                        DebugTools.Assert(subNet.Height < net.Height);
+                    }
+
+                    foreach (var batteryId in net.BatterySupplies)
+                    {
+                        var battery = state.Batteries[batteryId];
+                        if (battery.LinkedNetworkCharging == default)
+                            continue;
+
+                        var parentNet = state.Networks[battery.LinkedNetworkCharging];
+                        if (battery.LinkedNetworkCharging == net.Id)
+                        {
+                            DebugTools.Assert(parentNet == net);
+                            continue;
+                        }
+
+                        DebugTools.Assert(!nets.Contains(parentNet));
+                        DebugTools.Assert(!netIds.Contains(parentNet.Id));
+                        DebugTools.Assert(parentNet.Height > net.Height);
+                    }
+
+                    DebugTools.Assert(nets.Add(net));
+                    DebugTools.Assert(netIds.Add(net.Id));
+                }
+            }
         }
 
         private static void RecursivelyEstimateNetworkDepth(PowerState state, Network network, List<List<Network>> groupedNetworks)
