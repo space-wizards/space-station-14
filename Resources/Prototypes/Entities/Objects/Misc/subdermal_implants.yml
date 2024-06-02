@@ -143,7 +143,7 @@
         - Cuffable # useless if you cant be cuffed
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: [ BaseSubdermalImplant, StorePresetUplink ]
   id: UplinkImplant
   name: uplink implant
   description: This implant lets the user access a hidden Syndicate uplink at will.
@@ -155,7 +155,6 @@
       components:
       - Hands # prevent mouse buying grenade penguin since its not telepathic
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 0
   - type: UserInterface

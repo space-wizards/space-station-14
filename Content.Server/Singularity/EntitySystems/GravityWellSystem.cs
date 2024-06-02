@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Atmos.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Ghost;
@@ -126,7 +127,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <param name="minRange">The minimum distance at which entities can be affected by the gravity pulse.</param>
     /// <param name="baseMatrixDeltaV">The base velocity added to any entities within affected by the gravity pulse scaled by the displacement of those entities from the epicenter.</param>
     /// <param name="xform">(optional) The transform of the entity at the epicenter of the gravitational pulse.</param>
-    public void GravPulse(EntityUid uid, float maxRange, float minRange, in Matrix3 baseMatrixDeltaV, TransformComponent? xform = null)
+    public void GravPulse(EntityUid uid, float maxRange, float minRange, in Matrix3x2 baseMatrixDeltaV, TransformComponent? xform = null)
     {
         if (Resolve(uid, ref xform))
             GravPulse(xform.Coordinates, maxRange, minRange, in baseMatrixDeltaV);
@@ -154,7 +155,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <param name="maxRange">The maximum distance at which entities can be affected by the gravity pulse.</param>
     /// <param name="minRange">The minimum distance at which entities can be affected by the gravity pulse.</param>
     /// <param name="baseMatrixDeltaV">The base velocity added to any entities within affected by the gravity pulse scaled by the displacement of those entities from the epicenter.</param>
-    public void GravPulse(EntityCoordinates entityPos, float maxRange, float minRange, in Matrix3 baseMatrixDeltaV)
+    public void GravPulse(EntityCoordinates entityPos, float maxRange, float minRange, in Matrix3x2 baseMatrixDeltaV)
         => GravPulse(entityPos.ToMap(EntityManager, _transform), maxRange, minRange, in baseMatrixDeltaV);
 
     /// <summary>
@@ -175,7 +176,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <param name="maxRange">The maximum distance at which entities can be affected by the gravity pulse.</param>
     /// <param name="minRange">The minimum distance at which entities can be affected by the gravity pulse. Exists to prevent div/0 errors.</param>
     /// <param name="baseMatrixDeltaV">The base velocity added to any entities within affected by the gravity pulse scaled by the displacement of those entities from the epicenter.</param>
-    public void GravPulse(MapCoordinates mapPos, float maxRange, float minRange, in Matrix3 baseMatrixDeltaV)
+    public void GravPulse(MapCoordinates mapPos, float maxRange, float minRange, in Matrix3x2 baseMatrixDeltaV)
     {
         if (mapPos == MapCoordinates.Nullspace)
             return; // No gravpulses in nullspace please.
@@ -205,7 +206,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
                 continue;
 
             var scaling = (1f / distance2) * physics.Mass; // TODO: Variable falloff gradiants.
-            _physics.ApplyLinearImpulse(entity, (displacement * baseMatrixDeltaV) * scaling, body: physics);
+            _physics.ApplyLinearImpulse(entity, Vector2.Transform(displacement, baseMatrixDeltaV) * scaling, body: physics);
         }
     }
 
@@ -218,10 +219,9 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <param name="baseRadialDeltaV">The base amount of velocity that will be added to entities in range towards the epicenter of the pulse.</param>
     /// <param name="baseTangentialDeltaV">The base amount of velocity that will be added to entities in range counterclockwise relative to the epicenter of the pulse.</param>
     public void GravPulse(MapCoordinates mapPos, float maxRange, float minRange = 0.0f, float baseRadialDeltaV = 0.0f, float baseTangentialDeltaV = 0.0f)
-        => GravPulse(mapPos, maxRange, minRange, new Matrix3(
-            baseRadialDeltaV, +baseTangentialDeltaV, 0.0f,
-            -baseTangentialDeltaV, baseRadialDeltaV, 0.0f,
-            0.0f, 0.0f, 1.0f
+        => GravPulse(mapPos, maxRange, minRange, new Matrix3x2(
+            baseRadialDeltaV, -baseTangentialDeltaV, 0.0f,
+            +baseTangentialDeltaV, baseRadialDeltaV, 0.0f
         ));
 
     #endregion GravPulse
