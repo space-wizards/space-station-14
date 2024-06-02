@@ -61,7 +61,7 @@ public sealed partial class AdminFaxWindow : DefaultWindow
                 if (!stateName.StartsWith("paper_stamp-"))
                     continue;
 
-                StampSelector.AddItem(stateName, i);
+                StampSelector.AddItem(Loc.GetString(stateName), i);
                 StampSelector.SetItemMetadata(i, stateName);
                 i++;
             }
