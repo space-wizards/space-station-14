@@ -5,7 +5,7 @@
   playTimeTracker: JobTechnicalAssistant
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 3600 #1 hr
+      time: 10800 #3 hrs
     - !type:DepartmentTimeRequirement
       department: Engineering
       time: 54000 #15 hrs
