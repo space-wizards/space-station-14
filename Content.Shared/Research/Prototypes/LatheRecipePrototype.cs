@@ -81,27 +81,31 @@ public sealed partial class LatheRecipePrototype : IPrototype
 
     private string GetName()
     {
+        var loc = IoCManager.Resolve<ILocalizationManager>();
+
         if (_name.Trim().Length != 0)
-            return _name;
+            return loc.GetString(_name);
 
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
         protoMan.TryIndex(Result, out EntityPrototype? prototype);
         if (prototype?.Name != null)
             _name = prototype.Name;
 
-        return _name;
+        return loc.GetString(_name);
     }
 
     private string GetDescription()
     {
+        var loc = IoCManager.Resolve<ILocalizationManager>();
+
         if (_description.Trim().Length != 0)
-            return _description;
+            return loc.GetString(_description);
 
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
         protoMan.TryIndex(Result, out EntityPrototype? prototype);
         if (prototype?.Description != null)
             _description = prototype.Description;
 
-        return _description;
+        return loc.GetString(_description);
     }
 }

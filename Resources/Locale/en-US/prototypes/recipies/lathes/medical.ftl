@@ -1,0 +1,8 @@
+lathe-recipe-Medkit = first aid kit (empty)
+lathe-recipe-MedkitBurn = burn treatment kit (empty)
+lathe-recipe-MedkitToxin = toxin treatment kit (empty)
+lathe-recipe-MedkitO2 = oxygen deprivation treatment kit (empty)
+lathe-recipe-MedkitBrute = brute trauma treatment kit (empty)
+lathe-recipe-MedkitAdvanced = advanced first aid kit (empty)
+lathe-recipe-MedkitRadiation = radiation treatment kit (empty)
+lathe-recipe-MedkitCombat = combat medical kit (empty)
