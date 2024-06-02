@@ -246,7 +246,7 @@ public sealed partial class RevenantSystem
         foreach (var ent in lookup)
         {
             //break windows
-            if (tags.HasComponent(ent) && _tag.HasAnyTag(ent, "Window"))
+            if (tags.HasComponent(ent) && _tag.HasTag(ent, "Window"))
             {
                 //hardcoded damage specifiers til i die.
                 var dspec = new DamageSpecifier();
