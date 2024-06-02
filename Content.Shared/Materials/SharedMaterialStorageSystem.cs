@@ -123,7 +123,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (!CanTakeVolume(uid, volume, component))
             return false;
 
-        if (component.MaterialWhiteList == null ? false : component.MaterialWhiteList.Contains(materialId))
+        if (component.MaterialWhiteList == null ? false : !component.MaterialWhiteList.Contains(materialId))
             return false;
 
         var amount = component.Storage.GetValueOrDefault(materialId);
