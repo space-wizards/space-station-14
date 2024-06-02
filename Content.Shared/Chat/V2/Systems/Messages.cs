@@ -1,4 +1,5 @@
-﻿using Content.Shared.Radio;
+﻿using Content.Shared.Chat.V2.Prototypes;
+using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -26,6 +27,9 @@ public abstract class ChatAttemptEvent(ChatContext context, NetEntity sender, st
     public ChatContext Context = context;
     public NetEntity Sender = sender;
     public string Message = message;
+
+    public abstract ChatFailedEvent ToFailMessage(string reason);
+    public abstract IChatEvent ToSuccessMessage();
 }
 
 /// <summary>
@@ -40,12 +44,22 @@ public sealed class AttemptVerbalChatEvent(
     ChatContext context,
     NetEntity sender,
     string message,
-    VerbalChatChannel chatChannel,
+    ProtoId<VerbalChatChannelPrototype> chatChannel,
     ProtoId<RadioChannelPrototype>? radioChannel
 ) : ChatAttemptEvent(context, sender, message)
 {
     public ProtoId<RadioChannelPrototype>? RadioChannel = radioChannel;
-    public VerbalChatChannel ChatChannel = chatChannel;
+    public ProtoId<VerbalChatChannelPrototype> ChatChannel = chatChannel;
+
+    public override ChatFailedEvent ToFailMessage(string reason)
+    {
+        return new VerbalChatFailedEvent(Context, Sender, reason);
+    }
+
+    public override IChatEvent ToSuccessMessage()
+    {
+        return new VerbalChatCreatedEvent(Context, Sender, ChatChannel, RadioChannel, Message);
+    }
 }
 
 /// <summary>
@@ -57,11 +71,21 @@ public sealed class AttemptVerbalChatEvent(
 public sealed class AttemptVisualChatEvent(
     ChatContext context,
     NetEntity sender,
-    VisualChatChannel channel,
+    ProtoId<VisualChatChannelPrototype> channel,
     string message
 ) : ChatAttemptEvent(context, sender, message)
 {
-    public VisualChatChannel Channel = channel;
+    public ProtoId<VisualChatChannelPrototype> Channel = channel;
+
+    public override ChatFailedEvent ToFailMessage(string reason)
+    {
+        return new VisualChatFailedEvent(Context, Sender, reason);
+    }
+
+    public override IChatEvent ToSuccessMessage()
+    {
+        return new VisualChatCreatedEvent(Context, Sender, Channel, message);
+    }
 }
 
 /// <summary>
@@ -79,6 +103,16 @@ public sealed class AttemptAnnouncementEvent(
 ) : ChatAttemptEvent(context, sender, message)
 {
     public NetEntity Console = console;
+
+    public override ChatFailedEvent ToFailMessage(string reason)
+    {
+        return new AnnouncementFailedEvent(Context, Sender, reason);
+    }
+
+    public override IChatEvent ToSuccessMessage()
+    {
+        return new AnnouncementCreatedEvent(Context, Sender, Console, Message);
+    }
 }
 
 /// <summary>
@@ -92,10 +126,20 @@ public sealed class AttemptOutOfCharacterChatEvent(
     ChatContext context,
     NetEntity sender,
     string message,
-    OutOfCharacterChatChannel channel
+    ProtoId<OutOfCharacterChannelPrototype> channel
 ) : ChatAttemptEvent(context, sender, message)
 {
-    public OutOfCharacterChatChannel Channel = channel;
+    public ProtoId<OutOfCharacterChannelPrototype> Channel = channel;
+
+    public override ChatFailedEvent ToFailMessage(string reason)
+    {
+        return new OutOfCharacterChatFailed(Context, Sender, reason);
+    }
+
+    public override IChatEvent ToSuccessMessage()
+    {
+        return new OutOfCharacterChatCreatedEvent(Context, Sender, Channel, Message);
+    }
 }
 
 #endregion
@@ -170,10 +214,10 @@ public sealed class VerbalChatEvent(
     string asName,
     string message,
     uint id,
-    VerbalChatChannel chatChannel
+    ProtoId<VerbalChatChannelPrototype> chatChannel
 ) : ChatSuccessEvent(context, speaker, asName, message, id)
 {
-    public VerbalChatChannel ChatChannel = chatChannel;
+    public ProtoId<VerbalChatChannelPrototype> ChatChannel = chatChannel;
 }
 
 /// <summary>
@@ -190,10 +234,10 @@ public sealed class VisualChatEvent(
     string asName,
     string message,
     uint id,
-    VisualChatChannel chatChannel
+    ProtoId<OutOfCharacterChannelPrototype>  chatChannel
 ) : ChatSuccessEvent(context, speaker, asName, message, id)
 {
-    public VisualChatChannel ChatChannel = chatChannel;
+    public ProtoId<OutOfCharacterChannelPrototype> ChatChannel = chatChannel;
 }
 
 /// <summary>
@@ -217,10 +261,10 @@ public sealed class OutOfCharacterChatEvent(
     string asName,
     string message,
     uint id,
-    OutOfCharacterChatChannel chatChannel
+    ProtoId<OutOfCharacterChannelPrototype>  chatChannel
 ) : ChatSuccessEvent(context, speaker, asName, message, id)
 {
-    public OutOfCharacterChatChannel ChatChannel = chatChannel;
+    public ProtoId<OutOfCharacterChannelPrototype>  ChatChannel = chatChannel;
 }
 
 #endregion
@@ -260,26 +304,125 @@ public sealed class SubtleChatEvent(NetEntity target, string message) : EntityEv
     public readonly string Message = message;
 }
 
+#endregion
+
+#region Validated Events
 /// <summary>
-/// Raised when an entity (such as a vending machine) uses local chat. The chat should not appear in the chat log.
+/// Notifies that a chat attempt input from a player has been validated and sanatized, ready for further processing.
 /// </summary>
-/// <param name="speaker">The speaker of the message</param>
-/// <param name="asName">What name the speaker should present as</param>
-/// <param name="message">The message, possibly altered from when it was sent - although for automated messages this is unlikely.</param>
-[Serializable, NetSerializable]
-public sealed class BackgroundChatEvent(
-    ChatContext context,
-    NetEntity speaker,
-    string message,
-    string asName,
-    VerbalChatChannel chatChannel
-) : EntityEventArgs
+/// <param name="ev"></param>
+public sealed class ChatAttemptValidatedEvent(IChatEvent ev) : EntityEventArgs
 {
-    public ChatContext Context = context;
-    public NetEntity Speaker = speaker;
-    public string AsName = asName;
-    public readonly string Message = message;
-    public VerbalChatChannel ChatChannel = chatChannel;
+    public IChatEvent Event = ev;
+}
+
+/// <summary>
+/// Notifies that a chat message needs validating.
+/// </summary>
+/// <param name="attemptEvent">The chat message to validate</param>
+public sealed class ChatValidationEvent<T>(T attemptEvent) where T : ChatAttemptEvent
+{
+    public readonly T Event = attemptEvent;
+    public string Reason = "";
+
+    public bool IsCancelled { get; private set; }
+
+    public void Cancel(string reason)
+    {
+        if (IsCancelled)
+        {
+            return;
+        }
+
+        IsCancelled = true;
+        Reason = reason;
+    }
+}
+
+/// <summary>
+/// Notifies that a chat message needs sanitizing. If, after this message is processed, IsCancelled is true, the message
+/// should be discarded with a failure response. Otherwise, if ChatMessageSanitized is non-null, ChatMessageSanitized
+/// should be used instead of the non-sanitized message.
+/// </summary>
+/// <param name="attemptEvent">The chat message to sanitize.</param>
+public sealed class ChatSanitizationEvent<T>(T attemptEvent) where T : IChatEvent
+{
+    public string ChatMessageRaw = attemptEvent.Message;
+    public bool IsCancelled;
+    public string? ChatMessageSanitized { get; private set; }
+
+    // Commits the sanitized message string to the event. If a message string has already been input, this is a no-op.
+    public void Sanitize(string inMessage)
+    {
+        if (ChatMessageSanitized != null)
+        {
+            return;
+        }
+
+        ChatMessageSanitized = inMessage;
+    }
+}
+
+public abstract class ChatEvent(ChatContext context, NetEntity sender, string message) : IChatEvent
+{
+    public ChatContext Context { get; } = context;
+    public NetEntity Sender { get; set; } = sender;
+    public string Message { get; set; } = message;
+    public uint Id { get; set; }
+}
+
+/// <summary>
+/// Raised locally when a comms announcement is made.
+/// </summary>
+public sealed class AnnouncementCreatedEvent(
+    ChatContext context,
+    NetEntity sender,
+    NetEntity console,
+    string message
+) : ChatEvent(context, sender, message)
+{
+    public NetEntity Console = console;
+}
+
+/// <summary>
+/// Raised locally when an OOC message is created.
+/// </summary>
+public sealed class OutOfCharacterChatCreatedEvent(
+    ChatContext context,
+    NetEntity sender,
+    ProtoId<OutOfCharacterChannelPrototype> channel,
+    string message
+) : ChatEvent(context, sender, message)
+{
+    public ProtoId<OutOfCharacterChannelPrototype> Channel = channel;
+}
+
+/// <summary>
+/// Raised locally when a character emotes.
+/// </summary>
+public sealed class VisualChatCreatedEvent(
+    ChatContext context,
+    NetEntity sender,
+    ProtoId<VisualChatChannelPrototype> channel,
+    string message
+) : ChatEvent(context, sender, message)
+{
+    public ProtoId<VisualChatChannelPrototype> Channel = channel;
+}
+
+/// <summary>
+/// Raised locally when something talks.
+/// </summary>
+public sealed class VerbalChatCreatedEvent(
+    ChatContext context,
+    NetEntity sender,
+    ProtoId<VerbalChatChannelPrototype> chatChannel,
+    ProtoId<RadioChannelPrototype>? radioChannel,
+    string message
+) : ChatEvent(context, sender, message)
+{
+    public ProtoId<RadioChannelPrototype>? RadioChannel = radioChannel;
+    public ProtoId<VerbalChatChannelPrototype> ChatChannel = chatChannel;
 }
 
 #endregion

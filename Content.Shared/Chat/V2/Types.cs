@@ -15,7 +15,7 @@ public interface IChatEvent
     /// <summary>
     /// The sender of the chat message.
     /// </summary>
-    public EntityUid Sender
+    public NetEntity Sender
     {
         get;
     }
@@ -47,42 +47,4 @@ public interface IChatEvent
 
         Id = id;
     }
-}
-
-// TODO: These three channel enums can be migrated to YAML instead of being defined here.
-
-/// <summary>
-/// Covers the types of verbal chat message.
-/// </summary>
-public enum VerbalChatChannel : byte
-{
-    // Thought, not spoken, and thus totally silent. Used for telepathic-like communications using other systems like radio.
-    Internal,
-    // Short-range, obfuscated if too far away, no voice ID if too far away and no visuals
-    Whisper,
-    // Normal range.
-    Talk,
-    // Normal range but BIGGER TEXT!!
-    Shout,
-    // For breaking the fourth wall. Works just like Talk but the message is flagged as OOC.
-    OutOfCharacter,
-    // Used by vending machines and other automated talking machines. This channel shouldn't show up in chat logs.
-    Background
-}
-
-/// <summary>
-/// Covers the types of visual chat message
-/// </summary>
-public enum VisualChatChannel : byte
-{
-    // Used to smile, laugh, and evade the mime vow.
-    Emote
-}
-
-public enum OutOfCharacterChatChannel : byte
-{
-    Dead,
-    OutOfCharacter,
-    Admin,
-    System
 }

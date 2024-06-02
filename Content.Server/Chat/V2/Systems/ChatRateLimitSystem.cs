@@ -35,7 +35,7 @@ public sealed class ChatRateLimitSystem : EntitySystem
         _configuration.OnValueChanged(CCVars.ChatRateLimitCount, limitCount => _chatRateLimitCount = limitCount, true);
         _configuration.OnValueChanged(CCVars.ChatMaxAnnouncementLength, maxLen => _maxChatMessageLength = maxLen, true);
 
-        SubscribeLocalEvent<ChatValidationEvent<ChatAttemptEvent>>((msg, args) => OnValidationEvent(msg, args));
+        SubscribeLocalEvent<ChatValidationEvent<ChatAttemptEvent>>(OnValidationEvent);
     }
 
     private void OnValidationEvent(ChatValidationEvent<ChatAttemptEvent> validationEvent, EntitySessionEventArgs args)

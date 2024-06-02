@@ -31,6 +31,8 @@ public sealed class ChatRepositorySystem : EntitySystem
             // TODO: resolve https://github.com/space-wizards/space-station-14/issues/25485 so we can dump the chat to disc.
             Refresh();
         };
+
+        SubscribeNetworkEvent<ChatAttemptValidatedEvent>(ev => Add(ev.Event));
     }
 
     /// <summary>
@@ -40,7 +42,9 @@ public sealed class ChatRepositorySystem : EntitySystem
     /// <returns>If storing and raising succeeded.</returns>
     public bool Add(IChatEvent ev)
     {
-        if (!_player.TryGetSessionByEntity(ev.Sender, out var session))
+        var entityUid = GetEntity(ev.Sender);
+
+        if (!_player.TryGetSessionByEntity(entityUid, out var session))
         {
             return false;
         }
@@ -55,7 +59,7 @@ public sealed class ChatRepositorySystem : EntitySystem
         {
             UserName = session.Name,
             UserId = session.UserId,
-            EntityName = Name(ev.Sender),
+            EntityName = Name(entityUid),
             StoredEvent = ev
         };
 
@@ -63,7 +67,7 @@ public sealed class ChatRepositorySystem : EntitySystem
 
         CollectionsMarshal.GetValueRefOrAddDefault(_playerMessages, storedEv.UserId, out _)?.Add(messageId);
 
-        RaiseLocalEvent(ev.Sender, new MessageCreatedEvent(ev), true);
+        RaiseLocalEvent(entityUid, new MessageCreatedEvent(ev), true);
 
         return true;
     }
