@@ -3,6 +3,7 @@ using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GridPreloader;
 using Content.Server.Spawners.Components;
+using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Map;
@@ -19,6 +20,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly GridPreloaderSystem _gridPreloader = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -99,7 +101,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
             if (xform.GridUid == null || !ent.Comp.MapGrids.Contains(xform.GridUid.Value))
                 continue;
 
-            if (ent.Comp.SpawnerWhitelist != null && !ent.Comp.SpawnerWhitelist.IsValid(uid, EntityManager))
+            if (_whitelistSystem.IsWhitelistFail(ent.Comp.SpawnerWhitelist, uid))
                 continue;
 
             args.Coordinates.Add(_transform.GetMapCoordinates(xform));

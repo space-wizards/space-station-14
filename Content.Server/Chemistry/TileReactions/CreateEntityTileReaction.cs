@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
@@ -14,6 +14,8 @@ namespace Content.Server.Chemistry.TileReactions;
 [DataDefinition]
 public sealed partial class CreateEntityTileReaction : ITileReaction
 {
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+
     [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Entity = default!;
 
@@ -47,7 +49,7 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
                 int acc = 0;
                 foreach (var ent in tile.GetEntitiesInTile())
                 {
-                    if (Whitelist.IsValid(ent))
+                    if (_whitelistSystem.IsWhitelistPass(Whitelist, ent))
                         acc += 1;
 
                     if (acc >= MaxOnTile)

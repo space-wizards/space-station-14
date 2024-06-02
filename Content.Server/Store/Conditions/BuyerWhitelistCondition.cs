@@ -8,6 +8,8 @@ namespace Content.Server.Store.Conditions;
 /// </summary>
 public sealed partial class BuyerWhitelistCondition : ListingCondition
 {
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+
     /// <summary>
     /// A whitelist of tags or components.
     /// </summary>
@@ -24,17 +26,9 @@ public sealed partial class BuyerWhitelistCondition : ListingCondition
     {
         var ent = args.EntityManager;
 
-        if (Whitelist != null)
-        {
-            if (!Whitelist.IsValid(args.Buyer, ent))
-                return false;
-        }
-
-        if (Blacklist != null)
-        {
-            if (Blacklist.IsValid(args.Buyer, ent))
-                return false;
-        }
+        if (_whitelistSystem.IsWhitelistFail(args.Buyer, ent) ||
+            _whitelistSystem.IsBlacklistPass(args.Buyer, ent))
+            return false;
 
         return true;
     }
