@@ -4,7 +4,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Fax.AdminUI;
