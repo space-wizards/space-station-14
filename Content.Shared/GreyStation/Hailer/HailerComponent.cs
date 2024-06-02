@@ -14,6 +14,7 @@ public sealed partial class HailerComponent : Component
 {
     /// <summary>
     /// Action to grant when worn that uses <see cref="HailerActionEvent"/>.
+    /// Only gets put on cooldown when the line is said.
     /// </summary>
     [DataField(required: true)]
     public EntProtoId Action = string.Empty;
@@ -28,16 +29,10 @@ public sealed partial class HailerComponent : Component
     public SlotFlags RequiredFlags = SlotFlags.MASK;
 
     /// <summary>
-    /// Last played message, used to make it feel more random.
+    /// Last played random message, used to make it feel more random.
     /// </sumamry>
     public string LastPlayed = string.Empty;
-}
 
-/// <summary>
-/// Action event to use a hailer
-/// </summary>
-public sealed partial class HailerActionEvent : InstantActionEvent
-{
     /// <summary>
     /// Lines to choose from when out of combat mode and not emagged.
     /// </summary>
@@ -55,7 +50,18 @@ public sealed partial class HailerActionEvent : InstantActionEvent
     /// </summary>
     [DataField(required: true)]
     public List<HailerLine> Emagged = new();
+
+    /// <summary>
+    /// How long you have to wait before using the hailer again.
+    /// </summary>
+    [DataField]
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(15);
 }
+
+/// <summary>
+/// Action event to open the radial menu for playing a line.
+/// </summary>
+public sealed partial class HailerActionEvent : InstantActionEvent;
 
 /// <summary>
 /// A line and sound to be randomly chosen when using the hailer action.

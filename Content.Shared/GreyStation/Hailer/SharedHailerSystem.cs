@@ -3,7 +3,9 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.GreyStation.Hailer;
 
@@ -13,7 +15,11 @@ namespace Content.Shared.GreyStation.Hailer;
 public abstract class SharedHailerSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
@@ -22,6 +28,11 @@ public abstract class SharedHailerSystem : EntitySystem
         SubscribeLocalEvent<HailerComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<HailerComponent, HailerActionEvent>(OnActionUsed);
         SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagged);
+
+        Subs.BuiEvents<HailerComponent>(HailerUiKey.Key, subs =>
+        {
+            subs.Event<HailerPlayLineMessage>(OnPlayLine);
+        }
     }
 
     private void OnGetActions(Entity<HailerComponent> ent, ref GetItemActionsEvent args)
@@ -36,17 +47,45 @@ public abstract class SharedHailerSystem : EntitySystem
         if (TryComp<MaskComponent>(ent, out var mask) && mask.IsToggled)
             return;
 
-        args.Handled = true;
+        args.Handled = _ui.TryOpenUi(ent.Owner, HailerUiKey.Key, args.Performer, predicted: true);
+    }
 
-        List<HailerLine> lines;
+    private void OnLineChosen(Entity<HailerComponent> ent, ref HailerPlayLineMessage args)
+    {
+        var lines = GetLines(ent, args.Performer);
+        if (args.Index > lines.Count)
+            return;
+
+        var line = lines[args.Index];
+        _audio.PlayPredicted(line.Sound, ent);
+        _actions.SetCooldown(ent.Comp.ActionEntity, ent.Comp.Cooldown);
+        ent.Comp.LastMessage = line.Message;
+        Say(ent, line.Message);
+    }
+
+    protected List<HailerLine> GetLines(Entity<HailerComponent> ent, EntityUid user)
+    {
         if (HasComp<EmaggedComponent>(ent))
-            lines = args.Emagged;
-        else if (_combatMode.IsInCombatMode(args.Performer))
-            lines = args.Combat;
-        else
-            lines = args.Normal;
+            return ent.Comp.Emagged;
 
-        Say(ent, lines);
+        if (_combatMode.IsInCombatMode(user))
+            return ent.Comp.Combat;
+
+        return ent.Comp.Normal;
+    }
+
+    protected int PickRandomLine(Entity<HailerComponent> ent, EntityUid user)
+    {
+        var lines = GetLines(ent, user);
+        if (lines.Count < 1)
+            return 0;
+
+        var index = 0;
+        do {
+            index = _random.Next(lines.Count);
+        } while (lines[index].Message == ent.Comp.LastPlayed);
+
+        return index;
     }
 
     private void OnEmagged(Entity<HailerComponent> ent, ref GotEmaggedEvent args)
@@ -55,9 +94,9 @@ public abstract class SharedHailerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Say the actual random message ingame, only done serverside.
+    /// Say the actual message ingame, only done serverside.
     /// </summary>
-    protected virtual void Say(Entity<HailerComponent> ent, List<HailerLine> lines)
+    protected virtual void Say(Entity<HailerComponent> ent, string message)
     {
     }
 }
