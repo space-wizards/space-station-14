@@ -10,6 +10,8 @@ namespace Content.Server.Chat.Commands
     [AnyCommand]
     internal sealed class SuicideCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _e = default!;
+
         public string Command => "suicide";
 
         public string Description => Loc.GetString("suicide-command-description");
@@ -27,8 +29,8 @@ namespace Content.Server.Chat.Commands
             if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
                 return;
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var minds = entityManager.System<SharedMindSystem>();
+            var minds = _e.System<SharedMindSystem>();
+
             // This check also proves mind not-null for at the end when the mob is ghosted.
             if (!minds.TryGetMind(player, out var mindId, out var mind) ||
                 mind.OwnedEntity is not { Valid: true } victim)
@@ -37,17 +39,19 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (entityManager.HasComponent<AdminFrozenComponent>(victim))
+
+            var gameTicker = _e.System<GameTicker>();
+            var suicideSystem = _e.System<SuicideSystem>();
+
+            if (_e.HasComponent<AdminFrozenComponent>(victim))
             {
                 var deniedMessage = Loc.GetString("suicide-command-denied");
                 shell.WriteLine(deniedMessage);
-                entityManager.System<PopupSystem>()
+                _e.System<PopupSystem>()
                     .PopupEntity(deniedMessage, victim, victim);
                 return;
             }
 
-            var gameTicker = entityManager.System<GameTicker>();
-            var suicideSystem = entityManager.System<SuicideSystem>();
             if (suicideSystem.Suicide(victim))
             {
                 // Prevent the player from returning to the body.

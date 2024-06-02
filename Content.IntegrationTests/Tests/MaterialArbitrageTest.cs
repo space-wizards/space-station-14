@@ -103,7 +103,7 @@ public sealed class MaterialArbitrageTest
                         continue;
 
                     var stackProto = protoManager.Index<StackPrototype>(materialStep.MaterialPrototypeId);
-                    var spawnProto = protoManager.Index<EntityPrototype>(stackProto.Spawn);
+                    var spawnProto = protoManager.Index(stackProto.Spawn);
 
                     if (!spawnProto.Components.ContainsKey(materialName) ||
                         !spawnProto.Components.TryGetValue(compositionName, out var compositionReg))
