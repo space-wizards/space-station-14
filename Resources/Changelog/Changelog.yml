@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix store refunds.
-    type: Fix
-  id: 6165
-  time: '2024-03-16T14:06:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26173
 - author: LordCarve
   changes:
   - message: Decayed anomalies no longer show as having gone supercritical in logs.
@@ -3853,3 +3846,10 @@
   id: 6664
   time: '2024-06-02T04:17:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27369
+- author: AJCM-git
+  changes:
+  - message: Midround antags work again
+    type: Fix
+  id: 6665
+  time: '2024-06-02T16:52:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28523
