@@ -113,6 +113,10 @@ namespace Content.Client.Stylesheets
         public static readonly Color PointGreen = Color.FromHex("#38b026");
         public static readonly Color PointMagenta = Color.FromHex("#FF00FF");
 
+        //OptionButton
+        public static readonly Color OptionButtonBorder = Color.FromHex("#35384C");
+        public static readonly Color OptionButtonBackground = Color.FromHex("#24242B");
+
         // Context menu button colors
         public static readonly Color ButtonColorContext = Color.FromHex("#1119");
         public static readonly Color ButtonColorContextHover = Color.DarkSlateGray;
@@ -1339,6 +1343,11 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(Label), new[] { OptionButton.StyleClassOptionButton }, null, null), new[]
                 {
                     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] { OptionButton.StyleClassBackPanel }, null, null), new[]
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BorderColor = OptionButtonBorder, BackgroundColor = OptionButtonBackground, BorderThickness = new Thickness(2, 2, 2, 2) }),
                 }),
 
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new []{ ClassHighDivider}, null, null), new []
