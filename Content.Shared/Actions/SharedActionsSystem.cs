@@ -408,7 +408,6 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         // All checks passed. Perform the action!
-        performEvent.Performer = user;
         PerformAction(user, component, actionEnt, action, performEvent, curTime);
     }
 
@@ -569,6 +568,8 @@ public abstract class SharedActionsSystem : EntitySystem
 
         if (actionEvent != null)
         {
+            actionEvent.Performer = performer;
+
             // This here is required because of client-side prediction (RaisePredictiveEvent results in event re-use).
             actionEvent.Handled = false;
             var target = performer;

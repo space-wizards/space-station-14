@@ -373,8 +373,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             return;
 
         _actions.SetIcon((actionId.Value, baseAction), new SpriteSpecifier.EntityPrototype(polyProto.Configuration.Entity));
-        if (TryComp<InstantActionComponent>(actionId, out var instant))
-            instant.Event = new PolymorphActionEvent(id);
+        _actions.SetEvent(actionId.Value, new PolymorphActionEvent(id));
     }
 
     public void RemovePolymorphAction(ProtoId<PolymorphPrototype> id, Entity<PolymorphableComponent> target)
