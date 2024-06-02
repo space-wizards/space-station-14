@@ -60,23 +60,6 @@
     id: SyndiPDA
     ears: ClothingHeadsetAltSyndicate
 
-# Syndicate Footsoldier Gear
-- type: startingGear
-  id: SyndicateFootsoldierGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    head: ClothingHeadHelmetSwatSyndicate
-    mask: ClothingMaskGas
-    outerClothing: ClothingOuterArmorBasic
-    ears: ClothingHeadsetAltSyndicate
-    gloves: ClothingHandsGlovesCombat
-    back: ClothingBackpack
-    shoes: ClothingShoesBootsCombat
-    id: SyndiPDA
-  storage:
-    back:
-    - BoxSurvival
-
 # Syndicate Footsoldier Gear - No Headset
 - type: startingGear
   id: SyndicateFootsoldierGearRuin
@@ -92,6 +75,13 @@
   storage:
     back:
     - BoxSurvival
+
+# Syndicate Footsoldier Gear
+- type: startingGear
+  id: SyndicateFootsoldierGear
+  parent: SyndicateFootsoldierGearRuin
+  equipment:
+    ears: ClothingHeadsetAltSyndicate
 
 # Nanotrasen Paramilitary Unit Gear
 - type: startingGear
