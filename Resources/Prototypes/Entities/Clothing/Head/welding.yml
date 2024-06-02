@@ -51,19 +51,14 @@
   - type: Foldable
     folded: true
   - type: IngestionBlocker
-    enabled: false
   - type: Mask
     isToggled: true
   - type: Blindfold
-    enabled: false
   - type: FlashImmunity
     enabled: false
   - type: IdentityBlocker
-    enabled: false
     coverage: NONE
   - type: EyeProtection
-    enabled: false
-    protectionTime: 0
   - type: PhysicalComposition
     materialComposition:
       Steel: 200

@@ -1,6 +1,7 @@
 using Content.Shared.Clothing.Components;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Flash.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Inventory.Events;
 
@@ -32,17 +33,23 @@ namespace Content.Shared.Clothing.EntitySystems
         {
             Dirty(ent.Owner, ent.Comp);
             if (TryComp<BlindfoldComponent>(ent.Owner, out var blindcomp) &&
-                TryComp<MaskComponent>(ent.Owner, out var maskcomp))
+                TryComp<MaskComponent>(ent.Owner, out var maskcomp) &&
+                TryComp<EyeProtectionComponent>(ent.Owner, out var eyecomp) &&
+                TryComp<FlashImmunityComponent>(ent.Owner, out var flashcomp))
             {
                 if (args.IsFolded)
                 {
                     _blindfoldSystem.SetOverride(ent.Owner, blindcomp, true, ent.Comp.Equipee);
                     _maskSystem.SetOverride(ent.Owner, maskcomp, true);
+                    eyecomp.ProtectionTime = TimeSpan.FromSeconds(0);
+                    flashcomp.Enabled = false;
                 }
                 else
                 {
                     _blindfoldSystem.SetOverride(ent.Owner, blindcomp, false, ent.Comp.Equipee);
                     _maskSystem.SetOverride(ent.Owner, maskcomp, false);
+                    eyecomp.ProtectionTime = TimeSpan.FromSeconds(10);
+                    flashcomp.Enabled = true;
                 }
             }
         }
