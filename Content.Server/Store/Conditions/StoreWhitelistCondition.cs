@@ -29,8 +29,8 @@ public sealed partial class StoreWhitelistCondition : ListingCondition
 
         var ent = args.EntityManager;
 
-        if (_whitelistSystem.IsWhitelistFail(args.StoreEntity.Value, ent) ||
-            _whitelistSystem.IsBlacklistPass(args.StoreEntity.Value, ent)
+        if (_whitelistSystem.IsWhitelistFail(Whitelist, args.StoreEntity.Value) ||
+            _whitelistSystem.IsBlacklistPass(Blacklist, args.StoreEntity.Value))
             return false;
 
         return true;
