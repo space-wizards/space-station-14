@@ -1345,11 +1345,6 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] { OptionButton.StyleClassBackPanel }, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BorderColor = OptionButtonBorder, BackgroundColor = OptionButtonBackground, BorderThickness = new Thickness(2, 2, 2, 2) }),
-                }),
-
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new []{ ClassHighDivider}, null, null), new []
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = NanoGold, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2}),
@@ -1608,6 +1603,14 @@ namespace Content.Client.Stylesheets
                     {
                         BackgroundColor = FancyTreeSelectedRowColor,
                     }),
+
+                Element<PanelContainer>().Class(OptionButton.StyleClassBackPanel)
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
+                    {
+                        BorderColor = OptionButtonBorder,
+                        BackgroundColor = OptionButtonBackground,
+                        BorderThickness = new Thickness(2, 2, 2, 2)
+                    })
             }).ToList());
         }
     }
