@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: Ko4erga
-  changes:
-  - message: Added craftable high and small wooden fences, bench. New stairs.
-    type: Add
-  id: 6172
-  time: '2024-03-17T21:18:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26182
-- author: potato1234_x
-  changes:
-  - message: Changed the puddle sprites so the smoothing is less jagged
-    type: Tweak
-  id: 6173
-  time: '2024-03-17T23:15:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26171
-- author: FungiFellow
-  changes:
-  - message: Changed Monkey Reinf Price to 6TC
-    type: Tweak
-  id: 6174
-  time: '2024-03-18T01:25:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26214
-- author: Golinth
-  changes:
-  - message: Criminal record icons now show up below job icons
-    type: Tweak
-  id: 6175
-  time: '2024-03-18T01:37:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26203
 - author: PJB3005
   changes:
   - message: Fixed pressure damage calculations to what they were always supposed
@@ -3844,3 +3816,34 @@
   id: 6671
   time: '2024-06-03T03:33:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28545
+- author: Vermidia
+  changes:
+  - message: SyndiCats now spawn from a radio like other reinforcements.
+    type: Tweak
+  id: 6672
+  time: '2024-06-03T11:54:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28492
+- author: Cojoke-dot
+  changes:
+  - message: Medibots will now occasionally talk
+    type: Tweak
+  id: 6673
+  time: '2024-06-03T12:05:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28543
+- author: Cojoke-dot
+  changes:
+  - message: The player can now use the gasping emote
+    type: Tweak
+  id: 6674
+  time: '2024-06-03T12:10:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28466
+- author: Cojoke-dot
+  changes:
+  - message: Bullets no longer hit crates unless directly clicked on while shooting.
+    type: Tweak
+  - message: Bullets now pass over mobs that are lying down unless directly clicked
+      on while shooting.
+    type: Tweak
+  id: 6675
+  time: '2024-06-03T13:04:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28072
