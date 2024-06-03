@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Golinth
-  changes:
-  - message: Criminal record icons now show up below job icons
-    type: Tweak
-  id: 6175
-  time: '2024-03-18T01:37:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26203
 - author: PJB3005
   changes:
   - message: Fixed pressure damage calculations to what they were always supposed
@@ -3851,3 +3844,13 @@
   id: 6674
   time: '2024-06-03T12:10:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28466
+- author: Cojoke-dot
+  changes:
+  - message: Bullets no longer hit crates unless directly clicked on while shooting.
+    type: Tweak
+  - message: Bullets now pass over mobs that are lying down unless directly clicked
+      on while shooting.
+    type: Tweak
+  id: 6675
+  time: '2024-06-03T13:04:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28072
