@@ -20,6 +20,15 @@ cmd-playtime_addrole-arg-role = <role>
 cmd-playtime_addrole-arg-minutes = <minutes>
 cmd-playtime_addrole-error-args = Expected exactly three arguments
 
+# - playtime_addrole
+cmd-playtime_adddepartment-desc = Adds the specified minutes to a player's roles in department playtimes
+cmd-playtime_adddepartment-help = Usage: {$command} <user name> <department> <minutes>
+cmd-playtime_adddepartment-succeed = Increased role in department '{$department}' playtime for {$username} / '{$role}' to {TOSTRING($time, "dddd\\:hh\\:mm")}
+cmd-playtime_adddepartment-arg-user = <user name>
+cmd-playtime_adddepartment-arg-role = <department>
+cmd-playtime_adddepartment-arg-minutes = <minutes>
+cmd-playtime_adddepartment-error-args = Expected exactly three arguments
+
 # - playtime_getoverall
 cmd-playtime_getoverall-desc = Gets the specified minutes for a player's overall playtime
 cmd-playtime_getoverall-help = Usage: {$command} <user name>
