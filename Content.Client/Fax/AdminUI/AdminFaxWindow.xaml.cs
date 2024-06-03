@@ -4,7 +4,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Fax.AdminUI;
@@ -62,7 +61,7 @@ public sealed partial class AdminFaxWindow : DefaultWindow
                 if (!stateName.StartsWith("paper_stamp-"))
                     continue;
 
-                StampSelector.AddItem(stateName, i);
+                StampSelector.AddItem(Loc.GetString(stateName), i);
                 StampSelector.SetItemMetadata(i, stateName);
                 i++;
             }

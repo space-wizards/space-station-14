@@ -1,8 +1,6 @@
 - type: entity
-  name: generic rubber stamp
   parent: BaseItem
   id: RubberStampBase
-  description: A rubber stamp for stamping important documents.
   abstract: true
   components:
   - type: Stamp
@@ -23,7 +21,6 @@
     stealGroup: Stamp
 
 - type: entity
-  name: alternate rubber stamp
   parent: RubberStampBase
   id: RubberStampBaseAlt
   abstract: true
@@ -38,10 +35,8 @@
         maxDistance: 5
 
 - type: entity
-  name: captain's rubber stamp
   parent: RubberStampBase
   id: RubberStampCaptain
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-captain
@@ -51,10 +46,8 @@
     state: stamp-cap
 
 - type: entity
-  name: CentCom rubber stamp
   parent: RubberStampBase
   id: RubberStampCentcom
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-centcom
@@ -64,10 +57,8 @@
     state: stamp-centcom
 
 - type: entity
-  name: chaplain's rubber stamp
   parent: RubberStampBase
   id: RubberStampChaplain
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-chaplain
@@ -77,10 +68,8 @@
     state: stamp-chaplain
 
 - type: entity
-  name: lawyer's rubber stamp
   parent: RubberStampBase
   id: RubberStampLawyer
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-lawyer
@@ -90,10 +79,8 @@
     state: stamp-lawyer
 
 - type: entity
-  name: clown's rubber stamp
   parent: RubberStampBase
   id: RubberStampClown
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-clown
@@ -106,10 +93,8 @@
       - ClownRubberStamp
 
 - type: entity
-  name: chief engineer's rubber stamp
   parent: RubberStampBase
   id: RubberStampCE
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-ce
@@ -119,10 +104,8 @@
     state: stamp-ce
 
 - type: entity
-  name: chief medical officer's rubber stamp
   parent: RubberStampBase
   id: RubberStampCMO
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-cmo
@@ -132,10 +115,8 @@
     state: stamp-cmo
 
 - type: entity
-  name: head of personnel's rubber stamp
   parent: RubberStampBase
   id: RubberStampHop
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-hop
@@ -145,10 +126,8 @@
     state: stamp-hop
 
 - type: entity
-  name: head of security's rubber stamp
   parent: RubberStampBase
   id: RubberStampHos
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-hos
@@ -158,10 +137,8 @@
     state: stamp-hos
 
 - type: entity
-  name: mime's rubber stamp
   parent: RubberStampBase
   id: RubberStampMime
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-mime
@@ -172,10 +149,8 @@
     state: stamp-mime
 
 - type: entity
-  name: quartermaster's rubber stamp
   parent: RubberStampBase
   id: RubberStampQm
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-qm
@@ -185,10 +160,8 @@
     state: stamp-qm
 
 - type: entity
-  name: research director's rubber stamp
   parent: RubberStampBase
   id: RubberStampRd
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-rd
@@ -198,7 +171,6 @@
     state: stamp-rd
 
 - type: entity
-  name: trader's rubber stamp
   parent: RubberStampBase
   id: RubberStampTrader
   components:
@@ -210,10 +182,8 @@
     state: stamp-trader
 
 - type: entity
-  name: syndicate rubber stamp
   parent: RubberStampBase
   id: RubberStampSyndicate
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-syndicate
@@ -223,10 +193,8 @@
     state: stamp-syndicate
 
 - type: entity
-  name: warden's rubber stamp
   parent: RubberStampBase
   id: RubberStampWarden
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-warden
@@ -236,7 +204,6 @@
     state: stamp-warden
 
 - type: entity
-  name: APPROVED rubber stamp
   parent: RubberStampBaseAlt
   id: RubberStampApproved
   components:
@@ -248,7 +215,6 @@
     state: stamp-ok
 
 - type: entity
-  name: DENIED rubber stamp
   parent: RubberStampBaseAlt
   id: RubberStampDenied
   components:
@@ -260,10 +226,8 @@
     state: stamp-deny
 
 - type: entity
-  name: detective's rubber stamp
   parent: RubberStampBase
   id: RubberStampDetective
-  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-detective
