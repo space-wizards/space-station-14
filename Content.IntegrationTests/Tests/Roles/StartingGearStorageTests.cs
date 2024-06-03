@@ -31,32 +31,39 @@ public sealed class StartingGearPrototypeStorageTest
         var testMap = await pair.CreateTestMap();
         var coords = testMap.GridCoords;
 
-        foreach (var gearProto in protos)
+        await server.WaitAssertion(() =>
         {
-            var backpackProto = gearProto.GetGear("back");
-            if (backpackProto == string.Empty)
-                continue;
-
-            var bag = server.EntMan.SpawnEntity(backpackProto, coords);
-            var ents = new ValueList<EntityUid>();
-
-            foreach (var (slot, entProtos) in gearProto.Storage)
+            foreach (var gearProto in protos)
             {
-                if (entProtos.Count == 0)
+                var backpackProto = gearProto.GetGear("back");
+                if (backpackProto == string.Empty)
                     continue;
 
-                foreach (var ent in entProtos)
+                var bag = server.EntMan.SpawnEntity(backpackProto, coords);
+                var ents = new ValueList<EntityUid>();
+
+                foreach (var (slot, entProtos) in gearProto.Storage)
                 {
-                    ents.Add(server.EntMan.SpawnEntity(ent, coords));
+                    if (entProtos.Count == 0)
+                        continue;
+
+                    foreach (var ent in entProtos)
+                    {
+                        ents.Add(server.EntMan.SpawnEntity(ent, coords));
+                    }
+
+                    foreach (var ent in ents)
+                    {
+                        if (!storageSystem.CanInsert(bag, ent, out _))
+                            Assert.Fail($"StartingGearPrototype {gearProto.ID} could not successfully put items into storage {bag.Id}");
+
+                        server.EntMan.DeleteEntity(ent);
+                    }
                 }
 
-                foreach (var ent in ents)
-                {
-                    if (!storageSystem.CanInsert(bag, ent, out _))
-                        Assert.Fail($"StartingGearPrototype {gearProto.ID} could not successfully put items into storage {bag.Id}");
-                }
+                server.EntMan.DeleteEntity(bag);
             }
-        }
+        });
 
         await pair.CleanReturnAsync();
     }
