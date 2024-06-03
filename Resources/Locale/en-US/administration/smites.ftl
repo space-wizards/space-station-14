@@ -49,7 +49,6 @@ admin-smite-run-walk-swap-name = Headstand
 admin-smite-super-speed-name = Zoom in
 admin-smite-stomach-removal-name = Flip eye
 admin-smite-speak-backwards-name = Run Walk Swap
-admin-smite-ohio-accent-name = RIZZZZZZZZZZZZZZZZZZZZ
 admin-smite-lung-removal-name = Speak Backwards
 admin-smite-disarm-prone-name = Disarm Prone
 admin-smite-garbage-can-name = Super speed
@@ -61,7 +60,6 @@ admin-smite-super-slip-name = Super Slip
 ## Smite descriptions
 
 admin-smite-explode-description = Explode them.
-admin-smite-permstun-description = how to charg batong.
 admin-smite-chess-dimension-description = Banishment to the Chess Dimension.
 admin-smite-set-alight-description = Makes them burn.
 admin-smite-monkeyify-description = Turns the target into a monkey.
@@ -84,12 +82,8 @@ admin-smite-buffering-description = Causes the target to randomly start bufferin
 admin-smite-become-instrument-description = It turns them into a supersynth. Really. That's all it does.
 admin-smite-remove-gravity-description = Grants them anti-gravity.
 admin-smite-reptilian-species-swap-description = It changes their species to Reptilian. Useful for people who were being space racist.
-admin-smite-vulpkanin-species-swap-description = It changes their species to Vulpkanin. Useful for people who were being space racist.
-admin-smite-gondola-description = Polymorphs the player into a gondola. Useful for stopping raiders.
 admin-smite-locker-stuff-description = Stuffs them in a (welded) locker.
 admin-smite-headstand-description = Vertically flips their sprite.
-admin-smite-itemify-description = Turns the entity into an item you can pickup.
-admin-smite-plasma-internals-description = Replaces the contents of their internals with plasma.
 admin-smite-become-mouse-description = They become a mouse. Squeak!
 admin-smite-maid-description = Forcibly converts them into a janitorial cat maid. This is actual torture for some players, use it wisely.
 admin-smite-zoom-in-description = Zooms in their view so that they can no longer see their surroundings.
@@ -105,7 +99,6 @@ admin-smite-super-bonk-description = Slams them on every single table on the Sta
 admin-smite-super-bonk-lite-description= Slams them on every single table on the Station and beyond. Stops when the target is dead.
 admin-smite-terminate-description = Creates a Terminator ghost role with the sole objective of killing them.
 admin-smite-super-slip-description = Slips them really, really hard.
-admin-smite-ohio-accent-description = RIZZZZZZZZZZZZZZZZZZZZZZ
 
 ## Tricks descriptions
 

@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: GondolaSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: gondola steak
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 345
+
+  - node: gondola steak
+    entity: FoodMeatGondolaCooked

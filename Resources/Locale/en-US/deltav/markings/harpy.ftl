@@ -31,7 +31,7 @@ marking-HarpyWingTipsClassic-harpywingtip2 = Feathertips
 marking-HarpyEarsDefault = Feather Tufts
 marking-HarpyEarsDefault-harpy_ears_default = Tufts
 
-marking-HarpyTailPhoenix = Basic Tail
+marking-HarpyTailPhoenix = Basic Harpy Tail
 marking-HarpyTailPhoenix-phoenix_tail = Tail
 
 marking-HarpyTailRooster = Rooster Tail

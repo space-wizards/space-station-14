@@ -1,0 +1,68 @@
+- type: entity
+  name: Skibidi Toilet
+  id: MobSkibidiToilet
+  parent: SimpleMobBase
+  description: Skibidi dop dop mmm yes yes
+  components:
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: HTN
+      rootTask:
+        task: SimpleRangedHostileCompound
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Goobstation/Mobs/Demons/skibidi.rsi
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: alive
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.30
+          density: 80
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: alive
+        Dead:
+          Base: dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        100: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 5
+    - type: Tag
+      tags:
+        - FootstepSound
+    - type: HitscanBatteryAmmoProvider
+      proto: RedLightLaser
+      fireCost: 50
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 50
+    - type: Battery
+      maxCharge: 1000
+      startingCharge: 1000
+    - type: Gun
+      fireRate: 1
+      useKey: false
+      selectedMode: SemiAuto
+      availableModes:
+        - SemiAuto
+      soundGunshot: /Audio/Goobstation/Animals/skibidi.wav
+    - type: CombatMode
+    - type: InteractionPopup
+      successChance: 0.3
+      interactSuccessString: petting-success-reptile
+      interactFailureString: petting-failure-generic
+      interactSuccessSound:
+        path: /Audio/Goobstation/Animals/skibidi.wav

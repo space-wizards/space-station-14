@@ -448,7 +448,7 @@
   - type: StationEvent
     earliestStart: 35
     weight: 5.5
-    minimumPlayers: 10
+    minimumPlayers: 20
     duration: 1
   - type: LoadMapRule
     preloadedGrid: ShuttleStriker
@@ -573,7 +573,7 @@
   components:
     - type: StationEvent
       earliestStart: 0
-      minimumPlayers: 10
+      minimumPlayers: 20
       maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
       weight: 5
     - type: MobReplacementRule

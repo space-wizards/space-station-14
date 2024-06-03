@@ -1,4 +1,0 @@
-- type: soundCollection
-  id: DisarmAnnouncer
-  files:
-    - /Audio/StationEvents/bomb_defused_tf2.ogg

@@ -6,7 +6,7 @@ If you want to host or create content for SS14, go to the [Space Station 14 repo
 
 ## Links
 
-[Goob Station Discord Server](https://discord.gg/gEq2bDxU35) | [Goob Station Forum](https://x329436.invisionservice.com/)
+[Goob Station Discord Server](https://discord.gg/gEq2bDxU35) | [Goob Station Forum](https://forums.goobstation.com/)
 
 ## Documentation/Wiki
 
@@ -14,7 +14,7 @@ The Space Station 14's [docs site](https://docs.spacestation14.io/) has document
 
 ## Contributing
 
-We are happy to accept contributions from anybody. Get in Discord if you want to help. Feel free to check the [list of issues](https://github.com/Goob-Station/Goob-Station/issues) that need to be done and anybody can pick them up. Don't be afraid to ask for help either!  
+We are happy to accept contributions from anybody. Get in Discord if you want to help. Feel free to check the [list of issues](https://github.com/Goob-Station/Goob-Station/issues) that need to be done and anybody can pick them up. Don't be afraid to ask for help either!
 While Goob doesn't use the [contribution guidelines,](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html) you can feel free to if you want to check your stuff.
 
 We are not currently accepting translations of the game on our main repository. If you would like to translate the game into another language consider creating a fork or contributing to a fork.

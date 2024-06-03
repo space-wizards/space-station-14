@@ -2,8 +2,8 @@
   id: Core
   mapName: 'Core'
   mapPath: /Maps/core.yml
-  minPlayers: 0
-  maxPlayers: 100
+  minPlayers: 30
+  maxPlayers: 60
   stations:
     Core:
       stationProto: StandardNanotrasenStation
@@ -27,8 +27,8 @@
             Chef: [ 1, 1 ]
             Janitor: [ 2, 2 ]
             Captain: [ 1, 1 ]
-            BlueshieldOfficer: [ 1, 1 ]
             NanotrasenRepresentative: [ 1, 1 ]
+            BlueshieldOfficer: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]

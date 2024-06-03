@@ -40,21 +40,6 @@
       entity: Soap
 
 - type: reaction
-  id: CreateBananaSoap
-  impact: Low
-  quantized: true
-  reactants:
-    Fat:
-      amount: 15
-    TableSalt:
-      amount: 10
-    JuiceBanana:
-      amount: 20
-  effects:
-    - !type:CreateEntityReactionEffect
-      entity: SoapHomemadeBanana
-
-- type: reaction
   id: CreateSoapHomemade
   impact: Low
   quantized: true
@@ -187,21 +172,6 @@
     Laughter: 2
 
 - type: reaction
-  id: CreateEnrichedUranium
-  impact: Low
-  quantized: true
-  reactants:
-    Uranium-235:
-      amount: 55
-    Fluorine:
-      amount: 35
-    Uranium-234:
-      amount: 10
-  effects:
-    - !type:CreateEntityReactionEffect
-      entity: EnrichedUranium
-
-- type: reaction
   id: CreateCrystals
   quantized: true
   minTemp: 374
@@ -231,13 +201,3 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
-
-- type: reaction
-  id: Lingium # Failing checks in the hot sun, i fought the code and the code won
-  reactants:
-    UnstableMutagen:
-      amount: 3
-    Plasma: # Consumed in reaction: steady supply of plasma required for a jug of it
-      amount: 2
-  products:
-    Lingium: 3

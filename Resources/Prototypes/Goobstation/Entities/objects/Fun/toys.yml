@@ -1,0 +1,119 @@
+- type: entity
+  parent: BasePlushie
+  id: PlushieBlackburna
+  name: Blackburn Plushie
+  description: A stuffed toy that resembles a typical non-altered blackburna.
+  components:
+    - type: Sprite
+      sprite: Goobstation/Objects/Fun/toys.rsi
+      state: plushie_Bkv1
+    - type: EmitSoundOnUse
+      sound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: EmitSoundOnActivate
+      sound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: Food
+      requiresSpecialDigestion: true
+      useSound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: MeleeWeapon
+      wideAnimationRotation: 180
+      soundHit:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushiePlyushkina
+  name: Plyushkina Plushie
+  description: A stuffed toy that resembles a sub-species of blackburn created for trench clearing and cannon fodder.
+  components:
+    - type: Sprite
+      sprite: Goobstation/Objects/Fun/toys.rsi
+      state: plushie_Bkv2
+    - type: EmitSoundOnUse
+      sound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: EmitSoundOnActivate
+      sound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: Food
+      requiresSpecialDigestion: true
+      useSound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: MeleeWeapon
+      wideAnimationRotation: 180
+      soundHit:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieMatryoshka
+  name: Matryoshka Plushie
+  description: ...
+  components:
+    - type: Sprite
+      sprite: Goobstation/Objects/Fun/toys.rsi
+      state: plushie_Bkv3
+    - type: EmitSoundOnUse
+      sound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: EmitSoundOnActivate
+      sound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: Food
+      requiresSpecialDigestion: true
+      useSound:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+    - type: MeleeWeapon
+      wideAnimationRotation: 180
+      soundHit:
+        path: /Audio/Goobstation/Items/Toys/fox.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieLouie
+  name: louie plushie
+  description: A cute stuffed toy that resembles a rat. You feel a strange compulsion to say hi to the rat.
+  components:
+  - type: Sprite
+    sprite: Goobstation/Objects/Fun/toys.rsi
+    state: plushie_louie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/mousesqueek.ogg

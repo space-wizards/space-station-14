@@ -11,7 +11,6 @@
     baseDecayRate: 0.0083
   - type: Thirst
     baseDecayRate: 0.0083
-  - type: Carriable
   - type: Icon
     sprite: Mobs/Species/Diona/parts.rsi
     state: full

@@ -24,7 +24,6 @@
   - ClothingNeckPansexualPin
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
-  - EmergencyNitrogenTank
 
 - type: loadoutGroup
   id: Glasses
@@ -673,20 +672,12 @@
   - SeniorEngineerPDA
 
 - type: loadoutGroup
-  id: AtmosphericTechnicianHead
-  name: loadout-group-atmospheric-technician-head
-  loadouts:
-  - SeniorEngineerBeret
-
-- type: loadoutGroup
   id: AtmosphericTechnicianJumpsuit
   name: loadout-group-atmospheric-technician-jumpsuit
   loadouts:
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianJumpskirt
   - AtmosphericTechnicianJumpsuitCasual
-  - SeniorEngineerJumpsuit
-  - SeniorEngineerJumpskirt
 
 - type: loadoutGroup
   id: AtmosphericTechnicianOuterClothing

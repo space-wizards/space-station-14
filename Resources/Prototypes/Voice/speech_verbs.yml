@@ -1,4 +1,4 @@
-- type: speechVerb
+﻿- type: speechVerb
   id: Default
   name: chat-speech-verb-name-default
   speechVerbStrings:
@@ -134,7 +134,6 @@
 - type: speechVerb
   id: Parrot
   name: chat-speech-verb-name-parrot
-
   speechVerbStrings:
   - chat-speech-verb-parrot-1
   - chat-speech-verb-parrot-2
@@ -165,10 +164,3 @@
   - chat-speech-verb-electricity-1
   - chat-speech-verb-electricity-2
   - chat-speech-verb-electricity-3
-
-- type: speechVerb
-  id: Gondola
-  name: chat-speech-verb-name-gondola
-  speechVerbStrings:
-  - chat-speech-verb-gondola-1
-  - chat-speech-verb-gondola-2

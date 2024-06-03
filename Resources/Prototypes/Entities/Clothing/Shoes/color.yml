@@ -91,18 +91,6 @@
         color: "#0089EF"
       - state: soles-equipped-FEET
 
-# Pink Shoes
-- type: entity
-  parent: ClothingShoesBaseButcherable
-  id: ClothingShoesColorPink
-  name: pink shoes
-  description: Stylish pink shoes.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/Color/pink.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/Color/pink.rsi
-
 # Brown Shoes
 - type: entity
   parent: ClothingShoesBaseButcherable

@@ -18,14 +18,14 @@
     sound:
       collection: BikeHorn
       params:
-        variation: 0.200
+        variation: 0.125
   - type: UseDelay
-    delay: 0.25
+    delay: 0.5
   - type: EmitSoundOnTrigger
     sound:
       collection: BikeHorn
       params:
-        variation: 0.200
+        variation: 0.125
   - type: Tag
     tags:
     - Payload # yes, you can make re-usable prank grenades
@@ -35,7 +35,7 @@
     soundHit:
       collection: BikeHorn
       params:
-        variation: 0.200
+        variation: 0.125
     damage:
       types:
         Blunt: 0
@@ -141,32 +141,3 @@
   - type: Construction
     graph: BananiumHorn
     node: bananiumHorn
-
-- type: entity
-  parent: BikeHorn
-  id: SyndieWarhorn
-  name: warhorn
-  description: Declare war in style.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/warhorn.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Fun/warhorn.rsi
-    size: Small
-  - type: Clothing
-    sprite: Objects/Fun/warhorn.rsi
-    slots: [Belt]
-    quickEquip: false
-  - type: UseDelay
-    delay: 15
-  - type: EmitSoundOnUse
-    sound:
-      collection: WarHorn
-      params:
-        variation: 0
-  - type: EmitSoundOnTrigger
-    sound:
-      collection: WarHorn
-      params:
-        variation: 0

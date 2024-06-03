@@ -98,7 +98,6 @@ public sealed class AGhost : LocalizedCommands
             ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
             : gameTicker.GetObserverSpawnPoint();
         var ghost = _entities.SpawnEntity(GameTicker.AdminObserverPrototypeName, coordinates);
-
         transformSystem.AttachToGridOrMap(ghost, _entities.GetComponent<TransformComponent>(ghost));
 
         if (canReturn)

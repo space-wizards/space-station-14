@@ -166,6 +166,3 @@
       proto: PelletShotgunUranium
     - type: SpentAmmoVisuals
       state: "depleted-uranium"
-    - type: Tag
-      tags:
-      - ShellShotgunUranium

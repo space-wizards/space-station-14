@@ -1,0 +1,6 @@
+- type: speechVerb
+  id: Gondola
+  name: chat-speech-verb-name-gondola
+  speechVerbStrings:
+  - chat-speech-verb-gondola-1
+  - chat-speech-verb-gondola-2

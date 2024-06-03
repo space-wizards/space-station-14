@@ -22,33 +22,6 @@
     - RampingStationEventScheduler
 
 - type: gamePreset
-  id: AllAtOnceNoZeds
-  alias:
-  - allatoncefuckzombies
-  name: all-at-once-nozeds-title
-  description: all-at-once-nozeds-description
-  showInVote: false
-  rules:
-    - Nukeops
-    - Traitor
-    - Revolutionary
-    - RampingStationEventScheduler
-
-#- type: gamePreset
-#  id: AllAtOnceWizard
-#  alias:
-#  - magicalallatonce
-#  name: all-at-once-wizard-title
-#  description: all-at-once-wizard-description
-#  showInVote: false
-#  rules:
-#    - Nukeops
-#    - Traitor
-#    - Revolutionary
-#    - Wizard
-#    - RampingStationEventScheduler
-
-- type: gamePreset
   id: Extended
   alias:
   - extended
@@ -106,7 +79,7 @@
     - sandbox
   name: sandbox-title
   description: sandbox-description
-  showInVote: true
+  showInVote: false # Not suitable for use without admin intervention, since entity spamming can quickly crash a server
   maxPlayers: 5
   rules:
     - Sandbox
@@ -149,19 +122,6 @@
     - SubGamemodesRule
     - BasicStationEventScheduler
     - BasicRoundstartVariation
-
-#- type: gamePreset
-#  id: Wizard
-#  alias:
-#    - wizard
-#  name: wizard-title
-#  description: wizard-description
-#  showInVote: false
-#  rules:
-#    - Wizard
-#    - SubGamemodesRule
-#    - BasicStationEventScheduler
-#    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Revolutionary

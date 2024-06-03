@@ -30,7 +30,6 @@
     delay: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.9
-  - type: AllowsSleepInside
 
 - type: entity
   parent: ClothingBackpack

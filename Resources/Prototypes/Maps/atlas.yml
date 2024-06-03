@@ -2,8 +2,8 @@
   id: Atlas
   mapName: Atlas
   mapPath: /Maps/atlas.yml
-  minPlayers: 99
-  maxPlayers: 99
+  minPlayers: 5
+  maxPlayers: 20
   stations:
     Atlas:
       stationProto: StandardNanotrasenStation

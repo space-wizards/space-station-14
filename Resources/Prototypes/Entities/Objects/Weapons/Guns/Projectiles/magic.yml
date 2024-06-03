@@ -31,81 +31,6 @@
     fireStacks: 0.35
 
 - type: entity
-  id: ProjectileFireballNuke
-  name: nuclear fireball
-  description: Guh oh.
-  parent: BulletRocket
-  noSpawn: true
-  components:
-  - type: PointLight
-    color: "#E25822"
-    radius: 4.0
-    energy: 10.0
-  - type: Projectile
-    damage:
-      types:
-        Heat: 1000
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
-    layers:
-    - state: fireball
-      shader: unshaded
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 50
-    intensitySlope: 6
-    totalIntensity: 20000
-    maxTileBreak: 50
-  - type: IgnitionSource
-    temperature: 400
-    ignited: true
-  - type: IgniteOnCollide
-    fireStacks: 1
-
-- type: entity
-  id: ProjectileMagicMissile
-  name: magic missile
-  description: Smells like magic.
-  parent: BaseBullet
-  noSpawn: true
-  components:
-  - type: PointLight
-    color: "#00008B"
-    radius: 2.0
-    energy: 5.0
-  - type: Projectile
-    damage:
-      types:
-        Brute: 10
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
-    layers:
-    - state: magicm_cyan
-      shader: unshaded
-  - type: StunOnCollide
-    stunAmount: 5
-    knockdownAmount: 3
-
-- type: entity
-  id: ProjectileIceBurst
-  name: ice burst
-  description: Brrrrr.
-  parent: BaseBullet
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Cold: 20
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
-    layers:
-    - state: ice
-      shader: unshaded
-  - type: StaminaDamageOnHit
-    damage: 25
-
-- type: entity
   noSpawn: true
   parent: BaseBulletTrigger
   id: ProjectileDragonsBreath
@@ -116,6 +41,11 @@
     color: "#E25822"
     radius: 3.0
     energy: 5.0
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: fireball
+      shader: unshaded
   - type: IgnitionSource
     temperature: 1000
     ignited: true
@@ -286,71 +216,3 @@
     whitelist:
       components:
       - Body
-
-- type:  entity
-  parent: BaseBullet
-  id: ProjectileMagicTesla
-  name: magic tesla ball
-  description: 2 bajillion volts
-  noSpawn: true
-  components:
-  - type: TimedDespawn
-    lifetime: 5
-  - type: Sprite
-    sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
-    layers:
-    - state: tesla_projectile
-      shader: unshaded
-  - type: StaminaDamageOnCollide
-    damage: 15
-  - type: EmbeddableProjectile
-  - type: Projectile
-    deleteOnCollide: true
-    soundHit:
-      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
-  - type: LightningArcShooter
-    arcDepth: 1
-    maxLightningArc: 3
-    shootMinInterval: 2.5
-    shootMaxInterval: 4.5
-    shootRange: 5
-    lightningPrototype: Lightning
-  - type: Electrified
-    requirePower: false
-
-- type: entity
-  id: ProjectileFingerGun
-  name: silent bullet
-  description: Pew pew!
-  parent: BaseBullet
-  components:
-    - type: FlyBySound
-    - type: Sprite
-      netsync: false
-      noRot: false
-    - type: Projectile
-      impactEffect: BulletImpactEffect
-      damage:
-        types:
-          Piercing: 20
-      soundHit:
-        path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
-    - type: StaminaDamageOnCollide
-      damage: 25
-    - type: TimedDespawn
-      lifetime: 10
-    - type: SolutionContainerManager
-      solutions:
-        ammo:
-          reagents:
-          - ReagentId: MuteToxin
-            Quantity: 20
-    - type: RefillableSolution
-      solution: ammo
-    - type: DrainableSolution
-      solution: ammo
-    - type: SolutionInjectOnProjectileHit
-      transferAmount: 20
-      solution: ammo
-    - type: InjectableSolution
-      solution: ammo

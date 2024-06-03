@@ -6,8 +6,7 @@
   suffix: Chameleon
   components:
     - type: Tag
-      tags:
-      - Skirt
+      tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpsuit/color.rsi
       layers:

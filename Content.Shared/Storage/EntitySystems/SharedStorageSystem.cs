@@ -32,7 +32,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using Content.Shared.Nyanotrasen.Item.PseudoItem;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -824,9 +823,6 @@ public abstract class SharedStorageSystem : EntitySystem
 
         foreach (var entity in entities.ToArray())
         {
-            if (HasComp<PseudoItemComponent>(entity)) // Nyanotrasen - They dont transfer properly
-                continue;
-
             Insert(target, entity, out _, user: user, targetComp, playSound: false);
         }
 

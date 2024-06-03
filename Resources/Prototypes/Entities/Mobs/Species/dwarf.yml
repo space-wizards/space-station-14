@@ -7,7 +7,6 @@
   components:
   - type: Hunger
   - type: Thirst
-  - type: Carriable
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi # It was like this beforehand, no idea why.
     state: full

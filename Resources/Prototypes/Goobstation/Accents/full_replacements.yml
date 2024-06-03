@@ -1,0 +1,7 @@
+﻿# Accents that work off of full replacements rather than word replacements.
+
+- type: accent
+  id: gondola
+  fullReplacements:
+  - accent-words-gondola-1
+

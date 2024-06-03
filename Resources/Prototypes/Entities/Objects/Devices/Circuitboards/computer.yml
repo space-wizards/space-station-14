@@ -268,15 +268,6 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
-  id: WizardCommsComputerCircuitboard
-  name: wizard communications computer board
-  description: A computer printed circuit board for a wizard communications console.
-  components:
-    - type: ComputerBoard
-      prototype: WizardComputerComms
-
-- type: entity
-  parent: BaseComputerCircuitboard
   id: SyndicateCommsComputerCircuitboard
   name: syndicate communications computer board
   description: A computer printed circuit board for a syndicate communications console.

@@ -81,7 +81,7 @@
     contents:
       - id: ClothingUniformJumpsuitColorBlue
       - id: ClothingUniformJumpskirtColorBlue
-      - id: ClothingShoesColorBlue
+      - id: ClothingShoesColorBrown
         amount: 2
 
 - type: entity
@@ -93,7 +93,7 @@
     contents:
       - id: ClothingUniformJumpsuitColorPink
       - id: ClothingUniformJumpskirtColorPink
-      - id: ClothingShoesColorPink
+      - id: ClothingShoesColorBrown
         amount: 2
 
 - type: entity

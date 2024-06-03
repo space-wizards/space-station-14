@@ -7,6 +7,7 @@
   id: BaseMobSkeletonPerson
   abstract: true
   components:
+  - type: Carriable # Goobstation
   - type: HumanoidAppearance
     species: Skeleton
   - type: Icon

@@ -14,15 +14,6 @@
       - id: ClothingHandsGlovesCaptain
       - id: ClothingNeckMantleCap
       - id: ClothingOuterWinterCap
-      - id: ClothingUnderSocksStripedCaptainBlueandGold
-        orGroup: StripedSocks
-        prob: 0.33
-      - id: ClothingUnderSocksStripedCaptainBlueandWhite
-        orGroup: StripedSocks
-        prob: 0.33
-      - id: ClothingUnderSocksStripedCaptainGoldandBlue
-        orGroup: StripedSocks
-        prob: 0.33
 
 - type: entity
   id: DresserChiefEngineerFilled
@@ -37,7 +28,6 @@
       - id: ClothingNeckCloakCe
       - id: ClothingHeadHatBeretEngineering
       - id: ClothingOuterWinterCE
-      - id: ClothingUnderSocksStripedWhiteandOrange
 
 - type: entity
   id: DresserChiefMedicalOfficerFilled
@@ -68,15 +58,6 @@
       - id: ClothingHeadHatHopcap
       - id: ClothingOuterWinterHoP
       - id: ClothingEyesGlasses
-      - id: ClothingUnderSocksStripedCaptainBlueandGold
-        orGroup: StripedSocks
-        prob: 0.33
-      - id: ClothingUnderSocksStripedCaptainBlueandWhite
-        orGroup: StripedSocks
-        prob: 0.33
-      - id: ClothingUnderSocksStripedCaptainGoldandBlue
-        orGroup: StripedSocks
-        prob: 0.33
 
 - type: entity
   id: DresserHeadOfSecurityFilled
@@ -93,13 +74,7 @@
       - id: ClothingUniformJumpsuitHoSAlt
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal
-      - id: ClothingUnderSocksStripedSecurityJackboots
-        orGroup: StripedSocks
-        prob: 0.50
-      - id: ClothingUnderSocksStripedSecurity
-        orGroup: StripedSocks
-        prob: 0.50
-
+      - id: ClothingOuterWinterHoS
 
 - type: entity
   id: DresserQuarterMasterFilled
@@ -116,7 +91,6 @@
       - id: ClothingHandsGlovesColorBrown
       - id: ClothingNeckMantleQM
       - id: ClothingOuterWinterQM
-      - id: ClothingUnderSocksStripedCargo
 
 - type: entity
   id: DresserResearchDirectorFilled
@@ -131,7 +105,6 @@
       - id: ClothingHandsGlovesColorPurple
       - id: ClothingEyesGlasses
       - id: ClothingOuterWinterRD
-      - id: ClothingUnderSocksStripedScience
 
 - type: entity
   id: DresserWardenFilled
@@ -142,9 +115,3 @@
     contents:
       - id: ClothingHeadHatWarden
       - id: ClothingHeadHatBeretWarden
-      - id: ClothingUnderSocksStripedSecurityJackboots
-        orGroup: StripedSocks
-        prob: 0.50
-      - id: ClothingUnderSocksStripedSecurity
-        orGroup: StripedSocks
-        prob: 0.50

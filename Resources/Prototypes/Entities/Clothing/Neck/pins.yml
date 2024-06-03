@@ -151,7 +151,7 @@
     clothingVisuals:
       neck:
       - state: trans-equipped
- 
+
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckAutismPin
@@ -167,3 +167,4 @@
     clothingVisuals:
       neck:
       - state: autism-equipped
+

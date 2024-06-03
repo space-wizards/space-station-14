@@ -45,8 +45,8 @@
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
-  - BlueshieldOfficer
-  - NanotrasenRepresentative
+  - BlueshieldOfficer # Goobstation
+  - NanotrasenRepresentative # Goobstation
   primary: false
   weight: 100
 

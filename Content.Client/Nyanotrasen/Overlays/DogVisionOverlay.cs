@@ -3,6 +3,7 @@ using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Content.Shared.Abilities;
+using System.Numerics;
 
 namespace Content.Client.Nyanotrasen.Overlays;
 
@@ -43,7 +44,7 @@ public sealed partial class DogVisionOverlay : Overlay
 
         var worldHandle = args.WorldHandle;
         var viewport = args.WorldBounds;
-        worldHandle.SetTransform(Matrix3.Identity);
+        worldHandle.SetTransform(Matrix3x2.Identity);
         worldHandle.UseShader(_dogVisionShader);
         worldHandle.DrawRect(viewport, Color.White);
         worldHandle.UseShader(null); // important - as of writing, construction overlay breaks without this

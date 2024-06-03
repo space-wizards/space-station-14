@@ -192,19 +192,8 @@
 
 - type: damageModifierSet
   id: Vox
-  coefficients:
-    Slash: 1.3
-    Shock: 1.2 #electric type beats bird
-    Poison: 0.5
-    Radiation: 0.5
-    Asphyxiation: 0.8
-    Bloodloss: 2 #dunno
-    Cellular: 0.5
-    Caustic: 0.0
-  flatReductions:
-    Poison: 2
-    Radiation: 2
-
+  coefficients: # To be decided
+    Poison: 1
 
 - type: damageModifierSet
   id: Zombie #Blunt resistant and immune to biological threats, but can be hacked apart and burned

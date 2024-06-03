@@ -328,9 +328,6 @@
   id: CartridgeAntiMateriel
 
 - type: Tag
-  id: CartridgeMortis
-
-- type: Tag
   id: CartridgeCap
 
 - type: Tag
@@ -563,9 +560,6 @@
   id: Enzyme
 
 - type: Tag
-  id: EnrichedUranium
-
-- type: Tag
   id: ExplosivePassable
 
 - type: Tag
@@ -630,9 +624,6 @@
 
 - type: Tag
   id: GeigerCounter
-  
-- type: Tag
-  id: GhostFeet  # Neptune + others, set ghost socks here
 
 - type: Tag
   id: GlassAirlock
@@ -909,9 +900,6 @@
   id: Mineshaft
 
 - type: Tag
-  id: Minibomb
-
-- type: Tag
   id: ModularReceiver
 
 - type: Tag
@@ -1123,9 +1111,6 @@
   id: ShellShotgun
 
 - type: Tag
-  id: ShellShotgunUranium
-
-- type: Tag
   id: Shiv
 
 - type: Tag
@@ -1183,9 +1168,6 @@
 
 - type: Tag
   id: SpiderCraft
-
-- type: Tag
-  id: WizardNonApprentice
 
 - type: Tag
   id: SpookyFog
@@ -1306,9 +1288,6 @@
 
 - type: Tag
   id: WeaponPistolCHIMPUpgradeKit
-
-- type: Tag
-  id: WeaponShotgunImprovised
 
 - type: Tag
   id: WeaponShotgunKammerer

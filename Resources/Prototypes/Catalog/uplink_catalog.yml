@@ -122,7 +122,7 @@
   name: uplink-sniper-bundle-name
   description: uplink-sniper-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
-  productEntity: BriefcaseSyndieSniperBundleFilled
+  productEntity: BriefcaseSyndieSniperBundleFilled  
   cost:
     Telecrystal: 12
   categories:
@@ -779,16 +779,6 @@
   - UplinkDisruption
 
 - type: listing
-  id: UplinkCrateNPCGondola
-  name: uplink-gondola-name
-  description: uplink-gondola-desc
-  productEntity: CrateNPCGondola
-  cost:
-    Telecrystal: 6
-  categories:
-    -  UplinkDisruption
-
-- type: listing
   id: UplinkSlipocalypseClusterSoap
   name: uplink-slipocalypse-clustersoap-name
   description: uplink-slipocalypse-clustersoap-desc
@@ -1014,7 +1004,7 @@
     Telecrystal: 6
   categories:
     - UplinkAllies
-
+  
 - type: listing
   id: UplinkSyndicatePersonalAI
   name: uplink-syndicate-pai-name
@@ -1402,7 +1392,7 @@
   description: uplink-cat-ears-desc
   productEntity: ClothingHeadHatCatEars
   cost:
-    Telecrystal: 20
+    Telecrystal: 26
   categories:
   - UplinkPointless
 
@@ -1423,16 +1413,6 @@
   productEntity: ClothingEyesGlassesOutlawGlasses
   cost:
     Telecrystal: 1
-  categories:
-  - UplinkPointless
-
-- type: listing
-  id: UplinkWarhorn
-  name: uplink-warhorn-name
-  description: uplink-warhorn-desc
-  productEntity: SyndieWarhorn
-  cost:
-    Telecrystal: 2
   categories:
   - UplinkPointless
 
@@ -1719,37 +1699,6 @@
     - Chef
 
 - type: listing
-  id: UplinkThrongler
-  name: uplink-throngler-name
-  description: uplink-throngler-desc
-  productEntity: Throngler
-  cost:
-    Telecrystal: 100
-  categories:
-  - UplinkWeaponry
-  restockTime: 10
-  conditions:
-  - !type:StoreWhitelistCondition
-    blacklist:
-      tags:
-      - NukeOpsUplink
-
-- type: listing
-  id: UplinkPieCannon
-  name: uplink-pie-cannon-name
-  description: uplink-pie-cannon-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Cannons/pie_cannon.rsi, state: piecannon }
-  productEntity: LauncherCreamPieRegenerating
-  cost:
-    Telecrystal: 8
-  categories:
-  - UplinkJob
-  conditions:
-  - !type:BuyerJobCondition
-    whitelist:
-    - Clown
-
-- type: listing
   id: UplinkCaneBlade
   name: uplink-cane-blade-name
   description: uplink-cane-blade-desc
@@ -1767,33 +1716,3 @@
     blacklist:
       components:
       - SurplusBundle
-
-- type: listing
-  id: UplinkMimery
-  name: Guide to Advanced Mimery Volume 1
-  description: A finely written book on how to hone your mime skills. Focuses on advanced invisible walls.
-  icon: { sprite: /Textures/Objects/Misc/books.rsi, state: mime_book }
-  productEntity: MimerySpellbook
-  cost:
-    Telecrystal: 6
-  categories:
-  - UplinkJob
-  conditions:
-  - !type:BuyerJobCondition
-    whitelist:
-    - Mime
-
-- type: listing
-  id: UplinkMimery2
-  name: Guide to Advanced Mimery Volume 2
-  description: A finely written book on how to hone your mime skills. Focuses on finger guns.
-  icon: { sprite: /Textures/Objects/Misc/books.rsi, state: mime_book2 }
-  productEntity: Mimery2Spellbook
-  cost:
-    Telecrystal: 8
-  categories:
-  - UplinkJob
-  conditions:
-  - !type:BuyerJobCondition
-    whitelist:
-    - Mime
