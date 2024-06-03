@@ -1,4 +1,4 @@
-﻿using Content.Shared.DoAfter;
+using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -19,6 +19,9 @@ public sealed partial class HandTeleporterComponent : Component
 
     [ViewVariables, DataField("secondPortal")]
     public EntityUid? SecondPortal = null;
+
+    [DataField]
+    public bool Fizzle = true;
 
     [DataField("firstPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string FirstPortalPrototype = "PortalRed";
