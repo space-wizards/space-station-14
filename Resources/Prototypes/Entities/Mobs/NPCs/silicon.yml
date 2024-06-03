@@ -286,7 +286,7 @@
     interactSuccessString: petting-success-medibot
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
+      path: /Audio/Animals/cat_meow.ogg
 
 - type: entity
   parent: MobSiliconBase

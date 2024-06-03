@@ -36,7 +36,7 @@
   id: DeathSquad
   parent: EventHumanoidMindShielded
   randomizeName: false
-  components:        
+  components:
     - type: GhostRole
       name: ghost-role-information-Death-Squad-name
       description: ghost-role-information-Death-Squad-description
