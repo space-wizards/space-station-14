@@ -47,7 +47,7 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
                 int acc = 0;
                 foreach (var ent in tile.GetEntitiesInTile())
                 {
-                    var whitelistSystem = IoCManager.Resolve<EntityWhitelistSystem>();
+                    var whitelistSystem = entityManager.System<EntityWhitelistSystem>();
                     if (whitelistSystem.IsWhitelistPass(Whitelist, ent))
                         acc += 1;
 
