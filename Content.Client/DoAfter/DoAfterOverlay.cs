@@ -56,8 +56,8 @@ public sealed class DoAfterOverlay : Overlay
 
         // If you use the display UI scale then need to set max(1f, displayscale) because 0 is valid.
         const float scale = 1f;
-        var scaleMatrix = Matrix3.CreateScale(new Vector2(scale, scale));
-        var rotationMatrix = Matrix3.CreateRotation(-rotation);
+        var scaleMatrix = Matrix3Helpers.CreateScale(new Vector2(scale, scale));
+        var rotationMatrix = Matrix3Helpers.CreateRotation(-rotation);
 
         var curTime = _timing.CurTime;
 
@@ -91,9 +91,9 @@ public sealed class DoAfterOverlay : Overlay
                 ? curTime - _meta.GetPauseTime(uid, meta)
                 : curTime;
 
-            var worldMatrix = Matrix3.CreateTranslation(worldPosition);
-            Matrix3.Multiply(scaleMatrix, worldMatrix, out var scaledWorld);
-            Matrix3.Multiply(rotationMatrix, scaledWorld, out var matty);
+            var worldMatrix = Matrix3Helpers.CreateTranslation(worldPosition);
+            var scaledWorld = Matrix3x2.Multiply(scaleMatrix, worldMatrix);
+            var matty = Matrix3x2.Multiply(rotationMatrix, scaledWorld);
             handle.SetTransform(matty);
 
             var offset = 0f;
@@ -151,7 +151,7 @@ public sealed class DoAfterOverlay : Overlay
         }
 
         handle.UseShader(null);
-        handle.SetTransform(Matrix3.Identity);
+        handle.SetTransform(Matrix3x2.Identity);
     }
 
     public Color GetProgressColor(float progress, float alpha = 1f)
