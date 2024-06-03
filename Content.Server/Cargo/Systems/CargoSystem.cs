@@ -8,6 +8,7 @@ using Content.Server.Stack;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
+using Content.Server.Radio.EntitySystems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Containers.ItemSlots;
@@ -37,12 +38,12 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly RadioSystem _radio = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
     private EntityQuery<CargoSellBlacklistComponent> _blacklistQuery;

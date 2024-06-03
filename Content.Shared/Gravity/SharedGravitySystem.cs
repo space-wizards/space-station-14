@@ -17,6 +17,9 @@ namespace Content.Shared.Gravity
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
 
+        [ValidatePrototypeId<AlertPrototype>]
+        public const string WeightlessAlert = "Weightless";
+
         public bool IsWeightless(EntityUid uid, PhysicsComponent? body = null, TransformComponent? xform = null)
         {
             Resolve(uid, ref body, false);
@@ -61,8 +64,6 @@ namespace Content.Shared.Gravity
             SubscribeLocalEvent<GravityChangedEvent>(OnGravityChange);
             SubscribeLocalEvent<GravityComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<GravityComponent, ComponentHandleState>(OnHandleState);
-
-            InitializeShake();
         }
 
         public override void Update(float frameTime)
@@ -95,11 +96,11 @@ namespace Content.Shared.Gravity
 
                 if (!ev.HasGravity)
                 {
-                    _alerts.ShowAlert(uid, AlertType.Weightless);
+                    _alerts.ShowAlert(uid, WeightlessAlert);
                 }
                 else
                 {
-                    _alerts.ClearAlert(uid, AlertType.Weightless);
+                    _alerts.ClearAlert(uid, WeightlessAlert);
                 }
             }
         }
@@ -108,11 +109,11 @@ namespace Content.Shared.Gravity
         {
             if (IsWeightless(ev.Euid))
             {
-                _alerts.ShowAlert(ev.Euid, AlertType.Weightless);
+                _alerts.ShowAlert(ev.Euid, WeightlessAlert);
             }
             else
             {
-                _alerts.ClearAlert(ev.Euid, AlertType.Weightless);
+                _alerts.ClearAlert(ev.Euid, WeightlessAlert);
             }
         }
 
@@ -120,11 +121,11 @@ namespace Content.Shared.Gravity
         {
             if (IsWeightless(uid))
             {
-                _alerts.ShowAlert(uid, AlertType.Weightless);
+                _alerts.ShowAlert(uid, WeightlessAlert);
             }
             else
             {
-                _alerts.ClearAlert(uid, AlertType.Weightless);
+                _alerts.ClearAlert(uid, WeightlessAlert);
             }
         }
 

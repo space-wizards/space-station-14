@@ -2,7 +2,6 @@ using Content.Server.Actions;
 using Content.Server.Bed.Components;
 using Content.Server.Bed.Sleep;
 using Content.Server.Body.Systems;
-using Content.Server.Construction;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Bed;
@@ -10,7 +9,6 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
-using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Timing;
@@ -33,8 +31,6 @@ namespace Content.Server.Bed
             SubscribeLocalEvent<StasisBedComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<StasisBedComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<StasisBedComponent, GotEmaggedEvent>(OnEmagged);
-            SubscribeLocalEvent<StasisBedComponent, RefreshPartsEvent>(OnRefreshParts);
-            SubscribeLocalEvent<StasisBedComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         }
 
         private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, ref BuckleChangeEvent args)
@@ -97,9 +93,8 @@ namespace Content.Server.Bed
             if (!this.IsPowered(uid, EntityManager))
                 return;
 
-            var metabolicEvent = new ApplyMetabolicMultiplierEvent
-                {Uid = args.BuckledEntity, Multiplier = component.Multiplier, Apply = args.Buckling};
-            RaiseLocalEvent(args.BuckledEntity, metabolicEvent);
+            var metabolicEvent = new ApplyMetabolicMultiplierEvent(args.BuckledEntity, component.Multiplier, args.Buckling);
+            RaiseLocalEvent(args.BuckledEntity, ref metabolicEvent);
         }
 
         private void OnPowerChanged(EntityUid uid, StasisBedComponent component, ref PowerChangedEvent args)
@@ -125,23 +120,9 @@ namespace Content.Server.Bed
 
             foreach (var buckledEntity in strap.BuckledEntities)
             {
-                var metabolicEvent = new ApplyMetabolicMultiplierEvent
-                    {Uid = buckledEntity, Multiplier = component.Multiplier, Apply = shouldApply};
-                RaiseLocalEvent(buckledEntity, metabolicEvent);
+                var metabolicEvent = new ApplyMetabolicMultiplierEvent(buckledEntity, component.Multiplier, shouldApply);
+                RaiseLocalEvent(buckledEntity, ref metabolicEvent);
             }
-        }
-
-        private void OnRefreshParts(EntityUid uid, StasisBedComponent component, RefreshPartsEvent args)
-        {
-            var metabolismRating = args.PartRatings[component.MachinePartMetabolismModifier];
-            component.Multiplier = component.BaseMultiplier * metabolismRating; //linear scaling so it's not OP
-            if (HasComp<EmaggedComponent>(uid))
-                component.Multiplier = 1f / component.Multiplier;
-        }
-
-        private void OnUpgradeExamine(EntityUid uid, StasisBedComponent component, UpgradeExamineEvent args)
-        {
-            args.AddPercentageUpgrade("stasis-bed-component-upgrade-stasis", component.Multiplier / component.BaseMultiplier);
         }
     }
 }

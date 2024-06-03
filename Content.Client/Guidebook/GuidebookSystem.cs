@@ -55,7 +55,7 @@ public sealed class GuidebookSystem : EntitySystem
     /// </summary>
     public EntityUid GetGuidebookUser()
     {
-        var user = _playerManager.LocalPlayer!.ControlledEntity;
+        var user = _playerManager.LocalEntity;
         if (user != null)
             return user.Value;
 
@@ -78,6 +78,11 @@ public sealed class GuidebookSystem : EntitySystem
             ClientExclusive = true,
             CloseMenu = true
         });
+    }
+
+    public void OpenHelp(List<string> guides)
+    {
+        OnGuidebookOpen?.Invoke(guides, null, null, true, guides[0]);
     }
 
     private void OnInteract(EntityUid uid, GuideHelpComponent component, ActivateInWorldEvent args)
@@ -143,7 +148,7 @@ public sealed class GuidebookSystem : EntitySystem
 
     public void FakeClientActivateInWorld(EntityUid activated)
     {
-        var activateMsg = new ActivateInWorldEvent(GetGuidebookUser(), activated);
+        var activateMsg = new ActivateInWorldEvent(GetGuidebookUser(), activated, true);
         RaiseLocalEvent(activated, activateMsg);
     }
 

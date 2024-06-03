@@ -292,7 +292,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
         // Should be slightly more efficient than checking literally everything we consume for a singularity component and doing the reverse.
         if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizonUid, out var singulo))
         {
-            AdjustEnergy(uid, comp.Energy, singularity: singulo);
+            AdjustEnergy(args.EventHorizonUid, comp.Energy, singularity: singulo);
             SetEnergy(uid, 0.0f, comp);
         }
     }

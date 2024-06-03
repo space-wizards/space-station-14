@@ -131,8 +131,8 @@ namespace Content.Benchmarks
         public static Color InterpolateSysVector4In(in Color endPoint1, in Color endPoint2,
             float lambda)
         {
-            ref var sva = ref Unsafe.As<Color, SysVector4>(ref Unsafe.AsRef(endPoint1));
-            ref var svb = ref Unsafe.As<Color, SysVector4>(ref Unsafe.AsRef(endPoint2));
+            ref var sva = ref Unsafe.As<Color, SysVector4>(ref Unsafe.AsRef(in endPoint1));
+            ref var svb = ref Unsafe.As<Color, SysVector4>(ref Unsafe.AsRef(in endPoint2));
 
             var res = SysVector4.Lerp(svb, sva, lambda);
 
@@ -156,8 +156,8 @@ namespace Content.Benchmarks
         public static Color InterpolateSimdIn(in Color a, in Color b,
             float lambda)
         {
-            var vecA = Unsafe.As<Color, Vector128<float>>(ref Unsafe.AsRef(a));
-            var vecB = Unsafe.As<Color, Vector128<float>>(ref Unsafe.AsRef(b));
+            var vecA = Unsafe.As<Color, Vector128<float>>(ref Unsafe.AsRef(in a));
+            var vecB = Unsafe.As<Color, Vector128<float>>(ref Unsafe.AsRef(in b));
 
             vecB = Fma.MultiplyAdd(Sse.Subtract(vecB, vecA), Vector128.Create(lambda), vecA);
 

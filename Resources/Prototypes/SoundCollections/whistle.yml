@@ -8,3 +8,10 @@
     - /Audio/Items/Whistle/whistle_5.ogg
     - /Audio/Items/Whistle/whistle_6.ogg
     - /Audio/Items/Whistle/whistle_7.ogg
+
+- type: soundCollection
+  id: TrenchWhistle
+  files:
+    - /Audio/Items/Whistle/trench_whistle_1.ogg
+    - /Audio/Items/Whistle/trench_whistle_2.ogg
+    - /Audio/Items/Whistle/trench_whistle_3.ogg

@@ -1,12 +1,26 @@
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 
 namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class ShuttleConsoleSystem
 {
+    /// <summary>
+    /// Gets the drone console target if applicable otherwise returns itself.
+    /// </summary>
+    public EntityUid? GetDroneConsole(EntityUid consoleUid)
+    {
+        var getShuttleEv = new ConsoleShuttleEvent
+        {
+            Console = consoleUid,
+        };
+
+        RaiseLocalEvent(consoleUid, ref getShuttleEv);
+        return getShuttleEv.Console;
+    }
+
     /// <summary>
     /// Refreshes all drone console entities.
     /// </summary>

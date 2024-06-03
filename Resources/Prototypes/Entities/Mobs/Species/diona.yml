@@ -8,9 +8,6 @@
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger
-    starvationDamage:
-      types:
-        Bloodloss: 0.5
     baseDecayRate: 0.0083
   - type: Thirst
     baseDecayRate: 0.0083
@@ -27,14 +24,14 @@
     damageOverlayGroups:
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
-        color: "#75b1f0"
+        color: "#cd7314"
   - type: Butcherable
     butcheringType: Spike
     spawned:
       - id: FoodMeatPlant
         amount: 5
   - type: Bloodstream
-    bloodReagent: Water
+    bloodReagent: Sap
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -49,7 +46,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaled: true
+        scaleByQuantity: true
         damage:
           types:
             Blunt: 2
@@ -64,7 +61,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaled: true
+        scaleByQuantity: true
         damage:
           types:
             Poison: 5
@@ -97,6 +94,13 @@
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
   - type: IgnoreKudzu
+  - type: IgniteOnHeatDamage
+    fireStacks: 1
+    threshold: 12
+  - type: GibAction
+    actionPrototype: DionaGibAction
+    allowedStates:
+    - Dead
 
 - type: entity
   parent: BaseSpeciesDummy

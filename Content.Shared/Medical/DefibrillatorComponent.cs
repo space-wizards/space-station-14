@@ -11,7 +11,7 @@ namespace Content.Shared.Medical;
 /// This is used for defibrillators; a machine that shocks a dead
 /// person back into the world of the living.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class DefibrillatorComponent : Component
 {
     /// <summary>
@@ -24,6 +24,7 @@ public sealed partial class DefibrillatorComponent : Component
     /// The time at which the zap cooldown will be completed
     /// </summary>
     [DataField("nextZapTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [AutoPausedField]
     public TimeSpan? NextZapTime;
 
     /// <summary>
@@ -58,6 +59,12 @@ public sealed partial class DefibrillatorComponent : Component
     /// </remarks>
     [DataField("doAfterDuration"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(3);
+
+    [DataField]
+    public bool AllowDoAfterMovement = true;
+
+    [DataField]
+    public bool CanDefibCrit = true;
 
     /// <summary>
     /// The sound when someone is zapped.

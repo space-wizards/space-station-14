@@ -6,6 +6,7 @@ using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
+using Content.Server.Afk;
 using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
@@ -24,7 +25,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Administration.Systems
 {
     [UsedImplicitly]
-    public sealed class BwoinkSystem : SharedBwoinkSystem
+    public sealed partial class BwoinkSystem : SharedBwoinkSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
@@ -33,6 +34,10 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IPlayerLocator _playerLocator = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
+        [Dependency] private readonly IAfkManager _afkManager = default!;
+
+        [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
+        private static partial Regex DiscordRegex();
 
         private ISawmill _sawmill = default!;
         private readonly HttpClient _httpClient = new();
@@ -64,13 +69,13 @@ namespace Content.Server.Administration.Systems
         public override void Initialize()
         {
             base.Initialize();
-            _config.OnValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
-            _config.OnValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
-            _config.OnValueChanged(CCVars.DiscordAHelpAvatar, OnAvatarChanged, true);
-            _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
-            _config.OnValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
+            Subs.CVar(_config, CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
+            Subs.CVar(_config, CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
+            Subs.CVar(_config, CCVars.DiscordAHelpAvatar, OnAvatarChanged, true);
+            Subs.CVar(_config, CVars.GameHostName, OnServerNameChanged, true);
+            Subs.CVar(_config, CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
-            _maxAdditionalChars = GenerateAHelpMessage("", "", true, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel).Length;
+            _maxAdditionalChars = GenerateAHelpMessage("", "", true, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, playedSound: false).Length;
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
@@ -145,15 +150,6 @@ namespace Content.Server.Administration.Systems
             _serverName = obj;
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            _config.UnsubValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged);
-            _config.UnsubValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged);
-            _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
-            _config.UnsubValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged);
-        }
-
         private async void OnWebhookChanged(string url)
         {
             _webhookUrl = url;
@@ -164,7 +160,7 @@ namespace Content.Server.Administration.Systems
                 return;
 
             // Basic sanity check and capturing webhook ID and token
-            var match = Regex.Match(url, @"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$");
+            var match = DiscordRegex().Match(url);
 
             if (!match.Success)
             {
@@ -327,7 +323,7 @@ namespace Content.Server.Administration.Systems
                 username += $" ({characterName})";
 
             // If no admins are online, set embed color to red. Otherwise green
-            var color = GetTargetAdmins().Count > 0 ? 0x41F097 : 0xFF0000;
+            var color = GetNonAfkAdmins().Count > 0 ? 0x41F097 : 0xFF0000;
 
             // Limit server name to 1500 characters, in case someone tries to be a little funny
             var serverName = _serverName[..Math.Min(_serverName.Length, 1500)];
@@ -405,18 +401,22 @@ namespace Content.Server.Administration.Systems
 
             if (senderAdmin is not null && senderAdmin.Flags == AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
             {
-                bwoinkText = $"[color=purple]{senderSession.Name}[/color]: {escapedText}";
+                bwoinkText = $"[color=purple]{senderSession.Name}[/color]";
             }
             else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
             {
-                bwoinkText = $"[color=red]{senderSession.Name}[/color]: {escapedText}";
+                bwoinkText = $"[color=red]{senderSession.Name}[/color]";
             }
             else
             {
-                bwoinkText = $"{senderSession.Name}: {escapedText}";
+                bwoinkText = $"{senderSession.Name}";
             }
 
-            var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText);
+            bwoinkText = $"{(message.PlaySound ? "" : "(S) ")}{bwoinkText}: {escapedText}";
+
+            // If it's not an admin / admin chooses to keep the sound then play it.
+            var playSound = !senderAHelpAdmin || message.PlaySound;
+            var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText, playSound: playSound);
 
             LogBwoink(msg);
 
@@ -431,7 +431,7 @@ namespace Content.Server.Administration.Systems
             // Notify player
             if (_playerManager.TryGetSessionById(message.UserId, out var session))
             {
-                if (!admins.Contains(session.ConnectedClient))
+                if (!admins.Contains(session.Channel))
                 {
                     // If _overrideClientName is set, we generate a new message with the override name. The admins name will still be the original name for the webhooks.
                     if (_overrideClientName != string.Empty)
@@ -440,21 +440,23 @@ namespace Content.Server.Administration.Systems
                         // Doing the same thing as above, but with the override name. Theres probably a better way to do this.
                         if (senderAdmin is not null && senderAdmin.Flags == AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
                         {
-                            overrideMsgText = $"[color=purple]{_overrideClientName}[/color]: {escapedText}";
+                            overrideMsgText = $"[color=purple]{_overrideClientName}[/color]";
                         }
                         else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
                         {
-                            overrideMsgText = $"[color=red]{_overrideClientName}[/color]: {escapedText}";
+                            overrideMsgText = $"[color=red]{_overrideClientName}[/color]";
                         }
                         else
                         {
-                            overrideMsgText = $"{senderSession.Name}: {escapedText}"; // Not an admin, name is not overridden.
+                            overrideMsgText = $"{senderSession.Name}"; // Not an admin, name is not overridden.
                         }
 
-                        RaiseNetworkEvent(new BwoinkTextMessage(message.UserId, senderSession.UserId, overrideMsgText), session.ConnectedClient);
+                        overrideMsgText = $"{(message.PlaySound ? "" : "(S) ")}{overrideMsgText}: {escapedText}";
+
+                        RaiseNetworkEvent(new BwoinkTextMessage(message.UserId, senderSession.UserId, overrideMsgText, playSound: playSound), session.Channel);
                     }
                     else
-                        RaiseNetworkEvent(msg, session.ConnectedClient);
+                        RaiseNetworkEvent(msg, session.Channel);
                 }
             }
 
@@ -471,7 +473,8 @@ namespace Content.Server.Administration.Systems
                 {
                     str = str[..(DescriptionMax - _maxAdditionalChars - unameLength)];
                 }
-                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, admins.Count == 0));
+                var nonAfkAdmins = GetNonAfkAdmins();
+                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, playedSound: playSound, noReceivers: nonAfkAdmins.Count == 0));
             }
 
             if (admins.Count != 0 || sendsWebhook)
@@ -480,22 +483,29 @@ namespace Content.Server.Administration.Systems
             // No admin online, let the player know
             var systemText = Loc.GetString("bwoink-system-starmute-message-no-other-users");
             var starMuteMsg = new BwoinkTextMessage(message.UserId, SystemUserId, systemText);
-            RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
+            RaiseNetworkEvent(starMuteMsg, senderSession.Channel);
         }
 
-        // Returns all online admins with AHelp access
+        private IList<INetChannel> GetNonAfkAdmins()
+        {
+            return _adminManager.ActiveAdmins
+                .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false) && !_afkManager.IsAfk(p))
+                .Select(p => p.Channel)
+                .ToList();
+        }
+
         private IList<INetChannel> GetTargetAdmins()
         {
             return _adminManager.ActiveAdmins
-               .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
-               .Select(p => p.ConnectedClient)
-               .ToList();
+                .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
+                .Select(p => p.Channel)
+                .ToList();
         }
 
-        private static string GenerateAHelpMessage(string username, string message, bool admin, string roundTime, GameRunLevel roundState, bool noReceivers = false)
+        private static string GenerateAHelpMessage(string username, string message, bool admin, string roundTime, GameRunLevel roundState, bool playedSound, bool noReceivers = false)
         {
             var stringbuilder = new StringBuilder();
-            
+
             if (admin)
                 stringbuilder.Append(":outbox_tray:");
             else if (noReceivers)
@@ -505,6 +515,8 @@ namespace Content.Server.Administration.Systems
 
             if(roundTime != string.Empty && roundState == GameRunLevel.InRound)
                 stringbuilder.Append($" **{roundTime}**");
+            if (!playedSound)
+                stringbuilder.Append(" **(S)**");
             stringbuilder.Append($" **{username}:** ");
             stringbuilder.Append(message);
             return stringbuilder.ToString();

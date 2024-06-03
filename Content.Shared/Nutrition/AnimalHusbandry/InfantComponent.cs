@@ -8,7 +8,7 @@ namespace Content.Shared.Nutrition.AnimalHusbandry;
 /// This is used for marking entities as infants.
 /// Infants have half the size, visually, and cannot breed.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class InfantComponent : Component
 {
     /// <summary>
@@ -33,6 +33,7 @@ public sealed partial class InfantComponent : Component
     /// When the entity will stop being an infant.
     /// </summary>
     [DataField("infantEndTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan InfantEndTime;
 
     /// <summary>

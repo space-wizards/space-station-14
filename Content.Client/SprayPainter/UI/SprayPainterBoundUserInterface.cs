@@ -1,4 +1,5 @@
 using Content.Shared.SprayPainter;
+using Content.Shared.SprayPainter.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 
@@ -20,14 +21,20 @@ public sealed class SprayPainterBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
+        if (!EntMan.TryGetComponent<SprayPainterComponent>(Owner, out var comp))
+            return;
+
         _window = new SprayPainterWindow();
 
         _painter = EntMan.System<SprayPainterSystem>();
 
-        _window.OpenCentered();
         _window.OnClose += Close;
         _window.OnSpritePicked = OnSpritePicked;
         _window.OnColorPicked = OnColorPicked;
+
+        _window.Populate(_painter.Entries, comp.Index, comp.PickedColor, comp.ColorPalette);
+
+        _window.OpenCentered();
     }
 
     protected override void Dispose(bool disposing)
@@ -35,25 +42,6 @@ public sealed class SprayPainterBoundUserInterface : BoundUserInterface
         base.Dispose(disposing);
 
         _window?.Dispose();
-    }
-
-    protected override void UpdateState(BoundUserInterfaceState state)
-    {
-        base.UpdateState(state);
-
-        if (_window == null)
-            return;
-
-        if (_painter == null)
-            return;
-
-        if (state is not SprayPainterBoundUserInterfaceState stateCast)
-            return;
-
-        _window.Populate(_painter.Entries,
-                         stateCast.SelectedStyle,
-                         stateCast.SelectedColorKey,
-                         stateCast.Palette);
     }
 
     private void OnSpritePicked(ItemList.ItemListSelectedEventArgs args)

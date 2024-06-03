@@ -19,6 +19,8 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(EntityUid))]
     public sealed class EntityTest
     {
+        private static readonly ProtoId<EntityCategoryPrototype> SpawnerCategory = "Spawner";
+
         [Test]
         public async Task SpawnAndDeleteAllEntitiesOnDifferentMaps()
         {
@@ -31,6 +33,7 @@ namespace Content.IntegrationTests.Tests
             var entityMan = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var prototypeMan = server.ResolveDependency<IPrototypeManager>();
+            var mapSystem = entityMan.System<SharedMapSystem>();
 
             await server.WaitPost(() =>
             {
@@ -41,12 +44,13 @@ namespace Content.IntegrationTests.Tests
                     .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                     .Select(p => p.ID)
                     .ToList();
+
                 foreach (var protoId in protoIds)
                 {
                     var mapId = mapManager.CreateMap();
-                    var grid = mapManager.CreateGrid(mapId);
+                    var grid = mapManager.CreateGridEntity(mapId);
                     // TODO: Fix this better in engine.
-                    grid.SetTile(Vector2i.Zero, new Tile(1));
+                    mapSystem.SetTile(grid.Owner, grid.Comp, Vector2i.Zero, new Tile(1));
                     var coord = new EntityCoordinates(grid.Owner, 0, 0);
                     entityMan.SpawnEntity(protoId, coord);
                 }
@@ -61,7 +65,9 @@ namespace Content.IntegrationTests.Tests
                 {
                     var query = entityMan.AllEntityQueryEnumerator<TComp>();
                     while (query.MoveNext(out var uid, out var meta))
+                    {
                         yield return (uid, meta);
+                    }
                 }
 
                 var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
@@ -113,8 +119,10 @@ namespace Content.IntegrationTests.Tests
                 {
                     var query = entityMan.AllEntityQueryEnumerator<TComp>();
                     while (query.MoveNext(out var uid, out var meta))
+                    {
                         yield return (uid, meta);
-                };
+                    }
+                }
 
                 var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
                 foreach (var (uid, meta) in entityMetas)
@@ -163,11 +171,11 @@ namespace Content.IntegrationTests.Tests
                 foreach (var protoId in protoIds)
                 {
                     var mapId = mapManager.CreateMap();
-                    var grid = mapManager.CreateGrid(mapId);
+                    var grid = mapManager.CreateGridEntity(mapId);
                     var ent = sEntMan.SpawnEntity(protoId, new EntityCoordinates(grid.Owner, 0.5f, 0.5f));
                     foreach (var (_, component) in sEntMan.GetNetComponents(ent))
                     {
-                        sEntMan.Dirty(component);
+                        sEntMan.Dirty(ent, component);
                     }
                 }
             });
@@ -185,7 +193,9 @@ namespace Content.IntegrationTests.Tests
                 {
                     var query = entityMan.AllEntityQueryEnumerator<TComp>();
                     while (query.MoveNext(out var uid, out var meta))
+                    {
                         yield return (uid, meta);
+                    }
                 }
 
                 var entityMetas = Query<MetaDataComponent>(sEntMan).ToList();
@@ -226,14 +236,6 @@ namespace Content.IntegrationTests.Tests
                 "StationEvent",
                 "TimedDespawn",
 
-                // Spawner entities
-                "DragonRift",
-                "RandomHumanoidSpawner",
-                "RandomSpawner",
-                "ConditionalSpawner",
-                "GhostRoleMobSpawner",
-                "NukeOperativeSpawner",
-                "TimedSpawner",
                 // makes an announcement on mapInit.
                 "AnnounceOnSpawn",
             };
@@ -245,6 +247,7 @@ namespace Content.IntegrationTests.Tests
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
                 .Where(p => !excluded.Any(p.Components.ContainsKey))
+                .Where(p => p.Categories.All(x => x.ID != SpawnerCategory))
                 .Select(p => p.ID)
                 .ToList();
 
@@ -342,44 +345,26 @@ namespace Content.IntegrationTests.Tests
                 "DebrisFeaturePlacerController", // Above.
                 "LoadedChunk", // Worldgen chunk loading malding.
                 "BiomeSelection", // Whaddya know, requires config.
+                "ActivatableUI", // Requires enum key
             };
+
+            // TODO TESTS
+            // auto ignore any components that have a "required" data field.
 
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
-
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
-            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
             var logmill = server.ResolveDependency<ILogManager>().GetSawmill("EntityTest");
 
-            MapGridComponent grid = default;
-
-            await server.WaitPost(() =>
-            {
-                // Create a one tile grid to stave off the grid 0 monsters
-                var mapId = mapManager.CreateMap();
-
-                mapManager.AddUninitializedMap(mapId);
-
-                grid = mapManager.CreateGrid(mapId);
-
-                var tileDefinition = tileDefinitionManager["Plating"];
-                var tile = new Tile(tileDefinition.TileId);
-                var coordinates = grid.ToCoordinates();
-
-                grid.SetTile(coordinates, tile);
-
-                mapManager.DoMapInitialize(mapId);
-            });
-
+            await pair.CreateTestMap();
             await server.WaitRunTicks(5);
+            var testLocation = pair.TestMap.GridCoords;
 
             await server.WaitAssertion(() =>
             {
                 Assert.Multiple(() =>
                 {
-                    var testLocation = grid.ToCoordinates();
 
                     foreach (var type in componentFactory.AllRegisteredTypes)
                     {
@@ -404,7 +389,6 @@ namespace Content.IntegrationTests.Tests
                             continue;
                         }
 
-                        component.Owner = entity;
                         logmill.Debug($"Adding component: {name}");
 
                         Assert.DoesNotThrow(() =>

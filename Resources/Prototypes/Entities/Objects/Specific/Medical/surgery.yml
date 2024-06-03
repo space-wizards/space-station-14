@@ -8,6 +8,9 @@
   - type: Sprite
   - type: StaticPrice
     price: 20
+  - type: Tag
+    tags:
+    - SurgeryTool
 
 # Cautery
 
@@ -75,6 +78,8 @@
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     storedRotation: 90
   - type: MeleeWeapon
+    wideAnimationRotation: 90
+    swingLeft: true
     attackRate: 1.5
     damage:
       types:

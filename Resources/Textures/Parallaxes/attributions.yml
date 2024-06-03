@@ -12,3 +12,13 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "made by brainfood1183 (github) for ss14"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Parallaxes/gas_giant.png"
+
+- files: ["Asteroids.png"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "taken from tgstation on https://github.com/tgstation/tgstation/commit/3df5d3b42bfb6b3b5adba1067ab41f83816255bb from parallax.dmi"
+  source: "https://github.com/tgstation/tgstation"
+
+- files: ["core_planet.png"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Drawn by Ubaser"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Parallaxes/core_planet.png"

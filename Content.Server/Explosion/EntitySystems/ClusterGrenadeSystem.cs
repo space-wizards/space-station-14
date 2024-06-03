@@ -1,13 +1,12 @@
 using Content.Server.Explosion.Components;
-using Content.Server.Flash.Components;
-using Content.Shared.Explosion;
+using Content.Shared.Flash.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Throwing;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Content.Server.Weapons.Ranged.Systems;
 using System.Numerics;
+using Content.Shared.Explosion.Components;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 

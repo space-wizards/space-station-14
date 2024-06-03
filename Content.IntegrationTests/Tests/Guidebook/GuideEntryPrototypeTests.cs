@@ -23,17 +23,18 @@ public sealed class GuideEntryPrototypeTests
         var parser = client.ResolveDependency<DocumentParsingManager>();
         var prototypes = protoMan.EnumeratePrototypes<GuideEntryPrototype>().ToList();
 
-        await client.WaitAssertion(() =>
+        foreach (var proto in prototypes)
         {
-            Assert.Multiple(() =>
+            await client.WaitAssertion(() =>
             {
-                foreach (var proto in prototypes)
-                {
-                    var text = resMan.ContentFileReadText(proto.Text).ReadToEnd();
-                    Assert.That(parser.TryAddMarkup(new Document(), text), $"Failed to parse guidebook: {proto.Id}");
-                }
+                using var reader = resMan.ContentFileReadText(proto.Text);
+                var text = reader.ReadToEnd();
+                Assert.That(parser.TryAddMarkup(new Document(), text), $"Failed to parse guidebook: {proto.Id}");
             });
-        });
+
+            // Avoid styleguide update limit
+            await client.WaitRunTicks(1);
+        }
 
         await pair.CleanReturnAsync();
     }

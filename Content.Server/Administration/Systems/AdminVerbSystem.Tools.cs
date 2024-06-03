@@ -12,6 +12,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -34,13 +35,14 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    [Dependency] private readonly DoorBoltSystem _boltsSystem = default!;
+    [Dependency] private readonly DoorSystem _door = default!;
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
     [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
@@ -52,6 +54,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly BatterySystem _batterySystem = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly GunSystem _gun = default!;
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
@@ -76,7 +79,7 @@ public sealed partial class AdminVerbSystem
                         : new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/bolt.png")),
                     Act = () =>
                     {
-                        _boltsSystem.SetBoltsWithAudio(args.Target, bolts, !bolts.BoltsDown);
+                        _door.SetBoltsDown((args.Target, bolts), !bolts.BoltsDown);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString(bolts.BoltsDown
@@ -170,7 +173,6 @@ public sealed partial class AdminVerbSystem
                     Act = () =>
                     {
                         _batterySystem.SetCharge(args.Target, battery.MaxCharge, battery);
-                        Dirty(args.Target, battery);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-refill-battery-description"),
@@ -186,7 +188,6 @@ public sealed partial class AdminVerbSystem
                     Act = () =>
                     {
                         _batterySystem.SetCharge(args.Target, 0, battery);
-                        Dirty(args.Target, battery);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-drain-battery-description"),
@@ -556,7 +557,6 @@ public sealed partial class AdminVerbSystem
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
                         _batterySystem.SetCharge(ent, battery.MaxCharge, battery);
-                        Dirty(ent, battery);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -578,7 +578,6 @@ public sealed partial class AdminVerbSystem
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
                         _batterySystem.SetCharge(ent, 0, battery);
-                        Dirty(ent, battery);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -701,7 +700,8 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Weapons/Guns/HMGs/minigun.rsi"), "icon"),
                 Act = () =>
                 {
-                    gun.FireRate = 15;
+                    EnsureComp<AdminMinigunComponent>(args.Target);
+                    _gun.RefreshModifiers((args.Target, gun));
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-minigun-fire-description"),
@@ -719,9 +719,21 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Fun/caps.rsi"), "mag-6"),
                 Act = () =>
                 {
-                    _quickDialog.OpenDialog(player, "Set Bullet Amount", $"Amount (max {ballisticAmmo.Capacity}):", (int amount) =>
+                    _quickDialog.OpenDialog(player, "Set Bullet Amount", $"Amount (standard {ballisticAmmo.Capacity}):", (string amount) =>
                     {
-                        ballisticAmmo.UnspawnedCount = amount;
+                        if (!int.TryParse(amount, out var result))
+                            return;
+
+                        if (result > 0)
+                        {
+                            ballisticAmmo.UnspawnedCount = result;
+                        }
+                        else
+                        {
+                            ballisticAmmo.UnspawnedCount = 0;
+                        }
+
+                        _gun.UpdateBallisticAppearance(args.Target, ballisticAmmo);
                     });
                 },
                 Impact = LogImpact.Medium,
@@ -833,14 +845,14 @@ public sealed partial class AdminVerbSystem
     {
         var allAccess = _prototypeManager
             .EnumeratePrototypes<AccessLevelPrototype>()
-            .Select(p => p.ID).ToArray();
+            .Select(p => new ProtoId<AccessLevelPrototype>(p.ID)).ToArray();
 
         _accessSystem.TrySetTags(entity, allAccess);
     }
 
     private void RevokeAllAccess(EntityUid entity)
     {
-        _accessSystem.TrySetTags(entity, Array.Empty<string>());
+        _accessSystem.TrySetTags(entity, new List<ProtoId<AccessLevelPrototype>>());
     }
 
     public enum TricksVerbPriorities

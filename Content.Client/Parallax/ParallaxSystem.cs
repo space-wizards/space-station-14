@@ -13,7 +13,6 @@ public sealed class ParallaxSystem : SharedParallaxSystem
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IParallaxManager _parallax = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     [ValidatePrototypeId<ParallaxPrototype>]
     private const string Fallback = "Default";

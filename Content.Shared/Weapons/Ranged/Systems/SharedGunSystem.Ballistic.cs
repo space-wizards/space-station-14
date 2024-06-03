@@ -35,13 +35,16 @@ public abstract partial class SharedGunSystem
         if (args.Handled)
             return;
 
-        ManualCycle(uid, component, Transform(uid).MapPosition, args.User);
+        ManualCycle(uid, component, TransformSystem.GetMapCoordinates(uid), args.User);
         args.Handled = true;
     }
 
     private void OnBallisticInteractUsing(EntityUid uid, BallisticAmmoProviderComponent component, InteractUsingEvent args)
     {
-        if (args.Handled || component.Whitelist?.IsValid(args.Used, EntityManager) != true)
+        if (args.Handled)
+            return;
+
+        if (_whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, args.Used))
             return;
 
         if (GetBallisticShots(component) >= component.Capacity)
@@ -74,8 +77,7 @@ public abstract partial class SharedGunSystem
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.FillDelay, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             BreakOnDamage = false,
             NeedHand = true
         });
@@ -162,7 +164,7 @@ public abstract partial class SharedGunSystem
             {
                 Text = Loc.GetString("gun-ballistic-cycle"),
                 Disabled = GetBallisticShots(component) == 0,
-                Act = () => ManualCycle(uid, component, Transform(uid).MapPosition, args.User),
+                Act = () => ManualCycle(uid, component, TransformSystem.GetMapCoordinates(uid), args.User),
             });
 
         }
@@ -183,10 +185,11 @@ public abstract partial class SharedGunSystem
 
         // Reset shotting for cycling
         if (Resolve(uid, ref gunComp, false) &&
-            gunComp is { FireRate: > 0f } &&
+            gunComp is { FireRateModified: > 0f } &&
             !Paused(uid))
         {
-            gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRate);
+            gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRateModified);
+            Dirty(uid, gunComp);
         }
 
         Dirty(uid, component);
@@ -261,7 +264,7 @@ public abstract partial class SharedGunSystem
         args.Capacity = component.Capacity;
     }
 
-    private void UpdateBallisticAppearance(EntityUid uid, BallisticAmmoProviderComponent component)
+    public void UpdateBallisticAppearance(EntityUid uid, BallisticAmmoProviderComponent component)
     {
         if (!Timing.IsFirstTimePredicted || !TryComp<AppearanceComponent>(uid, out var appearance))
             return;

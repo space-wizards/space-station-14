@@ -22,7 +22,6 @@ Jetpacks will be needed to move thoughout space, since without floors and gravit
 <Box>
 <GuideEntityEmbed Entity="ClothingMaskGasExplorer"/>
 <GuideEntityEmbed Entity="OxygenTankFilled"/>
-<GuideEntityEmbed Entity="YellowOxygenTankFilled"/>
 <GuideEntityEmbed Entity="NitrogenTankFilled"/>
 </Box>
 Internals will be important, given all species need to breathe, and space doesnt have any gases. Your mask is used to connect the gas tank to your mouth to breath, while the gas tanks hold consumable gases and can be refilled at gas canisters. All species breathe oxygen (blue + yellow tanks) except slimes, which need nitrogen (red tanks)

@@ -1,27 +1,26 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Administration;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Parallax;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Salvage;
+using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Spawners.Components;
-using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Components;
+using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
-using Robust.Shared.Spawners;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
@@ -50,7 +49,6 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private readonly RestrictedRangeSystem _restricted = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
@@ -81,11 +79,9 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PlayerSpawningEvent>(OnPlayerSpawn, before: new[] { typeof(SpawnPointSystem) });
-        SubscribeLocalEvent<StationArrivalsComponent, ComponentStartup>(OnArrivalsStartup);
+        SubscribeLocalEvent<StationArrivalsComponent, StationPostInitEvent>(OnStationPostInit);
 
         SubscribeLocalEvent<ArrivalsShuttleComponent, ComponentStartup>(OnShuttleStartup);
-        SubscribeLocalEvent<ArrivalsShuttleComponent, EntityUnpausedEvent>(OnShuttleUnpaused);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLTagEvent>(OnShuttleTag);
 
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
@@ -98,7 +94,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
         // Don't invoke immediately as it will get set in the natural course of things.
         Enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
-        _cfgManager.OnValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
+        Subs.CVar(_cfgManager, CCVars.ArrivalsShuttles, SetArrivals);
 
         // Command so admins can set these for funsies
         _console.RegisterCommand("arrivals", ArrivalsCommand, ArrivalsCompletion);
@@ -182,12 +178,6 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _cfgManager.UnsubValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
-    }
-
     /// <summary>
     ///     First sends shuttle timer data, then kicks people off the shuttle if it isn't leaving the arrivals terminal
     /// </summary>
@@ -199,7 +189,7 @@ public sealed class ArrivalsSystem : EntitySystem
         if (TryComp<DeviceNetworkComponent>(shuttleUid, out var netComp))
         {
             TryComp<FTLComponent>(shuttleUid, out var ftlComp);
-            var ftlTime = TimeSpan.FromSeconds(ftlComp?.TravelTime ?? ShuttleSystem.DefaultTravelTime);
+            var ftlTime = TimeSpan.FromSeconds(ftlComp?.TravelTime ?? _shuttles.DefaultTravelTime);
 
             var payload = new NetworkPayload
             {
@@ -265,7 +255,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
     private void OnArrivalsDocked(EntityUid uid, ArrivalsShuttleComponent component, ref FTLCompletedEvent args)
     {
-        TimeSpan dockTime = component.NextTransfer - _timing.CurTime + TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime);
+        var dockTime = component.NextTransfer - _timing.CurTime + TimeSpan.FromSeconds(_shuttles.DefaultStartupTime);
 
         if (TryComp<DeviceNetworkComponent>(uid, out var netComp))
         {
@@ -288,7 +278,7 @@ public sealed class ArrivalsSystem : EntitySystem
         foreach (var (ent, xform) in toDump)
         {
             var rotation = xform.LocalRotation;
-            _transform.SetCoordinates(ent, new EntityCoordinates(args.FromMapUid!.Value, args.FTLFrom.Transform(xform.LocalPosition)));
+            _transform.SetCoordinates(ent, new EntityCoordinates(args.FromMapUid!.Value, Vector2.Transform(xform.LocalPosition, args.FTLFrom)));
             _transform.SetWorldRotation(ent, args.FromRotation + rotation);
         }
     }
@@ -313,7 +303,7 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
-    private void OnPlayerSpawn(PlayerSpawningEvent ev)
+    public void HandlePlayerSpawning(PlayerSpawningEvent ev)
     {
         if (ev.SpawnResult != null)
             return;
@@ -327,7 +317,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
         TryGetArrivals(out var arrivals);
 
-        if (TryComp<TransformComponent>(arrivals, out var arrivalsXform))
+        if (TryComp(arrivals, out TransformComponent? arrivalsXform))
         {
             var mapId = arrivalsXform.MapID;
 
@@ -390,11 +380,6 @@ public sealed class ArrivalsSystem : EntitySystem
         EnsureComp<PreventPilotComponent>(uid);
     }
 
-    private void OnShuttleUnpaused(EntityUid uid, ArrivalsShuttleComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextTransfer += args.PausedTime;
-    }
-
     private bool TryGetArrivals(out EntityUid uid)
     {
         var arrivalsQuery = EntityQueryEnumerator<ArrivalsSourceComponent>();
@@ -429,27 +414,20 @@ public sealed class ArrivalsSystem : EntitySystem
         var curTime = _timing.CurTime;
         TryGetArrivals(out var arrivals);
 
-        // TODO: FTL fucker, if on an edge tile every N seconds check for wall or w/e
-        // TODO: Docking should be per-grid rather than per dock and bump off when undocking.
-
-        // TODO: Stop dispatch if emergency shuttle has arrived.
-        // TODO: Need maps
-        // TODO: Need emergency suits on shuttle probs
-        // TODO: Need some kind of comp to shunt people off if they try to get on?
-        if (TryComp<TransformComponent>(arrivals, out var arrivalsXform))
+        if (TryComp(arrivals, out TransformComponent? arrivalsXform))
         {
             while (query.MoveNext(out var uid, out var comp, out var shuttle, out var xform))
             {
                 if (comp.NextTransfer > curTime || !TryComp<StationDataComponent>(comp.Station, out var data))
                     continue;
 
-                var tripTime = ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultStartupTime;
+                var tripTime = _shuttles.DefaultTravelTime + _shuttles.DefaultStartupTime;
 
                 // Go back to arrivals source
                 if (xform.MapUid != arrivalsXform.MapUid)
                 {
                     if (arrivals.IsValid())
-                        _shuttles.FTLTravel(uid, shuttle, arrivals, dock: true);
+                        _shuttles.FTLToDock(uid, shuttle, arrivals);
 
                     comp.NextArrivalsTime = _timing.CurTime + TimeSpan.FromSeconds(tripTime);
                 }
@@ -459,7 +437,7 @@ public sealed class ArrivalsSystem : EntitySystem
                     var targetGrid = _station.GetLargestGrid(data);
 
                     if (targetGrid != null)
-                        _shuttles.FTLTravel(uid, shuttle, targetGrid.Value, dock: true);
+                        _shuttles.FTLToDock(uid, shuttle, targetGrid.Value);
 
                     // The ArrivalsCooldown includes the trip there, so we only need to add the time taken for
                     // the trip back.
@@ -554,7 +532,7 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
-    private void OnArrivalsStartup(EntityUid uid, StationArrivalsComponent component, ComponentStartup args)
+    private void OnStationPostInit(EntityUid uid, StationArrivalsComponent component, ref StationPostInitEvent args)
     {
         if (!Enabled)
             return;
@@ -579,7 +557,7 @@ public sealed class ArrivalsSystem : EntitySystem
             var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle);
             arrivalsComp.Station = uid;
             EnsureComp<ProtectedGridComponent>(uid);
-            _shuttles.FTLTravel(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: RoundStartFTLDuration, dock: true);
+            _shuttles.FTLToDock(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: RoundStartFTLDuration);
             arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
         }
 

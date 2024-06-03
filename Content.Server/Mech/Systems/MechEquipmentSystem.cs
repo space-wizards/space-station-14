@@ -47,8 +47,7 @@ public sealed class MechEquipmentSystem : EntitySystem
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.InstallDuration, new InsertEquipmentEvent(), uid, target: mech, used: uid)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true
+            BreakOnMove = true,
         };
 
         _doAfter.TryStartDoAfter(doAfterEventArgs);

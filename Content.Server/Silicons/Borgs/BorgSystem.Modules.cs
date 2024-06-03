@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Silicons.Borgs.Components;
@@ -267,7 +267,7 @@ public sealed partial class BorgSystem
             return false;
         }
 
-        if (component.ModuleWhitelist?.IsValid(module, EntityManager) == false)
+        if (_whitelistSystem.IsWhitelistFail(component.ModuleWhitelist, module))
         {
             if (user != null)
                 Popup.PopupEntity(Loc.GetString("borg-module-whitelist-deny"), uid, user.Value);

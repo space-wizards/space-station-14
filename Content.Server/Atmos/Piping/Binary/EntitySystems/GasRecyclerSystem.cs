@@ -1,7 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.Construction;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
@@ -29,8 +28,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasRecyclerComponent, AtmosDeviceUpdateEvent>(OnUpdate);
             SubscribeLocalEvent<GasRecyclerComponent, AtmosDeviceDisabledEvent>(OnDisabled);
             SubscribeLocalEvent<GasRecyclerComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<GasRecyclerComponent, RefreshPartsEvent>(OnRefreshParts);
-            SubscribeLocalEvent<GasRecyclerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         }
 
         private void OnEnabled(EntityUid uid, GasRecyclerComponent comp, ref AtmosDeviceEnabledEvent args)
@@ -44,12 +41,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!EntityManager.GetComponent<TransformComponent>(ent).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
-            if (!EntityManager.TryGetComponent(ent, out NodeContainerComponent? nodeContainer)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inlet)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? _))
-            {
+            if (!_nodeContainer.TryGetNode(ent.Owner, comp.InletName, out PipeNode? inlet))
                 return;
-            }
 
             using (args.PushGroup(nameof(GasRecyclerComponent)))
             {
@@ -75,9 +68,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnUpdate(Entity<GasRecyclerComponent> ent, ref AtmosDeviceUpdateEvent args)
         {
             var comp = ent.Comp;
-            if (!EntityManager.TryGetComponent(ent, out NodeContainerComponent? nodeContainer)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inlet)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outlet))
+            if (!_nodeContainer.TryGetNodes(ent.Owner, comp.InletName, comp.OutletName, out PipeNode? inlet, out PipeNode? outlet))
             {
                 _ambientSoundSystem.SetAmbience(ent, false);
                 return;
@@ -124,21 +115,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             _appearance.SetData(uid, PumpVisuals.Enabled, comp.Reacting);
-        }
-
-        private void OnRefreshParts(EntityUid uid, GasRecyclerComponent component, RefreshPartsEvent args)
-        {
-            var ratingTemp = args.PartRatings[component.MachinePartMinTemp];
-            var ratingPressure = args.PartRatings[component.MachinePartMinPressure];
-
-            component.MinTemp = component.BaseMinTemp * MathF.Pow(component.PartRatingMinTempMultiplier, ratingTemp - 1);
-            component.MinPressure = component.BaseMinPressure * MathF.Pow(component.PartRatingMinPressureMultiplier, ratingPressure - 1);
-        }
-
-        private void OnUpgradeExamine(EntityUid uid, GasRecyclerComponent component, UpgradeExamineEvent args)
-        {
-            args.AddPercentageUpgrade("gas-recycler-upgrade-min-temp", component.MinTemp / component.BaseMinTemp);
-            args.AddPercentageUpgrade("gas-recycler-upgrade-min-pressure", component.MinPressure / component.BaseMinPressure);
         }
     }
 }

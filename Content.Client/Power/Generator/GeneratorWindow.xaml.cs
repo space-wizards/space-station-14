@@ -115,10 +115,34 @@ public sealed partial class GeneratorWindow : FancyWindow
         }
 
         CloggedLabel.Visible = state.Clogged;
+
+        if (state.NetworkStats is { } netStats)
+        {
+            NetworkStats.Text = Loc.GetString(
+                "portable-generator-ui-network-stats-value",
+                ("load", netStats.Load),
+                ("supply", netStats.Supply));
+
+            var good = netStats.Load <= netStats.Supply;
+            NetworkStats.SetOnlyStyleClass(good ? "Good" : "Caution");
+        }
+        else
+        {
+            NetworkStats.Text = Loc.GetString("portable-generator-ui-network-stats-not-connected");
+            NetworkStats.StyleClasses.Clear();
+        }
     }
 
     private bool TryGetStartProgress(out float progress)
     {
+        // Try to check progress of auto-revving first
+        if (_entityManager.TryGetComponent<ActiveGeneratorRevvingComponent>(_entity, out var activeGeneratorRevvingComponent) && _entityManager.TryGetComponent<PortableGeneratorComponent>(_entity, out var portableGeneratorComponent))
+        {
+            var calculatedProgress = activeGeneratorRevvingComponent.CurrentTime / portableGeneratorComponent.StartTime;
+            progress = (float) calculatedProgress;
+            return true;
+        }
+
         var doAfterSystem = _entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
         return doAfterSystem.TryFindActiveDoAfter<GeneratorStartedEvent>(_entity, out _, out _, out progress);
     }

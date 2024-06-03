@@ -4,8 +4,8 @@
     sprite: Clothing/Head/Helmets/bombsuit.rsi
     state: icon
   product: CrateEmergencyExplosive
-  cost: 650
-  category: Emergency
+  cost: 1000
+  category: cargoproduct-category-name-emergency
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: fire_extinguisher_closed
   product: CrateEmergencyFire
   cost: 1500
-  category: Emergency
+  category: cargoproduct-category-name-emergency
   group: market
 
 - type: cargoProduct
@@ -25,7 +25,7 @@
     state: icon
   product: CrateEmergencyInternals
   cost: 500
-  category: Emergency
+  category: cargoproduct-category-name-emergency
   group: market
 
 - type: cargoProduct
@@ -35,7 +35,7 @@
     state: icon
   product: CrateEmergencyInternalsLarge
   cost: 2000
-  category: Emergency
+  category: cargoproduct-category-name-emergency
   group: market
 
 - type: cargoProduct
@@ -45,7 +45,7 @@
     state: radiation
   product: CrateEmergencyRadiation
   cost: 1000
-  category: Emergency
+  category: cargoproduct-category-name-emergency
   group: market
 
 - type: cargoProduct
@@ -55,7 +55,7 @@
     state: item_wall
   product: CrateEmergencyInflatablewall
   cost: 500
-  category: Emergency
+  category: cargoproduct-category-name-emergency
   group: market
 
 - type: cargoProduct
@@ -65,7 +65,7 @@
     state: icon
   product: CrateSlimepersonLifeSupport
   cost: 300
-  category: Emergency
+  category: cargoproduct-category-name-emergency
   group: market
 
 - type: cargoProduct
@@ -75,5 +75,5 @@
     state: icon
   product: CrateGenericBiosuit
   cost: 800
-  category: Emergency
+  category: cargoproduct-category-name-emergency
   group: market

@@ -29,15 +29,10 @@
           state: "smes-op1"
           shader: unshaded
     - type: Smes
-    - type: UpgradeBattery
-      maxChargeMultiplier: 2
-      baseMaxCharge: 8000000
-    - type: UpgradePowerSupplyRamping
-      scaling: Linear
-      supplyRampingMultiplier: 1     
     - type: Appearance
     - type: Battery
       startingCharge: 0
+      maxCharge: 8000000
     - type: ExaminableBattery
     - type: NodeContainer
       examinable: true
@@ -72,9 +67,6 @@
       color: "#c9c042"
       castShadows: false
     - type: WiresPanel
-    - type: Wires
-      boardName: wires-board-name-smes
-      layoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget

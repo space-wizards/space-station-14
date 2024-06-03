@@ -20,7 +20,7 @@ public sealed class CharacterInfoSystem : EntitySystem
 
     public void RequestCharacterInfo()
     {
-        var entity = _players.LocalPlayer?.ControlledEntity;
+        var entity = _players.LocalEntity;
         if (entity == null)
         {
             return;

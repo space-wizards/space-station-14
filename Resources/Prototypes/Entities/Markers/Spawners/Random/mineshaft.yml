@@ -1,0 +1,93 @@
+- type: entity
+  id: RandomWoodenSupport
+  name: wooden support spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Decoration/mines.rsi
+        state: support
+  - type: RandomSpawner
+    prototypes:
+      - WoodenSupport
+      - WoodenSupportBeam
+      - WoodenSupportBeam
+      - WoodenSupportBeam
+    chance: 0.9
+
+- type: entity
+  id: RandomWoodenWall
+  name: wooden wall spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Decoration/mines.rsi
+        state: support_wall
+  - type: RandomSpawner
+    prototypes:
+      - WoodenSupportWall
+      - WoodenSupportWallBroken
+    chance: 0.9
+
+- type: entity
+  id: RandomStalagmiteOrCrystal
+  name: stalagmite or crystal spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+        state: stalagmite2
+  - type: RandomSpawner
+    offset: 0.3
+    prototypes:
+      - RandomBrownStalagmite
+      - RandomGreyStalagmite
+      - CrystalSpawner
+    chance: 0.9
+
+- type: entity
+  id: RandomBrownStalagmite
+  name: brown stalagmite spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+        state: stalagmite2
+  - type: RandomSpawner
+    offset: 0.3
+    prototypes:
+      - FloraStalagmite1
+      - FloraStalagmite2
+      - FloraStalagmite3
+      - FloraStalagmite4
+      - FloraStalagmite5
+      - FloraStalagmite6
+    chance: 0.9
+
+- type: entity
+  id: RandomGreyStalagmite
+  name: grey stalagmite spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+        state: grey_stalagmite3
+  - type: RandomSpawner
+    offset: 0.3
+    prototypes:
+      - FloraGreyStalagmite1
+      - FloraGreyStalagmite2
+      - FloraGreyStalagmite3
+      - FloraGreyStalagmite4
+      - FloraGreyStalagmite5
+      - FloraGreyStalagmite6
+    chance: 0.9

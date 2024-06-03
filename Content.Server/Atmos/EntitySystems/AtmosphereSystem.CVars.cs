@@ -36,25 +36,25 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void InitializeCVars()
         {
-            _cfg.OnValueChanged(CCVars.SpaceWind, value => SpaceWind = value, true);
-            _cfg.OnValueChanged(CCVars.SpaceWindPressureForceDivisorThrow, value => SpaceWindPressureForceDivisorThrow = value, true);
-            _cfg.OnValueChanged(CCVars.SpaceWindPressureForceDivisorPush, value => SpaceWindPressureForceDivisorPush = value, true);
-            _cfg.OnValueChanged(CCVars.SpaceWindMaxVelocity, value => SpaceWindMaxVelocity = value, true);
-            _cfg.OnValueChanged(CCVars.SpaceWindMaxPushForce, value => SpaceWindMaxPushForce = value, true);
-            _cfg.OnValueChanged(CCVars.MonstermosEqualization, value => MonstermosEqualization = value, true);
-            _cfg.OnValueChanged(CCVars.MonstermosDepressurization, value => MonstermosDepressurization = value, true);
-            _cfg.OnValueChanged(CCVars.MonstermosRipTiles, value => MonstermosRipTiles = value, true);
-            _cfg.OnValueChanged(CCVars.AtmosGridImpulse, value => GridImpulse = value, true);
-            _cfg.OnValueChanged(CCVars.AtmosSpacingEscapeRatio, value => SpacingEscapeRatio = value, true);
-            _cfg.OnValueChanged(CCVars.AtmosSpacingMinGas, value => SpacingMinGas = value, true);
-            _cfg.OnValueChanged(CCVars.AtmosSpacingMaxWind, value => SpacingMaxWind = value, true);
-            _cfg.OnValueChanged(CCVars.Superconduction, value => Superconduction = value, true);
-            _cfg.OnValueChanged(CCVars.AtmosMaxProcessTime, value => AtmosMaxProcessTime = value, true);
-            _cfg.OnValueChanged(CCVars.AtmosTickRate, value => AtmosTickRate = value, true);
-            _cfg.OnValueChanged(CCVars.AtmosSpeedup, value => Speedup = value, true);
-            _cfg.OnValueChanged(CCVars.AtmosHeatScale, value => { HeatScale = value; InitializeGases(); }, true);
-            _cfg.OnValueChanged(CCVars.ExcitedGroups, value => ExcitedGroups = value, true);
-            _cfg.OnValueChanged(CCVars.ExcitedGroupsSpaceIsAllConsuming, value => ExcitedGroupsSpaceIsAllConsuming = value, true);
+            Subs.CVar(_cfg, CCVars.SpaceWind, value => SpaceWind = value, true);
+            Subs.CVar(_cfg, CCVars.SpaceWindPressureForceDivisorThrow, value => SpaceWindPressureForceDivisorThrow = value, true);
+            Subs.CVar(_cfg, CCVars.SpaceWindPressureForceDivisorPush, value => SpaceWindPressureForceDivisorPush = value, true);
+            Subs.CVar(_cfg, CCVars.SpaceWindMaxVelocity, value => SpaceWindMaxVelocity = value, true);
+            Subs.CVar(_cfg, CCVars.SpaceWindMaxPushForce, value => SpaceWindMaxPushForce = value, true);
+            Subs.CVar(_cfg, CCVars.MonstermosEqualization, value => MonstermosEqualization = value, true);
+            Subs.CVar(_cfg, CCVars.MonstermosDepressurization, value => MonstermosDepressurization = value, true);
+            Subs.CVar(_cfg, CCVars.MonstermosRipTiles, value => MonstermosRipTiles = value, true);
+            Subs.CVar(_cfg, CCVars.AtmosGridImpulse, value => GridImpulse = value, true);
+            Subs.CVar(_cfg, CCVars.AtmosSpacingEscapeRatio, value => SpacingEscapeRatio = value, true);
+            Subs.CVar(_cfg, CCVars.AtmosSpacingMinGas, value => SpacingMinGas = value, true);
+            Subs.CVar(_cfg, CCVars.AtmosSpacingMaxWind, value => SpacingMaxWind = value, true);
+            Subs.CVar(_cfg, CCVars.Superconduction, value => Superconduction = value, true);
+            Subs.CVar(_cfg, CCVars.AtmosMaxProcessTime, value => AtmosMaxProcessTime = value, true);
+            Subs.CVar(_cfg, CCVars.AtmosTickRate, value => AtmosTickRate = value, true);
+            Subs.CVar(_cfg, CCVars.AtmosSpeedup, value => Speedup = value, true);
+            Subs.CVar(_cfg, CCVars.AtmosHeatScale, value => { HeatScale = value; InitializeGases(); }, true);
+            Subs.CVar(_cfg, CCVars.ExcitedGroups, value => ExcitedGroups = value, true);
+            Subs.CVar(_cfg, CCVars.ExcitedGroupsSpaceIsAllConsuming, value => ExcitedGroupsSpaceIsAllConsuming = value, true);
         }
     }
 }

@@ -7,7 +7,6 @@
   - AnomalousResearch
   - Xenoarchaeology
   - Robotics
-  - MachineUpgrading
 
 - type: guideEntry
   id: Technologies
@@ -39,7 +38,6 @@
   text: "/ServerInfo/Guidebook/Science/Xenoarchaeology.xml"
   children:
   - ArtifactReports
-  - TraversalDistorter
 
 - type: guideEntry
   id: Robotics
@@ -52,16 +50,6 @@
   id: ArtifactReports
   name: guide-entry-artifact-reports
   text: "/ServerInfo/Guidebook/Science/ArtifactReports.xml"
-
-- type: guideEntry
-  id: TraversalDistorter
-  name: guide-entry-traversal-distorter
-  text: "/ServerInfo/Guidebook/Science/TraversalDistorter.xml"
-
-- type: guideEntry
-  id: MachineUpgrading
-  name: guide-entry-machine-upgrading
-  text: "/ServerInfo/Guidebook/Science/MachineUpgrading.xml"
 
 - type: guideEntry
   id: Cyborgs

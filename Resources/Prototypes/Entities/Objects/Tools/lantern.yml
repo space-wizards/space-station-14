@@ -61,6 +61,9 @@
       quickEquip: false
       slots:
         - Belt
+    - type: Tag
+      tags:
+      - Flashlight
 
 - type: entity
   parent: Lantern

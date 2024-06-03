@@ -10,3 +10,7 @@ bwoink-system-typing-indicator = {$players} {$count ->
 [one] is
 *[other] are
 } typing...
+
+admin-bwoink-play-sound = Bwoink?
+
+bwoink-title-none-selected = None selected

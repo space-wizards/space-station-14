@@ -1,3 +1,4 @@
+using Content.Shared.Antag;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
@@ -13,20 +14,20 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Zombies;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ZombieComponent : Component
+public sealed partial class ZombieComponent : Component, IAntagStatusIconComponent
 {
     /// <summary>
     /// The baseline infection chance you have if you are completely nude
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float MaxZombieInfectionChance = 0.50f;
+    public float MaxZombieInfectionChance = 0.80f;
 
     /// <summary>
     /// The minimum infection chance possible. This is simply to prevent
     /// being invincible by bundling up.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float MinZombieInfectionChance = 0.20f;
+    public float MinZombieInfectionChance = 0.25f;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float ZombieMovementSpeedDebuff = 0.70f;
@@ -93,8 +94,11 @@ public sealed partial class ZombieComponent : Component
     [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick;
 
-    [DataField("zombieStatusIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
-    public string ZombieStatusIcon = "ZombieFaction";
+    [DataField("zombieStatusIcon")]
+    public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
+
+    [DataField]
+    public bool IconVisibleToGhost { get; set; } = true;
 
     /// <summary>
     /// Healing each second
@@ -106,7 +110,9 @@ public sealed partial class ZombieComponent : Component
         {
             { "Blunt", -0.4 },
             { "Slash", -0.2 },
-            { "Piercing", -0.2 }
+            { "Piercing", -0.2 },
+            { "Heat", -0.02 },
+            { "Shock", -0.02 }
         }
     };
 
@@ -135,6 +141,12 @@ public sealed partial class ZombieComponent : Component
     /// </summary>
     [DataField("greetSoundNotification")]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
+
+    /// <summary>
+    ///     Hit sound on zombie bite.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier BiteSound = new SoundPathSpecifier("/Audio/Effects/bite.ogg");
 
     /// <summary>
     /// The blood reagent of the humanoid to restore in case of cloning

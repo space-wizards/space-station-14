@@ -12,6 +12,7 @@ using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
@@ -350,17 +351,6 @@ namespace Content.Server.Database
         }
         #endregion
 
-        protected override PlayerRecord MakePlayerRecord(Player record)
-        {
-            return new PlayerRecord(
-                new NetUserId(record.UserId),
-                new DateTimeOffset(record.FirstSeenTime, TimeSpan.Zero),
-                record.LastSeenUserName,
-                new DateTimeOffset(record.LastSeenTime, TimeSpan.Zero),
-                record.LastSeenAddress,
-                record.LastSeenHWId?.ToImmutableArray());
-        }
-
         private static ServerBanDef? ConvertBan(ServerBan? ban)
         {
             if (ban == null)
@@ -449,7 +439,7 @@ namespace Content.Server.Database
         public override async Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(
             CancellationToken cancel)
         {
-            await using var db = await GetDbImpl();
+            await using var db = await GetDbImpl(cancel);
 
             var admins = await db.SqliteDbContext.Admin
                 .Include(a => a.Flags)
@@ -460,34 +450,6 @@ namespace Content.Server.Database
             var adminRanks = await db.DbContext.AdminRank.Include(a => a.Flags).ToArrayAsync(cancel);
 
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
-        }
-
-        public override async Task<int> AddNewRound(Server server, params Guid[] playerIds)
-        {
-            await using var db = await GetDb();
-
-            var players = await db.DbContext.Player
-                .Where(player => playerIds.Contains(player.UserId))
-                .ToListAsync();
-
-            var nextId = 1;
-            if (await db.DbContext.Round.AnyAsync())
-            {
-                nextId = db.DbContext.Round.Max(round => round.Id) + 1;
-            }
-
-            var round = new Round
-            {
-                Id = nextId,
-                Players = players,
-                ServerId = server.Id
-            };
-
-            db.DbContext.Round.Add(round);
-
-            await db.DbContext.SaveChangesAsync();
-
-            return round.Id;
         }
 
         protected override IQueryable<AdminLog> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
@@ -546,23 +508,33 @@ namespace Content.Server.Database
             return await base.AddAdminMessage(message);
         }
 
-        private async Task<DbGuardImpl> GetDbImpl([CallerMemberName] string? name = null)
+        protected override DateTime NormalizeDatabaseTime(DateTime time)
+        {
+            DebugTools.Assert(time.Kind == DateTimeKind.Unspecified);
+            return DateTime.SpecifyKind(time, DateTimeKind.Utc);
+        }
+
+        private async Task<DbGuardImpl> GetDbImpl(
+            CancellationToken cancel = default,
+            [CallerMemberName] string? name = null)
         {
             LogDbOp(name);
             await _dbReadyTask;
             if (_msDelay > 0)
-                await Task.Delay(_msDelay);
+                await Task.Delay(_msDelay, cancel);
 
-            await _prefsSemaphore.WaitAsync();
+            await _prefsSemaphore.WaitAsync(cancel);
 
             var dbContext = new SqliteServerDbContext(_options());
 
             return new DbGuardImpl(this, dbContext);
         }
 
-        protected override async Task<DbGuard> GetDb([CallerMemberName] string? name = null)
+        protected override async Task<DbGuard> GetDb(
+            CancellationToken cancel = default,
+            [CallerMemberName] string? name = null)
         {
-            return await GetDbImpl(name).ConfigureAwait(false);
+            return await GetDbImpl(cancel, name).ConfigureAwait(false);
         }
 
         private sealed class DbGuardImpl : DbGuard
@@ -601,9 +573,9 @@ namespace Content.Server.Database
                 _semaphore = new SemaphoreSlim(maxCount, maxCount);
             }
 
-            public Task WaitAsync()
+            public Task WaitAsync(CancellationToken cancel = default)
             {
-                var task = _semaphore.WaitAsync();
+                var task = _semaphore.WaitAsync(cancel);
 
                 if (_synchronous)
                 {

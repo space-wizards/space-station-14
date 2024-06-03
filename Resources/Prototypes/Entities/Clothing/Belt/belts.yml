@@ -31,6 +31,7 @@
         - AppraisalTool
         - JawsOfLife
         - GPS
+        - WeldingMask
       components:
         - SprayPainter
         - NetworkConfigurator
@@ -41,6 +42,7 @@
         - Geiger
         - TrayScanner
         - GasAnalyzer
+        - HandLabeler
   - type: ItemMapper
     mapLayers:
       drill:
@@ -179,7 +181,7 @@
         - SmokeOnTrigger
         - Flash
         - Handcuff
-        - RangedMagazine
+        - BallisticAmmoProvider
         - Ammo
   - type: ItemMapper
     mapLayers:
@@ -221,10 +223,10 @@
         - WetFloorSign
         - HolosignProjector
         - Plunger
-        - LightReplacer
-        - JanicartKeys
       components:
         - LightReplacer
+        - SmokeOnTrigger
+    maxItemSize: Large
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -266,10 +268,12 @@
         - PillCanister
         - Radio
         - DiscreteHealthAnalyzer
+        - SurgeryTool
       components:
         - Hypospray
         - Injector
         - Pill
+        - HandLabeler
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -306,6 +310,17 @@
   - type: Appearance
 
 - type: entity
+  parent: ClothingBeltMedical
+  id: ClothingBeltMedicalEMT
+  name: EMT belt
+  description: Perfect for holding various equipment for medical emergencies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/emt.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/emt.rsi
+
+- type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltPlant
   name: botanical belt
@@ -331,6 +346,7 @@
       components:
         - Seed
         - Smokable
+        - HandLabeler
   - type: ItemMapper
     mapLayers:
       hatchet:
@@ -457,12 +473,20 @@
         - Sidearm
         - MagazinePistol
         - MagazineMagnum
+        - CombatKnife
+        - Truncheon
       components:
         - Stunbaton
         - FlashOnTrigger
         - SmokeOnTrigger
         - Flash
         - Handcuff
+        - BallisticAmmoProvider
+        - CartridgeAmmo
+        - DoorRemote
+        - Whistle
+        - HolosignProjector
+        - BalloonPopper
   - type: ItemMapper
     mapLayers:
       flashbang:
@@ -499,6 +523,8 @@
         name: Sabre
         insertVerbText: sheath-insert-verb
         ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
         whitelist:
           tags:
           - CaptainSabre
@@ -582,7 +608,7 @@
         - CartridgeAmmo
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: ClothingBeltSecurity
   id: ClothingBeltSecurityWebbing
   name: security webbing
   description: Unique and versatile chest rig, can hold security gear.
@@ -595,7 +621,7 @@
 - type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltMercWebbing
-  name: mercenarie webbing
+  name: mercenary webbing
   description: Ideal for storing everything from ammo to weapons and combat essentials.
   components:
   - type: Sprite

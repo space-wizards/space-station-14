@@ -1,13 +1,15 @@
 using Content.Server.Communications;
 using Content.Server.Chat.Managers;
+using Content.Server.CriminalRecords.Systems;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.GenericAntag;
+using Content.Server.Objectives.Components;
+using Content.Server.Objectives.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
 using Content.Server.Research.Systems;
 using Content.Server.Roles;
-using Content.Server.GenericAntag;
-using Content.Server.Warps;
 using Content.Shared.Alert;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Doors.Components;
@@ -17,9 +19,10 @@ using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
-using Robust.Shared.Random;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Objectives.Components;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -27,7 +30,6 @@ namespace Content.Server.Ninja.Systems;
 // engi -> saboteur
 // medi -> idk reskin it
 // other -> assault
-// TODO: when criminal records is merged, hack it to set everyone to arrest
 
 /// <summary>
 /// Main ninja system that handles ninja setup, provides helper methods for the rest of the code to use.
@@ -36,10 +38,11 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly CodeConditionSystem _codeCondition = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly RoleSystem _role = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly StealthClothingSystem _stealthClothing = default!;
 
@@ -51,6 +54,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
         SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
         SubscribeLocalEvent<SpaceNinjaComponent, ThreatCalledInEvent>(OnThreatCalledIn);
+        SubscribeLocalEvent<SpaceNinjaComponent, CriminalRecordsHackedEvent>(OnCriminalRecordsHacked);
     }
 
     public override void Update(float frameTime)
@@ -98,20 +102,23 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// </summary>
     public void SetSuitPowerAlert(EntityUid uid, SpaceNinjaComponent? comp = null)
     {
-        if (!Resolve(uid, ref comp, false) || comp.Deleted || comp.Suit == null)
+        if (!Resolve(uid, ref comp, false))
+            return;
+
+        if (comp.Deleted || comp.Suit == null)
         {
-            _alerts.ClearAlert(uid, AlertType.SuitPower);
+            _alerts.ClearAlert(uid, comp.SuitPowerAlert);
             return;
         }
 
         if (GetNinjaBattery(uid, out _, out var battery))
         {
             var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, battery.CurrentCharge), battery.MaxCharge, 8);
-            _alerts.ShowAlert(uid, AlertType.SuitPower, (short) severity);
+            _alerts.ShowAlert(uid, comp.SuitPowerAlert, (short) severity);
         }
         else
         {
-            _alerts.ClearAlert(uid, AlertType.SuitPower);
+            _alerts.ClearAlert(uid, comp.SuitPowerAlert);
         }
     }
 
@@ -161,18 +168,9 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         _role.MindAddRole(mindId, role, mind);
         _role.MindPlaySound(mindId, config.GreetingSound, mind);
 
-        // choose spider charge detonation point
-        var warps = new List<EntityUid>();
-        var query = EntityQueryEnumerator<BombingTargetComponent, WarpPointComponent>();
-        while (query.MoveNext(out var warpUid, out _, out var warp))
-        {
-            warps.Add(warpUid);
-        }
-
-        if (warps.Count > 0)
-            role.SpiderChargeTarget = _random.Pick(warps);
-
-        _chatMan.DispatchServerMessage(mind.Session, Loc.GetString("ninja-role-greeting"));
+        var session = mind.Session;
+        _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
+        _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
     }
 
     // TODO: PowerCellDraw, modify when cloak enabled
@@ -224,11 +222,21 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         Popup.PopupEntity(str, uid, uid, PopupType.Medium);
     }
 
-    private void OnThreatCalledIn(EntityUid uid, SpaceNinjaComponent comp, ref ThreatCalledInEvent args)
+    private void OnThreatCalledIn(Entity<SpaceNinjaComponent> ent, ref ThreatCalledInEvent args)
     {
-        if (_mind.TryGetObjectiveComp<TerrorConditionComponent>(uid, out var obj))
-        {
-            obj.CalledInThreat = true;
-        }
+        _codeCondition.SetCompleted(ent.Owner, ent.Comp.TerrorObjective);
+    }
+
+    private void OnCriminalRecordsHacked(Entity<SpaceNinjaComponent> ent, ref CriminalRecordsHackedEvent args)
+    {
+        _codeCondition.SetCompleted(ent.Owner, ent.Comp.MassArrestObjective);
+    }
+
+    /// <summary>
+    /// Called by <see cref="SpiderChargeSystem"/> when it detonates.
+    /// </summary>
+    public void DetonatedSpiderCharge(Entity<SpaceNinjaComponent> ent)
+    {
+        _codeCondition.SetCompleted(ent.Owner, ent.Comp.SpiderChargeObjective);
     }
 }

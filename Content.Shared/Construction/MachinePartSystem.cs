@@ -21,7 +21,6 @@ namespace Content.Shared.Construction
         {
             base.Initialize();
             SubscribeLocalEvent<MachineBoardComponent, ExaminedEvent>(OnMachineBoardExamined);
-            SubscribeLocalEvent<MachinePartComponent, ExaminedEvent>(OnMachinePartExamined);
         }
 
         private void OnMachineBoardExamined(EntityUid uid, MachineBoardComponent component, ExaminedEvent args)
@@ -62,20 +61,6 @@ namespace Content.Shared.Construction
             }
         }
 
-        private void OnMachinePartExamined(EntityUid uid, MachinePartComponent component, ExaminedEvent args)
-        {
-            if (!args.IsInDetailsRange)
-                return;
-
-            using (args.PushGroup(nameof(MachinePartComponent)))
-            {
-                args.PushMarkup(Loc.GetString("machine-part-component-on-examine-rating-text",
-                    ("rating", component.Rating)));
-                args.PushMarkup(Loc.GetString("machine-part-component-on-examine-type-text", ("type",
-                    Loc.GetString(_prototype.Index<MachinePartPrototype>(component.PartType).Name))));
-            }
-        }
-
         public Dictionary<string, int> GetMachineBoardMaterialCost(Entity<MachineBoardComponent> entity, int coefficient = 1)
         {
             var (_, comp) = entity;
@@ -102,9 +87,9 @@ namespace Content.Shared.Construction
             foreach (var (stackId, amount) in comp.MaterialIdRequirements)
             {
                 var stackProto = _prototype.Index<StackPrototype>(stackId);
+                var defaultProto = _prototype.Index(stackProto.Spawn);
 
-                if (_prototype.TryIndex(stackProto.Spawn, out var defaultProto) &&
-                    defaultProto.TryGetComponent<PhysicalCompositionComponent>(out var physComp))
+                if (defaultProto.TryGetComponent<PhysicalCompositionComponent>(out var physComp))
                 {
                     foreach (var (mat, matAmount) in physComp.MaterialComposition)
                     {

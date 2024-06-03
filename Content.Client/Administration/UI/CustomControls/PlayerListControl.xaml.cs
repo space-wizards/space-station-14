@@ -20,7 +20,7 @@ namespace Content.Client.Administration.UI.CustomControls
         private List<PlayerInfo> _playerList = new();
         private readonly List<PlayerInfo> _sortedPlayerList = new();
 
-        public event Action<PlayerInfo>? OnSelectionChanged;
+        public event Action<PlayerInfo?>? OnSelectionChanged;
         public IReadOnlyList<PlayerInfo> PlayerInfo => _playerList;
 
         public Func<PlayerInfo, string, string>? OverrideText;
@@ -28,6 +28,8 @@ namespace Content.Client.Administration.UI.CustomControls
 
         private IEntityManager _entManager;
         private IUserInterfaceManager _uiManager;
+
+        private PlayerInfo? _selectedPlayer;
 
         public PlayerListControl()
         {
@@ -39,10 +41,17 @@ namespace Content.Client.Administration.UI.CustomControls
             PlayerListContainer.ItemPressed += PlayerListItemPressed;
             PlayerListContainer.ItemKeyBindDown += PlayerListItemKeyBindDown;
             PlayerListContainer.GenerateItem += GenerateButton;
+            PlayerListContainer.NoItemSelected += PlayerListNoItemSelected;
             PopulateList(_adminSystem.PlayerList);
             FilterLineEdit.OnTextChanged += _ => FilterList();
             _adminSystem.PlayerListChanged += PopulateList;
             BackgroundPanel.PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)};
+        }
+
+        private void PlayerListNoItemSelected()
+        {
+            _selectedPlayer = null;
+            OnSelectionChanged?.Invoke(null);
         }
 
         private void PlayerListItemPressed(BaseButton.ButtonEventArgs? args, ListData? data)
@@ -50,10 +59,14 @@ namespace Content.Client.Administration.UI.CustomControls
             if (args == null || data is not PlayerListData {Info: var selectedPlayer})
                 return;
 
+            if (selectedPlayer == _selectedPlayer)
+                return;
+
             if (args.Event.Function != EngineKeyFunctions.UIClick)
                 return;
 
             OnSelectionChanged?.Invoke(selectedPlayer);
+            _selectedPlayer = selectedPlayer;
 
             // update label text. Only required if there is some override (e.g. unread bwoink count).
             if (OverrideText != null && args.Button.Children.FirstOrDefault()?.Children?.FirstOrDefault() is Label label)
@@ -95,6 +108,8 @@ namespace Content.Client.Administration.UI.CustomControls
                 _sortedPlayerList.Sort((a, b) => Comparison(a, b));
 
             PlayerListContainer.PopulateList(_sortedPlayerList.Select(info => new PlayerListData(info)).ToList());
+            if (_selectedPlayer != null)
+                PlayerListContainer.Select(new PlayerListData(_selectedPlayer));
         }
 
         public void PopulateList(IReadOnlyList<PlayerInfo>? players = null)
@@ -102,6 +117,9 @@ namespace Content.Client.Administration.UI.CustomControls
             players ??= _adminSystem.PlayerList;
 
             _playerList = players.ToList();
+            if (_selectedPlayer != null && !_playerList.Contains(_selectedPlayer))
+                _selectedPlayer = null;
+
             FilterList();
         }
 

@@ -7,7 +7,7 @@ namespace Content.Server.Gateway.Components;
 /// <summary>
 /// Generates gateway destinations at a regular interval.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class GatewayGeneratorComponent : Component
 {
     /// <summary>
@@ -20,6 +20,7 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// Next time another seed unlocks.
     /// </summary>
     [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextUnlock;
 
     /// <summary>

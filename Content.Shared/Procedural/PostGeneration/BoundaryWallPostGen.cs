@@ -9,15 +9,25 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// </summary>
 public sealed partial class BoundaryWallPostGen : IPostDunGen
 {
-    [DataField("tile", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
-    public string Tile = "FloorSteel";
+    [DataField]
+    public ProtoId<ContentTileDefinition> Tile = "FloorSteel";
 
-    [DataField("wall", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Wall = "WallSolid";
+    [DataField]
+    public EntProtoId Wall = "WallSolid";
 
     /// <summary>
     /// Walls to use in corners if applicable.
     /// </summary>
-    [DataField("cornerWall", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField]
     public string? CornerWall;
+
+    [DataField]
+    public BoundaryWallFlags Flags = BoundaryWallFlags.Corridors | BoundaryWallFlags.Rooms;
+}
+
+[Flags]
+public enum BoundaryWallFlags : byte
+{
+    Rooms = 1 << 0,
+    Corridors = 1 << 1,
 }

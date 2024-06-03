@@ -10,7 +10,6 @@ public sealed class PassiveDamageSystem : EntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -33,14 +32,14 @@ public sealed class PassiveDamageSystem : EntitySystem
         // Go through every entity with the component
         var query = EntityQueryEnumerator<PassiveDamageComponent, DamageableComponent, MobStateComponent>();
         while (query.MoveNext(out var uid, out var comp, out var damage, out var mobState))
-        {   
+        {
             // Make sure they're up for a damage tick
             if (comp.NextDamage > curTime)
                 continue;
 
             if (comp.DamageCap != 0 && damage.TotalDamage >= comp.DamageCap)
                 continue;
-            
+
             // Set the next time they can take damage
             comp.NextDamage = curTime + TimeSpan.FromSeconds(1f);
 

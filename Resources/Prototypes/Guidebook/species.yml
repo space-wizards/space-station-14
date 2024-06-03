@@ -1,0 +1,47 @@
+- type: guideEntry
+  id: Species
+  name: guide-entry-species
+  text: "/ServerInfo/Guidebook/Mobs/Species.xml"
+  children:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+
+- type: guideEntry
+  id: Arachnid
+  name: species-name-arachnid
+  text: "/ServerInfo/Guidebook/Mobs/Arachnid.xml"
+
+- type: guideEntry
+  id: Diona
+  name: species-name-diona
+  text: "/ServerInfo/Guidebook/Mobs/Diona.xml"
+
+- type: guideEntry
+  id: Dwarf
+  name: species-name-dwarf
+  text: "/ServerInfo/Guidebook/Mobs/Dwarf.xml"
+
+- type: guideEntry
+  id: Human
+  name: species-name-human
+  text: "/ServerInfo/Guidebook/Mobs/Human.xml"
+
+- type: guideEntry
+  id: Moth
+  name: species-name-moth
+  text: "/ServerInfo/Guidebook/Mobs/Moth.xml"
+
+- type: guideEntry
+  id: Reptilian
+  name: species-name-reptilian
+  text: "/ServerInfo/Guidebook/Mobs/Reptilian.xml"
+
+- type: guideEntry
+  id: SlimePerson
+  name: species-name-slime
+  text: "/ServerInfo/Guidebook/Mobs/SlimePerson.xml"

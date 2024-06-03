@@ -17,9 +17,6 @@
       "name": "icon-2"
     },
     {
-      "name": "icon-3"
-    },
-    {
       "name": "mouse-0",
       "directions": 4
     },
@@ -110,36 +107,6 @@
       ]
     },
     {
-      "name": "mouse-3",
-      "directions": 4
-    },
-    {
-      "name": "mouse-moving-3",
-      "directions": 4,
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ]
-      ]
-    },
-    {
       "name": "dead-0"
     },
     {
@@ -149,9 +116,6 @@
       "name": "dead-2"
     },
     {
-      "name": "dead-3"
-    },
-    {
       "name": "splat-0"
     },
     {
@@ -159,9 +123,6 @@
     },
     {
       "name": "splat-2"
-    },
-    {
-      "name": "splat-3"
     },
     {
       "name": "0-equipped-HELMET",

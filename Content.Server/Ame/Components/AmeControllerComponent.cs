@@ -1,7 +1,7 @@
 using Content.Server.Ame.EntitySystems;
-using Content.Shared.Ame;
+using Content.Shared.Ame.Components;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Ame.Components;
@@ -15,15 +15,11 @@ namespace Content.Server.Ame.Components;
 public sealed partial class AmeControllerComponent : SharedAmeControllerComponent
 {
     /// <summary>
-    /// The id of the container used to store the current fuel container for the AME.
+    /// Antimatter fuel slot.
     /// </summary>
-    public const string FuelContainerId = "AmeFuel";
-
-    /// <summary>
-    /// The container for the fuel canisters used by the AME.
-    /// </summary>
-    [ViewVariables]
-    public ContainerSlot JarSlot = default!;
+    [DataField("fuelSlot")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public ItemSlot FuelSlot = new();
 
     /// <summary>
     /// Whether or not the AME controller is currently injecting animatter into the reactor.

@@ -28,6 +28,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
 {
     [Dependency] private readonly AmbientSoundTreeSystem _treeSys = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -49,7 +50,6 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     private static AudioParams _params = AudioParams.Default
         .WithVariation(0.01f)
         .WithLoop(true)
-        .WithAttenuation(Attenuation.LinearDistance)
         .WithMaxDistance(7f);
 
     /// <summary>
@@ -98,10 +98,10 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         UpdatesOutsidePrediction = true;
         UpdatesAfter.Add(typeof(AmbientSoundTreeSystem));
 
-        _cfg.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
-        _cfg.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);
-        _cfg.OnValueChanged(CCVars.AmbientRange, SetAmbientRange, true);
-        _cfg.OnValueChanged(CCVars.AmbienceVolume, SetAmbienceGain, true);
+        Subs.CVar(_cfg, CCVars.AmbientCooldown, SetCooldown, true);
+        Subs.CVar(_cfg, CCVars.MaxAmbientSources, SetAmbientCount, true);
+        Subs.CVar(_cfg, CCVars.AmbientRange, SetAmbientRange, true);
+        Subs.CVar(_cfg, CCVars.AmbienceVolume, SetAmbienceGain, true);
         SubscribeLocalEvent<AmbientSoundComponent, ComponentShutdown>(OnShutdown);
     }
 
@@ -137,11 +137,6 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
         base.Shutdown();
         ClearSounds();
-
-        _cfg.UnsubValueChanged(CCVars.AmbientCooldown, SetCooldown);
-        _cfg.UnsubValueChanged(CCVars.MaxAmbientSources, SetAmbientCount);
-        _cfg.UnsubValueChanged(CCVars.AmbientRange, SetAmbientRange);
-        _cfg.UnsubValueChanged(CCVars.AmbienceVolume, SetAmbienceGain);
     }
 
     private int PlayingCount(string countSound)
@@ -172,7 +167,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
 
         _targetTime = _gameTiming.CurTime+TimeSpan.FromSeconds(_cooldown);
 
-        var player = _playerManager.LocalPlayer?.ControlledEntity;
+        var player = _playerManager.LocalEntity;
         if (!EntityManager.TryGetComponent(player, out TransformComponent? xform))
         {
             ClearSounds();
@@ -198,13 +193,13 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         public readonly Dictionary<string, List<(float Importance, AmbientSoundComponent)>> SourceDict = new();
         public readonly Vector2 MapPos;
         public readonly TransformComponent Player;
-        public readonly EntityQuery<TransformComponent> Query;
+        public readonly SharedTransformSystem TransformSystem;
 
-        public QueryState(Vector2 mapPos, TransformComponent player, EntityQuery<TransformComponent> query)
+        public QueryState(Vector2 mapPos, TransformComponent player, SharedTransformSystem transformSystem)
         {
             MapPos = mapPos;
             Player = player;
-            Query = query;
+            TransformSystem = transformSystem;
         }
     }
 
@@ -218,7 +213,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
 
         var delta = xform.ParentUid == state.Player.ParentUid
             ? xform.LocalPosition - state.Player.LocalPosition
-            : xform.WorldPosition - state.MapPos;
+            : state.TransformSystem.GetWorldPosition(xform) - state.MapPos;
 
         var range = delta.Length();
         if (range >= ambientComp.Range)
@@ -244,7 +239,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
         var query = GetEntityQuery<TransformComponent>();
         var metaQuery = GetEntityQuery<MetaDataComponent>();
-        var mapPos = playerXform.MapPosition;
+        var mapPos = _xformSystem.GetMapCoordinates(playerXform);
 
         // Remove out-of-range ambiences
         foreach (var (comp, sound) in _playingSounds)
@@ -258,9 +253,10 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                 xform.MapID == playerXform.MapID &&
                 !metaQuery.GetComponent(entity).EntityPaused)
             {
+                // TODO: This is just trydistance for coordinates.
                 var distance = (xform.ParentUid == playerXform.ParentUid)
                     ? xform.LocalPosition - playerXform.LocalPosition
-                    : xform.WorldPosition - mapPos.Position;
+                    : _xformSystem.GetWorldPosition(xform) - mapPos.Position;
 
                 if (distance.LengthSquared() < comp.Range * comp.Range)
                     continue;
@@ -277,7 +273,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             return;
 
         var pos = mapPos.Position;
-        var state = new QueryState(pos, playerXform, query);
+        var state = new QueryState(pos, playerXform, _xformSystem);
         var worldAabb = new Box2(pos - MaxAmbientVector, pos + MaxAmbientVector);
         _treeSys.QueryAabb(ref state, Callback, mapPos.MapId, worldAabb);
 

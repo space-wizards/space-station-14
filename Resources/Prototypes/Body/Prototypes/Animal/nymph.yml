@@ -1,0 +1,66 @@
+﻿- type: body
+  id: AnimalNymphBrain
+  name: "nymph"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - legs
+      organs:
+        brain: OrganDionaBrain
+        lungs: OrganAnimalLungs
+        stomach: OrganAnimalStomach
+        liver: OrganAnimalLiver
+        heart: OrganAnimalHeart
+        kidneys: OrganAnimalKidneys
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal
+
+- type: body
+  id: AnimalNymphLungs
+  name: "nymph"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - legs
+      organs:
+        lungs: OrganDionaLungs
+        stomach: OrganAnimalStomach
+        liver: OrganAnimalLiver
+        heart: OrganAnimalHeart
+        kidneys: OrganAnimalKidneys
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal
+
+- type: body
+  id: AnimalNymphStomach
+  name: "nymph"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - legs
+      organs:
+        lungs: OrganAnimalLungs
+        stomach: OrganDionaStomach
+        liver: OrganAnimalLiver
+        heart: OrganAnimalHeart
+        kidneys: OrganAnimalKidneys
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal

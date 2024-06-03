@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e idcluwne made by brainfood1183 (github) for ss14, idbrigmedic made by PuroSlavKing (Github), pirate made by brainfood1183 (github)",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e idcluwne made by brainfood1183 (github) for ss14, idbrigmedic made by PuroSlavKing (Github), pirate made by brainfood1183 (github), idadmin made by Arimah (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,9 @@
     },
     {
       "name": "centcom"
+    },
+    {
+      "name": "admin"
     },
     {
       "name": "ert_chaplain"
@@ -170,6 +173,9 @@
       "name": "idintern-tech"
     },
     {
+      "name": "idadmin"
+    },
+    {
       "name": "orange"
     },
     {
@@ -255,6 +261,14 @@
     },
     {
       "name": "blue-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "green-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "green-inhand-right",
       "directions": 4
     }
   ]

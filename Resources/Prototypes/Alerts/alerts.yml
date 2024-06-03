@@ -24,6 +24,15 @@
     - category: Thirst
     - alertType: Magboots
     - alertType: Pacified
+    - alertType: Deflecting
+
+- type: entity
+  id: AlertSpriteView
+  categories: [ HideSpawnMenu  ]
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.AlertVisualLayers.Base" ]
 
 - type: alert
   id: LowOxygen
@@ -33,6 +42,15 @@
     state: not_enough_oxy
   name: alerts-low-oxygen-name
   description: alerts-low-oxygen-desc
+
+- type: alert
+  id: LowNitrogen
+  category: Breathing
+  icons:
+    - sprite: /Textures/Interface/Alerts/breathing.rsi
+      state: not_enough_nitro
+  name: alerts-low-nitrogen-name
+  description: alerts-low-nitrogen-desc
 
 - type: alert
   id: Toxins
@@ -457,3 +475,11 @@
     state: critical
   name: Debug6
   description: Debug
+
+- type: alert
+  id: Deflecting
+  icons:
+  - sprite: /Textures/Interface/Alerts/deflecting.rsi
+    state: deflecting0
+  name: alerts-deflecting-name
+  description: alerts-deflecting-desc

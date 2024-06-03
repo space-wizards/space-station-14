@@ -84,7 +84,7 @@ public sealed partial class DungeonJob
                     foundNoise = true;
                     noiseFill = true;
                     var tileDef = _tileDefManager[layer.Tile];
-                    var variant = rand.NextByte(tileDef.Variants);
+                    var variant = _tile.PickVariant((ContentTileDefinition) tileDef, rand);
 
                     tiles.Add((node, new Tile(tileDef.TileId, variant: variant)));
                     roomTiles.Add(node);

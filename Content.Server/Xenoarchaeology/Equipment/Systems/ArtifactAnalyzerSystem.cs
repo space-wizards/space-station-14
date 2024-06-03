@@ -1,9 +1,8 @@
 using System.Linq;
-using Content.Server.Construction;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Server.Research.Systems;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
@@ -41,6 +40,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly ResearchSystem _research = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly TraversalDistorterSystem _traversalDistorter = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -62,6 +62,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleScanButtonPressedMessage>(OnScanButton);
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsolePrintButtonPressedMessage>(OnPrintButton);
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleExtractButtonPressedMessage>(OnExtractButton);
+        SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleBiasButtonPressedMessage>(OnBiasButton);
 
         SubscribeLocalEvent<AnalysisConsoleComponent, ResearchClientServerSelectedMessage>((e, c, _) => UpdateUserInterface(e, c),
             after: new[] { typeof(ResearchSystem) });
@@ -193,6 +194,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         var canScan = false;
         var canPrint = false;
         var points = 0;
+
         if (TryComp<ArtifactAnalyzerComponent>(component.AnalyzerEntity, out var analyzer))
         {
             artifact = analyzer.LastAnalyzedArtifact;
@@ -206,18 +208,22 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             if (GetArtifactForAnalysis(component.AnalyzerEntity, placer) is { } current)
                 points = _artifact.GetResearchPointValue(current);
         }
+
         var analyzerConnected = component.AnalyzerEntity != null;
         var serverConnected = TryComp<ResearchClientComponent>(uid, out var client) && client.ConnectedToServer;
 
         var scanning = TryComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity, out var active);
         var paused = active != null ? active.AnalysisPaused : false;
 
+        var biasDirection = BiasDirection.Up;
 
-        var state = new AnalysisConsoleScanUpdateState(GetNetEntity(artifact), analyzerConnected, serverConnected,
-            canScan, canPrint, msg, scanning, paused, active?.StartTime, active?.AccumulatedRunTime, totalTime, points);
+        if (TryComp<TraversalDistorterComponent>(component.AnalyzerEntity, out var trav))
+            biasDirection = trav.BiasDirection;
 
-        var bui = _ui.GetUi(uid, ArtifactAnalzyerUiKey.Key);
-        _ui.SetUiState(bui, state);
+        var state = new AnalysisConsoleUpdateState(GetNetEntity(artifact), analyzerConnected, serverConnected,
+            canScan, canPrint, msg, scanning, paused, active?.StartTime, active?.AccumulatedRunTime, totalTime, points, biasDirection == BiasDirection.Down);
+
+        _ui.SetUiState(uid, ArtifactAnalzyerUiKey.Key, state);
     }
 
     /// <summary>
@@ -228,7 +234,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     /// <param name="args"></param>
     private void OnServerSelectionMessage(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleServerSelectionMessage args)
     {
-        _ui.TryOpen(uid, ResearchClientUiKey.Key, args.Session);
+        _ui.OpenUi(uid, ResearchClientUiKey.Key, args.Actor);
     }
 
     /// <summary>
@@ -369,6 +375,20 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("analyzer-artifact-extract-popup"),
             component.AnalyzerEntity.Value, PopupType.Large);
+
+        UpdateUserInterface(uid, component);
+    }
+
+    private void OnBiasButton(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleBiasButtonPressedMessage args)
+    {
+        if (component.AnalyzerEntity == null)
+            return;
+
+        if (!TryComp<TraversalDistorterComponent>(component.AnalyzerEntity, out var trav))
+            return;
+
+        if (!_traversalDistorter.SetState(component.AnalyzerEntity.Value, trav, args.IsDown))
+            return;
 
         UpdateUserInterface(uid, component);
     }

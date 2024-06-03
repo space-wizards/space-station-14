@@ -1,4 +1,4 @@
-﻿using Content.Server.NPC.HTN;
+using Content.Server.NPC.HTN;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
@@ -27,7 +27,7 @@ public sealed class KillTrackingSystem : EntitySystem
         {
             foreach (var key in component.LifetimeDamage.Keys)
             {
-                component.LifetimeDamage[key] -= args.DamageDelta.Total;
+                component.LifetimeDamage[key] -= args.DamageDelta.GetTotal();
             }
 
             return;
@@ -35,7 +35,7 @@ public sealed class KillTrackingSystem : EntitySystem
 
         var source = GetKillSource(args.Origin);
         var damage = component.LifetimeDamage.GetValueOrDefault(source);
-        component.LifetimeDamage[source] = damage + args.DamageDelta.Total;
+        component.LifetimeDamage[source] = damage + args.DamageDelta.GetTotal();
     }
 
     private void OnMobStateChanged(EntityUid uid, KillTrackerComponent component, MobStateChangedEvent args)

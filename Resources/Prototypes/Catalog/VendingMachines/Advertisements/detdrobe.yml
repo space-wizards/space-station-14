@@ -1,6 +1,0 @@
-- type: advertisementsPack
-  id: DetDrobeAds
-  advertisements:
-    - advertisement-detdrobe-1
-  thankyous:
-    - vending-machine-thanks

@@ -4,7 +4,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -102,7 +101,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform) || !transform.Anchored)
             return;
 
-        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid))
+        if (!TryComp<MapGridComponent>(transform.GridUid, out var grid))
             return;
 
         UpdateAirtightMap(transform.GridUid.Value, grid, grid.CoordinatesToTile(transform.Coordinates));

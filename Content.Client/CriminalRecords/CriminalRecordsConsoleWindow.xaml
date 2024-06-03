@@ -1,0 +1,37 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               Title="{Loc 'criminal-records-console-window-title'}"
+               MinSize="660 400">
+    <BoxContainer Orientation="Vertical">
+        <!-- Record search bar
+             TODO: make this into a control shared with general records -->
+        <BoxContainer Margin="5 5 5 10" HorizontalExpand="true" VerticalAlignment="Center">
+            <OptionButton Name="FilterType" MinWidth="200" Margin="0 0 10 0"/> <!-- Populated in constructor -->
+            <LineEdit Name="FilterText" PlaceHolder="{Loc 'criminal-records-filter-placeholder'}" HorizontalExpand="True"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+            <!-- Record listing -->
+            <BoxContainer Orientation="Vertical" Margin="5" MinWidth="250" MaxWidth="250">
+                <Label Name="RecordListingTitle" Text="{Loc 'criminal-records-console-records-list-title'}" HorizontalExpand="True" Align="Center"/>
+                <Label Name="NoRecords" Text="{Loc 'criminal-records-console-no-records'}" HorizontalExpand="True" Align="Center" FontColorOverride="DarkGray"/>
+                <ScrollContainer VerticalExpand="True">
+                    <ItemList Name="RecordListing"/> <!-- Populated when loading state -->
+                </ScrollContainer>
+            </BoxContainer>
+            <Label Name="RecordUnselected" Text="{Loc 'criminal-records-console-select-record-info'}" HorizontalExpand="True" Align="Center" FontColorOverride="DarkGray"/>
+            <!-- Selected record info -->
+            <BoxContainer Name="PersonContainer" Orientation="Vertical" Margin="5" Visible="False">
+                <Label Name="PersonName" StyleClasses="LabelBig"/>
+                <Label Name="PersonPrints"/>
+                <Label Name="PersonDna"/>
+                <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 5" />
+                <BoxContainer Orientation="Horizontal" Margin="5 5 5 5">
+                    <Label Name="StatusLabel" Text="{Loc 'criminal-records-console-status'}" FontColorOverride="DarkGray"/>
+                    <OptionButton Name="StatusOptionButton"/> <!-- Populated in constructor -->
+                </BoxContainer>
+                <RichTextLabel Name="WantedReason" Visible="False"/>
+                <Button Name="HistoryButton" Text="{Loc 'criminal-records-console-crime-history'}"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

@@ -44,9 +44,11 @@
     name: ghost-role-information-cerberus-name
     description: ghost-role-information-cerberus-description
     rules: ghost-role-information-cerberus-rules
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: MeleeWeapon
-    angle: 0
+    altDisarm: false
     animation: WeaponArcBite
     damage:
       types:

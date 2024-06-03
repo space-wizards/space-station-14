@@ -29,7 +29,7 @@ namespace Content.Server.Construction
                 return;
 
             if(GetGuide(prototype) is {} guide)
-                RaiseNetworkEvent(new ResponseConstructionGuide(msg.ConstructionId, guide), args.SenderSession.ConnectedClient);
+                RaiseNetworkEvent(new ResponseConstructionGuide(msg.ConstructionId, guide), args.SenderSession.Channel);
         }
 
         private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetVerbsEvent<Verb> args)
@@ -39,6 +39,18 @@ namespace Content.Server.Construction
 
             if (component.TargetNode == component.DeconstructionNode ||
                 component.Node == component.DeconstructionNode)
+                return;
+
+            if (!_prototypeManager.TryIndex(component.Graph, out ConstructionGraphPrototype? graph))
+                return;
+
+            if (component.DeconstructionNode == null)
+                return;
+
+            if (GetCurrentNode(uid, component) is not {} currentNode)
+                return;
+
+            if (graph.Path(currentNode.Name, component.DeconstructionNode) is not {} path || path.Length == 0)
                 return;
 
             Verb verb = new();

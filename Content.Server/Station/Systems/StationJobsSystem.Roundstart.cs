@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Station.Components;
+using Content.Server.Station.Events;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.Network;
@@ -323,8 +324,7 @@ public sealed partial class StationJobsSystem
 
             jobs.ExtendedAccess = count <= thresh;
 
-            Logger.DebugS(
-                "station", "Station {Station} on extended access: {ExtendedAccess}",
+            Log.Debug("Station {Station} on extended access: {ExtendedAccess}",
                 Name(station), jobs.ExtendedAccess);
         }
     }
@@ -343,8 +343,9 @@ public sealed partial class StationJobsSystem
         foreach (var (player, profile) in profiles)
         {
             var roleBans = _banManager.GetJobBans(player);
-            var profileJobs = profile.JobPriorities.Keys.ToList();
-            _playTime.RemoveDisallowedJobs(player, ref profileJobs);
+            var profileJobs = profile.JobPriorities.Keys.Select(k => new ProtoId<JobPrototype>(k)).ToList();
+            var ev = new StationJobsGetCandidatesEvent(player, profileJobs);
+            RaiseLocalEvent(ref ev);
 
             List<string>? availableJobs = null;
 
@@ -355,7 +356,7 @@ public sealed partial class StationJobsSystem
                 if (!(priority == selectedPriority || selectedPriority is null))
                     continue;
 
-                if (!_prototypeManager.TryIndex(jobId, out JobPrototype? job))
+                if (!_prototypeManager.TryIndex(jobId, out var job))
                     continue;
 
                 if (weight is not null && job.Weight != weight.Value)

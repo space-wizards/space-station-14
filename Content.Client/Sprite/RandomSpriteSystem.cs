@@ -1,3 +1,5 @@
+using Content.Client.Clothing;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Sprite;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
@@ -8,6 +10,7 @@ namespace Content.Client.Sprite;
 public sealed class RandomSpriteSystem : SharedRandomSpriteSystem
 {
     [Dependency] private readonly IReflectionManager _reflection = default!;
+    [Dependency] private readonly ClientClothingSystem _clothing = default!;
 
     public override void Initialize()
     {
@@ -31,10 +34,29 @@ public sealed class RandomSpriteSystem : SharedRandomSpriteSystem
             component.Selected.Add(layer.Key, layer.Value);
         }
 
-        UpdateAppearance(uid, component);
+        UpdateSpriteComponentAppearance(uid, component);
+        UpdateClothingComponentAppearance(uid, component);
     }
 
-    private void UpdateAppearance(EntityUid uid, RandomSpriteComponent component, SpriteComponent? sprite = null)
+    private void UpdateClothingComponentAppearance(EntityUid uid, RandomSpriteComponent component, ClothingComponent? clothing = null)
+    {
+        if (!Resolve(uid, ref clothing, false))
+            return;
+
+        if (clothing.ClothingVisuals == null)
+            return;
+
+        foreach (var slotPair in clothing.ClothingVisuals)
+        {
+            foreach (var keyColorPair in component.Selected)
+            {
+                _clothing.SetLayerColor(clothing, slotPair.Key, keyColorPair.Key, keyColorPair.Value.Color);
+                _clothing.SetLayerState(clothing, slotPair.Key, keyColorPair.Key, keyColorPair.Value.State);
+            }
+        }
+    }
+
+    private void UpdateSpriteComponentAppearance(EntityUid uid, RandomSpriteComponent component, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite, false))
             return;
@@ -51,11 +73,10 @@ public sealed class RandomSpriteSystem : SharedRandomSpriteSystem
             {
                 if (layer.Key is not { } strKey || !int.TryParse(strKey, out index))
                 {
-                    Logger.Error($"Invalid key `{layer.Key}` for entity with random sprite {ToPrettyString(uid)}");
+                    Log.Error($"Invalid key `{layer.Key}` for entity with random sprite {ToPrettyString(uid)}");
                     continue;
                 }
             }
-
             sprite.LayerSetState(index, layer.Value.State);
             sprite.LayerSetColor(index, layer.Value.Color ?? Color.White);
         }

@@ -190,9 +190,9 @@ public sealed class StatValuesCommand : IConsoleCommand
             values.Add(new[]
             {
                 proto.ID,
-                (comp.Damage.Total * comp.AttackRate).ToString(),
+                (comp.Damage.GetTotal() * comp.AttackRate).ToString(),
                 comp.AttackRate.ToString(CultureInfo.CurrentCulture),
-                comp.Damage.Total.ToString(),
+                comp.Damage.GetTotal().ToString(),
                 comp.Range.ToString(CultureInfo.CurrentCulture),
             });
         }

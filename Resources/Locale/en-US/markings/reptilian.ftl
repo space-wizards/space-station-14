@@ -22,7 +22,8 @@ marking-LizardHornsShort = Lizard Horns (Short)
 marking-LizardHornsSimple-horns_simple = Lizard Horns
 marking-LizardHornsSimple = Lizard Horns
 
-marking-LizardTailSmooth-tail_smooth = Lizard Tail (Smooth)
+marking-LizardTailSmooth-tail_smooth_primary = Lizard Tail
+marking-LizardTailSmooth-tail_smooth_secondary = Under Tone
 marking-LizardTailSmooth = Lizard Tail (Smooth)
 
 marking-LizardTailLarge-tail_large = Lizard Tail (Large)
@@ -67,6 +68,9 @@ marking-LizardFrillsDivinity = Lizard Frills (Divinity)
 marking-LizardFrillsBig-frills_big = Lizard Frills (Big)
 marking-LizardFrillsBig = Lizard Frills (Big)
 
+marking-LizardFrillsNeckfull-frills_neckfull = Lizard Frills (Neckfull)
+marking-LizardFrillsNeckfull = Lizard Frills (Neckfull)
+
 marking-LizardHornsDouble-horns_double = Lizard Horns (Double)
 marking-LizardHornsDouble = Lizard Horns (Double)
 
@@ -100,3 +104,7 @@ marking-LizardChestUnderbelly = Lizard Chest (Underbelly)
 
 marking-LizardChestBackspikes-body_backspikes = Lizard Back spikes (Four)
 marking-LizardChestBackspikes = Lizard Back spikes (Four)
+
+marking-LizardSnoutSplotch = Lizard Snout (Splotch)
+marking-LizardSnoutSplotch-snout_splotch_primary = Muzzle
+marking-LizardSnoutSplotch-snout_splotch_secondary = Snoot

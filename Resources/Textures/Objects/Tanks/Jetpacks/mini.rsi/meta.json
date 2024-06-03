@@ -59,6 +59,36 @@
           0.1
         ]
       ]
+    },
+    {
+      "name": "equipped-SUITSTORAGE",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-SUITSTORAGE",
+      "directions": 4,
+      "delays": [
+        [
+          0.5,
+          0.2,
+          0.1
+        ],
+        [
+          0.5,
+          0.2,
+          0.1
+        ],
+        [
+          0.5,
+          0.2,
+          0.1
+        ],
+        [
+          0.5,
+          0.2,
+          0.1
+        ]
+      ]
     }
   ]
 }
