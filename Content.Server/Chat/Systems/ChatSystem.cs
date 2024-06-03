@@ -188,7 +188,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             session = mind.Session;
         }
-        if (session != null && !_censor.RegexCensor(CensorTarget.IC, message, session))
+        if (session != null
+            && !_censor.RegexCensor(desiredType == InGameICChatType.Emote ? CensorTarget.Emote : CensorTarget.IC,
+                message,
+                session))
             return;
 
         if (player != null && !_chatManager.HandleRateLimit(player))
