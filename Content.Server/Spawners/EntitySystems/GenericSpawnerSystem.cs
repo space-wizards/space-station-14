@@ -76,7 +76,7 @@ public sealed class GenericSpawnerSystem : EntitySystem
 
         if (!_proto.TryIndex(component.EntityTable, out var entTable))
         {
-            Log.Error($"Referenced entity table prototype does not exist! Entity: {ToPrettyString(uid)}");
+            Log.Warning($"Referenced entity table prototype does not exist! Entity: {ToPrettyString(uid)}");
             return;
         }
 
