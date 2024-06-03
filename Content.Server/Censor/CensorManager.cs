@@ -101,7 +101,7 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
 
             foreach (var censorAction in censorGroup.CensorActions)
             {
-                blocked &= censorAction.RunAction(session, inputText, textMatches, textCensor.DisplayName, _entMan);
+                blocked &= censorAction.RunAction(session, inputText, textMatches, textCensor, _entMan);
             }
         }
 

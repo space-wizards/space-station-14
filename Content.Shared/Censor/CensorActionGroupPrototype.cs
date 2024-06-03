@@ -65,13 +65,13 @@ public interface ICensorAction
     /// <param name="session">The session the text came from.</param>
     /// <param name="fullText">The full text provided by the user.</param>
     /// <param name="matchedText">The text matched by the censor.</param>
-    /// <param name="censorTargetName">The name of the censor that matched the <paramref name="fullText"/>.</param>
+    /// <param name="censor">The censor that matched the <paramref name="fullText"/>.</param>
     /// <param name="entMan"></param>
     /// <returns>True if the message passes. False if the message should be blocked.</returns>
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> matchedText,
-        string censorTargetName,
+        TextCensorActionDef censor,
         IEntityManager entMan);
 
     // TODO ShadowCommander add a counter for each player that counts runs on an action for checking multiple slurs
