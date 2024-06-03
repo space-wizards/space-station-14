@@ -1,6 +1,4 @@
 using System.Diagnostics;
-using Content.Shared.CCVar;
-using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
 using System.Linq;
 using Robust.Shared.Threading;
@@ -13,10 +11,9 @@ namespace Content.Server.Power.Pow3r
         private UpdateNetworkJob _networkJob;
         private bool _disableParallel;
 
-        public BatteryRampPegSolver()
+        public BatteryRampPegSolver(bool disableParallel = false)
         {
-            IConfigurationManager _cfg = IoCManager.Resolve<IConfigurationManager>();
-            _disableParallel = _cfg.GetCVar(CCVars.DebugPow3rDisableParallel);
+            _disableParallel = disableParallel;
             _networkJob = new()
             {
                 Solver = this,

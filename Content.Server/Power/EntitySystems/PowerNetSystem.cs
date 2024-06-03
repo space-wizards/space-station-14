@@ -35,6 +35,7 @@ namespace Content.Server.Power.EntitySystems
             base.Initialize();
 
             UpdatesAfter.Add(typeof(NodeGroupSystem));
+            _solver = new(_cfg.GetCVar(CCVars.DebugPow3rDisableParallel));
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentInit>(ApcPowerReceiverInit);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentShutdown>(ApcPowerReceiverShutdown);
@@ -62,7 +63,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void DebugPow3rDisableParallelChanged(bool val)
         {
-            _solver = new();
+            _solver = new(val);
         }
 
         private void ApcPowerReceiverInit(EntityUid uid, ApcPowerReceiverComponent component, ComponentInit args)
