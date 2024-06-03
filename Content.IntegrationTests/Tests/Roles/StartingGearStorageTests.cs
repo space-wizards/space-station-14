@@ -1,8 +1,6 @@
 using System.Linq;
-using System.Numerics;
 using Content.Shared.Roles;
 using Content.Server.Storage.EntitySystems;
-using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Collections;
@@ -27,10 +25,8 @@ public sealed class StartingGearPrototypeStorageTest
         var protos = server.ProtoMan
             .EnumeratePrototypes<StartingGearPrototype>()
             .Where(p => !p.Abstract)
-            .ToList();
+            .ToList()
             .OrderBy(p => p.ID);
-
-        protos.Sort();
 
         var testMap = await pair.CreateTestMap();
         var coords = testMap.GridCoords;
