@@ -6,6 +6,7 @@
   - Forensics
   - Defusal
   - CriminalRecords
+  - SpaceLaw # Goobstation
 
 - type: guideEntry
   id: Forensics
@@ -21,3 +22,9 @@
   id: CriminalRecords
   name: guide-entry-criminal-records
   text: "/ServerInfo/Guidebook/Security/CriminalRecords.xml"
+
+# Goobstation
+- type: guideEntry
+  id: SpaceLaw
+  name: guide-entry-space-law
+  text: "/ServerInfo/Guidebook/Security/SpaceLaw.xml"
