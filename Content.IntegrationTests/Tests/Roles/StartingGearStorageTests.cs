@@ -34,24 +34,15 @@ public sealed class StartingGearPrototypeStorageTest
             .ToList();
 
         protos.Sort();
-        var mapId = MapId.Nullspace;
 
-        await server.WaitPost(() =>
-        {
-            mapId = mapManager.CreateMap();
-        });
-
-        var coords = new MapCoordinates(Vector2.Zero, mapId);
-
-        await pair.RunTicksSync(3);
+        var testMap = await pair.CreateTestMap();
+        var coords = testMap.GridCoords;
 
         foreach (var gearProto in protos)
         {
             var backpackProto = gearProto.GetGear("back");
 
-            EntityUid bag = default;
-
-            await server.WaitPost(() => bag = server.EntMan.SpawnEntity(backpackProto, coords));
+            var bag = server.EntMan.SpawnEntity(backpackProto, coords);
             var ents = new ValueList<EntityUid>();
 
             foreach (var (slot, entProtos) in gearProto.Storage)
