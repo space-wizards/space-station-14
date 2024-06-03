@@ -2,7 +2,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitBlackShirtJeans
   name: black shirt and jeans
-  description: Baggy jeans and a black t-shirt.
+  description: Baggy jeans and a black t-shirt
   components:
     - type: Sprite
       sprite: GreyStation/Clothing/Uniforms/Jumpsuit/casualblack.rsi
