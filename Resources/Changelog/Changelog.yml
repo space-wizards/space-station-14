@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ko4erga
-  changes:
-  - message: Added craftable high and small wooden fences, bench. New stairs.
-    type: Add
-  id: 6172
-  time: '2024-03-17T21:18:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26182
 - author: potato1234_x
   changes:
   - message: Changed the puddle sprites so the smoothing is less jagged
@@ -3851,3 +3844,10 @@
   id: 6671
   time: '2024-06-03T03:33:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28545
+- author: Vermidia
+  changes:
+  - message: SyndiCats now spawn from a radio like other reinforcements.
+    type: Tweak
+  id: 6672
+  time: '2024-06-03T11:54:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28492
