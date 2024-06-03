@@ -22,7 +22,7 @@ public sealed class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowMindShiel
         if (!IsActive)
             return;
 
-        var iconPrototype = _prototype.Index(component.MindShieldStatusIcon);
-        ev.StatusIcons.Add(iconPrototype);
+        if (_prototype.TryIndex(component.MindShieldStatusIcon, out var iconPrototype))
+            ev.StatusIcons.Add(iconPrototype);
     }
 }

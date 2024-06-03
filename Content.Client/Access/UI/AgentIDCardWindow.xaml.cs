@@ -46,7 +46,9 @@ namespace Content.Client.Access.UI
             var i = 0;
             foreach (var jobIconId in icons)
             {
-                var jobIcon = _prototypeManager.Index(jobIconId);
+                if (!_prototypeManager.TryIndex(jobIconId, out var jobIcon))
+                    continue;
+
                 String styleBase = StyleBase.ButtonOpenBoth;
                 var modulo = i % JobIconColumnCount;
                 if (modulo == 0)

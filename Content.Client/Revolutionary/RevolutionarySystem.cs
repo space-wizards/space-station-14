@@ -25,13 +25,13 @@ public sealed class RevolutionarySystem : SharedRevolutionarySystem
         if (HasComp<HeadRevolutionaryComponent>(ent))
             return;
 
-        var iconPrototype = _prototype.Index(ent.Comp.StatusIcon);
-        args.StatusIcons.Add(iconPrototype);
+        if (_prototype.TryIndex(ent.Comp.StatusIcon, out var iconPrototype))
+            args.StatusIcons.Add(iconPrototype);
     }
 
     private void GetHeadRevIcon(Entity<HeadRevolutionaryComponent> ent, ref GetStatusIconsEvent args)
     {
-        var iconPrototype = _prototype.Index(ent.Comp.StatusIcon);
-        args.StatusIcons.Add(iconPrototype);
+        if (_prototype.TryIndex(ent.Comp.StatusIcon, out var iconPrototype))
+            args.StatusIcons.Add(iconPrototype);
     }
 }

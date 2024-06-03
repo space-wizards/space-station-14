@@ -92,7 +92,9 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            var jobIcon = _prototypeManager.Index(args.JobIconId);
+            if (!_prototypeManager.TryIndex(args.JobIconId, out var jobIcon))
+                return;
+
             _cardSystem.TryChangeJobIcon(uid, jobIcon, idCard);
 
             if (TryFindJobProtoFromIcon(jobIcon, out var job))
