@@ -50,13 +50,15 @@ public sealed class NukeOpsTest
         var invSys = server.System<InventorySystem>();
         var factionSys = server.System<NpcFactionSystem>();
 
-        Assert.That(server.CfgMan.GetCVar(CCVars.GridFill), Is.False);
         server.CfgMan.SetCVar(CCVars.GridFill, true);
 
         // Initially in the lobby
         Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
         Assert.That(client.AttachedEntity, Is.Null);
         Assert.That(ticker.PlayerGameStatuses[client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
+
+        // Opt into the nukies role.
+        await pair.SetAntagPref("NukeopsCommander", true);
 
         // There are no grids or maps
         Assert.That(entMan.Count<MapComponent>(), Is.Zero);
@@ -197,7 +199,7 @@ public sealed class NukeOpsTest
         }
 
         ticker.SetGamePreset((GamePresetPrototype?)null);
-        server.CfgMan.SetCVar(CCVars.GridFill, false);
+        await pair.SetAntagPref("NukeopsCommander", false);
         await pair.CleanReturnAsync();
     }
 }

@@ -62,7 +62,7 @@ public sealed class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
             if (xform.GridUid is not {} grid || !ent.Comp.MapGrids.Contains(grid))
                 continue;
 
-            if (ent.Comp.SpawnerWhitelist != null && !_whitelist.IsValid(ent.Comp.SpawnerWhitelist, uid))
+            if (_whitelist.IsWhitelistFail(ent.Comp.SpawnerWhitelist, uid))
                 continue;
 
             args.Coordinates.Add(_transform.GetMapCoordinates(xform));

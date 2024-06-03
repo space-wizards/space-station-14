@@ -22,7 +22,7 @@
       NavSmash: !type:Bool
         true
   - type: Tool
-    speed: 1.5
+    speedModifier: 1.5
     qualities:
       - Prying
   - type: Prying
@@ -40,6 +40,7 @@
     factions:
     - Xeno
   - type: Hands
+  - type: ComplexInteraction
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/burrower.rsi
