@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared.Censor;
-using Content.Shared.Chat.V2.Moderation;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -18,8 +16,9 @@ public sealed class CensorSystem : EntitySystem
     // Cache for faster lookup
     private readonly Dictionary<CensorTarget, Dictionary<CensorFilterType, List<TextCensorActionDef>>> _censorActions = new();
 
-    // Chat filters
-    private readonly Dictionary<CensorTarget, SimpleCensor> _chatCensors = new();
+    // Filters
+    private readonly Dictionary<CensorTarget, Dictionary<Regex, CensorActionGroupPrototype>> _regexCensors = new();
+    // private readonly Dictionary<CensorTarget, SimpleCensor> _chatCensors = new();
 
     public override void Initialize()
     {
@@ -59,6 +58,13 @@ public sealed class CensorSystem : EntitySystem
 
         foreach (var (censorTarget, filterList) in _censorActions)
         {
+            var regexCensors = new Dictionary<Regex, CensorActionGroupPrototype>();
+            foreach (var textCensorActionDef in filterList[CensorFilterType.Regex])
+            {
+                regexCensors.Add(new Regex(textCensorActionDef.FilterText), textCensorActionDef.ActionGroup);
+            }
+            _regexCensors.Add(censorTarget, regexCensors);
+
             // censored words
             var plainTextWords = new List<string>();
             foreach (var censoredWord in filterList[CensorFilterType.PlainTextWords])
@@ -82,25 +88,31 @@ public sealed class CensorSystem : EntitySystem
             if (regexMatches.Count == 0)
                 continue;
 
-            var matches = regexMatches.ToList();
+            var textMatches = new Dictionary<string, int>();
+            foreach (Match match in regexMatches)
+            {
+                var str = match.ToString();
+                textMatches.Add(str, match.Index);
+            }
 
             var censorGroup = _protoMan.Index<CensorActionGroupPrototype>(textCensor.ActionGroup.ID);
-            var stop = false;
+
+            var skip = false;
             foreach (var censorAction in censorGroup.CensorActions)
             {
-                if (censorAction.IsCensored(inputText, regexMatches))
+                if (censorAction.AttemptCensor(inputText, textMatches))
                     continue;
 
-                stop = true;
+                skip = true;
                 break;
             }
 
-            if (stop)
+            if (skip)
                 continue;
 
             foreach (var censorAction in censorGroup.CensorActions)
             {
-                censorAction.RunAction(session, inputText, regexMatches, textCensor.DisplayName, EntityManager);
+                censorAction.RunAction(session, inputText, textMatches, textCensor.DisplayName, EntityManager);
             }
         }
     }

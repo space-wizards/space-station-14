@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Content.Shared.Popups;
+﻿using Content.Shared.Popups;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Censor.Actions;
@@ -8,7 +7,7 @@ public sealed class CensorActionWarningPopup : ICensorAction
 {
     private string? _previous = null;
 
-    public bool IsCensored(string fullText, MatchCollection matchedText)
+    public bool AttemptCensor(string fullText, Dictionary<string, int> matchedText)
     {
         if (fullText == _previous)
         {
@@ -22,7 +21,7 @@ public sealed class CensorActionWarningPopup : ICensorAction
 
     public void RunAction(ICommonSession session,
         string fullText,
-        MatchCollection matchedText,
+        Dictionary<string, int> matchedText,
         string censorTargetName,
         EntityManager entMan)
     {

@@ -57,7 +57,7 @@ public interface ICensorAction
     /// <param name="fullText">The full text provided by the user.</param>
     /// <param name="matchedText">The text matched by the censor.</param>
     /// <returns></returns>
-    public bool IsCensored(string fullText, MatchCollection matchedText);
+    public bool AttemptCensor(string fullText, Dictionary<string, int> matchedText);
 
     /// <summary>
     /// Run actions on the session.
@@ -69,7 +69,7 @@ public interface ICensorAction
     /// <param name="entMan"></param>
     public void RunAction(ICommonSession session,
         string fullText,
-        MatchCollection matchedText,
+        Dictionary<string, int> matchedText,
         string censorTargetName,
         EntityManager entMan);
 }

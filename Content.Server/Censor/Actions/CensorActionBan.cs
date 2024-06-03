@@ -7,14 +7,14 @@ namespace Content.Server.Censor.Actions;
 
 public sealed class CensorActionBan : ICensorAction
 {
-    public bool IsCensored(string fullText, MatchCollection matchedText)
+    public bool AttemptCensor(string fullText, Dictionary<string, int> matchedText)
     {
         return true;
     }
 
     public void RunAction(ICommonSession session,
         string fullText,
-        MatchCollection matchedText,
+        Dictionary<string, int> matchedText,
         string censorTargetName,
         EntityManager entMan)
     {
