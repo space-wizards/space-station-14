@@ -1,7 +1,8 @@
 using Content.Shared.Research.Components;
+using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Research.UI;
 
@@ -33,6 +34,20 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
         {
             SendMessage(new ConsoleServerSelectionMessage());
         };
+    }
+
+    public override void OnProtoReload(PrototypesReloadedEventArgs args)
+    {
+        base.OnProtoReload(args);
+
+        if (!args.WasModified<TechnologyPrototype>())
+            return;
+
+        if (State is not ResearchConsoleBoundInterfaceState rState)
+            return;
+
+        _consoleMenu?.UpdatePanels(rState);
+        _consoleMenu?.UpdateInformationPanel(rState);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

@@ -18,6 +18,8 @@ namespace Content.Client.Research.UI
         {
             base.Open();
             _menu = this.CreateWindow<ResearchClientServerSelectionMenu>();
+            _menu.OnServerSelected += SelectServer;
+            _menu.OnServerDeselected += DeselectServer;
         }
 
         public void SelectServer(int serverId)

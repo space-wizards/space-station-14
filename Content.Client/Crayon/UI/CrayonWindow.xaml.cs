@@ -23,6 +23,7 @@ namespace Content.Client.Crayon.UI
         private Color _color;
 
         public event Action<Color>? OnColorSelected;
+        public event Action<string>? OnSelected;
 
         public CrayonWindow()
         {
@@ -37,8 +38,6 @@ namespace Content.Client.Crayon.UI
             _color = color;
 
             OnColorSelected?.Invoke(color);
-            Owner.SelectColor(color);
-
             RefreshList();
         }
 
@@ -89,7 +88,6 @@ namespace Content.Client.Crayon.UI
         {
             if (obj.Button.Name == null) return;
 
-            Owner.Select(obj.Button.Name);
             _selected = obj.Button.Name;
             RefreshList();
         }

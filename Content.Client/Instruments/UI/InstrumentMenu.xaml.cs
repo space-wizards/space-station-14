@@ -16,33 +16,11 @@ namespace Content.Client.Instruments.UI
     [GenerateTypedNameReferences]
     public sealed partial class InstrumentMenu : DefaultWindow
     {
-        private readonly InstrumentBoundUserInterface _owner;
-
         private bool _isMidiFileDialogueWindowOpen;
 
-        public InstrumentMenu(InstrumentBoundUserInterface owner)
+        public InstrumentMenu()
         {
             RobustXamlLoader.Load(this);
-
-            _owner = owner;
-
-            if (_owner.Instrument != null)
-            {
-                _owner.Instrument.OnMidiPlaybackEnded += InstrumentOnMidiPlaybackEnded;
-                Title = _owner.Entities.GetComponent<MetaDataComponent>(_owner.Owner).EntityName;
-                LoopButton.Disabled = !_owner.Instrument.IsMidiOpen;
-                LoopButton.Pressed = _owner.Instrument.LoopMidi;
-                ChannelsButton.Disabled = !_owner.Instrument.IsRendererAlive;
-                StopButton.Disabled = !_owner.Instrument.IsMidiOpen;
-                PlaybackSlider.MouseFilter = _owner.Instrument.IsMidiOpen ? MouseFilterMode.Pass : MouseFilterMode.Ignore;
-            }
-
-            if (!_owner.MidiManager.IsAvailable)
-            {
-                UnavailableOverlay.Visible = true;
-                // We return early as to not give the buttons behavior.
-                return;
-            }
 
             InputButton.OnToggled += MidiInputButtonOnOnToggled;
             BandButton.OnPressed += BandButtonOnPressed;
@@ -55,6 +33,26 @@ namespace Content.Client.Instruments.UI
             PlaybackSlider.OnKeyBindUp += PlaybackSliderKeyUp;
 
             MinSize = SetSize = new Vector2(400, 150);
+        }
+
+        public void SetInstrument(InstrumentComponent component)
+        {
+            component.OnMidiPlaybackEnded += InstrumentOnMidiPlaybackEnded;
+            LoopButton.Disabled = !component.IsMidiOpen;
+            LoopButton.Pressed = component.LoopMidi;
+            ChannelsButton.Disabled = !component.IsRendererAlive;
+            StopButton.Disabled = !component.IsMidiOpen;
+            PlaybackSlider.MouseFilter = component.IsMidiOpen ? MouseFilterMode.Pass : MouseFilterMode.Ignore;
+        }
+
+        public void RemoveInstrument(InstrumentComponent component)
+        {
+            component.OnMidiPlaybackEnded -= InstrumentOnMidiPlaybackEnded;
+        }
+
+        public void SetMIDI(bool available)
+        {
+            UnavailableOverlay.Visible = !available;
         }
 
         private void BandButtonOnPressed(ButtonEventArgs obj)
@@ -85,7 +83,7 @@ namespace Content.Client.Instruments.UI
 
         public void MidiPlaybackSetButtonsDisabled(bool disabled)
         {
-            if(disabled)
+            if (disabled)
                 _owner.CloseChannelsMenu();
 
             LoopButton.Disabled = disabled;

@@ -32,7 +32,7 @@ public sealed partial class PowerMonitoringWindow
         if (windowEntry == null)
             return;
 
-        // Update sources and loads 
+        // Update sources and loads
         UpdateEntrySourcesOrLoads(masterContainer, windowEntry.SourcesContainer, focusSources, _sourceIcon);
         UpdateEntrySourcesOrLoads(masterContainer, windowEntry.LoadsContainer, focusLoads, _loadIconPath);
 
@@ -133,7 +133,7 @@ public sealed partial class PowerMonitoringWindow
             subEntry.Button.OnButtonUp += args => { ButtonAction(subEntry, masterContainer); };
         }
 
-        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(_owner, out var console))
+        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(Entity, out var console))
             return;
 
         // Update all children
@@ -378,7 +378,7 @@ public sealed class PowerMonitoringWindowEntry : PowerMonitoringWindowBaseEntry
 
         AddChild(MainContainer);
 
-        // Grid container to hold the list of sources when selected 
+        // Grid container to hold the list of sources when selected
         SourcesContainer = new BoxContainer()
         {
             Orientation = LayoutOrientation.Vertical,

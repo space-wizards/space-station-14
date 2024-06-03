@@ -26,6 +26,8 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<RCDMenu>();
+        _menu.SetEntity(Owner);
+        _menu.SendRCDSystemMessageAction += SendRCDSystemMessage;
 
         // Open the menu, centered on the mouse
         var vpSize = _displayManager.ScreenSize;

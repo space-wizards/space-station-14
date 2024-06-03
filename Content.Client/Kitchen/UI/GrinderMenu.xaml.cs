@@ -12,14 +12,15 @@ namespace Content.Client.Kitchen.UI
     [GenerateTypedNameReferences]
     public sealed partial class GrinderMenu : FancyWindow
     {
-        private readonly IEntityManager _entityManager;
-        private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly Dictionary<int, EntityUid> _chamberVisualContents = new();
 
         public GrinderMenu()
         {
             RobustXamlLoader.Load(this);
+            IoCManager.InjectDependencies(this);
             AutoModeButton.OnPressed += owner.ToggleAutoMode;
             GrindButton.OnPressed += owner.StartGrinding;
             JuiceButton.OnPressed += owner.StartJuicing;

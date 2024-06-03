@@ -23,15 +23,14 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 
     private readonly List<SinkPortPrototype> _sinks = new();
 
-    private readonly NetworkConfiguratorBoundUserInterface _userInterface;
-
     private (ButtonPosition position, string id, int index)? _selectedButton;
 
     private List<(string left, string right)>? _defaults;
 
-    public NetworkConfiguratorLinkMenu(NetworkConfiguratorBoundUserInterface userInterface)
+    public event Action? OnClearLinks;
+
+    public NetworkConfiguratorLinkMenu()
     {
-        _userInterface = userInterface;
         RobustXamlLoader.Load(this);
 
         var footerStyleBox = new StyleBoxFlat()
@@ -52,7 +51,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 
         ButtonOk.OnPressed += _ => Close();
         ButtonLinkDefault.OnPressed += _ => LinkDefaults();
-        ButtonClear.OnPressed += _ => _userInterface.SendMessage(new NetworkConfiguratorClearLinksMessage());
+        ButtonClear.OnPressed += _ => OnClearLinks?.Invoke();
     }
 
     public void UpdateState(DeviceLinkUserInterfaceState linkState)

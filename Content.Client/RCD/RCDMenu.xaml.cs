@@ -20,7 +20,8 @@ public sealed partial class RCDMenu : RadialMenu
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-    private readonly SharedPopupSystem _popup;
+    private SharedPopupSystem _popup;
+    private SpriteSystem _sprites;
 
     public event Action<ProtoId<RCDPrototype>>? SendRCDSystemMessageAction;
 
@@ -31,19 +32,24 @@ public sealed partial class RCDMenu : RadialMenu
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
 
+        _popup = _entManager.System<SharedPopupSystem>();
+        _sprites = _entManager.System<SpriteSystem>();
+
         OnChildAdded += AddRCDMenuButtonOnClickActions;
-        SendRCDSystemMessageAction += bui.SendRCDSystemMessage;
+    }
+
+    public void SetEntity(EntityUid uid)
+    {
+        _owner = uid;
     }
 
     public void Refresh()
     {
-        _popup = _entManager.System<SharedPopupSystem>();
-
         // Find the main radial container
         var main = FindControl<RadialContainer>("Main");
 
         // Populate secondary radial containers
-        if (!_entManager.TryGetComponent<RCDComponent>(owner, out var rcd))
+        if (!_entManager.TryGetComponent<RCDComponent>(_owner, out var rcd))
             return;
 
         foreach (var protoId in rcd.AvailablePrototypes)
@@ -79,7 +85,7 @@ public sealed partial class RCDMenu : RadialMenu
                 {
                     VerticalAlignment = VAlignment.Center,
                     HorizontalAlignment = HAlignment.Center,
-                    Texture = _spriteSystem.Frame0(proto.Sprite),
+                    Texture = _sprites.Frame0(proto.Sprite),
                     TextureScale = new Vector2(2f, 2f),
                 };
 

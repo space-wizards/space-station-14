@@ -12,14 +12,14 @@ namespace Content.Client.Communications.UI
     public sealed partial class CommunicationsConsoleMenu : FancyWindow
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly ILocalizationManager _loc = default!;
 
         public CommunicationsConsoleMenu()
         {
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
 
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-            MessageInput.Placeholder = new Rope.Leaf(loc.GetString("comms-console-menu-announcement-placeholder"));
+            MessageInput.Placeholder = new Rope.Leaf(_loc.GetString("comms-console-menu-announcement-placeholder"));
 
             var maxAnnounceLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
             MessageInput.OnTextChanged += (args) =>

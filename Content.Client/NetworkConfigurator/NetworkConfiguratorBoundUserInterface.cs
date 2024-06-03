@@ -54,6 +54,10 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
             case NetworkConfiguratorUiKey.Link:
                 _linkMenu = this.CreateWindow<NetworkConfiguratorLinkMenu>();
                 _linkMenu.OpenCentered();
+                _linkMenu.OnClearLinks += () =>
+                {
+                    SendMessage(new NetworkConfiguratorClearLinksMessage());
+                };
                 break;
         }
     }

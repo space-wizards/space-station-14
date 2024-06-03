@@ -21,12 +21,13 @@ public sealed class SignalTimerBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<SignalTimerWindow>();
+        _window.OnStartTimer += StartTimer;
         _window.OnCurrentTextChanged += OnTextChanged;
         _window.OnCurrentDelayMinutesChanged += OnDelayChanged;
         _window.OnCurrentDelaySecondsChanged += OnDelayChanged;
     }
 
-    public void OnStartTimer()
+    public void StartTimer()
     {
         SendMessage(new SignalTimerStartMessage());
     }
@@ -41,11 +42,6 @@ public sealed class SignalTimerBoundUserInterface : BoundUserInterface
         if (_window == null)
             return;
         SendMessage(new SignalTimerDelayChangedMessage(_window.GetDelay()));
-    }
-
-    public TimeSpan GetCurrentTime()
-    {
-        return _gameTiming.CurTime;
     }
 
     /// <summary>

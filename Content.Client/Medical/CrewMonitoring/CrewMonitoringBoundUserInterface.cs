@@ -15,7 +15,7 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         EntityUid? gridUid = null;
-        string stationName = string.Empty;
+        var stationName = string.Empty;
 
         if (EntMan.TryGetComponent<TransformComponent>(Owner, out var xform))
         {
@@ -28,6 +28,7 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
         }
 
         _menu = this.CreateWindow<CrewMonitoringWindow>();
+        _menu.Set(stationName, gridUid);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

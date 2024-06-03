@@ -20,6 +20,7 @@ public sealed class BorgBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<BorgMenu>();
+        _menu.SetEntity(Owner);
 
         _menu.BrainButtonPressed += () =>
         {
