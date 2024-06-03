@@ -66,27 +66,71 @@ public sealed class ReflectSystem : EntitySystem
         if (args.Reflected)
             return;
 
-        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.WITHOUT_POCKET))
+        EntityUid? reflectorUid = null;
+        ReflectComponent? bestReflector = null;
+
+        foreach (var entityUid in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.WITHOUT_POCKET))
         {
-            if (!TryReflectHitscan(uid, ent, args.Shooter, args.SourceItem, args.Direction, out var dir))
+            if (!TryComp<ReflectComponent>(entityUid, out var comp))
                 continue;
 
-            args.Direction = dir.Value;
-            args.Reflected = true;
-            break;
+            if (!comp.Enabled)
+                continue;
+
+            if (bestReflector != null && bestReflector.ReflectProb >= comp.ReflectProb)
+                continue;
+
+            bestReflector = comp;
+            reflectorUid = entityUid;
         }
+
+        if (reflectorUid == null || bestReflector == null)
+            return;
+
+        if (!TryReflectHitscan(uid, reflectorUid.Value, args.Shooter, args.SourceItem, args.Direction, out var dir))
+            return;
+
+        args.Direction = dir.Value;
+        args.Reflected = true;
     }
 
     private void OnReflectUserCollide(EntityUid uid, ReflectUserComponent component, ref ProjectileReflectAttemptEvent args)
     {
-        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.WITHOUT_POCKET))
+        if (args.Cancelled)
+            return;
+
+        EntityUid? reflectorUid = null;
+        ReflectComponent? bestReflector = null;
+
+        if (!TryComp<ReflectiveComponent>(args.ProjUid, out var reflective))
+            return;
+
+        // Get the best reflector in the hit entity's inventory for the projectile's hit
+        foreach (var entityUid in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.WITHOUT_POCKET))
         {
-            if (!TryReflectProjectile(uid, ent, args.ProjUid))
+            if (!TryComp<ReflectComponent>(entityUid, out var comp))
                 continue;
 
-            args.Cancelled = true;
-            break;
+            if (!comp.Enabled)
+                continue;
+
+            if ((comp.Reflects & reflective.Reflective) == 0x0)
+                continue;
+
+            if (bestReflector != null && bestReflector.ReflectProb >= comp.ReflectProb)
+                continue;
+
+            bestReflector = comp;
+            reflectorUid = entityUid;
         }
+
+        if (reflectorUid == null || bestReflector == null)
+            return;
+
+        if (!TryReflectProjectile(uid, reflectorUid.Value, args.ProjUid, bestReflector))
+            return;
+
+        args.Cancelled = true;
     }
 
     private void OnReflectCollide(EntityUid uid, ReflectComponent component, ref ProjectileReflectAttemptEvent args)
@@ -94,15 +138,14 @@ public sealed class ReflectSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (TryReflectProjectile(uid, uid, args.ProjUid, reflect: component))
+        if (TryReflectProjectile(uid, uid, args.ProjUid, component))
             args.Cancelled = true;
     }
 
-    private bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null, ReflectComponent? reflect = null)
+    private bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ReflectComponent reflect,  ProjectileComponent? projectileComp = null)
     {
         // Do we have the components needed to try a reflect at all?
         if (
-            !Resolve(reflector, ref reflect, false) ||
             !reflect.Enabled ||
             !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
             (reflect.Reflects & reflective.Reflective) == 0x0 ||
@@ -181,17 +224,14 @@ public sealed class ReflectSystem : EntitySystem
 
     private void OnReflectHitscan(EntityUid uid, ReflectComponent component, ref HitScanReflectAttemptEvent args)
     {
-        if (args.Reflected ||
-            (component.Reflects & args.Reflective) == 0x0)
-        {
+        if (args.Reflected || (component.Reflects & args.Reflective) == 0x0)
             return;
-        }
 
-        if (TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Direction, out var dir))
-        {
-            args.Direction = dir.Value;
-            args.Reflected = true;
-        }
+        if (!TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Direction, out var dir))
+            return;
+
+        args.Direction = dir.Value;
+        args.Reflected = true;
     }
 
     private bool TryReflectHitscan(
