@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Changed Monkey Reinf Price to 6TC
-    type: Tweak
-  id: 6174
-  time: '2024-03-18T01:25:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26214
 - author: Golinth
   changes:
   - message: Criminal record icons now show up below job icons
@@ -3851,3 +3844,10 @@
   id: 6673
   time: '2024-06-03T12:05:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28543
+- author: Cojoke-dot
+  changes:
+  - message: The player can now use the gasping emote
+    type: Tweak
+  id: 6674
+  time: '2024-06-03T12:10:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28466
