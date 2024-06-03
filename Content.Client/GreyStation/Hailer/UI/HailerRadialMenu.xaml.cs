@@ -28,13 +28,14 @@ public sealed partial class HailerRadialMenu : RadialMenu
         for (var i = 0; i < lines.Count; i++)
         {
             var line = lines[i];
+            var tooltip = line.Tooltip ?? line.Message;
             var button = new RadialMenuTextureButton()
             {
                 StyleClasses = { "RadialMenuButton" },
-                SetSize = new Vector2(64f, 64f)
+                SetSize = new Vector2(64f, 64f),
+                ToolTip = tooltip
             };
 
-            // TODO: scream texture
             var tex = new TextureRect()
             {
                 VerticalAlignment = VAlignment.Center,
