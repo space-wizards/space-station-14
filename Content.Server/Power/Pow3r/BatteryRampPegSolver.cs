@@ -11,9 +11,12 @@ namespace Content.Server.Power.Pow3r
     public sealed class BatteryRampPegSolver : IPowerSolver
     {
         private UpdateNetworkJob _networkJob;
+        private bool _disableParallel;
 
         public BatteryRampPegSolver()
         {
+            IConfigurationManager _cfg = IoCManager.Resolve<IConfigurationManager>();
+            _disableParallel = _cfg.GetCVar(CCVars.DebugPow3rDisableParallel);
             _networkJob = new()
             {
                 Solver = this,
@@ -58,8 +61,7 @@ namespace Content.Server.Power.Pow3r
                 // suppliers + discharger) Then decide based on total layer size whether its worth parallelizing that
                 // layer?
                 _networkJob.Networks = group;
-                IConfigurationManager _cfg = IoCManager.Resolve<IConfigurationManager>();
-                if (_cfg.GetCVar(CCVars.DebugPow3rDisableParallel))
+                if (_disableParallel)
                     parallel.ProcessSerialNow(_networkJob, group.Count);
                 else
                     parallel.ProcessNow(_networkJob, group.Count);

@@ -2067,6 +2067,6 @@ namespace Content.Shared.CCVar
         /// Set to true to disable parallel processing in the pow3r solver.
         /// </summary>
         public static readonly CVarDef<bool> DebugPow3rDisableParallel =
-            CVarDef.Create("debug.pow3r_disable_parallel", false, CVar.SERVERONLY);
+            CVarDef.Create("debug.pow3r_disable_parallel", true, CVar.SERVERONLY);
     }
 }
