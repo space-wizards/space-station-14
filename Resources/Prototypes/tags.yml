@@ -28,9 +28,6 @@
   id: ATVKeys
 
 - type: Tag
-  id: Baguette
-
-- type: Tag
   id: Balloon
 
 - type: Tag
@@ -257,12 +254,18 @@
 
 - type: Tag
   id: CableCoil
+  
+- type: Tag
+  id: Candle
+
+- type: Tag
+  id: Cake
+
+- type: Tag
+  id: CaneBlade
 
 - type: Tag
   id: CannonBall
-
-- type: Tag
-  id: CannonRestrict
 
 - type: Tag
   id: CannotSuicide
@@ -399,6 +402,9 @@
 
 - type: Tag
   id: ClownSuit
+
+- type: Tag
+  id: CluwneHappyHonk
 
 - type: Tag
   id: CluwneHorn
@@ -864,6 +870,9 @@
   id: Meat
 
 - type: Tag
+  id: Medal
+
+- type: Tag
   id: Medkit
 
 - type: Tag
@@ -919,6 +928,9 @@
 
 - type: Tag
   id: NozzleBackTank
+
+- type: Tag
+  id: Nugget # for chicken nuggets
 
 - type: Tag
   id: NukeOpsUplink
@@ -1102,19 +1114,22 @@
   id: Shiv
 
 - type: Tag
-  id: ShoesRequiredStepTriggerImmune
-
-- type: Tag
   id: Shovel
 
 - type: Tag
   id: Sidearm
 
 - type: Tag
+  id: SignalTrigger
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
   id: Skewer
+
+- type: Tag
+  id: Slice # sliced fruit, vegetables, pizza etc.
 
 - type: Tag
   id: SmallAIChip
@@ -1124,9 +1139,6 @@
 
 - type: Tag
   id: Smokable
-
-- type: Tag
-  id: SnapPop
 
 - type: Tag
   id: SnowyLabs
@@ -1239,6 +1251,9 @@
   id: TrashBag
 
 - type: Tag
+  id: Truncheon
+
+- type: Tag
   id: Unimplantable
 
 - type: Tag
@@ -1276,6 +1291,9 @@
 
 - type: Tag
   id: WeaponShotgunKammerer
+
+- type: Tag
+  id: WeldingMask
 
 - type: Tag
   id: WetFloorSign
@@ -1318,3 +1336,5 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+# ALPHABETICAL

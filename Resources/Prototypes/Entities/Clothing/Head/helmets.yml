@@ -110,6 +110,10 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 #Janitorial Bombsuit Helmet
 - type: entity
@@ -157,10 +161,13 @@
     sprite: Clothing/Head/Helmets/spaceninja.rsi
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 #Templar Helmet
 - type: entity
@@ -217,11 +224,16 @@
   - type: IngestionBlocker
   - type: TemperatureProtection
     coefficient: 0.005
+  - type: FireProtection
+    reduction: 0.15 # not fully sealed so less protection
   - type: IdentityBlocker
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 #Atmos Fire Helmet
 - type: entity
@@ -238,14 +250,19 @@
   - type: IngestionBlocker
   - type: TemperatureProtection
     coefficient: 0.005
+  - type: FireProtection
+    reduction: 0.2
   - type: PressureProtection
     highPressureMultiplier: 0.25
     lowPressureMultiplier: 1000
   - type: IdentityBlocker
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 #Chitinous Helmet
 - type: entity

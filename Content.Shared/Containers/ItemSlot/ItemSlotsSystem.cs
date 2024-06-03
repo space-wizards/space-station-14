@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -31,6 +32,7 @@ namespace Content.Shared.Containers.ItemSlots
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
         public override void Initialize()
         {
@@ -197,6 +199,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
                 return;
 
+            var slots = new List<ItemSlot>();
             foreach (var slot in itemSlots.Slots.Values)
             {
                 if (!slot.InsertOnInteract)
@@ -205,10 +208,20 @@ namespace Content.Shared.Containers.ItemSlots
                 if (!CanInsert(uid, args.Used, args.User, slot, swap: slot.Swap, popup: args.User))
                     continue;
 
-                // Drop the held item onto the floor. Return if the user cannot drop.
-                if (!_handsSystem.TryDrop(args.User, args.Used, handsComp: hands))
-                    return;
+                slots.Add(slot);
+            }
 
+            if (slots.Count == 0)
+                return;
+
+            // Drop the held item onto the floor. Return if the user cannot drop.
+            if (!_handsSystem.TryDrop(args.User, args.Used, handsComp: hands))
+                return;
+
+            slots.Sort(SortEmpty);
+
+            foreach (var slot in slots)
+            {
                 if (slot.Item != null)
                     _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
 
@@ -255,8 +268,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.ContainerSlot == null)
                 return false;
 
-            if ((!slot.Whitelist?.IsValid(usedUid) ?? false) ||
-                (slot.Blacklist?.IsValid(usedUid) ?? false))
+            if (_whitelistSystem.IsWhitelistFail(slot.Whitelist, usedUid) || _whitelistSystem.IsBlacklistPass(slot.Blacklist, usedUid))
             {
                 if (popup.HasValue && slot.WhitelistFailPopup.HasValue)
                     _popupSystem.PopupClient(Loc.GetString(slot.WhitelistFailPopup), uid, popup.Value);
@@ -332,6 +344,65 @@ namespace Content.Shared.Containers.ItemSlots
 
             Insert(uid, slot, held, user, excludeUserAudio: excludeUserAudio);
             return true;
+        }
+
+        /// <summary>
+        ///     Tries to insert an item into any empty slot.
+        /// </summary>
+        /// <param name="ent">The entity that has the item slots.</param>
+        /// <param name="item">The item to be inserted.</param>
+        /// <param name="user">The entity performing the interaction.</param>
+        /// <param name="excludeUserAudio">
+        ///     If true, will exclude the user when playing sound. Does nothing client-side.
+        ///     Useful for predicted interactions
+        /// </param>
+        /// <returns>False if failed to insert item</returns>
+        public bool TryInsertEmpty(Entity<ItemSlotsComponent?> ent, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
+        {
+            if (!Resolve(ent, ref ent.Comp, false))
+                return false;
+
+            var slots = new List<ItemSlot>();
+            foreach (var slot in ent.Comp.Slots.Values)
+            {
+                if (slot.ContainerSlot?.ContainedEntity != null)
+                    continue;
+
+                if (CanInsert(ent, item, user, slot))
+                    slots.Add(slot);
+            }
+
+            if (slots.Count == 0)
+                return false;
+
+            if (user != null && _handsSystem.IsHolding(user.Value, item))
+            {
+                if (!_handsSystem.TryDrop(user.Value, item))
+                    return false;
+            }
+
+            slots.Sort(SortEmpty);
+
+            foreach (var slot in slots)
+            {
+                if (TryInsert(ent, slot, item, user, excludeUserAudio: excludeUserAudio))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private static int SortEmpty(ItemSlot a, ItemSlot b)
+        {
+            var aEnt = a.ContainerSlot?.ContainedEntity;
+            var bEnt = b.ContainerSlot?.ContainedEntity;
+            if (aEnt == null && bEnt == null)
+                return a.Priority.CompareTo(b.Priority);
+
+            if (aEnt == null)
+                return -1;
+
+            return 1;
         }
         #endregion
 
@@ -626,9 +697,9 @@ namespace Content.Shared.Containers.ItemSlots
                 return;
 
             if (args.TryEject && slot.HasItem)
-                TryEjectToHands(uid, slot, args.Session.AttachedEntity, false);
-            else if (args.TryInsert && !slot.HasItem && args.Session.AttachedEntity is EntityUid user)
-                TryInsertFromHand(uid, slot, user);
+                TryEjectToHands(uid, slot, args.Actor, true);
+            else if (args.TryInsert && !slot.HasItem)
+                TryInsertFromHand(uid, slot, args.Actor);
         }
         #endregion
 

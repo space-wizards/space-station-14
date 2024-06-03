@@ -36,6 +36,9 @@
             <CheckBox Name="IntegerScalingCheckBox"
                       Text="{Loc 'ui-options-vp-integer-scaling'}"
                       ToolTip="{Loc 'ui-options-vp-integer-scaling-tooltip'}" />
+            <CheckBox Name="ViewportVerticalFitCheckBox"
+                      Text="{Loc 'ui-options-vp-vertical-fit'}"
+                      ToolTip="{Loc 'ui-options-vp-vertical-fit-tooltip'}" />
             <CheckBox Name="ViewportLowResCheckBox" Text="{Loc 'ui-options-vp-low-res'}" />
             <CheckBox Name="ParallaxLowQualityCheckBox" Text="{Loc 'ui-options-parallax-low-quality'}" />
             <CheckBox Name="FpsCounterCheckBox" Text="{Loc 'ui-options-fps-counter'}" />

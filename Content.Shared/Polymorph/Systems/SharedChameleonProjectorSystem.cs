@@ -10,6 +10,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Popups;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
@@ -25,6 +26,7 @@ namespace Content.Shared.Polymorph.Systems;
 /// </summary>
 public abstract class SharedChameleonProjectorSystem : EntitySystem
 {
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ISerializationManager _serMan = default!;
@@ -160,8 +162,8 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     /// </summary>
     public bool IsInvalid(ChameleonProjectorComponent comp, EntityUid target)
     {
-        return (comp.Whitelist?.IsValid(target, EntityManager) == false)
-            || (comp.Blacklist?.IsValid(target, EntityManager) == true);
+        return _whitelist.IsWhitelistFail(comp.Whitelist, target)
+            || _whitelist.IsBlacklistPass(comp.Blacklist, target);
     }
 
     /// <summary>

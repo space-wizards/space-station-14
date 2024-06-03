@@ -13,12 +13,17 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 17 #cmon, it has to be at least BETTER than the rest.
+        Slash: 15
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Reflect
     enabled: true
-    reflectProb: .1
+    # Design intent: a robust captain or tot can sacrifice movement to make the most of this weapon, but they have to
+    # really restrict themselves to walking speed or less.
+    reflectProb: 0.5
+    velocityBeforeNotMaxProb: 1.0
+    velocityBeforeMinProb: 3.0
+    minReflectProb: 0.1
     spread: 90
   - type: Item
     size: Normal
@@ -83,6 +88,9 @@
     - Back
     - Belt
   - type: Reflect
+    reflectProb: 0.3
+    velocityBeforeNotMaxProb: 6.0 # don't punish ninjas for being ninjas
+    velocityBeforeMinProb: 10.0
 
 - type: entity
   name: machete
@@ -152,7 +160,7 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Slash: 16
+        Slash: 15
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
@@ -164,7 +172,7 @@
   name: The Throngler
   parent: BaseItem
   id: Throngler
-  description: Why would you make this?
+  description: Why would someone make this?
   components:
     - type: Sharp
     - type: Sprite
@@ -185,7 +193,10 @@
         path: /Audio/Effects/explosion_small1.ogg
     - type: Reflect
       enabled: true
-      reflectProb: .25
+      reflectProb: 0.5 # In robust hands, deflects as well as an e-sword
+      velocityBeforeNotMaxProb: 1.0
+      velocityBeforeMinProb: 3.0
+      minReflectProb: 0.1
       spread: 90
     - type: Item
       size: Ginormous

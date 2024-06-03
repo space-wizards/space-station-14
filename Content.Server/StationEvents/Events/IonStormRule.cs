@@ -1,5 +1,5 @@
+using Content.Server.GameTicking.Components;
 using System.Linq;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Silicons.Laws;
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;

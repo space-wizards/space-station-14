@@ -37,14 +37,8 @@ namespace Content.Client.Instruments.UI
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
-            switch (message)
-            {
-                case InstrumentBandResponseBuiMessage bandRx:
-                    _bandMenu?.Populate(bandRx.Nearby, EntMan);
-                    break;
-                default:
-                    break;
-            }
+            if (message is InstrumentBandResponseBuiMessage bandRx)
+                _bandMenu?.Populate(bandRx.Nearby, EntMan);
         }
 
         protected override void Open()

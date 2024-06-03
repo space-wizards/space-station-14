@@ -1,109 +1,141 @@
 <Document>
-# Gravitational Singularity Engine
+  # Singularity / Tesla Engine
 
-The Gravitational Singularity Engine can yield infinite power, with no fueling required. It can also destroy the whole station with equal ease. It uses a Particle Accelerator to fire high energy particles at a Singularity Generator to form a singularity. The singularity then pulses radiation which is absorbed by Radiation Collectors.
+  The Singularity Engine / Tesla Engine can yield [color=#a4885c]infinite power[/color], with no fueling required. It can also [color=red]destroy the whole station[/color] with equal ease. It uses a Particle Accelerator to fire high energy particles at a Singularity Generator to form a singularity or ball lightning.
+  The singularity then pulses radiation which is absorbed by Radiation Collectors, or the ball lightning then zaps nearby tesla coils and grounding rods to provide power.
 
-## Setting it up
+  # Setting it up
 
-The Gravitational Singularity Engine requires 4 subsystems to work properly:
+  Both engines requires 4 subsystems to work properly; two are shared between both engines:
 
-## Gravitational singularity generator
-<Box>
-<GuideEntityEmbed Entity="SingularityGenerator"/>
-</Box>
-The generator should be anchored at the center of the containment area since this is where the singularity will appear at.
+  ## Containment field generators and Emitters
+  <Box>
+    <GuideEntityEmbed Entity="Emitter"/>
+    <GuideEntityEmbed Entity="ContainmentFieldGenerator"/>
+    <GuideEntityEmbed Entity="ContainmentField"/>
+  </Box>
+  The emitters connect to MV cables and fire lasers as long as they have power and are turned on.
+  Fire the emitters at enabled containment field generators to activate them.
+  If two containment field generators are active, in range and are in the same cardinal axis, a containment field will appear.
+  The containment field will repel the singularity or tesla, keeping it from escaping, and yield a little bit of power every time anything bounces off of them.
 
-## Containment field generators and emitters
-<Box>
-<GuideEntityEmbed Entity="Emitter"/>
-<GuideEntityEmbed Entity="ContainmentFieldGenerator"/>
-<GuideEntityEmbed Entity="ContainmentField"/>
-</Box>
-The emitters connect to MV cables and fire lasers as long as they have power and are turned on.
-Fire emitters at containment field generators to activate them.
-If two containment field generators are active, in range and in the same cardinal axis, a containment field will appear.
-The containment field will repell the singularity, keeping it from escaping, and yield a little bit of power every time anything bounces off of them. 
-Emitter lasers and containment field can cause damage, avoid touching them when active.
+  The emitter lasers and the containment fields can also cause damage and/or cause you to be sent flying into deep space; [color=#a4885c]avoid touching them[/color] when active.
+  It is recommended to [color=#a4885c]lock the emitters[/color] with [keybind="AltActivateItemInWorld"/], to prevent any break-in no-gooders from loosing the singularity or tesla by simply switching off the field.
 
-## Radiation collectors
-<Box>
-<GuideEntityEmbed Entity="RadiationCollector"/>
-<GuideEntityEmbed Entity="PlasmaTank"/>
-</Box>
-They connect to HV cables and generate power from nearby radiation sources when turned on. 
-Radiation collectors require a tank full of gaseous plasma in order to operate.
-Continous radiation exposure will gradually consume the stored plasma, so replace depleted tanks with fresh ones to maintain a high power output.
+  Teslas can have significantly smaller containment fields than singularity containment fields; adjusting field size is recommended, as the tesla becomes easier to keep watch on in a simply 3x3 field setup.
 
-## Particle accelerator
+  ## Particle accelerator
 
-<Box>
-<GuideEntityEmbed Entity="ParticleAcceleratorEndCap"/>
-</Box>
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorEndCap" Caption="" Margin="0"/>
+  </Box>
 
-<Box>
-<GuideEntityEmbed Entity="ParticleAcceleratorControlBox" Caption="PA computer"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber"/>
-<GuideEntityEmbed Entity="CableHV"/>
-</Box>
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorControlBox" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="CableMV" Caption="" Margin="0"/>
+  </Box>
 
-<Box>
-<GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
-</Box>
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorPowerBox" Caption="" Margin="0"/>
+  </Box>
 
-<Box>
-<GuideEntityEmbed Entity="ParticleAcceleratorEmitterStarboard" Caption="Starboard Emitter"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorEmitterFore" Caption="Fore Emitter"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorEmitterPort" Caption="Port Emitter"/>
-</Box>
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorEmitterStarboard" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="ParticleAcceleratorEmitterFore" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="ParticleAcceleratorEmitterPort" Caption="" Margin="0"/>
+  </Box>
 
-The Particle Accelerator (PA) is a multi-tile structure that launches accelerated particles from its emitters. Its emitters should always face the gravitational singularity generator.
-Some stations already have an unfinished PA. To complete, first ensure there is MV cable beneath the PA power box, anchor all parts, then add LV cable to each part.
-<Box>
-<GuideEntityEmbed Entity="CableApcStack"/>
-</Box>
-Then use a screwdriver to screw back the panels.
-Scan parts using the PA control computer to check if it's operational. If it shows up as incomplete, examine for what's missing.
-<Box>
-<GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
-</Box>
+  The Particle Accelerator (PA) is a multi-tile structure that launches accelerated particles from its emitters. Its emitters should always face the generator.
+  Some stations already have an unfinished PA. To complete it, first ensure there is a MV cable beneath the PA power box, anchor all the parts, and then add an LV cable to each part.
+  <Box>
+    <GuideEntityEmbed Entity="CableApcStack"/>
+  </Box>
+  Then use a screwdriver to screw back the panels.
+  [color=#a4885c]Scan parts[/color] using the PA control computer to check if it's operational (the PA will not function if you do not scan it!). If it shows up as incomplete, examine what's missing.
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
+  </Box>
 
-## Turing on the Gravitational Singularity Engine
+  The other two subsystems are unique to each other:
 
-[color=#a4885c]Do not[/color] turn the PA on unless all other subsystems are working properly.
+  ## Gravitational singularity generator or Ball lightning generator
+  <Box>
+    <GuideEntityEmbed Entity="SingularityGenerator"/>
+    <GuideEntityEmbed Entity="TeslaGenerator"/>
+  </Box>
+  The generator should be anchored at the center of the containment area, since this is where the singularity/tesla should appear at.
 
-Turn power on using the PA control computer. Set strength to an appropiate level. Currently the only appropriate level is [color=#f0684d]1[/color], anything above that will ensure that singularity grows too strong to handle.
-The higher the output stength is set on PA control computer, the bigger the singularity will be.
+  ## Radiation collectors or Tesla coils
+  <Box>
+    <GuideEntityEmbed Entity="RadiationCollector"/>
+    <GuideEntityEmbed Entity="PlasmaTank"/>
+  </Box>
+  The radition collectors connect to HV cables and generate power from nearby radiation sources when turned on.
+  Radiation collectors require a tank full of gaseous plasma in order to operate.
+  Continous radiation exposure will gradually convert the stored plasma into tritium, so replace depleted plasma tanks with fresh ones regularly to maintain a high power output.
 
-The PA will now draw power from the power net and start firing particles at the Gravitational singularity generator. 
+  <Box>
+    <GuideEntityEmbed Entity="TeslaCoil"/>
+    <GuideEntityEmbed Entity="TeslaGroundingRod"/>
+  </Box>
+  The tesla coils connect to HV cables and provide a stream of power after being zapped by the ball lightning.
+  However, tesla coils usually do not fully absorb the lightning strike, and the grounding rods are required to prevent lighting from arcing to and obliterating nearby machines.
+  Do note that one grounding rod is not a foolproof solution; get [color=#a4885c]atleast 4 rods[/color] around the containment field to make it mathematically unlikely for the tesla to escape.
+  As the ball lightning zaps tesla coils, they will degrade from wear; make sure to [color=#a4885c]weld them[/color] every now and then to keep generating power.
 
-<Box>
-<GuideEntityEmbed Entity="ParticlesProjectile" Caption=""/>
-<GuideEntityEmbed Entity="ParticlesProjectile"/>
-<GuideEntityEmbed Entity="ParticlesProjectile" Caption=""/>
-</Box>
+  ## Turing on the Engines
 
-A singularity will soon appear at the position of the Gravitational singularity generator.
-<Box>
-<GuideEntityEmbed Entity="Singularity"/>
-</Box>
+  [color=red]Do not[/color] turn the PA on unless all the other subsystems are working properly and there is enough power to start the engine.
 
-If no particle is hitting the singularity generator, the singularity will start to slowly decay until it disappear.
+  Turn power on using the PA control computer. Set the strength to an appropiate level. Currently the only appropriate level is [color=#f0684d]1[/color]; anything above that will ensure that singularity grows too strong to handle.
+  The higher the output stength is set on PA control computer, the bigger the singularity will be.
 
-## Safety
-Singularity emits radiation around it, so always keep a distance. Consider getting radiation shielding gear beforehand. Seek medical attention if experiencing health issues.
+  Currently, the output power does not affect the ball lightning, beyond giving the ball lightning extra orbs around it.
 
-<Box>
-<GuideEntityEmbed Entity="ClothingOuterHardsuitEngineering"/>
-</Box>
+  The PA will now draw power from the power net and start firing particles at the generators.
 
-<Box>
-<GuideEntityEmbed Entity="ClosetRadiationSuit"/>
-<GuideEntityEmbed Entity="ClothingOuterSuitRad"/>
-<GuideEntityEmbed Entity="GeigerCounter"/>
-</Box>
+  <Box>
+    <GuideEntityEmbed Entity="ParticlesProjectile" Caption=""/>
+    <GuideEntityEmbed Entity="ParticlesProjectile"/>
+    <GuideEntityEmbed Entity="ParticlesProjectile" Caption=""/>
+  </Box>
 
-A singularity might move around, but the containment field will repel it.
-If a singularity escapes its containment field, often referred to as a "singuloose," it will attract and then consume everything in its way.
+  A singularity or ball lightning will soon appear at the position of the Gravitational singularity generator.
+  <Box>
+    <GuideEntityEmbed Entity="Singularity"/>
+    or
+    <GuideEntityEmbed Entity="TeslaEnergyBall"/>
+  </Box>
 
-In such circumstances, there is little to be done other than running in the opposite direction.
+  If no particles are hitting the singularity, the singularity will start to slowly decay until it disappears.
+  This is not the case for the tesla; feel free to disconnect the PA after the tesla has been set up.
+
+  ## Safety
+  The singularity emits a large amount of radiation around it, so always keep a distance from it. Consider getting [color=yellow]radiation shielding gear[/color] beforehand. Seek medical attention if you are experiencing health issues.
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitEngineering"/>
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ClosetRadiationSuit"/>
+    <GuideEntityEmbed Entity="ClothingOuterSuitRad"/>
+    <GuideEntityEmbed Entity="GeigerCounter"/>
+  </Box>
+
+  The singularity might move around, but the containment field will repel it.
+
+  The tesla creates large bolts of lightning around it, so make sure to wear insuls before approaching it. If you aren't, and it zaps you, pray that the ball lightning doesn't stunlock you and eventually send you into crit.
+  <Box>
+    <GuideEntityEmbed Entity="ClothingHandsGlovesColorYellow"/>
+  </Box>
+  If a singularity or tesla escapes its containment field, often referred to as a "singuloose" or "tesloose" respectively, it will attract and then consume everything in its way, growing larger as it does so, or it will begin to obliterate every machine in its path, and shock all crew personnel.
+
+  In such circumstances, there is little to be done other than running in the opposite direction.
+  <Box>
+    <GuideEntityEmbed Entity="WeaponParticleDecelerator"/>
+  </Box>
+  However, if science has happened to research [color=#D381C9]Portable Particle Decelerators[/color], or if cargo can order them in time, you may be able to stop the singularity from eating the whole station.
+  Good luck on the tesla, though; it is merely too powerful to recontain after breaching.
 </Document>

@@ -28,21 +28,15 @@ namespace Content.Server.Station.Systems;
 [PublicAPI]
 public sealed class StationSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MapSystem _map = default!;
 
     private ISawmill _sawmill = default!;
-
-    private bool _randomStationOffset;
-    private bool _randomStationRotation;
-    private float _maxRandomStationOffset;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -112,26 +106,12 @@ public sealed class StationSystem : EntitySystem
     {
         var dict = new Dictionary<string, List<EntityUid>>();
 
-        void AddGrid(string station, EntityUid grid)
-        {
-            if (dict.ContainsKey(station))
-            {
-                dict[station].Add(grid);
-            }
-            else
-            {
-                dict[station] = new List<EntityUid> {grid};
-            }
-        }
-
         // Iterate over all BecomesStation
         foreach (var grid in ev.Grids)
         {
             // We still setup the grid
-            if (!TryComp<BecomesStationComponent>(grid, out var becomesStation))
-                continue;
-
-            AddGrid(becomesStation.Id, grid);
+            if (TryComp<BecomesStationComponent>(grid, out var becomesStation))
+                dict.GetOrNew(becomesStation.Id).Add(grid);
         }
 
         if (!dict.Any())
@@ -294,8 +274,6 @@ public sealed class StationSystem : EntitySystem
         // Use overrides for setup.
         var station = EntityManager.SpawnEntity(stationConfig.StationPrototype, MapCoordinates.Nullspace, stationConfig.StationComponentOverrides);
 
-
-
         if (name is not null)
             RenameStation(station, name, false);
 
@@ -345,6 +323,9 @@ public sealed class StationSystem : EntitySystem
                 }
             }
         }
+
+        if (LifeStage(station) < EntityLifeStage.MapInitialized)
+            throw new Exception($"Station must be man-initialized");
 
         var ev = new StationPostInitEvent((station, data));
         RaiseLocalEvent(station, ref ev, true);
