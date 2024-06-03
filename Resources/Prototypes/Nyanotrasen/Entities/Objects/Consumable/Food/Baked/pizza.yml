@@ -49,6 +49,7 @@
   - type: Tag
     tags:
     - Pizza
+    - Slice
 
 - type: entity
   name: firecracker pizza
@@ -116,6 +117,7 @@
   - type: Tag
     tags:
     - Pizza
+    - Slice
     - ClothMade # Mothic Food
 # Tastes like crust, chili, corn, cheese
 
@@ -157,6 +159,7 @@
   - type: Tag
     tags:
     - Pizza
+    - Slice
     - ClothMade # Mothic Food
 # Tastes like crust, cheese, more cheese, excessive amount of cheese
 
@@ -222,6 +225,7 @@
   - type: Tag
     tags:
     - Pizza
+    - Slice
     - Fruit
 # Tastes like crust, pesto, cheese
 
@@ -285,5 +289,6 @@
   - type: Tag
     tags:
     - Pizza
+    - Slice
     - ClothMade
 # Tastes like crust, cotton, cheese

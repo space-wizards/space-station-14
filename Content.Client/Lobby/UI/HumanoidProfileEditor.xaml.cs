@@ -806,7 +806,7 @@ namespace Content.Client.Lobby.UI
                         TextureScale = new Vector2(2, 2),
                         VerticalAlignment = VAlignment.Center
                     };
-                    var jobIcon = _prototypeManager.Index<StatusIconPrototype>(job.Icon);
+                    var jobIcon = _prototypeManager.Index(job.Icon);
                     icon.Texture = jobIcon.Icon.Frame0();
                     selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon);
 
