@@ -63,6 +63,8 @@ public sealed class StartingGearPrototypeStorageTest
 
                 server.EntMan.DeleteEntity(bag);
             }
+
+            mapManager.DeleteMap(testMap.MapId);
         });
 
         await pair.CleanReturnAsync();
