@@ -401,8 +401,8 @@ public sealed class AccessReaderSystem : EntitySystem
             && idCard.Comp is { BypassLogging: false, FullName: not null })
             name = idCard.Comp.FullName;
 
-        if (TryComp<NameIdentifierComponent>(accessor, out var nameIdentifier) && HasComp<BorgChassisComponent>(accessor))
-        name = nameIdentifier.FullIdentifier;
+        if (TryComp<NameIdentifierComponent>(accessor, out var nameIdentifier))
+            name = nameIdentifier.FullIdentifier;
 
         name ??= Loc.GetString("access-reader-unknown-id");
 
