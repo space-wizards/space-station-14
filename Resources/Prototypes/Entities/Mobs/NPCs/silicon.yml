@@ -246,7 +246,7 @@
       path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
-  parent: [MobSiliconBase, ShowMedicalIcons]
+  parent: MobSiliconBase
   id: MobMedibot
   name: medibot
   description: No substitute for a doctor, but better than nothing.
@@ -271,9 +271,20 @@
       Critical:
         reagent: SpaceDrugs
         quantity: 25
+  - type: RandomSprite
+    available:
+        - enum.DamageStateVisualLayers.Base:
+            medibot: ""
+          enum.DamageStateVisualLayers.BaseUnshaded:
+            powered: Rainbow
   - type: Sprite
-    sprite: Mobs/Silicon/Bots/medibot.rsi
-    state: medibot
+    sprite: Goobstation/Mobs/Silicon/Bots/medibot.rsi
+    layers:
+      - state: medibot
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+      - state: powered
+        map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+        shader: unshaded
   - type: HTN
     rootTask:
       task: MedibotCompound
@@ -285,8 +296,15 @@
   - type: InteractionPopup
     interactSuccessString: petting-success-medibot
     interactFailureString: petting-failure-medibot
+    interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
 
 - type: entity
   parent: MobSiliconBase

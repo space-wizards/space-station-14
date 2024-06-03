@@ -195,6 +195,11 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      # Goobstation
+      - id: CloningPodMachineCircuitboard
+      - id: MedicalScannerMachineCircuitboard
+      - id: CloningConsoleComputerCircuitboard
+      - id: BiomassReclaimerMachineCircuitboard
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -215,6 +220,11 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      # Goobstation
+      - id: CloningPodMachineCircuitboard
+      - id: MedicalScannerMachineCircuitboard
+      - id: CloningConsoleComputerCircuitboard
+      - id: BiomassReclaimerMachineCircuitboard
 
 - type: entity
   id: LockerResearchDirectorFilledHardsuit
