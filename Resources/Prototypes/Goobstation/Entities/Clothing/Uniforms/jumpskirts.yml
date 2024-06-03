@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: BKTurtleSkirt
+  name: Blackburna Turtle Skirt
+  description: A uniform consisting of snow coloured Turtleneck sweater with a navy blue skirt and gold belt straps.
+  components:
+  - type: Sprite
+    sprite: Goobstation/clothing/YTS.rsi
+  - type: Clothing
+    sprite: Goobstation/clothing/YTS.rsi
