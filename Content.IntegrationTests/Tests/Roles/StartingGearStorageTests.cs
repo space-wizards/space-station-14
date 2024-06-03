@@ -52,7 +52,7 @@ public sealed class StartingGearPrototypeStorageTest
 
         foreach (var gearProto in protos)
         {
-            var backpackProto = gearProto.GetGear("Back");
+            var backpackProto = gearProto.GetGear("back");
 
             EntityUid bag = default;
 
