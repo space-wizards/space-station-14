@@ -4,10 +4,12 @@ using System.Runtime.InteropServices;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
+using Content.Server.Censor;
 using Content.Server.MoMMI;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Censor;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Mind;
@@ -45,6 +47,7 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly ICensorManager _censorMan = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -219,6 +222,8 @@ namespace Content.Server.Chat.Managers
             switch (type)
             {
                 case OOCChatType.OOC:
+                    if (!_censorMan.RegexCensor(CensorTarget.OOC, message, player))
+                        return;
                     SendOOC(player, message);
                     break;
                 case OOCChatType.Admin:
