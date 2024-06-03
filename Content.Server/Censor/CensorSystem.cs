@@ -10,15 +10,8 @@ public sealed class CensorSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
-    // Loaded from database
-    private readonly List<TextCensorActionDef> _censorActionDefs = new();
-
-    // Cache for faster lookup
-    private readonly Dictionary<CensorTarget, Dictionary<CensorFilterType, List<TextCensorActionDef>>> _censorActions = new();
-
     // Filters
     private readonly Dictionary<CensorTarget, Dictionary<Regex, TextCensorActionDef>> _regexCensors = new();
-    // private readonly Dictionary<CensorTarget, SimpleCensor> _chatCensors = new();
 
     public override void Initialize()
     {
