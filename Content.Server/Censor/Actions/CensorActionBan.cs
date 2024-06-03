@@ -7,12 +7,12 @@ namespace Content.Server.Censor.Actions;
 
 public sealed class CensorActionBan : ICensorAction
 {
-    public bool AttemptCensor(string fullText, Dictionary<string, int> matchedText)
+    public bool SkipCensor(string fullText, Dictionary<string, int> matchedText)
     {
-        return true;
+        return false;
     }
 
-    public void RunAction(ICommonSession session,
+    public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> matchedText,
         string censorTargetName,
@@ -24,5 +24,7 @@ public sealed class CensorActionBan : ICensorAction
         // banManager.CreateServerBan(session.UserId, session.AttachedEntity.Value, player?.UserId, null, targetHWid,
         //     minutes, severity,
         //     reason);
+
+        return false;
     }
 }

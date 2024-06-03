@@ -1,0 +1,4 @@
+﻿- type: censorActionGroup
+  id: warning
+  censorActions:
+  - !type:CensorActionWarningPopup

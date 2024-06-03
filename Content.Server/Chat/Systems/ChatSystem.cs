@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Censor;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Speech.Components;
@@ -11,13 +12,14 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
+using Content.Shared.Censor;
 using Content.Shared.Chat;
-using Content.Shared.Chat.V2.Moderation;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
-using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Players;
 using Content.Shared.Radio;
@@ -58,6 +60,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
+    [Dependency] private readonly CensorSystem _censor = default!;
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -177,6 +180,18 @@ public sealed partial class ChatSystem : SharedChatSystem
             TrySendInGameOOCMessage(source, message, InGameOOCChatType.Dead, range == ChatTransmitRange.HideChat, shell, player);
             return;
         }
+
+        // Chat censor
+        // TODO ShadowCommander text censor
+        // newMessage = SanitizeMessageCensor(newMessage);
+        // Player isn't always provided, so get session. Kinda hacky for now.
+        var session = player;
+        if (player == null && TryComp(source, out MindContainerComponent? mindContainer) && mindContainer.HasMind && TryComp(mindContainer.Mind, out MindComponent? mind))
+        {
+            session = mind.Session;
+        }
+        if (session != null && !_censor.RegexCensor(CensorTarget.IC, message, session))
+            return;
 
         if (player != null && !_chatManager.HandleRateLimit(player))
             return;
@@ -707,9 +722,6 @@ public sealed partial class ChatSystem : SharedChatSystem
     private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true)
     {
         var newMessage = message.Trim();
-        // Chat censor
-        // TODO ShadowCommander text censor
-        // newMessage = SanitizeMessageCensor(newMessage);
 
         // Accent replacement
         newMessage = SanitizeMessageReplaceWords(newMessage);
