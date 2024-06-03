@@ -16,6 +16,7 @@ namespace Content.Shared.Ninja.Systems;
 /// </summary>
 public sealed class DashAbilitySystem : EntitySystem
 {
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
@@ -23,7 +24,6 @@ public sealed class DashAbilitySystem : EntitySystem
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
