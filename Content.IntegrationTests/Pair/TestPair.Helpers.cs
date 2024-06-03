@@ -7,6 +7,8 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
 
@@ -137,9 +139,14 @@ public sealed partial class TestPair
     /// </summary>
     public async Task SetAntagPref(ProtoId<AntagPrototype> id, bool value)
     {
+        await SetAntagPref(Client.User!.Value, id, value);
+    }
+
+    public async Task SetAntagPref(NetUserId user, ProtoId<AntagPrototype> id, bool value)
+    {
         var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
 
-        var prefs = prefMan.GetPreferences(Client.User!.Value);
+        var prefs = prefMan.GetPreferences(user);
         // what even is the point of ICharacterProfile if we always cast it to HumanoidCharacterProfile to make it usable?
         var profile = (HumanoidCharacterProfile) prefs.SelectedCharacter;
 
@@ -148,11 +155,11 @@ public sealed partial class TestPair
 
         await Server.WaitPost(() =>
         {
-            prefMan.SetProfile(Client.User.Value, prefs.SelectedCharacterIndex, newProfile).Wait();
+            prefMan.SetProfile(user, prefs.SelectedCharacterIndex, newProfile).Wait();
         });
 
         // And why the fuck does it always create a new preference and profile object instead of just reusing them?
-        var newPrefs = prefMan.GetPreferences(Client.User.Value);
+        var newPrefs = prefMan.GetPreferences(user);
         var newProf = (HumanoidCharacterProfile) newPrefs.SelectedCharacter;
         Assert.That(newProf.AntagPreferences.Contains(id), Is.EqualTo(value));
     }

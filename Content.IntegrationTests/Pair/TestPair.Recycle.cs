@@ -34,6 +34,8 @@ public sealed partial class TestPair : IAsyncDisposable
 
     private async Task OnCleanDispose()
     {
+        await Server.RemoveAllDummySessions();
+
         if (TestMap != null)
         {
             await Server.WaitPost(() => Server.EntMan.DeleteEntity(TestMap.MapUid));
