@@ -1,4 +1,4 @@
-﻿#
+#
 # You can use this Desmos sheet to calculate fuel burn rate values:
 # https://www.desmos.com/calculator/qcektq5dqs
 #
@@ -33,6 +33,7 @@
             - MachineMask
           layer:
             - MachineLayer
+    - type: RequireProjectileTarget
 
     # Visuals
     - type: Appearance

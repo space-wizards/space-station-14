@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: KitchenMicrowave
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: microwave
@@ -105,3 +105,4 @@
   - type: GuideHelp
     guides:
     - Chef
+  - type: RequireProjectileTarget

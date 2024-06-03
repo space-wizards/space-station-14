@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseItem
   id: BaseHandheldInstrument
@@ -71,6 +71,7 @@
         - BulletImpassable
   - type: StaticPrice
     price: 300
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: BasePlaceableInstrument

@@ -36,6 +36,7 @@
       mixer: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: RequireProjectileTarget
 
 - type: entity
   id: MachineElectrolysisUnit

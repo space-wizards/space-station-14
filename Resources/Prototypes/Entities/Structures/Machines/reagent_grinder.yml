@@ -56,6 +56,7 @@
       inputContainer: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: Recycler #too different so different parent

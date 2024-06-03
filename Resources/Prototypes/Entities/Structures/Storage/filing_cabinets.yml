@@ -67,6 +67,7 @@
     node: filingCabinet
   - type: StaticPrice
     price: 20
+  - type: RequireProjectileTarget
 
 - type: entity
   name: tall cabinet

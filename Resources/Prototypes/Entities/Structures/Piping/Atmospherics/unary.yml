@@ -466,3 +466,4 @@
   - type: ExaminableSolution
     solution: tank
   - type: PowerSwitch
+  - type: RequireProjectileTarget
