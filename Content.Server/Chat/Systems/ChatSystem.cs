@@ -286,6 +286,16 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (player != null && !_chatManager.HandleRateLimit(player))
             return;
 
+        // Chat censor
+        // Player isn't always provided, so get session. Kinda hacky for now.
+        var session = player;
+        if (player == null && TryComp(source, out MindContainerComponent? mindContainer) && mindContainer.HasMind && TryComp(mindContainer.Mind, out MindComponent? mind))
+        {
+            session = mind.Session;
+        }
+        if (session != null && !_censor.RegexCensor(CensorTarget.OOC, message, session))
+            return;
+
         // It doesn't make any sense for a non-player to send in-game OOC messages, whereas non-players may be sending
         // in-game IC messages.
         if (player?.AttachedEntity is not { Valid: true } entity || source != entity)
