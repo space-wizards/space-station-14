@@ -24,12 +24,12 @@ public sealed class UserOpenActivatableUIAttemptEvent : CancellableEntityEventAr
 public sealed class AfterActivatableUIOpenEvent : EntityEventArgs
 {
     public EntityUid User { get; }
-    public readonly ICommonSession Session;
+    public readonly EntityUid Actor;
 
-    public AfterActivatableUIOpenEvent(EntityUid who, ICommonSession session)
+    public AfterActivatableUIOpenEvent(EntityUid who, EntityUid actor)
     {
         User = who;
-        Session = session;
+        Actor = actor;
     }
 }
 

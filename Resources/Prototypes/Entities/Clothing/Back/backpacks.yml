@@ -23,8 +23,8 @@
         ents: []
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   # to prevent bag open/honk spam
   - type: UseDelay
     delay: 0.5
@@ -248,6 +248,15 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertclown.rsi
 
+- type: entity
+  parent: ClothingBackpackERTLeader
+  id: ClothingBackpackERTChaplain
+  name: ERT chaplain backpack
+  description: A spacious backpack with lots of pockets, worn by Chaplains of an Emergency Response Team.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertchaplain.rsi
+
 #Syndicate
 - type: entity
   parent: ClothingBackpack
@@ -258,7 +267,7 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/syndicate.rsi
   - type: ExplosionResistance
-    damageCoefficient: 0.1         
+    damageCoefficient: 0.1
 
 #Special
 - type: entity

@@ -40,9 +40,9 @@ namespace Content.Client.Access.UI
             SendMessage(new AgentIDCardJobChangedMessage(newJob));
         }
 
-        public void OnJobIconChanged(string newJobIcon)
+        public void OnJobIconChanged(string newJobIconId)
         {
-            SendMessage(new AgentIDCardJobIconChangedMessage(newJobIcon));
+            SendMessage(new AgentIDCardJobIconChangedMessage(newJobIconId));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Content.Client.Access.UI
 
             _window.SetCurrentName(cast.CurrentName);
             _window.SetCurrentJob(cast.CurrentJob);
-            _window.SetAllowedIcons(cast.Icons);
+            _window.SetAllowedIcons(cast.Icons, cast.CurrentJobIconId);
         }
 
         protected override void Dispose(bool disposing)

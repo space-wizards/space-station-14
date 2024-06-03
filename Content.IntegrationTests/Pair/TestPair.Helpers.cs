@@ -1,6 +1,10 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Preferences.Managers;
+using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -14,36 +18,37 @@ public sealed partial class TestPair
     /// <summary>
     /// Creates a map, a grid, and a tile, and gives back references to them.
     /// </summary>
-    public async Task<TestMapData> CreateTestMap()
+    [MemberNotNull(nameof(TestMap))]
+    public async Task<TestMapData> CreateTestMap(bool initialized = true, string tile = "Plating")
     {
+        var mapData = new TestMapData();
+        TestMap = mapData;
         await Server.WaitIdleAsync();
         var tileDefinitionManager = Server.ResolveDependency<ITileDefinitionManager>();
 
-        var mapData = new TestMapData();
         TestMap = mapData;
         await Server.WaitPost(() =>
         {
-            mapData.MapId = Server.MapMan.CreateMap();
-            mapData.MapUid = Server.MapMan.GetMapEntityId(mapData.MapId);
-            var mapGrid = Server.MapMan.CreateGridEntity(mapData.MapId);
-            mapData.MapGrid = mapGrid;
-            mapData.GridUid = mapGrid.Owner; // Fixing this requires an engine PR.
-            mapData.GridCoords = new EntityCoordinates(mapData.GridUid, 0, 0);
-            var plating = tileDefinitionManager["Plating"];
+            mapData.MapUid = Server.System<SharedMapSystem>().CreateMap(out mapData.MapId, runMapInit: initialized);
+            mapData.Grid = Server.MapMan.CreateGridEntity(mapData.MapId);
+            mapData.GridCoords = new EntityCoordinates(mapData.Grid, 0, 0);
+            var plating = tileDefinitionManager[tile];
             var platingTile = new Tile(plating.TileId);
-            mapData.MapGrid.SetTile(mapData.GridCoords, platingTile);
+            mapData.Grid.Comp.SetTile(mapData.GridCoords, platingTile);
             mapData.MapCoords = new MapCoordinates(0, 0, mapData.MapId);
-            mapData.Tile = mapData.MapGrid.GetAllTiles().First();
+            mapData.Tile = mapData.Grid.Comp.GetAllTiles().First();
         });
 
+        TestMap = mapData;
         if (!Settings.Connected)
             return mapData;
 
         await RunTicksSync(10);
         mapData.CMapUid = ToClientUid(mapData.MapUid);
-        mapData.CGridUid = ToClientUid(mapData.GridUid);
+        mapData.CGridUid = ToClientUid(mapData.Grid);
         mapData.CGridCoords = new EntityCoordinates(mapData.CGridUid, 0, 0);
 
+        TestMap = mapData;
         return mapData;
     }
 
@@ -125,5 +130,30 @@ public sealed partial class TestPair
         }
 
         return list;
+    }
+
+    /// <summary>
+    /// Helper method for enabling or disabling a antag role
+    /// </summary>
+    public async Task SetAntagPref(ProtoId<AntagPrototype> id, bool value)
+    {
+        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
+
+        var prefs = prefMan.GetPreferences(Client.User!.Value);
+        // what even is the point of ICharacterProfile if we always cast it to HumanoidCharacterProfile to make it usable?
+        var profile = (HumanoidCharacterProfile) prefs.SelectedCharacter;
+
+        Assert.That(profile.AntagPreferences.Contains(id), Is.EqualTo(!value));
+        var newProfile = profile.WithAntagPreference(id, value);
+
+        await Server.WaitPost(() =>
+        {
+            prefMan.SetProfile(Client.User.Value, prefs.SelectedCharacterIndex, newProfile).Wait();
+        });
+
+        // And why the fuck does it always create a new preference and profile object instead of just reusing them?
+        var newPrefs = prefMan.GetPreferences(Client.User.Value);
+        var newProf = (HumanoidCharacterProfile) newPrefs.SelectedCharacter;
+        Assert.That(newProf.AntagPreferences.Contains(id), Is.EqualTo(value));
     }
 }

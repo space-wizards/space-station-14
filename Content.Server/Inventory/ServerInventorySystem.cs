@@ -1,21 +1,15 @@
-using Content.Server.Storage.EntitySystems;
 using Content.Shared.Explosion;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
-using Content.Shared.Storage;
 
 namespace Content.Server.Inventory
 {
     public sealed class ServerInventorySystem : InventorySystem
     {
-        [Dependency] private readonly StorageSystem _storageSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<InventoryComponent, BeforeExplodeEvent>(OnExploded);
-            SubscribeNetworkEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
         }
 
         private void OnExploded(Entity<InventoryComponent> ent, ref BeforeExplodeEvent args)
@@ -26,17 +20,6 @@ namespace Content.Server.Inventory
             {
                 if (slot.ContainedEntity != null)
                     args.Contents.Add(slot.ContainedEntity.Value);
-            }
-        }
-
-        private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev, EntitySessionEventArgs args)
-        {
-            if (args.SenderSession.AttachedEntity is not { Valid: true } uid)
-                    return;
-
-            if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<StorageComponent>(entityUid, out var storageComponent))
-            {
-                _storageSystem.OpenStorageUI(entityUid.Value, uid, storageComponent);
             }
         }
 

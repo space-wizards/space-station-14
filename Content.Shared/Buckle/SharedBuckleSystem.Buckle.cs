@@ -40,6 +40,9 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, UpdateCanMoveEvent>(OnBuckleUpdateCanMove);
     }
 
+    [ValidatePrototypeId<AlertCategoryPrototype>]
+    public const string BuckledAlertCategory = "Buckled";
+
     private void OnBuckleComponentStartup(EntityUid uid, BuckleComponent component, ComponentStartup args)
     {
         UpdateBuckleStatus(uid, component);
@@ -61,7 +64,7 @@ public abstract partial class SharedBuckleSystem
             return;
 
         var strapPosition = Transform(strapUid).Coordinates;
-        if (ev.NewPosition.InRange(EntityManager, _transform, strapPosition, strapComp.MaxBuckleDistance))
+        if (ev.NewPosition.EntityId.IsValid() && ev.NewPosition.InRange(EntityManager, _transform, strapPosition, strapComp.MaxBuckleDistance))
             return;
 
         TryUnbuckle(uid, uid, true, component);
@@ -165,7 +168,7 @@ public abstract partial class SharedBuckleSystem
         }
         else
         {
-            _alerts.ClearAlertCategory(uid, AlertCategory.Buckled);
+            _alerts.ClearAlertCategory(uid, BuckledAlertCategory);
         }
     }
 
@@ -221,8 +224,8 @@ public abstract partial class SharedBuckleSystem
         }
 
         // Does it pass the Whitelist
-        if (strapComp.AllowedEntities != null &&
-            !strapComp.AllowedEntities.IsValid(userUid, EntityManager))
+        if (strapComp.Whitelist != null &&
+            !strapComp.Whitelist.IsValid(buckleUid, EntityManager) || strapComp.Blacklist?.IsValid(buckleUid, EntityManager) == true)
         {
             if (_netManager.IsServer)
                 _popup.PopupEntity(Loc.GetString("buckle-component-cannot-fit-message"), userUid, buckleUid, PopupType.Medium);

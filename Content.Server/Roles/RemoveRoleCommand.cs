@@ -5,14 +5,12 @@ using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Admin)]
     public sealed class RemoveRoleCommand : IConsoleCommand
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public string Command => "rmrole";

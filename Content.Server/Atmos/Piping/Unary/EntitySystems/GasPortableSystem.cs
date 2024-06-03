@@ -39,10 +39,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnAnchorChanged(EntityUid uid, GasPortableComponent portable, ref AnchorStateChangedEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!_nodeContainer.TryGetNode(nodeContainer, portable.PortName, out PipeNode? portableNode))
+            if (!_nodeContainer.TryGetNode(uid, portable.PortName, out PipeNode? portableNode))
                 return;
 
             portableNode.ConnectionsEnabled = args.Anchored;

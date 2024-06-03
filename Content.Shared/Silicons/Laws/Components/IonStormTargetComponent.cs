@@ -20,7 +20,7 @@ public sealed partial class IonStormTargetComponent : Component
     /// Chance for this borg to be affected at all.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float Chance = 0.5f;
+    public float Chance = 0.8f;
 
     /// <summary>
     /// Chance to replace the lawset with a random one
@@ -32,19 +32,19 @@ public sealed partial class IonStormTargetComponent : Component
     /// Chance to remove a random law.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float RemoveChance = 0.1f;
+    public float RemoveChance = 0.2f;
 
     /// <summary>
     /// Chance to replace a random law with the new one, rather than have it be a glitched-order law.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ReplaceChance = 0.1f;
+    public float ReplaceChance = 0.2f;
 
     /// <summary>
     /// Chance to shuffle laws after everything is done.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ShuffleChance = 0.1f;
+    public float ShuffleChance = 0.2f;
 }
 
 /// <summary>

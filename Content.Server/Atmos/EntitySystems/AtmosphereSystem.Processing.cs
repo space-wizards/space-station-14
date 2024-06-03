@@ -30,13 +30,15 @@ namespace Content.Server.Atmos.EntitySystems
         private int _currentRunAtmosphereIndex;
         private bool _simulationPaused;
 
-        private TileAtmosphere GetOrNewTile(EntityUid owner, GridAtmosphereComponent atmosphere, Vector2i index)
+        private TileAtmosphere GetOrNewTile(EntityUid owner, GridAtmosphereComponent atmosphere, Vector2i index, bool invalidateNew = true)
         {
             var tile = atmosphere.Tiles.GetOrNew(index, out var existing);
             if (existing)
                 return tile;
 
-            atmosphere.InvalidatedCoords.Add(index);
+            if (invalidateNew)
+                atmosphere.InvalidatedCoords.Add(index);
+
             tile.GridIndex = owner;
             tile.GridIndices = index;
             return tile;
@@ -68,7 +70,7 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunInvalidatedTiles.EnsureCapacity(atmosphere.InvalidatedCoords.Count);
                 foreach (var indices in atmosphere.InvalidatedCoords)
                 {
-                    var tile = GetOrNewTile(uid, atmosphere, indices);
+                    var tile = GetOrNewTile(uid, atmosphere, indices, invalidateNew: false);
                     atmosphere.CurrentRunInvalidatedTiles.Enqueue(tile);
 
                     // Update tile.IsSpace and tile.MapAtmosphere, and tile.AirtightData.
@@ -86,7 +88,7 @@ namespace Content.Server.Atmos.EntitySystems
                 DebugTools.Assert(atmosphere.Tiles.GetValueOrDefault(tile.GridIndices) == tile);
                 UpdateAdjacentTiles(ent, tile, activate: true);
                 UpdateTileAir(ent, tile, volume);
-                InvalidateVisuals(uid, tile.GridIndices, visuals);
+                InvalidateVisuals(ent, tile);
 
                 if (number++ < InvalidCoordinatesLagCheckIterations)
                     continue;
@@ -313,15 +315,17 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
-        private bool ProcessActiveTiles(GridAtmosphereComponent atmosphere, GasTileOverlayComponent visuals)
+        private bool ProcessActiveTiles(
+            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
         {
+            var atmosphere = ent.Comp1;
             if(!atmosphere.ProcessingPaused)
                 QueueRunTiles(atmosphere.CurrentRunTiles, atmosphere.ActiveTiles);
 
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                ProcessCell(atmosphere, tile, atmosphere.UpdateCounter, visuals);
+                ProcessCell(ent, tile, atmosphere.UpdateCounter);
 
                 if (number++ < LagCheckIterations)
                     continue;
@@ -337,8 +341,10 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
-        private bool ProcessExcitedGroups(GridAtmosphereComponent gridAtmosphere)
+        private bool ProcessExcitedGroups(
+            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
         {
+            var gridAtmosphere = ent.Comp1;
             if (!gridAtmosphere.ProcessingPaused)
             {
                 gridAtmosphere.CurrentRunExcitedGroups.Clear();
@@ -356,7 +362,7 @@ namespace Content.Server.Atmos.EntitySystems
                 excitedGroup.DismantleCooldown++;
 
                 if (excitedGroup.BreakdownCooldown > Atmospherics.ExcitedGroupBreakdownCycles)
-                    ExcitedGroupSelfBreakdown(gridAtmosphere, excitedGroup);
+                    ExcitedGroupSelfBreakdown(ent, excitedGroup);
                 else if (excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
                     DeactivateGroupTiles(gridAtmosphere, excitedGroup);
                 // TODO ATMOS. What is the point of this? why is this only de-exciting the group? Shouldn't it also dismantle it?
@@ -411,15 +417,17 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
-        private bool ProcessHotspots(GridAtmosphereComponent atmosphere)
+        private bool ProcessHotspots(
+            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
         {
+            var atmosphere = ent.Comp1;
             if(!atmosphere.ProcessingPaused)
                 QueueRunTiles(atmosphere.CurrentRunTiles, atmosphere.HotspotTiles);
 
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var hotspot))
             {
-                ProcessHotspot(atmosphere, hotspot);
+                ProcessHotspot(ent, hotspot);
 
                 if (number++ < LagCheckIterations)
                     continue;
@@ -507,8 +515,11 @@ namespace Content.Server.Atmos.EntitySystems
             return num * AtmosTime;
         }
 
-        private bool ProcessAtmosDevices(GridAtmosphereComponent atmosphere)
+        private bool ProcessAtmosDevices(
+            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            Entity<MapAtmosphereComponent?> map)
         {
+            var atmosphere = ent.Comp1;
             if (!atmosphere.ProcessingPaused)
             {
                 atmosphere.CurrentRunAtmosDevices.Clear();
@@ -521,7 +532,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var time = _gameTiming.CurTime;
             var number = 0;
-            var ev = new AtmosDeviceUpdateEvent(RealAtmosTime());
+            var ev = new AtmosDeviceUpdateEvent(RealAtmosTime(), (ent, ent.Comp1, ent.Comp2), map);
             while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
                 RaiseLocalEvent(device, ref ev);
@@ -565,12 +576,11 @@ namespace Content.Server.Atmos.EntitySystems
                 var ent = _currentRunAtmosphere[_currentRunAtmosphereIndex];
                 var (owner, atmosphere, visuals, grid, xform) = ent;
 
-                if (!TryComp(owner, out TransformComponent? x)
-                    || x.MapUid == null
-                    || TerminatingOrDeleted(x.MapUid.Value)
-                    || x.MapID == MapId.Nullspace)
+                if (xform.MapUid == null
+                    || TerminatingOrDeleted(xform.MapUid.Value)
+                    || xform.MapID == MapId.Nullspace)
                 {
-                    Log.Error($"Attempted to process atmos without a map? Entity: {ToPrettyString(owner)}. Map: {ToPrettyString(x?.MapUid)}. MapId: {x?.MapID}");
+                    Log.Error($"Attempted to process atmos without a map? Entity: {ToPrettyString(owner)}. Map: {ToPrettyString(xform?.MapUid)}. MapId: {xform?.MapID}");
                     continue;
                 }
 
@@ -584,6 +594,8 @@ namespace Content.Server.Atmos.EntitySystems
 
                 // We subtract it so it takes lost time into account.
                 atmosphere.Timer -= AtmosTime;
+
+                var map = new Entity<MapAtmosphereComponent?>(xform.MapUid.Value, _mapAtmosQuery.CompOrNull(xform.MapUid.Value));
 
                 switch (atmosphere.State)
                 {
@@ -614,7 +626,7 @@ namespace Content.Server.Atmos.EntitySystems
                         atmosphere.State = AtmosphereProcessingState.ActiveTiles;
                         continue;
                     case AtmosphereProcessingState.ActiveTiles:
-                        if (!ProcessActiveTiles(ent, ent))
+                        if (!ProcessActiveTiles(ent))
                         {
                             atmosphere.ProcessingPaused = true;
                             return;
@@ -625,7 +637,7 @@ namespace Content.Server.Atmos.EntitySystems
                         atmosphere.State = ExcitedGroups ? AtmosphereProcessingState.ExcitedGroups : AtmosphereProcessingState.HighPressureDelta;
                         continue;
                     case AtmosphereProcessingState.ExcitedGroups:
-                        if (!ProcessExcitedGroups(atmosphere))
+                        if (!ProcessExcitedGroups(ent))
                         {
                             atmosphere.ProcessingPaused = true;
                             return;
@@ -645,7 +657,7 @@ namespace Content.Server.Atmos.EntitySystems
                         atmosphere.State = AtmosphereProcessingState.Hotspots;
                         continue;
                     case AtmosphereProcessingState.Hotspots:
-                        if (!ProcessHotspots(atmosphere))
+                        if (!ProcessHotspots(ent))
                         {
                             atmosphere.ProcessingPaused = true;
                             return;
@@ -680,7 +692,7 @@ namespace Content.Server.Atmos.EntitySystems
                         atmosphere.State = AtmosphereProcessingState.AtmosDevices;
                         continue;
                     case AtmosphereProcessingState.AtmosDevices:
-                        if (!ProcessAtmosDevices(atmosphere))
+                        if (!ProcessAtmosDevices(ent, map))
                         {
                             atmosphere.ProcessingPaused = true;
                             return;

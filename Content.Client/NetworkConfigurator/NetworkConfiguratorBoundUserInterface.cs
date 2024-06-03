@@ -88,6 +88,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
         base.Dispose(disposing);
         if (!disposing) return;
 
+        _linkMenu?.Dispose();
         _listMenu?.Dispose();
         _configurationMenu?.Dispose();
     }

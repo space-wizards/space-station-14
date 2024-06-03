@@ -10,7 +10,7 @@
     - type: InteractionOutline
     - type: UserInterface
       interfaces:
-        - key: enum.WiresUiKey.Key
+        enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
     - type: Wires
       layoutId: Defusable

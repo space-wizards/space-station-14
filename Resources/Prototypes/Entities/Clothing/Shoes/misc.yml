@@ -47,6 +47,8 @@
       collection: FootstepDuck
       params:
         variation: 0.07
+  - type: WaddleWhenWorn
+    tumbleIntensity: 10 # smaller than clown shoes
   - type: Construction
     graph: ClothingShoeSlippersDuck
     node: shoes
@@ -126,7 +128,6 @@
   id: ActionToggleSpeedBoots
   name: Toggle Speed Boots
   description: Toggles the speed boots on and off.
-  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: NoItem

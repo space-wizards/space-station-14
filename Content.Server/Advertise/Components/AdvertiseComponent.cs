@@ -1,13 +1,12 @@
 using Content.Server.Advertise.EntitySystems;
-using Content.Shared.Advertise;
+using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Advertise.Components;
 
 /// <summary>
 /// Makes this entity periodically advertise by speaking a randomly selected
-/// message from a specified MessagePack into local chat.
+/// message from a specified dataset into local chat.
 /// </summary>
 [RegisterComponent, Access(typeof(AdvertiseSystem))]
 public sealed partial class AdvertiseComponent : Component
@@ -26,10 +25,18 @@ public sealed partial class AdvertiseComponent : Component
     public int MaximumWait { get; private set; } = 10 * 60;
 
     /// <summary>
-    /// The identifier for the advertisements pack prototype.
+    /// If true, the delay before the first advertisement (at MapInit) will ignore <see cref="MinimumWait"/>
+    /// and instead be rolled between 0 and <see cref="MaximumWait"/>. This only applies to the initial delay;
+    /// <see cref="MinimumWait"/> will be respected after that.
+    /// </summary>
+    [DataField]
+    public bool Prewarm = true;
+
+    /// <summary>
+    /// The identifier for the advertisements dataset prototype.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<MessagePackPrototype> Pack { get; private set; }
+    public ProtoId<LocalizedDatasetPrototype> Pack { get; private set; }
 
     /// <summary>
     /// The next time an advertisement will be said.
@@ -37,9 +44,4 @@ public sealed partial class AdvertiseComponent : Component
     [DataField]
     public TimeSpan NextAdvertisementTime { get; set; } = TimeSpan.Zero;
 
-    /// <summary>
-    /// Whether the entity will say advertisements or not.
-    /// </summary>
-    [DataField]
-    public bool Enabled { get; set; } = true;
 }

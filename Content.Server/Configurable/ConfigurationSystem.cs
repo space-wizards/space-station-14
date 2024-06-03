@@ -24,16 +24,14 @@ public sealed class ConfigurationSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, ConfigurationComponent component, InteractUsingEvent args)
     {
+        // TODO use activatable ui system
         if (args.Handled)
             return;
 
         if (!TryComp(args.Used, out ToolComponent? tool) || !tool.Qualities.Contains(component.QualityNeeded))
             return;
 
-        if (!TryComp(args.User, out ActorComponent? actor))
-            return;
-
-        args.Handled = _uiSystem.TryOpen(uid, ConfigurationUiKey.Key, actor.PlayerSession);
+        args.Handled = _uiSystem.TryOpenUi(uid, ConfigurationUiKey.Key, args.User);
     }
 
     private void OnStartup(EntityUid uid, ConfigurationComponent component, ComponentStartup args)
@@ -43,8 +41,8 @@ public sealed class ConfigurationSystem : EntitySystem
 
     private void UpdateUi(EntityUid uid, ConfigurationComponent component)
     {
-        if (_uiSystem.TryGetUi(uid, ConfigurationUiKey.Key, out var ui))
-            _uiSystem.SetUiState(ui, new ConfigurationBoundUserInterfaceState(component.Config));
+        if (_uiSystem.HasUi(uid, ConfigurationUiKey.Key))
+            _uiSystem.SetUiState(uid, ConfigurationUiKey.Key, new ConfigurationBoundUserInterfaceState(component.Config));
     }
 
     private void OnUpdate(EntityUid uid, ConfigurationComponent component, ConfigurationUpdatedMessage args)

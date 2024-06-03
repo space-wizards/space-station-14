@@ -1,4 +1,3 @@
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Remotes.Components;
@@ -8,8 +7,6 @@ namespace Content.Shared.Remotes.EntitySystems;
 public abstract class SharedDoorRemoteSystem : EntitySystem
 {
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    // I'm so sorry [Dependency] private readonly SharedAirlockSystem _sharedAirlockSystem = default!;
 
     public override void Initialize()
     {

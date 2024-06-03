@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Decals;
@@ -11,7 +10,6 @@ namespace Content.Server.Decals;
 public sealed class EditDecalCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
 
     public string Command => "editdecal";
     public string Description => "Edits a decal.";

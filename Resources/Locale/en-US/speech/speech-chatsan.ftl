@@ -117,3 +117,6 @@ chatsan-replacement-42 = of course
 
 chatsan-word-43 = ig
 chatsan-replacement-43 = i guess
+
+chatsan-word-44 = tbf
+chatsan-replacement-44 = to be fair
