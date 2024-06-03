@@ -7,7 +7,6 @@ using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Collections;
-using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Roles;
 
