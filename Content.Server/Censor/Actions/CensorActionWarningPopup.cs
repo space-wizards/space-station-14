@@ -10,17 +10,8 @@ namespace Content.Server.Censor.Actions;
 [UsedImplicitly]
 public sealed class CensorActionWarningPopup : ICensorAction
 {
-    private string? _previous = null;
-
     public bool SkipCensor(string fullText, Dictionary<string, int> matchedText)
     {
-        if (fullText == _previous)
-        {
-            _previous = null;
-            return true;
-        }
-
-        _previous = fullText;
         return false;
     }
 

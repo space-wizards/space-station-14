@@ -7,17 +7,8 @@ namespace Content.Server.Censor.Actions;
 
 public sealed class CensorActionWarningChatMessage : ICensorAction
 {
-    private string? _previous = null;
-
     public bool SkipCensor(string fullText, Dictionary<string, int> matchedText)
     {
-        if (fullText == _previous)
-        {
-            _previous = null;
-            return true;
-        }
-
-        _previous = fullText;
         return false;
     }
 
