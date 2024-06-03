@@ -2,8 +2,8 @@
   id: Bagel
   mapName: 'Bagel Station'
   mapPath: /Maps/bagel.yml
-  minPlayers: 40
-  maxPlayers: 76
+  minPlayers: 0
+  maxPlayers: 100
   stations:
     Bagel:
       stationProto: StandardNanotrasenStation
