@@ -45,7 +45,7 @@ public sealed class StatusIconOverlay : Overlay
         var query = _entity.AllEntityQueryEnumerator<StatusIconComponent, SpriteComponent, TransformComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var comp, out var sprite, out var xform, out var meta))
         {
-            if (xform.MapID != args.MapId)
+            if (xform.MapID != args.MapId || !sprite.Visible)
                 continue;
 
             var bounds = comp.Bounds ?? sprite.Bounds;
@@ -72,6 +72,8 @@ public sealed class StatusIconOverlay : Overlay
 
             foreach (var proto in icons)
             {
+                if (!_statusIcon.IsVisible((uid, meta), proto))
+                    continue;
 
                 var curTime = _timing.RealTime;
                 var texture = _sprite.GetFrame(proto.Icon, curTime);

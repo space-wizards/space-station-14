@@ -38,7 +38,7 @@ public sealed class EmagProviderSystem : EntitySystem
         var (uid, comp) = ent;
 
         // only allowed to emag entities on the whitelist
-        if (comp.Whitelist != null && !_whitelist.IsValid(comp.Whitelist, target))
+        if (_whitelist.IsWhitelistFail(comp.Whitelist, target))
             return;
 
         // only allowed to emag non-immune entities

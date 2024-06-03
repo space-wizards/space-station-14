@@ -9,6 +9,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Timing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Ninja.Systems;
@@ -45,7 +46,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
         if (args.Handled || comp.BatteryUid == null || !_gloves.AbilityCheck(uid, args, out var target))
             return;
 
-        if (target == uid || !_whitelist.IsValid(comp.Whitelist, target))
+        if (target == uid || _whitelist.IsWhitelistFail(comp.Whitelist, target))
             return;
 
         var useDelay = EnsureComp<UseDelayComponent>(uid);

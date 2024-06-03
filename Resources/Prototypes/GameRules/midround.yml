@@ -1,5 +1,4 @@
 - type: entity
-  noSpawn: true
   parent: BaseGameRule
   id: Thief
   components:

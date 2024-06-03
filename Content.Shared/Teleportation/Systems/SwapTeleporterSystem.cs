@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
@@ -24,6 +25,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -51,8 +53,8 @@ public sealed class SwapTeleporterSystem : EntitySystem
         if (!TryComp<SwapTeleporterComponent>(target, out var targetComp))
             return;
 
-        if (!comp.TeleporterWhitelist.IsValid(target, EntityManager) ||
-            !targetComp.TeleporterWhitelist.IsValid(uid, EntityManager))
+        if (_whitelistSystem.IsWhitelistFail(comp.TeleporterWhitelist, target) ||
+            _whitelistSystem.IsWhitelistFail(targetComp.TeleporterWhitelist, uid))
         {
             return;
         }
