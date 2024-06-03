@@ -14,29 +14,38 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
         SubscribeLocalEvent<RequireProjectileTargetComponent, DownedEvent>(LayingBulletPass);
     }
 
-    private void PreventCollide(EntityUid uid, RequireProjectileTargetComponent component, ref PreventCollideEvent args)
+    private void PreventCollide(Entity<RequireProjectileTargetComponent> ent, ref PreventCollideEvent args)
     {
         if (args.Cancelled)
           return;
 
-        if (!component.Active)
+        if (!ent.Comp.Active)
             return;
 
         var other = args.OtherEntity;
         if (HasComp<ProjectileComponent>(other) &&
-            CompOrNull<TargetedProjectileComponent>(other)?.Target != uid)
+            CompOrNull<TargetedProjectileComponent>(other)?.Target != ent)
         {
             args.Cancelled = true;
         }
     }
 
-    private void StandingBulletHit(EntityUid uid, RequireProjectileTargetComponent component, ref StoodEvent args)
+    private void SetActive(Entity<RequireProjectileTargetComponent> ent, bool value)
     {
-        component.Active = false;
+        if (ent.Comp.Active == value)
+            return;
+
+        ent.Comp.Active = value;
+        Dirty(ent);
     }
 
-    private void LayingBulletPass(EntityUid uid, RequireProjectileTargetComponent component, ref DownedEvent args)
+    private void StandingBulletHit(Entity<RequireProjectileTargetComponent> ent, ref StoodEvent args)
     {
-        component.Active = true;
+        SetActive(ent, false);
+    }
+
+    private void LayingBulletPass(Entity<RequireProjectileTargetComponent> ent, ref DownedEvent args)
+    {
+        SetActive(ent, true);
     }
 }
