@@ -2,3 +2,8 @@
   id: Actions
   name: entity-category-name-actions
   hideSpawnMenu: true
+
+- type: entityCategory
+  id: GameRules
+  name: entity-category-name-game-rules
+  hideSpawnMenu: true
