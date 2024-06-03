@@ -3787,25 +3787,18 @@
   id: 6666
   time: '2024-06-02T17:30:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28518
-- author: Voomra
-  changes:
-  - message: localize Pray UI
-    type: Fix
-  id: 6667
-  time: '2024-06-02T23:51:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28535
 - author: Whisper
   changes:
   - message: Renamed the player-obtainable "admin cloak" to "weh cloak".
     type: Tweak
-  id: 6668
+  id: 6667
   time: '2024-06-03T02:18:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28540
 - author: Vermidia
   changes:
   - message: Glass shards are no longer weldable with an unlit welder.
     type: Fix
-  id: 6669
+  id: 6668
   time: '2024-06-03T03:28:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27959
 - author: AJCM-git
@@ -3813,35 +3806,35 @@
   - message: Biomass reclaimers no longer act as a void to any unfortunate belongings
       a corpse may be wearing
     type: Tweak
-  id: 6670
+  id: 6669
   time: '2024-06-03T03:30:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28544
 - author: Laneron
   changes:
   - message: Jetpack UI window now has correctly displayed header
     type: Fix
-  id: 6671
+  id: 6670
   time: '2024-06-03T03:33:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28545
 - author: Vermidia
   changes:
   - message: SyndiCats now spawn from a radio like other reinforcements.
     type: Tweak
-  id: 6672
+  id: 6671
   time: '2024-06-03T11:54:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28492
 - author: Cojoke-dot
   changes:
   - message: Medibots will now occasionally talk
     type: Tweak
-  id: 6673
+  id: 6672
   time: '2024-06-03T12:05:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28543
 - author: Cojoke-dot
   changes:
   - message: The player can now use the gasping emote
     type: Tweak
-  id: 6674
+  id: 6673
   time: '2024-06-03T12:10:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28466
 - author: Cojoke-dot
@@ -3851,6 +3844,6 @@
   - message: Bullets now pass over mobs that are lying down unless directly clicked
       on while shooting.
     type: Tweak
-  id: 6675
+  id: 6674
   time: '2024-06-03T13:04:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28072
