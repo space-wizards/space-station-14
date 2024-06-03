@@ -26,9 +26,9 @@ public sealed class SaveActionsCommand : IConsoleCommand
         {
             EntitySystem.Get<ActionsSystem>().SaveActionAssignments(args[0]);
         }
-        catch
+        catch (Exception e)
         {
-            shell.WriteLine("Failed to save action assignments");
+            shell.WriteLine($"Failed to save action assignments:\n{e}");
         }
     }
 }
