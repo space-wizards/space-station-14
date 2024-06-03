@@ -16,7 +16,7 @@ public sealed class CensorActionBan : ICensorAction
         string fullText,
         Dictionary<string, int> matchedText,
         string censorTargetName,
-        EntityManager entMan)
+        IEntityManager entMan)
     {
         var banManager = IoCManager.Resolve<IBanManager>();
 

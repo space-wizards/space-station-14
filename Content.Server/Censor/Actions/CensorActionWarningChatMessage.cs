@@ -16,7 +16,7 @@ public sealed class CensorActionWarningChatMessage : ICensorAction
         string fullText,
         Dictionary<string, int> matchedText,
         string censorTargetName,
-        EntityManager entMan)
+        IEntityManager entMan)
     {
         IoCManager.Resolve<IChatManager>()
             .DispatchServerMessage(session,

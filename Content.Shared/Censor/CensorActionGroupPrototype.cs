@@ -72,7 +72,7 @@ public interface ICensorAction
         string fullText,
         Dictionary<string, int> matchedText,
         string censorTargetName,
-        EntityManager entMan);
+        IEntityManager entMan);
 
     // TODO ShadowCommander add a counter for each player that counts runs on an action for checking multiple slurs
     // in a certain time frame for auto banning and such

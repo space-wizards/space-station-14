@@ -19,7 +19,7 @@ public sealed class CensorActionWarningPopup : ICensorAction
         string fullText,
         Dictionary<string, int> matchedText,
         string censorTargetName,
-        EntityManager entMan)
+        IEntityManager entMan)
     {
         StringBuilder stringBuilder = new();
         stringBuilder.AppendJoin(", ", matchedText.Keys);
