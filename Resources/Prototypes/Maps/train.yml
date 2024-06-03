@@ -2,7 +2,7 @@
   id: Train
   mapName: 'Why would you fucking want this map at all?'
   mapPath: /Maps/train.yml
-  minPlayers: 0
+  minPlayers: 90
   maxPlayers: 100
   stations:
     Train:
