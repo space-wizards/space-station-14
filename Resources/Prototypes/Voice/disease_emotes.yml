@@ -2,7 +2,11 @@
   id: Sneeze
   name: chat-emote-name-sneeze
   category: Vocal
+  available: false
   chatMessages: ["chat-emote-msg-sneeze"]
+  chatTriggers:
+    - sneeze
+    - sneezes
 
 - type: emote
   id: Cough

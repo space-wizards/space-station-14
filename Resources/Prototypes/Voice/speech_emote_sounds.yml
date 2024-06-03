@@ -38,6 +38,8 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+    Sniff:
+      collection: Sniff
 
 - type: emoteSounds
   id: FemaleHuman
@@ -78,6 +80,8 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    Sniff:
+      collection: Sniff
 
 - type: emoteSounds
   id: MaleReptilian
@@ -85,7 +89,8 @@
     variation: 0.125
   sounds:
     Scream:
-      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+      collection: ReptilianScreams
+#     path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
     Honk:
@@ -100,6 +105,18 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: DeathGasp
+    Sneeze:
+      collection: ReptilianSneeze
+    Hiss:
+      collection: ReptilianHiss
+    Purr:
+      collection: ReptilianPurr
+    Growl:
+      collection: ReptilianGrowl
+    Sniff:
+      collection: Sniff
+    Whine:
+      collection: ReptilianWhine
 
 - type: emoteSounds
   id: FemaleReptilian
@@ -118,6 +135,18 @@
       collection: FemaleCry
     Weh:
       collection: Weh
+    Sneeze:
+      collection: ReptilianSneeze
+    Hiss:
+      collection: ReptilianHiss
+    Purr:
+      collection: ReptilianPurr
+    Growl:
+      collection: ReptilianGrowl
+    Sniff:
+      collection: Sniff
+    Whine:
+      collection: ReptilianWhine
 
 - type: emoteSounds
   id: MaleSlime
@@ -158,6 +187,8 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+    Sniff:
+      collection: Sniff
   params:
     variation: 0.125
 
@@ -200,6 +231,8 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    Sniff:
+      collection: Sniff
   params:
     variation: 0.125
 
@@ -289,6 +322,8 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+    Sniff:
+      collection: Sniff
   params:
     variation: 0.125
     pitch: 0.75
@@ -330,6 +365,8 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    Sniff:
+      collection: Sniff
   params:
     variation: 0.125
     pitch: 0.75
@@ -406,6 +443,8 @@
         volume: -6
     Salute:
       collection: Salutes
+    CracksKnuckles:
+      collection: CracksKnuckles
 
 - type: emoteSounds
   id: DionaBodyEmotes
@@ -420,6 +459,22 @@
       path: /Audio/Voice/Diona/diona_salute.ogg
       params:
        volume: -5
+
+- type: emoteSounds
+  id: ReptilianBodyEmotes
+  sounds:
+    WhipTail:
+      collection: ReptilianWhipTail
+    Clap:
+      collection: Claps
+    Snap:
+      collection: Snaps
+      params:
+        volume: -6
+    Salute:
+      collection: Salutes
+    CracksKnuckles:
+      collection: CracksKnuckles
 
 # mobs
 - type: emoteSounds
