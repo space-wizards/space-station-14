@@ -213,7 +213,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         {
             // prevent antag selection from happening if the round is on-going, requiring a spawner if used midround.
             // this is so rules like nukies, if added by an admin midround, dont make random living people nukies
-            Log.Debug($"Antags for rule {ent:?} get picked pre-spawn so only spawners will be made.");
+            Log.Info($"Antags for rule {ent:?} get picked pre-spawn so only spawners will be made.");
             DebugTools.Assert(def.SpawnerPrototype != null, $"Rule {ent:?} had no spawner for pre-spawn rule added mid-round!");
             picking = false;
         }
