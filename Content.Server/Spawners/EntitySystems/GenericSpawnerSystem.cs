@@ -25,7 +25,6 @@ public sealed class GenericSpawnerSystem : EntitySystem
 
         SubscribeLocalEvent<GameRuleStartedEvent>(OnRuleStarted);
         SubscribeLocalEvent<GenericSpawnerComponent, MapInitEvent>(OnSpawnMapInit);
-        SubscribeLocalEvent<GenericSpawnerComponent, MapInitEvent>(OnSpawnMapInit);
     }
 
     private void OnSpawnMapInit(EntityUid uid, GenericSpawnerComponent component, MapInitEvent args)
@@ -83,7 +82,7 @@ public sealed class GenericSpawnerSystem : EntitySystem
             return;
         }
 
-        if (component.Rolls is >= 1 and <= 100)
+        if (component.Rolls is < 1 or > 100)
         {
             Log.Warning($"Invalid amount of rolls on entity table, value should be between 1 and 100. Entity: {ToPrettyString(uid)}");
             return;
