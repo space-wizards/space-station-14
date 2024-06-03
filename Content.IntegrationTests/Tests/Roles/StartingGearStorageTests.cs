@@ -28,8 +28,7 @@ public sealed class StartingGearPrototypeStorageTest
             .EnumeratePrototypes<StartingGearPrototype>()
             .Where(p => !p.Abstract)
             .ToList();
-
-        protos.Sort();
+            .OrderBy(p => p.ID);
 
         var testMap = await pair.CreateTestMap();
         var coords = testMap.GridCoords;
