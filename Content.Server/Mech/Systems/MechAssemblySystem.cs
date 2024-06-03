@@ -2,6 +2,7 @@
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 
@@ -15,6 +16,7 @@ public sealed class MechAssemblySystem : EntitySystem
 {
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -30,7 +32,7 @@ public sealed class MechAssemblySystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, MechAssemblyComponent component, InteractUsingEvent args)
     {
-        if (TryComp<ToolComponent>(args.Used, out var toolComp) && toolComp.Qualities.Contains(component.QualityNeeded))
+        if (_toolSystem.HasQuality(args.Used, component.QualityNeeded))
         {
             foreach (var tag in component.RequiredParts.Keys)
             {
