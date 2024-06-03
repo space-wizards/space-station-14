@@ -33,12 +33,10 @@
   - type: Tool
     qualities:
       - Prying
-    speed: 0.8
+    speedModifier: .8
+    useSound: /Audio/Items/jaws_pry.ogg
   - type: Prying
-    pryPowered: !type:Bool
-      true
-    force: !type:Bool
-      true
+    pryPowered: true
     useSound: /Audio/Items/jaws_pry.ogg
   - type: ToolForcePowered
   - type: Clothing
