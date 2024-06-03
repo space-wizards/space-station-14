@@ -87,7 +87,7 @@
     requireAll: true
     components:
     - Vocal
-    - BorgChassis    
+    - BorgChassis
   chatMessages: ["chat-emote-msg-honk"]
   chatTriggers:
     - honk
