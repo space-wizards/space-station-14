@@ -7,6 +7,11 @@
     folded: true
   - type: Mask
     isToggled: true
+  - type: IngestionBlocker
+    enabled: false
+  - type: IdentityBlocker
+    enabled: false
+    coverage: MOUTH
   - type: Sprite # needed for vendor inventory icons
     layers:
     - state: icon
@@ -20,51 +25,51 @@
     - Bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandBlack]
+  parent: [ClothingMaskBandBlack, ClothingHeadBandBase]
   id: ClothingHeadBandBlack
   name: black bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandBlue]
+  parent: [ClothingMaskBandBlue, ClothingHeadBandBase]
   id: ClothingHeadBandBlue
   name: blue bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandBotany]
+  parent: [ClothingMaskBandBotany, ClothingHeadBandBase]
   id: ClothingHeadBandBotany
   name: botany bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandGold]
+  parent: [ClothingMaskBandGold, ClothingHeadBandBase]
   id: ClothingHeadBandGold
   name: gold bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandGreen]
+  parent: [ClothingMaskBandGreen, ClothingHeadBandBase]
   id: ClothingHeadBandGreen
   name: green bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandGrey]
+  parent: [ClothingMaskBandGrey, ClothingHeadBandBase]
   id: ClothingHeadBandGrey
   name: grey bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandRed]
+  parent: [ClothingMaskBandRed, ClothingHeadBandBase]
   id: ClothingHeadBandRed
   name: red bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandSkull]
+  parent: [ClothingMaskBandSkull, ClothingHeadBandBase]
   id: ClothingHeadBandSkull
   name: skull bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandMerc]
+  parent: [ClothingMaskBandMerc, ClothingHeadBandBase]
   id: ClothingHeadBandMerc
   name: mercenary bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandBrown]
+  parent: [ClothingMaskBandBrown, ClothingHeadBandBase]
   id: ClothingHeadBandBrown
   name: brown bandana
