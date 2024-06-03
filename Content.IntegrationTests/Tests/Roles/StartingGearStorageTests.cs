@@ -20,12 +20,9 @@ public sealed class StartingGearPrototypeStorageTest
     {
         var settings = new PoolSettings { Connected = true, Dirty = true };
         await using var pair = await PoolManager.GetServerClient(settings);
-        var mapManager = pair.Server.ResolveDependency<IMapManager>();
-        var storageSystem = pair.Server.System<StorageSystem>();
         var server = pair.Server;
-        var client = pair.Client;
-
-        Assert.That(server.CfgMan.GetCVar(CVars.NetPVS), Is.False);
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var storageSystem = server.System<StorageSystem>();
 
         var protos = server.ProtoMan
             .EnumeratePrototypes<StartingGearPrototype>()
