@@ -29,7 +29,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
         protected override void Open()
         {
             base.Open();
-            _window = new GasTankWindow(this);
+            _window = new GasTankWindow(this, EntMan.GetComponent<MetaDataComponent>(Owner).EntityName);
             _window.OnClose += Close;
             _window.OpenCentered();
         }
