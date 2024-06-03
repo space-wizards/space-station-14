@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Syndicate decoy bombs may now be purchased from the uplink.
-    type: Add
-  - message: Syndicate bomb description no longer lies about their minimum detonation
-      time.
-    type: Fix
-  id: 6170
-  time: '2024-03-17T02:31:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26034
 - author: wafehling
   changes:
   - message: Added 18 new bounties to cargo bounty system.
@@ -3853,3 +3843,11 @@
   id: 6669
   time: '2024-06-03T03:28:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27959
+- author: AJCM-git
+  changes:
+  - message: Biomass reclaimers no longer act as a void to any unfortunate belongings
+      a corpse may be wearing
+    type: Tweak
+  id: 6670
+  time: '2024-06-03T03:30:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28544
