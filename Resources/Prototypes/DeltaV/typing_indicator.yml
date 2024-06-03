@@ -1,0 +1,6 @@
+﻿- type: typingIndicator
+  id: felinid
+  spritePath: /Textures/DeltaV/Effects/speech.rsi
+  typingState: felinid0
+  offset: 0, 0.2 # 0625
+

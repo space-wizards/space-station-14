@@ -1,0 +1,6 @@
+pug.ogg (Renamed to vulp.ogg)
+pug_ask.ogg (Renamed to vulp_ask.ogg)
+pug_exclaim.ogg (Renamed to vulp_exclaim.ogg)
+all taken from
+https://github.com/goonstation/goonstation/commit/da7c8965c4552ca53af367e6c83a83da2affe790
+licensed under CC BY-NC-SA 3.0

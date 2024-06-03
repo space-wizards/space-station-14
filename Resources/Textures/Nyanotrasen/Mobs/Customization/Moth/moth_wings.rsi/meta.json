@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/a92719210eb834cf284c571b3b3d94c2d82c26ea | aspen from https://github.com/fulpstation/fulpstation/commit/b21af07f57c2c4fb1cdcdb4162ca222da97ed54c | mint made by Floofers",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+     "name": "plain",
+     "directions": 4
+    },
+    {
+     "name": "atlas",
+     "directions": 4
+    },
+    {
+     "name": "luna",
+     "directions": 4
+    },
+    {
+     "name": "monarch",
+     "directions": 4
+    },
+    {
+      "name": "reddish",
+      "directions": 4
+    },
+    {
+      "name": "royal",
+      "directions": 4
+    },
+    {
+      "name": "gothic",
+      "directions": 4
+    },
+    {
+      "name": "lovers",
+      "directions": 4
+    },
+    {
+      "name": "whitefly",
+      "directions": 4
+    },
+    {
+      "name": "firewatch",
+      "directions": 4
+    },
+    {
+      "name": "deathshead",
+      "directions": 4
+    },
+    {
+      "name": "poison",
+      "directions": 4
+    },
+    {
+      "name": "ragged",
+      "directions": 4
+    },
+    {
+      "name": "moonfly",
+      "directions": 4
+    },
+    {
+      "name": "snow",
+      "directions": 4
+    },
+    {
+      "name": "oakworm",
+      "directions": 4
+    },
+    {
+      "name": "witchking",
+      "directions": 4
+    },
+    {
+      "name": "jungle",
+      "directions": 4
+    },
+    {
+      "name": "rosy",
+      "directions": 4
+    },
+    {
+      "name": "feathery",
+      "directions": 4
+    },
+    {
+      "name": "brown",
+      "directions": 4
+    },
+    {
+      "name": "plasmafire",
+      "directions": 4
+    },
+    {
+      "name": "moffra",
+      "directions": 4
+    },
+    {
+      "name": "aspen",
+      "directions": 4
+    },
+    {
+      "name": "mint",
+      "directions": 4
+    }
+  ]
+}
