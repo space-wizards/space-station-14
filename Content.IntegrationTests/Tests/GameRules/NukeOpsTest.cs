@@ -50,7 +50,6 @@ public sealed class NukeOpsTest
         var invSys = server.System<InventorySystem>();
         var factionSys = server.System<NpcFactionSystem>();
 
-        Assert.That(server.CfgMan.GetCVar(CCVars.GridFill), Is.False);
         server.CfgMan.SetCVar(CCVars.GridFill, true);
 
         // Initially in the lobby
@@ -200,7 +199,6 @@ public sealed class NukeOpsTest
         }
 
         ticker.SetGamePreset((GamePresetPrototype?)null);
-        server.CfgMan.SetCVar(CCVars.GridFill, false);
         await pair.SetAntagPref("NukeopsCommander", false);
         await pair.CleanReturnAsync();
     }
