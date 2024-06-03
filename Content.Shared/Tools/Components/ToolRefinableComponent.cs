@@ -1,15 +1,16 @@
 using Content.Shared.Storage;
-using Content.Shared.Tools;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Content.Shared.Tools.Systems;
 
-namespace Content.Server.Construction.Components;
+namespace Content.Shared.Tools.Components;
 
 /// <summary>
 /// Used for something that can be refined by welder.
 /// For example, glass shard can be refined to glass sheet.
 /// </summary>
-[RegisterComponent, Access(typeof(RefiningSystem))]
-public sealed partial class WelderRefinableComponent : Component
+[RegisterComponent, NetworkedComponent, Access(typeof(ToolRefinablSystem))]
+public sealed partial class ToolRefinableComponent : Component
 {
     /// <summary>
     /// The items created when the item is refined.
@@ -27,7 +28,7 @@ public sealed partial class WelderRefinableComponent : Component
     /// The amount of fuel it takes to refine a given item.
     /// </summary>
     [DataField]
-    public float RefineFuel;
+    public float RefineFuel = 3f;
 
     /// <summary>
     /// The tool type needed in order to refine this item.
