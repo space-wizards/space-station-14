@@ -26,7 +26,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <param name="maxIntensity">The maximum intensity that the explosion can have at any given tile. This
     /// effectively caps the damage that this explosion can do.</param>
     /// <returns>A list of tile-sets and a list of intensity values which describe the explosion.</returns>
-    private (int, List<float>, ExplosionSpaceTileFlood?, Dictionary<EntityUid, ExplosionGridTileFlood>, Matrix3)? GetExplosionTiles(
+    private (int, List<float>, ExplosionSpaceTileFlood?, Dictionary<EntityUid, ExplosionGridTileFlood>, Matrix3x2)? GetExplosionTiles(
         MapCoordinates epicenter,
         string typeID,
         float totalIntensity,
@@ -84,7 +84,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         Dictionary<EntityUid, HashSet<Vector2i>>? previousGridJump;
 
         // variables for transforming between grid and space-coordinates
-        var spaceMatrix = Matrix3.Identity;
+        var spaceMatrix = Matrix3x2.Identity;
         var spaceAngle = Angle.Zero;
         if (referenceGrid != null)
         {

@@ -56,23 +56,34 @@ public abstract class SharedFirelockSystem : EntitySystem
 
         if (!component.Powered || (!overrideAccess && component.IsLocked))
             args.Cancel();
+        else if (args.User != null)
+            WarnPlayer((uid, component), args.User.Value);
     }
 
     private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)
     {
-        if (component.Temperature)
-        {
-            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-fire-message"),
-                uid, args.User, PopupType.MediumCaution);
-        }
-        else if (component.Pressure)
-        {
-            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-pressure-message"),
-                uid, args.User, PopupType.MediumCaution);
-        }
+        WarnPlayer((uid, component), args.User);
 
         if (component.IsLocked)
             args.PryTimeModifier *= component.LockedPryTimeModifier;
+    }
+
+    private void WarnPlayer(Entity<FirelockComponent> ent, EntityUid user)
+    {
+        if (ent.Comp.Temperature)
+        {
+            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-fire-message"),
+                ent.Owner,
+                user,
+                PopupType.MediumCaution);
+        }
+        else if (ent.Comp.Pressure)
+        {
+            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-pressure-message"),
+                ent.Owner,
+                user,
+                PopupType.MediumCaution);
+        }
     }
 
     private void OnAfterPried(EntityUid uid, FirelockComponent component, ref PriedEvent args)

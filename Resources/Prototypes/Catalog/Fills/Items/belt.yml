@@ -79,6 +79,7 @@
       - id: CleanerGrenade
         amount: 2
       - id: FlashlightLantern
+      - id: LightReplacer
 
 - type: entity
   id: ClothingBeltMedicalFilled
