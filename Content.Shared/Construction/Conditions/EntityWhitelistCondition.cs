@@ -11,8 +11,6 @@ namespace Content.Shared.Construction.Conditions;
 [DataDefinition]
 public sealed partial class EntityWhitelistCondition : IConstructionCondition
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-
     /// <summary>
     /// What is told to the player attempting to construct the recipe using this condition. This will be localised.
     /// </summary>
@@ -33,7 +31,8 @@ public sealed partial class EntityWhitelistCondition : IConstructionCondition
 
     public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
     {
-        return _whitelistSystem.IsWhitelistPass(Whitelist, user);
+        var whitelistSystem = IoCManager.Resolve<IEntityManager>().System<EntityWhitelistSystem>();
+        return whitelistSystem.IsWhitelistPass(Whitelist, user);
     }
 
     public ConstructionGuideEntry GenerateGuideEntry()
