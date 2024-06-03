@@ -58,10 +58,10 @@
   ## Restricted Items
   Items in the lists are preceded by an indication of which department or job is legally allowed to use or possess the item on most stations. The station captain may modify these lists as they see fit so long as they exercise due care and provide reasonable notification to the station. Members of command who oversee a department that is permitted to use a restricted item may issue permits to specific people outside of their department to use those items. "None" indicates that there are no departments or roles authorized to use or possess the item.
 
-  - [textlink="List of Controlled Substances" link="SLControlledSubstances"]
-  - [textlink="List of Restricted Gear" link="SLRestrictedGear"]
-  - [textlink="List of Restricted Weapons" link="SLRestrictedWeapons"]
+  - [textlink="List of Controlled Substances" link="SpaceLawControlledSubstances"]
+  - [textlink="List of Restricted Gear" link="SpaceLawRestrictedGear"]
+  - [textlink="List of Restricted Weapons" link="SpaceLawRestrictedWeapons"]
 
   ## Crime Listing
-  - [textlink="Crime Listing" link="SLCrimeList"]
+  - [textlink="Crime Listing" link="SpaceLawCrimeList"]
 </Document>

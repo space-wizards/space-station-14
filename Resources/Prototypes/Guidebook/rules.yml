@@ -3,36 +3,36 @@
   name: guide-entry-rules
   text: "/ServerInfo/Guidebook/ServerRules/WizDenRules.xml" # Ideally this would be dynamically selected based on if the server is LRP or MRP
   children:
-  - Standard Ruleset
-  - MRP Ruleset
-  - Role Types
-  - Core Rules
-  - Roleplay Rules
-  - Silicon Rules
-  - Space Law
-  - Ban Types
-  - Ban Durations
+  - StandardRuleset
+  - MRPRuleset
+  - RoleTypes
+  - CoreRules
+  - RoleplayRules
+  - SiliconRules
+  - SpaceLaw
+  - BanTypes
+  - BanDurations
 
 - type: guideEntry
-  id: Standard Ruleset
+  id: StandardRuleset
   name: guide-entry-rules-lrp
   priority: 0
   text: "/ServerInfo/Guidebook/ServerRules/WizDenLRPRules.xml"
 
 - type: guideEntry
-  id: MRP Ruleset
+  id: MRPRuleset
   name: guide-entry-rules-mrp
   priority: 10
   text: "/ServerInfo/Guidebook/ServerRules/WizDenMRPRules.xml"
 
 - type: guideEntry
-  id: Role Types
+  id: RoleTypes
   name: guide-entry-rules-role-types
   priority: 20
   text: "/ServerInfo/Guidebook/ServerRules/RoleTypes.xml"
 
 - type: guideEntry
-  id: Core Rules
+  id: CoreRules
   name: guide-entry-rules-core
   priority: 30
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC0.xml"
@@ -137,7 +137,7 @@
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC14ICinOOC.xml"
 
 - type: guideEntry
-  id: Roleplay Rules
+  id: RoleplayRules
   name: guide-entry-rules-roleplay
   priority: 40
   text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR0.xml"
@@ -249,7 +249,7 @@
   text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR15SpaceLaw.xml"
 
 - type: guideEntry
-  id: Silicon Rules
+  id: SiliconRules
   name: guide-entry-rules-silicon
   priority: 50
   text: "/ServerInfo/Guidebook/ServerRules/SiliconRules/RuleS0.xml"
@@ -322,10 +322,11 @@
 - type: guideEntry
   id: RuleS10
   name: guide-entry-rules-s10
+  priority: 10
   text: "/ServerInfo/Guidebook/ServerRules/SiliconRules/RuleS10OrderConflicts.xml"
 
 - type: guideEntry
-  id: Space Law
+  id: SpaceLaw
   name: guide-entry-rules-space-law
   priority: 60
   text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml"
@@ -360,13 +361,13 @@
   text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLRestrictedWeapons.xml"
 
 - type: guideEntry
-  id: Ban Types
+  id: BanTypes
   name: guide-entry-rules-ban-types
   priority: 90
   text: "/ServerInfo/Guidebook/ServerRules/BanTypes.xml"
 
 - type: guideEntry
-  id: Ban Durations
+  id: BanDurations
   name: guide-entry-rules-ban-durations
   priority: 100
   text: "/ServerInfo/Guidebook/ServerRules/BanDurations.xml"
