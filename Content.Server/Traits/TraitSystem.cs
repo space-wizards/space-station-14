@@ -2,6 +2,7 @@ using Content.Server.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Traits;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
@@ -12,6 +13,7 @@ public sealed class TraitSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
     [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -31,10 +33,8 @@ public sealed class TraitSystem : EntitySystem
                 return;
             }
 
-            if (traitPrototype.Whitelist != null && !traitPrototype.Whitelist.IsValid(args.Mob))
-                continue;
-
-            if (traitPrototype.Blacklist != null && traitPrototype.Blacklist.IsValid(args.Mob))
+            if (_whitelistSystem.IsWhitelistFail(traitPrototype.Whitelist, args.Mob) ||
+                _whitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, args.Mob))
                 continue;
 
             // Add all components required by the prototype
