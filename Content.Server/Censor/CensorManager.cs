@@ -6,22 +6,31 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Censor;
 
-public sealed class CensorSystem : EntitySystem
+public sealed class CensorManager : ICensorManager, IPostInjectInit
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private readonly ILogManager _logMan = default!;
+
+    private ISawmill _log = default!;
 
     // Filters
     private readonly Dictionary<CensorTarget, Dictionary<Regex, TextCensorActionDef>> _regexCensors = new();
 
-    public override void Initialize()
+    public void Initialize()
     {
-        base.Initialize();
+        IoCManager.InjectDependencies(this);
 
         AddCensor(new TextCensorActionDef("amogus",
             CensorFilterType.Regex,
             "warning",
             CensorTarget.IC | CensorTarget.OOC,
             "Amogus Censor"));
+    }
+
+    void IPostInjectInit.PostInject()
+    {
+        _log = _logMan.GetSawmill("censor");
     }
 
     public void AddCensor(TextCensorActionDef censor)
@@ -47,13 +56,6 @@ public sealed class CensorSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Checks a message for any matching regex censors. If there is a match, it runs ICensorActions on the text and matches.
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="inputText"></param>
-    /// <param name="session"></param>
-    /// <returns>True if the message passes. False if the message should be blocked.</returns>
     public bool RegexCensor(CensorTarget target, string inputText, ICommonSession session)
     {
         // Ensure that only 1 bit is set
@@ -80,7 +82,7 @@ public sealed class CensorSystem : EntitySystem
 
             if (!_protoMan.TryIndex<CensorActionGroupPrototype>(textCensor.ActionGroup, out var censorGroup))
             {
-                Log.Error($"CensorActionGroupPrototype \"{textCensor.ActionGroup}\" not found.");
+                _log.Error($"CensorActionGroupPrototype \"{textCensor.ActionGroup}\" not found.");
                 continue;
             }
 
@@ -99,7 +101,7 @@ public sealed class CensorSystem : EntitySystem
 
             foreach (var censorAction in censorGroup.CensorActions)
             {
-                blocked &= censorAction.RunAction(session, inputText, textMatches, textCensor.DisplayName, EntityManager);
+                blocked &= censorAction.RunAction(session, inputText, textMatches, textCensor.DisplayName, _entMan);
             }
         }
 
