@@ -55,12 +55,13 @@ public partial class ChatSystem
         ChatTransmitRange range = ChatTransmitRange.Normal,
         bool hideLog = false,
         string? nameOverride = null,
-        bool ignoreActionBlocker = false
+        bool ignoreActionBlocker = false,
+        bool forceEmote = false
         )
     {
         if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
             return;
-        TryEmoteWithChat(source, proto, range, hideLog: hideLog, nameOverride, ignoreActionBlocker: ignoreActionBlocker);
+        TryEmoteWithChat(source, proto, range, hideLog: hideLog, nameOverride, ignoreActionBlocker: ignoreActionBlocker, forceEmote: forceEmote);
     }
 
     /// <summary>
@@ -78,15 +79,11 @@ public partial class ChatSystem
         ChatTransmitRange range = ChatTransmitRange.Normal,
         bool hideLog = false,
         string? nameOverride = null,
-        bool ignoreActionBlocker = false
+        bool ignoreActionBlocker = false,
+        bool forceEmote = false
         )
     {
-        if (_whitelistSystem.IsWhitelistFail(emote.Whitelist, source) || _whitelistSystem.IsBlacklistPass(emote.Blacklist, source))
-            return;
-
-        if (!emote.Available &&
-            TryComp<SpeechComponent>(source, out var speech) &&
-            !speech.AllowedEmotes.Contains(emote.ID))
+        if (!forceEmote && !AllowedToUseEmote(source, emote))
             return;
 
         // check if proto has valid message for chat
@@ -162,7 +159,23 @@ public partial class ChatSystem
         if (!_wordEmoteDict.TryGetValue(actionLower, out var emote))
             return;
 
+        if (!AllowedToUseEmote(uid, emote))
+            return;
+
         InvokeEmoteEvent(uid, emote);
+    }
+
+    private bool AllowedToUseEmote(EntityUid source, EmotePrototype emote)
+    {
+        if ((_whitelistSystem.IsWhitelistFail(emote.Whitelist, source) || _whitelistSystem.IsBlacklistPass(emote.Blacklist, source)))
+            return false;
+
+        if (!emote.Available &&
+            TryComp<SpeechComponent>(source, out var speech) &&
+            !speech.AllowedEmotes.Contains(emote.ID))
+            return false;
+
+        return true;
     }
 
     private void InvokeEmoteEvent(EntityUid uid, EmotePrototype proto)

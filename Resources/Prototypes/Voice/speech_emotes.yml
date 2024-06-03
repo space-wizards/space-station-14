@@ -86,8 +86,8 @@
   whitelist:
     requireAll: true
     components:
-    - Vocal
     - BorgChassis
+    - Vocal    
   chatMessages: ["chat-emote-msg-honk"]
   chatTriggers:
     - honk
