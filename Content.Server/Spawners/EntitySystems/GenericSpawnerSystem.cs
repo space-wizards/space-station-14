@@ -28,14 +28,26 @@ public sealed class GenericSpawnerSystem : EntitySystem
         SubscribeLocalEvent<GenericSpawnerComponent, MapInitEvent>(OnSpawnMapInit);
     }
 
-    private void OnSpawnMapInit(Entity<GenericSpawnerComponent> ent, ref MapInitEvent args)
+    private void OnSpawnMapInit(EntityUid uid, GenericSpawnerComponent component, MapInitEvent args)
     {
-        throw new NotImplementedException();
+        TrySpawn(uid, component);
+        if (component.DeleteSpawnerAfterSpawn)
+            QueueDel(uid);
     }
 
-    private void OnRuleStarted(GameRuleStartedEvent ev)
+    private void OnRuleStarted(ref GameRuleStartedEvent args)
     {
-        throw new NotImplementedException();
+        var query = EntityQueryEnumerator<GenericSpawnerComponent>();
+        while (query.MoveNext(out var uid, out var spawner))
+        {
+            RuleStarted(uid, spawner, args);
+        }
+    }
+
+    public void RuleStarted(EntityUid uid, GenericSpawnerComponent component, GameRuleStartedEvent obj)
+    {
+        if (component.GameRules.Contains(obj.RuleId))
+            Spawn(uid, component);
     }
 
     private void TrySpawn(EntityUid uid, GenericSpawnerComponent component)
