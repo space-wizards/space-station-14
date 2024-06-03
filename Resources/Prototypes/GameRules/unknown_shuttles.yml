@@ -14,7 +14,6 @@
   - type: LoadMapRule
 
 - type: entity
-  noSpawn: true
   parent: BaseUnknownShuttleRule
   id: UnknownShuttleCargoLost
   components:
@@ -22,7 +21,6 @@
     preloadedGrid: ShuttleCargoLost
 
 - type: entity
-  noSpawn: true
   parent: BaseUnknownShuttleRule
   id: UnknownShuttleTravelingCuisine
   components:
@@ -30,7 +28,6 @@
     preloadedGrid: TravelingCuisine
 
 - type: entity
-  noSpawn: true
   parent: BaseUnknownShuttleRule
   id: UnknownShuttleDisasterEvacPod
   components:
@@ -38,7 +35,6 @@
     preloadedGrid: DisasterEvacPod
 
 - type: entity
-  noSpawn: true
   parent: BaseUnknownShuttleRule
   id: UnknownShuttleHonki
   components:
@@ -48,7 +44,6 @@
     preloadedGrid: Honki
 
 - type: entity
-  noSpawn: true
   parent: BaseUnknownShuttleRule
   id: UnknownShuttleSyndieEvacPod
   components:
