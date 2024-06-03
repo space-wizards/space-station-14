@@ -37,6 +37,7 @@ namespace Content.Server.Medical.BiomassReclaimer
     public sealed class BiomassReclaimerSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedJitteringSystem _jitteringSystem = default!;
         [Dependency] private readonly SharedAudioSystem _sharedAudioSystem = default!;
@@ -222,6 +223,12 @@ namespace Content.Server.Medical.BiomassReclaimer
             component.CurrentExpectedYield += expectedYield;
 
             component.ProcessingTimer = physics.FixturesMass * component.ProcessingTimePerUnitMass;
+
+            var inventory = _inventory.GetHandOrInventoryEntities(toProcess);
+            foreach (var item in inventory)
+            {
+                _transform.DropNextTo(item, ent.Owner);
+            }
 
             QueueDel(toProcess);
         }
