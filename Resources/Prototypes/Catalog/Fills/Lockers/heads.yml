@@ -181,7 +181,7 @@
     contents:
       - id: MedkitFilled
       - id: ClothingHandsGlovesNitrile
-      - id: ClothingEyesHudMedical
+      - id: ClothingEyesHudChemMed
       - id: ClothingHeadsetAltMedical
       - id: ClothingCloakCmo
       - id: ClothingBackpackDuffelSurgeryFilled
@@ -204,7 +204,7 @@
     contents:
       - id: MedkitFilled
       - id: ClothingHandsGlovesNitrile
-      - id: ClothingEyesHudMedical
+      - id: ClothingEyesHudChemMed
       - id: ClothingHeadsetAltMedical
       - id: ClothingBackpackDuffelSurgeryFilled
       - id: ClothingMaskSterile

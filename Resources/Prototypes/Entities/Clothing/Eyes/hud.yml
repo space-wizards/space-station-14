@@ -282,3 +282,21 @@
     damageContainers:
     - Inorganic
     - Silicon
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudChemMed
+  name: chemmed hud
+  description: A heads-up display that scans nearby humanoids' health status and chemical composition of solutions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/chemmed.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/chemmed.rsi
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
+  - type: SolutionScanner
