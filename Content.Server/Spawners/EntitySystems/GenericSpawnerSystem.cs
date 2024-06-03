@@ -1,0 +1,91 @@
+using System.Linq;
+using System.Numerics;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Components;
+using Content.Server.Spawners.Components;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+
+namespace Content.Server.Spawners.EntitySystems;
+
+/// <summary>
+/// This handles spawner markers.
+/// </summary>
+public sealed class GenericSpawnerSystem : EntitySystem
+{
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<GameRuleStartedEvent>(OnRuleStarted);
+        SubscribeLocalEvent<GenericSpawnerComponent, MapInitEvent>(OnSpawnMapInit);
+        SubscribeLocalEvent<GenericSpawnerComponent, MapInitEvent>(OnSpawnMapInit);
+    }
+
+    private void OnSpawnMapInit(Entity<GenericSpawnerComponent> ent, ref MapInitEvent args)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnRuleStarted(GameRuleStartedEvent ev)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void TrySpawn(EntityUid uid, GenericSpawnerComponent component)
+    {
+        if (component.GameRules.Count == 0)
+        {
+            Spawn(uid, component);
+            return;
+        }
+
+        foreach (var rule in component.GameRules)
+        {
+            if (!_ticker.IsGameRuleActive(rule))
+                continue;
+            Spawn(uid, component);
+            return;
+        }
+    }
+
+    private void Spawn(EntityUid uid, GenericSpawnerComponent component)
+    {
+        if (Deleted(uid))
+            return;
+
+        if (component.Chance != 1.0f && !_robustRandom.Prob(component.Chance))
+            return;
+
+        var entTable = _proto.Index<WeightedRandomEntityPrototype>(component.EntityTable);
+
+        if (entTable.Weights.Count == 0)
+        {
+            Log.Warning($"Entity table in GenericSpawnerComponent is empty! Entity: {ToPrettyString(uid)}");
+            return;
+        }
+
+        if (component.Rolls is >= 1 and <= 100)
+        {
+            Log.Warning($"Invalid amount of rolls on entity table, value should be between 1 and 100. Entity: {ToPrettyString(uid)}");
+            return;
+        }
+
+        foreach (var _ in Enumerable.Repeat(1, component.Rolls))
+        {
+            var entity = entTable.Pick(_robustRandom);
+            var offset = component.Offset;
+            var xOffset = _robustRandom.NextFloat(-offset, offset);
+            var yOffset = _robustRandom.NextFloat(-offset, offset);
+            var coordinates = Transform(uid).Coordinates.Offset(new Vector2(xOffset, yOffset));
+
+            EntityManager.SpawnEntity(entity, coordinates);
+        }
+    }
+}
