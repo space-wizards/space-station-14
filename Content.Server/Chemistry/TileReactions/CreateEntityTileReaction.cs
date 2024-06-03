@@ -14,8 +14,6 @@ namespace Content.Server.Chemistry.TileReactions;
 [DataDefinition]
 public sealed partial class CreateEntityTileReaction : ITileReaction
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-
     [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Entity = default!;
 
@@ -49,7 +47,8 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
                 int acc = 0;
                 foreach (var ent in tile.GetEntitiesInTile())
                 {
-                    if (_whitelistSystem.IsWhitelistPass(Whitelist, ent))
+                    var whitelistSystem = IoCManager.Resolve<EntityWhitelistSystem>();
+                    if (whitelistSystem.IsWhitelistPass(Whitelist, ent))
                         acc += 1;
 
                     if (acc >= MaxOnTile)
