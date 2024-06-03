@@ -1,5 +1,6 @@
 using Content.Server.Objectives.Components;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -8,6 +9,8 @@ namespace Content.Server.Objectives.Systems;
 /// </summary>
 public sealed class ObjectiveBlacklistRequirementSystem : EntitySystem
 {
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -22,7 +25,7 @@ public sealed class ObjectiveBlacklistRequirementSystem : EntitySystem
 
         foreach (var objective in args.Mind.AllObjectives)
         {
-            if (comp.Blacklist.IsValid(objective, EntityManager))
+            if (_whitelistSystem.IsBlacklistPass(comp.Blacklist, objective))
             {
                 args.Cancelled = true;
                 return;
