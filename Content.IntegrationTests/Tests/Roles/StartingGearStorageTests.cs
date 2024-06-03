@@ -34,7 +34,7 @@ public sealed class StartingGearPrototypeStorageTest
         foreach (var gearProto in protos)
         {
             var backpackProto = gearProto.GetGear("back");
-            if (backpackProto == null)
+            if (backpackProto == string.Empty)
                 continue;
 
             var bag = server.EntMan.SpawnEntity(backpackProto, coords);
