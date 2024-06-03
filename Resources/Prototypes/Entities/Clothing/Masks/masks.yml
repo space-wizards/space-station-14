@@ -41,6 +41,8 @@
         Heat: 0.95
   # GreyStation - hailer functionality
   - type: Speech
+  - type: UseDelay
+    delay: 15
   - type: Hailer
     pickerAction: SecurityHailerShout
     randomAction: SecurityHailerShoutRandom

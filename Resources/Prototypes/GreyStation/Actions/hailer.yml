@@ -5,7 +5,6 @@
   description: Activate your mask's hailer to shout at suspects for you during a chase!
   components:
   - type: InstantAction
-    useDelay: 15
     priority: 1
     icon:
       sprite: GreyStation/Interface/Actions/hailer.rsi

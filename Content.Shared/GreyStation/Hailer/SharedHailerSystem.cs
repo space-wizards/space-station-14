@@ -3,6 +3,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -18,10 +19,10 @@ public abstract class SharedHailerSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
@@ -62,32 +63,32 @@ public abstract class SharedHailerSystem : EntitySystem
 
         var index = PickRandomLine(ent, args.Performer);
         // not predicted as the server is picking the line
-        PlayLine(ent, lines[index], args.Performer, predicted: false);
-        args.Handled = true;
+        args.Handled = PlayLine(ent, lines[index], args.Performer, predicted: false);
     }
 
     private void OnPlayLine(Entity<HailerComponent> ent, ref HailerPlayLineMessage args)
     {
-        _ui.CloseUi(ent.Owner, HailerUiKey.Key);
-
         var lines = GetLines(ent, args.Actor);
         if (args.Index >= lines.Count)
             return;
 
-        PlayLine(ent, lines[(int) args.Index], args.Actor, predicted: true);
+        if (PlayLine(ent, lines[(int) args.Index], args.Actor, predicted: true))
+            _ui.CloseUi(ent.Owner, HailerUiKey.Key);
     }
 
-    public void PlayLine(Entity<HailerComponent> ent, HailerLine line, EntityUid user, bool predicted)
+    public bool PlayLine(Entity<HailerComponent> ent, HailerLine line, EntityUid user, bool predicted)
     {
+        if (TryComp<UseDelayComponent>(ent, out var delay) && !_useDelay.TryResetDelay((ent, delay), true))
+            return false;
+
         if (predicted)
             _audio.PlayPredicted(line.Sound, ent, user);
         else if (_net.IsServer)
             _audio.PlayPvs(line.Sound, ent);
 
-        _actions.StartUseDelay(ent.Comp.PickerActionEntity);
-        _actions.StartUseDelay(ent.Comp.RandomActionEntity);
         ent.Comp.LastPlayed = line.Message;
-        Say(ent, line.Message);
+        Say(ent, line.Message, user);
+        return true;
     }
 
     public List<HailerLine> GetLines(Entity<HailerComponent> ent, EntityUid user)
@@ -123,7 +124,7 @@ public abstract class SharedHailerSystem : EntitySystem
     /// <summary>
     /// Say the actual message ingame, only done serverside.
     /// </summary>
-    protected virtual void Say(Entity<HailerComponent> ent, string message)
+    protected virtual void Say(Entity<HailerComponent> ent, string message, EntityUid user)
     {
     }
 }
