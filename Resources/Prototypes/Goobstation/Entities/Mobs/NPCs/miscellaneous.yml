@@ -12,7 +12,7 @@
         task: SimpleRangedHostileCompound
     - type: Sprite
       drawdepth: Mobs
-      sprite: Mobs/Demons/skibidi.rsi
+      sprite: Goobstation/Mobs/Demons/skibidi.rsi
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
           state: alive
@@ -58,11 +58,11 @@
       selectedMode: SemiAuto
       availableModes:
         - SemiAuto
-      soundGunshot: /Audio/Misc/skibidi.wav
+      soundGunshot: /Audio/Goobstation/Animals/skibidi.wav
     - type: CombatMode
     - type: InteractionPopup
       successChance: 0.3
       interactSuccessString: petting-success-reptile
       interactFailureString: petting-failure-generic
       interactSuccessSound:
-        path: /Audio/Misc/skibidi.wav
+        path: /Audio/Goobstation/Animals/skibidi.wav

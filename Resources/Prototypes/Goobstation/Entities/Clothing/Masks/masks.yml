@@ -7,9 +7,9 @@
   - type: Item
     size: Tiny
   - type: Sprite
-    sprite: Goobstation/clothing/BKKitsuneMask.rsi
+    sprite: Goobstation/Clothing/Mask/BKKitsuneMask.rsi
   - type: Clothing
-    sprite: Goobstation/clothing/BKKitsuneMask.rsi
+    sprite: Goobstation/Clothing/Mask/BKKitsuneMask.rsi
   - type: BreathMask
   - type: IngestionBlocker
   - type: Tag

@@ -39,6 +39,16 @@
     color: "#43ccb5"
   - type: Rotatable
     rotateWhileAnchored: true
+  # Goobstation - Add components for self destruct.
+  - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
+    explosionType: DemolitionCharge
+    totalIntensity: 60
+    intensitySlope: 5
+    maxIntensity: 30
+    canCreateVacuum: false
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai
 
 - type: entity
   parent: BaseComputer
