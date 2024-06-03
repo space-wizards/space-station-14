@@ -395,14 +395,14 @@ public sealed class AccessReaderSystem : EntitySystem
             ent.Comp.AccessLog.Dequeue();
 
         string? name = null;
+        if (TryComp<NameIdentifierComponent>(accessor, out var nameIdentifier))
+            name = nameIdentifier.FullIdentifier;
+
         // TODO pass the ID card on IsAllowed() instead of using this expensive method
         // Set name if the accessor has a card and that card has a name and allows itself to be recorded
         if (_idCardSystem.TryFindIdCard(accessor, out var idCard)
             && idCard.Comp is { BypassLogging: false, FullName: not null })
             name = idCard.Comp.FullName;
-
-        if (TryComp<NameIdentifierComponent>(accessor, out var nameIdentifier))
-            name = nameIdentifier.FullIdentifier;
 
         name ??= Loc.GetString("access-reader-unknown-id");
 
