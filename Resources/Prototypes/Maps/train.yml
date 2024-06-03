@@ -2,8 +2,8 @@
   id: Train
   mapName: 'Train'
   mapPath: /Maps/train.yml
-  minPlayers: 10
-  maxPlayers: 50
+  minPlayers: 90
+  maxPlayers: 100
   stations:
     Train:
       stationProto: StandardNanotrasenStation
@@ -23,6 +23,8 @@
           availableJobs:
             #service
             Captain: [ 1, 1 ]
+            NanotrasenRepresentative: [ 1, 1 ]
+            BlueshieldOfficer: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
