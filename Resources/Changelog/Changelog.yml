@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: Ko4erga
-  changes:
-  - message: Added craftable high and small wooden fences, bench. New stairs.
-    type: Add
-  id: 6172
-  time: '2024-03-17T21:18:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26182
-- author: potato1234_x
-  changes:
-  - message: Changed the puddle sprites so the smoothing is less jagged
-    type: Tweak
-  id: 6173
-  time: '2024-03-17T23:15:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26171
-- author: FungiFellow
-  changes:
-  - message: Changed Monkey Reinf Price to 6TC
-    type: Tweak
-  id: 6174
-  time: '2024-03-18T01:25:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26214
-- author: Golinth
-  changes:
-  - message: Criminal record icons now show up below job icons
-    type: Tweak
-  id: 6175
-  time: '2024-03-18T01:37:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26203
 - author: PJB3005
   changes:
   - message: Fixed pressure damage calculations to what they were always supposed
@@ -3815,25 +3787,18 @@
   id: 6666
   time: '2024-06-02T17:30:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28518
-- author: Voomra
-  changes:
-  - message: localize Pray UI
-    type: Fix
-  id: 6667
-  time: '2024-06-02T23:51:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28535
 - author: Whisper
   changes:
   - message: Renamed the player-obtainable "admin cloak" to "weh cloak".
     type: Tweak
-  id: 6668
+  id: 6667
   time: '2024-06-03T02:18:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28540
 - author: Vermidia
   changes:
   - message: Glass shards are no longer weldable with an unlit welder.
     type: Fix
-  id: 6669
+  id: 6668
   time: '2024-06-03T03:28:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27959
 - author: AJCM-git
@@ -3841,13 +3806,52 @@
   - message: Biomass reclaimers no longer act as a void to any unfortunate belongings
       a corpse may be wearing
     type: Tweak
-  id: 6670
+  id: 6669
   time: '2024-06-03T03:30:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28544
 - author: Laneron
   changes:
   - message: Jetpack UI window now has correctly displayed header
     type: Fix
-  id: 6671
+  id: 6670
   time: '2024-06-03T03:33:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28545
+- author: Vermidia
+  changes:
+  - message: SyndiCats now spawn from a radio like other reinforcements.
+    type: Tweak
+  id: 6671
+  time: '2024-06-03T11:54:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28492
+- author: Cojoke-dot
+  changes:
+  - message: Medibots will now occasionally talk
+    type: Tweak
+  id: 6672
+  time: '2024-06-03T12:05:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28543
+- author: Cojoke-dot
+  changes:
+  - message: The player can now use the gasping emote
+    type: Tweak
+  id: 6673
+  time: '2024-06-03T12:10:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28466
+- author: Cojoke-dot
+  changes:
+  - message: Bullets no longer hit crates unless directly clicked on while shooting.
+    type: Tweak
+  - message: Bullets now pass over mobs that are lying down unless directly clicked
+      on while shooting.
+    type: Tweak
+  id: 6674
+  time: '2024-06-03T13:04:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28072
+- author: AJCM-git
+  changes:
+  - message: Ninja stealth mode, stealth boxes and everything with stealth won't show
+      up in equipment HUDs like the medical or security HUD anymore.
+    type: Fix
+  id: 6675
+  time: '2024-06-03T16:12:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28270
