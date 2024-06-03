@@ -1,25 +1,26 @@
-using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
-using Content.Shared.Tools.Systems;
+using Content.Shared.Tools.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 
-namespace Content.Server.Construction;
+namespace Content.Shared.Tools.Systems;
 
-public sealed class RefiningSystem : EntitySystem
+public sealed class ToolRefinablSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<WelderRefinableComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<WelderRefinableComponent, WelderRefineDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<ToolRefinableComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<ToolRefinableComponent, WelderRefineDoAfterEvent>(OnDoAfter);
     }
 
-    private void OnInteractUsing(EntityUid uid, WelderRefinableComponent component, InteractUsingEvent args)
+    private void OnInteractUsing(EntityUid uid, ToolRefinableComponent component, InteractUsingEvent args)
     {
         if (args.Handled)
             return;
@@ -34,9 +35,12 @@ public sealed class RefiningSystem : EntitySystem
             fuel: component.RefineFuel);
     }
 
-    private void OnDoAfter(EntityUid uid, WelderRefinableComponent component, WelderRefineDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, ToolRefinableComponent component, WelderRefineDoAfterEvent args)
     {
         if (args.Cancelled)
+            return;
+
+        if (_net.IsClient)
             return;
 
         var xform = Transform(uid);
