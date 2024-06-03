@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Dataset;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -16,7 +17,7 @@ public sealed class LocalizedDatasetPrototypeTest
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var localizationMan = server.ResolveDependency<ILocalizationManager>();
 
-        var protos = protoMan.EnumeratePrototypes<LocalizedDatasetPrototype>();
+        var protos = protoMan.EnumeratePrototypes<LocalizedDatasetPrototype>().OrderBy(p => p.ID);
 
         // Check each prototype
         foreach (var proto in protos)
