@@ -7,3 +7,8 @@
   id: GameRules
   name: entity-category-name-game-rules
   hideSpawnMenu: true
+
+- type: entityCategory
+  id: Objectives
+  name: entity-category-name-objectives
+  hideSpawnMenu: true
