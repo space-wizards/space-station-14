@@ -9,4 +9,3 @@ residue-blue = blue
 residue-red = red
 residue-grey = grey
 residue-brown = brown
-residue-yellow = yellow

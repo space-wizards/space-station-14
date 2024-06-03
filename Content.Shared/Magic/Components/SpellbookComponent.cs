@@ -33,8 +33,4 @@ public sealed partial class SpellbookComponent : Component
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool LearnPermanently;
-
-    [DataField("deleteAfterLearn")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool DeleteAfterLearn;
 }

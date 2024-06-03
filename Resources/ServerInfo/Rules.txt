@@ -5,6 +5,7 @@
 This is the "short" form of the rules, which has all the information any regular player should need. You can find the "long" form of the rules with more examples & clarifications of any ambiguity on the Space Station 14 wiki at [color=#a4885c]wiki.spacestation14.io[/color], should you need it.
 
 [color=#ff0000]Recent Changes[/color]
+    [color=#fc0303]- SPACE LAW HAS BEEN ADDED TO THE RULES.[/color]
     - New Wizard rule for rule 12.
     - Rule 10 is updated a bit.
     - Rule 11 is updated a bit.
@@ -100,18 +101,21 @@ If you regularly play Security or Command roles and got this far, we applaud you
 Security/Command will be expected to answer for use of lethal force. Security/Command will be expected to effect arrests on criminals and prevent them from dying while in custody, even if lethal force is used, unless there is strong reason to believe the criminal is an antagonist. Security/Command is strongly encouraged, but not required, to clone antagonists and effect a permabrigging or other sentence as deemed appropriate.
 
 [color=#a4885c]21.[/color] Security/Command are expected to protect detainees in their custody to the best of their ability so as long as it does not come to unreasonable risk to themselves, the crew, or the station at large to do so.
-    - Brig times should generally not exceed 10 minutes unless the crime is permabriggable. Repeat offenders or antagonists may be permabrigged.
+    - Brig times should generally not exceed 10 minutes unless the crime is permabriggable. Repeat offenders may be permabrigged.
     - Security may choose to confiscate dangerous items (weapons, firearms) as well as items used to commission crimes or items that prove problematic in possession of the detainee (tools, insulated gloves, etc.).
-    - Detainees that die in your custody must be cloned unless they have been (legally) executed, suicide, or there is strong reason to believe they are an antagonist.
+    - Detainees that die in your custody must be cloned unless they have been (legally) executed, suicide, or there is strong reason to believe they are an antagonist (e.g. contraband).
     - Executions must be for a permabriggable crime, used only as a last resort, and approved by the Captain/Acting Captain, who will answer for approving it alongside Security's chain of command. Those who willingly attempt to damage/destroy or escape from the permabrig may be executed.
     - Any prisoner may be borged with their consent. Borging may be offered as an alternative to execution, but cannot be forced if the prisoner is able to consent.
     - Detainees in the brig have the right to know what they are being charged with, as well as basic medical aid, at least to the point they are no longer at risk of dying.
-    As there is no space law, Security/Command acts to maintain the safety of the station and its inhabitants, as well as Nanotrasen assets.
+
+[color=#a4885c]22.[/color] Security/Command are expected to know and follow Space Law as is written in the guidebook and at [color=#a4885c]docs.goobstation.com/en/community/roleplay/space-law.html[/color].
+    - If you do not follow Space Law as Security/Command to a reasonable expectation, it will be considered unreasonable incompetence under banning policy.
+    - If you have questions about Space Law feel free to ask through AHelp.
 
 [color=#ff0000]SILICON RULES[/color]
 These rules also apply to any individual who is a silicon, including cyborgs and AI. As with other rules, more details are available on our wiki at [color=#a4885c]wiki.spacestation14.io[/color].
 
-[color=#a4885c]22.[/color] You must follow your laws
+[color=#a4885c]23.[/color] You must follow your laws
     - Silicons without any laws are free from any restrictions that would normally be placed by laws, but self-antagging rules still apply unless they are also antagonists.
     - The order of your laws determines law priority. Law 1 takes priority over laws 2 and 3, and so on.
     - Each individual silicon must remain consistent in their interpretations of laws through the round.
@@ -139,4 +143,3 @@ These rules also apply to any individual who is a silicon, including cyborgs and
 
 [color=#ffffff]SANDBOX SPECIFIC RULES[/color]
 1. You are free to do as you wish, however, causing massive damage to both the station, the arrivals system, and other player’s builds is strictly prohibited. It is also strictly prohibited to spawn large amounts of entities, as too much entities can cause severe lag.
-

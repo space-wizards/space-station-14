@@ -114,9 +114,6 @@
     intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
     maxIntensity: 60
   - type: Appearance
-  - type: Tag
-    tags:
-    - Minibomb
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/minibombcountdown.ogg
@@ -323,11 +320,12 @@
           emptyCase: { state: empty }
           wiredCase: { state: wired }
           caseWithTrigger: { state: no-payload }
+          caseWithPayload: { state: no-trigger }
           grenade: { state: complete }
       enum.Trigger.TriggerVisuals.VisualState:
         enum.ConstructionVisuals.Layer:
           Primed: { state: primed }
-          Unprimed: { state: complete }
+          # Unprimed: <Use state determined by enum.ConstructionVisuals.Layer>
   - type: StaticPrice
     price: 25
 
@@ -457,9 +455,6 @@
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
   - type: Appearance
-  - type: Tag
-    tags:
-    - Minibomb
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/minibombcountdown.ogg

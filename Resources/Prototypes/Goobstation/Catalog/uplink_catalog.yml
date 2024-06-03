@@ -1,0 +1,9 @@
+- type: listing
+  id: UplinkCrateNPCGondola
+  name: uplink-gondola-name
+  description: uplink-gondola-desc
+  productEntity: CrateNPCGondola
+  cost:
+    Telecrystal: 6
+  categories:
+    -  UplinkDisruption

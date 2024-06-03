@@ -25,7 +25,7 @@
   id: WizardsGrimoire
   name: wizards grimoire
   suffix: Wizard
-  parent: BaseItem
+  parent: [ BaseItem, StorePresetSpellbook ]
   components:
     - type: Sprite
       sprite: Objects/Misc/books.rsi
@@ -46,7 +46,6 @@
     - type: Store
       refundAllowed: true
       ownerOnly: true # get your own tome!
-      preset: StorePresetSpellbook
       balance:
         WizCoin: 10 # prices are balanced around this 10 point maximum and how strong the spells are
 
@@ -55,12 +54,11 @@
   id: WizardsGrimoireNoRefund
   name: wizards grimoire
   suffix: Wizard, No Refund
-  parent: WizardsGrimoire
+  parent: [ WizardsGrimoire, StorePresetSpellbook ]
   components:
     - type: Store
       refundAllowed: false
       ownerOnly: true # get your own tome!
-      preset: StorePresetSpellbook
       balance:
         WizCoin: 10 # prices are balanced around this 10 point maximum and how strong the spells are
 
@@ -187,33 +185,19 @@
         ActionFireball: -1
 
 - type: entity
-  id: MimerySpellbook
-  name: Guide to Advanced Mimery Volume 1
-  description: A guide on how to improve your mimery. Focuses on advanced invisible walls.
+  id: ScrollRunes
+  name: scroll of runes
   parent: BaseSpellbook
   components:
-   - type: Sprite
-     sprite: Objects/Misc/books.rsi
-     layers:
-     - state: mime_book
-   - type: Spellbook
-     learnPermanently: true
-     learnTime: 4
-     spellActions:
-       MimeBlockade: -1
-
-- type: entity
-  id: Mimery2Spellbook
-  name: Guide to Advanced Mimery Volume 2
-  description: A guide on how to improve your mimery. Focuses on finger guns.
-  parent: BaseSpellbook
-  components:
-   - type: Sprite
-     sprite: Objects/Misc/books.rsi
-     layers:
-     - state: mime_book2
-   - type: Spellbook
-     learnPermanently: true
-     learnTime: 4
-     spellActions:
-       MimeGun: -1
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: Spellbook
+    spellActions:
+      ActionFlashRune: -1
+      ActionExplosionRune: -1
+      ActionIgniteRune: -1
+      ActionStunRune: -1

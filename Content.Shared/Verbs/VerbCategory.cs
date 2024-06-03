@@ -64,8 +64,6 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategory Smite =
             new("verb-categories-smite", "/Textures/Interface/VerbIcons/smite.svg.192dpi.png", iconsOnly: true) { Columns = 6 };
-        public static readonly VerbCategory Polymorph =
-           new("verb-categories-polymorph", "/Textures/Interface/VerbIcons/smite.svg.192dpi.png", iconsOnly: true) { Columns = 6 };
         public static readonly VerbCategory Tricks =
             new("verb-categories-tricks", "/Textures/Interface/AdminActions/tricks.png", iconsOnly: true) { Columns = 5 };
 

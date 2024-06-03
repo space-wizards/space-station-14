@@ -1,0 +1,14 @@
+- type: reaction
+  id: CreateBananaSoap
+  impact: Low
+  quantized: true
+  reactants:
+    Fat:
+      amount: 15
+    TableSalt:
+      amount: 10
+    JuiceBanana:
+      amount: 20
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapHomemadeBanana

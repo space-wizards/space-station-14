@@ -209,32 +209,6 @@
     residueColor: residue-red
 
 - type: entity
-  name: Banana soap
-  id: SoapHomemadeBanana
-  parent: Soap
-  description: A homemade bar of soap. Smells of banana.
-  components:
-  - type: Sprite
-    layers:
-    - state: bananasoap-4
-      map: ["enum.SolutionContainerLayers.Fill"]
-  - type: SolutionContainerVisuals
-    fillBaseName: bananasoap-
-  - type: Slippery
-    paralyzeTime: 3.5
-    launchForwardsMultiplier: 2
-  - type: StepTrigger
-  - type: Item
-    heldPrefix: banana
-  - type: FlavorProfile
-    flavors:
-      - clean
-      - banana
-  - type: Residue
-    residueAdjective: residue-slippery
-    residueColor: residue-yellow
-
-- type: entity
   name: omega soap
   id: SoapOmega
   parent: Soap

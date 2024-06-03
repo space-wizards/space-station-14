@@ -7,6 +7,7 @@
     contents:
       - id: BoxFolderQmClipboard
       - id: CargoRequestComputerCircuitboard
+      - id: CargoSaleComputerCircuitboard
       - id: CargoShuttleComputerCircuitboard
       - id: CargoShuttleConsoleCircuitboard
       - id: SalvageShuttleConsoleCircuitboard
@@ -196,9 +197,11 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      # Goobstation
       - id: CloningPodMachineCircuitboard
       - id: MedicalScannerMachineCircuitboard
       - id: CloningConsoleComputerCircuitboard
+      - id: BiomassReclaimerMachineCircuitboard
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -219,9 +222,11 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      # Goobstation
       - id: CloningPodMachineCircuitboard
       - id: MedicalScannerMachineCircuitboard
       - id: CloningConsoleComputerCircuitboard
+      - id: BiomassReclaimerMachineCircuitboard
 
 - type: entity
   id: LockerResearchDirectorFilledHardsuit

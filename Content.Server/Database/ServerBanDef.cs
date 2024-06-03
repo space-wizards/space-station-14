@@ -101,7 +101,7 @@ namespace Content.Server.Database
 
             using (var client = new HttpClient())
             {
-                string apiUrl = "https://central.spacestation14.io/auth/api/query/userid?userid=" + userId;
+                string apiUrl = "https://auth.spacestation14.com/api/query/userid?userid=" + userId;
 
                 HttpResponseMessage response = client.Send(new HttpRequestMessage(HttpMethod.Get, apiUrl));
 

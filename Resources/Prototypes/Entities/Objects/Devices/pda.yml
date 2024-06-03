@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [ BaseItem, StorePresetUplink ] #PDA's have uplinks so they have to inherit the data.
   id: BasePDA
   name: PDA
   description: Personal Data Assistant.
@@ -1037,21 +1037,6 @@
     state: pda-pirate
   - type: Icon
     state: pda-pirate
-
-- type: entity
-  parent: SyndiPDA
-  id: WizardPDA
-  name: wizard PDA
-  description: Abra Kadabra!
-  components:
-  - type: Pda
-    id: WizardIDCard
-    state: pda-wizard
-  - type: Icon
-    state: pda-wizard
-  - type: PdaBorderColor
-    borderColor: "#46008C"
-    accentVColor: "#01043B"
 
 - type: entity
   parent: BaseMedicalPDA

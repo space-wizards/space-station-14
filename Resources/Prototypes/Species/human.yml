@@ -31,8 +31,8 @@
     RLeg: MobHumanRLeg
     LFoot: MobHumanLFoot
     RFoot: MobHumanRFoot
-    Tail: MobHumanoidAnyMarking
-    HeadTop: MobHumanoidAnyMarking
+    Tail: MobHumanoidAnyMarking # Goobstation - Required for felinids & harpies.
+    HeadTop: MobHumanoidAnyMarking # Goobstation - Required for felinids.
 
 - type: markingPoints
   id: MobHumanMarkingLimits
@@ -45,6 +45,12 @@
       required: false
     Snout:
       points: 1
+      required: false
+    Tail: # the cat tail joke
+      points: 0
+      required: false
+    HeadTop: # the cat ear joke
+      points: 0
       required: false
     Chest:
       points: 1

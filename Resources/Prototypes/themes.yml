@@ -110,17 +110,3 @@
     disabledFore: "#FFF5EE"
     _itemstatus_content_margin_right: "#06060604"
     _itemstatus_content_margin_left: "#06060604"
-- type: uiTheme
-  id: SS14GlassTheme
-  path: /Textures/Interface/Glass/
-  colors:
-    whiteText: "#FFF5EE"
-    slotSelectedGold: "#e6b812"
-    slotColor: "#0f1215"
-    slotOutline: "#333850"
-    slotText: "#333850"
-    nanoGold: "#A88B5E"
-    goodGreenFore: "#31843E"
-    concerningOrangeFore: "#A5762F"
-    dangerousRedFore: "#BB3232"
-    disabledFore: "#5A5A5A"

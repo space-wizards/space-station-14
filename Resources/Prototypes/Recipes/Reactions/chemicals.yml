@@ -112,27 +112,10 @@
   effects:
     - !type:ExplosionReactionEffect
       explosionType: Default
-      maxIntensity: 200
-      intensityPerUnit: 0.5 # 100+100 reagent for maximum explosion
+      maxIntensity: 100
+      intensityPerUnit: 0.5 # 50+50 reagent for maximum explosion
       intensitySlope: 4
-      maxTotalIntensity: 200
-
-- type: reaction
-  id: HolyPotassiumExplosion
-  impact: High
-  priority: 20
-  reactants:
-    Holywater:
-      amount: 1
-    Potassium:
-      amount: 1
-  effects:
-    - !type:ExplosionReactionEffect
-      explosionType: Default
-      maxIntensity: 800
-      intensityPerUnit: 1 # holy blast
-      intensitySlope: 4
-      maxTotalIntensity: 800
+      maxTotalIntensity: 100
 
 - type: reaction
   id: Smoke
@@ -211,7 +194,7 @@
   reactants:
     Iron:
       amount: 1
-    Uranium-238:
+    Uranium:
       amount: 1
     Aluminium:
       amount: 1
@@ -345,7 +328,7 @@
   impact: Medium
   minTemp: 370
   reactants:
-    Uranium-238:
+    Uranium:
       amount: 1
     Vestine:
       amount: 2
@@ -394,7 +377,7 @@
   id: NorepinephricAcid
   impact: Medium
   reactants:
-    Uranium-238:
+    Uranium:
       amount: 1
     Epinephrine:
       amount: 1

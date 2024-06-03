@@ -39,6 +39,7 @@
     color: "#43ccb5"
   - type: Rotatable
     rotateWhileAnchored: true
+  # Goobstation - Add components for self destruct.
   - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
     explosionType: DemolitionCharge
     totalIntensity: 60
@@ -633,37 +634,6 @@
     color: "#f71713"
 
 - type: entity
-  parent: ComputerComms
-  id: WizardComputerComms
-  name: wizard communications computer
-  description: A computer that uses magic to connect to the station's communcation system. Using this to make an announcement will alert the station to your presence.
-  components:
-  - type: Sprite
-    layers:
-    - map: ["computerLayerBody"]
-      state: computer
-    - map: ["computerLayerKeyboard"]
-      state: generic_keyboard
-    - map: ["computerLayerScreen"]
-      state: comm
-    - map: ["computerLayerKeys"]
-      state: generic_keys
-  - type: AccessReader
-    access: [[ "Wizard" ]]
-  - type: CommunicationsConsole
-    title: comms-console-announcement-title-wizard
-    color: "#A020F0"
-    canShuttle: false
-    global: true #announce to everyone they're about to fuck shit up
-    sound: /Audio/Announcements/war.ogg
-  - type: Computer
-    board: WizardCommsComputerCircuitboard
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#f71713"
-
-- type: entity
   parent: BaseComputer
   id: ComputerSolarControl
   name: solar control computer
@@ -1033,7 +1003,7 @@
       enum.CargoPalletConsoleUiKey.Sale:
         type: CargoPalletConsoleBoundUserInterface
   - type: Computer
-    board: CargoRequestComputerCircuitboard
+    board: CargoSaleComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6

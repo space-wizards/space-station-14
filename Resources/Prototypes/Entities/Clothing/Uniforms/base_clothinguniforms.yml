@@ -25,7 +25,6 @@
           Quantity: 30
   - type: Tag
     tags:
-    - Skirt
     - ClothMade
     - WhitelistChameleon
 
@@ -60,8 +59,3 @@
   - type: Clothing
     slots: [innerclothing]
     femaleMask: UniformTop
-  - type: Tag
-    tags:
-    - Skirt
-    - ClothMade
-    - WhitelistChameleon

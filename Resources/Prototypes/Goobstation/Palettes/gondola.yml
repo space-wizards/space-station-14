@@ -1,0 +1,8 @@
+﻿- type: palette
+  id: GondolaBrowns
+  name: Gondola Browns
+  colors:
+    brown: "#6e4e40"
+    brown1: "#593d31"
+    brown2: "#6e4330"
+    brown3: "#73422d"

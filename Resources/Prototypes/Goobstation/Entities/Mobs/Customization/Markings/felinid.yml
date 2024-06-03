@@ -1,0 +1,10 @@
+- type: marking
+  id: Foxtail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Goobstation/Mobs/Customization/Felinid/foxtail.rsi
+    state: base_fox_tail
+  - sprite: Goobstation/Mobs/Customization/Felinid/foxtail.rsi
+    state: base_fox_tail_tip

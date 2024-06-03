@@ -1,0 +1,18 @@
+- type: entity
+  parent: ClothingMaskBase
+  id: BKKitsuneMask
+  name: Blackburna Kitsune Mask
+  description: A mask of a fox usually worn by the blackburna army of certain rank
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Goobstation/Clothing/Mask/BKKitsuneMask.rsi
+  - type: Clothing
+    sprite: Goobstation/Clothing/Mask/BKKitsuneMask.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HidesNose

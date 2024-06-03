@@ -1,15 +1,14 @@
+using System.Numerics;
+using Content.Client.UserInterface.Systems;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.StatusIcon.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using System.Numerics;
-using Content.Shared.StatusIcon.Components;
-using Content.Client.UserInterface.Systems;
-using Robust.Shared.Prototypes;
 using static Robust.Shared.Maths.Color;
 
 namespace Content.Client.Overlays;
@@ -43,8 +42,8 @@ public sealed class EntityHealthBarOverlay : Overlay
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
         const float scale = 1f;
-        var scaleMatrix = Matrix3.CreateScale(new Vector2(scale, scale));
-        var rotationMatrix = Matrix3.CreateRotation(-rotation);
+        var scaleMatrix = Matrix3Helpers.CreateScale(new Vector2(scale, scale));
+        var rotationMatrix = Matrix3Helpers.CreateRotation(-rotation);
 
         var query = _entManager.AllEntityQueryEnumerator<MobThresholdsComponent, MobStateComponent, DamageableComponent, SpriteComponent>();
         while (query.MoveNext(out var uid,
@@ -79,11 +78,15 @@ public sealed class EntityHealthBarOverlay : Overlay
                 continue;
             }
 
-            var worldPosition = _transform.GetWorldPosition(xform);
-            var worldMatrix = Matrix3.CreateTranslation(worldPosition);
+            // we are all progressing towards death every day
+            if (CalcProgress(uid, mobStateComponent, damageableComponent, mobThresholdsComponent) is not { } deathProgress)
+                continue;
 
-            Matrix3.Multiply(scaleMatrix, worldMatrix, out var scaledWorld);
-            Matrix3.Multiply(rotationMatrix, scaledWorld, out var matty);
+            var worldPosition = _transform.GetWorldPosition(xform);
+            var worldMatrix = Matrix3Helpers.CreateTranslation(worldPosition);
+
+            var scaledWorld = Matrix3x2.Multiply(scaleMatrix, worldMatrix);
+            var matty = Matrix3x2.Multiply(rotationMatrix, scaledWorld);
 
             handle.SetTransform(matty);
 
@@ -91,10 +94,6 @@ public sealed class EntityHealthBarOverlay : Overlay
             var widthOfMob = bounds.Width * EyeManager.PixelsPerMeter;
 
             var position = new Vector2(-widthOfMob / EyeManager.PixelsPerMeter / 2, yOffset / EyeManager.PixelsPerMeter);
-
-            // we are all progressing towards death every day
-            (float ratio, bool inCrit) deathProgress = CalcProgress(uid, mobStateComponent, damageableComponent, mobThresholdsComponent);
-
             var color = GetProgressColor(deathProgress.ratio, deathProgress.inCrit);
 
             // Hardcoded width of the progress bar because it doesn't match the texture.
@@ -116,16 +115,19 @@ public sealed class EntityHealthBarOverlay : Overlay
             handle.DrawRect(pixelDarken, Black.WithAlpha(128));
         }
 
-        handle.SetTransform(Matrix3.Identity);
+        handle.SetTransform(Matrix3x2.Identity);
     }
 
     /// <summary>
     /// Returns a ratio between 0 and 1, and whether the entity is in crit.
     /// </summary>
-    private (float, bool) CalcProgress(EntityUid uid, MobStateComponent component, DamageableComponent dmg, MobThresholdsComponent thresholds)
+    private (float ratio, bool inCrit)? CalcProgress(EntityUid uid, MobStateComponent component, DamageableComponent dmg, MobThresholdsComponent thresholds)
     {
         if (_mobStateSystem.IsAlive(uid, component))
         {
+            if (dmg.HealthBarThreshold != null && dmg.TotalDamage < dmg.HealthBarThreshold)
+                return null;
+
             if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold, thresholds) &&
                 !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out threshold, thresholds))
                 return (1, false);

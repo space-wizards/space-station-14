@@ -12,7 +12,6 @@
     species: Arachnid
   - type: Hunger
   - type: Thirst
-  - type: Carriable
   - type: Sericulture
     action: ActionSericulture
     productionLength: 2

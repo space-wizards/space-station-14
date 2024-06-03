@@ -290,9 +290,6 @@ uplink-disposable-turret-desc = Looks and functions like a normal electrical too
 uplink-cluster-banana-peel-name = Cluster Banana
 uplink-cluster-banana-peel-desc = Splits into 6 explosive banana peels after being thrown, the peels detonate automatically after 20 seconds if nobody slips on them.
 
-uplink-pie-cannon-name = Regenerating Pie Cannon
-uplink-pie-cannon-desc = Regenerates banana cream pies. Aim your crosshair onto the target, not in their general direction.
-
 uplink-cane-blade-name = Cane Blade
 uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
 
@@ -345,9 +342,6 @@ uplink-eshield-desc = Exotic energy shield that reflects almost all laser beams,
 
 uplink-soap-name = Soap
 uplink-soap-desc = An untrustworthy bar of soap. Smells of fear.
-
-uplink-gondola-name = Gondola Crate
-uplink-gondola-desc = Crate containing one standard issue gondola.
 
 uplink-ultrabright-lantern-name = Extra-Bright Lantern
 uplink-ultrabright-lantern-desc = It can be used to blind people like a flash.
@@ -434,11 +428,5 @@ uplink-hypodart-desc = A seemingly unremarkable dart with an enlarged reservoir 
 uplink-barber-scissors-name = Barber Scissors
 uplink-barber-scissors-desc = A good tool to give your fellow agent a nice haircut, unless you want to give it to yourself.
 
-uplink-throngler-name = The Throngler
-uplink-throngler-desc = You're never gonna get it. You're never gonna get it. Please don't get it...
-
 uplink-backpack-syndicate-name = Syndicate backpack
 uplink-backpack-syndicate-desc = Lightweight explosion-proof а backpack for holding various traitor goods
-
-uplink-warhorn-name = Syndicate Warhorn
-uplink-warhorn-desc = A tool that releases an intimidating sound, great for letting the station know you're nearby.

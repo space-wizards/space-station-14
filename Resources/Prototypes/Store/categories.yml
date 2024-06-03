@@ -94,36 +94,3 @@
   id: RevenantAbilities
   name: store-category-abilities
 
-#wizard
-
-
-- type: storeCategory
-  id: WizardItems
-  name: store-category-magicitems
-  priority: 5
-
-- type: storeCategory
-  id: WizardSpells
-  name: Spells
-  priority: 0
-
-- type: storeCategory
-  id: OffensiveSpells
-  name: store-category-offensivespells
-  priority: 1
-
-- type: storeCategory
-  id: DefensiveSpells
-  name: store-category-defensivespells
-  priority: 2
-
-- type: storeCategory
-  id: MobilitySpells
-  name: store-category-mobilityspells
-  priority: 3
-
-- type: storeCategory
-  id: AssistanceSpells
-  name: store-category-assistancespells
-  priority: 4
-

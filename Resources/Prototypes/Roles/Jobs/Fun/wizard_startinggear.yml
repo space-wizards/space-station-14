@@ -1,58 +1,43 @@
-#Just commenting everything out until Po fixes it cuz im lazy!!! :-) -Durk
+#Wizard outfit startingGear definitions.
+- type: startingGear
+  id: WizardBlueGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorDarkBlue
+    back: ClothingBackpackFilled
+    head: ClothingHeadHatWizard
+    outerClothing: ClothingOuterWizard
+    shoes: ClothingShoesWizard
+    id: PassengerPDA
+    ears: ClothingHeadsetService
 
-##Wizard outfit startingGear definitions.
-#- type: startingGear
-#  id: WizardBlueGear
-#  equipment:
-#    jumpsuit: ClothingUniformJumpsuitColorDarkBlue
-#    back: ClothingBackpackFilled
-#    head: ClothingHeadHatWizard
-#    outerClothing: ClothingOuterWizard
-#    shoes: ClothingShoesWizard
-#    id: WizardPDA
-#    ears: ClothingHeadsetService
-#
-#- type: startingGear
-#  id: WizardBlueGearApprentice
-#  equipment:
-#    jumpsuit: ClothingUniformJumpsuitColorDarkBlue
-#    back: ClothingBackpackFilled
-#    head: ClothingHeadHatWizard
-#    outerClothing: ClothingOuterWizard
-#    shoes: ClothingShoesWizard
-#    belt: BaseSpellbookShop6MP
-#    id: WizardPDA
-#    ears: ClothingHeadsetService
-#
-#- type: startingGear
-#  id: WizardRedGear
-#  equipment:
-#    jumpsuit: ClothingUniformJumpsuitColorRed
-#    back: ClothingBackpackFilled
-#    head: ClothingHeadHatRedwizard
-#    outerClothing: ClothingOuterWizardRed
-#    shoes: ClothingShoesWizard
-#    id: WizardPDA
-#    ears: ClothingHeadsetService
-#
-#- type: startingGear
-#  id: WizardVioletGear
-#  equipment:
-#    jumpsuit: ClothingUniformJumpsuitColorPurple
-#    back: ClothingBackpackFilled
-#    head: ClothingHeadHatVioletwizard
-#    outerClothing: ClothingOuterWizardViolet
-#    shoes: ClothingShoesWizard
-#    id: WizardPDA
-#    ears: ClothingHeadsetService
-#
-#- type: startingGear
-#  id: WizardHardsuitGear
-#  equipment:
-#    jumpsuit: ClothingUniformJumpsuitColorPurple
-#    back: ClothingBackpackFilled
-#    outerClothing: ClothingOuterHardsuitWizard
-#    shoes: ClothingShoesWizard
-#    id: WizardPDA
-#    ears: ClothingHeadsetService
-#
+- type: startingGear
+  id: WizardRedGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    back: ClothingBackpackFilled
+    head: ClothingHeadHatRedwizard
+    outerClothing: ClothingOuterWizardRed
+    shoes: ClothingShoesWizard
+    id: PassengerPDA
+    ears: ClothingHeadsetService
+
+- type: startingGear
+  id: WizardVioletGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorPurple
+    back: ClothingBackpackFilled
+    head: ClothingHeadHatVioletwizard
+    outerClothing: ClothingOuterWizardViolet
+    shoes: ClothingShoesWizard
+    id: PassengerPDA
+    ears: ClothingHeadsetService
+
+- type: startingGear
+  id: WizardHardsuitGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorPurple
+    back: ClothingBackpackFilled
+    outerClothing: ClothingOuterHardsuitWizard
+    shoes: ClothingShoesWizard
+    id: PassengerPDA
+    ears: ClothingHeadsetService

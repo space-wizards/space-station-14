@@ -26,19 +26,7 @@
       "name": "magicmissile"
     },
     {
-        "name": "gib"
-    },
-    {
-        "name": "devolve"
-    },
-    {
-        "name": "tesla"
-    },
-    {
-        "name": "heal"
-    },
-    {
-        "name": "mimegun"
+      "name": "gib"
     }
   ]
 }

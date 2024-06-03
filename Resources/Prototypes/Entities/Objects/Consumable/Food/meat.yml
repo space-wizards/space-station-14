@@ -429,29 +429,6 @@
     defaultTarget: lizard steak
 
 - type: entity
-  name: raw gondola meat
-  parent: FoodMeatRawBase
-  id: FoodMeatGondola
-  description: You monster.
-  components:
-  - type: Sprite
-    state: plain
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 9
-        - ReagentId: Fat
-          Quantity: 9
-        - ReagentId: Tranquility
-          Quantity: 10
-  - type: Construction
-    graph: GondolaSteak
-    node: start
-    defaultTarget: gondola steak
-
-- type: entity
   name: raw plant meat
   parent: FoodMeatBase
   id: FoodMeatPlant
@@ -622,6 +599,8 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatTomatoCutlet
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: salami
@@ -1046,34 +1025,6 @@
     node: lizard steak
 
 - type: entity
-  name: gondola steak
-  parent: FoodMeatBase
-  id: FoodMeatGondolaCooked
-  description: Cooked, tough gondola meat.
-  components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Meat
-    - Steak
-  - type: Sprite
-    layers:
-    - state: plain-cooked
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Protein
-          Quantity: 5
-        - ReagentId: Tranquility
-          Quantity: 15
-  - type: Construction
-    graph: GondolaSteak
-    node: gondola steak
-
-- type: entity
   name: boiled spider leg
   parent: FoodMeatBase
   id: FoodMeatSpiderlegCooked
@@ -1321,6 +1272,8 @@
   - type: Sprite
     state: salami-slice
     color: red
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   name: salami slice

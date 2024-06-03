@@ -1,0 +1,36 @@
+- type: reagent
+  id: Tranquility
+  name: reagent-name-tranquility
+  group: Toxins
+  desc: reagent-desc-tranquility
+  physicalDesc: reagent-physical-desc-calming
+  flavor: mindful
+  color: "#915E48"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:PopupMessage
+          type: Local
+          messages: [ "reagent-popup-tranquility" ]
+          probability: 0.2
+      - !type:GenericStatusEffect
+        key: Muted
+        component: Muted
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+      - !type:Polymorph
+        prototype: Gondola
+        conditions:
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
+        - !type:ReagentThreshold
+          min: 25

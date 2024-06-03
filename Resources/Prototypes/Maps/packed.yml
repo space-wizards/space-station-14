@@ -2,8 +2,8 @@
   id: Packed
   mapName: 'Packed'
   mapPath: /Maps/packed.yml
-  minPlayers: 0
-  maxPlayers: 100
+  minPlayers: 5
+  maxPlayers: 40
   stations:
     Packed:
       stationProto: StandardNanotrasenStation

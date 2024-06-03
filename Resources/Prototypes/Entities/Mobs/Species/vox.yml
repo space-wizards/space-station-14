@@ -5,7 +5,6 @@
   components:
   - type: Hunger
   - type: Thirst
-  - type: Carriable
   - type: Icon
     sprite: Mobs/Species/Vox/parts.rsi
     state: vox_m
