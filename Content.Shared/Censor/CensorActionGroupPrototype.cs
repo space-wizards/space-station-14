@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Robust.Shared.Player;
+﻿using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Censor;
@@ -27,7 +26,7 @@ public enum CensorFilterType : byte
 }
 
 [Flags]
-public enum CensorTarget : int
+public enum CensorTarget
 {
     None  = 0,
     IC    = 1 << 0,
@@ -75,6 +74,6 @@ public interface ICensorAction
         string censorTargetName,
         EntityManager entMan);
 
-    // TODO ShadowCommander allow adding a counter for each player that hits an action for checking multiple slurs
+    // TODO ShadowCommander add a counter for each player that counts runs on an action for checking multiple slurs
     // in a certain time frame for auto banning and such
 }

@@ -182,8 +182,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
 
         // Chat censor
-        // TODO ShadowCommander text censor
-        // newMessage = SanitizeMessageCensor(newMessage);
         // Player isn't always provided, so get session. Kinda hacky for now.
         var session = player;
         if (player == null && TryComp(source, out MindContainerComponent? mindContainer) && mindContainer.HasMind && TryComp(mindContainer.Mind, out MindComponent? mind))
