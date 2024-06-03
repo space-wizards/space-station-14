@@ -38,11 +38,12 @@ public sealed class TraitSystem : EntitySystem
                 continue;
 
             // Add all components required by the prototype
-            EntityManager.AddComponents(args.Mob,traitPrototype.Components, false);
+            EntityManager.AddComponents(args.Mob, traitPrototype.Components, false);
 
             // Add item required by the trait
             if (traitPrototype.TraitGear == null)
                 continue;
+
             if (!TryComp(args.Mob, out HandsComponent? handsComponent))
                 continue;
 

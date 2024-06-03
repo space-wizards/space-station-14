@@ -465,7 +465,6 @@ namespace Content.Client.Lobby.UI
             TraitsList.DisposeAllChildren();
 
             var traits = _prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => Loc.GetString(t.Name)).ToList();
-            var categories = _prototypeManager.EnumeratePrototypes<TraitCategoryPrototype>().OrderBy(t => Loc.GetString(t.Name)).ToList();
             TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-traits-tab"));
 
             if (traits.Count < 1)
@@ -499,12 +498,12 @@ namespace Content.Client.Lobby.UI
             }
 
             //Create UI view from model
-            foreach (var pair in model)
+            foreach (var (categoryId, traitId) in model)
             {
                 TraitCategoryPrototype? category = null;
-                if (pair.Key != "default")
+                if (categoryId != "default")
                 {
-                    category = _prototypeManager.Index<TraitCategoryPrototype>(pair.Key);
+                    category = _prototypeManager.Index<TraitCategoryPrototype>(categoryId);
                     // Label
                     TraitsList.AddChild(new Label
                     {
@@ -517,7 +516,7 @@ namespace Content.Client.Lobby.UI
                 List<TraitPreferenceSelector?> selectors = new();
                 var selectionCount = 0;
 
-                foreach (var traitProto in pair.Value)
+                foreach (var traitProto in traitId)
                 {
                     var trait = _prototypeManager.Index<TraitPrototype>(traitProto);
                     var selector = new TraitPreferenceSelector(trait);
@@ -528,7 +527,7 @@ namespace Content.Client.Lobby.UI
 
                     selector.PreferenceChanged += preference =>
                     {
-                        Profile = Profile?.WithTraitPreference(trait.ID, pair.Key, preference);
+                        Profile = Profile?.WithTraitPreference(trait.ID, categoryId, preference);
                         SetDirty();
                         RefreshTraits(); // If too many traits are selected, they will be reset to the real value.
                     };
@@ -536,7 +535,7 @@ namespace Content.Client.Lobby.UI
                 }
 
                 // Selection counter
-                if (category != null && category.MaxTraitPoints >= 0)
+                if (category is { MaxTraitPoints: >= 0 })
                 {
                     TraitsList.AddChild(new Label
                     {
@@ -547,8 +546,16 @@ namespace Content.Client.Lobby.UI
 
                 foreach (var selector in selectors)
                 {
-                    if (selector != null)
-                        TraitsList.AddChild(selector);
+                    if (selector == null)
+                        continue;
+
+                    if (category is { MaxTraitPoints: >= 0 } &&
+                        selector.Cost + selectionCount > category.MaxTraitPoints)
+                    {
+                        selector.Checkbox.Label.FontColorOverride = Color.Red;
+                    }
+
+                    TraitsList.AddChild(selector);
                 }
             }
         }

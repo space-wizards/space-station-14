@@ -361,22 +361,27 @@ namespace Content.Shared.Preferences
             {
                 list.Add(traitId);
 
-                if (categoryProto != null && categoryProto.MaxTraitPoints >= 0)
+                if (categoryProto == null || categoryProto.MaxTraitPoints < 0)
                 {
-                    var count = 0;
-                    foreach (var trait in list)
+                    return new(this)
                     {
-                        var traitProtoTemp = prototypeManager.Index<TraitPrototype>(trait);
-                        count += traitProtoTemp.Cost;
-                    }
+                        _traitPreferences = list,
+                    };
+                }
 
-                    if (count > categoryProto.MaxTraitPoints && traitProto.Cost != 0)
+                var count = 0;
+                foreach (var trait in list)
+                {
+                    var traitProtoTemp = prototypeManager.Index<TraitPrototype>(trait);
+                    count += traitProtoTemp.Cost;
+                }
+
+                if (count > categoryProto.MaxTraitPoints && traitProto.Cost != 0)
+                {
+                    return new(this)
                     {
-                        return new(this)
-                        {
-                            _traitPreferences = _traitPreferences,
-                        };
-                    }
+                        _traitPreferences = _traitPreferences,
+                    };
                 }
             }
             else

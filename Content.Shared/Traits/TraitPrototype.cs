@@ -6,7 +6,7 @@ namespace Content.Shared.Traits;
 /// <summary>
 /// Describes a trait.
 /// </summary>
-[Prototype("trait")]
+[Prototype]
 public sealed partial class TraitPrototype : IPrototype
 {
     [ViewVariables]
@@ -61,4 +61,3 @@ public sealed partial class TraitPrototype : IPrototype
     [DataField]
     public ProtoId<TraitCategoryPrototype>? Category;
 }
-

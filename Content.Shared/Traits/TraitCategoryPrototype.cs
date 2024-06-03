@@ -5,7 +5,7 @@ namespace Content.Shared.Traits;
 /// <summary>
 /// Traits category with general settings. Allows you to limit the number of taken traits in one category
 /// </summary>
-[Prototype("traitCategory")]
+[Prototype]
 public sealed partial class TraitCategoryPrototype : IPrototype
 {
     [ViewVariables]
