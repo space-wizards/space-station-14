@@ -24,11 +24,10 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    // TODO: use the efficient thing in initialize
     /// <summary>
     /// Whether the preloading CVar is set or not.
     /// </summary>
-    public bool PreloadingEnabled => _cfg.GetCVar(CCVars.PreloadGrids);
+    public bool PreloadingEnabled;
 
     public override void Initialize()
     {
@@ -36,6 +35,8 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
+
+        Subs.CVar(_cfg, CCVars.PreloadGrids, value => PreloadingEnabled = value, true);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
