@@ -1,9 +1,11 @@
 ﻿#nullable enable
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
+using Content.Server.Mind;
 using Content.Server.Warps;
 using Robust.Server.GameObjects;
 using Robust.Shared;
@@ -54,15 +56,20 @@ public class PvsBenchmark
         _pair.Server.CfgMan.SetCVar(CVars.NetPvsAsync, false);
         _sys = _entMan.System<SharedTransformSystem>();
 
+        SetupAsync().Wait();
+    }
+
+    private async Task SetupAsync()
+    {
         // Spawn the map
         _pair.Server.ResolveDependency<IRobustRandom>().SetSeed(42);
-        _pair.Server.WaitPost(() =>
+        await _pair.Server.WaitPost(() =>
         {
             var success = _entMan.System<MapLoaderSystem>().TryLoad(_mapId, Map, out _);
             if (!success)
                 throw new Exception("Map load failed");
             _pair.Server.MapMan.DoMapInitialize(_mapId);
-        }).Wait();
+        });
 
         // Get list of ghost warp positions
         _spawns = _entMan.AllComponentsList<WarpPointComponent>()
@@ -72,17 +79,19 @@ public class PvsBenchmark
 
         Array.Resize(ref _players, PlayerCount);
 
-        // Spawn "Players".
-        _pair.Server.WaitPost(() =>
+        // Spawn "Players"
+        _players = await _pair.Server.AddDummySessions(PlayerCount);
+        await _pair.Server.WaitPost(() =>
         {
+            var mind = _pair.Server.System<MindSystem>();
             for (var i = 0; i < PlayerCount; i++)
             {
                 var pos = _spawns[i % _spawns.Length];
                 var uid =_entMan.SpawnEntity("MobHuman", pos);
                 _pair.Server.ConsoleHost.ExecuteCommand($"setoutfit {_entMan.GetNetEntity(uid)} CaptainGear");
-                _players[i] = new DummySession{AttachedEntity = uid};
+                mind.ControlMob(_players[i].UserId, uid);
             }
-        }).Wait();
+        });
 
         // Repeatedly move players around so that they "explore" the map and see lots of entities.
         // This will populate their PVS data with out-of-view entities.
