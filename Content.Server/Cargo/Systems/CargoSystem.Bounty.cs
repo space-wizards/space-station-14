@@ -304,7 +304,7 @@ public sealed partial class CargoSystem
     /// Determines whether the <paramref name="entity"/> meets the criteria for the bounty <paramref name="entry"/>.
     /// </summary>
     /// <returns>true if <paramref name="entity"/> is a valid item for the bounty entry, otherwise false</returns>
-    public bool EntityCountsForBountyEntry(EntityUid entity, CargoBountyItemEntry entry)
+    public bool IsValidBountyEntry(EntityUid entity, CargoBountyItemEntry entry)
     {
         if (!_whitelistSys.IsValid(entry.Whitelist, entity))
             return false;
@@ -328,7 +328,7 @@ public sealed partial class CargoSystem
             var temp = new HashSet<EntityUid>();
             foreach (var entity in entities)
             {
-                if (!EntityCountsForBountyEntry(entity, entry))
+                if (!IsValidBountyEntry(entity, entry))
                     continue;
 
                 count += _stackQuery.CompOrNull(entity)?.Count ?? 1;

@@ -169,6 +169,7 @@ public sealed class CargoTest
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
+        var componentFactory = server.ResolveDependency<IComponentFactory>();
         var whitelist = entManager.System<EntityWhitelistSystem>();
         var cargo = entManager.System<CargoSystem>();
         var sliceableSys = entManager.System<SliceableFoodSystem>();
@@ -184,7 +185,7 @@ public sealed class CargoTest
             var sliceableEntityProtos = protoManager.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.Components.ContainsKey("SliceableFood"))
+                .Where(p => p.TryGetComponent<SliceableFoodComponent>(out _, componentFactory))
                 .Select(p => p.ID)
                 .ToList();
 
@@ -200,14 +201,14 @@ public sealed class CargoTest
                     foreach (var entry in bounty.Entries)
                     {
                         // See if the entity counts as part of this bounty entry
-                        if (!cargo.EntityCountsForBountyEntry(ent, entry))
+                        if (!cargo.IsValidBountyEntry(ent, entry))
                             continue;
 
                         // Spawn a slice
                         var slice = entManager.SpawnEntity(sliceable.Slice, coord);
 
                         // See if the slice also counts for this bounty entry
-                        if (!cargo.EntityCountsForBountyEntry(slice, entry))
+                        if (!cargo.IsValidBountyEntry(slice, entry))
                         {
                             entManager.DeleteEntity(slice);
                             continue;
