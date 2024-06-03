@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Roles;
 
 [TestFixture]
-public sealed class LoadoutTests
+public sealed class StartingGearPrototypeStorageTest
 {
     private EntityQuery<StorageComponent> _storageQuery;
 
@@ -32,14 +32,13 @@ public sealed class LoadoutTests
 
         Assert.That(server.CfgMan.GetCVar(CVars.NetPVS), Is.False);
 
-        var protoIds = server.ProtoMan
+        var protos = server.ProtoMan
             .EnumeratePrototypes<StartingGearPrototype>()
             .Where(p => !p.Abstract)
             .Where(p => !pair.IsTestPrototype(p))
-            .Select(p => p.ID)
             .ToList();
 
-        protoIds.Sort();
+        protos.Sort();
         var mapId = MapId.Nullspace;
 
         await server.WaitPost(() =>
@@ -51,47 +50,30 @@ public sealed class LoadoutTests
 
         await pair.RunTicksSync(3);
 
-        foreach (var protoId in protoIds)
+        foreach (var gearProto in protos)
         {
-            server.ProtoMan.TryIndex(protoId, out StartingGearPrototype gearProto);
-
             var backpackProto = gearProto.GetGear("Back");
 
             EntityUid bag = default;
 
-            if (gearProto.Storage.Count > 0)
+            await server.WaitPost(() => bag = server.EntMan.SpawnEntity(backpackProto, coords));
+            var ents = new ValueList<EntityUid>();
+
+            foreach (var (slot, entProtos) in gearProto.Storage)
             {
-                if (backpackProto != null)
+                if (entProtos.Count == 0)
+                    continue;
+
+                foreach (var ent in entProtos)
                 {
-                    await server.WaitPost(() => bag = server.EntMan.SpawnEntity(backpackProto, coords));
-
-                    var itemcoords = transformSystem.GetMapCoordinates(bag);
-                    var ents = new ValueList<EntityUid>();
-
-                    if (_storageQuery.TryComp(bag, out var storage))
-                    {
-                        foreach (var (slot, entProtos) in gearProto.Storage)
-                        {
-                            if (entProtos.Count == 0)
-                                continue;
-
-                            foreach (var ent in entProtos)
-                            {
-                                ents.Add(server.EntMan.SpawnEntity(ent, coords));
-                            }
-
-                            foreach (var ent in ents)
-                            {
-                                if (!storageSystem.CanInsert(bag, ent, out _, storage))
-                                    Assert.Fail($"StartingGearPrototype {protoId} could not successfully put items into storage {bag.Id}");
-                            }
-                        }
-                    }
-                    else
-                        Assert.Fail($"StartingGearPrototype {protoId}'s bag {bag.Id} does not have a StorageComponent to fill the storage");
+                    ents.Add(server.EntMan.SpawnEntity(ent, coords));
                 }
-                else
-                    Assert.Fail($"StartingGearPrototype {protoId} has a storage field, but does not have a bag to fill");
+
+                foreach (var ent in ents)
+                {
+                    if (!storageSystem.CanInsert(bag, ent, out _))
+                        Assert.Fail($"StartingGearPrototype {gearProto.ID} could not successfully put items into storage {bag.Id}");
+                }
             }
         }
 
