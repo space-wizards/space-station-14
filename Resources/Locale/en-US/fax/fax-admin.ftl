@@ -32,3 +32,4 @@ paper_stamp-syndicate = { ent-RubberStampSyndicate }
 paper_stamp-warden = { ent-RubberStampWarden }
 paper_stamp-ok = { ent-RubberStampApproved }
 paper_stamp-deny = { ent-RubberStampDenied }
+paper_stamp-detective = { ent-RubberStampDetective }
