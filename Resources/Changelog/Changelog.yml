@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fixed pressure damage calculations to what they were always supposed
-      to be. This means pressure damage now starts happening at more extreme values
-      (20 kPa for low pressure damage instead of 50 kPa) and high pressure damage
-      is scaled different. It also fixed the HUD alerts so that the "warning" alerts
-      show up before you actually start taking damage.
-    type: Fix
-  - message: Air alarms now start complaining about low pressure much earlier, when
-      the pressure drops so much that you can't breathe oxygen tank.
-    type: Tweak
-  id: 6176
-  time: '2024-03-18T05:16:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26217
-- author: HappyRoach
-  changes:
-  - message: The correct magazines now appear in the WT550 safe.
-    type: Fix
-  id: 6177
-  time: '2024-03-18T06:10:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26208
-- author: vanx
-  changes:
-  - message: You can now wear most guns in the suit slot, and see them on yourself!
-    type: Tweak
-  id: 6178
-  time: '2024-03-18T06:16:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26152
 - author: Dutch-VanDerLinde
   changes:
   - message: Romerol now properly works on the dead.
@@ -3855,3 +3827,26 @@
   id: 6675
   time: '2024-06-03T16:12:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28270
+- author: TheShuEd
+  changes:
+  - message: Added italian and cowboy accents
+    type: Add
+  - message: Now you can't choose all the accents at once.
+    type: Fix
+  id: 6676
+  time: '2024-06-03T18:47:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28046
+- author: RenQ
+  changes:
+  - message: The moths now have their own "death grasp"
+    type: Add
+  id: 6677
+  time: '2024-06-03T18:48:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28409
+- author: lzk228
+  changes:
+  - message: Borgs ID now will be shown in LogProbe instead of Unknown.
+    type: Tweak
+  id: 6678
+  time: '2024-06-03T18:48:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27788
