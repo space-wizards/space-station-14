@@ -1,8 +1,8 @@
 - type: gameMap
   id: Train
-  mapName: 'Train'
+  mapName: 'Why would you fucking want this map at all?'
   mapPath: /Maps/train.yml
-  minPlayers: 90
+  minPlayers: 0
   maxPlayers: 100
   stations:
     Train:
