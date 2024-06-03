@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Roles;
-using Content.Shared.Storage;
 using Content.Server.Storage.EntitySystems;
 using Robust.Shared;
 using Robust.Shared.GameObjects;
@@ -13,8 +12,6 @@ namespace Content.IntegrationTests.Tests.Roles;
 [TestFixture]
 public sealed class StartingGearPrototypeStorageTest
 {
-    private EntityQuery<StorageComponent> _storageQuery;
-
     /// <summary>
     /// Checks that a storage fill on a StartingGearPrototype will properly fill
     /// </summary>
