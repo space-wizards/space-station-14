@@ -204,7 +204,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         }
 
         var gearEquippedEv = new StartingGearEquippedEvent(entity.Value);
-        RaiseLocalEvent(entity.Value, ref gearEquippedEv, true);
+        RaiseLocalEvent(entity.Value, ref gearEquippedEv);
 
         if (profile != null)
         {
@@ -257,10 +257,8 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         _cardSystem.TryChangeFullName(cardId, characterName, card);
         _cardSystem.TryChangeJobTitle(cardId, jobPrototype.LocalizedName, card);
 
-        if (_prototypeManager.TryIndex<StatusIconPrototype>(jobPrototype.Icon, out var jobIcon))
-        {
+        if (_prototypeManager.TryIndex(jobPrototype.Icon, out var jobIcon))
             _cardSystem.TryChangeJobIcon(cardId, jobIcon, card);
-        }
 
         var extendedAccess = false;
         if (station != null)
