@@ -3847,3 +3847,11 @@
   id: 6674
   time: '2024-06-03T13:04:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28072
+- author: AJCM-git
+  changes:
+  - message: Ninja stealth mode, stealth boxes and everything with stealth won't show
+      up in equipment HUDs like the medical or security HUD anymore.
+    type: Fix
+  id: 6675
+  time: '2024-06-03T16:12:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28270
