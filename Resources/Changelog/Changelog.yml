@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: wafehling
-  changes:
-  - message: Added 18 new bounties to cargo bounty system.
-    type: Add
-  id: 6171
-  time: '2024-03-17T17:06:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26160
 - author: Ko4erga
   changes:
   - message: Added craftable high and small wooden fences, bench. New stairs.
@@ -3851,3 +3844,10 @@
   id: 6670
   time: '2024-06-03T03:30:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28544
+- author: Laneron
+  changes:
+  - message: Jetpack UI window now has correctly displayed header
+    type: Fix
+  id: 6671
+  time: '2024-06-03T03:33:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28545
