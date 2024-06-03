@@ -15,7 +15,6 @@
     deleteBody: false
 
 - type: entity
-  noSpawn: true
   parent: BaseGameRule
   id: SubGamemodesRule
   components:
