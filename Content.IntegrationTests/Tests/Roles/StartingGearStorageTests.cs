@@ -30,6 +30,8 @@ public sealed class StartingGearPrototypeStorageTest
             .ToList();
             .OrderBy(p => p.ID);
 
+        protos.Sort();
+
         var testMap = await pair.CreateTestMap();
         var coords = testMap.GridCoords;
 
