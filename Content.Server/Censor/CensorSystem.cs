@@ -17,7 +17,7 @@ public sealed class CensorSystem : EntitySystem
     private readonly Dictionary<CensorTarget, Dictionary<CensorFilterType, List<TextCensorActionDef>>> _censorActions = new();
 
     // Filters
-    private readonly Dictionary<CensorTarget, Dictionary<Regex, CensorActionGroupPrototype>> _regexCensors = new();
+    private readonly Dictionary<CensorTarget, Dictionary<Regex, TextCensorActionDef>> _regexCensors = new();
     // private readonly Dictionary<CensorTarget, SimpleCensor> _chatCensors = new();
 
     public override void Initialize()
@@ -40,43 +40,18 @@ public sealed class CensorSystem : EntitySystem
             if (!censor.TargetFlags.HasFlag(targetFlag))
                 continue;
 
-            // Add to list
-            #region Add to list
-            if (!_censorActions.TryGetValue(targetFlag, out var filterList))
+            if (censor.FilterType == CensorFilterType.Regex)
             {
-                filterList = new Dictionary<CensorFilterType, List<TextCensorActionDef>>();
-                _censorActions.Add(targetFlag, filterList);
-            }
+                if (!_regexCensors.TryGetValue(targetFlag, out var list))
+                {
+                    list = new Dictionary<Regex, TextCensorActionDef>();
+                    _regexCensors.Add(targetFlag, list);
+                }
 
-            if (!filterList.TryGetValue(censor.FilterType, out var list))
-            {
-                list = new List<TextCensorActionDef>();
-                filterList.Add(censor.FilterType, list);
+                list.Add(new Regex(censor.FilterText), censor);
             }
-
-            list.Add(censor);
-            #endregion
+            // TODO other filter types
         }
-
-        // foreach (var (censorTarget, filterList) in _censorActions)
-        // {
-        //     var regexCensors = new Dictionary<Regex, CensorActionGroupPrototype>();
-        //     // TODO create Regex list
-        //     foreach (var textCensorActionDef in filterList[CensorFilterType.Regex])
-        //     {
-        //         regexCensors.Add(new Regex(textCensorActionDef.FilterText), textCensorActionDef.ActionGroup);
-        //     }
-        //     _regexCensors.Add(censorTarget, regexCensors);
-        //
-        //     // censored words
-        //     var plainTextWords = new List<string>();
-        //     foreach (var censoredWord in filterList[CensorFilterType.PlainTextWords])
-        //     {
-        //         plainTextWords.Add(censoredWord.FilterText);
-        //     }
-        //     // false positives
-        //     // false negatives
-        // }
     }
 
     /// <summary>
@@ -94,16 +69,12 @@ public sealed class CensorSystem : EntitySystem
         var blocked = true;
 
         // No censors defined for target
-        if (!_censorActions.TryGetValue(target, out var textCensorActionDefs))
+        if (!_regexCensors.TryGetValue(target, out var textCensors))
             return true;
 
-        // No regex censors defined
-        if (!textCensorActionDefs.TryGetValue(CensorFilterType.Regex, out var textCensors))
-            return true;
-
-        foreach (var textCensor in textCensors)
+        foreach (var (regex, textCensor) in textCensors)
         {
-            var regexMatches = Regex.Matches(inputText, textCensor.FilterText);
+            var regexMatches = regex.Matches(inputText);
             if (regexMatches.Count == 0)
                 continue;
 
