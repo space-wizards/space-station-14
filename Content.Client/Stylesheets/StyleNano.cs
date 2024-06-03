@@ -113,6 +113,10 @@ namespace Content.Client.Stylesheets
         public static readonly Color PointGreen = Color.FromHex("#38b026");
         public static readonly Color PointMagenta = Color.FromHex("#FF00FF");
 
+        //OptionButton
+        public static readonly Color OptionButtonBorder = Color.FromHex("#35384C");
+        public static readonly Color OptionButtonBackground = Color.FromHex("#24242B");
+
         // Context menu button colors
         public static readonly Color ButtonColorContext = Color.FromHex("#1119");
         public static readonly Color ButtonColorContextHover = Color.DarkSlateGray;
@@ -1599,6 +1603,14 @@ namespace Content.Client.Stylesheets
                     {
                         BackgroundColor = FancyTreeSelectedRowColor,
                     }),
+
+                Element<PanelContainer>().Class(OptionButton.StyleClassBackPanel)
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
+                    {
+                        BorderColor = OptionButtonBorder,
+                        BackgroundColor = OptionButtonBackground,
+                        BorderThickness = new Thickness(2, 2, 2, 2)
+                    })
             }).ToList());
         }
     }
