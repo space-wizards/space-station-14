@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Content.Shared.Censor;
+using Content.Shared.Database;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -15,13 +16,13 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
     private ISawmill _log = default!;
 
     // Filters
-    private readonly Dictionary<CensorTarget, Dictionary<Regex, TextCensorActionDef>> _regexCensors = new();
+    private readonly Dictionary<CensorTarget, Dictionary<Regex, CensorFilter>> _regexCensors = new();
 
     public void Initialize()
     {
         IoCManager.InjectDependencies(this);
 
-        AddCensor(new TextCensorActionDef("amogus",
+        AddCensor(new CensorFilter("amogus",
             CensorFilterType.Regex,
             "warning",
             CensorTarget.IC | CensorTarget.OOC,
@@ -33,7 +34,7 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
         _log = _logMan.GetSawmill("censor");
     }
 
-    public void AddCensor(TextCensorActionDef censor)
+    public void AddCensor(CensorFilter censor)
     {
         foreach (CensorTarget targetFlag in Enum.GetValues(typeof(CensorTarget)))
         {
@@ -46,7 +47,7 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
             {
                 if (!_regexCensors.TryGetValue(targetFlag, out var list))
                 {
-                    list = new Dictionary<Regex, TextCensorActionDef>();
+                    list = new Dictionary<Regex, CensorFilter>();
                     _regexCensors.Add(targetFlag, list);
                 }
 

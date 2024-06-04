@@ -21,7 +21,7 @@ public sealed class CensorActionAdminLog : ICensorAction
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> matchedText,
-        TextCensorActionDef censor,
+        CensorFilter censor,
         IEntityManager entMan)
     {
         IoCManager.Resolve<IAdminLogManager>()

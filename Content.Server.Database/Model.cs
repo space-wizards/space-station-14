@@ -40,6 +40,7 @@ namespace Content.Server.Database
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
         public DbSet<AdminWatchlist> AdminWatchlists { get; set; } = null!;
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
+        public DbSet<CensorFilter> Censor { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1098,5 +1099,17 @@ namespace Content.Server.Database
         /// Whether the message has been dismissed permanently by the player.
         /// </summary>
         public bool Dismissed { get; set; }
+    }
+
+    [Table("censor_filter")]
+    public sealed class CensorFilter
+    {
+        [Column("censor_id")] public int Id { get; set; }
+
+        public string FilterText { get; set; } = string.Empty;
+        public CensorFilterType FilterType { get; set; }
+        public string ActionGroup { get; set; } = string.Empty;
+        public CensorTarget TargetFlags { get; set; }
+        public string DisplayName { get; set; } = string.Empty;
     }
 }

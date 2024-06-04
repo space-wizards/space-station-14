@@ -26,7 +26,7 @@ public sealed class CensorActionBan : ICensorAction
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> matchedText,
-        TextCensorActionDef censor,
+        CensorFilter censor,
         IEntityManager entMan)
     {
         var banManager = IoCManager.Resolve<IBanManager>();
