@@ -422,6 +422,7 @@
     weight: 5.5
     minimumPlayers: 20
     duration: 1
+  - type: RuleGrids
   - type: LoadMapRule
     preloadedGrid: ShuttleStriker
   - type: NukeopsRule
