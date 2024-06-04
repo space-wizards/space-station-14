@@ -305,6 +305,8 @@
   - type: ShowHealthIcons
     damageContainers:
     - Biological
+  - type: Advertise
+    pack: MedibotAds
 
 - type: entity
   parent: MobSiliconBase

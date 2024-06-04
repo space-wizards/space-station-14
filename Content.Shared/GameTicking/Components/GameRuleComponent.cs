@@ -1,13 +1,14 @@
-using Content.Server.Destructible.Thresholds;
+using Content.Shared.Destructible.Thresholds;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.GameTicking.Components;
+namespace Content.Shared.GameTicking.Components;
 
 /// <summary>
 /// Component attached to all gamerule entities.
 /// Used to both track the entity as well as store basic data
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, EntityCategory("GameRules")]
 public sealed partial class GameRuleComponent : Component
 {
     /// <summary>

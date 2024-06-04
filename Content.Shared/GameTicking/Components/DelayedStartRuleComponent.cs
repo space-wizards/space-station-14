@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.GameTicking.Components;
+namespace Content.Shared.GameTicking.Components;
 
 /// <summary>
 /// Generic component used to track a gamerule that's start has been delayed.

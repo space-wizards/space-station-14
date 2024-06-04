@@ -1,9 +1,9 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Database.Migrations.Postgres;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
