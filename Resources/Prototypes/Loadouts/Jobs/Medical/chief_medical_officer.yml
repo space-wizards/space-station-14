@@ -73,34 +73,6 @@
   equipment:
     neck: ClothingNeckMantleCMO
 
-# Back
-- type: loadout
-  id: ChiefMedicalOfficerBackpack
-  equipment: ChiefMedicalOfficerBackpack
-
-- type: startingGear
-  id: ChiefMedicalOfficerBackpack
-  equipment:
-    back: ClothingBackpackCMOFilled
-
-- type: loadout
-  id: ChiefMedicalOfficerSatchel
-  equipment: ChiefMedicalOfficerSatchel
-
-- type: startingGear
-  id: ChiefMedicalOfficerSatchel
-  equipment:
-    back: ClothingBackpackSatchelCMOFilled
-
-- type: loadout
-  id: ChiefMedicalOfficerDuffel
-  equipment: ChiefMedicalOfficerDuffel
-
-- type: startingGear
-  id: ChiefMedicalOfficerDuffel
-  equipment:
-    back: ClothingBackpackDuffelCMOFilled
-
 # Outer clothing
 - type: loadout
   id: ChiefMedicalOfficerLabCoat

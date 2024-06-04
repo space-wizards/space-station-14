@@ -1,3 +1,5 @@
+using Content.Shared.StatusIcon;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access.Systems
@@ -62,9 +64,9 @@ namespace Content.Shared.Access.Systems
     [Serializable, NetSerializable]
     public sealed class AgentIDCardJobIconChangedMessage : BoundUserInterfaceMessage
     {
-        public string JobIconId { get; }
+        public ProtoId<StatusIconPrototype> JobIconId { get; }
 
-        public AgentIDCardJobIconChangedMessage(string jobIconId)
+        public AgentIDCardJobIconChangedMessage(ProtoId<StatusIconPrototype> jobIconId)
         {
             JobIconId = jobIconId;
         }
