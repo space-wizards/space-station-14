@@ -29,7 +29,7 @@ public sealed class LungSystem : EntitySystem
 
     private void OnGotUnequipped(Entity<BreathToolComponent> ent, ref GotUnequippedEvent args)
     {
-        _atmosphereSystem.DisconnectInternals(ent);
+        _atmosphereSystem.DisconnectInternals(ent.Owner, ent.Comp);
     }
 
     private void OnGotEquipped(Entity<BreathToolComponent> ent, ref GotEquippedEvent args)
@@ -59,7 +59,7 @@ public sealed class LungSystem : EntitySystem
     {
         if (args.IsToggled || args.IsEquip)
         {
-            _atmos.DisconnectInternals(ent.Comp);
+            _atmos.DisconnectInternals(ent.Owner, ent.Comp);
         }
         else
         {
