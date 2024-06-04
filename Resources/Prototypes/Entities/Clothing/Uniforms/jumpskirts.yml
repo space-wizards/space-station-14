@@ -311,6 +311,7 @@
     - ClothMade
     - PrisonUniform
     - WhitelistChameleon
+    - Skirt
 
 - type: entity
   parent: ClothingUniformSkirtBase
