@@ -121,6 +121,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/spaceninja.rsi
   - type: NoSlip
+  - type: Magboots # always have gravity because le suction cups
   - type: ClothingSpeedModifier
     # ninja are masters of sneaking around relatively quickly, won't break cloak
     walkModifier: 1.1
