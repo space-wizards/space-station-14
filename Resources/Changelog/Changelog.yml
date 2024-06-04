@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Romerol now properly works on the dead.
-    type: Tweak
-  id: 6179
-  time: '2024-03-18T06:25:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26222
 - author: ElectroJr
   changes:
   - message: Added an option to try and ignore some errors if a replay fails to load,
@@ -3850,3 +3843,11 @@
   id: 6678
   time: '2024-06-03T18:48:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27788
+- author: FairlySadPanda
+  changes:
+  - message: Stacking multiple deflecting items at once has been removed; now only
+      your best item is used.
+    type: Tweak
+  id: 6679
+  time: '2024-06-04T13:26:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28539
