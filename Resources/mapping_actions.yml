@@ -29,6 +29,7 @@
   assignments:
   - 0: 5
 - entity: GasPipeStraight
+  assignments:
   - 1: 0
 - entity: GasPipeBend
   assignments:

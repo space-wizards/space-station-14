@@ -37,7 +37,7 @@
     autoPopulate: False
     temporary: True
 
-- tpye: entity
+- type: entity
   parent: BaseMappingCommandAction
   id: ActionMappingSpace
   name: space
@@ -73,7 +73,7 @@
       tileId: Plating
 
 - type: entity
-  parent: baseMappingCommandAction
+  parent: BaseMappingCommandAction
   id: ActionMappingSteelFloor
   name: steel floor
   components:
