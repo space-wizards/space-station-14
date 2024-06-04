@@ -31,6 +31,7 @@ guide-entry-biological = Biological
 guide-entry-others = Others
 guide-entry-botanical = Botanicals
 guide-entry-ss14 = Space Station 14
+guide-entry-newplayer = New? Start here!
 guide-entry-janitorial = Janitorial
 guide-entry-bartender = Bartender
 guide-entry-chef = Chef

@@ -1,0 +1,4 @@
+- type: guideEntry
+  id: NewPlayer
+  name: guide-entry-newplayer
+  text: "/ServerInfo/Guidebook/NewPlayer.xml"
