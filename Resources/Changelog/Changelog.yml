@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: DoutorWhite
-  changes:
-  - message: Introduce new health status icons.
-    type: Add
-  - message: Enhance the Medical HUD to display the health status of players and mobs
-      using the newly added icons.
-    type: Tweak
-  id: 6182
-  time: '2024-03-18T13:56:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26027
 - author: Plykiya
   changes:
   - message: Lone operatives now start with 60TC instead of 40TC.
@@ -3852,3 +3842,10 @@
   id: 6681
   time: '2024-06-04T17:12:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28225
+- author: Tayrtahn
+  changes:
+  - message: Mops and rags now show the liquids they soak up.
+    type: Add
+  id: 6682
+  time: '2024-06-04T18:48:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28590
