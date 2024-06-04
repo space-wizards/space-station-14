@@ -91,6 +91,12 @@ public record struct HailerLine()
     public string Message = string.Empty;
 
     /// <summary>
+    /// Tooltip to show in the radial menu instead of the message.
+    /// </summary>
+    [DataField]
+    public string? Tooltip;
+
+    /// <summary>
     /// Sound to be played
     /// </summary>
     [DataField(required: true)]
