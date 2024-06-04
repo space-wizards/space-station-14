@@ -2,12 +2,14 @@ using System.IO;
 using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.Mapping;
 using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -24,6 +26,7 @@ namespace Content.Client.Actions
         public delegate void OnActionReplaced(EntityUid actionId);
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -38,6 +41,9 @@ namespace Content.Client.Actions
 
         private readonly List<EntityUid> _removed = new();
         private readonly List<Entity<ActionComponent>> _added = new();
+
+        // template action to set name icon and event entity, for entity placement actions
+        public readonly EntProtoId<ActionComponent> ActionMappingPlaceEntity = "ActionMappingPlaceEntity";
 
         public override void Initialize()
         {
@@ -237,16 +243,28 @@ namespace Content.Client.Actions
                 if (entry is not MappingDataNode map)
                     continue;
 
-                if (!map.TryGet("action", out var actionNode))
-                    continue;
+                // default to this template action to avoid copy pasting it with each entity placement action
+                var proto = ActionMappingPlaceEntity;
+                if (map.TryGet("action", out var actionNode))
+                    proto = _serialization.Read<EntProtoId<ActionComponent>>(actionNode);
 
-                var action = _serialization.Read<ActionComponent>(actionNode, notNullableOverride: true);
-                var actionId = Spawn(null);
-                AddComp(actionId, action);
-                AddActionDirect(user, actionId);
+                var action = Spawn(proto);
+                if (map.TryGet("entity", out var entityNode))
+                {
+                    var id = _serialization.Read<EntProtoId>(entityNode);
+                    if (Comp<InstantActionComponent>(action).Event is not StartPlacementActionEvent ev)
+                    {
+                        Log.Error($"Entity placement template action {proto} used wrong event type!");
+                        Del(action);
+                        continue;
+                    }
 
-                if (map.TryGet<ValueDataNode>("name", out var nameNode))
-                    _metaData.SetEntityName(actionId, nameNode.Value);
+                    ev.EntityType = id;
+                    _metaData.SetEntityName(action, _proto.Index(id).Name);
+                    Comp<ActionComponent>(action).Icon = new SpriteSpecifier.EntityPrototype(id);
+                }
+
+                AddActionDirect(user, action);
 
                 if (!map.TryGet("assignments", out var assignmentNode))
                     continue;
@@ -255,7 +273,7 @@ namespace Content.Client.Actions
 
                 foreach (var index in nodeAssignments)
                 {
-                    var assignment = new SlotAssignment(index.Hotbar, index.Slot, actionId);
+                    var assignment = new SlotAssignment(index.Hotbar, index.Slot, action);
                     assignments.Add(assignment);
                 }
             }
