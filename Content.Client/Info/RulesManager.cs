@@ -98,7 +98,7 @@ public sealed class RulesManager : SharedRulesManager
         var entries = text.Split("\n");
         entries = entries[1..^1];
         text = string.Join("\n", entries);
-        rulesSection.SetText(rules.Title, FormattedMessage.FromMarkup(text), true);
+        rulesSection.SetText(rules.Title, FormattedMessage.FromMarkupOrThrow(text), true);
     }
 
     public Control RulesSection()
