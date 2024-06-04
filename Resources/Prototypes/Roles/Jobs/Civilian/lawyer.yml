@@ -21,3 +21,7 @@
     # TODO add copy of space law
   inhand:
     - BriefcaseBrownFilled
+  storage:
+    back:
+    - BoxSurvival
+    - RubberStampLawyer

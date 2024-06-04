@@ -34,3 +34,8 @@
     pocket2: ClownRecorder
     id: ClownPDA
     ears: ClothingHeadsetService
+  storage:
+    back:
+    - BoxHug
+    - RubberStampClown
+    - CrayonRainbow
