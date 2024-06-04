@@ -580,7 +580,6 @@ namespace Content.Shared.Cuffs
                 BreakOnDamage = true,
                 NeedHand = true,
                 RequireCanInteract = false, // Trust in UncuffAttemptEvent
-                DistanceThreshold = 0.3f
             };
 
             if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
