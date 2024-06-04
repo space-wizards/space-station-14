@@ -61,53 +61,56 @@ public sealed class ReflectSystem : EntitySystem
         SubscribeLocalEvent<ReflectUserComponent, HitScanReflectAttemptEvent>(OnUserHitscanReflectAttempt);
     }
 
-    private void OnUserHitscanReflectAttempt(EntityUid userUid, ReflectUserComponent component, ref HitScanReflectAttemptEvent args)
+    private void OnUserHitscanReflectAttempt(Entity<ReflectUserComponent> user, ref HitScanReflectAttemptEvent args)
     {
         if (args.Reflected)
             return;
 
-        if (!UserCanReflect(userUid, out var bestReflectorUid))
+        if (!UserCanReflect(user, out var bestReflectorUid))
             return;
 
-        if (!TryReflectHitscan(userUid, bestReflectorUid.Value, args.Shooter, args.SourceItem, args.Direction, out var dir))
+        if (!TryReflectHitscan(user.Owner, bestReflectorUid.Value, args.Shooter, args.SourceItem, args.Direction, out var dir))
             return;
 
         args.Direction = dir.Value;
         args.Reflected = true;
     }
 
-    private void OnUserProjectileReflectAttempt(EntityUid userUid, ReflectUserComponent component, ref ProjectileReflectAttemptEvent args)
+    private void OnUserProjectileReflectAttempt(Entity<ReflectUserComponent> user, ref ProjectileReflectAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (!UserCanReflect(userUid, out var bestReflectorUid))
+        if (!TryComp<ReflectiveComponent>(args.ProjUid, out var reflectiveComponent))
             return;
 
-        if (!TryReflectProjectile(userUid, bestReflectorUid.Value, args.ProjUid))
+        if (!UserCanReflect(user, out var bestReflectorUid, (args.ProjUid, reflectiveComponent)))
+            return;
+
+        if (!TryReflectProjectile(user, bestReflectorUid.Value, (args.ProjUid, args.Component)))
             return;
 
         args.Cancelled = true;
     }
 
-    private void OnObjectReflectHitscanAttempt(EntityUid objectUid, ReflectComponent component, ref HitScanReflectAttemptEvent args)
+    private void OnObjectReflectHitscanAttempt(Entity<ReflectComponent> obj, ref HitScanReflectAttemptEvent args)
     {
-        if (args.Reflected || (component.Reflects & args.Reflective) == 0x0)
+        if (args.Reflected || (obj.Comp.Reflects & args.Reflective) == 0x0)
             return;
 
-        if (!TryReflectHitscan(objectUid, objectUid, args.Shooter, args.SourceItem, args.Direction, out var dir))
+        if (!TryReflectHitscan(obj, obj, args.Shooter, args.SourceItem, args.Direction, out var dir))
             return;
 
         args.Direction = dir.Value;
         args.Reflected = true;
     }
 
-    private void OnObjectReflectProjectileAttempt(EntityUid objectUid, ReflectComponent component, ref ProjectileReflectAttemptEvent args)
+    private void OnObjectReflectProjectileAttempt(Entity<ReflectComponent> obj, ref ProjectileReflectAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (!TryReflectProjectile(objectUid, objectUid, args.ProjUid))
+        if (!TryReflectProjectile(obj, obj, (args.ProjUid, args.Component)))
             return;
 
         args.Cancelled = true;
@@ -116,17 +119,11 @@ public sealed class ReflectSystem : EntitySystem
     /// <summary>
     /// Can a user reflect something that's hit them? Returns true if so, and the best reflector available in the user's equipment.
     /// </summary>
-    private bool UserCanReflect(EntityUid uid, [NotNullWhen(true)] out EntityUid? bestReflectorUid, EntityUid? projectile = null)
+    private bool UserCanReflect(Entity<ReflectUserComponent> user, [NotNullWhen(true)] out Entity<ReflectComponent>? bestReflector, Entity<ReflectiveComponent>? projectile = null)
     {
-        bestReflectorUid = null;
-        ReflectComponent? bestReflector = null;
-        ReflectiveComponent? reflective = null;
+        bestReflector = null;
 
-        // If it's a projectile trying to hit someone, make sure it can be reflected.
-        if (projectile != null && !TryComp(projectile, out reflective))
-            return false;
-
-        foreach (var entityUid in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.WITHOUT_POCKET))
+        foreach (var entityUid in _inventorySystem.GetHandOrInventoryEntities(user.Owner, SlotFlags.WITHOUT_POCKET))
         {
             if (!TryComp<ReflectComponent>(entityUid, out var comp))
                 continue;
@@ -134,30 +131,27 @@ public sealed class ReflectSystem : EntitySystem
             if (!comp.Enabled)
                 continue;
 
-            if (bestReflector != null && bestReflector.ReflectProb >= comp.ReflectProb)
+            if (bestReflector != null && bestReflector.Value.Comp.ReflectProb >= comp.ReflectProb)
                 continue;
 
-            if (reflective != null && (comp.Reflects & reflective.Reflective) == 0x0)
+            if (projectile != null && (comp.Reflects & projectile.Value.Comp.Reflective) == 0x0)
                 continue;
 
-            bestReflector = comp;
-            bestReflectorUid = entityUid;
+            bestReflector = (entityUid, comp);
         }
 
-        return bestReflectorUid != null && bestReflector != null;
+        return bestReflector != null;
     }
 
-    private bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null)
+    private bool TryReflectProjectile(EntityUid user, Entity<ReflectComponent> reflector, Entity<ProjectileComponent> projectile)
     {
         if (
-            // Does the reflector actually reflect?
-            !TryComp<ReflectComponent>(reflector, out var reflect) ||
             // Is it on?
-            !reflect.Enabled ||
+            !reflector.Comp.Enabled ||
             // Is the projectile deflectable?
             !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
             // Does the deflector deflect the type of projecitle?
-            (reflect.Reflects & reflective.Reflective) == 0x0 ||
+            (reflector.Comp.Reflects & reflective.Reflective) == 0x0 ||
             // Is the projectile correctly set up with physics?
             !TryComp<PhysicsComponent>(projectile, out var physics) ||
             // If the user of the reflector is a mob with stamina, is it capable of deflecting?
@@ -167,11 +161,11 @@ public sealed class ReflectSystem : EntitySystem
             return false;
 
         // If this dice roll fails, the shot isn't deflected
-        if (!_random.Prob(GetReflectChance(reflector, reflect)))
+        if (!_random.Prob(GetReflectChance(reflector)))
             return false;
 
         // Below handles what happens after being deflected.
-        var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
+        var rotation = _random.NextAngle(-reflector.Comp.Spread / 2, reflector.Comp.Spread / 2).Opposite();
         var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);
         var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(user);
         var newVelocity = rotation.RotateVec(relativeVelocity);
@@ -188,39 +182,29 @@ public sealed class ReflectSystem : EntitySystem
         if (_netManager.IsServer)
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
+            _audio.PlayPvs(reflector.Comp.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
         }
 
-        if (Resolve(projectile, ref projectileComp, false))
-        {
-            _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)} from {ToPrettyString(projectileComp.Weapon)} shot by {projectileComp.Shooter}");
+        _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)} from {ToPrettyString(projectile.Comp.Weapon)} shot by {projectile.Comp.Shooter}");
 
-            projectileComp.Shooter = user;
-            projectileComp.Weapon = user;
-            Dirty(projectile, projectileComp);
-        }
-        else
-        {
-            _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)}");
-        }
+        projectile.Comp.Shooter = user;
+        projectile.Comp.Weapon = user;
+        Dirty(projectile);
 
         return true;
     }
 
     private bool TryReflectHitscan(
         EntityUid user,
-        EntityUid reflector,
+        Entity<ReflectComponent> reflector,
         EntityUid? shooter,
         EntityUid shotSource,
         Vector2 direction,
         [NotNullWhen(true)] out Vector2? newDirection)
     {
-
         if (
-            // Does the reflector reflect?
-            !TryComp<ReflectComponent>(reflector, out var reflect) ||
             // Is the reflector enabled?
-            !reflect.Enabled ||
+            !reflector.Comp.Enabled ||
             // If the user is a mob with stamina, is it capable of deflecting?
             TryComp<StaminaComponent>(user, out var staminaComponent) && staminaComponent.Critical ||
             _standing.IsDown(user))
@@ -230,7 +214,7 @@ public sealed class ReflectSystem : EntitySystem
         }
 
         // If this dice roll fails, the shot is not deflected.
-        if (!_random.Prob(GetReflectChance(reflector, reflect)))
+        if (!_random.Prob(GetReflectChance(reflector)))
         {
             newDirection = null;
             return false;
@@ -240,10 +224,10 @@ public sealed class ReflectSystem : EntitySystem
         if (_netManager.IsServer)
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
+            _audio.PlayPvs(reflector.Comp.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
         }
 
-        var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
+        var spread = _random.NextAngle(-reflector.Comp.Spread / 2, reflector.Comp.Spread / 2);
         newDirection = -spread.RotateVec(direction);
 
         if (shooter != null)
@@ -254,7 +238,7 @@ public sealed class ReflectSystem : EntitySystem
         return true;
     }
 
-    private float GetReflectChance(EntityUid reflector, ReflectComponent reflect)
+    private float GetReflectChance(Entity<ReflectComponent> reflector)
     {
         /*
          *  The rules of deflection are as follows:
@@ -264,64 +248,67 @@ public sealed class ReflectSystem : EntitySystem
          *  If you are floating, your chance is the minimum value possible.
          */
 
-        if (reflect.Innate)
-            return reflect.ReflectProb;
+        if (reflector.Comp.Innate)
+            return reflector.Comp.ReflectProb;
 
         if (_gravity.IsWeightless(reflector))
-            return reflect.MinReflectProb;
+            return reflector.Comp.MinReflectProb;
 
         if (!TryComp<PhysicsComponent>(reflector, out var reflectorPhysics))
-            return reflect.ReflectProb;
+            return reflector.Comp.ReflectProb;
 
         return MathHelper.Lerp(
-            reflect.MinReflectProb,
-            reflect.ReflectProb,
+            reflector.Comp.MinReflectProb,
+            reflector.Comp.ReflectProb,
             // Inverse progression between velocities fed in as progression between probabilities. We go high -> low so the output here needs to be _inverted_.
-            1 - Math.Clamp((reflectorPhysics.LinearVelocity.Length() - reflect.VelocityBeforeNotMaxProb) / (reflect.VelocityBeforeMinProb - reflect.VelocityBeforeNotMaxProb), 0, 1)
+            1 - Math.Clamp((reflectorPhysics.LinearVelocity.Length() - reflector.Comp.VelocityBeforeNotMaxProb) / (reflector.Comp.VelocityBeforeMinProb - reflector.Comp.VelocityBeforeNotMaxProb), 0, 1)
         );
     }
 
-    private void OnReflectEquipped(EntityUid uid, ReflectComponent component, GotEquippedEvent args)
+    private void OnReflectEquipped(Entity<ReflectComponent> reflector, ref GotEquippedEvent args)
     {
         if (_gameTiming.ApplyingState)
             return;
 
         EnsureComp<ReflectUserComponent>(args.Equipee);
 
-        if (component.Enabled)
+        if (reflector.Comp.Enabled)
             EnableAlert(args.Equipee);
     }
 
-    private void OnReflectUnequipped(EntityUid uid, ReflectComponent comp, GotUnequippedEvent args)
+    private void OnReflectUnequipped(Entity<ReflectComponent> reflector, ref GotUnequippedEvent args)
     {
         RefreshReflectUser(args.Equipee);
     }
 
-    private void OnReflectHandEquipped(EntityUid uid, ReflectComponent component, GotEquippedHandEvent args)
+    private void OnReflectHandEquipped(Entity<ReflectComponent> reflector, ref GotEquippedHandEvent args)
     {
         if (_gameTiming.ApplyingState)
             return;
 
         EnsureComp<ReflectUserComponent>(args.User);
 
-        if (component.Enabled)
+        if (reflector.Comp.Enabled)
             EnableAlert(args.User);
     }
 
-    private void OnReflectHandUnequipped(EntityUid uid, ReflectComponent component, GotUnequippedHandEvent args)
+    private void OnReflectHandUnequipped(Entity<ReflectComponent> reflector, ref GotUnequippedHandEvent args)
     {
         RefreshReflectUser(args.User);
     }
 
-    private void OnToggleReflect(EntityUid uid, ReflectComponent comp, ref ItemToggledEvent args)
+    private void OnToggleReflect(Entity<ReflectComponent> reflector, ref ItemToggledEvent args)
     {
-        comp.Enabled = args.Activated;
-        Dirty(uid, comp);
+        reflector.Comp.Enabled = args.Activated;
+        Dirty(reflector);
 
-        if (comp.Enabled)
-            EnableAlert(uid);
+        if (args.User == null)
+            return;
+
+        if (reflector.Comp.Enabled)
+            EnableAlert(args.User.Value);
         else
-            DisableAlert(uid);
+            DisableAlert(args.User.Value);
     }
 
     /// <summary>
