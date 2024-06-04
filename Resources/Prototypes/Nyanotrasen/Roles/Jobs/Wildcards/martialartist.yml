@@ -26,8 +26,10 @@
   equipment:
     jumpsuit: ClothingUniformMartialGi
     belt: ClothingBeltMartialBlack
-    back: ClothingBackpackFilled
     id: MartialArtistPDA
     ears: ClothingHeadsetService
     shoes: ClothingShoesGeta
     gloves: ClothingHandsGlovesBoxingRed
+  storage:
+    back:
+    - BoxSurvival
