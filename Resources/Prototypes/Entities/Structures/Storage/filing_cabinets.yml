@@ -67,7 +67,6 @@
     node: filingCabinet
   - type: StaticPrice
     price: 20
-  - type: RequireProjectileTarget
 
 - type: entity
   name: tall cabinet
@@ -157,6 +156,7 @@
     node: chestDrawer
   - type: StaticPrice
     price: 15
+  - type: RequireProjectileTarget
 
 - type: entity
   abstract: true
