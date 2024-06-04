@@ -126,3 +126,6 @@ chatsan-replacement-45 = thank you so much
 
 chatsan-word-46 = tyvm
 chatsan-replacement-46 = thank you very much
+
+chatsan-word-47 = cya
+chatsan-replacement-47 = see you
