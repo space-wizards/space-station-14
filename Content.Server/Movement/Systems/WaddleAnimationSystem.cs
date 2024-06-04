@@ -2,4 +2,4 @@
 
 namespace Content.Server.Movement.Systems;
 
-public sealed class ServerWaddleAnimationSystem : SharedWaddleAnimationSystem;
+public sealed class WaddleAnimationSystem : SharedWaddleAnimationSystem;

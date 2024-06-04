@@ -20,32 +20,34 @@ public abstract class SharedWaddleAnimationSystem : EntitySystem
 
         // Start moving possibilities
         SubscribeLocalEvent<WaddleAnimationComponent, MoveInputEvent>(OnMovementInput);
-        SubscribeLocalEvent<WaddleAnimationComponent, StoodEvent>((uid, component, args) => OnStood(uid, component, args));
+        SubscribeLocalEvent<WaddleAnimationComponent, StoodEvent>(OnStood);
 
         // Stop moving possibilities
-        SubscribeLocalEvent<WaddleAnimationComponent, StunnedEvent>((uid, component, _) => StopWaddling(uid, component));
-        SubscribeLocalEvent<WaddleAnimationComponent, DownedEvent>((uid, component, _) => StopWaddling(uid, component));
-        SubscribeLocalEvent<WaddleAnimationComponent, BuckleChangeEvent>((uid, component, _) => StopWaddling(uid, component));
-        SubscribeLocalEvent<WaddleAnimationComponent, GravityChangedEvent>((uid, component, args) =>
-        {
-            if (!args.HasGravity && component.IsCurrentlyWaddling)
-                StopWaddling(uid, component);
-        });
+        SubscribeLocalEvent((Entity<WaddleAnimationComponent> ent, ref StunnedEvent _) => StopWaddling(ent));
+        SubscribeLocalEvent((Entity<WaddleAnimationComponent> ent, ref DownedEvent _) => StopWaddling(ent));
+        SubscribeLocalEvent((Entity<WaddleAnimationComponent> ent, ref BuckleChangeEvent _) => StopWaddling(ent));
+        SubscribeLocalEvent<WaddleAnimationComponent, GravityChangedEvent>(OnGravityChanged);
     }
 
-    private void OnComponentStartup(EntityUid uid, WaddleAnimationComponent component, ComponentStartup args)
+    private void OnGravityChanged(Entity<WaddleAnimationComponent> ent, ref GravityChangedEvent args)
     {
-        if (!TryComp<InputMoverComponent>(uid, out var moverComponent))
+        if (!args.HasGravity && ent.Comp.IsCurrentlyWaddling)
+            StopWaddling(ent);
+    }
+
+    private void OnComponentStartup(Entity<WaddleAnimationComponent> entity, ref ComponentStartup args)
+    {
+        if (!TryComp<InputMoverComponent>(entity.Owner, out var moverComponent))
             return;
 
         // If the waddler is currently moving, make them start waddling
         if ((moverComponent.HeldMoveButtons & MoveButtons.AnyDirection) == MoveButtons.AnyDirection)
         {
-            RaiseNetworkEvent(new StartedWaddlingEvent(GetNetEntity(uid)));
+            RaiseNetworkEvent(new StartedWaddlingEvent(GetNetEntity(entity.Owner)));
         }
     }
 
-    private void OnMovementInput(EntityUid uid, WaddleAnimationComponent component, MoveInputEvent args)
+    private void OnMovementInput(Entity<WaddleAnimationComponent> entity, ref MoveInputEvent args)
     {
         // Prediction mitigation. Prediction means that MoveInputEvents are spammed repeatedly, even though you'd assume
         // they're once-only for the user actually doing something. As such do nothing if we're just repeating this FoR.
@@ -54,23 +56,23 @@ public abstract class SharedWaddleAnimationSystem : EntitySystem
             return;
         }
 
-        if (!args.HasDirectionalMovement && component.IsCurrentlyWaddling)
+        if (!args.HasDirectionalMovement && entity.Comp.IsCurrentlyWaddling)
         {
-            StopWaddling(uid, component);
+            StopWaddling(entity);
 
             return;
         }
 
         // Only start waddling if we're not currently AND we're actually moving.
-        if (component.IsCurrentlyWaddling || !args.HasDirectionalMovement)
+        if (entity.Comp.IsCurrentlyWaddling || !args.HasDirectionalMovement)
             return;
 
-        component.IsCurrentlyWaddling = true;
+        entity.Comp.IsCurrentlyWaddling = true;
 
-        RaiseNetworkEvent(new StartedWaddlingEvent(GetNetEntity(uid)));
+        RaiseNetworkEvent(new StartedWaddlingEvent(GetNetEntity(entity.Owner)));
     }
 
-    private void OnStood(EntityUid uid, WaddleAnimationComponent component, StoodEvent args)
+    private void OnStood(Entity<WaddleAnimationComponent> entity, ref StoodEvent args)
     {
         // Prediction mitigation. Prediction means that MoveInputEvents are spammed repeatedly, even though you'd assume
         // they're once-only for the user actually doing something. As such do nothing if we're just repeating this FoR.
@@ -79,7 +81,7 @@ public abstract class SharedWaddleAnimationSystem : EntitySystem
             return;
         }
 
-        if (!TryComp<InputMoverComponent>(uid, out var mover))
+        if (!TryComp<InputMoverComponent>(entity.Owner, out var mover))
         {
             return;
         }
@@ -87,18 +89,18 @@ public abstract class SharedWaddleAnimationSystem : EntitySystem
         if ((mover.HeldMoveButtons & MoveButtons.AnyDirection) == MoveButtons.None)
             return;
 
-        if (component.IsCurrentlyWaddling)
+        if (entity.Comp.IsCurrentlyWaddling)
             return;
 
-        component.IsCurrentlyWaddling = true;
+        entity.Comp.IsCurrentlyWaddling = true;
 
-        RaiseNetworkEvent(new StartedWaddlingEvent(GetNetEntity(uid)));
+        RaiseNetworkEvent(new StartedWaddlingEvent(GetNetEntity(entity.Owner)));
     }
 
-    private void StopWaddling(EntityUid uid, WaddleAnimationComponent component)
+    private void StopWaddling(Entity<WaddleAnimationComponent> entity)
     {
-        component.IsCurrentlyWaddling = false;
+        entity.Comp.IsCurrentlyWaddling = false;
 
-        RaiseNetworkEvent(new StoppedWaddlingEvent(GetNetEntity(uid)));
+        RaiseNetworkEvent(new StoppedWaddlingEvent(GetNetEntity(entity.Owner)));
     }
 }

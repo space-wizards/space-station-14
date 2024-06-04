@@ -11,7 +11,7 @@ using Robust.Shared.Animations;
 
 namespace Content.Client.Movement.Systems;
 
-public sealed class ClientWaddleAnimationSystem : SharedWaddleAnimationSystem
+public sealed class WaddleAnimationSystem : SharedWaddleAnimationSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly GravitySystem _gravity = default!;
@@ -23,47 +23,50 @@ public sealed class ClientWaddleAnimationSystem : SharedWaddleAnimationSystem
     {
         base.Initialize();
 
-        // Start waddling
-        SubscribeAllEvent<StartedWaddlingEvent>((msg, args) =>
-        {
-            if (TryComp<WaddleAnimationComponent>(GetEntity(msg.Entity), out var comp))
-                StartWaddling(GetEntity(msg.Entity), comp);
-        });
-
-        // Handle concluding animations
+        SubscribeAllEvent<StartedWaddlingEvent>(OnStartWaddling);
         SubscribeLocalEvent<WaddleAnimationComponent, AnimationCompletedEvent>(OnAnimationCompleted);
-
-        // Stop waddling
-        SubscribeAllEvent<StoppedWaddlingEvent>((msg, args) =>
-        {
-            if (TryComp<WaddleAnimationComponent>(GetEntity(msg.Entity), out var comp))
-                StopWaddling(GetEntity(msg.Entity), comp);
-        });
+        SubscribeAllEvent<StoppedWaddlingEvent>(OnStopWaddling);
     }
 
-    private void StartWaddling(EntityUid uid, WaddleAnimationComponent component)
+    private void OnStartWaddling(StartedWaddlingEvent msg, EntitySessionEventArgs args)
     {
-        if (_animation.HasRunningAnimation(uid, component.KeyName))
+        if (TryComp<WaddleAnimationComponent>(GetEntity(msg.Entity), out var comp))
+            StartWaddling((GetEntity(msg.Entity), comp));
+    }
+
+    private void OnStopWaddling(StoppedWaddlingEvent msg, EntitySessionEventArgs args)
+    {
+        if (TryComp<WaddleAnimationComponent>(GetEntity(msg.Entity), out var comp))
+            StopWaddling((GetEntity(msg.Entity), comp));
+    }
+
+    private void StartWaddling(Entity<WaddleAnimationComponent> entity)
+    {
+        if (_animation.HasRunningAnimation(entity.Owner, entity.Comp.KeyName))
             return;
 
-        if (!TryComp<InputMoverComponent>(uid, out var mover))
+        if (!TryComp<InputMoverComponent>(entity.Owner, out var mover))
             return;
 
-        if (_gravity.IsWeightless(uid))
+        if (_gravity.IsWeightless(entity.Owner))
             return;
 
-        if (!_actionBlocker.CanMove(uid, mover))
+        if (!_actionBlocker.CanMove(entity.Owner, mover))
             return;
 
         // Do nothing if buckled in
-        if (_buckle.IsBuckled(uid))
+        if (_buckle.IsBuckled(entity.Owner))
             return;
 
         // Do nothing if crit or dead (for obvious reasons)
-        if (_mobState.IsIncapacitated(uid))
+        if (_mobState.IsIncapacitated(entity.Owner))
             return;
 
-        PlayWaddleAnimationUsing(uid, component, CalculateAnimationLength(component, mover), CalculateTumbleIntensity(component));
+        PlayWaddleAnimationUsing(
+            (entity.Owner, entity.Comp),
+            CalculateAnimationLength(entity.Comp, mover),
+            CalculateTumbleIntensity(entity.Comp)
+        );
     }
 
     private static float CalculateTumbleIntensity(WaddleAnimationComponent component)
@@ -76,36 +79,38 @@ public sealed class ClientWaddleAnimationSystem : SharedWaddleAnimationSystem
         return mover.Sprinting ? component.AnimationLength * component.RunAnimationLengthMultiplier : component.AnimationLength;
     }
 
-    private void OnAnimationCompleted(EntityUid uid, WaddleAnimationComponent component, AnimationCompletedEvent args)
+    private void OnAnimationCompleted(Entity<WaddleAnimationComponent> entity, ref AnimationCompletedEvent args)
     {
-        if (args.Key != component.KeyName)
+        if (args.Key != entity.Comp.KeyName)
             return;
 
-        if (!TryComp<InputMoverComponent>(uid, out var mover))
+        if (!TryComp<InputMoverComponent>(entity.Owner, out var mover))
             return;
 
-        PlayWaddleAnimationUsing(uid, component, CalculateAnimationLength(component, mover), CalculateTumbleIntensity(component));
+        PlayWaddleAnimationUsing(
+            (entity.Owner, entity.Comp),
+            CalculateAnimationLength(entity.Comp, mover),
+            CalculateTumbleIntensity(entity.Comp)
+        );
     }
 
-    private void StopWaddling(EntityUid uid, WaddleAnimationComponent component)
+    private void StopWaddling(Entity<WaddleAnimationComponent> entity)
     {
-        if (!_animation.HasRunningAnimation(uid, component.KeyName))
+        if (!_animation.HasRunningAnimation(entity.Owner, entity.Comp.KeyName))
             return;
 
-        _animation.Stop(uid, component.KeyName);
+        _animation.Stop(entity.Owner, entity.Comp.KeyName);
 
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
-        {
+        if (!TryComp<SpriteComponent>(entity.Owner, out var sprite))
             return;
-        }
 
         sprite.Offset = new Vector2();
         sprite.Rotation = Angle.FromDegrees(0);
     }
 
-    private void PlayWaddleAnimationUsing(EntityUid uid, WaddleAnimationComponent component, float len, float tumbleIntensity)
+    private void PlayWaddleAnimationUsing(Entity<WaddleAnimationComponent> entity, float len, float tumbleIntensity)
     {
-        component.LastStep = !component.LastStep;
+        entity.Comp.LastStep = !entity.Comp.LastStep;
 
         var anim = new Animation()
         {
@@ -132,13 +137,13 @@ public sealed class ClientWaddleAnimationSystem : SharedWaddleAnimationSystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(new Vector2(), 0),
-                        new AnimationTrackProperty.KeyFrame(component.HopIntensity, len/2),
+                        new AnimationTrackProperty.KeyFrame(entity.Comp.HopIntensity, len/2),
                         new AnimationTrackProperty.KeyFrame(new Vector2(), len/2),
                     }
                 }
             }
         };
 
-        _animation.Play(uid, anim, component.KeyName);
+        _animation.Play(entity.Owner, anim, entity.Comp.KeyName);
     }
 }
