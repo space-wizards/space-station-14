@@ -12,5 +12,5 @@ namespace Content.Shared.Mindshield.Components;
 public sealed partial class MindShieldComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<StatusIconPrototype> MindShieldStatusIcon = "MindShieldIcon";
+    public ProtoId<SecurityIconPrototype> MindShieldStatusIcon = "MindShieldIcon";
 }

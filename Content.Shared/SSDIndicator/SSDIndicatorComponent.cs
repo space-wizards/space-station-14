@@ -18,5 +18,5 @@ public sealed partial class SSDIndicatorComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
-    public ProtoId<StatusIconPrototype> Icon = "SSDIcon";
+    public ProtoId<SsdIconPrototype> Icon = "SSDIcon";
 }

@@ -1,4 +1,4 @@
-- type: statusIcon
+- type: ssdIcon
   id: SSDIcon
   icon:
     sprite: /Textures/Effects/ssd.rsi

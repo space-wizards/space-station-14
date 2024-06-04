@@ -1,26 +1,26 @@
 #Hunger
-- type: statusIcon
+- type: satiationIcon
   id: HungerIcon
   abstract: true
   priority: 5
   locationPreference: Right
   isShaded: true
 
-- type: statusIcon
+- type: satiationIcon
   id: HungerIconOverfed
   parent: HungerIcon
   icon:
     sprite: /Textures/Interface/Misc/food_icons.rsi
     state: overfed
 
-- type: statusIcon
+- type: satiationIcon
   id: HungerIconPeckish
   parent: HungerIcon
   icon:
     sprite: /Textures/Interface/Misc/food_icons.rsi
     state: peckish
 
-- type: statusIcon
+- type: satiationIcon
   id: HungerIconStarving
   parent: HungerIcon
   icon:
@@ -28,28 +28,28 @@
     state: starving
 
 #Thirst
-- type: statusIcon
+- type: satiationIcon
   id: ThirstIcon
   abstract: true
   priority: 5
   locationPreference: Left
   isShaded: true
 
-- type: statusIcon
+- type: satiationIcon
   id: ThirstIconOverhydrated
   parent: ThirstIcon
   icon:
     sprite: /Textures/Interface/Misc/food_icons.rsi
     state: overhydrated
 
-- type: statusIcon
+- type: satiationIcon
   id: ThirstIconThirsty
   parent: ThirstIcon
   icon:
     sprite: /Textures/Interface/Misc/food_icons.rsi
     state: thirsty
 
-- type: statusIcon
+- type: satiationIcon
   id: ThirstIconParched
   parent: ThirstIcon
   icon:

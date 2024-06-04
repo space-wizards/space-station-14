@@ -39,14 +39,14 @@ namespace Content.Client.Access.UI
             JobLineEdit.OnFocusExit += e => OnJobChanged?.Invoke(e.Text);
         }
 
-        public void SetAllowedIcons(string iconGroup, string currentJobIconId)
+        public void SetAllowedIcons(string currentJobIconId)
         {
             IconGrid.DisposeAllChildren();
 
             var jobIconButtonGroup = new ButtonGroup();
             var i = 0;
-            var icons = _prototypeManager.EnumeratePrototypes<StatusIconPrototype>().Where(icon => icon.Groups.Contains(iconGroup));
-            icons = icons.OrderBy(icon => icon.Caption == null ? string.Empty : Loc.GetString(icon.Caption));
+            var icons = _prototypeManager.EnumeratePrototypes<JobIconPrototype>().Where(icon => icon.AllowSelection);
+            icons = icons.OrderBy(icon => Loc.GetString(icon.JobName == null ? string.Empty : Loc.GetString(icon.JobName)));
             foreach (var jobIcon in icons)
             {
                 String styleBase = StyleBase.ButtonOpenBoth;
@@ -64,7 +64,7 @@ namespace Content.Client.Access.UI
                     MaxSize = new Vector2(42, 28),
                     Group = jobIconButtonGroup,
                     Pressed = currentJobIconId == jobIcon.ID,
-                    ToolTip = jobIcon.Caption == null ? string.Empty : Loc.GetString(jobIcon.Caption)
+                    ToolTip = jobIcon.JobName == null ? string.Empty : Loc.GetString(jobIcon.JobName)
                 };
 
                 // Generate buttons textures

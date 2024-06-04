@@ -24,7 +24,7 @@ public sealed partial class IdCardComponent : Component
     /// <summary>
     /// The state of the job icon rsi.
     /// </summary>
-    [DataField("jobIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
+    [DataField("jobIcon", customTypeSerializer: typeof(PrototypeIdSerializer<JobIconPrototype>))]
     [AutoNetworkedField]
     public string JobIcon = "JobIconUnknown";
 
