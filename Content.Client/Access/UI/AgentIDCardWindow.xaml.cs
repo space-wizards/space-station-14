@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using System.Linq;
 
 namespace Content.Client.Access.UI
 {
@@ -38,19 +39,16 @@ namespace Content.Client.Access.UI
             JobLineEdit.OnFocusExit += e => OnJobChanged?.Invoke(e.Text);
         }
 
-        public void SetAllowedIcons(HashSet<string> icons, string currentJobIconId)
+        public void SetAllowedIcons(string iconGroup, string currentJobIconId)
         {
             IconGrid.DisposeAllChildren();
 
-            var jobIconGroup = new ButtonGroup();
+            var jobIconButtonGroup = new ButtonGroup();
             var i = 0;
-            foreach (var jobIconId in icons)
+            var icons = _prototypeManager.EnumeratePrototypes<StatusIconPrototype>().Where(icon => icon.Groups.Contains(iconGroup));
+            icons = icons.OrderBy(icon => icon.Caption == null ? string.Empty : Loc.GetString(icon.Caption));
+            foreach (var jobIcon in icons)
             {
-                if (!_prototypeManager.TryIndex<StatusIconPrototype>(jobIconId, out var jobIcon))
-                {
-                    continue;
-                }
-
                 String styleBase = StyleBase.ButtonOpenBoth;
                 var modulo = i % JobIconColumnCount;
                 if (modulo == 0)
@@ -64,8 +62,9 @@ namespace Content.Client.Access.UI
                     Access = AccessLevel.Public,
                     StyleClasses = { styleBase },
                     MaxSize = new Vector2(42, 28),
-                    Group = jobIconGroup,
-                    Pressed = i == 0,
+                    Group = jobIconButtonGroup,
+                    Pressed = currentJobIconId == jobIcon.ID,
+                    ToolTip = jobIcon.Caption == null ? string.Empty : Loc.GetString(jobIcon.Caption)
                 };
 
                 // Generate buttons textures
@@ -79,9 +78,6 @@ namespace Content.Client.Access.UI
                 jobIconButton.AddChild(jobIconTexture);
                 jobIconButton.OnPressed += _ => _bui.OnJobIconChanged(jobIcon.ID);
                 IconGrid.AddChild(jobIconButton);
-
-                if (jobIconId.Equals(currentJobIconId))
-                    jobIconButton.Pressed = true;
 
                 i++;
             }

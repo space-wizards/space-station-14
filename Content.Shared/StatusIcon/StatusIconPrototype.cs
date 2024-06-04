@@ -52,6 +52,19 @@ public partial class StatusIconData : IComparable<StatusIconData>
     /// </summary>
     [DataField]
     public bool IsShaded = false;
+
+    /// <summary>
+    /// Name of the icon used for menu tooltips.
+    /// </summary>
+    [DataField]
+    public LocId? Caption;
+
+    /// <summary>
+    /// Icon group identifiers.
+    /// Used for the agent ID for filtering valid job icons.
+    /// </summary>
+    [DataField]
+    public HashSet<string> Groups = new();
 }
 
 /// <summary>

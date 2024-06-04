@@ -67,7 +67,7 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.JobTitle ?? "", idCard.JobIcon ?? "", component.Icons);
+            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.JobTitle ?? "", idCard.JobIcon ?? "", component.IconGroup);
             _uiSystem.SetUiState(uid, AgentIDCardUiKey.Key, state);
         }
 
@@ -109,7 +109,7 @@ namespace Content.Server.Access.Systems
         {
             foreach (var jobPrototype in _prototypeManager.EnumeratePrototypes<JobPrototype>())
             {
-                if(jobPrototype.Icon == jobIcon.ID)
+                if (jobPrototype.Icon == jobIcon.ID)
                 {
                     job = jobPrototype;
                     return true;

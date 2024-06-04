@@ -4,6 +4,8 @@
   priority: 1
   locationPreference: Right
   isShaded: true
+  groups:
+  - Job
 
 - type: statusIcon
   parent: JobIcon
@@ -11,6 +13,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Detective
+  caption: job-name-detective
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -18,6 +24,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: QuarterMaster
+  caption: job-name-qm
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -25,6 +35,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Borg
+  caption: job-name-borg
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -32,6 +46,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Botanist
+  caption: job-name-botanist
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -39,6 +57,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Boxer
+  caption: job-name-boxer
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -46,6 +68,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: AtmosphericTechnician
+  caption: job-name-atmostech
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -53,6 +79,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Nanotrasen
+  caption: job-name-centcomoff
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -60,6 +90,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Prisoner
+  caption: job-name-prisoner
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -67,6 +101,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Janitor
+  caption: job-name-janitor
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -74,6 +112,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Chemist
+  caption: job-name-chemist
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -81,6 +123,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: StationEngineer
+  caption: job-name-engineer
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -88,6 +134,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: SecurityOfficer
+  caption: job-name-security
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -95,6 +145,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: NoId
+  caption: job-name-no-id
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -102,6 +156,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: ChiefMedicalOfficer
+  caption: job-name-cmo
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -109,6 +167,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Roboticist
+  caption: job-name-roboticist
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -116,6 +178,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Chaplain
+  caption: job-name-chaplain
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -123,6 +189,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Lawyer
+  caption: job-name-lawyer
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -130,6 +200,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Unknown
+  caption: job-name-unknown
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -137,6 +211,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Librarian
+  caption: job-name-librarian
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -144,6 +222,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: CargoTechnician
+  caption: job-name-cargotech
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -151,6 +233,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Scientist
+  caption: job-name-scientist
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -158,6 +244,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: ResearchAssistant
+  caption: job-name-research-assistant
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -165,6 +255,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Geneticist
+  caption: job-name-geneticist
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -172,6 +266,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Clown
+  caption: job-name-clown
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -179,6 +277,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Captain
+  caption: job-name-captain
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -186,6 +288,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: HeadOfPersonnel
+  caption: job-name-hop
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -193,6 +299,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Virologist
+  caption: job-name-virologist
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -200,6 +310,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: ShaftMiner
+  caption: job-name-salvagespec
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -207,6 +321,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Passenger
+  caption: job-name-passenger
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -214,6 +332,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: ChiefEngineer
+  caption: job-name-ce
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -221,6 +343,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Bartender
+  caption: job-name-bartender
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -228,6 +354,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: HeadOfSecurity
+  caption: job-name-hos
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -235,6 +365,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Brigmedic
+  caption: job-name-brigmedic
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -242,6 +376,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: MedicalDoctor
+  caption: job-name-doctor
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -249,6 +387,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Paramedic
+  caption: job-name-paramedic
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -256,6 +398,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Chef
+  caption: job-name-chef
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -263,6 +409,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Warden
+  caption: job-name-warden
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -270,6 +420,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: ResearchDirector
+  caption: job-name-rd
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -277,6 +431,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Mime
+  caption: job-name-mime
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -284,6 +442,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Musician
+  caption: job-name-musician
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -291,6 +453,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Reporter
+  caption: job-name-reporter
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -298,6 +464,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Psychologist
+  caption: job-name-psychologist
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -305,6 +475,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: MedicalIntern
+  caption: job-name-intern
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -312,6 +486,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: TechnicalAssistant
+  caption: job-name-technical-assistant
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -319,6 +497,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: ServiceWorker
+  caption: job-name-serviceworker
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -326,6 +508,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: SecurityCadet
+  caption: job-name-cadet
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -333,6 +519,21 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Zombie
+  caption: job-name-zombie
+  groups:
+  - Job
+  - AgentIDJob
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconSyndicate # Just in case you want to make it official which side you are on
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Syndicate
+  caption: job-name-syndicate
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -340,6 +541,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Zookeeper
+  caption: job-name-zookeeper
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
@@ -375,6 +580,10 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Visitor
+  caption: job-name-visitor
+  groups:
+  - Job
+  - AgentIDJob
 
 - type: statusIcon
   parent: JobIcon
