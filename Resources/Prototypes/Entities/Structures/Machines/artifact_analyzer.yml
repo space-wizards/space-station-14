@@ -35,6 +35,7 @@
         - Impassable
         - MidImpassable
         - LowImpassable
+        - BulletImpassable
         hard: False
   - type: Transform
     anchored: true
@@ -72,6 +73,7 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: RequireProjectileTarget 
 
 - type: entity
   id: MachineArtifactCrusher

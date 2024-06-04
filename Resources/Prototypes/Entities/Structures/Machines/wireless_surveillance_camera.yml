@@ -23,6 +23,8 @@
           density: 80
           mask:
             - MachineMask
+          layer:
+            - BulletImpassable
     - type: SurveillanceCameraMicrophone
       blacklist:
         components:
@@ -35,6 +37,7 @@
       interfaces:
         enum.SurveillanceCameraSetupUiKey.Camera:
           type: SurveillanceCameraSetupBoundUi
+    - type: RequireProjectileTarget 
   placement:
     mode: SnapgridCenter
 
