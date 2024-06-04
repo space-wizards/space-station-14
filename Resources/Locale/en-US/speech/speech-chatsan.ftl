@@ -128,4 +128,4 @@ chatsan-word-46 = tyvm
 chatsan-replacement-46 = thank you very much
 
 chatsan-word-47 = cya
-chatsan-replacement-47 = see you
+chatsan-replacement-47 = see ya
