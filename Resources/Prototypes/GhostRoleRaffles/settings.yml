@@ -2,8 +2,8 @@
 - type: ghostRoleRaffleSettings
   id: default
   settings:
-    initialDuration: 300
-    joinExtendsDurationBy: 0
+    initialDuration: 180
+    joinExtendsDurationBy: 10
     maxDuration: 300
 
 # for roles that don't matter too much or are available plentifully (e.g. space carp)
