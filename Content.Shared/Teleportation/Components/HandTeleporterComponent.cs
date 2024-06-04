@@ -24,7 +24,7 @@ public sealed partial class HandTeleporterComponent : Component
     ///     Portals can't be placed on different grids?
     /// </summary>
     [DataField]
-    public bool PortalsFizzle = true;
+    public bool AllowPortalsOnDifferentGrids;
 
     [DataField("firstPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string FirstPortalPrototype = "PortalRed";
