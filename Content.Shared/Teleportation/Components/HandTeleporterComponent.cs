@@ -20,8 +20,11 @@ public sealed partial class HandTeleporterComponent : Component
     [ViewVariables, DataField("secondPortal")]
     public EntityUid? SecondPortal = null;
 
+    /// <summary>
+    ///     Portals can't be placed on different grids?
+    /// </summary>
     [DataField]
-    public bool Fizzle = true;
+    public bool PortalsFizzle = true;
 
     [DataField("firstPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string FirstPortalPrototype = "PortalRed";
