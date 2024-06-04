@@ -1,4 +1,5 @@
 using Content.Shared.Movement.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -9,6 +10,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     // TODO full-game-save
     // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
@@ -86,7 +88,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
             if (!TryComp<SpeedModifierContactsComponent>(ent, out var slowContactsComponent))
                 continue;
 
-            if (slowContactsComponent.IgnoreWhitelist != null && slowContactsComponent.IgnoreWhitelist.IsValid(uid))
+            if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.IgnoreWhitelist, uid))
                 continue;
 
             walkSpeed += slowContactsComponent.WalkSpeedModifier;
