@@ -63,7 +63,6 @@ guide-entry-species = Species
 guide-entry-newplayer = New? Start here!
 guide-entry-charactercreation = Character Creation
 
-
 guide-entry-antagonists = Antagonists
 guide-entry-nuclear-operatives = Nuclear Operatives
 guide-entry-traitors = Traitors
