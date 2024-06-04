@@ -289,6 +289,14 @@
       path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: Advertise
     pack: MedibotAds
+  - type: InventorySlots
+  - type: Strippable
+  - type: Inventory
+    templateId: medibot
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
 
 - type: entity
   parent: MobSiliconBase
