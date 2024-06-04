@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Cyborg recharging stations are able to charge cyborgs again.
-    type: Fix
-  id: 6181
-  time: '2024-03-18T13:37:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26230
 - author: DoutorWhite
   changes:
   - message: Introduce new health status icons.
@@ -3852,3 +3845,10 @@
   id: 6680
   time: '2024-06-04T15:59:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28419
+- author: blueDev2
+  changes:
+  - message: Fixed microwave recipes that use stacked materials
+    type: Fix
+  id: 6681
+  time: '2024-06-04T17:12:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28225
