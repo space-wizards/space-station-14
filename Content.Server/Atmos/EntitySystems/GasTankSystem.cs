@@ -17,7 +17,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
-using System.Linq;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -221,7 +220,7 @@ namespace Content.Server.Atmos.EntitySystems
         public bool CanConnectToInternals(GasTankComponent component)
         {
             var internals = GetInternalsComponent(component, component.User);
-            return internals != null && internals.BreathTools.Any() && !component.IsValveOpen;
+            return internals != null && internals.BreathTools.Count != 0 && !component.IsValveOpen;
         }
 
         public void ConnectToInternals(Entity<GasTankComponent> ent)

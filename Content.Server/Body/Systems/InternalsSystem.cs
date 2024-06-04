@@ -12,7 +12,6 @@ using Content.Shared.Roles;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Server.Body.Systems;
 
@@ -45,7 +44,7 @@ public sealed class InternalsSystem : EntitySystem
 
     private void OnStartingGear(EntityUid uid, InternalsComponent component, ref StartingGearEquippedEvent args)
     {
-        if (!component.BreathTools.Any())
+        if (component.BreathTools.Count == 0)
             return;
 
         if (component.GasTankEntity != null)
@@ -112,7 +111,7 @@ public sealed class InternalsSystem : EntitySystem
         }
 
         // If they're not on then check if we have a mask to use
-        if (!internals.BreathTools.Any())
+        if (internals.BreathTools.Count == 0)
         {
             _popupSystem.PopupEntity(Loc.GetString("internals-no-breath-tool"), uid, user);
             return;
@@ -186,7 +185,7 @@ public sealed class InternalsSystem : EntitySystem
         if (TryComp(toolEntity, out BreathToolComponent? breathTool))
             _atmos.DisconnectInternals(toolEntity, breathTool);
 
-        if (!ent.Comp.BreathTools.Any())
+        if (ent.Comp.BreathTools.Count == 0)
             DisconnectTank(ent);
 
         _alerts.ShowAlert(ent, ent.Comp.InternalsAlert, GetSeverity(ent));
@@ -212,7 +211,7 @@ public sealed class InternalsSystem : EntitySystem
 
     public bool TryConnectTank(Entity<InternalsComponent> ent, EntityUid tankEntity)
     {
-        if (!ent.Comp.BreathTools.Any())
+        if (ent.Comp.BreathTools.Count == 0)
             return false;
 
         if (TryComp(ent.Comp.GasTankEntity, out GasTankComponent? tank))
@@ -238,7 +237,7 @@ public sealed class InternalsSystem : EntitySystem
 
     private short GetSeverity(InternalsComponent component)
     {
-        if (!component.BreathTools.Any() || !AreInternalsWorking(component))
+        if (component.BreathTools.Count == 0 || !AreInternalsWorking(component))
             return 2;
 
         // If pressure in the tank is below low pressure threshold, flash warning on internals UI
