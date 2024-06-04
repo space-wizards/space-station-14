@@ -126,4 +126,8 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         return found;
     }
 
+    protected void ForceEndSelf(EntityUid uid, GameRuleComponent? component = null)
+    {
+        GameTicker.EndGameRule(uid, component);
+    }
 }

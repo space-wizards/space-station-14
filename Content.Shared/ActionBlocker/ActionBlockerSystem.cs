@@ -1,13 +1,9 @@
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Events;
-using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Speech;
@@ -194,7 +190,7 @@ namespace Content.Shared.ActionBlocker
             if (target == null)
                 return true;
 
-            var tev = new GettingAttackedAttemptEvent();
+            var tev = new GettingAttackedAttemptEvent(uid, weapon, disarm);
             RaiseLocalEvent(target.Value, ref tev);
             return !tev.Cancelled;
         }

@@ -18,7 +18,7 @@ public sealed class WeldableTests : InteractionTest
 
         Assert.That(comp.IsWelded, Is.False);
 
-        await Interact(Weld);
+        await InteractUsing(Weld);
         Assert.That(comp.IsWelded, Is.True);
         AssertPrototype(Locker); // Prototype did not change.
     }

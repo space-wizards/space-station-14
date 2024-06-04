@@ -72,19 +72,6 @@
         acts: [ "Destruction" ]
   - type: Climbable
     delay: 2.5
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 60
-        mask:
-        - MachineMask
-        layer:
-        - MidImpassable
-        - LowImpassable
-        - BulletImpassable
   - type: RequireProjectileTarget
 
 #High
