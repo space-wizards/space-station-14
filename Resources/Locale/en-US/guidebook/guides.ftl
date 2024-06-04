@@ -31,7 +31,6 @@ guide-entry-biological = Biological
 guide-entry-others = Others
 guide-entry-botanical = Botanicals
 guide-entry-ss14 = Space Station 14
-guide-entry-newplayer = New? Start here!
 guide-entry-janitorial = Janitorial
 guide-entry-bartender = Bartender
 guide-entry-chef = Chef
@@ -60,6 +59,10 @@ guide-entry-forensics = Forensics
 guide-entry-defusal = Large Bomb Defusal
 guide-entry-criminal-records = Criminal Records
 guide-entry-species = Species
+
+guide-entry-newplayer = New? Start here!
+guide-entry-charactercreation = Character Creation
+
 
 guide-entry-antagonists = Antagonists
 guide-entry-nuclear-operatives = Nuclear Operatives

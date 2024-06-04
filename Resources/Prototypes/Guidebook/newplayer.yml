@@ -2,3 +2,11 @@
   id: NewPlayer
   name: guide-entry-newplayer
   text: "/ServerInfo/Guidebook/NewPlayer.xml"
+  children:
+  - Controls
+  - CharacterCreation
+
+- type: guideEntry
+  id: CharacterCreation
+  name: guide-entry-charactercreation
+  text: "/ServerInfo/Guidebook/CharacterCreation.xml"
