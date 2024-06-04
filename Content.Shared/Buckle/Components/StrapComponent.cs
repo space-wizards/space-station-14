@@ -3,6 +3,7 @@ using Content.Shared.Alert;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Buckle.Components;
@@ -22,9 +23,14 @@ public sealed partial class StrapComponent : Component
     /// Entities that this strap accepts and can buckle
     /// If null it accepts any entity
     /// </summary>
-    [DataField]
-    [ViewVariables]
-    public EntityWhitelist? AllowedEntities;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Entities that this strap does not accept and cannot buckle.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     /// The change in position to the strapped mob
@@ -110,7 +116,7 @@ public sealed partial class StrapComponent : Component
     /// </summary>
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public AlertType BuckledAlertType = AlertType.Buckled;
+    public ProtoId<AlertPrototype> BuckledAlertType = "Buckled";
 
     /// <summary>
     /// The sum of the sizes of all the buckled entities in this strap

@@ -25,7 +25,6 @@ public sealed partial class StationJobsSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     /// <inheritdoc/>
@@ -429,7 +428,7 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <param name="pickOverflows">Whether or not to pick from the overflow list.</param>
     /// <param name="disallowedJobs">A set of disallowed jobs, if any.</param>
     /// <returns>The selected job, if any.</returns>
-    public string? PickBestAvailableJobWithPriority(EntityUid station, IReadOnlyDictionary<string, JobPriority> jobPriorities, bool pickOverflows, IReadOnlySet<string>? disallowedJobs = null)
+    public string? PickBestAvailableJobWithPriority(EntityUid station, IReadOnlyDictionary<string, JobPriority> jobPriorities, bool pickOverflows, IReadOnlySet<ProtoId<JobPrototype>>? disallowedJobs = null)
     {
         if (station == EntityUid.Invalid)
             return null;

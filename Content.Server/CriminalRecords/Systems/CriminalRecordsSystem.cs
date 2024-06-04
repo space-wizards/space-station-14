@@ -1,9 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.CriminalRecords;
+using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
-using Robust.Shared.Timing;
+using Content.Server.GameTicking;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -15,10 +16,10 @@ namespace Content.Server.CriminalRecords.Systems;
 ///         - See security officers' actions in Criminal Records in the radio
 ///         - See reasons for any action with no need to ask the officer personally
 /// </summary>
-public sealed class CriminalRecordsSystem : EntitySystem
+public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly StationRecordsSystem _records = default!;
 
     public override void Initialize()
     {
@@ -29,28 +30,40 @@ public sealed class CriminalRecordsSystem : EntitySystem
 
     private void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
     {
-        _stationRecords.AddRecordEntry(ev.Key, new CriminalRecord());
-        _stationRecords.Synchronize(ev.Key);
+        _records.AddRecordEntry(ev.Key, new CriminalRecord());
+        _records.Synchronize(ev.Key);
     }
 
     /// <summary>
     /// Tries to change the status of the record found by the StationRecordKey.
-    /// Reason should only be passed if status is Wanted.
+    /// Reason should only be passed if status is Wanted, nullability isn't checked.
     /// </summary>
     /// <returns>True if the status is changed, false if not</returns>
     public bool TryChangeStatus(StationRecordKey key, SecurityStatus status, string? reason)
     {
         // don't do anything if its the same status
-        if (!_stationRecords.TryGetRecord<CriminalRecord>(key, out var record)
+        if (!_records.TryGetRecord<CriminalRecord>(key, out var record)
             || status == record.Status)
             return false;
 
+        OverwriteStatus(key, record, status, reason);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Sets the status without checking previous status or reason nullability.
+    /// </summary>
+    public void OverwriteStatus(StationRecordKey key, CriminalRecord record, SecurityStatus status, string? reason)
+    {
         record.Status = status;
         record.Reason = reason;
 
-        _stationRecords.Synchronize(key);
+        var name = _records.RecordName(key);
+        if (name != string.Empty)
+            UpdateCriminalIdentity(name, status);
 
-        return true;
+        _records.Synchronize(key);
     }
 
     /// <summary>
@@ -59,7 +72,7 @@ public sealed class CriminalRecordsSystem : EntitySystem
     /// <returns>True if adding succeeded, false if not</returns>
     public bool TryAddHistory(StationRecordKey key, CrimeHistory entry)
     {
-        if (!_stationRecords.TryGetRecord<CriminalRecord>(key, out var record))
+        if (!_records.TryGetRecord<CriminalRecord>(key, out var record))
             return false;
 
         record.History.Add(entry);
@@ -71,7 +84,7 @@ public sealed class CriminalRecordsSystem : EntitySystem
     /// </summary>
     public bool TryAddHistory(StationRecordKey key, string line)
     {
-        var entry = new CrimeHistory(_timing.CurTime, line);
+        var entry = new CrimeHistory(_ticker.RoundDuration(), line);
         return TryAddHistory(key, entry);
     }
 
@@ -81,7 +94,7 @@ public sealed class CriminalRecordsSystem : EntitySystem
     /// <returns>True if the line was removed, false if not</returns>
     public bool TryDeleteHistory(StationRecordKey key, uint index)
     {
-        if (!_stationRecords.TryGetRecord<CriminalRecord>(key, out var record))
+        if (!_records.TryGetRecord<CriminalRecord>(key, out var record))
             return false;
 
         if (index >= record.History.Count)

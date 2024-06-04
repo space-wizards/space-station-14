@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Body.Components;
 using Content.Shared.CardboardBox;
 using Content.Shared.CardboardBox.Components;
 using Content.Shared.Examine;
@@ -13,9 +14,14 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
 
+    private EntityQuery<BodyComponent> _bodyQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        _bodyQuery = GetEntityQuery<BodyComponent>();
+
         SubscribeNetworkEvent<PlayBoxEffectMessage>(OnBoxEffect);
     }
 
@@ -57,6 +63,10 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         {
             var mapPos = _transform.GetMapCoordinates(mob);
             if (!_examine.InRangeUnOccluded(sourcePos, mapPos, box.Distance, null))
+                continue;
+
+            // no effect for anything too exotic
+            if (!_bodyQuery.HasComp(mob))
                 continue;
 
             var ent = Spawn(box.Effect, mapPos);

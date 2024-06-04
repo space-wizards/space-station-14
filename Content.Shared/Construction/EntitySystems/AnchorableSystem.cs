@@ -6,16 +6,16 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Pulling;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Tag;
-using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
@@ -27,22 +27,20 @@ public sealed partial class AnchorableSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPullingSystem _pulling = default!;
+    [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private   readonly TagSystem _tagSystem = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
-    private EntityQuery<TagComponent> _tagQuery;
 
-    public const string Unstackable = "Unstackable";
+    public readonly ProtoId<TagPrototype> Unstackable = "Unstackable";
 
     public override void Initialize()
     {
         base.Initialize();
 
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
-        _tagQuery = GetEntityQuery<TagComponent>();
 
         SubscribeLocalEvent<AnchorableComponent, InteractUsingEvent>(OnInteractUsing,
             before: new[] { typeof(ItemSlotsSystem) }, after: new[] { typeof(SharedConstructionSystem) });
@@ -81,7 +79,7 @@ public sealed partial class AnchorableSystem : EntitySystem
             return;
 
         // If the used entity doesn't have a tool, return early.
-        if (!TryComp(args.Used, out ToolComponent? usedTool) || !usedTool.Qualities.Contains(anchorable.Tool))
+        if (!TryComp(args.Used, out ToolComponent? usedTool) || !_tool.HasQuality(args.Used, anchorable.Tool, usedTool))
             return;
 
         args.Handled = true;
@@ -132,9 +130,9 @@ public sealed partial class AnchorableSystem : EntitySystem
         var rot = xform.LocalRotation;
         xform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
 
-        if (TryComp<SharedPullableComponent>(uid, out var pullable) && pullable.Puller != null)
+        if (TryComp<PullableComponent>(uid, out var pullable) && pullable.Puller != null)
         {
-            _pulling.TryStopPull(pullable);
+            _pulling.TryStopPull(uid, pullable);
         }
 
         // TODO: Anchoring snaps rn anyway!
@@ -175,7 +173,7 @@ public sealed partial class AnchorableSystem : EntitySystem
     public void TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
         AnchorableComponent? anchorable = null,
         TransformComponent? transform = null,
-        SharedPullableComponent? pullable = null,
+        PullableComponent? pullable = null,
         ToolComponent? usingTool = null)
     {
         if (!Resolve(uid, ref transform))
@@ -198,7 +196,7 @@ public sealed partial class AnchorableSystem : EntitySystem
     private void TryAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
             AnchorableComponent? anchorable = null,
             TransformComponent? transform = null,
-            SharedPullableComponent? pullable = null,
+            PullableComponent? pullable = null,
             ToolComponent? usingTool = null)
     {
         if (!Resolve(uid, ref anchorable, ref transform))
@@ -271,7 +269,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         // Probably ignore CanCollide on the anchoring body?
         var gridUid = coordinates.GetGridUid(EntityManager);
 
-        if (!_mapManager.TryGetGrid(gridUid, out var grid))
+        if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
 
         var tileIndices = grid.TileIndicesFor(coordinates);
@@ -313,7 +311,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         DebugTools.Assert(!Transform(uid).Anchored);
 
         // If we are unstackable, iterate through any other entities anchored on the current square
-        return _tagSystem.HasTag(uid, Unstackable, _tagQuery) && AnyUnstackablesAnchoredAt(location);
+        return _tagSystem.HasTag(uid, Unstackable) && AnyUnstackablesAnchoredAt(location);
     }
 
     public bool AnyUnstackablesAnchoredAt(EntityCoordinates location)
@@ -328,10 +326,8 @@ public sealed partial class AnchorableSystem : EntitySystem
         while (enumerator.MoveNext(out var entity))
         {
             // If we find another unstackable here, return true.
-            if (_tagSystem.HasTag(entity.Value, Unstackable, _tagQuery))
-            {
+            if (_tagSystem.HasTag(entity.Value, Unstackable))
                 return true;
-            }
         }
 
         return false;

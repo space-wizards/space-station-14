@@ -1,6 +1,7 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Player;
 using static Content.Server.Chat.Systems.ChatSystem;
 
@@ -9,17 +10,17 @@ namespace Content.Server.SurveillanceCamera;
 public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
-
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<SurveillanceCameraMicrophoneComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SurveillanceCameraMicrophoneComponent, ListenEvent>(RelayEntityMessage);
         SubscribeLocalEvent<SurveillanceCameraMicrophoneComponent, ListenAttemptEvent>(CanListen);
-        SubscribeLocalEvent<ExpandICChatRecipientstEvent>(OnExpandRecipients);
+        SubscribeLocalEvent<ExpandICChatRecipientsEvent>(OnExpandRecipients);
     }
 
-    private void OnExpandRecipients(ExpandICChatRecipientstEvent ev)
+    private void OnExpandRecipients(ExpandICChatRecipientsEvent ev)
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
         var sourceXform = Transform(ev.Source);
@@ -60,7 +61,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
     public void CanListen(EntityUid uid, SurveillanceCameraMicrophoneComponent microphone, ListenAttemptEvent args)
     {
         // TODO maybe just make this a part of ActiveListenerComponent?
-        if (microphone.Blacklist.IsValid(args.Source))
+        if (_whitelistSystem.IsBlacklistPass(microphone.Blacklist, args.Source))
             args.Cancel();
     }
 

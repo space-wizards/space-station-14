@@ -52,6 +52,11 @@ namespace Content.Client.Kitchen.UI
             _menu?.HandleMessage(message);
         }
 
+        public void ToggleAutoMode(BaseButton.ButtonEventArgs args)
+        {
+            SendMessage(new ReagentGrinderToggleAutoModeMessage());
+        }
+
         public void StartGrinding(BaseButton.ButtonEventArgs? _ = null)
         {
             SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Grind));

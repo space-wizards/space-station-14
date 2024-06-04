@@ -29,8 +29,6 @@
           components:
           - FitsInDispenser
   - type: Machine
-  - type: Wires
-    layoutId: chem
   - type: WiresPanel
   - type: WiresVisuals
   - type: ContainerContainer

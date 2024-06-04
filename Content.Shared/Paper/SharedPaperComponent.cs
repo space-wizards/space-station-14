@@ -1,8 +1,10 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Paper;
 
+[NetworkedComponent]
 public abstract partial class SharedPaperComponent : Component
 {
     /// <summary>

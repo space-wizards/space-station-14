@@ -11,5 +11,5 @@ public sealed partial class CryoPodAirComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("gasMixture")]
-    public GasMixture Air { get; set; } = new(Atmospherics.OneAtmosphere);
+    public GasMixture Air { get; set; } = new GasMixture(1000f);
 }

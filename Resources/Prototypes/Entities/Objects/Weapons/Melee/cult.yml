@@ -67,6 +67,8 @@
         Blunt: 10
         Slash: 10
         Structural: 5
+    soundHit:
+      collection: MetalThud
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:

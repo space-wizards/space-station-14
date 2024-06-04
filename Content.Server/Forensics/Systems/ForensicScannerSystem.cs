@@ -52,8 +52,7 @@ namespace Content.Server.Forensics
                 component.PrintCooldown,
                 component.PrintReadyAt);
 
-            if (!_uiSystem.TrySetUiState(uid, ForensicScannerUiKey.Key, state))
-                Log.Warning($"{ToPrettyString(uid)} was unable to set UI state.");
+            _uiSystem.SetUiState(uid, ForensicScannerUiKey.Key, state);
         }
 
         private void OnDoAfter(EntityUid uid, ForensicScannerComponent component, DoAfterEvent args)
@@ -95,8 +94,7 @@ namespace Content.Server.Forensics
         {
             _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.ScanDelay, new ForensicScannerDoAfterEvent(), uid, target: target, used: uid)
             {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 NeedHand = true
             });
         }
@@ -164,23 +162,14 @@ namespace Content.Server.Forensics
 
         private void OpenUserInterface(EntityUid user, Entity<ForensicScannerComponent> scanner)
         {
-            if (!TryComp<ActorComponent>(user, out var actor))
-                return;
-
             UpdateUserInterface(scanner, scanner.Comp);
 
-            _uiSystem.TryOpen(scanner, ForensicScannerUiKey.Key, actor.PlayerSession);
+            _uiSystem.OpenUi(scanner.Owner, ForensicScannerUiKey.Key, user);
         }
 
         private void OnPrint(EntityUid uid, ForensicScannerComponent component, ForensicScannerPrintMessage args)
         {
-            if (!args.Session.AttachedEntity.HasValue)
-            {
-                Log.Warning($"{ToPrettyString(uid)} got OnPrint without Session.AttachedEntity");
-                return;
-            }
-
-            var user = args.Session.AttachedEntity.Value;
+            var user = args.Actor;
 
             if (_gameTiming.CurTime < component.PrintReadyAt)
             {
@@ -192,7 +181,7 @@ namespace Content.Server.Forensics
 
             // Spawn a piece of paper.
             var printed = EntityManager.SpawnEntity(component.MachineOutput, Transform(uid).Coordinates);
-            _handsSystem.PickupOrDrop(args.Session.AttachedEntity, printed, checkActionBlocker: false);
+            _handsSystem.PickupOrDrop(args.Actor, printed, checkActionBlocker: false);
 
             if (!HasComp<PaperComponent>(printed))
             {
@@ -241,9 +230,6 @@ namespace Content.Server.Forensics
 
         private void OnClear(EntityUid uid, ForensicScannerComponent component, ForensicScannerClearMessage args)
         {
-            if (!args.Session.AttachedEntity.HasValue)
-                return;
-
             component.Fingerprints = new();
             component.Fibers = new();
             component.DNAs = new();

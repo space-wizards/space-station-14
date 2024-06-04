@@ -87,9 +87,3 @@ public sealed partial class SuitSensorComponent : Component
     [DataField, ViewVariables]
     public bool PreviousControlsLocked = false;
 }
-
-[ByRefEvent]
-public record struct SuitSensorsSendAttemptEvent
-{
-    public bool Cancelled;
-};

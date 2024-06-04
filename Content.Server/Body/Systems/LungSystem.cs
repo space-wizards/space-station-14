@@ -1,8 +1,9 @@
-﻿using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
 
@@ -26,21 +27,24 @@ public sealed class LungSystem : EntitySystem
         SubscribeLocalEvent<BreathToolComponent, ItemMaskToggledEvent>(OnMaskToggled);
     }
 
-    private void OnGotUnequipped(EntityUid uid, BreathToolComponent component, GotUnequippedEvent args)
+    private void OnGotUnequipped(Entity<BreathToolComponent> ent, ref GotUnequippedEvent args)
     {
-        _atmosphereSystem.DisconnectInternals(component);
+        _atmosphereSystem.DisconnectInternals(ent);
     }
 
-    private void OnGotEquipped(EntityUid uid, BreathToolComponent component, GotEquippedEvent args)
+    private void OnGotEquipped(Entity<BreathToolComponent> ent, ref GotEquippedEvent args)
     {
+        if ((args.SlotFlags & ent.Comp.AllowedSlots) == 0)
+        {
+            return;
+        }
 
-        if ((args.SlotFlags & component.AllowedSlots) == 0) return;
-        component.IsFunctional = true;
+        ent.Comp.IsFunctional = true;
 
         if (TryComp(args.Equipee, out InternalsComponent? internals))
         {
-            component.ConnectedInternalsEntity = args.Equipee;
-            _internals.ConnectBreathTool((args.Equipee, internals), uid);
+            ent.Comp.ConnectedInternalsEntity = args.Equipee;
+            _internals.ConnectBreathTool((args.Equipee, internals), ent);
         }
     }
 
@@ -74,23 +78,32 @@ public sealed class LungSystem : EntitySystem
         if (!_solutionContainerSystem.ResolveSolution(uid, lung.SolutionName, ref lung.Solution, out var solution))
             return;
 
-        foreach (var gas in Enum.GetValues<Gas>())
+        GasToReagent(lung.Air, solution);
+        _solutionContainerSystem.UpdateChemicals(lung.Solution.Value);
+    }
+
+    private void GasToReagent(GasMixture gas, Solution solution)
+    {
+        foreach (var gasId in Enum.GetValues<Gas>())
         {
-            var i = (int) gas;
-            var moles = lung.Air.Moles[i];
+            var i = (int) gasId;
+            var moles = gas[i];
             if (moles <= 0)
                 continue;
+
             var reagent = _atmosphereSystem.GasReagents[i];
-            if (reagent == null) continue;
+            if (reagent is null)
+                continue;
 
             var amount = moles * Atmospherics.BreathMolesToReagentMultiplier;
             solution.AddReagent(reagent, amount);
-
-            // We don't remove the gas from the lung mix,
-            // that's the responsibility of whatever gas is being metabolized.
-            // Most things will just want to exhale again.
         }
+    }
 
-        _solutionContainerSystem.UpdateChemicals(lung.Solution.Value);
+    public Solution GasToReagent(GasMixture gas)
+    {
+        var solution = new Solution();
+        GasToReagent(gas, solution);
+        return solution;
     }
 }

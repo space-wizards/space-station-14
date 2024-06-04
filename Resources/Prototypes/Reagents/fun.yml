@@ -249,7 +249,7 @@
         damage:
           types:
              Cold: 0.01 # slightly nips directly, other cold damage comes from the temp change
-             Burn: -3 # ghetto burn chem. i don't think anyone would use this intentionally but it's funny
+             Heat: -3 # ghetto burn chem. i don't think anyone would use this intentionally but it's funny
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
@@ -333,6 +333,7 @@
       - !type:Emote
         emote: Weh
         showInChat: true
+        force: true
         probability: 0.5
       - !type:Polymorph
         prototype: ArtifactLizard # Does the same thing as the original YML I made for this reagent.

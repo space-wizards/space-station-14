@@ -1,0 +1,9 @@
+<BoxContainer xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         Orientation="Horizontal">
+        <Label Name="TitleLabel"
+                      Margin="5 0"
+                      MouseFilter="Stop"/>
+        <BoxContainer Name="OptionsContainer"
+                      SetWidth="400"/>
+</BoxContainer>

@@ -22,11 +22,20 @@
   id: CrateVendingMachineRestockClothesFilled
   parent: CratePlastic
   name: clothing restock crate
-  description: Contains a pair of restock boxes, one for the ClothesMate and one for the AutoDrobe.
+  description: Contains a restock box for the clothes vending machines.
   components:
   - type: StorageFill
     contents:
       - id: VendingMachineRestockClothes
+
+- type: entity
+  id: CrateVendingMachineRestockAutoDrobeFilled
+  parent: CratePlastic
+  name: AutoDrobe restock crate
+  description: Contains a restock box for the AutoDrobe.
+  components:
+  - type: StorageFill
+    contents:
       - id: VendingMachineRestockCostumes
 
 - type: entity

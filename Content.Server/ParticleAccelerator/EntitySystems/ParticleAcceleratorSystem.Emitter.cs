@@ -28,7 +28,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (TryComp<PhysicsComponent>(emitted, out var particlePhys))
         {
             var angle = _transformSystem.GetWorldRotation(uid, xformQuery);
-            _physicsSystem.SetBodyStatus(particlePhys, BodyStatus.InAir);
+            _physicsSystem.SetBodyStatus(emitted, particlePhys, BodyStatus.InAir);
 
             var velocity = angle.ToWorldVec() * 20f;
             if (TryComp<PhysicsComponent>(uid, out var phys))
