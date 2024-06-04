@@ -6,7 +6,7 @@
   components:
     - type: StationMap
     - type: Sprite
-      sprite: Objects/Devices/tablets.rsi
+      sprite: Goobstation/Objects/Devices/tablets.rsi
       layers:
         - state: tablet
         - state: genericpowerconsole
