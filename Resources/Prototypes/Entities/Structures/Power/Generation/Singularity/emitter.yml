@@ -102,3 +102,4 @@
       - On
       - Off
       - Toggle
+  - type: RequireProjectileTarget 
