@@ -1,12 +1,12 @@
 using System.Linq;
 using Content.Server.Administration.Commands;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
 using Content.Server.Mind;
 using Content.Server.Points;
 using Content.Server.RoundEnd;
 using Content.Server.Station.Systems;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Points;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;

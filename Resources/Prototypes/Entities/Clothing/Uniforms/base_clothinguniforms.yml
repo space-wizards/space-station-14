@@ -27,6 +27,7 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+    - Skirt # Goobstation
 
 - type: entity
   abstract: true
@@ -59,3 +60,8 @@
   - type: Clothing
     slots: [innerclothing]
     femaleMask: UniformTop
+  - type: Tag
+    tags:
+    - Skirt
+    - ClothMade
+    - WhitelistChameleon

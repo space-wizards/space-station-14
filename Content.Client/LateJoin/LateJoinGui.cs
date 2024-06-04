@@ -244,7 +244,7 @@ namespace Content.Client.LateJoin
                             VerticalAlignment = VAlignment.Center
                         };
 
-                        var jobIcon = _prototypeManager.Index<StatusIconPrototype>(prototype.Icon);
+                        var jobIcon = _prototypeManager.Index(prototype.Icon);
                         icon.Texture = _sprites.Frame0(jobIcon.Icon);
                         jobSelector.AddChild(icon);
 
