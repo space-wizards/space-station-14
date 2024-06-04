@@ -484,7 +484,6 @@ namespace Content.Shared.Cuffs
                 BreakOnWeightlessMove = false,
                 BreakOnDamage = true,
                 NeedHand = true,
-                DistanceThreshold = 0.3f
             };
 
             if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
