@@ -1,5 +1,6 @@
 using Content.Client.Lobby;
 using Content.Client.Gameplay;
+using Content.Client.Guidebook;
 using Content.Shared.CCVar;
 using Content.Shared.Info;
 using Robust.Client.Console;
@@ -8,7 +9,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Info;
 
@@ -20,8 +20,9 @@ public sealed class RulesManager : SharedRulesManager
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+    [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
 
-    private InfoSection rulesSection = new InfoSection("", new FormattedMessage(), false);
+    private BoxContainer _rulesSection = new();
     private bool _shouldShowRules = false;
 
     private RulesPopup? _activePopup;
@@ -95,16 +96,13 @@ public sealed class RulesManager : SharedRulesManager
     {
         var rules = _sysMan.GetEntitySystem<InfoSystem>().Rules;
         var text = rules.Text;
-        var entries = text.Split("\n");
-        entries = entries[1..^1];
-        text = string.Join("\n", entries);
-        rulesSection.SetText(rules.Title, FormattedMessage.FromMarkupOrThrow(text), true);
+        _documentParsingManager.TryAddMarkup(_rulesSection, text);
     }
 
     public Control RulesSection()
     {
-        rulesSection = new InfoSection("", new FormattedMessage(), false);
+        _rulesSection = new BoxContainer();
         UpdateRules();
-        return rulesSection;
+        return _rulesSection;
     }
 }
