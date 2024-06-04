@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Added an option to try and ignore some errors if a replay fails to load,
-    type: Add
-  id: 6180
-  time: '2024-03-18T07:31:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26212
 - author: Tayrtahn
   changes:
   - message: Cyborg recharging stations are able to charge cyborgs again.
@@ -3851,3 +3844,11 @@
   id: 6679
   time: '2024-06-04T13:26:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28539
+- author: moonheart08
+  changes:
+  - message: AME power output is no longer super-buffed. Larger stations will now
+      require multiple engines to stay powered.
+    type: Tweak
+  id: 6680
+  time: '2024-06-04T15:59:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28419
