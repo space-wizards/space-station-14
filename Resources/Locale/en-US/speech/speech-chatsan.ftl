@@ -120,3 +120,9 @@ chatsan-replacement-43 = i guess
 
 chatsan-word-44 = tbf
 chatsan-replacement-44 = to be fair
+
+chatsan-word-45 = tysm
+chatsan-replacement-45 = thank you so much
+
+chatsan-word-46 = tyvm
+chatsan-replacement-46 = thank you very much
