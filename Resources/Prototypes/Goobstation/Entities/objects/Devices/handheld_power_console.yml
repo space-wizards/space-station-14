@@ -1,0 +1,24 @@
+- type: entity
+  id: BaseHandheldStationMapPowerCe
+  name: Handheld power console
+  description: Fine-crafted handheld power map console for Chief Engineers. Allows the user to view the powergrid.
+  parent: BaseItem
+  components:
+    - type: StationMap
+    - type: Sprite
+      sprite: Goobstation/Objects/Devices/tablets.rsi
+      layers:
+        - state: tablet
+        - state: genericpowerconsole
+          shader: unshaded
+    - type: ActivatableUI
+      inHandsOnly: true
+      singleUser: true
+      key: enum.PowerMonitoringConsoleUiKey.Key
+    - type: PowerMonitoringConsole
+    - type: PowerMonitoringCableNetworks
+    - type: NodeContainer
+    - type: UserInterface
+      interfaces:
+        enum.PowerMonitoringConsoleUiKey.Key:
+          type: PowerMonitoringConsoleBoundUserInterface
