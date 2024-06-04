@@ -46,6 +46,31 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+  - type: Gun
+    fireRate: 0.75
+    useKey: false
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  - type: MeleeWeapon
+    attackRate: 2
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 5
+        Slash: 8
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Piercing: 20
+        Slash: 6
+  - type: GunRequiresWield
+  - type: Item
+    size: Ginormous
+  - type: DisarmMalus
 
 - type: entity
   name: Hristov
@@ -66,7 +91,7 @@
 
 - type: entity
   name: musket
-  parent: BaseWeaponSniper
+  parent: [BaseWeaponSniper, BaseGunWieldable]
   id: Musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
