@@ -5,6 +5,10 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.Chat.Managers;
 
+/// <summary>
+///     Removes the shorthands for emotes (like "lol" or "^-^") from a chat message and returns the last emote in their
+///     message
+/// </summary>
 public sealed class ChatEmoteSanitizationManager : IChatSanitizationManager
 {
     private static readonly Dictionary<string, string> ShorthandToEmote = new()
@@ -97,6 +101,14 @@ public sealed class ChatEmoteSanitizationManager : IChatSanitizationManager
         _configurationManager.OnValueChanged(CCVars.ChatSanitizerEnabled, x => _doSanitize = x, true);
     }
 
+    /// <summary>
+    ///     Remove the shorthands from the message, returning the last one found as the emote
+    /// </summary>
+    /// <param name="message">The pre-sanitized message</param>
+    /// <param name="speaker">The speaker</param>
+    /// <param name="sanitized">The sanitized message with shorthands removed</param>
+    /// <param name="emote">The localized emote</param>
+    /// <returns>True if emote has been sanitized out</returns>
     public bool TrySanitizeEmoteShorthands(string message,
         EntityUid speaker,
         out string sanitized,
@@ -108,17 +120,30 @@ public sealed class ChatEmoteSanitizationManager : IChatSanitizationManager
         if (!_doSanitize)
             return false;
 
+        // -1 is just a canary for nothing found yet
         var lastEmoteIndex = -1;
 
-        foreach (var (shortHand, emoteKey) in ShorthandToEmote)
+        foreach (var (shorthand, emoteKey) in ShorthandToEmote)
         {
-            var escaped = Regex.Escape(shortHand);
+            // We have to escape it because shorthands like ":)" or "-_-" would break the regex otherwise.
+            var escaped = Regex.Escape(shorthand);
 
+            // So there are 4 cases:
+            // - If there is whitespace before and a non-alphanumeric character after (punctuation/whitespace):
+            //   Delete it and the whitespace before.
+            // - If there is whitespace before it and it is at the end of the string:
+            //   Delete it and the whitespace before.
+            // - If it is at the start of the string and there is a whitespace character after:
+            //   Delete it and the whitespace after.
+            // - If it is at the start and end of the string
+            //   Delete it.
             var pattern =
                 $@"(\s{escaped})(?=[\p{{P}}\s])|(\s{escaped})$|^({escaped}\s)|^({escaped})$";
 
             var r = new Regex(pattern, RegexOptions.RightToLeft | RegexOptions.IgnoreCase);
 
+            // We're using sanitized as the original message until the end so that we can make sure the indices of
+            // the emotes are accurate.
             var lastMatch = r.Match(sanitized);
 
             if (!lastMatch.Success)
