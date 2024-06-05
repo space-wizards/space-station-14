@@ -11,6 +11,12 @@ public sealed class CensorCommand : ToolshedCommand
     [Dependency]
     private ICensorManager _censorMan = default!;
 
+    [CommandImplementation("reload")]
+    public void ReloadCensors()
+    {
+        _censorMan.ReloadCensors();
+    }
+
     [CommandImplementation("add")]
     public void AddCensor(
             [CommandInvocationContext] IInvocationContext ctx,
@@ -26,11 +32,5 @@ public sealed class CensorCommand : ToolshedCommand
             actionGroup.Id,
             target,
             name));
-    }
-
-    [CommandImplementation("reload")]
-    public void ReloadCensors()
-    {
-        _censorMan.ReloadCensors();
     }
 }
