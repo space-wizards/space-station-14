@@ -189,7 +189,7 @@ namespace Content.Server.Administration.Systems
                 PlayerStatusType.Banned => "orange",
                 _ => "gray"
             };
-            var inGameMessage = $"[color={color}]{session.Name}: {message}[/color]";
+            var inGameMessage = $"[color={color}]{session.Name} {message}[/color]";
 
             var bwoinkMessage = new BwoinkTextMessage(
                 userId: session.UserId,
