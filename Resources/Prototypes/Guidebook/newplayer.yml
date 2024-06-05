@@ -5,13 +5,12 @@
   children:
   - Controls
   - Roleplaying
+  - CharacterCreation
 
 - type: guideEntry
   id: Roleplaying
   name: guide-entry-roleplaying
   text: "/ServerInfo/Guidebook/Roleplaying.xml"
-  children:
-  - CharacterCreation
 
 - type: guideEntry
   id: CharacterCreation
