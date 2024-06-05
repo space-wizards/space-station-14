@@ -18,14 +18,14 @@ public sealed class CensorActionBan : ICensorAction
     [DataField]
     public string BanCountGroup = "default";
 
-    public bool SkipCensor(string fullText, Dictionary<string, int> matchedText)
+    public bool SkipCensor(string fullText, Dictionary<string, int> patternMatches)
     {
         return false;
     }
 
     public bool RunAction(ICommonSession session,
         string fullText,
-        Dictionary<string, int> matchedText,
+        Dictionary<string, int> patternMatches,
         CensorFilterDef censor,
         IEntityManager entMan)
     {

@@ -13,21 +13,21 @@ public sealed class CensorActionAdminLog : ICensorAction
     [DataField]
     public LogImpact Impact = LogImpact.Medium;
 
-    public bool SkipCensor(string fullText, Dictionary<string, int> matchedText)
+    public bool SkipCensor(string fullText, Dictionary<string, int> patternMatches)
     {
         return false;
     }
 
     public bool RunAction(ICommonSession session,
         string fullText,
-        Dictionary<string, int> matchedText,
+        Dictionary<string, int> patternMatches,
         CensorFilterDef censor,
         IEntityManager entMan)
     {
         IoCManager.Resolve<IAdminLogManager>()
             .Add(LogType.Censor,
                 Impact,
-                $"{session.Name} ({session.UserId}) tripped {censor.DisplayName} which matched \"{new StringBuilder().AppendJoin(", ", matchedText.Keys)}\"");
+                $"{session.Name} ({session.UserId}) tripped {censor.DisplayName} which matched \"{new StringBuilder().AppendJoin(", ", patternMatches.Keys)}\"");
 
         return true;
     }

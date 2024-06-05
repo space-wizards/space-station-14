@@ -57,22 +57,22 @@ public interface ICensorAction
     /// Check whether the actions should be run.
     /// </summary>
     /// <param name="fullText">The full text provided by the user.</param>
-    /// <param name="matchedText">The text matched by the censor.</param>
+    /// <param name="patternMatches">The text matched by the censor.</param>
     /// <returns>True when this censor should be skipped.</returns>
-    public bool SkipCensor(string fullText, Dictionary<string, int> matchedText);
+    public bool SkipCensor(string fullText, Dictionary<string, int> patternMatches);
 
     /// <summary>
     /// Run actions on the session.
     /// </summary>
     /// <param name="session">The session the text came from.</param>
     /// <param name="fullText">The full text provided by the user.</param>
-    /// <param name="matchedText">The text matched by the censor.</param>
+    /// <param name="patternMatches">The text matched by the censor.</param>
     /// <param name="censor">The censor that matched the <paramref name="fullText"/>.</param>
     /// <param name="entMan"></param>
     /// <returns>True if the message passes. False if the message should be blocked.</returns>
     public bool RunAction(ICommonSession session,
         string fullText,
-        Dictionary<string, int> matchedText,
+        Dictionary<string, int> patternMatches,
         CensorFilterDef censor,
         IEntityManager entMan);
 
