@@ -50,13 +50,15 @@ public sealed class NukeOpsTest
         var invSys = server.System<InventorySystem>();
         var factionSys = server.System<NpcFactionSystem>();
 
-        Assert.That(server.CfgMan.GetCVar(CCVars.GridFill), Is.False);
         server.CfgMan.SetCVar(CCVars.GridFill, true);
 
         // Initially in the lobby
         Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
         Assert.That(client.AttachedEntity, Is.Null);
         Assert.That(ticker.PlayerGameStatuses[client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
+
+        // Opt into the nukies role.
+        await pair.SetAntagPref("NukeopsCommander", true);
 
         // There are no grids or maps
         Assert.That(entMan.Count<MapComponent>(), Is.Zero);
@@ -112,8 +114,8 @@ public sealed class NukeOpsTest
 
         // The game rule exists, and all the stations/shuttles/maps are properly initialized
         var rule = entMan.AllComponents<NukeopsRuleComponent>().Single().Component;
-        var mapRule = entMan.AllComponents<LoadMapRuleComponent>().Single().Component;
-        foreach (var grid in mapRule.MapGrids)
+        var gridsRule = entMan.AllComponents<RuleGridsComponent>().Single().Component;
+        foreach (var grid in gridsRule.MapGrids)
         {
             Assert.That(entMan.EntityExists(grid));
             Assert.That(entMan.HasComponent<MapGridComponent>(grid));
@@ -127,7 +129,7 @@ public sealed class NukeOpsTest
         Assert.That(entMan.EntityExists(nukieShuttlEnt));
 
         EntityUid? nukieStationEnt = null;
-        foreach (var grid in mapRule.MapGrids)
+        foreach (var grid in gridsRule.MapGrids)
         {
             if (entMan.HasComponent<StationMemberComponent>(grid))
             {
@@ -142,8 +144,8 @@ public sealed class NukeOpsTest
         Assert.That(entMan.EntityExists(nukieStation.Station));
         Assert.That(nukieStation.Station, Is.Not.EqualTo(rule.TargetStation));
 
-        Assert.That(server.MapMan.MapExists(mapRule.Map));
-        var nukieMap = mapSys.GetMap(mapRule.Map!.Value);
+        Assert.That(server.MapMan.MapExists(gridsRule.Map));
+        var nukieMap = mapSys.GetMap(gridsRule.Map!.Value);
 
         var targetStation = entMan.GetComponent<StationDataComponent>(rule.TargetStation!.Value);
         var targetGrid = targetStation.Grids.First();
@@ -197,7 +199,7 @@ public sealed class NukeOpsTest
         }
 
         ticker.SetGamePreset((GamePresetPrototype?)null);
-        server.CfgMan.SetCVar(CCVars.GridFill, false);
+        await pair.SetAntagPref("NukeopsCommander", false);
         await pair.CleanReturnAsync();
     }
 }

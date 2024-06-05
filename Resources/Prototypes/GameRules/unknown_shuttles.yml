@@ -1,7 +1,7 @@
-﻿- type: entity
-  id: UnknownShuttleCargoLost
+- type: entity
+  abstract: true
   parent: BaseGameRule
-  noSpawn: true
+  id: BaseUnknownShuttleRule
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming
@@ -10,86 +10,249 @@
     weight: 5
     reoccurrenceDelay: 30
     duration: 1
+    maxOccurrences: 1 # should be the same as [copies] in shuttle_incoming_event.yml
+  - type: RuleGrids
+  - type: LoadMapRule
+
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: UnknownShuttleCargoLost
+  components:
+  - type: StationEvent
     maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: ShuttleCargoLost
 
 - type: entity
+  parent: BaseUnknownShuttleRule
   id: UnknownShuttleTravelingCuisine
-  parent: BaseGameRule
-  noSpawn: true
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    weight: 5
-    reoccurrenceDelay: 30
-    duration: 1
     maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: TravelingCuisine
 
 - type: entity
+  parent: BaseUnknownShuttleRule
   id: UnknownShuttleDisasterEvacPod
-  parent: BaseGameRule
-  noSpawn: true
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    weight: 5
-    reoccurrenceDelay: 30
-    duration: 1
     maxOccurrences: 3 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: DisasterEvacPod
 
 - type: entity
+  parent: BaseUnknownShuttleRule
   id: UnknownShuttleHonki
-  parent: BaseGameRule
-  noSpawn: true
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
     weight: 2
-    reoccurrenceDelay: 30
-    duration: 1
-    maxOccurrences: 1 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: Honki
 
 - type: entity
+  parent: BaseUnknownShuttleRule
   id: UnknownShuttleSyndieEvacPod
-  parent: BaseGameRule
-  noSpawn: true
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
+    startAnnouncement: null # It should be silent.
     weight: 2
-    reoccurrenceDelay: 30
-    duration: 1
     maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: SyndieEvacPod
 
 - type: entity
   id: UnknownShuttleNTQuark
-  parent: BaseGameRule
-  noSpawn: true
+  parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
     startAnnouncement: null # It should be silent.
     weight: .5 # Hopefully this is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
     earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
-    reoccurrenceDelay: 30
-    duration: 1
     minimumPlayers: 25
-    maxOccurrences: 1 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: NTQuark
+
+- type: entity
+  id: UnknownShuttleBang
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Bang
+
+- type: entity
+  id: UnknownShuttleCruiser
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Cruiser
+
+- type: entity
+  id: UnknownShuttleCryptid
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Cryptid
+
+- type: entity
+  id: UnknownShuttleDrone
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Drone
+
+- type: entity
+  id: UnknownShuttleEternal
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Eternal
+
+- type: entity
+  id: UnknownShuttleFlatline
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Flatline
+
+- type: entity
+  id: UnknownShuttleGym
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Gym
+
+- type: entity
+  id: UnknownShuttleHook
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Hook
+
+- type: entity
+  id: UnknownShuttleNTIncorporation
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: NTIncorpration
+
+- type: entity
+  id: UnknownShuttleInstigator
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Instigator
+
+- type: entity
+  id: UnknownShuttleJoe
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Joe
+
+- type: entity
+  id: UnknownShuttleLambordeere
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Lambordeere
+
+- type: entity
+  id: UnknownShuttleManOWar
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: ManOWar
+
+- type: entity
+  id: UnknownShuttleMeatZone
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Meatzone
+
+- type: entity
+  id: UnknownShuttleMicroshuttle
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Microshuttle
+
+- type: entity
+  id: UnknownShuttleRaider
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Raider
+
+- type: entity
+  id: UnknownShuttleScooner
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Scooner
+
+- type: entity
+  id: UnknownShuttleSpacebus
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Spacebus
+
