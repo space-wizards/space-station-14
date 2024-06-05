@@ -33,7 +33,7 @@
   id: BlueshieldOfficerGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlue
-    back: ClothingBackpackCaptainFilled
+    back: ClothingBackpackCaptain
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetBasic
     eyes: ClothingEyesGlassesSecurity
