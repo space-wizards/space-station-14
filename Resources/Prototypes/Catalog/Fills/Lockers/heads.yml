@@ -152,6 +152,7 @@
       - id: AccessConfigurator
       - id: RCD
       - id: RCDAmmo
+      - id: BaseHandheldStationMapPowerCe
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -172,6 +173,7 @@
       - id: AccessConfigurator
       - id: RCD
       - id: RCDAmmo
+      - id: BaseHandheldStationMapPowerCe
 
 - type: entity
   id: LockerChiefMedicalOfficerFilledHardsuit
