@@ -1,10 +1,4 @@
 - type: entity
-  id: WeaponProtoKineticAcceleratorBase
-  abstract: true
-  parent: BaseItem
-  components:
-
-- type: entity
   name: proto-kinetic accelerator
   id: WeaponProtoKineticAccelerator
   parent: WeaponProtoKineticAcceleratorBase
