@@ -1200,6 +1200,7 @@
       state: "creampie_human"
       visible: false
   - type: Hands
+  - type: ComplexInteraction
   - type: GenericVisualizer
     visuals:
       enum.CreamPiedVisuals.Creamed:
@@ -2202,6 +2203,7 @@
       0: Alive
       90: Dead
   - type: MeleeWeapon
+    altDisarm: false
     angle: 0
     animation: WeaponArcBite
     soundHit:
@@ -2253,7 +2255,7 @@
     - DoorBumpOpener
     - FootstepSound
   - type: Tool # Open door from xeno.yml.
-    speed: 1.5
+    speedModifier: 1.5
     qualities:
       - Prying
     useSound:
@@ -2327,6 +2329,7 @@
     - type: Spider
       webPrototype: SpiderWebClown
     - type: MeleeWeapon
+      altDisarm: false
       angle: 0
       animation: WeaponArcBite
       soundHit:
@@ -2342,6 +2345,18 @@
     - type: Bloodstream
       bloodMaxVolume: 150
       bloodReagent: Laughter
+
+- type: entity
+  name: wizard spider
+  parent: MobGiantSpider
+  id: MobGiantSpiderWizard
+  description: This spider looks a little magical
+  suffix: Wizard
+  components:
+  - type: Accentless
+    removes:
+    - type: ReplacementAccent
+      accent: xeno  #let this wizard speak
 
 - type: entity
   name: possum

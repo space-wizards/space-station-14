@@ -218,7 +218,7 @@ public partial class NavMapControl : MapGridControl
 
             // Convert to a world position
             var unscaledPosition = (localPosition - MidPointVector) / MinimapScale;
-            var worldPosition = _transformSystem.GetWorldMatrix(_xform).Transform(new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offset);
+            var worldPosition = Vector2.Transform(new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offset, _transformSystem.GetWorldMatrix(_xform));
 
             // Find closest tracked entity in range
             var closestEntity = NetEntity.Invalid;
@@ -401,7 +401,7 @@ public partial class NavMapControl : MapGridControl
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
-                    var position = _transformSystem.GetInvWorldMatrix(_xform).Transform(mapPos.Position) - offset;
+                    var position = Vector2.Transform(mapPos.Position, _transformSystem.GetInvWorldMatrix(_xform)) - offset;
                     position = ScalePosition(new Vector2(position.X, -position.Y));
 
                     handle.DrawCircle(position, float.Sqrt(MinimapScale) * 2f, value.Color);
@@ -422,7 +422,7 @@ public partial class NavMapControl : MapGridControl
 
             if (mapPos.MapId != MapId.Nullspace)
             {
-                var position = _transformSystem.GetInvWorldMatrix(_xform).Transform(mapPos.Position) - offset;
+                var position = Vector2.Transform(mapPos.Position, _transformSystem.GetInvWorldMatrix(_xform)) - offset;
                 position = ScalePosition(new Vector2(position.X, -position.Y));
 
                 var scalingCoefficient = MinmapScaleModifier * float.Sqrt(MinimapScale);

@@ -28,7 +28,7 @@ using Color = Discord.Color;
 namespace Content.Server.Administration.Systems
 {
     [UsedImplicitly]
-    public sealed class BwoinkSystem : SharedBwoinkSystem
+    public sealed partial class BwoinkSystem : SharedBwoinkSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
@@ -43,6 +43,9 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IGameMapManager _mapManager = default!;
         [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
         [Dependency] private readonly IAfkManager _afkManager = default!;
+
+        [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
+        private static partial Regex DiscordRegex();
 
         private ISawmill _sawmill = default!;
         private readonly Dictionary<NetUserId, (TimeSpan Timestamp, bool Typing)> _typingUpdateTimestamps = new();

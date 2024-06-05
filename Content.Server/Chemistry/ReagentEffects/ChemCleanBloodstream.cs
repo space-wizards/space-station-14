@@ -26,7 +26,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             cleanseRate *= args.Scale;
 
-            var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
+            var bloodstreamSys = args.EntityManager.System<BloodstreamSystem>();
             bloodstreamSys.FlushChemicals(args.SolutionEntity, args.Reagent.ID, cleanseRate);
         }
     }
