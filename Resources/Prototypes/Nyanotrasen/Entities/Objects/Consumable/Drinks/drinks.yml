@@ -28,7 +28,7 @@
         maxVol: 30
         reagents:
         - ReagentId: OrangeCreamice
-          Quantity: 29
+          Quantity: 30
   - type: Icon
     sprite: Nyanotrasen/Objects/Consumable/Drinks/orangecreamcicle.rsi
     state: icon
