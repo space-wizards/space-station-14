@@ -1,48 +1,7 @@
 - type: entity
-  name: BaseWeaponSniper
-  parent: BaseItem
-  id: BaseWeaponSniper
-  description: A rooty tooty point and shooty.
-  abstract: true
-  components:
-  # - type: Sprite
-  #   layers:
-  #   - state: base
-  #     map: ["enum.GunVisualLayers.Base"]
-  # - type: Item
-  #   size: Huge
-  # - type: Clothing
-  #   sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
-    # quickEquip: false
-    # slots:
-    # - Back
-    # - suitStorage
-  # - type: AmmoCounter
-  # - type: Gun
-  #   fireRate: 0.75
-    # selectedMode: SemiAuto
-    # availableModes:
-    # - SemiAuto
-    # soundGunshot:
-    #   path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
-  # - type: BallisticAmmoProvider
-  #   capacity: 10
-  #   proto: CartridgeLightRifle
-  #   whitelist:
-  #     tags:
-  #     - CartridgeLightRifle
-  # - type: ContainerContainer
-  #   containers:
-  #     ballistic-ammo: !type:Container
-  #       ents: []
-  # - type: StaticPrice
-  #   price: 500
-
-- type: entity
   name: Kardashev-Mosin
   parent:
   - BaseGunLarge
-  - BaseWeaponSniper
   - BaseGunWieldable
   id: WeaponSniperMosin
   description: A weapon for hunting, or endless trench warfare. Uses .30 rifle ammo.
@@ -72,7 +31,6 @@
   name: Hristov
   parent:
   - BaseGunLarge
-  - BaseWeaponSniper
   - BaseGunWieldable
   id: WeaponSniperHristov
   description: A portable anti-materiel rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-materiel ammo.
@@ -102,7 +60,7 @@
 
 - type: entity
   name: musket
-  parent: BaseWeaponSniper
+  parent: BaseItem
   id: Musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
@@ -117,6 +75,10 @@
       map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
   - type: Gun
     fireRate: 0.75
     selectedMode: SemiAuto
@@ -151,7 +113,7 @@
 
 - type: entity
   name: flintlock pistol
-  parent: BaseWeaponSniper
+  parent: BaseItem
   id: WeaponPistolFlintlock
   description: A pirate's companion. Yarrr! Uses .60 anti-materiel ammo.
   components:
@@ -171,6 +133,10 @@
       map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 8 #it's a flintlock
