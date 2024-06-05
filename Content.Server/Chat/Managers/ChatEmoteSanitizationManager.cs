@@ -7,11 +7,8 @@ namespace Content.Server.Chat.Managers;
 
 public sealed class ChatEmoteSanitizationManager : IChatSanitizationManager
 {
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
-    private static readonly Dictionary<string, string> SmileyToEmote = new()
+    private static readonly Dictionary<string, string> shorthandToEmote = new()
     {
-        // I could've done this with regex, but felt it wasn't the right idea.
         { ":)", "chatsan-smiles" },
         { ":]", "chatsan-smiles" },
         { "=)", "chatsan-smiles" },
@@ -69,18 +66,13 @@ public sealed class ChatEmoteSanitizationManager : IChatSanitizationManager
         { ":/", "chatsan-uncertain" },
         { ":\\", "chatsan-uncertain" },
         { "lmao", "chatsan-laughs" },
-        { "lmao.", "chatsan-laughs" },
         { "lol", "chatsan-laughs" },
-        { "lol.", "chatsan-laughs" },
         { "lel", "chatsan-laughs" },
-        { "lel.", "chatsan-laughs" },
         { "kek", "chatsan-laughs" },
-        { "kek.", "chatsan-laughs" },
         { "rofl", "chatsan-laughs" },
         { "o7", "chatsan-salutes" },
-        { ";_;7", "chatsan-tearfully-salutes"},
+        { ";_;7", "chatsan-tearfully-salutes" },
         { "idk", "chatsan-shrugs" },
-        { "idk.", "chatsan-shrugs" },
         { ";)", "chatsan-winks" },
         { ";]", "chatsan-winks" },
         { "(;", "chatsan-winks" },
@@ -92,8 +84,10 @@ public sealed class ChatEmoteSanitizationManager : IChatSanitizationManager
         { "(':", "chatsan-tearfully-smiles" },
         { "[':", "chatsan-tearfully-smiles" },
         { "('=", "chatsan-tearfully-smiles" },
-        { "['=", "chatsan-tearfully-smiles" },
+        { "['=", "chatsan-tearfully-smiles" }
     };
+
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     private bool _doSanitize;
 
@@ -102,7 +96,10 @@ public sealed class ChatEmoteSanitizationManager : IChatSanitizationManager
         _configurationManager.OnValueChanged(CCVars.ChatSanitizerEnabled, x => _doSanitize = x, true);
     }
 
-    public bool TrySanitizeOutSmilies(string input, EntityUid speaker, out string sanitized, [NotNullWhen(true)] out string? emote)
+    public bool TrySanitizeEmoteShorthands(string input,
+        EntityUid speaker,
+        out string sanitized,
+        [NotNullWhen(true)] out string? emote)
     {
         if (!_doSanitize)
         {
@@ -113,11 +110,11 @@ public sealed class ChatEmoteSanitizationManager : IChatSanitizationManager
 
         input = input.TrimEnd();
 
-        foreach (var (smiley, replacement) in SmileyToEmote)
+        foreach (var (shorthand, replacement) in shorthandToEmote)
         {
-            if (input.EndsWith(smiley, true, CultureInfo.InvariantCulture))
+            if (input.EndsWith(shorthand, true, CultureInfo.InvariantCulture))
             {
-                sanitized = input.Remove(input.Length - smiley.Length).TrimEnd();
+                sanitized = input.Remove(input.Length - shorthand.Length).TrimEnd();
                 emote = Loc.GetString(replacement, ("ent", speaker));
                 return true;
             }
