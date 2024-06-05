@@ -33,20 +33,6 @@ public sealed class AutomodCommand : ToolshedCommand
         _automodMan.CreateFilter(new AutomodFilterDef(pattern, filterType, actionGroup.Id, target, name));
     }
 
-    [CommandImplementation("edit")]
-    public void EditAutomodFilter(
-            [CommandInvocationContext] IInvocationContext ctx,
-            [CommandArgument] int id,
-            [CommandArgument] string pattern,
-            [CommandArgument] AutomodFilterType filterType,
-            [CommandArgument] Prototype<AutomodActionGroupPrototype> actionGroup,
-            [CommandArgument] AutomodTarget target,
-            [CommandArgument] string name
-        )
-    {
-        _automodMan.EditFilter(new AutomodFilterDef(id, pattern, filterType, actionGroup.Id, target, name));
-    }
-
     [CommandImplementation("get")]
     public async void GetAutomodFilter([CommandInvocationContext] IInvocationContext ctx, [CommandArgument] int id)
     {
@@ -59,6 +45,20 @@ public sealed class AutomodCommand : ToolshedCommand
 
         ctx.WriteLine($"Id: {filter.Id}, pattern: {filter.Pattern}, filterType: {filter.FilterType
             }, actionGroup: {filter.ActionGroup}, targets: {filter.TargetFlags}, displayName: {filter.DisplayName}");
+    }
+
+    [CommandImplementation("edit")]
+    public void EditAutomodFilter(
+            [CommandInvocationContext] IInvocationContext ctx,
+            [CommandArgument] int id,
+            [CommandArgument] string pattern,
+            [CommandArgument] AutomodFilterType filterType,
+            [CommandArgument] Prototype<AutomodActionGroupPrototype> actionGroup,
+            [CommandArgument] AutomodTarget target,
+            [CommandArgument] string name
+        )
+    {
+        _automodMan.EditFilter(new AutomodFilterDef(id, pattern, filterType, actionGroup.Id, target, name));
     }
 
     [CommandImplementation("remove")]

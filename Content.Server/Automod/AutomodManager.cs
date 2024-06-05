@@ -46,48 +46,6 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
     #endregion
 
-    #region Create
-
-    public async void CreateFilter(string pattern,
-        AutomodFilterType filterType,
-        string actionGroup,
-        AutomodTarget targets,
-        string name)
-    {
-        CreateFilter(new AutomodFilterDef(pattern, filterType, actionGroup, targets, name));
-    }
-
-    public async void CreateFilter(AutomodFilterDef automod)
-    {
-        automod = await _db.AddAutomodFilterAsync(automod);
-        AddFilter(automod);
-    }
-
-    private void AddFilter(AutomodFilterDef automod)
-    {
-        foreach (AutomodTarget targetFlag in Enum.GetValues(typeof(AutomodTarget)))
-        {
-            if (targetFlag == AutomodTarget.None)
-                continue;
-            if (!automod.TargetFlags.HasFlag(targetFlag))
-                continue;
-
-            if (automod.FilterType == AutomodFilterType.Regex)
-            {
-                if (!_regexFilters.TryGetValue(targetFlag, out var list))
-                {
-                    list = new Dictionary<Regex, AutomodFilterDef>();
-                    _regexFilters.Add(targetFlag, list);
-                }
-
-                list.Add(new Regex(automod.Pattern), automod);
-            }
-            // TODO other filter types
-        }
-    }
-
-    #endregion
-
     #region Filter
 
     public bool Filter(AutomodTarget target, string inputText, ICommonSession session)
@@ -153,6 +111,8 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
     public async void ReloadAutomodFilters()
     {
+        _regexFilters.Clear();
+
         var censors = await _db.GetAllAutomodFiltersAsync();
 
         foreach (var censor in censors)
@@ -163,11 +123,44 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
     #endregion
 
-    #region Edit
+    #region Create
 
-    public void EditFilter(AutomodFilterDef automodFilterDef)
+    public async void CreateFilter(string pattern,
+        AutomodFilterType filterType,
+        string actionGroup,
+        AutomodTarget targets,
+        string name)
     {
-        _db.EditAutomodFilterAsync(automodFilterDef);
+        CreateFilter(new AutomodFilterDef(pattern, filterType, actionGroup, targets, name));
+    }
+
+    public async void CreateFilter(AutomodFilterDef automod)
+    {
+        automod = await _db.AddAutomodFilterAsync(automod);
+        AddFilter(automod);
+    }
+
+    private void AddFilter(AutomodFilterDef automod)
+    {
+        foreach (AutomodTarget targetFlag in Enum.GetValues(typeof(AutomodTarget)))
+        {
+            if (targetFlag == AutomodTarget.None)
+                continue;
+            if (!automod.TargetFlags.HasFlag(targetFlag))
+                continue;
+
+            if (automod.FilterType == AutomodFilterType.Regex)
+            {
+                if (!_regexFilters.TryGetValue(targetFlag, out var list))
+                {
+                    list = new Dictionary<Regex, AutomodFilterDef>();
+                    _regexFilters.Add(targetFlag, list);
+                }
+
+                list.Add(new Regex(automod.Pattern), automod);
+            }
+            // TODO other filter types
+        }
     }
 
     #endregion
@@ -177,6 +170,15 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
     public async Task<AutomodFilterDef?> GetFilter(int id)
     {
         return await _db.GetAutomodFilterAsync(id);
+    }
+
+    #endregion
+
+    #region Edit
+
+    public void EditFilter(AutomodFilterDef automodFilterDef)
+    {
+        _db.EditAutomodFilterAsync(automodFilterDef);
     }
 
     #endregion
