@@ -1,19 +1,4 @@
 ﻿- type: guideEntry
-  id: Rules
-  name: guide-entry-rules
-  text: "/ServerInfo/Guidebook/ServerRules/WizDenRules.xml" # Ideally this would be dynamically selected based on if the server is LRP or MRP
-  children:
-  - StandardRuleset
-  - MRPRuleset
-  - RoleTypes
-  - CoreRules
-  - RoleplayRules
-  - SiliconRules
-  - SpaceLaw
-  - BanTypes
-  - BanDurations
-
-- type: guideEntry
   id: StandardRuleset
   name: guide-entry-rules-lrp
   priority: 0
