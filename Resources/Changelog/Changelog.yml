@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: potato1234x
-  changes:
-  - message: Added crafting recipes for wall lockers and secure lockers
-    type: Add
-  - message: Fixed secure lockers and wall lockers not being deconstructible
-    type: Fix
-  id: 6185
-  time: '2024-03-18T20:53:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24942
 - author: brainfood1183
   changes:
   - message: Added Spray Paints.
@@ -3849,3 +3840,11 @@
   id: 6684
   time: '2024-06-05T20:14:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28576
+- author: Cojoke-dot
+  changes:
+  - message: A variety of objects around the station now need to be clicked on in
+      order for bullets to hit them.
+    type: Tweak
+  id: 6685
+  time: '2024-06-05T20:47:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28571
