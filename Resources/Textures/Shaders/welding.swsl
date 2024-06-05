@@ -1,0 +1,41 @@
+
+light_mode unshaded;
+
+uniform highp float InDiameter;
+uniform highp float OutDiameter;
+uniform highp float Zoom;
+uniform sampler2D SCREEN_TEXTURE;
+
+//i genuinely do not know what i am doing.
+const highp float mag = 100;
+
+void fragment() 
+{
+	highp float superZoom = Zoom / mag;
+
+	highp vec2 pixelSize = vec2(1.0 / SCREEN_PIXEL_SIZE.x, 1.0 / SCREEN_PIXEL_SIZE.y);
+	highp vec2 pixelCenter = pixelSize * vec2(0.5, 0.5);
+	highp float dist = length(FRAGCOORD.xy - pixelCenter);
+	
+	vec4 preColor = zTextureSpec(SCREEN_TEXTURE, Pos);
+	
+	//highp vec2 coord = (FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy) * Zoom;
+	//highp float circle = zCircleGradient(pixelSize, FRAGCOORD.xy, OutDiameter, InDiameter / Zoom, InDiameter / Zoom, 0.5);
+	highp float OutDiam = OutDiameter / superZoom;
+	highp float InDiam = InDiameter / superZoom;
+	
+	if(dist > (OutDiam / 2.))
+	{
+		COLOR = vec4(0.0, 0.0, 0.0, 1.0);
+	}
+	else if(dist > (InDiam / 2.))
+	{
+		highp float ratio = (dist - (InDiam / 2)) / ((OutDiam / 2) - (InDiam / 2));
+		highp float alpha = 1.0 * ratio;
+		COLOR = preColor * vec4(1. - alpha, 1. - alpha, 0., 1.0);
+	}
+	else
+	{
+		COLOR = preColor * vec4(1., 1., 0., 1.);
+	}
+}

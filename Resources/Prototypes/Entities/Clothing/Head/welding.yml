@@ -14,7 +14,6 @@
     foldedHeldPrefix: up
   - type: Mask
   - type: IngestionBlocker
-  - type: Blindfold
   - type: FlashImmunity
   - type: IdentityBlocker
     coverage: FULL
@@ -26,6 +25,8 @@
   - type: StaticPrice
     price: 50
   - type: WeldingMask
+    innerDiameter: 2
+    outerDiameter: 6
   - type: Sprite
     layers:
     - state: icon
@@ -50,15 +51,10 @@
   components:
   - type: Foldable
     folded: true
-  - type: IngestionBlocker
   - type: Mask
     isToggled: true
-  - type: Blindfold
-  - type: FlashImmunity
-    enabled: false
   - type: IdentityBlocker
     coverage: NONE
-  - type: EyeProtection
   - type: PhysicalComposition
     materialComposition:
       Steel: 200

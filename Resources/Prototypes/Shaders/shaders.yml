@@ -99,3 +99,8 @@
   id: Cataracts
   kind: source
   path: "/Textures/Shaders/cataracts.swsl"
+
+- type: shader
+  id: WeldingMaskOverlay
+  kind: source
+  path: "/Textures/Shaders/welding.swsl"
