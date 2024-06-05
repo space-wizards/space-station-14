@@ -512,46 +512,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("assigned_user_id", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.CensorFilter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("censor_id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ActionGroup")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("action_group");
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("display_name");
-
-                    b.Property<byte>("FilterType")
-                        .HasColumnType("smallint")
-                        .HasColumnName("filter_type");
-
-                    b.Property<string>("Pattern")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("pattern");
-
-                    b.Property<int>("TargetFlags")
-                        .HasColumnType("integer")
-                        .HasColumnName("target_flags");
-
-                    b.HasKey("Id")
-                        .HasName("PK_censor_filter");
-
-                    b.HasIndex("Id");
-
-                    b.ToTable("censor_filter", (string)null);
-                });
-
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
                 {
                     b.Property<int>("Id")
@@ -1294,6 +1254,46 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsUnique();
 
                     b.ToTable("server_unban", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.TextAutomodFilter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("filter_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ActionGroup")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("action_group");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("display_name");
+
+                    b.Property<byte>("FilterType")
+                        .HasColumnType("smallint")
+                        .HasColumnName("filter_type");
+
+                    b.Property<string>("Pattern")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("pattern");
+
+                    b.Property<int>("TargetFlags")
+                        .HasColumnType("integer")
+                        .HasColumnName("target_flags");
+
+                    b.HasKey("Id")
+                        .HasName("PK_text_automod");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("text_automod", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
