@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.Censor;
 using Content.Shared.Database;
@@ -42,13 +41,13 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
         _log = _logMan.GetSawmill("censor");
     }
 
-    public async void CreateCensor(string filter,
+    public async void CreateCensor(string pattern,
         CensorFilterType filterType,
         string actionGroup,
         CensorTarget targets,
         string name)
     {
-        CreateCensor(new CensorFilterDef(filter, filterType, actionGroup, targets, name));
+        CreateCensor(new CensorFilterDef(pattern, filterType, actionGroup, targets, name));
     }
 
     public async void CreateCensor(CensorFilterDef censor)

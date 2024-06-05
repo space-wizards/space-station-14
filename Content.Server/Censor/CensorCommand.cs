@@ -20,17 +20,13 @@ public sealed class CensorCommand : ToolshedCommand
     [CommandImplementation("add")]
     public void AddCensor(
             [CommandInvocationContext] IInvocationContext ctx,
-            [CommandArgument] string filter,
+            [CommandArgument] string pattern,
             [CommandArgument] CensorFilterType filterType,
             [CommandArgument] Prototype<CensorActionGroupPrototype> actionGroup,
             [CommandArgument] CensorTarget target,
             [CommandArgument] string name
         )
     {
-        _censorMan.CreateCensor(new CensorFilterDef(filter,
-            filterType,
-            actionGroup.Id,
-            target,
-            name));
+        _censorMan.CreateCensor(new CensorFilterDef(pattern, filterType, actionGroup.Id, target, name));
     }
 }

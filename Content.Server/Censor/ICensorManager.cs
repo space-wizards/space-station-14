@@ -12,7 +12,7 @@ public interface ICensorManager
     /// <inheritdoc cref="CreateCensor(CensorFilterDef)"/>
     /// </summary>
     /// <inheritdoc cref="CensorFilterDef"/>
-    public void CreateCensor(string filter,
+    public void CreateCensor(string pattern,
         CensorFilterType filterType,
         string actionGroup,
         CensorTarget targets,
@@ -32,7 +32,7 @@ public interface ICensorManager
     /// <param name="inputText"></param>
     /// <param name="session"></param>
     /// <returns>True if the message passes. False if the message should be blocked.</returns>
-    public bool RegexCensor(CensorTarget emote, string message, ICommonSession session);
+    public bool RegexCensor(CensorTarget target, string inputText, ICommonSession session);
 
     /// <summary>
     /// Clears and reloads all censors from the database.
