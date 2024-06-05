@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: brainfood1183
-  changes:
-  - message: Added Spray Paints.
-    type: Add
-  id: 6186
-  time: '2024-03-18T21:29:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23003
 - author: PJB3005
   changes:
   - message: Bans are now shown in the "adminremarks" command.
@@ -3848,3 +3841,10 @@
   id: 6685
   time: '2024-06-05T20:47:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28571
+- author: ps3moira
+  changes:
+  - message: Lit cigars inhand sprites are now visible.
+    type: Fix
+  id: 6686
+  time: '2024-06-05T21:16:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28641
