@@ -21,7 +21,7 @@ public sealed class CensorActionWarningPopup : ICensorAction
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> matchedText,
-        CensorFilter censor,
+        CensorFilterDef censor,
         IEntityManager entMan)
     {
         entMan.System<PopupSystem>()

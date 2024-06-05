@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Censor;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -1576,6 +1577,14 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             return bans;
         }
+
+        #endregion
+
+        #region Censor Filter
+
+        public abstract Task AddCensorFilter(CensorFilterDef censorFilter);
+
+        public abstract Task<List<CensorFilterDef>> GetAllCensorFiltersAsync();
 
         #endregion
 

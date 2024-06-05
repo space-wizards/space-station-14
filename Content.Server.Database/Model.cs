@@ -196,6 +196,10 @@ namespace Content.Server.Database
                 .WithMany(p => p.ConnectionLogs)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            modelBuilder.Entity<CensorFilter>()
+                .HasIndex(censor => censor.Id);
+
+
             // SetNull is necessary for created by/edited by-s here,
             // so you can safely delete admins (GDPR right to erasure) while keeping the notes intact
 
@@ -1106,7 +1110,7 @@ namespace Content.Server.Database
     {
         [Column("censor_id")] public int Id { get; set; }
 
-        public string FilterText { get; set; } = string.Empty;
+        public string Pattern { get; set; } = string.Empty;
         public CensorFilterType FilterType { get; set; }
         public string ActionGroup { get; set; } = string.Empty;
         public CensorTarget TargetFlags { get; set; }

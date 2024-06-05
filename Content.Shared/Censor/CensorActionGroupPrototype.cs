@@ -4,14 +4,22 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Censor;
 
-public sealed class CensorFilter(
-    string regex,
+/// <summary>
+/// A censor filter for running actions when a match is found in user input.
+/// </summary>
+/// <param name="pattern">The text to find in user input.</param>
+/// <param name="filterType">The type of filter to sort this definition into.</param>
+/// <param name="actionGroup">The <seealso cref="CensorActionGroupPrototype"/> to run when the <paramref name="pattern"/> is matched</param>
+/// <param name="targets">The user input types that this censor applies to.</param>
+/// <param name="name">The user facing name of this censor.</param>
+public sealed class CensorFilterDef(
+    string pattern,
     CensorFilterType filterType,
     string actionGroup,
     CensorTarget targets,
     string name)
 {
-    public readonly string FilterText = regex;
+    public readonly string Pattern = pattern;
     public readonly CensorFilterType FilterType = filterType;
     public readonly string ActionGroup = actionGroup;
     public readonly CensorTarget TargetFlags = targets;
@@ -54,7 +62,7 @@ public interface ICensorAction
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> matchedText,
-        CensorFilter censor,
+        CensorFilterDef censor,
         IEntityManager entMan);
 
     // TODO ShadowCommander add a counter for each player that counts runs on an action for checking multiple slurs

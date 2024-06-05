@@ -20,7 +20,7 @@ public sealed class CensorActionWarningChatMessage : ICensorAction
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> matchedText,
-        CensorFilter censor,
+        CensorFilterDef censor,
         IEntityManager entMan)
     {
         IoCManager.Resolve<IChatManager>()

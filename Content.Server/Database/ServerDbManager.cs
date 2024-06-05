@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Censor;
 using Content.Shared.Database;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
@@ -153,6 +154,14 @@ namespace Content.Server.Database
             DateTimeOffset? expiration,
             Guid editedBy,
             DateTimeOffset editedAt);
+        #endregion
+
+        #region Censor Filter
+
+        Task AddCensorFilterAsync(CensorFilterDef censor);
+
+        Task<List<CensorFilterDef>> GetAllCensorFiltersAsync();
+
         #endregion
 
         #region Playtime
@@ -491,6 +500,22 @@ namespace Content.Server.Database
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.EditServerRoleBan(id, reason, severity, expiration, editedBy, editedAt));
         }
+        #endregion
+
+        #region Censor Filter
+
+        public Task AddCensorFilterAsync(CensorFilterDef censor)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddCensorFilter(censor));
+        }
+
+        public Task<List<CensorFilterDef>> GetAllCensorFiltersAsync()
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAllCensorFiltersAsync());
+        }
+
         #endregion
 
         #region Playtime

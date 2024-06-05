@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Content.Server.Database;
 using Content.Shared.Censor;
 using Content.Shared.Database;
 using Robust.Shared.Player;
@@ -12,21 +14,27 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly ILogManager _logMan = default!;
+    [Dependency] private readonly IServerDbManager _db = default!;
 
     private ISawmill _log = default!;
 
     // Filters
-    private readonly Dictionary<CensorTarget, Dictionary<Regex, CensorFilter>> _regexCensors = new();
+    private readonly Dictionary<CensorTarget, Dictionary<Regex, CensorFilterDef>> _regexCensors = new();
 
     public void Initialize()
     {
         IoCManager.InjectDependencies(this);
 
-        AddCensor(new CensorFilter("amogus",
-            CensorFilterType.Regex,
-            "warning",
-            CensorTarget.IC | CensorTarget.OOC,
-            "Amogus Censor"));
+        LoadCensorsFromDatabase();
+    }
+
+    private async void LoadCensorsFromDatabase()
+    {
+        var censors = await _db.GetAllCensorFiltersAsync();
+        foreach (var censor in censors)
+        {
+            AddCensor(censor);
+        }
     }
 
     void IPostInjectInit.PostInject()
@@ -34,7 +42,22 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
         _log = _logMan.GetSawmill("censor");
     }
 
-    public void AddCensor(CensorFilter censor)
+    public async void CreateCensor(string filter,
+        CensorFilterType filterType,
+        string actionGroup,
+        CensorTarget targets,
+        string name)
+    {
+        CreateCensor(new CensorFilterDef(filter, filterType, actionGroup, targets, name));
+    }
+
+    public async void CreateCensor(CensorFilterDef censor)
+    {
+        await _db.AddCensorFilterAsync(censor);
+        AddCensor(censor);
+    }
+
+    private void AddCensor(CensorFilterDef censor)
     {
         foreach (CensorTarget targetFlag in Enum.GetValues(typeof(CensorTarget)))
         {
@@ -47,11 +70,11 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
             {
                 if (!_regexCensors.TryGetValue(targetFlag, out var list))
                 {
-                    list = new Dictionary<Regex, CensorFilter>();
+                    list = new Dictionary<Regex, CensorFilterDef>();
                     _regexCensors.Add(targetFlag, list);
                 }
 
-                list.Add(new Regex(censor.FilterText), censor);
+                list.Add(new Regex(censor.Pattern), censor);
             }
             // TODO other filter types
         }
@@ -107,5 +130,15 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
         }
 
         return blocked;
+    }
+
+    public async void ReloadCensors()
+    {
+        var censors = await _db.GetAllCensorFiltersAsync();
+
+        foreach (var censor in censors)
+        {
+            AddCensor(censor);
+        }
     }
 }

@@ -9,6 +9,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.IP;
 using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
+using Content.Shared.Censor;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -349,6 +350,43 @@ namespace Content.Server.Database
                 // SQLite apparently always reads DateTime as unspecified, but we always write as UTC.
                 DateTime.SpecifyKind(unban.UnbanTime, DateTimeKind.Utc));
         }
+        #endregion
+
+        #region Censor Filter
+
+        public override async Task AddCensorFilter(CensorFilterDef censorFilter)
+        {
+            await using var db = await GetDbImpl();
+
+            db.SqliteDbContext.Censor.Add(new CensorFilter
+            {
+                Pattern = censorFilter.Pattern,
+                FilterType = censorFilter.FilterType,
+                ActionGroup = censorFilter.ActionGroup,
+                TargetFlags = censorFilter.TargetFlags,
+                DisplayName = censorFilter.DisplayName
+            });
+
+            await db.SqliteDbContext.SaveChangesAsync();
+        }
+
+        public override async Task<List<CensorFilterDef>> GetAllCensorFiltersAsync()
+        {
+            await using var db = await GetDbImpl();
+
+            var censors = new List<CensorFilterDef>();
+            foreach (var censor in db.SqliteDbContext.Censor.ToList())
+            {
+                censors.Add(new CensorFilterDef(censor.Pattern,
+                    censor.FilterType,
+                    censor.ActionGroup,
+                    censor.TargetFlags,
+                    censor.DisplayName));
+            }
+
+            return censors;
+        }
+
         #endregion
 
         private static ServerBanDef? ConvertBan(ServerBan? ban)

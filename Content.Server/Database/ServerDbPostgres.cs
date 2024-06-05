@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.IP;
 using Content.Shared.CCVar;
+using Content.Shared.Censor;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -455,6 +456,43 @@ namespace Content.Server.Database
 
             await db.PgDbContext.SaveChangesAsync();
         }
+        #endregion
+
+        #region Censor Filter
+
+        public override async Task AddCensorFilter(CensorFilterDef censorFilter)
+        {
+            await using var db = await GetDbImpl();
+
+            db.PgDbContext.Censor.Add(new CensorFilter
+            {
+                Pattern = censorFilter.Pattern,
+                FilterType = censorFilter.FilterType,
+                ActionGroup = censorFilter.ActionGroup,
+                TargetFlags = censorFilter.TargetFlags,
+                DisplayName = censorFilter.DisplayName
+            });
+
+            await db.PgDbContext.SaveChangesAsync();
+        }
+
+        public override async Task<List<CensorFilterDef>> GetAllCensorFiltersAsync()
+        {
+            await using var db = await GetDbImpl();
+
+            var censors = new List<CensorFilterDef>();
+            foreach (var censor in db.PgDbContext.Censor.ToList())
+            {
+                censors.Add(new CensorFilterDef(censor.Pattern,
+                    censor.FilterType,
+                    censor.ActionGroup,
+                    censor.TargetFlags,
+                    censor.DisplayName));
+            }
+
+            return censors;
+        }
+
         #endregion
 
         public override async Task<int> AddConnectionLogAsync(
