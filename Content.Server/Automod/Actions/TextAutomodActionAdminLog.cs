@@ -28,8 +28,8 @@ public sealed class TextAutomodActionAdminLog : ITextAutomodAction
             .Add(
                 LogType.TextAutomod,
                 Impact,
-                $"{session.Name} ({session.UserId}) tripped {automod.DisplayName} ({automod.Id}) which matched \"{
-                    new StringBuilder().AppendJoin(", ", patternMatches.Keys)}\"");
+                $"{entMan.ToPrettyString(session.AttachedEntity):player} ({session}) tripped {automod.DisplayName
+                } ({automod.Id}) which matched \"{new StringBuilder().AppendJoin(", ", patternMatches.Keys)}\"");
 
         return true;
     }
