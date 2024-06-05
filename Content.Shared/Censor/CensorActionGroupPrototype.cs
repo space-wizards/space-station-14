@@ -40,7 +40,7 @@ public sealed class CensorFilterDef(
 /// <summary>
 /// A group of actions to be run when a censor matches the text.
 /// </summary>
-[Prototype]
+[Prototype("censorActionGroup")]
 public sealed class CensorActionGroupPrototype : IPrototype
 {
     [ViewVariables]
