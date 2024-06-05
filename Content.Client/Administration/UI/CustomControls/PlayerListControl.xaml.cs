@@ -153,7 +153,7 @@ namespace Content.Client.Administration.UI.CustomControls
 
             var pinButton = new Button
             {
-                Text = info.IsPinned ? "Unpin" : "Pin",
+                Text = info.IsPinned ? Loc.GetString("bwoink-system-unpinned-button-text") : Loc.GetString("bwoink-system-pinned-button-text"),
                 HorizontalAlignment = HAlignment.Right
             };
             pinButton.AddStyleClass("OpenRight");
