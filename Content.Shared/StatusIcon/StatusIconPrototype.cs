@@ -73,14 +73,6 @@ public partial class StatusIconData : IComparable<StatusIconData>
     /// </summary>
     [DataField]
     public bool IsShaded = false;
-
-    /// <summary>
-    /// Icon group identifiers.
-    /// Used for the agent ID for filtering valid job icons.
-    /// </summary>
-    [DataField]
-    public HashSet<string> Groups = new();
-
     public int CompareTo(StatusIconData? other)
     {
         return Priority.CompareTo(other?.Priority ?? int.MaxValue);
