@@ -47,7 +47,7 @@
   Refers to the health state at which you fall unconscious and unable to move. While in critical, your health slowly decays until you die, unless you happen to get outside assistance.
 
   ## Emag/Emagged
-  Refers to the Syndicate cryptographic sequencer or any device affected by it. Usually refers to doors or lockers that are bolted open.
+  Refers to the Syndicate cryptographic sequencer/any device affected by it. Usually refers to airlocks or lockers that are bolted open.
 
   ## Emergency Access/EA
   An airlock that can be opened by anyone, even without access or an ID at all. Airlocks that are set to emergency access have blinking yellow lights.
@@ -99,10 +99,7 @@
 
   ## Shift
   In-Character way to refer to rounds.
-
-  ## ShitSec
-  A derogatory term referring to an incompetent sec team. Often times used by criminals who are just upset that they were arrested. Just as often justified.
-
+  
   ## Singulo
   A shortening of the Singularity Engine. A Singulo can create infinite power for the station but is very dangerous.
 

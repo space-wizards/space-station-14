@@ -61,6 +61,7 @@ guide-entry-criminal-records = Criminal Records
 guide-entry-species = Species
 
 guide-entry-newplayer = New? Start here!
+guide-entry-roleplaying = RP Do's and Don'ts
 guide-entry-charactercreation = Character Creation
 
 guide-entry-antagonists = Antagonists
