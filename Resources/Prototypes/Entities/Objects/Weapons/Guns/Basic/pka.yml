@@ -3,8 +3,20 @@
   abstract: true
   parent: BaseItem
   components:
+
+- type: entity
+  name: proto-kinetic accelerator
+  id: WeaponProtoKineticAccelerator
+  parent: WeaponProtoKineticAcceleratorBase
+  description: Fires low-damage kinetic bolts at a short range.
+  components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
+    layers:
+    - state: icon
+    - state: animation-icon
+      visible: false
+      map: [ "empty-icon" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
     size: Normal
@@ -47,19 +59,5 @@
     - Belt
   - type: UseDelay
     delay: 1
-
-- type: entity
-  name: proto-kinetic accelerator
-  id: WeaponProtoKineticAccelerator
-  parent: WeaponProtoKineticAcceleratorBase
-  description: Fires low-damage kinetic bolts at a short range.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-    layers:
-    - state: icon
-    - state: animation-icon
-      visible: false
-      map: [ "empty-icon" ]
   # todo: add itemcomponent with inhandVisuals states using unused texture and animation assets in kinetic_accelerator.rsi
   # todo: add clothingcomponent with clothingVisuals states using unused texture and animations assets in kinetic_accelerator.rsi
