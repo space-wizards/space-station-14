@@ -143,9 +143,9 @@
   ## Bwoink
   The noise made when an admin-help is received. Pray this isn't a ban.
 
-  ## Upstream
-  The baseline version of the game. Any changes to Upstream will "flow" down to all other forks of the game. All official Wizard's Den servers work off of Upstream.
-
+  ## LOOC/OOC
+  Local out-of-character and (global) out-of-character respectively. They are text channels that allow players to talk to other players outside of roleplay. LOOC is enabled during rounds, while OOC is typically only on after the round ends.
+  
   ## LRP
   Low Roleplay. Servers marked LRP typically have relaxed roleplaying rules.
 
@@ -157,7 +157,10 @@
 
   ## Self-Antag
   A term for a player who engages in antagonist-like activity without actually being an antagonist. This encompasses a wide variety of behavior, but is typically used to describe annoying behavior or actions which are greatly detrimental to other players for no purpose. Self-antagonism is a bannable offense. Sometimes used in IC. DO NOT DO THIS.
-
+  
+  ## Upstream
+  The baseline version of the game. Any changes to Upstream will "flow" down to all other forks of the game. All official Wizard's Den servers work off of Upstream.
+  
   ## Validhunting
   A player who hunts down "valids", as in people that are valid to kill, even though this person isn't security.
 
