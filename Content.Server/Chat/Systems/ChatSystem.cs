@@ -183,19 +183,6 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
         }
 
-        // Chat censor
-        // Player isn't always provided, so get session. Kinda hacky for now.
-        var session = player;
-        if (player == null && TryComp(source, out MindContainerComponent? mindContainer) && mindContainer.HasMind && TryComp(mindContainer.Mind, out MindComponent? mind))
-        {
-            session = mind.Session;
-        }
-        if (session != null
-            && !_automod.Filter(desiredType == InGameICChatType.Emote ? AutomodTarget.Emote : AutomodTarget.IC,
-                message,
-                session))
-            return;
-
         if (player != null && !_chatManager.HandleRateLimit(player))
             return;
 
@@ -222,6 +209,19 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             _chatManager.EnsurePlayer(player.UserId).AddEntity(GetNetEntity(source));
         }
+
+        // Chat automod
+        // Player isn't always provided, so get session. Kinda hacky for now.
+        var session = player;
+        if (player == null && TryComp(source, out MindContainerComponent? mindContainer) && mindContainer.HasMind && TryComp(mindContainer.Mind, out MindComponent? mind))
+        {
+            session = mind.Session;
+        }
+        if (session != null
+            && !_automod.Filter(desiredType == InGameICChatType.Emote ? AutomodTarget.Emote : AutomodTarget.IC,
+                message,
+                session))
+            return;
 
         if (desiredType == InGameICChatType.Speak && message.StartsWith(LocalPrefix))
         {
