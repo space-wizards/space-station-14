@@ -1185,44 +1185,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("server_unban", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.TextAutomodFilter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("filter_id");
-
-                    b.Property<string>("ActionGroup")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("action_group");
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("display_name");
-
-                    b.Property<byte>("FilterType")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("filter_type");
-
-                    b.Property<string>("Pattern")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("pattern");
-
-                    b.Property<int>("TargetFlags")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("target_flags");
-
-                    b.HasKey("Id")
-                        .HasName("PK_text_automod");
-
-                    b.HasIndex("Id");
-
-                    b.ToTable("text_automod", (string)null);
-                });
-
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
                 {
                     b.Property<int>("Id")
