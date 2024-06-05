@@ -55,6 +55,7 @@ guide-entry-controls = Controls
 guide-entry-radio = Radio and Speech
 
 guide-entry-references = Reference Tables
+guide-entry-drinks = Drinks
 guide-entry-foodrecipes = Food Recipes
 guide-entry-chemicals = Chemicals
 guide-entry-elements = Elements

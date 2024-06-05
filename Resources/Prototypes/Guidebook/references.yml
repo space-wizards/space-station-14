@@ -9,6 +9,11 @@
   - Writing
 
 - type: guideEntry
+  id: Drinks
+  name: guide-entry-drinks
+  text: /ServerInfo/Guidebook/Reference Tables/Drinks.xml"
+
+- type: guideEntry
   id: FoodRecipes
   name: guide-entry-foodrecipes
   text: "/ServerInfo/Guidebook/Service/FoodRecipes.xml"
