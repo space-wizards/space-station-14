@@ -1,6 +1,6 @@
 ﻿namespace Content.Shared.Database;
 
-public enum CensorFilterType : byte
+public enum AutomodFilterType : byte
 {
     PlainTextWords,
     FalsePositives,

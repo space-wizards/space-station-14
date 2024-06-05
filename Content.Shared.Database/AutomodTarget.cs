@@ -1,7 +1,7 @@
 ﻿namespace Content.Shared.Database;
 
 [Flags]
-public enum CensorTarget
+public enum AutomodTarget
 {
     None  = 0,
     IC    = 1 << 0,

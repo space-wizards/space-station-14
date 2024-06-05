@@ -2,36 +2,36 @@
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Censor;
+namespace Content.Shared.Automod;
 
 /// <summary>
 /// A censor filter for running actions when a match is found in user input.
 /// </summary>
 /// <param name="pattern">The text to find in user input.</param>
 /// <param name="filterType">The type of filter to sort this definition into.</param>
-/// <param name="actionGroup">The <seealso cref="CensorActionGroupPrototype"/> to run when the <paramref name="pattern"/> is matched</param>
+/// <param name="actionGroup">The <seealso cref="AutomodActionGroupPrototype"/> to run when the <paramref name="pattern"/> is matched</param>
 /// <param name="targets">The user input types that this censor applies to.</param>
 /// <param name="name">The user facing name of this censor.</param>
-public sealed class CensorFilterDef(
+public sealed class AutomodFilterDef(
     int? id,
     string pattern,
-    CensorFilterType filterType,
+    AutomodFilterType filterType,
     string actionGroup,
-    CensorTarget targets,
+    AutomodTarget targets,
     string name)
 {
     public readonly int? Id = id;
     public readonly string Pattern = pattern;
-    public readonly CensorFilterType FilterType = filterType;
+    public readonly AutomodFilterType FilterType = filterType;
     public readonly string ActionGroup = actionGroup;
-    public readonly CensorTarget TargetFlags = targets;
+    public readonly AutomodTarget TargetFlags = targets;
     public readonly string DisplayName = name;
 
-    public CensorFilterDef(
+    public AutomodFilterDef(
         string pattern,
-        CensorFilterType filterType,
+        AutomodFilterType filterType,
         string actionGroup,
-        CensorTarget targets,
+        AutomodTarget targets,
         string name) : this(null, pattern, filterType, actionGroup, targets, name)
     {
     }
@@ -40,18 +40,18 @@ public sealed class CensorFilterDef(
 /// <summary>
 /// A group of actions to be run when a censor matches the text.
 /// </summary>
-[Prototype("censorActionGroup")]
-public sealed class CensorActionGroupPrototype : IPrototype
+[Prototype("automodActionGroup")]
+public sealed class AutomodActionGroupPrototype : IPrototype
 {
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
 
     [DataField]
-    public List<ICensorAction> CensorActions = new();
+    public List<ITextAutomodAction> AutomodActions = new();
 }
 
-public interface ICensorAction
+public interface ITextAutomodAction
 {
     /// <summary>
     /// Check whether the actions should be run.
@@ -59,7 +59,7 @@ public interface ICensorAction
     /// <param name="fullText">The full text provided by the user.</param>
     /// <param name="patternMatches">The text matched by the censor.</param>
     /// <returns>True when this censor should be skipped.</returns>
-    public bool SkipCensor(string fullText, Dictionary<string, int> patternMatches);
+    public bool Skip(string fullText, Dictionary<string, int> patternMatches);
 
     /// <summary>
     /// Run actions on the session.
@@ -67,15 +67,15 @@ public interface ICensorAction
     /// <param name="session">The session the text came from.</param>
     /// <param name="fullText">The full text provided by the user.</param>
     /// <param name="patternMatches">The text matched by the censor.</param>
-    /// <param name="censor">The censor that matched the <paramref name="fullText"/>.</param>
+    /// <param name="automod">The censor that matched the <paramref name="fullText"/>.</param>
     /// <param name="entMan"></param>
     /// <returns>True if the message passes. False if the message should be blocked.</returns>
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> patternMatches,
-        CensorFilterDef censor,
+        AutomodFilterDef automod,
         IEntityManager entMan);
 
-    // TODO ShadowCommander add a counter for each player that counts runs on an action for checking multiple slurs
+    // TODO ShadowCommander add a counter for each player that counts runs on an action for checking multiple hits
     // in a certain time frame for auto banning and such
 }

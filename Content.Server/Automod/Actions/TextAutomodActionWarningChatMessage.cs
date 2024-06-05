@@ -1,18 +1,18 @@
 ﻿using System.Text;
 using Content.Server.Chat.Managers;
-using Content.Shared.Censor;
+using Content.Shared.Automod;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 
-namespace Content.Server.Censor.Actions;
+namespace Content.Server.Automod.Actions;
 
 [UsedImplicitly]
-public sealed class CensorActionWarningChatMessage : ICensorAction
+public sealed class TextAutomodActionWarningChatMessage : ITextAutomodAction
 {
     [DataField]
     public string Reason = "censor-action-warning-chat-reason";
 
-    public bool SkipCensor(string fullText, Dictionary<string, int> patternMatches)
+    public bool Skip(string fullText, Dictionary<string, int> patternMatches)
     {
         return false;
     }
@@ -20,14 +20,14 @@ public sealed class CensorActionWarningChatMessage : ICensorAction
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> patternMatches,
-        CensorFilterDef censor,
+        AutomodFilterDef automod,
         IEntityManager entMan)
     {
         IoCManager.Resolve<IChatManager>()
             .DispatchServerMessage(session,
                 Loc.GetString(Reason,
                     ("matches", new StringBuilder().AppendJoin(", ", patternMatches.Keys)),
-                    ("censorName", censor.DisplayName)));
+                    ("censorName", automod.DisplayName)));
 
         return true;
     }

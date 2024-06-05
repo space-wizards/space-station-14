@@ -41,7 +41,7 @@ namespace Content.Server.Database
         public DbSet<AdminWatchlist> AdminWatchlists { get; set; } = null!;
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
-        public DbSet<CensorFilter> Censor { get; set; } = default!;
+        public DbSet<TextAutomodFilter> TextAutomod { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -324,7 +324,7 @@ namespace Content.Server.Database
                 .HasPrincipalKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<CensorFilter>()
+            modelBuilder.Entity<TextAutomodFilter>()
                 .HasIndex(censor => censor.Id);
         }
 
@@ -1124,15 +1124,15 @@ namespace Content.Server.Database
         public string RoleId { get; set; } = default!;
     }
 
-    [Table("censor_filter")]
-    public sealed class CensorFilter
+    [Table("text_automod")]
+    public sealed class TextAutomodFilter
     {
-        [Column("censor_id")] public int Id { get; set; }
+        [Column("filter_id")] public int Id { get; set; }
 
         public string Pattern { get; set; } = string.Empty;
-        public CensorFilterType FilterType { get; set; }
+        public AutomodFilterType FilterType { get; set; }
         public string ActionGroup { get; set; } = string.Empty;
-        public CensorTarget TargetFlags { get; set; }
+        public AutomodTarget TargetFlags { get; set; }
         public string DisplayName { get; set; } = string.Empty;
     }
 }

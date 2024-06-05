@@ -1,13 +1,13 @@
 ﻿using Content.Server.Administration.Managers;
-using Content.Shared.Censor;
+using Content.Shared.Automod;
 using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 
-namespace Content.Server.Censor.Actions;
+namespace Content.Server.Automod.Actions;
 
 [UsedImplicitly]
-public sealed class CensorActionBan : ICensorAction
+public sealed class TextAutomodActionBan : ITextAutomodAction
 {
     [DataField]
     public uint? BanTime;
@@ -18,7 +18,7 @@ public sealed class CensorActionBan : ICensorAction
     [DataField]
     public string BanCountGroup = "default";
 
-    public bool SkipCensor(string fullText, Dictionary<string, int> patternMatches)
+    public bool Skip(string fullText, Dictionary<string, int> patternMatches)
     {
         return false;
     }
@@ -26,7 +26,7 @@ public sealed class CensorActionBan : ICensorAction
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> patternMatches,
-        CensorFilterDef censor,
+        AutomodFilterDef automod,
         IEntityManager entMan)
     {
         var banManager = IoCManager.Resolve<IBanManager>();
@@ -40,7 +40,7 @@ public sealed class CensorActionBan : ICensorAction
             null,
             BanTime,
             NoteSeverity.Minor,
-            Loc.GetString(Reason, ("censorName", censor)));
+            Loc.GetString(Reason, ("censorName", automod)));
 
         return false;
     }

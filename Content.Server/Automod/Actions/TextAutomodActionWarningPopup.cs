@@ -1,19 +1,19 @@
 ﻿using System.Text;
 using Content.Server.Popups;
-using Content.Shared.Censor;
+using Content.Shared.Automod;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 
-namespace Content.Server.Censor.Actions;
+namespace Content.Server.Automod.Actions;
 
 [UsedImplicitly]
-public sealed class CensorActionWarningPopup : ICensorAction
+public sealed class TextAutomodActionWarningPopup : ITextAutomodAction
 {
     [DataField]
     public string Reason = "censor-action-warning-popup-reason";
 
-    public bool SkipCensor(string fullText, Dictionary<string, int> patternMatches)
+    public bool Skip(string fullText, Dictionary<string, int> patternMatches)
     {
         return false;
     }
@@ -21,14 +21,14 @@ public sealed class CensorActionWarningPopup : ICensorAction
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> patternMatches,
-        CensorFilterDef censor,
+        AutomodFilterDef automod,
         IEntityManager entMan)
     {
         entMan.System<PopupSystem>()
             .PopupCursor(Loc.GetString(Reason,
                     ("matches", new StringBuilder().AppendJoin(", ", patternMatches.Keys)),
-                    ("censorName", censor.DisplayName),
-                    ("censorId", censor.Id is null ? "" : censor.Id)),
+                    ("censorName", automod.DisplayName),
+                    ("censorId", automod.Id is null ? "" : automod.Id)),
                 session,
                 PopupType.LargeCaution);
 

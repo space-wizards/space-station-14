@@ -1,0 +1,4 @@
+﻿- type: automodActionGroup
+  id: warning
+  censorActions:
+  - !type:TextAutomodActionWarningPopup

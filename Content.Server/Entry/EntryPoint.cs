@@ -3,7 +3,7 @@ using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
-using Content.Server.Censor;
+using Content.Server.Automod;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
@@ -105,7 +105,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<GhostKickManager>().Initialize();
                 IoCManager.Resolve<ServerInfoManager>().Initialize();
                 IoCManager.Resolve<ServerApi>().Initialize();
-                IoCManager.Resolve<ICensorManager>().Initialize();
+                IoCManager.Resolve<IAutomodManager>().Initialize();
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();

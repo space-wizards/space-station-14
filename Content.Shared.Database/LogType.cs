@@ -97,5 +97,5 @@ public enum LogType
     AtmosTemperatureChanged = 88,
     DeviceNetwork = 89,
     StoreRefund = 90,
-    Censor = 91
+    TextAutomod = 91,
 }

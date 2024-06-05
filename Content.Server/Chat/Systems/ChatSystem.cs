@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
-using Content.Server.Censor;
+using Content.Server.Automod;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Speech.Components;
@@ -13,7 +13,6 @@ using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Content.Shared.Censor;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
@@ -56,7 +55,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ICensorManager _censor = default!;
+    [Dependency] private readonly IAutomodManager _automod = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
@@ -192,7 +191,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             session = mind.Session;
         }
         if (session != null
-            && !_censor.Censor(desiredType == InGameICChatType.Emote ? CensorTarget.Emote : CensorTarget.IC,
+            && !_automod.Filter(desiredType == InGameICChatType.Emote ? AutomodTarget.Emote : AutomodTarget.IC,
                 message,
                 session))
             return;
@@ -296,7 +295,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             session = mind.Session;
         }
-        if (session != null && !_censor.Censor(CensorTarget.OOC, message, session))
+        if (session != null && !_automod.Filter(AutomodTarget.OOC, message, session))
             return;
 
         // It doesn't make any sense for a non-player to send in-game OOC messages, whereas non-players may be sending

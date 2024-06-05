@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.IP;
 using Content.Server.Preferences.Managers;
+using Content.Shared.Automod;
 using Content.Shared.CCVar;
-using Content.Shared.Censor;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -352,48 +352,48 @@ namespace Content.Server.Database
         }
         #endregion
 
-        #region Censor Filter
+        #region TextAutomod Filter
 
-        public override async Task<CensorFilterDef> AddCensorFilter(CensorFilterDef censorFilter)
+        public override async Task<AutomodFilterDef> AddTextAutomodFilter(AutomodFilterDef automodFilter)
         {
             await using var db = await GetDbImpl();
 
-            var censor = new CensorFilter
+            var censor = new TextAutomodFilter
             {
-                Pattern = censorFilter.Pattern,
-                FilterType = censorFilter.FilterType,
-                ActionGroup = censorFilter.ActionGroup,
-                TargetFlags = censorFilter.TargetFlags,
-                DisplayName = censorFilter.DisplayName
+                Pattern = automodFilter.Pattern,
+                FilterType = automodFilter.FilterType,
+                ActionGroup = automodFilter.ActionGroup,
+                TargetFlags = automodFilter.TargetFlags,
+                DisplayName = automodFilter.DisplayName
             };
-            db.SqliteDbContext.Censor.Add(censor);
+            db.SqliteDbContext.TextAutomod.Add(censor);
 
             await db.SqliteDbContext.SaveChangesAsync();
-            return ConvertCensorFilter(censor);
+            return ConvertTextAutomodFilter(censor);
         }
 
-        public override async Task<List<CensorFilterDef>> GetAllCensorFiltersAsync()
+        public override async Task<List<AutomodFilterDef>> GetAllTextAutomodFiltersAsync()
         {
             await using var db = await GetDbImpl();
 
-            var censors = new List<CensorFilterDef>();
-            foreach (var censor in db.SqliteDbContext.Censor.ToList())
+            var censors = new List<AutomodFilterDef>();
+            foreach (var censor in db.SqliteDbContext.TextAutomod.ToList())
             {
-                censors.Add(ConvertCensorFilter(censor));
+                censors.Add(ConvertTextAutomodFilter(censor));
             }
 
             return censors;
         }
 
-        private CensorFilterDef ConvertCensorFilter(CensorFilter censor)
+        private AutomodFilterDef ConvertTextAutomodFilter(TextAutomodFilter textAutomod)
         {
-            return new CensorFilterDef(
-                censor.Id,
-                censor.Pattern,
-                censor.FilterType,
-                censor.ActionGroup,
-                censor.TargetFlags,
-                censor.DisplayName);
+            return new AutomodFilterDef(
+                textAutomod.Id,
+                textAutomod.Pattern,
+                textAutomod.FilterType,
+                textAutomod.ActionGroup,
+                textAutomod.TargetFlags,
+                textAutomod.DisplayName);
         }
 
         #endregion

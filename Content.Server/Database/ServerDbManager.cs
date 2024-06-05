@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Automod;
 using Content.Shared.CCVar;
-using Content.Shared.Censor;
 using Content.Shared.Database;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -158,16 +158,16 @@ namespace Content.Server.Database
             DateTimeOffset editedAt);
         #endregion
 
-        #region Censor Filter
+        #region Text Automod Filter
 
         /// <summary>
         /// Add a censor filter to the database.
         /// </summary>
-        /// <param name="censor">To add to the database.</param>
+        /// <param name="automod">To add to the database.</param>
         /// <returns>The censor added to the database with its Id.</returns>
-        Task<CensorFilterDef> AddCensorFilterAsync(CensorFilterDef censor);
+        Task<AutomodFilterDef> AddAutomodFilterAsync(AutomodFilterDef automod);
 
-        Task<List<CensorFilterDef>> GetAllCensorFiltersAsync();
+        Task<List<AutomodFilterDef>> GetAllAutomodFiltersAsync();
 
         #endregion
 
@@ -521,18 +521,18 @@ namespace Content.Server.Database
         }
         #endregion
 
-        #region Censor Filter
+        #region Text Automod Filter
 
-        public Task<CensorFilterDef> AddCensorFilterAsync(CensorFilterDef censor)
+        public Task<AutomodFilterDef> AddAutomodFilterAsync(AutomodFilterDef automod)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.AddCensorFilter(censor));
+            return RunDbCommand(() => _db.AddTextAutomodFilter(automod));
         }
 
-        public Task<List<CensorFilterDef>> GetAllCensorFiltersAsync()
+        public Task<List<AutomodFilterDef>> GetAllAutomodFiltersAsync()
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetAllCensorFiltersAsync());
+            return RunDbCommand(() => _db.GetAllTextAutomodFiltersAsync());
         }
 
         #endregion

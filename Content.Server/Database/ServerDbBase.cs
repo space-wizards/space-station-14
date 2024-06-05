@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Censor;
+using Content.Shared.Automod;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -1641,11 +1641,11 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #endregion
 
-        #region Censor Filter
+        #region Text Automod Filter
 
-        public abstract Task<CensorFilterDef> AddCensorFilter(CensorFilterDef censorFilter);
+        public abstract Task<AutomodFilterDef> AddTextAutomodFilter(AutomodFilterDef automodFilter);
 
-        public abstract Task<List<CensorFilterDef>> GetAllCensorFiltersAsync();
+        public abstract Task<List<AutomodFilterDef>> GetAllTextAutomodFiltersAsync();
 
         #endregion
 
