@@ -10,7 +10,7 @@ namespace Content.Server.Automod.Actions;
 public sealed class TextAutomodActionWarningChatMessage : ITextAutomodAction
 {
     [DataField]
-    public string Reason = "censor-action-warning-chat-reason";
+    public string Reason = "automod-action-warning-chat-reason";
 
     public bool Skip(string fullText, Dictionary<string, int> patternMatches)
     {

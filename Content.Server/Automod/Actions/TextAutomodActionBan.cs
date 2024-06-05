@@ -13,7 +13,7 @@ public sealed class TextAutomodActionBan : ITextAutomodAction
     public uint? BanTime;
 
     [DataField]
-    public string Reason = "censor-action-ban-reason";
+    public string Reason = "automod-action-ban-reason";
 
     [DataField]
     public string BanCountGroup = "default";

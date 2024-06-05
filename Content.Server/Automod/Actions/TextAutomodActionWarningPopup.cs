@@ -11,7 +11,7 @@ namespace Content.Server.Automod.Actions;
 public sealed class TextAutomodActionWarningPopup : ITextAutomodAction
 {
     [DataField]
-    public string Reason = "censor-action-warning-popup-reason";
+    public string Reason = "automod-action-warning-popup-reason";
 
     public bool Skip(string fullText, Dictionary<string, int> patternMatches)
     {
