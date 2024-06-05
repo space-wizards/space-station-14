@@ -1,4 +1,4 @@
-- type: JobRequirementOverride
+- type: jobRequirementOverride
   id: Reduced
   jobs:
     Captain:

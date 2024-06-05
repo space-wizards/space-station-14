@@ -5,7 +5,7 @@ namespace Content.Shared.Roles;
 /// <summary>
 /// Collection of job, antag, and ghost-role job requirements for per-server requirement overrides.
 /// </summary>
-[Prototype("JobRequirementOverride")]
+[Prototype]
 public sealed partial class JobRequirementOverridePrototype : IPrototype
 {
     [ViewVariables]
