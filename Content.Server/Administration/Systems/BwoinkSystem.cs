@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
+using Content.Server.Database;
 using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
@@ -35,6 +36,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly IAfkManager _afkManager = default!;
+        [Dependency] private readonly IServerDbManager _dbManager = default!;
 
         [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
         private static partial Regex DiscordRegex();
@@ -76,7 +78,15 @@ namespace Content.Server.Administration.Systems
             Subs.CVar(_config, CVars.GameHostName, OnServerNameChanged, true);
             Subs.CVar(_config, CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
-            _maxAdditionalChars = GenerateAHelpMessage("", "", true, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, playedSound: false).Length;
+            var defaultParams = new AHelpMessageParams(
+                string.Empty,
+                string.Empty,
+                true,
+                _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"),
+                _gameTicker.RunLevel,
+                playedSound: false
+            );
+            _maxAdditionalChars = GenerateAHelpMessage(defaultParams).Length;
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
@@ -88,7 +98,14 @@ namespace Content.Server.Administration.Systems
             _overrideClientName = obj;
         }
 
-        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+        public enum PlayerStatusType
+        {
+            Connected,
+            Disconnected,
+            Banned
+        }
+
+        private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus == SessionStatus.Disconnected)
             {
@@ -101,20 +118,29 @@ namespace Content.Server.Administration.Systems
                         return; // Do not send disconnect message if timeout exceeded
                     }
                 }
+
+                // Check if the user has been banned
+                var ban = await _dbManager.GetServerBanAsync(null, e.Session.UserId, null);
+                if (ban != null)
+                {
+                    var banMessage = Loc.GetString("bwoink-system-player-banned", ("banReason", ban.Reason));
+                    NotifyAdmins(e.Session, banMessage, PlayerStatusType.Banned);
+                    return;
+                }
             }
 
             // Notify all admins if a player disconnects or reconnects
             var message = e.NewStatus switch
             {
-                SessionStatus.Connected => $"{e.Session.Name} has reconnected.",
-                SessionStatus.Disconnected => $"{e.Session.Name} has disconnected.",
+                SessionStatus.Connected => Loc.GetString("bwoink-system-player-reconnecting"),
+                SessionStatus.Disconnected => Loc.GetString("bwoink-system-player-disconnecting"),
                 _ => null
             };
 
             if (message != null)
             {
-                var isReconnected = e.NewStatus == SessionStatus.Connected;
-                NotifyAdmins(e.Session.UserId, message, isReconnected);
+                var statusType = e.NewStatus == SessionStatus.Connected ? PlayerStatusType.Connected : PlayerStatusType.Disconnected;
+                NotifyAdmins(e.Session, message, statusType);
             }
 
             if (e.NewStatus != SessionStatus.InGame)
@@ -123,23 +149,52 @@ namespace Content.Server.Administration.Systems
             RaiseNetworkEvent(new BwoinkDiscordRelayUpdated(!string.IsNullOrWhiteSpace(_webhookUrl)), e.Session);
         }
 
-
-
-        private void NotifyAdmins(NetUserId userId, string message, bool isReconnected)
+        private void NotifyAdmins(ICommonSession session, string message, PlayerStatusType statusType)
         {
-            if (!_activeConversations.ContainsKey(userId))
+            if (!_activeConversations.ContainsKey(session.UserId))
             {
+                // If the user is not part of an active conversation, do not notify admins.
                 return;
             }
 
-            // Colorize the message based on the status
-            var color = isReconnected ? "green" : "red";
-            var coloredMessage = $"[color={color}]{message}[/color]";
+            // Get the current timestamp
+            var timestamp = DateTime.Now.ToString("HH:mm:ss");
+            var roundTime = _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss");
+
+            // Determine the icon based on the status type
+            string icon = statusType switch
+            {
+                PlayerStatusType.Connected => ":green_circle:",
+                PlayerStatusType.Disconnected => ":red_circle:",
+                PlayerStatusType.Banned => ":no_entry:",
+                _ => ":question:"
+            };
+
+            // Create the message parameters for Discord
+            var messageParams = new AHelpMessageParams(
+                session.Name,
+                message,
+                true,
+                roundTime,
+                _gameTicker.RunLevel,
+                playedSound: true,
+                icon: icon
+            );
+
+            // Create the message for in-game with username
+            var color = statusType switch
+            {
+                PlayerStatusType.Connected => "green",
+                PlayerStatusType.Disconnected => "yellow",
+                PlayerStatusType.Banned => "orange",
+                _ => "gray"
+            };
+            var inGameMessage = $"[color={color}]{session.Name}: {message}[/color]";
 
             var bwoinkMessage = new BwoinkTextMessage(
-                userId: userId,
+                userId: session.UserId,
                 trueSender: SystemUserId,
-                text: coloredMessage,
+                text: inGameMessage,
                 sentAt: DateTime.Now,
                 playSound: false
             );
@@ -153,17 +208,16 @@ namespace Content.Server.Administration.Systems
             // Enqueue the message for Discord relay
             if (_webhookUrl != string.Empty)
             {
-                if (!_messageQueues.ContainsKey(userId))
-                    _messageQueues[userId] = new Queue<string>();
+                if (!_messageQueues.ContainsKey(session.UserId))
+                    _messageQueues[session.UserId] = new Queue<string>();
 
                 var escapedText = FormattedMessage.EscapeText(message);
-                var discordMessage = isReconnected ? $":green_circle: {escapedText}" : $":red_circle: {escapedText}";
+                messageParams.Message = escapedText;
 
-                _messageQueues[userId].Enqueue(discordMessage);
+                var discordMessage = GenerateAHelpMessage(messageParams);
+                _messageQueues[session.UserId].Enqueue(discordMessage);
             }
         }
-
-
 
         private void OnGameRunLevelChanged(GameRunLevelChangedEvent args)
         {
@@ -545,7 +599,16 @@ namespace Content.Server.Administration.Systems
                     str = str[..(DescriptionMax - _maxAdditionalChars - unameLength)];
                 }
                 var nonAfkAdmins = GetNonAfkAdmins();
-                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, playedSound: playSound, noReceivers: nonAfkAdmins.Count == 0));
+                var messageParams = new AHelpMessageParams(
+                    senderSession.Name,
+                    str,
+                    !personalChannel,
+                    _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"),
+                    _gameTicker.RunLevel,
+                    playedSound: playSound,
+                    noReceivers: nonAfkAdmins.Count == 0
+                );
+                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(messageParams));
             }
 
             if (admins.Count != 0 || sendsWebhook)
@@ -573,25 +636,66 @@ namespace Content.Server.Administration.Systems
                 .ToList();
         }
 
-        private static string GenerateAHelpMessage(string username, string message, bool admin, string roundTime, GameRunLevel roundState, bool playedSound, bool noReceivers = false)
+        private static string GenerateAHelpMessage(AHelpMessageParams parameters)
         {
             var stringbuilder = new StringBuilder();
 
-            if (admin)
-                stringbuilder.Append(":outbox_tray:");
-            else if (noReceivers)
-                stringbuilder.Append(":sos:");
+            if (parameters.Icon != null)
+            {
+                stringbuilder.Append(parameters.Icon);
+            }
             else
-                stringbuilder.Append(":inbox_tray:");
+            {
+                if (parameters.IsAdmin)
+                    stringbuilder.Append(":outbox_tray:");
+                else if (parameters.NoReceivers)
+                    stringbuilder.Append(":sos:");
+                else
+                    stringbuilder.Append(":inbox_tray:");
+            }
 
-            if(roundTime != string.Empty && roundState == GameRunLevel.InRound)
-                stringbuilder.Append($" **{roundTime}**");
-            if (!playedSound)
+            if (parameters.RoundTime != string.Empty && parameters.RoundState == GameRunLevel.InRound)
+                stringbuilder.Append($" **{parameters.RoundTime}**");
+            if (!parameters.PlayedSound)
                 stringbuilder.Append(" **(S)**");
-            stringbuilder.Append($" **{username}:** ");
-            stringbuilder.Append(message);
+            stringbuilder.Append($" **{parameters.Username}:** ");
+            stringbuilder.Append(parameters.Message);
             return stringbuilder.ToString();
         }
+
     }
 }
+
+public class AHelpMessageParams
+{
+    public string Username { get; set; }
+    public string Message { get; set; }
+    public bool IsAdmin { get; set; }
+    public string RoundTime { get; set; }
+    public GameRunLevel RoundState { get; set; }
+    public bool PlayedSound { get; set; }
+    public bool NoReceivers { get; set; }
+    public string? Icon { get; set; }
+
+    public AHelpMessageParams(
+        string username,
+        string message,
+        bool isAdmin,
+        string roundTime,
+        GameRunLevel roundState,
+        bool playedSound,
+        bool noReceivers = false,
+        string? icon = null)
+    {
+        Username = username;
+        Message = message;
+        IsAdmin = isAdmin;
+        RoundTime = roundTime;
+        RoundState = roundState;
+        PlayedSound = playedSound;
+        NoReceivers = noReceivers;
+        Icon = icon;
+    }
+}
+
 
