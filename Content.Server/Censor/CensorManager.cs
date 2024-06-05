@@ -20,6 +20,8 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
     // Filters
     private readonly Dictionary<CensorTarget, Dictionary<Regex, CensorFilterDef>> _regexCensors = new();
 
+    #region Initialize
+
     public void Initialize()
     {
         IoCManager.InjectDependencies(this);
@@ -40,6 +42,10 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
     {
         _log = _logMan.GetSawmill("censor");
     }
+
+    #endregion
+
+    #region Create
 
     public async void CreateCensor(string pattern,
         CensorFilterType filterType,
@@ -79,7 +85,16 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
         }
     }
 
-    public bool RegexCensor(CensorTarget target, string inputText, ICommonSession session)
+    #endregion
+
+    #region Censor
+
+    public bool Censor(CensorTarget target, string inputText, ICommonSession session)
+    {
+        return RegexCensor(target, inputText, session);
+    }
+
+    private bool RegexCensor(CensorTarget target, string inputText, ICommonSession session)
     {
         // Ensure that only 1 bit is set
         Debug.Assert(target != 0 && (target & (target - 1)) == 0);
@@ -131,6 +146,10 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
         return blocked;
     }
 
+    #endregion
+
+    #region Reload
+
     public async void ReloadCensors()
     {
         var censors = await _db.GetAllCensorFiltersAsync();
@@ -140,4 +159,6 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
             AddCensor(censor);
         }
     }
+
+    #endregion
 }

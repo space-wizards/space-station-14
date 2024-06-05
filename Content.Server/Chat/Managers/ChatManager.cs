@@ -222,7 +222,7 @@ namespace Content.Server.Chat.Managers
             switch (type)
             {
                 case OOCChatType.OOC:
-                    if (!_censorMan.RegexCensor(CensorTarget.OOC, message, player))
+                    if (!_censorMan.Censor(CensorTarget.OOC, message, player))
                         return;
                     SendOOC(player, message);
                     break;

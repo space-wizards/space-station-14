@@ -192,7 +192,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             session = mind.Session;
         }
         if (session != null
-            && !_censor.RegexCensor(desiredType == InGameICChatType.Emote ? CensorTarget.Emote : CensorTarget.IC,
+            && !_censor.Censor(desiredType == InGameICChatType.Emote ? CensorTarget.Emote : CensorTarget.IC,
                 message,
                 session))
             return;
@@ -296,7 +296,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             session = mind.Session;
         }
-        if (session != null && !_censor.RegexCensor(CensorTarget.OOC, message, session))
+        if (session != null && !_censor.Censor(CensorTarget.OOC, message, session))
             return;
 
         // It doesn't make any sense for a non-player to send in-game OOC messages, whereas non-players may be sending
