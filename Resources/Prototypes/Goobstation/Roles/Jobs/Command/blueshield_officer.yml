@@ -32,9 +32,9 @@
 - type: startingGear
   id: BlueshieldOfficerGear
   equipment:
-    neck: ClothingNeckCloakNanotrasen # Goob Station, Harriet - the blueshield's drip is fucking shit I HAD to change it
-    jumpsuit: ClothingUniformJumpsuitNanotrasen # Goob Station, Harriet - the blueshield's drip is fucking shit I HAD to change it, previous: ClothingUniformJumpsuitColorBlue
-    back: ClothingBackpackCaptainFilled
+    back: ClothingBackpackCaptain
+    neck: ClothingNeckCloakNanotrasen
+    jumpsuit: ClothingUniformJumpsuitNanotrasen
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetBasic
     eyes: ClothingEyesGlassesSecurity
