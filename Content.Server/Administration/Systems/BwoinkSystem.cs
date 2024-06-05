@@ -658,7 +658,14 @@ namespace Content.Server.Administration.Systems
                 stringbuilder.Append($" **{parameters.RoundTime}**");
             if (!parameters.PlayedSound)
                 stringbuilder.Append(" **(S)**");
-            stringbuilder.Append($" **{parameters.Username}:** ");
+            if (parameters.Icon == null)
+            {
+                stringbuilder.Append($" **{parameters.Username}:** ");
+            }
+            else
+            {
+                stringbuilder.Append($" **{parameters.Username}** ");
+            }
             stringbuilder.Append(parameters.Message);
             return stringbuilder.ToString();
         }
