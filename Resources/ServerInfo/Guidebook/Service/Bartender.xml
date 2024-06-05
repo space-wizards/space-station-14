@@ -21,8 +21,5 @@ Don't forget containers to serve them in!
 <GuideEntityEmbed Entity="DrinkJigger"/>
 </Box>
 
-## Drinks
-Knowing how to make a requested drink is important. Here are the different drinks in the game, including their recipes:
-
-<GuideReagentGroupEmbed Group="Drinks"/>
+You can find a list of every drink that can be requested under the Reference Tables entry.
 </Document>
