@@ -81,7 +81,7 @@ public abstract partial class SharedDrinkSystem : EntitySystem
     {
         string remainingString = "drink-component-on-examine-is-half-full";
 
-        if (TryComp<MetaDataComponent>(args.Examiner, out var examiner) && examiner.EntityName.Length > 0
+        if (TryComp(args.Examiner, out MetaDataComponent? examiner) && examiner.EntityName.Length > 0
             && string.Compare(examiner.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
             remainingString = "drink-component-on-examine-is-half-empty";
 

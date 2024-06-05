@@ -340,6 +340,12 @@ DrinkBottleGoldschlager: DrinkBottleGildlager
 soda_dispenser: SodaDispenser
 chem_master: ChemMaster
 
-# 2024-05-14
+# 2024-05-21
+CrateJanitorExplosive: ClosetJanitorBombFilled
+
+# 2024-05-27
+DoorRemoteFirefight: null
+
+# 2024-06-5
 DrinkSpaceGlue: SqueezeBottleOfGlue
 DrinkSpaceLube: SqueezeBottleOfLube

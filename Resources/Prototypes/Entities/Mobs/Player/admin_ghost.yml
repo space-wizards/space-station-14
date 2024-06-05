@@ -18,6 +18,7 @@
     canInteract: true
   - type: GhostHearing
   - type: Hands
+  - type: ComplexInteraction
   - type: Puller
   - type: CombatMode
   - type: Physics
@@ -90,6 +91,7 @@
   - type: InventorySlots
   - type: Loadout
     prototypes: [ MobAghostGear ]
+  - type: BypassInteractionChecks
 
 - type: entity
   id: ActionAGhostShowSolar
