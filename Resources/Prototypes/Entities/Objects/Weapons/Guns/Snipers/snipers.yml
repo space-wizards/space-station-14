@@ -3,6 +3,7 @@
   parent:
   - BaseGunLarge
   - BaseGunWieldable
+  - BaseGunLightRifleBallistic
   id: WeaponSniperMosin
   description: A weapon for hunting, or endless trench warfare. Uses .30 rifle ammo.
   components:
@@ -17,21 +18,13 @@
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
     capacity: 10
-    proto: CartridgeLightRifle
-    whitelist:
-      tags:
-      - CartridgeLightRifle
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
-  - type: AmmoCounter
 
 - type: entity
   name: Hristov
   parent:
   - BaseGunLarge
   - BaseGunWieldable
+  - BaseGunAntiMaterielBallistic
   id: WeaponSniperHristov
   description: A portable anti-materiel rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-materiel ammo.
   components:
@@ -47,21 +40,13 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-      - CartridgeAntiMateriel
     capacity: 5
-    proto: CartridgeAntiMateriel
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
-  - type: AmmoCounter
 
 - type: entity
   name: musket
   parent:
   - BaseGunLarge
+  - BaseGunAntiMaterielBallistic
   id: Musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
@@ -77,20 +62,11 @@
     fireRate: 0.75
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
-  - type: AmmoCounter
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 8 #it's a musket
   - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-      - CartridgeAntiMateriel
     capacity: 1
-    proto: CartridgeAntiMateriel
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -107,6 +83,7 @@
   name: flintlock pistol
   parent:
   - BaseGunSmall
+  - BaseGunAntiMaterielBallistic
   id: WeaponPistolFlintlock
   description: A pirate's companion. Yarrr! Uses .60 anti-materiel ammo.
   components:
@@ -115,8 +92,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-  - type: Item
-    storedRotation: 90
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: Gun
@@ -129,16 +104,6 @@
   - type: UseDelay
     delay: 8 #it's a flintlock
   - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeAntiMateriel
     capacity: 1
-    proto: CartridgeAntiMateriel
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
-  - type: AmmoCounter
   - type: StaticPrice
     price: 0
-

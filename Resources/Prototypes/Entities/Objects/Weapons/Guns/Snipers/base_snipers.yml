@@ -1,0 +1,37 @@
+# LIGHT RIFLE BALLISTIC
+# A basic template for a gun that uses the BallisticAmmoProvider component and loads CartridgeLightRifle.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunLightRifleBallistic
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 1
+    proto: CartridgeLightRifle
+    whitelist:
+      tags:
+      - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: AmmoCounter
+
+# ANTI-MATERIEL BALLISTIC
+# A basic template for a gun that uses the BallisticAmmoProvider component and loads CartridgeAntiMateriel.
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunAntiMaterielBallistic
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 1
+    proto: CartridgeAntiMateriel
+    whitelist:
+      tags:
+      - CartridgeAntiMateriel
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: AmmoCounter
