@@ -621,7 +621,8 @@ namespace Content.Client.Lobby.UI
                 selector.Setup(items, title, 250, description);
                 selector.Select(Profile?.AntagPreferences.Contains(antag.ID) == true ? 0 : 1);
 
-                if (!_requirements.CheckRoleTime(antag.Requirements, out var reason))
+                var requirements = _entManager.System<SharedRoleSystem>().GetAntagRequirement(antag);
+                if (!_requirements.CheckRoleTime(requirements, out var reason))
                 {
                     selector.LockRequirements(reason);
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
