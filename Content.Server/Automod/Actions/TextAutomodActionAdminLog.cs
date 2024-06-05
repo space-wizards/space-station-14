@@ -25,9 +25,11 @@ public sealed class TextAutomodActionAdminLog : ITextAutomodAction
         IEntityManager entMan)
     {
         IoCManager.Resolve<IAdminLogManager>()
-            .Add(LogType.TextAutomod,
+            .Add(
+                LogType.TextAutomod,
                 Impact,
-                $"{session.Name} ({session.UserId}) tripped {automod.DisplayName} which matched \"{new StringBuilder().AppendJoin(", ", patternMatches.Keys)}\"");
+                $"{session.Name} ({session.UserId}) tripped {automod.DisplayName} ({automod.Id}) which matched \"{
+                    new StringBuilder().AppendJoin(", ", patternMatches.Keys)}\"");
 
         return true;
     }

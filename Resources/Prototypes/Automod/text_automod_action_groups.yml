@@ -2,3 +2,4 @@
   id: warning
   censorActions:
   - !type:TextAutomodActionWarningPopup
+  - !type:TextAutomodActionAdminLog
