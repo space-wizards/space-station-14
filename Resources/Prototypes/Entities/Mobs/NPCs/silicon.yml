@@ -107,6 +107,8 @@
     proto: robot
   - type: ZombieImmune
   - type: StepTriggerImmune
+  - type: NoSlip
+  - type: Insulated
 
 - type: entity
   parent: MobSiliconBase
