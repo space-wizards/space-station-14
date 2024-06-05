@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Content.Server.Chat;
 using Content.Server.Database;
 using Content.Shared.Automod;
 using Content.Shared.Database;
@@ -177,6 +178,75 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
     public async Task<AutomodFilterDef?> GetFilter(int id)
     {
         return await _db.GetAutomodFilterAsync(id);
+    }
+
+    #endregion
+
+    #region Remove
+
+    public async Task<bool> RemoveFilter(int id)
+    {
+        var toRemoveTargets = new List<AutomodTarget>();
+        Regex? toRemove = null;
+        foreach (var (target, reg) in _regexFilters)
+        {
+            foreach (var (regex, filter) in reg)
+            {
+                if (filter.Id == null || filter.Id.Value != id)
+                    continue;
+
+                toRemove = regex;
+                break;
+            }
+
+            if (toRemove != null)
+                reg.Remove(toRemove);
+            toRemove = null;
+
+            if (reg.Count == 0)
+                toRemoveTargets.Add(target);
+        }
+
+        foreach (var target in toRemoveTargets)
+        {
+            _regexFilters.Remove(target);
+        }
+
+        return await _db.RemoveAutomodFilterAsync(id);
+    }
+
+    public async Task RemoveMultipleFilters(List<int> ids)
+    {
+
+        var toRemoveTargets = new List<AutomodTarget>();
+        var toRemove = new List<Regex>();
+        foreach (var (target, reg) in _regexFilters)
+        {
+            foreach (var (regex, filter) in reg)
+            {
+                if (filter.Id == null || !ids.Contains(filter.Id.Value))
+                    continue;
+
+                toRemove.Add(regex);
+            }
+
+            foreach (var regex in toRemove)
+            {
+                reg.Remove(regex);
+            }
+
+            toRemove.Clear();
+
+            if (reg.Count == 0)
+                toRemoveTargets.Add(target);
+        }
+
+        foreach (var target in toRemoveTargets)
+        {
+            _regexFilters.Remove(target);
+        }
+
+        await _db.RemoveMultipleAutomodFilterAsync(ids);
     }
 
     #endregion

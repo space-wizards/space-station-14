@@ -1709,6 +1709,30 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await db.DbContext.SaveChangesAsync();
         }
 
+        public async Task<bool> RemoveTextAutomodFilterAsync(int id)
+        {
+            await using var db = await GetDb();
+
+            var filter = await db.DbContext.TextAutomod.SingleOrDefaultAsync(f => f.Id == id);
+            if (filter is null)
+                return false;
+
+            db.DbContext.TextAutomod.RemoveRange(filter);
+
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task RemoveMultipleTextAutomodFilterAsync(List<int> ids)
+        {
+            await using var db = await GetDb();
+
+            var toRemove = db.DbContext.TextAutomod.Where(f => ids.Contains(f.Id));
+            db.DbContext.TextAutomod.RemoveRange(toRemove);
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         // SQLite returns DateTime as Kind=Unspecified, Npgsql actually knows for sure it's Kind=Utc.

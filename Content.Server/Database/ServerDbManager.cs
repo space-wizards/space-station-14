@@ -173,6 +173,10 @@ namespace Content.Server.Database
 
         Task<AutomodFilterDef?> GetAutomodFilterAsync(int id);
 
+        Task<bool> RemoveAutomodFilterAsync(int id);
+
+        Task RemoveMultipleAutomodFilterAsync(List<int> ids);
+
         #endregion
 
         #region Playtime
@@ -549,6 +553,18 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetTextAutomodFilter(id));
+        }
+
+        public Task<bool> RemoveAutomodFilterAsync(int id)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RemoveTextAutomodFilterAsync(id));
+        }
+
+        public Task RemoveMultipleAutomodFilterAsync(List<int> ids)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RemoveMultipleTextAutomodFilterAsync(ids));
         }
 
         #endregion

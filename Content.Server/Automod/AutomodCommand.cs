@@ -60,6 +60,16 @@ public sealed class AutomodCommand : ToolshedCommand
         ctx.WriteLine($"Id: {filter.Id}, pattern: {filter.Pattern}, filterType: {filter.FilterType
             }, actionGroup: {filter.ActionGroup}, targets: {filter.TargetFlags}, displayName: {filter.DisplayName}");
     }
+
+    [CommandImplementation("remove")]
+    public async void RemoveAutomodFilter([CommandInvocationContext] IInvocationContext ctx,
+        [CommandArgument] int id)
+    {
+        if (await _automodMan.RemoveFilter(id))
+            ctx.WriteLine("Filters have been removed.");
+        else
+            ctx.WriteLine("Unable to find filter.");
+    }
 }
 
 public record struct NoFilterFoundError(int Id) : IConError

@@ -52,4 +52,17 @@ public interface IAutomodManager
     /// </summary>
     /// <param name="id"></param>
     public Task<AutomodFilterDef?> GetFilter(int id);
+
+    /// <summary>
+    /// Remove an automod filter.
+    /// </summary>
+    /// <param name="id">The id of the filter to delete.</param>
+    /// <returns>True when the id is found and deleted.</returns>
+    public Task<bool> RemoveFilter(int id);
+
+    /// <summary>
+    /// Remove multiple automod filters.
+    /// </summary>
+    /// <param name="ids">The ids of the filters to delete.</param>
+    public Task RemoveMultipleFilters(List<int> ids);
 }
