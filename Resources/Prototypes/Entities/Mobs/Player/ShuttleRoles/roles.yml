@@ -1,0 +1,261 @@
+## See also ../settings.yml and ../spawners.yml
+
+### Nanotrasen Visitors with Nanotrasen ID
+
+# Command
+
+- type: entity
+  id: RandomHumanoidVisitorCaptain
+  name: visiting Captain ghost role
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: VisitorCaptain
+
+- type: entity
+  id: RandomHumanoidVisitorCE
+  name: visiting CE ghost role
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: VisitorCE
+
+- type: entity
+  id: RandomHumanoidVisitorCMO
+  name: visiting CMO ghost role
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: VisitorCMO
+
+- type: entity
+  id: RandomHumanoidVisitorHOP
+  name: visiting HOP ghost role
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: VisitorHOP
+
+- type: entity
+  id: RandomHumanoidVisitorHOS
+  name: visiting HOS ghost role
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: VisitorHOS
+
+- type: entity
+  id: RandomHumanoidVisitorRD
+  name: visiting RD ghost role
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: VisitorResearchDirector
+
+- type: entity
+  id: RandomHumanoidVisitorQM
+  name: visiting QM ghost role
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: VisitorQM
+
+# Security
+
+- type: entity
+  id: RandomHumanoidVisitorSecurityOfficer
+  name: visiting security officer ghost role
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: SecurityOfficer
+
+- type: entity
+  id: RandomHumanoidVisitorSecurityCadet
+  name: visiting security cadet role
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: SecurityCadet
+
+- type: entity
+  id: RandomHumanoidVisitorDetective
+  name: visiting detective role
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: VisitorDetective
+
+- type: entity
+  id: RandomHumanoidVisitorWarden
+  name: visiting warden ghost role
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: VisitorWarden
+
+# Misc
+
+- type: entity
+  id: RandomHumanoidClownTroupeBanana
+  name: banana clown troupe
+  parent: RandomHumanoidClownTroupe
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ClownTroupeBanana
+
+# Cargo
+
+- type: entity
+  id: RandomHumanoidLostCargoTechnician
+  name: lost cargo technician ghost role
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: LostCargoTechnician
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+- type: entity
+  id: RandomHumanoidTravelingChef
+  name: traveling chef ghost role
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: TravelingChef
+
+- type: entity
+  id: RandomHumanoidClownTroupe
+  name: clown troupe ghost role
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: ClownTroupe
+
+### Visitors with Visitor ID
+
+# Command
+
+# Security
+
+# Misc
+
+# Cargo
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+### Visitors missing equipment for challenges
+
+# Command
+
+- type: entity
+  id: RandomHumanoidChallengeVictimRD
+  name: disaster victim RD ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimResearchDirector
+
+- type: entity
+  id: RandomHumanoidChallengeVictimCMO
+  parent: RandomHumanoidChallengeVictimRD
+  name: disaster victim CMO ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimCMO
+
+- type: entity
+  id: RandomHumanoidChallengeVictimCaptain
+  parent: RandomHumanoidChallengeVictimRD
+  name: disaster victim Captain ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimCaptain
+
+# Security
+
+# Misc
+
+# Cargo
+
+- type: entity
+  id: RandomHumanoidChallengeCargoTechnician
+  name: disaster cargo technician ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: ChallengeCargoTechnician
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+### Syndicate & Hostiles
+
+- type: entity
+  id: RandomHumanoidSyndieDisasterVictim
+  name: syndie disaster victim ghost role
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner_syndicate
+    - type: RandomHumanoidSpawner
+      settings: SyndieDisasterVictim
+
+### Other

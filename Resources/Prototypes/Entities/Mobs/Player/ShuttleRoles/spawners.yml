@@ -1,0 +1,331 @@
+## See also ../settings.yml and ../roles.yml
+
+### Visitors with Visitor ID & freelance comms
+
+# Command
+
+- type: entity
+  name: command visitor spawner
+  id: CommandVisitorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCaptain
+    - RandomHumanoidVisitorCE
+    - RandomHumanoidVisitorCMO
+    - RandomHumanoidVisitorHOP
+    - RandomHumanoidVisitorHOS
+    - RandomHumanoidVisitorQM
+    - RandomHumanoidVisitorRD
+
+- type: entity
+  name: visiting captain spawner
+  id: VisitorCaptainSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCaptain
+
+- type: entity
+  name: visiting chief engineer spawner
+  id: VisitorCESpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCE
+
+- type: entity
+  name: visiting chief medical officer spawner
+  id: VisitorCMOSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCMO
+
+- type: entity
+  name: visiting head of personnel spawner
+  id: VisitorHOPSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorHOP
+
+- type: entity
+  name: visiting head of security spawner
+  id: VisitorHOSSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorHOS
+
+- type: entity
+  name: visiting research director spawner
+  id: VisitorRDSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorRD
+
+- type: entity
+  name: visiting quartermaster spawner
+  id: VisitorQMSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorQM
+
+# Security
+
+- type: entity
+  name: security visitor spawner
+  id: SecurityVisitorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorSecurityOfficer
+    - RandomHumanoidVisitorSecurityCadet
+    - RandomHumanoidVisitorDetective
+    rarePrototypes:
+    - RandomHumanoidVisitorWarden
+    - RandomHumanoidVisitorHOS
+    rareChance: 0.1
+
+- type: entity
+  name: visiting security cadet spawner
+  id: VisitorSecurityCadetSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorSecurityCadet
+
+- type: entity
+  name: visiting security officer spawner
+  id: VisitorSecurityOfficerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorSecurityOfficer
+
+- type: entity
+  name: visiting detective spawner
+  id: VisitorDetective
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorDetective
+
+- type: entity
+  name: visiting warden spawner
+  id: VisitorWarden
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorWarden
+
+# Misc
+
+# Cargo
+
+- type: entity
+  name: lost cargonian spawner
+  id: LostCargonianSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidLostCargoTechnician
+    - RandomHumanoidLostSalvager
+    rarePrototypes:
+    - RandomHumanoidLostQuartermaster
+    rareChance: 0.1
+
+- type: entity
+  name: lost cargo technician spawner
+  id: LostCargoTechnicianSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Tools/appraisal-tool.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+      - RandomHumanoidLostCargoTechnician
+      chance: 1
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+- type: entity
+  name: traveling chef spawner
+  id: TravelingChefSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+      - RandomHumanoidTravelingChef
+
+### Visitors missing equipment for challenges
+
+# Command
+
+- type: entity
+  name: disaster victim spawner
+  id: ChallengeVictimSpawner
+  parent: MarkerBase
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidChallengeVictimRD
+    - RandomHumanoidChallengeVictimCMO
+    - RandomHumanoidChallengeVictimCaptain
+
+# Security
+
+# Misc
+
+# Cargo
+
+- type: entity
+  name: challenge cargo technician spawner
+  id: ChallengeCargoTechnicianSpawner
+  parent: MarkerBase
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Tools/appraisal-tool.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+      - RandomHumanoidChallengeCargoTechnician
+      chance: 1
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+### Syndicate & Hostiles
+
+- type: entity
+  name: syndie disaster victim spawner
+  id: SyndieDisasterVictimSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_syndicate
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidSyndieDisasterVictim
+
+### Other

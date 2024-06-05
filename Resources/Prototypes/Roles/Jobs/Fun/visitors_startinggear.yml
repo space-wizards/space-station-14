@@ -1,0 +1,524 @@
+### Visitors with Visitor ID & Freelance comms
+
+# Command
+
+- type: startingGear
+  id: VisitorCaptain
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptain
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    head: ClothingHeadHatCaptain
+    neck: ClothingNeckCloakCap
+    id: VisitorPDA
+    belt: WeaponDisabler
+    back: ClothingBackpackCaptain
+    ears: ClothingHeadsetAltCommand
+    outerClothing: ClothingOuterArmorCaptainCarapace
+
+- type: startingGear
+  id: VisitorCaptainAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCapFormal
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    head: ClothingHeadHatCapcap
+    neck: ClothingNeckMantleCap
+    id: VisitorPDA
+    belt: WeaponDisabler
+    back: ClothingBackpackSatchelCaptain
+    ears: ClothingHeadsetAltCommand
+    outerClothing: ClothingOuterArmorCaptainCarapace
+
+- type: startingGear
+  id: VisitorCE
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChiefEngineer
+    shoes: ClothingShoesColorWhite
+    head: ClothingHeadHatBeretEngineering
+    neck: ClothingNeckCloakCE
+    id: VisitorPDA
+    belt: ClothingBeltChiefEngineerFilled
+    back: ClothingBackpackDuffelEngineering
+    ears: RnDRD
+    outerClothing: ClothingOuterVestHazard
+    pocket1: WeaponDisabler
+
+- type: startingGear
+  id: VisitorCEAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChiefEngineerTurtle
+    shoes: ClothingShoesColorWhite
+    head: ClothingHeadHatBeretEngineering
+    neck: ClothingNeckMantleCE
+    id: VisitorPDA
+    belt: ClothingBeltChiefEngineerFilled
+    back: ClothingBackpackSatchelEngineering
+    ears: ClothingHeadsetCE
+    outerClothing: ClothingOuterWinterCE
+    pocket1: WeaponDisabler
+
+- type: startingGear
+  id: VisitorCMO
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMO
+    shoes: ClothingShoesColorBrown
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadMirror
+    neck: ClothingCloakCmo
+    id: VisitorPDA
+    back: ClothingBackpackMedical
+    ears: ClothingHeadsetCMO
+    belt: ClothingBeltMedical
+    outerClothing: ClothingOuterCoatLabCmo
+    pocket1: WeaponDisabler
+
+- type: startingGear
+  id: VisitorCMOAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMOTurtle
+    shoes: ClothingShoesColorBrown
+    gloves: ClothingHandsGlovesNitrile
+    head: ClothingHeadHatBeretCmo
+    neck: ClothingNeckMantleCMO
+    id: VisitorPDA
+    back: ClothingBackpackSatchelMedical
+    ears: ClothingHeadsetCMO
+    belt: ClothingBeltMedical
+    outerClothing: ClothingOuterCoatLabCmo
+    pocket1: WeaponDisabler
+
+- type: startingGear
+  id: VisitorHOP
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoP
+    shoes: ClothingShoesLeather
+    head: ClothingHeadHatHopcap
+    neck: ClothingNeckCloakHop
+    id: VisitorPDA
+    belt: WeaponDisabler
+    back: ClothingBackpackDebug
+    ears: ClothingHeadsetRD
+    outerClothing: ClothingOuterWinterHoP
+
+- type: startingGear
+  id: VisitorAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoP
+    shoes: ClothingShoesLeather
+    head: ClothingHeadHatHopcap
+    neck: ClothingNeckMantleHop
+    id: VisitorPDA
+    belt: WeaponDisabler
+    back: ClothingBackpackSatchelLeather
+    ears: ClothingHeadsetQM
+    outerClothing: ClothingOuterWinterHoP
+
+- type: startingGear
+  id: VisitorHOS
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSParadeMale
+    shoes: ClothingShoesBootsCowboyBlackFilled
+    gloves: ClothingHandsGlovesCombat
+    head: ClothingHeadHatHoshat
+    neck: ClothingNeckCloakHos
+    id: VisitorPDA
+    belt: ClothingBeltSecurityFilled
+    back: ClothingBackpackSatchelSecurity
+    ears: ClothingHeadsetAltSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterCoatHoSTrench
+    pocket1: MagazinePistolSubMachineGunTopMounted
+    hand: WeaponSubMachineGunWt550
+
+- type: startingGear
+  id: VisitorHOSAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSFormal
+    shoes: ClothingShoesBootsCowboyFancyFilled
+    gloves: ClothingHandsGlovesColorWhite
+    head: ClothingHeadHatCowboyWhite
+    neck: SecurityWhistle
+    id: VisitorPDA
+    belt: ClothingBeltSecurityFilled
+    back: ClothingBackpackSatchelLeather
+    ears: ClothingHeadsetAltSecurity
+    eyes: ClothingEyesGlassesSecurity
+    pocket1: MagazinePistolSubMachineGunTopMounted
+    hand: WeaponSubMachineGunWt550
+
+- type: startingGear
+  id: VisitorRD
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirector
+    shoes: ClothingShoesColorBrown
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatBeretRND
+    neck: ClothingNeckCloakRd
+    id: VisitorPDA
+    back: ClothingBackpackScience
+    ears: ClothingHeadsetRD
+    outerClothing: ClothingOuterCoatRD
+
+- type: startingGear
+  id: VisitorRDAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirector
+    shoes: ClothingShoesColorBrown
+    gloves: ClothingHandsGlovesNitrile
+    head: ClothingHeadHatBeretRND
+    neck: ClothingNeckMantleRD
+    id: VisitorPDA
+    back: ClothingBackpackSatchelScience
+    ears: ClothingHeadsetRD
+    outerClothing: ClothingOuterCoatRD
+
+- type: startingGear
+  id: VisitorQM
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitQMTurtleneck
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatQMSoft
+    neck: ClothingNeckCloakRd
+    id: VisitorPDA
+    back: ClothingBackpackCargo
+    ears: ClothingHeadsetRD
+    outerClothing: ClothingOuterWinterQM
+
+- type: startingGear
+  id: VisitorQMAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitQMFormal
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatBeretQM
+    neck: ClothingNeckMantleQM
+    id: VisitorPDA
+    back: ClothingBackpackSatchelCargo
+    ears: ClothingHeadsetQM
+    outerClothing: ClothingOuterWinterQM
+
+
+# Security
+
+- type: startingGear
+  id: VisitorSecurityCadet
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSec
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHelmetBasic
+    id: VisitorPDA
+    belt: ClothingBeltSecurityFilled
+    back: ClothingBackpackSecurity
+    ears: ClothingHeadsetSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterArmorBasic
+    pocket1: WeaponPostolMk58
+    pocket2: MagazinePistol
+    hand: FlashlightSeclite
+
+- type: startingGear
+  id: VisitorSecurityCadetAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSecGrey
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHelmetBasic
+    neck: SecurityWhistle
+    id: VisitorPDA
+    belt: ClothingBeltSecurityFilled
+    back: ClothingBackpackSatchelSecurity
+    ears: ClothingHeadsetSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterArmorBasicSlim
+    pocket1: WeaponPostolMk58
+    pocket2: MagazinePistol
+    hand: FlashlightSeclite
+
+- type: startingGear
+  id: VisitorSecurityOfficer
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSec
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHelmetBasic
+    id: VisitorPDA
+    belt: ClothingBeltSecurityWebbingFilled
+    back: ClothingBackpackSecurity
+    ears: ClothingHeadsetSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterArmorBasic
+    pocket1: WeaponPostolMk58
+    pocket2: MagazinePistol
+    hand: FlashlightSeclite
+
+- type: startingGear
+  id: VisitorSecurityOfficerAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSecGrey
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatCorpsoft
+    neck: SecurityWhistle
+    id: VisitorPDA
+    belt: ClothingBeltSecurityFilled
+    back: ClothingBackpackSatchelSecurity
+    ears: ClothingHeadsetSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterArmorBasicSlim
+    pocket1: WeaponPostolMk58
+    pocket2: MagazinePistol
+    hand: FlashlightSeclite
+
+- type: startingGear
+  id: VisitorDetective
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDetective
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatFedoraBrown
+    neck: ClothingNeckTieDet
+    id: VisitorPDA
+    belt: ClothingBeltHolsterFilled
+    back: ClothingBackpackSecurity
+    ears: ClothingHeadsetSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterCoatDetectiveLoadout
+    pocket1: ForensicScanner
+    pocket2: ForensicPad
+    hand: FlashlightSeclite
+
+- type: startingGear
+  id: VisitorDetectiveAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDetectiveGrey
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatFedoraGrey
+    neck: ClothingNeckTieDet
+    id: VisitorPDA
+    belt: ClothingBeltHolsterFilled
+    back: ClothingBackpackSatchelSecurity
+    ears: ClothingHeadsetSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterVestDetective
+    pocket1: ForensicScanner
+    pocket2: ForensicPad
+    hand: FlashlightSeclite
+
+- type: startingGear
+  id: VisitorWarden
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitWarden
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatBeretWarden
+    neck: SecurityWhistle
+    id: VisitorPDA
+    belt: ClothingBeltSecurityWebbingFilled
+    back: ClothingBackpackSecurity
+    ears: ClothingHeadsetSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterCoatWarden
+    pocket1: ForensicScanner
+    pocket2: ForensicPad
+    hand: FlashlightSeclite
+
+- type: startingGear
+  id: VisitorWardenAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitWarden
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatWarden
+    id: VisitorPDA
+    belt: ClothingBeltSecurityFilled
+    back: ClothingBackpackSatchelSecurity
+    ears: ClothingHeadsetSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterWinterWarden
+    suitstorage: WeaponShotgunKammerer
+    pocket1: disabler
+    pocket2: Zipties
+    hand: FlashlightSeclite
+
+# Misc
+
+# Cargo
+
+- type: startingGear
+  id: LostCargoTechGearSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargo
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatCargosoft
+    id: VisitorPDA
+    back: ClothingBackpackCargo
+    ears: ClothingHeadsetCargo
+    pocket1: AppraisalTool
+
+- type: startingGear
+  id: LostCargoTechGearCoat
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargo
+    shoes: ClothingShoesBootsWinterCargo
+    head: ClothingHeadHatCargosoft
+    id: VisitorPDA
+    back: ClothingBackpackDuffelCargo
+    ears: ClothingHeadsetCargo
+    pocket1: AppraisalTool
+    outerClothing: ClothingOuterWinterCargo
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+- type: startingGear
+  id: TravelingChef
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChef
+    shoes: ClothingShoesColorWhite
+    id: VisitorPDA
+    back: ClothingBackpackSatchel
+    ears: ClothingHeadsetService
+    belt: ClothingBeltChef
+
+- type: startingGear
+  id: ClownTroupe
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitClown
+    shoes: ClothingShoesClown
+    id: VisitorPDA
+    back: ClothingBackpackClown
+    ears: ClothingHeadsetService
+    mask: ClothingMaskClown
+    pocket1: BikeHorn
+    pocket2: ClownRecorder
+
+### Challenge Visitors
+
+# Command
+
+# CHALLENGE
+# carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
+# Challenge Cargo Tech
+- type: startingGear
+  id: ChallengeCargoTechGearSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargo
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatCargosoft
+    id: VisitorPDA
+    back: ClothingBackpackCargo
+    #ears: null # No headsets.
+    pocket1: AppraisalTool
+
+- type: startingGear
+  id: ChallengeCargoTechGearCoat
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargo
+    shoes: ClothingShoesBootsWinterCargo
+    head: ClothingHeadHatCargosoft
+    id: VisitorPDA
+    back: ClothingBackpackSatchelCargo
+    #ears: # No headsets.
+    pocket1: AppraisalTool
+    outerClothing: ClothingOuterWinterCargo
+
+# CHALLENGE
+# carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
+#CMO Disaster Victim
+- type: startingGear
+  id: ChallengeVictimCMO
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMO
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadMirror
+    neck: ClothingCloakCmo
+    id: VisitorPDA
+    back: ClothingBackpackMedical
+    #ears: # No headsets.
+    belt: ClothingBeltMedical
+    outerClothing: ClothingOuterCoatLabCmo
+
+- type: startingGear
+  id: ChallengeVictimCMOAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMOTurtle
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatBeretCmo
+    neck: ClothingNeckMantleCMO
+    id: VisitorPDA
+    back: ClothingBackpackSatchelMedical
+    #ears: # No headsets.
+    belt: ClothingBeltMedical
+    outerClothing: ClothingOuterCoatLabCmo
+
+# CHALLENGE
+# carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
+#Captain Disaster Victim
+- type: startingGear
+  id: ChallengeVictimCaptain
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptain
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    head: ClothingHeadHatCaptain
+    neck: ClothingNeckCloakCap
+    id: VisitorPDA
+    back: ClothingBackpackCaptain
+    #ears: # No headsets.
+
+- type: startingGear
+  id: ChallengeVictimCaptainAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCapFormal
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    head: ClothingHeadHatCapcap
+    neck: ClothingNeckMantleCap
+    id: VisitorPDA
+    back: ClothingBackpackSatchelCaptain
+    #ears: # No headsets.
+    outerClothing: ClothingOuterWinterCap
+
+# CHALLENGE
+# carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
+#RD Disaster Victim
+- type: startingGear
+  id: ChallengeVictimRD
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirector
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatBeretRND
+    neck: ClothingNeckCloakRd
+    id: VisitorPDA
+    back: ClothingBackpackScience
+    #ears: #No headsets.
+    outerClothing: ClothingOuterCoatRD
+
+- type: startingGear
+  id: ChallengeVictimRDAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirector
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatBeretRND
+    neck: ClothingNeckMantleRD
+    id: VisitorPDA
+    back: ClothingBackpackSatchelScience
+    #ears: # No headsets.
+    outerClothing: ClothingOuterCoatRD
+
+# Security
+
+# Misc
+
+# Cargo
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian

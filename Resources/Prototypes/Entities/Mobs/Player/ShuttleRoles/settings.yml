@@ -1,0 +1,309 @@
+## See also ../roles.yml and ../spawners.yml
+
+### Nanotrasen Visitors with Nanotrasen ID
+
+# Command
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+
+- type: randomHumanoidSettings
+  id: VisitorHead
+  parent: EventHumanoidMindShielded
+  components:
+    - type: GhostRole
+      name: ghost-role-information-disaster-victim-name
+      description: ghost-role-information-disaster-victim-description
+      rules: ghost-role-information-disaster-victim-rules
+      raffle:
+        settings: default
+
+- type: randomHumanoidSettings
+  id: VisitorCaptain
+  parent: VisitorHead
+  components:
+    - type: Loadout
+      prototypes: [ VisitorCaptain, VisitorCaptainAlt ]
+
+- type: randomHumanoidSettings
+  id: VisitorCE
+  parent: VisitorHead
+  components:
+    - type: Loadout
+      prototypes: [ VisitorCE, VisitorCEAlt ]
+
+- type: randomHumanoidSettings
+  id: VisitorCMO
+  parent: VisitorHead
+  components:
+    - type: Loadout
+      prototypes: [ VisitorCMO, VisitorCMOAlt ]
+
+- type: randomHumanoidSettings
+  id: VisitorHOP
+  parent: VisitorHead
+  components:
+    - type: Loadout
+      prototypes: [ VisitorHOP, VisitoHOPAlt ]
+
+- type: randomHumanoidSettings
+  id: VisitorHOS
+  parent: VisitorHead
+  components:
+    - type: Loadout
+      prototypes: [ VisitorHOS, VisitorHOSAlt ]
+
+- type: randomHumanoidSettings
+  id: VisitorResearchDirector
+  parent: VisitorHead
+  components:
+    - type: Loadout
+      prototypes: [ VisitorRD, VisitorRDAlt ]
+
+- type: randomHumanoidSettings
+  id: VisitorQM
+  parent: VisitorHead
+  components:
+    - type: Loadout
+      prototypes: [ VisitorQM, VisitorQMAlt ]
+
+# Security
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+
+- type: randomHumanoidSettings
+  id: VisitorSecurity
+  parent: EventHumanoidMindShielded
+  components:
+    - type: GhostRole
+      name: ghost-role-information-disaster-victim-name
+      description: ghost-role-information-disaster-victim-description
+      rules: ghost-role-information-disaster-victim-rules
+      raffle:
+        settings: default
+
+- type: randomHumanoidSettings
+  id: VisitorSecurityCadet
+  parent: VisitorSecurity
+  components:
+    - type: Loadout
+      prototypes: [ VisitorSecurityCadet, VisitoSecurityCadetAlt ]
+
+- type: randomHumanoidSettings
+  id: VisitorSecurityOfficer
+  parent: VisitorSecurity
+  components:
+    - type: Loadout
+      prototypes: [ VisitorSecurityOfficer, VisitorSecurityOfficerAlt ]
+
+- type: randomHumanoidSettings
+  id: VisitorDetective
+  parent: VisitorSecurity
+  components:
+    - type: Loadout
+      prototypes: [ VisitorDetective, VisitorDetectiveAlt ]
+
+- type: randomHumanoidSettings
+  id: VisitorWarden
+  parent: VisitorWarden
+  components:
+    - type: Loadout
+      prototypes: [ VisitorWarden, VisitorWardenAlt ]
+
+# Misc
+
+- type: randomHumanoidSettings
+  id: ClownTroupeBanana
+  parent: ClownTroupe
+  randomizeName: false
+  components:
+    - type: Loadout
+      prototypes: [ BananaClown ]
+
+# Cargo
+
+- type: randomHumanoidSettings
+  id: LostCargoTechnician
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-cargo-technical-name
+      description: ghost-role-information-lost-cargo-technical-description
+      rules: ghost-role-information-lost-cargo-technical-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ LostCargoTechGearSuit, LostCargoTechGearCoat ]
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+- type: randomHumanoidSettings
+  id: TravelingChef
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-traveling-chef-name
+      description: ghost-role-information-traveling-chef-description
+      rules: ghost-role-information-traveling-chef-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ TravelingChef ]
+
+- type: randomHumanoidSettings
+  id: ClownTroupe
+  parent: EventHumanoid
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-clown-troupe-name
+      description: ghost-role-information-clown-troupe-description
+      rules: ghost-role-information-clown-troupe-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ ClownTroupe ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_clown
+
+### Visitors with Visitor ID
+
+# Command
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+
+# Security
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+
+# Misc
+
+# Cargo
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+### Visitors missing equipment for challenges
+# CHALLENGE #
+# these are specifically missing QOL equipment and have settings to make them harder.
+# making changes to these should be done with care to avoid unbalancing challenging scenarios.
+
+# Command
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimResearchDirector
+  randomizeName: false
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimRD, ChallengeVictimRDAlt ] #!!
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimCMO
+  randomizeName: false
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimCMO, ChallengeVictimCMOAlt ] #!!
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimCaptain
+  randomizeName: false
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimCaptain, ChallengeVictimCaptainAlt ] #!!
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+# Security
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+
+# Misc
+
+# Cargo
+
+- type: randomHumanoidSettings
+  id: ChallengeCargoTechnician
+  randomizeName: false
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-cargo-technican-name
+      description: ghost-role-information-lost-challenge-cargo-technican-description
+      rules: ghost-role-information-lost-disaster-challenge-cargo-technican-rules
+      raffle:
+        settings: short
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeCargoTechGearSuit, ChallengeCargoTechGearCoat ] #!!
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+### Syndicate & Hostiles
+
+- type: randomHumanoidSettings
+  id: SyndieVisitor
+  parent: EventHumanoid
+  components:
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: GhostRole
+      name: ghost-role-information-syndie-disaster-victim-name
+      description: ghost-role-information-syndie-disaster-victim-description
+      rules: ghost-role-information-syndie-disaster-victim-rules
+      raffle:
+        settings: short
+    - type: Loadout
+
+### Other
