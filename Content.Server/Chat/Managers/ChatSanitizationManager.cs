@@ -6,10 +6,11 @@ using Robust.Shared.Configuration;
 namespace Content.Server.Chat.Managers;
 
 /// <summary>
-///     Removes the shorthands for emotes (like "lol" or "^-^") from a chat message and returns the last emote in their
-///     message
+///     Sanitizes messages!
+///     It currently ony removes the shorthands for emotes (like "lol" or "^-^") from a chat message and returns the last
+///     emote in their message
 /// </summary>
-public sealed class ChatEmoteSanitizationManager : IChatSanitizationManager
+public sealed class ChatSanitizationManager : IChatSanitizationManager
 {
     private static readonly Dictionary<string, string> ShorthandToEmote = new()
     {
