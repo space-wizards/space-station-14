@@ -1647,6 +1647,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         public abstract Task<List<AutomodFilterDef>> GetAllTextAutomodFiltersAsync();
 
+        public abstract Task EditTextAutomodFilter(AutomodFilterDef automodFilter);
+
         #endregion
 
         // SQLite returns DateTime as Kind=Unspecified, Npgsql actually knows for sure it's Kind=Utc.

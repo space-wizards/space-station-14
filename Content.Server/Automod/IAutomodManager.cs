@@ -39,4 +39,10 @@ public interface IAutomodManager
     /// Clears and reloads all censors from the database.
     /// </summary>
     public void ReloadAutomodFilters();
+
+    /// <summary>
+    /// Edit an automod filter.
+    /// </summary>
+    /// <param name="automodFilterDef">The Id determines which filter to replace.</param>
+    public void EditFilter(AutomodFilterDef automodFilterDef);
 }

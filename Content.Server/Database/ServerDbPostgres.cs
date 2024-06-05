@@ -502,6 +502,22 @@ namespace Content.Server.Database
                 textAutomod.DisplayName);
         }
 
+        public override async Task EditTextAutomodFilter(AutomodFilterDef automodFilter)
+        {
+            await using var db = await GetDb();
+
+            var filter = await db.DbContext.TextAutomod.SingleOrDefaultAsync(f => f.Id == automodFilter.Id);
+            if (filter is null)
+                return;
+            filter.Pattern = automodFilter.Pattern;
+            filter.FilterType = automodFilter.FilterType;
+            filter.ActionGroup = automodFilter.ActionGroup;
+            filter.TargetFlags = automodFilter.TargetFlags;
+            filter.DisplayName = automodFilter.DisplayName;
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         public override async Task<int> AddConnectionLogAsync(

@@ -163,11 +163,13 @@ namespace Content.Server.Database
         /// <summary>
         /// Add a censor filter to the database.
         /// </summary>
-        /// <param name="automod">To add to the database.</param>
+        /// <param name="automodFilter">To add to the database.</param>
         /// <returns>The censor added to the database with its Id.</returns>
-        Task<AutomodFilterDef> AddAutomodFilterAsync(AutomodFilterDef automod);
+        Task<AutomodFilterDef> AddAutomodFilterAsync(AutomodFilterDef automodFilter);
 
         Task<List<AutomodFilterDef>> GetAllAutomodFiltersAsync();
+
+        Task EditAutomodFilterAsync(AutomodFilterDef autmodFilterDef);
 
         #endregion
 
@@ -523,16 +525,22 @@ namespace Content.Server.Database
 
         #region Text Automod Filter
 
-        public Task<AutomodFilterDef> AddAutomodFilterAsync(AutomodFilterDef automod)
+        public Task<AutomodFilterDef> AddAutomodFilterAsync(AutomodFilterDef automodFilter)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.AddTextAutomodFilter(automod));
+            return RunDbCommand(() => _db.AddTextAutomodFilter(automodFilter));
         }
 
         public Task<List<AutomodFilterDef>> GetAllAutomodFiltersAsync()
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetAllTextAutomodFiltersAsync());
+        }
+
+        public Task EditAutomodFilterAsync(AutomodFilterDef automodFilter)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.EditTextAutomodFilter(automodFilter));
         }
 
         #endregion

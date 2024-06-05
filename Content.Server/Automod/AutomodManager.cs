@@ -161,4 +161,13 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
     }
 
     #endregion
+
+    #region Edit
+
+    public void EditFilter(AutomodFilterDef automodFilterDef)
+    {
+        _db.EditAutomodFilterAsync(automodFilterDef);
+    }
+
+    #endregion
 }
