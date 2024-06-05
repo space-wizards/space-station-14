@@ -1,4 +1,5 @@
-﻿using Content.Shared.Automod;
+﻿using System.Threading.Tasks;
+using Content.Shared.Automod;
 using Content.Shared.Database;
 using Robust.Shared.Player;
 
@@ -45,4 +46,10 @@ public interface IAutomodManager
     /// </summary>
     /// <param name="automodFilterDef">The Id determines which filter to replace.</param>
     public void EditFilter(AutomodFilterDef automodFilterDef);
+
+    /// <summary>
+    /// Gets an automod filter.
+    /// </summary>
+    /// <param name="id"></param>
+    public Task<AutomodFilterDef?> GetFilter(int id);
 }

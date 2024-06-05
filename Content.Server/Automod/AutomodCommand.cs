@@ -1,7 +1,10 @@
-﻿using Content.Shared.Automod;
+﻿using System.Diagnostics;
+using Content.Shared.Automod;
 using Content.Shared.Database;
 using Robust.Shared.Toolshed;
+using Robust.Shared.Toolshed.Errors;
 using Robust.Shared.Toolshed.TypeParsers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Automod;
 
@@ -43,4 +46,30 @@ public sealed class AutomodCommand : ToolshedCommand
     {
         _automodMan.EditFilter(new AutomodFilterDef(id, pattern, filterType, actionGroup.Id, target, name));
     }
+
+    [CommandImplementation("get")]
+    public async void GetAutomodFilter([CommandInvocationContext] IInvocationContext ctx, [CommandArgument] int id)
+    {
+        var filter = await _automodMan.GetFilter(id);
+        if (filter is null)
+        {
+            ctx.WriteError(new NoFilterFoundError(id));
+            return;
+        }
+
+        ctx.WriteLine($"Id: {filter.Id}, pattern: {filter.Pattern}, filterType: {filter.FilterType
+            }, actionGroup: {filter.ActionGroup}, targets: {filter.TargetFlags}, displayName: {filter.DisplayName}");
+    }
+}
+
+public record struct NoFilterFoundError(int Id) : IConError
+{
+    public FormattedMessage DescribeInner()
+    {
+        return FormattedMessage.FromMarkupOrThrow($"No filter with the id {Id} could be found.");
+    }
+
+    public string? Expression { get; set; }
+    public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }
