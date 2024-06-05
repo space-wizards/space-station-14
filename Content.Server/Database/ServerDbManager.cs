@@ -171,6 +171,8 @@ namespace Content.Server.Database
 
         Task EditAutomodFilterAsync(AutomodFilterDef autmodFilterDef);
 
+        Task<AutomodFilterDef?> GetAutomodFilterAsync(int id);
+
         #endregion
 
         #region Playtime
@@ -541,6 +543,12 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.EditTextAutomodFilter(automodFilter));
+        }
+
+        public Task<AutomodFilterDef?> GetAutomodFilterAsync(int id)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetTextAutomodFilter(id));
         }
 
         #endregion

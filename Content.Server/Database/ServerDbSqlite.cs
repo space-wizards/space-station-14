@@ -352,52 +352,6 @@ namespace Content.Server.Database
         }
         #endregion
 
-        #region TextAutomod Filter
-
-        public override async Task<AutomodFilterDef> AddTextAutomodFilter(AutomodFilterDef automodFilter)
-        {
-            await using var db = await GetDbImpl();
-
-            var censor = new TextAutomodFilter
-            {
-                Pattern = automodFilter.Pattern,
-                FilterType = automodFilter.FilterType,
-                ActionGroup = automodFilter.ActionGroup,
-                TargetFlags = automodFilter.TargetFlags,
-                DisplayName = automodFilter.DisplayName
-            };
-            db.SqliteDbContext.TextAutomod.Add(censor);
-
-            await db.SqliteDbContext.SaveChangesAsync();
-            return ConvertTextAutomodFilter(censor);
-        }
-
-        public override async Task<List<AutomodFilterDef>> GetAllTextAutomodFiltersAsync()
-        {
-            await using var db = await GetDbImpl();
-
-            var censors = new List<AutomodFilterDef>();
-            foreach (var censor in db.SqliteDbContext.TextAutomod.ToList())
-            {
-                censors.Add(ConvertTextAutomodFilter(censor));
-            }
-
-            return censors;
-        }
-
-        private AutomodFilterDef ConvertTextAutomodFilter(TextAutomodFilter textAutomod)
-        {
-            return new AutomodFilterDef(
-                textAutomod.Id,
-                textAutomod.Pattern,
-                textAutomod.FilterType,
-                textAutomod.ActionGroup,
-                textAutomod.TargetFlags,
-                textAutomod.DisplayName);
-        }
-
-        #endregion
-
         private static ServerBanDef? ConvertBan(ServerBan? ban)
         {
             if (ban == null)

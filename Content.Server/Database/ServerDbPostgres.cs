@@ -458,68 +458,6 @@ namespace Content.Server.Database
         }
         #endregion
 
-        #region Text Automod Filter
-
-        public override async Task<AutomodFilterDef> AddTextAutomodFilter(AutomodFilterDef automodFilter)
-        {
-            await using var db = await GetDbImpl();
-
-            var censor = new TextAutomodFilter
-            {
-                Pattern = automodFilter.Pattern,
-                FilterType = automodFilter.FilterType,
-                ActionGroup = automodFilter.ActionGroup,
-                TargetFlags = automodFilter.TargetFlags,
-                DisplayName = automodFilter.DisplayName
-            };
-            db.PgDbContext.TextAutomod.Add(censor);
-
-            await db.PgDbContext.SaveChangesAsync();
-            return ConvertTextAutomodFilter(censor);
-        }
-
-        public override async Task<List<AutomodFilterDef>> GetAllTextAutomodFiltersAsync()
-        {
-            await using var db = await GetDbImpl();
-
-            var censors = new List<AutomodFilterDef>();
-            foreach (var censor in db.PgDbContext.TextAutomod.ToList())
-            {
-                censors.Add(ConvertTextAutomodFilter(censor));
-            }
-
-            return censors;
-        }
-
-        private AutomodFilterDef ConvertTextAutomodFilter(TextAutomodFilter textAutomod)
-        {
-            return new AutomodFilterDef(
-                textAutomod.Id,
-                textAutomod.Pattern,
-                textAutomod.FilterType,
-                textAutomod.ActionGroup,
-                textAutomod.TargetFlags,
-                textAutomod.DisplayName);
-        }
-
-        public override async Task EditTextAutomodFilter(AutomodFilterDef automodFilter)
-        {
-            await using var db = await GetDb();
-
-            var filter = await db.DbContext.TextAutomod.SingleOrDefaultAsync(f => f.Id == automodFilter.Id);
-            if (filter is null)
-                return;
-            filter.Pattern = automodFilter.Pattern;
-            filter.FilterType = automodFilter.FilterType;
-            filter.ActionGroup = automodFilter.ActionGroup;
-            filter.TargetFlags = automodFilter.TargetFlags;
-            filter.DisplayName = automodFilter.DisplayName;
-
-            await db.DbContext.SaveChangesAsync();
-        }
-
-        #endregion
-
         public override async Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,

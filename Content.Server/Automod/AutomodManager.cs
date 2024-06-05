@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.Automod;
 using Content.Shared.Database;
@@ -167,6 +168,15 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
     public void EditFilter(AutomodFilterDef automodFilterDef)
     {
         _db.EditAutomodFilterAsync(automodFilterDef);
+    }
+
+    #endregion
+
+    #region Get
+
+    public async Task<AutomodFilterDef?> GetFilter(int id)
+    {
+        return await _db.GetAutomodFilterAsync(id);
     }
 
     #endregion

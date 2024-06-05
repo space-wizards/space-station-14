@@ -1643,11 +1643,71 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #region Text Automod Filter
 
-        public abstract Task<AutomodFilterDef> AddTextAutomodFilter(AutomodFilterDef automodFilter);
+        public async Task<AutomodFilterDef?> GetTextAutomodFilter(int id)
+        {
+            await using var db = await GetDb();
 
-        public abstract Task<List<AutomodFilterDef>> GetAllTextAutomodFiltersAsync();
+            var filter = await db.DbContext.TextAutomod.SingleOrDefaultAsync(f => f.Id == id);
+            return filter is null ? null : ConvertTextAutomodFilter(filter);
+        }
 
-        public abstract Task EditTextAutomodFilter(AutomodFilterDef automodFilter);
+        public async Task<AutomodFilterDef> AddTextAutomodFilter(AutomodFilterDef automodFilter)
+        {
+            await using var db = await GetDb();
+
+            var censor = new TextAutomodFilter
+            {
+                Pattern = automodFilter.Pattern,
+                FilterType = automodFilter.FilterType,
+                ActionGroup = automodFilter.ActionGroup,
+                TargetFlags = automodFilter.TargetFlags,
+                DisplayName = automodFilter.DisplayName
+            };
+            db.DbContext.TextAutomod.Add(censor);
+
+            await db.DbContext.SaveChangesAsync();
+            return ConvertTextAutomodFilter(censor);
+        }
+
+        public async Task<List<AutomodFilterDef>> GetAllTextAutomodFiltersAsync()
+        {
+            await using var db = await GetDb();
+
+            var censors = new List<AutomodFilterDef>();
+            foreach (var censor in db.DbContext.TextAutomod.ToList())
+            {
+                censors.Add(ConvertTextAutomodFilter(censor));
+            }
+
+            return censors;
+        }
+
+        protected AutomodFilterDef ConvertTextAutomodFilter(TextAutomodFilter textAutomod)
+        {
+            return new AutomodFilterDef(
+                textAutomod.Id,
+                textAutomod.Pattern,
+                textAutomod.FilterType,
+                textAutomod.ActionGroup,
+                textAutomod.TargetFlags,
+                textAutomod.DisplayName);
+        }
+
+        public async Task EditTextAutomodFilter(AutomodFilterDef automodFilter)
+        {
+            await using var db = await GetDb();
+
+            var filter = await db.DbContext.TextAutomod.SingleOrDefaultAsync(f => f.Id == automodFilter.Id);
+            if (filter is null)
+                return;
+            filter.Pattern = automodFilter.Pattern;
+            filter.FilterType = automodFilter.FilterType;
+            filter.ActionGroup = automodFilter.ActionGroup;
+            filter.TargetFlags = automodFilter.TargetFlags;
+            filter.DisplayName = automodFilter.DisplayName;
+
+            await db.DbContext.SaveChangesAsync();
+        }
 
         #endregion
 
