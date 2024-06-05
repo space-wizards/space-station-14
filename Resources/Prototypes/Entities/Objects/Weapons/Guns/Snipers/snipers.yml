@@ -65,7 +65,6 @@
   id: Musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
     state: base
@@ -102,6 +101,7 @@
     animation: WeaponArcThrust
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+  - type: Sharp
 
 - type: entity
   name: flintlock pistol
@@ -110,21 +110,21 @@
   id: WeaponPistolFlintlock
   description: A pirate's companion. Yarrr! Uses .60 anti-materiel ammo.
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    storedRotation: 90
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: Gun
     fireRate: 0.75
     minAngle: 0
     maxAngle: 30 #miss him entirely because the barrel is smoothbore
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
-  - type: Item
-    storedRotation: 90
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 8 #it's a flintlock
