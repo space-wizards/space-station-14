@@ -15,11 +15,6 @@
   - Medical
 
 - type: guideEntry
-  id: Survival
-  name: guide-entry-survival
-  text: "/ServerInfo/Guidebook/Survival.xml"
-
-- type: guideEntry
   id: Janitorial
   name: guide-entry-janitorial
   text: "/ServerInfo/Guidebook/Service/Janitorial.xml"
@@ -34,10 +29,3 @@
   id: Chef
   name: guide-entry-chef
   text: "/ServerInfo/Guidebook/Service/Chef.xml"
-  children:
-  - Food Recipes
-
-- type: guideEntry
-  id: Food Recipes
-  name: guide-entry-foodrecipes
-  text: "/ServerInfo/Guidebook/Service/FoodRecipes.xml"
