@@ -1643,14 +1643,6 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #region Text Automod Filter
 
-        public async Task<AutomodFilterDef?> GetTextAutomodFilter(int id)
-        {
-            await using var db = await GetDb();
-
-            var filter = await db.DbContext.TextAutomod.SingleOrDefaultAsync(f => f.Id == id);
-            return filter is null ? null : ConvertTextAutomodFilter(filter);
-        }
-
         public async Task<AutomodFilterDef> AddTextAutomodFilter(AutomodFilterDef automodFilter)
         {
             await using var db = await GetDb();
@@ -1667,6 +1659,14 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             await db.DbContext.SaveChangesAsync();
             return ConvertTextAutomodFilter(censor);
+        }
+
+        public async Task<AutomodFilterDef?> GetTextAutomodFilter(int id)
+        {
+            await using var db = await GetDb();
+
+            var filter = await db.DbContext.TextAutomod.SingleOrDefaultAsync(f => f.Id == id);
+            return filter is null ? null : ConvertTextAutomodFilter(filter);
         }
 
         public async Task<List<AutomodFilterDef>> GetAllTextAutomodFiltersAsync()

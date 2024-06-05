@@ -161,20 +161,42 @@ namespace Content.Server.Database
         #region Text Automod Filter
 
         /// <summary>
-        /// Add a censor filter to the database.
+        /// Add an automod filter to the database.
         /// </summary>
         /// <param name="automodFilter">To add to the database.</param>
         /// <returns>The censor added to the database with its Id.</returns>
         Task<AutomodFilterDef> AddAutomodFilterAsync(AutomodFilterDef automodFilter);
 
-        Task<List<AutomodFilterDef>> GetAllAutomodFiltersAsync();
-
-        Task EditAutomodFilterAsync(AutomodFilterDef autmodFilterDef);
-
+        /// <summary>
+        /// Get a an automod filter from the database.
+        /// </summary>
+        /// <param name="id">The id of the filter to fetch.</param>
+        /// <returns>The automod filter fetched from the database. Or null.</returns>
         Task<AutomodFilterDef?> GetAutomodFilterAsync(int id);
 
+        /// <summary>
+        /// Get all automod filters from the database.
+        /// </summary>
+        /// <returns>All automod filters in the database.</returns>
+        Task<List<AutomodFilterDef>> GetAllAutomodFiltersAsync();
+
+        /// <summary>
+        /// Edit an automod filter by the Id provided in <paramref name="automodFilterDef"/>
+        /// </summary>
+        /// <param name="automodFilterDef">The automod filter to replace the database entry with.</param>
+        Task EditAutomodFilterAsync(AutomodFilterDef automodFilterDef);
+
+        /// <summary>
+        /// Removes an automod filter from the database.
+        /// </summary>
+        /// <param name="id">Of the entry to remove.</param>
+        /// <returns>True when the entry was found and deleted.</returns>
         Task<bool> RemoveAutomodFilterAsync(int id);
 
+        /// <summary>
+        /// Removes multiple automod filter database entries.
+        /// </summary>
+        /// <param name="ids">List of database entry ids to remove.</param>
         Task RemoveMultipleAutomodFilterAsync(List<int> ids);
 
         #endregion
@@ -537,22 +559,22 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.AddTextAutomodFilter(automodFilter));
         }
 
+        public Task<AutomodFilterDef?> GetAutomodFilterAsync(int id)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetTextAutomodFilter(id));
+        }
+
         public Task<List<AutomodFilterDef>> GetAllAutomodFiltersAsync()
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetAllTextAutomodFiltersAsync());
         }
 
-        public Task EditAutomodFilterAsync(AutomodFilterDef automodFilter)
+        public Task EditAutomodFilterAsync(AutomodFilterDef automodFilterDef)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.EditTextAutomodFilter(automodFilter));
-        }
-
-        public Task<AutomodFilterDef?> GetAutomodFilterAsync(int id)
-        {
-            DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetTextAutomodFilter(id));
+            return RunDbCommand(() => _db.EditTextAutomodFilter(automodFilterDef));
         }
 
         public Task<bool> RemoveAutomodFilterAsync(int id)

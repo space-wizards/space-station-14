@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Content.Server.Chat;
 using Content.Server.Database;
 using Content.Shared.Automod;
 using Content.Shared.Database;

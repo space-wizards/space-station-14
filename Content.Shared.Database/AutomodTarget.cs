@@ -1,5 +1,8 @@
 ﻿namespace Content.Shared.Database;
 
+/// <summary>
+/// The text input that the automod filter applies to.
+/// </summary>
 [Flags]
 public enum AutomodTarget
 {

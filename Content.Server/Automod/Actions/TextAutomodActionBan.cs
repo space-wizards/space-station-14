@@ -33,14 +33,9 @@ public sealed class TextAutomodActionBan : ITextAutomodAction
 
         // TODO ShadowCommander implement ban group tracking for banning after three censor hits within $time minutes
 
-        banManager.CreateServerBan(session.UserId,
-            null,
-            null,
-            null,
-            null,
-            BanTime,
-            NoteSeverity.Minor,
-            Loc.GetString(Reason, ("censorName", automod)));
+        var str = Loc.GetString(Reason, ("censorName", automod));
+
+        banManager.CreateServerBan(session.UserId, null, null, null, null, BanTime, NoteSeverity.Minor, str);
 
         return false;
     }

@@ -23,11 +23,13 @@ public sealed class TextAutomodActionWarningChatMessage : ITextAutomodAction
         AutomodFilterDef automod,
         IEntityManager entMan)
     {
-        IoCManager.Resolve<IChatManager>()
-            .DispatchServerMessage(session,
-                Loc.GetString(Reason,
-                    ("matches", new StringBuilder().AppendJoin(", ", patternMatches.Keys)),
-                    ("censorName", automod.DisplayName)));
+        var str = Loc.GetString(
+            Reason,
+            ("matches", new StringBuilder().AppendJoin(", ", patternMatches.Keys)),
+            ("censorName", automod.DisplayName),
+            ("censorId", automod.Id is null ? "" : automod.Id));
+
+        IoCManager.Resolve<IChatManager>().DispatchServerMessage(session, str);
 
         return true;
     }

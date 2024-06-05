@@ -50,7 +50,8 @@ public interface IAutomodManager
     /// <summary>
     /// Gets an automod filter.
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">The id of the filter to retrieve.</param>
+    /// <returns>The filter returned by the Id, or if not found returns null.</returns>
     public Task<AutomodFilterDef?> GetFilter(int id);
 
     /// <summary>

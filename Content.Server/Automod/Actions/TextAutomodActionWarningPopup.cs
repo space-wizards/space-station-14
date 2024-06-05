@@ -24,13 +24,13 @@ public sealed class TextAutomodActionWarningPopup : ITextAutomodAction
         AutomodFilterDef automod,
         IEntityManager entMan)
     {
-        entMan.System<PopupSystem>()
-            .PopupCursor(Loc.GetString(Reason,
-                    ("matches", new StringBuilder().AppendJoin(", ", patternMatches.Keys)),
-                    ("censorName", automod.DisplayName),
-                    ("censorId", automod.Id is null ? "" : automod.Id)),
-                session,
-                PopupType.LargeCaution);
+        var str = Loc.GetString(
+            Reason,
+            ("matches", new StringBuilder().AppendJoin(", ", patternMatches.Keys)),
+            ("censorName", automod.DisplayName),
+            ("censorId", automod.Id is null ? "" : automod.Id));
+
+        entMan.System<PopupSystem>().PopupCursor(str, session, PopupType.LargeCaution);
 
         return true;
     }

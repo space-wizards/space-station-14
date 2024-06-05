@@ -5,13 +5,13 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Automod;
 
 /// <summary>
-/// A censor filter for running actions when a match is found in user input.
+/// An automod filter for running actions when a pattern match is found in user input.
 /// </summary>
 /// <param name="pattern">The text to find in user input.</param>
 /// <param name="filterType">The type of filter to sort this definition into.</param>
 /// <param name="actionGroup">The <seealso cref="AutomodActionGroupPrototype"/> to run when the <paramref name="pattern"/> is matched</param>
-/// <param name="targets">The user input types that this censor applies to.</param>
-/// <param name="name">The user facing name of this censor.</param>
+/// <param name="targets">The user input types that this filter applies to.</param>
+/// <param name="name">The user facing name of this filter.</param>
 public sealed class AutomodFilterDef(
     int? id,
     string pattern,
@@ -38,7 +38,7 @@ public sealed class AutomodFilterDef(
 }
 
 /// <summary>
-/// A group of actions to be run when a censor matches the text.
+/// A group of actions to be run when the automod pattern matches the text.
 /// </summary>
 [Prototype("automodActionGroup")]
 public sealed class AutomodActionGroupPrototype : IPrototype
@@ -57,8 +57,8 @@ public interface ITextAutomodAction
     /// Check whether the actions should be run.
     /// </summary>
     /// <param name="fullText">The full text provided by the user.</param>
-    /// <param name="patternMatches">The text matched by the censor.</param>
-    /// <returns>True when this censor should be skipped.</returns>
+    /// <param name="patternMatches">The text matched by the pattern.</param>
+    /// <returns>True when this filter's actions should be skipped.</returns>
     public bool Skip(string fullText, Dictionary<string, int> patternMatches);
 
     /// <summary>
@@ -68,7 +68,7 @@ public interface ITextAutomodAction
     /// <param name="fullText">The full text provided by the user.</param>
     /// <param name="patternMatches">The text matched by the censor.</param>
     /// <param name="automod">The censor that matched the <paramref name="fullText"/>.</param>
-    /// <param name="entMan"></param>
+    /// <param name="entMan"><see cref="IEntityManager"/> for resolving systems in the action.</param>
     /// <returns>True if the message passes. False if the message should be blocked.</returns>
     public bool RunAction(ICommonSession session,
         string fullText,
