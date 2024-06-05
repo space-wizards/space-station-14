@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Administration.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
@@ -18,7 +19,7 @@ namespace Content.Client.Administration.UI.CustomControls
         private readonly AdminSystem _adminSystem;
 
         private List<PlayerInfo> _playerList = new();
-        private readonly List<PlayerInfo> _sortedPlayerList = new();
+        private List<PlayerInfo> _sortedPlayerList = new();
 
         public event Action<PlayerInfo?>? OnSelectionChanged;
         public IReadOnlyList<PlayerInfo> PlayerInfo => _playerList;
@@ -107,10 +108,16 @@ namespace Content.Client.Administration.UI.CustomControls
             if (Comparison != null)
                 _sortedPlayerList.Sort((a, b) => Comparison(a, b));
 
+            // Ensure pinned players are always at the top
+            var pinnedPlayers = _sortedPlayerList.Where(p => p.IsPinned).ToList();
+            var unpinnedPlayers = _sortedPlayerList.Where(p => !p.IsPinned).ToList();
+            _sortedPlayerList = pinnedPlayers.Concat(unpinnedPlayers).ToList();
+
             PlayerListContainer.PopulateList(_sortedPlayerList.Select(info => new PlayerListData(info)).ToList());
             if (_selectedPlayer != null)
                 PlayerListContainer.Select(new PlayerListData(_selectedPlayer));
         }
+
 
         public void PopulateList(IReadOnlyList<PlayerInfo>? players = null)
         {
@@ -122,6 +129,7 @@ namespace Content.Client.Administration.UI.CustomControls
 
             FilterList();
         }
+
 
         private string GetText(PlayerInfo info)
         {
@@ -136,21 +144,40 @@ namespace Content.Client.Administration.UI.CustomControls
             if (data is not PlayerListData { Info: var info })
                 return;
 
-            button.AddChild(new BoxContainer
+            var nameLabel = new Label
             {
-                Orientation = LayoutOrientation.Vertical,
+                ClipText = true,
+                Text = GetText(info),
+                HorizontalExpand = true
+            };
+
+            var pinButton = new Button
+            {
+                Text = info.IsPinned ? "Unpin" : "Pin",
+                HorizontalAlignment = HAlignment.Right
+            };
+            pinButton.AddStyleClass("OpenRight");
+            pinButton.OnPressed += _ =>
+            {
+                info.IsPinned = !info.IsPinned;
+                PopulateList(_adminSystem.PlayerList);
+            };
+
+            var boxContainer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalExpand = true,
                 Children =
                 {
-                    new Label
-                    {
-                        ClipText = true,
-                        Text = GetText(info)
-                    }
+                    nameLabel,
+                    pinButton
                 }
-            });
+            };
 
+            button.AddChild(boxContainer);
             button.AddStyleClass(ListContainer.StyleClassListContainerButton);
         }
+
     }
 
     public record PlayerListData(PlayerInfo Info) : ListData;
