@@ -172,6 +172,18 @@
     Laughter: 2
 
 - type: reaction
+  id: Felinium
+  reactants:
+    Desoxyephedrine:
+      amount: 1
+    SpaceDrugs:
+      amount: 1
+    Razorium:
+      amount: 1
+  products:
+    Felinium: 3
+
+- type: reaction
   id: CreateCrystals
   quantized: true
   minTemp: 374

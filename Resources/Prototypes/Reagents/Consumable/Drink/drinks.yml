@@ -550,3 +550,21 @@
       effects:
       - !type:SatiateThirst
         factor: 0.6
+
+- type: reagent
+  id: CalicoSmall
+  name: reagent-name-calicosmall
+  parent: BaseDrink
+  desc: reagent-desc-calicosmall
+  physicalDesc: reagent-physical-desc-furry
+  flavor: calicosmall
+  color: "#ed8801"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Felinium
+          amount: 0.3
+  fizziness: 0.3

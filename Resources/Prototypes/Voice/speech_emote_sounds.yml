@@ -94,6 +94,8 @@
       collection: Whistles
     Crying:
       collection: MaleCry
+    CatMeow:
+      collection: CatMeows
     Weh:
       collection: Weh
     Gasp:
@@ -116,6 +118,8 @@
       collection: Whistles
     Crying:
       collection: FemaleCry
+    CatMeow:
+      collection: CatMeows
     Weh:
       collection: Weh
 
@@ -223,6 +227,8 @@
       collection: DionaLaugh
     Honk:
       collection: BikeHorn
+    CatMeow:
+      collection: CatMeows
     Weh:
       collection: Weh
     Gasp:
@@ -245,6 +251,8 @@
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
     Click:
       path: /Audio/Voice/Arachnid/arachnid_click.ogg
+    CatMeow:
+      collection: CatMeows
     Weh:
       collection: Weh
     Gasp:
@@ -349,6 +357,8 @@
       path: /Audio/Voice/Moth/moth_chitter.ogg
     Squeak:
       path: /Audio/Voice/Moth/moth_squeak.ogg
+    CatMeow:
+      collection: CatMeows
     Weh:
       collection: Weh
     Gasp:

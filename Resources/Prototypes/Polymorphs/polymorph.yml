@@ -127,6 +127,26 @@
     inventory: Drop
     cooldown: 160
 
+- type: polymorph
+  id: CatKittenMorph
+  configuration:
+    entity: MobCatKitten
+    forced: true
+    transferName: true
+    revertOnDeath: true
+    inventory: None
+    cooldown: 160
+
+- type: polymorph
+  id: CatMorph
+  configuration:
+    entity: MobCatKitten
+    forced: true
+    transferName: true
+    revertOnDeath: true
+    inventory: None
+    cooldown: 160
+
 # this is the monkey polymorph for artifact.
 - type: polymorph
   id: ArtifactMonkey

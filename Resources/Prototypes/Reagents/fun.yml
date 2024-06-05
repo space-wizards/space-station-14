@@ -319,6 +319,40 @@
         probability: 0.2
 
 - type: reagent
+  id: Felinium
+  name: reagent-name-felinium
+  group: Special
+  desc: reagent-desc-felinium
+  physicalDesc: reagent-physical-desc-furry
+  flavor: furry
+  color: "#ED8801"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1
+      effects:
+      - !type:Emote
+        emote: CatMeow
+        probability: 0.2
+        showInChat: true
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: OwOAccent
+      - !type:Polymorph
+        prototype: CatKittenMorph # Punish the hubris of those who mew too close to the sun
+        conditions:
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
+        - !type:ReagentThreshold
+          min: 50
+      - !type:AdjustReagent
+        reagent: Felinium
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
+
+- type: reagent
   id: JuiceThatMakesYouWeh
   name: reagent-name-weh
   group: Toxins

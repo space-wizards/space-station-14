@@ -1117,3 +1117,29 @@
       amount: 1
   products:
     Cola: 4
+
+- type: reaction
+  id: CalicoSmall
+  reactants:
+    CafeLatte:
+      amount: 20
+    Plasma:
+      amount: 10
+    Iron:
+      amount: 9
+    Carbon:
+      amount: 1
+    Zinc:
+      amount: 5
+    JuiceOrange:
+      amount: 20
+    Cream:
+      amount: 10
+    Sugar:
+      amount: 10
+    EnergyDrink:
+      amount: 4
+    Fiber:
+      amount: 6
+  products:
+    CalicoSmall: 100
