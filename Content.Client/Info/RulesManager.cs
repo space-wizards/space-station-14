@@ -1,5 +1,6 @@
 using Content.Client.Lobby;
 using Content.Client.Gameplay;
+using Content.Client.Guidebook;
 using Content.Shared.CCVar;
 using Content.Shared.Info;
 using Robust.Client.Console;
@@ -8,6 +9,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Info;
 
@@ -19,9 +21,9 @@ public sealed class RulesManager : SharedRulesManager
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    private InfoSection rulesSection = new InfoSection("", "", false);
-    private bool _shouldShowRules = false;
+    private bool _shouldShowRules;
 
     private RulesPopup? _activePopup;
 
@@ -32,7 +34,10 @@ public sealed class RulesManager : SharedRulesManager
         _netManager.RegisterNetMessage<RulesAcceptedMessage>();
         _stateManager.OnStateChanged += OnStateChanged;
 
-        _consoleHost.RegisterCommand("fuckrules", "", "", (_, _, _) =>
+        _consoleHost.RegisterCommand("fuckrules",
+            "",
+            "",
+            (_, _, _) =>
         {
             OnAcceptPressed();
         });
@@ -90,16 +95,8 @@ public sealed class RulesManager : SharedRulesManager
         _activePopup = null;
     }
 
-    public void UpdateRules()
+    public GuideEntryPrototype GetCoreRuleEntry()
     {
-        var rules = _sysMan.GetEntitySystem<InfoSystem>().Rules;
-        rulesSection.SetText(rules.Title, rules.Text, true);
-    }
-
-    public Control RulesSection()
-    {
-        rulesSection = new InfoSection("", "", false);
-        UpdateRules();
-        return rulesSection;
+        return _prototypeManager.Index(_sysMan.GetEntitySystem<InfoSystem>().Rules);
     }
 }

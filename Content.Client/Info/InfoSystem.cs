@@ -1,12 +1,13 @@
+using Content.Client.Guidebook;
 using Content.Shared.Info;
-using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Info;
 
 public sealed class InfoSystem : EntitySystem
 {
-    public RulesMessage Rules = new RulesMessage("Server Rules", "The server did not send any rules.");
-    [Dependency] private readonly RulesManager _rules = default!;
+    // TODO: don't merge with this
+    public ProtoId<GuideEntryPrototype> Rules = "SS!4";
 
     public override void Initialize()
     {
@@ -19,7 +20,6 @@ public sealed class InfoSystem : EntitySystem
     private void OnRulesReceived(RulesMessage message, EntitySessionEventArgs eventArgs)
     {
         Log.Debug("Received server rules.");
-        Rules = message;
-        _rules.UpdateRules();
+        Rules = message.Guide;
     }
 }

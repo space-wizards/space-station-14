@@ -7,7 +7,6 @@ soft_max_players = 130
 
 [server]
 rules_file = "RP_Rules.txt"
-rules_header = "ui-rules-header-rp"
 
 [whitelist]
 enabled = true

@@ -2,6 +2,8 @@ using System.Linq;
 using Content.Client.Guidebook.Richtext;
 using Pidgin;
 using Robust.Client.UserInterface;
+using Robust.Shared.ContentPack;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Sandboxing;
 using static Pidgin.Parser;
@@ -13,7 +15,9 @@ namespace Content.Client.Guidebook;
 /// </summary>
 public sealed partial class DocumentParsingManager
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IReflectionManager _reflectionManager = default!;
+    [Dependency] private readonly IResourceManager _resourceManager = default!;
     [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
 
     private readonly Dictionary<string, Parser<char, Control>> _tagControlParsers = new();
@@ -35,6 +39,21 @@ public sealed partial class DocumentParsingManager
         }
 
         ControlParser = SkipWhitespaces.Then(_controlParser.Many());
+    }
+
+    public bool TryAddMarkup(Control control, ProtoId<GuideEntryPrototype> entryId, bool log = true)
+    {
+        if (!_prototype.TryIndex(entryId, out var entry))
+            return false;
+
+        using var file = _resourceManager.ContentFileReadText(entry.Text);
+        return TryAddMarkup(control, file.ReadToEnd(), log);
+    }
+
+    public bool TryAddMarkup(Control control, GuideEntry entry, bool log = true)
+    {
+        using var file = _resourceManager.ContentFileReadText(entry.Text);
+        return TryAddMarkup(control, file.ReadToEnd(), log);
     }
 
     public bool TryAddMarkup(Control control, string text, bool log = true)
