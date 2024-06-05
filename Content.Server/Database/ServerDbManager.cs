@@ -160,7 +160,12 @@ namespace Content.Server.Database
 
         #region Censor Filter
 
-        Task AddCensorFilterAsync(CensorFilterDef censor);
+        /// <summary>
+        /// Add a censor filter to the database.
+        /// </summary>
+        /// <param name="censor">To add to the database.</param>
+        /// <returns>The censor added to the database with its Id.</returns>
+        Task<CensorFilterDef> AddCensorFilterAsync(CensorFilterDef censor);
 
         Task<List<CensorFilterDef>> GetAllCensorFiltersAsync();
 
@@ -518,7 +523,7 @@ namespace Content.Server.Database
 
         #region Censor Filter
 
-        public Task AddCensorFilterAsync(CensorFilterDef censor)
+        public Task<CensorFilterDef> AddCensorFilterAsync(CensorFilterDef censor)
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.AddCensorFilter(censor));

@@ -460,20 +460,22 @@ namespace Content.Server.Database
 
         #region Censor Filter
 
-        public override async Task AddCensorFilter(CensorFilterDef censorFilter)
+        public override async Task<CensorFilterDef> AddCensorFilter(CensorFilterDef censorFilter)
         {
             await using var db = await GetDbImpl();
 
-            db.PgDbContext.Censor.Add(new CensorFilter
+            var censor = new CensorFilter
             {
                 Pattern = censorFilter.Pattern,
                 FilterType = censorFilter.FilterType,
                 ActionGroup = censorFilter.ActionGroup,
                 TargetFlags = censorFilter.TargetFlags,
                 DisplayName = censorFilter.DisplayName
-            });
+            };
+            db.PgDbContext.Censor.Add(censor);
 
             await db.PgDbContext.SaveChangesAsync();
+            return ConvertCensorFilter(censor);
         }
 
         public override async Task<List<CensorFilterDef>> GetAllCensorFiltersAsync()
@@ -483,14 +485,21 @@ namespace Content.Server.Database
             var censors = new List<CensorFilterDef>();
             foreach (var censor in db.PgDbContext.Censor.ToList())
             {
-                censors.Add(new CensorFilterDef(censor.Pattern,
-                    censor.FilterType,
-                    censor.ActionGroup,
-                    censor.TargetFlags,
-                    censor.DisplayName));
+                censors.Add(ConvertCensorFilter(censor));
             }
 
             return censors;
+        }
+
+        private CensorFilterDef ConvertCensorFilter(CensorFilter censor)
+        {
+            return new CensorFilterDef(
+                censor.Id,
+                censor.Pattern,
+                censor.FilterType,
+                censor.ActionGroup,
+                censor.TargetFlags,
+                censor.DisplayName);
         }
 
         #endregion

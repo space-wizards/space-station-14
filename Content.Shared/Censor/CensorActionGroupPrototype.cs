@@ -13,17 +13,28 @@ namespace Content.Shared.Censor;
 /// <param name="targets">The user input types that this censor applies to.</param>
 /// <param name="name">The user facing name of this censor.</param>
 public sealed class CensorFilterDef(
+    int? id,
     string pattern,
     CensorFilterType filterType,
     string actionGroup,
     CensorTarget targets,
     string name)
 {
+    public readonly int? Id = id;
     public readonly string Pattern = pattern;
     public readonly CensorFilterType FilterType = filterType;
     public readonly string ActionGroup = actionGroup;
     public readonly CensorTarget TargetFlags = targets;
     public readonly string DisplayName = name;
+
+    public CensorFilterDef(
+        string pattern,
+        CensorFilterType filterType,
+        string actionGroup,
+        CensorTarget targets,
+        string name) : this(null, pattern, filterType, actionGroup, targets, name)
+    {
+    }
 }
 
 /// <summary>

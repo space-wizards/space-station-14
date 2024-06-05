@@ -53,7 +53,7 @@ public sealed class CensorManager : ICensorManager, IPostInjectInit
 
     public async void CreateCensor(CensorFilterDef censor)
     {
-        await _db.AddCensorFilterAsync(censor);
+        censor = await _db.AddCensorFilterAsync(censor);
         AddCensor(censor);
     }
 

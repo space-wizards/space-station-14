@@ -1643,7 +1643,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #region Censor Filter
 
-        public abstract Task AddCensorFilter(CensorFilterDef censorFilter);
+        public abstract Task<CensorFilterDef> AddCensorFilter(CensorFilterDef censorFilter);
 
         public abstract Task<List<CensorFilterDef>> GetAllCensorFiltersAsync();
 

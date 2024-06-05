@@ -27,7 +27,8 @@ public sealed class CensorActionWarningPopup : ICensorAction
         entMan.System<PopupSystem>()
             .PopupCursor(Loc.GetString(Reason,
                     ("matches", new StringBuilder().AppendJoin(", ", matchedText.Keys)),
-                    ("censorName", censor.DisplayName)),
+                    ("censorName", censor.DisplayName),
+                    ("censorId", censor.Id is null ? "" : censor.Id)),
                 session,
                 PopupType.LargeCaution);
 
