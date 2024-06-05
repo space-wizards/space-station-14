@@ -36,6 +36,8 @@ public sealed partial class TestPair : IAsyncDisposable
 
     private async Task OnCleanDispose()
     {
+        await Server.WaitIdleAsync();
+        await Client.WaitIdleAsync();
         await ResetModifiedPreferences();
         await Server.RemoveAllDummySessions();
 
@@ -46,7 +48,6 @@ public sealed partial class TestPair : IAsyncDisposable
         }
 
         await RevertModifiedCvars();
-
 
         var usageTime = Watch.Elapsed;
         Watch.Restart();

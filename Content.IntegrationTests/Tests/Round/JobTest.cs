@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Pair;
 using Content.Server.GameTicking;
-using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Shared.CCVar;

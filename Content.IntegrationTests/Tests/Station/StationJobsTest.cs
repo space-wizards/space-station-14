@@ -7,7 +7,6 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -46,8 +45,6 @@ public sealed class StationJobsTest
       stationProto: StandardNanotrasenStation
       components:
         - type: StationJobs
-          overflowJobs:
-          - Passenger
           availableJobs:
             TMime: [0, -1]
             TAssistant: [-1, -1]
@@ -164,7 +161,6 @@ public sealed class StationJobsTest
         var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
         var fooStationProto = prototypeManager.Index<GameMapPrototype>("FooStation");
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
         var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();

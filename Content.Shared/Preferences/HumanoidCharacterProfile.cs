@@ -342,6 +342,8 @@ namespace Content.Shared.Preferences
                     if (value == JobPriority.High)
                         dictionary[job] = JobPriority.Medium;
                 }
+
+                dictionary[jobId] = priority;
             }
             else
             {
