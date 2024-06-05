@@ -65,6 +65,7 @@ namespace Content.Server.Administration.Systems
         private const string TooLongText = "... **(too long)**";
 
         private int _maxAdditionalChars;
+        private readonly Dictionary<NetUserId, DateTime> _activeConversations = new();
 
         public override void Initialize()
         {
@@ -89,11 +90,80 @@ namespace Content.Server.Administration.Systems
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
+            if (e.NewStatus == SessionStatus.Disconnected)
+            {
+                if (_activeConversations.TryGetValue(e.Session.UserId, out var lastMessageTime))
+                {
+                    var timeSinceLastMessage = DateTime.Now - lastMessageTime;
+                    if (timeSinceLastMessage > TimeSpan.FromMinutes(10))
+                    {
+                        _activeConversations.Remove(e.Session.UserId);
+                        return; // Do not send disconnect message if timeout exceeded
+                    }
+                }
+            }
+
+            // Notify all admins if a player disconnects or reconnects
+            var message = e.NewStatus switch
+            {
+                SessionStatus.Connected => $"{e.Session.Name} has reconnected.",
+                SessionStatus.Disconnected => $"{e.Session.Name} has disconnected.",
+                _ => null
+            };
+
+            if (message != null)
+            {
+                var isReconnected = e.NewStatus == SessionStatus.Connected;
+                NotifyAdmins(e.Session.UserId, message, isReconnected);
+            }
+
             if (e.NewStatus != SessionStatus.InGame)
                 return;
 
             RaiseNetworkEvent(new BwoinkDiscordRelayUpdated(!string.IsNullOrWhiteSpace(_webhookUrl)), e.Session);
         }
+
+
+
+        private void NotifyAdmins(NetUserId userId, string message, bool isReconnected)
+        {
+            if (!_activeConversations.ContainsKey(userId))
+            {
+                return;
+            }
+
+            // Colorize the message based on the status
+            var color = isReconnected ? "green" : "red";
+            var coloredMessage = $"[color={color}]{message}[/color]";
+
+            var bwoinkMessage = new BwoinkTextMessage(
+                userId: userId,
+                trueSender: SystemUserId,
+                text: coloredMessage,
+                sentAt: DateTime.Now,
+                playSound: false
+            );
+
+            var admins = GetTargetAdmins();
+            foreach (var admin in admins)
+            {
+                RaiseNetworkEvent(bwoinkMessage, admin);
+            }
+
+            // Enqueue the message for Discord relay
+            if (_webhookUrl != string.Empty)
+            {
+                if (!_messageQueues.ContainsKey(userId))
+                    _messageQueues[userId] = new Queue<string>();
+
+                var escapedText = FormattedMessage.EscapeText(message);
+                var discordMessage = isReconnected ? $":green_circle: {escapedText}" : $":red_circle: {escapedText}";
+
+                _messageQueues[userId].Enqueue(discordMessage);
+            }
+        }
+
+
 
         private void OnGameRunLevelChanged(GameRunLevelChangedEvent args)
         {
@@ -381,6 +451,7 @@ namespace Content.Server.Administration.Systems
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             base.OnBwoinkTextMessage(message, eventArgs);
+            _activeConversations[message.UserId] = DateTime.Now;
             var senderSession = eventArgs.SenderSession;
 
             // TODO: Sanitize text?
