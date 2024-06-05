@@ -183,7 +183,7 @@ public sealed class InternalsSystem : EntitySystem
         ent.Comp.BreathTools.Remove(toolEntity);
 
         if (TryComp(toolEntity, out BreathToolComponent? breathTool))
-            _atmos.DisconnectInternals(toolEntity, breathTool);
+            _atmos.DisconnectInternals((toolEntity, breathTool));
 
         if (ent.Comp.BreathTools.Count == 0)
             DisconnectTank(ent);
