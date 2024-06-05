@@ -112,7 +112,7 @@ namespace Content.Server.Administration.Systems
                 if (_activeConversations.TryGetValue(e.Session.UserId, out var lastMessageTime))
                 {
                     var timeSinceLastMessage = DateTime.Now - lastMessageTime;
-                    if (timeSinceLastMessage > TimeSpan.FromMinutes(10))
+                    if (timeSinceLastMessage > TimeSpan.FromMinutes(5))
                     {
                         _activeConversations.Remove(e.Session.UserId);
                         return; // Do not send disconnect message if timeout exceeded
