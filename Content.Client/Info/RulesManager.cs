@@ -23,7 +23,7 @@ public sealed class RulesManager : SharedRulesManager
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    private bool _shouldShowRules;
+    private bool _shouldShowRules = true;
 
     private RulesPopup? _activePopup;
 
