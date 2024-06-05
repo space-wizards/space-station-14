@@ -7,6 +7,25 @@
   - CharacterCreation
 
 - type: guideEntry
+  id: Controls
+  name: guide-entry-controls
+  text: "/ServerInfo/Guidebook/Controls/Controls.xml"
+  children:
+  - Radio
+
+- type: guideEntry
+  id: Radio
+  name: guide-entry-radio
+  text: "/ServerInfo/Guidebook/Controls/Radio.xml" 
+
+- type: guideEntry
   id: CharacterCreation
   name: guide-entry-charactercreation
   text: "/ServerInfo/Guidebook/CharacterCreation.xml"
+  children:
+  - YourFirstCharacter
+
+- type: guideEntry
+  id: YourFirstCharacter
+  name: guide-entry-yourfirstcharacter
+  text: "/ServerInfo/Guidebook/YourFirstCharacter.xml"
