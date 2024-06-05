@@ -129,17 +129,13 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
             // We have to escape it because shorthands like ":)" or "-_-" would break the regex otherwise.
             var escaped = Regex.Escape(shorthand);
 
-            // So there are 4 cases:
-            // - If there is whitespace before and a non-alphanumeric character after (punctuation/whitespace):
-            //   Delete it and the whitespace before.
-            // - If there is whitespace before it and it is at the end of the string:
-            //   Delete it and the whitespace before.
-            // - If it is at the start of the string and there is a whitespace character after:
-            //   Delete it and the whitespace after.
-            // - If it is at the start and end of the string
-            //   Delete it.
+            // So there are 2 cases:
+            // - If there is whitespace before it and after it is either punctuation, whitespace, or the end of the line
+            //   Delete the word and the whitespace before
+            // - If it is at the start of the string and is followed by punctuation, whitespace, or the end of the line
+            //   Delete the word and the punctuation if it exists.
             var pattern =
-                $@"(\s{escaped})(?=[\p{{P}}\s])|(\s{escaped})$|^({escaped}\s)|^({escaped})$";
+                $@"\s{escaped}(?=\p{{P}}|\s|$)|^{escaped}(?:\p{{P}}|(?=\s|$))";
 
             var r = new Regex(pattern, RegexOptions.RightToLeft | RegexOptions.IgnoreCase);
 
