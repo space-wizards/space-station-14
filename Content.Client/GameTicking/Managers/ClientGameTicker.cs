@@ -70,7 +70,7 @@ namespace Content.Client.GameTicking.Managers
             // reading the console. E.g., logs like this one could leak the nuke station/grid:
             // > Grid NT-Arrivals 1101 (122/n25896) changed parent. Old parent: map 10 (121/n25895). New parent: FTL (123/n26470)
 #if !DEBUG
-            _map.Log.Level = _admin.IsAdmin() ? LogLevel.Info : LogLevel.Warning;
+            EntityManager.System<SharedMapSystem>().Log.Level = _admin.IsAdmin() ? LogLevel.Info : LogLevel.Warning;
 #endif
         }
 
