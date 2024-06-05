@@ -93,6 +93,7 @@ public sealed partial class TestPair : IAsyncDisposable
         {
             await Server.WaitPost(() => prefMan.SetProfile(user, 0, new HumanoidCharacterProfile()).Wait());
         }
+        _modifiedProfiles.Clear();
     }
 
     public async ValueTask CleanReturnAsync()
