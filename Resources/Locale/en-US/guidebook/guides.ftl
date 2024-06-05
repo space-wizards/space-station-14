@@ -14,8 +14,6 @@ guide-entry-ame = Antimatter Engine (AME)
 guide-entry-singularity = Singularity / Tesla
 guide-entry-teg = Thermo-electric Generator (TEG)
 guide-entry-rtg = RTG
-guide-entry-controls = Controls
-guide-entry-radio = Radio
 guide-entry-jobs = Jobs
 guide-entry-cargo = Cargo
 guide-entry-cargo-bounties = Cargo Bounties
@@ -63,6 +61,8 @@ guide-entry-species = Species
 guide-entry-newplayer = New? Start here!
 guide-entry-charactercreation = Character Creation
 guide-entry-yourfirstcharacter = Your First Character
+guide-entry-controls = Controls
+guide-entry-radio = Radio and Speech
 
 guide-entry-antagonists = Antagonists
 guide-entry-nuclear-operatives = Nuclear Operatives
