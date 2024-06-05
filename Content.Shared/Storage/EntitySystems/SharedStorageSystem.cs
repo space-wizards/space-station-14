@@ -55,6 +55,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
     private EntityQuery<StackComponent> _stackQuery;
@@ -364,7 +365,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// </summary>
     private void OnActivate(EntityUid uid, StorageComponent storageComp, ActivateInWorldEvent args)
     {
-        if (args.Handled || !CanInteract(args.User, (uid, storageComp), storageComp.ClickInsert))
+        if (args.Handled || !args.Complex || !CanInteract(args.User, (uid, storageComp), storageComp.ClickInsert))
             return;
 
         // Toggle
@@ -860,13 +861,8 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
         }
 
-        if (storageComp.Whitelist?.IsValid(insertEnt, EntityManager) == false)
-        {
-            reason = "comp-storage-invalid-container";
-            return false;
-        }
-
-        if (storageComp.Blacklist?.IsValid(insertEnt, EntityManager) == true)
+        if (_whitelistSystem.IsWhitelistFail(storageComp.Whitelist, insertEnt) ||
+            _whitelistSystem.IsBlacklistPass(storageComp.Blacklist, insertEnt))
         {
             reason = "comp-storage-invalid-container";
             return false;

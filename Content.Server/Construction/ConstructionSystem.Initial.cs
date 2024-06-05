@@ -14,6 +14,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Storage;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -30,6 +31,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -337,7 +339,7 @@ namespace Content.Server.Construction
                 return false;
             }
 
-            if (constructionPrototype.EntityWhitelist != null && !constructionPrototype.EntityWhitelist.IsValid(user))
+            if (_whitelistSystem.IsWhitelistFail(constructionPrototype.EntityWhitelist, user))
             {
                 _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
                 return false;
@@ -422,7 +424,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            if (constructionPrototype.EntityWhitelist != null && !constructionPrototype.EntityWhitelist.IsValid(user))
+            if (_whitelistSystem.IsWhitelistFail(constructionPrototype.EntityWhitelist, user))
             {
                 _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
                 return;
