@@ -51,7 +51,7 @@ public sealed class JobTest
         var roleSys = pair.Server.System<RoleSystem>();
         var ticker = pair.Server.System<GameTicker>();
 
-        user ??= pair.Client.User;
+        user ??= pair.Client.User!.Value;
 
         Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
         Assert.That(ticker.PlayerGameStatuses[user.Value], Is.EqualTo(PlayerGameStatus.JoinedGame));
