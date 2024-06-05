@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Bans are now shown in the "adminremarks" command.
-    type: Add
-  id: 6187
-  time: '2024-03-18T21:31:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26240
 - author: Terraspark4941
   changes:
   - message: The TEG page in the guidebook has been updated with proper information!
@@ -3848,3 +3841,11 @@
   id: 6686
   time: '2024-06-05T21:16:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28641
+- author: Tayrtahn
+  changes:
+  - message: Slimes, diona, and kudzu are less dramatically affected by having certain
+      chemicals splashed on them.
+    type: Tweak
+  id: 6687
+  time: '2024-06-05T22:08:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28591
