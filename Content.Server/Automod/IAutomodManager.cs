@@ -20,7 +20,7 @@ public interface IAutomodManager
     public bool Filter(AutomodTarget target, string inputText, ICommonSession session);
 
     /// <summary>
-    /// Clears and reloads all censors from the database.
+    /// Clears and reloads all automod filters from the database.
     /// </summary>
     public void ReloadAutomodFilters();
 
@@ -35,10 +35,10 @@ public interface IAutomodManager
         string name);
 
     /// <summary>
-    /// Add a censor def to the manager.
+    /// Add a automod def to the manager.
     /// This method sorts the definitions for faster lookup.
     /// </summary>
-    /// <param name="automod">The censor to add.</param>
+    /// <param name="automod">The automod filter to add.</param>
     public void CreateFilter(AutomodFilterDef automod);
 
     /// <summary>

@@ -32,16 +32,16 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
     private async void LoadAutomodFiltersFromDatabase()
     {
-        var censors = await _db.GetAllAutomodFiltersAsync();
-        foreach (var censor in censors)
+        var filters = await _db.GetAllAutomodFiltersAsync();
+        foreach (var filter in filters)
         {
-            AddFilter(censor);
+            AddFilter(filter);
         }
     }
 
     void IPostInjectInit.PostInject()
     {
-        _log = _logMan.GetSawmill("censor");
+        _log = _logMan.GetSawmill("automod");
     }
 
     #endregion
@@ -113,11 +113,11 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
     {
         _regexFilters.Clear();
 
-        var censors = await _db.GetAllAutomodFiltersAsync();
+        var filters = await _db.GetAllAutomodFiltersAsync();
 
-        foreach (var censor in censors)
+        foreach (var filter in filters)
         {
-            AddFilter(censor);
+            AddFilter(filter);
         }
     }
 

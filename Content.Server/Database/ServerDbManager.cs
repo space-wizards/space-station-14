@@ -164,7 +164,7 @@ namespace Content.Server.Database
         /// Add an automod filter to the database.
         /// </summary>
         /// <param name="automodFilter">To add to the database.</param>
-        /// <returns>The censor added to the database with its Id.</returns>
+        /// <returns>The automod filter added to the database, but with the Id set.</returns>
         Task<AutomodFilterDef> AddAutomodFilterAsync(AutomodFilterDef automodFilter);
 
         /// <summary>

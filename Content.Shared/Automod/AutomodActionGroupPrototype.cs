@@ -66,8 +66,8 @@ public interface ITextAutomodAction
     /// </summary>
     /// <param name="session">The session the text came from.</param>
     /// <param name="fullText">The full text provided by the user.</param>
-    /// <param name="patternMatches">The text matched by the censor.</param>
-    /// <param name="automod">The censor that matched the <paramref name="fullText"/>.</param>
+    /// <param name="patternMatches">The text matched by the pattern.</param>
+    /// <param name="automod">The filter def that matched the <paramref name="fullText"/>.</param>
     /// <param name="entMan"><see cref="IEntityManager"/> for resolving systems in the action.</param>
     /// <returns>True if the message passes. False if the message should be blocked.</returns>
     public bool RunAction(ICommonSession session,

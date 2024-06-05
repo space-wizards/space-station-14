@@ -31,7 +31,7 @@ public sealed class TextAutomodActionBan : ITextAutomodAction
     {
         var banManager = IoCManager.Resolve<IBanManager>();
 
-        // TODO ShadowCommander implement ban group tracking for banning after three censor hits within $time minutes
+        // TODO ShadowCommander implement ban group tracking for banning after three filter hits within $time minutes
 
         var str = Loc.GetString(Reason, ("censorName", automod));
 

@@ -325,7 +325,7 @@ namespace Content.Server.Database
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<TextAutomodFilter>()
-                .HasIndex(censor => censor.Id);
+                .HasIndex(filter => filter.Id);
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)

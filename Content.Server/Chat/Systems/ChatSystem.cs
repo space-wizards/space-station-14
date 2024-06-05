@@ -288,7 +288,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (player != null && !_chatManager.HandleRateLimit(player))
             return;
 
-        // Chat censor
+        // Chat filter
         // Player isn't always provided, so get session. Kinda hacky for now.
         var session = player;
         if (player == null && TryComp(source, out MindContainerComponent? mindContainer) && mindContainer.HasMind && TryComp(mindContainer.Mind, out MindComponent? mind))

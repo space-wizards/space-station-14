@@ -1647,7 +1647,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             await using var db = await GetDb();
 
-            var censor = new TextAutomodFilter
+            var filter = new TextAutomodFilter
             {
                 Pattern = automodFilter.Pattern,
                 FilterType = automodFilter.FilterType,
@@ -1655,10 +1655,10 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 TargetFlags = automodFilter.TargetFlags,
                 DisplayName = automodFilter.DisplayName
             };
-            db.DbContext.TextAutomod.Add(censor);
+            db.DbContext.TextAutomod.Add(filter);
 
             await db.DbContext.SaveChangesAsync();
-            return ConvertTextAutomodFilter(censor);
+            return ConvertTextAutomodFilter(filter);
         }
 
         public async Task<AutomodFilterDef?> GetTextAutomodFilter(int id)
@@ -1673,13 +1673,13 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             await using var db = await GetDb();
 
-            var censors = new List<AutomodFilterDef>();
-            foreach (var censor in db.DbContext.TextAutomod.ToList())
+            var filters = new List<AutomodFilterDef>();
+            foreach (var filter in db.DbContext.TextAutomod.ToList())
             {
-                censors.Add(ConvertTextAutomodFilter(censor));
+                filters.Add(ConvertTextAutomodFilter(filter));
             }
 
-            return censors;
+            return filters;
         }
 
         protected AutomodFilterDef ConvertTextAutomodFilter(TextAutomodFilter textAutomod)
