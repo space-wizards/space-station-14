@@ -47,7 +47,7 @@ public sealed partial class ConstructionSystem
             throw new Exception($"Entity with prototype {component.Board} doesn't have a {nameof(MachineBoardComponent)}!");
         }
 
-        foreach (var (stackType, amount) in machineBoard.MaterialRequirements)
+        foreach (var (stackType, amount) in machineBoard.StackRequirements)
         {
             var stack = _stackSystem.Spawn(amount, stackType, xform.Coordinates);
             if (!_container.Insert(stack, partContainer))

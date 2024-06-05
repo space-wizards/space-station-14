@@ -11,7 +11,7 @@
     state: security
   - type: MachineBoard
     prototype: ShuttleGunSvalinnMachineGun
-    materialRequirements:
+    stackRequirements:
       MatterBin: 2
       Manipulator: 4
       Steel: 5
@@ -28,7 +28,7 @@
     state: security
   - type: MachineBoard
     prototype: ShuttleGunPerforator
-    materialRequirements:
+    stackRequirements:
       MatterBin: 4
       Manipulator: 6
       Steel: 10
@@ -45,7 +45,7 @@
     state: security
   - type: MachineBoard
     prototype: ShuttleGunFriendship
-    materialRequirements:
+    stackRequirements:
       MatterBin: 3
       Manipulator: 2
       Steel: 7
@@ -62,7 +62,7 @@
     state: security
   - type: MachineBoard
     prototype: ShuttleGunDuster
-    materialRequirements:
+    stackRequirements:
       MatterBin: 6
       Manipulator: 4
       Steel: 10
@@ -80,7 +80,7 @@
     state: security
   - type: MachineBoard
     prototype: ShuttleGunKinetic
-    materialRequirements:
+    stackRequirements:
       MatterBin: 2
       Manipulator: 3
       Steel: 5

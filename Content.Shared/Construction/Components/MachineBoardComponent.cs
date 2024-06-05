@@ -11,11 +11,8 @@ public sealed partial class MachineBoardComponent : Component
     /// <summary>
     /// The stacks needed to construct this machine
     /// </summary>
-    /// <remarks>
-    /// MISNAMED VARIABLE: this refers to stacks, not materials.
-    /// </remarks>
     [DataField]
-    public Dictionary<ProtoId<StackPrototype>, int> MaterialRequirements = new();
+    public Dictionary<ProtoId<StackPrototype>, int> StackRequirements = new();
 
     /// <summary>
     /// Entities needed to construct this machine, discriminated by tag.

@@ -6,7 +6,7 @@
   components:
     - type: MachineBoard
       prototype: Autolathe
-      materialRequirements:
+      stackRequirements:
         MatterBin: 3
         Manipulator: 1
         Glass: 1
@@ -19,7 +19,7 @@
   components:
   - type: MachineBoard
     prototype: AutolatheHyperConvection
-    materialRequirements:
+    stackRequirements:
       MatterBin: 3
       Glass: 1
     tagRequirements:
@@ -35,7 +35,7 @@
   components:
     - type: MachineBoard
       prototype: Protolathe
-      materialRequirements:
+      stackRequirements:
         MatterBin: 2
         Manipulator: 2
       tagRequirements:
@@ -51,7 +51,7 @@
   components:
   - type: MachineBoard
     prototype: ProtolatheHyperConvection
-    materialRequirements:
+    stackRequirements:
       MatterBin: 2
     tagRequirements:
       GlassBeaker:
@@ -69,7 +69,7 @@
   components:
     - type: MachineBoard
       prototype: Biofabricator
-      materialRequirements:
+      stackRequirements:
         MatterBin: 4
         Glass: 1
 
@@ -83,7 +83,7 @@
       state: security
     - type: MachineBoard
       prototype: SecurityTechFab
-      materialRequirements:
+      stackRequirements:
         MatterBin: 2
         Manipulator: 2
       tagRequirements:
@@ -101,7 +101,7 @@
       state: security
     - type: MachineBoard
       prototype: AmmoTechFab
-      materialRequirements:
+      stackRequirements:
         MatterBin: 1
         Manipulator: 1
 
@@ -115,7 +115,7 @@
       state: medical
     - type: MachineBoard
       prototype: MedicalTechFab
-      materialRequirements:
+      stackRequirements:
         MatterBin: 2
         Manipulator: 2
       tagRequirements:
@@ -134,7 +134,7 @@
     state: science
   - type: MachineBoard
     prototype: CircuitImprinter
-    materialRequirements:
+    stackRequirements:
       MatterBin: 1
       Manipulator: 1
     tagRequirements:
@@ -152,7 +152,7 @@
     state: science
   - type: MachineBoard
     prototype: CircuitImprinterHyperConvection
-    materialRequirements:
+    stackRequirements:
       MatterBin: 2
     tagRequirements:
       GlassBeaker:
@@ -171,7 +171,7 @@
     state: science
   - type: MachineBoard
     prototype: ExosuitFabricator
-    materialRequirements:
+    stackRequirements:
       MatterBin: 1
       Manipulator: 3
       Glass: 5
@@ -190,7 +190,7 @@
     state: science
   - type: MachineBoard
     prototype: ResearchAndDevelopmentServer
-    materialRequirements:
+    stackRequirements:
       Plasma: 5
 
 - type: entity
@@ -200,7 +200,7 @@
   components:
   - type: MachineBoard
     prototype: UniformPrinter
-    materialRequirements:
+    stackRequirements:
       MatterBin: 1
       Manipulator: 2
 
@@ -213,7 +213,7 @@
     state: medical
   - type: MachineBoard
     prototype: Vaccinator
-    materialRequirements:
+    stackRequirements:
       MatterBin: 1
       Manipulator: 1
       Cable: 5
@@ -231,7 +231,7 @@
     state: medical
   - type: MachineBoard
     prototype: DiseaseDiagnoser
-    materialRequirements:
+    stackRequirements:
       Cable: 5
     tagRequirements:
       GlassBeaker:
@@ -252,7 +252,7 @@
       state: science
     - type: MachineBoard
       prototype: MachineArtifactAnalyzer
-      materialRequirements:
+      stackRequirements:
         Manipulator: 3
         Capacitor: 1
         Glass: 5
@@ -267,7 +267,7 @@
     state: science
   - type: MachineBoard
     prototype: MachineArtifactCrusher
-    materialRequirements:
+    stackRequirements:
       Manipulator: 2
       Glass: 1
       Steel: 5
@@ -282,7 +282,7 @@
       state: science
     - type: MachineBoard
       prototype: MachineAnomalyVessel
-      materialRequirements:
+      stackRequirements:
         Capacitor: 3
         Cable: 1
         PlasmaGlass: 10
@@ -297,7 +297,7 @@
     state: science
   - type: MachineBoard
     prototype: MachineAnomalyVesselExperimental
-    materialRequirements:
+    stackRequirements:
       Capacitor: 3
       Cable: 5
       PlasmaGlass: 15
@@ -313,7 +313,7 @@
       state: science
     - type: MachineBoard
       prototype: MachineAnomalySynchronizer
-      materialRequirements:
+      stackRequirements:
         Manipulator: 2
         Capacitor: 5
         PlasmaGlass: 5
@@ -329,7 +329,7 @@
       state: science
     - type: MachineBoard
       prototype: MachineAPE
-      materialRequirements:
+      stackRequirements:
         Capacitor: 2
         Cable: 1
         Glass: 1
@@ -344,7 +344,7 @@
     state: engineering
   - type: MachineBoard
     prototype: GasThermoMachineFreezer
-    materialRequirements:
+    stackRequirements:
       MatterBin: 2
       Capacitor: 2
       Cable: 5
@@ -363,7 +363,7 @@
     state: engineering
   - type: MachineBoard
     prototype: GasThermoMachineHeater
-    materialRequirements:
+    stackRequirements:
       MatterBin: 2
       Capacitor: 2
       Cable: 5
@@ -382,7 +382,7 @@
     state: engineering
   - type: MachineBoard
     prototype: GasThermoMachineHellfireFreezer
-    materialRequirements:
+    stackRequirements:
       MatterBin: 2
       Capacitor: 2
       Plasma: 1
@@ -401,7 +401,7 @@
     state: engineering
   - type: MachineBoard
     prototype: GasThermoMachineHellfireHeater
-    materialRequirements:
+    stackRequirements:
       MatterBin: 2
       Capacitor: 2
       Plasma: 1
@@ -420,7 +420,7 @@
     state: engineering
   - type: MachineBoard
     prototype: BaseGasCondenser
-    materialRequirements:
+    stackRequirements:
       MatterBin: 1
       Glass: 1
 
@@ -434,7 +434,7 @@
     state: engineering
   - type: MachineBoard
     prototype: PortableScrubber
-    materialRequirements:
+    stackRequirements:
       MatterBin: 1
       Manipulator: 2
       Cable: 5
@@ -450,7 +450,7 @@
     state: engineering
   - type: MachineBoard
     prototype: SpaceHeater
-    materialRequirements:
+    stackRequirements:
       MatterBin: 1
       Capacitor: 2
       Cable: 5
@@ -465,7 +465,7 @@
       state: medical
     - type: MachineBoard
       prototype: CloningPod
-      materialRequirements:
+      stackRequirements:
         MatterBin: 2
         Manipulator: 2
         Glass: 1
@@ -481,7 +481,7 @@
       state: medical
     - type: MachineBoard
       prototype: MedicalScanner
-      materialRequirements:
+      stackRequirements:
         Capacitor: 1
         Glass: 5
         Cable: 1
@@ -494,7 +494,7 @@
   components:
     - type: MachineBoard
       prototype: CrewMonitoringServer
-      materialRequirements:
+      stackRequirements:
         Steel: 1
         Cable: 2
 
@@ -508,7 +508,7 @@
       state: medical
     - type: MachineBoard
       prototype: CryoPod
-      materialRequirements:
+      stackRequirements:
         Glass: 5
         Cable: 1
 
@@ -522,7 +522,7 @@
       state: medical
     - type: MachineBoard
       prototype: ChemMaster
-      materialRequirements:
+      stackRequirements:
         Capacitor: 1
         Glass: 1
         Cable: 1
@@ -541,7 +541,7 @@
       state: medical
     - type: MachineBoard
       prototype: ChemDispenserEmpty
-      materialRequirements:
+      stackRequirements:
         Capacitor: 1
         Glass: 1
         Steel: 3
@@ -558,7 +558,7 @@
   components:
     - type: MachineBoard
       prototype: BiomassReclaimer
-      materialRequirements:
+      stackRequirements:
         MatterBin: 2
         Manipulator: 1
         Steel: 5
@@ -578,7 +578,7 @@
       state: service
     - type: MachineBoard
       prototype: HydroponicsTrayEmpty
-      materialRequirements:
+      stackRequirements:
         # replacing the console screen
         Glass: 5
         Cable: 2
@@ -597,7 +597,7 @@
       state: service
     - type: MachineBoard
       prototype: SeedExtractor
-      materialRequirements:
+      stackRequirements:
         Manipulator: 2
         Capacitor: 1
         # replacing the console screen
@@ -615,7 +615,7 @@
       state: power_mod
     - type: MachineBoard
       prototype: SMESBasicEmpty
-      materialRequirements:
+      stackRequirements:
         Capacitor: 1
         CableHV: 10
       componentRequirements:
@@ -634,7 +634,7 @@
       state: charger_APC
     - type: MachineBoard
       prototype: PowerCellRecharger
-      materialRequirements:
+      stackRequirements:
         Capacitor: 2
         Cable: 5
     - type: PhysicalComposition
@@ -655,7 +655,7 @@
       state: charger_APC
     - type: MachineBoard
       prototype: PowerCageRecharger
-      materialRequirements:
+      stackRequirements:
         Capacitor: 4
         Steel: 5
         Cable: 10
@@ -677,7 +677,7 @@
       state: charger_APC
     - type: MachineBoard
       prototype: BorgCharger
-      materialRequirements:
+      stackRequirements:
         Capacitor: 2
         Cable: 5
     - type: PhysicalComposition
@@ -698,7 +698,7 @@
       state: charger_APC
     - type: MachineBoard
       prototype: WeaponCapacitorRecharger
-      materialRequirements:
+      stackRequirements:
         Capacitor: 2
         CableMV: 5
     - type: PhysicalComposition
@@ -719,7 +719,7 @@
     state: charger_APC
   - type: MachineBoard
     prototype: TurboItemRecharger
-    materialRequirements:
+    stackRequirements:
       Capacitor: 2
       CableMV: 5
   - type: PhysicalComposition
@@ -735,7 +735,7 @@
   components:
     - type: MachineBoard
       prototype: SubstationBasicEmpty
-      materialRequirements:
+      stackRequirements:
         Capacitor: 1
         CableMV: 5
         CableHV: 5
@@ -758,7 +758,7 @@
   components:
     - type: MachineBoard
       prototype: DawInstrument
-      materialRequirements:
+      stackRequirements:
         Glass: 1
         Cable: 1
       tagRequirements:
@@ -793,7 +793,7 @@
       state: engineering
     - type: MachineBoard
       prototype: PortableGeneratorPacman
-      materialRequirements:
+      stackRequirements:
         Capacitor: 1
         CableHV: 5
     - type: PhysicalComposition
@@ -811,7 +811,7 @@
   components:
   - type: MachineBoard
     prototype: Thruster
-    materialRequirements:
+    stackRequirements:
       Capacitor: 4
       Steel: 5
 
@@ -822,7 +822,7 @@
   components:
   - type: MachineBoard
     prototype: Gyroscope
-    materialRequirements:
+    stackRequirements:
       Manipulator: 2
       Capacitor: 1
       Glass: 2
@@ -836,7 +836,7 @@
       state: engineering
     - type: MachineBoard
       prototype: PortableGeneratorSuperPacman
-      materialRequirements:
+      stackRequirements:
         Capacitor: 2
         CableHV: 10
     - type: PhysicalComposition
@@ -856,7 +856,7 @@
       state: engineering
     - type: MachineBoard
       prototype: PortableGeneratorJrPacman
-      materialRequirements:
+      stackRequirements:
         Capacitor: 1
         Cable: 10
     - type: PhysicalComposition
@@ -875,7 +875,7 @@
   components:
     - type: MachineBoard
       prototype: KitchenReagentGrinder
-      materialRequirements:
+      stackRequirements:
         MatterBin: 2
         Manipulator: 2
       tagRequirements:
@@ -891,7 +891,7 @@
   components:
     - type: MachineBoard
       prototype: ChemistryHotplate
-      materialRequirements:
+      stackRequirements:
         Capacitor: 2
         Glass: 1
 
@@ -903,7 +903,7 @@
   components:
   - type: MachineBoard
     prototype: KitchenElectricGrill
-    materialRequirements:
+    stackRequirements:
       Capacitor: 4
       Glass: 2
       Cable: 5
@@ -917,7 +917,7 @@
       state: medical
     - type: MachineBoard
       prototype: StasisBed
-      materialRequirements:
+      stackRequirements:
         Capacitor: 1
         Manipulator: 1
         Cable: 3
@@ -933,7 +933,7 @@
     state: medical
   - type: MachineBoard
     prototype: MachineElectrolysisUnit
-    materialRequirements:
+    stackRequirements:
       Capacitor: 2
       Cable: 1
 
@@ -947,7 +947,7 @@
     state: medical
   - type: MachineBoard
     prototype: MachineCentrifuge
-    materialRequirements:
+    stackRequirements:
       Manipulator: 1
       Steel: 1
 
@@ -960,7 +960,7 @@
       state: supply
     - type: MachineBoard
       prototype: MaterialReclaimer
-      materialRequirements:
+      stackRequirements:
         Manipulator: 2
         Steel: 5
         Plastic: 5
@@ -974,7 +974,7 @@
       state: supply
     - type: MachineBoard
       prototype: OreProcessor
-      materialRequirements:
+      stackRequirements:
         MatterBin: 1
         Manipulator: 3
         Glass: 1
@@ -988,7 +988,7 @@
     state: supply
   - type: MachineBoard
     prototype: OreProcessorIndustrial
-    materialRequirements:
+    stackRequirements:
       MatterBin: 1
       Manipulator: 3
       Glass: 1
@@ -1000,7 +1000,7 @@
   components:
   - type: MachineBoard
     prototype: Sheetifier
-    materialRequirements:
+    stackRequirements:
       MatterBin: 1
       Manipulator: 1
 
@@ -1013,7 +1013,7 @@
       state: service
     - type: MachineBoard
       prototype: KitchenMicrowave
-      materialRequirements:
+      stackRequirements:
         Capacitor: 1
         Glass: 2
         Cable: 2
@@ -1030,7 +1030,7 @@
       state: service
     - type: MachineBoard
       prototype: FatExtractor
-      materialRequirements:
+      stackRequirements:
         Manipulator: 1
       componentRequirements:
         Utensil:
@@ -1045,7 +1045,7 @@
   components:
   - type: MachineBoard
     prototype: MachineFlatpacker
-    materialRequirements:
+    stackRequirements:
       Manipulator: 2
       MatterBin: 1
       Steel: 1
@@ -1059,7 +1059,7 @@
       state: engineering
     - type: MachineBoard
       prototype: Emitter
-      materialRequirements:
+      stackRequirements:
         Capacitor: 2
         CableHV: 5
         Glass: 2
@@ -1072,7 +1072,7 @@
   components:
     - type: MachineBoard
       prototype: SurveillanceCameraRouterConstructed
-      materialRequirements:
+      stackRequirements:
         Cable: 1
 
 - type: entity
@@ -1083,7 +1083,7 @@
   components:
     - type: MachineBoard
       prototype: SurveillanceCameraWirelessRouterConstructed
-      materialRequirements:
+      stackRequirements:
         Cable: 2
         Glass: 1
 
@@ -1095,7 +1095,7 @@
   components:
     - type: MachineBoard
       prototype: SurveillanceWirelessCameraMovableConstructed
-      materialRequirements:
+      stackRequirements:
         Glass: 2
         Cable: 2
 
@@ -1107,7 +1107,7 @@
   components:
     - type: MachineBoard
       prototype: SurveillanceWirelessCameraAnchoredConstructed
-      materialRequirements:
+      stackRequirements:
         Cable: 2
         Glass: 1
 
@@ -1119,7 +1119,7 @@
   components:
   - type: MachineBoard
     prototype: GasRecycler
-    materialRequirements:
+    stackRequirements:
       Capacitor: 1
       Manipulator: 1
       Steel: 10
@@ -1135,7 +1135,7 @@
       state: service
     - type: MachineBoard
       prototype: BoozeDispenserEmpty
-      materialRequirements:
+      stackRequirements:
         Steel: 5
       tagRequirements:
           GlassBeaker:
@@ -1152,7 +1152,7 @@
       state: supply
     - type: MachineBoard
       prototype: CargoTelepad
-      materialRequirements:
+      stackRequirements:
         Capacitor: 2
         Steel: 5
 
@@ -1166,7 +1166,7 @@
       state: service
     - type: MachineBoard
       prototype: SodaDispenserEmpty
-      materialRequirements:
+      stackRequirements:
         Steel: 5
       tagRequirements:
           GlassBeaker:
@@ -1181,7 +1181,7 @@
   components:
     - type: MachineBoard
       prototype: TelecomServer
-      materialRequirements:
+      stackRequirements:
         Steel: 1
         Cable: 2
 
@@ -1193,7 +1193,7 @@
   components:
   - type: MachineBoard
     prototype: SalvageMagnet
-    materialRequirements:
+    stackRequirements:
       Capacitor: 4
       Steel: 5
       CableHV: 5
@@ -1207,7 +1207,7 @@
   components:
   - type: MachineBoard
     prototype: GravityGeneratorMini
-    materialRequirements:
+    stackRequirements:
       Capacitor: 4
       MatterBin: 3
       Steel: 5
@@ -1221,7 +1221,7 @@
   components:
   - type: MachineBoard
     prototype: ReagentGrinderIndustrial
-    materialRequirements:
+    stackRequirements:
       MatterBin: 1
       Manipulator: 3
       Glass: 1
@@ -1234,7 +1234,7 @@
   components:
   - type: MachineBoard
     prototype: Jukebox
-    materialRequirements:
+    stackRequirements:
       WoodPlank: 5
       Steel: 2
       Glass: 5

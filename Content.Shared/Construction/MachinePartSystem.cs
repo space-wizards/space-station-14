@@ -30,7 +30,7 @@ namespace Content.Shared.Construction
             using (args.PushGroup(nameof(MachineBoardComponent)))
             {
                 args.PushMarkup(Loc.GetString("machine-board-component-on-examine-label"));
-                foreach (var (material, amount) in component.MaterialRequirements)
+                foreach (var (material, amount) in component.StackRequirements)
                 {
                     var stack = _prototype.Index(material);
                     var name = _prototype.Index(stack.Spawn).Name;
@@ -64,7 +64,7 @@ namespace Content.Shared.Construction
 
             var materials = new Dictionary<string, int>();
 
-            foreach (var (stackId, amount) in comp.MaterialRequirements)
+            foreach (var (stackId, amount) in comp.StackRequirements)
             {
                 var stackProto = _prototype.Index(stackId);
                 var defaultProto = _prototype.Index(stackProto.Spawn);
