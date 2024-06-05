@@ -101,7 +101,7 @@
   id: BannerSecurity
   parent: BannerBase
   name: security banner
-  description: A banner displaying the colors of the security department. You're surprised its not vandalised.
+  description: A banner displaying the colors of the security department. You're surprised it's not vandalised.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
