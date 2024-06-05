@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -94,7 +95,8 @@ public sealed class WieldableSystem : EntitySystem
 
     private void OnDeselectWieldable(EntityUid uid, WieldableComponent component, HandDeselectedEvent args)
     {
-        if (!component.Wielded)
+        if (!component.Wielded ||
+            _handsSystem.EnumerateHands(args.User).Count() > 2)
             return;
 
         TryUnwield(uid, component, args.User);
