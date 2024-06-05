@@ -1,9 +1,10 @@
 using System.Numerics;
-using Content.Client.Guidebook;
 using Content.Client.UserInterface.Systems.EscapeMenu;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 
 namespace Content.Client.Info
@@ -12,7 +13,6 @@ namespace Content.Client.Info
     {
         [Dependency] private readonly IResourceManager _resourceManager = default!;
         [Dependency] private readonly RulesManager _rules = default!;
-        [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
 
         public RulesAndInfoWindow()
         {
@@ -60,12 +60,9 @@ namespace Content.Client.Info
             AddSection(info, MakeSection(title, path, markup, _resourceManager));
         }
 
-        private Control MakeSection(string title, string path, bool markup, IResourceManager res)
+        private static Control MakeSection(string title, string path, bool markup, IResourceManager res)
         {
-            var text = res.ContentFileReadAllText($"/ServerInfo/{path}");
-            var container = new BoxContainer();
-            _documentParsingManager.TryAddMarkup(container, text);
-            return container;
+            return new InfoSection(title, res.ContentFileReadAllText($"/ServerInfo/{path}"), markup);
         }
 
     }

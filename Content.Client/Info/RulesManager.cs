@@ -1,6 +1,5 @@
 using Content.Client.Lobby;
 using Content.Client.Gameplay;
-using Content.Client.Guidebook;
 using Content.Shared.CCVar;
 using Content.Shared.Info;
 using Robust.Client.Console;
@@ -20,9 +19,8 @@ public sealed class RulesManager : SharedRulesManager
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
-    [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
 
-    private BoxContainer _rulesSection = new();
+    private InfoSection rulesSection = new InfoSection("", "", false);
     private bool _shouldShowRules = false;
 
     private RulesPopup? _activePopup;
@@ -95,14 +93,13 @@ public sealed class RulesManager : SharedRulesManager
     public void UpdateRules()
     {
         var rules = _sysMan.GetEntitySystem<InfoSystem>().Rules;
-        var text = rules.Text;
-        _documentParsingManager.TryAddMarkup(_rulesSection, text);
+        rulesSection.SetText(rules.Title, rules.Text, true);
     }
 
     public Control RulesSection()
     {
-        _rulesSection = new BoxContainer();
+        rulesSection = new InfoSection("", "", false);
         UpdateRules();
-        return _rulesSection;
+        return rulesSection;
     }
 }
