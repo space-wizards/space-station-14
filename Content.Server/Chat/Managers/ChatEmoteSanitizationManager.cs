@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
+using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 
@@ -7,7 +7,7 @@ namespace Content.Server.Chat.Managers;
 
 public sealed class ChatEmoteSanitizationManager : IChatSanitizationManager
 {
-    private static readonly Dictionary<string, string> shorthandToEmote = new()
+    private static readonly Dictionary<string, string> ShorthandToEmote = new()
     {
         { ":)", "chatsan-smiles" },
         { ":]", "chatsan-smiles" },
@@ -88,6 +88,7 @@ public sealed class ChatEmoteSanitizationManager : IChatSanitizationManager
     };
 
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
 
     private bool _doSanitize;
 
@@ -96,32 +97,43 @@ public sealed class ChatEmoteSanitizationManager : IChatSanitizationManager
         _configurationManager.OnValueChanged(CCVars.ChatSanitizerEnabled, x => _doSanitize = x, true);
     }
 
-    public bool TrySanitizeEmoteShorthands(string input,
+    public bool TrySanitizeEmoteShorthands(string message,
         EntityUid speaker,
         out string sanitized,
         [NotNullWhen(true)] out string? emote)
     {
-        if (!_doSanitize)
-        {
-            sanitized = input;
-            emote = null;
-            return false;
-        }
-
-        input = input.TrimEnd();
-
-        foreach (var (shorthand, replacement) in shorthandToEmote)
-        {
-            if (input.EndsWith(shorthand, true, CultureInfo.InvariantCulture))
-            {
-                sanitized = input.Remove(input.Length - shorthand.Length).TrimEnd();
-                emote = Loc.GetString(replacement, ("ent", speaker));
-                return true;
-            }
-        }
-
-        sanitized = input;
         emote = null;
-        return false;
+        sanitized = message;
+
+        if (!_doSanitize)
+            return false;
+
+        var lastEmoteIndex = -1;
+
+        foreach (var (shortHand, emoteKey) in ShorthandToEmote)
+        {
+            var escaped = Regex.Escape(shortHand);
+
+            var pattern =
+                $@"(\s{escaped})(?=[\p{{P}}\s])|(\s{escaped})$|^({escaped}\s)|^({escaped})$";
+
+            var r = new Regex(pattern, RegexOptions.RightToLeft | RegexOptions.IgnoreCase);
+
+            var lastMatch = r.Match(sanitized);
+
+            if (!lastMatch.Success)
+                continue;
+
+            if (lastMatch.Index > lastEmoteIndex)
+            {
+                lastEmoteIndex = lastMatch.Index;
+                emote = _loc.GetString(emoteKey, ("ent", speaker));
+            }
+
+            message = r.Replace(message, string.Empty);
+        }
+
+        sanitized = message.Trim();
+        return emote is not null;
     }
 }
