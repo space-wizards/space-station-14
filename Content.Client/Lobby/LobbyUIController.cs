@@ -22,7 +22,6 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby;
@@ -70,12 +69,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             _profileEditor?.RefreshFlavorText();
         });
 
-        _configurationManager.OnValueChanged(CCVars.GameRoleTimers, args =>
-        {
-            _profileEditor?.RefreshAntags();
-            _profileEditor?.RefreshJobs();
-            _profileEditor?.RefreshLoadouts();
-        });
+        _configurationManager.OnValueChanged(CCVars.GameRoleTimers, _ => RefreshProfileEditor());
+
+        _configurationManager.OnValueChanged(CCVars.GameRoleWhitelist, _ => RefreshProfileEditor());
     }
 
     private LobbyCharacterPreviewPanel? GetLobbyPreview()
@@ -193,6 +189,13 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         PreviewPanel.SetSummaryText(humanoid.Summary);
     }
 
+    private void RefreshProfileEditor()
+    {
+        _profileEditor?.RefreshAntags();
+        _profileEditor?.RefreshJobs();
+        _profileEditor?.RefreshLoadouts();
+    }
+
     private void SaveProfile()
     {
         DebugTools.Assert(EditedProfile != null);
@@ -299,7 +302,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     {
         var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
         // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract (what is resharper smoking?)
-        return _prototypeManager.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
+        return _prototypeManager.Index<JobPrototype>(highPriorityJob.Id ?? SharedGameTicker.FallbackOverflowJob);
     }
 
     public void GiveDummyLoadout(EntityUid uid, RoleLoadout? roleLoadout)

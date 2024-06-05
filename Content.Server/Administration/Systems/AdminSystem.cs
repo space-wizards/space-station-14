@@ -292,6 +292,19 @@ namespace Content.Server.Administration.Systems
                 : _adminManager.ActiveAdmins;
             var hasAdmins = admins.Any();
 
+            // TODO Fix order dependent Cvars
+            // Please for the sake of my sanity don't make cvars & order dependent.
+            // Just make a bool field on the system instead of having some cvars automatically modify other cvars.
+            //
+            // I.e., this:
+            //   /sudo cvar game.panic_bunker.enabled true
+            //   /sudo cvar game.panic_bunker.disable_with_admins true
+            // and this:
+            //   /sudo cvar game.panic_bunker.disable_with_admins true
+            //   /sudo cvar game.panic_bunker.enabled true
+            //
+            // should have the same effect, but currently setting the disable_with_admins can modify enabled.
+
             if (hasAdmins && PanicBunker.DisableWithAdmins)
             {
                 _config.SetCVar(CCVars.PanicBunkerEnabled, false);

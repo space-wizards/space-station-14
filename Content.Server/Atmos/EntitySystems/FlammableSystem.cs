@@ -155,7 +155,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnExtinguishActivateInWorld(EntityUid uid, ExtinguishOnInteractComponent component, ActivateInWorldEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.Complex)
                 return;
 
             if (!TryComp(uid, out FlammableComponent? flammable))
