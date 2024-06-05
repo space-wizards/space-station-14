@@ -4,160 +4,67 @@
 
   Revealing conditions reveal the shielded information for the round, not for a specific instance. This means that once a revealing condition is met in a round, the shield no longer applies in any case for the remainder of the round.
 
-  Some revealing conditions say "Never revealed IC". This means that your character can never act as if they know about that shielded thing.
+  ## Never Revealed IC
+  Some shields are never revealed IC. This means that your character can never act as if they know about that shielded thing.
 
-  ## Metashield
-  <Table Columns="2">
-    <ColorBox Color="#994444">
-      <Box>
-        Shield
-      </Box>
-    </ColorBox>
-    <ColorBox Color="#449944">
-      <Box>
-        Revealing Condition
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Current game mode and possible antags during the current game mode.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Never revealed IC
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Events from previous rounds.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Never revealed IC
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Events from previous characters.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Never revealed IC
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        All information related to the player of a character rather than the character itself.
+  The following are shielded:
+  - Current game mode and possible antags during the current game mode.
+  - Events from previous rounds.
+  - Events from previous characters.
+  - All information related to the player of a character rather than the character itself. (See "Metafriending and Metagrudging" below.)
+  - All information gained while dead or a ghost.
+  - The fact that a round will end.
 
-        See "Metafriending and Metagrudging" below.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Never revealed IC
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        See "Metafriending and Metagrudging" below.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Never revealed IC
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        All information gained while dead or a ghost.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Never revealed IC
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The fact that a round will end.
+  This does not prevent knowing that a shift will end, but does prohibit things like preparing to kill people at central command when roleplay rules stop being enforced on LRP.
 
-        This does not prevent knowing that a shift will end, but does prohibit things like preparing to kill people at central command when roleplay rules stop being enforced on LRP.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Never revealed IC
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The existence of Nuclear Operatives beyond a myth that no one would act on.
+  ## Nuclear Operatives
 
-        The fact that the nuke disk must be protected and could be used by a bad actor to try to destroy the station is not shielded.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        ANY of:
-        - discovering a blood red hardsuit
-        - an operative name
-        - a War Ops announcement
-        - being a nuclear operative
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Implanted implants.
+  The existence of Nuclear Operatives beyond a myth that no one would act on is shielded.
 
-        Implanters themselves and un-implanted implants are not shielded. Prohibits implant checking.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        ANY of:
-        - discovering a non-NT implanter, used or unused
-        - discovering a non-NT implant box
-        - discovering use of a non-NT implant by anyone
-        - experiencing a situation where absolutely no other explanation is possible
-        - discovering an unlocked uplink
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Chameleon items.
+  The fact that the nuke disk must be protected and could be used by a bad actor to try to destroy the station is not shielded.
 
-        Being suspicious of an item being fake or stolen is not shielded, but testing items or calling them chameleon is covered by this shield.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        ANY of:
-        - seeing someone else cause any chameleon item to change
-        - finding holographic nanomachine fibers
-        - experiencing a situation where absolutely no other explanation is possible
-        - discovering an unlocked uplink
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The fact that an item can be something other than what its visual appearance and examine description indicate.
+  The revealing condition for this shield is any of the following:
+  - discovering a blood red hardsuit
+  - an operative name
+  - a War Ops announcement
+  - being a nuclear operative
 
-        This shield protects stealth items, including protecting them from being tested.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        ANY of:
-        - seeing the item behave differently than the expected behavior for the item
-        - seeing the item used for its hidden purpose
-        - experiencing a situation where absolutely no other explanation is possible
-        - discovering an unlocked uplink
-      </Box>
-    </ColorBox>
-  </Table>
+  ## Implanted Implants
+
+  Implanted implants are shielded.
+
+  Implanters themselves and un-implanted implants are not shielded. This prohibits implant checking.
+
+  The revealing condition for this shield is any of the following:
+  - discovering a non-NT implanter, used or unused
+  - discovering a non-NT implant box
+  - discovering use of a non-NT implant by anyone
+  - experiencing a situation where absolutely no other explanation is possible
+  - discovering an unlocked uplink
+
+  ## Chameleon Items
+
+  Chameleon items are shielded.
+
+  Being suspicious of an item being fake or stolen is not shielded, but testing items or calling them chameleon is covered by this shield.
+
+  The revealing condition for this shield is any of the following:
+  - seeing someone else cause any chameleon item to change
+  - finding holographic nanomachine fibers
+  - experiencing a situation where absolutely no other explanation is possible
+  - discovering an unlocked uplink
+
+  ## Stealth Items
+
+  The fact that an item can be something other than what its visual appearance and examine description indicate is shielded.
+
+  This shield protects stealth items, including protecting them from being tested.
+
+  The revealing condition for this shield is any of the following:
+  - seeing the item behave differently than the expected behavior for the item
+  - seeing the item used for its hidden purpose
+  - experiencing a situation where absolutely no other explanation is possible
+  - discovering an unlocked uplink
 
   ## MRP Amendment 1
   A shield prevents your character from remembering anything that happened while unconscious. This shield is never revealed IC.
