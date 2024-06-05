@@ -68,8 +68,6 @@
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 8 #it's a musket
-  - type: BallisticAmmoProvider
-    capacity: 1
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -107,7 +105,5 @@
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 8 #it's a flintlock
-  - type: BallisticAmmoProvider
-    capacity: 1
   - type: StaticPrice
     price: 0
