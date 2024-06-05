@@ -346,13 +346,43 @@ namespace Content.Shared.Preferences
             };
         }
 
-        public HumanoidCharacterProfile WithTraitPreference(string traitId, bool pref)
+        public HumanoidCharacterProfile WithTraitPreference(string traitId, string? categoryId, bool pref)
         {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var traitProto = prototypeManager.Index<TraitPrototype>(traitId);
+
+            TraitCategoryPrototype? categoryProto = null;
+            if (categoryId != null && categoryId != "default")
+                categoryProto = prototypeManager.Index<TraitCategoryPrototype>(categoryId);
+
             var list = new HashSet<string>(_traitPreferences);
 
             if (pref)
             {
                 list.Add(traitId);
+
+                if (categoryProto == null || categoryProto.MaxTraitPoints < 0)
+                {
+                    return new(this)
+                    {
+                        _traitPreferences = list,
+                    };
+                }
+
+                var count = 0;
+                foreach (var trait in list)
+                {
+                    var traitProtoTemp = prototypeManager.Index<TraitPrototype>(trait);
+                    count += traitProtoTemp.Cost;
+                }
+
+                if (count > categoryProto.MaxTraitPoints && traitProto.Cost != 0)
+                {
+                    return new(this)
+                    {
+                        _traitPreferences = _traitPreferences,
+                    };
+                }
             }
             else
             {

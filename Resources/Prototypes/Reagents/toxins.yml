@@ -560,6 +560,7 @@
       - !type:Emote
         emote: Honk
         showInChat: true
+        force: true
         probability: 0.2
       - !type:HealthChange
         conditions:

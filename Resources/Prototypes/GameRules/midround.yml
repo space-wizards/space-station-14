@@ -3,7 +3,6 @@
 - type: entity
   id: Ninja
   parent: BaseGameRule
-  noSpawn: true
   components:
   - type: GenericAntagRule
     agentName: ninja-round-end-agent-name
