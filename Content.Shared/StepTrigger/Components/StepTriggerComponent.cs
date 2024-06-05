@@ -16,7 +16,8 @@ public sealed partial class StepTriggerComponent : Component
 
     /// <summary>
     ///     The list of entities that are standing on this entity,
-    /// which shouldn't be able to trigger it again until stepping off.
+    ///     which shouldn't be able to trigger it again until stepping off.
+    ///     Requires <see cref="StepOn"/> to be true to contain anything
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public HashSet<EntityUid> CurrentlySteppedOn = new();
@@ -53,7 +54,7 @@ public sealed partial class StepTriggerComponent : Component
     public bool IgnoreWeightless;
 
     /// <summary>
-    /// Does this have separate "StepOn" and "StepOff" triggers.
+    ///     Does this have separate "StepOn" and "StepOff" triggers.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool StepOn = false;
