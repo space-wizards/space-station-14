@@ -1,14 +1,23 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/1b8c53516ce8b14828b7147b0fa344b7b57724e9",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "rag"
-    }
-  ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/1b8c53516ce8b14828b7147b0fa344b7b57724e9. Fill levels by Tayrtahn on GitHub",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "rag"
+        },
+        {
+            "name": "fill-1"
+        },
+        {
+            "name": "fill-2"
+        },
+        {
+            "name": "fill-3"
+        }
+    ]
 }
