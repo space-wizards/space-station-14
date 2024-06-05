@@ -1,7 +1,13 @@
 ﻿- type: guideEntry
+  id: CoreRuleset
+  name: guide-entry-rules-core
+  priority: 0
+  text: "/ServerInfo/Guidebook/ServerRules/WizDenCoreOnlyRules.xml"
+
+- type: guideEntry
   id: StandardRuleset
   name: guide-entry-rules-lrp
-  priority: 0
+  priority: 5
   text: "/ServerInfo/Guidebook/ServerRules/WizDenLRPRules.xml"
 
 - type: guideEntry
