@@ -193,7 +193,9 @@ public sealed class InternalsSystem : EntitySystem
 
     public void ConnectBreathTool(Entity<InternalsComponent> ent, EntityUid toolEntity)
     {
-        ent.Comp.BreathTools.Add(toolEntity);
+        if (!ent.Comp.BreathTools.Add(toolEntity))
+            return;
+
         _alerts.ShowAlert(ent, ent.Comp.InternalsAlert, GetSeverity(ent));
     }
 
