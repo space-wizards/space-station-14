@@ -22,7 +22,8 @@ public sealed class JobTest
     private static ProtoId<JobPrototype> _passenger = "Passenger";
     private static ProtoId<JobPrototype> _engineer = "StationEngineer";
     private static ProtoId<JobPrototype> _captain = "Captain";
-    private static ProtoId<GameMapPrototype> _map = "JobTestMap";
+
+    private static string _map = "JobTestMap";
 
     [TestPrototypes]
     public static string JobTestMap = @$"
