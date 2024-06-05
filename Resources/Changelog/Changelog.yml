@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Lone operatives now start with 60TC instead of 40TC.
-    type: Tweak
-  id: 6183
-  time: '2024-03-18T14:15:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26130
 - author: PJB3005
   changes:
   - message: Fixed hardsuits in space causing high pressure damage
@@ -3849,3 +3842,10 @@
   id: 6682
   time: '2024-06-04T18:48:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28590
+- author: Boaz1111
+  changes:
+  - message: Revamped Cluster's Head Offices
+    type: Tweak
+  id: 6683
+  time: '2024-06-05T17:50:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28627
