@@ -1,6 +1,6 @@
 - type: entity
   id: BaseTabletopChemicalMachine
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   abstract: true
   components:
   - type: Transform
@@ -36,7 +36,6 @@
       mixer: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
-  - type: RequireProjectileTarget
 
 - type: entity
   id: MachineElectrolysisUnit

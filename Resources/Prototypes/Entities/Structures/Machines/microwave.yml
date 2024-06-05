@@ -1,6 +1,6 @@
 - type: entity
   id: KitchenMicrowave
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   name: microwave
   description: It's magic.
   components:
@@ -105,4 +105,3 @@
   - type: GuideHelp
     guides:
     - Chef
-  - type: RequireProjectileTarget

@@ -1,6 +1,6 @@
 - type: entity
   id: DiseaseDiagnoser
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   name: Disease Diagnoser Delta Extreme
   description: A machine that analyzes disease samples.
   placement:
@@ -17,7 +17,6 @@
   - type: Appearance
   - type: Machine
     board: DiagnoserMachineCircuitboard
-  - type: RequireProjectileTarget
 
 - type: entity
   name: disease diagnoser report
