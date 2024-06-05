@@ -69,7 +69,7 @@ guide-entry-minor-antagonists = Minor Antagonists
 guide-entry-space-ninja = Space Ninja
 
 guide-entry-rules = Server Rules
-guide-entry-rules-core = Core Only Ruleset
+guide-entry-rules-core-only = Core Only Ruleset
 guide-entry-rules-lrp = Standard Ruleset
 guide-entry-rules-mrp = MRP Ruleset
 guide-entry-rules-role-types = Role Types

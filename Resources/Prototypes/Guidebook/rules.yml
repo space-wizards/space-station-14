@@ -1,6 +1,6 @@
 ﻿- type: guideEntry
   id: CoreRuleset
-  name: guide-entry-rules-core
+  name: guide-entry-rules-core-only
   priority: 0
   text: "/ServerInfo/Guidebook/ServerRules/WizDenCoreOnlyRules.xml"
 
