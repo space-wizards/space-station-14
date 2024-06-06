@@ -21,6 +21,9 @@ website    = "https://spacestation14.io"
 wiki       = "https://wiki.spacestation14.io"
 appeal     = "https://appeal.ss14.io"
 
+[server]
+rules_file = "StandardRuleset"
+
 [net]
 max_connections = 1024
 
