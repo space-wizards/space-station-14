@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using Content.Server.Administration;
+using Content.Shared.Administration;
 using Content.Shared.Automod;
 using Content.Shared.Database;
 using Robust.Shared.Toolshed;
@@ -8,7 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Automod;
 
-[ToolshedCommand]
+[ToolshedCommand, AdminCommand(AdminFlags.Automod)]
 public sealed class AutomodCommand : ToolshedCommand
 {
     [Dependency]
