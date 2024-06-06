@@ -3,10 +3,10 @@
   abstract: true
   parent: BaseItem
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
+  # - type: Sprite
+  #   sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
+  # - type: Clothing
+  #   sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
     # slots: BELT
   # - type: Item
   #   sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
@@ -64,6 +64,8 @@
     - state: detail
     - state: icon
       map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:
@@ -97,6 +99,8 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: icon
       map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
   - type: RandomSprite
     getAllGroups: true
     available:
@@ -133,6 +137,8 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: icon
       map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
   - type: RandomSprite
     getAllGroups: true
     available:
