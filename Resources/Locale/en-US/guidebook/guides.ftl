@@ -1,4 +1,4 @@
-guide-entry-ss14 = The Station
+guide-entry-ss14 = Station and Shifts
 guide-entry-engineering = Engineering
 guide-entry-construction = Construction
 guide-entry-airlock-security = Airlock Upgrades
@@ -56,7 +56,7 @@ guide-entry-yourfirstcharacter = Your First Character
 guide-entry-controls = Controls
 guide-entry-radio = Radio and Speech
 
-guide-entry-references = Reference Tables
+guide-entry-references = Tables and References
 guide-entry-drinks = Drinks
 guide-entry-foodrecipes = Food Recipes
 guide-entry-chemicals = Chemicals
