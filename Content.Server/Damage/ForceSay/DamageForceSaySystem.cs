@@ -1,3 +1,4 @@
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.FixedPoint;
