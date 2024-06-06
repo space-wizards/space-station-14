@@ -351,3 +351,6 @@ AirlockServiceCaptainLocked: AirlockCaptainLocked
 
 #2024-06-05
 DisasterVictimSpawner: CommandVisitorSpawner
+LostCargoTechnicianSpawner: VisitorCargoTechnicianSpawner
+ClownTroupeSpawner: VisitorClownSpawner
+TravelingChefSpawner: VisitorChefSpawner

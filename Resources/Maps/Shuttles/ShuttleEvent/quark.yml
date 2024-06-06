@@ -968,7 +968,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,5.5
       parent: 1
-- proto: ChallengeVictimSpawner
+- proto: DisasterVictimSpawner
   entities:
   - uid: 73
     components:
@@ -1519,7 +1519,7 @@ entities:
       parent: 112
     - type: Physics
       canCollide: False
-- proto: ChallengeCargoTechnicianSpawner
+- proto: LostCargoTechnicianSpawner
   entities:
   - uid: 260
     components:

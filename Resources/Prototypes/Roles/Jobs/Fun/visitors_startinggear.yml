@@ -38,11 +38,11 @@
     jumpsuit: ClothingUniformJumpsuitChiefEngineer
     shoes: ClothingShoesColorWhite
     head: ClothingHeadHatBeretEngineering
-    neck: ClothingNeckCloakCE
+    neck: ClothingNeckCloakCe
     id: VisitorPDA
     belt: ClothingBeltChiefEngineerFilled
     back: ClothingBackpackDuffelEngineering
-    ears: RnDRD
+    ears: ClothingHeadsetCE
     outerClothing: ClothingOuterVestHazard
     pocket1: WeaponDisabler
 
@@ -71,7 +71,7 @@
     id: VisitorPDA
     back: ClothingBackpackMedical
     ears: ClothingHeadsetCMO
-    belt: ClothingBeltMedical
+    belt: ClothingBeltMedicalFilled
     outerClothing: ClothingOuterCoatLabCmo
     pocket1: WeaponDisabler
 
@@ -86,7 +86,7 @@
     id: VisitorPDA
     back: ClothingBackpackSatchelMedical
     ears: ClothingHeadsetCMO
-    belt: ClothingBeltMedical
+    belt: ClothingBeltMedicalFilled
     outerClothing: ClothingOuterCoatLabCmo
     pocket1: WeaponDisabler
 
@@ -104,12 +104,12 @@
     outerClothing: ClothingOuterWinterHoP
 
 - type: startingGear
-  id: VisitorAlt
+  id: VisitorHOPAlt
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoP
     shoes: ClothingShoesLeather
     head: ClothingHeadHatHopcap
-    neck: ClothingNeckMantleHop
+    neck: ClothingNeckMantleHOP
     id: VisitorPDA
     belt: WeaponDisabler
     back: ClothingBackpackSatchelLeather
@@ -131,12 +131,13 @@
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterCoatHoSTrench
     pocket1: MagazinePistolSubMachineGunTopMounted
-    hand: WeaponSubMachineGunWt550
+  inhand:
+  - WeaponSubMachineGunWt550
 
 - type: startingGear
   id: VisitorHOSAlt
   equipment:
-    jumpsuit: ClothingUniformJumpsuitHoSFormal
+    jumpsuit: ClothingUniformJumpsuitHosFormal
     shoes: ClothingShoesBootsCowboyFancyFilled
     gloves: ClothingHandsGlovesColorWhite
     head: ClothingHeadHatCowboyWhite
@@ -147,7 +148,8 @@
     ears: ClothingHeadsetAltSecurity
     eyes: ClothingEyesGlassesSecurity
     pocket1: MagazinePistolSubMachineGunTopMounted
-    hand: WeaponSubMachineGunWt550
+  inhand:
+  - WeaponSubMachineGunWt550
 
 - type: startingGear
   id: VisitorRD
@@ -180,8 +182,8 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitQMTurtleneck
     shoes: ClothingShoesColorBrown
-    head: ClothingHeadHatQMSoft
-    neck: ClothingNeckCloakRd
+    head: ClothingHeadHatQMsoft
+    neck: ClothingNeckCloakQm
     id: VisitorPDA
     back: ClothingBackpackCargo
     ears: ClothingHeadsetRD
@@ -214,9 +216,10 @@
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterArmorBasic
-    pocket1: WeaponPostolMk58
+    pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
-    hand: FlashlightSeclite
+  inhand:
+  - FlashlightSeclite
 
 - type: startingGear
   id: VisitorSecurityCadetAlt
@@ -231,9 +234,10 @@
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterArmorBasicSlim
-    pocket1: WeaponPostolMk58
+    pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
-    hand: FlashlightSeclite
+  inhand:
+  - FlashlightSeclite
 
 - type: startingGear
   id: VisitorSecurityOfficer
@@ -247,9 +251,10 @@
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterArmorBasic
-    pocket1: WeaponPostolMk58
+    pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
-    hand: FlashlightSeclite
+  inhand:
+  - FlashlightSeclite
 
 - type: startingGear
   id: VisitorSecurityOfficerAlt
@@ -264,9 +269,10 @@
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterArmorBasicSlim
-    pocket1: WeaponPostolMk58
+    pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
-    hand: FlashlightSeclite
+  inhand: 
+  - FlashlightSeclite
 
 - type: startingGear
   id: VisitorDetective
@@ -283,7 +289,8 @@
     outerClothing: ClothingOuterCoatDetectiveLoadout
     pocket1: ForensicScanner
     pocket2: ForensicPad
-    hand: FlashlightSeclite
+  inhand:
+  - FlashlightSeclite
 
 - type: startingGear
   id: VisitorDetectiveAlt
@@ -300,13 +307,15 @@
     outerClothing: ClothingOuterVestDetective
     pocket1: ForensicScanner
     pocket2: ForensicPad
-    hand: FlashlightSeclite
+  inhand:
+  - FlashlightSeclite
 
 - type: startingGear
   id: VisitorWarden
   equipment:
     jumpsuit: ClothingUniformJumpsuitWarden
     shoes: ClothingShoesBootsCombatFilled
+    gloves: ClothingHandsGlovesCombat
     head: ClothingHeadHatBeretWarden
     neck: SecurityWhistle
     id: VisitorPDA
@@ -315,15 +324,18 @@
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterCoatWarden
-    pocket1: ForensicScanner
-    pocket2: ForensicPad
-    hand: FlashlightSeclite
+    suitstorage: WeaponShotgunKammerer
+    pocket1: WeaponDisabler
+    pocket2: Zipties
+  inhand:
+  - FlashlightSeclite
 
 - type: startingGear
   id: VisitorWardenAlt
   equipment:
     jumpsuit: ClothingUniformJumpsuitWarden
     shoes: ClothingShoesBootsCombatFilled
+    gloves: ClothingHandsGlovesCombat
     head: ClothingHeadHatWarden
     id: VisitorPDA
     belt: ClothingBeltSecurityFilled
@@ -332,16 +344,17 @@
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterWinterWarden
     suitstorage: WeaponShotgunKammerer
-    pocket1: disabler
+    pocket1: WeaponDisabler
     pocket2: Zipties
-    hand: FlashlightSeclite
+  inhand:
+  - FlashlightSeclite
 
 # Misc
 
 # Cargo
 
 - type: startingGear
-  id: LostCargoTechGearSuit
+  id: VisitorCargoTech
   equipment:
     jumpsuit: ClothingUniformJumpsuitCargo
     shoes: ClothingShoesColorBlack
@@ -352,7 +365,7 @@
     pocket1: AppraisalTool
 
 - type: startingGear
-  id: LostCargoTechGearCoat
+  id: VisitorCargoTechAlt
   equipment:
     jumpsuit: ClothingUniformJumpsuitCargo
     shoes: ClothingShoesBootsWinterCargo
@@ -363,26 +376,655 @@
     pocket1: AppraisalTool
     outerClothing: ClothingOuterWinterCargo
 
+- type: startingGear
+  id: VisitorSalvageSpecialist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
+    shoes: ClothingShoesBootsSalvage
+    head: ClothingHeadHatCargosoftFlipped
+    id: VisitorPDA
+    belt: ClothingBeltSalvageWebbing
+    back: ClothingBackpackSalvage
+    ears: ClothingHeadsetCargo
+    pocket1: SurvivalKnife
+    pocket2: HandheldGPSBasic
+
+- type: startingGear
+  id: VisitorSalvageSpecialistAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
+    shoes: ClothingShoesBootsSalvage
+    head: ClothingHeadHatBrownFlatcap
+    id: VisitorPDA
+    belt: ClothingBeltSalvageWebbing
+    back: ClothingBackpackDuffelSalvage
+    ears: ClothingHeadsetCargo
+    outerClothing: ClothingOuterWinterCargo
+    pocket1: SurvivalKnife
+    pocket2: HandheldGPSBasic
+
 # Engineering
+
+- type: startingGear
+  id: VisitorAtmosTech
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAtmos
+    shoes: ClothingShoesColorWhite
+    gloves: ClothingHandsGlovesFingerlessInsulated
+    head: ClothingHeadHelmetFire
+    id: VisitorPDA
+    back: ClothingBackpackDuffelAtmospherics
+    ears: ClothingHeadsetEngineering
+    eyes: ClothingEyesGlassesMeson
+    outerClothing: ClothingOuterSuitAtmosFire
+    suitstorage: AirTankFilled
+    pocket1: CrowbarRed
+  inhand:
+  - FireExtinguisher
+
+- type: startingGear
+  id: VisitorAtmosTechAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAtmosCasual
+    shoes: ClothingShoesColorWhite
+    gloves: ClothingHandsGlovesColorYellow
+    head: ClothingHeadHatHardhatYellow
+    neck: ClothingNeckScarfStripedLightBlue
+    id: VisitorPDA
+    belt: DoubleEmergencyOxygenTankFilled
+    back: ClothingBackpackSatchelAtmospherics
+    ears: ClothingHeadsetEngineering
+    eyes: ClothingEyesGlassesMeson
+    outerClothing: ClothingOuterWinterAtmos
+    pocket1: FlashlightLantern
+    pocket2: CrowbarRed
+  inhand:
+  - FoodSnackBoritos
+
+- type: startingGear
+  id: VisitorTechnicalAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorYellow
+    shoes: ClothingShoesBootsWork
+    gloves: ClothingHandsGlovesColorYellowBudget
+    head: ClothingHeadHatWelding
+    id: VisitorPDA
+    back: ClothingBackpackEngineering
+    ears: ClothingHeadsetEngineering
+    eyes: ClothingEyesGlassesMeson
+    pocket1: LightReplacer
+    pocket2: Welder
+
+- type: startingGear
+  id: VisitorTechnicalAssistantAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitEngineeringHazard
+    shoes: ClothingShoesColorBlack
+    gloves: ClothingHandsGlovesColorYellowBudget
+    head: ClothingHeadHatCone
+    id: VisitorPDA
+    belt: ClothingBeltUtility
+    back: ClothingBackpackSatchelEngineering
+    ears: ClothingHeadsetEngineering
+    eyes: ClothingEyesGlassesMeson
+    outerClothing: ClothingOuterVestHazard
+    pocket1: HolofanProjector
+    pocket2: GasAnalyzer
+
+- type: startingGear
+  id: VisitorEngineer
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitEngineering
+    shoes: ClothingShoesBootsWork
+    gloves: ClothingHandsGlovesColorYellow
+    head: ClothingHeadHatHardhatYellow
+    id: VisitorPDA
+    belt: ClothingBeltUtilityEngineering
+    back: ClothingBackpackEngineering
+    ears: ClothingHeadsetEngineering
+    eyes: ClothingEyesGlassesMeson
+    outerClothing: ClothingOuterWinterEngi
+    pocket1: RCD
+    pocket2: RCDAmmo
+
+- type: startingGear
+  id: VisitorEngineerAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorEngineer
+    shoes: ClothingShoesBootsWork
+    gloves: ClothingHandsGlovesColorYellow
+    head: ClothingHeadHatBeretEngineering
+    id: VisitorPDA
+    belt: ClothingBeltUtilityEngineering
+    back: ClothingBackpackDuffelEngineering
+    ears: ClothingHeadsetEngineering
+    eyes: ClothingEyesGlassesMeson
+    pocket1: RCD
+    pocket2: RCDAmmo
 
 # Medical
 
+- type: startingGear
+  id: VisitorChemist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChemistry
+    shoes: ClothingShoesColorOrange
+    gloves: ClothingHandsGlovesLatex
+    id: VisitorPDA
+    belt: ChemBag
+    back: ClothingBackpackChemistry
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesGlassesChemical
+    outerClothing: ClothingOuterCoatLabChem
+    pocket1: PillCanisterRandom
+    pocket2: PillCanisterRandom
+  inhand:
+  - PillCanisterRandom
+  - PillCanisterRandom
+
+- type: startingGear
+  id: VisitorChemistAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChemistry
+    shoes: ClothingShoesColorOrange
+    head: ClothingHeadHatPaper
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackSatchelChemistry
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesGlassesChemical
+    outerClothing: ClothingOuterWinterChem
+    pocket1: PillCanisterRandom
+    pocket2: PillCanisterRandom
+  inhand:
+  - PillCanisterRandom
+  - PillCanisterRandom
+
+- type: startingGear
+  id: VisitorGeneticist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitGenetics
+    shoes: ClothingShoesColorBlue
+    gloves: ClothingHandsGlovesNitrile
+    head: ClothingHeadBandGrey
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackGenetics
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    outerClothing: ClothingOuterCoatLabGene
+    pocket1: PillCanisterCharcoal
+    pocket2: PillCanisterRandom
+  inhand:
+  - SyringePhalanximine
+
+- type: startingGear
+  id: VisitorGeneticistAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitGenetics
+    shoes: ClothingShoesColorBlue
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatBeretBrigmedic
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackSatchelGenetics
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    outerClothing: ClothingOuterWinterGen
+    pocket1: PillCanisterHyronalin
+    pocket2: PillCanisterRandom
+  inhand:
+  - SyringeBicaridine
+
+- type: startingGear
+  id: VisitorVirologist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitVirology
+    shoes: ClothingShoesColorGreen
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadMirror
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackVirology
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    outerClothing: ClothingOuterCoatLabViro
+    pocket1: PillCanisterTricordrazine
+    pocket2: PillCanisterRandom
+  inhand:
+  - SyringeSigynate
+
+- type: startingGear
+  id: VisitorVirologistAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitVirology
+    shoes: ClothingShoesColorGreen
+    gloves: ClothingHandsGlovesNitrile
+    head: ClothingHeadHatBeretSeniorPhysician
+    neck: ClothingNeckStethoscope
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackSatchelVirology
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    outerClothing: ClothingOuterWinterViro
+    pocket1: PillCanisterTricordrazine
+    pocket2: PillCanisterRandom
+  inhand:
+  - SyringeEphedrine
+
+- type: startingGear
+  id: VisitorMedicalDoctor
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    shoes: ClothingShoesColorWhite
+    gloves: ClothingHandsGlovesNitrile
+    head: ClothingHeadHatCorpsoft
+    neck: ClothingNeckStethoscope
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackMedical
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    outerClothing: ClothingOuterCoatLab
+    pocket1: PillCanisterTricordrazine
+    pocket2: PillCanisterDermaline
+  inhand:
+  - SyringeInaprovaline
+
+- type: startingGear
+  id: VisitorMedicalDoctorAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    shoes: ClothingShoesBootsWinterMed
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatBeretMedic
+    neck: ClothingNeckStethoscope
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackSatchelMedical
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    outerClothing: ClothingOuterWinterMed
+    pocket1: PillCanisterTricordrazine
+    pocket2: PillCanisterBicaridine
+  inhand:
+  - SyringeSaline
+
+- type: startingGear
+  id: VisitorDentist
+  equipment:
+    jumpsuit: UniformScrubsColorBlue
+    shoes: ClothingShoesColorBlue
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatSurgcapBlue
+    mask: ClothingMaskBreath
+    id: VisitorPDA
+    belt: ClothingBeltStorageWaistbag
+    back: NitrousOxideTankFilled
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesGlasses
+    pocket1: Scalpel
+    pocket2: Gauze
+  inhand:
+  - Cautery
+  - Drill
+
+- type: startingGear
+  id: VisitorPsychologist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPsychologist
+    shoes: ClothingShoesLeather
+    head: ClothingHeadHatMagician
+    neck: ClothingNeckTieRed
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackSatchelLeather
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    pocket1: WhoopieCushion
+    pocket2: PillSpaceDrugs
+  inhand:
+  - CigarCase
+  - Lighter
+
+- type: startingGear
+  id: VisitorPsychologistAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPsychologist
+    shoes: ClothingShoesLeather
+    head: ClothingHeadHatAnimalCat
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackSatchelLeather
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    pocket1: BulletFoam
+    pocket2: PillSpaceDrugs
+  inhand:
+  - FoamCrossbow
+  - DrinkWhiskeyBottleFull
+
+- type: startingGear
+  id: VisitorParamedic
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitParamedicNT
+    shoes: ClothingShoesSwat
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatParamedicsoft
+    neck: ClothingNeckStethoscope
+    id: VisitorPDA
+    belt: ClothingBeltMedicalEMTFilled
+    back: ClothingBackpackDuffelGenetics
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    outerClothing: ClothingOuterWinterPara
+    pocket1: CombatMedipen
+    pocket2: Brutepack
+  inhand:
+  - SyringeTranexamicAcid
+  - Gauze
+
+- type: startingGear
+  id: VisitorParamedicAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitParamedic
+    shoes: ClothingShoesBootsWork
+    gloves: ClothingHandsGlovesNitrile
+    head: ClothingHeadHatParamedicsoftFlipped
+    neck: ClothingNeckStethoscope
+    id: VisitorPDA
+    belt: ClothingBeltMedicalEMTFilled
+    back: ClothingBackpackDuffelGenetics
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    outerClothing: ClothingOuterCoatParamedicWB
+    pocket1: CombatMedipen
+    pocket2: Brutepack
+  inhand:
+  - AntiPoisonMedipen
+  - Gauze
+
+- type: startingGear
+  id: VisitorMedicalIntern
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+    shoes: ClothingShoesColorWhite
+    head: ClothingHeadBandGreen
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackDuffelMedical
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    pocket1: Ointment
+    pocket2: Brutepack
+  inhand:
+  - Bloodpack
+  - Gauze
+
+- type: startingGear
+  id: VisitorMedicalInternAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+    shoes: ClothingShoesColorWhite
+    head: ClothingHeadBandBlue
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackDuffelMedical
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    pocket1: Ointment
+    pocket2: Brutepack
+  inhand:
+  - Bloodpack
+  - Gauze
+
+- type: startingGear
+  id: VisitorScrubsPurple
+  equipment:
+    jumpsuit: UniformScrubsColorPurple
+    shoes: ClothingShoesColorRed
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatSurgcapPurple
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackSatchelMedical
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    pocket1: RegenerativeMesh
+    pocket2: PillCanisterBicaridine
+  inhand:
+  - ScalpelAdvanced
+  - MedicatedSuture
+
+- type: startingGear
+  id: VisitorScrubsGreen
+  equipment:
+    jumpsuit: UniformScrubsColorGreen
+    shoes: ClothingShoesColorGreen
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatSurgcapGreen
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackSatchelMedical
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    pocket1: RegenerativeMesh
+    pocket2: PillCanisterBicaridine
+  inhand:
+  - ScalpelAdvanced
+  - MedicatedSuture
+
+- type: startingGear
+  id: VisitorScrubsBlue
+  equipment:
+    jumpsuit: UniformScrubsColorBlue
+    shoes: ClothingShoesColorBlue
+    gloves: ClothingHandsGlovesNitrile
+    head: ClothingHeadHatSurgcapBlue
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackSatchelMedical
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    pocket1: RegenerativeMesh
+    pocket2: PillCanisterBicaridine
+  inhand: 
+  - ScalpelAdvanced
+  - MedicatedSuture
+
 # Science
+
+- type: startingGear
+  id: VisitorResearchAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorPurple
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadPaperSack
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackScience
+    ears: ClothingHeadsetScience
+    eyes: ClothingEyesGlasses
+
+- type: startingGear
+  id: VisitorResearchAssistantAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCasualPurple
+    shoes: ClothingShoesColorBlack
+    neck: ClothingNeckTieSci
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackSatchelScience
+    ears: ClothingHeadsetScience
+    eyes: ClothingEyesGlasses
+
+- type: startingGear
+  id: VisitorScientist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientistFormal
+    shoes: ClothingShoesColorPurple
+    head: ClothingHeadHatBeretRND
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackScience
+    ears: ClothingHeadsetScience
+    eyes: ClothingEyesGlasses
+
+- type: startingGear
+  id: VisitorScientistAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientist
+    shoes: ClothingShoesBootsWinterSci
+    head: ClothingHeadHatPurplesoft
+    neck: ClothingNeckTieSci
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackSatchelScience
+    ears: ClothingHeadsetScience
+    eyes: ClothingEyesGlasses
 
 # Civilian
 
 - type: startingGear
-  id: TravelingChef
+  id: VisitorBartender
   equipment:
-    jumpsuit: ClothingUniformJumpsuitChef
-    shoes: ClothingShoesColorWhite
+    jumpsuit: ClothingUniformJumpsuitBartender
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatTophat
+    id: VisitorPDA
+    back: ClothingBackpack
+    suitstorage: WeaponShotgunDoubleBarreledRubber
+    ears: ClothingHeadsetService
+    eyes: ClothingEyesGlassesSunglasses
+    outerClothing: ClothingOuterArmorBasicSlim
+    pocket1: DrinkVodkaBottleFull
+    pocket2: BarSpoon
+
+- type: startingGear
+  id: VisitorBartenderAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBartenderPurple
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatBowlerHat
+    neck: ClothingNeckTieSci
     id: VisitorPDA
     back: ClothingBackpackSatchel
     ears: ClothingHeadsetService
-    belt: ClothingBeltChef
+    eyes: ClothingEyesHudBeer
+    outerClothing: ClothingOuterWinterBar
+    pocket1: WeaponShotgunSawn
+    pocket2: DrinkTequilaBottleFull
 
 - type: startingGear
-  id: ClownTroupe
+  id: VisitorBotanist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHydroponics
+    shoes: ClothingShoesColorGreen
+    head: ClothingHeadBandGreen
+    id: VisitorPDA
+    back: ClothingBackpackDuffelHydroponics
+    ears: ClothingHeadsetService
+  inhand:
+  - HydroponicsToolScythe
+
+
+- type: startingGear
+  id: VisitorBotanistAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHydroponics
+    shoes: ClothingShoesColorGreen
+    head: Bucket
+    id: VisitorPDA
+    back: ClothingBackpackHydroponics
+    ears: ClothingHeadsetService
+    pocket1: HydroponicsToolMiniHoe
+    pocket2: HydroponicsToolSpade
+
+- type: startingGear
+  id: VisitorBoxer
+  equipment:
+    jumpsuit: ClothingUniformRandomShorts
+    shoes: ClothingShoesColorBlack
+    gloves: ClothingHandsGlovesBoxingBlue
+    head: ClothingHeadPaperSackSmile
+    id: VisitorPDA
+    ears: ClothingHeadsetService
+    pocket1: DrinkVodkaBottleFull
+    pocket2: SoapDeluxe
+
+- type: startingGear
+  id: VisitorBoxerAlt
+  equipment:
+    jumpsuit: ClothingUniformRandomShorts
+    shoes: ClothingShoesColorBlack
+    gloves: ClothingHandsGlovesBoxingRed
+    head: ClothingHeadHatSkub
+    id: VisitorPDA
+    ears: ClothingHeadsetService
+    outerClothing: ClothingOuterSkub
+    pocket1: Skub
+    pocket2: DrinkSpaceGlue
+
+- type: startingGear #!! make sure these are bible users.
+  id: VisitorChaplain
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChaplain
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatPlaguedoctor
+    mask: ClothingMaskPlague
+    id: VisitorPDA
+    belt: Bible
+    ears: ClothingHeadsetService
+    outerClothing: ClothingOuterPlagueSuit
+    pocket1: PlushieSharkGrey
+    pocket2: FoodSnackEnergy
+
+- type: startingGear
+  id: VisitorChaplainAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChaplain
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatHoodNunHood
+    id: VisitorPDA
+    belt: Bible
+    ears: ClothingHeadsetService
+    outerClothing: ClothingOuterNunRobe
+    pocket1: PlushiePenguin
+    pocket2: DrinkCoconutWaterCarton
+
+- type: startingGear
+  id: VisitorChef
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChef
+    shoes: ClothingShoesChef
+    head: ClothingHeadHatChef
+    mask: ClothingMaskItalianMoustache
+    id: VisitorPDA
+    back: ClothingBackpackSatchel
+    belt: ClothingBeltChefFilled
+    ears: ClothingHeadsetService
+    outerClothing: ClothingOuterJacketChef
+    pocket1: ButchCleaver
+    pocket2: BookChefGaming
+
+- type: startingGear
+  id: VisitorChefAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChef
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatChef
+    mask: ClothingMaskItalianMoustache
+    id: VisitorPDA
+    back: ClothingBackpack
+    belt: ClothingBeltChefFilled
+    ears: ClothingHeadsetService
+    outerClothing: ClothingOuterWinterChef
+    pocket1: RollingPin
+    pocket2: BookChefGaming
+
+- type: startingGear
+  id: VisitorClown
   equipment:
     jumpsuit: ClothingUniformJumpsuitClown
     shoes: ClothingShoesClown
@@ -392,6 +1034,38 @@
     mask: ClothingMaskClown
     pocket1: BikeHorn
     pocket2: ClownRecorder
+
+- type: startingGear
+  id: VisitorJanitor
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJanitor
+    shoes: ClothingShoesGaloshes
+    gloves: ClothingHandsGlovesJanitor
+    head: ClothingHeadFishCap
+    id: VisitorPDA
+    back: ClothingBackpackSatchel
+    belt: ClothingBeltJanitorFilled
+    ears: ClothingHeadsetService
+    outerClothing: ClothingOuterWinterJani
+  inhand:
+  - MopItem
+  - Bucket
+
+- type: startingGear
+  id: VisitorJanitorAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJanitor
+    shoes: ClothingShoesGaloshes
+    gloves: ClothingHandsGlovesJanitor
+    head: ClothingHeadHatHoodBioJanitor
+    id: VisitorPDA
+    back: ClothingBackpack
+    belt: ClothingBeltJanitorFilled
+    ears: ClothingHeadsetService
+    outerClothing: ClothingOuterBioJanitor
+  inhand:
+  - MopItem
+  - Bucket
 
 ### Challenge Visitors
 

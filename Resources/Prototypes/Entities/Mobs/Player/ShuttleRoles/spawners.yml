@@ -142,7 +142,7 @@
     rarePrototypes:
     - RandomHumanoidVisitorWarden
     - RandomHumanoidVisitorHOS
-    rareChance: 0.1
+    rareChance: 0.05
 
 - type: entity
   name: visiting security cadet spawner
@@ -205,8 +205,8 @@
 # Cargo
 
 - type: entity
-  name: lost cargonian spawner
-  id: LostCargonianSpawner
+  name: cargonian visitor spawner
+  id: VisitingCargonianSpawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -216,15 +216,15 @@
         state: icon
   - type: RandomSpawner
     prototypes:
-    - RandomHumanoidLostCargoTechnician
-    - RandomHumanoidLostSalvager
+    - RandomHumanoidVisitorCargoTechnician
+    - RandomHumanoidVisitorSalvageSpecialist
     rarePrototypes:
-    - RandomHumanoidLostQuartermaster
-    rareChance: 0.1
+    - RandomHumanoidVisitorQM
+    rareChance: 0.05
 
 - type: entity
-  name: lost cargo technician spawner
-  id: LostCargoTechnicianSpawner
+  name: visiting cargo technician spawner
+  id: VisitorCargoTechnicianSpawner
   parent: MarkerBase
   components:
     - type: Sprite
@@ -234,30 +234,498 @@
           state: icon
     - type: RandomSpawner
       prototypes:
-      - RandomHumanoidLostCargoTechnician
-      chance: 1
-
-# Engineering
-
-# Medical
-
-# Science
-
-# Civilian
+      - RandomHumanoidVisitorCargoTechnician
 
 - type: entity
-  name: traveling chef spawner
-  id: TravelingChefSpawner
+  name: visiting salvage specialist spawner
+  id: VisitorSalvageSpecialistSpawner
   parent: MarkerBase
   components:
     - type: Sprite
       layers:
         - state: red
-        - sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+        - sprite: Objects/Tools/appraisal-tool.rsi
           state: icon
     - type: RandomSpawner
       prototypes:
-      - RandomHumanoidTravelingChef
+      - RandomHumanoidVisitorSalvageSpecialist
+
+# Engineering
+
+- type: entity
+  name: engineering visitor spawner
+  id: EngineeringVisitorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorAtmosTechnician
+    - RandomHumanoidVisitorTechnicalAssistant
+    - RandomHumanoidVisitorEngineer
+    rarePrototypes:
+    - RandomHumanoidVisitorCE
+    rareChance: 0.05
+
+- type: entity
+  name: visiting atmospheric technician spawner
+  id: VisitorAtmosTechSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorAtmosTech
+
+- type: entity
+  name: visiting technical assistant spawner
+  id: VisitorTechnicalAssistantSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorTechnicalAssistant
+
+- type: entity
+  name: visiting engineer spawner
+  id: VisitorEngineerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorEngineer
+
+# Medical
+
+- type: entity
+  name: medical visitor spawner
+  id: VisitingMedicalSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorChemist
+    - RandomHumanoidVisitorMedicalIntern
+    - RandomHumanoidVisitorMedicalDoctor
+    - RandomHumanoidVisitorParamedic
+    - RandomHumanoidVisitorVirologist
+    - RandomHumanoidVisitorGeneticist
+    - RandomHumanoidVisitorPsychologist
+    rarePrototypes:
+    - RandomHumanoidVisitorCMO
+    - RandomHumanoidVisitorDentist
+    rareChance: 0.05
+
+- type: entity
+  name: visiting chemist spawner
+  id: VisitorChemistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorChemist
+
+- type: entity
+  name: visiting medical intern spawner
+  id: VisitorMedicalInternSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorMedicalIntern
+
+- type: entity
+  name: visiting medical doctor spawner
+  id: VisitorMedicalDoctorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorMedicalDoctor
+
+- type: entity
+  name: visiting paramedic spawner
+  id: VisitorParamedicSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorParamedic
+
+- type: entity
+  name: visiting virologist spawner
+  id: VisitorVirologistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorVirologist
+
+- type: entity
+  name: visiting geneticist spawner
+  id: VisitorGeneticistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorGeneticist
+
+- type: entity
+  name: visiting psychologist spawner
+  id: VisitorPsychologistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorPsychologist
+
+- type: entity
+  name: visiting dentist spawner
+  id: VisitorDentistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorDentist
+
+# Science
+
+- type: entity
+  name: scientific visitor spawner
+  id: VisitingMedicalSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorResearchAssistant
+    - RandomHumanoidVisitorScientist
+    rarePrototypes:
+    - RandomHumanoidVisitorCE
+    rareChance: 0.05
+
+- type: entity
+  name: visiting scientist spawner
+  id: VisitorScientistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorScientist
+
+- type: entity
+  name: visiting research assistant spawner
+  id: VisitorResearchAssistantSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorResearchAssistant
+
+# Civilian
+
+- type: entity
+  name: civilian visitor spawner
+  id: VisitingMedicalSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBartender
+    - RandomHumanoidVisitorBotanist
+    - RandomHumanoidVisitorBoxer
+    - RandomHumanoidVisitorChaplain
+    - RandomHumanoidVisitorChef
+    - RandomHumanoidVisitorClown
+    - RandomHumanoidVisitorJanitor
+    - RandomHumanoidVisitorLawyer
+    - RandomHumanoidVisitorLibrarian
+    - RandomHumanoidVisitorMusician
+    - RandomHumanoidVisitorMime
+    - RandomHumanoidVisitorReporter
+    - RandomHumanoidVisitorServiceWorker
+    - RandomHumanoidVisitorZookeeper
+    rarePrototypes:
+    - RandomHumanoidVisitorHOP
+    rareChance: 0.03
+
+- type: entity
+  name: visiting bartender spawner
+  id: VisitorBartenderSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBartender
+
+- type: entity
+  name: visiting botanist spawner
+  id: VisitorBotanistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBotanist
+
+- type: entity
+  name: visiting boxer spawner
+  id: VisitorBoxerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBoxer
+
+- type: entity
+  name: visiting chaplain spawner
+  id: VisitorChaplainSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorChaplain
+
+- type: entity
+  name: visiting chef spawner
+  id: VisitorChefSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorChef
+
+- type: entity
+  name: visiting janitor spawner
+  id: VisitorJanitorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorJanitor
+
+- type: entity
+  name: visiting lawyer spawner
+  id: VisitorLawyerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorLawyer
+
+- type: entity
+  name: visiting librarian spawner
+  id: VisitorLibrarianSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorLibrarian
+
+- type: entity
+  name: visiting bartender spawner
+  id: VisitorBartenderSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBartender
+
+- type: entity
+  name: visiting musician spawner
+  id: VisitorMusicianSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorMusician
+
+- type: entity
+  name: visiting mime spawner
+  id: VisitorMimeSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorMime
+
+- type: entity
+  name: visiting reporter spawner
+  id: VisitorReporterSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorReporter
+
+- type: entity
+  name: visiting service worker spawner
+  id: Visitor Service Worker Spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorServiceWorker
+
+- type: entity
+  name: visiting zookeeper spawner
+  id: VisitorZookeeperSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorZookeeper
 
 ### Visitors missing equipment for challenges
 

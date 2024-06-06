@@ -19,7 +19,7 @@
       - KukriKnife
 
 - type: entity
-  id: CClothingShoesBootsCowboyBrownFilled
+  id: ClothingShoesBootsCowboyBrownFilled
   parent: ClothingShoesBootsCowboyBrown
   suffix: Filled
   components:
@@ -29,7 +29,7 @@
       - CombatKnife
 
 - type: entity
-  id: CClothingShoesBootsCowboyBlackFilled
+  id: ClothingShoesBootsCowboyBlackFilled
   parent: ClothingShoesBootsCowboyBlack
   suffix: Filled
   components:
@@ -39,7 +39,7 @@
       - CombatKnife
 
 - type: entity
-  id: CClothingShoesBootsCowboyWhiteFilled
+  id: ClothingShoesBootsCowboyWhiteFilled
   parent: ClothingShoesBootsCowboyWhite
   suffix: Filled
   components:
@@ -49,7 +49,7 @@
       - CombatKnife
 
 - type: entity
-  id: CClothingShoesBootsCowboyFancyFilled
+  id: ClothingShoesBootsCowboyFancyFilled
   parent: ClothingShoesBootsCowboyFancy
   suffix: Filled
   components:
