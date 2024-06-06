@@ -9,16 +9,6 @@ namespace Content.Client.Guidebook.RichText;
 /// In order to be accessed by this tag, the desired field/property must
 /// be tagged with <see cref="Shared.Guidebook.GuidebookDataAttribute"/>.
 /// </summary>
-/// <remarks>
-/// The tag should be formatted as Prototype.Component.Field[:Format], where
-/// <list type="bullet">
-/// <item>Prototype is the ID of the prototype.</item>
-/// <item>Component is the name of the component the field/property belongs to.</item>
-/// <item>Field is the name of the tagged field or property for display.</item>
-/// <item>Format is an optional parameter passed to <see cref="IFormattable.ToString"/> to control how the value is formatted
-/// (if the value is a Type that implements <see cref="IFormattable"/>)</item>
-/// </list>
-/// </remarks>
 public sealed class ProtodataTag : IMarkupTag
 {
     [Dependency] private readonly ILogManager _logMan = default!;
