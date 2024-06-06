@@ -60,7 +60,7 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
         var blocked = true;
 
-        // No censors defined for target
+        // No filters defined for target
         if (!_regexFilters.TryGetValue(target, out var automodFilters))
             return true;
 

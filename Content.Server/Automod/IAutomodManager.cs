@@ -10,7 +10,7 @@ public interface IAutomodManager
     public void Initialize();
 
     /// <summary>
-    /// Checks a message for any matching regex censors.
+    /// Checks a message for any matching automod filter.
     /// If there is a match, it runs <see cref="ITextAutomodAction"/>s on the text and matches.
     /// </summary>
     /// <param name="target"></param>

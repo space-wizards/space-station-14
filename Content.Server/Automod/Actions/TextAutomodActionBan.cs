@@ -34,7 +34,7 @@ public sealed partial class TextAutomodActionBan : ITextAutomodAction
 
         // TODO ShadowCommander implement ban group tracking for banning after three filter hits within $time minutes
 
-        var str = Loc.GetString(Reason, ("censorName", filterDisplayName));
+        var str = Loc.GetString(Reason, ("filterName", filterDisplayName));
 
         banManager.CreateServerBan(session.UserId, null, null, null, null, BanTime, NoteSeverity.Minor, str);
 
