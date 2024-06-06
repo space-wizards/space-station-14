@@ -127,3 +127,10 @@
   license: "CC0-1.0"
   copyright: "Original sound by stomachache on freesound.org, processed by vanilla"
   source: "https://freesound.org/s/262213/"
+
+- files:
+  - "sheath.ogg"
+  - "unsheath.ogg"
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation."
+  source: "https://github.com/tgstation/tgstation/blob/a7f525bce9a359ab5282fc754078cd4b5678a006/sound/items"

@@ -121,6 +121,17 @@
 
 - type: entity
   parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCMOTurtle
+  name: chief medical officer's turtleneck jumpskirt
+  description: It's a turtleneck worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/cmo_turtle.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/cmo_turtle.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtDetective
   name: hard-worn suit
   description: Someone who wears this means business.
@@ -766,3 +777,14 @@
       - state: equipped-INNERCLOTHING-jumpskirt
       - state: equipped-INNERCLOTHING-shirt
         color: "#b30000"
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtOldDress
+  name: old dress
+  description: A worn-looking dress from a very long time ago.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/olddress.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/olddress.rsi

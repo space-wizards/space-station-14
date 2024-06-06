@@ -23,6 +23,24 @@
             <CheckBox Name="MakeSentientCheckbox" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
+            <Label Name="RaffleLabel" Text="Raffle Role?" />
+            <OptionButton Name="RaffleButton" />
+        </BoxContainer>
+        <BoxContainer Name="RaffleCustomSettingsContainer" Orientation="Vertical" Visible="False">
+            <BoxContainer Orientation="Horizontal">
+                <Label Name="RaffleInitialDurationLabel" Text="Initial Duration (s)" />
+                <SpinBox Name="RaffleInitialDuration" HorizontalExpand="True" />
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal">
+                <Label Name="RaffleJoinExtendsDurationByLabel" Text="Joins Extend By (s)" />
+                <SpinBox Name="RaffleJoinExtendsDurationBy" HorizontalExpand="True" />
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal">
+                <Label Name="RaffleMaxDurationLabel" Text="Max Duration (s)" />
+                <SpinBox Name="RaffleMaxDuration" HorizontalExpand="True" />
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
             <Button Name="MakeButton" Text="Make" />
         </BoxContainer>
     </BoxContainer>

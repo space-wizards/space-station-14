@@ -11,6 +11,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
@@ -35,13 +36,10 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
         var query = AllEntityQuery<JukeboxComponent, UserInterfaceComponent>();
 
-        while (query.MoveNext(out _, out var ui))
+        while (query.MoveNext(out var uid, out _, out var ui))
         {
-            if (!ui.OpenInterfaces.TryGetValue(JukeboxUiKey.Key, out var baseBui) ||
-                baseBui is not JukeboxBoundUserInterface bui)
-            {
+            if (!_uiSystem.TryGetOpenUi<JukeboxBoundUserInterface>((uid, ui), JukeboxUiKey.Key, out var bui))
                 continue;
-            }
 
             bui.PopulateMusic();
         }
@@ -49,14 +47,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnJukeboxAfterState(Entity<JukeboxComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (!TryComp(ent, out UserInterfaceComponent? ui))
+        if (!_uiSystem.TryGetOpenUi<JukeboxBoundUserInterface>(ent.Owner, JukeboxUiKey.Key, out var bui))
             return;
-
-        if (!ui.OpenInterfaces.TryGetValue(JukeboxUiKey.Key, out var baseBui) ||
-            baseBui is not JukeboxBoundUserInterface bui)
-        {
-            return;
-        }
 
         bui.Reload();
     }
