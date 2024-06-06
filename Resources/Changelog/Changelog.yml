@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Lone operatives now require a minimum of 20 players to spawn
-    type: Tweak
-  id: 6190
-  time: '2024-03-18T21:36:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26244
 - author: shampunj
   changes:
   - message: Zombies now passively heal 1 heat/shock damage every 50 seconds
@@ -3850,3 +3843,10 @@
   id: 6689
   time: '2024-06-06T09:32:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28621
+- author: Flareguy
+  changes:
+  - message: Nerfed the explosive power of fuel tanks.
+    type: Tweak
+  id: 6690
+  time: '2024-06-06T10:08:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28650
