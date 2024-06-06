@@ -39,7 +39,6 @@
         empty-icon:
           True: { visible: False }
           False: { visible: True }
-        #todo: add other 'empty' animations
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 0.75
     rechargeSound:
@@ -50,5 +49,3 @@
     count: 1
   - type: UseDelay
     delay: 1
-  # todo: add itemcomponent with inhandVisuals states using unused texture and animation assets in kinetic_accelerator.rsi
-  # todo: add clothingcomponent with clothingVisuals states using unused texture and animations assets in kinetic_accelerator.rsi
