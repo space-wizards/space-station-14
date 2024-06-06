@@ -1,9 +1,9 @@
-# SOLUTION
+# SOLUTION CONTAINER
 # A basic template for a gun that
 - type: entity
   abstract: true
   parent: BaseGun
-  id: BaseGunSolution
+  id: BaseGunSolutionContainer
   components:
   - type: Gun
     clumsyProof: true

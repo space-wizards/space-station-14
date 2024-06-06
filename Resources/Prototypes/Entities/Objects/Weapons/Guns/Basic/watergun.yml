@@ -54,7 +54,7 @@
   id: WeaponWaterPistol
   parent:
   - BaseGunSmall
-  - BaseGunSolution
+  - BaseGunSolutionContainer
   - WeaponWaterGunBase
   name: water pistol
   description: The dinkiest of water-based weaponry. You swear the trigger doesn't do anything.
@@ -76,7 +76,7 @@
   id: WeaponWaterBlaster
   parent:
   - BaseGunSmall
-  - BaseGunSolution
+  - BaseGunSolutionContainer
   - WeaponWaterGunBase
   name: water blaster
   description: With this bad boy, you'll be the cooleste kid at the summer barbecue.
@@ -115,7 +115,7 @@
   id: WeaponWaterBlasterSuper
   parent:
   - BaseGunSmall
-  - BaseGunSolution
+  - BaseGunSolutionContainer
   - WeaponWaterGunBase
   name: super water blaster
   description: No! No! Not in the eyes!
