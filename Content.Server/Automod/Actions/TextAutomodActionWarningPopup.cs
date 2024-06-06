@@ -2,12 +2,10 @@
 using Content.Server.Popups;
 using Content.Shared.Automod;
 using Content.Shared.Popups;
-using JetBrains.Annotations;
 using Robust.Shared.Player;
 
 namespace Content.Server.Automod.Actions;
 
-[UsedImplicitly]
 public sealed partial class TextAutomodActionWarningPopup : ITextAutomodAction
 {
     [DataField]

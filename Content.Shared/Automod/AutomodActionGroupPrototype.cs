@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Database;
+using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -51,6 +52,7 @@ public sealed class AutomodActionGroupPrototype : IPrototype
     public List<ITextAutomodAction> AutomodActions = new();
 }
 
+[UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 [ImplicitDataDefinitionForInheritors]
 public partial interface ITextAutomodAction
 {

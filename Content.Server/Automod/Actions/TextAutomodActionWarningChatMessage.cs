@@ -1,12 +1,10 @@
 ﻿using System.Text;
 using Content.Server.Chat.Managers;
 using Content.Shared.Automod;
-using JetBrains.Annotations;
 using Robust.Shared.Player;
 
 namespace Content.Server.Automod.Actions;
 
-[UsedImplicitly]
 public sealed partial class TextAutomodActionWarningChatMessage : ITextAutomodAction
 {
     [DataField]

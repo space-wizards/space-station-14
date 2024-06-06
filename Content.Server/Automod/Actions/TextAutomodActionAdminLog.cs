@@ -2,12 +2,10 @@
 using Content.Server.Administration.Logs;
 using Content.Shared.Automod;
 using Content.Shared.Database;
-using JetBrains.Annotations;
 using Robust.Shared.Player;
 
 namespace Content.Server.Automod.Actions;
 
-[UsedImplicitly]
 public sealed partial class TextAutomodActionAdminLog : ITextAutomodAction
 {
     [DataField]
