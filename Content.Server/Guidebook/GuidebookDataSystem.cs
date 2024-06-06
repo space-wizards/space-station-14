@@ -75,7 +75,7 @@ public sealed class GuidebookDataSystem : EntitySystem
         {
             foreach (var (type, members) in tagged)
             {
-                if (!prototype.TryGetComponent<IComponent>(type.Name, out var component))
+                if (!prototype.TryGetComponent<Component>(type.Name, out var component))
                     continue;
 
                 prototypeCount++;
