@@ -190,6 +190,16 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
         FlushSingleTracker(data, time);
     }
 
+    public async Task FlushTrackerById(NetUserId userId)
+    {
+        var playTimes = await _db.GetPlayTimes(userId, CancellationToken.None);
+
+        foreach (var timer in playTimes)
+        {
+            await _db.UpdatePlayTimes(new List<PlayTimeUpdate> { new PlayTimeUpdate(userId, timer.Tracker, timer.TimeSpent) });
+        }
+    }
+
     private static void FlushSingleTracker(PlayTimeData data, TimeSpan time)
     {
         var delta = time - data.LastUpdate;
@@ -240,6 +250,16 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
         FlushAllTrackers();
 
         TrackPending(DoSaveSessionAsync(session));
+    }
+
+    public async Task SaveSessionById(NetUserId userId)
+    {
+        var playTimes = await _db.GetPlayTimes(userId, CancellationToken.None);
+
+        foreach (var timer in playTimes)
+        {
+            await _db.UpdatePlayTimes(new List<PlayTimeUpdate> { new PlayTimeUpdate(userId, timer.Tracker, timer.TimeSpent) });
+        }
     }
 
     /// <summary>
@@ -347,14 +367,74 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
         data.DbTrackersDirty.Add(tracker);
     }
 
+    public async Task AddTimeToTrackerById(NetUserId userId, string tracker, TimeSpan time)
+    {
+        var playTimes = await _db.GetPlayTimes(userId, CancellationToken.None);
+
+        foreach (var timer in playTimes)
+        {
+            if (timer.Tracker == tracker)
+            {
+                timer.TimeSpent += time;
+                await _db.UpdatePlayTimes(new List<PlayTimeUpdate> { new PlayTimeUpdate(userId, tracker, timer.TimeSpent) });
+                return;
+            }
+        }
+
+        // If tracker doesn't exist, add it
+        await _db.UpdatePlayTimes(new List<PlayTimeUpdate> { new PlayTimeUpdate(userId, tracker, time) });
+    }
+
+
     public void AddTimeToOverallPlaytime(ICommonSession id, TimeSpan time)
     {
         AddTimeToTracker(id, PlayTimeTrackingShared.TrackerOverall, time);
     }
 
+    public async Task AddTimeToOverallPlaytimeById(NetUserId userId, TimeSpan time)
+    {
+        var playTimes = await _db.GetPlayTimes(userId, CancellationToken.None);
+        var playTimeUpdates = new List<PlayTimeUpdate>();
+
+        bool overallTrackerExists = false;
+
+        foreach (var timer in playTimes)
+        {
+            if (timer.Tracker == PlayTimeTrackingShared.TrackerOverall)
+            {
+                timer.TimeSpent += time;
+                playTimeUpdates.Add(new PlayTimeUpdate(userId, timer.Tracker, timer.TimeSpent));
+                overallTrackerExists = true;
+                break;
+            }
+        }
+
+        if (!overallTrackerExists)
+        {
+            playTimeUpdates.Add(new PlayTimeUpdate(userId, PlayTimeTrackingShared.TrackerOverall, time));
+        }
+
+        await _db.UpdatePlayTimes(playTimeUpdates);
+    }
+
     public TimeSpan GetOverallPlaytime(ICommonSession id)
     {
         return GetPlayTimeForTracker(id, PlayTimeTrackingShared.TrackerOverall);
+    }
+
+    public async Task<TimeSpan> GetOverallPlaytimeById(NetUserId userId)
+    {
+        var playTimes = await _db.GetPlayTimes(userId, CancellationToken.None);
+
+        foreach (var timer in playTimes)
+        {
+            if (timer.Tracker == PlayTimeTrackingShared.TrackerOverall)
+            {
+                return timer.TimeSpent;
+            }
+        }
+
+        return TimeSpan.Zero;
     }
 
     public bool TryGetTrackerTimes(ICommonSession id, [NotNullWhen(true)] out Dictionary<string, TimeSpan>? time)
@@ -378,12 +458,40 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
         return data.TrackerTimes;
     }
 
+    public async Task<Dictionary<string, TimeSpan>> GetTrackerTimesById(NetUserId userId)
+    {
+        var playTimes = await _db.GetPlayTimes(userId, CancellationToken.None);
+        var trackerTimes = new Dictionary<string, TimeSpan>();
+
+        foreach (var timer in playTimes)
+        {
+            trackerTimes[timer.Tracker] = timer.TimeSpent;
+        }
+
+        return trackerTimes;
+    }
+
     public TimeSpan GetPlayTimeForTracker(ICommonSession id, string tracker)
     {
         if (!_playTimeData.TryGetValue(id, out var data) || !data.Initialized)
             throw new InvalidOperationException("Play time info is not yet loaded for this player!");
 
         return data.TrackerTimes.GetValueOrDefault(tracker);
+    }
+
+    public async Task<TimeSpan> GetPlayTimeForTrackerById(NetUserId userId, string tracker)
+    {
+        var playTimes = await _db.GetPlayTimes(userId, CancellationToken.None);
+
+        foreach (var timer in playTimes)
+        {
+            if (timer.Tracker == tracker)
+            {
+                return timer.TimeSpent;
+            }
+        }
+
+        return TimeSpan.Zero;
     }
 
     /// <summary>

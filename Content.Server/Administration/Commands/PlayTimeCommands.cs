@@ -3,6 +3,7 @@ using Content.Shared.Administration;
 using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Commands;
 
@@ -11,6 +12,7 @@ public sealed class PlayTimeAddOverallCommand : IConsoleCommand
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
 
     public string Command => "playtime_addoverall";
     public string Description => Loc.GetString("cmd-playtime_addoverall-desc");
@@ -30,19 +32,42 @@ public sealed class PlayTimeAddOverallCommand : IConsoleCommand
             return;
         }
 
-        if (!_playerManager.TryGetSessionByUsername(args[0], out var player))
+        NetUserId userId;
+        if (Guid.TryParse(args[0], out var guid))
         {
-            shell.WriteError(Loc.GetString("parse-session-fail", ("username", args[0])));
-            return;
+            userId = new NetUserId(guid);
+        }
+        else
+        {
+            var dbGuid = await _playerLocator.LookupIdByNameAsync(args[0]);
+            if (dbGuid == null)
+            {
+                shell.WriteError(Loc.GetString("parse-session-fail", ("username", args[0])));
+                return;
+            }
+            userId = dbGuid.UserId;
         }
 
-        _playTimeTracking.AddTimeToOverallPlaytime(player, TimeSpan.FromMinutes(minutes));
-        var overall = _playTimeTracking.GetOverallPlaytime(player);
+        if (_playerManager.TryGetSessionById(userId, out var player))
+        {
+            _playTimeTracking.AddTimeToOverallPlaytime(player, TimeSpan.FromMinutes(minutes));
+            var overall = _playTimeTracking.GetOverallPlaytime(player);
 
-        shell.WriteLine(Loc.GetString(
-            "cmd-playtime_addoverall-succeed",
-            ("username", args[0]),
-            ("time", overall)));
+            shell.WriteLine(Loc.GetString(
+                "cmd-playtime_addoverall-succeed",
+                ("username", args[0]),
+                ("time", overall)));
+        }
+        else
+        {
+            await _playTimeTracking.AddTimeToOverallPlaytimeById(userId, TimeSpan.FromMinutes(minutes));
+            var overall = await _playTimeTracking.GetOverallPlaytimeById(userId);
+
+            shell.WriteLine(Loc.GetString(
+                "cmd-playtime_addoverall-succeed",
+                ("username", args[0]),
+                ("time", overall)));
+        }
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -58,11 +83,13 @@ public sealed class PlayTimeAddOverallCommand : IConsoleCommand
     }
 }
 
+
 [AdminCommand(AdminFlags.Moderator)]
 public sealed class PlayTimeAddRoleCommand : IConsoleCommand
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
 
     public string Command => "playtime_addrole";
     public string Description => Loc.GetString("cmd-playtime_addrole-desc");
@@ -76,28 +103,36 @@ public sealed class PlayTimeAddRoleCommand : IConsoleCommand
             return;
         }
 
-        var userName = args[0];
-        if (!_playerManager.TryGetSessionByUsername(userName, out var player))
+        NetUserId userId;
+        if (Guid.TryParse(args[0], out var guid))
         {
-            shell.WriteError(Loc.GetString("parse-session-fail", ("username", userName)));
+            userId = new NetUserId(guid);
+        }
+        else
+        {
+            var dbGuid = await _playerLocator.LookupIdByNameAsync(args[0]);
+            if (dbGuid == null)
+            {
+                shell.WriteError(Loc.GetString("parse-session-fail", ("username", args[0])));
+                return;
+            }
+            userId = dbGuid.UserId;
+        }
+
+        if (!int.TryParse(args[2], out var minutes))
+        {
+            shell.WriteError(Loc.GetString("parse-minutes-fail", ("minutes", args[2])));
             return;
         }
 
-        var role = args[1];
+        await _playTimeTracking.AddTimeToTrackerById(userId, args[1], TimeSpan.FromMinutes(minutes));
+        var overall = await _playTimeTracking.GetOverallPlaytimeById(userId);
 
-        var m = args[2];
-        if (!int.TryParse(m, out var minutes))
-        {
-            shell.WriteError(Loc.GetString("parse-minutes-fail", ("minutes", minutes)));
-            return;
-        }
-
-        _playTimeTracking.AddTimeToTracker(player, role, TimeSpan.FromMinutes(minutes));
-        var time = _playTimeTracking.GetOverallPlaytime(player);
-        shell.WriteLine(Loc.GetString("cmd-playtime_addrole-succeed",
-            ("username", userName),
-            ("role", role),
-            ("time", time)));
+        shell.WriteLine(Loc.GetString(
+            "cmd-playtime_addrole-succeed",
+            ("username", args[0]),
+            ("role", args[1]),
+            ("time", overall)));
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -128,6 +163,7 @@ public sealed class PlayTimeGetOverallCommand : IConsoleCommand
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
 
     public string Command => "playtime_getoverall";
     public string Description => Loc.GetString("cmd-playtime_getoverall-desc");
@@ -141,18 +177,28 @@ public sealed class PlayTimeGetOverallCommand : IConsoleCommand
             return;
         }
 
-        var userName = args[0];
-        if (!_playerManager.TryGetSessionByUsername(userName, out var player))
+        NetUserId userId;
+        if (Guid.TryParse(args[0], out var guid))
         {
-            shell.WriteError(Loc.GetString("parse-session-fail", ("username", userName)));
-            return;
+            userId = new NetUserId(guid);
+        }
+        else
+        {
+            var dbGuid = await _playerLocator.LookupIdByNameAsync(args[0]);
+            if (dbGuid == null)
+            {
+                shell.WriteError(Loc.GetString("parse-session-fail", ("username", args[0])));
+                return;
+            }
+            userId = dbGuid.UserId;
         }
 
-        var value = _playTimeTracking.GetOverallPlaytime(player);
+        var overallPlaytime = await _playTimeTracking.GetOverallPlaytimeById(userId);
+
         shell.WriteLine(Loc.GetString(
             "cmd-playtime_getoverall-success",
-            ("username", userName),
-            ("time", value)));
+            ("username", args[0]),
+            ("time", overallPlaytime)));
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -168,11 +214,13 @@ public sealed class PlayTimeGetOverallCommand : IConsoleCommand
     }
 }
 
+
 [AdminCommand(AdminFlags.Moderator)]
 public sealed class PlayTimeGetRoleCommand : IConsoleCommand
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
 
     public string Command => "playtime_getrole";
     public string Description => Loc.GetString("cmd-playtime_getrole-desc");
@@ -186,41 +234,49 @@ public sealed class PlayTimeGetRoleCommand : IConsoleCommand
             return;
         }
 
-        var userName = args[0];
-        if (!_playerManager.TryGetSessionByUsername(userName, out var session))
+        NetUserId userId;
+        if (Guid.TryParse(args[0], out var guid))
         {
-            shell.WriteError(Loc.GetString("parse-session-fail", ("username", userName)));
-            return;
+            userId = new NetUserId(guid);
+        }
+        else
+        {
+            var dbGuid = await _playerLocator.LookupIdByNameAsync(args[0]);
+            if (dbGuid == null)
+            {
+                shell.WriteError(Loc.GetString("parse-session-fail", ("username", args[0])));
+                return;
+            }
+            userId = dbGuid.UserId;
         }
 
         if (args.Length == 1)
         {
-            var timers = _playTimeTracking.GetTrackerTimes(session);
+            var playTimes = await _playTimeTracking.GetTrackerTimesById(userId);
 
-            if (timers.Count == 0)
+            if (playTimes.Count == 0)
             {
                 shell.WriteLine(Loc.GetString("cmd-playtime_getrole-no"));
                 return;
             }
 
-            foreach (var (role, time) in timers)
+            foreach (var (role, time) in playTimes)
             {
                 shell.WriteLine(Loc.GetString("cmd-playtime_getrole-role", ("role", role), ("time", time)));
             }
         }
-
-        if (args.Length >= 2)
+        else
         {
             if (args[1] == "Overall")
             {
-                var timer = _playTimeTracking.GetOverallPlaytime(session);
-                shell.WriteLine(Loc.GetString("cmd-playtime_getrole-overall", ("time", timer)));
-                return;
+                var overallTime = await _playTimeTracking.GetOverallPlaytimeById(userId);
+                shell.WriteLine(Loc.GetString("cmd-playtime_getrole-overall", ("time", overallTime)));
             }
-
-            var time = _playTimeTracking.GetPlayTimeForTracker(session, args[1]);
-            shell.WriteLine(Loc.GetString("cmd-playtime_getrole-succeed", ("username", session.Name),
-                ("time", time)));
+            else
+            {
+                var roleTime = await _playTimeTracking.GetPlayTimeForTrackerById(userId, args[1]);
+                shell.WriteLine(Loc.GetString("cmd-playtime_getrole-succeed", ("username", args[0]), ("time", roleTime)));
+            }
         }
     }
 
@@ -252,6 +308,7 @@ public sealed class PlayTimeSaveCommand : IConsoleCommand
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
 
     public string Command => "playtime_save";
     public string Description => Loc.GetString("cmd-playtime_save-desc");
@@ -265,15 +322,24 @@ public sealed class PlayTimeSaveCommand : IConsoleCommand
             return;
         }
 
-        var name = args[0];
-        if (!_playerManager.TryGetSessionByUsername(name, out var pSession))
+        NetUserId userId;
+        if (Guid.TryParse(args[0], out var guid))
         {
-            shell.WriteError(Loc.GetString("parse-session-fail", ("username", name)));
-            return;
+            userId = new NetUserId(guid);
+        }
+        else
+        {
+            var dbGuid = await _playerLocator.LookupIdByNameAsync(args[0]);
+            if (dbGuid == null)
+            {
+                shell.WriteError(Loc.GetString("parse-session-fail", ("username", args[0])));
+                return;
+            }
+            userId = dbGuid.UserId;
         }
 
-        _playTimeTracking.SaveSession(pSession);
-        shell.WriteLine(Loc.GetString("cmd-playtime_save-succeed", ("username", name)));
+        await _playTimeTracking.SaveSessionById(userId);
+        shell.WriteLine(Loc.GetString("cmd-playtime_save-succeed", ("username", args[0])));
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -294,12 +360,13 @@ public sealed class PlayTimeFlushCommand : IConsoleCommand
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
 
     public string Command => "playtime_flush";
     public string Description => Loc.GetString("cmd-playtime_flush-desc");
     public string Help => Loc.GetString("cmd-playtime_flush-help", ("command", Command));
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length is not (0 or 1))
         {
@@ -313,14 +380,23 @@ public sealed class PlayTimeFlushCommand : IConsoleCommand
             return;
         }
 
-        var name = args[0];
-        if (!_playerManager.TryGetSessionByUsername(name, out var pSession))
+        NetUserId userId;
+        if (Guid.TryParse(args[0], out var guid))
         {
-            shell.WriteError(Loc.GetString("parse-session-fail", ("username", name)));
-            return;
+            userId = new NetUserId(guid);
+        }
+        else
+        {
+            var dbGuid = await _playerLocator.LookupIdByNameAsync(args[0]);
+            if (dbGuid == null)
+            {
+                shell.WriteError(Loc.GetString("parse-session-fail", ("username", args[0])));
+                return;
+            }
+            userId = dbGuid.UserId;
         }
 
-        _playTimeTracking.FlushTracker(pSession);
+        await _playTimeTracking.FlushTrackerById(userId);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -335,3 +411,4 @@ public sealed class PlayTimeFlushCommand : IConsoleCommand
         return CompletionResult.Empty;
     }
 }
+
