@@ -1,8 +1,8 @@
-﻿using Content.Server.Administration.Logs;
-using Content.Server.Interaction.Components;
+using Content.Server.Administration.Logs;
 using Content.Server.Popups;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.AnimalHusbandry;
@@ -10,6 +10,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Renamer.EntitySystems;
 using Content.Shared.Storage;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -31,6 +32,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly RenamerSystem _renamer = default!;
 
     private readonly HashSet<EntityUid> _failedAttempts = new();
@@ -167,7 +169,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         if (!CanReproduce(partner))
             return false;
 
-        return component.PartnerWhitelist.IsValid(partner);
+        return _whitelistSystem.IsWhitelistPass(component.PartnerWhitelist, partner);
     }
 
     /// <summary>

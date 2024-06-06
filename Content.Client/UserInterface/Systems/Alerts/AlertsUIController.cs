@@ -7,6 +7,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface.Systems.Alerts;
 
@@ -43,7 +44,7 @@ public sealed class AlertsUIController : UIController, IOnStateEntered<GameplayS
         SyncAlerts();
     }
 
-    private void OnAlertPressed(object? sender, AlertType e)
+    private void OnAlertPressed(object? sender, ProtoId<AlertPrototype> e)
     {
         _alertsSystem?.AlertClicked(e);
     }

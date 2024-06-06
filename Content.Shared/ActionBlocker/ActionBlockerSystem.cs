@@ -1,13 +1,9 @@
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Events;
-using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Speech;
@@ -96,9 +92,9 @@ namespace Content.Shared.ActionBlocker
         ///     involve using a held entity. In the majority of cases, systems that provide interactions will not need
         ///     to check this themselves.
         /// </remarks>
-        public bool CanUseHeldEntity(EntityUid user)
+        public bool CanUseHeldEntity(EntityUid user, EntityUid used)
         {
-            var ev = new UseAttemptEvent(user);
+            var ev = new UseAttemptEvent(user, used);
             RaiseLocalEvent(user, ev);
 
             return !ev.Cancelled;
@@ -194,7 +190,7 @@ namespace Content.Shared.ActionBlocker
             if (target == null)
                 return true;
 
-            var tev = new GettingAttackedAttemptEvent();
+            var tev = new GettingAttackedAttemptEvent(uid, weapon, disarm);
             RaiseLocalEvent(target.Value, ref tev);
             return !tev.Cancelled;
         }
