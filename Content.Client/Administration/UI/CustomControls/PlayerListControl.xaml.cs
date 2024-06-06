@@ -154,8 +154,6 @@ namespace Content.Client.Administration.UI.CustomControls
                 HorizontalExpand = true
             };
 
-            var separator = new VSeparator(Color.White);
-
             var pinButton = new TextureButton
             {
                 TextureNormal = _sprites.Frame0(new SpriteSpecifier.Texture(new("/Textures/Interface/Bwoink/un_pinned.png"))),
@@ -181,7 +179,6 @@ namespace Content.Client.Administration.UI.CustomControls
                 Children =
                 {
                     nameLabel,
-                    separator,
                     pinButton
                 }
             };
