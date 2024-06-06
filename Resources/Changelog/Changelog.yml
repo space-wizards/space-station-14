@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Terraspark4941
-  changes:
-  - message: The TEG page in the guidebook has been updated with proper information!
-    type: Tweak
-  id: 6188
-  time: '2024-03-18T21:33:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26170
 - author: Plykiya
   changes:
   - message: You can now craft ducky slippers.
@@ -3849,3 +3842,11 @@
   id: 6687
   time: '2024-06-05T22:08:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28591
+- author: Plykiya
+  changes:
+  - message: Internals are no longer toggled off if you take your helmet off but still
+      have a gas mask on and vice versa.
+    type: Tweak
+  id: 6688
+  time: '2024-06-06T07:01:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28595
