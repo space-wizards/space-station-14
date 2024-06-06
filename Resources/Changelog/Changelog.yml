@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can now craft ducky slippers.
-    type: Add
-  id: 6189
-  time: '2024-03-18T21:34:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26138
 - author: Boaz1111
   changes:
   - message: Lone operatives now require a minimum of 20 players to spawn
@@ -3850,3 +3843,10 @@
   id: 6688
   time: '2024-06-06T07:01:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28595
+- author: Cojoke-dot
+  changes:
+  - message: Bots now have Insulation and NoSlip
+    type: Tweak
+  id: 6689
+  time: '2024-06-06T09:32:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28621
