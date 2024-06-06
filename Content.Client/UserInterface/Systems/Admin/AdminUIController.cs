@@ -198,9 +198,12 @@ public sealed class AdminUIController : UIController,
         args.Handle();
     }
 
-    private void ObjectsTabEntryKeyBindDown(ObjectsTabEntry entry, GUIBoundKeyEventArgs args)
+    private void ObjectsTabEntryKeyBindDown(GUIBoundKeyEventArgs args, ListData? data)
     {
-        var uid = entry.AssocEntity;
+        if (data is not ObjectsListData { Info: var info })
+            return;
+
+        var uid = info.Entity;
         var function = args.Function;
 
         if (function == EngineKeyFunctions.UIClick)
