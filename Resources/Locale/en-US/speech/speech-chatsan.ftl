@@ -129,3 +129,6 @@ chatsan-replacement-46 = thank you very much
 
 chatsan-word-47 = cya
 chatsan-replacement-47 = see ya
+
+chatsan-word-48 = deathsquad
+chatsan-replacement-478 = knock at the door
