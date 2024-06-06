@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: BookSpaceLaw
-  name: "Space Law"
-  description: The law of the station. Prepare for screaming and arguing.
+  name: "Security Handbook"
+  description: The standard guidebook for security officers.
   components:
     - type: Sprite
       sprite: Nyanotrasen/Objects/Misc/books.rsi
@@ -19,7 +19,7 @@
     - type: GuideHelp
       openOnActivation: true
       guides:
-      - Spacelaw
+      - Security
     - type: EmitSoundOnPickup # GreyStation - Sound PR
       sound: /Audio/SimpleStation14/Items/Handling/book_pickup.ogg
     - type: EmitSoundOnDrop

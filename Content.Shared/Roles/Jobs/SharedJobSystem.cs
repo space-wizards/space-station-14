@@ -118,6 +118,18 @@ public abstract class SharedJobSystem : EntitySystem
                _prototypes.TryIndex(comp.Prototype, out prototype);
     }
 
+    public bool MindTryGetJobId([NotNullWhen(true)] EntityUid? mindId, out ProtoId<JobPrototype>? job)
+    {
+        if (!TryComp(mindId, out JobComponent? comp))
+        {
+            job = null;
+            return false;
+        }
+
+        job = comp.Prototype;
+        return true;
+    }
+
     /// <summary>
     ///     Tries to get the job name for this mind.
     ///     Returns unknown if not found.
