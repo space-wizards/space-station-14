@@ -1,6 +1,7 @@
 <Document>
 # Speech and Text Channels
 Talking is a key part of Space Station 14. You can press "T" to jump to the text box.
+//PLEASE REMIND ME TO FIGURE OUT HOW [keybind="(control)"/] WORKS OR I'M GONNA FORGET.
 The word next to the text box is the [color=#a4885c]text channel[/color] you're about to send the message to, or rather how you're about to say what you've typed.
 
 Local is normal speech at normal volume.

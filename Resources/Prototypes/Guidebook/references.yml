@@ -11,7 +11,7 @@
 - type: guideEntry
   id: Drinks
   name: guide-entry-drinks
-  text: /ServerInfo/Guidebook/Reference Tables/Drinks.xml"
+  text: "/ServerInfo/Guidebook/ReferenceTables/Drinks.xml"
 
 - type: guideEntry
   id: FoodRecipes
