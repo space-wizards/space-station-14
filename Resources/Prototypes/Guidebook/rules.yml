@@ -1,4 +1,5 @@
-﻿- type: guideEntry # Default for forks and stuff. Should not be listed anywhere if the server is using a custom ruleset.
+﻿# Default for forks and stuff. Should not be listed anywhere if the server is using a custom ruleset.
+- type: guideEntry
   id: DefaultRuleset
   name: guide-entry-rules
   text: "/ServerInfo/Guidebook/ServerRules/DefaultRules.xml"
@@ -8,6 +9,9 @@
   name: guide-entry-rules-core-only
   priority: 0
   text: "/ServerInfo/Guidebook/ServerRules/WizDenCoreOnlyRules.xml"
+  #children:
+   # - MainRules
+    #- RoleplayRules
 
 - type: guideEntry
   id: StandardRuleset
@@ -28,7 +32,7 @@
   text: "/ServerInfo/Guidebook/ServerRules/RoleTypes.xml"
 
 - type: guideEntry
-  id: CoreRules
+  id: MainRules
   name: guide-entry-rules-core
   priority: 30
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC0.xml"

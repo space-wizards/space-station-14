@@ -14,6 +14,7 @@ public sealed class TextLinkTag : IMarkupTag
     public string Name => "textlink";
 
     public Control? Control;
+    public bool ShouldAddSelfAsChild = true;
 
     /// <inheritdoc/>
     public bool TryGetControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
@@ -26,6 +27,13 @@ public sealed class TextLinkTag : IMarkupTag
             return false;
         }
 
+        if (node.Attributes.TryGetValue("addAsChild", out var shouldAddAsChild) &&
+            !shouldAddAsChild.TryGetString(out var addAsChild) &&
+            bool.TryParse(addAsChild, out var value))
+        {
+            ShouldAddSelfAsChild = value;
+        }
+
         var label = new Label();
         label.Text = text;
 
@@ -33,13 +41,24 @@ public sealed class TextLinkTag : IMarkupTag
         label.FontColorOverride = Color.CornflowerBlue;
         label.DefaultCursorShape = Control.CursorShape.Hand;
 
-        label.OnMouseEntered += _ => label.FontColorOverride = Color.LightSkyBlue;
+        label.OnMouseEntered += args => OnMouseEntered(args, link);
         label.OnMouseExited += _ => label.FontColorOverride = Color.CornflowerBlue;
         label.OnKeyBindDown += args => OnKeybindDown(args, link);
 
         control = label;
         Control = label;
         return true;
+    }
+
+    private void OnMouseEntered(GUIMouseHoverEventArgs obj, string link)
+    {
+        if (Control is not Label label)
+            return;
+
+        label.FontColorOverride = Color.LightSkyBlue;
+
+        if (label.Parent is not ILinkHandler handler)
+            return;
     }
 
     private void OnKeybindDown(GUIBoundKeyEventArgs args, string link)
@@ -55,7 +74,7 @@ public sealed class TextLinkTag : IMarkupTag
         {
             current = current.Parent;
 
-            if (current is not ILinkClickHandler handler)
+            if (current is not ILinkHandler handler)
                 continue;
             handler.HandleClick(link);
             return;
@@ -64,7 +83,9 @@ public sealed class TextLinkTag : IMarkupTag
     }
 }
 
-public interface ILinkClickHandler
+public interface ILinkHandler
 {
+    public void HandleLinkAsChild(string link);
+
     public void HandleClick(string link);
 }
