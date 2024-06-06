@@ -112,9 +112,6 @@
     interfaces:
       enum.SharedGasTankUiKey.Key:
         type: GasTankBoundUserInterface
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 20
   - type: Jetpack
     moleUsage: 0.00085
   - type: CanMoveInAir
