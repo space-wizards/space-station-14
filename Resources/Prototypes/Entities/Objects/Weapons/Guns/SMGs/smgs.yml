@@ -93,13 +93,9 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
-  - type: Wieldable
-  - type: GunWieldBonus
-    minAngle: -19
-    maxAngle: -16
   - type: Gun
-    minAngle: 21
-    maxAngle: 32 
+    minAngle: 2
+    maxAngle: 16
     shotsPerBurst: 5
     availableModes:
     - SemiAuto
@@ -130,13 +126,9 @@
           map: ["enum.GunVisualLayers.Mag"]
     - type: Clothing
       sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
-    - type: Wieldable
-    - type: GunWieldBonus
-      minAngle: -19
-      maxAngle: -16
     - type: Gun
-      minAngle: 21
-      maxAngle: 32
+      minAngle: 2
+      maxAngle: 16
       fireRate: 6
       selectedMode: FullAuto
       soundGunshot:
