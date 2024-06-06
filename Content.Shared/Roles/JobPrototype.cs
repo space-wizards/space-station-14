@@ -120,7 +120,7 @@ namespace Content.Shared.Roles
         public bool Whitelisted;
 
         /// <summary>
-        /// Optional list of guides associated with this role. If the guides are opened,  the first entry in this list
+        /// Optional list of guides associated with this role. If the guides are opened, the first entry in this list
         /// will be used to select the currently selected guidebook.
         /// </summary>
         [DataField]
