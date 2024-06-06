@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Emag.Components;
@@ -31,6 +32,7 @@ public abstract class SharedHailerSystem : EntitySystem
         SubscribeLocalEvent<HailerComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<HailerComponent, HailerActionEvent>(OnActionUsed);
         SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<HailerComponent, ItemMaskToggledEvent>(OnMaskToggled);
 
         Subs.BuiEvents<HailerComponent>(HailerUiKey.Key, subs =>
         {
@@ -49,7 +51,7 @@ public abstract class SharedHailerSystem : EntitySystem
 
     private void OnActionUsed(Entity<HailerComponent> ent, ref HailerActionEvent args)
     {
-        // require the mask be pulled down before using
+        // require the mask be up before using
         if (TryComp<MaskComponent>(ent, out var mask) && mask.IsToggled)
             return;
 
@@ -79,6 +81,9 @@ public abstract class SharedHailerSystem : EntitySystem
     public bool PlayLine(Entity<HailerComponent> ent, HailerLine line, EntityUid user, bool predicted)
     {
         if (TryComp<UseDelayComponent>(ent, out var delay) && !_useDelay.TryResetDelay((ent, delay), true))
+            return false;
+
+        if (TryComp<MaskComponent>(ent, out var mask) && mask.IsToggled)
             return false;
 
         if (predicted)
@@ -119,6 +124,13 @@ public abstract class SharedHailerSystem : EntitySystem
     private void OnEmagged(Entity<HailerComponent> ent, ref GotEmaggedEvent args)
     {
         args.Handled = true;
+    }
+
+    private void OnMaskToggled(Entity<HailerComponent> ent, ref ItemMaskToggledEvent args)
+    {
+        // if you pull the mask down the menu is closed
+        if (args.IsToggled)
+            _ui.CloseUi(ent.Owner, HailerUiKey.Key);
     }
 
     /// <summary>
