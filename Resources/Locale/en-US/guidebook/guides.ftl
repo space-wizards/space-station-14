@@ -1,3 +1,4 @@
+guide-entry-ss14 = The Station
 guide-entry-engineering = Engineering
 guide-entry-construction = Construction
 guide-entry-airlock-security = Airlock Upgrades
@@ -19,7 +20,6 @@ guide-entry-cargo = Cargo
 guide-entry-cargo-bounties = Cargo Bounties
 guide-entry-salvage = Salvage
 guide-entry-survival = Survival
-guide-entry-ss14 = Space Station 14
 guide-entry-janitorial = Janitorial
 guide-entry-bartender = Bartender
 guide-entry-chef = Chef
