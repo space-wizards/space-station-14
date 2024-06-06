@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Renamer.Components;
+namespace Content.Shared.NameModifier.Components;
 
 /// <summary>
 /// Adds a modifier to the wearer's name when this item is equipped,

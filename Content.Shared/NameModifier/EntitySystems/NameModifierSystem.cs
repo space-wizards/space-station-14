@@ -1,11 +1,11 @@
 using System.Linq;
 using System.Text;
 using Content.Shared.Inventory;
-using Content.Shared.Renamer.Components;
+using Content.Shared.NameModifier.Components;
 
-namespace Content.Shared.Renamer.EntitySystems;
+namespace Content.Shared.NameModifier.EntitySystems;
 
-public sealed partial class RenamerSystem : EntitySystem
+public sealed partial class NameModifierSystem : EntitySystem
 {
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
@@ -13,17 +13,17 @@ public sealed partial class RenamerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RenamerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<RenamerComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
+        SubscribeLocalEvent<NameModifierComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<NameModifierComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
     }
 
-    private void OnMapInit(Entity<RenamerComponent> entity, ref MapInitEvent args)
+    private void OnMapInit(Entity<NameModifierComponent> entity, ref MapInitEvent args)
     {
         // Set the base name to the current name
         SetBaseName((entity, entity.Comp), Name(entity));
     }
 
-    private void OnAfterAutoHandleState(Entity<RenamerComponent> entity, ref AfterAutoHandleStateEvent args)
+    private void OnAfterAutoHandleState(Entity<NameModifierComponent> entity, ref AfterAutoHandleStateEvent args)
     {
         // The server might have generated a different name than we did locally if some systems only handle
         // adding modifiers server-side, so we apply the server's generated name here to be sure.
@@ -31,8 +31,8 @@ public sealed partial class RenamerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Sets the <see cref="RenamerComponent.BaseName"/> for this entity.
-    /// This will add a <see cref="RenamerComponent"/> if there isn't one already.
+    /// Sets the <see cref="NameModifierComponent.BaseName"/> for this entity.
+    /// This will add a <see cref="NameModifierComponent"/> if there isn't one already.
     /// This will call <see cref="RefreshNameModifiers"/>.
     /// </summary>
     /// <remarks>
@@ -41,10 +41,10 @@ public sealed partial class RenamerSystem : EntitySystem
     /// subscribe to <see cref="RefreshNameModifiersEvent"/> and call <see cref="RefreshNameModifiers"/>
     /// when needed.
     /// </remarks>
-    public void SetBaseName(Entity<RenamerComponent?> entity, string name)
+    public void SetBaseName(Entity<NameModifierComponent?> entity, string name)
     {
         if (!Resolve(entity, ref entity.Comp, false))
-            entity.Comp = EnsureComp<RenamerComponent>(entity);
+            entity.Comp = EnsureComp<NameModifierComponent>(entity);
 
         if (name == entity.Comp.BaseName)
             return;
@@ -60,15 +60,15 @@ public sealed partial class RenamerSystem : EntitySystem
     /// <summary>
     /// Raises a <see cref="RefreshNameModifiersEvent"/> to gather modifiers and
     /// updates the entity's name to its base name with modifiers applied.
-    /// This will add a <see cref="RenamerComponent"/> if there isn't one already.
+    /// This will add a <see cref="NameModifierComponent"/> if there isn't one already.
     /// </summary>
     /// <remarks>
     /// Call this to update the entity's name when adding or removing a modifier.
     /// </remarks>
-    public void RefreshNameModifiers(Entity<RenamerComponent?> entity)
+    public void RefreshNameModifiers(Entity<NameModifierComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp, false))
-            entity.Comp = EnsureComp<RenamerComponent>(entity);
+            entity.Comp = EnsureComp<NameModifierComponent>(entity);
 
         var meta = MetaData(entity);
 
@@ -97,7 +97,7 @@ public sealed partial class RenamerSystem : EntitySystem
 }
 
 /// <summary>
-/// Raised on an entity when <see cref="RenamerSystem.RefreshNameModifiers"/> is called.
+/// Raised on an entity when <see cref="NameModifierSystem.RefreshNameModifiers"/> is called.
 /// Subscribe to this event and use its methods to add modifiers to the entity's name.
 /// </summary>
 [ByRefEvent]
@@ -140,7 +140,7 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
     }
 
     /// <summary>
-    /// Adds text that will override the <see cref="RenamerComponent.BaseName"/> of the entity.
+    /// Adds text that will override the <see cref="NameModifierComponent.BaseName"/> of the entity.
     /// If multiple overrides are applied to an entity, the one with the highest <paramref name="priority"/>
     /// will be used.
     /// </summary>

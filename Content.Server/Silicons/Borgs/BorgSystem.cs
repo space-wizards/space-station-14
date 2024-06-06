@@ -29,7 +29,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.Renamer.EntitySystems;
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -57,7 +56,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
-    [Dependency] private readonly RenamerSystem _renamer = default!;
 
     [ValidatePrototypeId<JobPrototype>]
     public const string BorgJobId = "Borg";

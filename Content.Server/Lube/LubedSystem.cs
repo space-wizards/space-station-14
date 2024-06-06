@@ -14,7 +14,7 @@ public sealed class LubedSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly RenamerSystem _renamer = default!;
+    [Dependency] private readonly NameModifierSystem _renamer = default!;
 
     public override void Initialize()
     {

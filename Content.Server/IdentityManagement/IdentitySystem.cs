@@ -10,7 +10,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Renamer.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
@@ -28,7 +27,6 @@ public sealed class IdentitySystem : SharedIdentitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly CriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
-    [Dependency] private readonly RenamerSystem _renamer = default!;
 
     private HashSet<EntityUid> _queuedIdentityUpdates = new();
 
@@ -41,7 +39,6 @@ public sealed class IdentitySystem : SharedIdentitySystem
         SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
-        SubscribeLocalEvent<IdentityComponent, NameRefreshedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
     }
 

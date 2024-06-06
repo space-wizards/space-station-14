@@ -2,7 +2,7 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Renamer.EntitySystems;
+using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -12,7 +12,7 @@ public sealed class TransformableContainerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly MetaDataSystem _metadataSystem = default!;
-    [Dependency] private readonly RenamerSystem _renamer = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     public override void Initialize()
     {
@@ -62,7 +62,7 @@ public sealed class TransformableContainerSystem : EntitySystem
             entity.Comp.Transformed = true;
         }
 
-        _renamer.RefreshNameModifiers(entity.Owner);
+        _nameMod.RefreshNameModifiers(entity.Owner);
     }
 
     private void OnRefreshNameModifiers(Entity<TransformableContainerComponent> entity, ref RefreshNameModifiersEvent args)
@@ -80,7 +80,7 @@ public sealed class TransformableContainerSystem : EntitySystem
 
         var metadata = MetaData(entity);
 
-        _renamer.RefreshNameModifiers(entity.Owner);
+        _nameMod.RefreshNameModifiers(entity.Owner);
 
         if (!string.IsNullOrEmpty(entity.Comp.InitialDescription))
         {

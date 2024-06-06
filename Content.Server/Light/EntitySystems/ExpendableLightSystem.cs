@@ -4,13 +4,14 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light.Components;
-using Content.Shared.Renamer.EntitySystems;
 using Content.Shared.Tag;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
@@ -24,7 +25,6 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
-        [Dependency] private readonly RenamerSystem _renamer = default!;
 
         public override void Initialize()
         {
@@ -68,7 +68,7 @@ namespace Content.Server.Light.EntitySystems
                     case ExpendableLightState.Fading:
                         component.CurrentState = ExpendableLightState.Dead;
                         var meta = MetaData(ent);
-                        _renamer.SetBaseName(ent.Owner, Loc.GetString(component.SpentName));
+                        _metaData.SetEntityName(ent, Loc.GetString(component.SpentName), meta);
                         _metaData.SetEntityDescription(ent, Loc.GetString(component.SpentDesc), meta);
 
                         _tagSystem.AddTag(ent, "Trash");

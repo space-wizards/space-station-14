@@ -33,7 +33,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly RenamerSystem _renamer = default!;
+    [Dependency] private readonly NameModifierSystem _renamer = default!;
 
     private readonly HashSet<EntityUid> _failedAttempts = new();
     private readonly HashSet<EntityUid> _birthQueue = new();

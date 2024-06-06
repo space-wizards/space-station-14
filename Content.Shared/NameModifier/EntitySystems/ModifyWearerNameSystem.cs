@@ -1,12 +1,12 @@
 using Content.Shared.Clothing;
 using Content.Shared.Inventory;
-using Content.Shared.Renamer.Components;
+using Content.Shared.NameModifier.Components;
 
-namespace Content.Shared.Renamer.EntitySystems;
+namespace Content.Shared.NameModifier.EntitySystems;
 
 public sealed partial class ModifyWearerNameSystem : EntitySystem
 {
-    [Dependency] private readonly RenamerSystem _renamer = default!;
+    [Dependency] private readonly NameModifierSystem _renamer = default!;
 
     public override void Initialize()
     {

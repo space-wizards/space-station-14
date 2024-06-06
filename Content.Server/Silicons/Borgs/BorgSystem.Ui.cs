@@ -6,7 +6,6 @@ using Content.Shared.PowerCell.Components;
 using Content.Shared.Preferences;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
-using Content.Shared.Renamer.Components;
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -69,12 +68,11 @@ public sealed partial class BorgSystem
         var metaData = MetaData(uid);
 
         // don't change the name if the value doesn't actually change
-        if (TryComp<RenamerComponent>(uid, out var renamerComp) && renamerComp.BaseName.Equals(name, StringComparison.InvariantCulture)
-            || metaData.EntityName.Equals(name, StringComparison.InvariantCulture))
+        if (metaData.EntityName.Equals(name, StringComparison.InvariantCulture))
             return;
 
         _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Actor):player} set borg \"{ToPrettyString(uid)}\"'s name to: {name}");
-        _renamer.SetBaseName(uid, name);
+        _metaData.SetEntityName(uid, name, metaData);
     }
 
     private void OnRemoveModuleBuiMessage(EntityUid uid, BorgChassisComponent component, BorgRemoveModuleBuiMessage args)

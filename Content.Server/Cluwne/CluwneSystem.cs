@@ -15,7 +15,7 @@ using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cluwne;
 using Content.Shared.Interaction.Components;
 using Robust.Shared.Audio.Systems;
-using Content.Shared.Renamer.EntitySystems;
+using Content.Shared.NameModifier.EntitySystems;
 
 namespace Content.Server.Cluwne;
 
@@ -30,7 +30,7 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly RenamerSystem _renamer = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     public override void Initialize()
     {
@@ -76,7 +76,7 @@ public sealed class CluwneSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("cluwne-transform", ("target", uid)), uid, PopupType.LargeCaution);
         _audio.PlayPvs(component.SpawnSound, uid);
 
-        _renamer.RefreshNameModifiers(uid);
+        _nameMod.RefreshNameModifiers(uid);
 
         SetOutfitCommand.SetOutfit(uid, "CluwneGear", EntityManager);
     }

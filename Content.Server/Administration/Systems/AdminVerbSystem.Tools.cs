@@ -26,7 +26,6 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
-using Content.Shared.Renamer.EntitySystems;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -55,7 +54,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly BatterySystem _batterySystem = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-    [Dependency] private readonly RenamerSystem _renamerSystem = default!;
     [Dependency] private readonly GunSystem _gun = default!;
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
@@ -452,7 +450,7 @@ public sealed partial class AdminVerbSystem
             {
                 _quickDialog.OpenDialog(player, "Rename", "Name", (string newName) =>
                 {
-                    _renamerSystem.SetBaseName(args.Target, newName);
+                    _metaSystem.SetEntityName(args.Target, newName);
                 });
             },
             Impact = LogImpact.Medium,
@@ -490,7 +488,7 @@ public sealed partial class AdminVerbSystem
                     (string newName, LongString newDescription) =>
                     {
                         var meta = MetaData(args.Target);
-                        _renamerSystem.SetBaseName(args.Target, newName);
+                        _metaSystem.SetEntityName(args.Target, newName, meta);
                         _metaSystem.SetEntityDescription(args.Target, newDescription.String, meta);
                     });
             },

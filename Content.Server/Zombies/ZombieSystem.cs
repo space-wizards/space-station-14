@@ -38,7 +38,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly RenamerSystem _renamer = default!;
+        [Dependency] private readonly NameModifierSystem _renamer = default!;
 
         public const SlotFlags ProtectiveSlots =
             SlotFlags.FEET |

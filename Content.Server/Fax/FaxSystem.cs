@@ -29,7 +29,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Content.Shared.Renamer.Components;
 
 namespace Content.Server.Fax;
 
@@ -464,12 +463,11 @@ public sealed class FaxSystem : EntitySystem
             !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
-        TryComp<RenamerComponent>(sendEntity, out var renamerComponent);
         TryComp<LabelComponent>(sendEntity, out var labelComponent);
 
         // TODO: See comment in 'Send()' about not being able to copy whole entities
         var printout = new FaxPrintout(paper.Content,
-                                       renamerComponent?.BaseName ?? metadata.EntityName,
+                                       labelComponent?.OriginalName ?? metadata.EntityName,
                                        labelComponent?.CurrentLabel,
                                        metadata.EntityPrototype?.ID ?? DefaultPaperPrototypeId,
                                        paper.StampState,
@@ -512,13 +510,12 @@ public sealed class FaxSystem : EntitySystem
            !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
-        TryComp<RenamerComponent>(sendEntity, out var renamerComponent);
         TryComp<LabelComponent>(sendEntity, out var labelComponent);
 
         var payload = new NetworkPayload()
         {
             { DeviceNetworkConstants.Command, FaxConstants.FaxPrintCommand },
-            { FaxConstants.FaxPaperNameData, renamerComponent?.BaseName ?? metadata.EntityName },
+            { FaxConstants.FaxPaperNameData, labelComponent?.OriginalName ?? metadata.EntityName },
             { FaxConstants.FaxPaperLabelData, labelComponent?.CurrentLabel },
             { FaxConstants.FaxPaperContentData, paper.Content },
         };

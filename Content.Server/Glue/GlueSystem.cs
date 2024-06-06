@@ -23,7 +23,7 @@ public sealed class GlueSystem : SharedGlueSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
-    [Dependency] private readonly RenamerSystem _renamer = default!;
+    [Dependency] private readonly NameModifierSystem _renamer = default!;
 
     public override void Initialize()
     {

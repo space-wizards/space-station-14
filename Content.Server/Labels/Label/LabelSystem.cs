@@ -19,7 +19,7 @@ namespace Content.Server.Labels
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly RenamerSystem _renamer = default!;
+        [Dependency] private readonly NameModifierSystem _renamer = default!;
 
         public const string ContainerName = "paper_label";
 
