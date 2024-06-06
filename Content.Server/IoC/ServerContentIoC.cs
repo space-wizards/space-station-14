@@ -63,6 +63,7 @@ namespace Content.Server.IoC
             IoCManager.Register<ISharedPlaytimeManager, PlayTimeTrackingManager>();
             IoCManager.Register<ServerApi>();
             IoCManager.Register<JobWhitelistManager>();
+            IoCManager.Register<PostgresNotificationManager>();
         }
     }
 }
