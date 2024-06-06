@@ -6354,7 +6354,9 @@ entities:
     - type: Transform
       pos: -19.5,-19.5
       parent: 4812
-  - uid: 7416
+- proto: AirlockMedicalMorgueLocked
+  entities:
+  - uid: 6282
     components:
     - type: Transform
       pos: -19.5,-13.5
