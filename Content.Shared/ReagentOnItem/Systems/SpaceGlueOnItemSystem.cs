@@ -8,7 +8,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 
-namespace Content.Server.ReagentOnItem;
+namespace Content.Shared.ReagentOnItem;
 
 public sealed class SpaceGlueOnItemSystem : EntitySystem
 {
@@ -50,7 +50,7 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
 
         if (SetNextNextCanDropCheck(entity, entity))
         {
-            _popup.PopupEntity(Loc.GetString("space-glue-on-item-hand-stuck", ("target", Identity.Entity(entity, EntityManager))), args.User, args.User, PopupType.MediumCaution);
+            _popup.PopupPredicted(Loc.GetString("space-glue-on-item-hand-stuck", ("target", Identity.Entity(entity, EntityManager))), args.User, args.User, PopupType.MediumCaution);
         }
     }
 
@@ -69,7 +69,7 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
         unremoveComp.DeleteOnDrop = false;
 
         glueComp.TimeOfNextCheck = _timing.CurTime + glueComp.DurationPerUnit;
-        glueComp.EffectStacks = glueComp.EffectStacks - 1;
+        glueComp.EffectStacks -= 1;
 
         return true;
     }

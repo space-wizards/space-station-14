@@ -1,8 +1,9 @@
 using Content.Shared.FixedPoint;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.ReagentOnItem;
 
-[ImplicitDataDefinitionForInheritors]
+[RegisterComponent, NetworkedComponent, ImplicitDataDefinitionForInheritors]
 public abstract partial class ReagentOnItemComponent : Component
 {
 

@@ -1,6 +1,8 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.ReagentOnItem;
 
-[RegisterComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class SpaceGlueOnItemComponent : ReagentOnItemComponent
 {
     /// <summary>

@@ -1,18 +1,16 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.ApplyReagentToItem;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Content.Shared.ReagentOnItem;
 
-using Content.Server.ReagentOnItem;
-
-namespace Content.Server.ApplyReagentToItem;
+namespace Content.Shared.ApplyReagentToItem;
 
 /// <summary>
 ///     This allows an item to apply reagents to items. For example,
@@ -23,8 +21,8 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly ReagentOnItemSystem _reagentOnItem = default!;
 
@@ -75,7 +73,7 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
     {
         if (!HasComp<ItemComponent>(target))
         {
-            _popup.PopupEntity(Loc.GetString("apply-reagent-not-item-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
+            _popup.PopupPredicted(Loc.GetString("apply-reagent-not-item-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
             return false;
         }
 
@@ -87,11 +85,11 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
             if (_reagentOnItem.ApplyReagentEffectToItem(target, reagent))
             {
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} tried to apply reagent to {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
-                _audio.PlayPvs(entity.Comp.OnSqueezeNoise, entity.Owner);
+                _audio.PlayPredicted(entity.Comp.OnSqueezeNoise, entity, actor);
             }
             else
             {
-                _popup.PopupEntity(Loc.GetString("apply-reagent-is-empty-failure"), actor, actor, PopupType.Medium);
+                _popup.PopupPredicted(Loc.GetString("apply-reagent-is-empty-failure"), actor, actor, PopupType.Medium);
             }
 
             return true;

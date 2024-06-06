@@ -1,6 +1,8 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.ReagentOnItem;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class SpaceLubeOnItemComponent : ReagentOnItemComponent
 {
 

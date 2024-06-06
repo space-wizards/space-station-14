@@ -2,20 +2,20 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.ReagentOnItem;
-using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Fluids;
 using Content.Shared.Clothing.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.FixedPoint;
 using Content.Shared.Chemistry.Reagent;
 
-namespace Content.Server.ReagentOnItem;
+namespace Content.Shared.ReagentOnItem;
 
 /// <summary>
 ///     Deals with items that apply a solution on use to other entities.
 /// </summary>
 public sealed class ReagentOnItemSystem : EntitySystem
 {
-    [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     /// <summary>
@@ -53,6 +53,7 @@ public sealed class ReagentOnItemSystem : EntitySystem
             var volSpaceLube = reagentMixture.RemoveReagent(spaceLubeId, reagentMixture.Volume);
             var lubed = EnsureComp<SpaceLubeOnItemComponent>(item);
             ConvertReagentToStacks(lubed, spaceLubeId, volSpaceLube, reagentMixture);
+            Dirty(item, lubed);
         }
 
         if (reagentMixture.TryGetReagent(spaceGlueId, out var _))
@@ -60,6 +61,7 @@ public sealed class ReagentOnItemSystem : EntitySystem
             var volSpaceGlue = reagentMixture.RemoveReagent(spaceGlueId, reagentMixture.Volume);
             var glued = EnsureComp<SpaceGlueOnItemComponent>(item);
             ConvertReagentToStacks(glued, spaceGlueId, volSpaceGlue, reagentMixture);
+            Dirty(item, glued);
         }
 
         _puddle.TrySpillAt(item, reagentMixture, out var _, false);

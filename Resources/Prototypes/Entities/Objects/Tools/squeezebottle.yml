@@ -23,6 +23,7 @@
     - state: front
       map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: Appearance
+  - type: UseDelay
   - type: SolutionContainerManager
     solutions:
       drink:
