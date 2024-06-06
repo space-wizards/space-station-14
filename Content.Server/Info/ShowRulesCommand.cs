@@ -47,20 +47,16 @@ public sealed class ShowRulesCommand : IConsoleCommand
             }
         }
 
-        var locator = IoCManager.Resolve<IPlayerLocator>();
-        var located = await locator.LookupIdByNameOrIdAsync(target);
-        if (located == null)
+
+        var message = new ShowRulesPopupMessage { PopupTime = seconds };
+
+        if (!IoCManager.Resolve<IPlayerManager>().TryGetSessionByUsername(target, out var player))
         {
             shell.WriteError("Unable to find a player with that name.");
-            return;
+           return;
         }
 
         var netManager = IoCManager.Resolve<INetManager>();
-
-        var message = new SharedRulesManager.ShowRulesPopupMessage();
-        message.PopupTime = seconds;
-
-        var player = IoCManager.Resolve<IPlayerManager>().GetSessionById(located.UserId);
         netManager.ServerSendMessage(message, player.Channel);
     }
 }

@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Terraspark4941
-  changes:
-  - message: The TEG page in the guidebook has been updated with proper information!
-    type: Tweak
-  id: 6188
-  time: '2024-03-18T21:33:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26170
-- author: Plykiya
-  changes:
-  - message: You can now craft ducky slippers.
-    type: Add
-  id: 6189
-  time: '2024-03-18T21:34:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26138
-- author: Boaz1111
-  changes:
-  - message: Lone operatives now require a minimum of 20 players to spawn
-    type: Tweak
-  id: 6190
-  time: '2024-03-18T21:36:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26244
 - author: shampunj
   changes:
   - message: Zombies now passively heal 1 heat/shock damage every 50 seconds
@@ -3849,3 +3828,25 @@
   id: 6687
   time: '2024-06-05T22:08:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28591
+- author: Plykiya
+  changes:
+  - message: Internals are no longer toggled off if you take your helmet off but still
+      have a gas mask on and vice versa.
+    type: Tweak
+  id: 6688
+  time: '2024-06-06T07:01:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28595
+- author: Cojoke-dot
+  changes:
+  - message: Bots now have Insulation and NoSlip
+    type: Tweak
+  id: 6689
+  time: '2024-06-06T09:32:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28621
+- author: Flareguy
+  changes:
+  - message: Nerfed the explosive power of fuel tanks.
+    type: Tweak
+  id: 6690
+  time: '2024-06-06T10:08:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28650
