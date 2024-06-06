@@ -17,7 +17,7 @@ public sealed partial class ObjectsTab : Control
 
     private readonly List<ObjectsTabEntry> _objects = new();
     private readonly List<ObjectsTabSelection> _selections = new();
-    private bool _ascending = false;  // Set to false for descending order by default
+    private bool _ascending = false;
     private ObjectsTabHeader.Header _headerClicked = ObjectsTabHeader.Header.ObjectName;
     private readonly Color _altColor = Color.FromHex("#292B38");
     private readonly Color _defaultColor = Color.FromHex("#2F2F3B");
@@ -48,14 +48,14 @@ public sealed partial class ObjectsTab : Control
         SearchList.SearchBar = SearchLineEdit;
         SearchList.GenerateItem += GenerateButton;
         SearchList.DataFilterCondition += DataFilterCondition;
+        SearchList.ItemKeyBindDown += (args, data) => OnEntryKeyBindDown?.Invoke(args, data);
+
 
         RefreshObjectList();
-        // Set initial selection and refresh the list to apply the initial sort order
         var defaultSelection = ObjectsTabSelection.Grids;
-        ObjectTypeOptions.SelectId((int)defaultSelection); // Set the default selection
-        RefreshObjectList(defaultSelection); // Refresh the list with the default selection
+        ObjectTypeOptions.SelectId((int)defaultSelection);
+        RefreshObjectList(defaultSelection);
 
-        // Initialize the next update time
         _nextUpdate = TimeSpan.Zero;
     }
 
@@ -131,9 +131,6 @@ public sealed partial class ObjectsTab : Control
 
         var entry = new ObjectsTabEntry(info.Name, info.Entity, new StyleBoxFlat { BackgroundColor = backgroundColor });
         button.ToolTip = $"{info.Name}, {info.Entity}";
-
-        // Add key binding event handler
-        entry.OnKeyBindDown += args => OnEntryKeyBindDown?.Invoke(args, data);
 
         button.AddChild(entry);
     }
