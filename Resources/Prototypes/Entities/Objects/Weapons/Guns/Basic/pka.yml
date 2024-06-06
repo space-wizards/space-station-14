@@ -1,9 +1,10 @@
+# proto-kinetic accelerator
 - type: entity
-  name: proto-kinetic accelerator
-  id: WeaponProtoKineticAccelerator
   parent:
   - BaseGunMedium
   - BaseGunWieldable
+  id: WeaponProtoKineticAccelerator
+  name: proto-kinetic accelerator
   description: Fires low-damage kinetic bolts at a short range.
   components:
   - type: Sprite
@@ -27,14 +28,6 @@
     maxAngle: 45
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
-  - type: AmmoCounter
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.AmmoVisuals.HasAmmo:
-        empty-icon:
-          True: { visible: False }
-          False: { visible: True }
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 0.75
     rechargeSound:
@@ -43,5 +36,13 @@
     proto: BulletKinetic
     capacity: 1
     count: 1
+  - type: AmmoCounter
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.HasAmmo:
+        empty-icon:
+          True: { visible: False }
+          False: { visible: True }
   - type: UseDelay
     delay: 1
