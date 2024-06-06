@@ -1,4 +1,14 @@
-
+- type: guideEntry
+  id: Service
+  name: guide-entry-service
+  text: "/ServerInfo/Guidebook/Service/Service.xml"
+  filterEnabled: True
+  children:
+  - Bartender
+  - Botany
+  - Chef
+  - Janitorial
+  
 - type: guideEntry
   id: Bartender
   name: guide-entry-bartender
