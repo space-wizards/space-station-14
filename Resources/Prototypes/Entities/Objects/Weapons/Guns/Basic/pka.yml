@@ -2,6 +2,7 @@
   name: proto-kinetic accelerator
   id: WeaponProtoKineticAccelerator
   parent:
+  - BaseGunMedium
   - BaseGunWieldable
   description: Fires low-damage kinetic bolts at a short range.
   components:
@@ -12,12 +13,8 @@
     - state: animation-icon
       visible: false
       map: [ "empty-icon" ]
-  - type: Item
-    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-    size: Normal
   - type: Clothing
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-    quickEquip: false
     slots:
     - suitStorage
     - Belt
@@ -26,7 +23,6 @@
     maxAngle: -43
   - type: Gun
     fireRate: 0.5
-    angleDecay: 45 #??
     minAngle: 44
     maxAngle: 45
     soundGunshot:
