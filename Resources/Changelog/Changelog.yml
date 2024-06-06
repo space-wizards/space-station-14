@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: shampunj
-  changes:
-  - message: Zombies now passively heal 1 heat/shock damage every 50 seconds
-    type: Tweak
-  id: 6191
-  time: '2024-03-18T21:47:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25925
 - author: Killerqu00
   changes:
   - message: Initial Infected now can see each other.
@@ -3850,3 +3843,11 @@
   id: 6690
   time: '2024-06-06T10:08:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28650
+- author: ElectroJr
+  changes:
+  - message: The job/antag preferences window now has some buttons that link to relevant
+      guidebook entries
+    type: Add
+  id: 6691
+  time: '2024-06-06T12:05:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28614
