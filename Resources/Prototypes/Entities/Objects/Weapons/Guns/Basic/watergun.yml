@@ -97,9 +97,6 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: icon
       map: [ "enum.DamageStateVisualLayers.Base" ]
-  - type: Item
-    sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
-    size: Normal
   - type: RandomSprite
     getAllGroups: true
     available:
@@ -136,9 +133,6 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: icon
       map: [ "enum.DamageStateVisualLayers.Base" ]
-  - type: Item
-    sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
-    size: Normal
   - type: RandomSprite
     getAllGroups: true
     available:
