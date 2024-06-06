@@ -98,7 +98,7 @@ public sealed class HandTeleporterSystem : EntitySystem
             if (xform.ParentUid != xform.GridUid) // Still, don't portal.
                 return;
 
-            if (xform.ParentUid != Transform(component.FirstPortal!.Value).ParentUid)
+            if (!component.AllowPortalsOnDifferentGrids && xform.ParentUid != Transform(component.FirstPortal!.Value).ParentUid)
             {
                 // Whoops. Fizzle time. Crime time too because yippee I'm not refactoring this logic right now (I started to, I'm not going to.)
                 FizzlePortals(uid, component, user, true);
