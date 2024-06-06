@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Killerqu00
-  changes:
-  - message: Initial Infected now can see each other.
-    type: Add
-  - message: Initial Infected can now see zombified entities.
-    type: Add
-  id: 6192
-  time: '2024-03-18T21:57:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25934
 - author: nikthechampiongr
   changes:
   - message: You can now use the SCRAM! implant while cuffed.
@@ -3851,3 +3842,10 @@
   id: 6691
   time: '2024-06-06T12:05:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28614
+- author: Aeshus
+  changes:
+  - message: Space Law gives security exception for syndicate communication equipment.
+    type: Fix
+  id: 6692
+  time: '2024-06-06T19:24:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28668
