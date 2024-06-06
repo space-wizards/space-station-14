@@ -11158,13 +11158,6 @@ entities:
     - type: Transform
       pos: -16.5,-5.5
       parent: 30
-  - uid: 6878
-    components:
-    - type: MetaData
-      name: Morgue
-    - type: Transform
-      pos: -22.5,0.5
-      parent: 30
   - uid: 6879
     components:
     - type: MetaData
@@ -11222,6 +11215,13 @@ entities:
     components:
     - type: Transform
       pos: -23.5,-22.5
+      parent: 30
+- proto: AirlockMedicalMorgueLocked
+  entities:
+  - uid: 6878
+    components:
+    - type: Transform
+      pos: -22.5,0.5
       parent: 30
 - proto: AirlockQuartermasterLocked
   entities:
