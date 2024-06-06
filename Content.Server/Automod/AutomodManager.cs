@@ -92,17 +92,23 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
                 skip = true;
                 break;
             }
-
             if (skip)
                 continue;
 
+            var displayName = GetDisplayName(filter);
+
             foreach (var censorAction in censorGroup.AutomodActions)
             {
-                blocked &= censorAction.RunAction(session, inputText, textMatches, filter, _entMan);
+                blocked &= censorAction.RunAction(session, inputText, textMatches, filter, displayName, _entMan);
             }
         }
 
         return blocked;
+    }
+
+    private string GetDisplayName(AutomodFilterDef filter)
+    {
+        return filter.Id != null ? $"{filter.DisplayName} (automod#{filter.Id})" : $"{filter.DisplayName} (automod#na)";
     }
 
     #endregion

@@ -26,17 +26,15 @@ public sealed partial class TextAutomodActionBan : ITextAutomodAction
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> patternMatches,
-        AutomodFilterDef automod,
+        AutomodFilterDef filter,
+        string filterDisplayName,
         IEntityManager entMan)
     {
         var banManager = IoCManager.Resolve<IBanManager>();
 
         // TODO ShadowCommander implement ban group tracking for banning after three filter hits within $time minutes
 
-        var str = Loc.GetString(
-            Reason,
-            ("censorName", automod.DisplayName),
-            ("censorId", automod.Id is null ? "automod#na" : $"automod#{automod.Id}"));
+        var str = Loc.GetString(Reason, ("censorName", filterDisplayName));
 
         banManager.CreateServerBan(session.UserId, null, null, null, null, BanTime, NoteSeverity.Minor, str);
 

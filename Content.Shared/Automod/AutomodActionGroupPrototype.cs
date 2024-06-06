@@ -68,13 +68,15 @@ public partial interface ITextAutomodAction
     /// <param name="session">The session the text came from.</param>
     /// <param name="fullText">The full text provided by the user.</param>
     /// <param name="patternMatches">The text matched by the pattern.</param>
-    /// <param name="automod">The filter def that matched the <paramref name="fullText"/>.</param>
+    /// <param name="filter">The filter def that matched the <paramref name="fullText"/>.</param>
+    /// <param name="filterDisplayName">The display ID of the automod filter.</param>
     /// <param name="entMan"><see cref="IEntityManager"/> for resolving systems in the action.</param>
     /// <returns>True if the message passes. False if the message should be blocked.</returns>
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> patternMatches,
-        AutomodFilterDef automod,
+        AutomodFilterDef filter,
+        string filterDisplayName,
         IEntityManager entMan);
 
     // TODO ShadowCommander add a counter for each player that counts runs on an action for checking multiple hits

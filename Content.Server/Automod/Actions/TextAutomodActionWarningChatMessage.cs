@@ -20,14 +20,14 @@ public sealed partial class TextAutomodActionWarningChatMessage : ITextAutomodAc
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> patternMatches,
-        AutomodFilterDef automod,
+        AutomodFilterDef filter,
+        string filterDisplayName,
         IEntityManager entMan)
     {
         var str = Loc.GetString(
             Reason,
             ("matches", new StringBuilder().AppendJoin(", ", patternMatches.Keys)),
-            ("censorName", automod.DisplayName),
-            ("censorId", automod.Id is null ? "" : automod.Id));
+            ("censorName", filterDisplayName));
 
         IoCManager.Resolve<IChatManager>().DispatchServerMessage(session, str);
 

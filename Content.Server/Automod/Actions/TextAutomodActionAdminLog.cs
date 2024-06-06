@@ -21,15 +21,16 @@ public sealed partial class TextAutomodActionAdminLog : ITextAutomodAction
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> patternMatches,
-        AutomodFilterDef automod,
+        AutomodFilterDef filter,
+        string filterDisplayName,
         IEntityManager entMan)
     {
         IoCManager.Resolve<IAdminLogManager>()
             .Add(
                 LogType.TextAutomod,
                 Impact,
-                $"{entMan.ToPrettyString(session.AttachedEntity):player} ({session}) tripped {automod.DisplayName
-                } (automod#{automod.Id}) which matched: {new StringBuilder().AppendJoin("; ", patternMatches.Keys)}");
+                $"{entMan.ToPrettyString(session.AttachedEntity):player} ({session}) tripped {filterDisplayName
+                } which matched: {new StringBuilder().AppendJoin("; ", patternMatches.Keys)}");
 
         return true;
     }

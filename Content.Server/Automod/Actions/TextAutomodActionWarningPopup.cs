@@ -21,14 +21,14 @@ public sealed partial class TextAutomodActionWarningPopup : ITextAutomodAction
     public bool RunAction(ICommonSession session,
         string fullText,
         Dictionary<string, int> patternMatches,
-        AutomodFilterDef automod,
+        AutomodFilterDef filter,
+        string filterDisplayName,
         IEntityManager entMan)
     {
         var str = Loc.GetString(
             Reason,
             ("matches", new StringBuilder().AppendJoin(", ", patternMatches.Keys)),
-            ("censorName", automod.DisplayName),
-            ("censorId", automod.Id is null ? "" : automod.Id));
+            ("censorName", filterDisplayName));
 
         entMan.System<PopupSystem>().PopupCursor(str, session, PopupType.LargeCaution);
 
