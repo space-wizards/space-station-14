@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Client.Guidebook.Richtext;
+using Content.Shared.Guidebook;
 using Pidgin;
 using Robust.Client.UserInterface;
 using Robust.Shared.ContentPack;
