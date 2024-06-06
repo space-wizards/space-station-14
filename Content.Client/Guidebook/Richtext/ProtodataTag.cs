@@ -22,7 +22,7 @@ public sealed class ProtodataTag : IMarkupTag
     {
         // Do nothing with an empty tag
         if (!node.Value.TryGetString(out var prototype))
-            return "";
+            return string.Empty;
 
         if (!node.Attributes.TryGetValue("comp", out var component))
             return string.Empty;
