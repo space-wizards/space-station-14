@@ -54,7 +54,14 @@
   - type: Fixtures
     fixtures:
       fix1:
-        hard: false
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - None
   - type: Construction
     graph: Toilet
     node: toilet
