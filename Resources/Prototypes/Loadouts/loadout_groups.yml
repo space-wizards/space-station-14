@@ -5,26 +5,31 @@
   minLimit: 0
   maxLimit: 3
   loadouts:
-  - PlushieLizard
-  - PlushieSpaceLizard
+  #- PlushieLizard
+  #- PlushieSpaceLizard
+  - ToyFigurineGreytider #GreyStation
+  - HarmonicaInstrument #GreyStation
+  - BalloonNT #GreyStation
   - Lighter
+  - FlippoLighter #GreyStation
+  - Matchbox #GreyStation
   - CigPackGreen
   - CigPackRed
   - CigPackBlue
   - CigPackBlack
   - CigarCase
   - CigarGold
-  - ClothingNeckLGBTPin
-  - ClothingNeckAromanticPin
-  - ClothingNeckAsexualPin
-  - ClothingNeckBisexualPin
-  - ClothingNeckIntersexPin
-  - ClothingNeckLesbianPin
-  - ClothingNeckNonBinaryPin
-  - ClothingNeckPansexualPin
-  - ClothingNeckTransPin
-  - ClothingNeckAutismPin
-  - ClothingNeckGoldAutismPin
+  #- ClothingNeckLGBTPin
+  #- ClothingNeckAromanticPin
+  #- ClothingNeckAsexualPin
+  #- ClothingNeckBisexualPin
+  #- ClothingNeckIntersexPin
+  #- ClothingNeckLesbianPin
+  #- ClothingNeckNonBinaryPin
+  #- ClothingNeckPansexualPin
+  #- ClothingNeckTransPin
+  #- ClothingNeckAutismPin
+  #- ClothingNeckGoldAutismPin
 
 - type: loadoutGroup
   id: Glasses
