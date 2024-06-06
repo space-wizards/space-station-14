@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 using Content.Client.Gameplay;
-using Content.Client.Guidebook;
 using Content.Client.Info;
 using Content.Shared.Administration.Managers;
 using Content.Shared.CCVar;
+using Content.Shared.Guidebook;
 using Content.Shared.Info;
 using Robust.Client;
 using Robust.Client.Console;
