@@ -1,5 +1,7 @@
 using Content.Shared.Access.Systems;
+using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Access.UI
 {
@@ -40,7 +42,7 @@ namespace Content.Client.Access.UI
             SendMessage(new AgentIDCardJobChangedMessage(newJob));
         }
 
-        public void OnJobIconChanged(string newJobIconId)
+        public void OnJobIconChanged(ProtoId<StatusIconPrototype> newJobIconId)
         {
             SendMessage(new AgentIDCardJobIconChangedMessage(newJobIconId));
         }
