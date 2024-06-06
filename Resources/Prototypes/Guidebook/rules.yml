@@ -3,23 +3,23 @@
   name: guide-entry-rules
   text: "/ServerInfo/Guidebook/ServerRules/DefaultRules.xml"
 
-- type: guideEntry
-  id: CoreRuleset
-  name: guide-entry-rules-core-only
-  priority: 0
-  text: "/ServerInfo/Guidebook/ServerRules/WizDenCoreOnlyRules.xml"
+#- type: guideEntry GreyStation
+#  id: CoreRuleset
+#  name: guide-entry-rules-core-only
+#  priority: 0
+#  text: "/ServerInfo/Guidebook/ServerRules/WizDenCoreOnlyRules.xml"
 
-- type: guideEntry
-  id: StandardRuleset
-  name: guide-entry-rules-lrp
-  priority: 5
-  text: "/ServerInfo/Guidebook/ServerRules/WizDenLRPRules.xml"
+#- type: guideEntry
+#  id: StandardRuleset
+#  name: guide-entry-rules-lrp
+#  priority: 5
+#  text: "/ServerInfo/Guidebook/ServerRules/WizDenLRPRules.xml"
 
-- type: guideEntry
-  id: MRPRuleset
-  name: guide-entry-rules-mrp
-  priority: 10
-  text: "/ServerInfo/Guidebook/ServerRules/WizDenMRPRules.xml"
+#- type: guideEntry
+#  id: MRPRuleset
+#  name: guide-entry-rules-mrp
+#  priority: 10
+#  text: "/ServerInfo/Guidebook/ServerRules/WizDenMRPRules.xml"
 
 - type: guideEntry
   id: RoleTypes
@@ -328,6 +328,7 @@
   text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml"
   children:
   - SpaceLawCrimeList
+  - SpaceLawProcessingPrisoners #GreyStation
   - SpaceLawControlledSubstances
   - SpaceLawRestrictedGear
   - SpaceLawRestrictedWeapons
@@ -337,6 +338,12 @@
   name: guide-entry-rules-sl-crime-list
   priority: 5
   text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLCrimeList.xml"
+
+- type: guideEntry #GreyStation
+  id: SpaceLawProcessingPrisoners
+  name: guide-entry-rules-sl-prisoner-processing
+  priority: 6
+  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLPrisonerProcessing.xml"
 
 - type: guideEntry
   id: SpaceLawControlledSubstances
