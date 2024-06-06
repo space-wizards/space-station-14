@@ -1789,7 +1789,13 @@ namespace Content.Shared.CCVar
         /// Don't show rules to localhost/loopback interface.
         /// </summary>
         public static readonly CVarDef<bool> RulesExemptLocal =
-            CVarDef.Create("rules.exempt_local", true, CVar.SERVERONLY);
+            CVarDef.Create("rules.exempt_local", true, CVar.CLIENT);
+
+        /// <summary>
+        /// The next time the rules will popup for this client, expressed in minutes
+        /// </summary>
+        public static readonly CVarDef<string> RulesNextPopupTime =
+            CVarDef.Create("rules.next_popup_time", "Jan 1, 1997", CVar.CLIENTONLY | CVar.ARCHIVE);
 
 
         /*
