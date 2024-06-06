@@ -13,7 +13,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Guidebook.Controls;
 
 [GenerateTypedNameReferences]
-public sealed partial class GuidebookWindow : FancyWindow, ILinkHandler
+public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
 {
     [Dependency] private readonly IResourceManager _resourceManager = default!;
     [Dependency] private readonly DocumentParsingManager _parsingMan = default!;
@@ -180,14 +180,6 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkHandler
         {
             ShowGuide(entry);
         }
-    }
-
-    public void HandleLinkAsChild(string link)
-    {
-        if (!_entries.TryGetValue(link, out var entry))
-            return;
-
-
     }
 
     private void HandleFilter()

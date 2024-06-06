@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Info;
 
 [GenerateTypedNameReferences]
-public sealed partial class RulesControl : BoxContainer, ILinkHandler
+public sealed partial class RulesControl : BoxContainer, ILinkClickHandler
 {
     [Dependency] private readonly DocumentParsingManager _parsingMan = default!;
 
@@ -33,8 +33,6 @@ public sealed partial class RulesControl : BoxContainer, ILinkHandler
     {
         SetGuide(link);
     }
-
-    public void HandleLinkAsChild(string link) { }
 
     private void SetGuide(ProtoId<GuideEntryPrototype>? entry = null, bool addToPrior = true)
     {
