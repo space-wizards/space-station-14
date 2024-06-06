@@ -44,11 +44,11 @@
   #   solution: chamber
   # - type: ExaminableSolution
   #   solution: chamber
-  - type: StaticPrice
-    price: 100
-  - type: PhysicalComposition
-    materialComposition:
-      Plastic: 150
+  # - type: StaticPrice
+  #   price: 100
+  # - type: PhysicalComposition
+  #   materialComposition:
+  #     Plastic: 150
 
 - type: entity
   id: WeaponWaterPistol
@@ -71,6 +71,11 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           icon: Rainbow
+  - type: StaticPrice
+    price: 100
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 150
 
 - type: entity
   id: WeaponWaterBlaster
@@ -110,6 +115,11 @@
           icon: Rainbow
       - enum.PowerDeviceVisualLayers.Powered:
           detail2: Sixteen
+  - type: StaticPrice
+    price: 100
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 150
 
 - type: entity
   id: WeaponWaterBlasterSuper
@@ -149,3 +159,8 @@
           icon: Rainbow
       - enum.PowerDeviceVisualLayers.Powered:
           detail2: Sixteen
+  - type: StaticPrice
+    price: 100
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 150
