@@ -1,7 +1,7 @@
 <Document>
 # Speech and Text Channels
-Talking is a key part of Space Station 14. You can press "T" to jump to the text box.
-//PLEASE REMIND ME TO FIGURE OUT HOW [keybind="(control)"/] WORKS OR I'M GONNA FORGET.
+Talking is a key part of Space Station 14. You can press [keybind="FocusChatInputWindow"/] to jump to the text box.
+
 The word next to the text box is the [color=#a4885c]text channel[/color] you're about to send the message to, or rather how you're about to say what you've typed.
 
 Local is normal speech at normal volume.
@@ -10,8 +10,8 @@ Whisper can only be heard when nearby somebody. You automatically whisper into y
 
 Emotes are gestures that you make. Can be recieved by anyone who is not blinded. You will often see mimes do many emotes.
 
-Whisper messages can be sent by starting your message with a [color=#a4885c]comma (,)[/color] and Emotes can be sent by starting your message with an [color=#a4885c]at sign (@)[/color].
-You can also cycle through all of these text channels by pressing Tab.
+Whisper messages can be sent by starting your message with [color=#a4885c][keybind="FocusChatWhisperWindow"/][/color] and Emotes can be sent by starting your message with ([color=#a4885c]@[/color]).
+You can also cycle through all of these text channels by pressing [keybind="CycleChatChannelForward"/].
 
 People may not be able to make out all of what you're saying if you're standing too far away from them. This is especially important if you're whispering.
 

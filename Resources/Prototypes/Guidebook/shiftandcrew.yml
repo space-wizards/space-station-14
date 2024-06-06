@@ -3,14 +3,10 @@
   name: guide-entry-jobs
   text: "/ServerInfo/Guidebook/Jobs.xml"
   children:
-  - Bartender
-  - Chef
-  - Botany
+  - Cargo
+  - Command
   - Engineering
+  - Medical
   - Science
   - Security
-  - Janitorial
-  - Cargo
-  - Salvage
-  - Medical
   - Service
