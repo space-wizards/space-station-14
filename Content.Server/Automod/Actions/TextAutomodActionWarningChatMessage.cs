@@ -7,7 +7,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Automod.Actions;
 
 [UsedImplicitly]
-public sealed class TextAutomodActionWarningChatMessage : ITextAutomodAction
+public sealed partial class TextAutomodActionWarningChatMessage : ITextAutomodAction
 {
     [DataField]
     public string Reason = "automod-action-warning-chat-reason";

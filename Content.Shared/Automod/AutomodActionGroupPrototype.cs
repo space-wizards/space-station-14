@@ -51,7 +51,8 @@ public sealed class AutomodActionGroupPrototype : IPrototype
     public List<ITextAutomodAction> AutomodActions = new();
 }
 
-public interface ITextAutomodAction
+[ImplicitDataDefinitionForInheritors]
+public partial interface ITextAutomodAction
 {
     /// <summary>
     /// Check whether the actions should be run.

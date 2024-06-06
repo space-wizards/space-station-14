@@ -8,7 +8,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Automod.Actions;
 
 [UsedImplicitly]
-public sealed class TextAutomodActionAdminLog : ITextAutomodAction
+public sealed partial class TextAutomodActionAdminLog : ITextAutomodAction
 {
     [DataField]
     public LogImpact Impact = LogImpact.Medium;

@@ -7,7 +7,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Automod.Actions;
 
 [UsedImplicitly]
-public sealed class TextAutomodActionBan : ITextAutomodAction
+public sealed partial class TextAutomodActionBan : ITextAutomodAction
 {
     [DataField]
     public uint? BanTime;

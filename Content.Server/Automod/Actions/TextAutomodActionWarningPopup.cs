@@ -8,7 +8,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Automod.Actions;
 
 [UsedImplicitly]
-public sealed class TextAutomodActionWarningPopup : ITextAutomodAction
+public sealed partial class TextAutomodActionWarningPopup : ITextAutomodAction
 {
     [DataField]
     public string Reason = "automod-action-warning-popup-reason";
