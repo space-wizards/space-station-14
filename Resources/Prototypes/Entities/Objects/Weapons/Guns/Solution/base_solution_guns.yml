@@ -1,0 +1,36 @@
+# SOLUTION
+# A basic template for a gun that
+- type: entity
+  abstract: true
+  parent: BaseGun
+  id: BaseGunSolution
+  components:
+  - type: Gun
+    clumsyProof: true
+    cameraRecoilScalar: 0 #no recoil
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
+  - type: SolutionContainerManager
+    solutions:
+      chamber:
+        maxVol: 50 #10 shots
+  - type: SolutionAmmoProvider
+    solutionId: chamber
+    proto: BulletWaterShot
+  - type: SolutionTransfer
+    transferAmount: 5
+    maxTransferAmount: 50
+    minTransferAmount: 5
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: DrawableSolution
+    solution: chamber
+  - type: RefillableSolution
+    solution: chamber
+  - type: DrainableSolution
+    solution: chamber
+  - type: ExaminableSolution
+    solution: chamber
