@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WeaponWaterGunBase
   abstract: true
   parent: BaseItem
@@ -7,17 +7,17 @@
     sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
-    slots: BELT
-  - type: Item
-    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
-    size: Small
+    # slots: BELT
+  # - type: Item
+  #   sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
+    # size: Small
   - type: Gun
     clumsyProof: true
     cameraRecoilScalar: 0 #no recoil
-    fireRate: 2
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
+    # fireRate: 2
+    # selectedMode: SemiAuto
+    # availableModes:
+    # - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
   - type: SolutionContainerManager
@@ -52,7 +52,9 @@
 
 - type: entity
   id: WeaponWaterPistol
-  parent: WeaponWaterGunBase
+  parent:
+  - BaseGunSmall
+  - WeaponWaterGunBase
   name: water pistol
   description: The dinkiest of water-based weaponry. You swear the trigger doesn't do anything.
   components:
@@ -69,7 +71,9 @@
 
 - type: entity
   id: WeaponWaterBlaster
-  parent: WeaponWaterGunBase
+  parent:
+  - BaseGunSmall
+  - WeaponWaterGunBase
   name: water blaster
   description: With this bad boy, you'll be the cooleste kid at the summer barbecue.
   components:
@@ -106,7 +110,9 @@
 
 - type: entity
   id: WeaponWaterBlasterSuper
-  parent: WeaponWaterGunBase
+  parent:
+  - BaseGunSmall
+  - WeaponWaterGunBase
   name: super water blaster
   description: No! No! Not in the eyes!
   components:
