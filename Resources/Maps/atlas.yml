@@ -19143,35 +19143,6 @@ entities:
     - type: Transform
       pos: 13.450137,-7.468577
       parent: 30
-- proto: chem_master
-  entities:
-  - uid: 2470
-    components:
-    - type: Transform
-      pos: -1.5,-4.5
-      parent: 30
-    - type: ContainerContainer
-      containers:
-        ChemMaster-beaker: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        beakerSlot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        outputSlot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ChemDispenser
   entities:
   - uid: 2469
@@ -19204,6 +19175,35 @@ entities:
     - type: Transform
       pos: -3.5,-6.5
       parent: 30
+- proto: ChemMaster
+  entities:
+  - uid: 2470
+    components:
+    - type: Transform
+      pos: -1.5,-4.5
+      parent: 30
+    - type: ContainerContainer
+      containers:
+        ChemMaster-beaker: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+        machine_board: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        machine_parts: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        beakerSlot: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+        outputSlot: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: ChurchOrganInstrument
   entities:
   - uid: 1016
@@ -20881,10 +20881,10 @@ entities:
       parent: 30
 - proto: DefaultStationBeaconBridge
   entities:
-  - uid: 7515
+  - uid: 2719
     components:
     - type: Transform
-      pos: 32.5,2.5
+      pos: 38.5,2.5
       parent: 30
 - proto: DefaultStationBeaconBrig
   entities:
@@ -24002,8 +24002,6 @@ entities:
     - type: Transform
       pos: 33.5,0.5
       parent: 30
-    - type: ItemCabinet
-      opened: True
   - uid: 5936
     components:
     - type: Transform
@@ -41963,13 +41961,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -55.5,-1.5
       parent: 30
-  - uid: 2719
-    components:
-    - type: Transform
-      pos: 0.5,-14.5
-      parent: 30
-    - type: ApcPowerReceiver
-      powerLoad: 0
   - uid: 2920
     components:
     - type: Transform
@@ -42210,6 +42201,12 @@ entities:
     components:
     - type: Transform
       pos: -40.5,13.5
+      parent: 30
+  - uid: 7515
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,-14.5
       parent: 30
   - uid: 7762
     components:
@@ -46055,7 +46052,7 @@ entities:
     - type: Transform
       pos: 23.41242,-1.4073458
       parent: 30
-- proto: soda_dispenser
+- proto: SodaDispenser
   entities:
   - uid: 5622
     components:
@@ -47216,6 +47213,38 @@ entities:
       - SurveillanceCameraCommand
       nameSet: True
       id: HoP Line
+  - uid: 8512
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -39.5,9.5
+      parent: 30
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: ce's room
+  - uid: 8513
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 1.5,22.5
+      parent: 30
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: hos' room
+  - uid: 8514
+    components:
+    - type: Transform
+      pos: -27.5,19.5
+      parent: 30
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: qm's room
 - proto: SurveillanceCameraEngineering
   entities:
   - uid: 574
@@ -54904,10 +54933,10 @@ entities:
   - uid: 7579
     components:
     - type: Transform
-      pos: 32.5,2.5
+      pos: 38.5,2.5
       parent: 30
     - type: WarpPoint
-      location: bridge
+      location: Bridge
   - uid: 7580
     components:
     - type: Transform

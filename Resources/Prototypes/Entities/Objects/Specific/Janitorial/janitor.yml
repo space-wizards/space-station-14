@@ -6,7 +6,17 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
-    state: mop
+    layers:
+      - state: mop
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: fill-3
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fill-
+    inHandsFillBaseName: -fill-
+    inHandsMaxFillLevels: 2
   - type: MeleeWeapon
     damage:
       types:
@@ -49,7 +59,17 @@
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/advmop.rsi
-      state: advmop
+      layers:
+      - state: advmop
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: fill-2
+        visible: false
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 2
+      fillBaseName: fill-
+      inHandsFillBaseName: -fill-
+      inHandsMaxFillLevels: 2
     - type: MeleeWeapon
       damage:
         types:
@@ -244,7 +264,15 @@
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/rag.rsi
-      state: rag
+      layers:
+      - state: rag
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: fill-3
+        visible: false
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 3
+      fillBaseName: fill-
     - type: Spillable
       solution: absorbed
     - type: MeleeWeapon

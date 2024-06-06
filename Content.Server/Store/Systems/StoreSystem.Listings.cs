@@ -1,5 +1,6 @@
-using Content.Server.Store.Components;
 using Content.Shared.Store;
+using Content.Shared.Store.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Store.Systems;
 
@@ -80,7 +81,11 @@ public sealed partial class StoreSystem
     /// <param name="categories">What categories to filter by.</param>
     /// <param name="storeEntity">The physial entity of the store. Can be null.</param>
     /// <returns>The available listings.</returns>
-    public IEnumerable<ListingData> GetAvailableListings(EntityUid buyer, HashSet<ListingData>? listings, HashSet<string> categories, EntityUid? storeEntity = null)
+    public IEnumerable<ListingData> GetAvailableListings(
+        EntityUid buyer,
+        HashSet<ListingData>? listings,
+        HashSet<ProtoId<StoreCategoryPrototype>> categories,
+        EntityUid? storeEntity = null)
     {
         listings ??= GetAllListings();
 
@@ -117,7 +122,7 @@ public sealed partial class StoreSystem
     /// <param name="listing">The listing itself.</param>
     /// <param name="categories">The categories to check through.</param>
     /// <returns>If the listing was present in one of the categories.</returns>
-    public bool ListingHasCategory(ListingData listing, HashSet<string> categories)
+    public bool ListingHasCategory(ListingData listing, HashSet<ProtoId<StoreCategoryPrototype>> categories)
     {
         foreach (var cat in categories)
         {

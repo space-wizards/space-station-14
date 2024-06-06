@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Construction.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -9,7 +8,6 @@ using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
@@ -88,7 +86,8 @@ public abstract class SharedFlatpackSystem : EntitySystem
         if (_net.IsServer)
         {
             var spawn = Spawn(comp.Entity, _map.GridTileToLocal(grid, gridComp, buildPos));
-            _adminLogger.Add(LogType.Construction, LogImpact.Low,
+            _adminLogger.Add(LogType.Construction,
+                LogImpact.Low,
                 $"{ToPrettyString(args.User):player} unpacked {ToPrettyString(spawn):entity} at {xform.Coordinates} from {ToPrettyString(uid):entity}");
             QueueDel(uid);
         }
@@ -115,9 +114,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
             return;
 
         var machinePrototypeId = new EntProtoId();
-        if (TryComp<MachineBoardComponent>(board, out var machineBoard) && machineBoard.Prototype is not null)
-            machinePrototypeId = machineBoard.Prototype;
-        else if (TryComp<ComputerBoardComponent>(board, out var computerBoard) && computerBoard.Prototype is not null)
+        if (TryComp<ComputerBoardComponent>(board, out var computerBoard) && computerBoard.Prototype is not null)
             machinePrototypeId = computerBoard.Prototype;
 
         var comp = ent.Comp!;

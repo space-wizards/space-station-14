@@ -55,7 +55,6 @@
 # Collections
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealCollectionObjective
   id: FigurineStealCollectionObjective
   components:
@@ -67,7 +66,6 @@
     difficulty: 0.25
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealCollectionObjective
   id: HeadCloakStealCollectionObjective
   components:
@@ -79,7 +77,6 @@
     difficulty: 1.5
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealCollectionObjective
   id: HeadBedsheetStealCollectionObjective
   components:
@@ -91,7 +88,6 @@
     difficulty: 1.0
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealCollectionObjective
   id: StampStealCollectionObjective
   components:
@@ -103,7 +99,6 @@
     difficulty: 1.0
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealCollectionObjective
   id: DoorRemoteStealCollectionObjective
   components:
@@ -115,7 +110,6 @@
     difficulty: 1.5
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealCollectionObjective
   id: TechnologyDiskStealCollectionObjective
   components:
@@ -130,7 +124,6 @@
     difficulty: 0.8
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealCollectionObjective
   id: IDCardsStealCollectionObjective
   components:
@@ -145,7 +138,6 @@
 
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealCollectionObjective
   id: LAMPStealCollectionObjective
   components:
@@ -163,7 +155,6 @@
 # steal item
 
 - type: entity                                      #Security subgroup
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: ForensicScannerStealObjective
   components:
@@ -175,7 +166,6 @@
     difficulty: 1
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: FlippoEngravedLighterStealObjective
   components:
@@ -187,7 +177,6 @@
     difficulty: 0.8
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: ClothingHeadHatWardenStealObjective
   components:
@@ -197,7 +186,6 @@
     difficulty: 1.2
 
 - type: entity                                      #Medical subgroup
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: ClothingOuterHardsuitVoidParamedStealObjective
   components:
@@ -209,7 +197,6 @@
     difficulty: 1
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: MedicalTechFabCircuitboardStealObjective
   components:
@@ -221,7 +208,6 @@
     difficulty: 1
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: ClothingHeadsetAltMedicalStealObjective
   components:
@@ -233,7 +219,6 @@
     difficulty: 1
 
 - type: entity                                      #Engineering subgroup
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: FireAxeStealObjective
   components:
@@ -245,7 +230,6 @@
     difficulty: 0.8
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: AmePartFlatpackStealObjective
   components:
@@ -257,7 +241,6 @@
     difficulty: 1
 
 - type: entity                                      #Cargo subgroup
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: ExpeditionsCircuitboardStealObjective
   components:
@@ -269,7 +252,6 @@
     difficulty: 0.7
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: CargoShuttleCircuitboardStealObjective
   components:
@@ -281,7 +263,6 @@
     difficulty: 0.7
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: SalvageShuttleCircuitboardStealObjective
   components:
@@ -293,7 +274,6 @@
     difficulty: 0.7
 
 - type: entity                                      #Service subgroup
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: ClothingEyesHudBeerStealObjective
   components:
@@ -305,7 +285,6 @@
     difficulty: 0.3
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: BibleStealObjective
   components:
@@ -317,7 +296,6 @@
     difficulty: 0.4
 
 - type: entity                                      #Other subgroup
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: ClothingNeckGoldmedalStealObjective
   components:
@@ -329,7 +307,6 @@
     difficulty: 1
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealObjective
   id: ClothingNeckClownmedalStealObjective
   components:
@@ -343,7 +320,6 @@
 # Structures
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealStructureObjective
   id: NuclearBombStealObjective
   components:
@@ -355,7 +331,6 @@
     difficulty: 2.5 #Good luck
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealStructureObjective
   id: FaxMachineCaptainStealObjective
   components:
@@ -367,7 +342,6 @@
     difficulty: 2
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealStructureObjective
   id: ChemDispenserStealObjective
   components:
@@ -379,7 +353,6 @@
     difficulty: 1
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealStructureObjective
   id: XenoArtifactStealObjective
   components:
@@ -391,7 +364,6 @@
     difficulty: 0.5
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealStructureObjective
   id: FreezerHeaterStealObjective
   components:
@@ -403,7 +375,6 @@
     difficulty: 0.5
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealStructureObjective
   id: TegStealObjective
   components:
@@ -415,7 +386,6 @@
     difficulty: 1
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealStructureObjective
   id: BoozeDispenserStealObjective
   components:
@@ -427,7 +397,6 @@
     difficulty: 0.5
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealStructureObjective
   id: AltarNanotrasenStealObjective
   components:
@@ -439,7 +408,6 @@
     difficulty: 0.5
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealStructureObjective
   id: PlantRDStealObjective
   components:
@@ -453,7 +421,6 @@
 # Animal
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealAnimalObjective
   id: IanStealObjective
   components:
@@ -465,7 +432,6 @@
     difficulty: 2.5
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealAnimalObjective
   id: BingusStealObjective
   components:
@@ -475,7 +441,6 @@
     difficulty: 1
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealAnimalObjective
   id: McGriffStealObjective
   components:
@@ -487,7 +452,6 @@
     difficulty: 1
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealAnimalObjective
   id: WalterStealObjective
   components:
@@ -499,7 +463,6 @@
     difficulty: 1
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealAnimalObjective
   id: MortyStealObjective
   components:
@@ -509,7 +472,6 @@
     difficulty: 0.5
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealAnimalObjective
   id: RenaultStealObjective
   components:
@@ -521,7 +483,6 @@
     difficulty: 2
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealAnimalObjective
   id: ShivaStealObjective
   components:
@@ -533,7 +494,6 @@
     difficulty: 2
 
 - type: entity
-  noSpawn: true
   parent: BaseThiefStealAnimalObjective
   id: TropicoStealObjective
   components:
@@ -547,7 +507,6 @@
 # Escape
 
 - type: entity
-  noSpawn: true
   parent: [BaseThiefObjective, BaseLivingObjective]
   id: EscapeThiefShuttleObjective
   name: Escape to centcom alive and unrestrained.

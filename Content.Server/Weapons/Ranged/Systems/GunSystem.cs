@@ -237,7 +237,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         {
                             if (!Deleted(hitEntity))
                             {
-                                if (dmg.Any())
+                                if (dmg.AnyPositive())
                                 {
                                     _color.RaiseEffect(Color.Red, new List<EntityUid>() { hitEntity }, Filter.Pvs(hitEntity, entityManager: EntityManager));
                                 }
@@ -396,7 +396,7 @@ public sealed partial class GunSystem : SharedGunSystem
             var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform, xformQuery);
 
             fromCoordinates = new EntityCoordinates(gridUid.Value,
-                gridInvMatrix.Transform(fromCoordinates.ToMapPos(EntityManager, TransformSystem)));
+                Vector2.Transform(fromCoordinates.ToMapPos(EntityManager, TransformSystem), gridInvMatrix));
 
             // Use the fallback angle I guess?
             angle -= gridRot;

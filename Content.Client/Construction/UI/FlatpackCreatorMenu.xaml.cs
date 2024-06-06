@@ -65,8 +65,7 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
         else if (_currentBoard != null)
         {
             Dictionary<string, int> cost;
-            if (_entityManager.TryGetComponent<MachineBoardComponent>(_currentBoard, out var machineBoardComp) &&
-                machineBoardComp.Prototype is not null)
+            if (_entityManager.TryGetComponent<MachineBoardComponent>(_currentBoard, out var machineBoardComp))
                 cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker), (_currentBoard.Value, machineBoardComp));
             else
                 cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker));

@@ -1,14 +1,17 @@
 using System.Numerics;
+using Content.Client.StatusIcon;
 using Content.Client.UserInterface.Systems;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.Prototypes;
 using static Robust.Shared.Maths.Color;
 
 namespace Content.Client.Overlays;
@@ -19,19 +22,27 @@ namespace Content.Client.Overlays;
 public sealed class EntityHealthBarOverlay : Overlay
 {
     private readonly IEntityManager _entManager;
+    private readonly IPrototypeManager _prototype;
+
     private readonly SharedTransformSystem _transform;
     private readonly MobStateSystem _mobStateSystem;
     private readonly MobThresholdSystem _mobThresholdSystem;
+    private readonly StatusIconSystem _statusIconSystem;
     private readonly ProgressColorSystem _progressColor;
+
+
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
     public HashSet<string> DamageContainers = new();
+    public ProtoId<StatusIconPrototype>? StatusIcon;
 
-    public EntityHealthBarOverlay(IEntityManager entManager)
+    public EntityHealthBarOverlay(IEntityManager entManager, IPrototypeManager prototype)
     {
         _entManager = entManager;
+        _prototype = prototype;
         _transform = _entManager.System<SharedTransformSystem>();
         _mobStateSystem = _entManager.System<MobStateSystem>();
         _mobThresholdSystem = _entManager.System<MobThresholdSystem>();
+        _statusIconSystem = _entManager.System<StatusIconSystem>();
         _progressColor = _entManager.System<ProgressColorSystem>();
     }
 
@@ -42,8 +53,9 @@ public sealed class EntityHealthBarOverlay : Overlay
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
         const float scale = 1f;
-        var scaleMatrix = Matrix3.CreateScale(new Vector2(scale, scale));
-        var rotationMatrix = Matrix3.CreateRotation(-rotation);
+        var scaleMatrix = Matrix3Helpers.CreateScale(new Vector2(scale, scale));
+        var rotationMatrix = Matrix3Helpers.CreateRotation(-rotation);
+        _prototype.TryIndex(StatusIcon, out var statusIcon);
 
         var query = _entManager.AllEntityQueryEnumerator<MobThresholdsComponent, MobStateComponent, DamageableComponent, SpriteComponent>();
         while (query.MoveNext(out var uid,
@@ -52,41 +64,33 @@ public sealed class EntityHealthBarOverlay : Overlay
             out var damageableComponent,
             out var spriteComponent))
         {
-            if (_entManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
-                metaDataComponent.Flags.HasFlag(MetaDataFlags.InContainer))
-            {
+            if (statusIcon != null && !_statusIconSystem.IsVisible((uid, _entManager.GetComponent<MetaDataComponent>(uid)), statusIcon))
                 continue;
-            }
 
+            // We want the stealth user to still be able to see his health bar himself
             if (!xformQuery.TryGetComponent(uid, out var xform) ||
                 xform.MapID != args.MapId)
-            {
                 continue;
-            }
 
             if (damageableComponent.DamageContainerID == null || !DamageContainers.Contains(damageableComponent.DamageContainerID))
-            {
                 continue;
-            }
 
             // we use the status icon component bounds if specified otherwise use sprite
             var bounds = _entManager.GetComponentOrNull<StatusIconComponent>(uid)?.Bounds ?? spriteComponent.Bounds;
             var worldPos = _transform.GetWorldPosition(xform, xformQuery);
 
             if (!bounds.Translated(worldPos).Intersects(args.WorldAABB))
-            {
                 continue;
-            }
 
             // we are all progressing towards death every day
             if (CalcProgress(uid, mobStateComponent, damageableComponent, mobThresholdsComponent) is not { } deathProgress)
                 continue;
 
             var worldPosition = _transform.GetWorldPosition(xform);
-            var worldMatrix = Matrix3.CreateTranslation(worldPosition);
+            var worldMatrix = Matrix3Helpers.CreateTranslation(worldPosition);
 
-            Matrix3.Multiply(scaleMatrix, worldMatrix, out var scaledWorld);
-            Matrix3.Multiply(rotationMatrix, scaledWorld, out var matty);
+            var scaledWorld = Matrix3x2.Multiply(scaleMatrix, worldMatrix);
+            var matty = Matrix3x2.Multiply(rotationMatrix, scaledWorld);
 
             handle.SetTransform(matty);
 
@@ -115,7 +119,7 @@ public sealed class EntityHealthBarOverlay : Overlay
             handle.DrawRect(pixelDarken, Black.WithAlpha(128));
         }
 
-        handle.SetTransform(Matrix3.Identity);
+        handle.SetTransform(Matrix3x2.Identity);
     }
 
     /// <summary>
