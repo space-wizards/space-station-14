@@ -1,7 +1,7 @@
-﻿using Content.Client.Gameplay;
-using Content.Client.Guidebook;
+using Content.Client.Gameplay;
 using Content.Client.Info;
 using Content.Shared.CCVar;
+using Content.Shared.Guidebook;
 using Content.Shared.Info;
 using Robust.Client.Console;
 using Robust.Client.UserInterface.Controllers;
