@@ -18,6 +18,3 @@ bwoink-title-none-selected = None selected
 bwoink-system-player-disconnecting = has disconnected.
 bwoink-system-player-reconnecting = has reconnected.
 bwoink-system-player-banned = has been banned for: {$banReason}
-
-bwoink-system-unpinned-button-text = Unpin
-bwoink-system-pinned-button-text = Pin
