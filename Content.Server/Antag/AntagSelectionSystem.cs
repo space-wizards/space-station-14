@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
@@ -15,6 +14,7 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Antag;
 using Content.Shared.GameTicking;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Players;
@@ -182,20 +182,20 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             .Where(x => GameTicker.PlayerGameStatuses[x.UserId] == PlayerGameStatus.JoinedGame)
             .ToList();
 
-        ChooseAntags((uid, component), players);
+        ChooseAntags((uid, component), players, midround: true);
     }
 
     /// <summary>
     /// Chooses antagonists from the given selection of players
     /// </summary>
-    public void ChooseAntags(Entity<AntagSelectionComponent> ent, IList<ICommonSession> pool)
+    public void ChooseAntags(Entity<AntagSelectionComponent> ent, IList<ICommonSession> pool, bool midround = false)
     {
         if (ent.Comp.SelectionsComplete)
             return;
 
         foreach (var def in ent.Comp.Definitions)
         {
-            ChooseAntags(ent, pool, def);
+            ChooseAntags(ent, pool, def, midround: midround);
         }
 
         ent.Comp.SelectionsComplete = true;
@@ -204,17 +204,28 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// <summary>
     /// Chooses antagonists from the given selection of players for the given antag definition.
     /// </summary>
-    public void ChooseAntags(Entity<AntagSelectionComponent> ent, IList<ICommonSession> pool, AntagSelectionDefinition def)
+    /// <param name="midround">Disable picking players for pre-spawn antags in the middle of a round</param>
+    public void ChooseAntags(Entity<AntagSelectionComponent> ent, IList<ICommonSession> pool, AntagSelectionDefinition def, bool midround = false)
     {
         var playerPool = GetPlayerPool(ent, pool, def);
         var count = GetTargetAntagCount(ent, GetTotalPlayerCount(pool), def);
 
         // if there is both a spawner and players getting picked, let it fall back to a spawner.
         var noSpawner = def.SpawnerPrototype == null;
+        var picking = def.PickPlayer;
+        if (midround && ent.Comp.SelectionTime == AntagSelectionTime.PrePlayerSpawn)
+        {
+            // prevent antag selection from happening if the round is on-going, requiring a spawner if used midround.
+            // this is so rules like nukies, if added by an admin midround, dont make random living people nukies
+            Log.Info($"Antags for rule {ent:?} get picked pre-spawn so only spawners will be made.");
+            DebugTools.Assert(def.SpawnerPrototype != null, $"Rule {ent:?} had no spawner for pre-spawn rule added mid-round!");
+            picking = false;
+        }
+
         for (var i = 0; i < count; i++)
         {
             var session = (ICommonSession?) null;
-            if (def.PickPlayer)
+            if (picking)
             {
                 if (!playerPool.TryPickAndTake(RobustRandom, out session) && noSpawner)
                 {

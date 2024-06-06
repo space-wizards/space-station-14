@@ -85,7 +85,7 @@
   components:
   - type: Sprite
     color: "#bbeeff"
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
   - type: DamageUserOnTrigger
@@ -120,7 +120,7 @@
     damage:
       types:
         Slash: 4.5
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
     - id: PartRodMetal1
@@ -156,7 +156,7 @@
     damage:
       types:
         Slash: 5.5
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
     - id: SheetPlasma1
@@ -195,7 +195,7 @@
       types:
         Slash: 4.5
         Radiation: 2
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
     - id: SheetUranium1
@@ -230,7 +230,7 @@
   components:
   - type: Sprite
     color: "#e0aa36"
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
     - id: SheetBrass1

@@ -370,8 +370,8 @@ uplink-syndicate-sponge-box-desc = A box containing 6 syndicate sponges disguise
 uplink-slipocalypse-clustersoap-name = Slipocalypse Clustersoap
 uplink-slipocalypse-clustersoap-desc = Scatters arounds small pieces of syndicate-brand soap after being thrown, these pieces of soap evaporate after 60 seconds.
 
-uplink-mobcat-microbomb-name = SyndiCat
-uplink-mobcat-microbomb-desc = A hand cat equipped with a microbomb implant. Explodes when seriously injured. Can bite painfully
+uplink-mobcat-microbomb-name = SyndiCat Teleporter
+uplink-mobcat-microbomb-desc = Call in a handy cat equipped with a microbomb implant. Explodes when seriously injured. Can bite painfully.
 
 uplink-chameleon-projector-name = Chameleon Projector
 uplink-chameleon-projector-desc = Disappear in plain sight by creating a hologram of an item around you. Do not use this to play the game "Object Search".

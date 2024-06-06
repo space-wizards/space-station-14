@@ -1,6 +1,7 @@
 using Content.Server.GameTicking;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
@@ -9,7 +10,6 @@ using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
-using Content.Server.GameTicking.Components;
 using System.Text;
 using Robust.Server.Player;
 

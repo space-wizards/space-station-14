@@ -63,8 +63,8 @@ namespace Content.Shared.Roles
         public bool CanBeAntag { get; private set; } = true;
 
         /// <summary>
-        ///     Whether this job is a head.
-        ///     The job system will try to pick heads before other jobs on the same priority level.
+        ///     The "weight" or importance of this job. If this number is large, the job system will assign this job
+        ///     before assigning other jobs.
         /// </summary>
         [DataField("weight")]
         public int Weight { get; private set; }
@@ -97,8 +97,8 @@ namespace Content.Shared.Roles
         [DataField("jobEntity", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? JobEntity = null;
 
-        [DataField("icon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
-        public string Icon { get; private set; } = "JobIconUnknown";
+        [DataField]
+        public ProtoId<StatusIconPrototype> Icon { get; private set; } = "JobIconUnknown";
 
         [DataField("special", serverOnly: true)]
         public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
