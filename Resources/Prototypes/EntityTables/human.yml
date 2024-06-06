@@ -1,0 +1,9 @@
+- type: weightedRandomEntity
+  id: SyndicateFootsoldierEntityTable
+  weights:
+    MobSyndicateFootsoldier: 1
+
+- type: weightedRandomEntity
+  id: SyndicateFootsoldierPilotEntityTable
+  weights:
+    MobSyndicateFootsoldierPilot: 1

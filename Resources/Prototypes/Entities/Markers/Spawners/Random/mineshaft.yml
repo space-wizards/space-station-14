@@ -8,12 +8,8 @@
       - state: red
       - sprite: Objects/Decoration/mines.rsi
         state: support
-  - type: RandomSpawner
-    prototypes:
-      - WoodenSupport
-      - WoodenSupportBeam
-      - WoodenSupportBeam
-      - WoodenSupportBeam
+  - type: GenericSpawner
+    entityTable: WoodenSupportEntityTable
     chance: 0.9
 
 - type: entity
@@ -26,10 +22,8 @@
       - state: red
       - sprite: Objects/Decoration/mines.rsi
         state: support_wall
-  - type: RandomSpawner
-    prototypes:
-      - WoodenSupportWall
-      - WoodenSupportWallBroken
+  - type: GenericSpawner
+    entityTable: WoodenWallEntityTable
     chance: 0.9
 
 - type: entity
@@ -42,12 +36,9 @@
       - state: red
       - sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
         state: stalagmite2
-  - type: RandomSpawner
+  - type: GenericSpawner
     offset: 0.3
-    prototypes:
-      - RandomBrownStalagmite
-      - RandomGreyStalagmite
-      - CrystalSpawner
+    entityTable: RockFormationEntityTable
     chance: 0.9
 
 - type: entity
@@ -60,15 +51,9 @@
       - state: red
       - sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
         state: stalagmite2
-  - type: RandomSpawner
+  - type: GenericSpawner
     offset: 0.3
-    prototypes:
-      - FloraStalagmite1
-      - FloraStalagmite2
-      - FloraStalagmite3
-      - FloraStalagmite4
-      - FloraStalagmite5
-      - FloraStalagmite6
+    entityTable: BrownStalagmiteEntityTable
     chance: 0.9
 
 - type: entity
@@ -81,13 +66,7 @@
       - state: red
       - sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
         state: grey_stalagmite3
-  - type: RandomSpawner
+  - type: GenericSpawner
     offset: 0.3
-    prototypes:
-      - FloraGreyStalagmite1
-      - FloraGreyStalagmite2
-      - FloraGreyStalagmite3
-      - FloraGreyStalagmite4
-      - FloraGreyStalagmite5
-      - FloraGreyStalagmite6
+    entityTable: GreyStalagmiteEntityTable
     chance: 0.9

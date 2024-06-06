@@ -11,32 +11,8 @@
         - state: red
         - sprite: Structures/Storage/Crates/generic.rsi
           state: icon
-    - type: RandomSpawner
-      rarePrototypes:
-        - SalvageHumanCorpse
-        - CrateMaterialPlasteel
-        - CrateMaterialWood
-        - CrateMaterialPlastic
-        - CrateSalvageEquipment
-        - CrateMaterialSteel
-        - CrateMaterialGlass
-        - CrateServiceJanitorialSupplies
-        - CrateHydroponicsSeedsMedicinal
-        - CrateEmergencyInternals
-        - CrateFoodMRE
-        - CrateMaterialTextiles
-        - CrateMedicalSupplies
-        - CrateEngineeringCableBulk
-        - CrateMaterialCardboard
-        - CrateServiceBooks
-        - CrateServiceSmokeables
-        - CrateTrashCartFilled
-        - ClosetMaintenanceFilledRandom
-        - ClosetEmergencyFilledRandom
-      rareChance: 0.4
-      prototypes:
-        - CrateSalvageAssortedGoodies
-      chance: 0.9
+    - type: GenericSpawner
+      entityTable: SalvageMaterialCrateEntityTable
       offset: 0.0
 
 - type: entity
@@ -49,17 +25,8 @@
         - state: red
         - sprite: Structures/Storage/canister.rsi
           state: blue
-    - type: RandomSpawner
-      rarePrototypes:
-        - PlasmaCanister
-      rareChance: 0.03
-      prototypes:
-        - AirCanister
-        - NitrogenCanister
-        - OxygenCanister
-        - CarbonDioxideCanister
-        - WaterVaporCanister
-      chance: 0.9
+    - type: GenericSpawner
+      entityTable: SalvageCanisterEntityTable
       offset: 0.0
 
 - type: entity
@@ -72,12 +39,8 @@
         - state: red
         - sprite: Objects/Weapons/Melee/crusher.rsi
           state: icon
-    - type: RandomSpawner
-      prototypes:
-      - WeaponCrusher
-      - WeaponCrusherDagger
-      - WeaponCrusherGlaive
-      - MiningDrill
+    - type: GenericSpawner
+      entityTable: SalvageLootEntityTable
       offset: 0.0
 
 - type: entity
@@ -91,22 +54,8 @@
         - state: red
         - sprite: Mobs/Aliens/Carps/space.rsi
           state: icon
-    - type: RandomSpawner
-      rarePrototypes:
-      - MobSharkSalvage
-      rareChance: 0.2
-      prototypes:
-        - MobCarpSalvage
-        - MobCarpSalvage
-        - MobCarpSalvage
-        - MobCarpSalvage
-        - MobCarpSalvage
-        - MobTickSalvage
-        - MobTickSalvage
-        - MobTickSalvage
-        - PlushieCarp
-        - DehydratedSpaceCarp
-      chance: 0.25
+    - type: GenericSpawner
+      entityTable: SalvageMobEntityTable
       offset: 0.2
 
 - type: entity #I made this in case someone decided to make a terrifying space tick swarm for salvage. that someone may be me -EG404
@@ -120,9 +69,8 @@
         - state: red
         - sprite: Mobs/Aliens/Xenos/spacetick.rsi
           state: icon
-    - type: ConditionalSpawner
-      prototypes:
-        - MobTickSalvage
+    - type: GenericSpawner
+      entityTable: SpaceTickEntityTable
 
 - type: entity
   name: Salvage Space Bear Spawner
@@ -134,30 +82,16 @@
     - state: green
     - state: bear
       sprite: Mobs/Animals/bear.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobBearSpaceSalvage
+  - type: GenericSpawner
+    entityTable: SalvageBearEntityTable
 
 - type: entity
   id: SalvageMobSpawner75
   parent: SalvageMobSpawner
   suffix: 75
   components:
-  - type: RandomSpawner
-    rarePrototypes:
-    - MobSharkSalvage
-    rareChance: 0.2
-    prototypes:
-    - MobCarpSalvage
-    - MobCarpSalvage
-    - MobCarpSalvage
-    - MobCarpSalvage
-    - MobCarpSalvage
-    - MobTickSalvage
-    - MobTickSalvage
-    - MobTickSalvage
-    - PlushieCarp
-    - DehydratedSpaceCarp
+  - type: GenericSpawner
+    entityTable: SalvageMobEntityTable
     chance: 0.75
     offset: 0.2
 
@@ -171,9 +105,8 @@
     - state: green
     - state: kangaroo-space
       sprite: Mobs/Animals/kangaroo.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobKangarooSpaceSalvage
+  - type: GenericSpawner
+    entityTable: SpaceKangarooEntityTable
 
 - type: entity
   name: Salvage Space Spider Spawner
@@ -185,9 +118,8 @@
     - state: green
     - state: spacespider
       sprite: Mobs/Animals/spacespider.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobSpiderSpaceSalvage
+  - type: GenericSpawner
+    entityTable: SpaceSpiderEntityTable
 
 - type: entity
   name: Salvage Space Cobra Spawner
@@ -199,9 +131,8 @@
       - state: green
       - state: spacecobra
         sprite: Mobs/Animals/spacecobra.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobCobraSpaceSalvage
+  - type: GenericSpawner
+    entityTable: SpaceCobraEntityTable
 
 - type: entity
   name: Salvage Flesh Spawner
@@ -214,17 +145,6 @@
         - state: red
         - sprite: Mobs/Aliens/flesh.rsi
           state: jared
-    - type: RandomSpawner
-      rarePrototypes:
-      - MobSharkSalvage
-      rareChance: 0
-      prototypes:
-      - MobFleshJaredSalvage
-      - MobFleshGolemSalvage
-      - MobFleshGolemSalvage
-      - MobFleshClampSalvage
-      - MobFleshClampSalvage
-      - MobFleshLoverSalvage
-      - MobFleshLoverSalvage
-      chance: 1
+    - type: GenericSpawner
+      entityTable: SalvageFleshEntityTable
       offset: 0.2

@@ -1,0 +1,27 @@
+- type: weightedRandomEntity
+  id: GenericVendorRestockEntityTable
+  weights:
+    VendingMachineRestockDiscountDans: 1
+    VendingMachineRestockChang: 1
+    VendingMachineRestockDonut: 1
+    VendingMachineRestockGetmoreChocolateCorp: 1
+    VendingMachineRestockRobustSoftdrinks: 1
+    VendingMachineRestockHotDrinks: 1
+    VendingMachineRestockHappyHonk: 1
+    VendingMachineRestockCondimentStation: 1
+
+- type: weightedRandomEntity
+  id: FoodVendorRestockEntityTable
+  weights:
+    VendingMachineRestockDiscountDans: 1
+    VendingMachineRestockChang: 1
+    VendingMachineRestockDonut: 1
+    VendingMachineRestockGetmoreChocolateCorp: 1
+    VendingMachineRestockHappyHonk: 1
+    VendingMachineRestockCondimentStation: 1
+
+- type: weightedRandomEntity
+  id: DrinkVendorRestockEntityTable
+  weights:
+    VendingMachineRestockRobustSoftdrinks: 1
+    VendingMachineRestockHotDrinks: 1

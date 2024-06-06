@@ -140,7 +140,7 @@
   id: ShardCrystalRandom
   name: random crystal shard
   components:
-  - type: RandomSpawner
+  - type: GenericSpawner
     prototypes:
       - ShardCrystalGreen
       - ShardCrystalPink

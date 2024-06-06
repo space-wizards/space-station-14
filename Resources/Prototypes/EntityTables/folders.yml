@@ -1,0 +1,10 @@
+- type: weightedRandomEntity
+  id: FoldersEntityTable
+  weights:
+    BoxFolderRed: 1
+    BoxFolderBlue: 1
+    BoxFolderYellow: 1
+    BoxFolderWhite: 1
+    BoxFolderGrey: 1
+    BoxFolderBlack: 1
+    BoxFolderGreen: 1

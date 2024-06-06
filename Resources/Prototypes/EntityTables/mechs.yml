@@ -1,0 +1,9 @@
+- type: weightedRandomEntity
+  id: MechRipleyEntityTable
+  weights:
+    MechRipleyBattery: 1
+
+- type: weightedRandomEntity
+  id: HonkEntityTable
+  weights:
+    MechHonkerBattery: 1

@@ -1,0 +1,29 @@
+- type: weightedRandomEntity
+  id: AltarEntityTable
+  weights:
+    AltarNanotrasen: 1
+    AltarChaos: 1
+    AltarDruid: 1
+    AltarToolbox: 1
+    AltarSpaceChristian: 1
+    AltarSatana: 1
+    AltarTechnology: 1
+
+- type: weightedRandomEntity
+  id: ConvertAltarEntityTable
+  weights:
+    AltarConvert: 1
+    AltarConvertFestival: 1
+    AltarConvertMaint: 1
+    AltarConvertBlue: 1
+    AltarConvertBurden: 1
+    AltarConvertOrange: 1
+    AltarConvertRed: 1
+    AltarConvertWhite: 1
+    AltarConvertYellow: 1
+
+- type: weightedRandomEntity
+  id: CultAltarEntityTable
+  weights:
+    AltarHeaven: 1
+    AltarFangs: 1

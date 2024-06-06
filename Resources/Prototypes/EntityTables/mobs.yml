@@ -1,0 +1,312 @@
+- type: weightedRandomEntity
+  id: MouseEntityTable
+  weights:
+    MobMouse: 1
+    MobMouse1: 1
+    MobMouse2: 1
+
+- type: weightedRandomEntity
+  id: CockroachEntityTable
+  weights:
+    MobCockroach: 1
+
+- type: weightedRandomEntity
+  id: CorgiEntityTable
+  weights:
+    MobCorgiIan: 1
+    MobCorgiIanOld: 1
+    MobCorgiLisa: 1
+    MobCorgiIanPup: 1
+
+- type: weightedRandomEntity
+  id: PossumMortyEntityTable
+  weights:
+    MobPossumMortyOld: 1
+
+- type: weightedRandomEntity
+  id: RaccoonMorticiaEntityTable
+  weights:
+    MobRaccoonMorticia: 1
+
+- type: weightedRandomEntity
+  id: FoxRenaultEntityTable
+  weights:
+    MobFoxRenault: 1
+
+- type: weightedRandomEntity
+  id: CatRuntimeEntityTable
+  weights:
+    MobCatRuntime: 1
+
+- type: weightedRandomEntity
+  id: CatExceptionEntityTable
+  weights:
+    MobCatException: 1
+
+- type: weightedRandomEntity
+  id: CrabAtmosEntityTable
+  weights:
+    MobCrabAtmos: 1
+
+- type: weightedRandomEntity
+  id: FloppaEntityTable
+  weights:
+    MobCatFloppa: 1
+
+- type: weightedRandomEntity
+  id: BingusEntityTable
+  weights:
+    MobBingus: 1
+
+- type: weightedRandomEntity
+  id: SpaceCatEntityTable
+  weights:
+    MobCatSpace: 1
+
+- type: weightedRandomEntity
+  id: CatKittenEntityTable
+  weights:
+    MobCatKitten: 1
+
+- type: weightedRandomEntity
+  id: CatEntityTable
+  weights:
+    MobCatRuntime: 1
+    MobCatException: 1
+    MobCatFloppa: 1
+    MobBingus: 1
+
+- type: weightedRandomEntity
+  id: GenericCatEntityTable
+  weights:
+    MobCat: 20
+    MobCatCalico: 20
+    MobCatCaracal: 20
+    MobCatKitten: 20
+    MobCatSpace: 1
+
+- type: weightedRandomEntity
+  id: BanditoEntityTable
+  weights:
+    MobBandito: 1
+
+- type: weightedRandomEntity
+  id: McGriffEntityTable
+  weights:
+    MobMcGriff: 1
+
+- type: weightedRandomEntity
+  id: SlothPaperworkEntityTable
+  weights:
+    MobPaperwork: 1
+
+- type: weightedRandomEntity
+  id: WalterEntityTable
+  weights:
+    MobWalter: 1
+
+- type: weightedRandomEntity
+  id: BearSpaceEntityTable
+  weights:
+    MobBearSpace: 1
+
+- type: weightedRandomEntity
+  id: CarpEntityTable
+  weights:
+    MobCarp: 1
+
+- type: weightedRandomEntity
+  id: MagiCarpEntityTable
+  weights:
+    MobCarpMagic: 1
+
+- type: weightedRandomEntity
+  id: HoloCarpEntityTable
+  weights:
+    MobCarpHolo: 1
+
+- type: weightedRandomEntity
+  id: SharkEntityTable
+  weights:
+    MobShark: 1
+
+- type: weightedRandomEntity
+  id: HamsterEntityTable
+  weights:
+    CrateNPCHamlet: 1
+
+- type: weightedRandomEntity
+  id: AlexanderEntityTable
+  weights:
+    MobAlexander: 1
+
+- type: weightedRandomEntity
+  id: ShivaEntityTable
+  weights:
+    MobSpiderShiva: 1
+
+- type: weightedRandomEntity
+  id: KangarooWillowEntityTable
+  weights:
+    MobKangarooWillow: 1
+
+- type: weightedRandomEntity
+  id: BoxingKangarooEntityTable
+  weights:
+    MobBoxingKangaroo: 1
+
+- type: weightedRandomEntity
+  id: SpaceCobraEntityTable
+  weights:
+    MobCobraSpace: 1
+
+- type: weightedRandomEntity
+  id: BlueSlimesEntityTable
+  weights:
+    MobAdultSlimesBlue: 1
+
+- type: weightedRandomEntity
+  id: BlueSlimesAngryEntityTable
+  weights:
+    MobAdultSlimesBlueAngry: 1
+
+- type: weightedRandomEntity
+  id: GreenSlimesEntityTable
+  weights:
+    MobAdultSlimesGreen: 1
+
+- type: weightedRandomEntity
+  id: GreenSlimesAngryEntityTable
+  weights:
+    MobAdultSlimesGreenAngry: 1
+
+- type: weightedRandomEntity
+  id: YellowSlimesEntityTable
+  weights:
+    MobAdultSlimesYellow: 1
+
+- type: weightedRandomEntity
+  id: YellowSlimesAngryEntityTable
+  weights:
+    MobAdultSlimesYellowAngry: 1
+
+- type: weightedRandomEntity
+  id: SmileEntityTable
+  weights:
+    MobSlimesPet: 1
+
+- type: weightedRandomEntity
+  id: PunPunEntityTable
+  weights:
+    MobMonkeyPunpun: 1
+
+- type: weightedRandomEntity
+  id: BehonkerEntityTable
+  weights:
+    MobBehonkerIce: 1
+    MobBehonkerPyro: 1
+    MobBehonkerElectrical: 1
+    MobBehonkerGrav: 1
+
+- type: weightedRandomEntity
+  id: MonkeyEntityTable
+  weights:
+    MobMonkey: 1
+
+- type: weightedRandomEntity
+  id: PurpleSnakeEntityTable
+  weights:
+    MobPurpleSnake: 1
+
+- type: weightedRandomEntity
+  id: SmallPurpleSnakeEntityTable
+  weights:
+    MobSmallPurpleSnake: 1
+
+- type: weightedRandomEntity
+  id: SlugEntityTable
+  weights:
+    MobSlug: 1
+
+- type: weightedRandomEntity
+  id: LizardEntityTable
+  weights:
+    MobLizard: 1
+
+- type: weightedRandomEntity
+  id: CrabEntityTable
+  weights:
+    MobCrab: 1
+
+- type: weightedRandomEntity
+  id: GoatEntityTable
+  weights:
+    MobGoat: 1
+
+- type: weightedRandomEntity
+  id: FrogEntityTable
+  weights:
+    MobFrog: 1
+
+- type: weightedRandomEntity
+  id: BeeEntityTable
+  weights:
+    MobBee: 1
+
+- type: weightedRandomEntity
+  id: ParrotEntityTable
+  weights:
+    MobParrot: 1
+
+- type: weightedRandomEntity
+  id: ButterflyEntityTable
+  weights:
+    MobButterfly: 1
+
+- type: weightedRandomEntity
+  id: CowEntityTable
+  weights:
+    MobCow: 1
+
+- type: weightedRandomEntity
+  id: GorillaEntityTable
+  weights:
+    MobGorilla: 1
+
+- type: weightedRandomEntity
+  id: PenguinEntityTable
+  weights:
+    MobPenguin: 1
+
+- type: weightedRandomEntity
+  id: HellspawnEntityTable
+  weights:
+    MobHellspawn: 1
+
+- type: weightedRandomEntity
+  id: OreCrabEntityTable
+  weights:
+    MobSpawnCrabUranium: 1
+    MobSpawnCrabIron: 1
+    MobSpawnCrabQuartz: 1
+    MobSpawnCrabSilver: 1
+
+- type: weightedRandomEntity
+  id: LuminousPersonEntityTable
+  weights:
+    MobLuminousPerson: 1
+
+- type: weightedRandomEntity
+  id: LuminousObjectEntityTable
+  weights:
+    MobLuminousObject: 1
+
+- type: weightedRandomEntity
+  id: LuminousEntityEntityTable
+  weights:
+    MobLuminousEntity: 1
+
+- type: weightedRandomEntity
+  id: ClownSpiderEntityTable
+  weights:
+    MobClownSpider: 1

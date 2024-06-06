@@ -8,9 +8,8 @@
       - state: green
       - sprite: Mobs/Silicon/Bots/medibot.rsi
         state: medibot
-  - type: ConditionalSpawner
-    prototypes:
-      - MobMedibot
+  - type: GenericSpawner
+    entityTable: MedibotEntityTable
 
 - type: entity
   name: cleanbot spawner
@@ -22,7 +21,6 @@
       - state: green
       - sprite: Mobs/Silicon/Bots/cleanbot.rsi
         state: cleanbot
-  - type: ConditionalSpawner
-    prototypes:
-      - MobCleanBot
+  - type: GenericSpawner
+    entityTable: CleanbotEntityTable
 

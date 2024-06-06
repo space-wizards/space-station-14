@@ -1,0 +1,11 @@
+- type: weightedRandomEntity
+  id: EncryptionKeysEntityTable
+  weights:
+    EncryptionKeyCommon: 9
+    EncryptionKeyEngineering: 9
+    EncryptionKeyScience: 9
+    EncryptionKeyService: 9
+    EncryptionKeyMedical: 9
+    EncryptionKeyCargo: 9
+    EncryptionKeyCommand: 1
+    EncryptionKeySecurity: 1

@@ -8,15 +8,8 @@
         - state: red
         - sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
           state: nanotrasen
-    - type: RandomSpawner
-      prototypes:
-        - AltarNanotrasen
-        - AltarChaos
-        - AltarDruid
-        - AltarToolbox
-        - AltarSpaceChristian
-        - AltarSatana
-        - AltarTechnology
+    - type: GenericSpawner
+      entityTable: AltarEntityTable
       offset: 0.0
 
 - type: entity
@@ -29,17 +22,8 @@
         - state: red
         - sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
           state: convertaltar
-    - type: RandomSpawner
-      prototypes:
-        - AltarConvert
-        - AltarConvertFestival
-        - AltarConvertMaint
-        - AltarConvertBlue
-        - AltarConvertBurden
-        - AltarConvertOrange
-        - AltarConvertRed
-        - AltarConvertWhite
-        - AltarConvertYellow
+    - type: GenericSpawner
+      entityTable: ConvertAltarEntityTable
       offset: 0.0
 
 - type: entity
@@ -52,8 +36,6 @@
         - state: red
         - sprite: Structures/Furniture/Altars/Cults/fangs.rsi
           state: full
-    - type: RandomSpawner
-      prototypes:
-        - AltarHeaven
-        - AltarFangs
+    - type: GenericSpawner
+      entityTable: CultAltarEntityTable
       offset: 0.0

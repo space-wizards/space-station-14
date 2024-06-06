@@ -128,7 +128,7 @@
       ignoreWhitelist:
         components:
         - IgnoreKudzu
-    - type: RandomSpawner
+    - type: GenericSpawner
       deleteSpawnerAfterSpawn: false
       rareChance: 0.15
       offset: 0.2
@@ -151,7 +151,7 @@
   components:
     - type: Kudzu
       spreadChance: 0.2
-    - type: RandomSpawner
+    - type: GenericSpawner
       chance: 0.05
       rarePrototypes:
       - AnomalyFloraBulb
@@ -275,7 +275,7 @@
     - type: Kudzu
       growthTickChance: 0.2
       spreadChance: 0.99
-    - type: RandomSpawner
+    - type: GenericSpawner
       deleteSpawnerAfterSpawn: false
       rareChance: 0.05
       offset: 0.2

@@ -1,0 +1,5 @@
+- type: weightedRandomEntity
+  id: ArcadeEntityTable
+  weights:
+    BlockGameArcade: 1
+    SpaceVillainArcadeFilled: 1

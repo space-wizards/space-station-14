@@ -36,7 +36,7 @@
   id: DeathSquad
   parent: EventHumanoidMindShielded
   randomizeName: false
-  components:        
+  components:
     - type: GhostRole
       name: ghost-role-information-Death-Squad-name
       description: ghost-role-information-Death-Squad-description
@@ -576,7 +576,7 @@
         - state: red
         - sprite: Objects/Tools/appraisal-tool.rsi
           state: icon
-    - type: RandomSpawner
+    - type: GenericSpawner
       prototypes:
       - RandomHumanoidLostCargoTechnician
       chance: 1
@@ -616,7 +616,7 @@
         - state: red
         - sprite: Objects/Fun/bikehorn.rsi
           state: icon
-    - type: RandomSpawner
+    - type: GenericSpawner
       prototypes:
       - RandomHumanoidClownTroupe
       rarePrototypes:
@@ -678,7 +678,7 @@
         - state: red
         - sprite: Objects/Weapons/Melee/kitchen_knife.rsi
           state: icon
-    - type: RandomSpawner
+    - type: GenericSpawner
       prototypes:
       - RandomHumanoidTravelingChef
 
@@ -717,7 +717,7 @@
       - state: red
       - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
         state: icon
-  - type: RandomSpawner
+  - type: GenericSpawner
     prototypes:
     - RandomHumanoidDisasterVictimRD
     - RandomHumanoidDisasterVictimCMO
@@ -796,7 +796,7 @@
       - state: red
       - sprite: Structures/Decoration/banner.rsi
         state: banner_syndicate
-  - type: RandomSpawner
+  - type: GenericSpawner
     prototypes:
     - RandomHumanoidSyndieDisasterVictim
 

@@ -82,7 +82,7 @@
     tags:
       - HideContextMenu
   - type: AnimationPlayer
-  - type: RandomSpawner
+  - type: GenericSpawner
     deleteSpawnerAfterSpawn: false
     rareChance: 0.1
     offset: 0.3

@@ -38,7 +38,7 @@
   id: ClothingRandomSpawner
   name: random colorful costume
   components:
-  - type: RandomSpawner
+  - type: GenericSpawner
     offset: 0
     prototypes:
     - ClothingUniformRandomArmless

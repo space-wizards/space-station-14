@@ -1,0 +1,21 @@
+- type: weightedRandomEntity
+  id: AnomalyEntityTable
+  weights:
+    AnomalyPyroclastic: 1
+    AnomalyGravity: 1
+    AnomalyElectricity: 1
+    AnomalyFlesh: 1
+    AnomalyBluespace: 1
+    AnomalyIce: 1
+    RandomRockAnomalySpawner: 1
+    AnomalyLiquid: 1
+    AnomalyFlora: 1
+    AnomalyShadow: 1
+
+- type: weightedRandomEntity
+  id: RockAnomalyEntityTable
+  weights:
+    AnomalyRockIron: 1
+    AnomalyRockSilver: 1
+    AnomalyRockQuartz: 1
+    AnomalyRockUranium: 1

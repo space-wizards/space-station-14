@@ -1,0 +1,9 @@
+- type: weightedRandomEntity
+  id: ArtifactEntityTable
+  weights:
+    SimpleXenoArtifact: 1
+    MediumXenoArtifact: 4
+    ComplexXenoArtifact: 3
+    SimpleXenoArtifactItem: 1
+    MediumXenoArtifactItem: 1
+    ComplexXenoArtifactItem: 1

@@ -1,0 +1,9 @@
+- type: weightedRandomEntity
+  id: MedibotEntityTable
+  weights:
+    MobMedibot: 1
+
+- type: weightedRandomEntity
+  id: CleanbotEntityTable
+  weights:
+    MobCleanBot: 1

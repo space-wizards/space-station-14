@@ -21,15 +21,13 @@
       state: equipped-MASK
     - sprite: Clothing/Head/Helmets/swat_syndicate.rsi
       state: equipped-HELMET
-  - type: ConditionalSpawner
-    prototypes:
-    - MobSyndicateFootsoldier
+  - type: GenericSpawner
+    entityTable: SyndicateFootsoldierEntityTable
 
 - type: entity
   name: syndicate shuttle pilot spawner
   id: SpawnMobSyndicateFootsoldierPilot
   parent: SpawnMobSyndicateFootSoldier
   components:
-  - type: ConditionalSpawner
-    prototypes:
-    - MobSyndicateFootsoldierPilot
+  - type: GenericSpawner
+    entityTable: SyndicateFootsoldierPilotEntityTable

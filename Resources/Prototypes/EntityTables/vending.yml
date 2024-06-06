@@ -1,0 +1,50 @@
+- type: weightedRandomEntity
+  id: VendingMachineEntityTable
+  weights:
+    VendingMachineCigs: 1
+    VendingMachineCoffee: 1
+    VendingMachineCola: 1
+    VendingMachineColaRed: 1
+    VendingMachineColaBlack: 1
+    VendingMachineDiscount: 1
+    VendingMachineSnack: 1
+    VendingMachineSnackBlue: 1
+    VendingMachineSnackGreen: 1
+    VendingMachineSnackOrange: 1
+    VendingMachineSnackTeal: 1
+    VendingMachineSovietSoda: 1
+    VendingMachineChang: 1
+    VendingMachineDonut: 1
+    VendingMachineShamblersJuice: 1
+    VendingMachinePwrGame: 1
+    VendingMachineDrGibb: 1
+    VendingMachineSoda: 1
+    VendingMachineStarkist: 1
+    VendingMachineSpaceUp: 1
+
+- type: weightedRandomEntity
+  id: VendingMachineSnacksEntityTable
+  weights:
+    VendingMachineDiscount: 1
+    VendingMachineSnack: 1
+    VendingMachineSnackBlue: 1
+    VendingMachineSnackGreen: 1
+    VendingMachineSnackOrange: 1
+    VendingMachineSnackTeal: 1
+    VendingMachineChang: 1
+    VendingMachineDonut: 1
+
+- type: weightedRandomEntity
+  id: VendingMachineDrinksEntityTable
+  weights:
+    VendingMachineCoffee: 1
+    VendingMachineCola: 1
+    VendingMachineColaRed: 1
+    VendingMachineColaBlack: 1
+    VendingMachineSovietSoda: 1
+    VendingMachineShamblersJuice: 1
+    VendingMachinePwrGame: 1
+    VendingMachineDrGibb: 1
+    VendingMachineSoda: 1
+    VendingMachineStarkist: 1
+    VendingMachineSpaceUp: 1

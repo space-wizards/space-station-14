@@ -307,7 +307,7 @@
         - state: red
         - sprite: Mobs/Aliens/elemental.rsi
           state: alive
-    - type: RandomSpawner
+    - type: GenericSpawner
       prototypes:
         - ReagentSlime
         - ReagentSlimeBeer

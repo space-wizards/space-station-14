@@ -9,126 +9,9 @@
         - state: red
         - sprite: Clothing/Eyes/Glasses/gar.rsi
           state: icon-super
-    - type: RandomSpawner
-      rarePrototypes:
-        - ClothingUniformJumpsuitFamilyGuy
-        - CigarGold
-        - ClothingNeckCloakHerald
-        - ClothingHeadHelmetTemplar
-        - ClothingNeckCloakTrans
-        - ClothingNeckCloakAdmin
-        - ClothingNeckCloakMoth
-        - ClothingNeckCloakVoid
-        - ClothingNeckCloakGoliathCloak
-        - ClothingNeckCloakAce
-        - ClothingNeckCloakAro
-        - ClothingNeckCloakBi
-        - ClothingNeckCloakIntersex
-        - ClothingNeckCloakLesbian
-        - ClothingNeckCloakGay
-        - ClothingNeckCloakEnby
-        - ClothingNeckCloakPan
-        - ToySkeleton
-        - Basketball
-        - Football
-        - BalloonCorgi
-        - BalloonNT
-        - PonderingOrb
-        - Skub
-        - DrinkMugDog
-        - ClothingNeckLGBTPin
-        - ClothingNeckAromanticPin
-        - ClothingNeckAsexualPin
-        - ClothingNeckBisexualPin
-        - ClothingNeckIntersexPin
-        - ClothingNeckLesbianPin
-        - ClothingNeckNonBinaryPin
-        - ClothingNeckPansexualPin
-        - ClothingNeckTransPin
-        - CluwneHorn
-        - ClothingMaskRat
-        - MysteryFigureBox
-        - ClothingHandsGlovesMercFingerless
-        - ClothingHandsGlovesNitrile
-        - ClothingHandsGlovesPowerglove
-        - ClothingHeadHatAnimalHeadslime
-        - ClothingHeadHatBeretMerc
-        - ClothingHeadHatOutlawHat
-        - ClothingHeadHatUshanka
-        - ClothingHeadHatBunny
-        - ClothingMaskNeckGaiter
-        - ClothingNeckScarfStripedZebra
-        - ClothingOuterRobesCult
-        - ClothingOuterGhostSheet
-        - ClothingShoesCult
-        - ClothingUniformJumpsuitAncient
-        - ClothingUniformJumpsuitPirate
-        - ClothingShoesBootsCowboyFancy
-        - ClothingHeadHatCowboyBountyHunter
-        - ClothingNeckAutismPin
-        - ClothingNeckGoldAutismPin
-      rareChance: 0.01
-      prototypes:
-        - Lighter
-        - CigCartonBlue
-        - ClothingEyesGlassesGarGiga
-        - ClothingEyesGlassesGarOrange
-        - ClothingEyesGlassesGar
-        - ClothingHeadHatCake
-        - ClothingHeadHatSkub
-        - ClothingHeadHatCone
-        - ClothingNeckBling
-        - ClothingHeadHelmetCosmonaut
-        - ClothingHeadHelmetBasic
-        - ClothingShoeSlippersDuck
-        - ClothingUnderSocksBee
-        - ClothingUnderSocksCoder
-        - ClothingHeadHatSquid
-        - ClothingMaskFox
-        - ClothingMaskBee
-        - ClothingMaskBear
-        - ClothingMaskRaven
-        - ClothingMaskJackal
-        - ClothingMaskBat
-        - ClothingBeltSuspenders
-        - ClothingEyesEyepatch
-        - ClothingEyesGlasses
-        - ClothingHandsGlovesLatex
-        - ClothingHandsGlovesFingerless
-        - ClothingHandsGlovesColorBlack
-        - ClothingHeadHatBeret
-        - ClothingHeadHatBowlerHat
-        - ClothingHeadHatFedoraBrown
-        - ClothingHeadHatFedoraGrey
-        - ClothingHeadHatFez
-        - ClothingHeadHatPaper
-        - ClothingHeadHatPirate
-        - ClothingHeadHatPirateTricord
-        - ClothingHeadHatTophat
-        - ClothingMaskSterile
-        - ClothingNeckHeadphones
-        - ClothingNeckTieRed
-        - ClothingOuterCoatGentle
-        - ClothingOuterCoatJensen
-        - ClothingEyesGlassesJensen
-        - ClothingOuterCoatLab
-        - ClothingOuterCoatPirate
-        - ClothingOuterHoodieBlack
-        - ClothingOuterHoodieGrey
-        - ClothingOuterFlannelRed
-        - ClothingOuterFlannelBlue
-        - ClothingOuterFlannelGreen
-        - ClothingOuterVestHazard
-        - ClothingShoesBootsJack
-        - ClothingShoesHighheelBoots
-        - ClothingShoesBootsLaceup
-        - ClothingShoesLeather
-        - ClothingShoesBootsSalvage
-        - ClothingShoesBootsWork
-        - ClothingShoesTourist
-        - ClothingUniformJumpsuitLoungewear
-        - ClothingHeadHatCowboyRed
-      chance: 0.6
+    - type: GenericSpawner
+      entityTable: MaintenanceFluffEntityTable
+      chance: 0.65
       offset: 0.0
 
 
@@ -143,69 +26,9 @@
         - state: red
         - sprite: Objects/Power/power_cells.rsi
           state: high
-    - type: RandomSpawner
-      rarePrototypes:
-        - LanternFlash
-        - PowerCellHigh
-        - NetProbeCartridge
-        - WelderIndustrial
-        - SheetPlasteel10
-        - ClothingMaskGasExplorer
-      rareChance: 0.08
-      prototypes:
-        - FlashlightLantern
-        - OxygenTankFilled
-        - DoubleEmergencyOxygenTankFilled
-        - ToolboxEmergencyFilled
-        - ToolboxArtisticFilled
-        - NitrogenTankFilled
-        - DoubleEmergencyNitrogenTankFilled
-        - EmergencyFunnyOxygenTankFilled
-        - ToolboxElectricalFilled
-        - ToolboxMechanicalFilled
-        - ClothingBeltUtility
-        - Shovel
-        - Welder
-        - WeaponFlareGun
-        - SheetSteel10
-        - SheetPlastic10
-        - SheetGlass10
-        - PartRodMetal10
-        - MaterialCardboard10
-        - MaterialCloth10
-        - MaterialWoodPlank10
-        - ResearchDisk
-        - Plunger
-        - TechnologyDisk
-        - PowerCellMedium
-        - PowerCellSmall
-        - Wirecutter
-        - Screwdriver
-        - Wrench
-        - Crowbar
-        - NetworkConfigurator
-        - trayScanner
-        - GasAnalyzer
-        - SprayPainter
-        - AppraisalTool
-        - Flare
-        - HandheldGPSBasic
-        - HandLabeler
-        - GlowstickBase
-        - Bucket
-        - RadioHandheld
-        - GeigerCounter
-        - Beaker
-        - ClothingMaskGas
-        - ClothingMaskBreath
-        - DoorElectronics
-        - APCElectronics
-        - InflatableWallStack5
-        - CableHVStack10
-        - CableMVStack10
-        - CableApcStack10
-        - PetCarrier
-      chance: 0.6
+    - type: GenericSpawner
+      entityTable: MaintenanceToolEntityTable
+      chance: 0.65
       offset: 0.0
 
 - type: entity
@@ -219,45 +42,9 @@
         - state: red
         - sprite: Objects/Weapons/Melee/machete.rsi
           state: icon
-    - type: RandomSpawner
-      rarePrototypes:
-        - Machete
-        - BaseBallBat
-        - CombatKnife
-        - Spear
-        - RifleStock
-        - ModularReceiver
-        - HydroponicsToolScythe
-      rareChance: 0.05
-      prototypes:
-        - FlashlightLantern
-        - OxygenTankFilled
-        - DoubleEmergencyOxygenTankFilled
-        - NitrogenTankFilled
-        - DoubleEmergencyNitrogenTankFilled
-        - Lighter
-        - Matchbox
-        - Crowbar
-        - Shovel
-        - Welder
-        - WeaponFlareGun
-        - LidSalami
-        - ClothingEyesBlindfold
-        - ClothingMaskMuzzle
-        - ClothingMaskGasSecurity
-        - ShardGlass
-        - Syringe
-        - Mousetrap
-        - Brutepack1
-        - Ointment1
-        - Gauze1
-        - Bola
-        - SurvivalKnife
-        - ScalpelShiv
-        - Shiv
-        - SawImprov
-        - HydroponicsToolMiniHoe
-      chance: 0.6
+    - type: GenericSpawner
+      entityTable: MaintenanceWeaponEntityTable
+      chance: 0.65
       offset: 0.0
 
 - type: entity
@@ -271,8 +58,7 @@
         - state: red
         - sprite: Objects/Misc/spaceshroom.rsi
           state: structure
-    - type: RandomSpawner
-      prototypes:
-        - Spaceshroom
+    - type: GenericSpawner
+      entityTable: MaintenancePlantEntityTable
       chance: 0.6
       offset: 0.0

@@ -1,0 +1,9 @@
+- type: weightedRandomEntity
+  id: CrystalEntityTable
+  weights:
+    CrystalGreen: 1
+    CrystalPink: 1
+    CrystalOrange: 1
+    CrystalBlue: 1
+    CrystalCyan: 1
+    CrystalGrey: 1
