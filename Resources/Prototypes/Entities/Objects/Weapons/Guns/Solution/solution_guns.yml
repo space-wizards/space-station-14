@@ -1,8 +1,9 @@
+# water pistol
 - type: entity
-  id: WeaponWaterPistol
   parent:
   - BaseGunSmall
   - BaseGunSolutionContainer
+  id: WeaponWaterPistol
   name: water pistol
   description: The dinkiest of water-based weaponry. You swear the trigger doesn't do anything.
   components:
@@ -24,11 +25,12 @@
     materialComposition:
       Plastic: 150
 
+# water blaster
 - type: entity
-  id: WeaponWaterBlaster
   parent:
   - BaseGunSmall
   - BaseGunSolutionContainer
+  id: WeaponWaterBlaster
   name: water blaster
   description: With this bad boy, you'll be the cooleste kid at the summer barbecue.
   components:
@@ -67,11 +69,12 @@
     materialComposition:
       Plastic: 150
 
+# super water blaster
 - type: entity
-  id: WeaponWaterBlasterSuper
   parent:
   - BaseGunSmall
   - BaseGunSolutionContainer
+  id: WeaponWaterBlasterSuper
   name: super water blaster
   description: No! No! Not in the eyes!
   components:
