@@ -11,8 +11,6 @@
     layers:
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
-  - type: Item
-    sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
   - type: Gun
     fireRate: 8
     soundGunshot:
@@ -20,5 +18,3 @@
   - type: BallisticAmmoProvider
     proto: ShellShotgunFlare
     capacity: 1
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
