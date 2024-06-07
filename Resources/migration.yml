@@ -348,3 +348,11 @@ DoorRemoteFirefight: null
 
 # 2024-06-03
 AirlockServiceCaptainLocked: AirlockCaptainLocked
+
+# 2024-06-07
+filingCabinet: FilingCabinet
+filingCabinetTall: FilingCabinetTall
+filingCabinetDrawer: FilingCabinetDrawer
+filingCabinetRandom: FilingCabinetFilled
+filingCabinetTallRandom: FilingCabinetTallFilled
+filingCabinetDrawerRandom: FilingCabinetDrawerFilled
