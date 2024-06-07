@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingShoesBase
+  parent: [ClothingShoesBase, BaseEngineeringContraband]
   id: ClothingShoesBootsMag
   name: magboots
   description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle.
@@ -81,7 +81,7 @@
     price: 3000
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: [ClothingShoesBase, BaseSyndicateContraband]
   id: ClothingShoesBootsMagSyndie
   name: blood-red magboots
   description: Reverse-engineered magnetic boots that have a heavy magnetic pull and integrated thrusters.
