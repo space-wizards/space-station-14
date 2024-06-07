@@ -44,8 +44,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
     state: icon
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Gun
     fireRate: 1.5
     soundGunshot:
@@ -63,8 +61,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
     state: icon
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Gun
     fireRate: 3
     soundGunshot:
@@ -82,8 +78,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
     state: icon
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Gun
     fireRate: 2
     soundGunshot:
@@ -112,8 +106,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
     state: icon
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: Gun
     fireRate: 1
     soundGunshot:

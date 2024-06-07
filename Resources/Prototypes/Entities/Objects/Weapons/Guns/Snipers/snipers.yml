@@ -35,8 +35,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Gun
     fireRate: 0.75
     soundGunshot:
@@ -59,8 +57,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/musket.rsi
   - type: Gun
     fireRate: 0.75
     soundGunshot:
@@ -94,8 +90,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: Gun
     fireRate: 0.75
     minAngle: 0

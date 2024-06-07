@@ -15,8 +15,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
   - type: Gun
     fireRate: 5
     selectedMode: FullAuto
@@ -47,8 +45,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
   - type: Gun
     fireRate: 5
     selectedMode: FullAuto
@@ -79,8 +75,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
   - type: Gun
     fireRate: 5
     selectedMode: FullAuto

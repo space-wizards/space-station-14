@@ -15,8 +15,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 2
@@ -85,8 +83,6 @@
       map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
@@ -120,8 +116,6 @@
       map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     soundGunshot:
@@ -151,8 +145,6 @@
       map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
@@ -188,8 +180,6 @@
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Gun
     fireRate: 4
     soundGunshot:
@@ -248,8 +238,6 @@
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
