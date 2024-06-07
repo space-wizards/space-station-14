@@ -79,7 +79,7 @@ namespace Content.Shared.Roles
             IPrototypeManager prototypes)
         {
             var sys = entManager.System<SharedRoleSystem>();
-            var requirements = sys.GetJobRequirement(job.ID);
+            var requirements = sys.GetJobRequirement(job);
             reason = null;
             if (requirements == null)
                 return true;

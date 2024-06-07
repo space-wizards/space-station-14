@@ -272,6 +272,14 @@ public abstract class SharedRoleSystem : EntitySystem
             _audio.PlayGlobal(sound, mind.Session);
     }
 
+    public HashSet<JobRequirement>? GetJobRequirement(JobPrototype job)
+    {
+        if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(job.ID, out var req))
+            return req;
+
+        return job.Requirements;
+    }
+
     public HashSet<JobRequirement>? GetJobRequirement(ProtoId<JobPrototype> job)
     {
         if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(job, out var req))
@@ -286,5 +294,13 @@ public abstract class SharedRoleSystem : EntitySystem
             return req;
 
         return _prototypes.Index(antag).Requirements;
+    }
+
+    public HashSet<JobRequirement>? GetAntagRequirement(AntagPrototype antag)
+    {
+        if (_requirementOverride != null && _requirementOverride.Antags.TryGetValue(antag.ID, out var req))
+            return req;
+
+        return antag.Requirements;
     }
 }

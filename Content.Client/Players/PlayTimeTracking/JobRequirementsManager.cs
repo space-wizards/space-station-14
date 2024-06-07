@@ -111,7 +111,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
 
     public bool CheckRoleTime(JobPrototype job, [NotNullWhen(false)] out FormattedMessage? reason)
     {
-        var reqs = _entManager.System<SharedRoleSystem>().GetJobRequirement(job.ID);
+        var reqs = _entManager.System<SharedRoleSystem>().GetJobRequirement(job);
         return CheckRoleTime(reqs, out reason);
     }
 
