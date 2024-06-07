@@ -91,7 +91,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
-            SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredOffEvent>(OnStepTriggered);
+            SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredIntersectEvent>(OnStepTriggered);
             SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
             SubscribeLocalEvent<TriggerWhenEmptyComponent, OnEmptyGunShotEvent>(OnEmptyTriggered);
             SubscribeLocalEvent<RepeatingTriggerComponent, MapInitEvent>(OnRepeatInit);
@@ -230,7 +230,7 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = Trigger(uid);
         }
 
-        private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredOffEvent args)
+        private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredIntersectEvent args)
         {
             Trigger(uid, args.Tripper);
         }

@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
@@ -48,6 +49,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
+    [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
@@ -95,6 +97,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         SubscribeLocalEvent<PuddleComponent, SlipEvent>(OnPuddleSlip);
 
         SubscribeLocalEvent<EvaporationComponent, MapInitEvent>(OnEvaporationMapInit);
+        SubscribeLocalEvent<PuddleAbsorptionComponent, MapInitEvent>(OnAbsorptionMapInit);
 
         InitializeTransfers();
     }
@@ -321,6 +324,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _deletionQueue.Clear();
 
         TickEvaporation();
+        AbsorbPuddleByEntities();
     }
 
     private void OnPuddleInit(Entity<PuddleComponent> entity, ref ComponentInit args)

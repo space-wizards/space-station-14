@@ -13,6 +13,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
+using Content.Shared.StepTrigger.Components;
 
 namespace Content.Shared.Slippery;
 
@@ -31,16 +32,25 @@ public sealed class SlipperySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SlipperyComponent, StepTriggerAttemptEvent>(HandleAttemptCollide);
-        SubscribeLocalEvent<SlipperyComponent, StepTriggeredOffEvent>(HandleStepTrigger);
+        SubscribeLocalEvent<SlipperyComponent, StepTriggeredOffEvent>(HandleStepOffTrigger);
+        SubscribeLocalEvent<SlipperyComponent, StepTriggeredIntersectEvent>(HandleStepTrigger);
         SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
         SubscribeLocalEvent<ThrownItemComponent, SlipCausingAttemptEvent>(OnThrownSlipAttempt);
         // as long as slip-resistant mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
         SubscribeLocalEvent<NoSlipComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnNoSlipAttempt(e, c, ev.Args));
     }
 
-    private void HandleStepTrigger(EntityUid uid, SlipperyComponent component, ref StepTriggeredOffEvent args)
+    private void HandleStepTrigger(EntityUid uid, SlipperyComponent component, ref StepTriggeredIntersectEvent args)
     {
         TrySlip(uid, component, args.Tripper);
+    }
+
+    /// <summary>
+    /// for things that are slippery but use step on/off triggers
+    /// </summary>
+    private void HandleStepOffTrigger(Entity<SlipperyComponent> entity, ref StepTriggeredOffEvent args)
+    {
+        TrySlip(entity.Owner, entity.Comp, args.Tripper);
     }
 
     private void HandleAttemptCollide(

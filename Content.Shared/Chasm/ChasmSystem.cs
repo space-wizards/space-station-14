@@ -1,4 +1,4 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Systems;
@@ -24,7 +24,7 @@ public sealed class ChasmSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChasmComponent, StepTriggeredOffEvent>(OnStepTriggered);
+        SubscribeLocalEvent<ChasmComponent, StepTriggeredIntersectEvent>(OnStepTriggered);
         SubscribeLocalEvent<ChasmComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
         SubscribeLocalEvent<ChasmFallingComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
     }
@@ -47,7 +47,7 @@ public sealed class ChasmSystem : EntitySystem
         }
     }
 
-    private void OnStepTriggered(EntityUid uid, ChasmComponent component, ref StepTriggeredOffEvent args)
+    private void OnStepTriggered(EntityUid uid, ChasmComponent component, ref StepTriggeredIntersectEvent args)
     {
         // already doomed
         if (HasComp<ChasmFallingComponent>(args.Tripper))
