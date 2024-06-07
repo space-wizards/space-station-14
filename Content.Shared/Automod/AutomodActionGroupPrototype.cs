@@ -17,7 +17,7 @@ public sealed class AutomodFilterDef(
     int? id,
     string pattern,
     AutomodFilterType filterType,
-    string actionGroup,
+    ProtoId<AutomodActionGroupPrototype> actionGroup,
     AutomodTarget targets,
     string name)
 {

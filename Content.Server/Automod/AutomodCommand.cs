@@ -3,6 +3,7 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Automod;
 using Content.Shared.Database;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
 using Robust.Shared.Toolshed.TypeParsers;
@@ -27,7 +28,7 @@ public sealed class AutomodCommand : ToolshedCommand
             [CommandInvocationContext] IInvocationContext ctx,
             [CommandArgument] string pattern,
             [CommandArgument] AutomodFilterType filterType,
-            [CommandArgument] Prototype<AutomodActionGroupPrototype> actionGroup,
+            [CommandArgument] ProtoId<AutomodActionGroupPrototype> actionGroup,
             [CommandArgument] AutomodTarget target,
             [CommandArgument] string name
         )
