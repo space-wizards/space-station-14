@@ -29,10 +29,10 @@ public sealed class ContrabandSystem : EntitySystem
 
         using (args.PushGroup(nameof(ContrabandComponent)))
         {
-            if (component is { Severity: ContrabandSeverity.Restricted, DepartmentRestrictions: not null })
+            if (component is { Severity: ContrabandSeverity.Restricted, AllowedDepartments: not null })
             {
                 // TODO shouldn't department prototypes have a localized name instead of just using the ID for this?
-                var list = ContentLocalizationManager.FormatList(component.DepartmentRestrictions.Select(p => Loc.GetString($"department-{p.Id}")).ToList());
+                var list = ContentLocalizationManager.FormatList(component.AllowedDepartments.Select(p => Loc.GetString($"department-{p.Id}")).ToList());
 
                 // department restricted text
                 args.PushMarkup(Loc.GetString("contraband-examine-text-Restricted-department", ("departments", list)));
@@ -50,9 +50,9 @@ public sealed class ContrabandSystem : EntitySystem
             }
 
             // either its fully restricted, you have no departments, or your departments dont intersect with the restricted departments
-            if (component.DepartmentRestrictions is null
+            if (component.AllowedDepartments is null
                 || departments is null
-                || !departments.Intersect(component.DepartmentRestrictions).Any())
+                || !departments.Intersect(component.AllowedDepartments).Any())
             {
                 args.PushMarkup(Loc.GetString("contraband-examine-text-avoid-carrying-around"));
                 return;

@@ -22,7 +22,7 @@ public sealed partial class ContrabandComponent : Component
     ///     If null, no departments are allowed to use this.
     /// </summary>
     [DataField]
-    public HashSet<ProtoId<DepartmentPrototype>>? DepartmentRestrictions = ["Security"];
+    public HashSet<ProtoId<DepartmentPrototype>>? AllowedDepartments = ["Security"];
 }
 
 [Serializable, NetSerializable]

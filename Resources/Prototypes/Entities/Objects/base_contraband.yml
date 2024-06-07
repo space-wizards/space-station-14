@@ -6,7 +6,7 @@
   - type: Contraband
     severity: Syndicate
     # no one should be carrying this around visibly!
-    departmentRestrictions: null
+    allowedDepartments: null
 
 # minor contraband not departmentally restricted -- improvised weapons etc
 - type: entity
@@ -16,7 +16,7 @@
   - type: Contraband
     severity: Minor
     # according to space law no dept is authorized to have
-    departmentRestrictions: null
+    allowedDepartments: null
 
 # minor contraband by default restricted to security only
 - type: entity
@@ -33,7 +33,7 @@
   abstract: true
   components:
   - type: Contraband
-    departmentRestrictions: [ Command ]
+    allowedDepartments: [ Command ]
 
 - type: entity
   id: BaseSecurityCommandContraband
@@ -41,7 +41,7 @@
   abstract: true
   components:
   - type: Contraband
-    departmentRestrictions: [ Security, Command ]
+    allowedDepartments: [ Security, Command ]
 
 - type: entity
   id: BaseSecurityScienceCommandContraband
@@ -49,7 +49,7 @@
   abstract: true
   components:
   - type: Contraband
-    departmentRestrictions: [ Security, Science, Command ]
+    allowedDepartments: [ Security, Science, Command ]
 
 - type: entity
   id: BaseEngineeringContraband
@@ -57,7 +57,7 @@
   abstract: true
   components:
   - type: Contraband
-    departmentRestrictions: [ Engineering ]
+    allowedDepartments: [ Engineering ]
 
 - type: entity
   id: BaseScienceContraband
@@ -65,7 +65,7 @@
   abstract: true
   components:
   - type: Contraband
-    departmentRestrictions: [ Science ]
+    allowedDepartments: [ Science ]
 
 - type: entity
   id: BaseSecurityCargoContraband
@@ -73,7 +73,7 @@
   abstract: true
   components:
   - type: Contraband
-    departmentRestrictions: [ Security, Cargo ]
+    allowedDepartments: [ Security, Cargo ]
 
 - type: entity
   id: BaseCargoContraband
@@ -81,7 +81,7 @@
   abstract: true
   components:
   - type: Contraband
-    departmentRestrictions: [ Cargo ]
+    allowedDepartments: [ Cargo ]
 
 # for ~objective items
 - type: entity
@@ -90,4 +90,4 @@
   components:
   - type: Contraband
     severity: GrandTheft
-    departmentRestrictions: [ Command ]
+    allowedDepartments: [ Command ]
