@@ -251,6 +251,23 @@
   ruleEntry: true
   priority: 11
   text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR11Escalation.xml"
+  children:
+  - RuleR11-1
+  - RuleR11-2
+
+- type: guideEntry
+  id: RuleR11-1
+  name: guide-entry-rules-r11-1
+  ruleEntry: true
+  priority: 10
+  text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR11-1AnimalEscalation.xml"
+
+- type: guideEntry
+  id: RuleR11-2
+  name: guide-entry-rules-r11-2
+  ruleEntry: true
+  priority: 10
+  text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR11-2ConflictTypes.xml"
 
 - type: guideEntry
   id: RuleR12
