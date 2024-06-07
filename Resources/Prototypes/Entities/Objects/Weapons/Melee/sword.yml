@@ -1,6 +1,6 @@
 - type: entity
   name: captain's sabre
-  parent: BaseItem
+  parent: [BaseItem, BaseCommandContraband]
   id: CaptainSabre
   description: A ceremonial weapon belonging to the captain of the station.
   components:
@@ -35,7 +35,7 @@
 
 - type: entity
   name: katana
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: Katana
   description: Ancient craftwork made with not so ancient plasteel.
   components:
@@ -94,7 +94,7 @@
 
 - type: entity
   name: machete
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: Machete
   description: A large, vicious looking blade.
   components:
@@ -119,7 +119,7 @@
 
 - type: entity
   name: claymore
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: Claymore
   description: An ancient war blade.
   components:
@@ -145,7 +145,7 @@
 
 - type: entity
   name: cutlass
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: Cutlass
   description: A wickedly curved blade, often seen in the hands of space pirates.
   components:
@@ -170,7 +170,7 @@
 
 - type: entity
   name: The Throngler
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: Throngler
   description: Why would someone make this?
   components:

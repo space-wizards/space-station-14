@@ -13,7 +13,7 @@
     radius: 4
 
 - type: entity
-  parent: BaseWeaponCrusher
+  parent: [BaseWeaponCrusher, BaseSecurityCargoContraband]
   id: WeaponCrusher
   components:
   - type: Tag

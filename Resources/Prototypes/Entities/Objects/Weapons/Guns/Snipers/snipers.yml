@@ -66,7 +66,7 @@
 
 - type: entity
   name: musket
-  parent: BaseWeaponSniper
+  parent: [BaseWeaponSniper, BaseMinorContraband]
   id: Musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
@@ -104,7 +104,7 @@
 
 - type: entity
   name: flintlock pistol
-  parent: BaseWeaponSniper
+  parent: [BaseWeaponSniper, BaseMinorContraband]
   id: WeaponPistolFlintlock
   description: A pirate's companion. Yarrr! Uses .60 anti-materiel ammo.
   components:

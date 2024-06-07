@@ -1,6 +1,6 @@
 - type: entity
   name: spear
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: Spear
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:

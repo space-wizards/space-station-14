@@ -59,6 +59,14 @@
     departmentRestrictions: [ Engineering ]
 
 - type: entity
+  id: BaseSecurityCargoContraband
+  parent: BaseMinorContraband
+  abstract: true
+  components:
+  - type: Contraband
+    departmentRestrictions: [ Security, Cargo ]
+
+- type: entity
   id: BaseCargoContraband
   parent: BaseMinorContraband
   abstract: true
