@@ -10,7 +10,7 @@
   The following are shielded:
   - Current game mode and possible antags during the current game mode.
   - Events from previous rounds.
-  - Events from previous characters.
+  - Events you experienced as a different character.
   - All information related to the player of a character rather than the character itself. (See "Metafriending and Metagrudging" below.)
   - All information gained while dead or a ghost.
   - The fact that a round will end.
@@ -25,6 +25,7 @@
 
   The revealing condition for this shield is any of the following:
   - discovering a blood red hardsuit
+  - discovering a nuclear operative's shuttle
   - an operative name
   - a War Ops announcement
   - being a nuclear operative
