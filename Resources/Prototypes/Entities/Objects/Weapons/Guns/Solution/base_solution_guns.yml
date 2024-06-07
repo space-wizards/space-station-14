@@ -1,5 +1,5 @@
 # SOLUTION CONTAINER
-# A basic template for a gun that
+# A basic template for a gun that shoots chemical solutions from a container.
 - type: entity
   abstract: true
   parent: BaseGun
