@@ -4,7 +4,7 @@ reagent-desc-desoxyephedrine = A more effective ephedrine, with more active down
 reagent-name-ephedrine = ephedrine
 reagent-desc-ephedrine = A caffeinated adrenaline stimulator chemical that makes you faster and harder to knock down. Also helps combat narcolepsy at dosages over thirty, at the cost of severe nerval stress.
 
-reagent-name-stimulants = stimulants
+reagent-name-stimulants = hyperzine
 reagent-desc-stimulants = A chemical cocktail developed by Donk Co. that allows agents to recover from stuns faster, move more quickly, and grants a small heal while close to critical condition. Due to the complex nature of the chemical, it is much harder for the body to purge naturally.
 
 reagent-name-experimental-stimulants = experimental stimulants
@@ -22,7 +22,7 @@ reagent-desc-nicotine = Dangerous and highly addictive, but that's what the prop
 reagent-name-impedrezene = impedrezene
 reagent-desc-impedrezene = A narcotic that impedes one's ability by slowing down the higher brain cell functions.
 
-reagent-name-space-drugs = space drugs
+reagent-name-space-drugs = space mirage
 reagent-desc-space-drugs = An illegal compound which induces a number of effects such as loss of balance and visual artefacts.
 
 reagent-name-nocturine = nocturine
