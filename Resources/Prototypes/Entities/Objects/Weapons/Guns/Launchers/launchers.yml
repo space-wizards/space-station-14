@@ -3,7 +3,7 @@
   parent:
   - BaseGunWieldable
   - BaseGunLarge
-  - BaseGunLauncherBallistic
+  - BaseGunGrenadeBallistic
   - BaseGun
   id: WeaponLauncherChinaLake
   name: china lake
@@ -17,18 +17,14 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
   - type: BallisticAmmoProvider
-    proto: GrenadeFrag
     capacity: 3
-    whitelist:
-      tags:
-      - Grenade
 
 # RPG-7
 - type: entity
   parent:
   - BaseGunMagVisuals
   - BaseGunLarge
-  - BaseGunLauncherBallistic
+  - BaseGunRocketBallistic
   - BaseGun
   id: WeaponLauncherRocket
   name: RPG-7
@@ -40,12 +36,6 @@
     fireRate: 0.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
-  - type: BallisticAmmoProvider
-    proto: CartridgeRocket
-    capacity: 1
-    whitelist:
-      tags:
-      - CartridgeRocket
   - type: MagazineVisuals
     steps: 2
     zeroVisible: false
@@ -54,7 +44,7 @@
 - type: entity
   parent:
   - BaseGunLarge
-  - BaseGunLauncherBallistic
+  - BaseGunCannonBallBallistic
   - BaseGun
   id: WeaponLauncherPirateCannon
   name: pirate cannon
@@ -66,12 +56,6 @@
     fireRate: 1
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
-  - type: BallisticAmmoProvider
-    proto: CannonBall
-    capacity: 1
-    whitelist:
-      tags:
-      - CannonBall
 
 # tether gun
 - type: entity

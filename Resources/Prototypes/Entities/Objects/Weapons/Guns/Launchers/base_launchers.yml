@@ -1,8 +1,8 @@
-# BALLISTIC LAUNCHER
-# A basic template for a launcher that uses the BallisticAmmoProvider component.
+# ROCKET LAUNCHER
+# A basic template for a launcher that uses the BallisticAmmoProvider component to load and fire rockets.
 - type: entity
   abstract: true
-  id: BaseGunLauncherBallistic
+  id: BaseGunRocketBallistic
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRocket
@@ -10,6 +10,44 @@
     whitelist:
       tags:
       - CartridgeRocket
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+
+# GRENADE LAUNCHER
+# A basic template for a launcher that uses the BallisticAmmoProvider component to load and fire grenades.
+- type: entity
+  abstract: true
+  id: BaseGunGrenadeBallistic
+  components:
+  - type: BallisticAmmoProvider
+    proto: GrenadeFrag
+    capacity: 1
+    whitelist:
+      tags:
+      - Grenade
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+
+# CANNONBALL LAUNCHER
+# A basic template for a launcher that uses the BallisticAmmoProvider component to load and fire cannonballs.
+- type: entity
+  abstract: true
+  id: BaseGunCannonBallBallistic
+  components:
+  - type: BallisticAmmoProvider
+    proto: CannonBall
+    capacity: 1
+    whitelist:
+      tags:
+      - CannonBall
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: ContainerContainer
