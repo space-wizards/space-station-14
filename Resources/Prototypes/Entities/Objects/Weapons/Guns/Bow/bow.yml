@@ -14,22 +14,22 @@
   #   slots:
   #     - Back
   #     - suitStorage
-  - type: Wieldable
-    wieldSound:
-      path: /Audio/Items/bow_pull.ogg
-  - type: UseDelay
-    delay: 1
-  - type: GunRequiresWield
-  - type: Gun
-    minAngle: 0
-    maxAngle: 5
-    fireRate: 1
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
-    soundGunshot:
-      collection: BulletMiss
-    soundEmpty: null
+  # - type: Wieldable
+  #   wieldSound:
+  #     path: /Audio/Items/bow_pull.ogg
+  # - type: UseDelay
+  #   delay: 1
+  # - type: GunRequiresWield
+  # - type: Gun
+  #   minAngle: 0
+  #   maxAngle: 5
+  #   fireRate: 1
+  #   selectedMode: SemiAuto
+  #   availableModes:
+  #   - SemiAuto
+  #   soundGunshot:
+  #     collection: BulletMiss
+  #   soundEmpty: null
   # - type: ItemSlots
   #   slots:
   #     projectiles:
@@ -68,6 +68,22 @@
   # arrow is inserted -> ItemMapper sets layer with map `arrow` to visible
   # bow is wielded -> generic vis sets states of layers with map `arrow` and `base`
   # arrow is removed -> itemmapper sets layer with map `arrow` to invisible
+  - type: Wieldable
+    wieldSound:
+      path: /Audio/Items/bow_pull.ogg
+  - type: UseDelay
+    delay: 1
+  - type: GunRequiresWield
+  - type: Gun
+    minAngle: 0
+    maxAngle: 5
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      collection: BulletMiss
+    soundEmpty: null
   - type: Appearance
   - type: ItemMapper
     spriteLayers:
