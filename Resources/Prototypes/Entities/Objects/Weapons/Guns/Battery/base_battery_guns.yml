@@ -44,6 +44,9 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
     fireCost: 62.5
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
 
 # RED MEDIUM LASER
 # A basic template for a gun that fires the RedMediumLaser hitscan.
@@ -55,6 +58,9 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedMediumLaser
     fireCost: 100
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
 
 # RED HEAVY LASER
 # A basic template for a gun that fires the RedHeavyLaser hitscan.
@@ -66,6 +72,9 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedHeavyLaser
     fireCost: 100
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
 
 # XRAY LASER
 # A basic template for a gun that fires the XrayLaser hitscan.
@@ -77,6 +86,9 @@
   - type: HitscanBatteryAmmoProvider
     proto: XrayLaser
     fireCost: 100
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
 
 # PULSE
 # A basic template for a gun that fires the Pulse hitscan.
@@ -88,6 +100,9 @@
   - type: HitscanBatteryAmmoProvider
     proto: Pulse
     fireCost: 200
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
 
 # SELF RECHARGING
 # A basic template for a gun that recharges its own internal battery over time.

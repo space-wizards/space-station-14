@@ -77,9 +77,6 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
-  - type: Gun
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -142,9 +139,6 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
-  - type: Gun
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -191,9 +185,6 @@
     magState: mag
     steps: 5
     zeroVisible: false
-  - type: Gun
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Battery
     maxCharge: 2000
     startingCharge: 2000
@@ -230,8 +221,6 @@
     availableModes:
     - SemiAuto
     - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Battery
     maxCharge: 5000
     startingCharge: 5000
@@ -300,8 +289,6 @@
     zeroVisible: false
   - type: Gun
     fireRate: 1.5
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
 
 # portable particle decelerator
 - type: entity
@@ -356,9 +343,6 @@
     magState: mag
     steps: 5
     zeroVisible: true
-  - type: Gun
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
 
 # disabler
 - type: entity
@@ -524,9 +508,6 @@
     magState: mag
     steps: 5
     zeroVisible: true
-  - type: Gun
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Tag
     tags:
     - HighRiskItem
@@ -566,9 +547,6 @@
     magState: mag
     steps: 5
     zeroVisible: true
-  - type: Gun
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: BatterySelfRecharger
     autoRechargeRate: 30
   - type: StaticPrice
