@@ -56,7 +56,8 @@ public sealed class PrayerSystem : EntitySystem
 
                 _quickDialog.OpenDialog(actor.PlayerSession, Loc.GetString(comp.Verb), Loc.GetString("prayer-popup-notify-pray-ui-message"), (string message) =>
                 {
-                    Pray(actor.PlayerSession, comp, message);
+                    if (actor?.PlayerSession != null)
+                        Pray(actor.PlayerSession, comp, message);
                 });
             },
             Impact = LogImpact.Low,
