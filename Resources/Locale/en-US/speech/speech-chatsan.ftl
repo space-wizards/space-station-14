@@ -135,3 +135,6 @@ chatsan-replacement-48 = right now
 
 chatsan-word-49 = atp
 chatsan-replacement-49 = at this point
+
+chatsan-word-50 = atm
+chatsan-replacement-50 = at the moment
