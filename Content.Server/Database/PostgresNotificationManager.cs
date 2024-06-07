@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.CCVar;
@@ -13,7 +15,11 @@ using Robust.Shared.Exceptions;
 
 namespace Content.Server.Database;
 
-public sealed class PostgresNotificationManager : IDisposable, IPostInjectInit
+/// <summary>
+/// Listens for ban_notification containing the player id and the banning server id using postgres listen/notify.
+/// Players a ban_notification got received for get banned, except when the current server id and the one in the notification payload match.
+/// </summary>
+public sealed class PostgresNotificationManager : IDisposable
 {
     private const string BanNotificationChannel = "ban_notification";
     private const string PostgresDbEngine = "postgres";
@@ -24,6 +30,7 @@ public sealed class PostgresNotificationManager : IDisposable, IPostInjectInit
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly ILocalizationManager _loc = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly ServerDbEntryManager _entryManager = default!;
 
 #if EXCEPTION_TOLERANCE
     [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
@@ -31,9 +38,13 @@ public sealed class PostgresNotificationManager : IDisposable, IPostInjectInit
 
     private ISawmill? _logger;
     private NpgsqlConnection? _connection;
-    private CancellationTokenSource _tokenSource = new CancellationTokenSource();
 
-    public void PostInject()
+    private readonly CancellationTokenSource _tokenSource = new();
+
+    /// <summary>
+    /// Sets up the database connection and the notification handler
+    /// </summary>
+    public void Init()
     {
         if (!_cfg.GetCVar(CCVars.DatabaseEngine).Equals(PostgresDbEngine, StringComparison.CurrentCultureIgnoreCase))
             return;
@@ -57,17 +68,14 @@ public sealed class PostgresNotificationManager : IDisposable, IPostInjectInit
 
         _connection = new NpgsqlConnection(builder.ConnectionString);
         _connection.Notification += OnNotification;
-    }
-
-    public void Listen()
-    {
-        if (_connection == null)
-            return;
 
         var cancellationToken = _tokenSource.Token;
         Task.Run(() => NotificationListener(cancellationToken), cancellationToken);
     }
 
+    /// <summary>
+    /// Listens to the notification channel with basic error handling and reopens the connection if it got closed
+    /// </summary>
     private async Task NotificationListener(CancellationToken cancellationToken)
     {
         if (_connection == null)
@@ -108,15 +116,21 @@ public sealed class PostgresNotificationManager : IDisposable, IPostInjectInit
         if (notification.Channel != BanNotificationChannel)
             return;
 
-        _taskManager.RunOnMainThread(async () => OnBanNotification(notification.Payload));
-    }
-
-    private void OnBanNotification(string payload)
-    {
-        if (!Guid.TryParse(payload, out var playerId))
+        var notificationData = JsonSerializer.Deserialize<BanNotificationData>(notification.Payload);
+        if (notificationData == null)
             return;
 
-        if (!_playerManager.TryGetSessionById(new NetUserId(playerId), out var player))
+        // ReSharper disable once AsyncVoidLambda
+        _taskManager.RunOnMainThread(async () => await OnBanNotification(notificationData));
+    }
+
+    private async Task OnBanNotification(BanNotificationData payload)
+    {
+
+        if ((await _entryManager.ServerEntity).Id == payload.ServerId)
+            return;
+
+        if (!_playerManager.TryGetSessionById(new NetUserId(payload.PlayerId), out var player))
             return;
 
         var reason = _loc.GetString("ban-kick-reason");
@@ -132,5 +146,17 @@ public sealed class PostgresNotificationManager : IDisposable, IPostInjectInit
 
         _connection.Notification -= OnNotification;
         _connection.Dispose();
+    }
+
+    private sealed class BanNotificationData
+    {
+        [JsonRequired, JsonPropertyName("player_id")]
+        public Guid PlayerId { get; init; }
+        /// <summary>
+        /// The id of the server the ban was made on
+        /// </summary>
+        /// <remarks>This is optional in case the ban was made outside a server (SS14.Admin) </remarks>
+        [JsonPropertyName("server_id")]
+        public int ServerId { get; init; }
     }
 }

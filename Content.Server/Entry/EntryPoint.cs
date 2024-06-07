@@ -104,7 +104,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<GhostKickManager>().Initialize();
                 IoCManager.Resolve<ServerInfoManager>().Initialize();
                 IoCManager.Resolve<ServerApi>().Initialize();
-                IoCManager.Resolve<PostgresNotificationManager>().Listen();
+                IoCManager.Resolve<PostgresNotificationManager>().Init();
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();
