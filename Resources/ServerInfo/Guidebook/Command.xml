@@ -19,37 +19,37 @@ Command is made up of the heads of each department, being the Head of Personnel,
   </Box>
 
 ## Taking Charge
-Congratulations on your promotion! Besides all the extra paperwork, your new responsibilities include running your department, making changes and choosing priorities, keeping personnel and equipment safe as well as slacking off while your cronies do all the work.
+Congratulations on your promotion! Besides all the extra paperwork, your new [color=#a4885c]responsibilities[/color] include running your department, making changes and choosing priorities, keeping personnel and equipment safe as well as slacking off while your cronies do all the work.
 
-Don't forget, you still have a job! Your fancy tools don't earn you a day off, you still have to fill in for any staffing shortages or help out struggling workers.
+Don't forget, you still have a job! Your fancy tools don't earn you a day off, you still have to fill in for any staffing shortages, helping out struggling workers and teaching the newbies.
 
 You might get away with just sitting around and letting people resent you, but it's wiser to get active and work alongside them.
 Remember to move your workers around to have them do what they like doing or what they do best.
 
 ## Your Locker
 
-To deal with your new soul-crushing tasks, every head is given special items to lead your subordinates. Most of your new shiny tools can be found in your locker.
+To deal with your new soul-crushing tasks, every head is given special items to lead your subordinates. Most of your new shiny tools can be found in your [color=#a4885c]locker[/color].
   <Box>
     <GuideEntityEmbed Entity="LockerCaptain"/>
   </Box>
 
-Your remote is very simple but profoundly underestimated. A small but mighty force, your remote can open and close airlocks, spin the bolts to lock them, or even allow anybody in, regardless of access. It does this all from a distance.
+Your [color=#a4885c]remote[/color] is very simple but profoundly underestimated. A small but mighty force, your remote can open and close [color=#a4885c]airlocks[/color], spin the [color=#a4885c]bolts[/color] to lock them, or toggle [color=#a4885c]emergency access[/color]. It can do this from a distance.
   <Box>
     <GuideEntityEmbed Entity="DoorRemoteCommand"/>
   </Box>
-The remote controls where people move around. Heads can lock personnel out of dangerous areas or let people in to grab something really quickly.
+The remote influences where people move around. Heads can lock personnel out of dangerous areas or let people in to grab something really quickly.
 
-You also have access to your own channel, like every other department. However, yours is particularly special as the people who can hear you have entire departments at their fingertips.
+You also have access to your very own Command channel, like every other department. However, yours is particularly special as the people who can hear you have [color=#a4885c]entire departments[/color] at their fingertips.
 Use this to communicate with other heads and be a representative of what your workers want or need.
 
-The Captain and the Head of Personnel get access to the lucrative master encryption key, letting them tune into every radio channel on the station. This is extremly valuable, as you can coordinate between departments yourself.
-Don't waste this vital advantage!
+The Captain and the Head of Personnel get access to the lucrative [color=#a4885c]master encryption key[/color], letting them tune into every radio channel on the station. This is extremly valuable, as you can coordinate between departments yourself.
+[color=#a4885c]Don't waste this vital advantage![/color]
   <Box>
     <GuideEntityEmbed Entity="ClothingHeadsetCommand"/>
     <GuideEntityEmbed Entity="EncryptionKeyStationMaster"/>
   </Box>
 
-To make the swamp of paperwork (that will definitely overwhelm you) even harder to deal with, you have generously been given a stamp in your locker. Use this to sign paperwork. After you stamp it, it can't be edited. Look it over first.
+To make the swamp of paperwork (that will definitely overwhelm you) even harder to deal with, you have generously been given a [color=#a4885c]stamp[/color] in your locker. Use this to sign paperwork. After you stamp it, it can't be edited. Look it over first.
   <Box>
     <GuideEntityEmbed Entity="RubberStampCaptain"/>
   </Box>

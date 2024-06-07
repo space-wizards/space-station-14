@@ -10,7 +10,7 @@ Whisper can only be heard when nearby somebody. You automatically whisper into y
 
 Emotes are gestures that you make. Can be recieved by anyone who is not blinded. You will often see mimes do many emotes.
 
-Whisper messages can be sent by starting your message with [color=#a4885c][keybind="FocusChatWhisperWindow"/][/color] and Emotes can be sent by starting your message with ([color=#a4885c]@[/color]).
+Whisper messages can be sent by starting your message with [color=#a4885c][keybind="FocusWhisperChatindow"/][/color] and Emotes can be sent by starting your message with ([color=#a4885c]@[/color]).
 You can also cycle through all of these text channels by pressing [keybind="CycleChatChannelForward"/].
 
 People may not be able to make out all of what you're saying if you're standing too far away from them. This is especially important if you're whispering.
