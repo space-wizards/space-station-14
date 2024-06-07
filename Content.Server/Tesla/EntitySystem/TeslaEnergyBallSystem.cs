@@ -22,20 +22,6 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<TeslaEnergyBallComponent, EntityConsumedByEventHorizonEvent>(OnConsumed);
-    }
-
-    private void OnConsumed(Entity<TeslaEnergyBallComponent> tesla, ref EntityConsumedByEventHorizonEvent args)
-    {
-        Spawn(tesla.Comp.ConsumeEffectProto, Transform(args.Entity).Coordinates);
-        if (TryComp<SinguloFoodComponent>(args.Entity, out var singuloFood))
-        {
-            AdjustEnergy(tesla, tesla.Comp, singuloFood.Energy);
-        } else
-        {
-            AdjustEnergy(tesla, tesla.Comp, tesla.Comp.ConsumeStuffEnergy);
-        }
     }
 
     public void AdjustEnergy(EntityUid uid, TeslaEnergyBallComponent component, float delta)
