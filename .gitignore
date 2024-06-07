@@ -306,5 +306,3 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
-/Resources/Prototypes/Loadouts/loadout_groups.yml
-/Resources/Prototypes/Roles/Jobs/Command/captain.yml
