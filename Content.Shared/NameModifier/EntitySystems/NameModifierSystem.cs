@@ -13,13 +13,7 @@ public sealed partial class NameModifierSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NameModifierComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NameModifierComponent, EntityRenamedEvent>(OnEntityRenamed);
-    }
-
-    private void OnMapInit(Entity<NameModifierComponent> entity, ref MapInitEvent args)
-    {
-        //SetBaseName(entity, Name(entity));
     }
 
     private void OnEntityRenamed(Entity<NameModifierComponent> entity, ref EntityRenamedEvent args)
@@ -111,7 +105,7 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
     /// <summary>
     /// Adds a modifier to the entity's name.
     /// The original name will be passed to Fluent as <c>$baseName</c> along with any <paramref name="extraArgs"/>.
-    /// Prefixes with a higher <paramref name="priority"/> will be applied later.
+    /// Modifiers with a higher <paramref name="priority"/> will be applied later.
     /// </summary>
     public void AddModifier(LocId locId, int priority = 0, ValueList<(string, object)>? extraArgs = null)
     {

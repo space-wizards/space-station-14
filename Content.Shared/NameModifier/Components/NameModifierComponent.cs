@@ -11,7 +11,7 @@ namespace Content.Shared.NameModifier.Components;
 public sealed partial class NameModifierComponent : Component
 {
     /// <summary>
-    /// The entity's name without any modifiers like prefixes, postfixes, or overrides.
+    /// The entity's name without any modifiers.
     /// If you want to base a modifier on the entity's name, use this so that modifiers
     /// aren't duplicated.
     /// </summary>
