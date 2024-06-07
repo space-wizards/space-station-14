@@ -1,0 +1,31 @@
+- type: entity
+  parent: BaseItem
+  id: WeaponMeleeToolboxHisGrace
+  name: His Grace
+  description: A tider's best friend or worst enemy. He hungers. Bring him food.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_green.rsi
+    state: icon
+  - type: Item
+    size: Ginormous
+    sprite: Objects/Tools/Toolboxes/toolbox_green.rsi
+  - type: MeleeWeapon
+    altDisarm: false
+    wideAnimationRotation: -135
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 20
+        Structural: 20
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"
+  - type: HisGrace
+  - type: Devourer
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: Ichor
+    healRate: 15.0
+    whitelist:
+      components:
+      - MobState
