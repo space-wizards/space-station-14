@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: Made the Artifact Reports page up to date with current Xenoarchaeology
-    type: Tweak
-  id: 6195
-  time: '2024-03-19T03:22:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26252
 - author: keronshb
   changes:
   - message: Fixed a bug where stores were enabling refunds after a purchase
@@ -3848,3 +3841,10 @@
   id: 6694
   time: '2024-06-07T01:24:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28679
+- author: AJCM-git
+  changes:
+  - message: Guidebook no longer lists every single rule
+    type: Fix
+  id: 6695
+  time: '2024-06-07T11:28:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28680
