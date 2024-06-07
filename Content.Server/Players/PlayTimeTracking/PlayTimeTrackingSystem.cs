@@ -246,12 +246,14 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
         for (var i = 0; i < jobs.Count; i++)
         {
-            if (!_prototypes.TryIndex(jobs[i], out var job)
-                || !JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes))
+            if (_prototypes.TryIndex(jobs[i], out var job)
+                && JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes))
             {
-                jobs.RemoveSwap(i);
-                i--;
+                continue;
             }
+
+            jobs.RemoveSwap(i);
+            i--;
         }
     }
 
