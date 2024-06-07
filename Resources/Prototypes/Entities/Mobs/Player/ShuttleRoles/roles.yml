@@ -121,7 +121,7 @@
 - type: entity
   id: RandomHumanoidClownTroupeBanana
   name: banana clown troupe
-  parent: RandomHumanoidClownTroupe
+  parent: RandomHumanoidVisitorClown
   components:
     - type: RandomHumanoidSpawner
       settings: ClownTroupeBanana
@@ -367,6 +367,16 @@
       settings: VisitorLawyer
 
 - type: entity
+  id: RandomHumanoidVisitorLawyerCentcom
+  name: visiting centcom lawyer ghost role
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: VisitorLawyerCentcom
+
+- type: entity
   id: RandomHumanoidVisitorLibrarian
   name: visiting librarian ghost role
   components:
@@ -384,7 +394,7 @@
       sprite: Objects/Tools/appraisal-tool.rsi
       state: icon
     - type: RandomHumanoidSpawner
-      settings: VisitorMusican
+      settings: VisitorMusician
 
 - type: entity
   id: RandomHumanoidVisitorMime

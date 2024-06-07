@@ -1,6 +1,6 @@
 ## See also ../roles.yml and ../spawners.yml
 
-### Nanotrasen Visitors with Nanotrasen ID
+### Visitors with Visitor ID
 
 # Command
 # Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
@@ -106,8 +106,6 @@
   components:
     - type: Loadout
       prototypes: [ VisitorWarden, VisitorWardenAlt ]
-
-# Misc
 
 # Cargo
 
@@ -416,7 +414,20 @@
       raffle:
         settings: short
     - type: Loadout
-      prototypes: [ VisitorLawyer, VisitorLawyerAlt ]
+      prototypes: [ VisitorLawyerAltA, VisitorLawyerAltB, VisitorLawyerAltC, VisitorLawyerAltD, VisitorLawyerAltE ]
+
+- type: randomHumanoidSettings
+  id: VisitorLawyerCentcom
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-cargo-technical-name
+      description: ghost-role-information-lost-cargo-technical-description
+      rules: ghost-role-information-lost-cargo-technical-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ VisitorLawyerCentcom ]
 
 - type: randomHumanoidSettings
   id: VisitorLibrarian
@@ -442,7 +453,33 @@
       raffle:
         settings: short
     - type: Loadout
-      prototypes: [ VisitorMusician, VisitorMusicianAlt ]
+      prototypes: [ VisitorMusicianFancyAltA, VisitorMusicianFancyAltB, VisitorMusicianFancyAltC, VisitorMusicianFancyAltD, VisitorMusicianFancyAltE, VisitorMusicianFancyAltF, VisitorMusicianFancyAltG, VisitorMusicianFancyAltH, VisitorMusicianFancyAltI, VisitorMusicianRelaxedAltA, VisitorMusicianRelaxedAltB, VisitorMusicianRelaxedAltC, VisitorMusicianRelaxedAltD, VisitorMusicianRelaxedAltE, VisitorMusicianRelaxedAltF, VisitorMusicianMariachi ]
+
+- type: randomHumanoidSettings
+  id: VisitorMusicianFancy
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-cargo-technical-name
+      description: ghost-role-information-lost-cargo-technical-description
+      rules: ghost-role-information-lost-cargo-technical-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ VisitorMusicianFancyAltA, VisitorMusicianFancyAltB, VisitorMusicianFancyAltC, VisitorMusicianFancyAltD, VisitorMusicianFancyAltE, VisitorMusicianFancyAltF, VisitorMusicianFancyAltG, VisitorMusicianFancyAltH, VisitorMusicianFancyAltI ]
+
+- type: randomHumanoidSettings
+  id: VisitorMusicianRelaxed
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-cargo-technical-name
+      description: ghost-role-information-lost-cargo-technical-description
+      rules: ghost-role-information-lost-cargo-technical-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ VisitorMusicianRelaxedAltA, VisitorMusicianRelaxedAltB, VisitorMusicianRelaxedAltC, VisitorMusicianRelaxedAltD, VisitorMusicianRelaxedAltE, VisitorMusicianRelaxedAltF, VisitorMusicianMariachi ]
 
 - type: randomHumanoidSettings
   id: VisitorMime
@@ -496,38 +533,15 @@
     - type: Loadout
       prototypes: [ VisitorZookeeper, VisitorZookeeperAlt ]
 
-
-
-
-
-
 - type: randomHumanoidSettings
   id: ClownTroupeBanana
-  parent: ClownTroupe
+  parent: VisitorClown
   randomizeName: false
   components:
     - type: Loadout
       prototypes: [ BananaClown ]
 
-### Visitors with Visitor ID
-
-# Command
-# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
-
-# Security
-# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
-
 # Misc
-
-# Cargo
-
-# Engineering
-
-# Medical
-
-# Science
-
-# Civilian
 
 ### Visitors missing equipment for challenges
 # CHALLENGE #
@@ -597,8 +611,6 @@
 # Security
 # Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
 
-# Misc
-
 # Cargo
 
 - type: randomHumanoidSettings
@@ -627,6 +639,8 @@
 # Science
 
 # Civilian
+
+# Misc
 
 ### Syndicate & Hostiles
 

@@ -1067,6 +1067,510 @@
   - MopItem
   - Bucket
 
+- type: startingGear
+  id: VisitorLawyerAltA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatFedoraGrey
+    neck: ClothingNeckLawyerbadge
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    ears: ClothingHeadsetSecurity
+    pocket1: RubberStampLawyer
+    pocket2: LuxuryPen
+  inhand:
+  - BriefcaseBrownFilled
+
+- type: startingGear
+  id: VisitorLawyerAltB
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerBlue
+    shoes: ClothingShoesLeather
+    head: ClothingHeadHatFedoraBrown
+    neck: ClothingNeckLawyerbadge
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    ears: ClothingHeadsetSecurity
+    pocket1: RubberStampLawyer
+    pocket2: SmokingPipeFilledTobacco
+  inhand:
+  - BriefcaseBrownFilled
+
+- type: startingGear
+  id: VisitorLawyerAltC
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerRed
+    shoes: ClothingShoesColorRed
+    head: ClothingHeadHatCowboyBrown
+    neck: ClothingNeckLawyerbadge
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    belt: ClothingBeltStorageWaistbag
+    ears: ClothingHeadsetSecurity
+    pocket1: RubberStampLawyer
+    pocket2: SmokingPipeFilledTobacco
+  inhand:
+  - BriefcaseBrownFilled
+
+- type: startingGear
+  id: VisitorLawyerAltD
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerPurple
+    shoes: ClothingShoesSnakeskinBoots
+    gloves: ClothingHandsGlovesColorWhite
+    head: ClothingHeadHatBeaverHat
+    neck: ClothingNeckLawyerbadge
+    mask: CigarGold
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    ears: ClothingHeadsetSecurity
+    outerClothing: ClothingOuterCoatExpensive
+    pocket1: RubberStampLawyer
+    pocket2: LuxuryPen
+  inhand:
+  - BriefcaseBrownFilled
+
+- type: startingGear
+  id: VisitorLawyerAltE
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerGood
+    shoes: ClothingShoesLeather
+    head: ClothingHeadHatCorpsoft
+    neck: ClothingNeckLawyerbadge
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    belt: ClothingBeltStorageWaistbag
+    ears: ClothingHeadsetSecurity
+    pocket1: RubberStampLawyer
+    pocket2: LuxuryPen
+  inhand:
+  - BriefcaseBrownFilled
+
+- type: startingGear
+  id: VisitorLawyerCentcom
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomAgent
+    shoes: ClothingShoesLeather
+    gloves: ClothingHandsGlovesLeather
+    head: BladedFlatcapBrown
+    neck: ClothingNeckLawyerbadge
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    belt: ClothingBeltStorageWaistbag
+    eyes: ClothingEyesGlassesSunglasses
+    ears: ClothingHeadsetCentCom
+    pocket1: RubberStampLawyer
+    pocket2: LuxuryPen
+  inhand:
+  - BriefcaseBrownFilled
+
+- type: startingGear
+  id: VisitorLawyer
+  equipment:
+    jumpsuit: 
+    shoes: 
+    gloves:
+    head: 
+    neck: 
+    mask: 
+    id: VisitorPDA
+    back: 
+    belt: 
+    eyes: 
+    ears: 
+    outerClothing: 
+    suitstorage:
+    pocket1: 
+    pocket2: 
+  inhand:
+  - 
+
+- type: startingGear
+  id: VisitorLibrarian
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLibrarian
+    shoes: ClothingShoesBootsLaceup
+    neck: ClothingNeckScarfStripedGreen
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    belt: ClothingBeltStorageWaistbag
+    eyes: ClothingEyesGlassesJamjar
+    ears: ClothingHeadsetService
+    pocket1: BookJanitorTale
+    pocket2: BookRandomStory
+  inhand:
+  - Cane
+
+- type: startingGear
+  id: VisitorLibrarianAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCurator
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatGreyFlatcap
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    belt: ClothingBeltStorageWaistbag
+    eyes: ClothingEyesGlasses
+    ears: ClothingHeadsetService
+    pocket1: BookSun
+    pocket2: BookRandomStory
+  inhand:
+  - BoxFolderClipboard
+
+# - type: startingGear
+  # id: VisitorLawyer
+  # equipment:
+    # jumpsuit: 
+    # shoes: 
+    # gloves:
+    # head: 
+    # neck: 
+    # mask: 
+    # id: VisitorPDA
+    # back: 
+    # belt: 
+    # eyes: ClothingEyesGlassesCheapSunglasses
+    # ears: ClothingHeadsetService
+    # outerClothing: 
+    # suitstorage:
+    # pocket1: 
+    # pocket2: 
+  # inhand:
+  # - 
+
+- type: startingGear
+  id: VisitorMusicianFancyAltA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMusician
+    shoes: ClothingShoesBootsLaceup
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: DrinkGrapeCan
+    pocket2: FoodSnackBoritos
+  inhand:
+  - TromboneInstrument
+
+- type: startingGear
+  id: VisitorMusicianFancyAltB
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMusician
+    shoes: ClothingShoesBootsLaceup
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: FoodSnackCheesie
+    pocket2: DrinkShamblersJuiceCan
+  inhand:
+  - SynthesizerInstrument
+
+- type: startingGear
+  id: VisitorMusicianFancyAltC
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMusician
+    shoes: ClothingShoesBootsLaceup
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: FoodSnackPistachios
+    pocket2: DrinkNukieCan
+  inhand:
+  - CelloInstrument
+
+- type: startingGear
+  id: VisitorMusicianFancyAltD
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMusician
+    shoes: ClothingShoesBootsLaceup
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: DrinkSolDryCan
+    pocket2: FoodSnackBoritos
+  inhand:
+  - ViolinInstrument
+
+- type: startingGear
+  id: VisitorMusicianFancyAltE
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMusician
+    shoes: ClothingShoesBootsLaceup
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: DrinkEnergyDrinkCan
+    pocket2: FoodSnackRaisins
+  inhand:
+  - ViolaInstrument
+
+- type: startingGear
+  id: VisitorMusicianFancyAltF
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMusician
+    shoes: ClothingShoesBootsLaceup
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: FoodSnackSus
+    pocket2: DrinkFourteenLokoCan
+  inhand:
+  - ClarinetInstrument
+
+- type: startingGear
+  id: VisitorMusicianFancyAltG
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMusician
+    shoes: ClothingShoesBootsLaceup
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: FoodSnackCnDs
+    pocket2: DrinkDrGibbCan
+  inhand:
+  - SaxophoneInstrument
+
+- type: startingGear
+  id: VisitorMusicianFancyAltH
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMusician
+    shoes: ClothingShoesBootsLaceup
+    id: VisitorPDA
+    back: ClothingBackpackSatchelLeather
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: FoodSnackChips
+    pocket2: DrinkRootBeerCan
+  inhand:
+  - FrenchHornInstrument
+
+- type: startingGear
+  id: VisitorMusicianFancyAltI
+  equipment:
+    jumpsuit: ClothingUniformRandomShirt
+    shoes: ClothingShoesColorBrown
+    id: VisitorPDA
+    back: ClothingBackpackDuffel
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: BluntRainbow
+    pocket2: DrinkGrapeCan
+  inhand:
+  - TrumpetInstrument
+
+- type: startingGear
+  id: VisitorMusicianRelaxedAltA
+  equipment:
+    jumpsuit: ClothingUniformRandomShirt
+    shoes: ClothingShoesColorBlack
+    id: VisitorPDA
+    back: ClothingBackpackSatchel
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: BluntRainbow
+    pocket2: DrinkNukieCan
+  inhand:
+  - RockGuitarInstrument
+
+- type: startingGear
+  id: VisitorMusicianRelaxedAltB
+  equipment:
+    jumpsuit: ClothingUniformRandomShirt
+    shoes: ClothingShoesColorBlack
+    id: VisitorPDA
+    back: ClothingBackpack
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: BluntRainbow
+    pocket2: FoodSnackCheesie
+  inhand:
+  - BanjoInstrument
+
+- type: startingGear
+  id: VisitorMusicianRelaxedAltC
+  equipment:
+    jumpsuit: ClothingUniformRandomShirt
+    shoes: ClothingShoesColorBrown
+    id: VisitorPDA
+    back: ClothingBackpackDuffel
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: BluntRainbow
+    pocket2: FoodSnackPistachios
+  inhand:
+  - AcousticGuitarInstrument
+
+- type: startingGear
+  id: VisitorMusicianRelaxedAltD
+  equipment:
+    jumpsuit: ClothingUniformRandomShirt
+    shoes: ClothingShoesColorBlack
+    id: VisitorPDA
+    back: ClothingBackpackDuffel
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: BluntRainbow
+    pocket2: DrinkEnergyDrinkCan
+  inhand:
+  - ElectricGuitarInstrument
+
+- type: startingGear
+  id: VisitorMusicianRelaxedAltE
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMusician
+    shoes: ClothingShoesBootsLaceup
+    id: VisitorPDA
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: BluntRainbow
+    pocket2: FoodSnackSus
+  inhand:
+  - TrumpetInstrument
+
+- type: startingGear
+  id: VisitorMusicianRelaxedAltF
+  equipment:
+    jumpsuit: ClothingUniformRandomShirt
+    shoes: ClothingShoesWizard
+    head: ClothingHeadRastaHat
+    id: VisitorPDA
+    back: ClothingBackpackSatchel
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: BluntRainbow
+    pocket2: FoodSnackSus
+  inhand:
+  - SaxophoneInstrument
+
+- type: startingGear
+  id: VisitorMusicianMariachi
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorTeal
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatSombrero
+    id: VisitorPDA
+    back: ClothingBackpackSatchel
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    outerClothing: ClothingOuterPoncho
+    pocket1: BluntRainbow
+    pocket2: FoodSnackSus
+  inhand:
+  - AcousticGuitarInstrument
+
+- type: startingGear
+  id: VisitorMime
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMime
+    shoes: ClothingShoesColorWhite
+    gloves: ClothingHandsGlovesColorWhite
+    head: ClothingHeadBandBlack
+    mask: ClothingMaskMime
+    id: VisitorPDA
+    back: ClothingBackpackMime
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    pocket1: CrayonMime
+    pocket2: RubberStampMime
+
+- type: startingGear
+  id: VisitorMimeAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMime
+    shoes: ClothingShoesColorWhite
+    gloves: ClothingHandsGlovesColorWhite
+    head: ClothingHeadHatAnimalCatBlack
+    mask: ClothingMaskMime
+    id: VisitorPDA
+    back: ClothingBackpackMime
+    eyes: ClothingEyesGlassesCheapSunglasses
+    ears: ClothingHeadsetService
+    outerClothing: ClothingOuterWinterMime
+    pocket1: CrayonMime
+    pocket2: RubberStampMime
+  inhand:
+  - FoodBurgerMime
+
+- type: startingGear
+  id: VisitorReporter
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitReporter
+    shoes: ClothingShoesLeather
+    id: VisitorPDA
+    back: ClothingBackpackSatchel
+    ears: ClothingHeadsetService
+    pocket1: MicrophoneInstrument
+    pocket2: BoxFolderClipboard
+
+- type: startingGear
+  id: VisitorReporterAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJournalist
+    shoes: ClothingShoesColorBrown
+    id: VisitorPDA
+    back: ClothingBackpackSatchel
+    ears: ClothingHeadsetService
+    pocket1: MicrophoneInstrument
+    pocket2: BoxFolderClipboard
+
+- type: startingGear
+  id: VisitorServiceWorker
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBartender
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadBandBlue
+    id: VisitorPDA
+    back: ClothingBackpack
+    ears: ClothingHeadsetService
+    pocket1: Fork
+    pocket2: FoodShakerPepper
+
+- type: startingGear
+  id: VisitorServiceWorkerAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadBandBlack
+    id: VisitorPDA
+    back: ClothingBackpack
+    ears: ClothingHeadsetService
+    outerClothing: ClothingOuterApronBar
+    pocket1: Fork
+    pocket2: FoodShakerPepper
+
+- type: startingGear
+  id: VisitorZookeeper
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSafari
+    shoes: ClothingShoesBootsSalvage
+    head: ClothingHeadSafari
+    id: VisitorPDA
+    belt: ClothingBeltUtility
+    back: ClothingBackpackDuffel
+    ears: ClothingHeadsetService
+    pocket1: WeaponFlareGun
+    pocket2: PillCanisterDylovene
+
+- type: startingGear
+  id: VisitorZookeeperAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSafari
+    shoes: ClothingShoesBootsWork
+    head: ClothingHeadSafari
+    id: VisitorPDA
+    belt: ClothingBeltStorageWaistbag
+    back: WeaponShotgunDoubleBarreledRubber
+    ears: ClothingHeadsetService
+    pocket1: WeaponFlareGun
+    pocket2: PillCanisterDylovene
+
 ### Challenge Visitors
 
 # Command

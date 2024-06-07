@@ -455,7 +455,7 @@
 
 - type: entity
   name: scientific visitor spawner
-  id: VisitingMedicalSpawner
+  id: VisitingScientistSpawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -468,7 +468,7 @@
     - RandomHumanoidVisitorResearchAssistant
     - RandomHumanoidVisitorScientist
     rarePrototypes:
-    - RandomHumanoidVisitorCE
+    - RandomHumanoidVisitorRD
     rareChance: 0.05
 
 - type: entity
@@ -503,7 +503,7 @@
 
 - type: entity
   name: civilian visitor spawner
-  id: VisitingMedicalSpawner
+  id: VisitingCivilianSpawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -602,6 +602,20 @@
     - RandomHumanoidVisitorChef
 
 - type: entity
+  name: visiting clown spawner
+  id: VisitorClownSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorClown
+
+- type: entity
   name: visiting janitor spawner
   id: VisitorJanitorSpawner
   parent: MarkerBase
@@ -630,6 +644,20 @@
     - RandomHumanoidVisitorLawyer
 
 - type: entity
+  name: visiting centcom lawyer spawner
+  id: VisitorLawyerCentcomSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorLawyerCentcom
+
+- type: entity
   name: visiting librarian spawner
   id: VisitorLibrarianSpawner
   parent: MarkerBase
@@ -644,20 +672,6 @@
     - RandomHumanoidVisitorLibrarian
 
 - type: entity
-  name: visiting bartender spawner
-  id: VisitorBartenderSpawner
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
-  - type: RandomSpawner
-    prototypes:
-    - RandomHumanoidVisitorBartender
-
-- type: entity
   name: visiting musician spawner
   id: VisitorMusicianSpawner
   parent: MarkerBase
@@ -670,6 +684,34 @@
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMusician
+
+- type: entity
+  name: visiting fancy musician spawner
+  id: VisitorMusicianFancySpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorMusicianFancy
+
+- type: entity
+  name: visiting relaxed musician spawner
+  id: VisitorMusicianRelaxedSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorMusicianRelaxed
 
 - type: entity
   name: visiting mime spawner
