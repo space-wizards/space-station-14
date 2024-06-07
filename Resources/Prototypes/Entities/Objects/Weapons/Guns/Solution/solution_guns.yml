@@ -36,7 +36,6 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
   - type: Gun
-    cameraRecoilScalar: 0 #no recoil
     fireRate: 3
     selectedMode: FullAuto
     availableModes:
@@ -73,7 +72,6 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
   - type: Gun
-    cameraRecoilScalar: 0 #no recoil
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
