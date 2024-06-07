@@ -42,6 +42,8 @@ namespace Content.Server.Labels
                 component.CurrentLabel = Loc.GetString(component.CurrentLabel);
                 Dirty(uid, component);
             }
+
+            _nameMod.RefreshNameModifiers(uid);
         }
 
         /// <summary>
