@@ -41,8 +41,6 @@
     selectedMode: FullAuto
     availableModes:
     - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
   - type: SolutionContainerManager
     solutions:
       chamber:
@@ -80,8 +78,6 @@
     selectedMode: FullAuto
     availableModes:
     - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
   - type: SolutionContainerManager
     solutions:
       chamber:
