@@ -6,7 +6,7 @@ namespace Content.Shared.NameModifier.EntitySystems;
 
 public sealed partial class ModifyWearerNameSystem : EntitySystem
 {
-    [Dependency] private readonly NameModifierSystem _renamer = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     public override void Initialize()
     {
@@ -19,33 +19,16 @@ public sealed partial class ModifyWearerNameSystem : EntitySystem
 
     private void OnGotEquipped(Entity<ModifyWearerNameComponent> entity, ref ClothingGotEquippedEvent args)
     {
-        _renamer.RefreshNameModifiers(args.Wearer);
+        _nameMod.RefreshNameModifiers(args.Wearer);
     }
 
     private void OnGotUnequipped(Entity<ModifyWearerNameComponent> entity, ref ClothingGotUnequippedEvent args)
     {
-        _renamer.RefreshNameModifiers(args.Wearer);
+        _nameMod.RefreshNameModifiers(args.Wearer);
     }
 
     private void OnRefreshNameModifiers(Entity<ModifyWearerNameComponent> entity, ref InventoryRelayedEvent<RefreshNameModifiersEvent> args)
     {
-        switch (entity.Comp.ModifierType)
-        {
-            case NameModifierType.Prefix:
-                {
-                    args.Args.AddPrefix(Loc.GetString(entity.Comp.Text), entity.Comp.Priority);
-                    break;
-                }
-            case NameModifierType.Postfix:
-                {
-                    args.Args.AddPostfix(Loc.GetString(entity.Comp.Text), entity.Comp.Priority);
-                    break;
-                }
-            case NameModifierType.Override:
-                {
-                    args.Args.AddOverride(Loc.GetString(entity.Comp.Text), entity.Comp.Priority);
-                    break;
-                }
-        }
+        args.Args.AddModifier(entity.Comp.LocId, entity.Comp.Priority);
     }
 }

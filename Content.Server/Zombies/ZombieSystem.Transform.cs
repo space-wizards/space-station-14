@@ -222,7 +222,7 @@ namespace Content.Server.Zombies
             _faction.AddFaction(target, "Zombie");
 
             //gives it the funny "Zombie ___" name.
-            _renamer.RefreshNameModifiers(target);
+            _nameMod.RefreshNameModifiers(target);
 
             _identity.QueueIdentityUpdate(target);
 

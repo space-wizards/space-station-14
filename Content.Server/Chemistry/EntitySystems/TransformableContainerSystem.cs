@@ -69,7 +69,7 @@ public sealed class TransformableContainerSystem : EntitySystem
     {
         if (entity.Comp.CurrentReagent is { } currentReagent)
         {
-            args.AddOverride(Loc.GetString("transformable-container-component-glass", ("name", currentReagent.LocalizedName)));
+            args.AddModifier("transformable-container-component-glass", priority: -1, extraArgs: [("reagent", currentReagent.LocalizedName)]);
         }
     }
 

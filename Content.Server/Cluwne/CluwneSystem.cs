@@ -109,6 +109,6 @@ public sealed class CluwneSystem : EntitySystem
     /// </summary>
     private void OnRefreshNameModifiers(Entity<CluwneComponent> entity, ref RefreshNameModifiersEvent args)
     {
-        args.AddPrefix(Loc.GetString("cluwne-name-prefix"));
+        args.AddModifier("cluwne-name-prefix");
     }
 }

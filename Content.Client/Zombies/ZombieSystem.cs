@@ -1,8 +1,5 @@
 using System.Linq;
-using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
-using Content.Shared.StatusIcon;
-using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.StatusIcon.Components;
 using Content.Shared.Zombies;
 using Robust.Client.GameObjects;
@@ -19,7 +16,6 @@ public sealed class ZombieSystem : SharedZombieSystem
         base.Initialize();
 
         SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<ZombieComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
         SubscribeLocalEvent<ZombieComponent, GetStatusIconsEvent>(GetZombieIcon);
         SubscribeLocalEvent<InitialInfectedComponent, GetStatusIconsEvent>(GetInitialInfectedIcon);
     }
@@ -51,10 +47,5 @@ public sealed class ZombieSystem : SharedZombieSystem
         {
             sprite.LayerSetColor(i, component.SkinColor);
         }
-    }
-
-    private void OnRefreshNameModifiers(Entity<ZombieComponent> entity, ref RefreshNameModifiersEvent args)
-    {
-        args.AddPrefix(Loc.GetString("zombie-name-prefix"));
     }
 }

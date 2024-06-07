@@ -1,6 +1,6 @@
 using Content.Shared.Examine;
 using Content.Shared.Labels.Components;
-using Content.Shared.Renamer.EntitySystems;
+using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Labels.EntitySystems;
@@ -33,6 +33,6 @@ public abstract partial class SharedLabelSystem : EntitySystem
     private void OnRefreshNameModifiers(Entity<LabelComponent> entity, ref RefreshNameModifiersEvent args)
     {
         if (!string.IsNullOrEmpty(entity.Comp.CurrentLabel))
-            args.AddPostfix($"({entity.Comp.CurrentLabel})");
+            args.AddModifier("comp-label-format", extraArgs: [("label", entity.Comp.CurrentLabel)]);
     }
 }

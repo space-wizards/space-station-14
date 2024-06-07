@@ -1,7 +1,7 @@
 using Content.Shared.IdentityManagement;
 using Content.Shared.Lube;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Renamer.EntitySystems;
 using Content.Shared.Throwing;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -14,7 +14,7 @@ public sealed class LubedSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly NameModifierSystem _renamer = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     public override void Initialize()
     {
@@ -27,7 +27,7 @@ public sealed class LubedSystem : EntitySystem
 
     private void OnInit(EntityUid uid, LubedComponent component, ComponentInit args)
     {
-        _renamer.RefreshNameModifiers(uid);
+        _nameMod.RefreshNameModifiers(uid);
     }
 
     private void OnHandPickUp(EntityUid uid, LubedComponent component, ContainerGettingInsertedAttemptEvent args)
@@ -35,7 +35,7 @@ public sealed class LubedSystem : EntitySystem
         if (component.SlipsLeft <= 0)
         {
             RemComp<LubedComponent>(uid);
-            _renamer.RefreshNameModifiers(uid);
+            _nameMod.RefreshNameModifiers(uid);
             return;
         }
         component.SlipsLeft--;
@@ -49,6 +49,6 @@ public sealed class LubedSystem : EntitySystem
 
     private void OnRefreshNameModifiers(Entity<LubedComponent> entity, ref RefreshNameModifiersEvent args)
     {
-        args.AddPrefix(Loc.GetString("lubed-name-prefix"));
+        args.AddModifier("lubed-name-prefix");
     }
 }

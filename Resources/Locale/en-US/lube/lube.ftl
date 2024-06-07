@@ -1,5 +1,5 @@
 lube-success = {THE($target)} has been covered in lube!
-lubed-name-prefix = Lubed
+lubed-name-prefix = Lubed {$baseName}
 lube-failure = Can't cover {THE($target)} in lube!
 lube-slip = {THE($target)} slips out of your hands!
 lube-verb-text = Apply Lube

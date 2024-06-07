@@ -6,9 +6,9 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Item;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Renamer.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
@@ -23,7 +23,7 @@ public sealed class GlueSystem : SharedGlueSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
-    [Dependency] private readonly NameModifierSystem _renamer = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     public override void Initialize()
     {
@@ -106,13 +106,13 @@ public sealed class GlueSystem : SharedGlueSystem
             RemComp<UnremoveableComponent>(uid);
             RemComp<GluedComponent>(uid);
 
-            _renamer.RefreshNameModifiers(uid);
+            _nameMod.RefreshNameModifiers(uid);
         }
     }
 
     private void OnGluedInit(Entity<GluedComponent> entity, ref ComponentInit args)
     {
-        _renamer.RefreshNameModifiers(entity.Owner);
+        _nameMod.RefreshNameModifiers(entity.Owner);
     }
 
     private void OnHandPickUp(Entity<GluedComponent> entity, ref GotEquippedHandEvent args)
@@ -124,6 +124,6 @@ public sealed class GlueSystem : SharedGlueSystem
 
     private void OnRefreshNameModifiers(Entity<GluedComponent> entity, ref RefreshNameModifiersEvent args)
     {
-        args.AddPrefix(Loc.GetString("glued-name-prefix"));
+        args.AddModifier("glued-name-prefix");
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Movement.Systems;
-using Content.Shared.Renamer.EntitySystems;
+using Content.Shared.NameModifier.EntitySystems;
 
 namespace Content.Shared.Zombies;
 
@@ -22,6 +22,6 @@ public abstract class SharedZombieSystem : EntitySystem
 
     private void OnRefreshNameModifiers(Entity<ZombieComponent> entity, ref RefreshNameModifiersEvent args)
     {
-        args.AddPrefix(Loc.GetString("zombie-name-prefix"));
+        args.AddModifier("zombie-name-prefix");
     }
 }

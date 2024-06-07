@@ -5,10 +5,10 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Renamer.EntitySystems;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
@@ -33,7 +33,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly NameModifierSystem _renamer = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     private readonly HashSet<EntityUid> _failedAttempts = new();
     private readonly HashSet<EntityUid> _birthQueue = new();
@@ -56,7 +56,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     {
         // This check may seem redundant, but it makes sure that the prefix is removed before the component is removed
         if (_timing.CurTime < entity.Comp.InfantEndTime)
-            args.AddPrefix(Loc.GetString("infant-name-prefix"));
+            args.AddModifier("infant-name-prefix");
     }
 
     /// <summary>
@@ -196,7 +196,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
                 var infant = AddComp<InfantComponent>(offspring);
                 infant.InfantEndTime = _timing.CurTime + infant.InfantDuration;
                 // Make sure the name prefix is applied
-                _renamer.RefreshNameModifiers(offspring);
+                _nameMod.RefreshNameModifiers(offspring);
             }
             _adminLog.Add(LogType.Action, $"{ToPrettyString(uid)} gave birth to {ToPrettyString(offspring)}.");
         }
@@ -245,7 +245,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
                 continue;
             RemCompDeferred(uid, infant);
             // Make sure the name prefix gets removed
-            _renamer.RefreshNameModifiers(uid);
+            _nameMod.RefreshNameModifiers(uid);
         }
     }
 }

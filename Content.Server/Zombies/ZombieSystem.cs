@@ -14,8 +14,8 @@ using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Renamer.EntitySystems;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
@@ -35,10 +35,9 @@ namespace Content.Server.Zombies
         [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly NameModifierSystem _renamer = default!;
+        [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
         public const SlotFlags ProtectiveSlots =
             SlotFlags.FEET |
@@ -283,7 +282,7 @@ namespace Content.Server.Zombies
             _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor, false);
             _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 
-            _renamer.RefreshNameModifiers(target);
+            _nameMod.RefreshNameModifiers(target);
             return true;
         }
 

@@ -12,26 +12,14 @@ public sealed partial class ModifyWearerNameComponent : Component
 {
     /// <summary>
     /// The localization ID of the text to be used as the modifier.
+    /// The base name will be passed in as <c>$baseName</c>
     /// </summary>
     [DataField, AutoNetworkedField]
-    public LocId Text = string.Empty;
-
-    /// <summary>
-    /// What form of modifier should be used.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public NameModifierType ModifierType = NameModifierType.Prefix;
+    public LocId LocId = string.Empty;
 
     /// <summary>
     /// Priority of the modifier. See <see cref="EntitySystems.RefreshNameModifiersEvent"/> for more information.
     /// </summary>
     [DataField, AutoNetworkedField]
     public int Priority;
-}
-
-public enum NameModifierType
-{
-    Prefix,
-    Postfix,
-    Override
 }

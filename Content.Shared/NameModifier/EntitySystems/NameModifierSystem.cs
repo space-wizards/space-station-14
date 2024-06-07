@@ -1,7 +1,7 @@
 using System.Linq;
-using System.Text;
 using Content.Shared.Inventory;
 using Content.Shared.NameModifier.Components;
+using Robust.Shared.Collections;
 
 namespace Content.Shared.NameModifier.EntitySystems;
 
@@ -14,85 +14,71 @@ public sealed partial class NameModifierSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<NameModifierComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<NameModifierComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
+        SubscribeLocalEvent<NameModifierComponent, EntityRenamedEvent>(OnEntityRenamed);
     }
 
     private void OnMapInit(Entity<NameModifierComponent> entity, ref MapInitEvent args)
     {
-        // Set the base name to the current name
-        SetBaseName((entity, entity.Comp), Name(entity));
+        //SetBaseName(entity, Name(entity));
     }
 
-    private void OnAfterAutoHandleState(Entity<NameModifierComponent> entity, ref AfterAutoHandleStateEvent args)
+    private void OnEntityRenamed(Entity<NameModifierComponent> entity, ref EntityRenamedEvent args)
     {
-        // The server might have generated a different name than we did locally if some systems only handle
-        // adding modifiers server-side, so we apply the server's generated name here to be sure.
-        _metaData.SetEntityName(entity, entity.Comp.FullName);
+        SetBaseName((entity, entity.Comp), args.NewName);
+        RefreshNameModifiers((entity, entity.Comp));
     }
 
-    /// <summary>
-    /// Sets the <see cref="NameModifierComponent.BaseName"/> for this entity.
-    /// This will add a <see cref="NameModifierComponent"/> if there isn't one already.
-    /// This will call <see cref="RefreshNameModifiers"/>.
-    /// </summary>
-    /// <remarks>
-    /// Use this to make a permanent change to an entity's name that will play nicely
-    /// with name modifiers like pre- and postfixes. For temporary changes, instead
-    /// subscribe to <see cref="RefreshNameModifiersEvent"/> and call <see cref="RefreshNameModifiers"/>
-    /// when needed.
-    /// </remarks>
-    public void SetBaseName(Entity<NameModifierComponent?> entity, string name)
+    private void SetBaseName(Entity<NameModifierComponent> entity, string name)
     {
-        if (!Resolve(entity, ref entity.Comp, false))
-            entity.Comp = EnsureComp<NameModifierComponent>(entity);
-
         if (name == entity.Comp.BaseName)
             return;
 
         // Set the base name to the new name
         entity.Comp.BaseName = name;
         Dirty(entity);
-
-        // Apply any modifiers if needed
-        RefreshNameModifiers(entity);
     }
 
     /// <summary>
     /// Raises a <see cref="RefreshNameModifiersEvent"/> to gather modifiers and
     /// updates the entity's name to its base name with modifiers applied.
-    /// This will add a <see cref="NameModifierComponent"/> if there isn't one already.
+    /// This will add a <see cref="NameModifierComponent"/> if any modifiers are added.
     /// </summary>
     /// <remarks>
     /// Call this to update the entity's name when adding or removing a modifier.
     /// </remarks>
     public void RefreshNameModifiers(Entity<NameModifierComponent?> entity)
     {
-        if (!Resolve(entity, ref entity.Comp, false))
-            entity.Comp = EnsureComp<NameModifierComponent>(entity);
+        Resolve(entity, ref entity.Comp, logMissing: false);
 
         var meta = MetaData(entity);
 
         // Raise an event to get any modifiers
-        var modifierEvent = new RefreshNameModifiersEvent(entity.Comp.BaseName);
+        var modifierEvent = new RefreshNameModifiersEvent(entity.Comp?.BaseName ?? meta.EntityName);
         RaiseLocalEvent(entity, ref modifierEvent);
+
+        // No modifiers
+        if (modifierEvent.ModifierCount == 0)
+        {
+            // If the entity doesn't have the component, we're done
+            if (entity.Comp == null)
+                return;
+
+            // Restore the base name
+            _metaData.SetEntityName(entity, entity.Comp.BaseName, meta, raiseEvents: false);
+            // The component isn't doing anything anymore, so remove it
+            RemComp<NameModifierComponent>(entity);
+            return;
+        }
 
         // Get the final name with modifiers applied
         var modifiedName = modifierEvent.GetModifiedName();
 
-        if (modifiedName != meta.EntityName)
-        {
-            // Set the entity's name with modifiers
-            _metaData.SetEntityName(entity, modifiedName, meta);
-            Dirty(entity.Owner, meta);
-            var ev = new NameRefreshedEvent();
-            RaiseLocalEvent(entity, ref ev);
-        }
+        // Add the component if needed, and store the base name
+        if (!EnsureComp<NameModifierComponent>(entity, out var comp))
+            SetBaseName((entity, comp), meta.EntityName);
 
-        if (modifiedName != entity.Comp.FullName)
-        {
-            entity.Comp.FullName = modifiedName;
-            Dirty(entity);
-        }
+        // Set the entity's name with modifiers
+        _metaData.SetEntityName(entity, modifiedName, meta, raiseEvents: false);
     }
 }
 
@@ -109,12 +95,13 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
     /// this so you don't include other modifiers.
     /// </summary>
     public readonly string BaseName;
-    private readonly List<(string Text, int Priority)> _prefixes = [];
-    private readonly List<(string Text, int Priority)> _postfixes = [];
-    private (string Text, int Priority)? _override;
+
+    private readonly List<(LocId LocId, int Priority, ValueList<(string, object)>? ExtraArgs)> _modifiers = [];
 
     /// <inheritdoc/>
     public SlotFlags TargetSlots => ~SlotFlags.POCKET;
+
+    public int ModifierCount => _modifiers.Count;
 
     public RefreshNameModifiersEvent(string baseName)
     {
@@ -122,32 +109,13 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
     }
 
     /// <summary>
-    /// Adds a prefix before the entity's name.
-    /// Prefixes with a higher <paramref name="priority"/> will be displayed earlier.
+    /// Adds a modifier to the entity's name.
+    /// The original name will be passed to Fluent as <c>$baseName</c> along with any <paramref name="extraArgs"/>.
+    /// Prefixes with a higher <paramref name="priority"/> will be applied later.
     /// </summary>
-    public void AddPrefix(string text, int priority = 0)
+    public void AddModifier(LocId locId, int priority = 0, ValueList<(string, object)>? extraArgs = null)
     {
-        _prefixes.Add((text, priority));
-    }
-
-    /// <summary>
-    /// Adds a postfix after the entity's name.
-    /// Postfixes with a higher <paramref name="priority"/> will be displayed earlier.
-    /// </summary>
-    public void AddPostfix(string text, int priority = 0)
-    {
-        _postfixes.Add((text, priority));
-    }
-
-    /// <summary>
-    /// Adds text that will override the <see cref="NameModifierComponent.BaseName"/> of the entity.
-    /// If multiple overrides are applied to an entity, the one with the highest <paramref name="priority"/>
-    /// will be used.
-    /// </summary>
-    public void AddOverride(string text, int priority = 0)
-    {
-        if (_override == null || priority > _override.Value.Priority)
-            _override = (text, priority);
+        _modifiers.Add((locId, priority, extraArgs));
     }
 
     /// <summary>
@@ -155,29 +123,15 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
     /// </summary>
     public string GetModifiedName()
     {
-        var sb = new StringBuilder();
+        var name = BaseName;
 
-        // Add all prefixes
-        foreach (var prefix in _prefixes.OrderByDescending(n => n.Priority))
+        foreach (var modifier in _modifiers.OrderBy(n => n.Priority))
         {
-            sb.Append($"{prefix.Text} ");
+            var args = modifier.ExtraArgs ?? [];
+            args.Add(("baseName", name));
+            name = Loc.GetString(modifier.LocId, args.ToArray());
         }
 
-        // Add the override name if there is one, otherwise the original name
-        sb.Append(_override?.Text ?? BaseName);
-
-        // Add all postfixes
-        foreach (var postfix in _postfixes.OrderByDescending(n => n.Priority))
-        {
-            sb.Append($" {postfix.Text}");
-        }
-
-        return sb.ToString();
+        return name;
     }
 }
-
-/// <summary>
-/// Raised on an entity when its name changes as a result of a <see cref="RefreshNameModifiersEvent"/>.
-/// </summary>
-[ByRefEvent]
-public record struct NameRefreshedEvent() { }
