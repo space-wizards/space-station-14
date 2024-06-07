@@ -2,7 +2,6 @@
 # A basic template for a gun that feeds ammo to a chamber from a loaded pistol magazine.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunPistolMag
   components:
   - type: ChamberMagazineAmmoProvider
@@ -36,7 +35,6 @@
 # A basic template for a gun that feeds ammo to a chamber from a loaded caseless pistol magazine.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunPistolCaselessMag
   components:
   - type: ChamberMagazineAmmoProvider
@@ -69,7 +67,6 @@
 # A basic template for a gun that feeds ammo to a chamber from a loaded magnum magazine.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunMagnumMag
   components:
   - type: ChamberMagazineAmmoProvider

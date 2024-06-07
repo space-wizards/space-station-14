@@ -2,7 +2,6 @@
 # A basic template for a gun that feeds ammo to a chamber from a loaded SMG magazine.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunSubMachineGunMag
   components:
   - type: ChamberMagazineAmmoProvider
@@ -36,7 +35,6 @@
 # A basic template for a gun that feeds ammo to a chamber from a top loaded SMG magazine.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunSubMachineGunTopMountedMag
   components:
   - type: ChamberMagazineAmmoProvider

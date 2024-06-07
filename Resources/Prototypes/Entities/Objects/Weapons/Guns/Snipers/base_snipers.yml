@@ -2,7 +2,6 @@
 # A basic template for a gun that uses the BallisticAmmoProvider component and loads CartridgeLightRifle.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunLightRifleBallistic
   components:
   - type: BallisticAmmoProvider
@@ -21,7 +20,6 @@
 # A basic template for a gun that uses the BallisticAmmoProvider component and loads CartridgeAntiMateriel.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunAntiMaterielBallistic
   components:
   - type: BallisticAmmoProvider

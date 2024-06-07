@@ -20,7 +20,6 @@
 # A basic template for a small gun that can be equipped in the belt slot.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunSmall
   components:
   - type: Item
@@ -41,7 +40,6 @@
 # A basic template for a large gun that can be equipped in the back slot.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunMedium
   components:
   - type: Item
@@ -56,7 +54,6 @@
 # A basic template for a gun that is large enough to not fit well in bags and be equipped on the back.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunLarge
   components:
   - type: Item
@@ -71,7 +68,6 @@
 # A basic template for a massive gun that requires multiple hands to carry and slows the carrier.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunHeavy
   components:
   - type: Item
@@ -86,7 +82,6 @@
 # A basic template for a gun that is wieldable and has improved accuracy when wielded. Includes a standard innacuracy.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunWieldable
   components:
   - type: Wieldable
@@ -102,7 +97,6 @@
 # A basic template for a gun that makes almost no noise when fired.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunSilenced
   components:
   - type: Gun

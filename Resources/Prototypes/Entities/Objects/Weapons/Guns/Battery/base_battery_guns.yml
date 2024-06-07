@@ -2,7 +2,6 @@
 # A basic template for a gun that is powered by an internal battery and can be recharged at recharger.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunBattery
   components:
   - type: Battery
@@ -14,7 +13,6 @@
 # A basic template for a gun that is powered by an insertable powercell.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunPowerCell
   components:
   - type: MagazineAmmoProvider
@@ -38,7 +36,6 @@
 # A basic template for a gun that fires the RedLaser hitscan.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunRedLaser
   components:
   - type: HitscanBatteryAmmoProvider
@@ -52,7 +49,6 @@
 # A basic template for a gun that fires the RedMediumLaser hitscan.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunRedMediumLaser
   components:
   - type: HitscanBatteryAmmoProvider
@@ -66,7 +62,6 @@
 # A basic template for a gun that fires the RedHeavyLaser hitscan.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunRedHeavyLaser
   components:
   - type: HitscanBatteryAmmoProvider
@@ -80,7 +75,6 @@
 # A basic template for a gun that fires the XrayLaser hitscan.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunXrayLaser
   components:
   - type: HitscanBatteryAmmoProvider
@@ -94,7 +88,6 @@
 # A basic template for a gun that fires the Pulse hitscan.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunPulse
   components:
   - type: HitscanBatteryAmmoProvider
@@ -108,7 +101,6 @@
 # A basic template for a gun that recharges its own internal battery over time.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunSelfRecharger
   components:
   - type: BatterySelfRecharger

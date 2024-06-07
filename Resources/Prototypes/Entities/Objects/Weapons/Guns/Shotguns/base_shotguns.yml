@@ -2,7 +2,6 @@
 # A basic template for a shotgun that uses the BallisticAmmoProvider component.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunShotgunBallistic
   components:
   - type: BallisticAmmoProvider
@@ -23,7 +22,6 @@
 # A basic template for a gun that fires shells from a loaded shotgun magazine.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunShotgunMag
   components:
   - type: MagazineAmmoProvider

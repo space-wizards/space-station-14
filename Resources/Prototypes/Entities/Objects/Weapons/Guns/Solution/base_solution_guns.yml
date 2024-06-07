@@ -2,7 +2,6 @@
 # A basic template for a gun that shoots chemical solutions from a container.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunSolutionContainer
   components:
   - type: Gun

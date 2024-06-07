@@ -2,7 +2,6 @@
 # A basic template for a launcher that uses the BallisticAmmoProvider component.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunLauncherBallistic
   components:
   - type: BallisticAmmoProvider

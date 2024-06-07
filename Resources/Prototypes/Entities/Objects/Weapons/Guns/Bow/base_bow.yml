@@ -2,7 +2,6 @@
 # A basic template for a bow weapon that knocks an arrow.
 - type: entity
   abstract: true
-  parent: BaseGun
   id: BaseGunArrow
   components:
   - type: ItemSlots
