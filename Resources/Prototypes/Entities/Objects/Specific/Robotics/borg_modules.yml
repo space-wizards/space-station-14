@@ -32,7 +32,6 @@
   id: ActionBorgSwapModule
   name: Swap Module
   description: Select this module, enabling you to use the tools it provides.
-  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: BigItem

@@ -49,7 +49,7 @@
 
 # Uplinks
 - type: entity
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [BaseItem, StorePresetUplink, BaseSyndicateContraband]
   id: BaseUplinkRadio
   name: syndicate uplink
   description: Suspiciously looking old radio...
@@ -69,7 +69,6 @@
   - type: ActivatableUI
     key: enum.StoreUiKey.Key
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 0
 
@@ -79,7 +78,6 @@
   suffix: 20 TC
   components:
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 20
 
@@ -89,7 +87,6 @@
   suffix: 25 TC
   components:
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 25
 
@@ -100,7 +97,6 @@
   suffix: 40 TC, NukeOps
   components:
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 40
   - type: Tag
@@ -113,7 +109,6 @@
   suffix: 60 TC, LoneOps
   components:
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 60
   - type: Tag
@@ -126,6 +121,5 @@
   suffix: DEBUG
   components:
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 99999

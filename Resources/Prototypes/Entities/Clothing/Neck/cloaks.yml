@@ -118,7 +118,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakAdmin
-  name: admin cloak
+  name: weh cloak
   description: Weh!
   components:
   - type: Sprite

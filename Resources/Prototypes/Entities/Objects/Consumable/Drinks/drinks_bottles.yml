@@ -80,7 +80,7 @@
   - type: Tool
     qualities:
     - Rolling
-    speed: 0.75 # not as good as a rolling pin but does the job
+    speedModifier: 0.75 # not as good as a rolling pin but does the job
   - type: PhysicalComposition
     materialComposition:
       Glass: 100
