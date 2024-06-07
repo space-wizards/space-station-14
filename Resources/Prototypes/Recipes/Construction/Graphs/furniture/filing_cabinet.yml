@@ -23,7 +23,7 @@
               doAfter: 3
 
     - node: filingCabinet
-      entity: filingCabinet
+      entity: FilingCabinet
       edges:
         - to: start
           completed:
@@ -34,7 +34,7 @@
             - tool: Screwing
               doAfter: 4
     - node: tallCabinet
-      entity: filingCabinetTall
+      entity: FilingCabinetTall
       edges:
         - to: start
           completed:
@@ -45,7 +45,7 @@
             - tool: Screwing
               doAfter: 4
     - node: chestDrawer
-      entity: filingCabinetDrawer
+      entity: FilingCabinetDrawer
       edges:
         - to: start
           completed:
