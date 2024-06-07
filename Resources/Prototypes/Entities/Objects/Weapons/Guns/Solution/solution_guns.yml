@@ -34,6 +34,16 @@
   name: water blaster
   description: With this bad boy, you'll be the cooleste kid at the summer barbecue.
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
+    layers:
+    - state: detail1
+    - state: detail2
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: icon
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
   - type: Gun
     cameraRecoilScalar: 0 #no recoil
     fireRate: 3
@@ -46,16 +56,6 @@
     solutions:
       chamber:
         maxVol: 100 #20 shots
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
-    layers:
-    - state: detail1
-    - state: detail2
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: icon
-      map: [ "enum.DamageStateVisualLayers.Base" ]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
   - type: RandomSprite
     getAllGroups: true
     available:
@@ -78,6 +78,16 @@
   name: super water blaster
   description: No! No! Not in the eyes!
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
+    layers:
+    - state: detail1
+    - state: detail2
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: icon
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
   - type: Gun
     cameraRecoilScalar: 0 #no recoil
     fireRate: 8
@@ -90,16 +100,6 @@
     solutions:
       chamber:
         maxVol: 500 #100 shots
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
-    layers:
-    - state: detail1
-    - state: detail2
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: icon
-      map: [ "enum.DamageStateVisualLayers.Base" ]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
   - type: RandomSprite
     getAllGroups: true
     available:
