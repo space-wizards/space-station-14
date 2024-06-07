@@ -1,8 +1,11 @@
+# improvised bow
 - type: entity
-  id: BowImprovised
   parent:
   - BaseGunLarge
   - BaseGunArrow
+  id: BowImprovised
+  name: bow
+  description: The original rooty tooty point and shooty.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Bow/bow.rsi
