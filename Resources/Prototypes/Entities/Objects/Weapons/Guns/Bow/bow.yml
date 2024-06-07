@@ -29,9 +29,6 @@
     minAngle: 0
     maxAngle: 5
     fireRate: 1
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
     soundGunshot:
       collection: BulletMiss
     soundEmpty: null
