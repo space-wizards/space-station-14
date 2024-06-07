@@ -46,7 +46,6 @@
             max: 2
   - type: StaticPrice
     price: 20
-  - type: RequireProjectileTarget
 
 - type: entity
   name: filing cabinet
@@ -121,6 +120,7 @@
   - type: Construction
     graph: FilingCabinet
     node: chestDrawer
+  - type: RequireProjectileTarget
 
 - type: entity
   abstract: true
