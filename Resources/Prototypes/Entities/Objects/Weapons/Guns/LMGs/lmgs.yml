@@ -4,6 +4,7 @@
   - BaseWeaponL6
   - BaseGunLarge
   - BaseGunWieldable
+  - BaseGunMagVisuals
   - BaseGun
   id: WeaponLightMachineGunL6
   name: L6 SAW
@@ -49,10 +50,7 @@
       gun_chamber: !type:ContainerSlot
   - type: AmmoCounter
   - type: MagazineVisuals
-    magState: mag
     steps: 4
-    zeroVisible: true
-  - type: Appearance
 
 # L6C ROW
 - type: entity

@@ -3,6 +3,7 @@
   parent:
   - BaseGunMedium
   - BaseGunSubMachineGunMag
+  - BaseGunMagVisuals
   - BaseGun
   id: WeaponSubMachineGunAtreides
   name: Atreides
@@ -10,11 +11,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 10
     minAngle: 2
@@ -27,11 +23,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
 
 # C-20r sub machine gun
 - type: entity
@@ -39,6 +30,7 @@
   - BaseGunMedium
   - BaseGunWieldable
   - BaseGunSubMachineGunMag
+  - BaseGunMagVisuals
   - BaseGun
   id: WeaponSubMachineGunC20r
   name: C-20r sub machine gun
@@ -46,11 +38,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
   - type: GunWieldBonus
     minAngle: -19
     maxAngle: -16
@@ -69,10 +56,7 @@
   - type: ChamberMagazineAmmoProvider
     autoEject: true
   - type: MagazineVisuals
-    magState: mag
     steps: 6
-    zeroVisible: true
-  - type: Appearance
 
 # Drozd
 - type: entity
@@ -80,6 +64,7 @@
   - BaseGunMedium
   - BaseGunWieldable
   - BaseGunSubMachineGunMag
+  - BaseGunMagVisuals
   - BaseGun
   id: WeaponSubMachineGunDrozd
   name: Drozd
@@ -87,11 +72,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
   - type: GunWieldBonus
     minAngle: -19
     maxAngle: -16
@@ -105,17 +85,13 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
 
 # Vector [Deprecated use Drozd]
 - type: entity
   parent:
   - BaseGunMedium
   - BaseGunSubMachineGunMag
+  - BaseGunMagVisuals
   - BaseGun
   id: WeaponSubMachineGunVector
   name: Vector
@@ -124,11 +100,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/vector.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 6
     minAngle: 2
@@ -159,17 +130,13 @@
         whitelist:
           tags:
           - CartridgeMagnum
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
 
 # WT550
 - type: entity
   parent:
   - BaseGunMedium
   - BaseGunSubMachineGunTopMountedMag
+  - BaseGunMagVisuals
   - BaseGun
   id: WeaponSubMachineGunWt550
   name: WT550
@@ -205,7 +172,4 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/smg.ogg
   - type: MagazineVisuals
-    magState: mag
     steps: 6
-    zeroVisible: true
-  - type: Appearance

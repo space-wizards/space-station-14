@@ -1,6 +1,7 @@
 # AKMS
 - type: entity
   parent:
+  - BaseGunMagVisuals
   - BaseGunLarge
   - BaseGunLightRifleMag
   - BaseGunWieldable
@@ -11,11 +12,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 5
     selectedMode: FullAuto
@@ -23,11 +19,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
 
 # M-90gl
 - type: entity
@@ -35,6 +26,7 @@
   - BaseGunLarge
   - BaseGunRifleMag
   - BaseGunWieldable
+  - BaseGunMagVisuals
   - BaseGun
   id: WeaponRifleM90GrenadeLauncher
   name: M-90gl
@@ -42,11 +34,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 5
     selectedMode: FullAuto
@@ -54,11 +41,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
 
 # Lecter
 - type: entity
@@ -66,6 +48,7 @@
   - BaseGunLarge
   - BaseGunRifleMag
   - BaseGunWieldable
+  - BaseGunMagVisuals
   - BaseGun
   id: WeaponRifleLecter
   name: Lecter
@@ -73,11 +56,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 5
     selectedMode: FullAuto
@@ -85,8 +63,3 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance

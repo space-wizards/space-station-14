@@ -26,6 +26,7 @@
 # RPG-7
 - type: entity
   parent:
+  - BaseGunMagVisuals
   - BaseGunLarge
   - BaseGunLauncherBallistic
   - BaseGun
@@ -35,11 +36,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 0.5
     soundGunshot:
@@ -51,10 +47,8 @@
       tags:
       - CartridgeRocket
   - type: MagazineVisuals
-    magState: mag
     steps: 2
     zeroVisible: false
-  - type: Appearance
 
 # pirate cannon
 - type: entity
@@ -245,10 +239,6 @@
   - type: BallisticAmmoProvider
     proto: CartridgeRocketSlow
     capacity: 30
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
 
 # meteor launcher [admeme]
 - type: entity

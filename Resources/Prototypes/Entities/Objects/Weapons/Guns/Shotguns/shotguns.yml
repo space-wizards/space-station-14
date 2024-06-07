@@ -4,6 +4,7 @@
   - BaseGunMedium
   - BaseGunWieldable
   - BaseGunShotgunMag
+  - BaseGunMagVisuals
   - BaseGun
   id: WeaponShotgunBulldog
   name: Bulldog
@@ -11,11 +12,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 2
@@ -26,11 +22,6 @@
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
 
 # double-barreled shotgun
 - type: entity

@@ -3,6 +3,7 @@
   parent:
   - BaseGunSmall
   - BaseGunRevolverCylinder
+  - BaseGunMagVisuals
   - BaseGun
   id: WeaponRevolverDeckard
   name: Deckard
@@ -26,10 +27,7 @@
     chambers: [ True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null ]
   - type: MagazineVisuals
-    magState: mag
     steps: 4
-    zeroVisible: true
-  - type: Appearance
   - type: StaticPrice
     price: 1500
 
