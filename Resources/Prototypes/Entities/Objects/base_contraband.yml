@@ -1,20 +1,67 @@
-﻿- type: entity
+﻿# non-stealth syndicate stuff
+- type: entity
   id: BaseSyndicateContraband
   abstract: true
   components:
   - type: Contraband
     severity: Syndicate
+    # no one should be carrying this around visibly!
+    departmentRestrictions: null
 
+# minor contraband -- contraband, by default restricted to security only
 - type: entity
   id: BaseMinorContraband
   abstract: true
   components:
   - type: Contraband
-    severity: Minor
+    severity: Restricted
 
+# departmentally restricted contraband -- this covers every configuration currently listed in space law
+- type: entity
+  id: BaseCommandContraband
+  parent: BaseMinorContraband
+  abstract: true
+  components:
+  - type: Contraband
+    departmentRestrictions: [ Command ]
+
+- type: entity
+  id: BaseSecurityCommandContraband
+  parent: BaseMinorContraband
+  abstract: true
+  components:
+  - type: Contraband
+    departmentRestrictions: [ Security, Command ]
+
+- type: entity
+  id: BaseSecurityScienceCommandContraband
+  parent: BaseMinorContraband
+  abstract: true
+  components:
+  - type: Contraband
+    departmentRestrictions: [ Security, Science, Command ]
+
+- type: entity
+  id: BaseEngineeringContraband
+  parent: BaseMinorContraband
+  abstract: true
+  components:
+  - type: Contraband
+    departmentRestrictions: [ Engineering ]
+
+- type: entity
+  id: BaseCargoContraband
+  parent: BaseMinorContraband
+  abstract: true
+  components:
+  - type: Contraband
+    departmentRestrictions: [ Cargo ]
+
+# for ~objective items
 - type: entity
   id: BaseGrandTheftContraband
   abstract: true
   components:
   - type: Contraband
     severity: GrandTheft
+    departmentRestrictions: [ Command ]
