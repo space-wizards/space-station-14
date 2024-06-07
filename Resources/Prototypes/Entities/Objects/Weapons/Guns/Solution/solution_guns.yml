@@ -50,10 +50,10 @@
   - type: RandomSprite
     getAllGroups: true
     available:
-      - enum.DamageStateVisualLayers.Base:
-          icon: Rainbow
-      - enum.PowerDeviceVisualLayers.Powered:
-          detail2: Sixteen
+    - enum.DamageStateVisualLayers.Base:
+        icon: Rainbow
+    - enum.PowerDeviceVisualLayers.Powered:
+        detail2: Sixteen
 
 # super water blaster
 - type: entity
@@ -89,10 +89,10 @@
   - type: RandomSprite
     getAllGroups: true
     available:
-      - enum.DamageStateVisualLayers.Base:
-          icon: Rainbow
-      - enum.PowerDeviceVisualLayers.Powered:
-          detail2: Sixteen
+    - enum.DamageStateVisualLayers.Base:
+        icon: Rainbow
+    - enum.PowerDeviceVisualLayers.Powered:
+        detail2: Sixteen
 
 # spray nozzle
 - type: entity
