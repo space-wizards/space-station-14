@@ -14,22 +14,13 @@
             "name": "front"
         },
         {
-            "name": "cap_closed_blue"
+            "name": "cap_closed"
         },
         {
-            "name": "cap_closed_orange"
+            "name": "cap_inbetween"
         },
         {
-            "name": "cap_closed_red"
-        },
-        {
-            "name": "cap_open_blue"
-        },
-        {
-            "name": "cap_open_orange"
-        },
-        {
-            "name": "cap_open_red"
+            "name": "cap_open"
         },
         {
             "name": "fill1"

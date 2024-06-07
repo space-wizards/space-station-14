@@ -15,8 +15,10 @@
     sprite: Objects/Consumable/Drinks/squeeze_bottle.rsi
     layers:
     - state: body
-    - state: cap_closed_red
-      map: ["enum.OpenableVisuals.Layer"]
+    - state: cap_inbetween
+    - state: cap_closed
+      color: "#E81D1D"
+      map: [ "enum.OpenableVisuals.Layer" ]
     - state: fill1
       map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
@@ -35,8 +37,8 @@
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "cap_open_red"}
-          False: {state: "cap_closed_red"}
+          True: {state: "cap_open"}
+          False: {state: "cap_closed"}
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -57,18 +59,15 @@
     sprite: Objects/Consumable/Drinks/squeeze_bottle.rsi
     layers:
     - state: body
-    - state: cap_closed_orange
-      map: ["enum.OpenableVisuals.Layer"]
+    - state: cap_inbetween
+    - state: cap_closed
+      color: "#E8801D"
+      map: [ "enum.OpenableVisuals.Layer" ]
     - state: fill1
       map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
     - state: front
       map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "cap_open_orange"}
-          False: {state: "cap_closed_orange"}
 
 - type: entity
   parent: SqueezeBottle
@@ -87,18 +86,15 @@
     sprite: Objects/Consumable/Drinks/squeeze_bottle.rsi
     layers:
     - state: body
-    - state: cap_closed_blue
-      map: ["enum.OpenableVisuals.Layer"]
+    - state: cap_inbetween
+    - state: cap_closed
+      color: "#3A7DCF"
+      map: [ "enum.OpenableVisuals.Layer" ]
     - state: fill1
       map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
     - state: front
       map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "cap_open_blue"}
-          False: {state: "cap_closed_blue"}
 
 - type: entity
   parent: SqueezeBottle
