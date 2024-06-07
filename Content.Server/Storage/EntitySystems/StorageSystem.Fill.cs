@@ -49,7 +49,7 @@ public sealed partial class StorageSystem
 
             // No, you are not allowed to fill a container with entity spawners.
             DebugTools.Assert(!_prototype.Index<EntityPrototype>(spawnPrototype)
-                .HasComponent(typeof(RandomSpawnerComponent)));
+                .HasComponent(typeof(GenericSpawnerComponent)));
 
             if (!TryComp<ItemComponent>(ent, out var itemComp))
             {
@@ -100,7 +100,7 @@ public sealed partial class StorageSystem
         {
             // No, you are not allowed to fill a container with entity spawners.
             DebugTools.Assert(!_prototype.Index<EntityPrototype>(item)
-                .HasComponent(typeof(RandomSpawnerComponent)));
+                .HasComponent(typeof(GenericSpawnerComponent)));
             var ent = Spawn(item, coordinates);
 
             // handle depending on storage component, again this should be unified after ECS
