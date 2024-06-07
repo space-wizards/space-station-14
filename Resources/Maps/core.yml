@@ -62136,11 +62136,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 50.5,5.5
       parent: 2
-  - uid: 13521
-    components:
-    - type: Transform
-      pos: 50.5,13.5
-      parent: 2
   - uid: 13522
     components:
     - type: Transform
@@ -62291,6 +62286,18 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 44.5,15.5
       parent: 2
+  - uid: 21854
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 57.5,14.5
+      parent: 2
+  - uid: 21855
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 50.5,14.5
+      parent: 2
 - proto: DisposalJunction
   entities:
   - uid: 12957
@@ -62388,6 +62395,11 @@ entities:
     components:
     - type: Transform
       pos: 42.5,-9.5
+      parent: 2
+  - uid: 13521
+    components:
+    - type: Transform
+      pos: 50.5,13.5
       parent: 2
   - uid: 13555
     components:
@@ -66508,6 +66520,42 @@ entities:
       rot: 3.141592653589793 rad
       pos: 44.5,14.5
       parent: 2
+  - uid: 21856
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 51.5,14.5
+      parent: 2
+  - uid: 21857
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 52.5,14.5
+      parent: 2
+  - uid: 21858
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 53.5,14.5
+      parent: 2
+  - uid: 21859
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 54.5,14.5
+      parent: 2
+  - uid: 21860
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 55.5,14.5
+      parent: 2
+  - uid: 21861
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 56.5,14.5
+      parent: 2
 - proto: DisposalTrunk
   entities:
   - uid: 2313
@@ -66738,6 +66786,17 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -28.5,16.5
       parent: 2
+  - uid: 20515
+    components:
+    - type: Transform
+      pos: 21.5,21.5
+      parent: 2
+  - uid: 20516
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 35.5,2.5
+      parent: 2
   - uid: 20722
     components:
     - type: Transform
@@ -66767,6 +66826,11 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 45.5,15.5
+      parent: 2
+  - uid: 21853
+    components:
+    - type: Transform
+      pos: 57.5,15.5
       parent: 2
 - proto: DisposalUnit
   entities:
