@@ -1,6 +1,8 @@
 - type: entity
   name: flare gun
-  parent: BaseItem
+  parent:
+  - BaseGunSmall
+  - BaseGunShotgunBallistic
   id: WeaponFlareGun
   description: A compact, single-shot pistol that fires shotgun shells.
   components:
@@ -10,30 +12,13 @@
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: Small
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
   - type: Gun
     fireRate: 8
-    selectedMode: SemiAuto
-    availableModes:
-      - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
   - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - ShellShotgun
     proto: ShellShotgunFlare
     capacity: 1
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
-    quickEquip: false
-    slots:
-    - Belt
-    - suitStorage
