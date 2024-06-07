@@ -44,9 +44,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
-    layers:
-    - state: icon
-      map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
@@ -78,9 +75,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
-    layers:
-    - state: icon
-      map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
   - type: Gun
@@ -111,9 +105,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-    layers:
-    - state: icon
-      map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
@@ -140,9 +131,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
-    layers:
-    - state: icon
-      map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
   - type: BallisticAmmoProvider
@@ -177,9 +165,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
-    layers:
-    - state: icon
-      map: [ "enum.GunVisualLayers.Base" ]
   - type: Gun
     fireRate: 4
     soundGunshot:
@@ -208,9 +193,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/blunderbuss.rsi
-    layers:
-    - state: icon
-      map: [ "enum.GunVisualLayers.Base" ]
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 2
@@ -235,9 +217,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
-    layers:
-    - state: icon
-      map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
@@ -276,9 +255,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
-    layers:
-      - state: icon
-        map: ["enum.GunVisualLayers.Base"]
   - type: Gun
     fireRate: 8
     soundGunshot:

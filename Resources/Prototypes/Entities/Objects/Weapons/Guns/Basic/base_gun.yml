@@ -4,6 +4,10 @@
   parent: BaseItem
   id: BaseGun
   components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
   - type: Gun
     fireRate: 2
     selectedMode: SemiAuto

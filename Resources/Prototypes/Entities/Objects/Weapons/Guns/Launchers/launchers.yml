@@ -10,9 +10,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
-    layers:
-    - state: icon
-      map: ["enum.GunVisualLayers.Base"]
   - type: AmmoCounter
   - type: Gun
     fireRate: 1
@@ -68,9 +65,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
-    layers:
-    - state: icon
-      map: ["enum.GunVisualLayers.Base"]
   - type: Gun
     fireRate: 1
     soundGunshot:

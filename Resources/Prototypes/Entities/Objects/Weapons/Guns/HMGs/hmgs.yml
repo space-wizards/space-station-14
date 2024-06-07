@@ -8,9 +8,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
-    layers:
-    - state: icon
-      map: ["enum.GunVisualLayers.Base"]
   - type: Gun
     fireRate: 15
     selectedMode: FullAuto
