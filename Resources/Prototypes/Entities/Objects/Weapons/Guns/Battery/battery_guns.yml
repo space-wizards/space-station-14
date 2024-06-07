@@ -75,8 +75,6 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -137,8 +135,6 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -178,8 +174,6 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -208,8 +202,6 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -244,8 +236,6 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -280,8 +270,6 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -336,8 +324,6 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -361,8 +347,6 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -397,8 +381,6 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisablerPractice
     fireCost: 100
@@ -464,8 +446,6 @@
       shader: unshaded
   - type: Item
     heldPrefix: taser4
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -501,8 +481,6 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -540,8 +518,6 @@
   - type: Item
     size: Normal  # Intentionally larger than other pistols
     shape: null
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -570,8 +546,6 @@
       visible: false
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
