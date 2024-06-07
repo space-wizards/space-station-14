@@ -54,7 +54,7 @@ public sealed class ContrabandSystem : EntitySystem
                 || departments is null
                 || !departments.Intersect(component.DepartmentRestrictions).Any())
             {
-                args.PushMarkup(Loc.GetString("contraband-examine-text-avoid-carrying-around "));
+                args.PushMarkup(Loc.GetString("contraband-examine-text-avoid-carrying-around"));
                 return;
             }
 
