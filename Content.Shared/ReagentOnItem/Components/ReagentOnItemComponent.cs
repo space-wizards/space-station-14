@@ -4,6 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.ReagentOnItem;
 
 [RegisterComponent, NetworkedComponent, ImplicitDataDefinitionForInheritors]
+[AutoGenerateComponentState]
 public abstract partial class ReagentOnItemComponent : Component
 {
 
@@ -12,6 +13,7 @@ public abstract partial class ReagentOnItemComponent : Component
     ///     At zero it should remove itself from the item!
     /// </summary>
     [DataField]
+    [AutoNetworkedField]
     public FixedPoint2 EffectStacks;
 
     /// <summary>
