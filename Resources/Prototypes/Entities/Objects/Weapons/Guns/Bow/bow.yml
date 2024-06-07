@@ -30,26 +30,27 @@
     soundGunshot:
       collection: BulletMiss
     soundEmpty: null
-  - type: ItemSlots
-    slots:
-      projectiles:
-        name: Projectiles
-        startingItem: null
-        insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
-        whitelist:
-          tags:
-          - Arrow
-          - Plunger
-  - type: ContainerContainer
-    containers:
-      projectiles: !type:ContainerSlot
-  - type: ContainerAmmoProvider
-    container: projectiles
+  # - type: ItemSlots
+  #   slots:
+  #     projectiles:
+  #       name: Projectiles
+  #       startingItem: null
+  #       insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+  #       whitelist:
+  #         tags:
+  #         - Arrow
+  #         - Plunger
+  # - type: ContainerContainer
+  #   containers:
+  #     projectiles: !type:ContainerSlot
+  # - type: ContainerAmmoProvider
+  #   container: projectiles
 
 - type: entity
   id: BowImprovised
   parent:
   - BaseGunLarge
+  - BaseGunArrow
   - BaseBow
   components:
   - type: Sprite
