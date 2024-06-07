@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseLandMine
   abstract: true
   components:
@@ -40,8 +40,8 @@
         params:
             maxDistance: 10
   - type: StepTrigger
-    requiredTriggeredSpeed: 0
-    stepOn: true
+    hasStepOnOffTriggers: true
+    requiredStepOffTriggeredSpeed: 0
 
 - type: entity
   name: kick mine
