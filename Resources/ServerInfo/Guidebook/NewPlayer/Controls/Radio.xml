@@ -10,7 +10,7 @@ Whisper can only be heard when nearby somebody. You automatically whisper into y
 
 Emotes are gestures that you make. Can be recieved by anyone who is not blinded. You will often see mimes do many emotes.
 
-Whisper messages can be sent by starting your message with [color=#a4885c][keybind="FocusWhisperChatindow"/][/color] and Emotes can be sent by starting your message with ([color=#a4885c]@[/color]).
+Whisper messages can be sent by starting your message with [color=#a4885c][keybind="FocusWhisperChatWindow"/][/color] and Emotes can be sent by starting your message with ([color=#a4885c]@[/color]).
 You can also cycle through all of these text channels by pressing [keybind="CycleChatChannelForward"/].
 
 People may not be able to make out all of what you're saying if you're standing too far away from them. This is especially important if you're whispering.
@@ -44,7 +44,7 @@ For example, if you're a Station Engineer then [color=#a4885c]:h[/color] will de
 ## Encryption Keys
 [color=#a4885c]Encryption keys[/color] give you access to their respective channel.
   
-Examining our engineering headset from earlier shows us [color=#32cd32]Common[/color] and [color=#f37746]Engineering[/color] because an engineer's headset contains those [color=#a4885c]encryption keys[/color] by default.
+Examining our engineering headset from earlier shows us [color=#32cd32]Common[/color] and [color=#f37746]Engineering[/color] because an engineer's headset starts with those [color=#a4885c]encryption keys[/color].
   
 <Box>
   <GuideEntityEmbed Entity="EncryptionKeyCommon"/>
