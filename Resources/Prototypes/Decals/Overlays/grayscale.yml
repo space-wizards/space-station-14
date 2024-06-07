@@ -1,4 +1,4 @@
-﻿- type: decal
+- type: decal
   id: FullTileOverlayGreyscale
   tags: ["station", "overlay"]
   defaultCustomColor: true
@@ -517,3 +517,11 @@
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
     state: pavement_vertical_checker_b
+
+- type: decal
+  id: FullOverlay
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: full

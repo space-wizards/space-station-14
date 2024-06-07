@@ -175,6 +175,9 @@
       "name": "techfloor"
     },
     {
+      "name": "techfloordark"
+    },
+    {
       "name": "white"
     },
     {
@@ -448,6 +451,9 @@
     },
     {
       "name": "wood-large"
+    },
+    {
+      "name": "xenofloor"
     }
   ]
 }
