@@ -1003,6 +1003,9 @@
   - type: IconSmooth
     key: chitin
     base: solid
+  - type: Construction
+    graph: Girder
+    node: wallChitin
 
 - type: entity
   parent: BaseWall
@@ -1058,6 +1061,9 @@
   - type: IconSmooth
     key: chitin
     base: reinf_over
+  - type: Construction
+    graph: Girder
+    node: reinforcedWallChitin
 
 - type: entity
   parent: BaseWall
