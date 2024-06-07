@@ -3,6 +3,7 @@
   parent:
   - BaseGunLarge
   - BaseGunArrow
+  - BaseGun
   id: BowImprovised
   name: bow
   description: The original rooty tooty point and shooty.

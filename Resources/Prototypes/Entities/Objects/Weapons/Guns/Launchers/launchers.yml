@@ -4,6 +4,7 @@
   - BaseGunWieldable
   - BaseGunLarge
   - BaseGunLauncherBallistic
+  - BaseGun
   id: WeaponLauncherChinaLake
   name: china lake
   description: PLOOP
@@ -27,6 +28,7 @@
   parent:
   - BaseGunLarge
   - BaseGunLauncherBallistic
+  - BaseGun
   id: WeaponLauncherRocket
   name: RPG-7
   description: A modified ancient rocket-propelled grenade launcher.
@@ -59,6 +61,7 @@
   parent:
   - BaseGunLarge
   - BaseGunLauncherBallistic
+  - BaseGun
   id: WeaponLauncherPirateCannon
   name: pirate cannon
   description: Kaboom!
@@ -112,6 +115,7 @@
 - type: entity
   parent:
   - BaseGunSmall
+  - BaseGun
   id: WeaponGrapplingGun
   name: grappling gun
   components:

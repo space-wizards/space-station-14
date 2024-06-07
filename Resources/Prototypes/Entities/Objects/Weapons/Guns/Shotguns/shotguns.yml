@@ -4,6 +4,7 @@
   - BaseGunMedium
   - BaseGunWieldable
   - BaseGunShotgunMag
+  - BaseGun
   id: WeaponShotgunBulldog
   name: Bulldog
   description: It's a magazine-fed shotgun designed for close quarters combat. Uses .50 shotgun shells.
@@ -38,6 +39,7 @@
   - BaseGunWieldable
   - BaseGunShotgunBallistic
   - BaseWeaponDoubleBarreled
+  - BaseGun
   id: WeaponShotgunDoubleBarreled
   name: double-barreled shotgun
   description: An immortal classic. Uses .50 shotgun shells.
@@ -69,6 +71,7 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
+  - BaseGun
   id: WeaponShotgunEnforcer
   name: Enforcer
   description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
@@ -99,6 +102,7 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
+  - BaseGun
   id: WeaponShotgunKammerer
   name: Kammerer
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
@@ -125,6 +129,7 @@
   - BaseGunSmall
   - BaseGunShotgunBallistic
   - BaseWeaponDoubleBarreled
+  - BaseGun
   id: WeaponShotgunSawn
   name: sawn-off shotgun
   description: Groovy! Uses .50 shotgun shells.
@@ -159,6 +164,7 @@
   parent:
   - BaseGunSmall
   - BaseGunShotgunBallistic
+  - BaseGun
   id: WeaponShotgunHandmade
   name: handmade pistol
   description: Looks unreliable. Uses .50 shotgun shells.
@@ -186,6 +192,7 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
+  - BaseGun
   id: WeaponShotgunBlunderbuss
   name: blunderbuss
   suffix: Pirate
@@ -211,6 +218,7 @@
   - BaseGunLarge
   - BaseGunWieldable
   - BaseGunShotgunBallistic
+  - BaseGun
   id: WeaponShotgunImprovised
   name: improvised shotgun
   description: A shitty, hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
@@ -249,6 +257,7 @@
   parent:
   - BaseGunSmall
   - BaseGunShotgunBallistic
+  - BaseGun
   id: WeaponFlareGun
   name: flare gun
   description: A compact, single-shot pistol that fires shotgun shells.

@@ -4,6 +4,7 @@
   - BaseWeaponL6
   - BaseGunLarge
   - BaseGunWieldable
+  - BaseGun
   id: WeaponLightMachineGunL6
   name: L6 SAW
   description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip. Uses .30 rifle ammo.
@@ -59,6 +60,7 @@
   - BaseWeaponL6
   - BaseGunBattery
   - BaseGunSelfRecharger
+  - BaseGun
   id: WeaponLightMachineGunL6C
   name: L6C ROW
   description: A L6 SAW for use by cyborgs. Creates .30 rifle ammo on the fly from an internal ammo fabricator, which slowly self-charges.
