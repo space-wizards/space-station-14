@@ -1,5 +1,7 @@
+using Content.Shared.Maps;
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.CCVar
 {
@@ -18,16 +20,10 @@ namespace Content.Shared.CCVar
             CVarDef.Create("server.id", "unknown_server_id", CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
-        ///     Name of the rules txt file in the "Resources/Server Info" dir. Include the extension.
+        ///     Guide Entry Prototype ID to be displayed as the server rules.
         /// </summary>
         public static readonly CVarDef<string> RulesFile =
-            CVarDef.Create("server.rules_file", "Rules.txt", CVar.REPLICATED | CVar.SERVER);
-
-        /// <summary>
-        ///     A loc string for what should be displayed as the title on the Rules window.
-        /// </summary>
-        public static readonly CVarDef<string> RulesHeader =
-            CVarDef.Create("server.rules_header", "ui-rules-header", CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("server.rules_file", "DefaultRuleset", CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Ambience
@@ -222,6 +218,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool>
             GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// If roles should be restricted based on whether or not they are whitelisted.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameRoleWhitelist = CVarDef.Create("game.role_whitelist", true, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         /// Whether or not disconnecting inside of a cryopod should remove the character or just store them until they reconnect.
@@ -435,6 +437,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> LoginTipsDataset =
             CVarDef.Create("tips.login_dataset", "Tips");
 
+        /// <summary>
+        ///     The chance for Tippy to replace a normal tip message.
+        /// </summary>
+        public static readonly CVarDef<float> TipsTippyChance =
+            CVarDef.Create("tips.tippy_chance", 0.01f);
+
         /*
          * Console
          */
@@ -562,13 +570,13 @@ namespace Content.Shared.CCVar
         /// When a mob is walking should its X / Y movement be relative to its parent (true) or the map (false).
         /// </summary>
         public static readonly CVarDef<bool> RelativeMovement =
-            CVarDef.Create("physics.relative_movement", true, CVar.ARCHIVE | CVar.REPLICATED);
+            CVarDef.Create("physics.relative_movement", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<float> TileFrictionModifier =
-            CVarDef.Create("physics.tile_friction", 40.0f, CVar.ARCHIVE | CVar.REPLICATED);
+            CVarDef.Create("physics.tile_friction", 40.0f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<float> StopSpeed =
-            CVarDef.Create("physics.stop_speed", 0.1f, CVar.ARCHIVE | CVar.REPLICATED);
+            CVarDef.Create("physics.stop_speed", 0.1f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         /// Whether mobs can push objects like lockers.
@@ -577,7 +585,7 @@ namespace Content.Shared.CCVar
         /// Technically client doesn't need to know about it but this may prevent a bug in the distant future so it stays.
         /// </remarks>
         public static readonly CVarDef<bool> MobPushing =
-            CVarDef.Create("physics.mob_pushing", false, CVar.REPLICATED);
+            CVarDef.Create("physics.mob_pushing", false, CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Music
@@ -899,6 +907,13 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> ExplosionSingleTickAreaLimit =
             CVarDef.Create("explosion.single_tick_area_limit", 400, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Whether or not explosions are allowed to create tiles that have
+        ///     <see cref="ContentTileDefinition.MapAtmosphere"/> set to true.
+        /// </summary>
+        public static readonly CVarDef<bool> ExplosionCanCreateVacuum =
+            CVarDef.Create("explosion.can_create_vacuum", true, CVar.SERVERONLY);
+
         /*
          * Radiation
          */
@@ -1032,7 +1047,7 @@ namespace Content.Shared.CCVar
         ///     1.0 for instant spacing, 0.2 means 20% of remaining air lost each time
         /// </summary>
         public static readonly CVarDef<float> AtmosSpacingEscapeRatio =
-            CVarDef.Create("atmos.mmos_spacing_speed", 0.05f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.mmos_spacing_speed", 0.15f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Minimum amount of air allowed on a spaced tile before it is reset to 0 immediately in kPa
@@ -1236,7 +1251,7 @@ namespace Content.Shared.CCVar
         ///     Config for when the restart vote should be allowed to be called based on percentage of ghosts.
         ///
         public static readonly CVarDef<int> VoteRestartGhostPercentage =
-            CVarDef.Create("vote.restart_ghost_percentage", 75, CVar.SERVERONLY);
+            CVarDef.Create("vote.restart_ghost_percentage", 55, CVar.SERVERONLY);
 
         /// <summary>
         ///     See vote.enabled, but specific to preset votes
@@ -1360,6 +1375,49 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> GridFill =
             CVarDef.Create("shuttle.grid_fill", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether to automatically preloading grids by GridPreloaderSystem
+        /// </summary>
+        public static readonly CVarDef<bool> PreloadGrids =
+            CVarDef.Create("shuttle.preload_grids", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How long the warmup time before FTL start should be.
+        /// </summary>
+        public static readonly CVarDef<float> FTLStartupTime =
+            CVarDef.Create("shuttle.startup_time", 5.5f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How long a shuttle spends in FTL.
+        /// </summary>
+        public static readonly CVarDef<float> FTLTravelTime =
+            CVarDef.Create("shuttle.travel_time", 20f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How long the final stage of FTL before arrival should be.
+        /// </summary>
+        public static readonly CVarDef<float> FTLArrivalTime =
+            CVarDef.Create("shuttle.arrival_time", 5f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How much time needs to pass before a shuttle can FTL again.
+        /// </summary>
+        public static readonly CVarDef<float> FTLCooldown =
+            CVarDef.Create("shuttle.cooldown", 10f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The maximum <see cref="PhysicsComponent.Mass"/> a grid can have before it becomes unable to FTL.
+        /// Any value equal to or less than zero will disable this check.
+        /// </summary>
+        public static readonly CVarDef<float> FTLMassLimit =
+            CVarDef.Create("shuttle.mass_limit", 300f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How long to knock down entities for if they aren't buckled when FTL starts and stops.
+        /// </summary>
+        public static readonly CVarDef<float> HyperspaceKnockdownTime =
+            CVarDef.Create("shuttle.hyperspace_knockdown_time", 5f, CVar.SERVERONLY);
 
         /*
          * Emergency
@@ -1486,10 +1544,10 @@ namespace Content.Shared.CCVar
             CVarDef.Create("viewport.scale_render", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         public static readonly CVarDef<int> ViewportMinimumWidth =
-            CVarDef.Create("viewport.minimum_width", 15, CVar.REPLICATED);
+            CVarDef.Create("viewport.minimum_width", 15, CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<int> ViewportMaximumWidth =
-            CVarDef.Create("viewport.maximum_width", 21, CVar.REPLICATED);
+            CVarDef.Create("viewport.maximum_width", 21, CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<int> ViewportWidth =
             CVarDef.Create("viewport.width", 21, CVar.CLIENTONLY | CVar.ARCHIVE);
@@ -1594,7 +1652,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("chat.chat_sanitizer_enabled", true, CVar.SERVERONLY);
 
         public static readonly CVarDef<bool> ChatShowTypingIndicator =
-            CVarDef.Create("chat.show_typing_indicator", true, CVar.CLIENTONLY);
+            CVarDef.Create("chat.show_typing_indicator", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<bool> ChatEnableFancyBubbles =
             CVarDef.Create("chat.enable_fancy_bubbles", true, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying fancy speech bubbles, which display the speaking character's name.");
@@ -1731,7 +1789,13 @@ namespace Content.Shared.CCVar
         /// Don't show rules to localhost/loopback interface.
         /// </summary>
         public static readonly CVarDef<bool> RulesExemptLocal =
-            CVarDef.Create("rules.exempt_local", true, CVar.SERVERONLY);
+            CVarDef.Create("rules.exempt_local", true, CVar.CLIENT);
+
+        /// <summary>
+        /// The next time the rules will popup for this client, expressed in minutes
+        /// </summary>
+        public static readonly CVarDef<string> RulesNextPopupTime =
+            CVarDef.Create("rules.next_popup_time", "Jan 1, 1997", CVar.CLIENTONLY | CVar.ARCHIVE);
 
 
         /*
@@ -1985,6 +2049,10 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> GatewayGeneratorEnabled =
             CVarDef.Create("gateway.generator_enabled", true);
 
+        // Clippy!
+        public static readonly CVarDef<string> TippyEntity =
+            CVarDef.Create("tippy.entity", "Tippy", CVar.SERVER | CVar.REPLICATED);
+
         /*
          * DEBUG
          */
@@ -1994,5 +2062,11 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> DebugOptionVisualizerTest =
             CVarDef.Create("debug.option_visualizer_test", false, CVar.CLIENTONLY);
+
+        /// <summary>
+        /// Set to true to disable parallel processing in the pow3r solver.
+        /// </summary>
+        public static readonly CVarDef<bool> DebugPow3rDisableParallel =
+            CVarDef.Create("debug.pow3r_disable_parallel", true, CVar.SERVERONLY);
     }
 }

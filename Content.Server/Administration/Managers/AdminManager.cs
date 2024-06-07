@@ -7,6 +7,7 @@ using Content.Server.Database;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Info;
 using Content.Shared.Players;
 using Robust.Server.Console;
 using Robust.Server.Player;
@@ -239,6 +240,7 @@ namespace Content.Server.Administration.Managers
             _sawmill = _logManager.GetSawmill("admin");
 
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>();
+            _netMgr.RegisterNetMessage<ShowRulesPopupMessage>();
 
             // Cache permissions for loaded console commands with the requisite attributes.
             foreach (var (cmdName, cmd) in _consoleHost.AvailableCommands)

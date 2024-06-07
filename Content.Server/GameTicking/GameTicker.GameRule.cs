@@ -1,8 +1,9 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.GameTicking.Components;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
 using Content.Shared.Database;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
@@ -42,6 +43,14 @@ public sealed partial class GameTicker
             string.Empty,
             "cleargamerules",
             ClearGameRulesCommand);
+
+        // List game rules command.
+        var localizedHelp = Loc.GetString("listgamerules-command-help");
+
+        _consoleHost.RegisterCommand("listgamerules",
+            string.Empty,
+            $"listgamerules - {localizedHelp}",
+            ListGameRuleCommand);
     }
 
     private void ShutdownGameRules()
@@ -49,6 +58,7 @@ public sealed partial class GameTicker
         _consoleHost.UnregisterCommand("addgamerule");
         _consoleHost.UnregisterCommand("endgamerule");
         _consoleHost.UnregisterCommand("cleargamerules");
+        _consoleHost.UnregisterCommand("listgamerules");
     }
 
     /// <summary>
@@ -64,6 +74,13 @@ public sealed partial class GameTicker
 
         var ev = new GameRuleAddedEvent(ruleEntity, ruleId);
         RaiseLocalEvent(ruleEntity, ref ev, true);
+
+        var currentTime = RunLevel == GameRunLevel.PreRoundLobby ? TimeSpan.Zero : RoundDuration();
+        if (!HasComp<RoundstartStationVariationRuleComponent>(ruleEntity) && !HasComp<StationVariationPassRuleComponent>(ruleEntity))
+        {
+            _allPreviousGameRules.Add((currentTime, ruleId + " (Pending)"));
+        }
+
         return ruleEntity;
     }
 
@@ -110,7 +127,8 @@ public sealed partial class GameTicker
             if (delayTime > TimeSpan.Zero)
             {
                 _sawmill.Info($"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
-                _adminLogger.Add(LogType.EventStarted, $"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
+                _adminLogger.Add(LogType.EventStarted,
+                    $"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
 
                 var delayed = EnsureComp<DelayedStartRuleComponent>(ruleEntity);
                 delayed.RuleStartTime = _gameTiming.CurTime + (delayTime);
@@ -118,7 +136,20 @@ public sealed partial class GameTicker
             }
         }
 
-        _allPreviousGameRules.Add((RoundDuration(), id));
+        var currentTime = RunLevel == GameRunLevel.PreRoundLobby ? TimeSpan.Zero : RoundDuration();
+
+        // Remove the first occurrence of the pending entry before adding the started entry
+        var pendingRuleIndex = _allPreviousGameRules.FindIndex(rule => rule.Item2 == id + " (Pending)");
+        if (pendingRuleIndex >= 0)
+        {
+            _allPreviousGameRules.RemoveAt(pendingRuleIndex);
+        }
+
+        if (!HasComp<RoundstartStationVariationRuleComponent>(ruleEntity) && !HasComp<StationVariationPassRuleComponent>(ruleEntity))
+        {
+            _allPreviousGameRules.Add((currentTime, id));
+        }
+
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
         _adminLogger.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(ruleEntity)}");
 
@@ -296,6 +327,7 @@ public sealed partial class GameTicker
             if (shell.Player != null)
             {
                 _adminLogger.Add(LogType.EventStarted, $"{shell.Player} tried to add game rule [{rule}] via command");
+                _chatManager.SendAdminAnnouncement(Loc.GetString("add-gamerule-admin", ("rule", rule), ("admin", shell.Player)));
             }
             else
             {
@@ -306,6 +338,7 @@ public sealed partial class GameTicker
             // Start rule if we're already in the middle of a round
             if(RunLevel == GameRunLevel.InRound)
                 StartGameRule(ent);
+
         }
     }
 
@@ -347,6 +380,43 @@ public sealed partial class GameTicker
     private void ClearGameRulesCommand(IConsoleShell shell, string argstr, string[] args)
     {
         ClearGameRules();
+    }
+
+    [AdminCommand(AdminFlags.Admin)]
+    private void ListGameRuleCommand(IConsoleShell shell, string argstr, string[] args)
+    {
+        _sawmill.Info($"{shell.Player} tried to get list of game rules via command");
+        _adminLogger.Add(LogType.Action, $"{shell.Player} tried to get list of game rules via command");
+        var message = GetGameRulesListMessage(false);
+        shell.WriteLine(message);
+    }
+    private string GetGameRulesListMessage(bool forChatWindow)
+    {
+        if (_allPreviousGameRules.Count > 0)
+        {
+            var sortedRules = _allPreviousGameRules.OrderBy(rule => rule.Item1).ToList();
+            var message = "\n";
+
+            if (!forChatWindow)
+            {
+                var header = Loc.GetString("list-gamerule-admin-header");
+                message += $"\n{header}\n";
+                message += "|------------|------------------\n";
+            }
+
+            foreach (var (time, rule) in sortedRules)
+            {
+                var formattedTime = time.ToString(@"hh\:mm\:ss");
+                message += $"| {formattedTime,-10} | {rule,-16} \n";
+            }
+
+            return message;
+        }
+        else
+        {
+            return Loc.GetString("list-gamerule-admin-no-rules");
+
+        }
     }
 
     #endregion

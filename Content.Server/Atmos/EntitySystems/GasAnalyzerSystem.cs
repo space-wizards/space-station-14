@@ -68,7 +68,6 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
             ActivateAnalyzer(uid, component, args.User, args.Target);
-            OpenUserInterface(uid, args.User, component);
             args.Handled = true;
         }
 
@@ -86,6 +85,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void ActivateAnalyzer(EntityUid uid, GasAnalyzerComponent component, EntityUid user, EntityUid? target = null)
         {
+            if (!TryOpenUserInterface(uid, user, component))
+                return;
+
             component.Target = target;
             component.User = user;
             if (target != null)
@@ -95,8 +97,7 @@ namespace Content.Server.Atmos.EntitySystems
             component.Enabled = true;
             Dirty(uid, component);
             UpdateAppearance(uid, component);
-            if (!HasComp<ActiveGasAnalyzerComponent>(uid))
-                AddComp<ActiveGasAnalyzerComponent>(uid);
+            EnsureComp<ActiveGasAnalyzerComponent>(uid);
             UpdateAnalyzer(uid, component);
         }
 
@@ -134,12 +135,12 @@ namespace Content.Server.Atmos.EntitySystems
             DisableAnalyzer(uid, component);
         }
 
-        private void OpenUserInterface(EntityUid uid, EntityUid user, GasAnalyzerComponent? component = null)
+        private bool TryOpenUserInterface(EntityUid uid, EntityUid user, GasAnalyzerComponent? component = null)
         {
             if (!Resolve(uid, ref component, false))
-                return;
+                return false;
 
-            _userInterface.OpenUi(uid, GasAnalyzerUiKey.Key, user);
+            return _userInterface.TryOpenUi(uid, GasAnalyzerUiKey.Key, user);
         }
 
         /// <summary>
