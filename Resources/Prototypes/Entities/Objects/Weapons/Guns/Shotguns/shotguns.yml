@@ -1,7 +1,7 @@
 # Bulldog
 - type: entity
   parent:
-  - BaseGunLarge
+  - BaseGunMedium
   - BaseGunWieldable
   - BaseGunShotgunMag
   id: WeaponShotgunBulldog
@@ -15,8 +15,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
@@ -52,9 +50,6 @@
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: BallisticAmmoProvider
@@ -89,7 +84,6 @@
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
-    size: Large
     sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
@@ -125,9 +119,6 @@
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
@@ -159,7 +150,6 @@
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
-    size: Small
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
@@ -231,10 +221,6 @@
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
-  - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 2
@@ -265,9 +251,6 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
