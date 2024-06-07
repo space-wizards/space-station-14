@@ -106,6 +106,9 @@
       moles:
         - 0.153853429 # oxygen
         - 0.153853429 # nitrogen
+  - type: Item
+    sprite: null
+    size: Normal
   - type: Tag
     tags:
       - WhitelistChameleon
