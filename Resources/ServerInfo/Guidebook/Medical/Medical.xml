@@ -3,7 +3,7 @@
 This is the department where people go to when they're hurt, it's up to the folks working here to fix them.
 
 ## Personnel
-Medical's staff is made up of Medical Interns, Medical Doctors, Paramedics and Chemists. Medical is run by the Chief Medical Officer.
+[color=#5b97bc]Medical[/color]'s staff is made up of Medical Interns, Medical Doctors, Paramedics and Chemists. [color=#5b97bc]Medical[/color] is run by the Chief Medical Officer.
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineMedicalDoctor" Caption="Doctor"/>

@@ -1,9 +1,9 @@
 <Document>
 # Cargo
-The supply department, more commonly known simply as Cargo, is in charge of keeping the station stocked up on necessary resources, such as fuel and raw materials. Though, they are not restricted to simple goods, and can order a wide variety of different items from off-station. The point is, it's Cargo's job to get the rest of the station what they need.
+The supply department, more commonly known simply as [color=#b18644]Cargo[/color], is in charge of keeping the station stocked up on necessary resources, such as fuel and raw materials. Though, they are not restricted to simple goods, and can order a wide variety of different items from off-station. The point is, it's [color=#b18644]Cargo[/color]'s job to get the rest of the station what they need.
 
 ## Personnel
-Cargo's staff is made up of Cargo Technicians and Salvage Technicans. Cargo is run by the Quartermaster.
+[color=#b18644]Cargo[/color]'s staff is made up of Cargo Technicians and Salvage Technicans. Cargo is run by the Quartermaster.
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineCargoTech" Caption="Cargo Tech"/>

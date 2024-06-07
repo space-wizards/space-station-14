@@ -1,9 +1,9 @@
 <Document>
 # Command
-The heads of each department come together the Command department, a force to be reckoned with and the handlers of the station. They usually have access to special equipment and their own rooms. They are often wanted dead.
+The heads of each department come together to form the [color=#1b67a5]Command[/color] department, a force to be reckoned with and the handlers of the station. They usually have access to special equipment and their own rooms. They are often wanted dead.
 
 ## Personnel
-Command is made up of the heads of each department, being the Head of Personnel, the Head of Security, the Chief Medical Officer, the Chief Engineer, the Research Director, the Quartermaster and above all else, the Captain.
+[color=#1b67a5]Command[/color] is made up of the heads of each department, being the [color=#9fed58]Head of Personnel[/color], the [color=#cb0000]Head of Security[/color], the [color=#5b97bc]Chief Medical Officer[/color], the [color=#f39f27]Chief Engineer[/color], the [color=#c96dbf]Research Director[/color], the [color=#b18644]Quartermaster[/color] and above all else, the [color=#1b67a5]Captain[/color].
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineCaptain" Caption="Captain"/>
   </Box>
@@ -39,10 +39,10 @@ Your [color=#a4885c]remote[/color] is very simple but profoundly underestimated.
   </Box>
 The remote influences where people move around. Heads can lock personnel out of dangerous areas or let people in to grab something really quickly.
 
-You also have access to your very own Command channel, like every other department. However, yours is particularly special as the people who can hear you have [color=#a4885c]entire departments[/color] at their fingertips.
+You also have access to your very own [color=#1b67a5]Command[/color] channel, like every other department. However, yours is particularly special as the people who can hear you have [color=#a4885c]entire departments[/color] at their fingertips.
 Use this to communicate with other heads and be a representative of what your workers want or need.
 
-The Captain and the Head of Personnel get access to the lucrative [color=#a4885c]master encryption key[/color], letting them tune into every radio channel on the station. This is extremly valuable, as you can coordinate between departments yourself.
+The [color=#1b67a5]Captain[/color] and the [color=#9fed58]Head of Personnel[/color] get access to the lucrative [color=#a4885c]master encryption key[/color], letting them tune into every radio channel on the station. This is extremly valuable, as you can coordinate between departments yourself.
 [color=#a4885c]Don't waste this vital advantage![/color]
   <Box>
     <GuideEntityEmbed Entity="ClothingHeadsetCommand"/>

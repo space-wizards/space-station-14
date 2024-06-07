@@ -1,9 +1,9 @@
 <Document>
 # Science
-Science, often called Research and Development, is a job made up of both generating research points to unlock new technologies as well as using said technologies to produce new items at lathes to help out the station.
+[color=#c96dbf]Science[/color], often called Research and Development, is a job made up of both generating research points to unlock new technologies as well as using said technologies to produce new items at lathes to help out the station.
 
 ## Personnel
-Science's staff is made up of Research Assistants and Scientists. Science is run by the Research Director.
+[color=#c96dbf]Science[/color]'s staff is made up of Research Assistants and Scientists. [color=#c96dbf]Science[/color] is run by the Research Director.
 
   <Box>
    <GuideEntityEmbed Entity="ToyFigurineScientist" Caption="Scientist"/>
@@ -15,7 +15,7 @@ Science's staff is made up of Research Assistants and Scientists. Science is run
     <GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/>
     <GuideEntityEmbed Entity="ResearchAndDevelopmentServer"/>
   </Box>
-The most important thing inside your department is the R&D server, which stores unlocked technologies, and the R&D computer, which allows you to unlock technologies.
+The most important thing inside your department is the R&D server, which stores unlocked technologies, and the R&D computer, which allows you to unlock [color=#a4885c]technologies[/color].
 
 Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes at lathes. Some technologies will also have prerequisites you have to unlock before you can research them.
 
