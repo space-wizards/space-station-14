@@ -40,12 +40,7 @@
   components:
   - type: GenericSpawner
     offset: 0
-    prototypes:
-    - ClothingUniformRandomArmless
-    - ClothingUniformRandomStandard
-    - ClothingUniformRandomBra
-    - ClothingUniformRandomShorts
-    - ClothingUniformRandomShirt
+    entityTable: ClothingEntityTable
 
 - type: entity
   parent: ClothingUniformRandom

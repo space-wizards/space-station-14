@@ -1,0 +1,26 @@
+- type: weightedRandomEntity
+  id: FriendlyKudzuFlowerEntityTable
+  weights:
+    LightTree01: 100
+    LightTree02: 100
+    LightTree03: 100
+    LightTree04: 100
+    LightTree05: 100
+    LightTree06: 100
+    CrystalCyan: 100
+    AnomalyFloraBulb: 15
+
+- type: weightedRandomEntity
+  id: AngryKudzuFlowerEntityTable
+  weights:
+    AnomalyFloraBulb: 2
+    MobLuminousEntity: 1
+    MobLuminousObject: 1
+    MobLuminousPerson: 1
+
+- type: weightedRandomEntity
+  id: ShadowKudzuFlowerEntityTable
+  weights:
+    ShadowBasaltRandom: 100
+    ShadowPortal: 5
+    ShadowKudzuLootSpawner: 5

@@ -577,9 +577,7 @@
         - sprite: Objects/Tools/appraisal-tool.rsi
           state: icon
     - type: GenericSpawner
-      prototypes:
-      - RandomHumanoidLostCargoTechnician
-      chance: 1
+      entityTable: LostCargoTechnicianEntityTable
 
 - type: entity
   id: RandomHumanoidLostCargoTechnician
@@ -617,11 +615,7 @@
         - sprite: Objects/Fun/bikehorn.rsi
           state: icon
     - type: GenericSpawner
-      prototypes:
-      - RandomHumanoidClownTroupe
-      rarePrototypes:
-      - RandomHumanoidClownTroupeBanana
-      rareChance: 0.3
+      entityTable: ClownTroupeEntityTable
 
 - type: entity
   id: RandomHumanoidClownTroupe
@@ -679,8 +673,7 @@
         - sprite: Objects/Weapons/Melee/kitchen_knife.rsi
           state: icon
     - type: GenericSpawner
-      prototypes:
-      - RandomHumanoidTravelingChef
+      entityTable: TravelingChefEntityTable
 
 - type: entity
   id: RandomHumanoidTravelingChef
@@ -718,11 +711,7 @@
       - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
         state: icon
   - type: GenericSpawner
-    prototypes:
-    - RandomHumanoidDisasterVictimRD
-    - RandomHumanoidDisasterVictimCMO
-    - RandomHumanoidDisasterVictimCaptain
-    - MobSkeletonCloset
+    entityTable: DisasterVictimEntityTable
 
 - type: entity
   id: RandomHumanoidDisasterVictimRD
@@ -797,8 +786,7 @@
       - sprite: Structures/Decoration/banner.rsi
         state: banner_syndicate
   - type: GenericSpawner
-    prototypes:
-    - RandomHumanoidSyndieDisasterVictim
+    entityTable: SyndieDisasterVictimEntityTable
 
 - type: entity
   id: RandomHumanoidSyndieDisasterVictim

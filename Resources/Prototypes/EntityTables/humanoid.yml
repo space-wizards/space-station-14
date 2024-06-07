@@ -1,0 +1,28 @@
+- type: weightedRandomEntity
+  id: LostCargoTechnicianEntityTable
+  weights:
+    RandomHumanoidLostCargoTechnician: 1
+
+- type: weightedRandomEntity
+  id: ClownTroupeEntityTable
+  weights:
+    RandomHumanoidClownTroupe: 10
+    RandomHumanoidClownTroupeBanana: 3
+
+- type: weightedRandomEntity
+  id: TravelingChefEntityTable
+  weights:
+    RandomHumanoidTravelingChef: 1
+
+- type: weightedRandomEntity
+  id: DisasterVictimEntityTable
+  weights:
+    RandomHumanoidDisasterVictimRD: 1
+    RandomHumanoidDisasterVictimCMO: 1
+    RandomHumanoidDisasterVictimCaptain: 1
+    MobSkeletonCloset: 1
+
+- type: weightedRandomEntity
+  id: SyndieDisasterVictimEntityTable
+  weights:
+    RandomHumanoidSyndieDisasterVictim: 1

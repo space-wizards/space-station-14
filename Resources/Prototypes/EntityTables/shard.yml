@@ -1,0 +1,9 @@
+- type: weightedRandomEntity
+  id: ShardCrystalEntityTable
+  weights:
+    ShardCrystalGreen: 1
+    ShardCrystalPink: 1
+    ShardCrystalOrange: 1
+    ShardCrystalBlue: 1
+    ShardCrystalCyan: 1
+    ShardCrystalRed: 1
