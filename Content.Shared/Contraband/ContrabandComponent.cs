@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Serialization;
+﻿using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Contraband;
 
@@ -12,21 +14,25 @@ public sealed partial class ContrabandComponent : Component
     ///     The degree of contraband severity this item is considered to have.
     /// </summary>
     [DataField]
-    public ContrabandSeverity Severity = ContrabandSeverity.Minor;
+    public ContrabandSeverity Severity = ContrabandSeverity.Restricted;
+
+    /// <summary>
+    ///     Which departments is this item restricted to?
+    ///     By default, command and sec are assumed to be fine with contraband.
+    ///     If null, no departments are allowed to use this.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<DepartmentPrototype>>? DepartmentRestrictions = ["Command", "Security"];
 }
 
 [Serializable, NetSerializable]
 public enum ContrabandSeverity
 {
     /// <summary>
-    ///     Having this without a good reason might get you yelled at by security. (spears, shivs, etc)
+    ///     Having this without a good reason might get you yelled at by security. (spears, shivs, etc).
+    ///     or, Having this as a regular crew member, not the department it was made for, is considered theft IC. (rcd, sec gear, etc)
     /// </summary>
-    Minor,
-
-    /// <summary>
-    ///     Having this as a regular crew member, not the role it was made for, is considered theft IC. (rcd, sec gear, etc)
-    /// </summary>
-    RoleRestrictedTheft,
+    Restricted,
 
     /// <summary>
     ///     Having this as a regular crew member is considered grand theft. (nuke disk, cpatains gear, objective items, etc)
