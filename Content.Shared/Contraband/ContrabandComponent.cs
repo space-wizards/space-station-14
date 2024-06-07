@@ -29,6 +29,12 @@ public sealed partial class ContrabandComponent : Component
 public enum ContrabandSeverity
 {
     /// <summary>
+    ///     Improvised weapons/gear, etc. Not departmentally restricted per se, but you shouldn't really have it around
+    ///     as non-sec without a valid reason.
+    /// </summary>
+    Minor,
+
+    /// <summary>
     ///     Having this without a good reason might get you yelled at by security. (spears, shivs, etc).
     ///     or, Having this as a regular crew member, not the department it was made for, is considered theft IC. (rcd, sec gear, etc)
     /// </summary>
