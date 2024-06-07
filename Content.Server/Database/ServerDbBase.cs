@@ -15,6 +15,7 @@ using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
+using Content.Shared.Traits;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
@@ -183,9 +184,9 @@ namespace Content.Server.Database
 
         private static HumanoidCharacterProfile ConvertProfiles(Profile profile)
         {
-            var jobs = profile.Jobs.ToDictionary(j => j.JobName, j => (JobPriority) j.Priority);
-            var antags = profile.Antags.Select(a => a.AntagName);
-            var traits = profile.Traits.Select(t => t.TraitName);
+            var jobs = profile.Jobs.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
+            var antags = profile.Antags.Select(a => new ProtoId<AntagPrototype>(a.AntagName));
+            var traits = profile.Traits.Select(t => new ProtoId<TraitPrototype>(t.TraitName));
 
             var sex = Sex.Male;
             if (Enum.TryParse<Sex>(profile.Sex, true, out var sexVal))
@@ -1028,30 +1029,6 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             var entry = await db.DbContext.Whitelist.SingleAsync(w => w.UserId == player);
             db.DbContext.Whitelist.Remove(entry);
-            await db.DbContext.SaveChangesAsync();
-        }
-
-        public async Task<DateTimeOffset?> GetLastReadRules(NetUserId player)
-        {
-            await using var db = await GetDb();
-
-            return NormalizeDatabaseTime(await db.DbContext.Player
-                .Where(dbPlayer => dbPlayer.UserId == player)
-                .Select(dbPlayer => dbPlayer.LastReadRules)
-                .SingleOrDefaultAsync());
-        }
-
-        public async Task SetLastReadRules(NetUserId player, DateTimeOffset date)
-        {
-            await using var db = await GetDb();
-
-            var dbPlayer = await db.DbContext.Player.Where(dbPlayer => dbPlayer.UserId == player).SingleOrDefaultAsync();
-            if (dbPlayer == null)
-            {
-                return;
-            }
-
-            dbPlayer.LastReadRules = date.UtcDateTime;
             await db.DbContext.SaveChangesAsync();
         }
 

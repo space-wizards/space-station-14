@@ -1,94 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Lone operatives now start with 60TC instead of 40TC.
-    type: Tweak
-  id: 6183
-  time: '2024-03-18T14:15:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26130
-- author: PJB3005
-  changes:
-  - message: Fixed hardsuits in space causing high pressure damage
-    type: Fix
-  id: 6184
-  time: '2024-03-18T16:46:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26236
-- author: potato1234x
-  changes:
-  - message: Added crafting recipes for wall lockers and secure lockers
-    type: Add
-  - message: Fixed secure lockers and wall lockers not being deconstructible
-    type: Fix
-  id: 6185
-  time: '2024-03-18T20:53:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24942
-- author: brainfood1183
-  changes:
-  - message: Added Spray Paints.
-    type: Add
-  id: 6186
-  time: '2024-03-18T21:29:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23003
-- author: PJB3005
-  changes:
-  - message: Bans are now shown in the "adminremarks" command.
-    type: Add
-  id: 6187
-  time: '2024-03-18T21:31:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26240
-- author: Terraspark4941
-  changes:
-  - message: The TEG page in the guidebook has been updated with proper information!
-    type: Tweak
-  id: 6188
-  time: '2024-03-18T21:33:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26170
-- author: Plykiya
-  changes:
-  - message: You can now craft ducky slippers.
-    type: Add
-  id: 6189
-  time: '2024-03-18T21:34:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26138
-- author: Boaz1111
-  changes:
-  - message: Lone operatives now require a minimum of 20 players to spawn
-    type: Tweak
-  id: 6190
-  time: '2024-03-18T21:36:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26244
-- author: shampunj
-  changes:
-  - message: Zombies now passively heal 1 heat/shock damage every 50 seconds
-    type: Tweak
-  id: 6191
-  time: '2024-03-18T21:47:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25925
-- author: Killerqu00
-  changes:
-  - message: Initial Infected now can see each other.
-    type: Add
-  - message: Initial Infected can now see zombified entities.
-    type: Add
-  id: 6192
-  time: '2024-03-18T21:57:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25934
-- author: nikthechampiongr
-  changes:
-  - message: You can now use the SCRAM! implant while cuffed.
-    type: Fix
-  - message: The freedom implant can no longer be used while in crit, or dead.
-    type: Fix
-  id: 6193
-  time: '2024-03-18T22:35:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25978
-- author: SlamBamActionman
-  changes:
-  - message: Recyclers no longer delete items stored inside of recycled entities.
-    type: Fix
-  id: 6194
-  time: '2024-03-19T02:36:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26045
 - author: Vermidia
   changes:
   - message: Made the Artifact Reports page up to date with current Xenoarchaeology
@@ -3849,3 +3759,92 @@
   id: 6682
   time: '2024-06-04T18:48:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28590
+- author: Boaz1111
+  changes:
+  - message: Revamped Cluster's Head Offices
+    type: Tweak
+  id: 6683
+  time: '2024-06-05T17:50:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28627
+- author: Plykiya
+  changes:
+  - message: Handcuff range is buffed to one tile of distance.
+    type: Tweak
+  id: 6684
+  time: '2024-06-05T20:14:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28576
+- author: Cojoke-dot
+  changes:
+  - message: A variety of objects around the station now need to be clicked on in
+      order for bullets to hit them.
+    type: Tweak
+  id: 6685
+  time: '2024-06-05T20:47:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28571
+- author: ps3moira
+  changes:
+  - message: Lit cigars inhand sprites are now visible.
+    type: Fix
+  id: 6686
+  time: '2024-06-05T21:16:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28641
+- author: Tayrtahn
+  changes:
+  - message: Slimes, diona, and kudzu are less dramatically affected by having certain
+      chemicals splashed on them.
+    type: Tweak
+  id: 6687
+  time: '2024-06-05T22:08:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28591
+- author: Plykiya
+  changes:
+  - message: Internals are no longer toggled off if you take your helmet off but still
+      have a gas mask on and vice versa.
+    type: Tweak
+  id: 6688
+  time: '2024-06-06T07:01:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28595
+- author: Cojoke-dot
+  changes:
+  - message: Bots now have Insulation and NoSlip
+    type: Tweak
+  id: 6689
+  time: '2024-06-06T09:32:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28621
+- author: Flareguy
+  changes:
+  - message: Nerfed the explosive power of fuel tanks.
+    type: Tweak
+  id: 6690
+  time: '2024-06-06T10:08:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28650
+- author: ElectroJr
+  changes:
+  - message: The job/antag preferences window now has some buttons that link to relevant
+      guidebook entries
+    type: Add
+  id: 6691
+  time: '2024-06-06T12:05:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28614
+- author: Aeshus
+  changes:
+  - message: Space Law gives security exception for syndicate communication equipment.
+    type: Fix
+  id: 6692
+  time: '2024-06-06T19:24:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28668
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Fixed janitors not spawning with a survival box in their bag
+    type: Fix
+  id: 6693
+  time: '2024-06-06T22:26:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28669
+- author: blueDev2
+  changes:
+  - message: Rebalanced medicated suture and regen mesh to only require 1 brute pack/ointment
+      respectively
+    type: Tweak
+  id: 6694
+  time: '2024-06-07T01:24:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28679

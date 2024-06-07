@@ -4,6 +4,7 @@ using Content.Client.Guidebook;
 using Content.Client.Guidebook.Controls;
 using Content.Client.Lobby;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Guidebook;
 using Content.Shared.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -74,12 +75,12 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
     public void OnSystemLoaded(GuidebookSystem system)
     {
-        _guidebookSystem.OnGuidebookOpen += ToggleGuidebook;
+        _guidebookSystem.OnGuidebookOpen += OpenGuidebook;
     }
 
     public void OnSystemUnloaded(GuidebookSystem system)
     {
-        _guidebookSystem.OnGuidebookOpen -= ToggleGuidebook;
+        _guidebookSystem.OnGuidebookOpen -= OpenGuidebook;
     }
 
     internal void UnloadButton()
@@ -101,6 +102,22 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
     private void GuidebookButtonOnPressed(ButtonEventArgs obj)
     {
         ToggleGuidebook();
+    }
+
+    public void ToggleGuidebook()
+    {
+        if (_guideWindow == null)
+            return;
+
+        if (_guideWindow.IsOpen)
+        {
+            UIManager.ClickSound();
+            _guideWindow.Close();
+        }
+        else
+        {
+            OpenGuidebook();
+        }
     }
 
     private void OnWindowClosed()
@@ -127,22 +144,15 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
     /// <param name="includeChildren">Whether or not to automatically include child entries. If false, this will ONLY
     /// show the specified entries</param>
     /// <param name="selected">The guide whose contents should be displayed when the guidebook is opened</param>
-    public void ToggleGuidebook(
-        Dictionary<string, GuideEntry>? guides = null,
-        List<string>? rootEntries = null,
-        string? forceRoot = null,
+    public void OpenGuidebook(
+        Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry>? guides = null,
+        List<ProtoId<GuideEntryPrototype>>? rootEntries = null,
+        ProtoId<GuideEntryPrototype>? forceRoot = null,
         bool includeChildren = true,
-        string? selected = null)
+        ProtoId<GuideEntryPrototype>? selected = null)
     {
         if (_guideWindow == null)
             return;
-
-        if (_guideWindow.IsOpen)
-        {
-            UIManager.ClickSound();
-            _guideWindow.Close();
-            return;
-        }
 
         if (GuidebookButton != null)
             GuidebookButton.SetClickPressed(!_guideWindow.IsOpen);
@@ -150,7 +160,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         if (guides == null)
         {
             guides = _prototypeManager.EnumeratePrototypes<GuideEntryPrototype>()
-                .ToDictionary(x => x.ID, x => (GuideEntry) x);
+                .ToDictionary(x => new ProtoId<GuideEntryPrototype>(x.ID), x => (GuideEntry) x);
         }
         else if (includeChildren)
         {
@@ -171,17 +181,17 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         _guideWindow.OpenCenteredRight();
     }
 
-    public void ToggleGuidebook(
-        List<string> guideList,
-        List<string>? rootEntries = null,
-        string? forceRoot = null,
+    public void OpenGuidebook(
+        List<ProtoId<GuideEntryPrototype>> guideList,
+        List<ProtoId<GuideEntryPrototype>>? rootEntries = null,
+        ProtoId<GuideEntryPrototype>? forceRoot = null,
         bool includeChildren = true,
-        string? selected = null)
+        ProtoId<GuideEntryPrototype>? selected = null)
     {
-        Dictionary<string, GuideEntry> guides = new();
+        Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry> guides = new();
         foreach (var guideId in guideList)
         {
-            if (!_prototypeManager.TryIndex<GuideEntryPrototype>(guideId, out var guide))
+            if (!_prototypeManager.TryIndex(guideId, out var guide))
             {
                 Logger.Error($"Encountered unknown guide prototype: {guideId}");
                 continue;
@@ -189,17 +199,29 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
             guides.Add(guideId, guide);
         }
 
-        ToggleGuidebook(guides, rootEntries, forceRoot, includeChildren, selected);
+        OpenGuidebook(guides, rootEntries, forceRoot, includeChildren, selected);
     }
 
-    private void RecursivelyAddChildren(GuideEntry guide, Dictionary<string, GuideEntry> guides)
+    public void CloseGuidebook()
+    {
+        if (_guideWindow == null)
+            return;
+
+        if (_guideWindow.IsOpen)
+        {
+            UIManager.ClickSound();
+            _guideWindow.Close();
+        }
+    }
+
+    private void RecursivelyAddChildren(GuideEntry guide, Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry> guides)
     {
         foreach (var childId in guide.Children)
         {
             if (guides.ContainsKey(childId))
                 continue;
 
-            if (!_prototypeManager.TryIndex<GuideEntryPrototype>(childId, out var child))
+            if (!_prototypeManager.TryIndex(childId, out var child))
             {
                 Logger.Error($"Encountered unknown guide prototype: {childId} as a child of {guide.Id}. If the child is not a prototype, it must be directly provided.");
                 continue;

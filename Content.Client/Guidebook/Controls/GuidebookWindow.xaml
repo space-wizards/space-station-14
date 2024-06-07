@@ -18,7 +18,7 @@
                     Name="SearchBar"
                     PlaceHolder="{Loc 'guidebook-filter-placeholder-text'}"
                     HorizontalExpand="True"
-                    Margin="0 5 10 5">                
+                    Margin="0 5 10 5">
                 </LineEdit>
             </BoxContainer>
             <ScrollContainer Name="Scroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
