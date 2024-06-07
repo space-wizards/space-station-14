@@ -34,3 +34,20 @@
     solution: chamber
   - type: ExaminableSolution
     solution: chamber
+
+# WATER TOY
+# A basic template for the toy water guns. Includes its randomly colorful visuals and common properties.
+- type: entity
+  abstract: true
+  parent: BaseGunSolutionContainer
+  id: BaseGunWaterToy
+  components:
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          icon: Rainbow
+  - type: StaticPrice
+    price: 100
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 150
