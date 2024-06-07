@@ -1,0 +1,139 @@
+- type: microwaveMealRecipe
+  id: RecipeLoadedBakedPotato
+  name: loaded baked potato recipe
+  result: FoodMealPotatoLoaded
+  time: 15
+  solids:
+    FoodPotato: 1
+    FoodCheeseSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFries
+  name: space fries recipe
+  result: FoodMealFries
+  time: 15
+  reagents:
+    TableSalt: 5
+  solids:
+    FoodPotato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCheesyFries
+  name: cheesy fries recipe
+  result: FoodMealFriesCheesy
+  time: 15
+  reagents:
+    TableSalt: 5
+  solids:
+    FoodPotato: 1
+    FoodCheeseSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCarrotFries
+  name: carrot fries recipe
+  result: FoodMealFriesCarrot
+  time: 15
+  reagents:
+    TableSalt: 5
+  solids:
+    FoodCarrot: 1
+
+- type: microwaveMealRecipe
+  id: RecipePopcorn
+  name: popcorn recipe
+  result: FoodSnackPopcorn
+  time: 20
+  solids:
+    FoodCorn: 1
+
+- type: microwaveMealRecipe
+  id: RecipeOnionRings
+  name: onion rings recipe
+  result: FoodOnionRings
+  time: 15
+  solids:
+    FoodOnionSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCookedSpaceshroom
+  name: cooked spaceshroom recipe
+  result: FoodSpaceshroomCooked
+  time: 5
+  solids:
+    FoodSpaceshroom: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCornInButter
+  name: corn in butter recipe
+  result: FoodMealCornInButter
+  time: 10
+  solids:
+    FoodCorn: 1
+    FoodPlate: 1
+    FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCannabisButter
+  name: cannabis butter recipe
+  result: FoodCannabisButter
+  time: 15
+  solids:
+    FoodButter: 1
+    LeavesCannabis: 6
+
+- type: microwaveMealRecipe
+  id: RecipeQueso
+  name: queso recipe
+  result: FoodMealQueso
+  time: 15
+  #todo Add blackpepper
+  #reagents:
+    #blackpepper: 5
+  solids:
+    FoodChiliPepper: 1
+    FoodCheeseSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeCubanCarp
+  name: Cuban carp recipe
+  result: FoodMealCubancarp
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodCheeseSlice: 2
+    FoodChiliPepper: 1
+    FoodMeatFish: 2
+
+- type: microwaveMealRecipe
+  id: RecipeSashimi
+  name: sashimi recipe
+  result: FoodMealSashimi
+  time: 15
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodMeatFish: 2
+
+- type: microwaveMealRecipe
+  id: RecipeDumplings
+  name: dumplings recipe
+  result: FoodBakedDumplings
+  time: 15
+  reagents:
+    Water: 10
+    UncookedAnimalProteins: 6
+  solids:
+    FoodDoughSlice: 3
+
+- type: microwaveMealRecipe
+  id: RecipeRibs
+  name: BBQ ribs recipe
+  result: FoodMealRibs
+  time: 15
+  reagents:
+    BbqSauce: 5
+  solids:
+    FoodMeat: 2
+    FoodKebabSkewer: 1
+
+

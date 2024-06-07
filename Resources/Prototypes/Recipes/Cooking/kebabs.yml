@@ -1,0 +1,61 @@
+- type: microwaveMealRecipe
+  id: RecipeMeatKebab
+  name: meat kebab recipe
+  result: FoodMeatKebab
+  time: 5
+  solids:
+    FoodMeatCutlet: 3
+    FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeHawaiianKebab
+  name: Hawaiian kebab recipe
+  result: FoodMeatHawaiianKebab
+  time: 5
+  solids:
+    FoodChiliPepper: 1
+    FoodMeatCutlet: 1
+    FoodPineappleSlice: 1
+    FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFiestaKebab
+  name: fiesta kebab recipe
+  result: FoodMeatFiestaKebab
+  time: 5
+  solids:
+    FoodChiliPepper: 1
+    FoodCorn: 1
+    FoodMeatCutlet: 1
+    FoodTomato: 1
+    FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeRatKebab
+  name: rat kebab recipe
+  result: FoodMeatRatKebab
+  time: 10
+  solids:
+    FoodMeatRat: 1
+    FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDoubleRatKebab
+  name: double rat kebab recipe
+  result: FoodMeatRatdoubleKebab
+  time: 20
+  solids:
+    FoodMeatRat: 2
+    FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeSnakeKebab
+  name: snake kebab recipe
+  result: FoodMeatSnakeKebab
+  time: 15
+  reagents:
+    Wine: 5
+  solids:
+    FoodMeatSnake: 1
+    FoodKebabSkewer: 1
+

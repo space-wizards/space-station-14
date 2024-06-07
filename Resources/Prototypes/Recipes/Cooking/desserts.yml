@@ -1,0 +1,376 @@
+###Cakes
+
+- type: microwaveMealRecipe
+  id: RecipeAppleCake
+  name: apple cake recipe
+  result: FoodCakeApple
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodApple: 3
+
+- type: microwaveMealRecipe
+  id: RecipeCarrotCake
+  name: carrot cake recipe
+  result: FoodCakeCarrot
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodCarrot: 3
+
+- type: microwaveMealRecipe
+  id: RecipeLemonCake
+  name: lemon cake recipe
+  result: FoodCakeLemon
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodLemon: 3
+
+- type: microwaveMealRecipe
+  id: RecipeLemoonCake
+  name: lemoon cake recipe
+  result: FoodCakeLemoon
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodLemoon: 2
+    FoodBerries: 1 #dark colouring
+
+- type: microwaveMealRecipe
+  id: RecipeOrangeCake
+  name: orange cake recipe
+  result: FoodCakeOrange
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodOrange: 3
+
+- type: microwaveMealRecipe
+  id: RecipeBlueberryCake
+  name: blueberry cake recipe
+  result: FoodCakeBlueberry
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodBerries: 3
+
+- type: microwaveMealRecipe
+  id: RecipeLimeCake
+  name: lime cake recipe
+  result: FoodCakeLime
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodLime: 3
+
+- type: microwaveMealRecipe
+  id: RecipeCheeseCake
+  name: cheese cake recipe
+  result: FoodCakeCheese
+  time: 5
+  reagents:
+    Cream: 10
+  solids:
+    FoodCakePlain: 1
+    FoodCheeseSlice: 3
+
+- type: microwaveMealRecipe
+  id: RecipePumpkinCake
+  name: pumpkin cake recipe
+  result: FoodCakePumpkin
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodPumpkin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeClownCake
+  name: clown cake recipe
+  result: FoodCakeClown
+  time: 5
+  solids:
+    ClothingMaskClown: 1
+    FoodCakePlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCake
+  name: cake recipe
+  result: FoodCakePlain
+  time: 15
+  solids:
+    FoodCakeBatter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBirthdayCake
+  name: birthday cake recipe
+  result: FoodCakeBirthday
+  time: 5
+  reagents:
+    Cream: 5
+  solids:
+    FoodCakePlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeChocolateCake
+  name: chocolate cake recipe
+  result: FoodCakeChocolate
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodSnackChocolateBar: 2
+
+- type: microwaveMealRecipe
+  id: RecipeSlimeCake
+  name: slime cake recipe
+  result: FoodCakeSlime
+  time: 5
+  reagents:
+    Slime: 15
+  solids:
+    FoodCakePlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeSuppermatter
+  name: suppermatter recipe
+  result: FoodCakeSuppermatter
+  time: 30
+  solids:
+    FoodCakeBatter: 2
+  reagents:
+    Sugar: 30
+    Nitrogen: 10
+    Plasma: 10
+
+###Pies
+
+- type: microwaveMealRecipe
+  id: RecipeAmanitaPie
+  name: amanita pie recipe
+  result: FoodPieAmanita
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodFlyAmanita: 1
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeApplePie
+  name: apple pie recipe
+  result: FoodPieApple
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodApple: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBaklava
+  name: baklava recipe
+  result: FoodPieBaklava
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodSnackPistachios: 1 #i'd rather use a botany crop but we don't have nuts yet
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBananaCreamPie
+  name: banana cream pie recipe
+  result: FoodPieBananaCream
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodBanana: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBerryClafoutis
+  name: berry clafoutis recipe
+  result: FoodPieClafoutis
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodBerries: 3
+    FoodPlateTin: 1
+
+#- type: microwaveMealRecipe
+#  id: RecipeCherryPie
+#  name: cherry pie recipe
+#  result: FoodPieCherry
+#  time: 15
+#  solids:
+#    FoodDoughPie: 1
+#    FoodCherry: 3 #cherries don't exist yet
+#    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFrostyPie
+  name: frosty pie recipe
+  result: FoodPieFrosty
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodChillyPepper: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMeatPie
+  name: meat pie recipe
+  result: FoodPieMeat
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodMeat: 3
+    FoodPlateTin: 1
+
+#- type: microwaveMealRecipe
+#  id: RecipePlumpPie
+#  name: plump pie recipe
+#  result: FoodPiePlump
+#  time: 15
+#  solids:
+#    FoodDoughPie: 1
+#    FoodPlumpHelmet: 3 #a big part of me wants to veto this because the item description is a dick joke but i'll write the placeholder anyway
+#    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeXenoPie
+  name: xeno pie recipe
+  result: FoodPieXeno
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodMeatXeno: 3
+    FoodPlateTin: 1
+
+###Cookies
+
+- type: microwaveMealRecipe
+  id: RecipeCookie
+  name: cookie recipe
+  result: FoodBakedCookie
+  time: 5
+  reagents:
+    Flour: 5
+    Sugar: 5
+  solids:
+    FoodButter: 1
+    FoodSnackChocolateBar: 1
+
+- type: microwaveMealRecipe
+  id: RecipeSugarCookie
+  name: sugar cookie recipe
+  result: FoodBakedCookieSugar
+  time: 5
+  reagents:
+    Flour: 5
+    Sugar: 10
+  solids:
+    FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeRaisinCookie
+  name: raisin cookie recipe
+  result: FoodBakedCookieRaisin
+  time: 5
+  reagents:
+    Flour: 5
+    Sugar: 5
+  solids:
+    FoodSnackRaisins: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCookieOatmeal
+  name: oatmeal cookie recipe
+  result: FoodBakedCookieOatmeal
+  time: 5
+  reagents:
+    Oats: 5
+    Sugar: 5
+  solids:
+    FoodButter: 1
+
+###Tarts
+
+- type: microwaveMealRecipe
+  id: RecipeCocoTart
+  name: chocolate lava tart recipe
+  result: FoodTartCoco
+  time: 15
+  reagents:
+    Sugar: 5
+    Milk: 5
+  solids:
+    FoodDoughPie: 1
+    FoodSnackChocolateBar: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGappleTart
+  name: golden apple streusel tart recipe
+  result: FoodTartGapple
+  time: 15
+  reagents:
+    Gold: 10
+    Sugar: 5
+    Milk: 5
+  solids:
+    FoodDoughPie: 1
+    FoodApple: 2 #in absence of the real gapple i'm substituting one apple with 10u gold (one ingot)
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGrapeTart
+  name: grape tart recipe
+  result: FoodTartGrape
+  time: 15
+  reagents:
+    Sugar: 5
+    Milk: 5
+  solids:
+    FoodDoughPie: 1
+    FoodGrape: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMimeTart
+  name: mime tart recipe
+  result: FoodTartMime
+  time: 15
+  reagents:
+    Sugar: 5
+    Milk: 5
+  solids:
+    FoodDoughPie: 1
+    FoodMimana: 3
+    FoodPlateTin: 1
+
+### Other
+
+- type: microwaveMealRecipe
+  id: RecipeBrownies
+  name: brownie recipe
+  result: FoodBakedBrownieBatch
+  time: 25
+  reagents:
+    Flour: 15
+    Sugar: 30
+  solids:
+    FoodButter: 2
+    FoodSnackChocolateBar: 2
+    FoodEgg: 3
+
+- type: microwaveMealRecipe
+  id: RecipeCannabisBrownies
+  name: cannabis brownie recipe
+  result: FoodBakedCannabisBrownieBatch
+  time: 25
+  reagents:
+    Flour: 15
+    Sugar: 30
+  solids:
+    FoodCannabisButter: 2
+    FoodSnackChocolateBar: 2
+    FoodEgg: 3
+

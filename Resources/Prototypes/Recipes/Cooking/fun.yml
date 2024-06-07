@@ -1,0 +1,62 @@
+#for fun/secret/easter egg recipes not to be embedded in guidebook
+
+- type: microwaveMealRecipe
+  id: RecipeCatCake
+  name: cat cake recipe
+  result: MobCatCake
+  time: 15
+  reagents:
+    Milk: 15
+    Cognizine: 5
+  solids:
+    FoodCakePlain: 1
+    FoodSnackRaisins: 1
+    OrganAnimalHeart: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBreadDog
+  name: bread dog recipe
+  result: MobBreadDog
+  time: 15
+  reagents:
+    Cognizine: 5
+  solids:
+    FoodBreadSausage: 1
+    OrganAnimalHeart: 1
+    FoodSpaceshroomCooked: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDriedTobacco
+  name: dried tobacco leaves recipe
+  result: LeavesTobaccoDried
+  time: 10
+  solids:
+    LeavesTobacco: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDriedCannabis
+  name: dried cannabis leaves recipe
+  result: LeavesCannabisDried
+  time: 10
+  solids:
+    LeavesCannabis: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDriedCannabisRainbow
+  name: dried rainbow cannabis leaves recipe
+  result: LeavesCannabisRainbowDried
+  time: 10
+  solids:
+    LeavesCannabisRainbow: 1
+
+- type: microwaveMealRecipe
+  id: RecipeTrashBakedBananaPeel
+  name: baked banana peel recipe
+  result: TrashBakedBananaPeel
+  time: 5
+  solids:
+    TrashBananaPeel: 1
+
+
+
+

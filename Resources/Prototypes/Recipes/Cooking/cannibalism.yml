@@ -1,0 +1,57 @@
+#Weird to have these embed so this is a place to leave these as easter eggs
+
+- type: microwaveMealRecipe
+  id: RecipeBrainCake
+  name: brain cake recipe
+  result: FoodCakeBrain
+  time: 15
+  solids:
+    FoodCakePlain: 1
+    OrganHumanBrain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeAppendixBurger
+  name: appendix burger recipe
+  result: FoodBurgerAppendix
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    OrganHumanAppendix: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBrainBurger
+  name: brain burger recipe
+  result: FoodBurgerBrain
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    OrganHumanBrain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeHumanBurger
+  name: human burger recipe
+  result: FoodBurgerHuman
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodMeatHuman: 1
+
+#Move Soylent Burger here when / if soylent green is craftable
+
+- type: microwaveMealRecipe
+  id: RecipeHumanKebab
+  name: human kebab recipe
+  result: FoodMeatHumanKebab
+  time: 15
+  solids:
+    TorsoHuman: 1
+    FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeLizardKebab
+  name: lizard kebab recipe
+  result: FoodMeatLizardtailKebab
+  time: 15
+  solids:
+    FoodMeatLizard: 1
+    FoodKebabSkewer: 1

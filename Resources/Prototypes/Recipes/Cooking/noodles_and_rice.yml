@@ -1,0 +1,112 @@
+###Noodles
+- type: microwaveMealRecipe
+  id: RecipeBoiledSpaghetti
+  name: boiled spaghetti recipe
+  result: FoodNoodlesBoiled
+  time: 15
+  reagents:
+    Flour: 15
+    Egg: 6
+  solids:
+    FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipePastaTomato
+  name: pasta tomato recipe
+  result: FoodNoodles
+  time: 10
+  solids:
+    FoodNoodlesBoiled: 1
+    FoodTomato: 2
+
+- type: microwaveMealRecipe
+  id: RecipeMeatballSpaghetti
+  name: spaghetti & meatballs recipe
+  result: FoodNoodlesMeatball
+  time: 10
+  solids:
+    FoodNoodlesBoiled: 1
+    FoodMeatMeatball: 2
+
+- type: microwaveMealRecipe
+  id: RecipeButterNoodles
+  name: butter noodles recipe
+  result: FoodNoodlesButter
+  time: 10
+  solids:
+    FoodNoodlesBoiled: 1
+    FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeChowMein
+  name: chow mein recipe
+  result: FoodNoodlesChowmein
+  time: 10
+  solids:
+    FoodNoodlesBoiled: 1
+    FoodEggplant: 1
+    FoodCarrot: 1
+    FoodCorn: 1
+    FoodEgg: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCopypasta
+  name: copypasta recipe
+  result: FoodNoodlesCopy
+  time: 10
+  solids:
+    FoodNoodles: 2
+
+###Rice
+
+- type: microwaveMealRecipe
+  id: RecipeBoiledRice
+  name: boiled rice recipe
+  result: FoodRiceBoiled
+  time: 15
+  reagents:
+    Rice: 15
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+
+- type: microwaveMealRecipe
+  id: RecipeRicePudding
+  name: rice pudding recipe
+  result: FoodRicePudding
+  time: 15
+  reagents:
+    Rice: 15
+    Milk: 10
+    Sugar: 5
+  solids:
+    FoodBowlBig: 1
+
+- type: microwaveMealRecipe
+  id: RecipeRicePork
+  name: rice and pork recipe
+  result: FoodRicePork
+  time: 15
+  solids:
+    FoodRiceBoiled: 1
+    FoodMeatCutlet: 3
+
+- type: microwaveMealRecipe
+  id: RecipeRiceGumbo
+  name: black-eyed gumbo recipe
+  result: FoodRiceGumbo
+  time: 15
+  solids:
+    FoodRiceBoiled: 1
+    FoodMeatCutlet: 3
+    FoodChiliPepper: 2
+
+- type: microwaveMealRecipe
+  id: RecipeEggRice
+  name: egg-fried rice recipe
+  result: FoodRiceEgg
+  time: 15
+  solids:
+    FoodRiceBoiled: 1
+    FoodEgg: 1
+    FoodCarrot: 1

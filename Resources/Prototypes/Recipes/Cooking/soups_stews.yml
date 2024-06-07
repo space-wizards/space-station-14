@@ -1,0 +1,265 @@
+- type: microwaveMealRecipe
+  id: RecipeBisque
+  name: bisque recipe
+  result: FoodSoupBisque
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodTomato: 1
+    FoodMushroom: 1
+    FoodMeatFish: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMeatballSoup
+  name: meatball soup recipe
+  result: FoodSoupMeatball
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodMeatMeatball: 1
+    FoodCarrot: 1
+    FoodPotato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeNettleSoup
+  name: nettle soup recipe
+  result: FoodSoupNettle
+  time: 10
+  reagents:
+    Water: 10
+    Egg: 6
+  solids:
+    FoodBowlBig: 1
+    Nettle: 1
+    FoodPotato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeEyeballSoup
+  name: eyeball soup recipe
+  result: FoodSoupEyeball
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    OrganHumanEyes: 1
+    FoodCarrot: 1
+    FoodPotato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeAmanitaJelly
+  name: amanita jelly recipe
+  result: FoodJellyAmanita
+  time: 10
+  reagents:
+    Water: 5
+    Vodka: 5
+  solids:
+    FoodFlyAmanita: 3
+
+- type: microwaveMealRecipe
+  id: RecipeOnionSoup
+  name: onion soup recipe
+  result: FoodSoupOnion
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodOnionSlice: 5
+    FoodCheeseSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMushroomSoup
+  name: mushroom soup recipe
+  result: FoodSoupMushroom
+  time: 10
+  reagents:
+    Water: 5
+    Milk: 5
+  solids:
+    FoodBowlBig: 1
+    FoodMushroom: 2
+
+- type: microwaveMealRecipe
+  id: RecipeStewSoup
+  name: stew recipe
+  result: FoodSoupStew
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodMeatCutlet: 3
+    FoodTomato: 1
+    FoodPotato: 1
+    FoodCarrot: 1
+    FoodEggplant: 1
+    FoodMushroom: 1
+
+- type: microwaveMealRecipe
+  id: RecipeTomatoSoup
+  name: tomato soup recipe
+  result: FoodSoupTomato
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodTomato: 2
+
+- type: microwaveMealRecipe
+  id: RecipeTomatoBloodSoup
+  name: tomato blood soup recipe
+  result: FoodSoupTomatoBlood
+  time: 10
+  reagents:
+    Blood: 10
+  solids:
+    FoodBowlBig: 1
+    FoodBloodTomato: 2
+
+- type: microwaveMealRecipe
+  id: RecipeWingFangChuSoup
+  name: wing fang chu recipe
+  result: FoodSoupWingFangChu
+  time: 10
+  reagents:
+    Soysauce: 5
+  solids:
+    FoodBowlBig: 1
+    FoodMeatXenoCutlet: 2
+
+- type: microwaveMealRecipe
+  id: RecipeWingFangChuSoupSpider
+  name: wing fang chu recipe
+  result: FoodSoupWingFangChu
+  time: 10
+  reagents:
+    Soysauce: 5
+  solids:
+    FoodBowlBig: 1
+    FoodMeatSpider: 2
+
+- type: microwaveMealRecipe
+  id: RecipeVegetableSoup
+  name: vegetable soup recipe
+  result: FoodSoupVegetable
+  time: 10
+  reagents:
+    Water: 5
+  solids:
+    FoodBowlBig: 1
+    FoodCorn: 1
+    FoodCarrot: 1
+    FoodPotato: 1
+    FoodEggplant: 1
+
+- type: microwaveMealRecipe
+  id: RecipeClownTearsSoup
+  name: clown tears soup recipe
+  result: FoodSoupClown
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodBanana: 1
+    ShardGlass: 1     #idk probably replace shard with someting bananium when #14663 merged
+
+- type: microwaveMealRecipe
+  id: RecipeMonkeysDelightSoup
+  name: monkeys delight recipe
+  result: FoodSoupMonkey
+  time: 10
+  reagents:
+    Flour: 5
+    TableSalt: 1
+    Blackpepper: 1
+  solids:
+    FoodBowlBig: 1
+    FoodBanana: 1
+    MonkeyCube: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBungoSoup
+  name: bungo soup recipe
+  result: FoodSoupBungo
+  time: 10
+  reagents:
+    Water: 5
+  solids:
+    FoodBowlBig: 1
+    FoodBungo: 2
+    FoodChiliPepper: 1
+
+- type: microwaveMealRecipe
+  id: RecipeHotChili
+  name: hot chili recipe
+  result: FoodSoupChiliHot
+  time: 20
+  solids:
+    FoodBowlBig: 1
+    FoodChiliPepper: 1
+    FoodMeatCutlet: 1
+    FoodOnionSlice: 1
+    FoodTomato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeClownTears
+  name: clown's tears recipe
+  result: FoodSoupClown
+  time: 15
+  solids:
+    FoodBowlBig: 1
+    FoodOnionSlice: 1
+    FoodTomato: 1
+    BikeHorn: 1
+
+- type: microwaveMealRecipe
+  id: RecipeChiliClown
+  name: chili con carnival recipe
+  result: FoodSoupChiliClown
+  time: 30
+  solids:
+    FoodBowlBig: 1
+    FoodChiliPepper: 1
+    FoodMeatCutlet: 1
+    FoodOnionSlice: 1
+    FoodTomato: 1
+    ClothingShoesClown: 1
+
+- type: microwaveMealRecipe
+  id: RecipeColdChili
+  name: cold chili recipe
+  result: FoodSoupChiliCold
+  time: 5
+  reagents:
+    Nitrogen: 5
+  solids:
+    FoodSoupChiliHot: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMisoColaSoup
+  name: salty sweet misocola soup recipe
+  result: DisgustingSweptSoup
+  time: 15
+  reagents:
+    Cola: 5
+  solids:
+    FoodSoupMiso: 1
+
+- type: microwaveMealRecipe
+  id: RecipePeaSoup
+  name: pea soup recipe
+  result: FoodSoupPea
+  time: 10
+  solids:
+    FoodPeaPod: 2
+    FoodBowlBig: 1
+  reagents:
+    Water: 10
