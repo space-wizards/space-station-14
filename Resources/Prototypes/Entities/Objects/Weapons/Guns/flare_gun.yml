@@ -1,9 +1,10 @@
+# flare gun
 - type: entity
-  name: flare gun
   parent:
   - BaseGunSmall
   - BaseGunShotgunBallistic
   id: WeaponFlareGun
+  name: flare gun
   description: A compact, single-shot pistol that fires shotgun shells.
   components:
   - type: Sprite
