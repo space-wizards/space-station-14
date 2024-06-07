@@ -1,6 +1,13 @@
 # Traitor single items
 
 - type: stealTargetGroup
+  id: SupermatterSilver
+  name: supermatter silver
+  sprite:
+    sprite: Objects/Misc/supermatter_silver.rsi
+    state: icon
+
+- type: stealTargetGroup
   id: Hypospray
   name: hypospray
   sprite:

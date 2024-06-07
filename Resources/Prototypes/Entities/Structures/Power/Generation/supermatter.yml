@@ -1,0 +1,67 @@
+- type: entity
+  id: Supermatter
+  name: supermatter
+  description: A strangely translucent and iridescent crystal.
+  components:
+    - type: Supermatter
+      whitelist:
+        tags:
+          - EmitterBolt
+          - Laser
+          - Knife # for traitor objective
+    - type: RadiationSource
+      intensity: 0
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Glass
+    - type: Physics
+      bodyType: Dynamic
+    - type: Fixtures
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+        mass: 500
+        layer:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - Opaque
+        mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - SmallImpassable
+    - type: CollisionWake
+      enabled: false
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Anchorable
+    - type: Pullable
+    - type: Sprite
+      drawdepth: 2
+      sprite: Structures/Power/Generation/supermatter.rsi
+      state: supermatter
+    - type: Icon
+      sprite: Structures/Power/Generation/supermatter.rsi
+      state: supermatter
+    - type: PointLight
+      enabled: true
+      radius: 10
+      energy: 5
+      color: "#fff633"
+    - type: AmbientSound
+      range: 5
+      volume: -5
+      sound:
+        path: /Audio/Ambience/Objects/supermatter_calm.ogg
+    - type: Explosive
+      explosionType: Supermatter
+      maxIntensity: 10000
+      intensitySlope: 10
+      totalIntensity: 10000
+    - type: SinguloFood
+      energy: 5000
+    - type: Butcherable
+      spawned:
+        id: SupermatterSliver

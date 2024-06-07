@@ -4,11 +4,10 @@ using Content.Server.Singularity.Events;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Singularity.Events;
+using Content.Server.Supermatter.Components;
 using Robust.Server.GameStates;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
@@ -36,6 +35,11 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// The amount of energy singulos accumulate when they eat an entity.
     /// </summary>
     public const float BaseEntityEnergy = 1f;
+
+    /// <summary>
+    ///     Whether or not the singuloo has eaten the supermatter crystal
+    /// </summary>
+    public bool HasEatenSM = false;
 
     public override void Initialize()
     {
@@ -132,7 +136,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
         singularity.Energy = value;
         SetLevel(uid, value switch
         {
-            >= 2400 => 6,
+            >= 2400 when HasEatenSM => 6,
             >= 1600 => 5,
             >= 900 => 4,
             >= 300 => 3,
@@ -267,6 +271,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnConsumedEntity(EntityUid uid, SingularityComponent comp, ref EntityConsumedByEventHorizonEvent args)
     {
+        if (HasComp<SupermatterComponent>(uid))
+            HasEatenSM = true;
         AdjustEnergy(uid, BaseEntityEnergy, singularity: comp);
     }
 
