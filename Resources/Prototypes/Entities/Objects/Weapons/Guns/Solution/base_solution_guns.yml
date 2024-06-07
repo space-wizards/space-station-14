@@ -6,7 +6,6 @@
   id: BaseGunSolutionContainer
   components:
   - type: Gun
-    clumsyProof: true
     cameraRecoilScalar: 0 #no recoil
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
@@ -42,6 +41,8 @@
   parent: BaseGunSolutionContainer
   id: BaseGunWaterToy
   components:
+  - type: Gun
+    clumsyProof: true
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:
