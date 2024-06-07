@@ -1,8 +1,8 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Components;
 using Content.Server.Spawners.Components;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
