@@ -7,13 +7,13 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Bow/bow.rsi
-  - type: Item
-    size: Normal
-  - type: Clothing
-    quickEquip: false
-    slots:
-      - Back
-      - suitStorage
+  # - type: Item
+  #   size: Normal
+  # - type: Clothing
+  #   quickEquip: false
+  #   slots:
+  #     - Back
+  #     - suitStorage
   - type: Wieldable
     wieldSound:
       path: /Audio/Items/bow_pull.ogg
@@ -48,7 +48,9 @@
 
 - type: entity
   id: BowImprovised
-  parent: BaseBow
+  parent:
+  - BaseGunLarge
+  - BaseBow
   components:
   - type: Sprite
     layers:
