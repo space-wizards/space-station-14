@@ -3,7 +3,7 @@
 - type: entity
   name: implanter
   description: A syringe exclusively designed for the injection and extraction of subdermal implants.
-  id: BaseImplanter
+  id: [BaseImplanter, BaseRestrictedContraband]
   parent: BaseItem
   abstract: true
   components:

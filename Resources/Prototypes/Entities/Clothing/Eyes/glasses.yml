@@ -53,7 +53,7 @@
         Blunt: 10
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, BaseEngineeringContraband]
   id: ClothingEyesGlassesMeson
   name: engineering goggles #less confusion
   description: Green-tinted goggles using a proprietary polymer that provides protection from eye damage of all types.

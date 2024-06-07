@@ -94,7 +94,7 @@
     mustBeEquippedToUse: true
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: [ClothingHandsBase, BaseCommandContraband]
   id: ClothingHandsGlovesCaptain
   name: captain gloves
   description: Regal blue gloves, with a nice gold trim. Swanky.
@@ -237,7 +237,7 @@
   - type: NinjaGloves
 
 - type: entity
-  parent: ClothingHandsGlovesColorBlack
+  parent: [ClothingHandsGlovesColorBlack, BaseMinorContraband]
   id: ClothingHandsGlovesCombat
   name: combat gloves
   description: These tactical gloves are fireproof and shock resistant.
