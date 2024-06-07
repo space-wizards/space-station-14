@@ -4,14 +4,12 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Traits;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Traits;
 
 public sealed class TraitSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISerializationManager _serializationManager = default!;
     [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
@@ -25,34 +23,61 @@ public sealed class TraitSystem : EntitySystem
     // When the player is spawned in, add all trait components selected during character creation
     private void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent args)
     {
-        foreach (var traitId in args.Profile.TraitPreferences)
+        ApplyTraits(args.Mob, args.Profile.TraitPreferences);
+    }
+
+    public void ApplyTraits(EntityUid uid, IReadOnlySet<ProtoId<TraitPrototype>> traits)
+    {
+        // Construct a dict of all the categories that support limits
+        var categoryLimits = new Dictionary<string, int>();
+        foreach (var traitCategory in _prototypeManager.EnumeratePrototypes<TraitCategoryPrototype>())
         {
-            if (!_prototypeManager.TryIndex<TraitPrototype>(traitId, out var traitPrototype))
+            if (traitCategory.MaxTraitPoints != null)
+                categoryLimits.Add(traitCategory.ID, traitCategory.MaxTraitPoints.Value);
+        }
+
+        foreach (var traitId in traits)
+        {
+            if (!_prototypeManager.TryIndex(traitId, out var traitPrototype))
             {
                 Log.Warning($"No trait found with ID {traitId}!");
                 return;
             }
 
-            if (_whitelistSystem.IsWhitelistFail(traitPrototype.Whitelist, args.Mob) ||
-                _whitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, args.Mob))
+            if (traitPrototype.Category != null &&
+                categoryLimits.TryGetValue(traitPrototype.Category, out var pointsRemaining))
+            {
+                if (traitPrototype.Cost > pointsRemaining)
+                {
+                    Log.Error($"Unable to apply trait {traitPrototype.ID}! Too many traits in category {traitPrototype.Category} selected.");
+                    continue;
+                }
+
+                categoryLimits[traitPrototype.Category] = pointsRemaining - traitPrototype.Cost;
+            }
+
+
+            if (_whitelistSystem.IsWhitelistFail(traitPrototype.Whitelist, uid) ||
+                _whitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, uid))
                 continue;
 
             // Add all components required by the prototype
-            EntityManager.AddComponents(args.Mob, traitPrototype.Components, false);
+            EntityManager.AddComponents(uid, traitPrototype.Components, false);
 
             // Add item required by the trait
             if (traitPrototype.TraitGear == null)
                 continue;
 
-            if (!TryComp(args.Mob, out HandsComponent? handsComponent))
+            if (!TryComp(uid, out HandsComponent? handsComponent))
                 continue;
 
-            var coords = Transform(args.Mob).Coordinates;
+            var coords = Transform(uid).Coordinates;
             var inhandEntity = EntityManager.SpawnEntity(traitPrototype.TraitGear, coords);
-            _sharedHandsSystem.TryPickup(args.Mob,
+            _sharedHandsSystem.TryPickup(uid,
                 inhandEntity,
                 checkActionBlocker: false,
                 handsComp: handsComponent);
         }
+
     }
 }

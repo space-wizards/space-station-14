@@ -19,8 +19,8 @@ public sealed partial class TraitCategoryPrototype : IPrototype
     public LocId Name { get; private set; } = string.Empty;
 
     /// <summary>
-    ///     The maximum number of traits that can be taken in this category. If -1, you can take as many traits as you like.
+    ///     The maximum number of traits that can be taken in this category. If null, you can take as many traits as you like.
     /// </summary>
     [DataField]
-    public int MaxTraitPoints = -1;
+    public int? MaxTraitPoints;
 }

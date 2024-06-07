@@ -536,7 +536,7 @@ namespace Content.Client.Lobby.UI
                 }
 
                 // Selection counter
-                if (category is { MaxTraitPoints: >= 0 })
+                if (category?.MaxTraitPoints is not null)
                 {
                     TraitsList.AddChild(new Label
                     {
