@@ -5,8 +5,8 @@
   description: The original rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+  # - type: Sprite
+  #   sprite: Objects/Weapons/Guns/Bow/bow.rsi
   # - type: Item
   #   size: Normal
   # - type: Clothing
@@ -53,6 +53,7 @@
   - BaseBow
   components:
   - type: Sprite
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
     layers:
     - state: unwielded
       map: [ base ]
