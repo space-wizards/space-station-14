@@ -2,19 +2,19 @@
   id: BaseSyndicateContraband
   abstract: true
   components:
-  - type: ContrabandExamine
+  - type: Contraband
     severity: Syndicate
 
 - type: entity
   id: BaseMinorContraband
   abstract: true
   components:
-  - type: ContrabandExamine
+  - type: Contraband
     severity: Minor
 
 - type: entity
   id: BaseGrandTheftContraband
   abstract: true
   components:
-  - type: ContrabandExamine
+  - type: Contraband
     severity: GrandTheft

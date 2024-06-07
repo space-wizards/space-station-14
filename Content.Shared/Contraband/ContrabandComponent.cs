@@ -6,7 +6,7 @@ namespace Content.Shared.Contraband;
 /// This is used for marking entities that are considered 'contraband' IC and showing it clearly in examine.
 /// </summary>
 [RegisterComponent]
-public sealed partial class ContrabandExamineComponent : Component
+public sealed partial class ContrabandComponent : Component
 {
     /// <summary>
     ///     The degree of contraband severity this item is considered to have.
