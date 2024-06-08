@@ -20,8 +20,6 @@ public sealed class MapTextOverlay : Overlay
     private readonly IEntityManager _entManager;
     private readonly IUserInterfaceManager _uiManager;
     private readonly SharedTransformSystem _transform;
-    private readonly IResourceCache _resourceCache;
-    private readonly IPrototypeManager _prototypeManager;
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
     public MapTextOverlay(
@@ -36,8 +34,6 @@ public sealed class MapTextOverlay : Overlay
         _entManager = entManager;
         _uiManager = uiManager;
         _transform = transform;
-        _resourceCache = resourceCache;
-        _prototypeManager = prototypeManager;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -75,13 +71,12 @@ public sealed class MapTextOverlay : Overlay
             if (!args.WorldBounds.Contains(mapPos.Position))
                 continue;
 
-            var fontPrototype = _prototypeManager.Index<FontPrototype>(mapText.FontId);
-            var fontResource = _resourceCache.GetResource<FontResource>(fontPrototype.Path);
-            var font = new VectorFont(fontResource, mapText.FontSize);
+            if (mapText.CachedFont == null)
+                return;
 
             var pos = Vector2.Transform(mapPos.Position, matrix) + mapText.Offset;
-            var dimensions = handle.GetDimensions(font, mapText.Text, scale);
-            handle.DrawString(font, pos - dimensions / 2f, mapText.Text, scale, mapText.Color);
+            var dimensions = handle.GetDimensions(mapText.CachedFont, mapText.Text, scale);
+            handle.DrawString(mapText.CachedFont, pos - dimensions / 2f, mapText.Text, scale, mapText.Color);
         }
     }
 }
