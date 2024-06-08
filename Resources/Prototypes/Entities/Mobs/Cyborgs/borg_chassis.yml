@@ -192,7 +192,7 @@
 
 - type: entity
   id: BorgChassisMedical
-  parent: BaseBorgChassisNT
+  parent: [BaseBorgChassisNT, ShowMedicalIcons]
   name: medical cyborg
   components:
   - type: Sprite
@@ -314,8 +314,6 @@
           shader: unshaded
           map: ["light"]
           visible: false
-    - type: PointLight
-      color: "#dd200b"
     - type: BorgChassis
       maxModules: 3
       moduleWhitelist:
@@ -356,6 +354,9 @@
       noMindState: synd_medical
     - type: Construction
       node: syndicatemedical
+    - type: ShowHealthBars
+      damageContainers:
+      - Biological
 
 - type: entity
   id: BorgChassisSyndicateSaboteur
@@ -385,3 +386,7 @@
       noMindState: synd_engi
     - type: Construction
       node: syndicatesaboteur
+    - type: ShowHealthBars
+      damageContainers:
+      - Inorganic
+      - Silicon

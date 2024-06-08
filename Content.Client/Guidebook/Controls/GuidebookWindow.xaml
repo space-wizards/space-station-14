@@ -2,7 +2,7 @@
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 xmlns:fancyTree="clr-namespace:Content.Client.UserInterface.Controls.FancyTree"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                SetSize="750 700"
+                SetSize="850 700"
                 MinSize="100 200"
                 Resizable="True"
                 Title="{Loc 'guidebook-window-title'}">
@@ -18,12 +18,16 @@
                     Name="SearchBar"
                     PlaceHolder="{Loc 'guidebook-filter-placeholder-text'}"
                     HorizontalExpand="True"
-                    Margin="0 5 10 5">                
+                    Margin="0 5 10 5">
                 </LineEdit>
+            </BoxContainer>
+            <BoxContainer Access="Internal" Name="ReturnContainer" Orientation="Horizontal" HorizontalAlignment="Right" Visible="False">
+                <Button Name="HomeButton" Text="{Loc 'ui-rules-button-home'}" Margin="0 0 10 0"/>
             </BoxContainer>
             <ScrollContainer Name="Scroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
                 <Control>
-                    <BoxContainer Orientation="Vertical" Name="EntryContainer" Margin="5 5 5 5" Visible="False"/>
+                    <BoxContainer Orientation="Vertical" Name="EntryContainer" Margin="5 5 5 5" Visible="False">
+                    </BoxContainer>
                     <BoxContainer Orientation="Vertical" Name="Placeholder" Margin="5 5 5 5">
                         <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'guidebook-placeholder-text'}"/>
                         <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'guidebook-placeholder-text-2'}"/>

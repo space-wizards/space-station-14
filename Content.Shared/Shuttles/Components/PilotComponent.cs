@@ -1,7 +1,9 @@
 using System.Numerics;
+using Content.Shared.Alert;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Shuttles.Components
@@ -31,6 +33,9 @@ namespace Content.Shared.Shuttles.Components
 
         [ViewVariables]
         public ShuttleButtons HeldButtons = ShuttleButtons.None;
+
+        [DataField]
+        public ProtoId<AlertPrototype> PilotingAlert = "PilotingShuttle";
 
         public override bool SendOnlyToOwner => true;
     }
