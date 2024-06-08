@@ -1,5 +1,7 @@
 using Content.Server.ParticleAccelerator.Wires;
+using Content.Shared.Radio;
 using Content.Shared.Singularity.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.ParticleAccelerator.Components;
@@ -186,4 +188,7 @@ public sealed partial class ParticleAcceleratorControlBoxComponent : Component
     /// </summary>
     [ViewVariables]
     public bool CanBeEnabled = true;
+
+    [DataField]
+    public ProtoId<RadioChannelPrototype> WarningChannel = "Engineering";
 }

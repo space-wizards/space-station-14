@@ -5,6 +5,7 @@ using Content.Shared.Singularity.Components;
 using Robust.Shared.Utility;
 using System.Diagnostics;
 using Content.Server.Administration.Managers;
+using Content.Server.Radio.EntitySystems;
 using Content.Shared.CCVar;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -18,6 +19,7 @@ public sealed partial class ParticleAcceleratorSystem
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly RadioSystem _radio = default!;
 
     private void InitializeControlBoxSystem()
     {
@@ -101,6 +103,7 @@ public sealed partial class ParticleAcceleratorSystem
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} off");
 
         comp.Enabled = false;
+        SetStrength(uid, ParticleAcceleratorPowerState.Standby, user, comp);
         UpdatePowerDraw(uid, comp);
         PowerOff(uid, comp);
         UpdateUI(uid, comp);
@@ -161,9 +164,7 @@ public sealed partial class ParticleAcceleratorSystem
                 ParticleAcceleratorPowerState.Standby => LogImpact.Low,
                 ParticleAcceleratorPowerState.Level0 => LogImpact.Medium,
                 ParticleAcceleratorPowerState.Level1 => LogImpact.High,
-                ParticleAcceleratorPowerState.Level2
-                or ParticleAcceleratorPowerState.Level3
-                or _ => LogImpact.Extreme,
+                _ => LogImpact.Extreme,
             };
 
             _adminLogger.Add(LogType.Action, impact, $"{ToPrettyString(player):player} has set the strength of {ToPrettyString(uid)} to {strength}");
@@ -175,16 +176,25 @@ public sealed partial class ParticleAcceleratorSystem
                 var pos = Transform(uid);
                 if (_timing.CurTime > comp.EffectCooldown)
                 {
-                    _chat.SendAdminAlert(player, Loc.GetString("particle-accelerator-admin-power-strength-warning",
+                    _chat.SendAdminAlert(player,
+                        Loc.GetString("particle-accelerator-admin-power-strength-warning",
                         ("machine", ToPrettyString(uid)),
                         ("powerState", strength),
                         ("coordinates", pos.Coordinates)));
                     _audio.PlayGlobal("/Audio/Misc/adminlarm.ogg",
-                        Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false,
+                        Filter.Empty().AddPlayers(_adminManager.ActiveAdmins),
+                        false,
                         AudioParams.Default.WithVolume(-8f));
                     comp.EffectCooldown = _timing.CurTime + comp.CooldownDuration;
                 }
             }
+
+            var msg = strength switch
+            {
+                ParticleAcceleratorPowerState.Standby => Loc.GetString("particle-accelerator-radio-message-off"),
+                _ => Loc.GetString("particle-accelerator-radio-message-num", ("level", GetPANumericalLevel(strength)))
+            };
+            _radio.SendRadioMessage(uid, msg, comp.WarningChannel, uid);
         }
 
         comp.SelectedStrength = strength;
@@ -248,7 +258,9 @@ public sealed partial class ParticleAcceleratorSystem
             receive = powerConsumer.ReceivedPower;
         }
 
-        _uiSystem.SetUiState(uid, ParticleAcceleratorControlBoxUiKey.Key, new ParticleAcceleratorUIState(
+        _uiSystem.SetUiState(uid,
+            ParticleAcceleratorControlBoxUiKey.Key,
+            new ParticleAcceleratorUIState(
             comp.Assembled,
             comp.Enabled,
             comp.SelectedStrength,
@@ -396,5 +408,20 @@ public sealed partial class ParticleAcceleratorSystem
         RescanParts(uid, msg.Actor, comp);
 
         UpdateUI(uid, comp);
+    }
+
+    /// <remarks>
+    /// Why yes! Of course they are all nonsensically off by 1!
+    /// </remarks>
+    public static int GetPANumericalLevel(ParticleAcceleratorPowerState state)
+    {
+        return state switch
+        {
+            ParticleAcceleratorPowerState.Level0 => 1,
+            ParticleAcceleratorPowerState.Level1 => 2,
+            ParticleAcceleratorPowerState.Level2 => 3,
+            ParticleAcceleratorPowerState.Level3 => 4,
+            _ => 0
+        };
     }
 }

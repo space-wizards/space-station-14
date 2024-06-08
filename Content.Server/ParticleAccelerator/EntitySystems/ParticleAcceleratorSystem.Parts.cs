@@ -26,6 +26,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (controller.CurrentlyRescanning)
             return;
 
+        //TODO: fix it always switching off 4noraisin
         SwitchOff(uid, user, controller);
 
         var partQuery = GetEntityQuery<ParticleAcceleratorPartComponent>();
@@ -157,19 +158,19 @@ public sealed partial class ParticleAcceleratorSystem
 
     private void OnComponentShutdown(EntityUid uid, ParticleAcceleratorPartComponent comp, ComponentShutdown args)
     {
-        if (EntityManager.EntityExists(comp.Master))
+        if (Exists(comp.Master))
             RescanParts(comp.Master!.Value);
     }
 
     private void BodyTypeChanged(EntityUid uid, ParticleAcceleratorPartComponent comp, ref PhysicsBodyTypeChangedEvent args)
     {
-        if (EntityManager.EntityExists(comp.Master))
+        if (Exists(comp.Master))
             RescanParts(comp.Master!.Value);
     }
 
     private void OnMoveEvent(EntityUid uid, ParticleAcceleratorPartComponent comp, ref MoveEvent args)
     {
-        if (EntityManager.EntityExists(comp.Master))
+        if (Exists(comp.Master))
             RescanParts(comp.Master!.Value);
     }
 }
