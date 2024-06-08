@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Killerqu00
-  changes:
-  - message: Airlock wires are now different between departments.
-    type: Tweak
-  id: 6198
-  time: '2024-03-20T16:07:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26247
 - author: Tayrtahn
   changes:
   - message: Pizza is no longer considered a fruit.
@@ -3849,3 +3842,10 @@
   id: 6697
   time: '2024-06-08T05:49:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28709
+- author: metalgearsloth
+  changes:
+  - message: Fix some loadout groups not getting validated properly.
+    type: Fix
+  id: 6698
+  time: '2024-06-08T10:03:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28731
