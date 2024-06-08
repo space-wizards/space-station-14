@@ -127,7 +127,10 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
                     if (loadouts.Contains(defaultLoadout))
                         continue;
 
-                    // Still need to apply the effects even if validation is ignored.
+                    // Not valid so don't default to it anyway.
+                    if (!IsValid(profile, session, defaultLoadout.Prototype, collection, out _))
+                        continue;
+
                     loadouts.Add(defaultLoadout);
                     Apply(loadoutProto);
                 }
