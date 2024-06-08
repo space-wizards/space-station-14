@@ -8,6 +8,8 @@ namespace Content.Shared.Traits;
 [Prototype]
 public sealed partial class TraitCategoryPrototype : IPrototype
 {
+    public const string Default = "Default";
+
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;

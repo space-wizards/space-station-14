@@ -477,10 +477,10 @@ namespace Content.Client.Lobby.UI
                 return;
             }
 
-            //Setup model
-            Dictionary<string, List<string>> model = new();
+            // Setup model
+            Dictionary<string, List<string>> traitGroups = new();
             List<string> defaultTraits = new();
-            model.Add("default", defaultTraits);
+            traitGroups.Add(TraitCategoryPrototype.Default, defaultTraits);
 
             foreach (var trait in traits)
             {
@@ -490,18 +490,19 @@ namespace Content.Client.Lobby.UI
                     continue;
                 }
 
-                if (!model.ContainsKey(trait.Category))
-                {
-                    model.Add(trait.Category, new());
-                }
-                model[trait.Category].Add(trait.ID);
+                if (!_prototypeManager.HasIndex(trait.Category))
+                    continue;
+
+                var group = traitGroups.GetOrNew(trait.Category);
+                group.Add(trait.ID);
             }
 
-            //Create UI view from model
-            foreach (var (categoryId, traitId) in model)
+            // Create UI view from model
+            foreach (var (categoryId, categoryTraits) in traitGroups)
             {
                 TraitCategoryPrototype? category = null;
-                if (categoryId != "default")
+
+                if (categoryId != TraitCategoryPrototype.Default)
                 {
                     category = _prototypeManager.Index<TraitCategoryPrototype>(categoryId);
                     // Label
@@ -516,7 +517,7 @@ namespace Content.Client.Lobby.UI
                 List<TraitPreferenceSelector?> selectors = new();
                 var selectionCount = 0;
 
-                foreach (var traitProto in traitId)
+                foreach (var traitProto in categoryTraits)
                 {
                     var trait = _prototypeManager.Index<TraitPrototype>(traitProto);
                     var selector = new TraitPreferenceSelector(trait);
@@ -527,7 +528,15 @@ namespace Content.Client.Lobby.UI
 
                     selector.PreferenceChanged += preference =>
                     {
-                        Profile = Profile?.WithTraitPreference(trait.ID, categoryId, preference);
+                        if (preference)
+                        {
+                            Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
+                        }
+                        else
+                        {
+                            Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
+                        }
+
                         SetDirty();
                         RefreshTraits(); // If too many traits are selected, they will be reset to the real value.
                     };
