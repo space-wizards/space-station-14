@@ -14,3 +14,8 @@
     - type: Icon
       sprite: Objects/Misc/supermatter_silver.rsi
       state: icon
+    - type: StealTarget
+      stealGroup: SupermatterSliver
+    - type: Tag
+      tags:
+        - HighRiskItem
