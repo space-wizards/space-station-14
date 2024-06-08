@@ -11,14 +11,14 @@ public sealed partial class TextAutomodActionAdminLog : ITextAutomodAction
     [DataField]
     public LogImpact Impact = LogImpact.Medium;
 
-    public bool Skip(string fullText, Dictionary<string, int> patternMatches)
+    public bool Skip(string fullText, List<(string, int)> patternMatches)
     {
         return false;
     }
 
     public bool RunAction(ICommonSession session,
         string fullText,
-        Dictionary<string, int> patternMatches,
+        List<(string, int)> patternMatches,
         AutomodFilterDef filter,
         string filterDisplayName,
         IEntityManager entMan)
@@ -28,7 +28,7 @@ public sealed partial class TextAutomodActionAdminLog : ITextAutomodAction
                 LogType.TextAutomod,
                 Impact,
                 $"{entMan.ToPrettyString(session.AttachedEntity):player} ({session}) tripped {filterDisplayName
-                } which matched: {new StringBuilder().AppendJoin("; ", patternMatches.Keys)}");
+                } which matched: {new StringBuilder().AppendJoin("; ", patternMatches)}");
 
         return true;
     }

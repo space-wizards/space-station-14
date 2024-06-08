@@ -93,7 +93,7 @@ public partial interface ITextAutomodAction
     /// <param name="fullText">The full text provided by the user.</param>
     /// <param name="patternMatches">The text matched by the pattern.</param>
     /// <returns>True when this filter's actions should be skipped.</returns>
-    public bool Skip(string fullText, Dictionary<string, int> patternMatches);
+    public bool Skip(string fullText, List<(string, int)> patternMatches);
 
     /// <summary>
     /// Run actions on the session.
@@ -107,7 +107,7 @@ public partial interface ITextAutomodAction
     /// <returns>True if the message passes. False if the message should be blocked.</returns>
     public bool RunAction(ICommonSession session,
         string fullText,
-        Dictionary<string, int> patternMatches,
+        List<(string, int)> patternMatches,
         AutomodFilterDef filter,
         string filterDisplayName,
         IEntityManager entMan);

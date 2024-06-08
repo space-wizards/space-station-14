@@ -69,11 +69,11 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
             if (regexMatches.Count == 0)
                 continue;
 
-            var textMatches = new Dictionary<string, int>();
+            var textMatches = new List<(string, int)>();
             foreach (Match match in regexMatches)
             {
                 var str = match.ToString();
-                textMatches.Add(str, match.Index);
+                textMatches.Add((str, match.Index));
             }
 
             if (!_protoMan.TryIndex<AutomodActionGroupPrototype>(filter.ActionGroup, out var censorGroup))
