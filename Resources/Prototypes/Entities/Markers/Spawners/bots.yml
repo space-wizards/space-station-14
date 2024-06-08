@@ -26,3 +26,16 @@
     prototypes:
       - MobCleanBot
 
+- type: entity
+  name: honkbot spawner
+  id: SpawnMobHonkBot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Mobs/Silicon/Bots/honkbot.rsi
+        state: honkbot
+  - type: ConditionalSpawner
+    prototypes:
+      - MobHonkBot

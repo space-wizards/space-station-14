@@ -2223,7 +2223,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: SpawnClownSpider
+- proto: SpawnMobHonkBot
   entities:
   - uid: 312
     components:
