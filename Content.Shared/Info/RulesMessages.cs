@@ -23,3 +23,19 @@ public sealed class ShowRulesPopupMessage : NetMessage
         buffer.Write(PopupTime);
     }
 }
+
+/// <summary>
+///     Sent by the client when it has accepted the rules.
+/// </summary>
+public sealed class RulesAcceptedMessage : NetMessage
+{
+    public override MsgGroups MsgGroup => MsgGroups.Command;
+
+    public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
+    {
+    }
+
+    public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
+    {
+    }
+}

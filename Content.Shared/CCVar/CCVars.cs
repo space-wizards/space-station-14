@@ -1,4 +1,5 @@
 using Content.Shared.Maps;
+using Content.Shared.Roles;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
@@ -218,6 +219,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool>
             GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Override default role requirements using a <see cref="JobRequirementOverridePrototype"/>
+        /// </summary>
+        public static readonly CVarDef<string>
+            GameRoleTimerOverride = CVarDef.Create("game.role_timer_override", "", CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         /// If roles should be restricted based on whether or not they are whitelisted.
@@ -1789,13 +1796,7 @@ namespace Content.Shared.CCVar
         /// Don't show rules to localhost/loopback interface.
         /// </summary>
         public static readonly CVarDef<bool> RulesExemptLocal =
-            CVarDef.Create("rules.exempt_local", true, CVar.CLIENT);
-
-        /// <summary>
-        /// The next time the rules will popup for this client, expressed in minutes
-        /// </summary>
-        public static readonly CVarDef<string> RulesNextPopupTime =
-            CVarDef.Create("rules.next_popup_time", "Jan 1, 1997", CVar.CLIENTONLY | CVar.ARCHIVE);
+            CVarDef.Create("rules.exempt_local", false, CVar.SERVERONLY);
 
 
         /*

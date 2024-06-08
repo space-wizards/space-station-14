@@ -1,13 +1,9 @@
-﻿using System.Globalization;
 using Content.Client.Gameplay;
 using Content.Client.Info;
-using Content.Shared.Administration.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Guidebook;
 using Content.Shared.Info;
-using Robust.Client;
 using Robust.Client.Console;
-using Robust.Client.Player;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
@@ -18,24 +14,20 @@ namespace Content.Client.UserInterface.Systems.Info;
 
 public sealed class InfoUIController : UIController, IOnStateExited<GameplayState>
 {
-    [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly ISharedAdminManager _adminManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     private RulesPopup? _rulesPopup;
     private RulesAndInfoWindow? _infoWindow;
 
-    private static DateTime NextRulesReadTime => DateTime.UtcNow + TimeSpan.FromDays(60);
-
     public override void Initialize()
     {
         base.Initialize();
 
-        _client.PlayerJoinedServer += OnJoinedServer;
+
+        _netManager.RegisterNetMessage<RulesAcceptedMessage>();
         _netManager.RegisterNetMessage<ShowRulesPopupMessage>(OnShowRulesPopupMessage);
 
         _consoleHost.RegisterCommand("fuckrules",
@@ -45,22 +37,6 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
         {
             OnAcceptPressed();
         });
-    }
-
-    private void OnJoinedServer(object? sender, PlayerEventArgs args)
-    {
-        if (_playerManager.LocalSession is not { } localSession)
-            return;
-
-        if (_adminManager.IsAdmin(localSession) && _cfg.GetCVar(CCVars.RulesExemptLocal))
-            return;
-
-        var nextReadTarget = DateTime.Parse(_cfg.GetCVar(CCVars.RulesNextPopupTime));
-        if (nextReadTarget >= DateTime.UtcNow)
-            return;
-
-        var time = _cfg.GetCVar(CCVars.RulesWaitTime);
-        ShowRules(time);
     }
 
     private void OnShowRulesPopupMessage(ShowRulesPopupMessage message)
@@ -100,8 +76,7 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
 
     private void OnAcceptPressed()
     {
-        _cfg.SetCVar(CCVars.RulesNextPopupTime, NextRulesReadTime.ToString(CultureInfo.InvariantCulture));
-        _cfg.SaveToFile();
+        _netManager.ClientSendMessage(new RulesAcceptedMessage());
 
         _rulesPopup?.Orphan();
         _rulesPopup = null;
