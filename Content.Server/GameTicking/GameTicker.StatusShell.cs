@@ -46,6 +46,7 @@ namespace Content.Server.GameTicking
                 jObject["players"] = _playerManager.PlayerCount;
                 jObject["soft_max_players"] = _cfg.GetCVar(CCVars.SoftMaxPlayers);
                 jObject["panic_bunker"] = _cfg.GetCVar(CCVars.PanicBunkerEnabled);
+                jObject["baby_jail"] = _cfg.GetCVar(CCVars.BabyJailEnabled);
                 jObject["run_level"] = (int) _runLevel;
                 if (preset != null)
                     jObject["preset"] = Loc.GetString(preset.ModeTitle);

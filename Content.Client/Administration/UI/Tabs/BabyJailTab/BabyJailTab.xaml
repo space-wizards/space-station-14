@@ -1,0 +1,26 @@
+﻿<controls:BabyJailTab
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.Administration.UI.Tabs.BabyJailTab"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Margin="4">
+    <BoxContainer Orientation="Vertical">
+        <cc:CommandButton Name="EnabledButton" Command="babyjail" ToggleMode="True"
+                          Text="{Loc admin-ui-baby-jail-disabled}"
+                          ToolTip="{Loc admin-ui-baby-jail-tooltip}" />
+        <cc:CommandButton Name="ShowReasonButton" Command="babyjail_show_reason"
+                          ToggleMode="True" Text="{Loc admin-ui-baby-jail-show-reason}"
+                          ToolTip="{Loc admin-ui-baby-jail-show-reason-tooltip}" />
+        <BoxContainer Orientation="Vertical" Margin="0 10 0 0">
+            <BoxContainer Orientation="Horizontal" Margin="2">
+                <Label Text="{Loc admin-ui-baby-jail-max-account-age}" MinWidth="175" />
+                <LineEdit Name="MaxAccountAge" MinWidth="50" Margin="0 0 5 0" />
+                <Label Text="{Loc generic-hours}" />
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" Margin="2">
+                <Label Text="{Loc admin-ui-baby-jail-max-overall-hours}" MinWidth="175" />
+                <LineEdit Name="MaxOverallHours" MinWidth="50" Margin="0 0 5 0" />
+                <Label Text="{Loc generic-hours}" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:BabyJailTab>

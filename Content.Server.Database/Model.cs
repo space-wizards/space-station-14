@@ -889,6 +889,7 @@ namespace Content.Server.Database
         Whitelist = 1,
         Full = 2,
         Panic = 3,
+        BabyJail = 4,
     }
 
     public class ServerBanHit
