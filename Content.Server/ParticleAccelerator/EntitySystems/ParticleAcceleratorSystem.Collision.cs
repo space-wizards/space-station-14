@@ -38,7 +38,7 @@ public sealed partial class ParticleAcceleratorSystem
             );
             EntityManager.QueueDeleteEntity(entity.Owner);
         }
-        else if (TryComp<TeslaEnergyBallComponent>(args.OtherEntity, out var comp))
+        else if (TryComp<TeslaEnergyBallComponent>(args.OtherEntity, out var teslaComp))
         {
             // idk what values we want, I just know that it takes 100 energy total to spawn a miniball
             // EmoGarbage might change the PA levels to use actual numbers instead of imaginary ones
@@ -53,7 +53,11 @@ public sealed partial class ParticleAcceleratorSystem
                 _ => 0
             };
 
-            EntityManager.System<TeslaEnergyBallSystem>().AdjustEnergy(args.OtherEntity, comp, energyFromParticle);
+            if (energyFromParticle == 0)
+                if (TryComp<SinguloFoodComponent>(entity, out var singuloFoodComp)) // decelerator moment
+                    energyFromParticle = (int) singuloFoodComp.Energy;
+
+            EntityManager.System<TeslaEnergyBallSystem>().AdjustEnergy(args.OtherEntity, teslaComp, energyFromParticle);
             EntityManager.QueueDeleteEntity(entity);
         }
     }
