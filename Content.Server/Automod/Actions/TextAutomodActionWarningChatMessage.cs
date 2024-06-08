@@ -24,7 +24,7 @@ public sealed partial class TextAutomodActionWarningChatMessage : ITextAutomodAc
     {
         var str = Loc.GetString(
             Reason,
-            ("matches", new StringBuilder().AppendJoin(", ", patternMatches)),
+            ("matches", string.Join(", ", patternMatches)),
             ("filterName", filterDisplayName));
 
         IoCManager.Resolve<IChatManager>().DispatchServerMessage(session, str);

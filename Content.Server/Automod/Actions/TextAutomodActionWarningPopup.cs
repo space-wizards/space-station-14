@@ -25,7 +25,7 @@ public sealed partial class TextAutomodActionWarningPopup : ITextAutomodAction
     {
         var str = Loc.GetString(
             Reason,
-            ("matches", new StringBuilder().AppendJoin(", ", patternMatches)),
+            ("matches", string.Join(", ", patternMatches)),
             ("filterName", filterDisplayName));
 
         entMan.System<PopupSystem>().PopupCursor(str, session, PopupType.LargeCaution);

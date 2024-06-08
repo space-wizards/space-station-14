@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Content.Server.Administration.Logs;
+﻿using Content.Server.Administration.Logs;
 using Content.Shared.Automod;
 using Content.Shared.Database;
 using Robust.Shared.Player;
@@ -28,7 +27,7 @@ public sealed partial class TextAutomodActionAdminLog : ITextAutomodAction
                 LogType.TextAutomod,
                 Impact,
                 $"{entMan.ToPrettyString(session.AttachedEntity):player} ({session}) tripped {filterDisplayName
-                } which matched: {new StringBuilder().AppendJoin("; ", patternMatches)}");
+                } which matched: {string.Join("; ", patternMatches)}");
 
         return true;
     }
