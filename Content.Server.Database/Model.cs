@@ -1121,11 +1121,9 @@ namespace Content.Server.Database
         public string RoleId { get; set; } = default!;
     }
 
-    [Table("text_automod")]
     public sealed class TextAutomod
     {
-        [Column("id")] public int Id { get; set; }
-
+        public int Id { get; set; }
         public string Pattern { get; set; } = string.Empty;
         public AutomodFilterType FilterType { get; set; }
         public string ActionGroup { get; set; } = string.Empty;
