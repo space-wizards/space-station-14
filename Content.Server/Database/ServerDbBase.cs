@@ -1647,7 +1647,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             await using var db = await GetDb();
 
-            var filter = new TextAutomodFilter
+            var filter = new TextAutomod
             {
                 Pattern = automodFilter.Pattern,
                 FilterType = automodFilter.FilterType,
@@ -1682,7 +1682,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return filters;
         }
 
-        protected AutomodFilterDef ConvertTextAutomodFilter(TextAutomodFilter textAutomod)
+        protected AutomodFilterDef ConvertTextAutomodFilter(TextAutomod textAutomod)
         {
             return new AutomodFilterDef(
                 textAutomod.Id,

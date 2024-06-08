@@ -41,7 +41,7 @@ namespace Content.Server.Database
         public DbSet<AdminWatchlist> AdminWatchlists { get; set; } = null!;
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
-        public DbSet<TextAutomodFilter> TextAutomod { get; set; } = default!;
+        public DbSet<TextAutomod> TextAutomod { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -324,7 +324,7 @@ namespace Content.Server.Database
                 .HasPrincipalKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<TextAutomodFilter>()
+            modelBuilder.Entity<TextAutomod>()
                 .HasIndex(filter => filter.Id);
         }
 
@@ -1125,7 +1125,7 @@ namespace Content.Server.Database
     }
 
     [Table("text_automod")]
-    public sealed class TextAutomodFilter
+    public sealed class TextAutomod
     {
         [Column("filter_id")] public int Id { get; set; }
 
