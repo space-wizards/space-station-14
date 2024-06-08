@@ -1,5 +1,5 @@
 # ARROW
-# A basic template for a bow weapon that knocks an arrow.
+# A bow weapon that knocks an arrow.
 - type: entity
   abstract: true
   id: BaseGunArrow

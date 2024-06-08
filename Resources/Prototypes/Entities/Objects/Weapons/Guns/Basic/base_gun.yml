@@ -17,6 +17,7 @@
     price: 500
 
 # MAG VISUALS
+# The most common set of components for displaying a magazine in a gun.
 - type: entity
   abstract: true
   id: BaseGunMagVisuals
@@ -34,7 +35,7 @@
   - type: Appearance
 
 # SMALL
-# A basic template for a small gun that can be equipped in the belt slot.
+# A small gun that can be equipped in the belt slot.
 - type: entity
   abstract: true
   id: BaseGunSmall
@@ -54,7 +55,7 @@
     - suitStorage
 
 # MEDIUM
-# A basic template for a large gun that can be equipped in the back slot.
+# A large gun that can be equipped in the back slot.
 - type: entity
   abstract: true
   id: BaseGunMedium
@@ -68,7 +69,7 @@
     - suitStorage
 
 # LARGE
-# A basic template for a gun that is large enough to not fit well in bags and be equipped on the back.
+# A gun that is large enough to not fit well in bags and be equipped on the back.
 - type: entity
   abstract: true
   id: BaseGunLarge
@@ -82,7 +83,7 @@
     - suitStorage
 
 # HEAVY
-# A basic template for a massive gun that requires multiple hands to carry and slows the carrier.
+# A massive gun that requires multiple hands to carry and slows the carrier.
 - type: entity
   abstract: true
   id: BaseGunHeavy
@@ -96,7 +97,7 @@
   - type: HeldSpeedModifier
 
 # WIELDABLE
-# A basic template for a gun that is wieldable and has improved accuracy when wielded. Includes a standard innacuracy.
+# A gun that is wieldable and has improved accuracy when wielded. Includes a standard innacuracy.
 - type: entity
   abstract: true
   id: BaseGunWieldable
@@ -111,7 +112,7 @@
     maxAngle: 32
 
 # SILENCED
-# A basic template for a gun that makes almost no noise when fired.
+# A gun that makes almost no noise when fired.
 - type: entity
   abstract: true
   id: BaseGunSilenced

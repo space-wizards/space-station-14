@@ -1,5 +1,5 @@
 # SMG MAG
-# A basic template for a gun that feeds ammo to a chamber from a loaded SMG magazine.
+# A gun that feeds ammo to a chamber from a loaded SMG magazine.
 - type: entity
   abstract: true
   id: BaseGunSubMachineGunMag
@@ -32,7 +32,7 @@
   - type: AmmoCounter
   
 # SMG TOP-MOUNTED MAG
-# A basic template for a gun that feeds ammo to a chamber from a top loaded SMG magazine.
+# A gun that feeds ammo to a chamber from a top loaded SMG magazine.
 - type: entity
   abstract: true
   id: BaseGunSubMachineGunTopMountedMag

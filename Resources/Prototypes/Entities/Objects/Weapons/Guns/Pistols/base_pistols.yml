@@ -1,5 +1,5 @@
 # PISTOL MAG
-# A basic template for a gun that feeds ammo to a chamber from a loaded pistol magazine.
+# A gun that feeds ammo to a chamber from a loaded pistol magazine.
 - type: entity
   abstract: true
   id: BaseGunPistolMag
@@ -32,7 +32,7 @@
       gun_chamber: !type:ContainerSlot
 
 # CASELESS PISTOL MAG
-# A basic template for a gun that feeds ammo to a chamber from a loaded caseless pistol magazine.
+# A gun that feeds ammo to a chamber from a loaded caseless pistol magazine.
 - type: entity
   abstract: true
   id: BaseGunPistolCaselessMag
@@ -64,7 +64,7 @@
       gun_chamber: !type:ContainerSlot
 
 # MAGNUM MAG
-# A basic template for a gun that feeds ammo to a chamber from a loaded magnum magazine.
+# A gun that feeds ammo to a chamber from a loaded magnum magazine.
 - type: entity
   abstract: true
   id: BaseGunMagnumMag

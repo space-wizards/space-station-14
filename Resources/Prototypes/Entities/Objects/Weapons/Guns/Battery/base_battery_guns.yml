@@ -1,5 +1,5 @@
 # BATTERY
-# A basic template for a gun that is powered by an internal battery and can be recharged at recharger.
+# A gun that is powered by an internal battery and can be recharged at recharger.
 - type: entity
   abstract: true
   id: BaseGunBattery
@@ -10,7 +10,7 @@
   - type: AmmoCounter
 
 # POWER CELL
-# A basic template for a gun that is powered by an insertable powercell.
+# A gun that is powered by an insertable power cell.
 - type: entity
   abstract: true
   id: BaseGunPowerCell
@@ -33,7 +33,7 @@
   - type: AmmoCounter
 
 # RED LASER
-# A basic template for a gun that fires the RedLaser hitscan.
+# A gun that fires the RedLaser hitscan.
 - type: entity
   abstract: true
   id: BaseGunRedLaser
@@ -46,7 +46,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
 
 # RED MEDIUM LASER
-# A basic template for a gun that fires the RedMediumLaser hitscan.
+# A gun that fires the RedMediumLaser hitscan.
 - type: entity
   abstract: true
   id: BaseGunRedMediumLaser
@@ -59,7 +59,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
 
 # RED HEAVY LASER
-# A basic template for a gun that fires the RedHeavyLaser hitscan.
+# A gun that fires the RedHeavyLaser hitscan.
 - type: entity
   abstract: true
   id: BaseGunRedHeavyLaser
@@ -72,7 +72,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
 
 # XRAY LASER
-# A basic template for a gun that fires the XrayLaser hitscan.
+# A gun that fires the XrayLaser hitscan.
 - type: entity
   abstract: true
   id: BaseGunXrayLaser
@@ -85,7 +85,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
 
 # PULSE
-# A basic template for a gun that fires the Pulse hitscan.
+# A gun that fires the Pulse hitscan.
 - type: entity
   abstract: true
   id: BaseGunPulse
@@ -98,7 +98,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
 
 # SELF RECHARGING
-# A basic template for a gun that recharges its own internal battery over time.
+# A gun that recharges its own internal battery over time.
 - type: entity
   abstract: true
   id: BaseGunSelfRecharger

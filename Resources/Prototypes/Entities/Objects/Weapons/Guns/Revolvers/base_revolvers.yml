@@ -1,5 +1,5 @@
 # REVOLVER CYLINDER
-# A basic template for a gun that loads cartridges into and fires from a rotating cylinder.
+# A gun that loads cartridges into and fires from a rotating cylinder.
 - type: entity
   abstract: true
   id: BaseGunRevolverCylinder

@@ -1,5 +1,5 @@
 # SOLUTION CONTAINER
-# A basic template for a gun that shoots chemical solutions from a container.
+# A gun that shoots chemical solutions from a container.
 - type: entity
   abstract: true
   id: BaseGunSolutionContainer
@@ -34,7 +34,7 @@
     solution: chamber
 
 # WATER TOY
-# A basic template for the toy water guns. Includes its randomly colorful visuals and common properties.
+# Template for the toy water guns. Includes its randomly colorful visuals and common properties.
 - type: entity
   abstract: true
   parent: BaseGunSolutionContainer

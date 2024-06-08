@@ -1,5 +1,5 @@
 # BALLISTIC SHOTGUN
-# A basic template for a shotgun that uses the BallisticAmmoProvider component.
+# A gun that uses the BallisticAmmoProvider component to load and fire shotgun shells.
 - type: entity
   abstract: true
   id: BaseGunShotgunBallistic
@@ -19,7 +19,7 @@
   - type: AmmoCounter
 
 # SHOTGUN MAG
-# A basic template for a gun that fires shells from a loaded shotgun magazine.
+# A gun that fires shotgun shells from a loaded shotgun magazine.
 - type: entity
   abstract: true
   id: BaseGunShotgunMag

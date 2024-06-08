@@ -1,5 +1,5 @@
 # LIGHT RIFLE BALLISTIC
-# A basic template for a gun that uses the BallisticAmmoProvider component and loads CartridgeLightRifle.
+# A gun that uses the BallisticAmmoProvider component to load and fire light rifle ammo.
 - type: entity
   abstract: true
   id: BaseGunLightRifleBallistic
@@ -17,7 +17,7 @@
   - type: AmmoCounter
 
 # ANTI-MATERIEL BALLISTIC
-# A basic template for a gun that uses the BallisticAmmoProvider component and loads CartridgeAntiMateriel.
+# A gun that uses the BallisticAmmoProvider component to load and fire anti-materiel ammo.
 - type: entity
   abstract: true
   id: BaseGunAntiMaterielBallistic

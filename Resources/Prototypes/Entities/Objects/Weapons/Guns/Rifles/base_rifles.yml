@@ -1,5 +1,5 @@
 # RIFLE MAG
-# A basic template for a gun that feeds ammo to a chamber from a loaded rifle magazine.
+# A gun that feeds ammo to a chamber from a loaded rifle magazine.
 - type: entity
   abstract: true
   id: BaseGunRifleMag
@@ -32,7 +32,7 @@
   - type: AmmoCounter
 
 # LIGHT RIFLE MAG
-# A basic template for a gun that feeds ammo to a chamber from a loaded light rifle magazine.
+# A gun that feeds ammo to a chamber from a loaded light rifle magazine.
 - type: entity
   abstract: true
   id: BaseGunLightRifleMag

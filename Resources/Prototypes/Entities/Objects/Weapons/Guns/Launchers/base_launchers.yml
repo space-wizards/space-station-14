@@ -1,5 +1,5 @@
 # ROCKET LAUNCHER
-# A basic template for a launcher that uses the BallisticAmmoProvider component to load and fire rockets.
+# A gun that uses the BallisticAmmoProvider component to load and fire rockets.
 - type: entity
   abstract: true
   id: BaseGunRocketBallistic
@@ -18,7 +18,7 @@
         ents: []
 
 # GRENADE LAUNCHER
-# A basic template for a launcher that uses the BallisticAmmoProvider component to load and fire grenades.
+# A gun that uses the BallisticAmmoProvider component to load and fire grenades.
 - type: entity
   abstract: true
   id: BaseGunGrenadeBallistic
@@ -37,7 +37,7 @@
         ents: []
 
 # CANNONBALL LAUNCHER
-# A basic template for a launcher that uses the BallisticAmmoProvider component to load and fire cannonballs.
+# A gun that uses the BallisticAmmoProvider component to load and fire cannonballs.
 - type: entity
   abstract: true
   id: BaseGunCannonBallBallistic
@@ -56,7 +56,7 @@
         ents: []
 
 # PHYSICS GUN
-# A basic template for a physics manipulating gun. Groups together the visual qualities of all physics guns.
+# A physics manipulating gun. Groups together the visual qualities of all physics guns.
 - type: entity
   abstract: true
   parent:
