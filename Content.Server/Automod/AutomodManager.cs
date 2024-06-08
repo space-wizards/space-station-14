@@ -56,7 +56,7 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
         // Ensure that only 1 bit is set
         Debug.Assert(target != 0 && (target & (target - 1)) == 0);
 
-        var blocked = true;
+        var passes = true;
 
         // No filters defined for target
         if (!_regexFilters.TryGetValue(target, out var automodFilters))
@@ -97,11 +97,11 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
             foreach (var censorAction in censorGroup.AutomodActions)
             {
-                blocked &= censorAction.RunAction(session, inputText, textMatches, filter, displayName, _entMan);
+                passes &= censorAction.RunAction(session, inputText, textMatches, filter, displayName, _entMan);
             }
         }
 
-        return blocked;
+        return passes;
     }
 
     private string GetDisplayName(AutomodFilterDef filter)
