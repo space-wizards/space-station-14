@@ -163,7 +163,7 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
                 }
                 catch (RegexParseException e)
                 {
-                    _log.Error("Failed to parse regex in {0}. Error code: {1}.", this.GetType(), e.Error);
+                    _log.Error("Failed to parse regex filter: {0}. Error code: {1}.", GetDisplayName(automod), e.Error);
                 }
             }
             // TODO other filter types
