@@ -1,3 +1,4 @@
+using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Tesla.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Server.Audio;
@@ -22,13 +23,13 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
     }
 
     /// <summary>
-    /// prevent collisions with entities that are not the containment field
-    /// or the containment field generators
+    /// only collides with the containment fields, containment field generators, or particle projectile components from the PA
     /// </summary>
     public void OnPreventCollide(Entity<TeslaEnergyBallComponent> entity, ref PreventCollideEvent args)
     {
-        if (HasComp<ContainmentFieldComponent>(args.OtherEntity)
-            || HasComp<ContainmentFieldGeneratorComponent>(args.OtherEntity))
+        if (HasComp<ContainmentFieldComponent>(args.OtherEntity) 
+            || HasComp<ContainmentFieldGeneratorComponent>(args.OtherEntity)
+            || HasComp<ParticleProjectileComponent>(args.OtherEntity))
             return;
 
         args.Cancelled = true;
