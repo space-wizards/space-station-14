@@ -10,13 +10,13 @@ particle-accelerator-control-menu-scan-parts-button = Scan Parts
 particle-accelerator-control-menu-check-containment-field-warning = Ensure containment field is active before operation
 particle-accelerator-control-menu-foo-bar-baz = FOO-BAR-BAZ
 particle-accelerator-control-menu-status-label = [bold]Status:[/bold]
-particle-accelerator-control-menu-status-unknown = [color=red]Unknown[/color]
-particle-accelerator-control-menu-status-operational = [color=green]Operational[/color]
-particle-accelerator-control-menu-status-incomplete = [color=red]Incomplete[/color]
+particle-accelerator-control-menu-status-unknown = [font="Monospace"][color=red]Unknown[/color][/bold]
+particle-accelerator-control-menu-status-operational = [font="Monospace"][color=green]Operational[/color][/bold]
+particle-accelerator-control-menu-status-incomplete = [font="Monospace"][color=red]Incomplete[/color][/bold]
 particle-accelerator-control-menu-draw = [bold]Draw:[/bold]
-particle-accelerator-control-menu-draw-value = {$watts}/{$lastReceive}
-particle-accelerator-control-menu-draw-not-available = [color=gray]N/A[/color]
+particle-accelerator-control-menu-draw-value = [font="Monospace"]{$watts}/{$lastReceive}[/font]
+particle-accelerator-control-menu-draw-not-available = [font="Monospace"][color=gray]N/A[/color][/font]
 
-
+particle-accelerator-radio-message-on = PA power has been switched on.
 particle-accelerator-radio-message-off = PA power has been switched off.
-particle-accelerator-radio-message-num = PA power has been set to level {$level}.
+particle-accelerator-radio-message-num = PA strength has been set to level {$level}.

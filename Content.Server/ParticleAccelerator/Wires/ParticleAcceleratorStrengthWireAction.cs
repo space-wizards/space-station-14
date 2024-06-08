@@ -21,12 +21,16 @@ public sealed partial class ParticleAcceleratorStrengthWireAction : ComponentWir
     public override bool Cut(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         controller.StrengthLocked = true;
+        var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
+        paSystem.UpdateUI(wire.Owner, controller);
         return true;
     }
 
     public override bool Mend(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         controller.StrengthLocked = false;
+        var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
+        paSystem.UpdateUI(wire.Owner, controller);
         return true;
     }
 

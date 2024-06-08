@@ -80,7 +80,12 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         if (user is { } player)
+        {
+            var msg = Loc.GetString("particle-accelerator-radio-message-on");
+            _radio.SendRadioMessage(uid, msg, comp.WarningChannel, uid);
+
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} on");
+        }
 
         comp.Enabled = true;
         UpdatePowerDraw(uid, comp);
@@ -100,10 +105,15 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         if (user is { } player)
+        {
+            var msg = Loc.GetString("particle-accelerator-radio-message-off");
+            _radio.SendRadioMessage(uid, msg, comp.WarningChannel, uid);
+
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} off");
+        }
 
         comp.Enabled = false;
-        SetStrength(uid, ParticleAcceleratorPowerState.Standby, user, comp);
+        SetStrength(uid, ParticleAcceleratorPowerState.Standby, user, comp, sendRadio: false);
         UpdatePowerDraw(uid, comp);
         PowerOff(uid, comp);
         UpdateUI(uid, comp);
@@ -141,7 +151,7 @@ public sealed partial class ParticleAcceleratorSystem
         UpdateUI(uid, comp);
     }
 
-    public void SetStrength(EntityUid uid, ParticleAcceleratorPowerState strength, EntityUid? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
+    public void SetStrength(EntityUid uid, ParticleAcceleratorPowerState strength, EntityUid? user = null, ParticleAcceleratorControlBoxComponent? comp = null, bool sendRadio = true)
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -189,12 +199,12 @@ public sealed partial class ParticleAcceleratorSystem
                 }
             }
 
-            var msg = strength switch
+            if (sendRadio)
             {
-                ParticleAcceleratorPowerState.Standby => Loc.GetString("particle-accelerator-radio-message-off"),
-                _ => Loc.GetString("particle-accelerator-radio-message-num", ("level", GetPANumericalLevel(strength)))
-            };
-            _radio.SendRadioMessage(uid, msg, comp.WarningChannel, uid);
+                var msg = Loc.GetString("particle-accelerator-radio-message-num",
+                    ("level", GetPANumericalLevel(strength)));
+                _radio.SendRadioMessage(uid, msg, comp.WarningChannel, uid);
+            }
         }
 
         comp.SelectedStrength = strength;
@@ -241,7 +251,7 @@ public sealed partial class ParticleAcceleratorSystem
         powerConsumer.DrawRate = powerDraw;
     }
 
-    private void UpdateUI(EntityUid uid, ParticleAcceleratorControlBoxComponent? comp = null)
+    public void UpdateUI(EntityUid uid, ParticleAcceleratorControlBoxComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -410,9 +420,6 @@ public sealed partial class ParticleAcceleratorSystem
         UpdateUI(uid, comp);
     }
 
-    /// <remarks>
-    /// Why yes! Of course they are all nonsensically off by 1!
-    /// </remarks>
     public static int GetPANumericalLevel(ParticleAcceleratorPowerState state)
     {
         return state switch

@@ -29,7 +29,6 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
     private int _lastDraw;
     private int _lastReceive;
 
-    //private bool _blockSpinBox;
     private bool _assembled;
     private bool _shouldContinueAnimating;
     private int _maxStrength = 3;
@@ -189,7 +188,7 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
         OffButton.Disabled = cantUse;
         ScanButton.Disabled = blocked;
 
-        var cantChangeLevel = !assembled || blocked || !enabled;
+        var cantChangeLevel = !assembled || blocked || !enabled || cantUse;
         StateSpinBox.SetButtonDisabled(cantChangeLevel);
     }
 
