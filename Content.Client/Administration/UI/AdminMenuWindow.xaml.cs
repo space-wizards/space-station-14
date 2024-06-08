@@ -25,9 +25,7 @@ namespace Content.Client.Administration.UI
             MasterTabContainer.SetTabTitle(5, Loc.GetString("admin-menu-panic-bunker-tab"));
             MasterTabContainer.SetTabTitle(6, Loc.GetString("admin-menu-players-tab"));
             MasterTabContainer.SetTabTitle(7, Loc.GetString("admin-menu-objects-tab"));
-
             MasterTabContainer.OnTabChanged += TabChanged;
-
         }
 
         private void TabChanged(int tabIndex)
