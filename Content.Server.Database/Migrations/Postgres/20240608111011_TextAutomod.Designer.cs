@@ -15,7 +15,7 @@ using NpgsqlTypes;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20240605091303_TextAutomod")]
+    [Migration("20240608111011_TextAutomod")]
     partial class TextAutomod
     {
         /// <inheritdoc />
@@ -1259,12 +1259,12 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("server_unban", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.TextAutomodFilter", b =>
+            modelBuilder.Entity("Content.Server.Database.TextAutomod", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("filter_id");
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -1293,8 +1293,6 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasKey("Id")
                         .HasName("PK_text_automod");
-
-                    b.HasIndex("Id");
 
                     b.ToTable("text_automod", (string)null);
                 });

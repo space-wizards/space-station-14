@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20240605091244_TextAutomod")]
+    [Migration("20240608110517_TextAutomod")]
     partial class TextAutomod
     {
         /// <inheritdoc />
@@ -1188,12 +1188,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("server_unban", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.TextAutomodFilter", b =>
+            modelBuilder.Entity("Content.Server.Database.TextAutomod", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
-                        .HasColumnName("filter_id");
+                        .HasColumnName("id");
 
                     b.Property<string>("ActionGroup")
                         .IsRequired()
@@ -1220,8 +1220,6 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.HasKey("Id")
                         .HasName("PK_text_automod");
-
-                    b.HasIndex("Id");
 
                     b.ToTable("text_automod", (string)null);
                 });
