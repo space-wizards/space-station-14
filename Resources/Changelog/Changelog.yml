@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix some shuttle console stuff surrounding the Map screen.
-    type: Fix
-  id: 6203
-  time: '2024-03-22T01:57:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26305
 - author: nikthechampiongr
   changes:
   - message: You can now move again if you stop being pulled while in cuffs.
@@ -3850,3 +3843,11 @@
   id: 6702
   time: '2024-06-08T18:48:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28734
+- author: UBlueberry
+  changes:
+  - message: The guidebook has been heavily reorganized to improve convenience for
+      all types of users.
+    type: Tweak
+  id: 6703
+  time: '2024-06-08T23:00:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28603
