@@ -1127,7 +1127,7 @@ namespace Content.Server.Database
     [Table("text_automod")]
     public sealed class TextAutomod
     {
-        [Column("filter_id")] public int Id { get; set; }
+        [Column("id")] public int Id { get; set; }
 
         public string Pattern { get; set; } = string.Empty;
         public AutomodFilterType FilterType { get; set; }
