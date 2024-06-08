@@ -6,6 +6,7 @@ using Content.Shared.Automod;
 using Content.Shared.Database;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Automod;
 
@@ -151,11 +152,8 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
             if (automod.FilterType == AutomodFilterType.Regex)
             {
-                if (!_regexFilters.TryGetValue(targetFlag, out var list))
-                {
-                    list = new List<RegexAutomodFilterDef>();
-                    _regexFilters.Add(targetFlag, list);
-                }
+                var list = _regexFilters.GetOrNew(targetFlag);
+                _regexFilters.TryAdd(targetFlag, list);
 
                 try
                 {
