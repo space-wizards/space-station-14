@@ -13,9 +13,9 @@ public interface IAutomodManager
     /// Checks a message for any matching automod filter.
     /// If there is a match, it runs <see cref="ITextAutomodAction"/>s on the text and matches.
     /// </summary>
-    /// <param name="target"></param>
-    /// <param name="inputText"></param>
-    /// <param name="session"></param>
+    /// <param name="target">The target type of automod filter to use on the <paramref name="inputText"/>.</param>
+    /// <param name="inputText">The full text to run automod filters on.</param>
+    /// <param name="session">The player that sent the <paramref name="inputText"/></param>
     /// <returns>True if the message passes. False if the message should be blocked.</returns>
     public bool Filter(AutomodTarget target, string inputText, ICommonSession session);
 

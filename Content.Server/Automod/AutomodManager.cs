@@ -51,6 +51,7 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
         return RegexFilter(target, inputText, session);
     }
 
+    /// <inheritdoc cref="Filter"/>
     private bool RegexFilter(AutomodTarget target, string inputText, ICommonSession session)
     {
         // Ensure that only 1 bit is set
