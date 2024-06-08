@@ -87,3 +87,8 @@
   license: "CC0-1.0"
   copyright: "Taken from 0ne_one111yt on freesound.org"
   source: "https://freesound.org/people/0ne_one111yt/sounds/478213/"
+
+- files: ["emitter2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/master/sound/weapons/emitter2.ogg"
