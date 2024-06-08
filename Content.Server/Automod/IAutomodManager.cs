@@ -25,21 +25,11 @@ public interface IAutomodManager
     public void ReloadAutomodFilters();
 
     /// <summary>
-    /// <inheritdoc cref="CreateFilter(AutomodFilterDef)"/>
-    /// </summary>
-    /// <inheritdoc cref="AutomodFilterDef"/>
-    public void CreateFilter(string pattern,
-        AutomodFilterType filterType,
-        string actionGroup,
-        AutomodTarget targets,
-        string name);
-
-    /// <summary>
     /// Add a automod def to the manager.
     /// This method sorts the definitions for faster lookup.
     /// </summary>
     /// <param name="automod">The automod filter to add.</param>
-    public void CreateFilter(AutomodFilterDef automod);
+    public Task<bool> CreateFilter(AutomodFilterDef automod);
 
     /// <summary>
     /// Edit an automod filter.

@@ -24,7 +24,7 @@ public sealed class AutomodCommand : ToolshedCommand
     }
 
     [CommandImplementation("add")]
-    public void AddAutomodFilter(
+    public async void AddAutomodFilter(
             [CommandInvocationContext] IInvocationContext ctx,
             [CommandArgument] string pattern,
             [CommandArgument] AutomodFilterType filterType,
@@ -33,7 +33,8 @@ public sealed class AutomodCommand : ToolshedCommand
             [CommandArgument] string name
         )
     {
-        _automodMan.CreateFilter(new AutomodFilterDef(pattern, filterType, actionGroup.Id, target, name));
+        if (!await _automodMan.CreateFilter(new AutomodFilterDef(pattern, filterType, actionGroup.Id, target, name)))
+            ctx.WriteError(new CreateTextAutomodFilterFailed());
     }
 
     [CommandImplementation("get")]
@@ -73,6 +74,18 @@ public sealed class AutomodCommand : ToolshedCommand
         else
             ctx.WriteLine("Unable to find filter.");
     }
+}
+
+public record struct CreateTextAutomodFilterFailed : IConError
+{
+    public FormattedMessage DescribeInner()
+    {
+        return FormattedMessage.FromMarkupOrThrow("Failed to create filter.");
+    }
+
+    public string? Expression { get; set; }
+    public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }
 
 public record struct NoFilterFoundError(int Id) : IConError

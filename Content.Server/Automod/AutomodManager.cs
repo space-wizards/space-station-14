@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -123,26 +124,22 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
     #region Create
 
-    public async void CreateFilter(string pattern,
-        AutomodFilterType filterType,
-        string actionGroup,
-        AutomodTarget targets,
-        string name)
+    public async Task<bool> CreateFilter(AutomodFilterDef automod)
     {
-        CreateFilter(new AutomodFilterDef(pattern, filterType, actionGroup, targets, name));
-    }
+        if (automod.FilterType == AutomodFilterType.Regex
+            && !TryParseRegex(automod, out _))
+            return false;
 
-    public async void CreateFilter(AutomodFilterDef automod)
-    {
         automod = await _db.AddAutomodFilterAsync(automod);
-        AddFilter(automod);
+
+        return AddFilter(automod);
     }
 
     /// <summary>
     /// Adds a filter to the manager lists.
     /// </summary>
     /// <param name="automod"></param>
-    private void AddFilter(AutomodFilterDef automod)
+    private bool AddFilter(AutomodFilterDef automod)
     {
         foreach (var targetFlag in Enum.GetValues<AutomodTarget>())
         {
@@ -155,19 +152,34 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
             {
                 var list = _regexFilters.GetOrNew(targetFlag);
 
-                try
-                {
-                    var regex = new Regex(automod.Pattern);
+                if (!TryParseRegex(automod, out var regex))
+                    return false;
 
-                    list.Add(new RegexAutomodFilterDef(automod, regex));
-                }
-                catch (RegexParseException e)
-                {
-                    _log.Error("Failed to parse regex filter: {0}. Error code: {1}.", GetDisplayName(automod), e.Error);
-                }
+                list.Add(new RegexAutomodFilterDef(automod, regex));
             }
             // TODO other filter types
         }
+
+        return true;
+    }
+
+    private bool TryParseRegex(AutomodFilterDef automod, [NotNullWhen(true)] out Regex? regex)
+    {
+        regex = null;
+        try
+        {
+            regex = new Regex(automod.Pattern);
+        }
+        catch (RegexParseException e)
+        {
+            _log.Error("Failed to parse automod regex filter: {0}. Pattern: \"{1}\". Error code: {2}.",
+                GetDisplayName(automod),
+                automod.Pattern,
+                e.Error);
+            return false;
+        }
+
+        return true;
     }
 
     #endregion
