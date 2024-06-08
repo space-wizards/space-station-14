@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Pizza is no longer considered a fruit.
-    type: Tweak
-  id: 6199
-  time: '2024-03-20T19:03:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26293
 - author: jamessimo
   changes:
   - message: Ratkings and Rat servants eyes now glow in the dark
@@ -3849,3 +3842,10 @@
   id: 6698
   time: '2024-06-08T10:03:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28731
+- author: ElectroJr
+  changes:
+  - message: Fixed RGB lights & eswords sometimes not working and showing up as black.
+    type: Fix
+  id: 6699
+  time: '2024-06-08T10:27:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28741
