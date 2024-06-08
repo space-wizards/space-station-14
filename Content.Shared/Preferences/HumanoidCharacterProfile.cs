@@ -401,7 +401,7 @@ namespace Content.Shared.Preferences
             if (category != null && !protoManager.TryIndex(category, out traitCategory))
                 return new(this);
 
-            var list = new HashSet<string>(_traitPreferences) { traitId };
+            var list = new HashSet<ProtoId<TraitPrototype>>(_traitPreferences) { traitId };
 
             if (traitCategory == null || traitCategory.MaxTraitPoints < 0)
             {
@@ -435,9 +435,9 @@ namespace Content.Shared.Preferences
             };
         }
 
-        public HumanoidCharacterProfile WithoutTraitPreference(string traitId, IPrototypeManager protoManager)
+        public HumanoidCharacterProfile WithoutTraitPreference(ProtoId<TraitPrototype> traitId, IPrototypeManager protoManager)
         {
-            var list = new HashSet<string>(_traitPreferences);
+            var list = new HashSet<ProtoId<TraitPrototype>>(_traitPreferences);
             list.Remove(traitId);
 
             return new(this)
@@ -640,15 +640,15 @@ namespace Content.Shared.Preferences
         /// <summary>
         /// Takes in an IEnumerable of traits and returns a List of the valid traits.
         /// </summary>
-        public List<string> GetValidTraits(IEnumerable<string> traits, IPrototypeManager protoManager)
+        public List<ProtoId<TraitPrototype>> GetValidTraits(IEnumerable<ProtoId<TraitPrototype>> traits, IPrototypeManager protoManager)
         {
             // Track points count for each group.
             var groups = new Dictionary<string, int>();
-            var result = new List<string>();
+            var result = new List<ProtoId<TraitPrototype>>();
 
             foreach (var trait in traits)
             {
-                if (!protoManager.TryIndex<TraitPrototype>(trait, out var traitProto))
+                if (!protoManager.TryIndex(trait, out var traitProto))
                     continue;
 
                 // Always valid.
