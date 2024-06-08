@@ -4,7 +4,7 @@
   - BaseGunLarge
   - BaseGunArrow
   - BaseGun
-  id: BowImprovised
+  id: WeaponBowImprovised
   name: bow
   description: The original rooty tooty point and shooty.
   components:
