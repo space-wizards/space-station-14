@@ -290,7 +290,7 @@ public sealed class SatiationSystem : EntitySystem
             return null; // It's never going to go unsatiated, so it's probably fine to assume that it's satiated.
 
         if (satiation == null)
-            return null;
+            return false;
 
         return satiation.Current < threshold;
     }
@@ -307,6 +307,20 @@ public sealed class SatiationSystem : EntitySystem
             prototype = iconProto;
 
         return prototype != null;
+    }
+
+    public bool TryGetCurrentSatiation(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, [NotNullWhen(true)] out float? current)
+    {
+        current = null;
+
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
+            return false;
+
+        current = satiation.Current;
+        return true;
     }
 
 

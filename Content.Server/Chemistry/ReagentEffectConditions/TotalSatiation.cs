@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition;
 using Robust.Shared.Prototypes;
@@ -16,15 +17,16 @@ public sealed partial class Satiation : ReagentEffectCondition
     [DataField]
     public ProtoId<SatiationTypePrototype> SatiationType = "hunger";
 
+    [Dependency] private readonly SatiationSystem _satiation = default!;
+
     public override bool Condition(ReagentEffectArgs args)
     {
         if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out SatiationComponent? component))
             return false;
 
-        if (!component.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
+        if (!_satiation.TryGetCurrentSatiation((args.SolutionEntity, component), SatiationType, out var total))
             return false;
 
-        var total = satiation.Current;
         return total > Min && total < Max;
     }
 
