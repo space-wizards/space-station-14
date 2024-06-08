@@ -1,32 +1,29 @@
 - type: entity
-  id: Supermatter
-  name: supermatter
+  id: SupermatterCrystal
+  name: supermatter crystal
   description: A strangely translucent and iridescent crystal.
   components:
     - type: Supermatter
+    - type: Transform
+      anchored: true
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Glass
     - type: RadiationSource
       intensity: 0 # will be set somewhere else
     - type: Physics
-      bodyType: Dynamic
+      bodyType: Static
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.25"
-        mass: 500
-        layer:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - Opaque
-        mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - SmallImpassable
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 250
+          mask:
+          - FullTileMask
+          layer:
+          - WallLayer
     - type: CollisionWake
       enabled: false
     - type: Clickable

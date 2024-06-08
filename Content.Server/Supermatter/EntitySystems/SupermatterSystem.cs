@@ -3,8 +3,6 @@ using Content.Server.Supermatter.Components;
 using Robust.Shared.Physics.Events;
 using Content.Shared.Atmos;
 using Content.Server.Lightning;
-
-using Consts = Content.Server.Supermatter.Components.SupermatterComponent; // using an alias for readability
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Radiation.Components;
 using Content.Server.Chat.Managers;
@@ -18,8 +16,10 @@ using Content.Server.Anomaly;
 using Content.Shared.Damage;
 using Content.Shared.Tag;
 using Content.Shared.DoAfter;
-using Robust.Shared.Serialization;
 using Content.Server.Popups;
+using Content.Shared.Supermatter;
+
+using Consts = Content.Server.Supermatter.Components.SupermatterComponent; // using an alias for readability
 
 namespace Content.Server.Supermatter.EntitySystems;
 
@@ -426,6 +426,3 @@ public sealed class SupermatterSystem : EntitySystem
 
     }
 }
-
-[Serializable, NetSerializable]
-public sealed partial class SupermatterDoAfterEvent : SimpleDoAfterEvent {}
