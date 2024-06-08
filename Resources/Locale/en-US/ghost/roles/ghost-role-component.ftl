@@ -240,9 +240,9 @@ ghost-role-information-disaster-victim-name = Disaster Victim
 ghost-role-information-disaster-victim-description = You were rescued in an escape pod from another station that suffered a terrible fate. Perhaps you will be found and rescued.
 ghost-role-information-disaster-victim-rules = Normal station crew rules apply.
 
-ghost-role-information-syndie-disaster-victim-name = Syndie Disaster Victim
-ghost-role-information-syndie-disaster-victim-description = You're a regular passenger from a syndicate station. Unfortunately, an evacuation pod has thrown you into an enemy sector.....
-ghost-role-information-syndie-disaster-victim-rules = Normal station crew rules apply. You are NOT an antagonist!
+ghost-role-information-syndie-disaster-victim-name = Syndicate Deserters
+ghost-role-information-syndie-disaster-victim-description = Disillusioned with the ideals of the syndicate, you have stolen an evac pod from one of their stations. Unfortunately, that pod has thrown you into an enemy sector.....
+ghost-role-information-syndie-disaster-victim-rules = Survive. You have no allegiance to either the Syndicate or Nanotrasen. Do what you must to make it out of the sector - befriend the crew, side with syndicate loyalists, or go your own way.
 
 ghost-role-information-syndicate-kobold-reinforcement-name = Syndicate Kobold Agent
 ghost-role-information-syndicate-kobold-reinforcement-description = Someone needs reinforcements. You, a trained kobold, will help them.
