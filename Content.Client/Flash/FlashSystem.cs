@@ -22,7 +22,6 @@ public sealed class FlashSystem : SharedFlashSystem
         SubscribeLocalEvent<FlashedComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<FlashedComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<FlashedComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
-        SubscribeLocalEvent<FlashedComponent, StatusEffectAddedEvent>(OnStatusAdded);
 
         _overlay = new();
     }
@@ -44,6 +43,7 @@ public sealed class FlashSystem : SharedFlashSystem
         if (_player.LocalEntity == uid)
         {
             _overlayMan.AddOverlay(_overlay);
+            _overlay.ReceiveFlash();
         }
     }
 
@@ -54,14 +54,6 @@ public sealed class FlashSystem : SharedFlashSystem
             _overlay.PercentComplete = 1.0f;
             _overlay.ScreenshotTexture = null;
             _overlayMan.RemoveOverlay(_overlay);
-        }
-    }
-
-    private void OnStatusAdded(EntityUid uid, FlashedComponent component, StatusEffectAddedEvent args)
-    {
-        if (_player.LocalEntity == uid && args.Key == FlashedKey)
-        {
-            _overlay.ReceiveFlash();
         }
     }
 }
