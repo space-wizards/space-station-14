@@ -25,8 +25,6 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
     public void Initialize()
     {
-        IoCManager.InjectDependencies(this);
-
         LoadAutomodFiltersFromDatabase();
     }
 
