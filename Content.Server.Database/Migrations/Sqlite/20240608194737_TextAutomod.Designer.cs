@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20240608110517_TextAutomod")]
+    [Migration("20240608194737_TextAutomod")]
     partial class TextAutomod
     {
         /// <inheritdoc />
@@ -1193,7 +1193,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
-                        .HasColumnName("id");
+                        .HasColumnName("text_automod_id");
 
                     b.Property<string>("ActionGroup")
                         .IsRequired()

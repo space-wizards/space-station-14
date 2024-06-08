@@ -1190,7 +1190,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
-                        .HasColumnName("id");
+                        .HasColumnName("text_automod_id");
 
                     b.Property<string>("ActionGroup")
                         .IsRequired()

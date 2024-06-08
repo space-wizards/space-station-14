@@ -15,7 +15,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "text_automod",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
+                    text_automod_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     pattern = table.Column<string>(type: "text", nullable: false),
                     filter_type = table.Column<byte>(type: "smallint", nullable: false),
@@ -25,7 +25,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_text_automod", x => x.id);
+                    table.PrimaryKey("PK_text_automod", x => x.text_automod_id);
                 });
         }
 

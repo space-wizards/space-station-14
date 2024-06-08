@@ -15,7 +15,7 @@ using NpgsqlTypes;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20240608111011_TextAutomod")]
+    [Migration("20240608194721_TextAutomod")]
     partial class TextAutomod
     {
         /// <inheritdoc />
@@ -1264,7 +1264,7 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("text_automod_id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 

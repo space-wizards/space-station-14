@@ -14,7 +14,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "text_automod",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                    text_automod_id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     pattern = table.Column<string>(type: "TEXT", nullable: false),
                     filter_type = table.Column<byte>(type: "INTEGER", nullable: false),
@@ -24,7 +24,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_text_automod", x => x.id);
+                    table.PrimaryKey("PK_text_automod", x => x.text_automod_id);
                 });
         }
 
