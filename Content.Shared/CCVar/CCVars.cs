@@ -1378,6 +1378,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.arrivals_returns", false, CVar.SERVERONLY);
 
         /// <summary>
+        /// Should all players be forced to spawn at departures, even on roundstart, even if their loadout says they spawn in cryo?
+        /// </summary>
+        public static readonly CVarDef<bool> ForceArrivals =
+            CVarDef.Create("shuttle.force_arrivals", false, CVar.SERVERONLY);
+
+        /// <summary>
         /// Whether to automatically spawn escape shuttles.
         /// </summary>
         public static readonly CVarDef<bool> GridFill =

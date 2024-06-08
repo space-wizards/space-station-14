@@ -64,6 +64,11 @@ public sealed class ArrivalsSystem : EntitySystem
     public bool Enabled { get; private set; }
 
     /// <summary>
+    /// Flags if all players must arrive via the Arrivals system, or if they can spawn in other ways.
+    /// </summary>
+    public bool Forced { get; private set; }
+
+    /// <summary>
     ///     The first arrival is a little early, to save everyone 10s
     /// </summary>
     private const float RoundStartFTLDuration = 10f;
@@ -96,6 +101,10 @@ public sealed class ArrivalsSystem : EntitySystem
         Enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
         Subs.CVar(_cfgManager, CCVars.ArrivalsShuttles, SetArrivals);
 
+        Forced = _cfgManager.GetCVar(CCVars.ForceArrivals);
+        Subs.CVar(_cfgManager, CCVars.ForceArrivals, ForceArrivals);
+
+        // TODO: This command has been superseded by setting the cvar shuttle.force_arrivals
         // Command so admins can set these for funsies
         _console.RegisterCommand("arrivals", ArrivalsCommand, ArrivalsCompletion);
     }
@@ -309,7 +318,7 @@ public sealed class ArrivalsSystem : EntitySystem
             return;
 
         // Only works on latejoin even if enabled.
-        if (!Enabled || _ticker.RunLevel != GameRunLevel.InRound)
+        if (!Enabled || !Forced && _ticker.RunLevel != GameRunLevel.InRound)
             return;
 
         if (!HasComp<StationArrivalsComponent>(ev.Station))
@@ -317,33 +326,33 @@ public sealed class ArrivalsSystem : EntitySystem
 
         TryGetArrivals(out var arrivals);
 
-        if (TryComp(arrivals, out TransformComponent? arrivalsXform))
+        if (!TryComp(arrivals, out TransformComponent? arrivalsXform))
+            return;
+
+        var mapId = arrivalsXform.MapID;
+
+        var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
+        var possiblePositions = new List<EntityCoordinates>();
+        while (points.MoveNext(out var uid, out var spawnPoint, out var xform))
         {
-            var mapId = arrivalsXform.MapID;
+            if (spawnPoint.SpawnType != SpawnPointType.LateJoin || xform.MapID != mapId)
+                continue;
 
-            var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
-            var possiblePositions = new List<EntityCoordinates>();
-            while (points.MoveNext(out var uid, out var spawnPoint, out var xform))
-            {
-                if (spawnPoint.SpawnType != SpawnPointType.LateJoin || xform.MapID != mapId)
-                    continue;
-
-                possiblePositions.Add(xform.Coordinates);
-            }
-
-            if (possiblePositions.Count > 0)
-            {
-                var spawnLoc = _random.Pick(possiblePositions);
-                ev.SpawnResult = _stationSpawning.SpawnPlayerMob(
-                    spawnLoc,
-                    ev.Job,
-                    ev.HumanoidCharacterProfile,
-                    ev.Station);
-
-                EnsureComp<PendingClockInComponent>(ev.SpawnResult.Value);
-                EnsureComp<AutoOrientComponent>(ev.SpawnResult.Value);
-            }
+            possiblePositions.Add(xform.Coordinates);
         }
+
+        if (possiblePositions.Count <= 0)
+            return;
+
+        var spawnLoc = _random.Pick(possiblePositions);
+        ev.SpawnResult = _stationSpawning.SpawnPlayerMob(
+            spawnLoc,
+            ev.Job,
+            ev.HumanoidCharacterProfile,
+            ev.Station);
+
+        EnsureComp<PendingClockInComponent>(ev.SpawnResult.Value);
+        EnsureComp<AutoOrientComponent>(ev.SpawnResult.Value);
     }
 
     private bool TryTeleportToMapSpawn(EntityUid player, EntityUid stationId, TransformComponent? transform = null)
@@ -529,6 +538,20 @@ public sealed class ArrivalsSystem : EntitySystem
             {
                 QueueDel(uid);
             }
+        }
+    }
+
+    private void ForceArrivals(bool obj)
+    {
+        Forced = obj;
+
+        if (Forced)
+        {
+
+        }
+        else
+        {
+
         }
     }
 
