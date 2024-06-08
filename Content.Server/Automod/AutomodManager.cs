@@ -204,6 +204,10 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
         await _db.RemoveMultipleAutomodFilterAsync(ids);
     }
 
+    /// <summary>
+    /// Removes all filters that match any of the <paramref name="ids"/> from <see cref="_regexFilters"/>.
+    /// </summary>
+    /// <param name="ids">Ids of the filters to remove.</param>
     private void RegexRemoveFiltersById(List<int> ids)
     {
         var toRemoveTargets = new List<AutomodTarget>();
