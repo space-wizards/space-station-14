@@ -16,14 +16,14 @@ public sealed partial class TextAutomodActionBan : ITextAutomodAction
     [DataField]
     public string BanCountGroup = "default";
 
-    public bool Skip(string fullText, List<(string, int)> patternMatches)
+    public bool Skip(string fullText, List<(string match, int index)> patternMatches)
     {
         return false;
     }
 
     public bool RunAction(ICommonSession session,
         string fullText,
-        List<(string, int)> patternMatches,
+        List<(string match, int index)> patternMatches,
         AutomodFilterDef filter,
         string filterDisplayName,
         IEntityManager entMan)
