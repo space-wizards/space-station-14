@@ -154,7 +154,6 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
             if (automod.FilterType == AutomodFilterType.Regex)
             {
                 var list = _regexFilters.GetOrNew(targetFlag);
-                _regexFilters.TryAdd(targetFlag, list);
 
                 try
                 {
