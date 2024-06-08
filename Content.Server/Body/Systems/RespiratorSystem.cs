@@ -165,8 +165,8 @@ public sealed class RespiratorSystem : EntitySystem
             _atmosSys.Merge(outGas, lung.Air);
             lung.Air.Clear();
 
-            if (_solutionContainerSystem.ResolveSolution(lung.Owner, lung.SolutionName, ref lung.Solution))
-                _solutionContainerSystem.RemoveAllSolution(lung.Solution.Value);
+            if (_solutionContainerSystem.TryGetSolution(lung.Owner, lung.SolutionName, out var solutionEnt))
+                _solutionContainerSystem.RemoveAllSolution(solutionEnt.Value);
         }
 
         _atmosSys.Merge(ev.Gas, outGas);

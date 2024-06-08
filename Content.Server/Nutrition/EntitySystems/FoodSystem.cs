@@ -240,7 +240,7 @@ public sealed class FoodSystem : EntitySystem
             if (!_stomach.CanTransferSolution(owner, split, stomach))
                 continue;
 
-            if (!_solutionContainer.ResolveSolution(owner, StomachSystem.DefaultSolutionName, ref stomach.Solution, out var stomachSol))
+            if (!_solutionContainer.TryGetSolution(owner, StomachSystem.DefaultSolutionName, out _, out var stomachSol))
                 continue;
 
             if (stomachSol.AvailableVolume <= highestAvailable)

@@ -93,10 +93,4 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("solution")]
     public string SolutionName = "default";
-
-    /// <summary>
-    /// Solution where the substance is generated
-    /// </summary>
-    [DataField("solutionRef")]
-    public Entity<SolutionComponent>? Solution = null;
 }

@@ -68,7 +68,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             if (component.AccumulatedFrametime < component.UpdateInterval)
                 continue;
 
-            if (!_solutionContainer.ResolveSolution(uid, component.SolutionName, ref component.Solution, out var producerSolution))
+            if (!_solutionContainer.TryGetSolution(uid, component.SolutionName, out var solutionEnt, out var producerSolution))
                 continue;
 
             Solution newSol = new();
@@ -76,7 +76,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             if (anomaly.Severity >= 0.97) reagentProducingAmount *= component.SupercriticalReagentProducingModifier;
 
             newSol.AddReagent(component.ProducingReagent, reagentProducingAmount);
-            _solutionContainer.TryAddSolution(component.Solution.Value, newSol); //TO DO - the container is not fully filled. 
+            _solutionContainer.TryAddSolution(solutionEnt.Value, newSol); //TO DO - the container is not fully filled.
 
             component.AccumulatedFrametime = 0;
 

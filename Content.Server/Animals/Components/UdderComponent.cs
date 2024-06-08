@@ -27,12 +27,6 @@ namespace Content.Server.Animals.Components
         public string SolutionName = "udder";
 
         /// <summary>
-        ///     The solution to add reagent to.
-        /// </summary>
-        [DataField]
-        public Entity<SolutionComponent>? Solution = null;
-
-        /// <summary>
         ///     The amount of reagent to be generated on update.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadOnly)]
