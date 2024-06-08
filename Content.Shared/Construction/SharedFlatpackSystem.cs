@@ -79,8 +79,9 @@ public abstract class SharedFlatpackSystem : EntitySystem
         var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
         var coords = _map.ToCenterCoordinates(grid, buildPos);
 
-        // todo make this logic smarter.
-        // This should eventually allow for shit like building microwaves on tables and such.
+        // TODO FLATPAK
+        // Make this logic smarter. This should eventually allow for shit like building microwaves on tables and such.
+        // Also: make it ignore ghosts
         if (_entityLookup.AnyEntitiesIntersecting(coords, LookupFlags.Dynamic | LookupFlags.Static))
         {
             // this popup is on the server because the predicts on the intersection is crazy
