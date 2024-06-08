@@ -48,14 +48,14 @@ public sealed class ShowRulesCommand : IConsoleCommand
         }
 
 
-        var message = new ShowRulesPopupMessage { PopupTime = seconds };
-
         if (!IoCManager.Resolve<IPlayerManager>().TryGetSessionByUsername(target, out var player))
         {
             shell.WriteError("Unable to find a player with that name.");
            return;
         }
 
+        var coreRules = IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.RulesFile);
+        var message = new SendRulesInformationMessage { PopupTime = seconds, CoreRules = coreRules, ShouldShowRules = true};
         var netManager = IoCManager.Resolve<INetManager>();
         netManager.ServerSendMessage(message, player.Channel);
     }

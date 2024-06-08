@@ -22,13 +22,14 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
     private RulesPopup? _rulesPopup;
     private RulesAndInfoWindow? _infoWindow;
 
+    public ProtoId<GuideEntryPrototype> Rules = "DefaultRuleset";
+
     public override void Initialize()
     {
         base.Initialize();
 
-
         _netManager.RegisterNetMessage<RulesAcceptedMessage>();
-        _netManager.RegisterNetMessage<ShowRulesPopupMessage>(OnShowRulesPopupMessage);
+        _netManager.RegisterNetMessage<SendRulesInformationMessage>(OnShowRulesPopupMessage);
 
         _consoleHost.RegisterCommand("fuckrules",
             "",
@@ -39,9 +40,12 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
         });
     }
 
-    private void OnShowRulesPopupMessage(ShowRulesPopupMessage message)
+    private void OnShowRulesPopupMessage(SendRulesInformationMessage message)
     {
-        ShowRules(message.PopupTime);
+        Rules = message.CoreRules;
+
+        if (message.ShouldShowRules)
+            ShowRules(message.PopupTime);
     }
 
     public void OnStateExited(GameplayState state)
@@ -84,8 +88,7 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
 
     public GuideEntryPrototype GetCoreRuleEntry()
     {
-        var guide = _cfg.GetCVar(CCVars.RulesFile);
-        var guideEntryPrototype = _prototype.Index<GuideEntryPrototype>(guide);
+        var guideEntryPrototype = _prototype.Index(Rules);
         return guideEntryPrototype;
     }
 
