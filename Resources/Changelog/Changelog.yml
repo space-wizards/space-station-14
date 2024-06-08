@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: Scram! implant no longer allows for someone to keep pulling you when
-      it teleports you.
-    type: Fix
-  id: 6201
-  time: '2024-03-21T17:42:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26309
 - author: Plykiya
   changes:
   - message: Door remote UI now shows the mode it is in.
@@ -3850,3 +3842,11 @@
   id: 6700
   time: '2024-06-08T10:37:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28652
+- author: EmoGarbage404
+  changes:
+  - message: Fixed singularity decay being underpowered, leading to continuous growth
+      on higher PA strengths.
+    type: Fix
+  id: 6701
+  time: '2024-06-08T14:36:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28743
