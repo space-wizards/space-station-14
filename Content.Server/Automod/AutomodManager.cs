@@ -25,16 +25,7 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
     public void Initialize()
     {
-        LoadAutomodFiltersFromDatabase();
-    }
-
-    private async void LoadAutomodFiltersFromDatabase()
-    {
-        var filters = await _db.GetAllAutomodFiltersAsync();
-        foreach (var filter in filters)
-        {
-            AddFilter(filter);
-        }
+        ReloadAutomodFilters();
     }
 
     void IPostInjectInit.PostInject()
