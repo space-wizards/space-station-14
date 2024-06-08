@@ -19,7 +19,7 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
     private ISawmill _log = default!;
 
     // Filters
-    private readonly Dictionary<AutomodTarget, Dictionary<Regex, AutomodFilterDef>> _regexFilters = new();
+    private readonly Dictionary<AutomodTarget, List<RegexAutomodFilterDef>> _regexFilters = new();
 
     #region Initialize
 
@@ -62,9 +62,9 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
         if (!_regexFilters.TryGetValue(target, out var automodFilters))
             return true;
 
-        foreach (var (regex, filter) in automodFilters)
+        foreach (var filter in automodFilters)
         {
-            var regexMatches = regex.Matches(inputText);
+            var regexMatches = filter.Regex.Matches(inputText);
             if (regexMatches.Count == 0)
                 continue;
 
@@ -157,11 +157,11 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
             {
                 if (!_regexFilters.TryGetValue(targetFlag, out var list))
                 {
-                    list = new Dictionary<Regex, AutomodFilterDef>();
+                    list = new List<RegexAutomodFilterDef>();
                     _regexFilters.Add(targetFlag, list);
                 }
 
-                list.Add(new Regex(automod.Pattern), automod);
+                list.Add(new RegexAutomodFilterDef(automod, new Regex(automod.Pattern)));
             }
             // TODO other filter types
         }
@@ -191,56 +191,35 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
     public async Task<bool> RemoveFilter(int id)
     {
-        var toRemoveTargets = new List<AutomodTarget>();
-        Regex? toRemove = null;
-        foreach (var (target, reg) in _regexFilters)
-        {
-            foreach (var (regex, filter) in reg)
-            {
-                if (filter.Id == null || filter.Id.Value != id)
-                    continue;
-
-                toRemove = regex;
-                break;
-            }
-
-            if (toRemove != null)
-                reg.Remove(toRemove);
-            toRemove = null;
-
-            if (reg.Count == 0)
-                toRemoveTargets.Add(target);
-        }
-
-        foreach (var target in toRemoveTargets)
-        {
-            _regexFilters.Remove(target);
-        }
+        RegexRemoveFiltersById([id]);
 
         return await _db.RemoveAutomodFilterAsync(id);
     }
 
     public async Task RemoveMultipleFilters(List<int> ids)
     {
+        RegexRemoveFiltersById(ids);
 
+        await _db.RemoveMultipleAutomodFilterAsync(ids);
+    }
+
+    private void RegexRemoveFiltersById(List<int> ids)
+    {
         var toRemoveTargets = new List<AutomodTarget>();
-        var toRemove = new List<Regex>();
         foreach (var (target, reg) in _regexFilters)
         {
-            foreach (var (regex, filter) in reg)
+            var toRemove = new List<RegexAutomodFilterDef>();
+            foreach (var filter in reg)
             {
                 if (filter.Id == null || !ids.Contains(filter.Id.Value))
                     continue;
 
-                toRemove.Add(regex);
+                toRemove.Add(filter);
             }
-
             foreach (var regex in toRemove)
             {
                 reg.Remove(regex);
             }
-
-            toRemove.Clear();
 
             if (reg.Count == 0)
                 toRemoveTargets.Add(target);
@@ -250,8 +229,6 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
         {
             _regexFilters.Remove(target);
         }
-
-        await _db.RemoveMultipleAutomodFilterAsync(ids);
     }
 
     #endregion

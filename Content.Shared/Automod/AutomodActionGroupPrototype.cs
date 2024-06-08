@@ -1,4 +1,6 @@
-﻿using Content.Shared.Database;
+﻿using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
+using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -13,7 +15,8 @@ namespace Content.Shared.Automod;
 /// <param name="actionGroup">The <seealso cref="AutomodActionGroupPrototype"/> to run when the <paramref name="pattern"/> is matched</param>
 /// <param name="targets">The user input types that this filter applies to.</param>
 /// <param name="name">The user facing name of this filter.</param>
-public sealed class AutomodFilterDef(
+[Virtual]
+public class AutomodFilterDef(
     int? id,
     string pattern,
     AutomodFilterType filterType,
@@ -34,6 +37,34 @@ public sealed class AutomodFilterDef(
         string actionGroup,
         AutomodTarget targets,
         string name) : this(null, pattern, filterType, actionGroup, targets, name)
+    {
+    }
+}
+
+/// <summary>
+/// <see cref="AutomodFilterDef"/> with Regex saved.
+/// </summary>
+/// <inheritdoc cref="AutomodFilterDef"/>
+/// <param name="regex">The compiled Regex from the <paramref name="pattern"/>.</param>
+public sealed class RegexAutomodFilterDef(
+    int? id,
+    string pattern,
+    AutomodFilterType filterType,
+    ProtoId<AutomodActionGroupPrototype> actionGroup,
+    AutomodTarget targets,
+    string name,
+    Regex regex) : AutomodFilterDef(id, pattern, filterType, actionGroup, targets, name)
+{
+    public readonly Regex Regex = regex;
+
+    public RegexAutomodFilterDef(AutomodFilterDef filter, Regex regex) : this(
+        filter.Id,
+        filter.Pattern,
+        filter.FilterType,
+        filter.ActionGroup,
+        filter.TargetFlags,
+        filter.DisplayName,
+        regex)
     {
     }
 }
