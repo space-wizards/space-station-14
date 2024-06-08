@@ -532,6 +532,56 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: InventorySlots
+  - type: Inventory
+    speciesId: hamster
+    templateId: hamster
+    displacements:
+      head:
+        layer:
+          sprite: Mobs/Animals/mothroach_displacement.rsi
+          state: head
+          copyToShaderParameters:
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
+      mask:
+        layer:
+          sprite: Mobs/Animals/mothroach_displacement.rsi
+          state: mask
+          copyToShaderParameters:
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
+      suitstorage:
+        layer:
+          sprite: Mobs/Animals/mothroach_displacement.rsi
+          state: suitstorage
+          copyToShaderParameters:
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
+      eyes:
+        layer:
+          sprite: Mobs/Animals/mothroach_displacement.rsi
+          state: eyes
+          copyToShaderParameters:
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
+      neck:
+        layer:
+          sprite: Mobs/Animals/mothroach_displacement.rsi
+          state: neck
+          copyToShaderParameters:
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
 
 
 # Note that the mallard duck is actually a male drake mallard, with the brown duck being the female variant of the same species, however ss14 lacks sex specific textures
