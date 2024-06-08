@@ -1124,10 +1124,10 @@ namespace Content.Server.Database
     public sealed class TextAutomod
     {
         public int Id { get; set; }
-        public string Pattern { get; set; } = string.Empty;
+        public string Pattern { get; set; } = null!;
         public AutomodFilterType FilterType { get; set; }
-        public string ActionGroup { get; set; } = string.Empty;
+        public string ActionGroup { get; set; } = null!;
         public AutomodTarget TargetFlags { get; set; }
-        public string DisplayName { get; set; } = string.Empty;
+        public string DisplayName { get; set; } = null!;
     }
 }
