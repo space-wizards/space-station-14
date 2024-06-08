@@ -322,17 +322,6 @@
   text: "/ServerInfo/Guidebook/ServerRules/SiliconRules/RuleS10OrderConflicts.xml"
 
 - type: guideEntry
-  id: SpaceLaw
-  name: guide-entry-rules-space-law
-  priority: 60
-  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml"
-  children:
-  - SpaceLawCrimeList
-  - SpaceLawControlledSubstances
-  - SpaceLawRestrictedGear
-  - SpaceLawRestrictedWeapons
-
-- type: guideEntry
   id: SpaceLawCrimeList
   name: guide-entry-rules-sl-crime-list
   priority: 5
