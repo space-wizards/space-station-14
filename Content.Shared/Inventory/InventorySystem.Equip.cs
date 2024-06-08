@@ -438,7 +438,7 @@ public abstract partial class InventorySystem
         // we check if any items were dropped, and make a popup if they were.
         // this doesn't guarantee that only 1 popup will be shown if multiple items were dropped in recursion.
         if (droppedItems)
-            _popup.PopupPredicted(Loc.GetString("inventory-component-dropped-from-unequip"), target, target);
+            _popup.PopupClient(Loc.GetString("inventory-component-dropped-from-unequip"), target, target);
 
         if (!_containerSystem.Remove(removedItem.Value, slotContainer, force: force, reparent: reparent))
             return false;
