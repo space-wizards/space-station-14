@@ -53,12 +53,12 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
         var passes = true;
 
         // No filters defined for target
-        if (!_regexFilters.TryGetValue(target, out var automodFilters))
+        if (!_regexFilters.TryGetValue(target, out var regexFilters))
             return true;
 
-        foreach (var filter in automodFilters)
+        foreach (var regexFilter in regexFilters)
         {
-            var regexMatches = filter.Regex.Matches(inputText);
+            var regexMatches = regexFilter.Regex.Matches(inputText);
             if (regexMatches.Count == 0)
                 continue;
 
@@ -69,9 +69,9 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
                 textMatches.Add((str, match.Index));
             }
 
-            if (!_protoMan.TryIndex<AutomodActionGroupPrototype>(filter.ActionGroup, out var censorGroup))
+            if (!_protoMan.TryIndex<AutomodActionGroupPrototype>(regexFilter.Filter.ActionGroup, out var censorGroup))
             {
-                _log.Error($"AutomodActionGroupPrototype \"{filter.ActionGroup}\" not found.");
+                _log.Error($"AutomodActionGroupPrototype \"{regexFilter.Filter.ActionGroup}\" not found.");
                 continue;
             }
 
@@ -87,11 +87,11 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
             if (skip)
                 continue;
 
-            var displayName = GetDisplayName(filter);
+            var displayName = GetDisplayName(regexFilter.Filter);
 
             foreach (var censorAction in censorGroup.AutomodActions)
             {
-                passes &= censorAction.RunAction(session, inputText, textMatches, filter, displayName, _entMan);
+                passes &= censorAction.RunAction(session, inputText, textMatches, regexFilter.Filter, displayName, _entMan);
             }
         }
 
@@ -213,22 +213,22 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
     private void RegexRemoveFiltersById(List<int> ids)
     {
         var toRemoveTargets = new List<AutomodTarget>();
-        foreach (var (target, reg) in _regexFilters)
+        foreach (var (target, regexFilters) in _regexFilters)
         {
             var toRemove = new List<RegexAutomodFilterDef>();
-            foreach (var filter in reg)
+            foreach (var regexFilter in regexFilters)
             {
-                if (filter.Id == null || !ids.Contains(filter.Id.Value))
+                if (regexFilter.Filter.Id == null || !ids.Contains(regexFilter.Filter.Id.Value))
                     continue;
 
-                toRemove.Add(filter);
+                toRemove.Add(regexFilter);
             }
             foreach (var regex in toRemove)
             {
-                reg.Remove(regex);
+                regexFilters.Remove(regex);
             }
 
-            if (reg.Count == 0)
+            if (regexFilters.Count == 0)
                 toRemoveTargets.Add(target);
         }
 

@@ -44,29 +44,12 @@ public class AutomodFilterDef(
 /// <summary>
 /// <see cref="AutomodFilterDef"/> with Regex saved.
 /// </summary>
-/// <inheritdoc cref="AutomodFilterDef"/>
-/// <param name="regex">The compiled Regex from the <paramref name="pattern"/>.</param>
-public sealed class RegexAutomodFilterDef(
-    int? id,
-    string pattern,
-    AutomodFilterType filterType,
-    ProtoId<AutomodActionGroupPrototype> actionGroup,
-    AutomodTarget targets,
-    string name,
-    Regex regex) : AutomodFilterDef(id, pattern, filterType, actionGroup, targets, name)
+/// <param name="filter">The automod filter that the regex pattern triggers.</param>
+/// <param name="regex">The compiled Regex from the <paramref name="filter"/>.</param>
+public sealed class RegexAutomodFilterDef(AutomodFilterDef filter, Regex regex)
 {
+    public readonly AutomodFilterDef Filter = filter;
     public readonly Regex Regex = regex;
-
-    public RegexAutomodFilterDef(AutomodFilterDef filter, Regex regex) : this(
-        filter.Id,
-        filter.Pattern,
-        filter.FilterType,
-        filter.ActionGroup,
-        filter.TargetFlags,
-        filter.DisplayName,
-        regex)
-    {
-    }
 }
 
 /// <summary>
