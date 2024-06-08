@@ -64,6 +64,13 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
 
         foreach (var (group, groupLoadouts) in SelectedLoadouts)
         {
+            // Check the group is even valid for this role.
+            if (!roleProto.Groups.Contains(group))
+            {
+                groupRemove.Add(group);
+                continue;
+            }
+
             // Dump if Group doesn't exist
             if (!protoManager.TryIndex(group, out var groupProto))
             {
