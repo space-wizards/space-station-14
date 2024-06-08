@@ -142,7 +142,7 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
     /// <param name="automod"></param>
     private void AddFilter(AutomodFilterDef automod)
     {
-        foreach (AutomodTarget targetFlag in Enum.GetValues(typeof(AutomodTarget)))
+        foreach (var targetFlag in Enum.GetValues<AutomodTarget>())
         {
             if (targetFlag == AutomodTarget.None)
                 continue;
