@@ -269,8 +269,8 @@
 
 - type: entity
   parent: ClothingEyesBase
-  id: ClothingEyesHudChemMed
-  name: chemmed hud
+  id: ClothingEyesHudMedChem
+  name: medchem hud
   description: A heads-up display that scans nearby humanoids' health status and chemical composition of solutions.
   components:
   - type: Sprite
