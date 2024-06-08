@@ -438,7 +438,7 @@
     insertingState: inserting_mothroach
   - type: MothAccent
   - type: Sprite
-    sprite: Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mothroach
@@ -453,7 +453,7 @@
     size: Normal
   - type: Clothing
     quickEquip: false
-    sprite: Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
     equippedPrefix: 0
     slots:
     - HEAD
@@ -544,7 +544,7 @@
     displacements:
       head:
         layer:
-          sprite: Mobs/Animals/mothroach_displacement.rsi
+          sprite: Mobs/Animals/mothroach/displacement.rsi
           state: head
           copyToShaderParameters:
             layerKey: dummy
@@ -552,7 +552,7 @@
             parameterUV: displacementUV
       mask:
         layer:
-          sprite: Mobs/Animals/mothroach_displacement.rsi
+          sprite: Mobs/Animals/mothroach/displacement.rsi
           state: mask
           copyToShaderParameters:
             layerKey: dummy
@@ -560,7 +560,7 @@
             parameterUV: displacementUV
       suitstorage:
         layer:
-          sprite: Mobs/Animals/mothroach_displacement.rsi
+          sprite: Mobs/Animals/mothroach/displacement.rsi
           state: suitstorage
           copyToShaderParameters:
             layerKey: dummy
@@ -568,7 +568,7 @@
             parameterUV: displacementUV
       eyes:
         layer:
-          sprite: Mobs/Animals/mothroach_displacement.rsi
+          sprite: Mobs/Animals/mothroach/displacement.rsi
           state: eyes
           copyToShaderParameters:
             layerKey: dummy
@@ -576,7 +576,7 @@
             parameterUV: displacementUV
       neck:
         layer:
-          sprite: Mobs/Animals/mothroach_displacement.rsi
+          sprite: Mobs/Animals/mothroach/displacement.rsi
           state: neck
           copyToShaderParameters:
             layerKey: dummy
