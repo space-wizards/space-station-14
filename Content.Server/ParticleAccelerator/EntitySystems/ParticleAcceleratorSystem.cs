@@ -5,6 +5,8 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Content.Server.ParticleAccelerator.Components;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
@@ -27,5 +29,7 @@ public sealed partial class ParticleAcceleratorSystem : EntitySystem
         InitializeControlBoxSystem();
         InitializePartSystem();
         InitializePowerBoxSystem();
+
+        SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
     }
 }
