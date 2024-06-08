@@ -25,7 +25,7 @@ namespace Content.Shared.Preferences
     [Serializable, NetSerializable]
     public sealed partial class HumanoidCharacterProfile : ICharacterProfile
     {
-        private static readonly Regex RestrictedNameRegex = new("[^A-Z,a-z,0-9, -]");
+        private static readonly Regex RestrictedNameRegex = new("[^A-Z,a-z,0-9, ,\\-,']");
         private static readonly Regex ICNameCaseRegex = new(@"^(?<word>\w)|\b(?<word>\w)(?=\w*$)");
 
         public const int MaxNameLength = 32;
@@ -467,10 +467,10 @@ namespace Content.Shared.Preferences
             var configManager = collection.Resolve<IConfigurationManager>();
             var prototypeManager = collection.Resolve<IPrototypeManager>();
 
-            if (!prototypeManager.TryIndex<SpeciesPrototype>(Species, out var speciesPrototype) || speciesPrototype.RoundStart == false)
+            if (!prototypeManager.TryIndex(Species, out var speciesPrototype) || speciesPrototype.RoundStart == false)
             {
                 Species = SharedHumanoidAppearanceSystem.DefaultSpecies;
-                speciesPrototype = prototypeManager.Index<SpeciesPrototype>(Species);
+                speciesPrototype = prototypeManager.Index(Species);
             }
 
             var sex = Sex switch
