@@ -112,16 +112,20 @@ namespace Content.Client.HealthAnalyzer.UI
 
             DrawDiagnosticGroups(damageSortedGroups, damagePerType);
 
-            if (_entityManager.TryGetComponent(target, out SatiationComponent? satiation)
-                && satiation.Satiations[_satiationHunger]?.CurrentThresholdDamage != null)
+            if (_entityManager.TryGetComponent(target, out SatiationComponent? satiationComponent))
             {
-                var box = new Control { Margin = new Thickness(0, 0, 0, 15) };
+                foreach (var (id, satiation) in satiationComponent.Satiations)
+                {
+                    if (satiation.CurrentThresholdDamage == null) continue;
 
-                box.AddChild(CreateDiagnosticGroupTitle(
-                    Loc.GetString("health-analyzer-window-malnutrition"),
-                    "malnutrition"));
+                    var box = new Control { Margin = new Thickness(0, 0, 0, 15) };
 
-                GroupsContainer.AddChild(box);
+                    box.AddChild(CreateDiagnosticGroupTitle(
+                        Loc.GetString($"health-analyzer-window-{id}"),
+                        id));
+
+                    GroupsContainer.AddChild(box);
+                }
             }
 
             SetHeight = AnalyzerHeight;
