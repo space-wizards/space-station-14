@@ -126,8 +126,7 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
     public async Task<string?> CreateFilter(AutomodFilterDef automod)
     {
-        if (automod.FilterType == AutomodFilterType.Regex
-            && !TryParseRegex(automod, out _, out var error))
+        if (!IsValid(automod, out var error))
             return error;
 
         automod = await _db.AddAutomodFilterAsync(automod);
@@ -161,6 +160,25 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
         }
 
         return null;
+    }
+
+    private bool IsValid(AutomodFilterDef automod, out string? error)
+    {
+        error = null;
+
+        switch (automod.FilterType)
+        {
+            case AutomodFilterType.PlainTextWords:
+            case AutomodFilterType.FalsePositives:
+            case AutomodFilterType.FalseNegatives:
+                error = $"Error: AutomodFilterType {automod.FilterType} is not implemented.";
+                return false;
+            case AutomodFilterType.Regex
+                when !TryParseRegex(automod, out _, out error):
+                return false;
+        }
+
+        return true;
     }
 
     private bool TryParseRegex(AutomodFilterDef automod, [NotNullWhen(true)] out Regex? regex, out string? error)
