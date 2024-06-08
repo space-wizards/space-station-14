@@ -124,6 +124,9 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
     {
         if (GuidebookButton != null)
             GuidebookButton.Pressed = false;
+
+        if (_guideWindow != null)
+            _guideWindow.ReturnContainer.Visible = false;
     }
 
     private void OnWindowOpen()

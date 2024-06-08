@@ -1,46 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: Made the Artifact Reports page up to date with current Xenoarchaeology
-    type: Tweak
-  id: 6195
-  time: '2024-03-19T03:22:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26252
-- author: keronshb
-  changes:
-  - message: Fixed a bug where stores were enabling refunds after a purchase
-    type: Fix
-  id: 6196
-  time: '2024-03-19T03:48:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26251
-- author: Errant
-  changes:
-  - message: Thrown objects can no longer slip while they are still in flight.
-    type: Tweak
-  id: 6197
-  time: '2024-03-20T11:57:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24494
-- author: Killerqu00
-  changes:
-  - message: Airlock wires are now different between departments.
-    type: Tweak
-  id: 6198
-  time: '2024-03-20T16:07:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26247
-- author: Tayrtahn
-  changes:
-  - message: Pizza is no longer considered a fruit.
-    type: Tweak
-  id: 6199
-  time: '2024-03-20T19:03:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26293
-- author: jamessimo
-  changes:
-  - message: Ratkings and Rat servants eyes now glow in the dark
-    type: Tweak
-  id: 6200
-  time: '2024-03-21T13:16:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26300
 - author: nikthechampiongr
   changes:
   - message: Scram! implant no longer allows for someone to keep pulling you when
@@ -3848,3 +3806,47 @@
   id: 6694
   time: '2024-06-07T01:24:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28679
+- author: AJCM-git
+  changes:
+  - message: Guidebook no longer lists every single rule
+    type: Fix
+  id: 6695
+  time: '2024-06-07T11:28:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28680
+- author: Plykiya
+  changes:
+  - message: You can now place construction ghosts without getting blocked by things
+      like grilles or windows.
+    type: Fix
+  id: 6696
+  time: '2024-06-08T00:57:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28706
+- author: Lyndomen
+  changes:
+  - message: Space Dragons will drop bodies upon being gibbed/butchered
+    type: Fix
+  id: 6697
+  time: '2024-06-08T05:49:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28709
+- author: metalgearsloth
+  changes:
+  - message: Fix some loadout groups not getting validated properly.
+    type: Fix
+  id: 6698
+  time: '2024-06-08T10:03:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28731
+- author: ElectroJr
+  changes:
+  - message: Fixed RGB lights & eswords sometimes not working and showing up as black.
+    type: Fix
+  id: 6699
+  time: '2024-06-08T10:27:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28741
+- author: Whisper, DrSmugleaf
+  changes:
+  - message: Players can now add ' to their character names. Please ensure your character
+      names still follow server naming conventions.
+    type: Add
+  id: 6700
+  time: '2024-06-08T10:37:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28652
