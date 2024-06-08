@@ -81,7 +81,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     public void UpdateBankAccount(EntityUid uid, StationBankAccountComponent component, int balanceAdded)
     {
         component.Balance += balanceAdded;
-        var query = EntityQueryEnumerator<TransformComponent, BankClientComponent>();
+        var query = EntityQueryEnumerator<BankClientComponent, TransformComponent>();
 
         var ev = new BankBalanceUpdatedEvent(uid, component.Balance);
         while (query.MoveNext(out var client, out var xform, out var comp))
