@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: You can now move again if you stop being pulled while in cuffs.
-    type: Fix
-  id: 6204
-  time: '2024-03-22T01:59:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26312
 - author: lzk228
   changes:
   - message: Snoring is now a trait in character preference menu.
@@ -3851,3 +3844,10 @@
   id: 6703
   time: '2024-06-08T23:00:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28603
+- author: Psychpsyo
+  changes:
+  - message: New lobby background art!
+    type: Add
+  id: 6704
+  time: '2024-06-08T23:29:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28724
