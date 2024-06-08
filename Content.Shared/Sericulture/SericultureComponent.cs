@@ -63,4 +63,7 @@ public sealed partial class SericultureComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public SatiationThreashold MinHungerThreshold = SatiationThreashold.Okay;
+
+    [DataField]
+    public ProtoId<SatiationTypePrototype> UsedSatiation = "Hunger";
 }

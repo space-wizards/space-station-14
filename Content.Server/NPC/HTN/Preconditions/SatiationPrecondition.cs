@@ -1,4 +1,4 @@
-using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition;
 using Robust.Shared.Prototypes;
 
@@ -10,11 +10,13 @@ namespace Content.Server.NPC.HTN.Preconditions;
 public sealed partial class SatiationPrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly SatiationSystem _satiation = default!;
 
     [DataField(required: true)]
-    public SatiationThreashold MinSatiationState = SatiationThreashold.Desperate;
+    public SatiationThreashold MinSatiationState = SatiationThreashold.Concerned;
     [DataField(required: true)]
     public ProtoId<SatiationTypePrototype> SatiationType = "hunger";
+
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
@@ -23,12 +25,6 @@ public sealed partial class SatiationPrecondition : HTNPrecondition
             return false;
         }
 
-        if (!_entManager.TryGetComponent<SatiationComponent>(owner, out var component))
-            return false;
-
-        if (!component.Satiations.AsReadOnly().TryGetValue(SatiationType, out var satiation))
-            return false;
-
-        return satiation.CurrentThreshold <= MinSatiationState;
+        return _satiation.IsCurrentSatiationBelowState((owner, null), SatiationType, MinSatiationState);
     }
 }

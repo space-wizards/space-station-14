@@ -26,8 +26,6 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedStackSystem _stackSystem = default!;
 
-    private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -57,7 +55,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
     {
         if (TryComp<SatiationComponent>(uid, out var satiationComp)
-        && _satiationSystem.IsCurrentSatiationBelowState((uid, satiationComp), _satiationHunger, comp.MinHungerThreshold, -comp.HungerCost))
+        && _satiationSystem.IsCurrentSatiationBelowState((uid, satiationComp), comp.UsedSatiation, comp.MinHungerThreshold, -comp.HungerCost))
         {
             _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;
@@ -81,13 +79,13 @@ public abstract partial class SharedSericultureSystem : EntitySystem
             return;
 
         if (TryComp<SatiationComponent>(uid, out var satiationComp) // A check, just incase the doafter is somehow performed when the entity is not in the right hunger state.
-        && _satiationSystem.IsCurrentSatiationBelowState((uid, satiationComp), _satiationHunger, comp.MinHungerThreshold, -comp.HungerCost))
+        && _satiationSystem.IsCurrentSatiationBelowState((uid, satiationComp), comp.UsedSatiation, comp.MinHungerThreshold, -comp.HungerCost))
         {
             _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 
-        _satiationSystem.ModifySatiation((uid, satiationComp), _satiationHunger, -comp.HungerCost);
+        _satiationSystem.ModifySatiation((uid, satiationComp), comp.UsedSatiation, -comp.HungerCost);
 
         if (!_netManager.IsClient) // Have to do this because spawning stuff in shared is CBT.
         {

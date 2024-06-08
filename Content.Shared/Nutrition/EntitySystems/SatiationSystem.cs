@@ -260,6 +260,20 @@ public sealed class SatiationSystem : EntitySystem
         return GetThreshold(satiation, thirst) < threshold;
     }
 
+    public bool TryGetSatiationPrototype(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, [NotNullWhen(true)] out ProtoId<SatiationPrototype>? satiationPrototype)
+    {
+        satiationPrototype = null;
+
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
+            return false;
+
+        satiationPrototype = satiation.Prototype;
+        return true;
+    }
+
 
     /// <summary>
     /// A check that returns if the entity is below a satiation threshold.

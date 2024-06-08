@@ -29,29 +29,30 @@ namespace Content.Server.Medical
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly ForensicsSystem _forensics = default!;
 
-        private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
-        private readonly ProtoId<SatiationTypePrototype> _satiationThirst = "thirst";
-
         /// <summary>
         /// Make an entity vomit, if they have a stomach.
         /// </summary>
-        public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f)
+        public void Vomit(EntityUid uid, Dictionary<string, float> satiationsAdded)
         {
             // Main requirement: You have a stomach
             var stomachList = _body.GetBodyOrganComponents<StomachComponent>(uid);
             if (stomachList.Count == 0)
                 return;
 
+            float solutionSize = 0;
             // Vomiting makes you hungrier and thirstier
             if (TryComp<SatiationComponent>(uid, out var satiation))
             {
-                _satiation.ModifySatiation((uid, satiation), _satiationHunger, hungerAdded);
-                _satiation.ModifySatiation((uid, satiation), _satiationThirst, thirstAdded);
+                foreach (var (satiationType, added) in satiationsAdded)
+                {
+                    _satiation.ModifySatiation((uid, satiation), satiationType, added);
+                    solutionSize += MathF.Abs(added);
+                }
             }
 
 
             // It fully empties the stomach, this amount from the chem stream is relatively small
-            var solutionSize = (MathF.Abs(thirstAdded) + MathF.Abs(hungerAdded)) / 6;
+            solutionSize /= 6;
             // Apply a bit of slowdown
             if (TryComp<StatusEffectsComponent>(uid, out var status))
                 _stun.TrySlowdown(uid, TimeSpan.FromSeconds(solutionSize), true, 0.5f, 0.5f, status);

@@ -48,6 +48,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly WeldableSystem _weldable = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly SatiationSystem _satiation = default!;
 
     private EntityQuery<PuddleComponent> _puddleQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -181,8 +182,8 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 // only eat when hungry or if it will eat anything
                 if (TryComp<SatiationComponent>(owner, out var component)
-                        && component.Satiations.AsReadOnly().TryGetValue(_satiationHunger, out var hunger)
-                        && hunger.CurrentThreshold > SatiationThreashold.Okay && avoidBadFood)
+                        && !_satiation.IsCurrentSatiationBelowState((owner, component), _satiationHunger, SatiationThreashold.Full)
+                        && avoidBadFood)
                     return 0f;
 
                 // no mouse don't eat the uranium-235
@@ -202,8 +203,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 // only drink when thirsty
                 if (TryComp<SatiationComponent>(owner, out var component)
-                        && component.Satiations.AsReadOnly().TryGetValue(_satiationThirst, out var thirst)
-                        && thirst.CurrentThreshold > SatiationThreashold.Okay)
+                        && !_satiation.IsCurrentSatiationBelowState((owner, component), _satiationThirst, SatiationThreashold.Full))
                     return 0f;
 
                 // no janicow don't drink the blood puddle

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Storage;
+using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -84,7 +84,10 @@ public sealed partial class ReproductiveComponent : Component
     /// gives birth. A balancing tool to require feeding.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float HungerPerBirth = 75f;
+    public Dictionary<string, float> SatiationPerBirth = new() {
+        {"hunger", 75f},
+        {"thirst", 75f},
+    };
 
     /// <summary>
     /// Popup shown when an entity gives birth.

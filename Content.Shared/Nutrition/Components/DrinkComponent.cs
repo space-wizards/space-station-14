@@ -2,6 +2,7 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.Components;
 
@@ -40,4 +41,10 @@ public sealed partial class DrinkComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float ForceFeedDelay = 3;
+
+    /// <summary>
+    /// What tyoe if satiation it satiates.
+    /// </summary>
+    [DataField]
+    public ProtoId<SatiationTypePrototype> SatiationType = "thirst";
 }

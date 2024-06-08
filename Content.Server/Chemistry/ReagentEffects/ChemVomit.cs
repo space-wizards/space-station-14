@@ -1,7 +1,9 @@
 using Content.Server.Medical;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Nutrition;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -11,12 +13,12 @@ namespace Content.Server.Chemistry.ReagentEffects
     [UsedImplicitly]
     public sealed partial class ChemVomit : ReagentEffect
     {
-        /// How many units of thirst to add each time we vomit
-        [DataField]
-        public float ThirstAmount = -8f;
-        /// How many units of hunger to add each time we vomit
-        [DataField]
-        public float HungerAmount = -8f;
+        /// How many units of satiation to add each time we vomit
+        [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, SatiationTypePrototype>))]
+        public Dictionary<string, float> SatiationAmount = new() {
+            { "hunger", -8f },
+            { "thirst", -8f },
+        };
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
             => Loc.GetString("reagent-effect-guidebook-chem-vomit", ("chance", Probability));
@@ -28,7 +30,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
             var vomitSys = args.EntityManager.EntitySysManager.GetEntitySystem<VomitSystem>();
 
-            vomitSys.Vomit(args.SolutionEntity, ThirstAmount, HungerAmount);
+            vomitSys.Vomit(args.SolutionEntity, SatiationAmount);
         }
     }
 }

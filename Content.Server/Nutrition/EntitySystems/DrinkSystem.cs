@@ -52,8 +52,6 @@ public sealed class DrinkSystem : SharedDrinkSystem
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly ForensicsSystem _forensics = default!;
 
-    private readonly ProtoId<SatiationTypePrototype> _satiationThirst = "thirst";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -92,7 +90,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
-                    if (effect is Satiate saitation && saitation.SatiationType == _satiationThirst)
+                    if (effect is Satiate saitation && saitation.SatiationType == comp.SatiationType)
                     {
                         total += saitation.SatiationFactor * quantity.Quantity.Float();
                     }

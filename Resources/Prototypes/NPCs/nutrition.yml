@@ -7,7 +7,7 @@
           preconditions:
             - !type:SatiationPrecondition
               satiationType: hunger
-              minSatiationState: Desperate  # See SatiationThreshold enum
+              minSatiationState: Concerned  # See SatiationThreshold enum
           operator: !type:UtilityOperator
             proto: NearbyFood
 
@@ -38,7 +38,7 @@
           preconditions:
             - !type:SatiationPrecondition
               satiationType: thirst
-              minSatiationState: Desperate  # See SatiationThreshold enum
+              minSatiationState: Concerned  # See SatiationThreshold enum
           operator: !type:UtilityOperator
             proto: NearbyDrink
 

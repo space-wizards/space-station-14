@@ -38,8 +38,6 @@ public sealed class AnimalHusbandrySystem : EntitySystem
 
     private readonly HashSet<EntityUid> _failedAttempts = new();
     private readonly HashSet<EntityUid> _birthQueue = new();
-    private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
-    private readonly ProtoId<SatiationTypePrototype> _satiationThirst = "thirst";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -130,8 +128,10 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         if (TryComp<InteractionPopupComponent>(uid, out var interactionPopup))
             _audio.PlayPvs(interactionPopup.InteractSuccessSound, uid);
 
-        _satiation.ModifySatiation(uid, _satiationHunger, -component.HungerPerBirth);
-        _satiation.ModifySatiation(partner, _satiationThirst, -component.HungerPerBirth);
+        foreach (var (satiationType, consumed) in component.SatiationPerBirth)
+        {
+            _satiation.ModifySatiation(uid, satiationType, -consumed);
+        }
 
         component.GestationEndTime = _timing.CurTime + component.GestationDuration;
         component.Gestating = true;
@@ -157,10 +157,14 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         if (_mobState.IsIncapacitated(uid))
             return false;
 
-        if (TryComp<SatiationComponent>(uid, out var satiation)
-            && _satiation.TryGetSatiationThreshold((uid, satiation), _satiationHunger, out var hunger) && hunger < SatiationThreashold.Okay
-            && _satiation.TryGetSatiationThreshold((uid, satiation), _satiationThirst, out var thirst) && thirst < SatiationThreashold.Okay)
-            return false;
+        if (TryComp<SatiationComponent>(uid, out var satiation))
+        {
+            foreach (var (satiationType, consumed) in component!.SatiationPerBirth)
+            {
+                if (_satiation.IsSatiationBelowState((uid, satiation), satiationType, SatiationThreashold.Okay))
+                    return false;
+            }
+        }
 
         return true;
     }

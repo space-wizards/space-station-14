@@ -918,9 +918,9 @@
     reagentId: MilkGoat
     quantityPerUpdate: 25
     growthDelay: 20
-    UsedSatiation: hunger
+    UsedSatiation: Hunger
   - type: Wooly
-    usedSatiation: hunger
+    usedSatiation: Hunger
   - type: Food
     solution: wool
     requiresSpecialDigestion: true

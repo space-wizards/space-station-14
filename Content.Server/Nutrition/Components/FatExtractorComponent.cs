@@ -71,4 +71,11 @@ public sealed partial class FatExtractorComponent : Component
     /// </summary>
     [DataField("minHungerThreshold")]
     public SatiationThreashold MinHungerThreshold = SatiationThreashold.Okay;
+
+
+    /// <summary>
+    /// Type of satiation to use.
+    /// </summary>
+    [DataField]
+    public ProtoId<SatiationTypePrototype> UsedSatiation = "Hunger";
 }
