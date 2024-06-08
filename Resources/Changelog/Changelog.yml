@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Thrown objects can no longer slip while they are still in flight.
-    type: Tweak
-  id: 6197
-  time: '2024-03-20T11:57:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24494
 - author: Killerqu00
   changes:
   - message: Airlock wires are now different between departments.
@@ -3849,3 +3842,10 @@
   id: 6696
   time: '2024-06-08T00:57:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28706
+- author: Lyndomen
+  changes:
+  - message: Space Dragons will drop bodies upon being gibbed/butchered
+    type: Fix
+  id: 6697
+  time: '2024-06-08T05:49:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28709
