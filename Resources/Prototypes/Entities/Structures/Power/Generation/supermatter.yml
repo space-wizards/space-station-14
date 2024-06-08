@@ -1,37 +1,29 @@
 - type: entity
-  id: Supermatter
-  name: supermatter
+  id: SupermatterCrystal
+  name: supermatter crystal
   description: A strangely translucent and iridescent crystal.
   components:
     - type: Supermatter
-      whitelist:
-        tags:
-          - EmitterBolt
-          - Laser
-          - Knife # for traitor objective
-    - type: RadiationSource
-      intensity: 0
+    - type: Transform
+      anchored: true
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Glass
+    - type: RadiationSource
+      intensity: 0 # will be set somewhere else
     - type: Physics
-      bodyType: Dynamic
+      bodyType: Static
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.25"
-        mass: 500
-        layer:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - Opaque
-        mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - SmallImpassable
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 250
+          mask:
+          - FullTileMask
+          layer:
+          - WallLayer
     - type: CollisionWake
       enabled: false
     - type: Clickable
@@ -51,17 +43,14 @@
       energy: 5
       color: "#fff633"
     - type: AmbientSound
-      range: 5
-      volume: -5
+      range: 4
+      volume: -2
       sound:
         path: /Audio/Ambience/Objects/supermatter_calm.ogg
-    - type: Explosive
-      explosionType: Supermatter
-      maxIntensity: 10000
-      intensitySlope: 10
-      totalIntensity: 10000
-    - type: SinguloFood
+    - type: SinguloFood # instant level 6 babye, it's SM!!
       energy: 5000
-    - type: Butcherable
-      spawned:
-        id: SupermatterSliver
+    - type: WarpPoint
+      follow: false
+      location: supermatter
+    - type: GravityWell
+      baseRadialAcceleration: 0.1
