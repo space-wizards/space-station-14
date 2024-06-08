@@ -33,8 +33,13 @@ public sealed class AutomodCommand : ToolshedCommand
             [CommandArgument] string name
         )
     {
-        if (!await _automodMan.CreateFilter(new AutomodFilterDef(pattern, filterType, actionGroup.Id, target, name)))
-            ctx.WriteError(new CreateTextAutomodFilterFailed());
+        var error = await _automodMan.CreateFilter(new AutomodFilterDef(pattern,
+            filterType,
+            actionGroup.Id,
+            target,
+            name));
+        if (error != null)
+            ctx.WriteError(new CreateTextAutomodFilterFailed(error));
     }
 
     [CommandImplementation("get")]
@@ -76,11 +81,11 @@ public sealed class AutomodCommand : ToolshedCommand
     }
 }
 
-public record struct CreateTextAutomodFilterFailed : IConError
+public record struct CreateTextAutomodFilterFailed(string ErrorMessage) : IConError
 {
     public FormattedMessage DescribeInner()
     {
-        return FormattedMessage.FromMarkupOrThrow("Failed to create filter.");
+        return FormattedMessage.FromMarkupOrThrow(ErrorMessage);
     }
 
     public string? Expression { get; set; }

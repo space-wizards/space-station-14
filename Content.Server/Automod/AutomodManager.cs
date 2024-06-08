@@ -124,11 +124,11 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
 
     #region Create
 
-    public async Task<bool> CreateFilter(AutomodFilterDef automod)
+    public async Task<string?> CreateFilter(AutomodFilterDef automod)
     {
         if (automod.FilterType == AutomodFilterType.Regex
-            && !TryParseRegex(automod, out _))
-            return false;
+            && !TryParseRegex(automod, out _, out var error))
+            return error;
 
         automod = await _db.AddAutomodFilterAsync(automod);
 
@@ -139,7 +139,7 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
     /// Adds a filter to the manager lists.
     /// </summary>
     /// <param name="automod"></param>
-    private bool AddFilter(AutomodFilterDef automod)
+    private string? AddFilter(AutomodFilterDef automod)
     {
         foreach (var targetFlag in Enum.GetValues<AutomodTarget>())
         {
@@ -152,30 +152,30 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
             {
                 var list = _regexFilters.GetOrNew(targetFlag);
 
-                if (!TryParseRegex(automod, out var regex))
-                    return false;
+                if (!TryParseRegex(automod, out var regex, out var error))
+                    return error;
 
                 list.Add(new RegexAutomodFilterDef(automod, regex));
             }
             // TODO other filter types
         }
 
-        return true;
+        return null;
     }
 
-    private bool TryParseRegex(AutomodFilterDef automod, [NotNullWhen(true)] out Regex? regex)
+    private bool TryParseRegex(AutomodFilterDef automod, [NotNullWhen(true)] out Regex? regex, out string? error)
     {
         regex = null;
+        error = null;
         try
         {
             regex = new Regex(automod.Pattern);
         }
         catch (RegexParseException e)
         {
-            _log.Error("Failed to parse automod regex filter: {0}. Pattern: \"{1}\". Error code: {2}.",
-                GetDisplayName(automod),
-                automod.Pattern,
-                e.Error);
+            error = $"Failed to parse automod regex filter: {GetDisplayName(automod)
+                }. Pattern: \"{automod.Pattern}\". Error code: {e.Error}.";
+            _log.Error(error);
             return false;
         }
 

@@ -29,7 +29,7 @@ public interface IAutomodManager
     /// This method sorts the definitions for faster lookup.
     /// </summary>
     /// <param name="automod">The automod filter to add.</param>
-    public Task<bool> CreateFilter(AutomodFilterDef automod);
+    public Task<string?> CreateFilter(AutomodFilterDef automod);
 
     /// <summary>
     /// Edit an automod filter.
