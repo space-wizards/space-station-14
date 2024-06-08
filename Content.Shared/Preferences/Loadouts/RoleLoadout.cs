@@ -59,6 +59,16 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             return;
         }
 
+        // In some instances we might not have picked up a new group for existing data.
+        foreach (var groupProto in roleProto.Groups)
+        {
+            if (SelectedLoadouts.ContainsKey(groupProto))
+                continue;
+
+            // Data will get set below.
+            SelectedLoadouts[groupProto] = new List<Loadout>();
+        }
+
         // Reset points to recalculate.
         Points = roleProto.Points;
 
@@ -156,6 +166,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
     /// <summary>
     /// Resets the selected loadouts to default if no data is present.
     /// </summary>
+    /// <param name="force">Clear existing data first</param>
     public void SetDefault(IPrototypeManager protoManager, bool force = false)
     {
         if (force)
