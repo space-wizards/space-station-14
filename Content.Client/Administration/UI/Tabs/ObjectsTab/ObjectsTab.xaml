@@ -11,6 +11,8 @@
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
         </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        </BoxContainer>
         <cc:HSeparator/>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
             <ot:ObjectsTabHeader Name="ListHeader"/>
