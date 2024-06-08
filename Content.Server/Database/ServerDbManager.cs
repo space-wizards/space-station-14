@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using Prometheus;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
@@ -304,6 +305,11 @@ namespace Content.Server.Database
         Task<bool> RemoveJobWhitelist(Guid player, ProtoId<JobPrototype> job);
 
         #endregion
+
+        #region DB Notifications
+        public void SubscribeToNotifications(Action<(string channel, string? payload)> handler);
+
+        #endregion
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -323,6 +329,7 @@ namespace Content.Server.Database
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logMgr = default!;
+        [Dependency] private readonly ITaskManager _taskManager = default!;
 
         private ServerDbBase _db = default!;
         private LoggingProvider _msLogProvider = default!;
@@ -332,6 +339,8 @@ namespace Content.Server.Database
         // When running in integration tests, we'll use a single in-memory SQLite database connection.
         // This is that connection, close it when we shut down.
         private SqliteConnection? _sqliteInMemoryConnection;
+
+        private List<Action<(string channel, string? payload)>> _notificationHandlers = [];
 
         public void Init()
         {
@@ -358,11 +367,16 @@ namespace Content.Server.Database
                 default:
                     throw new InvalidDataException($"Unknown database engine {engine}.");
             }
+
+            _db.OnNotificationReceived += HandleDatabaseNotification;
         }
 
         public void Shutdown()
         {
+            _db.OnNotificationReceived -= HandleDatabaseNotification;
+
             _sqliteInMemoryConnection?.Dispose();
+            _db.Shutdown();
         }
 
         public Task<PlayerPreferences> InitPrefsAsync(
@@ -806,7 +820,7 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.GetServerRoleBanAsNoteAsync(id));
         }
 
-    public Task<List<IAdminRemarksRecord>> GetAllAdminRemarks(Guid player)
+        public Task<List<IAdminRemarksRecord>> GetAllAdminRemarks(Guid player)
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetAllAdminRemarks(player));
@@ -905,6 +919,19 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
+        }
+
+        public void SubscribeToNotifications(Action<(string channel, string? payload)> handler)
+        {
+            _notificationHandlers.Add(handler);
+        }
+
+        private async void HandleDatabaseNotification((string channel, string? payload) notification)
+        {
+            foreach (var handler in _notificationHandlers)
+            {
+                _taskManager.RunOnMainThread(async () => handler(notification));
+            }
         }
 
         // Wrapper functions to run DB commands from the thread pool.

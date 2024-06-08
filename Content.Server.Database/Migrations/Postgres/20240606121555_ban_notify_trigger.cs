@@ -16,10 +16,15 @@ namespace Content.Server.Database.Migrations.Postgres
                     declare
                         x_server_id integer;
                     begin
+                        -- Avoid spamming servers with IP bans
+                        if NEW.player_user_id is null then
+                            return NEW;
+                        end if;
+
                         select round.server_id into x_server_id from round where round.round_id = NEW.round_id;
 
-                        perform pg_notify('ban_notification', json_build_object('player_id', NEW.player_user_id::text,'server_id', x_server_id)::text);
-                        return new;
+                        perform pg_notify('ban_notification', json_build_object('ban_id', NEW.server_ban_id,'server_id', x_server_id)::text);
+                        return NEW;
                     end;
                     $$ LANGUAGE plpgsql;
                 """);

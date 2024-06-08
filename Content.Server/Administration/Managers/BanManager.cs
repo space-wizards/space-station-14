@@ -2,6 +2,8 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
@@ -23,12 +25,15 @@ namespace Content.Server.Administration.Managers;
 
 public sealed class BanManager : IBanManager, IPostInjectInit
 {
+    public const string BanNotificationChannel = "ban_notification";
+
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntitySystemManager _systems = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ILocalizationManager _localizationManager = default!;
+    [Dependency] private readonly ServerDbEntryManager _entryManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
@@ -45,6 +50,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
         _netManager.RegisterNetMessage<MsgRoleBans>();
+
+        _db.SubscribeToNotifications(async notification => OnDatabaseNotification(notification));
     }
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -301,5 +308,37 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     public void PostInject()
     {
         _sawmill = _logManager.GetSawmill(SawmillId);
+    }
+
+    private async void OnDatabaseNotification((string channel, string? payload) notification)
+    {
+        var (channel, payload) = notification;
+        if (channel != BanNotificationChannel || payload == null)
+            return;
+
+        var data = JsonSerializer.Deserialize<BanNotificationData>(payload);
+
+        if (data == null || (await _entryManager.ServerEntity).Id == data.ServerId)
+            return;
+
+        var ban = await _db.GetServerBanAsync(data.BanId);
+        if (ban?.UserId == null || !_playerManager.TryGetSessionById(ban.UserId, out var player))
+            return;
+
+        var reason = ban.FormatBanMessage(_cfg, _localizationManager);
+        player.Channel.Disconnect(reason);
+        _sawmill.Info($"Kicked player {player.Name} ({player.UserId}) for {reason} through ban notification");
+    }
+
+    private sealed class BanNotificationData
+    {
+        [JsonRequired, JsonPropertyName("ban_id")]
+        public int BanId { get; init; }
+        /// <summary>
+        /// The id of the server the ban was made on
+        /// </summary>
+        /// <remarks>This is optional in case the ban was made outside a server (SS14.Admin) </remarks>
+        [JsonPropertyName("server_id")]
+        public int ServerId { get; init; }
     }
 }
