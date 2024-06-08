@@ -3,6 +3,7 @@ using Content.Client.Guidebook.Richtext;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared.Guidebook;
 
 namespace Content.IntegrationTests.Tests.Guidebook;
 

@@ -1533,6 +1533,7 @@
         state: mouse-0
   - type: Item
     size: Tiny
+    heldPrefix: 0
   - type: Clothing
     quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
@@ -1706,6 +1707,9 @@
         Base: dead-1
       Dead:
         Base: splat-1
+  - type: Item
+    size: Tiny
+    heldPrefix: 1
 
 - type: entity
   parent: MobMouse
@@ -1732,6 +1736,9 @@
         Base: dead-2
       Dead:
         Base: splat-2
+  - type: Item
+    size: Tiny
+    heldPrefix: 2
 
 - type: entity
   name: cancer mouse
