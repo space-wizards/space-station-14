@@ -268,7 +268,7 @@
     - Silicon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ShowMedicalIcons]
   id: ClothingEyesHudMedChem
   name: medchem hud
   description: A heads-up display that scans nearby humanoids' health status and chemical composition of solutions.
