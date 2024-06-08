@@ -113,6 +113,8 @@ public sealed class SatiationSystem : EntitySystem
         Dirty(uid, component);
     }
 
+    //
+    //
     public void ModifySatiation(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, float amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
@@ -216,6 +218,10 @@ public sealed class SatiationSystem : EntitySystem
         return true;
     }
 
+    ///
+    /// <summary>
+    ///
+    /// </summary>
     private SatiationThreashold GetThreshold(Satiation satiation, float? level = null)
     {
 
@@ -253,7 +259,8 @@ public sealed class SatiationSystem : EntitySystem
 
         return GetThreshold(satiation, thirst) < threshold;
     }
-    ///
+
+
     /// <summary>
     /// A check that returns if the entity is below a satiation threshold.
     /// </summary>
@@ -269,6 +276,23 @@ public sealed class SatiationSystem : EntitySystem
             return false;
 
         return GetThreshold(satiation, satiation.Current + delta) < threshold;
+    }
+
+    /// <summary>
+    /// A check that returns if the entity is below a satiation threshold.
+    /// </summary>
+    public bool? IsCurrentSatiationBelowValue(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, float threshold)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return null; // It's never going to go unsatiated, so it's probably fine to assume that it's satiated.
+
+        if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
+            return null; // It's never going to go unsatiated, so it's probably fine to assume that it's satiated.
+
+        if (satiation == null)
+            return null;
+
+        return satiation.Current < threshold;
     }
 
     public bool TryGetStatusIconPrototype(SatiationComponent component, ProtoId<SatiationTypePrototype> satiationType, [NotNullWhen(true)] out StatusIconPrototype? prototype)

@@ -2,6 +2,7 @@ using Content.Server.Animals.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Content.Shared.Nutrition;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -42,7 +43,7 @@ public sealed partial class WoolyComponent : Component
     ///     The amount of nutrient consumed on update.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float HungerUsage = 10f;
+    public float SatiationUsage = 10f;
 
     /// <summary>
     ///     How long to wait before growing wool.
@@ -55,4 +56,11 @@ public sealed partial class WoolyComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextGrowth = TimeSpan.FromSeconds(0);
+
+
+    /// <summary>
+    ///     The type of satiation to consume.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<SatiationTypePrototype> UsedSatiation;
 }

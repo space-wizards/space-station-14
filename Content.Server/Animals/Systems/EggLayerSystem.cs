@@ -28,8 +28,6 @@ public sealed class EggLayerSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
-    private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -83,16 +81,17 @@ public sealed class EggLayerSystem : EntitySystem
         // Allow infinitely laying eggs if they can't get hungry
         if (TryComp<SatiationComponent>(uid, out var component))
         {
-            if (!component.Satiations.AsReadOnly().TryGetValue(_satiationHunger, out var satiation))
+            var belowValue = _satiation.IsCurrentSatiationBelowValue((uid, component), egglayer.UsedSatiation,  egglayer.SatiationUsage);
+            if (belowValue == null)
                 return false;
 
-            if (satiation.Current < egglayer.HungerUsage)
+            if (!belowValue.Value)
             {
-                _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), uid, uid);
+                _popup.PopupEntity(Loc.GetString(egglayer.InsufficientSatiation), uid, uid);
                 return false;
             }
 
-            _satiation.ModifySatiation((uid, component), _satiationHunger, -egglayer.HungerUsage);
+            _satiation.ModifySatiation((uid, component), egglayer.UsedSatiation, -egglayer.SatiationUsage);
         }
 
         foreach (var ent in EntitySpawnCollection.GetSpawns(egglayer.EggSpawn, _random))

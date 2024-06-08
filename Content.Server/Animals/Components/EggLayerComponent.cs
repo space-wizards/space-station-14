@@ -1,4 +1,5 @@
 using Content.Shared.Storage;
+using Content.Shared.Nutrition;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -19,7 +20,7 @@ public sealed partial class EggLayerComponent : Component
     ///     The amount of nutrient consumed on update.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float HungerUsage = 60f;
+    public float SatiationUsage = 60f;
 
     /// <summary>
     ///     Minimum cooldown used for the automatic egg laying.
@@ -47,6 +48,12 @@ public sealed partial class EggLayerComponent : Component
 
     [DataField]
     public float AccumulatedFrametime;
+
+    [DataField]
+    public ProtoId<SatiationTypePrototype> UsedSatiation;
+
+    [DataField]
+    public LocId InsufficientSatiation;
 
     [DataField] public EntityUid? Action;
 }

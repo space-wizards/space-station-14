@@ -29,8 +29,6 @@ internal sealed class UdderSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
-    private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -59,11 +57,11 @@ internal sealed class UdderSystem : EntitySystem
             if (EntityManager.TryGetComponent(uid, out SatiationComponent? satiation))
             {
                 // Is there enough nutrition to produce reagent?
-                if (!_satiation.TryGetSatiationThreshold((uid, satiation), _satiationHunger, out var threshold)
+                if (!_satiation.TryGetSatiationThreshold((uid, satiation), udder.UsedSatiation, out var threshold)
                         || threshold < SatiationThreashold.Okay)
                     continue;
 
-                _satiation.ModifySatiation((uid, satiation), _satiationHunger, -udder.HungerUsage);
+                _satiation.ModifySatiation((uid, satiation), udder.UsedSatiation, -udder.SatiationUsage);
             }
 
             if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution))

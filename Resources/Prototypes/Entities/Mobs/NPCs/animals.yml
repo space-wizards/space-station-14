@@ -222,6 +222,8 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
+    usedSatiation: hunger
+    insufficientSatiation: action-popup-lay-egg-too-hungry
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
@@ -603,6 +605,8 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
+    usedSatiation: hunger
+    insufficientSatiation: action-popup-lay-egg-too-hungry
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
@@ -760,6 +764,7 @@
     reagentId: Milk
     quantityPerUpdate: 25
     growthDelay: 30
+    UsedSatiation: hunger
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -913,7 +918,9 @@
     reagentId: MilkGoat
     quantityPerUpdate: 25
     growthDelay: 20
+    UsedSatiation: hunger
   - type: Wooly
+    usedSatiation: hunger
   - type: Food
     solution: wool
     requiresSpecialDigestion: true

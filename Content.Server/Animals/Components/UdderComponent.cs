@@ -42,7 +42,7 @@ namespace Content.Server.Animals.Components
         ///     The amount of nutrient consumed on update.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public float HungerUsage = 10f;
+        public float SatiationUsage = 10f;
 
         /// <summary>
         ///     How long to wait before producing.
@@ -55,5 +55,11 @@ namespace Content.Server.Animals.Components
         /// </summary>
         [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
         public TimeSpan NextGrowth = TimeSpan.FromSeconds(0);
+
+        /// <summary>
+        ///     The type of satiation to be consumed..
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public ProtoId<SatiationTypePrototype> UsedSatiation;
     }
 }
