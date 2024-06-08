@@ -52,8 +52,13 @@ public sealed class AutomodCommand : ToolshedCommand
             return;
         }
 
-        ctx.WriteLine($"Id: {filter.Id}, pattern: {filter.Pattern}, filterType: {filter.FilterType
-            }, actionGroup: {filter.ActionGroup}, targets: {filter.TargetFlags}, displayName: {filter.DisplayName}");
+        ctx.WriteLine(Loc.GetString("command-error-automod-get",
+            ("id", filter.Id.HasValue ? filter.Id : "na"),
+            ("pattern", filter.Pattern),
+            ("filterType", filter.FilterType),
+            ("actionGroup", filter.ActionGroup),
+            ("targetFlags", filter.TargetFlags),
+            ("displayName", filter.DisplayName)));
     }
 
     [CommandImplementation("edit")]
