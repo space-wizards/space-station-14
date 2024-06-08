@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: jamessimo
-  changes:
-  - message: Ratkings and Rat servants eyes now glow in the dark
-    type: Tweak
-  id: 6200
-  time: '2024-03-21T13:16:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26300
 - author: nikthechampiongr
   changes:
   - message: Scram! implant no longer allows for someone to keep pulling you when
@@ -3849,3 +3842,11 @@
   id: 6699
   time: '2024-06-08T10:27:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28741
+- author: Whisper, DrSmugleaf
+  changes:
+  - message: Players can now add ' to their character names. Please ensure your character
+      names still follow server naming conventions.
+    type: Add
+  id: 6700
+  time: '2024-06-08T10:37:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28652
