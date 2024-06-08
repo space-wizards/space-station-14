@@ -20,17 +20,9 @@ namespace Content.Client.Kitchen.UI
 
         [ViewVariables]
         private readonly Dictionary<int, ReagentQuantity> _reagents = new();
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-        public MicrowaveUpdateUserInterfaceState currentState = default!;
 
         public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-        }
-
-        public TimeSpan GetCurrentTime()
-        {
-            return _gameTiming.CurTime;
         }
 
         protected override void Open()
@@ -79,8 +71,6 @@ namespace Content.Client.Kitchen.UI
             }
 
             _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0);
-            currentState = cState;
-
             // TODO move this to a component state and ensure the net ids.
             RefreshContentsDisplay(EntMan.GetEntityArray(cState.ContainedSolids));
 

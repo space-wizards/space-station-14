@@ -18,6 +18,9 @@ namespace Content.Client.ParticleAccelerator.UI
             base.Open();
 
             _menu = this.CreateWindow<ParticleAcceleratorControlMenu>();
+            _menu.OnOverallState += SendEnableMessage;
+            _menu.OnPowerState += SendPowerStateMessage;
+            _menu.OnScanPartsRequested += SendScanPartsMessage;
         }
 
         public void SendEnableMessage(bool enable)

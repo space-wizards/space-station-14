@@ -9,6 +9,8 @@ namespace Content.Client.Kitchen.UI
     [GenerateTypedNameReferences]
     public sealed partial class MicrowaveMenu : FancyWindow
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
+
         public sealed class MicrowaveCookTimeButton : Button
         {
             public uint CookTime;
@@ -63,13 +65,14 @@ namespace Content.Client.Kitchen.UI
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
-            if(!_owner.currentState.IsMicrowaveBusy)
+
+            if (!_owner.currentState.IsMicrowaveBusy)
                 return;
 
-            if(_owner.currentState.CurrentCookTimeEnd > _owner.GetCurrentTime())
+            if (_owner.currentState.CurrentCookTimeEnd > _timing.CurTime)
             {
                 CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                ("time",_owner.currentState.CurrentCookTimeEnd.Subtract(_owner.GetCurrentTime()).Seconds));
+                ("time", _owner.currentState.CurrentCookTimeEnd.Subtract(_timing.CurTime).Seconds));
             }
         }
     }

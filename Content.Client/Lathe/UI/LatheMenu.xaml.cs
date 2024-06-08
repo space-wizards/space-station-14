@@ -37,6 +37,8 @@ public sealed partial class LatheMenu : DefaultWindow
 
     public ProtoId<LatheCategoryPrototype>? CurrentCategory;
 
+    public EntityUid Entity;
+
     public LatheMenu()
     {
         RobustXamlLoader.Load(this);
@@ -58,8 +60,13 @@ public sealed partial class LatheMenu : DefaultWindow
         FilterOption.OnItemSelected += OnItemSelected;
 
         ServerListButton.OnPressed += a => OnServerListButtonPressed?.Invoke(a);
+    }
 
-        if (_entityManager.TryGetComponent<LatheComponent>(owner.Owner, out var latheComponent))
+    public void SetEntity(EntityUid uid)
+    {
+        Entity = uid;
+
+        if (_entityManager.TryGetComponent<LatheComponent>(Entity, out var latheComponent))
         {
             if (!latheComponent.DynamicRecipes.Any())
             {
@@ -67,7 +74,7 @@ public sealed partial class LatheMenu : DefaultWindow
             }
         }
 
-        MaterialsList.SetOwner(owner.Owner);
+        MaterialsList.SetOwner(Entity);
     }
 
     /// <summary>
