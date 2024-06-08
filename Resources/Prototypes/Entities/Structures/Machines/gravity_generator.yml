@@ -62,8 +62,8 @@
       on: "on"
   - type: UserInterface
     interfaces:
-      - key: enum.GravityGeneratorUiKey.Key
-        type: GravityGeneratorBoundUserInterface
+        enum.GravityGeneratorUiKey.Key:
+          type: GravityGeneratorBoundUserInterface
   - type: Appearance
   - type: PointLight
     radius: 2.5

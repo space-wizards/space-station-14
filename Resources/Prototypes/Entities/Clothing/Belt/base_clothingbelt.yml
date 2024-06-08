@@ -9,6 +9,8 @@
     size: Normal
   - type: Clothing
     slots: [belt]
+    equipSound:
+      path: /Audio/Items/belt_equip.ogg
     quickEquip: false
   - type: PhysicalComposition
     materialComposition:
@@ -34,8 +36,8 @@
         ents: []
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
 
 - type: entity
   abstract: true

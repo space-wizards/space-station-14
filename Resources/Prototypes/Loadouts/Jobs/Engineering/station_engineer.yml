@@ -20,13 +20,31 @@
 
 # Head
 - type: loadout
-  id: StationEngineerHead
-  equipment: StationEngineerHead
+  id: StationEngineerHardhatYellow
+  equipment: StationEngineerHardhatYellow
 
 - type: startingGear
-  id: StationEngineerHead
+  id: StationEngineerHardhatYellow
   equipment:
     head: ClothingHeadHatHardhatYellow
+
+- type: loadout
+  id: StationEngineerHardhatOrange
+  equipment: StationEngineerHardhatOrange
+
+- type: startingGear
+  id: StationEngineerHardhatOrange
+  equipment:
+    head: ClothingHeadHatHardhatOrange
+
+- type: loadout
+  id: StationEngineerHardhatRed
+  equipment: StationEngineerHardhatRed
+
+- type: startingGear
+  id: StationEngineerHardhatRed
+  equipment:
+    head: ClothingHeadHatHardhatRed
 
 - type: loadout
   id: SeniorEngineerBeret
@@ -100,7 +118,7 @@
 - type: startingGear
   id: StationEngineerBackpack
   equipment:
-    back: ClothingBackpackEngineeringFilled
+    back: ClothingBackpackEngineering
 
 - type: loadout
   id: StationEngineerSatchel
@@ -109,7 +127,7 @@
 - type: startingGear
   id: StationEngineerSatchel
   equipment:
-    back: ClothingBackpackSatchelEngineeringFilled
+    back: ClothingBackpackSatchelEngineering
 
 - type: loadout
   id: StationEngineerDuffel
@@ -118,7 +136,7 @@
 - type: startingGear
   id: StationEngineerDuffel
   equipment:
-    back: ClothingBackpackDuffelEngineeringFilled
+    back: ClothingBackpackDuffelEngineering
 
 # OuterClothing
 - type: loadout

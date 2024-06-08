@@ -20,9 +20,11 @@
   equipment:
     shoes: ClothingShoesGaloshes
     id: JanitorPDA
-    gloves: ClothingHandsGlovesJanitor
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
+  storage:
+    back:
+    - BoxSurvival
 
 - type: startingGear
   id: JanitorMaidGear

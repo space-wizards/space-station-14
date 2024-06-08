@@ -24,8 +24,6 @@ public sealed partial class AirAlarmComponent : Component
     public readonly Dictionary<string, GasVentScrubberData> ScrubberData = new();
     public readonly Dictionary<string, AtmosSensorData> SensorData = new();
 
-    public HashSet<NetUserId> ActivePlayers = new();
-
     public bool CanSync = true;
 
     /// <summary>
