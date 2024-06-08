@@ -132,10 +132,12 @@ public sealed class SingularitySystem : SharedSingularitySystem
         singularity.Energy = value;
         SetLevel(uid, value switch
         {
-            >= 2400 => 6,
-            >= 1600 => 5,
-            >= 900 => 4,
-            >= 300 => 3,
+			// Normally, a level 6 singularity requires the supermatter + 3000 energy.
+			// The required amount of energy has been bumped up to compensate for the lack of the supermatter.
+            >= 5000 => 6,
+            >= 2000 => 5,
+            >= 1000 => 4,
+            >= 500 => 3,
             >= 200 => 2,
             > 0 => 1,
             _ => 0
@@ -319,11 +321,11 @@ public sealed class SingularitySystem : SharedSingularitySystem
     {
         comp.EnergyDrain = args.NewValue switch
         {
-            6 => 20,
-            5 => 15,
-            4 => 12,
-            3 => 8,
-            2 => 2,
+            6 => 0,
+            5 => 0,
+            4 => 20,
+            3 => 10,
+            2 => 5,
             1 => 1,
             _ => 0
         };

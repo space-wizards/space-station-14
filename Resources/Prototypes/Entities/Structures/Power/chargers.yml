@@ -58,12 +58,15 @@
         density: 500
         mask:
         - TabletopMachineMask
+        layer:
+        - BulletImpassable
   - type: PowerChargerVisuals
   - type: ContainerContainer
     containers:
       charger_slot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: BaseItemRecharger

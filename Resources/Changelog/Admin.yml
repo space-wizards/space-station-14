@@ -281,5 +281,14 @@ Entries:
   id: 34
   time: '2024-06-01T08:14:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28451
+- author: Repo
+  changes:
+  - message: Sorting and search to objects tab.
+    type: Add
+  - message: Disconnected people showing player tab
+    type: Fix
+  id: 35
+  time: '2024-06-06T06:41:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28609
 Name: Admin
 Order: 1
