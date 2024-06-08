@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Server.Database;
@@ -47,7 +48,7 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
     private bool RegexFilter(AutomodTarget target, string inputText, ICommonSession session)
     {
         // Ensure that only 1 bit is set
-        Debug.Assert(target != 0 && (target & (target - 1)) == 0);
+        Debug.Assert(BitOperations.PopCount((uint)target) == 1);
 
         var passes = true;
 
