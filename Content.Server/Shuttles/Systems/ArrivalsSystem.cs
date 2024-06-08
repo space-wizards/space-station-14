@@ -102,8 +102,7 @@ public sealed class ArrivalsSystem : EntitySystem
         Subs.CVar(_cfgManager, CCVars.ArrivalsShuttles, SetArrivals);
 
         _cfgManager.OnValueChanged(CCVars.ForceArrivals, b => Forced = b);
-
-        // TODO: This command has been superseded by setting the cvar shuttle.force_arrivals
+        
         // Command so admins can set these for funsies
         _console.RegisterCommand("arrivals", ArrivalsCommand, ArrivalsCompletion);
     }
