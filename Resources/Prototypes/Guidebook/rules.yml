@@ -1,25 +1,15 @@
 ﻿- type: guideEntry # Default for forks and stuff. Should not be listed anywhere if the server is using a custom ruleset.
   id: DefaultRuleset
   name: guide-entry-rules
+  priority: 60
   text: "/ServerInfo/Guidebook/ServerRules/DefaultRules.xml"
-
-- type: guideEntry
-  id: CoreRuleset
-  name: guide-entry-rules-core-only
-  priority: 0
-  text: "/ServerInfo/Guidebook/ServerRules/WizDenCoreOnlyRules.xml"
-
-- type: guideEntry
-  id: StandardRuleset
-  name: guide-entry-rules-lrp
-  priority: 5
-  text: "/ServerInfo/Guidebook/ServerRules/WizDenLRPRules.xml"
-
-- type: guideEntry
-  id: MRPRuleset
-  name: guide-entry-rules-mrp
-  priority: 10
-  text: "/ServerInfo/Guidebook/ServerRules/WizDenMRPRules.xml"
+  children:
+  - CoreRules
+  - RoleplayRules
+  - SiliconRules
+  - RoleTypes
+  - BanTypes
+  - BanDurations
 
 - type: guideEntry
   id: RoleTypes
@@ -153,6 +143,8 @@
   - RuleR13
   - RuleR14
   - RuleR15
+  - RuleR16
+  - RuleR17
 
 - type: guideEntry
   id: RuleR1
@@ -245,6 +237,18 @@
   text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR15SpaceLaw.xml"
 
 - type: guideEntry
+  id: RuleR16
+  name: guide-entry-rules-r16
+  priority: 16
+  text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR16Blueshield.xml"
+
+- type: guideEntry
+  id: RuleR17
+  name: guide-entry-rules-r17
+  priority: 17
+  text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR17NTR.xml"
+
+- type: guideEntry
   id: SiliconRules
   name: guide-entry-rules-silicon
   priority: 50
@@ -320,12 +324,6 @@
   name: guide-entry-rules-s10
   priority: 10
   text: "/ServerInfo/Guidebook/ServerRules/SiliconRules/RuleS10OrderConflicts.xml"
-
-- type: guideEntry
-  id: SpaceLawCrimeList
-  name: guide-entry-rules-sl-crime-list
-  priority: 5
-  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLCrimeList.xml"
 
 - type: guideEntry
   id: SpaceLawControlledSubstances
