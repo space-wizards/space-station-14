@@ -101,8 +101,7 @@ public sealed class ArrivalsSystem : EntitySystem
         Enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
         Subs.CVar(_cfgManager, CCVars.ArrivalsShuttles, SetArrivals);
 
-        Forced = _cfgManager.GetCVar(CCVars.ForceArrivals);
-        Subs.CVar(_cfgManager, CCVars.ForceArrivals, ForceArrivals);
+        _cfgManager.OnValueChanged(CCVars.ForceArrivals, b => Forced = b);
 
         // TODO: This command has been superseded by setting the cvar shuttle.force_arrivals
         // Command so admins can set these for funsies
@@ -538,20 +537,6 @@ public sealed class ArrivalsSystem : EntitySystem
             {
                 QueueDel(uid);
             }
-        }
-    }
-
-    private void ForceArrivals(bool obj)
-    {
-        Forced = obj;
-
-        if (Forced)
-        {
-
-        }
-        else
-        {
-
         }
     }
 
