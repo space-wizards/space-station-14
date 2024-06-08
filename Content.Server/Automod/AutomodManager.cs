@@ -136,6 +136,10 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
         AddFilter(automod);
     }
 
+    /// <summary>
+    /// Adds a filter to the manager lists.
+    /// </summary>
+    /// <param name="automod"></param>
     private void AddFilter(AutomodFilterDef automod)
     {
         foreach (AutomodTarget targetFlag in Enum.GetValues(typeof(AutomodTarget)))
@@ -153,7 +157,16 @@ public sealed class AutomodManager : IAutomodManager, IPostInjectInit
                     _regexFilters.Add(targetFlag, list);
                 }
 
-                list.Add(new RegexAutomodFilterDef(automod, new Regex(automod.Pattern)));
+                try
+                {
+                    var regex = new Regex(automod.Pattern);
+
+                    list.Add(new RegexAutomodFilterDef(automod, regex));
+                }
+                catch (RegexParseException e)
+                {
+                    _log.Error("Failed to parse regex in {0}. Error code: {1}.", this.GetType(), e.Error);
+                }
             }
             // TODO other filter types
         }
