@@ -59,9 +59,15 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             return;
         }
 
-        // In some instances SetDefault is not called, e.g. if we're loading data from the server
-        // in those cases we want to fallback group changes to defaults
-        SetDefault(protoManager);
+        // In some instances we might not have picked up a new group for existing data.
+        foreach (var groupProto in roleProto.Groups)
+        {
+            if (SelectedLoadouts.ContainsKey(groupProto))
+                continue;
+
+            // Data will get set below.
+            SelectedLoadouts[groupProto] = new List<Loadout>();
+        }
 
         // Reset points to recalculate.
         Points = roleProto.Points;
