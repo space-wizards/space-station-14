@@ -12,6 +12,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// </summary>
     public sealed partial class Satiate : ReagentEffect
     {
+        [Dependency] private readonly SatiationSystem _satiation = default!;
         private const float DefaultSatiationFactor = 3.0f;
 
         /// How much thirst is satiated each metabolism tick. Not currently tied to
@@ -29,7 +30,7 @@ namespace Content.Server.Chemistry.ReagentEffects
             if (!args.EntityManager.TryGetComponent(uid, out SatiationComponent? component))
                 return;
 
-            EntitySystem.Get<SatiationSystem>().ModifySatiation((uid, component), SatiationType, SatiationFactor);
+            _satiation.ModifySatiation((uid, component), SatiationType, SatiationFactor);
         }
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
