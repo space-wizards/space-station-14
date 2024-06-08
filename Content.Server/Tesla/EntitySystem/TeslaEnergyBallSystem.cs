@@ -1,5 +1,8 @@
 using Content.Server.Tesla.Components;
+using Content.Shared.Singularity.Components;
 using Robust.Server.Audio;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 
 
 namespace Content.Server.Tesla.EntitySystems;
@@ -14,6 +17,21 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<TeslaEnergyBallComponent, PreventCollideEvent>(OnPreventCollide);
+    }
+
+    /// <summary>
+    /// prevent collisions with entities that are not the containment field
+    /// or the containment field generators
+    /// </summary>
+    public void OnPreventCollide(Entity<TeslaEnergyBallComponent> entity, ref PreventCollideEvent args)
+    {
+        if (HasComp<ContainmentFieldComponent>(args.OtherEntity)
+            || HasComp<ContainmentFieldGeneratorComponent>(args.OtherEntity))
+            return;
+
+        args.Cancelled = true;
     }
 
     public void AdjustEnergy(EntityUid uid, TeslaEnergyBallComponent component, float delta)
