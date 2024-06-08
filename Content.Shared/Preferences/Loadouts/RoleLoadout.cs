@@ -275,7 +275,8 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
 
-        if (!Role.Equals(other.Role) || SelectedLoadouts.Count != other.SelectedLoadouts.Count ||
+        if (!Role.Equals(other.Role) ||
+            SelectedLoadouts.Count != other.SelectedLoadouts.Count ||
             Points != other.Points)
         {
             return false;
