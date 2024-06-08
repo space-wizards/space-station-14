@@ -424,15 +424,21 @@ public abstract partial class InventorySystem
             return false;
         }
 
+        bool droppedItems = false;
         foreach (var slotDef in inventory.Slots)
         {
             if (slotDef != slotDefinition && slotDef.DependsOn == slotDefinition.Name)
             {
                 //this recursive call might be risky
                 if (TryUnequip(actor, target, slotDef.Name, true, true, predicted, inventory, reparent: reparent))
-                    _popup.PopupPredicted(Loc.GetString("inventory-component-dropped-from-unequip"), target, target);
+                    droppedItems = true;
             }
         }
+
+        // we check if any items were dropped, and make a popup if they were.
+        // this doesn't guarantee that only 1 popup will be shown if multiple items were dropped in recursion.
+        if (droppedItems)
+            _popup.PopupPredicted(Loc.GetString("inventory-component-dropped-from-unequip"), target, target);
 
         if (!_containerSystem.Remove(removedItem.Value, slotContainer, force: force, reparent: reparent))
             return false;
