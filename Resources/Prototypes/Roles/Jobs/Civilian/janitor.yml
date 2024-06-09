@@ -22,6 +22,9 @@
     id: JanitorPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
+  storage:
+    back:
+    - BoxSurvival
 
 - type: startingGear
   id: JanitorMaidGear

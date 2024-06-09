@@ -1,6 +1,6 @@
 # OBJECTIVE STYLE
-# in comments anything that says final prototype means the objective that isnt abstract
-# the final prototype must be noSpawn to avoid showing in f5
+# in comments anything that says final prototype means the objective that isnt abstract.
+# you dont need noSpawn because Objectives category is automatically added, which has hideSpawnmenu
 # components are listed in this order:
 # 1. Objective
 # 2. requirement components
@@ -8,7 +8,7 @@
 # 4. the condition component
 
 # all objectives should inherit this at some point
-# then have its difficulty etc fields set in the final objective prototypes
+# then have its icon etc fields set in the final objective prototypes
 - type: entity
   abstract: true
   id: BaseObjective
