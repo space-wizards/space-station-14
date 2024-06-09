@@ -467,10 +467,10 @@ namespace Content.Shared.Preferences
             var configManager = collection.Resolve<IConfigurationManager>();
             var prototypeManager = collection.Resolve<IPrototypeManager>();
 
-            if (!prototypeManager.TryIndex<SpeciesPrototype>(Species, out var speciesPrototype) || speciesPrototype.RoundStart == false)
+            if (!prototypeManager.TryIndex(Species, out var speciesPrototype) || speciesPrototype.RoundStart == false)
             {
                 Species = SharedHumanoidAppearanceSystem.DefaultSpecies;
-                speciesPrototype = prototypeManager.Index<SpeciesPrototype>(Species);
+                speciesPrototype = prototypeManager.Index(Species);
             }
 
             var sex = Sex switch
