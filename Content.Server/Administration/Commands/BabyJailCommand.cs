@@ -110,7 +110,7 @@ public sealed class BabyJailMinOverallHoursCommand : LocalizedCommands
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    public override string Command => "babyjail_max_overall_hours";
+    public override string Command => "babyjail_max_overall_minutes";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
