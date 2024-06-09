@@ -307,4 +307,4 @@
     difficulty: 2.5
   - type: NotCommandRequirement
   - type: StealCondition
-    stealGroup: SupermatterSilver
+    stealGroup: SupermatterSliver

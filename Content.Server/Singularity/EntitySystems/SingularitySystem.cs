@@ -107,9 +107,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
         {
 			// Normally, a level 6 singularity requires the supermatter + 3000 energy.
 			// The required amount of energy has been bumped up to compensate for the lack of the supermatter.
-            >= 2400 when HasEatenSM => 6,
+            >= 5000 when HasEatenSM => 6,
             >= 2000 => 5,
-            >= 100 => 4,
+            >= 1000 => 4,
             >= 500 => 3,
             >= 200 => 2,
             > 0 => 1,

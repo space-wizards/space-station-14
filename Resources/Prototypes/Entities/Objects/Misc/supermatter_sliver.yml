@@ -10,7 +10,7 @@
       energy: 5
       color: "#fff633"
     - type: RadiationSource
-      intensity: 3
+      intensity: 5
     - type: Icon
       sprite: Objects/Misc/supermatter_silver.rsi
       state: icon
