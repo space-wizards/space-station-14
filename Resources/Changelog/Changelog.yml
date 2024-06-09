@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: liltenhead
-  changes:
-  - message: reduced the odds of budget insulated gloves being insulated and increased
-      the damage multipliers on bad gloves.
-    type: Tweak
-  id: 6206
-  time: '2024-03-22T08:20:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26318
 - author: BlitzTheSquishy
   changes:
   - message: Irish Coffee recipe adjusted to be more logical
@@ -3852,3 +3844,12 @@
   id: 6705
   time: '2024-06-09T16:26:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28774
+- author: Aeshus
+  changes:
+  - message: Salvage has a comprehensive guide.
+    type: Add
+  - message: Cargo's guide is up-to-date.
+    type: Tweak
+  id: 6706
+  time: '2024-06-09T18:28:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28775
