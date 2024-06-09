@@ -58,8 +58,7 @@ public sealed class SatiationSystem : EntitySystem
     {
         foreach (var (_, satiation) in component.Satiations)
         {
-            if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
-                continue;
+            var proto = _prototype.Index<SatiationPrototype>(satiation.Prototype);
 
             var amount = _random.Next(
                 (int) proto.Thresholds[SatiationThreashold.Concerned] + 10,
