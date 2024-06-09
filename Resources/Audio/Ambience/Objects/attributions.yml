@@ -62,3 +62,8 @@
   license: "CC-BY-4.0"
   copyright: "Taken and edited from source"
   source: "https://freesound.org/people/juskiddink/sounds/215658/"
+
+- files: ["supermatter_calm.ogg", "supermatter_delam.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from source"
+  source: "https://github.com/tgstation/tgstation/blob/master/sound/machines/sm/loops"
