@@ -9,6 +9,6 @@ namespace Content.Shared.Overlays;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ShowSatiationIconsComponent : Component {
-    [DataField, ViewVariables]
+    [DataField]
     public List<ProtoId<SatiationTypePrototype>> Satiations = new();
 }

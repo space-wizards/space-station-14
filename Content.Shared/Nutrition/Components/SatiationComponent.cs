@@ -1,7 +1,6 @@
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Nutrition.Components;
@@ -18,7 +17,7 @@ public sealed partial class SatiationComponent : Component
     /// <summary>
     /// The time when the thirst will update next.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField]
     [AutoPausedField]
     public TimeSpan NextUpdateTime;
