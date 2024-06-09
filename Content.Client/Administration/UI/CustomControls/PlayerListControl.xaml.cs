@@ -191,7 +191,6 @@ namespace Content.Client.Administration.UI.CustomControls
         {
             pinButton.TextureNormal = _sprites.Frame0(new SpriteSpecifier.Texture(new(isPinned ? "/Textures/Interface/Bwoink/pinned.png" : "/Textures/Interface/Bwoink/un_pinned.png")));
         }
-
     }
 
     public record PlayerListData(PlayerInfo Info) : ListData;
