@@ -204,6 +204,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                             var result = rayCastResults[0];
 
+                            // Checks if the laser should pass over unless targeted by its user
                             foreach (var colide in rayCastResults)
                             {
                                 if (colide.HitEntity != gun.Target &&
