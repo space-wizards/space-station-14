@@ -18,8 +18,6 @@ namespace Content.Client.Guidebook.Controls;
 [GenerateTypedNameReferences]
 public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
 {
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceManager _resourceManager = default!;
     [Dependency] private readonly DocumentParsingManager _parsingMan = default!;
 
@@ -36,20 +34,6 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         {
             HandleFilter();
         };
-    }
-
-    protected override void Opened()
-    {
-        base.Opened();
-
-        var guideProto = _configuration.GetCVar(CCVars.DefaultGuide);
-        if (_prototypeManager.TryIndex<GuideEntryPrototype>(guideProto, out var guideEntry))
-        {
-            if (Tree.Items.FirstOrDefault(x => x.Metadata is GuideEntry entry && entry.Id == guideProto) is { } item)
-                Tree.SetSelectedIndex(item.Index);
-            else
-                ShowGuide(guideEntry);
-        }
     }
 
     private void OnSelectionChanged(TreeItem? item)
