@@ -14,7 +14,7 @@ public sealed class ScrambleTag : IMarkupTag
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private const int MaxScrambleLength = 16;
+    private const int MaxScrambleLength = 32;
 
     public string Name => "scramble";
 
