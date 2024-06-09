@@ -3,7 +3,7 @@
 
   The Supply department, also known as [color=cyan]Cargo[/color], supplies the station with necessary resources, such as fuel and raw materials, and comfort resources, such as lottery tickets and plushies.
 
-  They raise the [color=cyan]spesos[/color] (the currency of the station) for this through many methods, such as taking bounties, selling miscellaneous items, and salvaging, allowing them to purchase a wide variety of equipment from off-station for any crew member's needs. It is [color=#b18644]Cargo[/color]'s job to fulfill the needs of the rest of the station.
+  They raise the [color=cyan]spesos[/color] (the currency of the station) for this through many methods, such as taking bounties, selling miscellaneous items, and salvaging, allowing them to purchase a wide variety of equipment from off-station for any crew member's needs. It is Cargo's job to fulfill the needs of the rest of the station.
 
   ## Personnel
 
@@ -80,11 +80,11 @@
 
   After interacting with the computer, there should be a navigation view from the shuttle. Here are the steps for piloting the shuttle to and from the Trading Station:
 
-  - First, switch to the [color=yellow]"DOCK"[/color] screen and disconnect any airlocks between the shuttle and the station.
+  - First, switch to the [color=yellow]"DOCK"[/color] screen and [color=yellow]undock[/color] any airlocks between the shuttle and the station.
   - Now, with the shuttle disconnected, you can pilot it. [italic]Remember that you are flying in space and momentum is conserved[/italic].
-  - The basic controls are [color=yellow][keybind="ShuttleStrafeUp"][/color] and [color=yellow][keybind="ShuttleStrafeDown"][/color] for strafing up and down, [color=yellow][keybind="ShuttleStrafeLeft"][/color] and [color=yellow][keybind="ShuttleStrafeRight"][/color] for strafing left and right, and [color=yellow][keybind="ShuttleRotateLeft"][/color] and [color=yellow][keybind="ShuttleRotateRight"][/color] for turning left and right. To brake, press [color=yellow][keybind="ShuttleBrake"][/color].
-  - Then pilot the shuttle to the Trade Station.
-  - Once you are there, reconnect the airlocks and you are done.
+  - The controls are [color=yellow][keybind="ShuttleStrafeUp"][/color] and [color=yellow][keybind="ShuttleStrafeDown"][/color] for strafing up and down, [color=yellow][keybind="ShuttleStrafeLeft"][/color] and [color=yellow][keybind="ShuttleStrafeRight"][/color] for strafing left and right, and [color=yellow][keybind="ShuttleRotateLeft"][/color] and [color=yellow][keybind="ShuttleRotateRight"][/color] for turning left and right. To brake, press [color=yellow][keybind="ShuttleBrake"][/color].
+  - Then pilot the shuttle to the [color=cyan]Trade Station[/color].
+  - Once you are there, [color=yellow]dock[/color] to the airlocks and you are done.
 
   [textlink="Learn about bounties, a way to maximize your on-station profits." link="CargoBounties"]
 </Document>
