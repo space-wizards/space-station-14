@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Snoring is now a trait in character preference menu.
-    type: Tweak
-  id: 6205
-  time: '2024-03-22T07:00:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26322
 - author: liltenhead
   changes:
   - message: reduced the odds of budget insulated gloves being insulated and increased
@@ -3851,3 +3844,11 @@
   id: 6704
   time: '2024-06-08T23:29:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28724
+- author: AJCM-git
+  changes:
+  - message: When people with less than an hour playing join the game, the guidebook
+      is automatically opened for them.
+    type: Tweak
+  id: 6705
+  time: '2024-06-09T16:26:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28774
