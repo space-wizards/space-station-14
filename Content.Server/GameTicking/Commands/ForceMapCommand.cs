@@ -1,8 +1,13 @@
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
+using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.Maps;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
@@ -13,6 +18,8 @@ namespace Content.Server.GameTicking.Commands
     sealed class ForceMapCommand : IConsoleCommand
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
 
         public string Command => "forcemap";
         public string Description => Loc.GetString("forcemap-command-description");
@@ -28,6 +35,16 @@ namespace Content.Server.GameTicking.Commands
 
             var gameMap = IoCManager.Resolve<IGameMapManager>();
             var name = args[0];
+
+            if (shell.Player != null)
+            {
+                _adminLogger.Add(LogType.AdminMessage, $"{shell.Player} tried to forcemap {name} via command");
+                _chatManager.SendAdminAnnouncement(Loc.GetString("forcemap-command-admin-notification", ("name", name), ("admin", shell.Player)));
+            }
+            else
+            {
+                _adminLogger.Add(LogType.AdminMessage, $"Unknown tried to forcemap {name} via command");
+            }
 
             _configurationManager.SetCVar(CCVars.GameMap, name);
             shell.WriteLine(Loc.GetString("forcemap-command-success", ("map", name)));
