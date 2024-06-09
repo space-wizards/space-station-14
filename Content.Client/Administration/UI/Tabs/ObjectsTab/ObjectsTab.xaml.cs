@@ -132,9 +132,7 @@ public sealed partial class ObjectsTab : Control
         var entry = new ObjectsTabEntry(info.Name, info.Entity, new StyleBoxFlat { BackgroundColor = backgroundColor });
         button.ToolTip = $"{info.Name}, {info.Entity}";
 
-        // Add key binding event handler
-        entry.OnKeyBindDown += args => OnEntryKeyBindDown?.Invoke(args, data);
-
+        button.OnKeyBindDown += args => OnEntryKeyBindDown?.Invoke(args, data);
         button.AddChild(entry);
     }
 
