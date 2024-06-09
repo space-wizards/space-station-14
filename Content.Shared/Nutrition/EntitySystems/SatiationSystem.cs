@@ -54,38 +54,38 @@ public sealed class SatiationSystem : EntitySystem
         }
     }
 
-    private void OnMapInit(EntityUid uid, SatiationComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<SatiationComponent> ent, ref MapInitEvent args)
     {
-        foreach (var (_, satiation) in component.Satiations)
+        foreach (var (_, satiation) in ent.Comp.Satiations)
         {
             var proto = _prototype.Index<SatiationPrototype>(satiation.Prototype);
 
             var amount = _random.Next(
                 (int) proto.Thresholds[SatiationThreashold.Concerned] + 10,
                 (int) proto.Thresholds[SatiationThreashold.Okay]);
-            SetSatiation((uid, component), satiation, amount);
-            UpdateCurrentThreshold((uid, component), satiation);
-            DoThresholdEffects(uid, satiation, false);
+            SetSatiation(ent, satiation, amount);
+            UpdateCurrentThreshold(ent, satiation);
+            DoThresholdEffects(ent.Owner, satiation, false);
         }
-        Dirty(uid, component);
+        Dirty(ent);
     }
 
-    private void OnShutdown(EntityUid uid, SatiationComponent component, ComponentShutdown args)
+    private void OnShutdown(Entity<SatiationComponent> ent, ref ComponentShutdown args)
     {
-        foreach(var (_, satiation) in component.Satiations)
+        foreach(var (_, satiation) in ent.Comp.Satiations)
         {
             if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
                 continue;
-            _alerts.ClearAlertCategory(uid, proto.AlertCategory);
+            _alerts.ClearAlertCategory(ent.Owner, proto.AlertCategory);
         }
     }
 
-    private void OnRefreshMovespeed(EntityUid uid, SatiationComponent component, RefreshMovementSpeedModifiersEvent args)
+    private void OnRefreshMovespeed(Entity<SatiationComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {
-        if (_jetpack.IsUserFlying(uid))
+        if (_jetpack.IsUserFlying(ent.Owner))
             return;
 
-        foreach(var (_, satiation) in component.Satiations)
+        foreach(var (_, satiation) in ent.Comp.Satiations)
         {
             if (satiation.CurrentThreshold > SatiationThreashold.Concerned)
                 continue;
@@ -97,20 +97,18 @@ public sealed class SatiationSystem : EntitySystem
         }
     }
 
-    private void OnRejuvenate(EntityUid uid, SatiationComponent component, RejuvenateEvent args)
+    private void OnRejuvenate(Entity<SatiationComponent> ent, ref RejuvenateEvent args)
     {
-        foreach(var (_, satiation) in component.Satiations)
+        foreach(var (_, satiation) in ent.Comp.Satiations)
         {
             if (!_prototype.TryIndex<SatiationPrototype>(satiation.Prototype, out var proto))
                 continue;
 
-            SetSatiation((uid, component), satiation, proto.Thresholds[SatiationThreashold.Okay]);
+            SetSatiation(ent, satiation, proto.Thresholds[SatiationThreashold.Okay]);
         }
-        Dirty(uid, component);
+        Dirty(ent);
     }
 
-    //
-    //
     public void ModifySatiation(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, float amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
@@ -288,28 +286,14 @@ public sealed class SatiationSystem : EntitySystem
         return GetThreshold(satiation, satiation.Current + delta) < threshold;
     }
 
-    /// <summary>
-    /// A check that returns if the entity is below a satiation threshold.
-    /// </summary>
-    public bool? IsCurrentSatiationBelowValue(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, float threshold)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp))
-            return null; // It's never going to go unsatiated, so it's probably fine to assume that it's satiated.
-
-        if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation))
-            return null; // It's never going to go unsatiated, so it's probably fine to assume that it's satiated.
-
-        if (satiation == null)
-            return false;
-
-        return satiation.Current < threshold;
-    }
-
-    public bool TryGetStatusIconPrototype(SatiationComponent component, ProtoId<SatiationTypePrototype> satiationType, [NotNullWhen(true)] out StatusIconPrototype? prototype)
+    public bool TryGetStatusIconPrototype(Entity<SatiationComponent?> ent, ProtoId<SatiationTypePrototype> satiationType, [NotNullWhen(true)] out StatusIconPrototype? prototype)
     {
         prototype = null;
 
-        if (!component.Satiations.TryGetValue(satiationType, out var satiation)
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        if (!ent.Comp.Satiations.TryGetValue(satiationType, out var satiation)
                 || !_prototype.TryIndex(satiation.Prototype, out var satiationProto))
             return false;
 

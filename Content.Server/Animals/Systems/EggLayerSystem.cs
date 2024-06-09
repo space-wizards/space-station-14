@@ -81,11 +81,10 @@ public sealed class EggLayerSystem : EntitySystem
         // Allow infinitely laying eggs if they can't get hungry
         if (TryComp<SatiationComponent>(uid, out var component))
         {
-            var belowValue = _satiation.IsCurrentSatiationBelowValue((uid, component), egglayer.UsedSatiation,  egglayer.SatiationUsage);
-            if (belowValue == null)
+            if (!_satiation.TryGetCurrentSatiation((uid, component), egglayer.UsedSatiation, out var current))
                 return false;
 
-            if (!belowValue.Value)
+            if (current < egglayer.SatiationUsage)
             {
                 _popup.PopupEntity(Loc.GetString(egglayer.InsufficientSatiation), uid, uid);
                 return false;
