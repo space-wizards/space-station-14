@@ -80,9 +80,9 @@ public sealed class AutomodCommand : ToolshedCommand
         [CommandArgument] int id)
     {
         if (await _automodMan.RemoveFilter(id))
-            ctx.WriteLine("Filters have been removed.");
+            ctx.WriteLine(Loc.GetString("command-automod-remove-success"));
         else
-            ctx.WriteLine("Unable to find filter.");
+            ctx.WriteLine(Loc.GetString("command-automod-remove-failure"));
     }
 }
 
