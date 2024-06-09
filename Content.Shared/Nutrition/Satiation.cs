@@ -26,7 +26,7 @@ public sealed partial class Satiation
     /// Stored in order to prevent recalculating
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SatiationThreashold LastThreshold;
+    public SatiationThreashold LastThreshold = SatiationThreashold.Okay;
 
     /// <summary>
     /// The current nutrition threshold the entity is at
