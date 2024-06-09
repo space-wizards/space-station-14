@@ -435,14 +435,14 @@
   - type: SolutionContainerManager
     solutions:
       injector:
-        maxVol: 10
+        maxVol: 20
         canReact: false
   - type: Injector
-    delay: 1.5
+    delay: 1
     injectOnly: false
     minTransferAmount: 5
-    maxTransferAmount: 25
-    transferAmount: 25
+    maxTransferAmount: 20
+    transferAmount: 20
   - type: Tag
     tags:
     - Syringe
