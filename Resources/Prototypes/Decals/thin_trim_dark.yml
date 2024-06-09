@@ -1,0 +1,118 @@
+- type: decal
+  id: ThinTrimDarkBox
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_box
+
+- type: decal
+  id: ThinTrimDarkCornerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_corner_ne
+
+- type: decal
+  id: ThinTrimDarkCornerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_corner_se
+
+- type: decal
+  id: ThinTrimDarkCornerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_corner_nw
+
+- type: decal
+  id: ThinTrimDarkCornerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_corner_sw
+
+- type: decal
+  id: ThinTrimDarkInnerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_inner_ne
+
+- type: decal
+  id: ThinTrimDarkInnerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_inner_se
+
+- type: decal
+  id: ThinTrimDarkInnerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_inner_nw
+
+- type: decal
+  id: ThinTrimDarkInnerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_inner_sw
+
+- type: decal
+  id: ThinTrimDarkEndN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_end_n
+
+- type: decal
+  id: ThinTrimDarkEndE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_end_e
+
+- type: decal
+  id: ThinTrimDarkEndS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_end_s
+
+- type: decal
+  id: ThinTrimDarkEndW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_end_w
+
+- type: decal
+  id: ThinTrimDarkLineN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_line_n
+
+- type: decal
+  id: ThinTrimDarkLineE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_line_e
+
+- type: decal
+  id: ThinTrimDarkLineS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_line_s
+
+- type: decal
+  id: ThinTrimDarkLineW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/thin_trim.rsi
+    state: dark_thin_line_w
