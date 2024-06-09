@@ -1,6 +1,8 @@
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
+using Content.Shared.Nutrition;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.AnimalHusbandry;
 
@@ -84,9 +86,9 @@ public sealed partial class ReproductiveComponent : Component
     /// gives birth. A balancing tool to require feeding.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public Dictionary<string, float> SatiationPerBirth = new() {
-        {"hunger", 75f},
-        {"thirst", 75f},
+    public Dictionary<ProtoId<SatiationTypePrototype>, float> SatiationPerBirth = new() {
+        {"Hunger", 75f},
+        {"Thirst", 75f},
     };
 
     /// <summary>
