@@ -15,7 +15,7 @@ public sealed partial class Satiation : ReagentEffectCondition
     public float Min = 0;
 
     [DataField]
-    public ProtoId<SatiationTypePrototype> SatiationType = "hunger";
+    public ProtoId<SatiationTypePrototype> SatiationType = "Hunger";
 
     [Dependency] private readonly SatiationSystem _satiation = default!;
 

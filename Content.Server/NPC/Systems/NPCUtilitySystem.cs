@@ -61,8 +61,8 @@ public sealed class NPCUtilitySystem : EntitySystem
     private HashSet<Entity<IComponent>> _entitySet = new();
     private List<EntityPrototype.ComponentRegistryEntry> _compTypes = new();
 
-    private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
-    private readonly ProtoId<SatiationTypePrototype> _satiationThirst = "thirst";
+    private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "Hunger";
+    private readonly ProtoId<SatiationTypePrototype> _satiationThirst = "Thirst";
 
     public override void Initialize()
     {

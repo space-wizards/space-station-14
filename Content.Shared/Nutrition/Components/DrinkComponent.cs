@@ -46,5 +46,5 @@ public sealed partial class DrinkComponent : Component
     /// What tyoe if satiation it satiates.
     /// </summary>
     [DataField]
-    public ProtoId<SatiationTypePrototype> SatiationType = "thirst";
+    public ProtoId<SatiationTypePrototype> SatiationType = "Thirst";
 }

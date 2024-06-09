@@ -14,7 +14,7 @@ public sealed partial class SatiationPrecondition : HTNPrecondition
     [DataField(required: true)]
     public SatiationThreashold MinSatiationState = SatiationThreashold.Concerned;
     [DataField(required: true)]
-    public ProtoId<SatiationTypePrototype> SatiationType = "hunger";
+    public ProtoId<SatiationTypePrototype> SatiationType = "Hunger";
 
 
     public override bool IsMet(NPCBlackboard blackboard)
