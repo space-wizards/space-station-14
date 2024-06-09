@@ -114,18 +114,20 @@ namespace Content.Client.HealthAnalyzer.UI
 
             if (_entityManager.TryGetComponent(target, out SatiationComponent? satiationComponent))
             {
+                var box = new BoxContainer
+                {
+                    Margin = new Thickness(0, 0, 0, 15),
+                   Orientation = BoxContainer.LayoutOrientation.Vertical
+                };
                 foreach (var (id, satiation) in satiationComponent.Satiations)
                 {
                     if (satiation.CurrentThresholdDamage == null) continue;
 
-                    var box = new Control { Margin = new Thickness(0, 0, 0, 15) };
-
                     box.AddChild(CreateDiagnosticGroupTitle(
                         Loc.GetString($"health-analyzer-window-satiation-damage", ("type", id)),
                         id));
-
-                    GroupsContainer.AddChild(box);
                 }
+                GroupsContainer.AddChild(box);
             }
 
             SetHeight = AnalyzerHeight;
