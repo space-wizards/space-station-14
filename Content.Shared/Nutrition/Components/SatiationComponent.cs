@@ -13,7 +13,7 @@ public sealed partial class SatiationComponent : Component
 {
     [DataField]
     [AutoNetworkedField]
-    public Dictionary<ProtoId<SatiationTypePrototype>, Satiation> Satiations = new();
+    public Dictionary<ProtoId<SatiationTypePrototype>, Satiation> Satiations;
 
     /// <summary>
     /// The time when the thirst will update next.
