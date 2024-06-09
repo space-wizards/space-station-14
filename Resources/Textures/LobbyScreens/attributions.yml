@@ -47,3 +47,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "plantyfern on discord"
   source: "https://github.com/space-wizards/space-station-14"
+
+- files: ["janishootout.webp"]
+  license: "CC0-1.0"
+  copyright: "psychpsyo on Github/Twitter"
+  source: "https://github.com/space-wizards/space-station-14"
