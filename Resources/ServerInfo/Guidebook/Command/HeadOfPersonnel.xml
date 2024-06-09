@@ -5,10 +5,10 @@
   The Head of Personnel is the head of the Service department as well as the manager of all the IDs on the station.
   Your duties include overseeing your chefs, bartenders and botanists as well as coordinating between the other departments and having them get along.
 
-  But most importantly-- [color=#a4885c]you change IDs[/color].
+  But most importantly-- [color=cyan]you change IDs[/color].
 
   ## Changing IDs
-  To get started, you need your own ID, someone else's ID and an [color=#a4885c]ID card computer[/color].
+  To get started, you need your own ID, someone else's ID and an [color=cyan]ID card computer[/color].
   <Box>
     <GuideEntityEmbed Entity="HoPIDCard" Caption="your ID card"/>
     <GuideEntityEmbed Entity="PassengerIDCard" Caption="someone else's ID card"/>
@@ -16,28 +16,28 @@
   </Box>
 
   Now, follow these steps.
-  - First, put your ID into the computer. This is the [color=#a4885c]Privileged ID[/color], the one that has the ability to modify other cards.
-  - Now, put in the ID you want to change. This is the [color=#a4885c]Target ID[/color]. You're modifying the access of this one.
-  - Choose a preset. This will change the person's [color=#a4885c]job icon[/color] that will show up on secHUDs and the crew manifest.
+  - Insert the [bold]Privileged ID[/bold]. This is the card that has the ability to modify other cards.
+  - Then insert the [bold]Target ID[/bold]. This is the card you're modifying.
+  - Choose a [bold]preset[/bold]. This will change the person's [bold]job icon[/bold] that will show up on secHUDs and the crew manifest.
   - If necessary, add or take away additional accesses.
   - Take out the IDs and make sure you don't accidentally hand someone else your own ID!
 
   ## Allowing Access
   You COULD give away acceesses willy-nilly, but your fellow department heads may not appreciate fresh faces walking into their departments without their permission.
 
-  Before assigning a job, at the bare minimum [color=#a4885c]notify[/color] the department head so that everyone is on the same page.
-  Ideally, you should ask them over [color=#a4885c]radio[/color] if they approve or send them a letter for them to [color=#a4885c]stamp[/color].
+  Before assigning a job, at the bare minimum [color=cyan]notify[/color] the department head so that everyone is on the same page.
+  Ideally, you should ask them over [bold]radio[/bold] if they approve or send them a letter for them to [bold]stamp[/bold].
 
-  How stringent your policy is up to you, but remember that some accesses could be [color=#a4885c]detrimental[/color] to the station should they fall into the wrong hands! This is why HoPs will often make job request forms for record-keeping.
+  How stringent your policy is up to you, but remember that some accesses could be [color=cyan]detrimental[/color] to the station should they fall into the wrong hands! This is why HoPs will often make job request forms for record-keeping.
 
-  [textlink="If you want advanced techniques for writing on paper, click here." link="Writing"]
+  [italic]Tips for formatting your document can be found [textlink="here" link="Writing"].[/italic]
 
-  Also check the wiki for additional tips and [color=#a4885c]templates[/color] that you can use.
+  Also check the wiki for additional tips and [color=cyan]templates[/color] that you can use.
 
   ## Replacing Lost Equipment
   Some poor shmuck came to your office without a PDA or a headset. Would hate to be that guy!
 
-  Thankfully, you can replace his lost devices using the PTech in your office.
+  Thankfully, you can replace his lost devices using the [color=cyan]PTech[/color] in your office.
   <Box>
     <GuideEntityEmbed Entity="VendingMachineCart"/>
     <GuideEntityEmbed Entity="PassengerIDCard" Caption="ID card"/>
@@ -51,7 +51,7 @@
     <GuideEntityEmbed Entity="EncryptionKeySecurity" Caption=""/>
   </Box>
 
-  [textlink="Click here for an explanation on the radio and encryption keys." link="Radio"]
+  [italic]An explanation on the radio and encryption keys can be found [textlink="here" link="Radio"].[/italic]
  
   ## Access Types
   <Box>
