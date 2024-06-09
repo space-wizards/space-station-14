@@ -73,7 +73,7 @@ public sealed class BabyJailMinAccountAgeCommand : LocalizedCommands
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    public override string Command => "babyjail_min_account_age";
+    public override string Command => "babyjail_max_account_age";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -82,7 +82,7 @@ public sealed class BabyJailMinAccountAgeCommand : LocalizedCommands
             case 0:
             {
                 var current = _cfg.GetCVar(CCVars.BabyJailMaxAccountAge);
-                shell.WriteLine(Loc.GetString("babyjail-command-min-account-age-is", ("hours", current / 60)));
+                shell.WriteLine(Loc.GetString("babyjail-command-max-account-age-is", ("minutes", current)));
                 break;
             }
             case > 1:
@@ -90,14 +90,14 @@ public sealed class BabyJailMinAccountAgeCommand : LocalizedCommands
                 return;
         }
 
-        if (!int.TryParse(args[0], out var hours))
+        if (!int.TryParse(args[0], out var minutes))
         {
             shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
             return;
         }
 
-        _cfg.SetCVar(CCVars.BabyJailMaxAccountAge, hours * 60);
-        shell.WriteLine(Loc.GetString("babyjail-command-min-account-age-set", ("hours", hours)));
+        _cfg.SetCVar(CCVars.BabyJailMaxAccountAge, minutes);
+        shell.WriteLine(Loc.GetString("babyjail-command-max-account-age-set", ("minutes", minutes)));
     }
 }
 
@@ -106,7 +106,7 @@ public sealed class BabyJailMinOverallHoursCommand : LocalizedCommands
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    public override string Command => "babyjail_min_overall_hours";
+    public override string Command => "babyjail_max_overall_hours";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -114,8 +114,8 @@ public sealed class BabyJailMinOverallHoursCommand : LocalizedCommands
         {
             case 0:
             {
-                var current = _cfg.GetCVar(CCVars.BabyJailMaxOverallHours);
-                shell.WriteLine(Loc.GetString("babyjail-command-min-overall-hours-is", ("minutes", current)));
+                var current = _cfg.GetCVar(CCVars.BabyJailMaxOverallMinutes);
+                shell.WriteLine(Loc.GetString("babyjail-command-max-overall-minutes-is", ("minutes", current)));
                 break;
             }
             case > 1:
@@ -129,7 +129,7 @@ public sealed class BabyJailMinOverallHoursCommand : LocalizedCommands
             return;
         }
 
-        _cfg.SetCVar(CCVars.BabyJailMaxOverallHours, hours);
-        shell.WriteLine(Loc.GetString("babyjail-command-overall-hours-age-set", ("hours", hours)));
+        _cfg.SetCVar(CCVars.BabyJailMaxOverallMinutes, hours);
+        shell.WriteLine(Loc.GetString("babyjail-command-overall-minutes-set", ("hours", hours)));
     }
 }

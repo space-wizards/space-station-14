@@ -336,8 +336,8 @@ namespace Content.Shared.CCVar
         /// <summary>
         /// Maximum overall played time allowed to access baby jailed servers.
         /// </summary>
-        public static readonly CVarDef<int> BabyJailMaxOverallHours =
-            CVarDef.Create("game.baby_jail.max_overall_hours", 10, CVar.SERVERONLY);
+        public static readonly CVarDef<int> BabyJailMaxOverallMinutes =
+            CVarDef.Create("game.baby_jail.max_overall_minutes", 120, CVar.SERVERONLY);
 
         /// <summary>
         /// A custom message that will be used for connections denied due to the baby jail.

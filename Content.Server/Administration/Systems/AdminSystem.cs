@@ -84,7 +84,7 @@ namespace Content.Server.Administration.Systems
             Subs.CVar(_config, CCVars.BabyJailEnabled, OnBabyJailChanged, true);
             Subs.CVar(_config, CCVars.BabyJailShowReason, OnBabyJailShowReasonChanged, true);
             Subs.CVar(_config, CCVars.BabyJailMaxAccountAge, OnBabyJailMaxAccountAgeChanged, true);
-            Subs.CVar(_config, CCVars.BabyJailMaxOverallHours, OnBabyJailMaxOverallHoursChanged, true);
+            Subs.CVar(_config, CCVars.BabyJailMaxOverallMinutes, OnBabyJailMaxOverallMinutesChanged, true);
 
             SubscribeLocalEvent<IdentityChangedEvent>(OnIdentityChanged);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
@@ -306,7 +306,7 @@ namespace Content.Server.Administration.Systems
 
         private void OnBabyJailMaxAccountAgeChanged(int minutes)
         {
-            BabyJail.MaxAccountAgeHours = minutes / 60;
+            BabyJail.MaxAccountAgeMinutes = minutes;
             SendBabyJailStatusAll();
         }
 
@@ -316,9 +316,9 @@ namespace Content.Server.Administration.Systems
             SendPanicBunkerStatusAll();
         }
 
-        private void OnBabyJailMaxOverallHoursChanged(int hours)
+        private void OnBabyJailMaxOverallMinutesChanged(int minutes)
         {
-            BabyJail.MaxOverallHours = hours;
+            BabyJail.MaxOverallMinutes = minutes;
             SendBabyJailStatusAll();
         }
 

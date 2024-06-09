@@ -253,7 +253,7 @@ namespace Content.Server.Connection
             var showReason = _cfg.GetCVar(CCVars.BabyJailShowReason);
             var reason = _cfg.GetCVar(CCVars.BabyJailCustomReason);
             var maxAccountAgeMinutes = _cfg.GetCVar(CCVars.BabyJailMaxAccountAge);
-            var maxPlaytimeHours = _cfg.GetCVar(CCVars.BabyJailMaxOverallHours);
+            var maxPlaytimeMinutes = _cfg.GetCVar(CCVars.BabyJailMaxOverallMinutes);
 
             // Wait some time to lookup data
             var record = await _dbManager.GetPlayerRecordByUserId(userId);
@@ -273,7 +273,7 @@ namespace Content.Server.Connection
             }
 
             var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
-            var isTotalPlaytimeInvalid = overallTime == null || overallTime.TimeSpent.TotalHours >= maxPlaytimeHours;
+            var isTotalPlaytimeInvalid = overallTime == null || overallTime.TimeSpent.TotalMinutes >= maxPlaytimeMinutes;
 
             if (isTotalPlaytimeInvalid && showReason)
             {
@@ -283,7 +283,7 @@ namespace Content.Server.Connection
                         ("reason",
                             Loc.GetString(
                                 "baby-jail-account-reason-overall",
-                                ("minutes", maxPlaytimeHours))));
+                                ("minutes", maxPlaytimeMinutes))));
 
                 return (true, locPlaytimeReason);
             }
@@ -292,7 +292,6 @@ namespace Content.Server.Connection
                 return (true, Loc.GetString("baby-jail-account-denied"));
 
             return (false, "");
-
         }
 
         private bool HasTemporaryBypass(NetUserId user)

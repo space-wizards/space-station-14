@@ -12,7 +12,7 @@ public sealed partial class BabyJailTab : Control
     [Dependency] private readonly IConsoleHost _console = default!;
 
     private string _maxAccountAge;
-    private string _maxOverallHours;
+    private string _maxOverallMinutes;
 
     public BabyJailTab()
     {
@@ -23,9 +23,9 @@ public sealed partial class BabyJailTab : Control
         MaxAccountAge.OnFocusExit += args => SendMaxAccountAge(args.Text);
         _maxAccountAge = MaxAccountAge.Text;
 
-        MaxOverallHours.OnTextEntered += args => SendMaxOverallHours(args.Text);
-        MaxOverallHours.OnFocusExit += args => SendMaxOverallHours(args.Text);
-        _maxOverallHours = MaxOverallHours.Text;
+        MaxOverallMinutes.OnTextEntered += args => SendMaxOverallMinutes(args.Text);
+        MaxOverallMinutes.OnFocusExit += args => SendMaxOverallMinutes(args.Text);
+        _maxOverallMinutes = MaxOverallMinutes.Text;
     }
 
     private void SendMaxAccountAge(string text)
@@ -37,19 +37,19 @@ public sealed partial class BabyJailTab : Control
             return;
         }
 
-        _console.ExecuteCommand($"babyjail_min_account_age {minutes}");
+        _console.ExecuteCommand($"babyjail_max_account_age {minutes}");
     }
 
-    private void SendMaxOverallHours(string text)
+    private void SendMaxOverallMinutes(string text)
     {
         if (string.IsNullOrWhiteSpace(text) ||
-            text == _maxOverallHours ||
-            !int.TryParse(text, out var hours))
+            text == _maxOverallMinutes ||
+            !int.TryParse(text, out var minutes))
         {
             return;
         }
 
-        _console.ExecuteCommand($"babyjail_min_overall_hours {hours}");
+        _console.ExecuteCommand($"babyjail_max_overall_minutes {minutes}");
     }
 
     public void UpdateStatus(BabyJailStatus status)
@@ -62,10 +62,10 @@ public sealed partial class BabyJailTab : Control
         EnabledButton.ModulateSelfOverride = status.Enabled ? Color.Red : null;
         ShowReasonButton.Pressed = status.ShowReason;
 
-        MaxAccountAge.Text = status.MaxAccountAgeHours.ToString();
+        MaxAccountAge.Text = status.MaxAccountAgeMinutes.ToString();
         _maxAccountAge = MaxAccountAge.Text;
 
-        MaxOverallHours.Text = status.MaxOverallHours.ToString();
-        _maxOverallHours = MaxOverallHours.Text;
+        MaxOverallMinutes.Text = status.MaxOverallMinutes.ToString();
+        _maxOverallMinutes = MaxOverallMinutes.Text;
     }
 }
