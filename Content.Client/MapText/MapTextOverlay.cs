@@ -72,7 +72,7 @@ public sealed class MapTextOverlay : Overlay
                 continue;
 
             if (mapText.CachedFont == null)
-                return;
+                continue;
 
             var pos = Vector2.Transform(mapPos.Position, matrix) + mapText.Offset;
             var dimensions = handle.GetDimensions(mapText.CachedFont, mapText.Text, scale);
