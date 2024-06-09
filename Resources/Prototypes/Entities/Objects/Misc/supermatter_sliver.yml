@@ -12,7 +12,10 @@
     - type: RadiationSource
       intensity: 5
     - type: Icon
-      sprite: Objects/Misc/supermatter_silver.rsi
+      sprite: Objects/Misc/supermatter_sliver.rsi
+      state: icon
+    - type: Sprite
+      sprite: Objects/Misc/supermatter_sliver.rsi
       state: icon
     - type: StealTarget
       stealGroup: SupermatterSliver
