@@ -370,6 +370,19 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
         return true;
     }
 
+    public bool TryGetTrackerTime(ICommonSession id, string tracker, [NotNullWhen(true)] out TimeSpan? time)
+    {
+        time = null;
+        if (!TryGetTrackerTimes(id, out var times))
+            return false;
+
+        if (!times.TryGetValue(tracker, out var t))
+            return false;
+
+        time = t;
+        return true;
+    }
+
     public Dictionary<string, TimeSpan> GetTrackerTimes(ICommonSession id)
     {
         if (!_playTimeData.TryGetValue(id, out var data) || !data.Initialized)
