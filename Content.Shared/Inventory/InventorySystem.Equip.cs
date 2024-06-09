@@ -363,6 +363,25 @@ public abstract partial class InventorySystem
         bool reparent = true,
         bool checkDoafter = false)
     {
+        var itemsDropped = 0;
+        return TryUnequip(actor, target, slot, out removedItem, ref itemsDropped,
+            silent, force, predicted, inventory, clothing, reparent, checkDoafter);
+    }
+
+    private bool TryUnequip(
+        EntityUid actor,
+        EntityUid target,
+        string slot,
+        [NotNullWhen(true)] out EntityUid? removedItem,
+        ref int itemsDropped,
+        bool silent = false,
+        bool force = false,
+        bool predicted = false,
+        InventoryComponent? inventory = null,
+        ClothingComponent? clothing = null,
+        bool reparent = true,
+        bool checkDoafter = false)
+    {
         removedItem = null;
 
         if (TerminatingOrDeleted(target))
@@ -424,24 +443,27 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        bool droppedItems = false;
+        if (!_containerSystem.Remove(removedItem.Value, slotContainer, force: force, reparent: reparent))
+            return false;
+
+        // this is in order to keep track of whether this is the first instance of a recursion call
+        bool firstRun = itemsDropped == 0;
+        ++itemsDropped;
+
         foreach (var slotDef in inventory.Slots)
         {
             if (slotDef != slotDefinition && slotDef.DependsOn == slotDefinition.Name)
             {
                 //this recursive call might be risky
-                if (TryUnequip(actor, target, slotDef.Name, true, true, predicted, inventory, reparent: reparent))
-                    droppedItems = true;
+                TryUnequip(actor, target, slotDef.Name, out _, ref itemsDropped, true, true, predicted, inventory, reparent: reparent);
             }
         }
 
         // we check if any items were dropped, and make a popup if they were.
-        // this doesn't guarantee that only 1 popup will be shown if multiple items were dropped in recursion.
-        if (droppedItems)
-            _popup.PopupClient(Loc.GetString("inventory-component-dropped-from-unequip"), target, target);
-
-        if (!_containerSystem.Remove(removedItem.Value, slotContainer, force: force, reparent: reparent))
-            return false;
+        // the reason we check for > 1 is because the first item is always the one we are trying to unequip,
+        // whereas we only want to notify for extra dropped items.
+        if (firstRun && itemsDropped > 1)
+            _popup.PopupClient(Loc.GetString("inventory-component-dropped-from-unequip", ("items", itemsDropped)), target, target);
 
         // TODO: Inventory needs a hot cleanup hoo boy
         // Check if something else (AKA toggleable) dumped it into a container.
