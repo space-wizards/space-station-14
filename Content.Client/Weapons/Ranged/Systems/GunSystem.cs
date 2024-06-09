@@ -94,25 +94,18 @@ public sealed partial class GunSystem : SharedGunSystem
     private void OnHitscan(HitscanEvent ev)
     {
         // ALL I WANT IS AN ANIMATED EFFECT
-        foreach (var a in ev.Sprites)
+        foreach (var spriteData in ev.Sprites)
         {
-            if (a.Sprite is not SpriteSpecifier.Rsi rsi)
+            if (spriteData.Sprite is not SpriteSpecifier.Rsi rsi)
                 continue;
 
-            var coords = GetCoordinates(a.coordinates);
-
-            if (Deleted(coords.EntityId))
-                continue;
-
-            var ent = Spawn(HitscanProto, coords);
-            var sprite = Comp<SpriteComponent>(ent);
-            var xform = Transform(ent);
-            xform.LocalRotation = a.angle;
-            sprite[EffectLayers.Unshaded].AutoAnimated = false;
-            sprite.LayerSetSprite(EffectLayers.Unshaded, rsi);
-            sprite.LayerSetState(EffectLayers.Unshaded, rsi.RsiState);
-            sprite.Scale = new Vector2(a.Distance, 1f);
-            sprite[EffectLayers.Unshaded].Visible = true;
+            var effectUid = Spawn(HitscanProto, spriteData.coordinates, rotation: spriteData.angle);
+            var effectSprite = Comp<SpriteComponent>(effectUid);
+            effectSprite[EffectLayers.Unshaded].AutoAnimated = false;
+            effectSprite.LayerSetSprite(EffectLayers.Unshaded, rsi);
+            effectSprite.LayerSetState(EffectLayers.Unshaded, rsi.RsiState);
+            effectSprite.Scale = new Vector2(spriteData.Distance, 1f);
+            effectSprite[EffectLayers.Unshaded].Visible = true;
 
             var anim = new Animation()
             {
@@ -130,7 +123,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 }
             };
 
-            _animPlayer.Play(ent, anim, "hitscan-effect");
+            _animPlayer.Play(effectUid, anim, "hitscan-effect");
         }
     }
 
