@@ -11,19 +11,21 @@ namespace Content.Shared.MapText;
 [NetworkedComponent, Access(typeof(SharedMapTextSystem))]
 public abstract partial class SharedMapTextComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public const string DefaultFont = "Default";
+
+    [DataField]
     public string? Text;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public Color Color = Color.White;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string FontId = "Default";
+    [DataField]
+    public string FontId = DefaultFont;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int FontSize = 12;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public Vector2 Offset = Vector2.Zero;
 }
 
