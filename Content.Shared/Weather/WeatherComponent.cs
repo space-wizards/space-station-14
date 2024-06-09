@@ -1,10 +1,11 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Weather;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class WeatherComponent : Component
 {
     /// <summary>
@@ -27,13 +28,13 @@ public sealed partial class WeatherData
     /// <summary>
     /// When the weather started if relevant.
     /// </summary>
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))] //TODO: Remove Custom serializer
     public TimeSpan StartTime = TimeSpan.Zero;
 
     /// <summary>
     /// When the applied weather will end.
     /// </summary>
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))] //TODO: Remove Custom serializer
     public TimeSpan? EndTime;
 
     [ViewVariables]
