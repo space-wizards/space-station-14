@@ -304,8 +304,8 @@ namespace Content.Shared.CCVar
         /// <summary>
         /// Minimal overall played time.
         /// </summary>
-        public static readonly CVarDef<int> PanicBunkerMinOverallHours =
-            CVarDef.Create("game.panic_bunker.min_overall_hours", 10, CVar.SERVERONLY);
+        public static readonly CVarDef<int> PanicBunkerMinOverallMinutes =
+            CVarDef.Create("game.panic_bunker.min_overall_minutes", 600, CVar.SERVERONLY);
 
         /// <summary>
         /// A custom message that will be used for connections denied to the panic bunker

@@ -2,5 +2,5 @@
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.Administration.UI.Tabs.BabyJailTab"
     Title="{Loc admin-ui-baby-jail-window-title}">
-    <Label Name="MessageLabel" Access="Public" Text="{Loc admin-ui-baby-jail-is-enabled}" />
+    <RichTextLabel Name="MessageLabel" Access="Public" />
 </controls:BabyJailStatusWindow>
