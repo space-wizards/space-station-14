@@ -13,7 +13,8 @@ panic_bunker.enable_without_admins = false
 panic_bunker.custom_reason = ""
 panic_bunker.enabled = true
 panic_bunker.show_reason = true
-panic_bunker.max_overall_minutes = 15
+panic_bunker.min_overall_minutes = 15
+
 [server]
 rules_file = "CoreRuleset"
 
