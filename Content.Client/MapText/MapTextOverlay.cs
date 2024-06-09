@@ -61,6 +61,9 @@ public sealed class MapTextOverlay : Overlay
         var matrix = args.ViewportControl.GetWorldToScreenMatrix();
         var query = _entManager.AllEntityQueryEnumerator<MapTextComponent>();
 
+        // Enlarge bounds to try prevent pop-in due to large text.
+        var bounds = args.WorldBounds.Enlarged(2);
+
         while(query.MoveNext(out var uid, out var mapText))
         {
             var mapPos = _transform.GetMapCoordinates(uid);
@@ -68,7 +71,7 @@ public sealed class MapTextOverlay : Overlay
             if (mapPos.MapId != args.MapId)
                 continue;
 
-            if (!args.WorldBounds.Contains(mapPos.Position))
+            if (!bounds.Contains(mapPos.Position))
                 continue;
 
             if (mapText.CachedFont == null)
