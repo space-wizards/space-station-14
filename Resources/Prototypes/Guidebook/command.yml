@@ -7,5 +7,5 @@
 
 - type: guideEntry
   id: HeadOfPersonnel
-  name: guide-entry-headofpersonnel
+  name: guide-entry-headofpersonnel 
   text: "/ServerInfo/Guidebook/Command/HeadOfPersonnel.xml"

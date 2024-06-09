@@ -26,6 +26,21 @@ Don't forget, you still have a job! Your fancy tools don't earn you a day off, y
 You might get away with just sitting around and letting people resent you, but it's wiser to get active and work alongside them.
 Remember to move your workers around to have them do what they like doing or what they do best.
 
+## The Bridge
+The bridge is a command-only area that usually houses the conference room, Captain's quarters and plenty of computers to use as necessary.
+
+  <Box>
+     <GuideEntityEmbed Entity="ComputerComms"/>
+  </Box>
+
+A communications computer can be found in the bridge. You can use this to make station-wide announcements, or to change the station's [textlink="alert level." link="AlertLevels"]
+
+  <Box>
+    <GuideEntityEmbed Entity="PhoneInstrument"/>
+  </Box>
+
+The red phone is used to leave voicemails for Central Command. This is usually used to request Emergency Response Teams when the situation becomes dire.
+
 ## Your Locker
 
 To deal with your new soul-crushing tasks, every head is given special items to lead your subordinates. Most of your new shiny tools can be found in your [color=#a4885c]locker[/color].
