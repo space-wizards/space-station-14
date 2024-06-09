@@ -106,7 +106,7 @@
   - type: TypingIndicator
     proto: robot
   - type: ZombieImmune
-  - type: ClothingStepTriggerImmune
+  - type: ClothingRequiredStepTriggerImmune
   - type: NoSlip
   - type: Insulated
 

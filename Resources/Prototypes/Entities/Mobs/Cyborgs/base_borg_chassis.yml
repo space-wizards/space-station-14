@@ -216,7 +216,7 @@
   - type: GuideHelp
     guides:
       - Cyborgs
-  - type: ClothingStepTriggerImmune
+  - type: ClothingRequiredStepTriggerImmune
 
 - type: entity
   abstract: true
