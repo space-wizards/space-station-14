@@ -49,11 +49,12 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         _guideWindow.OnClose += OnWindowClosed;
         _guideWindow.OnOpen += OnWindowOpen;
 
-        if (state is GameplayState &&
+        if (state is LobbyState &&
             _jobRequirements.FetchOverallPlaytime() < TimeSpan.FromMinutes(PlaytimeOpenGuidebook))
         {
             OpenGuidebook(selected: DefaultWelcomeGuideEntry);
             _guideWindow.RecenterWindow(new(0.5f, 0.5f));
+            _guideWindow.SetPositionFirst();
         }
 
         // setup keybinding
