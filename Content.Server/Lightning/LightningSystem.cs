@@ -47,10 +47,17 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="target">Where the lightning fires to</param>
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
     /// <param name="triggerLightningEvents">if the lightnings being fired should trigger lightning events.</param>
-    public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype = "Lightning", bool triggerLightningEvents = true)
+    public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype, bool triggerLightningEvents = true)
     {
-        var spriteState = LightningRandomizer();
-        _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
+        if (_random.Prob(80))
+        {
+            var spriteState = LightningRandomizer();
+            _beam.TryCreateBeam(user, target, "Lightning", spriteState);
+        }
+        else
+        {
+            _beam.TryCreateBeam(user, target, lightningPrototype);
+        }
 
         if (triggerLightningEvents) // we don't want certain prototypes to trigger lightning level events
         {
@@ -69,7 +76,7 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
     /// <param name="arcDepth">how many times to recursively fire lightning bolts from the target points of the first shot.</param>
     /// <param name="triggerLightningEvents">if the lightnings being fired should trigger lightning events.</param>
-    public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0, bool triggerLightningEvents = true)
+    public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype, int arcDepth = 0, bool triggerLightningEvents = true)
     {
         //To Do: add support to different priority target tablem for different lightning types
         //To Do: Remove Hardcode LightningTargetComponent (this should be a parameter of the SharedLightningComponent)
