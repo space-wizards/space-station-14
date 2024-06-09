@@ -29,8 +29,6 @@ namespace Content.Client.HealthAnalyzer.UI
         private readonly IPrototypeManager _prototypes;
         private readonly IResourceCache _cache;
 
-        private readonly ProtoId<SatiationTypePrototype> _satiationHunger = "hunger";
-
         private const int AnalyzerHeight = 430;
         private const int AnalyzerWidth = 300;
 
