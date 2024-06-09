@@ -17,6 +17,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Reflect;
+using Content.Shared.Damage.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -202,6 +203,17 @@ public sealed partial class GunSystem : SharedGunSystem
                                 break;
 
                             var result = rayCastResults[0];
+
+                            foreach (var colide in rayCastResults)
+                            {
+                                if (colide.HitEntity != gun.Target &&
+                                    CompOrNull<RequireProjectileTargetComponent>(colide.HitEntity)?.Active == true)
+                                    continue;
+
+                                result = colide;
+                                break;
+                            }
+
                             var hit = result.HitEntity;
                             lastHit = hit;
 
