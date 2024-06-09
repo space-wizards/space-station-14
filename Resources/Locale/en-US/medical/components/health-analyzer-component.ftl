@@ -13,5 +13,8 @@ health-analyzer-window-scan-mode-text = Scan Mode:
 health-analyzer-window-scan-mode-active = ACTIVE
 health-analyzer-window-scan-mode-inactive = INACTIVE
 
-health-analyzer-window-hunger = Severely malnourished
-health-analyzer-window-thirst = Severely dehydrated
+health-analyzer-window-satiation-damage = { $type ->
+    [Hunger] Severely malnourished
+    [Thirst] Severely dehydrated
+    *[other] Severely deficient
+}

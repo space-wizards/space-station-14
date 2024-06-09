@@ -121,7 +121,7 @@ namespace Content.Client.HealthAnalyzer.UI
                     var box = new Control { Margin = new Thickness(0, 0, 0, 15) };
 
                     box.AddChild(CreateDiagnosticGroupTitle(
-                        Loc.GetString($"health-analyzer-window-{id}"),
+                        Loc.GetString($"health-analyzer-window-satiation-damage", ("type", id)),
                         id));
 
                     GroupsContainer.AddChild(box);
