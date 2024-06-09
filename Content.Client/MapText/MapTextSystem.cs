@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.MapText;
 
@@ -29,11 +30,16 @@ public sealed class MapTextSystem : SharedMapTextSystem
 
         _overlay = new MapTextOverlay(_configManager, EntityManager, _uiManager, _transform, _resourceCache, _prototypeManager);
         _overlayManager.AddOverlay(_overlay);
+
+        // TODO move font prototype to robust.shared, then use ProtoId<FontPrototype>
+        DebugTools.Assert(_prototypeManager.HasIndex<FontPrototype>(SharedMapTextComponent.DefaultFont));
     }
 
     private void OnComponentStartup(Entity<MapTextComponent> ent, ref ComponentStartup args)
     {
         CacheFont(ent.Comp);
+        // TODO move font prototype to robust.shared, then use ProtoId<FontPrototype>
+        DebugTools.Assert(_prototypeManager.HasIndex<FontPrototype>(ent.Comp.FontId));
     }
 
     private void HandleCompState(Entity<MapTextComponent> ent, ref ComponentHandleState args)
@@ -52,10 +58,26 @@ public sealed class MapTextSystem : SharedMapTextSystem
 
     private void CacheFont(MapTextComponent component)
     {
-        if(!_prototypeManager.TryIndex<FontPrototype>(component.FontId, out var fontPrototype))
+        component.CachedFont = null;
+
+        if (!_prototypeManager.TryIndex<FontPrototype>(component.FontId, out var fontPrototype))
+        {
+            FontError(component);
             return;
+        }
 
         var fontResource = _resourceCache.GetResource<FontResource>(fontPrototype.Path);
         component.CachedFont = new VectorFont(fontResource, component.FontSize);
+    }
+
+    private void FontError(MapTextComponent comp)
+    {
+        // Ideally this should never be seen by players unless an admin fucks up while VVing an entity.
+        // So probably fine not to localize it.
+        comp.Text = "Error - invalid font";
+        comp.Color = Color.Red;
+
+        if(_prototypeManager.TryIndex<FontPrototype>(SharedMapTextComponent.DefaultFont, out var fontPrototype))
+            comp.CachedFont = new VectorFont(_resourceCache.GetResource<FontResource>(fontPrototype.Path), 14);
     }
 }
