@@ -3,7 +3,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Nutrition;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -14,8 +13,8 @@ namespace Content.Server.Chemistry.ReagentEffects
     public sealed partial class ChemVomit : ReagentEffect
     {
         /// How many units of satiation to add each time we vomit
-        [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, SatiationTypePrototype>))]
-        public Dictionary<string, float> SatiationAmount = new() {
+        [DataField]
+        public Dictionary<ProtoId<SatiationTypePrototype>, float> SatiationAmount = new() {
             { "Hunger", -8f },
             { "Thirst", -8f },
         };

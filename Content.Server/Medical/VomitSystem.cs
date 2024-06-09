@@ -32,7 +32,7 @@ namespace Content.Server.Medical
         /// <summary>
         /// Make an entity vomit, if they have a stomach.
         /// </summary>
-        public void Vomit(EntityUid uid, Dictionary<string, float> satiationsAdded)
+        public void Vomit(EntityUid uid, Dictionary<ProtoId<SatiationTypePrototype>, float> satiationsAdded)
         {
             // Main requirement: You have a stomach
             var stomachList = _body.GetBodyOrganComponents<StomachComponent>(uid);
