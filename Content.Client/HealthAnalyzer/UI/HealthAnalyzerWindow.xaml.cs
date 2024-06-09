@@ -117,15 +117,22 @@ namespace Content.Client.HealthAnalyzer.UI
                 var box = new BoxContainer
                 {
                     Margin = new Thickness(0, 0, 0, 15),
-                   Orientation = BoxContainer.LayoutOrientation.Vertical
+                    Orientation = BoxContainer.LayoutOrientation.Vertical,
                 };
+                BoxContainer? satiationGroup = null;
                 foreach (var (id, satiation) in satiationComponent.Satiations)
                 {
                     if (satiation.CurrentThresholdDamage == null) continue;
 
-                    box.AddChild(CreateDiagnosticGroupTitle(
-                        Loc.GetString($"health-analyzer-window-satiation-damage", ("type", id)),
-                        id));
+                    if (satiationGroup == null)
+                    {
+                        satiationGroup = CreateDiagnosticGroupTitle(
+                            Loc.GetString($"health-analyzer-window-satiation-group-text"),
+                            "malnutrition");
+                        box.AddChild(satiationGroup);
+                    }
+
+                    box.AddChild(CreateDiagnosticItemLabel(Loc.GetString("health-analyzer-window-satiation-deficiency", ("type", id)).Insert(0, "- ")));
                 }
                 GroupsContainer.AddChild(box);
             }
