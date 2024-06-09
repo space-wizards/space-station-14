@@ -13,6 +13,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
+public sealed class HungerModifiedEvent(float amount) : EntityEventArgs
+{
+    public float Amount = amount;
+}
+
 public sealed class HungerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -91,6 +96,7 @@ public sealed class HungerSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
         SetHunger(uid, component.CurrentHunger + amount, component);
+        RaiseLocalEvent(uid, new HungerModifiedEvent(amount));
     }
 
     /// <summary>
@@ -216,7 +222,7 @@ public sealed class HungerSystem : EntitySystem
         }
     }
 
-    public bool TryGetStatusIconPrototype(HungerComponent component, [NotNullWhen(true)] out StatusIconPrototype? prototype)
+        public bool TryGetStatusIconPrototype(HungerComponent component, [NotNullWhen(true)] out StatusIconPrototype? prototype)
     {
         switch (component.CurrentThreshold)
         {
