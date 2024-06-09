@@ -1,13 +1,24 @@
 <Document>
   # Antagonists
+  Antagonists are the driving force of every shift.
+  They are the catalysts for chaos, conflict and mystery in Space Station 14 that also serve to provide a challenge to Nanotrasen and its [color=#cb0000]Security[/color] force.
+  You can expect them to act in violation of Space Law and they're often tasked with objectives that include theft, subterfuge and murder.
 
-  Antagonists are the driving force of every shift, usually creating conflict and defying the crew. Their goals can vary a lot, but they usually require some thievery, sabotage, or murder.
+  Antagonists are the driving force of every shift, usually creating conflict and defying the crew.
+  These bad actors are more often than not employed or backed up by the [color=#ff0000]Syndicate[/color], a rival organization to [color=#134975]Nanotrasen[/color] that wants nothing more than to see it burn.
 
   ## Various Antagonists
+  Antagonist roles come with their own special sets of abilities, tools and risks to the station.
 
   Antagonists can take many forms, like:
   - Nuclear operatives, with the goal of infiltrating and destroying the station.
   - Traitors infiltrating the crew who can assassinate targets and steal high value items.
   - Space Ninjas, masters of espionage and sabotage, who are equipped with special gear.
   - Several non-humanoid creatures, who usually just try to bring down as many crewmembers as they can.
+  - [textlink="Nuclear operatives, with the goal of infiltrating and destroying the station." link="Nuclear Operatives"]
+  - [textlink="Traitors amongst the crew who must assassinate, steal and decieve." link="Traitors"]
+  - [textlink="Space Ninjas, masters of espionage and sabotage with special gear." link="SpaceNinja"]
+  - [textlink="Revolutionaries who are intent on taking control of the station from the inside." link="Revolutionaries"]
+  - [textlink="Zombies that crave the flesh of every crew member and creature on board." link="Zombies"]
+  - [textlink="Several non-humanoid creatures, who usually just try to kill any crew they see." link="MinorAntagonists"]
 </Document>
