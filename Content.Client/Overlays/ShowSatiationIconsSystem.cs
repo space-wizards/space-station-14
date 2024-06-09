@@ -16,17 +16,17 @@ public sealed class ShowSatiationIconsSystem : EquipmentHudSystem<ShowSatiationI
         SubscribeLocalEvent<SatiationComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
     }
 
-    private void OnGetStatusIconsEvent(EntityUid uid, SatiationComponent component, ref GetStatusIconsEvent ev)
+    private void OnGetStatusIconsEvent(Entity<SatiationComponent> ent, ref GetStatusIconsEvent ev)
     {
         if (!IsActive || ev.InContainer)
             return;
 
-        if (!TryComp<ShowSatiationIconsComponent>(uid, out var showIcons))
+        if (!TryComp<ShowSatiationIconsComponent>(ent.Owner, out var showIcons))
             return;
 
         foreach (var satiation in showIcons.Satiations)
         {
-            if (_satiation.TryGetStatusIconPrototype(component, satiation, out var iconPrototype))
+            if (_satiation.TryGetStatusIconPrototype((ent.Owner, ent.Comp), satiation, out var iconPrototype))
                 ev.StatusIcons.Add(iconPrototype);
         }
     }
