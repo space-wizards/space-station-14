@@ -140,7 +140,7 @@ public sealed class FoodSystem : EntitySystem
         if (GetUsesRemaining(food, foodComp) <= 0)
         {
             _popup.PopupEntity(Loc.GetString("food-system-try-use-food-is-empty", ("entity", food)), user, user);
-            DeleteAndSpawnTrash(foodComp, food, user);
+            DeleteAndSpawnTrash((food, foodComp), user);
             return (false, true);
         }
 
@@ -309,20 +309,23 @@ public sealed class FoodSystem : EntitySystem
 
         // don't try to repeat if its being deleted
         args.Repeat = false;
-        DeleteAndSpawnTrash(entity.Comp, entity.Owner, args.User);
+        DeleteAndSpawnTrash(entity, args.User);
     }
 
-    public void DeleteAndSpawnTrash(FoodComponent component, EntityUid food, EntityUid user)
+    /// <summary>
+    /// Deletes the food entity and spawns its trash, if it has any.
+    /// If the food was held the trash is placed in the user's hand,
+    /// otherwise it is placed next to where the food was.
+    /// </summary>
+    public void DeleteAndSpawnTrash(Entity<FoodComponent> food, EntityUid? user)
     {
-        var ev = new BeforeFullyEatenEvent
-        {
-            User = user
-        };
-        RaiseLocalEvent(food, ev);
+        var ev = new BeforeFullyEatenEvent(user);
+        RaiseLocalEvent(food, ref ev);
         if (ev.Cancelled)
             return;
 
-        if (string.IsNullOrEmpty(component.Trash))
+        var comp = food.Comp;
+        if (string.IsNullOrEmpty(comp.Trash))
         {
             QueueDel(food);
             return;
@@ -330,15 +333,21 @@ public sealed class FoodSystem : EntitySystem
 
         //We're empty. Become trash.
         var position = _transform.GetMapCoordinates(food);
-        var finisher = Spawn(component.Trash, position);
+        var trash = Spawn(comp.Trash, position);
+
+        _transform.DropNextTo(trash, food.Owner);
+        _transform.SetLocalRotation(trash, 0);
+
+        var spawnedEv = new FoodSpawnedTrashEvent(trash, user);
+        RaiseLocalEvent(food, ref spawnedEv);
 
         // If the user is holding the item
-        if (_hands.IsHolding(user, food, out var hand))
+        if (user != null && _hands.IsHolding(user.Value, food, out var hand))
         {
             Del(food);
 
             // Put the trash in the user's hand
-            _hands.TryPickup(user, finisher, hand);
+            _hands.TryPickup(user.Value, trash, hand);
             return;
         }
 
