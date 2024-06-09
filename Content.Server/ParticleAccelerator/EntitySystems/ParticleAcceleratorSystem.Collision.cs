@@ -23,6 +23,7 @@ public sealed partial class ParticleAcceleratorSystem
     {
         if (EntityManager.TryGetComponent<SingularityGeneratorComponent>(args.OtherEntity, out var singularityGeneratorComponent))
         {
+            // TODO: Unhardcode this.
             EntityManager.System<SingularityGeneratorSystem>().SetPower(
                 args.OtherEntity,
                 singularityGeneratorComponent.Power + entity.Comp.State switch
@@ -40,6 +41,7 @@ public sealed partial class ParticleAcceleratorSystem
         }
         else if (TryComp<TeslaEnergyBallComponent>(args.OtherEntity, out var teslaComp))
         {
+            // TODO: Unhardcode this.
             // idk what values we want, I just know that it takes 100 energy total to spawn a miniball
             // EmoGarbage might change the PA levels to use actual numbers instead of imaginary ones
             // in regards to rebalancing the singularity, so I might be able to use that instead
