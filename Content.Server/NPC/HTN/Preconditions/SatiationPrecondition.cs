@@ -10,7 +10,6 @@ namespace Content.Server.NPC.HTN.Preconditions;
 public sealed partial class SatiationPrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SatiationSystem _satiation = default!;
 
     [DataField(required: true)]
     public SatiationThreashold MinSatiationState = SatiationThreashold.Concerned;
@@ -25,6 +24,6 @@ public sealed partial class SatiationPrecondition : HTNPrecondition
             return false;
         }
 
-        return _satiation.IsCurrentSatiationBelowState((owner, null), SatiationType, MinSatiationState);
+        return _entManager.System<SatiationSystem>().IsCurrentSatiationBelowState((owner, null), SatiationType, MinSatiationState);
     }
 }

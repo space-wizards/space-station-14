@@ -446,7 +446,7 @@
             Shock: -0.33
             Cold: -0.33
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: -10
         conditions:
         - !type:ReagentThreshold
@@ -652,7 +652,7 @@
     Drink:
       effects:
         - !type:Satiate
-          satiationType: thirst
+          satiationType: Thirst
           factor: 6
         - !type:ModifyBloodLevel
           amount: 6
@@ -784,7 +784,7 @@
       effects:
       # what the hell, this isn't satiating at all!!
       - !type:Satiate
-        satiationType: hunger
+        satiationType: Hunger
         factor: -1
 
   # Should heal quite literally everything, use in very small amounts
@@ -1047,7 +1047,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 3
     Medicine:
       effects:

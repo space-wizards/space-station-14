@@ -11,9 +11,9 @@
     needsHands: false
   - type: Satiation
     satiations:
-      hunger:
+      Hunger:
         prototype: normalSatiationHunger
-      thirst:
+      Thirst:
         prototype: normalSatiationThirst
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi

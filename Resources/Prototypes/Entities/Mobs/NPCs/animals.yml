@@ -222,7 +222,7 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-    usedSatiation: hunger
+    usedSatiation: Hunger
     insufficientSatiation: action-popup-lay-egg-too-hungry
   - type: ReplacementAccent
     accent: chicken
@@ -348,9 +348,9 @@
   - type: Food
   - type: Satiation
     satiations:
-      hunger:
+      Hunger:
         prototype: cockroachHunger
-      thirst:
+      Thirst:
         prototype: animalThirst
   - type: Extractable
     grindableSolutionName: food
@@ -605,7 +605,7 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-    usedSatiation: hunger
+    usedSatiation: Hunger
     insufficientSatiation: action-popup-lay-egg-too-hungry
   - type: ReplacementAccent
     accent: duck
@@ -764,7 +764,7 @@
     reagentId: Milk
     quantityPerUpdate: 25
     growthDelay: 30
-    UsedSatiation: hunger
+    UsedSatiation: Hunger
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1596,9 +1596,9 @@
   - type: Food
   - type: Satiation
     satiations:
-      hunger:
+      Hunger:
         prototype: mouseHunger
-      thirst:
+      Thirst:
         prototype: animalThirst
   - type: Extractable
     grindableSolutionName: food
@@ -3143,9 +3143,9 @@
   - type: Food
   - type: Satiation
     satiations:
-      hunger:
+      Hunger:
         prototype: animalHunger
-      thirst:
+      Thirst:
         prototype: animalThirst
   - type: Extractable
     grindableSolutionName: food

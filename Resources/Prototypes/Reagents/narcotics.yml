@@ -145,10 +145,10 @@
       effects:
         - !type:ResetNarcolepsy
         - !type:Satiate
-          satiationType: hunger
+          satiationType: Hunger
           factor: 1
         - !type:Satiate
-          satiationType: thirst
+          satiationType: Thirst
           factor: 1
         - !type:HealthChange
           conditions:

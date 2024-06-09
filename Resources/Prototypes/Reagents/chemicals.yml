@@ -150,7 +150,7 @@
     Poison:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: -5 # This is basically industrial dessicant
       - !type:PopupMessage
         visualType: MediumCaution

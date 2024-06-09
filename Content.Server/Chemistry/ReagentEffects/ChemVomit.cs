@@ -16,8 +16,8 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// How many units of satiation to add each time we vomit
         [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, SatiationTypePrototype>))]
         public Dictionary<string, float> SatiationAmount = new() {
-            { "hunger", -8f },
-            { "thirst", -8f },
+            { "Hunger", -8f },
+            { "Thirst", -8f },
         };
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

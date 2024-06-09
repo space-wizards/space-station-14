@@ -12,9 +12,9 @@
     species: Arachnid
   - type: Satiation
     satiations:
-      hunger:
+      Hunger:
         prototype: normalSatiationHunger
-      thirst:
+      Thirst:
         prototype: normalSatiationThirst
   - type: Sericulture
     action: ActionSericulture

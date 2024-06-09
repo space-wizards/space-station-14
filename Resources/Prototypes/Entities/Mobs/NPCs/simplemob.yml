@@ -74,9 +74,9 @@
   components:
   - type: Satiation
     satiations:
-      hunger:
+      Hunger:
         prototype: simpleMobHunger
-      thirst:
+      Thirst:
         prototype: simpleMobThirst
   - type: StatusEffects
     allowed:

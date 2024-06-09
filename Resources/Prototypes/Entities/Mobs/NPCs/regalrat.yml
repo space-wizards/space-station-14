@@ -61,9 +61,9 @@
     requiredLegs: 1 # TODO: More than 1 leg
   - type: Satiation
     satiations:
-      hunger:
+      Hunger:
         prototype: critterHunger
-      thirst:
+      Thirst:
         prototype: critterThirst
   - type: DamageStateVisuals
     rotate: true
@@ -229,9 +229,9 @@
     requiredLegs: 1 # TODO: More than 1 leg
   - type: Satiation
     satiations:
-      hunger:
+      Hunger:
         prototype: critterHunger
-      thirst:
+      Thirst:
         prototype: critterThirst
   - type: DamageStateVisuals
     states:

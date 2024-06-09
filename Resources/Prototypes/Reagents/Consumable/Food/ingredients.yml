@@ -14,7 +14,7 @@
         reagent: Sugar
         amount: 0.4
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: -0.2 #its flour
       - !type:AdjustReagent
         reagent: Nutriment
@@ -32,7 +32,7 @@
     Food:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: -0.2 #its cornflour
       - !type:AdjustReagent
         reagent: Nutriment
@@ -229,7 +229,7 @@
     Food:
       effects:
       - !type:Satiate
-        satiationType: hunger
+        satiationType: Hunger
         conditions:
         - !type:ReagentThreshold #Only satiates when eaten with nutriment
           reagent: Nutriment

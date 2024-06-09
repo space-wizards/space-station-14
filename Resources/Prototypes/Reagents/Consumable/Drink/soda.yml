@@ -29,7 +29,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 4
 
 - type: reagent
@@ -68,7 +68,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 2
       - !type:AdjustReagent
         reagent: Theobromine
@@ -178,7 +178,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 4
 
 - type: reagent
@@ -232,7 +232,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 2
       - !type:AdjustReagent
         reagent: Theobromine

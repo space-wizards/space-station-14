@@ -47,7 +47,7 @@ public sealed class Unsatiate : IConsoleCommand
 
         foreach (var satiationType in args)
         {
-            if (!_entities.System<SatiationSystem>().TryGetSatiationPrototype((playerEntity, component), args[0], out var satiationPrototype))
+            if (!_entities.System<SatiationSystem>().TryGetSatiationPrototype((playerEntity, component), satiationType, out var satiationPrototype))
             {
                 shell.WriteLine($"Your entity does not have a {satiationType} satiation meter.");
                 return;

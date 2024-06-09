@@ -13,7 +13,7 @@
     Food:
       effects:
       - !type:Satiate
-        satiationType: hunger
+        satiationType: Hunger
         conditions:
         - !type:OrganType
           type: Plant
@@ -38,7 +38,7 @@
     Medicine:
       effects:
       - !type:Satiate
-        satiationType: hunger
+        satiationType: Hunger
         conditions:
         - !type:OrganType
           type: Plant

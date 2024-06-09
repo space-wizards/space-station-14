@@ -18,7 +18,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 1.5
         conditions:
           - !type:OrganType
@@ -77,7 +77,7 @@
       # Delicious!
       effects:
       - !type:Satiate
-        satiationType: hunger
+        satiationType: Hunger
         factor: 1.5
   footstepSound:
     collection: FootstepBlood
@@ -102,10 +102,10 @@
       # Sweet!
       effects:
       - !type:Satiate
-        satiationType: hunger
+        satiationType: Hunger
         factor: 1
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 1
   footstepSound:
     collection: FootstepBlood
@@ -150,7 +150,7 @@
       # Disgusting!
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: -0.5
     Poison:
       effects:
@@ -174,7 +174,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 1.5
     # Dragon doesn't require airloss healing, so omnizine is still best for humans.
     Medicine:
@@ -225,7 +225,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 0.5
       - !type:AdjustReagent
         reagent: Nutriment
@@ -248,7 +248,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: hunger
+        satiationType: Hunger
         factor: 1.5
     Poison:
       effects:

@@ -11,7 +11,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 2
       - !type:AdjustReagent
         reagent: Theobromine
@@ -36,7 +36,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 2
       - !type:AdjustReagent
         reagent: Theobromine
@@ -54,7 +54,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 1
 
 - type: reagent
@@ -69,7 +69,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 4 # Coconut water is 94% water
 
 - type: reagent
@@ -84,7 +84,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 2
 
 - type: reagent
@@ -184,7 +184,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 2
       - !type:AdjustReagent
         reagent: Theobromine
@@ -203,7 +203,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
     Poison:
       effects:
       - !type:HealthChange
@@ -230,7 +230,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 2
 
 - type: reagent
@@ -251,7 +251,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 4
 
 - type: reagent
@@ -273,7 +273,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 4
 
 - type: reagent
@@ -297,7 +297,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: -2
 
 - type: reagent
@@ -310,7 +310,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 2
         # TODO heal mimes
 
@@ -333,7 +333,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 6
     Poison:
       effects:
@@ -381,7 +381,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 2
       - !type:AdjustReagent
         reagent: Theobromine
@@ -425,7 +425,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 4
 
 - type: reagent
@@ -460,7 +460,7 @@
     Food:
       effects:
       - !type:Satiate
-        satiationType: hunger
+        satiationType: Hunger
         factor: 1
 
 - type: reagent
@@ -475,7 +475,7 @@
     Food:
       effects:
       - !type:Satiate
-        satiationType: hunger
+        satiationType: Hunger
         factor: 4
 
 - type: reagent
@@ -493,7 +493,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 4
       - !type:AdjustReagent
         reagent: Theobromine
@@ -511,7 +511,7 @@
     Drink:
       effects:
         - !type:Satiate
-          satiationType: thirst
+          satiationType: Thirst
           factor: 1
   fizziness: 0.3
 
@@ -568,5 +568,5 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 0.6

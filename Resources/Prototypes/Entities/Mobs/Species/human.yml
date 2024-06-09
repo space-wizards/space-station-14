@@ -10,9 +10,9 @@
     state: full
   - type: Satiation
     satiations:
-      hunger:
+      Hunger:
         prototype: normalSatiationHunger
-      thirst:
+      Thirst:
         prototype: normalSatiationThirst
   - type: Butcherable
     butcheringType: Spike

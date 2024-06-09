@@ -82,7 +82,7 @@
     sprite: Clothing/Eyes/Hud/friedonion.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/friedonion.rsi
-  - type: ShowHungerIcons
+  - type: ShowSatiationIcons
   - type: Food
   - type: SolutionContainerManager
     solutions:
@@ -106,7 +106,7 @@
     sprite: Clothing/Eyes/Hud/onionbeer.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/onionbeer.rsi
-  - type: ShowHungerIcons
+  - type: ShowSatiationIcons
   - type: ShowThirstIcons
 
 - type: entity
@@ -125,7 +125,7 @@
   - type: ShowHealthIcons
     damageContainers:
     - Biological
-  - type: ShowHungerIcons
+  - type: ShowSatiationIcons
 
 - type: entity
   parent: ClothingEyesBase
@@ -143,7 +143,7 @@
   - type: ShowHealthIcons
     damageContainers:
     - Biological
-  - type: ShowHungerIcons
+  - type: ShowSatiationIcons
   - type: ShowThirstIcons
 
 - type: entity
@@ -163,7 +163,7 @@
     damageContainers:
     - Biological
   - type: ShowHealthIcons
-    damageContainers: 
+    damageContainers:
     - Biological
 
 - type: entity
@@ -202,7 +202,7 @@
   - type: ShowHealthIcons
     damageContainers:
     - Biological
-  - type: ShowHungerIcons
+  - type: ShowSatiationIcons
   - type: ShowThirstIcons
   - type: ShowSyndicateIcons
 

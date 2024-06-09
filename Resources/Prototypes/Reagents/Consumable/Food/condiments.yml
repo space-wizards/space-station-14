@@ -130,10 +130,10 @@
     Food:
       effects:
       - !type:Satiate
-        satiationType: hunger
+        satiationType: Hunger
         factor: 0.5
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: -0.5 # high salt content
 
 - type: reagent
@@ -165,7 +165,7 @@
       effects:
       # eating salt on its own kinda sucks, kids
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: -0.5
 
 - type: reagent
@@ -186,7 +186,7 @@
       # 12 diona blood for 1 unit of syrup, this stuff better be worthwhile.
       effects:
       - !type:Satiate
-        satiationType: hunger
+        satiationType: Hunger
         factor: 6.0 #Stronger than cookedramen
   footstepSound:
     collection: FootstepBlood

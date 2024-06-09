@@ -38,7 +38,7 @@
     Drink:
       effects:
       - !type:Satiate
-        satiationType: thirst
+        satiationType: Thirst
         factor: 2
       - !type:AdjustReagent
         reagent: Oculine

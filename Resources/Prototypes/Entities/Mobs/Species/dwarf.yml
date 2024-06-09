@@ -7,9 +7,9 @@
   components:
   - type: Satiation
     satiations:
-      hunger:
+      Hunger:
         prototype: normalSatiationHunger
-      thirst:
+      Thirst:
         prototype: normalSatiationThirst
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi # It was like this beforehand, no idea why.
