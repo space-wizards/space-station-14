@@ -36,6 +36,7 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         InitializeCommands();
         InitializeActions();
+        InitializeGhost();
     }
 
     /// <summary>
