@@ -1,6 +1,6 @@
 <Document>
   # Cargo Bounties
-  While [textlink="Cargo" link="Cargo"] can money selling just about anything, more money can be made by fulfilling bounties found through the Cargo Bounty Computer.
+  While [textlink="Cargo" link="Cargo"] can make spesos selling just about anything, more spesos can be made by fulfilling bounties found through the Cargo Bounty Computer.
 
   ## Starting Bounties
 
@@ -9,11 +9,11 @@
     <GuideEntityEmbed Entity="PaperCargoBountyManifest"/>
   </Box>
 
-  To start a bounty, open the bounty screen by interacting with the [color=#a4885c]Cargo Bounty Computer[/color]. The Cargo Bounty Computer maintains a list of all the current bounties, and lets you either print out a label or skip it.
+  To start a bounty, open the bounty screen by interacting with the [color=#a4885c]Cargo Bounty Computer[/color]. The Cargo Bounty Computer maintains a list of all the current bounties and lets you either print out a label or skip it.
 
-  - Printing the label gives you Bounty Manifest that lists the goods that you need to acquire. You can print out an infinite number of Bounty Manifests, so make sure you are not repeating the same work as another Cargo Technician.
+  - Printing the label gives you a Bounty Manifest listing the goods that need to be acquired. You can print out infinite Bounty Manifests, so ensure you are not repeating the same work as another Cargo Technician.
 
-  - Skipping a bounty replaces the that bounty with a new one, as there can only be 6 active bounties at any time. This has a 15-minute cooldown and makes that bounty void, which may anger other Cargo Technicians working on it.
+  - Skipping a bounty replaces that bounty with a new one, as there can only be six active bounties at any time. Skipping has a 15-minute cooldown and voids that bounty, which may anger other Cargo Technicians working on it.
 
   ## Fulfilling Bounties
 
@@ -23,11 +23,11 @@
     <GuideEntityEmbed Entity="AppraisalTool"/>
   </Box>
 
-  With the Bounty Manifest, it is now up to you to collect the required goods. Most departments will give you what you need just by asking for it with a Bounty Manifest.
+  With the Bounty Manifest, it is now up to you to collect the required goods. Most departments will give you what you need by asking for it with a Bounty Manifest.
 
   Once you have collected the goods, return to the cargo bay and put the goods inside an empty crate. After everything is in the crate, close it, and then apply the Bounty Manifest to it.
 
-  To verify that the bounty has been completed, use the appraisal tool on it. It should say that it confirms that the bounty has been completed.
+  To verify the completion of a bounty, use the appraisal tool on it. It should say that it confirms that the bounty has been completed.
 
   ## Selling Bounties
 
@@ -37,9 +37,9 @@
     <GuideEntityEmbed Entity="CargoPalletSell"/>
   </Box>
 
-  Once you have verified that you have completed the bounty, it is the same as selling anything else.
+  Once you have verified that you have completed the bounty, follow the same steps as selling anything else.
 
-  Just transport it to the Trading Station, sell it, and you're done!
+  Just transport it to the Trading Station, sell it, and you are done!
 
   When you return, there should be a new bounty to take its place.
 </Document>
