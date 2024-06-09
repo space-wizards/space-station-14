@@ -48,11 +48,11 @@ namespace Content.Server.RatKing
             if (!TryComp<SatiationComponent>(uid, out var satiationComponent))
                 return;
 
-            if (!satiationComponent.Satiations.AsReadOnly().TryGetValue(component.UsedSatiation, out var satiation))
+            if (!_satiation.TryGetCurrentSatiation((uid, satiationComponent), component.UsedSatiation, out var current))
                 return;
 
             //make sure the hunger doesn't go into the negatives
-            if (satiation.Current < component.HungerPerArmyUse)
+            if (current < component.HungerPerArmyUse)
             {
                 _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, uid);
                 return;
@@ -81,11 +81,11 @@ namespace Content.Server.RatKing
             if (!TryComp<SatiationComponent>(uid, out var satiationComponent))
                 return;
 
-            if (!satiationComponent.Satiations.AsReadOnly().TryGetValue(component.UsedSatiation, out var satiation))
+            if (!_satiation.TryGetCurrentSatiation((uid, satiationComponent), component.UsedSatiation, out var current))
                 return;
 
             //make sure the hunger doesn't go into the negatives
-            if (satiation.Current < component.HungerPerDomainUse)
+            if (current < component.HungerPerDomainUse)
             {
                 _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, uid);
                 return;
