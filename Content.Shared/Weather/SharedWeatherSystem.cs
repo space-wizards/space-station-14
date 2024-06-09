@@ -152,9 +152,6 @@ public abstract class SharedWeatherSystem : EntitySystem
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
             return;
 
-        if (proto == null)
-            return;
-
         var weatherComp = EnsureComp<WeatherComponent>(mapUid.Value);
 
         foreach (var (eProto, weather) in weatherComp.Weather)

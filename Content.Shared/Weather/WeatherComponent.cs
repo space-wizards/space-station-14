@@ -18,7 +18,7 @@ public sealed partial class WeatherComponent : Component
     public static readonly TimeSpan ShutdownTime = TimeSpan.FromSeconds(15);
 }
 
-[DataDefinition, Serializable, NetSerializable]
+[DataDefinition, Serializable, NetSerializable, AutoGenerateComponentPause]
 public sealed partial class WeatherData
 {
     // Client audio stream.
@@ -28,13 +28,13 @@ public sealed partial class WeatherData
     /// <summary>
     /// When the weather started if relevant.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))] //TODO: Remove Custom serializer
+    [DataField, AutoPausedField]
     public TimeSpan StartTime = TimeSpan.Zero;
 
     /// <summary>
     /// When the applied weather will end.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))] //TODO: Remove Custom serializer
+    [DataField, AutoPausedField]
     public TimeSpan? EndTime;
 
     [ViewVariables]
