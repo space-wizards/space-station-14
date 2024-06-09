@@ -71,7 +71,7 @@
     shootMinInterval: 3
     shootMaxInterval: 5
     shootRange: 7
-    lightningPrototype: Lightning # TODO: Fix beam stuff then change to HyperChargedLightning
+    lightningPrototype: HyperchargedLightning
   - type: ChasingWalk
     minSpeed: 1
     maxSpeed: 3
