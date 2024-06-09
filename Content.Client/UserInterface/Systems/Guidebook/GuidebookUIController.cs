@@ -7,6 +7,7 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Guidebook;
 using Content.Shared.Input;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -31,15 +32,15 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
     public void OnStateEntered(LobbyState state)
     {
-        HandleStateEntered();
+        HandleStateEntered(state);
     }
 
     public void OnStateEntered(GameplayState state)
     {
-        HandleStateEntered();
+        HandleStateEntered(state);
     }
 
-    private void HandleStateEntered()
+    private void HandleStateEntered(State state)
     {
         DebugTools.Assert(_guideWindow == null);
 
@@ -48,7 +49,8 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         _guideWindow.OnClose += OnWindowClosed;
         _guideWindow.OnOpen += OnWindowOpen;
 
-        if (_jobRequirements.FetchOverallPlaytime() < TimeSpan.FromMinutes(PlaytimeOpenGuidebook))
+        if (state is GameplayState &&
+            _jobRequirements.FetchOverallPlaytime() < TimeSpan.FromMinutes(PlaytimeOpenGuidebook))
         {
             OpenGuidebook(selected: DefaultWelcomeGuideEntry);
             _guideWindow.RecenterWindow(new(0.5f, 0.5f));
