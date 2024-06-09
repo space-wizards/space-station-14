@@ -1,39 +1,39 @@
 <Document>
-# Important Character Creation Tips
-This is a guide for the parts of character creation that effect [color=cyan]gameplay[/color].
+  # Important Character Creation Tips
+  This is a guide for the parts of character creation that effect [color=cyan]gameplay[/color].
 
-[textlink="For a guide on making cosmetic changes, click here." link="YourFirstCharacter"]
+  [italic]A guide for customizing your character's appearance can be found [textlink="here" link="YourFirstCharacter"].[/italic]
+  
+  ## Spawn Priority
+  This affects where you spawn in upon joining the game after the round has already started. You can choose between:
+  - [bold]Arrivals[/bold], which will have you wait for a shuttle to take you to the main station.
+  - [bold]Cryosleep[/bold], which spawns you on the station in a cryosleep chamber.
+  - [bold]None[/bold], which lets the game choose for you.
 
-## Spawn Priority
-This affects where you spawn in upon joining the game after the round has already started. This is a mostly arbitrary choice. You can choose between:
-- [bold]Arrivals[/bold], which will have you wait for a shuttle to take you to the main station.
-- [bold]Cryosleep[/bold], which spawns you on the station in a cryosleep chamber.
-- [bold]None[/bold], which lets the game choose for you.
+  ## Jobs
+  You can set your job preferences in the lobby. While [color=cyan]these don't guarantee[/color] your position, someone who wants the job will be randomly selected at the start of the round.
 
-## Jobs
-You can set your job preferences in the lobby. While [color=cyan]these don't guarantee[/color] your position, someone who wants the job will be randomly selected at the start of the round.
+  Some jobs are locked until you've played long enough as other entry level jobs.
 
-Some jobs are locked until you've played long enough as other entry level jobs.
+  [italic]More detailed guides about jobs can be found [textlink="here" link="Jobs"].[/italic]
 
-[textlink="For more infomation about jobs, click here." link="Jobs"]
+  ## Job Loadouts
+  You can decide on [color=cyan]loadouts[/color] for each job. This may have various effects on gameplay, especially for Command and Security.
 
-## Job Loadouts
-You can decide on [color=cyan]loadouts[/color] for each job. This may have various effects on gameplay, especially for Command and Security.
+  You may also choose what bag you spawn in with.
+  - [bold]Backpacks[/bold] are medium sized.
+  - [bold]Satchels[/bold] have slightly more space but have trouble fitting large items.
+  - [bold]Duffel bags[/bold] are large but incur a movement penalty.
 
-You may also choose what bag you spawn in with.
-- [bold]Backpacks[/bold] are medium sized.
-- [bold]Satchels[/bold] have slightly more space but have trouble fitting large items.
-- [bold]Duffel bags[/bold] are large but incur a movement penalty.
+  ## Antags
+  Turning on an [color=cyan]antagonist[/color] gives you a chance to be that antag for the next round, like a job priority. If you are a command member or security officer, you cannot be chosen for an antag role.
 
-## Antags
-Turning on an [color=cyan]antagonist[/color] gives you a chance to be that antag for the next round, like a job priority. If you are a command member or security officer, you cannot be chosen for an antag role.
+  [italic]Information on antagonists can be found [textlink="here" link="Antagonists"].[/italic]
 
-Information about antagonists can be found [textlink="here" link="Antagonists"].
+  Plenty of people patiently wait for their turn to be antagonists, so we kindly ask you to refrain from opting-in to an antagonist role if you aren't ready.
 
-Plenty of people patiently wait for their turn to be antagonists, so we kindly ask you to refrain from opting-in to an antagonist role if you aren't ready.
+  ## Traits
+  Accent traits alter your speech, sometimes to an extreme degree.
 
-## Traits
-Accent traits alter your speech, sometimes to an extreme degree.
-
-There are also disabilty traits. Familiarize yourself with the game and the game's flow before taking one of these, as some may become difficult for beginners to deal with.
+  There are also disabilty traits. Familiarize yourself with the game and the game's flow before taking one of these, as some may become difficult for beginners to deal with.
 </Document>
