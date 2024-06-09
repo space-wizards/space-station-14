@@ -52,7 +52,7 @@ guide-entry-headofpersonnel = Head Of Personnel
 guide-entry-alertlevels = Alert Levels
 
 guide-entry-newplayer = New? Start here!
-guide-entry-charactercreation = Character Creation
+guide-entry-charactercreation = Creating Characters
 guide-entry-species = Species
 guide-entry-yourfirstcharacter = Your First Character
 guide-entry-controls = Controls
