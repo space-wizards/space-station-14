@@ -23,7 +23,7 @@
   - Take out the IDs and make sure you don't accidentally hand someone else your own ID!
 
   ## Allowing Access
-  You COULD give away acceesses willy-nilly, but your fellow department heads may not appreciate fresh faces walking into their departments without their permission.
+  You [italic]could[/italic] give away acceesses willy-nilly, but your fellow department heads may not appreciate fresh faces walking into their departments without their permission.
 
   Before assigning a job, at the bare minimum [color=cyan]notify[/color] the department head so that everyone is on the same page.
   Ideally, you should ask them over [bold]radio[/bold] if they approve or send them a letter for them to [bold]stamp[/bold].
@@ -57,39 +57,39 @@
   <Box>
     <GuideEntityEmbed Entity="AirlockCommand" Caption=""/>
     <GuideEntityEmbed Entity="HighSecDoor" Caption=""/>
-    Command gives access to the bridge and the vault, but not department head rooms.
+    [bold]Command[/bold] gives access to the bridge and the vault, but not department head rooms.
   </Box>
   <Box>
     <GuideEntityEmbed Entity="AirlockSecurity" Caption=""/>
-    Brig gives access to security's lobby. Security gives access to Security equipment, excluding the Armory.
+    [bold]Brig[/bold] gives access to security's lobby. [bold]Security[/bold] gives access to security's equipment, excluding the [bold]Armory[/bold].
   </Box>
   <Box>
     <GuideEntityEmbed Entity="AirlockServiceLocked" Caption=""/>
-    Service allows access into general service areas, but not specific service rooms as they have their own accesses, like the Bar.
+    [bold]Service[/bold] allows access into general service areas, but not specific service rooms as they have their own accesses, like the [bold]Bar[/bold].
   </Box>
   <Box>
     <GuideEntityEmbed Entity="AirlockScience" Caption=""/>
-    Research allows into Science and Robotics. The R&D server is usually locked behind a Research Director airlock.
+    [bold]Research[/bold] allows into science and robotics. The R&D server is usually locked behind a [bold]Research Director[/bold] airlock.
   </Box>
   <Box>
     <GuideEntityEmbed Entity="AirlockMedical" Caption=""/>
-    Medical does not allow access into Cryogenics or Chemistry, as they have their own accesses.
+    [bold]Medical[/bold] does not allow access into [bold]Cryogenics[/bold] or [bold]Chemistry[/bold], as they have their own accesses.
   </Box>
   <Box>
     <GuideEntityEmbed Entity="AirlockEngineering" Caption=""/>
     <GuideEntityEmbed Entity="AirlockAtmospherics" Caption=""/>
-    Engineering does not allow access into Atmospherics or outside the station, as they have their own accesses.
+    [bold]Engineering[/bold] does not allow access into [bold]Atmospherics[/bold] or outside the station, as they have their own accesses.
   </Box>
   <Box>
     <GuideEntityEmbed Entity="AirlockCargo" Caption=""/>
-   Cargo does not allow access into Salvage, as it has its own access.
+    [bold]Cargo[/bold] does not allow access into Salvage, as it has its own access.
   </Box>
   <Box>
     <GuideEntityEmbed Entity="AirlockMaint" Caption=""/>
-    Maintenance allows access into the maintenance shafts but not the substation rooms.
+    [bold]Maintenance[/bold] allows access into the maintenance shafts but not the substation rooms.
   </Box>
   <Box>
     <GuideEntityEmbed Entity="AirlockExternal" Caption=""/>
-    External access allows people to leave the station, either for a spacewalk or a one-way trip.
+    [bold]External[/bold] access allows people to leave the station, either for a spacewalk or a one-way trip.
   </Box>
 </Document>
