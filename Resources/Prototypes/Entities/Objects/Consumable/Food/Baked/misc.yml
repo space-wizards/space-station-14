@@ -29,6 +29,15 @@
   components:
   - type: Sprite
     state: muffin
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
 
 - type: entity
   name: berry muffin
@@ -38,6 +47,17 @@
   components:
   - type: Sprite
     state: muffin-berry
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: JuiceBerry
+          Quantity: 2
   - type: Tag
     tags:
     - Fruit
@@ -65,6 +85,50 @@
   - type: Tag
     tags:
     - Fruit
+
+- type: entity
+  name: chocolate muffin
+  parent: FoodBakedBase
+  id: FoodBakedMuffinChocolate
+  description: A delicious and spongy chocolate muffin.
+  components:
+  - type: Sprite
+    state: muffin-chocolate
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: CocoaPowder
+          Quantity: 2
+
+- type: entity
+  name: banana muffin
+  parent: FoodBakedBase
+  id: FoodBakedMuffinBanana
+  description: A delicious and spongy banana muffin.
+  components:
+  - type: Sprite
+    state: muffin-banana
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: JuiceBanana
+          Quantity: 2
+  - type: Tag
+    tags:
+    - Fruit
+    - Banana
 
 - type: entity
   name: honey bun #TODO honey
