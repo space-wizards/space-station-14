@@ -406,7 +406,7 @@
       injector:
         maxVol: 100
   - type: Injector
-    delay: 0.5
+    delay: 2
     injectOnly: false
   - type: SolutionContainerVisuals
     maxFillLevels: 2
@@ -438,11 +438,11 @@
         maxVol: 10
         canReact: false
   - type: Injector
-    delay: 1
+    delay: 1.5
     injectOnly: false
     minTransferAmount: 5
-    maxTransferAmount: 20
-    transferAmount: 20
+    maxTransferAmount: 25
+    transferAmount: 25
   - type: Tag
     tags:
     - Syringe
