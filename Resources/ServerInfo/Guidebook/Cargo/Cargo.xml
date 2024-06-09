@@ -1,13 +1,13 @@
 <Document>
   # Cargo
 
-  The Supply department, also known as [color=#b18644]Cargo[/color], supplies the station with necessary resources, such as fuel and raw materials, and comfort resources, such as lottery tickets and plushies.
+  The Supply department, also known as [color=cyan]Cargo[/color], supplies the station with necessary resources, such as fuel and raw materials, and comfort resources, such as lottery tickets and plushies.
 
-  They raise the money for this through many methods, such as taking bounties, selling miscellaneous items, and salvaging, allowing them to purchase a wide variety of equipment from off-station for any crew member's needs. It is [color=#b18644]Cargo[/color]'s job to fulfill the needs of the rest of the station.
+  They raise the [color=cyan]spesos[/color] (the currency of the station) for this through many methods, such as taking bounties, selling miscellaneous items, and salvaging, allowing them to purchase a wide variety of equipment from off-station for any crew member's needs. It is [color=#b18644]Cargo[/color]'s job to fulfill the needs of the rest of the station.
 
   ## Personnel
 
-  [color=#b18644]Cargo[/color] is made up of Cargo Technicians and Salvage Specialists and is led by the Quartermaster.
+  Cargo is made up of [color=cyan]Cargo Technicians[/color] and [color=cyan]Salvage Specialists[/color] and is led by the [color=cyan]Quartermaster[/color].
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineCargoTech" Caption="Cargo Tech"/>
@@ -19,7 +19,7 @@
 
   The main struggle of any Cargo department is not having enough money.
 
-  Cargo makes their money by selling things at the Trading Station. Almost everything on the station has economic value that you can sell, as seen via the [color=#a4885c]appraisal tool[/color]. That value then further increases when you sell it as part of a [textlink="bounty" link="CargoBounties"].
+  Cargo makes their money by selling things at the [color=cyan]Trading Station[/color]. Almost everything on the station has economic value that you can sell, as seen via the [color=cyan]appraisal tool[/color]. That value then further increases when you sell it as part of a [textlink="bounty" link="CargoBounties"].
 
   <Box>
     <GuideEntityEmbed Entity="AppraisalTool"/>
@@ -27,9 +27,9 @@
     <GuideEntityEmbed Entity="CrateGenericSteel"/>
   </Box>
 
-  Upon finding something valuable, bring it to the Cargo Bay. If it fits inside a crate, find an empty crate and put the items in it.
+  Upon finding something valuable, bring it to the [color=cyan]Cargo Bay/color]. If it fits inside a [color=cyan]Crate[/color], find an empty crate and put the items in it.
 
-  If the shuttle is away, you can put all the items you want to sell onto the Cargo Pallets. Once the shuttle has docked at the station, you load the crates and everything else to be sold onto it.
+  If the [color=cyan]Cargo Shuttle[/color] is away, you can put all the items you want to sell onto the [color=cyan]Cargo Pallets[/color]. Once the shuttle has docked at the station, you load the crates and everything else to be sold onto it.
 
   <Box>
     <GuideEntityEmbed Entity="ComputerPalletConsole"/>
@@ -37,9 +37,9 @@
     <GuideEntityEmbed Entity="ComputerCargoOrders"/>
   </Box>
 
-  After the shuttle is loaded, fly it to the Trade Station. There, move the sellable items onto the green Cargo Selling Pallets, and then go to the Cargo Sale Computer and click "Sell".
+  After the shuttle is loaded, fly it to the Trade Station. There, move the sellable items onto the green [color=cyan]Cargo Selling Pallets/color], and then go to the [color=cyan]Cargo Sale Computer[/color] and click [italics]"Sell"[/italics].
 
-  Now, you can take those spesos and bring them back to the station and deposit them into the Cargo Request Computer.
+  Now, you can take those spesos and bring them back to the station and deposit them into the [color=cyan]Cargo Request Computer[/color].
 
   You can also make even more money by completing [textlink="bounties" link="CargoBounties"] or selling valuable items from [textlink="salvage" link="Salvage"].
 
@@ -49,7 +49,7 @@
     <GuideEntityEmbed Entity="ComputerCargoOrders"/>
   </Box>
 
-  Every order begins at a [color=#a4885c]Cargo Request Computer[/color]. First and foremost, making an order requires that Cargo has enough [color=#118C4F]spesos[/color], the currency of the station. If Cargo doesn't have the spesos, get some.
+  Every order begins at a [color=cyan]Cargo Request Computer[/color]. First and foremost, making an order requires that Cargo has enough spesos. If Cargo doesn't have the money, get some.
 
   It is also the sole discretion of Cargo to fulfill any given request. If Cargo is tight on spesos, they are free to deny requests that are not immediately necessary.
 
@@ -62,29 +62,29 @@
     <GuideEntityEmbed Entity="PaperCargoInvoice"/>
   </Box>
 
-  Then, to collect the order, it must be transported back to the station from the Trading Station.
+  Then, to collect the order, it must be transported back to the station from the [color=cyan]Trading Station[/color].
 
-  In the Trading Station, on the Cargo Buying Pallets, is a crate holding that order. Load it onto the shuttle and fly it back.
+  In the Trading Station, on the [color=cyan]Cargo Buying Pallets[/color], is a crate holding that order. Load it onto the shuttle and fly it back.
 
-  Once it is at the Cargo Dock, you can read the Cargo Invoice label on it to find out the intended recipient. Finally, deliver it to them.
+  Once it is at the Cargo Dock, you can read the [color=cyan]Cargo Invoice[/color] label on it to find out the intended recipient. Finally, deliver it to them.
 
   ## Piloting
 
-  Orders are delivered to the station via the orbiting [color=#a4885c]Trade Station[/color] and are transported to the main station by the cargo shuttle. The shuttle does not fly itself, so it must either be piloted in the shuttle or remotely.
+  Orders are delivered to the station via the orbiting [color=cyan]Trade Station[/color] and are transported to the main station by the [color=cyan]Cargo Shuttle[color]. The shuttle does not fly itself, so it must either be piloted in the shuttle or remotely.
 
   <Box>
     <GuideEntityEmbed Entity="ComputerCargoShuttle"/>
   </Box>
 
-  To fly the shuttle, you must first find the [color=#a4885c]cargo shuttle console[/color]. One is inside the cargo bay, and the other is inside the shuttle.
+  To fly the shuttle, you must first find the [color=cyan]Cargo Shuttle Console[/color]. One is inside the Cargo Bay, and the other is inside the Cargo Shuttle.
 
   After interacting with the computer, there should be a navigation view from the shuttle. Here are the steps for piloting the shuttle to and from the Trading Station:
 
-  - First, switch to the "DOCK" screen and disconnect any airlocks between the shuttle and the station.
-  - Now, with the shuttle disconnected, you can pilot it. Remember that you are flying in space and momentum is conserved.
-  - The basic controls are [color=#028ed9][keybind="ShuttleStrafeUp"][/color] and [color=#028ed9][keybind="ShuttleStrafeDown"][/color] for strafing up and down, [color=#028ed9][keybind="ShuttleStrafeLeft"][/color] and [color=#028ed9][keybind="ShuttleStrafeRight"][/color] for strafing left and right, and [color=#028ed9][keybind="ShuttleRotateLeft"][/color] and [color=#028ed9][keybind="ShuttleRotateRight"][/color] for turning left and right. To brake, press [color=#028ed9][keybind="ShuttleBrake"][/color].
-
+  - First, switch to the [color=yellow]"DOCK"[/color] screen and disconnect any airlocks between the shuttle and the station.
+  - Now, with the shuttle disconnected, you can pilot it. [italics]Remember that you are flying in space and momentum is conserved[/italics].
+  - The basic controls are [color=yellow][keybind="ShuttleStrafeUp"][/color] and [color=yellow][keybind="ShuttleStrafeDown"][/color] for strafing up and down, [color=yellow][keybind="ShuttleStrafeLeft"][/color] and [color=yellow][keybind="ShuttleStrafeRight"][/color] for strafing left and right, and [color=yellow][keybind="ShuttleRotateLeft"][/color] and [color=yellow][keybind="ShuttleRotateRight"][/color] for turning left and right. To brake, press [color=yellow][keybind="ShuttleBrake"][/color].
   - Then pilot the shuttle to the Trade Station.
+  - Once you are there, reconnect the airlocks and you are done.
 
   [textlink="Learn about bounties, a way to maximize your on-station profits." link="CargoBounties"]
 </Document>

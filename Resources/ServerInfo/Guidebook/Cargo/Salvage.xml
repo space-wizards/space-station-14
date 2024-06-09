@@ -1,9 +1,9 @@
 <Document>
   # Salvage
 
-  Salvage is one of Cargo's key, but also most dangerous, sources of income. Salvage extracts money from space debris and going on planet expeditions.
+  [color=cyan]Salvage[/color] is one of Cargo's key, but also most dangerous, sources of income. Salvage extracts money from [color=cyan]space debris[/color] and going on [color=cyan]planetary expeditions[/color].
 
-  While risky because of the dangers of space and alien planets, with the proper preparation and teamwork, any Salvage Team can conquer dungeons and make the most money for Cargo.
+  While risky because of the dangers of space and alien planets, with the proper preparation and teamwork, any Salvage Team can make a lot of money for Cargo.
 
   ## Preperations
 
@@ -25,9 +25,9 @@
 
   The most basic equipment you need is the EVA setup.
 
-  - [bold]Spationaut Hardsuit[/bold]: This keeps you alive in space. Remember to activate the helmet so you can breathe and turn on its built-in flashlight.
-  - [bold]Magboots[/bold]: These provide you with gravity when exploring space debris while also making you slip-proof.
-  - [bold]Oxygen/Nitrogen[/bold]: Depending on your species, you will need Nitrogen (slimes) or Oxygen (every other species). The Gas Tank Dispenser has all the tanks needed, so stock up. Be warned that the Salvage Shuttle doesn't always have air, so you might start asphyxiating before even getting to space
+  - [color=cyan]Spationaut Hardsuit[/color]: This keeps you alive in space. [italics]Remember to activate the helmet so you can breathe and turn on its built-in flashlight[/italics].
+  - [color=cyan]Magboots[/color]: These provide you with gravity when exploring space debris while also making you slip-proof.
+  - [color=cyan]Oxygen/Nitrogen[/color]: Depending on your species, you will need [color=cyan]Nitrogen[/color] (slimes) or [color=cyan]Oxygen[/color] (every other species). The [color=cyan]Gas Tank Dispenser[/color] has all the tanks needed, so stock up. Be warned that the Salvage Shuttle doesn't always have air, so you might start asphyxiating before even getting to space
 
   <Box>
     <GuideEntityEmbed Entity="WeaponProtoKineticAccelerator"/>
@@ -35,7 +35,7 @@
 
   All Salvage Specialists must be armed, in case they need to defend themselves from hostiles.
 
-  - [bold]Proto-Kinetic Accelerator[/bold]: This gun has infinite ammunition, allowing you to slowly mine and fly through space.
+  - [color=cyan]Proto-Kinetic Accelerator[/color]: This gun has infinite ammunition, allowing you to slowly mine and fly through space.
 
   <Box>
     <GuideEntityEmbed Entity="Pickaxe"/>
@@ -44,8 +44,8 @@
 
   Mining (on asteroids or expeditions) requires its own basic set.
 
-  - [bold]Pickaxe[/bold]: This is required for mining at any reasonable speed when wielded. Also, it works as a melee weapon!
-  - [bold]Ore Bag[/bold]: When equipped with the belt, this magnetizes nearby ore and automatically picks it up for you.
+  - [color=cyan]Pickaxe[/color]: This is required for mining at any reasonable speed when wielded. Also, it works as a melee weapon!
+  - [color=cyan]Ore Bag[/color]: When equipped with the belt, this magnetizes nearby ore and automatically picks it up for you.
 
   <Box>
     <GuideEntityEmbed Entity="FultonBeacon"/>
@@ -54,8 +54,8 @@
 
   Before looting (space wrecks or expeditions), set up Fultons to transport large objects or dead Salvage Technicians.
 
-  - [bold]Fulton Beacon[/bold]: Unfold this to the shuttle, and all Fulton-attached objects will fly to it within 15 tiles.
-  - [bold]Fulton[/bold]: After linking with the Fulton Beacon, attach a Fulton to the object, and after one minute, it will fly to the Fulton Beacon.
+  - [color=cyan]Fulton Beacon[/color]: Unfold this to the shuttle, and all Fulton-attached objects will fly to it within 15 tiles.
+  - [color=cyan]Fulton[/color]: After linking with the Fulton Beacon, attach a Fulton to the object, and after one minute, it will fly to the Fulton Beacon.
 
   <Box>
     <GuideEntityEmbed Entity="RadioHandheld"/>
@@ -65,9 +65,9 @@
 
   Finally, there are also some helpful but not required equipment that is available to Salvage.
 
-  - [bold]Handheld Radio[/bold]: This lets you communicate with other Salvage Specialists even if regular radio communications are unavailable. It is essential for Salvage coordination while in space or on expeditions.
-  - [bold]Global Positioning System[/bold]: This gives you an absolute position of yourself, allowing you to pinpoint your exact location. If you get lost in space, this can let you organize a rescue mission or can help you get back to the shuttle when lost on an expedition.
-  - [bold]Utility Belt[/bold]: This holds all the equipment you will need to loot machines and the like from space wrecks and expeditions.
+  - [color=cyan]Handheld Radio[/color]: This lets you communicate with other Salvage Specialists even if regular radio communications are unavailable. It is essential for Salvage coordination while in space or on expeditions.
+  - [color=cyan]Global Positioning System[/color]: This gives you an absolute position of yourself, allowing you to pinpoint your exact location. If you get lost in space, this can let you organize a rescue mission or can help you get back to the shuttle when lost on an expedition.
+  - [color=cyan]Utility Belt[/color]: This holds all the equipment you will need to loot machines and the like from space wrecks and expeditions.
 
   ## Space Debris
 
@@ -75,19 +75,19 @@
 
   Before immediately doing expeditions, it is good practice to start with space debris so that the crew gets used to their job.
 
-  Space debris is generally much safer than expeditions and provides many basic materials in short supply at the start of the shift.
+  [color=cyan]Space Debris[/color] is generally much safer than expeditions and provides many basic materials (such as steel, glass, etc) in short supply at the start of the shift.
 
   <Box>
     <GuideEntityEmbed Entity="SalvageMagnet"/>
   </Box>
 
-  The Salvage Magnet is the machine that brings space debris into nearby space.
+  The [color=cyan]Salvage Magnet[/color] is the machine that brings space debris into nearby space.
 
-  The Salvage Magnet provides six offers: the first 3 are asteroids, and the last 3 are space wrecks. The offers then refresh every 3 minutes until claimed, after which the space debris is brought in for the next 6 minutes.
+  The Salvage Magnet provides six offers: the first 3 are [color=cyan]Asteroids[/color], and the last 3 are [color=cyan]Space Wrecks[/color]. The offers then refresh every 3 minutes until claimed, after which the space debris is brought in for the next 6 minutes.
 
-  The Salvage Magnet provides the types of resources on an asteroid, which can help you decide which to prioritize based on the current needs of the station.
+  The Salvage Magnet provides information on the types of resources on an asteroid, which can help you decide which to prioritize based on the current needs of the station.
 
-  During the 6 minutes, fly to the debris, extract all profit possible, and then fly back to the station. You will die if you don't return to the shuttle in time!
+  During the 6 minutes, fly to the debris, extract all profit possible, and then fly back to the station. [italics]You will die if you don't return to the shuttle in time[/italics]!
 
   There are two main activities that you do with the Salvage Magnet:
 
@@ -97,7 +97,7 @@
     <GuideEntityEmbed Entity="OreProcessor"/>
   </Box>
 
-  - [bold]Asteroid Mining[/bold]: This is the safest option for money as there are no hostiles. All you need to do is fly around and mine the ore with your Pickaxe and Ore Bag. Once you have collected all the ore, you can refine it into materials through the Ore Processor.
+  - [color=cyan]Asteroid Mining[/color]: This is the safest option for money as there are no hostiles. All you need to do is fly around and mine the ore with your [color=cyan]Pickaxe[/color] and [color=cyan]Ore Bag[/color]. Once you have collected all the ore, you can refine it into materials through the [color=cyan]Ore Processor[/color].
 
   <Box>
     <GuideEntityEmbed Entity="Wrench"/>
@@ -105,11 +105,11 @@
     <GuideEntityEmbed Entity="WeaponProtoKineticAccelerator"/>
   </Box>
 
-  - [bold]Space Wreck Salvaging[/bold]: These are slightly more dangerous as there are hostiles. Keep your distance from hostiles and shoot at them with the Proto-Kinetic Accelerator. You will mainly be looting equipment and machines through wrenching and the Fultons.
+  - [color=cyan]Space Wreck Salvaging[/color]: These are slightly more dangerous as there are hostiles. Keep your distance from hostiles and shoot at them with the [color=cyan]Proto-Kinetic Accelerator[/color]. You will mainly be looting equipment and machines through wrenching and the [color=cyan]Fultons[/color].
 
-  ## Expeditions
+  ## Planetary Expeditions
 
-  Finally, expeditions are the most dangerous but profitable way for Salvage to make money.
+  Finally, [color=cyan]Planetary Expeditions[/color] are the most dangerous but profitable way for Salvage to make money.
 
   <Box>
     <GuideEntityEmbed Entity="ComputerSalvageExpedition"/>
@@ -118,17 +118,17 @@
   </Box>
 
 
-  First, use the Salvage Expedition Computer to select an expedition. Every 30 seconds, the missions cycle and provide certain information like the difficulty and types of enemies.
+  First, use the [color=cyan]Salvage Expedition Computer[/color] to select an expedition. Every 30 seconds, the missions cycle and provide certain information like the [color=yellow]difficulty[/color] and [color=yellow]types of enemies[/color].
 
   After weighing your options, pick the expedition that best suits the station's needs and the crew's abilities.
 
-  Once you claim the expedition mission, a Coordinates Disk will be ejected, which needs to be inserted into the Shuttle Console.
+  Once you claim the expedition mission, a [color=cyan]Coordinates Disk[/color] will be ejected, which needs to be inserted into the [color=cyan]Shuttle Console[/color].
 
-  Once inside the Shuttle Console, switch to Map mode. Then, click "Scan for Nearby Objects." Now, on the drop-down menu on the bottom left of the console UI, click on the planet. Finally, enable FTL, click on the expedition on the map, and you will begin FTL travel.
+  Once inside the Shuttle Console, switch to [color=yellow]Map mode[/color]. Then, click "Scan for Nearby Objects". Now, on the drop-down menu on the bottom left of the console UI, click on the planet. Finally, enable [color=yellow]FTL[/color], click on the expedition on the map, and you will begin FTL travel.
 
-  Once you have landed on the planet, you will have 11 minutes to spend between mining and dungeon looting.
+  Once you have landed on the planet, you will have 11 minutes to spend between [color=cyan]Mining[/color] and [color=cyan]Dungeon Looting[/color]
 
-  - [bold]Expedition Mining[/bold]: Mining during expeditions provides access to a wide range of resources, but also increases the risk of getting lost or encountering environmental and hostile threats.
+  - [color=cyan]Expedition Mining[/color]: Mining during expeditions provides access to a wide range of resources, but also increases the risk of getting lost or encountering environmental and hostile threats.
 
-  - [bold]Dungeon Looting[/bold]: Dungeon Looting is where you make the most profit. When you touch down on the planet, the direction of the dungeon will be announced over the radio. Next, break into the dungeon, kill all the hostiles, and secure any loot. Fultons become especially handy as you will be transferring whole machines and anomalies. The rewards from Dungeon Looting are expensive equipment to sell and exclusive technologies, such as cloning. As an addition, the corpses of the hostiles can also be used and sold!
+  - [color=cyan]Dungeon Looting[/color]: Dungeon Looting is where you make the most profit. When you touch down on the planet, the direction of the dungeon will be announced over the radio. Next, break into the dungeon, kill all the hostiles, and secure any loot. [color=cyan]Fultons[/color] become especially handy as you will be transferring whole machines and anomalies. The rewards from Dungeon Looting are expensive equipment to sell and exclusive technologies, such as [color=yellow]cloning[/color]. As an addition, the corpses of the hostiles can also be used and sold!
 </Document>
