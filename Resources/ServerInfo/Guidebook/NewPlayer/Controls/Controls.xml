@@ -19,30 +19,23 @@ You can quickly try out these controls with the monkey below (note: clicking it 
 <GuideEntityEmbed Entity="MobGuidebookMonkey" Interactive="True" Caption=""/>
 
 ## Inventory
-In order to move items around in your inventory and between containers, you can click the item (or item name) to move it to your active hand, and then click the spot you want it to go (either a slot in your HUD, or the container).
+Only one of your hands are 'active', meaning that's the one you'll do things with.
 
-The items in your hands are only active one at a time, in order to swap between what you're currently using, you can press [color=#a4885c][keybind="SwapHands"/][/color] on your keyboard to change active hands.
+Press [color=#a4885c][keybind="SwapHands"/][/color] to swap your active hand. Press [color=#a4885c][keybind="ActivateItemInHand"/][/color] to use the item in your active hand.
 
-Opening containers in your inventory is easy as well, either hover over the item and activate it with [color=#a4885c][keybind="ActivateItemInWorld"/][/color] or click on the bag icon in the bottom right corner of the slot it is in.
+Opening your bag is easy as well, either hover over the item and activate it with [color=#a4885c][keybind="ActivateItemInWorld"/][/color] or click on the bag icon in the bottom right corner of the slot it is in.
 
-When you open a container a window will pop up showing the contents of the container and how much space it has available to hold things.
-All items have an assigned size, some too large to fit into most or all containers.
+When you open a container a window will pop up showing the contents of the container and how much space it has available to hold things. All items have an assigned size, some too large to fit into most or all containers.
 
 To drop items, you can press [color=#a4885c][keybind="Drop"/][/color], and to drop them more violently (also known as throwing), you can press [color=#a4885c][keybind="ThrowItemInHand"/][/color].
 
-A slightly advanced way to manage your inventory is to use [color=#a4885c]Shift + B[/color]. If your active hand is currently empty, this hotkey will pull out the latest item that was put in your bag. If you have an item in your hand - samek hotkey will put said item into your bag.
-Hotkey [color=#a4885c]Shift + E[/color] works exactly the same, but uses your belt as storage.
 ## Actions
-To the left in your HUD there's a bar showing various actions you can take.
-You can hover over each one to see a name and description for the action that tells you what it is and how it works.
-You can click on an action to invoke it, or press a number key at any time to invoke the action without clicking on it.
+To the left in your HUD there's a bar showing various actions you can take. You can hover over it to read about what it does or click it to invoke the action.
 
 In order to rearrange your actions, simply drag and drop them to other slots, right click to remove them, and press the gear icon at the top of the bar to open a menu to (re)add them.
-You have 10 pages of actions total that you can switch between by pressing [color=#a4885c]shift-(number)[/color].
-Additionally, you can press the lock icon to prevent the action bar from being modified.
 
 ## Movement
-There's a good few things that can modify your movement, most notably slipping (which requires you to walk with [color=#a4885c]shift[/color] to avoid, usually.) and a lack of gravity.
-Slipping simply stuns you for a bit, but no gravity can be deadly if you're off station and wander more than about 1.5m away from the nearest wall or solid structure, as you'll lose your grip and no longer be able to move without throwing something.
+You can walk by pressing [color=#a4885c][keybind="Walk"/][/color]. Walking over puddles will stop you from slipping.
 
+In zero gravity, you can only move if you're close to a wall. You can also throw items to give yourself a bit of propulsion. The more mass of the item you throw, the farther you go.
 </Document>
