@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weather;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class WeatherComponent : Component
 {
     /// <summary>
@@ -17,7 +17,7 @@ public sealed partial class WeatherComponent : Component
     public static readonly TimeSpan ShutdownTime = TimeSpan.FromSeconds(15);
 }
 
-[DataDefinition, Serializable, NetSerializable, AutoGenerateComponentPause]
+[DataDefinition, Serializable, NetSerializable]
 public sealed partial class WeatherData
 {
     // Client audio stream.
