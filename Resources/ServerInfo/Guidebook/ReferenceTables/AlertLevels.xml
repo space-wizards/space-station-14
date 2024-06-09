@@ -12,7 +12,7 @@
 
     ## Code Blue
     [italic]Attention! Station alert level is now Blue! There is a confirmed threat to the station. Security should perform random checks. Crewmembers are advised to be vigilant and report suspicious activity to security.[/italic]
-    <!-- this color isn't the same as the alert color because it's easier(?) to read -->
+    
     [color=#5555FF]Code Blue[/color] signifies that [bold]there is a security threat[/bold] and Security should move to investigate and handle the situation. Personnel should:
     - Work as usual
     - Comply with orders from Security
@@ -37,7 +37,7 @@
 
     ## Code Violet
     [italic]Attention! Station alert level is now Violet! There is a viral threat on the station. Medical staff are advised to isolate crewmembers with any symptoms. Crewmembers are advised to distance themselves from others and perform safety measures to prevent further spread.[/italic]
-    <!-- this needs to be updated when virology comes back -->
+    
     [color=#ff00ff]Code Violet[/color] indicates that a [bold]Romerol outbreak[/bold] has begun on the station. Personnel should:
     - Work as usual, if not in infected areas
     - Shelter in place and barricade departments
