@@ -1,14 +1,20 @@
-﻿<Document>
+<Document>
 # Space Station 14
 
-Welcome to the pre-alpha of Space Station 14! We hope you enjoy the game, and this entry will serve to guide you on how to learn to play. There's quite a bit to read, but SS14 is in itself a very large and in-depth game, and hopefully these guides help you enjoy it to it's fullest.
+This entry marks the beginning of the advanced guidebook entries. Most information found here only applies to offical Wizard's Den servers, or servers that are similar to it.
+Other servers may have their own guidebooks that you should read for relevant information.
 
-## What this is
-Space Station 14 is a free (forever) open source remake of the infamous Space Station 13, hoping to provide an improved experience for both newcomers and old players alike. Space Station 14 is designed as a fully moddable experience that you can modify to your liking with custom servers, adding entire swaths of new content for people to explore.
+If you're just here to play, that's great! The [color=#a4885c]Still new?[/color] section of this entry will help you out.
 
-If you're just here to play, that's great! The [color=#a4885c]Where to start[/color] section of this entry will help you out, if you're looking to do a bit more with the game, you can join our discord and find our github page in the lobby.
+## Still new?
+[textlink="Completely lost? Click here to start at the beginning." link="NewPlayer"]
 
-## Where to start
-It's recommended to start with the [color=#a4885c]Controls[/color] guide, and then read the [color=#a4885c]Character Creation[/color], [color=#a4885c]Roleplaying[/color], and [color=#a4885c]Jobs[/color] guides. Not all jobs or concepts will have guides yet, and it's strongly encouraged to help us write them if you're an experienced player!
+[textlink="Don't know how to perform a job? Click here to jump to a list of departments." link="Jobs"]
 
+[textlink="Keep dying? Click here to see a survival guide." link="Survival"]
+
+## Contributing
+If you're looking to do a bit more with the game, you can join our [color=#5865f2]Discord[/color] server and find our [color=#627597]GitHub[/color] page in the lobby.
+
+Not all jobs or concepts will have guides yet, so if you're an experienced player we strongly encourage you to [color=#a4885c]contribute[/color]!
 </Document>
