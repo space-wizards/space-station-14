@@ -6,7 +6,6 @@
     mode: PlaceFree
   components:
   - type: MapText
-    text: "Use VV to change the displayed text"
   - type: Sprite
     state: pink
 

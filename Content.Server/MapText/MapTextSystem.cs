@@ -18,6 +18,7 @@ public sealed class MapTextSystem : SharedMapTextSystem
         args.State = new MapTextComponentState
         {
             Text = ent.Comp.Text,
+            LocText = ent.Comp.LocText,
             Color = ent.Comp.Color,
             FontId = ent.Comp.FontId,
             FontSize = ent.Comp.FontSize,

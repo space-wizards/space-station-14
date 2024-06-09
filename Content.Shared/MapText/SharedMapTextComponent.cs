@@ -13,8 +13,18 @@ public abstract partial class SharedMapTextComponent : Component
 {
     public const string DefaultFont = "Default";
 
+    /// <summary>
+    /// The text to display. This will override <see cref="LocText"/>.
+    /// </summary>
     [DataField]
     public string? Text;
+
+    /// <summary>
+    /// The localized-id of the text that should be displayed.
+    /// </summary>
+    [DataField]
+    public LocId LocText = "map-text-default";
+    // TODO VV: LocId editing
 
     [DataField]
     public Color Color = Color.White;
@@ -33,6 +43,7 @@ public abstract partial class SharedMapTextComponent : Component
 public sealed class MapTextComponentState : ComponentState
 {
     public string? Text { get; init;}
+    public LocId LocText { get; init;}
     public Color Color { get; init;}
     public string FontId { get; init; } = default!;
     public int FontSize { get; init;}
