@@ -152,12 +152,15 @@ public abstract class SharedWeatherSystem : EntitySystem
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
             return;
 
+        if (proto == null)
+            return;
+
         var weatherComp = EnsureComp<WeatherComponent>(mapUid.Value);
 
         foreach (var (eProto, weather) in weatherComp.Weather)
         {
             // Reset cooldown if it's an existing one.
-            if (eProto == proto?.ID)
+            if (eProto == proto.ID)
             {
                 weather.EndTime = endTime;
 
