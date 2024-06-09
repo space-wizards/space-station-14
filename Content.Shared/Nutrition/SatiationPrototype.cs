@@ -22,14 +22,13 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     /// <summary>
     /// The base amount at which <see cref="Current"/> decays.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float BaseDecayRate = 0.01666666666f;
 
     /// <summary>
     /// A dictionary relating SatiationThreshold to the amount of <see cref="Current"/> needed for each one
     /// </summary>
     [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationThreashold, float>))]
-    [ViewVariables(VVAccess.ReadWrite)]
     public Dictionary<SatiationThreashold, float> Thresholds = new()
     {
         { SatiationThreashold.Full, 200.0f },
@@ -55,7 +54,7 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     /// <summary>
     /// The amount of slowdown applied when an entity is at SatiationThreashhold.Desperate
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float SlowdownModifier = 0.75f;
 
     /// <summary>
@@ -64,10 +63,10 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationThreashold, DamageSpecifier>))]
     public Dictionary<SatiationThreashold, DamageSpecifier> ThresholdDamage = new();
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<AlertCategoryPrototype> AlertCategory = "Hunger";
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public Dictionary<SatiationThreashold, ProtoId<AlertPrototype>> Alerts = new()
     {
         { SatiationThreashold.Concerned, "Peckish"},
@@ -75,7 +74,7 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
         { SatiationThreashold.Dead, "Starving"}
     };
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public Dictionary<SatiationThreashold, string> Icons = new()
     {
         { SatiationThreashold.Full, "HungerIconOverfed"},
