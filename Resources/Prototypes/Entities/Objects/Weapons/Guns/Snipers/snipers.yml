@@ -68,8 +68,6 @@
         Piercing: 20
         Slash: 6
   - type: GunRequiresWield
-  - type: Item
-    size: Ginormous
   - type: DisarmMalus
 
 - type: entity
