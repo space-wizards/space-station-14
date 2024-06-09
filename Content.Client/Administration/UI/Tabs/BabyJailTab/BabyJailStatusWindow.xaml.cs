@@ -4,6 +4,10 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.Administration.UI.Tabs.BabyJailTab;
 
+/*
+ * TODO: Remove me once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
+ */
+
 [GenerateTypedNameReferences]
 public sealed partial class BabyJailStatusWindow : DefaultWindow
 {

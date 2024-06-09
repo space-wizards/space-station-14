@@ -13,6 +13,9 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
+/*
+ * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
+ */
 
 namespace Content.Server.Connection
 {

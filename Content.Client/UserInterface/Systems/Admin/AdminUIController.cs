@@ -116,6 +116,10 @@ public sealed class AdminUIController : UIController,
         if (_panicBunker != null)
             _window.PanicBunkerControl.UpdateStatus(_panicBunker);
 
+        /*
+         * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
+         */
+
         if (_babyJail != null)
             _window.BabyJailControl.UpdateStatus(_babyJail);
 

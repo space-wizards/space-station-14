@@ -3,6 +3,10 @@ using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 
+/*
+ * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
+ */
+
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Server)]

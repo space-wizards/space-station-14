@@ -314,6 +314,10 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> BypassBunkerWhitelist =
             CVarDef.Create("game.panic_bunker.whitelisted_can_bypass", true, CVar.SERVERONLY);
 
+        /*
+         * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
+         */
+
         /// <summary>
         /// Whether the baby jail is currently enabled.
         /// </summary>
