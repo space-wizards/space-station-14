@@ -13,9 +13,9 @@
   - type: Satiation
     satiations:
       Hunger:
-        prototype: normalSatiationHunger
+        prototype: NormalSatiationHunger
       Thirst:
-        prototype: normalSatiationThirst
+        prototype: NormalSatiationThirst
   - type: Sericulture
     action: ActionSericulture
     productionLength: 2

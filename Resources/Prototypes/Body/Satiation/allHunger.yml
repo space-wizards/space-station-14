@@ -1,5 +1,5 @@
 - type: satiation
-  id: normalSatiationHunger
+  id: NormalSatiationHunger
   thresholds:
     Full: 200
     Okay: 150
@@ -25,8 +25,8 @@
     Dead: "HungerIconStarving"
 
 - type: satiation
-  id: animalHunger
-  parent: normalSatiationHunger
+  id: AnimalHunger
+  parent: NormalSatiationHunger
   baseDecayRate: 0.3
   thresholds:
     Full: 35
@@ -36,18 +36,18 @@
     Dead: 0
 
 - type: satiation
-  id: mouseHunger
-  parent: animalHunger
+  id: MouseHunger
+  parent: AnimalHunger
   baseDecayRate: 0.5
 
 - type: satiation
-  id: cockroachHunger
-  parent: animalHunger
+  id: CockroachHunger
+  parent: AnimalHunger
   baseDecayRate: 0.25
 
 - type: satiation
-  id: simpleMobHunger
-  parent: normalSatiationHunger
+  id: SimpleMobHunger
+  parent: NormalSatiationHunger
   baseDecayRate: 0.00925925925926
   thresholds:
     Full: 100
@@ -57,8 +57,8 @@
     Dead: 0
 
 - type: satiation
-  id: critterHunger
-  parent: normalSatiationHunger
+  id: CritterHunger
+  parent: NormalSatiationHunger
   baseDecayRate: 0.01666666666
   thresholds:
     Full: 200
@@ -68,8 +68,8 @@
     Dead: 0
 
 - type: satiation
-  id: dionaHunger
-  parent: normalSatiationHunger
+  id: DionaHunger
+  parent: NormalSatiationHunger
   baseDecayRate: 0.0083
   thresholds:
     Full: 200

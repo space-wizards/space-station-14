@@ -1,5 +1,5 @@
 - type: satiation
-  id: normalSatiationThirst
+  id: NormalSatiationThirst
   thresholds:
     Full: 600.0
     Okay: 450.0
@@ -25,8 +25,8 @@
     Dead: "ThirstIconParched"
 
 - type: satiation
-  id: animalThirst
-  parent: normalSatiationThirst
+  id: AnimalThirst
+  parent: NormalSatiationThirst
   thresholds:
     Full: 35.0
     Okay: 25.0
@@ -35,8 +35,8 @@
     Dead: 0.0
 
 - type: satiation
-  id: simpleMobThirst
-  parent: normalSatiationThirst
+  id: SimpleMobThirst
+  parent: NormalSatiationThirst
   baseDecayRate: 0.04
   thresholds:
     Full: 200.0
@@ -46,8 +46,8 @@
     Dead: 0.0
 
 - type: satiation
-  id: critterThirst
-  parent: normalSatiationThirst
+  id: CritterThirst
+  parent: NormalSatiationThirst
   baseDecayRate: 0.1
   thresholds:
     Full: 600.0
@@ -57,7 +57,7 @@
     Dead: 0.0
 
 - type: satiation
-  id: dionaThirst
-  parent: normalSatiationThirst
+  id: DionaThirst
+  parent: NormalSatiationThirst
   baseDecayRate: 0.0083
 

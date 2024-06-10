@@ -6,9 +6,9 @@
   - type: Satiation
     satiations:
       Hunger:
-        prototype: normalSatiationHunger
+        prototype: NormalSatiationHunger
       Thirst:
-        prototype: normalSatiationThirst
+        prototype: NormalSatiationThirst
   - type: Icon
     sprite: Mobs/Species/Vox/parts.rsi
     state: vox_m

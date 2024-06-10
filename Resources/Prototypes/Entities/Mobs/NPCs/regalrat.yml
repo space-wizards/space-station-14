@@ -62,9 +62,9 @@
   - type: Satiation
     satiations:
       Hunger:
-        prototype: critterHunger
+        prototype: CritterHunger
       Thirst:
-        prototype: critterThirst
+        prototype: CritterThirst
   - type: DamageStateVisuals
     rotate: true
     states:
@@ -230,9 +230,9 @@
   - type: Satiation
     satiations:
       Hunger:
-        prototype: critterHunger
+        prototype: CritterHunger
       Thirst:
-        prototype: critterThirst
+        prototype: CritterThirst
   - type: DamageStateVisuals
     states:
       Alive:

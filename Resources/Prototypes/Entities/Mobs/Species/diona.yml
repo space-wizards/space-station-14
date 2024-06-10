@@ -10,9 +10,9 @@
   - type: Satiation
     satiations:
       Hunger:
-        prototype: dionaHunger
+        prototype: DionaHunger
       Thirst:
-        prototype: dionaThirst
+        prototype: DionaThirst
   - type: Icon
     sprite: Mobs/Species/Diona/parts.rsi
     state: full

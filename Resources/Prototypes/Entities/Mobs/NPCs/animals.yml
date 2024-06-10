@@ -349,9 +349,9 @@
   - type: Satiation
     satiations:
       Hunger:
-        prototype: cockroachHunger
+        prototype: CockroachHunger
       Thirst:
-        prototype: animalThirst
+        prototype: AnimalThirst
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -1597,9 +1597,9 @@
   - type: Satiation
     satiations:
       Hunger:
-        prototype: mouseHunger
+        prototype: MouseHunger
       Thirst:
-        prototype: animalThirst
+        prototype: AnimalThirst
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -3144,9 +3144,9 @@
   - type: Satiation
     satiations:
       Hunger:
-        prototype: animalHunger
+        prototype: AnimalHunger
       Thirst:
-        prototype: animalThirst
+        prototype: AnimalThirst
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
