@@ -842,6 +842,7 @@
 - type: entity
   name: clown spider spawner
   id: SpawnClownSpider
+  parent: MarkerBase
   components:
   - type: Sprite
     layers:

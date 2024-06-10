@@ -39,7 +39,6 @@
   name: dark techmaint floor
   spawn: FloorTileItemTechmaintDark
   maxCount: 30
-  itemSize: 5
 
 - type: stack
   id: FloorTileFreezer
