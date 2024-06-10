@@ -11541,7 +11541,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -603.7948
+      secondsUntilStateChange: -706.3356
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -69673,6 +69673,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 37.5,-41.5
       parent: 8364
+  - uid: 20698
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 46.5,-25.5
+      parent: 8364
 - proto: ComputerCriminalRecords
   entities:
   - uid: 9075
@@ -69774,12 +69780,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 28.5,-21.5
-      parent: 8364
-  - uid: 26738
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 46.5,-25.5
       parent: 8364
 - proto: ComputerPowerMonitoring
   entities:
@@ -96660,18 +96660,6 @@ entities:
       parent: 8364
     - type: AtmosPipeColor
       color: '#FF1212FF'
-  - uid: 23915
-    components:
-    - type: Transform
-      anchored: False
-      rot: 3.141592653589793 rad
-      pos: 76.5,-6.5
-      parent: 8364
-    - type: AtmosPipeColor
-      color: '#FF1212FF'
-    - type: Physics
-      canCollide: True
-      bodyType: Dynamic
   - uid: 23916
     components:
     - type: Transform
