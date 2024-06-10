@@ -97,6 +97,9 @@
     interactSuccessString: petting-success-tesla
     interactFailureString: petting-failure-tesla
     interactSuccessSpawn: EffectHearts
+  - type: Electrified
+    requirePower: false
+    shockDamage: 60
 
 - type: entity
   id: TeslaMiniEnergyBall

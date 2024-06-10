@@ -122,7 +122,7 @@ public sealed class BeamSystem : SharedBeamSystem
         }
 
         //Create the rest of the beam, sprites handled through the BeamVisualizerEvent
-        for (var i = 0; i < distanceLength-1; i++)
+        for (var i = 0; i < distanceLength - 1; i++)
         {
             beamSpawnPos = beamSpawnPos.Offset(calculatedDistance.Normalized());
             var newEnt = Spawn(prototype, beamSpawnPos);

@@ -1,3 +1,4 @@
+using Content.Server.Electrocution;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Lightning;
 using Content.Server.Lightning.Components;
@@ -14,6 +15,7 @@ public sealed class LightningTargetSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
 
     public override void Initialize()
     {
@@ -27,6 +29,14 @@ public sealed class LightningTargetSystem : EntitySystem
         DamageSpecifier damage = new();
         damage.DamageDict.Add("Structural", uid.Comp.DamageFromLightning);
         _damageable.TryChangeDamage(uid, damage, true);
+
+        // I would ideally like to get the Electrified component from the lightning itself
+        // But unfortunately I am only, at most able to access the string prototype of the lightning I want
+        // So I can only get the electrified component of the source that shot the lightning
+        if (TryComp<ElectrifiedComponent>(args.Source, out var electrifiedComp))
+        {
+            _electrocution.TryDoElectrifiedAct(args.Source, args.Target, electrified: electrifiedComp);
+        }
 
         if (uid.Comp.LightningExplode)
         {
