@@ -6,7 +6,7 @@
   Medical achieves this through a variety of means, such as [color=cyan]Topicals[/color], [color=cyan]Chemicals[/color], [color=cyan]Cloning[/color], [color=cyan]Cryogenics[/color], and more.
 
   ## Personnel
-  [color=cyan]Medical[/color] is staffed by [color=cyan]Medical Interns[/color], [color=cyan]Medical Doctors[/color], [color=cyan]Paramedics[/color], and [color=cyan]Chemists[/colors]. They all report directly to the [color=cyan]Chief Medical Officer[/color].
+  [color=cyan]Medical[/color] is staffed by [color=cyan]Medical Interns[/color], [color=cyan]Medical Doctors[/color], [color=cyan]Paramedics[/color], and [color=cyan]Chemists[/color]. They all report directly to the [color=cyan]Chief Medical Officer[/color].
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineMedicalDoctor" Caption="Doctor"/>
@@ -28,7 +28,7 @@
   - [color=cyan]Medical Hud[/color]: This displays the health of other personnel above their heads. This lets you visually assess the condition of other crew members without needing to analyze them.
   - [color=cyan]Medical PDA[/color] and [color=cyan]Health Analyzer[/color]: These let you analyze the condition of a patient, listing all the kinds of and amounts of damage they have.
 
-  ## Patient Status & Triaging
+  ## Patient Status and Triaging
 
   Whenever a patient is hurt, it is your job to find out how to manage them and what approach to heal them. It always starts with accessing their needs and statuses so you can heal them properly.
 
@@ -67,7 +67,6 @@
   Before treating any patients, it is important to understand what medicines you have at your disposal.
 
   <Box>
-
     <GuideEntityEmbed Entity="Jug"/>
     <GuideEntityEmbed Entity="Defibrillator"/>
   </Box>
@@ -102,6 +101,10 @@
   - [color=cyan]Regenerative Mesh[/color]: This heals more burn damage.
 
   ## Defibrilation
+
+  <Box>
+    <GuideEntityEmbed Entity="Defibrillator"/>
+  </Box>
 
   Death is not permanent as long as you have enough [color=cyan]Topicals[/color] or [color=cyan]Cryogenics[/color].
 
@@ -177,9 +180,9 @@
   This is the most dangerous status for any patient. If this is left unattended, they will very quickly die.
 
   There are 3 parts in curing bloodloss:
-  - Stop the bleeding
-  - Restore the blood
-  - Cure bloodloss damage
+  - [color=yellow]Stop[/color] the bleeding
+  - [color=yellow]Restore[/color] the blood
+  - [color=yellow]Cure[/color] bloodloss damage
 
   The first step you should always do is stop the bleeding before it gets any worse.
 
@@ -195,7 +198,6 @@
   - [color=cyan]Medicated Suture[/color]: This is an advanced Topical medicine for bleeding.
   - [color=cyan]Inaprovaline[/color]: This is the Chemical can stop bleeding.
 
-
   Then, you need to return all the blood that was lost.
 
   <Box>
@@ -205,7 +207,6 @@
 
   - [color=cyan]Blood Packs[/color]: This is the topical medicine for bloodloss.
   - [color=cyan]Saline[/color]: This is the best chemical for blood loss.
-
 
   Finally, you can just let them be, and their bloodloss damage will decrease.
 
