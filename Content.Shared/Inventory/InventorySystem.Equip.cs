@@ -447,7 +447,7 @@ public abstract partial class InventorySystem
             return false;
 
         // this is in order to keep track of whether this is the first instance of a recursion call
-        bool firstRun = itemsDropped == 0;
+        var firstRun = itemsDropped == 0;
         ++itemsDropped;
 
         foreach (var slotDef in inventory.Slots)
@@ -462,8 +462,8 @@ public abstract partial class InventorySystem
         // we check if any items were dropped, and make a popup if they were.
         // the reason we check for > 1 is because the first item is always the one we are trying to unequip,
         // whereas we only want to notify for extra dropped items.
-        if (firstRun && itemsDropped > 1)
-            _popup.PopupClient(Loc.GetString("inventory-component-dropped-from-unequip", ("items", itemsDropped)), target, target);
+        if (!silent && _gameTiming.IsFirstTimePredicted && firstRun && itemsDropped > 1)
+            _popup.PopupClient(Loc.GetString("inventory-component-dropped-from-unequip", ("items", itemsDropped - 1)), target, target);
 
         // TODO: Inventory needs a hot cleanup hoo boy
         // Check if something else (AKA toggleable) dumped it into a container.

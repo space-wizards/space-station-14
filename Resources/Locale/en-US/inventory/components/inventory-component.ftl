@@ -5,6 +5,6 @@ inventory-component-can-unequip-cannot = You can't unequip this!
 
 inventory-component-dropped-from-unequip =
     You dropped {$items ->
-    [2] an item!
+    [1] an item!
     *[other] some items!
 }
