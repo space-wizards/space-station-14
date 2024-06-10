@@ -406,7 +406,7 @@
       injector:
         maxVol: 100
   - type: Injector
-    delay: 2
+    delay: 1
     injectOnly: false
   - type: SolutionContainerVisuals
     maxFillLevels: 2
@@ -420,7 +420,7 @@
   id: SyringeCryostasis
   parent: BaseSyringe
   name: cryostasis syringe
-  description: An improved syringe used to contain chemicals or solutions without reactions.
+  description: An improved syringe used to contain chemicals or solutions without reactions. # Goobstation - buffing cryo syringe cause its currently pointless and buffing bluespace syringe to make it more useful.
   components:
   - type: Sprite
     layers:
@@ -438,7 +438,7 @@
         maxVol: 20
         canReact: false
   - type: Injector
-    delay: 1
+    delay: 2
     injectOnly: false
     minTransferAmount: 5
     maxTransferAmount: 20
