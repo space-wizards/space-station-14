@@ -65,16 +65,17 @@ namespace Content.Client.Kitchen.UI
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (state is not MicrowaveUpdateUserInterfaceState cState)
+            if (state is not MicrowaveUpdateUserInterfaceState cState || _menu == null)
             {
                 return;
             }
 
-            _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0);
+            _menu.IsBusy = cState.IsMicrowaveBusy;
+            _menu.CurrentCooktimeEnd = cState.CurrentCookTimeEnd;
+
+            _menu.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0);
             // TODO move this to a component state and ensure the net ids.
             RefreshContentsDisplay(EntMan.GetEntityArray(cState.ContainedSolids));
-
-            if (_menu == null) return;
 
             //Set the cook time info label
             var cookTime = cState.ActiveButtonIndex == 0

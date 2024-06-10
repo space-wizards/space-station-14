@@ -14,6 +14,8 @@ public sealed partial class GeneratorWindow : FancyWindow
 
     private EntityUid _entity;
 
+    public float? MaximumPower;
+
     public event Action<int>? OnPower;
     public event Action<bool>? OnState;
     public event Action? OnSwitchOutput;
@@ -47,7 +49,7 @@ public sealed partial class GeneratorWindow : FancyWindow
         if (arg < 0)
             return false;
 
-        if (arg > (_lastState?.MaximumPower / 1000.0f ?? 0))
+        if (arg > (MaximumPower / 1000.0f ?? 0))
             return false;
 
         return true;
@@ -55,12 +57,17 @@ public sealed partial class GeneratorWindow : FancyWindow
 
     public void Update(PortableGeneratorComponentBuiState state)
     {
+        MaximumPower = state.MaximumPower;
+
+        if (!_entityManager.TryGetComponent(_entity, out FuelGeneratorComponent? component))
+            return;
+
         if (!TargetPower.LineEditControl.HasKeyboardFocus())
             TargetPower.OverrideValue((int)(state.TargetPower / 1000.0f));
-        var efficiency = SharedGeneratorSystem.CalcFuelEfficiency(state.TargetPower, state.OptimalPower, _component);
+        var efficiency = SharedGeneratorSystem.CalcFuelEfficiency(state.TargetPower, state.OptimalPower, component);
         Efficiency.Text = efficiency.ToString("P1");
 
-        var burnRate = _component.OptimalBurnRate / efficiency;
+        var burnRate = component.OptimalBurnRate / efficiency;
         var left = state.RemainingFuel / burnRate;
 
         Eta.Text = Loc.GetString(
@@ -100,14 +107,15 @@ public sealed partial class GeneratorWindow : FancyWindow
         }
 
         var canSwitch = _entityManager.TryGetComponent(_entity, out PowerSwitchableComponent? switchable);
+        var switcher = _entityManager.System<SharedPowerSwitchableSystem>();
         OutputSwitchLabel.Visible = canSwitch;
         OutputSwitchButton.Visible = canSwitch;
 
         if (switchable != null)
         {
-            var voltage = _switchable.VoltageString(_switchable.GetVoltage(_entity, switchable));
+            var voltage = switcher.VoltageString(switcher.GetVoltage(_entity, switchable));
             OutputSwitchLabel.Text = Loc.GetString("portable-generator-ui-current-output", ("voltage", voltage));
-            var nextVoltage = _switchable.VoltageString(_switchable.GetNextVoltage(_entity, switchable));
+            var nextVoltage = switcher.VoltageString(switcher.GetNextVoltage(_entity, switchable));
             OutputSwitchButton.Text = Loc.GetString("power-switchable-switch-voltage", ("voltage", nextVoltage));
             OutputSwitchButton.Disabled = state.On;
         }

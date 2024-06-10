@@ -38,7 +38,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
             case NetworkConfiguratorUiKey.List:
                 _listMenu = this.CreateWindow<NetworkConfiguratorListMenu>();
                 _listMenu.ClearButton.OnPressed += _ => OnClearButtonPressed();
-                _listMenu.OpenCenteredRight();
+                _listMenu.OnRemoveAddress += OnRemoveButtonPressed;
                 break;
             case NetworkConfiguratorUiKey.Configure:
                 _configurationMenu = this.CreateWindow<NetworkConfiguratorConfigurationMenu>();
@@ -49,11 +49,20 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 _configurationMenu.Copy.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Copy);
                 _configurationMenu.Show.OnPressed += OnShowPressed;
                 _configurationMenu.Show.Pressed = _netConfig.ConfiguredListIsTracked(Owner);
-                _configurationMenu.OpenCentered();
+                _configurationMenu.OnRemoveAddress += OnRemoveButtonPressed;
                 break;
             case NetworkConfiguratorUiKey.Link:
                 _linkMenu = this.CreateWindow<NetworkConfiguratorLinkMenu>();
-                _linkMenu.OpenCentered();
+                _linkMenu.OnLinkDefaults += args =>
+                {
+                    SendMessage(new NetworkConfiguratorLinksSaveMessage(args));
+                };
+
+                _linkMenu.OnToggleLink += (left, right) =>
+                {
+                    SendMessage(new NetworkConfiguratorToggleLinkMessage(left, right));
+                };
+
                 _linkMenu.OnClearLinks += () =>
                 {
                     SendMessage(new NetworkConfiguratorClearLinksMessage());

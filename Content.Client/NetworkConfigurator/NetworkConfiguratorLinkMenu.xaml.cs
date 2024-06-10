@@ -18,7 +18,6 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 
     private readonly LinksRender _links;
 
-
     private readonly List<SourcePortPrototype> _sources = new();
 
     private readonly List<SinkPortPrototype> _sinks = new();
@@ -28,6 +27,8 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
     private List<(string left, string right)>? _defaults;
 
     public event Action? OnClearLinks;
+    public event Action<string, string>? OnToggleLink;
+    public event Action<List<(string left, string right)>>? OnLinkDefaults;
 
     public NetworkConfiguratorLinkMenu()
     {
@@ -97,7 +98,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         if (_defaults == default)
             return;
 
-        _userInterface.SendMessage(new NetworkConfiguratorLinksSaveMessage(_defaults));
+        OnLinkDefaults?.Invoke(_defaults);
     }
 
     private Button CreateButton(ButtonPosition position, string name, string description, string id, int index)
@@ -137,7 +138,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         var left = _selectedButton.Value.position == ButtonPosition.Left ? _selectedButton.Value.id : id;
         var right = _selectedButton.Value.position == ButtonPosition.Left ? id : _selectedButton.Value.id;
 
-        _userInterface.SendMessage(new NetworkConfiguratorToggleLinkMessage(left, right));
+        OnToggleLink?.Invoke(left, right);
 
         args.Button.Pressed = false;
 

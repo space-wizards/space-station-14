@@ -17,34 +17,29 @@ namespace Content.Client.Kitchen.UI
 
         private readonly Dictionary<int, EntityUid> _chamberVisualContents = new();
 
+        public event Action? OnToggleAuto;
+        public event Action? OnGrind;
+        public event Action? OnJuice;
+        public event Action? OnEjectAll;
+        public event Action? OnEjectBeaker;
+        public event Action<EntityUid>? OnEjectChamber;
+
         public GrinderMenu()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-            AutoModeButton.OnPressed += owner.ToggleAutoMode;
-            GrindButton.OnPressed += owner.StartGrinding;
-            JuiceButton.OnPressed += owner.StartJuicing;
-            ChamberContentBox.EjectButton.OnPressed += owner.EjectAll;
-            BeakerContentBox.EjectButton.OnPressed += owner.EjectBeaker;
+            AutoModeButton.OnPressed += _ => OnToggleAuto?.Invoke();
+            GrindButton.OnPressed += _ => OnGrind?.Invoke();
+            JuiceButton.OnPressed += _ => OnJuice?.Invoke();
+            ChamberContentBox.EjectButton.OnPressed += _ => OnEjectAll?.Invoke();
+            BeakerContentBox.EjectButton.OnPressed += _ => OnEjectBeaker?.Invoke();
             ChamberContentBox.BoxContents.OnItemSelected += OnChamberBoxContentsItemSelected;
             BeakerContentBox.BoxContents.SelectMode = ItemList.ItemListSelectMode.None;
         }
 
         private void OnChamberBoxContentsItemSelected(ItemList.ItemListSelectedEventArgs args)
         {
-            _owner.EjectChamberContent(_chamberVisualContents[args.ItemIndex]);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            _chamberVisualContents.Clear();
-            GrindButton.OnPressed -= _owner.StartGrinding;
-            JuiceButton.OnPressed -= _owner.StartJuicing;
-            ChamberContentBox.EjectButton.OnPressed -= _owner.EjectAll;
-            BeakerContentBox.EjectButton.OnPressed -= _owner.EjectBeaker;
-            ChamberContentBox.BoxContents.OnItemSelected -= OnChamberBoxContentsItemSelected;
+            OnEjectChamber?.Invoke(_chamberVisualContents[args.ItemIndex]);
         }
 
         public void UpdateState(ReagentGrinderInterfaceState state)

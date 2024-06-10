@@ -44,11 +44,16 @@ namespace Content.Client.Instruments.UI
             _instrumentMenu = this.CreateWindow<InstrumentMenu>();
             _instrumentMenu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
+            _instrumentMenu.OnOpenBand += OpenBandMenu;
+            _instrumentMenu.OnOpenChannels += OpenChannelsMenu;
+            _instrumentMenu.OnCloseChannels += CloseChannelsMenu;
+            _instrumentMenu.OnCloseBands += CloseBandMenu;
+
             _instrumentMenu.SetMIDI(MidiManager.IsAvailable);
 
             if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
             {
-                _instrumentMenu.SetInstrument(instrument);
+                _instrumentMenu.SetInstrument((Owner, instrument));
             }
         }
 
@@ -76,6 +81,11 @@ namespace Content.Client.Instruments.UI
         {
             _bandMenu ??= new BandMenu(this);
 
+            if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
+            {
+                _bandMenu.Master = instrument.Master;
+            }
+
             // Refresh cache...
             RefreshBands();
 
@@ -91,7 +101,9 @@ namespace Content.Client.Instruments.UI
         public void OpenChannelsMenu()
         {
             _channelsMenu ??= new ChannelsMenu(this);
-            _channelsMenu.Populate();
+            EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument);
+
+            _channelsMenu.Populate(instrument);
             _channelsMenu.OpenCenteredRight();
         }
 

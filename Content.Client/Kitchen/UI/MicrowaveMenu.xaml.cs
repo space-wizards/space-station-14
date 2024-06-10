@@ -11,14 +11,12 @@ namespace Content.Client.Kitchen.UI
     {
         [Dependency] private readonly IGameTiming _timing = default!;
 
-        public sealed class MicrowaveCookTimeButton : Button
-        {
-            public uint CookTime;
-        }
-
         public event Action<BaseButton.ButtonEventArgs, int>? OnCookTimeSelected;
 
         public ButtonGroup CookTimeButtonGroup { get; }
+
+        public bool IsBusy;
+        public TimeSpan CurrentCooktimeEnd;
 
         public MicrowaveMenu()
         {
@@ -66,14 +64,19 @@ namespace Content.Client.Kitchen.UI
         {
             base.FrameUpdate(args);
 
-            if (!_owner.currentState.IsMicrowaveBusy)
+            if (!IsBusy)
                 return;
 
-            if (_owner.currentState.CurrentCookTimeEnd > _timing.CurTime)
+            if (CurrentCooktimeEnd > _timing.CurTime)
             {
                 CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                ("time", _owner.currentState.CurrentCookTimeEnd.Subtract(_timing.CurTime).Seconds));
+                ("time", CurrentCooktimeEnd.Subtract(_timing.CurTime).Seconds));
             }
+        }
+
+        public sealed class MicrowaveCookTimeButton : Button
+        {
+            public uint CookTime;
         }
     }
 }

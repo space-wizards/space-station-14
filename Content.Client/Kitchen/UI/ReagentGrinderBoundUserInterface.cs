@@ -9,8 +9,6 @@ namespace Content.Client.Kitchen.UI
 {
     public sealed class ReagentGrinderBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         [ViewVariables]
         private GrinderMenu? _menu;
 
@@ -23,6 +21,12 @@ namespace Content.Client.Kitchen.UI
             base.Open();
 
             _menu = this.CreateWindow<GrinderMenu>();
+            _menu.OnToggleAuto += ToggleAutoMode;
+            _menu.OnGrind += StartGrinding;
+            _menu.OnJuice += StartJuicing;
+            _menu.OnEjectAll += EjectAll;
+            _menu.OnEjectBeaker += EjectBeaker;
+            _menu.OnEjectChamber += EjectChamberContent;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -40,27 +44,27 @@ namespace Content.Client.Kitchen.UI
             _menu?.HandleMessage(message);
         }
 
-        public void ToggleAutoMode(BaseButton.ButtonEventArgs args)
+        public void ToggleAutoMode()
         {
             SendMessage(new ReagentGrinderToggleAutoModeMessage());
         }
 
-        public void StartGrinding(BaseButton.ButtonEventArgs? _ = null)
+        public void StartGrinding()
         {
             SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Grind));
         }
 
-        public void StartJuicing(BaseButton.ButtonEventArgs? _ = null)
+        public void StartJuicing()
         {
             SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Juice));
         }
 
-        public void EjectAll(BaseButton.ButtonEventArgs? _ = null)
+        public void EjectAll()
         {
             SendMessage(new ReagentGrinderEjectChamberAllMessage());
         }
 
-        public void EjectBeaker(BaseButton.ButtonEventArgs? _ = null)
+        public void EjectBeaker()
         {
             SendMessage(new ItemSlotButtonPressedEvent(SharedReagentGrinder.BeakerSlotId));
         }
