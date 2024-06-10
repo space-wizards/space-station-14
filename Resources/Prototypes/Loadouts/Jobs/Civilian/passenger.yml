@@ -95,6 +95,18 @@
   equipment:
     back: ClothingBackpackDuffel
 
+- type: loadout
+  id: LeatherSatchel
+  equipment: LeatherSatchel
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+
+- type: startingGear
+  id: LeatherSatchel
+  equipment:
+    back: ClothingBackpackSatchelLeather
+
 # Gloves
 - type: loadout
   id: PassengerGloves

@@ -69,6 +69,7 @@
   - CaptainBackpack
   - CaptainSatchel
   - CaptainDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: CaptainOuterClothing
@@ -107,6 +108,7 @@
   - CommonSatchel
   - CommonDuffel
   - HoPBackpackIan
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: HoPOuterClothing
@@ -146,6 +148,7 @@
   - CommonBackpack
   - CommonSatchel
   - CommonDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: PassengerOuterClothing
@@ -344,6 +347,7 @@
   - BotanistBackpack
   - BotanistSatchel
   - BotanistDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: BotanistOuterClothing
@@ -374,6 +378,7 @@
   - ClownBackpack
   - ClownSatchel
   - ClownDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: ClownOuterClothing
@@ -422,6 +427,7 @@
   - MimeBackpack
   - MimeSatchel
   - MimeDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: MimeOuterClothing
@@ -499,6 +505,7 @@
   - CargoTechnicianBackpack
   - CargoTechnicianSatchel
   - CargoTechnicianDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: CargoTechnicianOuterClothing
@@ -521,6 +528,7 @@
   - SalvageSpecialistBackpack
   - SalvageSpecialistSatchel
   - SalvageSpecialistDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: SalvageSpecialistOuterClothing
@@ -609,6 +617,7 @@
   - StationEngineerBackpack
   - StationEngineerSatchel
   - StationEngineerDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: StationEngineerOuterClothing
@@ -654,6 +663,7 @@
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianSatchel
   - AtmosphericTechnicianDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: AtmosphericTechnicianShoes
@@ -734,6 +744,7 @@
   - ScientistBackpack
   - ScientistSatchel
   - ScientistDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: ScientistOuterClothing
@@ -862,6 +873,7 @@
   - SecurityBackpack
   - SecuritySatchel
   - SecurityDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: SecurityBelt
@@ -1013,6 +1025,7 @@
   - MedicalDoctorBackpack
   - MedicalDoctorSatchel
   - MedicalDoctorDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: MedicalShoes
@@ -1073,6 +1086,7 @@
   - ChemistBackpack
   - ChemistSatchel
   - ChemistDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: ParamedicHead
