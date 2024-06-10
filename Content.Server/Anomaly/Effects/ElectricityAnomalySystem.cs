@@ -40,7 +40,7 @@ public sealed class ElectricityAnomalySystem : EntitySystem
         var range = anomaly.Comp.MaxElectrocuteRange * 3 * args.PowerModifier;
 
         _emp.EmpPulse(_transform.GetMapCoordinates(anomaly), range, anomaly.Comp.EmpEnergyConsumption, anomaly.Comp.EmpDisabledDuration);
-        _lightning.ShootRandomLightnings(anomaly, range, anomaly.Comp.MaxBoltCount * 3, "Lightning", arcDepth: 3);
+        _lightning.ShootRandomLightnings(anomaly, range, anomaly.Comp.MaxBoltCount * 3, "SuperChargedLightning", arcDepth: 3);
     }
 
     public override void Update(float frameTime)
