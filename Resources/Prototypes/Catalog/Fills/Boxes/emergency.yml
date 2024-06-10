@@ -22,6 +22,7 @@
   parent: BoxCardboard
   id: BoxSurvivalEngineering
   description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
+  suffix: Engineering
   components:
   - type: StorageFill
     contents:
@@ -106,6 +107,7 @@
   parent: BoxCardboard
   id: BoxSurvivalSyndicate
   description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
+  suffix: Syndicate
   components:
   - type: StorageFill
     contents:
