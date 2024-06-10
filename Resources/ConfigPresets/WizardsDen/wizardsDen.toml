@@ -1,13 +1,10 @@
-﻿# Base configuration preset used on all Wizard's Den servers.
+# Base configuration preset used on all Wizard's Den servers.
 # Loaded before server-specific config presets by configuration.
 
 [game]
 desc             = "Official English Space Station 14 servers. Vanilla, roleplay ruleset."
 lobbyenabled     = true
 soft_max_players = 80
-panic_bunker.enabled = true
-panic_bunker.disable_with_admins = false
-panic_bunker.enable_without_admins = true
 panic_bunker.show_reason = true
 panic_bunker.custom_reason = "You have not played on a Wizard's Den server long enough to connect to this server. Please play on another Wizard's Den server for now."
 
