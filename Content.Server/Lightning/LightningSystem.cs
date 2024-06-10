@@ -49,10 +49,10 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="triggerLightningEvents">if the lightnings being fired should trigger lightning events.</param>
     public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype, bool triggerLightningEvents = true)
     {
-        if (_random.Prob(80))
+        if (lightningPrototype == "Lightning")
         {
             var spriteState = LightningRandomizer();
-            _beam.TryCreateBeam(user, target, "Lightning", spriteState);
+            _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
         }
         else
         {
