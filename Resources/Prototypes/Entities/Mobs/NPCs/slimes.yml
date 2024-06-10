@@ -93,7 +93,7 @@
     prototype: Slimes
     requiredLegs: 1
   - type: MeleeWeapon
-    altDisarm: false
+    #altDisarm: false - GreyStation
     soundHit:
         path: /Audio/Weapons/punch3.ogg
     angle: 0
@@ -122,12 +122,12 @@
   components:
   - type: ReplacementAccent
     accent: slimes
-  - type: GhostTakeoverAvailable
-  - type: GhostRole
-    makeSentient: true
-    name: ghost-role-information-slimes-name
-    description: ghost-role-information-slimes-description
-    raffle:
+  #- type: GhostTakeoverAvailable - GreyStation
+  #- type: GhostRole
+  #  makeSentient: true
+  #  name: ghost-role-information-slimes-name
+  #  description: ghost-role-information-slimes-description
+  #  raffle:
       settings: short
   - type: Speech
     speechVerb: Slime
@@ -198,10 +198,10 @@
     - type: NpcFactionMember
       factions:
         - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      raffle:
-        settings: short
+    #- type: GhostRole - GreyStation
+    #  description: ghost-role-information-angry-slimes-description
+    #  raffle:
+    #    settings: short
 
 - type: entity
   name: green slime
@@ -235,10 +235,10 @@
     - type: NpcFactionMember
       factions:
         - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      raffle:
-        settings: short
+    #- type: GhostRole - GreyStation
+    #  description: ghost-role-information-angry-slimes-description
+    #  raffle:
+    #    settings: short
 
 - type: entity
   name: yellow slime
@@ -272,7 +272,7 @@
     - type: NpcFactionMember
       factions:
         - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      raffle:
-        settings: short
+    #- type: GhostRole - GreyStation
+    #  description: ghost-role-information-angry-slimes-description
+    #  raffle:
+    #    settings: short

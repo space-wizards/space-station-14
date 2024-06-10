@@ -2213,7 +2213,7 @@
       0: Alive
       90: Dead
   - type: MeleeWeapon
-    altDisarm: false
+    #altDisarm: false - GreyStation
     angle: 0
     animation: WeaponArcBite
     soundHit:
@@ -2339,7 +2339,7 @@
     - type: Spider
       webPrototype: SpiderWebClown
     - type: MeleeWeapon
-      altDisarm: false
+      #altDisarm: false - GreyStation
       angle: 0
       animation: WeaponArcBite
       soundHit:
@@ -2789,7 +2789,7 @@
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
   - type: MeleeWeapon
-    altDisarm: false
+    #altDisarm: false - GreyStation
     angle: 0
     animation: WeaponArcBite
     soundHit:
@@ -2857,7 +2857,7 @@
     factions:
     - Syndicate
   - type: MeleeWeapon
-    altDisarm: false
+    #altDisarm: false - GreyStation
     angle: 0
     animation: WeaponArcBite
     soundHit:
