@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: BlitzTheSquishy
-  changes:
-  - message: Irish Coffee recipe adjusted to be more logical
-    type: Tweak
-  id: 6207
-  time: '2024-03-22T08:23:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26327
 - author: SlamBamActionman
   changes:
   - message: Space glue/lube tubes can now be used through the right-click menu.
@@ -3853,3 +3846,10 @@
   id: 6706
   time: '2024-06-09T18:28:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28775
+- author: Zonespace27
+  changes:
+  - message: Fixed a typo under the "Cargonia" header in the glossary.
+    type: Fix
+  id: 6707
+  time: '2024-06-10T13:19:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28818
