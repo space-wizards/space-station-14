@@ -19,11 +19,35 @@
   - type: Item
     size: Tiny
 
-# Muffins/Buns
+- type: entity
+  parent: FoodInjectableBase
+  id: FoodMuffinBase
+  abstract: true
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/misc.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
+  - type: Food
+    trash: FoodPlateMuffinTin
+  - type: Item
+    size: Tiny
+
+# Muffins
 
 - type: entity
   name: muffin
-  parent: FoodBakedBase
+  parent: FoodMuffinBase
   id: FoodBakedMuffin
   description: A delicious and spongy little cake.
   components:
@@ -41,7 +65,7 @@
 
 - type: entity
   name: berry muffin
-  parent: FoodBakedBase
+  parent: FoodMuffinBase
   id: FoodBakedMuffinBerry
   description: A delicious and spongy little cake, with berries.
   components:
@@ -64,7 +88,7 @@
 
 - type: entity
   name: cherry muffin
-  parent: FoodBakedBase
+  parent: FoodMuffinBase
   id: FoodBakedMuffinCherry
   description: A sweet muffin with cherry bits.
   components:
@@ -76,7 +100,7 @@
 
 - type: entity
   name: bluecherry muffin
-  parent: FoodBakedBase
+  parent: FoodMuffinBase
   id: FoodBakedMuffinBluecherry
   description: Blue cherries inside a delicious muffin.
   components:
@@ -88,7 +112,7 @@
 
 - type: entity
   name: chocolate muffin
-  parent: FoodBakedBase
+  parent: FoodMuffinBase
   id: FoodBakedMuffinChocolate
   description: A delicious and spongy chocolate muffin.
   components:
@@ -108,7 +132,7 @@
 
 - type: entity
   name: banana muffin
-  parent: FoodBakedBase
+  parent: FoodMuffinBase
   id: FoodBakedMuffinBanana
   description: A delicious and spongy banana muffin.
   components:
@@ -129,6 +153,8 @@
     tags:
     - Fruit
     - Banana
+
+# Buns
 
 - type: entity
   name: honey bun #TODO honey
