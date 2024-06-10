@@ -3,11 +3,15 @@ using Content.Client.Gameplay;
 using Content.Client.Guidebook;
 using Content.Client.Guidebook.Controls;
 using Content.Client.Lobby;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.CCVar;
 using Content.Shared.Guidebook;
 using Content.Shared.Input;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Shared.Configuration;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
@@ -19,21 +23,25 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 {
     [UISystemDependency] private readonly GuidebookSystem _guidebookSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
+
+    private const int PlaytimeOpenGuidebook = 60;
 
     private GuidebookWindow? _guideWindow;
     private MenuButton? GuidebookButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.GuidebookButton;
 
     public void OnStateEntered(LobbyState state)
     {
-        HandleStateEntered();
+        HandleStateEntered(state);
     }
 
     public void OnStateEntered(GameplayState state)
     {
-        HandleStateEntered();
+        HandleStateEntered(state);
     }
 
-    private void HandleStateEntered()
+    private void HandleStateEntered(State state)
     {
         DebugTools.Assert(_guideWindow == null);
 
@@ -41,6 +49,14 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         _guideWindow = UIManager.CreateWindow<GuidebookWindow>();
         _guideWindow.OnClose += OnWindowClosed;
         _guideWindow.OnOpen += OnWindowOpen;
+
+        if (state is LobbyState &&
+            _jobRequirements.FetchOverallPlaytime() < TimeSpan.FromMinutes(PlaytimeOpenGuidebook))
+        {
+            OpenGuidebook();
+            _guideWindow.RecenterWindow(new(0.5f, 0.5f));
+            _guideWindow.SetPositionFirst();
+        }
 
         // setup keybinding
         CommandBinds.Builder
@@ -159,6 +175,8 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
         if (GuidebookButton != null)
             GuidebookButton.SetClickPressed(!_guideWindow.IsOpen);
+
+        selected ??= _configuration.GetCVar(CCVars.DefaultGuide);
 
         if (guides == null)
         {
