@@ -94,7 +94,11 @@ public sealed class BeamSystem : SharedBeamSystem
             manager: manager,
             body: physics);
 
-        _physics.SetBodyType(ent, BodyType.Dynamic, manager: manager, body: physics);
+        // the body type used to be set to dynamic, but this would cause it so that
+        // when a lightning bolt hit something and it exploded, the lightning bolt
+        // would experience the explosion forces and each section would disjoint
+        // for obvious reasons, we don't want this to happen
+        _physics.SetBodyType(ent, BodyType.Static, manager: manager, body: physics);
         _physics.SetCanCollide(ent, true, manager: manager, body: physics);
         _broadphase.RegenerateContacts(ent, physics, manager);
 
