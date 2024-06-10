@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Stacks;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -17,6 +18,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     /// <summary>
     /// Default volume for a sheet if the material's entity prototype has no material composition.
@@ -121,7 +123,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (!CanTakeVolume(uid, volume, component))
             return false;
 
-        if (component.MaterialWhiteList != null && !component.MaterialWhiteList.Contains(materialId))
+        if (component.MaterialWhiteList == null ? false : !component.MaterialWhiteList.Contains(materialId))
             return false;
 
         var amount = component.Storage.GetValueOrDefault(materialId);
@@ -239,7 +241,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (!Resolve(toInsert, ref material, ref composition, false))
             return false;
 
-        if (storage.Whitelist?.IsValid(toInsert) == false)
+        if (_whitelistSystem.IsWhitelistFail(storage.Whitelist, toInsert))
             return false;
 
         if (HasComp<UnremoveableComponent>(toInsert))

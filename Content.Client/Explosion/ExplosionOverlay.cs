@@ -48,7 +48,7 @@ public sealed class ExplosionOverlay : Overlay
             DrawExplosion(drawHandle, args.WorldBounds, visuals, index, xforms, textures);
         }
 
-        drawHandle.SetTransform(Matrix3.Identity);
+        drawHandle.SetTransform(Matrix3x2.Identity);
         drawHandle.UseShader(null);
     }
 
@@ -78,7 +78,8 @@ public sealed class ExplosionOverlay : Overlay
         if (visuals.SpaceTiles == null)
             return;
 
-        gridBounds = Matrix3.Invert(visuals.SpaceMatrix).TransformBox(worldBounds).Enlarged(2);
+        Matrix3x2.Invert(visuals.SpaceMatrix, out var invSpace);
+        gridBounds = invSpace.TransformBox(worldBounds).Enlarged(2);
         drawHandle.SetTransform(visuals.SpaceMatrix);
 
         DrawTiles(drawHandle, gridBounds, index, visuals.SpaceTiles, visuals, visuals.SpaceTileSize, textures);
