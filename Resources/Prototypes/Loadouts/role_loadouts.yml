@@ -208,7 +208,7 @@
 - type: roleLoadout
   id: JobAtmosphericTechnician
   groups:
-  - AtmosphericTechnicianHead
+  - AtmosphericTechnicianHead # Goobstation
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianOuterClothing

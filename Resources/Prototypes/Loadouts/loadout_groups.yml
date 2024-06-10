@@ -634,8 +634,9 @@
 - type: loadoutGroup
   id: AtmosphericTechnicianHead
   name: loadout-group-atmospheric-technician-head
+  minLimit: 0
   loadouts:
-  - SeniorEngineerBeret
+  - SeniorEngineerBeret   # Goobstation
 
 - type: loadoutGroup
   id: AtmosphericTechnicianJumpsuit
@@ -644,8 +645,8 @@
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianJumpskirt
   - AtmosphericTechnicianJumpsuitCasual
-  - SeniorEngineerJumpskirt
-  - SeniorEngineerJumpsuit
+  - SeniorEngineerJumpskirt  # Goobstation
+  - SeniorEngineerJumpsuit   # Goobstation
 
 - type: loadoutGroup
   id: AtmosphericTechnicianOuterClothing
