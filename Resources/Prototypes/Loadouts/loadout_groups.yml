@@ -632,12 +632,21 @@
   - SeniorEngineerPDA
 
 - type: loadoutGroup
+  id: AtmosphericTechnicianHead
+  name: loadout-group-atmospheric-technician-head
+  minLimit: 0
+  loadouts:
+  - SeniorEngineerBeret   # Goobstation
+
+- type: loadoutGroup
   id: AtmosphericTechnicianJumpsuit
   name: loadout-group-atmospheric-technician-jumpsuit
   loadouts:
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianJumpskirt
   - AtmosphericTechnicianJumpsuitCasual
+  - SeniorEngineerJumpskirt  # Goobstation
+  - SeniorEngineerJumpsuit   # Goobstation
 
 - type: loadoutGroup
   id: AtmosphericTechnicianOuterClothing
