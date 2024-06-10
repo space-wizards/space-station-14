@@ -5,7 +5,7 @@
 # needs region tag
 
 [game]
-hostname = "[EN][New Player Server] Wizard's Den Farm Grass Hopper"
+hostname = "[EN][New Player Server] Wizard's Den Farm Grass Hopper [US East]"
 desc = "Official English Space Station 14 servers for new players. Vanilla, roleplay ruleset."
 panic_bunker.enabled = false
 panic_bunker.disable_with_admins = false
@@ -17,4 +17,4 @@ baby_jail.max_overall_minutes = 15
 baby_jail.custom_reason = "Sorry! Only new players can join the servers, try joining another one instead!"
 baby_jail.whitelisted_can_bypass = true
 [hub]
-tags = "lang:en,rp:low"
+tags = "lang:en,region:am_n_e,rp:low"
