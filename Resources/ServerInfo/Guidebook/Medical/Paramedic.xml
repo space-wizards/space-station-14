@@ -1,0 +1,24 @@
+<Document>
+  # Paramedic
+
+  [color=cyan]Paramedics[/color] are the most active doctors in the Medical Department.
+
+  Using their Rolling Beds and the Crew Monitoring Console, they track down critical and dead crew members to bring them back and be revived. Without them, people stuck in maints would stay in maints for the end of time.
+
+  ## Equipment
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerCrewMonitoring"/>
+  </Box>
+
+  - Rolling stuff
+
+  ## Getting Access
+
+  You need to go to HoP and get access to places so you can go and rescue dead people
+
+  ## Finding Action
+
+  the computer thingy
+
+</Document>
