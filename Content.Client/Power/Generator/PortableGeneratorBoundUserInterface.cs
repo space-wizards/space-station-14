@@ -19,6 +19,21 @@ public sealed class PortableGeneratorBoundUserInterface : BoundUserInterface
         base.Open();
         _window = this.CreateWindow<GeneratorWindow>();
         _window.SetEntity(Owner);
+        _window.OnState += args =>
+        {
+            if (args)
+            {
+                Start();
+            }
+            else
+            {
+                Stop();
+            }
+        };
+
+        _window.OnPower += SetTargetPower;
+        _window.OnEjectFuel += EjectFuel;
+        _window.OnSwitchOutput += SwitchOutput;
 
         _window.OpenCenteredLeft();
     }

@@ -14,6 +14,11 @@ public sealed partial class GeneratorWindow : FancyWindow
 
     private EntityUid _entity;
 
+    public event Action<int>? OnPower;
+    public event Action<bool>? OnState;
+    public event Action? OnSwitchOutput;
+    public event Action? OnEjectFuel;
+
     public GeneratorWindow()
     {
         RobustXamlLoader.Load(this);
@@ -22,13 +27,13 @@ public sealed partial class GeneratorWindow : FancyWindow
         TargetPower.IsValid += IsValid;
         TargetPower.ValueChanged += (args) =>
         {
-            bui.SetTargetPower(args.Value);
+            OnPower?.Invoke(args.Value);
         };
 
-        StartButton.OnPressed += _ => bui.Start();
-        StopButton.OnPressed += _ => bui.Stop();
-        OutputSwitchButton.OnPressed += _ => bui.SwitchOutput();
-        FuelEject.OnPressed += _ => bui.EjectFuel();
+        StartButton.OnPressed += _ => OnState?.Invoke(true);
+        StopButton.OnPressed += _ => OnState?.Invoke(false);
+        OutputSwitchButton.OnPressed += _ => OnSwitchOutput?.Invoke();
+        FuelEject.OnPressed += _ => OnEjectFuel?.Invoke();
     }
 
     public void SetEntity(EntityUid entity)
