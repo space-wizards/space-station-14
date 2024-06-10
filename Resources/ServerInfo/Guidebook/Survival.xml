@@ -2,10 +2,10 @@
 # Survival
 The life of a single person may make or break a situation if [color=#5b97bc]Medical[/color] is already swamped and under pressure.
 
-Your [color=cyan]longevity[/color] is vital to keep yourself out of the pile of bodies waiting to be treated when [textlink="evil-doers" link="Antagonists"] rise up against the crew.
+Your [color=cyan]longevity[/color] is vital to the station when [textlink="evil-doers" link="Antagonists"] rise up against the crew.
 
 ## Being Prepared
-The home screen of your PDA can tell you the station you are on, the alert level and all the crew on the station.
+The PDA you start with can tell you the [bold]station you are on[/bold], [bold]every member of the crew[/bold] and the [textlink="alert level." link="AlertLevels"]
 
 Beyond that, one of the best things you can do is turn on your [color=cyan]suit sensors[/color], done by opening up your suit's context menu (done by pressing [color=yellow][bold][keybind="UIRightClick"/][/bold][/color]) and navigating to "Sensor" then "Coordinates".
 This gives [color=#5b97bc]Medical[/color] a huge advantage towards finding you should you be mortally wounded.
