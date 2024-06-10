@@ -29,7 +29,7 @@ function load_contribs([string] $repo)
 $engineJson = load_contribs("space-wizards/RobustToolbox")
 $contentJson = load_contribs("space-wizards/space-station-14")
 
-($engineJson).login + ($contentJson).login `
+($engineJson).login + ($contentJson).login + ($add) `
     | select -unique `
     | Where-Object { -not $ignore[$_] }`
     | ForEach-Object { if($replacements[$_] -eq $null){ $_ } else { $replacements[$_] }} `

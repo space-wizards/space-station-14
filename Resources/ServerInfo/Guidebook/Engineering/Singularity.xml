@@ -88,8 +88,7 @@
 
   [color=red]Do not[/color] turn the PA on unless all the other subsystems are working properly and there is enough power to start the engine.
 
-  Turn power on using the PA control computer. Set the strength to an appropiate level. Currently the only appropriate level is [color=#f0684d]1[/color]; anything above that will ensure that singularity grows too strong to handle.
-  The higher the output stength is set on PA control computer, the bigger the singularity will be.
+  Turn power on using the PA control computer. Set the strength to an appropiate level. The higher the output stength is set on PA control computer, the bigger the singularity will be.
 
   Currently, the output power does not affect the ball lightning, beyond giving the ball lightning extra orbs around it.
 

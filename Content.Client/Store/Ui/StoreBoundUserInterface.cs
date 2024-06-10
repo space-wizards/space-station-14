@@ -15,9 +15,6 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     private StoreMenu? _menu;
 
     [ViewVariables]
-    private string _windowName = Loc.GetString("store-ui-default-title");
-
-    [ViewVariables]
     private string _search = string.Empty;
 
     [ViewVariables]
@@ -30,7 +27,9 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         _menu = this.CreateWindow<StoreMenu>();
-        _menu.Title = _windowName;
+        if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store))
+            _menu.Title = Loc.GetString(store.Name);
+
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
@@ -63,25 +62,15 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
 
-        if (_menu == null)
-            return;
-
         switch (state)
         {
             case StoreUpdateState msg:
                 _listings = msg.Listings;
 
-                _menu.UpdateBalance(msg.Balance);
+                _menu?.UpdateBalance(msg.Balance);
                 UpdateListingsWithSearchFilter();
-                _menu.SetFooterVisibility(msg.ShowFooter);
-                _menu.UpdateRefund(msg.AllowRefund);
-                break;
-            case StoreInitializeState msg:
-                _windowName = msg.Name;
-                if (_menu != null && _menu.Window != null)
-                {
-                    _menu.Window.Title = msg.Name;
-                }
+                _menu?.SetFooterVisibility(msg.ShowFooter);
+                _menu?.UpdateRefund(msg.AllowRefund);
                 break;
         }
     }

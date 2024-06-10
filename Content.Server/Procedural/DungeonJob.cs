@@ -28,10 +28,10 @@ public sealed partial class DungeonJob : Job<Dungeon>
     private readonly DecalSystem _decals;
     private readonly DungeonSystem _dungeon;
     private readonly EntityLookupSystem _lookup;
+    private readonly TagSystem _tag;
     private readonly TileSystem _tile;
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _transform;
-    private EntityQuery<TagComponent> _tagQuery;
 
     private readonly DungeonConfigPrototype _gen;
     private readonly int _seed;
@@ -53,6 +53,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
         DecalSystem decals,
         DungeonSystem dungeon,
         EntityLookupSystem lookup,
+        TagSystem tag,
         TileSystem tile,
         SharedTransformSystem transform,
         DungeonConfigPrototype gen,
@@ -72,10 +73,10 @@ public sealed partial class DungeonJob : Job<Dungeon>
         _decals = decals;
         _dungeon = dungeon;
         _lookup = lookup;
+        _tag = tag;
         _tile = tile;
         _maps = _entManager.System<SharedMapSystem>();
         _transform = transform;
-        _tagQuery = _entManager.GetEntityQuery<TagComponent>();
 
         _gen = gen;
         _grid = grid;
