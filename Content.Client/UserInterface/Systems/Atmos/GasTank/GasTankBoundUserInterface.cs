@@ -32,6 +32,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
         {
             base.Open();
             _window = this.CreateWindow<GasTankWindow>();
+            _window.SetTitle(EntMan.GetComponent<MetaDataComponent>(Owner).EntityName);
             _window.OnOutputPressure += SetOutputPressure;
             _window.OnToggleInternals += ToggleInternals;
         }

@@ -2,6 +2,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Access.UI
 {

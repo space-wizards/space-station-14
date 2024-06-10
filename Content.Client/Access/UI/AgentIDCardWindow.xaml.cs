@@ -23,7 +23,7 @@ namespace Content.Client.Access.UI
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
 
-        public event Action<string>? OnJobIconChanged;
+        public event Action<ProtoId<StatusIconPrototype>>? OnJobIconChanged;
 
         public AgentIDCardWindow()
         {
