@@ -263,7 +263,7 @@ public sealed partial class NoteEdit : FancyWindow
             return true;
         }
 
-        if (string.IsNullOrWhiteSpace(ExpiryLineEdit.Text) || !DateTime.TryParse(ExpiryLineEdit.Text, out var result) || DateTime.UtcNow > result)
+        if (string.IsNullOrWhiteSpace(ExpiryLineEdit.Text) || !DateTime.TryParse(ExpiryLineEdit.Text, out var result) || DateTime.UtcNow > result.ToUniversalTime())
         {
             ExpiryLineEdit.ModulateSelfOverride = Color.Red;
             return false;
