@@ -10,6 +10,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -48,6 +49,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
         SubscribeLocalEvent<ChameleonDisguisedComponent, DamageChangedEvent>(OnDamageChanged);
 
         SubscribeLocalEvent<ChameleonProjectorComponent, AfterInteractEvent>(OnInteract);
+        SubscribeLocalEvent<ChameleonProjectorComponent, GetVerbsEvent<UtilityVerb>>(OnGetVerbs);
         SubscribeLocalEvent<ChameleonProjectorComponent, DisguiseToggleNoRotEvent>(OnToggleNoRot);
         SubscribeLocalEvent<ChameleonProjectorComponent, DisguiseToggleAnchoredEvent>(OnToggleAnchored);
         SubscribeLocalEvent<ChameleonProjectorComponent, HandDeselectedEvent>(OnDeselected);
@@ -91,26 +93,47 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
     private void OnInteract(Entity<ChameleonProjectorComponent> ent, ref AfterInteractEvent args)
     {
-        if (!args.CanReach || args.Target is not {} target)
+        if (args.Handled || !args.CanReach || args.Target is not {} target)
+            return;
+
+        args.Handled = true;
+        TryDisguise(ent, args.User, target);
+    }
+
+    private void OnGetVerbs(Entity<ChameleonProjectorComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
+    {
+        if (!args.CanAccess)
             return;
 
         var user = args.User;
-        args.Handled = true;
+        var target = args.Target;
+        args.Verbs.Add(new UtilityVerb()
+        {
+            Act = () =>
+            {
+                TryDisguise(ent, user, target);
+            },
+            Text = Loc.GetString("chameleon-projector-set-disguise")
+        });
+    }
 
+    public bool TryDisguise(Entity<ChameleonProjectorComponent> ent, EntityUid user, EntityUid target)
+    {
         if (_container.IsEntityInContainer(target))
         {
             _popup.PopupClient(Loc.GetString(ent.Comp.ContainerPopup), target, user);
-            return;
+            return false;
         }
 
         if (IsInvalid(ent.Comp, target))
         {
             _popup.PopupClient(Loc.GetString(ent.Comp.InvalidPopup), target, user);
-            return;
+            return false;
         }
 
         _popup.PopupClient(Loc.GetString(ent.Comp.SuccessPopup), target, user);
         Disguise(ent, user, target);
+        return true;
     }
 
     private void OnToggleNoRot(Entity<ChameleonProjectorComponent> ent, ref DisguiseToggleNoRotEvent args)
