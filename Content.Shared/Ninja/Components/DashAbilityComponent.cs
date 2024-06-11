@@ -1,5 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Ninja.Systems;
+using Content.Shared.Physics;
+using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -29,6 +31,21 @@ public sealed partial class DashAbilityComponent : Component
     {
         Params = AudioParams.Default.WithVolume(5f)
     };
+
+    /// <summary>
+    /// Damage dealt after dashing through someone.
+    /// </summary>
+    [DataField]
+    public DamageSpecifier DashDamage = new()
+    {
+        DamageDict = new()
+        {
+            { "Slash", 30 }
+        }
+    };
+
+    [DataField]
+    public int CollisionMask = (int) CollisionGroup.BulletImpassable;
 }
 
 public sealed partial class DashEvent : WorldTargetActionEvent { }

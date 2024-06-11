@@ -1,3 +1,5 @@
+using System.Numerics;
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
@@ -6,8 +8,11 @@ using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Popups;
 using Content.Shared.Examine;
+using Content.Shared.Damage;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -24,6 +29,8 @@ public sealed class DashAbilitySystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+    [Dependency] protected readonly DamageableSystem Damageable = default!;
 
     public override void Initialize()
     {
@@ -87,6 +94,21 @@ public sealed class DashAbilitySystem : EntitySystem
             // can only dash if the destination is visible on screen
             _popup.PopupClient(Loc.GetString("dash-ability-cant-see", ("item", uid)), user, user);
             return;
+        }
+
+        // Creates a ray to check for objects between the ninja
+        var dir = target.Position - origin.Position;
+        var dis = Vector2.Distance(target.Position, origin.Position);
+        var ray = new CollisionRay(origin.Position, dir.Normalized(), comp.CollisionMask);
+        var rayCastResults = _physicsSystem.IntersectRay(origin.MapId, ray, dis, user, false).ToList(); // MaxDistance needs to not be hardcoded
+
+        // Deal damage to every object hit by the slashing attack
+        foreach (var hit in rayCastResults)
+        {
+            if (!HasComp<DamageableComponent>(hit.HitEntity))  // need to make a filter so it does not break structures
+                continue;
+
+            Damageable.TryChangeDamage(hit.HitEntity, comp.DashDamage, true);
         }
 
         _transform.SetCoordinates(user, args.Target);
