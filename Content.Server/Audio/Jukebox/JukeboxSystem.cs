@@ -152,9 +152,11 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
                 }
             }
 
+            if (comp.TimeWhenSongEnds == null)
             comp.Time += TimeSpan.FromSeconds(frameTime);
             if (comp.TimeWhenSongEnds < comp.Time)
             {
+                comp.TimeWhenSongEnds = null;
                 if (comp.SongIdQueue.Count == 0)
                     continue;
 
