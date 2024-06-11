@@ -1,0 +1,95 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "copyright": "Sprited by Bloomyex and implemented by RobynTheWarcrime",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+      {
+        "name": "braidedExtensions",
+        "directions": 4
+      },
+      {
+        "name": "cometTail",
+        "directions": 4
+      },
+      {
+        "name": "fantasyHair",
+        "directions": 4
+      },
+      {
+        "name": "flatTwistsUpdo",
+        "directions": 4
+      },
+      {
+        "name": "floorlengthBraid",
+        "directions": 4
+      },
+      {
+        "name": "floorlengthWavy",
+        "directions": 4
+      },
+      {
+        "name": "frontBraidsLong",
+        "directions": 4
+      },
+      {
+        "name": "frontBraidsMedium",
+        "directions": 4
+      },
+      {
+        "name": "frontBraidsShort",
+        "directions": 4
+      },
+      {
+        "name": "jellyfish",
+        "directions": 4
+      },
+      {
+        "name": "kazuyaMishima",
+        "directions": 4
+      },
+      {
+        "name": "longBraids",
+        "directions": 4
+      },
+      {
+        "name": "longCurvy",
+        "directions": 4
+      },
+      {
+        "name": "mullet",
+        "directions": 4
+      },
+      {
+        "name": "pelvicLengthBraid",
+        "directions": 4
+      },
+      {
+        "name": "sharpMohawk",
+        "directions": 4
+      },
+      {
+        "name": "shortAndPoofy",
+        "directions": 4
+      },
+      {
+        "name": "shortCurls",
+        "directions": 4
+      },
+      {
+        "name": "shoulderLengthBraid",
+        "directions": 4
+      },
+      {
+        "name": "styledCurls",
+        "directions": 4
+      },
+      {
+        "name": "unkemptScientist",
+        "directions": 4
+      }
+    ]
+  }

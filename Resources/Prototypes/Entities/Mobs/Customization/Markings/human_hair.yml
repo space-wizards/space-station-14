@@ -1349,3 +1349,173 @@
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
       state: tailed
+
+# Goobstation
+
+- type: marking
+  id: HumanHairBraidedExtension
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: braidedExtensions
+      
+- type: marking
+  id: HumanHairCometTail
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: cometTail
+      
+- type: marking
+  id: HumanHairFantasyHair
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: fantasyHair
+      
+- type: marking
+  id: HumanHairFlatTwistsUpdo
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: flatTwistsUpdo
+
+- type: marking
+  id: HumanHairFloorlengthBraid
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: floorlengthBraid
+      
+- type: marking
+  id: HumanHairFloorlengthWavy
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: floorlengthWavy
+
+- type: marking
+  id: HumanHairFrontBraidsLong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: frontBraidsLong
+      
+- type: marking
+  id: HumanHairFrontBraidsMedium
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: frontBraidsMedium
+      
+- type: marking
+  id: HumanHairFrontBraidsShort
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: frontBraidsShort
+      
+- type: marking
+  id: HumanHairJellyfish
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: jellyfish
+      
+- type: marking
+  id: HumanHairKazuyaMishima
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: kazuyaMishima
+      
+- type: marking
+  id: HumanHairLongBraids
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: longBraids
+
+- type: marking
+  id: HumanHairLongCurvy
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: longCurvy
+
+- type: marking
+  id: HumanHairMullet
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: mullet
+
+- type: marking
+  id: HumanHairPelvicLengthBraid
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: pelvicLengthBraid      
+      
+- type: marking
+  id: HumanHairSharpMohawk
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: sharpMohawk
+      
+- type: marking
+  id: HumanHairShortAndPoofy
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: shortAndPoofy
+      
+- type: marking
+  id: HumanHairShortCurls
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: shortCurls
+      
+- type: marking
+  id: HumanHairShoulderLengthBraid
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: shoulderLengthBraid
+      
+- type: marking
+  id: HumanHairStyledCurls
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: styledCurls
+      
+- type: marking
+  id: HumanHairUnkemptScientist
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Goobstation/Mobs/Customization/human_hair.rsi
+      state: unkemptScientist
