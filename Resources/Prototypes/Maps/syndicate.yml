@@ -1,7 +1,7 @@
 - type: gameMap
   id: NukieOutpost
   mapName: Nukie Outpost
-  mapPath: /Maps/Nonstations/nukieplanet.yml
+  mapPath: /Maps/Goobstation/Nonstations/nukieplanet.yml # Goobstation - use custom infiltrator
   minPlayers: 0
   stations:
     SyndicateOutpost:

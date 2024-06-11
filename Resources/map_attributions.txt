@@ -6,7 +6,7 @@
 
 - files: ["barratry.yml"]
   authors: Emogarbage, Scribbles0
- 
+
 - files: ["box.yml"]
   authors: ACJM, Emisse
 
@@ -20,7 +20,7 @@
   authors: Emisse
 
 - files: ["infiltrator.yml"]
-  authors: DogZeroX, Emisse
+  authors: DogZeroX, Emisse, Piras314
 
 - files: ["kettle.yml"]
   authors: Checkraze
@@ -35,7 +35,7 @@
   authors: checkraze
 
 - files: ["nukieplanet.yml"]
-  authors: DogZeroX, Emisse, metalgearsloth
+  authors: DogZeroX, Emisse, metalgearsloth, Piras314
 
 - files: ["omega.yml"]
   authors: Emisse
