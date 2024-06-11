@@ -431,6 +431,10 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         return beacon != null;
     }
 
+    /// <summary>
+    /// Returns a string describing the rough distance and direction
+    /// to the position of <paramref name="ent"/> from the nearest beacon.
+    /// </summary>
     [PublicAPI]
     public string GetNearestBeaconString(Entity<TransformComponent?> ent)
     {
@@ -439,6 +443,11 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
         return GetNearestBeaconString(_transformSystem.GetMapCoordinates(ent, ent.Comp));
     }
+
+    /// <summary>
+    /// Returns a string describing the rough distance and direction
+    /// to <paramref name="coordinates"/> from the nearest beacon.
+    /// </summary>
 
     public string GetNearestBeaconString(MapCoordinates coordinates)
     {
