@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Audio;
 using Content.Server.Power.Components;
+using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Gravity;
@@ -30,18 +31,16 @@ namespace Content.Server.Gravity
             SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<GravityGeneratorComponent, SharedGravityGeneratorComponent.SwitchGeneratorMessage>(
                 OnSwitchGenerator);
-            SubscribeLocalEvent<GravityGeneratorComponent, InteractUsingEvent>(OnInteractUsing, before: new []{typeof(AnchorableSystem)});
+            SubscribeLocalEvent<GravityGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         }
 
-        private void OnInteractUsing(Entity<GravityGeneratorComponent> gravity, ref InteractUsingEvent args)
+        private void OnUnanchorAttempt(Entity<GravityGeneratorComponent> ent, ref UnanchorAttemptEvent args)
         {
-            if (!TryComp<ApcPowerReceiverComponent>(args.Target, out var apc))
-                return;
-            if (!apc.Powered)
-                return;
-
-            _popup.PopupEntity(Loc.GetString("gravity-generator-interact-failed"), args.Target);
-            args.Handled = true;
+            if (TryComp<ApcPowerReceiverComponent>(ent, out var apc) && apc.Powered)
+            {
+                _popup.PopupEntity(Loc.GetString("gravity-generator-interact-failed"), ent);
+                args.Cancel();
+            }
         }
 
         private void OnParentChanged(EntityUid uid, GravityGeneratorComponent component, ref EntParentChangedMessage args)

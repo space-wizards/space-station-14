@@ -29,4 +29,4 @@ gravity-generator-window-eta-value = { TOSTRING($left, "m\\:ss") }
 
 # Interact
 
-gravity-generator-interact-failed = The gravitational field is pushing you away.
+gravity-generator-interact-failed = The active gravitational field is pushing you away.
