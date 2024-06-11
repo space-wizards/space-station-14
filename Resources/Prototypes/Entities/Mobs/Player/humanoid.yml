@@ -153,6 +153,7 @@
   id: ERTChaplain
   parent: ERTLeader
   components:
+    - type: BibleUser
     - type: GhostRole
       name: ghost-role-information-ert-chaplain-name
       description: ghost-role-information-ert-chaplain-description

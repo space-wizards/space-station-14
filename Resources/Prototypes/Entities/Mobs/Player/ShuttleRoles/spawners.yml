@@ -1,6 +1,6 @@
 ## See also ../settings.yml and ../roles.yml
 
-### Visitors with Visitor ID & freelance comms
+### Visitors with Visitor ID
 
 # Command
 
@@ -199,8 +199,6 @@
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorWarden
-
-# Misc
 
 # Cargo
 
@@ -743,7 +741,7 @@
 
 - type: entity
   name: visiting service worker spawner
-  id: Visitor Service Worker Spawner
+  id: VisitorServiceWorkerSpawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -822,7 +820,151 @@
 
 # Civilian
 
+# Misc
+
+- type: entity
+  name: NanoTrasen visitor spawner
+  id: NTVisitorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCaptain
+    - RandomHumanoidVisitorCE
+    - RandomHumanoidVisitorCMO
+    - RandomHumanoidVisitorHOP
+    - RandomHumanoidVisitorHOS
+    - RandomHumanoidVisitorQM
+    - RandomHumanoidVisitorRD
+    - RandomHumanoidVisitorSecurityCadet
+    - RandomHumanoidVisitorSecurityOfficer
+    - RandomHumanoidVisitorDetective
+    - RandomHumanoidVisitorWarden
+    - RandomHumanoidVisitorCargoTechnician
+    - RandomHumanoidVisitorSalvageSpecialist
+    - RandomHumanoidVisitorAtmosTech
+    - RandomHumanoidVisitorTechnicalAssistant
+    - RandomHumanoidVisitorEngineer
+    - RandomHumanoidVisitorMedicalIntern
+    - RandomHumanoidVisitorMedicalDoctor
+    - RandomHumanoidVisitorParamedic
+    - RandomHumanoidVisitorPsychologist
+    - RandomHumanoidVisitorChemist
+    - RandomHumanoidVisitorVirologist
+    - RandomHumanoidVisitorGeneticist
+    - RandomHumanoidVisitorDentist
+    - RandomHumanoidVisitorResearchAssistant
+    - RandomHumanoidVisitorScientist
+    - RandomHumanoidVisitorBartender
+    - RandomHumanoidVisitorBotanist
+    - RandomHumanoidVisitorBoxer
+    - RandomHumanoidVisitorChaplain
+    - RandomHumanoidVisitorChef
+    - RandomHumanoidVisitorClown
+    - RandomHumanoidVisitorJanitor
+    - RandomHumanoidVisitorLawyer
+    - RandomHumanoidVisitorLibrarian
+    - RandomHumanoidVisitorMusician
+    - RandomHumanoidVisitorMime
+    - RandomHumanoidVisitorReporter
+    - RandomHumanoidVisitorServiceWorker
+    - RandomHumanoidVisitorZookeeper
+    - MobSkeletonCloset
+
+- type: entity
+  name: NanoTrasen visitor spawner
+  suffix: 50
+  id: NTVisitorSpawner50
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: ConditionalSpawner
+    prototypes:
+    - NTVisitorSpawner
+    chance: 0.5
+
+- type: entity
+  name: NanoTrasen visitor spawner
+  suffix: 33
+  id: NTVisitorSpawner33
+  parent: NTVisitorSpawner50
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - NTVisitorSpawner
+    chance: 0.33
+
+- type: entity
+  name: NanoTrasen visitor spawner
+  suffix: 25
+  id: NTVisitorSpawner25
+  parent: NTVisitorSpawner50
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - NTVisitorSpawner
+    chance: 0.25
+
+- type: entity
+  name: NanoTrasen visitor spawner
+  suffix: 20
+  id: NTVisitorSpawner20
+  parent: NTVisitorSpawner50
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - NTVisitorSpawner
+    chance: 0.20
+
+- type: entity
+  name: NanoTrasen visitor spawner
+  suffix: 10
+  id: NTVisitorSpawner10
+  parent: NTVisitorSpawner50
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - NTVisitorSpawner
+    chance: 0.10
+
 ### Syndicate & Hostiles
+
+- type: entity
+  name: syndicate team leader spawner
+  id: SyndieSoldierTeamLeaderSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_syndicate
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidSyndieSoldierTeamLeader
+
+- type: entity
+  name: syndicate soldier spawner
+  id: SyndieSoldierSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_syndicate
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidSyndieSoldier
 
 - type: entity
   name: syndie disaster victim spawner
@@ -838,4 +980,62 @@
     prototypes:
     - RandomHumanoidSyndieDisasterVictim
 
+- type: entity
+  name: pirate crewman spawner
+  suffix: scooner
+  id: PirateScoonerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner-red
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidPirateScooner
+
+- type: entity
+  name: pirate captain spawner
+  suffix: scooner
+  id: PirateCaptainScoonerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner-red
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidPirateCaptainScooner
+
 ### Other
+
+- type: entity
+  name: Blackmarketeer spawner
+  id: VisitorBlackmarketeerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBlackmarketeer
+
+- type: entity
+  name: cossack spawner
+  id: CossackSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner-yellow
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidCossack

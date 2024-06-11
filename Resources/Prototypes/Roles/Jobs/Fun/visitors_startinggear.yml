@@ -1,4 +1,4 @@
-### Visitors with Visitor ID & Freelance comms
+### Visitors with Visitor ID
 
 # Command
 
@@ -201,7 +201,6 @@
     ears: ClothingHeadsetQM
     outerClothing: ClothingOuterWinterQM
 
-
 # Security
 
 - type: startingGear
@@ -348,8 +347,6 @@
     pocket2: Zipties
   inhand:
   - FlashlightSeclite
-
-# Misc
 
 # Cargo
 
@@ -1155,7 +1152,7 @@
     gloves: ClothingHandsGlovesLeather
     head: BladedFlatcapBrown
     neck: ClothingNeckLawyerbadge
-    id: VisitorPDA
+    id: VisitorLawyerPDA
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
     eyes: ClothingEyesGlassesSunglasses
@@ -1166,33 +1163,12 @@
   - BriefcaseBrownFilled
 
 - type: startingGear
-  id: VisitorLawyer
-  equipment:
-    jumpsuit: 
-    shoes: 
-    gloves:
-    head: 
-    neck: 
-    mask: 
-    id: VisitorPDA
-    back: 
-    belt: 
-    eyes: 
-    ears: 
-    outerClothing: 
-    suitstorage:
-    pocket1: 
-    pocket2: 
-  inhand:
-  - 
-
-- type: startingGear
   id: VisitorLibrarian
   equipment:
     jumpsuit: ClothingUniformJumpsuitLibrarian
     shoes: ClothingShoesBootsLaceup
     neck: ClothingNeckScarfStripedGreen
-    id: VisitorPDA
+    id: VisitorLibrarianPDA
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
     eyes: ClothingEyesGlassesJamjar
@@ -1571,6 +1547,8 @@
     pocket1: WeaponFlareGun
     pocket2: PillCanisterDylovene
 
+# Misc
+
 ### Challenge Visitors
 
 # Command
@@ -1700,3 +1678,79 @@
 # Science
 
 # Civilian
+
+# Misc
+
+### Syndicate & Hostiles
+
+- type: startingGear
+  id: PirateScoonerAltA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPirate
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadBandRed
+    id: PiratePDA
+    back: ClothingBackpackSatchelLeather
+    belt: ClothingBeltUtility
+    ears: ClothingHeadsetFreelance
+    pocket1: WeaponPistolFlintlock
+    pocket2: HandheldGPSBasic
+  inhand:
+    - Cutlass
+
+- type: startingGear
+  id: PirateScoonerAltB
+  parent: VisitorPirateScoonerAltA
+  equipment:
+    head: ClothingHeadHatPirateTricord
+    outerClothing: ClothingOuterCoatGentle
+
+- type: startingGear
+  id: PirateScoonerAltC
+  parent: VisitorPirateScoonerAltA
+  equipment:
+    head: ClothingHeadBandBlack
+  inhand:
+    - WeaponShotgunBlunderbuss
+
+- type: startingGear
+  id: PirateScoonerAltD
+  parent: PirateScoonerAltA
+  equipment:
+    head: ClothingHeadHatPirateTricord
+    pocket1: WeaponRevolverPirate
+
+- type: startingGear
+  id: PirateCaptainScooner
+  parent: PirateScoonerAltA
+  equipment:
+    head: ClothingHeadHatPirate
+    ears: ClothingHeadsetAltFreelancer
+    neck: ClothingNeckCloakPirateCap
+    outerClothing: ClothingOuterVestWeb
+    pocket1: WeaponRevolverPirate
+
+### Other
+
+- type: startingGear
+  id: VisitorBlackmarketeer
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMercenary
+    shoes: ClothingShoesBootsMercFilled
+    head: ClothingHeadHelmetMerc
+    id: VisitorPDA
+    back: ClothingBackpackMerc
+    belt: ClothingBeltMercWebbing
+    ears: ClothingHeadsetGrey
+    outerClothing: ClothingOuterVestWebMerc
+    pocket1: WeaponLaserSvalinn
+    pocket2: RadioHandheld
+
+- type: startingGear
+  id: CossackGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCossack
+    shoes: ClothingShoesBootsSalvage
+    head: ClothingHeadHatGreyFlatcap
+    id: VisitorPDA
+    back: ClothingBackpack

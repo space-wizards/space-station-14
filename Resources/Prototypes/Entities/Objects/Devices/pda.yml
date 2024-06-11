@@ -245,6 +245,7 @@
     penSlot:
       startingItem: CrayonOrange # no pink crayon?!?
       # ^ Still unacceptable.
+      # ^ I would have to concur.
       ejectSound: /Audio/Items/bikehorn.ogg
       priority: -1
       whitelist:
@@ -280,6 +281,15 @@
         - ItemMask
 
 - type: entity
+  parent: ClownPDA
+  id: VisitorClownPDA
+  suffix: Visitor
+  components:
+  - type: Pda
+    id: VisitorIDCard
+    state: pda-clown
+
+- type: entity
   parent: BasePDA
   id: MimePDA
   name: mime PDA
@@ -311,6 +321,15 @@
   - type: PdaBorderColor
     borderColor: "#333333"
   - type: Icon
+    state: pda-chaplain
+
+- type: entity
+  parent: ChaplainPDA
+  id: VisitorChaplainPDA
+  suffix: Visitor
+  components:
+  - type: Pda
+    id: VisitorIDCard
     state: pda-chaplain
 
 - type: entity
@@ -392,6 +411,15 @@
     state: pda-library
 
 - type: entity
+  parent: LibrarianPDA
+  id: VisitorLibrarianPDA
+  suffix: Visitor
+  components:
+  - type: Pda
+    id: VisitorIDCard
+    state: pda-library
+
+- type: entity
   parent: BasePDA
   id: LawyerPDA
   name: lawyer PDA
@@ -409,6 +437,15 @@
   - type: PdaBorderColor
     borderColor: "#6f6192"
   - type: Icon
+    state: pda-lawyer
+
+- type: entity
+  parent: LawyerPDA
+  id: VisitorLawyerPDA
+  suffix: Visitor
+  components:
+  - type: Pda
+    id: VisitorIDCard
     state: pda-lawyer
 
 - type: entity
@@ -529,6 +566,15 @@
   - type: GuideHelp
     guides:
     - Medical Doctor
+
+- type: entity
+  parent: MedicalPDA
+  id: VisitorMedicalPDA
+  suffix: Visitor
+  components:
+  - type: Pda
+    id: VisitorIDCard
+    state: pda-medical
 
 - type: entity
   parent: BaseMedicalPDA
@@ -707,6 +753,15 @@
     handheld: true
     bank: 1
     program: 2
+
+- type: entity
+  parent: MusicianPDA
+  id: VisitorMusicianPDA
+  suffix: Visitor
+  components:
+  - type: Pda
+    id: VisitorIDCard
+    state: pda-musician
 
 - type: entity
   parent: BasePDA

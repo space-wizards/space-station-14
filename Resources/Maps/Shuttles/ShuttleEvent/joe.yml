@@ -1811,7 +1811,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,4.5
       parent: 1
-- proto: RandomHumanoidTravelingChef
+- proto: VisitorChefSpawner
   entities:
   - uid: 310
     components:

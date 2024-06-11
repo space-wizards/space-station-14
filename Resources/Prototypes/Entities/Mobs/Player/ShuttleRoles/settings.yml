@@ -355,6 +355,7 @@
   id: VisitorChaplain
   parent: EventHumanoid
   components:
+    - type: BibleUser
     - type: GhostRole
       name: ghost-role-information-lost-cargo-technical-name
       description: ghost-role-information-lost-cargo-technical-description
@@ -645,6 +646,40 @@
 ### Syndicate & Hostiles
 
 - type: randomHumanoidSettings
+  id: SyndieSoldierTeamLeader
+  parent: EventHumanoid
+  components:
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: NukeOperative
+    - type: GhostRole
+      name: ghost-role-information-syndie-disaster-victim-name
+      description: ghost-role-information-syndie-disaster-victim-description
+      rules: ghost-role-information-syndie-disaster-victim-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ SyndicateFootsoldierTeamLeaderGear ]
+
+- type: randomHumanoidSettings
+  id: SyndieSoldier
+  parent: EventHumanoid
+  components:
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: NukeOperative
+    - type: GhostRole
+      name: ghost-role-information-syndie-disaster-victim-name
+      description: ghost-role-information-syndie-disaster-victim-description
+      rules: ghost-role-information-syndie-disaster-victim-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ SyndicateFootsoldierGear ]
+
+- type: randomHumanoidSettings
   id: SyndieVisitor
   parent: EventHumanoid
   components:
@@ -660,4 +695,62 @@
     - type: Loadout
       prototypes: [ SyndicateOperativeGearCivilian ]
 
+- type: randomHumanoidSettings
+  id: PirateScooner
+  parent: EventHumanoid
+  components:
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: GhostRole
+      name: ghost-role-information-syndie-disaster-victim-name
+      description: ghost-role-information-syndie-disaster-victim-description
+      rules: ghost-role-information-syndie-disaster-victim-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ PirateScoonerAltA, PirateScoonerAltB, PirateScoonerAltC, PirateScoonerAltD ]
+
+- type: randomHumanoidSettings
+  id: PirateCaptainScooner
+  parent: EventHumanoid
+  components:
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: GhostRole
+      name: ghost-role-information-syndie-disaster-victim-name
+      description: ghost-role-information-syndie-disaster-victim-description
+      rules: ghost-role-information-syndie-disaster-victim-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ PirateCaptainScooner ]
+
 ### Other
+
+- type: randomHumanoidSettings
+  id: VisitorBlackmarketeer
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-cargo-technical-name
+      description: ghost-role-information-lost-cargo-technical-description
+      rules: ghost-role-information-lost-cargo-technical-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ VisitorBlackmarketeer, VisitorBlackmarketeer ]
+
+- type: randomHumanoidSettings
+  id: Cossack
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-syndie-disaster-victim-name
+      description: ghost-role-information-syndie-disaster-victim-description
+      rules: ghost-role-information-syndie-disaster-victim-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ CossackGear ]

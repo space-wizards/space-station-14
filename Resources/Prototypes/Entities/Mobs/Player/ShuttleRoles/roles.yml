@@ -1,6 +1,6 @@
 ## See also ../settings.yml and ../spawners.yml
 
-### Nanotrasen Visitors with Nanotrasen ID
+### Visitors with Visitor ID
 
 # Command
 
@@ -115,16 +115,6 @@
       state: icon
     - type: RandomHumanoidSpawner
       settings: VisitorWarden
-
-# Misc
-
-- type: entity
-  id: RandomHumanoidClownTroupeBanana
-  name: banana clown troupe
-  parent: RandomHumanoidVisitorClown
-  components:
-    - type: RandomHumanoidSpawner
-      settings: ClownTroupeBanana
 
 # Cargo
 
@@ -436,23 +426,15 @@
     - type: RandomHumanoidSpawner
       settings: VisitorZookeeper
 
-### Visitors with Visitor ID
-
-# Command
-
-# Security
-
 # Misc
 
-# Cargo
-
-# Engineering
-
-# Medical
-
-# Science
-
-# Civilian
+- type: entity
+  id: RandomHumanoidClownTroupeBanana
+  name: banana clown troupe
+  parent: RandomHumanoidVisitorClown
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ClownTroupeBanana
 
 ### Visitors missing equipment for challenges
 
@@ -516,7 +498,29 @@
 
 # Civilian
 
+# Misc
+
 ### Syndicate & Hostiles
+
+- type: entity
+  id: RandomHumanoidSyndieSoldierTeamLeader
+  name: syndicate team leader ghost role
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner_syndicate
+    - type: RandomHumanoidSpawner
+      settings: SyndieSoldierTeamLeader
+
+- type: entity
+  id: RandomHumanoidSyndieSoldier
+  name: syndicate soldier ghost role
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner_syndicate
+    - type: RandomHumanoidSpawner
+      settings: SyndieSoldier
 
 - type: entity
   id: RandomHumanoidSyndieDisasterVictim
@@ -528,4 +532,47 @@
     - type: RandomHumanoidSpawner
       settings: SyndieDisasterVictim
 
+- type: entity
+  id: RandomHumanoidPirateScooner
+  name: pirate crewman ghost role
+  suffix: scooner
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner-red
+    - type: RandomHumanoidSpawner
+      settings: PirateScooner
+
+- type: entity
+  id: RandomHumanoidPirateCaptainScooner
+  name: pirate captain ghost role
+  suffix: scooner
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner-red
+    - type: RandomHumanoidSpawner
+      settings: PirateCaptainScooner
+
 ### Other
+
+- type: entity
+  id: RandomHumanoidVisitorBlackmarketeer
+  name: visiting blackmarketeer ghost role
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: VisitorBlackmarketeer
+
+
+- type: entity
+  id: RandomHumanoidCossack
+  name: cossack ghost role
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner-yellow
+    - type: RandomHumanoidSpawner
+      settings: Cossack
