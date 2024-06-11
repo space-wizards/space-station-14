@@ -1,0 +1,10 @@
+<BoxContainer xmlns="https://spacestation14.io" xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    Orientation="Horizontal"
+    HorizontalExpand="True"
+>
+    <Label Name="SongName" Text="00:00 / 00:00" HorizontalAlignment="Left" HorizontalExpand="True"/>
+    <Button Name="PlayButton" Text="{Loc 'jukebox-menu-buttonplay'}" />
+    <Button Name="StopButton" Text="{Loc 'jukebox-menu-buttonstop'}" />
+    <Button Name="RemoveButton" Text="{Loc 'jukebox-menu-buttonremove'}" />
+    <Button Name="QueueButton" Text="{Loc 'jukebox-menu-buttonqueue'}" />
+</BoxContainer>
