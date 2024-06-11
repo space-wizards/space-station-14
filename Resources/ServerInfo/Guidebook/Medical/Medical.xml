@@ -41,7 +41,7 @@
   - [color=cyan]Dead[/color]: These people are clearly dead, but still have a soul. They have a medium priority, as you can still save them, but there is a timer until they start rotting. The [color=cyan]Medical Hud[/color] displays a black bar with a heart-rate icon. A dead person has over 200 total damage.
   - [color=cyan]Rotting[/color]: When inspected, it says their body is rotting. If you have [color=cyan]Cloning[/color] or [color=cyan]Cryogenics[/color], you still might be able to save them. If not, you should put them in the [color=cyan]Morgue[/color].
   - [color=cyan]Soulless[/color]: This person lacks a soul when it escaped after death. When inspected, if it says that their soul has departed or has gone catatonic, they are soulless. If you have [color=cyan]Cognizine[/color], you can give them a soul again. If they are alive, put them in Cryosleep, and if they are dead, put them in the [color=cyan]Morgue[/color].
-  - [color=cyan]SSD[/color]: Pations may have a soul but still be unresponsive, meaning they have contracted Space Sleep Disorder. The only thing you can do for this patient is to put them in a chair and hope they return or put them in Cryosleep.
+  - [color=cyan]SSD[/color]: Patients may have a soul but still be unresponsive, meaning they have contracted Space Sleep Disorder. The only thing you can do for this patient is to put them in a chair and hope they return or put them in Cryosleep.
 
   ## Triaging Locations
 
@@ -129,7 +129,7 @@
     <GuideEntityEmbed Entity="MedkitCombatFilled"/>
   </Box>
 
-  First, at the start of every shift, there is a limited amount of medkids for dealing with severe and bizarre injuries. This limited nature means you should not waste it on trivial injuries until Chemistry has gotten all the Chemicals ready.
+  First, at the start of every shift, there is a limited amount of medkits for dealing with severe and bizarre injuries. This limited nature means you should not waste it on trivial injuries until Chemistry has gotten all the Chemicals ready.
 
   These are the only ways to deal with genetic, toxin, and asphyxiation damage at the start of the shift.
 
