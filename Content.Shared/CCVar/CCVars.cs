@@ -1058,7 +1058,7 @@ namespace Content.Shared.CCVar
         ///     Useful to prevent clipping through objects.
         /// </summary>
         public static readonly CVarDef<float> SpaceWindMaxVelocity =
-            CVarDef.Create("atmos.space_wind_max_velocity", 25f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind_max_velocity", 15f, CVar.SERVERONLY);
 
         /// <summary>
         ///     If an object's mass is below this number, then this number is used in place of mass to determine whether air pressure can throw an object.
@@ -1069,7 +1069,7 @@ namespace Content.Shared.CCVar
         ///     And maybe do your part to fix that? :)
         /// </remarks>
         public static readonly CVarDef<float> SpaceWindMinimumCalculatedMass =
-            CVarDef.Create("atmos.space_wind_minimum_calculated_mass", 5f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind_minimum_calculated_mass", 10f, CVar.SERVERONLY);
 
         /// <summary>
         /// Calculated as 1/Mass, where Mass is the physics.Mass of the desired threshold.
@@ -1077,7 +1077,7 @@ namespace Content.Shared.CCVar
         /// before it stops resisting space wind more.
         /// </summary>
         public static readonly CVarDef<float> SpaceWindMaximumCalculatedInverseMass =
-            CVarDef.Create("atmos.space_wind_maximum_calculated_inverse_mass", 0.04f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind_maximum_calculated_inverse_mass", 0.0125f, CVar.SERVERONLY);
 
         /// <summary>
         /// Increases default airflow calculations to O(n^2) complexity, for use with heavy space wind optimizations. Potato servers BEWARE
@@ -1091,7 +1091,7 @@ namespace Content.Shared.CCVar
         ///     A "throwing" atmospheric pressure difference ignores this limit, but not the max. velocity limit.
         /// </summary>
         public static readonly CVarDef<float> SpaceWindMaxPushForce =
-            CVarDef.Create("atmos.space_wind_max_push_force", 20f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind_max_push_force", 10f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether monstermos tile equalization is enabled.

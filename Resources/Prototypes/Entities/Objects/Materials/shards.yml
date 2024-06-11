@@ -46,6 +46,8 @@
     damage:
       types:
         Slash: 2
+  - type: EmbeddableProjectile # Goobstation - Make shards embeddable so spacewind doesnt massacre the entire station :-)
+    sound: /Audio/Weapons/bladeslice.ogg
   - type: Tag
     tags:
     - Trash
