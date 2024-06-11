@@ -4,6 +4,44 @@ ghost-role-component-default-rules = All normal rules apply unless an administra
                                      You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                      You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
 
+ghost-role-information-rules-default-crew-aligned = You are a [color=green]Non-Antagonist[/color] unless the game tells you otherwise.
+                                                    [color=green]Non-Antagonists[/color] are intended to work towards a net positive effect on the round.
+                                                    You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                                    You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                                    You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+
+ghost-role-information-rules-default-solo-antagonist = You are a [color=red]Solo-Antagonist[/color], unless the game tells you otherwise.
+                                                       [color=red]Solo-Antagonists[/color] may do anything necessary to work towards their own goals and drive the round towards a conclusion.
+                                                       You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                                       You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                                       You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+
+ghost-role-information-rules-default-team-antagonist = You are a [color=red]Team-Antagonist[/color].
+                                                       You must work with your team or follow reasonable directions from your team leaders.
+                                                       [color=red]Team-Antagonists[/color] may do anything necessary to work towards their collective goals and drive the round towards a conclusion.
+                                                       You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                                       You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                                       You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+
+ghost-role-information-rules-default-free-agent = You are a [color=yellow]Free Agent[/color], unless the game tells you otherwise.
+                                                  [color=yellow]Free Agents[/color] may do anything necessary to work towards their own goals, but should not take actions which will likely end the round.
+                                                  You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                                  You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                                  You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+
+ghost-role-information-rules-default-familiar = You are a [color=brown]Familiar[/color], unless the game tells you otherwise.
+                                                [color=brown]Familiars[/color] are Non-Antagonists but should follow the instructions to obey someone. You may kill or take destructive actions on their orders.
+                                                You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                                You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                                You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+
+ghost-role-information-rules-default-silicon = You are a [color=cyan]Silicon[/color].
+                                               [color=cyan]Silicons[/color] have a set of laws that they must follow above all else except the core rules.
+											   If you have no laws, you may act as a Free Agent.
+											   You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                               You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                               You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+
 ghost-role-information-mouse-name = Mouse
 ghost-role-information-mouse-description = A hungry and mischievous mouse.
 
@@ -223,6 +261,37 @@ ghost-role-information-syndicate-reinforcement-rules = Normal syndicate antagoni
 ghost-role-information-syndicate-monkey-reinforcement-name = Syndicate Monkey Agent
 ghost-role-information-syndicate-monkey-reinforcement-description = Someone needs reinforcements. You, a trained monkey, will help them.
 ghost-role-information-syndicate-monkey-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+
+
+
+
+
+ghost-role-information-security-name = Security
+ghost-role-information-security-description = You are part of a security task force, but seem to have found yourself in a strange situation...
+
+ghost-role-information-medical-name = Medical
+ghost-role-information-medical-virologist-name = Virologist
+ghost-role-information-medical-geneticist-name = Geneticist
+ghost-role-information-medical-dentist-name = Dentist
+ghost-role-information-medical-description = You are a medical professional, but seem to have found yourself in a strange situation...
+
+ghost-role-information-cargo-name = Cargo
+ghost-role-information-cargo-description = You are part of a logistics mission, but seem to have found yourself in a strange situation...
+
+ghost-role-information-engineering-name = Engineering 
+ghost-role-information-engineering-description = You are on an engineering job, but seem to have found yourself in a strange situation...
+
+ghost-role-information-science-name = Science
+ghost-role-information-science-description = You are part of a science team, but seem to have found yourself in a strange situation...
+
+ghost-role-information-civilian-name = Civilian
+ghost-role-information-civilian-description = You were just hanging out, but seem to have found yourself in a strange situation...
+ghost-role-information-civilian-centcom-lawyer-name = Centcom Lawyer
+ghost-role-information-civilian-centcom-lawyer-description = A lawyer direct from the Central Legal Division.
+
+
+
+
 
 ghost-role-information-lost-cargo-technical-name = Lost Cargo Technician
 ghost-role-information-lost-cargo-technical-description = Something went wrong and your cargo shuttle with the goods was beamed into the sector to another station.

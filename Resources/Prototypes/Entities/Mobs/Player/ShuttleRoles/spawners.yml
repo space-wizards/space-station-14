@@ -12,8 +12,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorCaptain
@@ -32,8 +32,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorCaptain
@@ -46,8 +46,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_engineering
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorCE
@@ -60,8 +60,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorCMO
@@ -74,8 +74,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorHOP
@@ -88,8 +88,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorHOS
@@ -102,8 +102,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_science
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorRD
@@ -116,8 +116,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_cargo
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorQM
@@ -132,8 +132,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorSecurityOfficer
@@ -152,8 +152,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorSecurityCadet
@@ -166,8 +166,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorSecurityOfficer
@@ -180,8 +180,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorDetective
@@ -194,8 +194,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorWarden
@@ -210,8 +210,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_cargo
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorCargoTechnician
@@ -225,28 +225,28 @@
   id: VisitorCargoTechnicianSpawner
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Tools/appraisal-tool.rsi
-          state: icon
-    - type: RandomSpawner
-      prototypes:
-      - RandomHumanoidVisitorCargoTechnician
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_cargo
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCargoTechnician
 
 - type: entity
   name: visiting salvage specialist spawner
   id: VisitorSalvageSpecialistSpawner
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Tools/appraisal-tool.rsi
-          state: icon
-    - type: RandomSpawner
-      prototypes:
-      - RandomHumanoidVisitorSalvageSpecialist
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_cargo
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorSalvageSpecialist
 
 # Engineering
 
@@ -258,8 +258,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_engineering
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorAtmosTechnician
@@ -277,8 +277,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_engineering
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorAtmosTech
@@ -291,8 +291,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_engineering
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorTechnicalAssistant
@@ -305,8 +305,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_engineering
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorEngineer
@@ -321,8 +321,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorChemist
@@ -345,8 +345,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorChemist
@@ -359,8 +359,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMedicalIntern
@@ -373,8 +373,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMedicalDoctor
@@ -387,8 +387,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorParamedic
@@ -401,8 +401,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorVirologist
@@ -415,8 +415,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorGeneticist
@@ -429,8 +429,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorPsychologist
@@ -443,8 +443,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorDentist
@@ -459,8 +459,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_science
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorResearchAssistant
@@ -477,8 +477,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_science
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorScientist
@@ -491,8 +491,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_science
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorResearchAssistant
@@ -507,8 +507,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorBartender
@@ -537,8 +537,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorBartender
@@ -551,8 +551,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorBotanist
@@ -565,8 +565,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorBoxer
@@ -579,8 +579,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorChaplain
@@ -593,8 +593,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorChef
@@ -607,8 +607,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorClown
@@ -621,8 +621,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorJanitor
@@ -635,8 +635,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorLawyer
@@ -649,8 +649,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorLawyerCentcom
@@ -663,8 +663,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorLibrarian
@@ -677,8 +677,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMusician
@@ -691,8 +691,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMusicianFancy
@@ -705,8 +705,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMusicianRelaxed
@@ -719,8 +719,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorMime
@@ -733,8 +733,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorReporter
@@ -747,8 +747,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorServiceWorker
@@ -761,8 +761,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorZookeeper
@@ -781,8 +781,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_syndicate
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidChallengeVictimRD
@@ -802,15 +802,15 @@
   suffix: CHALLENGE
   # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Tools/appraisal-tool.rsi
-          state: icon
-    - type: RandomSpawner
-      prototypes:
-      - RandomHumanoidChallengeCargoTechnician
-      chance: 1
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_cargo
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidChallengeCargoTechnician
+    chance: 1
 
 # Engineering
 
@@ -1020,8 +1020,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner-yellow
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorBlackmarketeer

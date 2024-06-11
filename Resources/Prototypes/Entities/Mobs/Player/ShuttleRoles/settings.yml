@@ -12,7 +12,7 @@
     - type: GhostRole
       name: ghost-role-information-disaster-victim-name
       description: ghost-role-information-disaster-victim-description
-      rules: ghost-role-information-disaster-victim-rules
+      rules: ghost-role-information-rules-default-crew-aligned
       raffle:
         settings: default
 
@@ -73,9 +73,9 @@
   parent: EventHumanoidMindShielded
   components:
     - type: GhostRole
-      name: ghost-role-information-disaster-victim-name
-      description: ghost-role-information-disaster-victim-description
-      rules: ghost-role-information-disaster-victim-rules
+      name: ghost-role-information-security-name
+      description: ghost-role-information-security-description
+      rules: ghost-role-information-rules-default-crew-aligned
       raffle:
         settings: default
 
@@ -83,6 +83,8 @@
   id: VisitorSecurityCadet
   parent: VisitorSecurity
   components:
+    - type: GhostRole
+      name: job-name-cadet
     - type: Loadout
       prototypes: [ VisitorSecurityCadet, VisitorSecurityCadetAlt ]
 
@@ -90,6 +92,8 @@
   id: VisitorSecurityOfficer
   parent: VisitorSecurity
   components:
+    - type: GhostRole
+      name: job-name-security
     - type: Loadout
       prototypes: [ VisitorSecurityOfficer, VisitorSecurityOfficerAlt ]
 
@@ -97,6 +101,8 @@
   id: VisitorDetective
   parent: VisitorSecurity
   components:
+    - type: GhostRole
+      name: job-name-detective
     - type: Loadout
       prototypes: [ VisitorDetective, VisitorDetectiveAlt ]
 
@@ -104,433 +110,364 @@
   id: VisitorWarden
   parent: VisitorSecurity
   components:
+    - type: GhostRole
+      name: job-name-warden
     - type: Loadout
       prototypes: [ VisitorWarden, VisitorWardenAlt ]
 
 # Cargo
 
 - type: randomHumanoidSettings
-  id: VisitorCargoTechnician
+  id: VisitorCargonian
   parent: EventHumanoid
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
+      name: ghost-role-information-cargo-name
+      description: ghost-role-information-cargo-description
+      rules: ghost-role-information-rules-default-crew-aligned
       raffle:
         settings: short
+
+- type: randomHumanoidSettings
+  id: VisitorCargoTechnician
+  parent: VisitorCargonian
+  components:
+    - type: GhostRole
+      name: job-name-cargotech
     - type: Loadout
       prototypes: [ VisitorCargoTech, VisitorCargoTechAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorSalvageSpecialist
-  parent: EventHumanoid
+  parent: VisitorCargonian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-salvagespec
     - type: Loadout
       prototypes: [ VisitorSalvageSpecialist, VisitorSalvageSpecialistAlt ]
 
 # Engineering
 
 - type: randomHumanoidSettings
-  id: VisitorAtmosTech
+  id: VisitorEngineering
   parent: EventHumanoid
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
+      name: ghost-role-information-engineering-name
+      description: ghost-role-information-engineering-description
+      rules: ghost-role-information-rules-default-crew-aligned
       raffle:
         settings: short
+
+- type: randomHumanoidSettings
+  id: VisitorAtmosTech
+  parent: VisitorEngineering
+  components:
+    - type: GhostRole
+      name: job-name-atmostech
     - type: Loadout
       prototypes: [ VisitorAtmosTech, VisitorAtmosTechAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorTechnicalAssistant
-  parent: EventHumanoid
+  parent: VisitorEngineering
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-technical-assistant
     - type: Loadout
       prototypes: [ VisitorTechnicalAssistant, VisitorTechnicalAssistantAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorEngineer
-  parent: EventHumanoid
+  parent: VisitorEngineering
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-engineer
     - type: Loadout
       prototypes: [ VisitorEngineer, VisitorEngineerAlt ]
 
 # Medical
 
 - type: randomHumanoidSettings
-  id: VisitorMedicalIntern
+  id: VisitorMedical
   parent: EventHumanoid
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
+      name: ghost-role-information-medical-name
+      description: ghost-role-information-medical-description
+      rules: ghost-role-information-rules-default-crew-aligned
       raffle:
         settings: short
+
+- type: randomHumanoidSettings
+  id: VisitorMedicalIntern
+  parent: VisitorMedical
+  components:
+    - type: GhostRole
+      name: job-name-intern
     - type: Loadout
       prototypes: [ VisitorMedicalIntern, VisitorMedicalInternAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorMedicalDoctor
-  parent: EventHumanoid
+  parent: VisitorMedical
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-doctor
     - type: Loadout
       prototypes: [ VisitorMedicalDoctor, VisitorMedicalDoctorAlt , VisitorScrubsPurple, VisitorScrubsGreen, VisitorScrubsBlue]
 
 - type: randomHumanoidSettings
   id: VisitorParamedic
-  parent: EventHumanoid
+  parent: VisitorMedical
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-paramedic
     - type: Loadout
       prototypes: [ VisitorParamedic, VisitorParamedicAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorVirologist
-  parent: EventHumanoid
+  parent: VisitorMedical
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: ghost-role-information-medical-virologist-name
     - type: Loadout
       prototypes: [ VisitorVirologist, VisitorVirologistAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorGeneticist
-  parent: EventHumanoid
+  parent: VisitorMedical
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: ghost-role-information-medical-geneticist-name
     - type: Loadout
       prototypes: [ VisitorGeneticist, VisitorGeneticistAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorPsychologist
-  parent: EventHumanoid
+  parent: VisitorMedical
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-psychologist
     - type: Loadout
       prototypes: [ VisitorPsychologist, VisitorPsychologistAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorChemist
-  parent: EventHumanoid
+  parent: VisitorMedical
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-chemist
     - type: Loadout
       prototypes: [ VisitorChemist, VisitorChemistAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorDentist
-  parent: EventHumanoid
+  parent: VisitorMedical
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: ghost-role-information-medical-dentist-name
     - type: Loadout
       prototypes: [ VisitorDentist ]
 
 # Science
 
 - type: randomHumanoidSettings
-  id: VisitorResearchAssistant
+  id: VisitorScience
   parent: EventHumanoid
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
+      name: ghost-role-information-science-name
+      description: ghost-role-information-science-description
+      rules: ghost-role-information-rules-default-crew-aligned
       raffle:
         settings: short
+
+- type: randomHumanoidSettings
+  id: VisitorResearchAssistant
+  parent: VisitorScience
+  components:
+    - type: GhostRole
+      name: job-name-research-assistant
     - type: Loadout
       prototypes: [ VisitorResearchAssistant, VisitorResearchAssistantAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorScientist
-  parent: EventHumanoid
+  parent: VisitorScience
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-scientist
     - type: Loadout
       prototypes: [ VisitorScientist, VisitorScientistAlt ]
 
 # Civilian
 
 - type: randomHumanoidSettings
-  id: VisitorBartender
+  id: VisitorCivilian
   parent: EventHumanoid
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
+      name: ghost-role-information-civilian-name
+      description: ghost-role-information-civilian-description
+      rules: ghost-role-information-rules-default-crew-aligned
       raffle:
         settings: short
+
+- type: randomHumanoidSettings
+  id: VisitorBartender
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-bartender
     - type: Loadout
       prototypes: [ VisitorBartender, VisitorBartenderAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorBotanist
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-botanist
     - type: Loadout
       prototypes: [ VisitorBotanist, VisitorBotanistAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorBoxer
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-boxer
     - type: Loadout
       prototypes: [ VisitorBoxer, VisitorBoxerAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorChaplain
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: BibleUser
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-chaplain
     - type: Loadout
       prototypes: [ VisitorChaplain, VisitorChaplainAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorChef
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-chef
     - type: Loadout
       prototypes: [ VisitorChef, VisitorChefAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorClown
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-clown
     - type: Loadout
       prototypes: [ VisitorClown ]
       
 - type: randomHumanoidSettings
   id: VisitorJanitor
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-janitor
     - type: Loadout
       prototypes: [ VisitorJanitor, VisitorJanitorAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorLawyer
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-lawyer
     - type: Loadout
       prototypes: [ VisitorLawyerAltA, VisitorLawyerAltB, VisitorLawyerAltC, VisitorLawyerAltD, VisitorLawyerAltE ]
 
 - type: randomHumanoidSettings
   id: VisitorLawyerCentcom
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: ghost-role-information-civilian-centcom-lawyer-name
+      description: ghost-role-information-civilian-centcom-lawyer-description
     - type: Loadout
       prototypes: [ VisitorLawyerCentcom ]
 
 - type: randomHumanoidSettings
   id: VisitorLibrarian
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-librarian
     - type: Loadout
       prototypes: [ VisitorLibrarian, VisitorLibrarianAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorMusician
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-musician
     - type: Loadout
       prototypes: [ VisitorMusicianFancyAltA, VisitorMusicianFancyAltB, VisitorMusicianFancyAltC, VisitorMusicianFancyAltD, VisitorMusicianFancyAltE, VisitorMusicianFancyAltF, VisitorMusicianFancyAltG, VisitorMusicianFancyAltH, VisitorMusicianFancyAltI, VisitorMusicianRelaxedAltA, VisitorMusicianRelaxedAltB, VisitorMusicianRelaxedAltC, VisitorMusicianRelaxedAltD, VisitorMusicianRelaxedAltE, VisitorMusicianRelaxedAltF, VisitorMusicianMariachi ]
 
 - type: randomHumanoidSettings
   id: VisitorMusicianFancy
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-musician
     - type: Loadout
       prototypes: [ VisitorMusicianFancyAltA, VisitorMusicianFancyAltB, VisitorMusicianFancyAltC, VisitorMusicianFancyAltD, VisitorMusicianFancyAltE, VisitorMusicianFancyAltF, VisitorMusicianFancyAltG, VisitorMusicianFancyAltH, VisitorMusicianFancyAltI ]
 
 - type: randomHumanoidSettings
   id: VisitorMusicianRelaxed
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-musician
     - type: Loadout
       prototypes: [ VisitorMusicianRelaxedAltA, VisitorMusicianRelaxedAltB, VisitorMusicianRelaxedAltC, VisitorMusicianRelaxedAltD, VisitorMusicianRelaxedAltE, VisitorMusicianRelaxedAltF, VisitorMusicianMariachi ]
 
 - type: randomHumanoidSettings
   id: VisitorMime
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
+    - type: MimePowers
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-mime
     - type: Loadout
       prototypes: [ VisitorMime, VisitorMimeAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorReporter
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-reporter
     - type: Loadout
       prototypes: [ VisitorReporter, VisitorReporterAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorServiceWorker
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-serviceworker
     - type: Loadout
       prototypes: [ VisitorServiceWorker, VisitorServiceWorkerAlt ]
 
 - type: randomHumanoidSettings
   id: VisitorZookeeper
-  parent: EventHumanoid
+  parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
-      raffle:
-        settings: short
+      name: job-name-zookeeper
     - type: Loadout
       prototypes: [ VisitorZookeeper, VisitorZookeeperAlt ]
 
@@ -555,7 +492,6 @@
 - type: randomHumanoidSettings
   id: ChallengeVictimResearchDirector
   randomizeName: false
-#  This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
   components:
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
@@ -565,7 +501,7 @@
         settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
-      prototypes: [ ChallengeVictimRD, ChallengeVictimRDAlt ] #!!
+      prototypes: [ ChallengeVictimRD, ChallengeVictimRDAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
     - type: RandomMetadata
       nameSegments:
       - names_first
@@ -574,7 +510,6 @@
 - type: randomHumanoidSettings
   id: ChallengeVictimCMO
   randomizeName: false
-#  This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
   components:
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
@@ -584,7 +519,7 @@
         settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
-      prototypes: [ ChallengeVictimCMO, ChallengeVictimCMOAlt ] #!!
+      prototypes: [ ChallengeVictimCMO, ChallengeVictimCMOAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
     - type: RandomMetadata
       nameSegments:
       - names_first
@@ -593,7 +528,6 @@
 - type: randomHumanoidSettings
   id: ChallengeVictimCaptain
   randomizeName: false
-#  This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
   components:
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
@@ -603,7 +537,7 @@
         settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
-      prototypes: [ ChallengeVictimCaptain, ChallengeVictimCaptainAlt ] #!!
+      prototypes: [ ChallengeVictimCaptain, ChallengeVictimCaptainAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
     - type: RandomMetadata
       nameSegments:
       - names_first
@@ -617,7 +551,6 @@
 - type: randomHumanoidSettings
   id: ChallengeCargoTechnician
   randomizeName: false
-#  This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
   components:
     - type: GhostRole
       name: ghost-role-information-lost-challenge-cargo-technican-name
@@ -627,7 +560,7 @@
         settings: short
     - type: GhostTakeoverAvailable
     - type: Loadout
-      prototypes: [ ChallengeCargoTechGearSuit, ChallengeCargoTechGearCoat ] #!!
+      prototypes: [ ChallengeCargoTechGearSuit, ChallengeCargoTechGearCoat ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
     - type: RandomMetadata
       nameSegments:
       - names_first
@@ -658,7 +591,7 @@
       description: ghost-role-information-syndie-disaster-victim-description
       rules: ghost-role-information-syndie-disaster-victim-rules
       raffle:
-        settings: short
+        settings: default
     - type: Loadout
       prototypes: [ SyndicateFootsoldierTeamLeaderGear ]
 
@@ -675,7 +608,7 @@
       description: ghost-role-information-syndie-disaster-victim-description
       rules: ghost-role-information-syndie-disaster-victim-rules
       raffle:
-        settings: short
+        settings: default
     - type: Loadout
       prototypes: [ SyndicateFootsoldierGear ]
 
@@ -707,7 +640,7 @@
       description: ghost-role-information-syndie-disaster-victim-description
       rules: ghost-role-information-syndie-disaster-victim-rules
       raffle:
-        settings: short
+        settings: default
     - type: Loadout
       prototypes: [ PirateScoonerAltA, PirateScoonerAltB, PirateScoonerAltC, PirateScoonerAltD ]
 
@@ -723,7 +656,7 @@
       description: ghost-role-information-syndie-disaster-victim-description
       rules: ghost-role-information-syndie-disaster-victim-rules
       raffle:
-        settings: short
+        settings: default
     - type: Loadout
       prototypes: [ PirateCaptainScooner ]
 
@@ -736,9 +669,9 @@
     - type: GhostRole
       name: ghost-role-information-lost-cargo-technical-name
       description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-lost-cargo-technical-rules
+      rules: ghost-role-information-rules-default-free-agent
       raffle:
-        settings: short
+        settings: default
     - type: Loadout
       prototypes: [ VisitorBlackmarketeer, VisitorBlackmarketeer ]
 
@@ -746,11 +679,15 @@
   id: Cossack
   parent: EventHumanoid
   components:
+    - type: RussianAccent
+    - type: ScrambledAccent
+    - type: SlurredAccent
+    - type: SouthernAccent
     - type: GhostRole
       name: ghost-role-information-syndie-disaster-victim-name
       description: ghost-role-information-syndie-disaster-victim-description
-      rules: ghost-role-information-syndie-disaster-victim-rules
+      rules: ghost-role-information-rules-default-free-agent
       raffle:
-        settings: short
+        settings: default
     - type: Loadout
       prototypes: [ CossackGear ]

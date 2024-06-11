@@ -1700,14 +1700,14 @@
 
 - type: startingGear
   id: PirateScoonerAltB
-  parent: VisitorPirateScoonerAltA
+  parent: PirateScoonerAltA
   equipment:
     head: ClothingHeadHatPirateTricord
     outerClothing: ClothingOuterCoatGentle
 
 - type: startingGear
   id: PirateScoonerAltC
-  parent: VisitorPirateScoonerAltA
+  parent: PirateScoonerAltA
   equipment:
     head: ClothingHeadBandBlack
   inhand:
