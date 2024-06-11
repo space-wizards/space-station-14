@@ -45,8 +45,8 @@ namespace Content.Client.Access.UI
 
             var jobIconButtonGroup = new ButtonGroup();
             var i = 0;
-            var icons = _prototypeManager.EnumeratePrototypes<JobIconPrototype>().Where(icon => icon.AllowSelection);
-            icons = icons.OrderBy(icon => Loc.GetString(icon.JobName == null ? string.Empty : Loc.GetString(icon.JobName)));
+            var icons = _prototypeManager.EnumeratePrototypes<JobIconPrototype>().Where(icon => icon.AllowSelection).ToList();
+            icons.Sort((x, y) => string.Compare(x.LocalizedJobName, y.LocalizedJobName, StringComparison.CurrentCulture));
             foreach (var jobIcon in icons)
             {
                 String styleBase = StyleBase.ButtonOpenBoth;
@@ -64,7 +64,7 @@ namespace Content.Client.Access.UI
                     MaxSize = new Vector2(42, 28),
                     Group = jobIconButtonGroup,
                     Pressed = currentJobIconId == jobIcon.ID,
-                    ToolTip = jobIcon.JobName == null ? string.Empty : Loc.GetString(jobIcon.JobName)
+                    ToolTip = jobIcon.LocalizedJobName
                 };
 
                 // Generate buttons textures
