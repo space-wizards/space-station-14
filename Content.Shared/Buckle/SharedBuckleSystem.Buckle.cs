@@ -405,6 +405,14 @@ public abstract partial class SharedBuckleSystem
             buckleComp.BuckledTo is not { } strapUid)
             return false;
 
+        if (!HasComp<HandsComponent>(userUid))
+        {
+            // PopupPredicted when
+            if (_netManager.IsServer)
+                _popup.PopupEntity(Loc.GetString("buckle-component-no-hands-message"), userUid, userUid);
+            return false;
+        }
+
         if (!force)
         {
             var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, userUid, false);
