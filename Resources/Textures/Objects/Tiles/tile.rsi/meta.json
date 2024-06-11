@@ -89,9 +89,6 @@
       "name": "grass"
     },
     {
-      "name": "grassjungle"
-    },
-    {
       "name": "kitchen"
     },
     {
@@ -239,9 +236,6 @@
     },
     {
       "name": "woodpatternfloor"
-    },
-    {
-      "name": "astrograss"
     },
     {
       "name": "astroice"

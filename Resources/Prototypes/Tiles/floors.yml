@@ -1443,24 +1443,18 @@
 - type: tile
   id: FloorGrass
   name: tiles-planet-grass-floor
-  sprite: /Textures/Tiles/grass.png
+  sprite: /Textures/Tiles/Planet/Grass/grass.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   baseTurf: FloorDirt
   isSubfloor: true
   footstepSounds:
     collection: FootstepGrass
   itemDrop: FloorTileItemGrass
-  heatCapacity: 10000
-  weather: true
-
-- type: tile
-  id: FloorGrassJungle
-  name: tiles-jungle-grass-floor
-  sprite: /Textures/Tiles/grassjungle.png
-  baseTurf: FloorDirt
-  isSubfloor: true
-  footstepSounds:
-    collection: FootstepGrass
-  itemDrop: FloorTileItemGrassJungle
   heatCapacity: 10000
   weather: true
 
@@ -1871,24 +1865,6 @@
     collection: FootstepGrass
   itemDrop: FloorTileItemAstroGrass
   heatCapacity: 10000
-
-- type: tile
-  id: FloorMowedAstroGrass
-  name: tiles-mowed-astro-grass
-  parent: FloorGrass
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Cutting ]
-  itemDrop: FloorTileItemMowedAstroGrass
-
-- type: tile
-  id: FloorJungleAstroGrass
-  name: tiles-jungle-astro-grass
-  parent: FloorGrassJungle
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Cutting ]
-  itemDrop: FloorTileItemJungleAstroGrass
 
 # Ice
 - type: tile

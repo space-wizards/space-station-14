@@ -408,12 +408,6 @@
   maxCount: 30
 
 - type: stack
-  id: FloorTileMowedAstroGrass
-  name: mowed astro-grass floor
-  spawn: FloorTileItemMowedAstroGrass
-  maxCount: 30
-
-- type: stack
   id: FloorTileJungleAstroGrass
   name: jungle astro-grass floor
   spawn: FloorTileItemJungleAstroGrass
