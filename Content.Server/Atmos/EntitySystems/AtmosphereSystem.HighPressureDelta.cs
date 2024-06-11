@@ -49,8 +49,7 @@ namespace Content.Server.Atmos.EntitySystems
                 comp.Accumulator = 0f;
                 toRemove.Add(ent);
 
-                if (HasComp<MobStateComponent>(uid) &&
-                    TryComp<PhysicsComponent>(uid, out var body))
+                if (TryComp<PhysicsComponent>(uid, out var body))
                 {
                     _physics.SetBodyStatus(uid, body, BodyStatus.OnGround);
                 }
@@ -70,7 +69,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        private void AddMobMovedByPressure(EntityUid uid, MovedByPressureComponent component, PhysicsComponent body)
+        private void AddMovedByPressure(EntityUid uid, MovedByPressureComponent component, PhysicsComponent body)
         {
             if (!TryComp<FixturesComponent>(uid, out var fixtures))
                 return;
@@ -91,6 +90,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void HighPressureMovements(Entity<GridAtmosphereComponent> gridAtmosphere, TileAtmosphere tile, EntityQuery<PhysicsComponent> bodies, EntityQuery<TransformComponent> xforms, EntityQuery<MovedByPressureComponent> pressureQuery, EntityQuery<MetaDataComponent> metas)
         {
+            //!MAGIC EXIT CONDITION THAT MAKES ALMOST 200 LINES RUN 1/100TH AS OFTEN.
+            if (tile.PressureDifference < SpaceWindMinimumCalculatedMass * SpaceWindMinimumCalculatedMass)
+                return;
             // TODO ATMOS finish this
 
             // Don't play the space wind sound on tiles that are on fire...
@@ -120,7 +122,8 @@ namespace Content.Server.Atmos.EntitySystems
             var gridWorldRotation = xforms.GetComponent(gridAtmosphere).WorldRotation;
 
             // If we're using monstermos, smooth out the yeet direction to follow the flow
-            if (MonstermosEqualization)
+            //WTF:This is bad, don't run this. It just makes the throws worse by somehow rounding them to orthogonal
+            if (!MonstermosEqualization)
             {
                 // We step through tiles according to the pressure direction on the current tile.
                 // The goal is to get a general direction of the airflow in the area.
@@ -160,7 +163,7 @@ namespace Content.Server.Atmos.EntitySystems
                         (entity, pressureMovements),
                         gridAtmosphere.Comp.UpdateCounter,
                         tile.PressureDifference,
-                        tile.PressureDirection, 0,
+                        tile.PressureDirection,
                         tile.PressureSpecificTarget != null ? _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.PressureSpecificTarget.GridIndices) : EntityCoordinates.Invalid,
                         gridWorldRotation,
                         xforms.GetComponent(entity),
@@ -181,12 +184,37 @@ namespace Content.Server.Atmos.EntitySystems
             tile.PressureDirection = differenceDirection;
         }
 
+        //INFO:The EE version of this function drops pressureResistanceProbDelta, since it's not needed. If you are for whatever reason calling this function
+        //INFO:And it isn't working, you've probably still got the pressureResistanceProbDelta line included.
+        /// <notes>
+        /// EXPLANATION:
+        /// pressureDifference = Force of Air Flow on a given tile
+        /// physics.Mass = Mass of the object potentially being thrown
+        /// physics.InvMass = 1 divided by said Mass. More CPU efficient way to do division.
+        ///
+        /// Objects can only be thrown if the force of air flow is greater than the SQUARE of their mass or {SpaceWindMinimumCalculatedMass}, whichever is heavier
+        /// This means that the heavier an object is, the exponentially more force is required to move it
+        /// The force of a throw is equal to the force of air pressure, divided by an object's mass. So not only are heavier objects
+        /// less likely to be thrown, they are also harder to throw,
+        /// while lighter objects are yeeted easily, and from great distance.
+        ///
+        /// For a human sized entity with a standard weight of 80kg and a spacing between a hard vacuum and a room pressurized at 101kpa,
+        /// The human shall only be moved if he is either very close to the hole, or is standing in a region of high airflow
+        /// </notes>
+        /// <param name="ent"></param>
+        /// <param name="cycle"></param>
+        /// <param name="pressureDifference"></param>
+        /// <param name="direction"></param>
+        /// <param name="throwTarget"></param>
+        /// <param name="gridWorldRotation"></param>
+        /// <param name="xform"></param>
+        /// <param name="physics"></param>
+
         public void ExperiencePressureDifference(
             Entity<MovedByPressureComponent> ent,
             int cycle,
             float pressureDifference,
             AtmosDirection direction,
-            float pressureResistanceProbDelta,
             EntityCoordinates throwTarget,
             Angle gridWorldRotation,
             TransformComponent? xform = null,
@@ -199,49 +227,27 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref xform))
                 return;
 
-            // TODO ATMOS stuns?
 
-            var maxForce = MathF.Sqrt(pressureDifference) * 2.25f;
-            var moveProb = 100f;
-
-            if (component.PressureResistance > 0)
-                moveProb = MathF.Abs((pressureDifference / component.PressureResistance * MovedByPressureComponent.ProbabilityBasePercent) -
-                                     MovedByPressureComponent.ProbabilityOffset);
-
-            // Can we yeet the thing (due to probability, strength, etc.)
-            if (moveProb > MovedByPressureComponent.ProbabilityOffset && _robustRandom.Prob(MathF.Min(moveProb / 100f, 1f))
-                                                                      && !float.IsPositiveInfinity(component.MoveResist)
-                                                                      && (physics.BodyType != BodyType.Static
-                                                                          && (maxForce >= (component.MoveResist * MovedByPressureComponent.MoveForcePushRatio)))
-                || (physics.BodyType == BodyType.Static && (maxForce >= (component.MoveResist * MovedByPressureComponent.MoveForceForcePushRatio))))
+            if (physics.BodyType != BodyType.Static
+                && !float.IsPositiveInfinity(component.MoveResist))
             {
-                if (HasComp<MobStateComponent>(uid))
+                var moveForce = pressureDifference * MathF.Max(physics.InvMass, SpaceWindMaximumCalculatedInverseMass);
+                if (moveForce > physics.Mass)
                 {
-                    AddMobMovedByPressure(uid, component, physics);
-                }
-
-                if (maxForce > MovedByPressureComponent.ThrowForce)
-                {
-                    var moveForce = maxForce;
-                    moveForce /= (throwTarget != EntityCoordinates.Invalid) ? SpaceWindPressureForceDivisorThrow : SpaceWindPressureForceDivisorPush;
-                    moveForce *= MathHelper.Clamp(moveProb, 0, 100);
-
-                    // Apply a sanity clamp to prevent being thrown through objects.
                     var maxSafeForceForObject = SpaceWindMaxVelocity * physics.Mass;
                     moveForce = MathF.Min(moveForce, maxSafeForceForObject);
-
+                    AddMovedByPressure(uid, component, physics);
                     // Grid-rotation adjusted direction
                     var dirVec = (direction.ToAngle() + gridWorldRotation).ToWorldVec();
 
-                    // TODO: Technically these directions won't be correct but uhh I'm just here for optimisations buddy not to fix my old bugs.
+                    // TODO: Consider replacing throw target with proper trigonometry angles.
                     if (throwTarget != EntityCoordinates.Invalid)
                     {
-                        var pos = ((throwTarget.ToMap(EntityManager, _transformSystem).Position - xform.WorldPosition).Normalized() + dirVec).Normalized();
+                        var pos = throwTarget.ToMap(EntityManager, _transformSystem).Position - xform.WorldPosition + dirVec;
                         _physics.ApplyLinearImpulse(uid, pos * moveForce, body: physics);
                     }
                     else
                     {
-                        moveForce = MathF.Min(moveForce, SpaceWindMaxPushForce);
                         _physics.ApplyLinearImpulse(uid, dirVec * moveForce, body: physics);
                     }
 
