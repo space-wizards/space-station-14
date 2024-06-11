@@ -233,7 +233,7 @@
   - type: Machine
     board: AutolatheHyperConvectionMachineCircuitboard
 
-- type: entity
+- type: entity #
   id: Protolathe
   parent: BaseLatheLube
   name: protolathe
