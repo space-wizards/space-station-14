@@ -3,6 +3,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Storage;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
@@ -12,6 +13,7 @@ public sealed partial class PilotedClothingSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedMoverController _moverController = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -30,7 +32,7 @@ public sealed partial class PilotedClothingSystem : EntitySystem
             return;
 
         // Check potential pilot against whitelist, if one exists.
-        if (entity.Comp.PilotWhitelist != null && !entity.Comp.PilotWhitelist.IsValid(args.Entity))
+        if (_whitelist.IsWhitelistFail(entity.Comp.PilotWhitelist, args.Entity))
             return;
 
         entity.Comp.Pilot = args.Entity;
