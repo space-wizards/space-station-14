@@ -45,8 +45,8 @@
 
   To use the [color=cyan]Crew Monitoring Console[/color]:
 
-  - Press [color=yellow][keybind="ActivateItemInWorld"][/color] on it.
-  - On the left side, you will see a map with all of the crew member's coordinates.
+  - Press [color=yellow][keybind="ActivateItemInWorld" /][/color] on it.
+  - On the left side, you will see a map with the crew member's coordinates.
   - On the right side, you will see a list of all crew members and their current status.
 
   ## Responding
@@ -59,24 +59,33 @@
 
   Once you have discovered the action, Paramedics need to get there [bold]as fast as possible[/bold]. The longer it takes, the worse the situation will get.
 
-  Before arriving, you see on the [color=cyan]Crew Monitoring Computer[/color] if the crew member is critical or dead.
+  Before arriving, see on the [color=cyan]Crew Monitoring Computer[/color] if the crew member is critical or dead.
 
   - If they are critical, bring a [color=cyan]Roller Bed[/color], [color=cyan]Emergency MediPens[/color], and as many [color=cyan]Topicals[/color] as you can hold.
   - If they are dead, bring a [color=cyan]Body Bag[/color]. If you do not have a [color=cyan]Body Bag[/color], bring a [color=cyan]Roller Bed[/color], a [color=cyan]Defibrillator[/color], and as many [color=cyan]Topicals[/color] as you can hold.
 
   For critical patients, just try to stabilize them by injecting an [color=cyan]Emergency MediPen[/color] and applying [color=cyan]Gauze[/color] to stop bleeding. After this, transport them to Medical, and they will be fine.
 
-  For dead patients, if you have a body bag, you can just put the corpse inside, and it will not rot. This gives you more time to transport them and treat other patients. Without a body bag, it is advisable to attempt revival as soon as possible. Even if they die again, their rotting timer is elongated, and they will have a higher chance of survival.
+  For dead patients, if you have a body bag, you can just put the corpse inside, and it will not rot. This gives you more time to transport them and treat other patients.
+
+  Without a body bag, it is advisable to attempt revival as soon as possible. Even if they die again, their rotting timer increases, and they will have a higher chance of survival.
 
   When there are multiple patients, always prioritize the dead patients (with souls). This is because there is a fixed timer until the corpse rots and cannot be revived.
 
+  ## Using Roller Beds and Body Bags
+
+  <Box>
+    <GuideEntityEmbed Entity="RollerBed"/>
+    <GuideEntityEmbed Entity="BodyBag"/>
+  </Box>
+
   To put a patient on a [color=cyan]Roller Bed[/color] or a [color=cyan]Body Bag[/color]:
 
-  - Drop it by pressing [color=yellow][keybind="Drop"][/color].
-  - Unfold it by pressing [color=yellow][keybind="AltActivateItemInWorld"][/color].
+  - Drop it by pressing [color=yellow][keybind="Drop" /][/color].
+  - Unfold it by pressing [color=yellow][keybind="AltActivateItemInWorld" /][/color].
 
-  - If it is a [color=cyan]Roller Bed[/color], just hold [color=yellow][keybind="Use"][/color] and [color=yellow]drag[/color] the patient onto it.
+  - If it is a [color=cyan]Roller Bed[/color], just hold [color=yellow][keybind="Use" /][/color] and [color=yellow]drag[/color] the patient onto it.
 
-  - If it is a [color=cyan]Body Bag[/color], unzip the bag by pressing [color=yellow][keybind="ActivateItemInWorld"][/color], and then [color=yellow]pull[/color] the corpse into the body bag by pressing [color=yellow][keybind="TryPullObject"][/color].
+  - If it is a [color=cyan]Body Bag[/color], unzip the bag by pressing [color=yellow][keybind="ActivateItemInWorld" /][/color], and then [color=yellow]pull[/color] the corpse into the body bag by pressing [color=yellow][keybind="TryPullObject" /][/color].
 
 </Document>

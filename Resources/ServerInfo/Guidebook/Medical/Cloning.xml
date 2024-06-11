@@ -13,10 +13,10 @@
 
   Assuming that the machines are built, cloning is relatively simple.
 
-  - Hold [color=yellow][keybind="Use"][/color] and [color=yellow]drag[/color] the patient into the [color=cyan]Medical Computer[/colo].
-  - Press [color=yellow][keybind="ActivateItemInWorld"][/color] with the [color=cyan]Cloning Console Computer[/color].
+  - Hold [color=yellow][keybind="Use" /][/color] and [color=yellow]drag[/color] the patient into the [color=cyan]Medical Computer[/colo].
+  - Press [color=yellow][keybind="ActivateItemInWorld" /][/color] with the [color=cyan]Cloning Console Computer[/color].
   - Insert enough biomass into the [color=cyan]Cloning Pod[/color] as is required.
-  - Click [color=yellow][keybind="UIClick"][/color] on [color=yellow]Clone[/color] to start cloning.
+  - Click [color=yellow][keybind="UIClick" /][/color] on [color=yellow]Clone[/color] to start cloning.
 
   If cloning isn't possible, the [color=cyan]Cloning Console Computer[/color] will display why it is.
 
@@ -34,9 +34,9 @@
 
   To set up Cloning, you first need all the necessary hardware.
 
-  You'll need Salvage to go out and collect the machine boards, as they cannot be researched by Science.
+  You'll need [color=cyan]Salvage[/color] to go out and collect the [color=cyan]Machine Boards[/color], as they cannot be researched by Science.
 
-  Once they are collected, build the machines, and then connect everything to the [color=cyan]Medical Scanner[/color] through the [color=cyan]Network Communicator[/color] or [color=cyan]Multitool[/color].
+  Once they are collected, [color=yellow]build[/color] the machines, and then [color=yellow]connect[/color] everything to the [color=cyan]Cloning Console[/color] through the [color=cyan]Network Communicator[/color] or [color=cyan]Multitool[/color].
 
   Now you can clone!
 
@@ -47,15 +47,17 @@
     <GuideEntityEmbed Entity="MaterialBiomass"/>
   </Box>
 
-  Biomass is required to clone anyone, as you cannot create something out of nothing.
+  [color=cyan]Biomass[/color] is required to clone anyone, as you cannot create something out of nothing.
 
-  The bigger the biological things you grind up, the more biomass you will get.
+  The more massive the biological things you reclaim, the more [color=cyan]Biomass[/color] you will get.
 
-  [bold]Do not use the patient you are trying to clone in the Biomass Reclaimer, as this will destroy their body and all their cellular information. Only do it after they've been cloned![/bold]
+  [bold]Do not use the patient you are trying to clone in the [color=cyan]Biomass Reclaimer[/color], as this will destroy their body and all their cellular information. Only do it after they've been cloned![/bold]
 
   If you are using a crew member, it is common practice to strip and return their equipment to their respective department.
 
-  To get this biomass:
-  - Press [color=yellow][keybind="Use"][/color] and drag anything biological like a corpse (crew, pets, anything living) into the [color=cyan]Biomass Reclaimer[/color].
+  To reclaim [color=cyan]Biomass[/color]:
+  - Acquire anything biological like a corpse (crew, pets, really anything).
+  - Press [color=yellow][keybind="Use" /][/color] and drag anything biological into the [color=cyan]Biomass Reclaimer[/color].
   - It should reclaim about 40% of the biomass of the corpse.
+
 </Document>

@@ -18,11 +18,11 @@
 
   - First, ensure the patient is not wearing any suits, as those stop them from freezing properly. Also, make sure they are not bleeding and have enough blood (~80% is a good number) to not die before freezing
   - If you wish, you can administer the Cryogenic Medicine now through pills or syringe now if you wish to precalculate and minimize potential waste.
-  - Hold [color=yellow][keybind="Use"][/color] and drag the patient into the [color=cyan]CryoPod[/color].
+  - Hold [color=yellow][keybind="Use" /][/color] and drag the patient into the [color=cyan]Cryo Pod[/color].
   - Wait until the patient's [color=yellow]body temperature[/color] is under 213 kelvin, which is seen by using the [color=cyan]Medical Analyzer[/color] or [color=cyan]Medical PDA[/color] on the patient.
-  - If you didn't already administer, with the [color=cyan]Beaker[/color] in your hands, [color=yellow]insert[/color] it into the [color=cyan]CryoPod[/color] by pressing [color=yellow][keybind="Use"][/color].
-  - Once the patient is fully healed, and take them out of the [color=cyan]CrypoPod[/color] by pressing [color=yellow][keybind="AltActivateItemInWorld"][/yellow].
-  - Take out the [color=cyan]Beaker[/color] by pressing [color=yellow][keybind="AltActivateItemInWorld"][/yellow].
+  - If you didn't already administer, with the [color=cyan]Beaker[/color] in your hands, [color=yellow]insert[/color] it into the [color=cyan]Cryo Pod[/color] by pressing [color=yellow][keybind="Use" /][/color].
+  - Once the patient is fully healed, and take them out of the [color=cyan]Crypo Pod[/color] by pressing [color=yellow][keybind="AltActivateItemInWorld" /][/yellow].
+  - Take out the [color=cyan]Beaker[/color] by pressing [color=yellow][keybind="AltActivateItemInWorld" /][/yellow].
   - The patient will begin taking Cold damage, and to deal with this, give them [color=cyan]Leporazine[/color] any similar medicine.
   - Once their body temperature is back to normal, you can discharge them.
 
@@ -41,27 +41,27 @@
   - [bold]Air Out[/bold]: Waste gasses go here, either into a storage tank, or into the waste network.
 
   <Box>
-    <GuideEntityEmbed Entity="GasPipeBend" Rotation="90" Caption=""/>
-    <GuideEntityEmbed Entity="GasPipeStraight" Rotation="90" Caption=""/>
-    <GuideEntityEmbed Entity="GasPipeStraight" Rotation="90" Caption=""/>
-    <GuideEntityEmbed Entity="GasPipeBend" Rotation="0" Caption=""/>
-    <GuideEntityEmbed Entity="CryoPod" Caption="cryo pod" Rotation="0"/>
-    <GuideEntityEmbed Entity="GasThermoMachineFreezerEnabled" Rotation="0" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeBend" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeBend" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="CryoPod" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasThermoMachineFreezerEnabled" Rotation="0" Caption="" Margin="0"/>
   </Box>
   <Box>
-    <GuideEntityEmbed Entity="GasPipeBend" Rotation="180" Caption=""/>
-    <GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90" Caption=""/>
-    <GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90" Caption=""/>
-    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180" Caption=""/>
-    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180" Caption=""/>
-    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="270" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeBend" Rotation="180" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="270" Caption="" Margin="0"/>
   </Box>
   <Box>
-    <GuideEntityEmbed Entity="GasPort" Caption="air out" Rotation="90"/>
-    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180" Caption=""/>
-    <GuideEntityEmbed Entity="GasPipeBend" Rotation="270" Caption=""/>
-    <GuideEntityEmbed Entity="GasPort" Caption="air in" Rotation="90"/>
-    <GuideEntityEmbed Entity="GasPressurePump" Rotation="90" Caption=""/>
-    <GuideEntityEmbed Entity="GasPipeBend" Rotation="270" Caption=""/>
+    <GuideEntityEmbed Entity="GasPort" Caption="air out" Rotation="90" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeBend" Rotation="270" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPort" Caption="air in" Rotation="90" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPressurePump" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeBend" Rotation="270" Caption="" Margin="0"/>
   </Box>
 </Document>

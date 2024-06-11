@@ -1,7 +1,7 @@
 <Document>
   # Medical
 
-  [color=cyan]Medical[/color] is the department that heals people and revives the dead. They are central to a functioning Space Station, as everyone would die without them.
+  [color=cyan]Medical[/color] is the department that heals people and revives the dead. They are central to a functioning space station, as everyone would die without them.
 
   Medical achieves this through a variety of means, such as [color=cyan]Topicals[/color], [color=cyan]Chemicals[/color], [color=cyan]Cloning[/color], [color=cyan]Cryogenics[/color], and more.
 
@@ -60,7 +60,7 @@
   - [color=cyan]Roller Bed[/color]: When out in the field, it is necessary for healing people close to the action or quickly transporting them back to medical.
   - [color=cyan]Cryogenic Sleep Unit[/color]: This stores SSD and soulless people. Once placed in it, they will automatically disappear, freeing their soul and role.
   - [color=cyan]Morgue[/color]: This is for dead people without souls or rotting corpses. If you leave corpses around, they will eventually explode and release poison gas, so they must be disposed of.
-  - [textlink="Cryopod" link="Cryogenics"]: These require setup but can do miraculous work for very hurt patients.
+  - [textlink="Cryopod" link="Cryogenics" /]: These require setup but can do miraculous work for very hurt patients.
 
   ## Types of Medicine
 
@@ -73,7 +73,7 @@
 
   - [color=cyan]Topicals[/color]: Topicals are the basic medicine that every Medical department starts with. These are applied directly to the patient, and heal a specific amount of damage per use. These should generally be reserved for dead patients, as this can get you to the point of being able to use the [color=cyan]Defibrillator[/color].
   - [color=cyan]Chemicals[/color]: When applied through the [color=cyan]Syringe[/color] or [color=cyan]Pills[/color], these Chemicals are metabolized and heal the patient. As such, the patient must be alive or critical for it to be effective. Many kinds of afflictions can only be healed with Chemicals, and Chemicals are much more efficient when compared to topicals.
-  - [textlink="Cryogenics" link="Cryogenics"]: This can let you heal critical and dead patients very quickly and efficiently. It usually requires some setup and specific Chemicals before use.
+  - [textlink="Cryogenics" link="Cryogenics" /]: This can let you heal critical and dead patients very quickly and efficiently. It usually requires some setup and specific Chemicals before use.
 
   ## Topicals
 
@@ -95,6 +95,11 @@
   - [color=cyan]Gauze[/color]: This stops bleeding and heals slash and piercing damage.
   - [color=cyan]Blood Packs[/color]: This increases the blood level and decreases bloodloss damage.
 
+  <Box>
+    <GuideEntityEmbed Entity="MedicatedSuture"/>
+    <GuideEntityEmbed Entity="RegenerativeMesh"/>
+  </Box>
+
   Later, many departments can collaborate with Chemistry to create [color=cyan]Advanced Topicals[/color]. These [color=cyan]Advanced Topicals[/color] are more effective than regular ones.
 
   - [color=cyan]Medicated Sutures[/color]: This heals more brute damage and stops bleeding faster.
@@ -113,15 +118,15 @@
   - Find a dead patient with under 200 total damage.
   - [color=yellow]Hold[/color] the [color=cyan]Defibrillator[/color]
   - Make sure that it is [color=yellow]charged[/color].
-  - [color=yellow]Turn it on[/color] by pressing [color=yellow][keybind="ActivateItemInHand"][/color].
-  - [color=yellow]Use it[/color] on the dead patient by pressing [color=yellow][keybind="Use"][/color].
+  - [color=yellow]Turn it on[/color] by pressing [color=yellow][keybind="ActivateItemInHand" /][/color].
+  - [color=yellow]Use it[/color] on the dead patient by pressing [color=yellow][keybind="Use" /][/color].
   - When they come back to life, inject [color=cyan]Chemicals[/color] and use [color=cyan]Topicals[/color] to stabilize them.
 
   ## Chemicals
 
   [color=cyan]Chemicals[/color] are the most effective and versatile treatment type.
 
-  There are many Chemicals, but doctors don't need to know them all. Generally, [color=cyan]Chemists[/color] will label the Chemicals, and there is always a [textlink="Medicine Reference" link="Medical"].
+  There are many Chemicals, but doctors don't need to know them all. Generally, [color=cyan]Chemists[/color] will label the Chemicals, and there is always a [textlink="Medicine Reference" link="Medical" /].
 
   <Box>
     <GuideEntityEmbed Entity="MedkitFilled"/>
@@ -145,9 +150,9 @@
   - Make sure the patient is [color=cyan]Alive[/color] or [color=cyan]Critical[/color] and secure the appropriate [color=cyan]Chemicals[/color]. They cannot be on a [color=cyan]Stasis Bed[/color].
 
   - Hold an empty [color=cyan]Syringe[/color].
-  - In the hotbar slot, ensure the mode is on [color=yellow]Draw[/color]. [italic]You can toggle between injecting and drawing by pressing [color=yellow][keybind="ActivateItemInHand"][/color][/italic].
-  - Next, [color=yellow]Set Transfer Amount[/color], by pressing [color=yellow][keybind="UIRightClick"][/color] on the [color=cyan]Syringe[/color]. This helps you avoid overdosing patients.
-  - Now, draw the Chemicals from the container (Jug, Beaker, Person, etc) by pressing [color=yellow][keybind="Use"][/color].
+  - In the hotbar slot, ensure the mode is on [color=yellow]Draw[/color]. [italic]You can toggle between injecting and drawing by pressing [color=yellow][keybind="ActivateItemInHand" /][/color][/italic].
+  - Next, [color=yellow]Set Transfer Amount[/color], by pressing [color=yellow][keybind="UIRightClick" /][/color] on the [color=cyan]Syringe[/color]. This helps you avoid overdosing patients.
+  - Now, draw the Chemicals from the container (Jug, Beaker, Person, etc) by pressing [color=yellow][keybind="Use" /][/color].
   - After that, switch to [color=yellow]Inject[/color].
 
   <Box>
@@ -161,11 +166,11 @@
 
   - [color=yellow]Open[/color] the [color=cyan]Pill Canister[/color].
   - [color=yellow]Take out[/color] the [color=cyan]Pill[/color].
-  - [color=yellow]Feed[/color] the [color=cyan]Pill[/color] to the patient by pressing [color=yellow][keybind="Use"][/color] on them. Make sure you administer the correct dosage.
+  - [color=yellow]Feed[/color] the [color=cyan]Pill[/color] to the patient by pressing [color=yellow][keybind="Use" /][/color] on them. Make sure you administer the correct dosage.
 
   ## Cryogenics
 
-  See the [textlink="Cryogenics" link="Cryogenics"] guidebook entry for [color=cyan]Cryogenics[/color] information.
+  See the [textlink="Cryogenics" link="Cryogenics" /] guidebook entry for [color=cyan]Cryogenics[/color] information.
 
   ## Medical Treatment
 
@@ -173,7 +178,7 @@
 
   The way that you tell what specifically is wrong with a patient is by using the [color=cyan]Medical PDA[/color] or [color=cyan]Health Analyzer[/color]. These list the kinds and amounts of damage that a patient has.
 
-  This guidebook entry will only talk about [color=cyan]Bloodloss[/color] and [color=cyan]Overdosing[/color], as those are two things that every doctor will need to know how to deal with. The rest of the ailments and drugs required to cure them can be found in the [textlink="Medicine Reference" link="Medicine"].
+  This guidebook entry will only talk about [color=cyan]Bloodloss[/color] and [color=cyan]Overdosing[/color], as those are two things that every doctor will need to know how to deal with. The rest of the ailments and drugs required to cure them can be found in the [textlink="Medicine Reference" link="Medicine" /].
 
   ## Bloodloss
 
