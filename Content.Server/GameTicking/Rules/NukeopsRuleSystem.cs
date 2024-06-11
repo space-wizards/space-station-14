@@ -11,6 +11,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.NPC.Components;
@@ -24,7 +25,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Server.GameTicking.Components;
 using Content.Shared.Store.Components;
 
 namespace Content.Server.GameTicking.Rules;
