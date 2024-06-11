@@ -359,12 +359,6 @@
   maxCount: 30
 
 - type: stack
-  id: FloorTileGrassJungle
-  name: grass jungle floor tile
-  spawn: FloorTileItemGrassJungle
-  maxCount: 30
-
-- type: stack
   id: FloorTileSnow
   name: snow floor tile
   spawn: FloorTileItemSnow
@@ -405,12 +399,6 @@
   id: FloorTileAstroGrass
   name: astro-grass floor
   spawn: FloorTileItemAstroGrass
-  maxCount: 30
-
-- type: stack
-  id: FloorTileJungleAstroGrass
-  name: jungle astro-grass floor
-  spawn: FloorTileItemJungleAstroGrass
   maxCount: 30
 
 - type: stack
