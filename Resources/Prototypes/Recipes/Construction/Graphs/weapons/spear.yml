@@ -10,7 +10,7 @@
               amount: 2
               doAfter: 2
             - material: Cable
-              amount: 2
+              amount: 3
               doAfter: 1
             - tag: GlassShard
               name: Glass Shard
@@ -33,7 +33,7 @@
               amount: 2
               doAfter: 2
             - material: Cable
-              amount: 2
+              amount: 3
               doAfter: 1
             - tag: ReinforcedGlassShard
               name: Reinforced Glass Shard
@@ -56,7 +56,7 @@
               amount: 2
               doAfter: 2
             - material: Cable
-              amount: 2
+              amount: 3
               doAfter: 1
             - tag: PlasmaGlassShard
               name: Plasma Glass Shard
@@ -79,7 +79,7 @@
               amount: 2
               doAfter: 2
             - material: Cable
-              amount: 2
+              amount: 3
               doAfter: 1
             - tag: UraniumGlassShard
               name: Uranium Glass Shard

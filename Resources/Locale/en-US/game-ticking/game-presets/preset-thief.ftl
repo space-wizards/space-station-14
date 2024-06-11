@@ -6,7 +6,7 @@ thief-role-greeting-human =
     but that can't stop you from getting your fix by any means necessary.
 
 thief-role-greeting-animal =
-    You are a kleptomaniaс animal.
+    You are a kleptomaniac animal.
     Steal things that you like.
 
 thief-role-greeting-equipment =

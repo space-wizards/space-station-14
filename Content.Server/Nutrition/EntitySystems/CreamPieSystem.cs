@@ -1,12 +1,11 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Server.Explosion.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Explosion.Components;
-using Content.Shared.Interaction;
+using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Rejuvenate;
@@ -32,7 +31,10 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<CreamPieComponent, InteractUsingEvent>(OnInteractUsing);
+            // activate BEFORE entity is deleted and trash is spawned
+            SubscribeLocalEvent<CreamPieComponent, ConsumeDoAfterEvent>(OnConsume, before: [typeof(FoodSystem)]);
+            SubscribeLocalEvent<CreamPieComponent, SliceFoodEvent>(OnSlice);
+
             SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
         }
 
@@ -56,7 +58,12 @@ namespace Content.Server.Nutrition.EntitySystems
             EntityManager.QueueDeleteEntity(uid);
         }
 
-        private void OnInteractUsing(Entity<CreamPieComponent> entity, ref InteractUsingEvent args)
+        private void OnConsume(Entity<CreamPieComponent> entity, ref ConsumeDoAfterEvent args)
+        {
+            ActivatePayload(entity);
+        }
+
+        private void OnSlice(Entity<CreamPieComponent> entity, ref SliceFoodEvent args)
         {
             ActivatePayload(entity);
         }

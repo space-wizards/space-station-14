@@ -62,6 +62,13 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: long_bedhead
 - type: marking
+  id: HumanHairLongBedhead2
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: long_bedhead2
+- type: marking
   id: HumanHairFloorlengthBedhead
   bodyPart: Hair
   markingCategory: Hair
@@ -397,6 +404,13 @@
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
       state: crewcut
+- type: marking
+  id: HumanHairCrewcut2
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: crewcut2
 - type: marking
   id: HumanHairCurls
   bodyPart: Hair
@@ -1146,6 +1160,13 @@
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
       state: spiky2
+- type: marking
+  id: HumanHairSpookyLong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: spookylong
 - type: marking
   id: HumanHairSwept
   bodyPart: Hair

@@ -171,3 +171,33 @@
   products:
     Laughter: 2
 
+- type: reaction
+  id: CreateCrystals
+  quantized: true
+  minTemp: 374
+  reactants:
+    Sugar:
+      amount: 15
+    Water:
+      amount: 15
+    Ethanol:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: ShardCrystalRandom
+
+- type: reaction
+  id: Gunpowder
+  impact: Low
+  quantized: true
+  minTemp: 374
+  reactants:
+    Potassium:
+      amount: 6
+    Sulfur:
+      amount: 2
+    Charcoal:
+      amount: 2
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: MaterialGunpowder

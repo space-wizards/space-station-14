@@ -25,8 +25,6 @@ public partial class MobStateSystem : EntitySystem
         _sawmill = _logManager.GetSawmill("MobState");
         base.Initialize();
         SubscribeEvents();
-        SubscribeLocalEvent<MobStateComponent, ComponentGetState>(OnGetComponentState);
-        SubscribeLocalEvent<MobStateComponent, ComponentHandleState>(OnHandleComponentState);
     }
 
     #region Public API
@@ -99,25 +97,6 @@ public partial class MobStateSystem : EntitySystem
     #endregion
 
     #region Private Implementation
-
-    private void OnHandleComponentState(EntityUid uid, MobStateComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MobStateComponentState state)
-            return;
-
-        component.CurrentState = state.CurrentState;
-
-        if (!component.AllowedStates.SetEquals(state.AllowedStates))
-        {
-            component.AllowedStates.Clear();
-            component.AllowedStates.UnionWith(state.AllowedStates);
-        }
-    }
-
-    private void OnGetComponentState(EntityUid uid, MobStateComponent component, ref ComponentGetState args)
-    {
-        args.State = new MobStateComponentState(component.CurrentState, component.AllowedStates);
-    }
 
     #endregion
 }

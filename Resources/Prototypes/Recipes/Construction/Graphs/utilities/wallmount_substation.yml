@@ -26,7 +26,13 @@
         steps:
         - material: Cable
           amount: 5
-          doAfter: 2
+          doAfter: 0.5
+        - material: CableMV
+          amount: 5
+          doAfter: 0.5
+        - material: CableHV
+          amount: 5
+          doAfter: 0.5
         - tool: Screwing
           doAfter: 2
 
@@ -41,11 +47,33 @@
           icon:
             sprite: "Objects/Misc/module.rsi"
             state: "charger_APC"
-          doAfter: 1
+          doAfter: 0.5
+        - anyTags:
+            - PowerCell
+            - PowerCellSmall
+          store: powercell
+          name: a powercell
+          icon:
+            sprite: "Objects/Power/power_cells.rsi"
+            state: "medium"
+          doAfter: 0.5
+        - tag: CapacitorStockPart
+          name: a capacitor
+          store: capacitor
+          icon:
+            sprite: "Objects/Misc/stock_parts.rsi"
+            state: "capacitor"
+          doAfter: 0.5
       - to: frame
         completed:
         - !type:GivePrototype
           prototype: CableApcStack1
+          amount: 5
+        - !type:GivePrototype
+          prototype: CableMVStack1
+          amount: 5
+        - !type:GivePrototype
+          prototype: CableHVStack1
           amount: 5
         steps:
         - tool: Cutting

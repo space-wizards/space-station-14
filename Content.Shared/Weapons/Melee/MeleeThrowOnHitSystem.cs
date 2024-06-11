@@ -74,7 +74,7 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
         comp.PreviousStatus = body.BodyStatus;
         comp.ThrownEndTime = _timing.CurTime + TimeSpan.FromSeconds(comp.Lifetime);
         comp.MinLifetimeTime = _timing.CurTime + TimeSpan.FromSeconds(comp.MinLifetime);
-        _physics.SetBodyStatus(body, BodyStatus.InAir);
+        _physics.SetBodyStatus(ent, body, BodyStatus.InAir);
         _physics.SetLinearVelocity(ent, Vector2.Zero, body: body);
         _physics.ApplyLinearImpulse(ent, comp.Velocity * body.Mass, body: body);
         Dirty(ent, ent.Comp);
@@ -83,7 +83,7 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
     private void OnThrownShutdown(Entity<MeleeThrownComponent> ent, ref ComponentShutdown args)
     {
         if (TryComp<PhysicsComponent>(ent, out var body))
-            _physics.SetBodyStatus(body,ent.Comp.PreviousStatus);
+            _physics.SetBodyStatus(ent, body, ent.Comp.PreviousStatus);
         var ev = new MeleeThrowOnHitEndEvent();
         RaiseLocalEvent(ent, ref ev);
     }

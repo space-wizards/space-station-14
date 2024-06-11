@@ -9,6 +9,12 @@ namespace Content.Shared.Throwing
     public sealed partial class ThrownItemComponent : Component
     {
         /// <summary>
+        /// Should the in-air throwing animation play.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool Animate = true;
+
+        /// <summary>
         ///     The entity that threw this entity.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]

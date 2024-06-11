@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 
@@ -21,6 +22,7 @@ public sealed class BinSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _admin = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public const string BinContainerId = "bin-container";
 
@@ -130,12 +132,12 @@ public sealed class BinSystem : EntitySystem
         if (component.Items.Count >= component.MaxItems)
             return false;
 
-        if (component.Whitelist != null && !component.Whitelist.IsValid(toInsert))
+        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, toInsert))
             return false;
 
         _container.Insert(toInsert, component.ItemContainer);
         component.Items.Add(toInsert);
-        Dirty(component);
+        Dirty(uid, component);
         return true;
     }
 
@@ -151,7 +153,7 @@ public sealed class BinSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        if (!component.Items.Any())
+        if (component.Items.Count == 0)
             return false;
 
         if (toRemove == null || toRemove != component.Items.LastOrDefault())
@@ -161,7 +163,7 @@ public sealed class BinSystem : EntitySystem
             return false;
 
         component.Items.Remove(toRemove.Value);
-        Dirty(component);
+        Dirty(uid, component);
         return true;
     }
 }

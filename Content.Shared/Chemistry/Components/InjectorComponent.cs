@@ -24,7 +24,8 @@ public sealed partial class InjectorDoAfterEvent : SimpleDoAfterEvent
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class InjectorComponent : Component
 {
-    public const string SolutionName = "injector";
+    [DataField]
+    public string SolutionName = "injector";
 
     /// <summary>
     /// Whether or not the injector is able to draw from containers or if it's a single use
@@ -52,7 +53,7 @@ public sealed partial class InjectorComponent : Component
     ///     The maximum amount of solution that can be transferred at once from this solution.
     /// </summary>
     [DataField("maxTransferAmount")]
-    public FixedPoint2 MaximumTransferAmount = FixedPoint2.New(50);
+    public FixedPoint2 MaximumTransferAmount = FixedPoint2.New(15);
 
     /// <summary>
     /// Amount to inject or draw on each usage. If the injector is inject only, it will

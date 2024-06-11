@@ -1,9 +1,12 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Ghost.Roles;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -15,14 +18,30 @@ public abstract class SharedRoleSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     // TODO please lord make role entities
     private readonly HashSet<Type> _antagTypes = new();
+
+    private JobRequirementOverridePrototype? _requirementOverride;
 
     public override void Initialize()
     {
         // TODO make roles entities
         SubscribeLocalEvent<JobComponent, MindGetAllRolesEvent>(OnJobGetAllRoles);
+        Subs.CVar(_cfg, CCVars.GameRoleTimerOverride, SetRequirementOverride, true);
+    }
+
+    private void SetRequirementOverride(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            _requirementOverride = null;
+            return;
+        }
+
+        if (!_prototypes.TryIndex(value, out _requirementOverride ))
+            Log.Error($"Unknown JobRequirementOverridePrototype: {value}");
     }
 
     private void OnJobGetAllRoles(EntityUid uid, JobComponent component, ref MindGetAllRolesEvent args)
@@ -60,6 +79,64 @@ public abstract class SharedRoleSystem : EntitySystem
 
         SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) => { args.IsAntagonist = true; args.IsExclusiveAntagonist |= typeof(T).TryGetCustomAttribute<ExclusiveAntagonistAttribute>(out _); });
         _antagTypes.Add(typeof(T));
+    }
+
+    public void MindAddRoles(EntityUid mindId, ComponentRegistry components, MindComponent? mind = null, bool silent = false)
+    {
+        if (!Resolve(mindId, ref mind))
+            return;
+
+        EntityManager.AddComponents(mindId, components);
+        var antagonist = false;
+        foreach (var compReg in components.Values)
+        {
+            var compType = compReg.Component.GetType();
+
+            var comp = EntityManager.ComponentFactory.GetComponent(compType);
+            if (IsAntagonistRole(comp.GetType()))
+            {
+                antagonist = true;
+                break;
+            }
+        }
+
+        var mindEv = new MindRoleAddedEvent(silent);
+        RaiseLocalEvent(mindId, ref mindEv);
+
+        var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
+        if (mind.OwnedEntity != null)
+        {
+            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
+        }
+
+        _adminLogger.Add(LogType.Mind, LogImpact.Low,
+            $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
+    }
+
+    public void MindAddRole(EntityUid mindId, Component component, MindComponent? mind = null, bool silent = false)
+    {
+        if (!Resolve(mindId, ref mind))
+            return;
+
+        if (HasComp(mindId, component.GetType()))
+        {
+            throw new ArgumentException($"We already have this role: {component}");
+        }
+
+        EntityManager.AddComponent(mindId, component);
+        var antagonist = IsAntagonistRole(component.GetType());
+
+        var mindEv = new MindRoleAddedEvent(silent);
+        RaiseLocalEvent(mindId, ref mindEv);
+
+        var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
+        if (mind.OwnedEntity != null)
+        {
+            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
+        }
+
+        _adminLogger.Add(LogType.Mind, LogImpact.Low,
+            $"'Role {component}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
     }
 
     /// <summary>
@@ -137,11 +214,13 @@ public abstract class SharedRoleSystem : EntitySystem
 
     public bool MindHasRole<T>(EntityUid mindId) where T : IComponent
     {
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
         return HasComp<T>(mindId);
     }
 
     public List<RoleInfo> MindGetAllRoles(EntityUid mindId)
     {
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
         var ev = new MindGetAllRolesEvent(new List<RoleInfo>());
         RaiseLocalEvent(mindId, ref ev);
         return ev.Roles;
@@ -152,6 +231,7 @@ public abstract class SharedRoleSystem : EntitySystem
         if (mindId == null)
             return false;
 
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
         var ev = new MindIsAntagonistEvent();
         RaiseLocalEvent(mindId.Value, ref ev);
         return ev.IsAntagonist;
@@ -177,6 +257,11 @@ public abstract class SharedRoleSystem : EntitySystem
         return _antagTypes.Contains(typeof(T));
     }
 
+    public bool IsAntagonistRole(Type component)
+    {
+        return _antagTypes.Contains(component);
+    }
+
     /// <summary>
     /// Play a sound for the mind, if it has a session attached.
     /// Use this for role greeting sounds.
@@ -185,5 +270,37 @@ public abstract class SharedRoleSystem : EntitySystem
     {
         if (Resolve(mindId, ref mind) && mind.Session != null)
             _audio.PlayGlobal(sound, mind.Session);
+    }
+
+    public HashSet<JobRequirement>? GetJobRequirement(JobPrototype job)
+    {
+        if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(job.ID, out var req))
+            return req;
+
+        return job.Requirements;
+    }
+
+    public HashSet<JobRequirement>? GetJobRequirement(ProtoId<JobPrototype> job)
+    {
+        if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(job, out var req))
+            return req;
+
+        return _prototypes.Index(job).Requirements;
+    }
+
+    public HashSet<JobRequirement>? GetAntagRequirement(ProtoId<AntagPrototype> antag)
+    {
+        if (_requirementOverride != null && _requirementOverride.Antags.TryGetValue(antag, out var req))
+            return req;
+
+        return _prototypes.Index(antag).Requirements;
+    }
+
+    public HashSet<JobRequirement>? GetAntagRequirement(AntagPrototype antag)
+    {
+        if (_requirementOverride != null && _requirementOverride.Antags.TryGetValue(antag.ID, out var req))
+            return req;
+
+        return antag.Requirements;
     }
 }
