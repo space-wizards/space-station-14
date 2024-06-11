@@ -48,6 +48,11 @@ namespace Content.Shared.Explosion.Components
         /// </summary>
         [DataField] public bool Examinable = true;
 
+        /// <summary>
+        ///     Whether or not to show the user a popup when starting the timer.
+        /// </summary>
+        [DataField] public bool DoPopup = true;
+
         #region GuidebookData
 
         [GuidebookData]

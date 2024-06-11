@@ -1,4 +1,5 @@
 using Content.Shared.Maps;
+using Content.Shared.Roles;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
@@ -20,16 +21,16 @@ namespace Content.Shared.CCVar
             CVarDef.Create("server.id", "unknown_server_id", CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
-        ///     Name of the rules txt file in the "Resources/Server Info" dir. Include the extension.
+        ///     Guide Entry Prototype ID to be displayed as the server rules.
         /// </summary>
         public static readonly CVarDef<string> RulesFile =
-            CVarDef.Create("server.rules_file", "Rules.txt", CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("server.rules_file", "DefaultRuleset", CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
-        ///     A loc string for what should be displayed as the title on the Rules window.
+        ///     Guide entry that is displayed by default when a guide is opened.
         /// </summary>
-        public static readonly CVarDef<string> RulesHeader =
-            CVarDef.Create("server.rules_header", "ui-rules-header", CVar.REPLICATED | CVar.SERVER);
+        public static readonly CVarDef<string> DefaultGuide =
+            CVarDef.Create("server.default_guide", "NewPlayer", CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Ambience
@@ -226,6 +227,12 @@ namespace Content.Shared.CCVar
             GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
+        /// Override default role requirements using a <see cref="JobRequirementOverridePrototype"/>
+        /// </summary>
+        public static readonly CVarDef<string>
+            GameRoleTimerOverride = CVarDef.Create("game.role_timer_override", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
         /// If roles should be restricted based on whether or not they are whitelisted.
         /// </summary>
         public static readonly CVarDef<bool>
@@ -297,8 +304,8 @@ namespace Content.Shared.CCVar
         /// <summary>
         /// Minimal overall played time.
         /// </summary>
-        public static readonly CVarDef<int> PanicBunkerMinOverallHours =
-            CVarDef.Create("game.panic_bunker.min_overall_hours", 10, CVar.SERVERONLY);
+        public static readonly CVarDef<int> PanicBunkerMinOverallMinutes =
+            CVarDef.Create("game.panic_bunker.min_overall_minutes", 600, CVar.SERVERONLY);
 
         /// <summary>
         /// A custom message that will be used for connections denied to the panic bunker
@@ -312,6 +319,48 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> BypassBunkerWhitelist =
             CVarDef.Create("game.panic_bunker.whitelisted_can_bypass", true, CVar.SERVERONLY);
+
+        /*
+         * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
+         */
+
+        /// <summary>
+        /// Whether the baby jail is currently enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> BabyJailEnabled  =
+            CVarDef.Create("game.baby_jail.enabled", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// Show reason of disconnect for user or not.
+        /// </summary>
+        public static readonly CVarDef<bool> BabyJailShowReason =
+            CVarDef.Create("game.baby_jail.show_reason", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Maximum age of the account (from server's PoV, so from first-seen date) in minutes that can access baby
+        /// jailed servers.
+        /// </summary>
+        public static readonly CVarDef<int> BabyJailMaxAccountAge =
+            CVarDef.Create("game.baby_jail.max_account_age", 1440, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Maximum overall played time allowed to access baby jailed servers.
+        /// </summary>
+        public static readonly CVarDef<int> BabyJailMaxOverallMinutes =
+            CVarDef.Create("game.baby_jail.max_overall_minutes", 120, CVar.SERVERONLY);
+
+        /// <summary>
+        /// A custom message that will be used for connections denied due to the baby jail.
+        /// If not empty, then will overwrite <see cref="BabyJailShowReason"/>
+        /// </summary>
+        public static readonly CVarDef<string> BabyJailCustomReason =
+            CVarDef.Create("game.baby_jail.custom_reason", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Allow bypassing the baby jail if the user is whitelisted.
+        /// </summary>
+        public static readonly CVarDef<bool> BypassBabyJailWhitelist =
+            CVarDef.Create("game.baby_jail.whitelisted_can_bypass", true, CVar.SERVERONLY);
 
         /// <summary>
         /// Make people bonk when trying to climb certain objects like tables.
@@ -1795,7 +1844,7 @@ namespace Content.Shared.CCVar
         /// Don't show rules to localhost/loopback interface.
         /// </summary>
         public static readonly CVarDef<bool> RulesExemptLocal =
-            CVarDef.Create("rules.exempt_local", true, CVar.SERVERONLY);
+            CVarDef.Create("rules.exempt_local", false, CVar.SERVERONLY);
 
 
         /*
