@@ -108,10 +108,13 @@ public sealed partial class JobIconPrototype : StatusIconPrototype, IInheritingP
     /// Name of the icon used for menu tooltips.
     /// </summary>
     [DataField]
-    public LocId? JobName;
+    public string JobName { get; private set; } = string.Empty;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public string LocalizedJobName => Loc.GetString(JobName);
 
     /// <summary>
-    /// Should the agent ID be able to use this job icon?
+    /// Should the agent ID or ID card console be able to use this job icon?
     /// </summary>
     [DataField]
     public bool AllowSelection = true;
