@@ -46,6 +46,10 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
 
         _menu.OnSongSelected += SelectSong;
 
+        _menu.OnSongQueueAdd += songId =>
+        {
+            SendMessage(new JukeboxAddQueueMessage(songId));
+        };
         _menu.SetTime += SetTime;
         PopulateMusic();
         Reload();
@@ -64,11 +68,11 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         if (_protoManager.TryIndex(jukebox.SelectedSongId, out var songProto))
         {
             var length = EntMan.System<AudioSystem>().GetAudioLength(songProto.Path.Path.ToString());
-            _menu.SetSelectedSong(songProto.Name, (float) length.TotalSeconds);
+            _menu.SetSelectedSong(songProto.ID, (float) length.TotalSeconds);
         }
         else
         {
-            _menu.SetSelectedSong(string.Empty, 0f);
+            _menu.SetSelectedSong(null, 0f);
         }
     }
 

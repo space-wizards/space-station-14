@@ -16,6 +16,7 @@ namespace Content.Client.Audio.Jukebox;
 public sealed partial class JukeboxMenu : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     private AudioSystem _audioSystem;
 
     /// <summary>
@@ -29,11 +30,14 @@ public sealed partial class JukeboxMenu : FancyWindow
     public event Action<bool>? OnPlayPressed;
     public event Action? OnStopPressed;
     public event Action<ProtoId<JukeboxPrototype>>? OnSongSelected;
+    public event Action<ProtoId<JukeboxPrototype>>? OnSongQueueAdd;
     public event Action<float>? SetTime;
 
     private EntityUid? _audio;
 
     private float _lockTimer;
+
+    private int i = 0;
 
     public JukeboxMenu()
     {
@@ -41,25 +45,15 @@ public sealed partial class JukeboxMenu : FancyWindow
         IoCManager.InjectDependencies(this);
         _audioSystem = _entManager.System<AudioSystem>();
 
-        MusicList.OnItemSelected += args =>
+        CurrentSong.SetOnPressedStop(args =>
         {
-            var entry = MusicList[args.ItemIndex];
-
-            if (entry.Metadata is not string juke)
-                return;
-
-            OnSongSelected?.Invoke(juke);
-        };
-
-        PlayButton.OnPressed += args =>
+            // OnStopPressed?.Invoke();
+            OnPlayPressed?.Invoke(false);
+        });
+        CurrentSong.SetOnPressedPlay((song, args) =>
         {
-            OnPlayPressed?.Invoke(!_playState);
-        };
-
-        StopButton.OnPressed += args =>
-        {
-            OnStopPressed?.Invoke();
-        };
+            OnPlayPressed?.Invoke(true);
+        });
         PlaybackSlider.OnReleased += PlaybackSliderKeyUp;
 
         SetPlayPauseButton(_audioSystem.IsPlaying(_audio), force: true);
@@ -86,11 +80,34 @@ public sealed partial class JukeboxMenu : FancyWindow
     /// </summary>
     public void Populate(IEnumerable<JukeboxPrototype> jukeboxProtos)
     {
-        MusicList.Clear();
+        // MusicList.Clear();
 
         foreach (var entry in jukeboxProtos)
         {
-            MusicList.AddItem(entry.Name, metadata: entry.ID);
+            // MusicList.AddItem(entry.Name, metadata: entry.ID);
+            var songControl = new JukeboxEntry(entry) {EntryType = JukeboxEntry.Type.List};
+            songControl.SetOnPressedPlay((song, args) => {
+                if (song == null)
+                    return;
+                OnSongSelected?.Invoke(song.ID);
+                OnPlayPressed?.Invoke(true);
+            });
+
+            songControl.SetOnPressedQueue((song, args) => {
+                if (song == null)
+                    return;
+
+                var songControl = new JukeboxEntry(song) {EntryType = JukeboxEntry.Type.Queue};
+                var box = new BoxContainer();
+                box.AddChild(new Label() {Text= $"{i} "});
+                box.AddChild(songControl);
+                MusicListQueue.AddChild(box);
+                i += 1;
+
+                OnSongQueueAdd?.Invoke(song.ID);
+            });
+
+            MusicList.AddChild(songControl);
         }
     }
 
@@ -103,16 +120,23 @@ public sealed partial class JukeboxMenu : FancyWindow
 
         if (playing)
         {
-            PlayButton.Text = Loc.GetString("jukebox-menu-buttonpause");
+            //PlayButton.Text = Loc.GetString("jukebox-menu-buttonpause");
             return;
         }
 
-        PlayButton.Text = Loc.GetString("jukebox-menu-buttonplay");
+        //PlayButton.Text = Loc.GetString("jukebox-menu-buttonplay");
     }
 
-    public void SetSelectedSong(string name, float length)
+    public void SetSelectedSong(ProtoId<JukeboxPrototype>? song, float length)
     {
-        SetSelectedSongText(name);
+        if (song == null)
+            return;
+
+        if (!_prototype.TryIndex(song, out var songProto))
+            return;
+
+        CurrentSong.SetSong(songProto);
+        // SetSelectedSongText(name);
         PlaybackSlider.MaxValue = length;
         PlaybackSlider.SetValueWithoutEvent(0);
     }
@@ -156,11 +180,11 @@ public sealed partial class JukeboxMenu : FancyWindow
     {
         if (!string.IsNullOrEmpty(text))
         {
-            SongName.Text = text;
+            // SongName.Text = text;
         }
         else
         {
-            SongName.Text = "---";
+            // SongName.Text = "---";
         }
     }
 }
