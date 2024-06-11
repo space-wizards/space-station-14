@@ -6,6 +6,9 @@
   placement:
     mode: AlignTileAny
   components:
+  - type: Anchorable
+    flags:
+    - Unanchorable
   - type: AmbientSound
     enabled: false
     volume: -6
