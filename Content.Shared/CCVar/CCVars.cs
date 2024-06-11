@@ -1039,7 +1039,7 @@ namespace Content.Shared.CCVar
         ///     Whether gas differences will move entities.
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
-            CVarDef.Create("atmos.space_wind", false, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
@@ -1058,7 +1058,33 @@ namespace Content.Shared.CCVar
         ///     Useful to prevent clipping through objects.
         /// </summary>
         public static readonly CVarDef<float> SpaceWindMaxVelocity =
-            CVarDef.Create("atmos.space_wind_max_velocity", 30f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind_max_velocity", 25f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     If an object's mass is below this number, then this number is used in place of mass to determine whether air pressure can throw an object.
+        ///     This has nothing to do with throwing force, only acting as a way of reducing the odds of tiny 5 gram objects from being yeeted by people's breath
+        /// </summary>
+        /// <remarks>
+        ///     If you are reading this because you want to change it, consider looking into why almost every item in the game weighs only 5 grams
+        ///     And maybe do your part to fix that? :)
+        /// </remarks>
+        public static readonly CVarDef<float> SpaceWindMinimumCalculatedMass =
+            CVarDef.Create("atmos.space_wind_minimum_calculated_mass", 5f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Calculated as 1/Mass, where Mass is the physics.Mass of the desired threshold.
+        /// If an object's inverse mass is lower than this, it is capped at this. Basically, an upper limit to how heavy an object can be
+        /// before it stops resisting space wind more.
+        /// </summary>
+        public static readonly CVarDef<float> SpaceWindMaximumCalculatedInverseMass =
+            CVarDef.Create("atmos.space_wind_maximum_calculated_inverse_mass", 0.04f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Increases default airflow calculations to O(n^2) complexity, for use with heavy space wind optimizations. Potato servers BEWARE
+        /// This solves the problem of objects being trapped in an infinite loop of slamming into a wall repeatedly.
+        /// </summary>
+        public static readonly CVarDef<bool> MonstermosUseExpensiveAirflow =
+            CVarDef.Create("atmos.mmos_expensive_airflow", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     The maximum force that may be applied to an object by pushing (i.e. not throwing) atmospheric pressure differences.
@@ -1088,7 +1114,7 @@ namespace Content.Shared.CCVar
 		///     Also looks weird on slow spacing for unrelated reasons. If you do want to enable this, you should probably turn on instaspacing.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosRipTiles =
-            CVarDef.Create("atmos.monstermos_rip_tiles", false, CVar.SERVERONLY);
+            CVarDef.Create("atmos.monstermos_rip_tiles", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether explosive depressurization will cause the grid to gain an impulse.
