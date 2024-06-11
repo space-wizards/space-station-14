@@ -1,11 +1,12 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Audio;
 using Content.Server.Power.Components;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.Gravity
 {
@@ -17,6 +18,7 @@ namespace Content.Server.Gravity
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedPointLightSystem _lights = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -28,6 +30,18 @@ namespace Content.Server.Gravity
             SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<GravityGeneratorComponent, SharedGravityGeneratorComponent.SwitchGeneratorMessage>(
                 OnSwitchGenerator);
+            SubscribeLocalEvent<GravityGeneratorComponent, InteractUsingEvent>(OnInteractUsing, before: new []{typeof(AnchorableSystem)});
+        }
+
+        private void OnInteractUsing(Entity<GravityGeneratorComponent> gravity, ref InteractUsingEvent args)
+        {
+            if (!TryComp<ApcPowerReceiverComponent>(args.Target, out var apc))
+                return;
+            if (!apc.Powered)
+                return;
+
+            _popup.PopupEntity(Loc.GetString("gravity-generator-interact-failed"), args.Target);
+            args.Handled = true;
         }
 
         private void OnParentChanged(EntityUid uid, GravityGeneratorComponent component, ref EntParentChangedMessage args)
