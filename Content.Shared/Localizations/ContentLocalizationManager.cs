@@ -24,7 +24,7 @@ namespace Content.Shared.Localizations
 
         public void Initialize()
         {
-            var culture = _loc.LoadDefault();
+            var culture = _loc.SetDefaultCulture();
             _loc.AddFunction(culture, "PRESSURE", FormatPressure);
             _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
             _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);

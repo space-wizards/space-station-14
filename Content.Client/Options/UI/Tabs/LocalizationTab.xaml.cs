@@ -23,7 +23,7 @@ public sealed partial class LocalizationTab : Control
 
         ReloadCultures();
 
-        var configCulture = new CultureInfo(_configuration.GetCVar(CVars.CultureName));
+        var configCulture = new CultureInfo(_configuration.GetCVar(CVars.LocCultureName));
         _cultures.TryGetValue(configCulture, out var configCultureId);
         CultureOption.Select((int?)configCultureId ?? 0);
 
@@ -36,7 +36,7 @@ public sealed partial class LocalizationTab : Control
 
                 CultureOption.Select(id);
 
-                _configuration.SetCVar(CVars.CultureName, culture.Name);
+                _configuration.SetCVar(CVars.LocCultureName, culture.Name);
                 _ui.Popup(Loc.GetString("ui-options-culture-change-popup"));
                 return;
             }
