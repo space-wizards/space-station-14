@@ -16,7 +16,7 @@ admin-ui-panic-bunker-show-reason = Show Reason
 admin-ui-panic-bunker-show-reason-tooltip = Show the user why they were blocked from connecting by the panic bunker.
 
 admin-ui-panic-bunker-min-account-age = Min. Account Age
-admin-ui-panic-bunker-min-overall-hours = Min. Overall Playtime
+admin-ui-panic-bunker-min-overall-minutes = Min. Overall Playtime
 
 admin-ui-panic-bunker-is-enabled = The panic bunker is currently enabled.
 

@@ -281,5 +281,22 @@ Entries:
   id: 34
   time: '2024-06-01T08:14:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28451
+- author: Repo
+  changes:
+  - message: Sorting and search to objects tab.
+    type: Add
+  - message: Disconnected people showing player tab
+    type: Fix
+  id: 35
+  time: '2024-06-06T06:41:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28609
+- author: nikthechampiongr
+  changes:
+  - message: Freeze, freeze & mute, and unfreeze verbs now work on any entity. Not
+      just connected players.
+    type: Tweak
+  id: 36
+  time: '2024-06-08T10:40:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28664
 Name: Admin
 Order: 1
