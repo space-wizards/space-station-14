@@ -5397,7 +5397,7 @@ entities:
   - uid: 1537
     components:
     - type: Transform
-      pos: 47.5,7.5
+      pos: 46.5,7.5
       parent: 31
 - proto: AnomalyScanner
   entities:
@@ -26748,14 +26748,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -33.5,8.5
       parent: 31
-  - uid: 9867
+  - uid: 7105
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -34.5,-0.5
       parent: 31
-    - type: EntityStorage
-      open: True
 - proto: ClosetWallMaintenanceFilledRandom
   entities:
   - uid: 9863
@@ -28341,6 +28339,11 @@ entities:
       parent: 31
 - proto: CrateEngineeringAMEShielding
   entities:
+  - uid: 7464
+    components:
+    - type: Transform
+      pos: 48.5,8.5
+      parent: 31
   - uid: 8990
     components:
     - type: Transform
@@ -61219,6 +61222,13 @@ entities:
     components:
     - type: Transform
       pos: 25.5,6.5
+      parent: 31
+- proto: VendingMachineCuraDrobe
+  entities:
+  - uid: 9049
+    components:
+    - type: Transform
+      pos: 11.5,-29.5
       parent: 31
 - proto: VendingMachineDetDrobe
   entities:
