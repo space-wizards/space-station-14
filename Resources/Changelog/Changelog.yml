@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: RenQ
-  changes:
-  - message: brought back the classic long bedhead as an alternative to the current
-      one.
-    type: Add
-  id: 6209
-  time: '2024-03-22T17:35:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26336
 - author: metalgearsloth
   changes:
   - message: Fix NPCs getting stuck on railings.
@@ -3853,3 +3845,10 @@
   id: 6708
   time: '2024-06-10T13:20:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28815
+- author: Aquif
+  changes:
+  - message: It is now possible to save after chaining you job unavailable preference.
+    type: Fix
+  id: 6709
+  time: '2024-06-11T02:48:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28839
