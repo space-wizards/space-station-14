@@ -1,0 +1,15 @@
+<tabs:LocalizationTab xmlns="https://spacestation14.io"
+                      xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs">
+    <BoxContainer Orientation="Vertical">
+        <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+            <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
+                <!-- Culture selection -->
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'ui-options-culture'}"/>
+                    <Control MinSize="4 0"/>
+                    <OptionButton Name="CultureOption"/>
+                </BoxContainer>
+            </BoxContainer>
+        </ScrollContainer>
+    </BoxContainer>
+</tabs:LocalizationTab>
