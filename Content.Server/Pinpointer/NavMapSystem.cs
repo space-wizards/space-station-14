@@ -451,10 +451,11 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
         // get the angle between the two positions, adjusted for the grid rotation so that
         // we properly preserve north in relation to the grid.
-        var dir = (pos.Value.Position - coordinates.Position).ToWorldAngle();
+        var offset = coordinates.Position - pos.Value.Position;
+        var dir = offset.ToWorldAngle();
         var adjustedDir = (dir - gridOffset).GetDir();
 
-        var length = (pos.Value.Position - coordinates.Position).Length();
+        var length = offset.Length();
         if (length < CloseDistance)
         {
             return Loc.GetString("nav-beacon-pos-format",
