@@ -200,19 +200,41 @@ namespace Content.Shared.Containers.ItemSlots
                 return;
 
             var slots = new List<ItemSlot>();
+            // if itemSlots.Slots.Count == 0, we wouldn't want to show the locked popup that would be weird
+            var allLocked = itemSlots.Slots.Count != 0;
+            ItemSlot? lastFailedSlot = null;
             foreach (var slot in itemSlots.Slots.Values)
             {
                 if (!slot.InsertOnInteract)
                     continue;
 
-                if (!CanInsert(uid, args.Used, args.User, slot, swap: slot.Swap, popup: args.User))
+                if (!CanInsert(uid, args.Used, out var reason, args.User, slot, slot.Swap))
+                {
+                    if (reason != CannotInsertReason.SlotLocked)
+                        allLocked = false;
+                    lastFailedSlot = slot;
                     continue;
+                }
 
                 slots.Add(slot);
             }
 
             if (slots.Count == 0)
+            {
+                // no slots failed, so uh,
+                if (lastFailedSlot == null)
+                    return;
+
+                // it's a bit weird that the popupMessage is stored with the item slots themselves, but in practice
+                // the popup messages will just all be the same, so it's probably fine.
+                //
+                // doing a check to make sure that they're all the same or something is probably frivolous
+                if (allLocked && lastFailedSlot.LockedFailPopup != null)
+                    _popupSystem.PopupClient(Loc.GetString(lastFailedSlot.LockedFailPopup), uid, args.User);
+                if (!allLocked && lastFailedSlot.WhitelistFailPopup != null)
+                    _popupSystem.PopupClient(Loc.GetString(lastFailedSlot.WhitelistFailPopup), uid, args.User);
                 return;
+            }
 
             // Drop the held item onto the floor. Return if the user cannot drop.
             if (!_handsSystem.TryDrop(args.User, args.Used, handsComp: hands))
@@ -255,42 +277,89 @@ namespace Content.Shared.Containers.ItemSlots
             _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
         }
 
+        public enum CannotInsertReason
+        {
+            ContainerSlotNull,
+            SlotFullNoSwap,
+            ItemNotWhitelisted,
+            ItemBlacklisted,
+            SlotLocked,
+            EventCanceled,
+
+            /**
+             * calling _containers.CanInsert returned false, i dunno why you figure it out
+             */
+            CanInsertFalse
+        }
+
         /// <summary>
         ///     Check whether a given item can be inserted into a slot. Unless otherwise specified, this will return
         ///     false if the slot is already filled.
         /// </summary>
         /// <remarks>
-        ///     If a popup entity is given, and if the item slot is set to generate a popup message when it fails to
-        ///     pass the whitelist or due to slot being locked, then this will generate an appropriate popup.
+        ///     Overloaded method, so you don't have to use reason
         /// </remarks>
-        public bool CanInsert(EntityUid uid, EntityUid usedUid, EntityUid? user, ItemSlot slot, bool swap = false, EntityUid? popup = null)
+        public bool CanInsert(
+            EntityUid uid,
+            EntityUid usedUid,
+            EntityUid? user,
+            ItemSlot slot,
+            bool swap = false)
+        {
+            return CanInsert(uid, usedUid, out var reason, user, slot, swap);
+        }
+
+        /// <summary>
+        ///     Check whether a given item can be inserted into a slot. Unless otherwise specified, this will return
+        ///     false if the slot is already filled.
+        /// </summary>
+        public bool CanInsert(EntityUid uid,
+            EntityUid usedUid,
+            out CannotInsertReason reason,
+            EntityUid? user,
+            ItemSlot slot,
+            bool swap = false)
         {
             if (slot.ContainerSlot == null)
-                return false;
-
-            if (_whitelistSystem.IsWhitelistFail(slot.Whitelist, usedUid) || _whitelistSystem.IsBlacklistPass(slot.Blacklist, usedUid))
             {
-                if (popup.HasValue && slot.WhitelistFailPopup.HasValue)
-                    _popupSystem.PopupClient(Loc.GetString(slot.WhitelistFailPopup), uid, popup.Value);
+                reason = CannotInsertReason.ContainerSlotNull;
+                return false;
+            }
+
+            if (slot.HasItem && (!swap || swap && !CanEject(uid, user, slot)))
+            {
+                reason = CannotInsertReason.SlotFullNoSwap;
+                return false;
+            }
+
+            if (_whitelistSystem.IsWhitelistFail(slot.Whitelist, usedUid))
+            {
+                reason = CannotInsertReason.ItemNotWhitelisted;
+                return false;
+            }
+
+            if (_whitelistSystem.IsBlacklistPass(slot.Blacklist, usedUid))
+            {
+                reason = CannotInsertReason.ItemBlacklisted;
                 return false;
             }
 
             if (slot.Locked)
             {
-                if (popup.HasValue && slot.LockedFailPopup.HasValue)
-                    _popupSystem.PopupClient(Loc.GetString(slot.LockedFailPopup), uid, popup.Value);
+                reason = CannotInsertReason.SlotLocked;
                 return false;
             }
-
-            if (slot.HasItem && (!swap || (swap && !CanEject(uid, user, slot))))
-                return false;
 
             var ev = new ItemSlotInsertAttemptEvent(uid, usedUid, user, slot);
             RaiseLocalEvent(uid, ref ev);
             RaiseLocalEvent(usedUid, ref ev);
             if (ev.Cancelled)
+            {
+                reason = CannotInsertReason.EventCanceled;
                 return false;
+            }
 
+            reason = CannotInsertReason.CanInsertFalse;
             return _containers.CanInsert(usedUid, slot.ContainerSlot, assumeEmpty: swap);
         }
 
