@@ -218,7 +218,8 @@ public sealed class WieldableSystem : EntitySystem
         {
             if (_virtualItemSystem.TrySpawnVirtualItemInHand(used, user, out var virtualItem, true))
             {
-                virtuals.Add(virtualItem.Value);
+                if (virtualItem != null)
+                    virtuals.Add(virtualItem.Value);
                 continue;
             }
 

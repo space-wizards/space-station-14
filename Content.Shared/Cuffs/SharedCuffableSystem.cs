@@ -424,10 +424,10 @@ namespace Content.Shared.Cuffs
                     break;
             }
 
-            if (_virtualItem.TrySpawnVirtualItemInHand(handcuff, uid, out var virtItem1))
+            if (_virtualItem.TrySpawnVirtualItemInHand(handcuff, uid, out var virtItem1) && virtItem1 != null)
                 EnsureComp<UnremoveableComponent>(virtItem1.Value);
 
-            if (_virtualItem.TrySpawnVirtualItemInHand(handcuff, uid, out var virtItem2))
+            if (_virtualItem.TrySpawnVirtualItemInHand(handcuff, uid, out var virtItem2) && virtItem2 != null)
                 EnsureComp<UnremoveableComponent>(virtItem2.Value);
         }
 

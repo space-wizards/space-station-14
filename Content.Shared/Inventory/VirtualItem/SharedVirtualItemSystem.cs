@@ -24,6 +24,10 @@ namespace Content.Shared.Inventory.VirtualItem;
 /// </remarks>
 public abstract class SharedVirtualItemSystem : EntitySystem
 {
+    /*
+     * TODO: When we get predicted entity spawning fix the NotNullWhen(true) attributes back.
+     */
+
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -86,7 +90,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     }
 
     /// <inheritdoc cref="TrySpawnVirtualItemInHand(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,bool)"/>
-    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem, bool dropOthers = false)
+    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, out EntityUid? virtualItem, bool dropOthers = false)
     {
         virtualItem = null;
         if (!_handsSystem.TryGetEmptyHand(user, out var empty))
@@ -119,7 +123,9 @@ public abstract class SharedVirtualItemSystem : EntitySystem
         if (!TrySpawnVirtualItem(blockingEnt, user, out virtualItem))
             return false;
 
-        _handsSystem.DoPickup(user, empty, virtualItem.Value);
+        if (virtualItem != null)
+            _handsSystem.DoPickup(user, empty, virtualItem.Value);
+
         return true;
     }
 
@@ -159,12 +165,14 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     }
 
     /// <inheritdoc cref="TrySpawnVirtualItemInInventory(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,string,bool)"/>
-    public bool TrySpawnVirtualItemInInventory(EntityUid blockingEnt, EntityUid user, string slot, bool force, [NotNullWhen(true)] out EntityUid? virtualItem)
+    public bool TrySpawnVirtualItemInInventory(EntityUid blockingEnt, EntityUid user, string slot, bool force, out EntityUid? virtualItem)
     {
         if (!TrySpawnVirtualItem(blockingEnt, user, out virtualItem))
             return false;
 
-        _inventorySystem.TryEquip(user, virtualItem.Value, slot, force: force);
+        if (virtualItem != null)
+            _inventorySystem.TryEquip(user, virtualItem.Value, slot, force: force);
+
         return true;
     }
 
@@ -213,13 +221,13 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     /// </summary>
     /// <param name="blockingEnt">The entity we will make a virtual entity copy of</param>
     /// <param name="user">The entity that we want to insert the virtual entity</param>
-    /// <param name="virtualItem">The virtual item, if spawned</param>
-    public bool TrySpawnVirtualItem(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem)
+    /// <param name="virtualItem">The virtual item, if spawned. Will be null on the client.</param>
+    public bool TrySpawnVirtualItem(EntityUid blockingEnt, EntityUid user, out EntityUid? virtualItem)
     {
         if (_netManager.IsClient)
         {
             virtualItem = null;
-            return false;
+            return true;
         }
 
         var pos = Transform(user).Coordinates;
