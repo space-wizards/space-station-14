@@ -1,15 +1,12 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Supermatter.Components;
-using Robust.Shared.Physics.Events;
 using Content.Shared.Atmos;
 using Content.Server.Lightning;
-using Robust.Shared.Audio.Systems;
 using Content.Shared.Radiation.Components;
 using Content.Server.Chat.Managers;
 using Content.Shared.Interaction;
 using Content.Server.Audio;
 using Content.Shared.Audio;
-using Robust.Shared.Random;
 using Content.Server.Station.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Anomaly;
@@ -18,8 +15,17 @@ using Content.Shared.Tag;
 using Content.Shared.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Supermatter;
+using Content.Server.Administration.Logs;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Random;
 
-using Consts = Content.Server.Supermatter.Components.SupermatterComponent; // using an alias for readability
+using Consts = Content.Server.Supermatter.Components.SupermatterComponent;
+using Content.Shared.Database;
+using Content.Server.Chat.Systems;
+using System.Text;
+using Content.Server.AlertLevel;
+using Content.Shared.Examine; // using an alias for readability
 
 namespace Content.Server.Supermatter.EntitySystems;
 
@@ -28,13 +34,15 @@ public sealed class SupermatterSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly SharedAudioSystem _sound = default!;
     [Dependency] private readonly LightningSystem _lightning = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly AlertLevelSystem _alert = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly AmbientSoundSystem _ambience = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly AnomalySystem _anomaly = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -44,6 +52,7 @@ public sealed class SupermatterSystem : EntitySystem
         SubscribeLocalEvent<SupermatterComponent, InteractUsingEvent>(OnClick);
         SubscribeLocalEvent<SupermatterComponent, SupermatterDoAfterEvent>(OnGetSliver);
         SubscribeLocalEvent<SupermatterComponent, DamageChangedEvent>(OnGetHit);
+        SubscribeLocalEvent<SupermatterComponent, ExaminedEvent>(OnExamine);
     }
 
     public override void Update(float frameTime)
@@ -57,6 +66,7 @@ public sealed class SupermatterSystem : EntitySystem
 
             var uid = sm.Owner;
 
+            sm.DeltaTime = frameTime;
             sm.UpdateTimerAccumulator += frameTime;
 
             if (sm.UpdateTimerAccumulator >= sm.UpdateTimer)
@@ -64,8 +74,12 @@ public sealed class SupermatterSystem : EntitySystem
                 sm.UpdateTimerAccumulator = 0f;
 
                 ProcessAtmos(uid, sm);
-                ProcessPower(uid, sm, frameTime);
+
                 ProcessDamage(uid, sm);
+
+                if (sm.AreWeDelaming)
+                    DelamCountdown(sm);
+
                 ProcessWaste(sm);
 
                 HandleSound(uid, sm);
@@ -153,16 +167,13 @@ public sealed class SupermatterSystem : EntitySystem
         sm.DamageArchived = sm.Damage;
         CalculateDamage(sm);
 
-        if (sm.Damage > sm.DelaminationPoint && !sm.AreWeDelaming)
-        {
-            DelamCountdown(sm);
-            return;
-        }
+        if (sm.Damage > sm.DelaminationPoint)
+            sm.AreWeDelaming = true;
 
         if (sm.Damage > sm.DangerPoint)
         {
             if (_random.Prob(.25f))
-                GenerateAnomaly(Comp<TransformComponent>(uid));
+                GenerateAnomaly(uid);
             return;
         }
     }
@@ -322,10 +333,54 @@ public sealed class SupermatterSystem : EntitySystem
     /// <summary>
     ///     Handle supermatter delamination and the end of the station.
     /// </summary>
-    private void Delaminate(SupermatterComponent sm)
+    private void Delaminate(EntityUid uid, SupermatterComponent sm)
     {
+        var delamType = ChooseDelam(sm);
 
+        var sb = new StringBuilder();
+        sb.Append(Loc.GetString("supermatter-announcement-delam"));
+        switch (delamType)
+        {
+            case DelamType.Explosion:
+            default:
+                sb.Append(" " + Loc.GetString("supermatter-announcement-delam-explosion"));
+                break;
+            case DelamType.Tesla:
+                sb.Append(" " + Loc.GetString("supermatter-announcement-delam-tesla"));
+                break;
+            case DelamType.Singularity:
+                sb.Append(" " + Loc.GetString("supermatter-announcement-delam-singuloose"));
+                break;
+            case DelamType.ResonanceCascade:
+                sb.Append(" " + Loc.GetString("supermatter-announcement-delam-cascade"));
+                break;
+        }
+
+        SupermatterAlert(uid, sb.ToString(), true, delamType);
+        Delaminate(uid, sm, delamType);
     }
+
+    /// <summary>
+    ///     Handle supermatter delamination based on it's type.
+    /// </summary>
+    private void Delaminate(EntityUid uid, SupermatterComponent sm, DelamType type)
+    {
+        GenerateAnomaly(uid, _random.Next(2, 4));
+
+        switch (type)
+        {
+            case DelamType.Explosion:
+            default:
+                break;
+            case DelamType.Tesla:
+                break;
+            case DelamType.Singularity:
+                break;
+            case DelamType.ResonanceCascade:
+                break;
+        }
+    }
+
     /// <summary>
     ///     Choose a prefered delamination type. The supermatter is picky.
     /// </summary>
@@ -345,44 +400,84 @@ public sealed class SupermatterSystem : EntitySystem
     /// <summary>
     ///     Handle the delamination countdown, alerts, etc.
     /// </summary>
-    private void DelamCountdown(SupermatterComponent sm)
+    private void DelamCountdown(EntityUid uid, SupermatterComponent sm)
     {
-
+        if (sm.Damage < sm.DelaminationPoint)
+        {
+            // yay!
+            return;
+        }
+        if (sm.DelamCountdownAccumulator >= sm.CountdownTimer) // uh oh
+            Delaminate(uid, sm);
     }
 
-    private void GenerateAnomaly(TransformComponent xform, float amount = 1)
+    private void GenerateAnomaly(EntityUid uid, float amount = 1)
     {
-        if (_station.GetStationInMap(xform.MapID) is not { } station ||
-            !TryComp<StationDataComponent>(station, out var data) ||
-            _station.GetLargestGrid(data) is not { } grid)
-        {
-            if (xform.GridUid == null)
-                return;
-            grid = xform.GridUid.Value;
-        }
+        var stationUid = _station.GetOwningStation(uid);
+
+        if (stationUid == null || !TryComp<StationDataComponent>(stationUid, out var data))
+            return;
+
+        var grid = _station.GetLargestGrid(data);
+
+        if (grid == null)
+            return;
 
         for (var i = 0; i < amount; i++)
-            _anomaly.SpawnOnRandomGridLocation(grid, "RandomAnomalySpawner");
+        {
+            _anomaly.SpawnOnRandomGridLocation((EntityUid) grid, "RandomAnomalySpawner");
+            _adminLogger.Add(LogType.Anomaly, LogImpact.Medium, $"An anomaly has been spawned by the supermatter crystal.");
+        }
     }
 
     /// <summary>
     ///     Make console alerts, set station codes, etc. etc.
     /// </summary>
-    public void SupermatterAlert(string message, bool isDelamming = true, DelamType? delamType = null)
+    /// <param name="customSender"> If true, the message will be sent from Central Command </param>
+    public void SupermatterAlert(EntityUid uid, string message, bool isDelamming = false, DelamType? delamType = null, bool customSender = false)
     {
-
+        if (isDelamming)
+        {
+            switch (delamType)
+            {
+                case DelamType.Explosion:
+                default:
+                    break;
+                case DelamType.Tesla:
+                case DelamType.Singularity:
+                case DelamType.ResonanceCascade:
+                    break;
+            }
+        }
+        _chat.DispatchStationAnnouncement(uid, message, customSender ? "Central Command" : Loc.GetString("supermatter-announcement-sender"), false, null, Color.LightYellow);
     }
 
     /// <summary>
-    ///     Vaporizes anything that touched the SM. @o7.
+    ///     Vaporizes the targeted uid.
+    /// </summary>
+    private void Vaporize(EntityUid uid)
+    {
+
+
+        // getting discombobulated by the SM is the same as permanent round removal so why not log that
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{EntityManager.ToPrettyString(uid):player} has been vaporized by the supermatter.");
+    }
+
+    /// <summary>
+    ///     Event handler to vaporize anything that touched the SM. @o7.
     /// </summary>
     private void OnCollide(EntityUid uid, SupermatterComponent sm, StartCollideEvent args)
     {
+        if (!sm.Activated)
+            sm.Activated = true;
 
+        Vaporize(uid);
+        ProcessPower(uid, sm, sm.DeltaTime);
+        ProcessDamage(uid, sm);
     }
 
     /// <summary>
-    ///     Event handlet to get the supermatter sliver using any knife.
+    ///     Event handler to get the supermatter sliver using any knife.
     /// </summary>
     private void OnClick(EntityUid uid, SupermatterComponent sm, InteractUsingEvent args)
     {
@@ -392,6 +487,7 @@ public sealed class SupermatterSystem : EntitySystem
         {
             if (tag == "Knife")
             {
+                _adminLogger.Add(LogType.Action, LogImpact.High, $"{EntityManager.ToPrettyString(uid):player} is trying to extract a sliver from the supermatter crystal.");
                 _popup.PopupClient(Loc.GetString("supermatter-tamper-begin"), args.User);
 
                 new DoAfterArgs(EntityManager, uid, 30, new SupermatterDoAfterEvent(), args.Used)
@@ -412,7 +508,7 @@ public sealed class SupermatterSystem : EntitySystem
     private void OnGetSliver(EntityUid uid, SupermatterComponent sm, SupermatterDoAfterEvent args)
     {
         sm.Damage += 10; // your criminal actions will not go unnoticed
-        SupermatterAlert(Loc.GetString("supermatter-announcement-tamper", ("integrity", sm.Integrity)));
+        SupermatterAlert(uid, Loc.GetString("supermatter-announcement-tamper", ("integrity", sm.Integrity)));
 
         Spawn(sm.SliverPrototype, _transform.GetMapCoordinates(args.User));
         _popup.PopupClient(Loc.GetString("supermatter-tamper-end"), args.User);
@@ -423,6 +519,20 @@ public sealed class SupermatterSystem : EntitySystem
     /// </summary>
     private void OnGetHit(EntityUid uid, SupermatterComponent sm, DamageChangedEvent args)
     {
+        if (!sm.Activated)
+            sm.Activated = true;
 
+        sm.Damage += args.DamageDelta?.GetTotal().Int() / 100 ?? 0;
+
+        ProcessPower(uid, sm, sm.DeltaTime);
+        ProcessDamage(uid, sm);
+    }
+
+    private void OnExamine(EntityUid uid, SupermatterComponent sm, ExaminedEvent args)
+    {
+        if (args.IsInDetailsRange) // get all close to it
+        {
+            args.PushMarkup(Loc.GetString("supermatter-examine-integrity", ("integrity", sm.Integrity)));
+        }
     }
 }

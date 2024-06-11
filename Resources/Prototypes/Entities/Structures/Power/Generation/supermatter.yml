@@ -6,6 +6,7 @@
     - type: Supermatter
     - type: Transform
       anchored: true
+      noRot: true
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Glass

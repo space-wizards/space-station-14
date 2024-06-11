@@ -29,26 +29,31 @@ public sealed partial class SupermatterComponent : Component
     /// <summary>
     ///     Indicates whether supermatter crystal is active or not.
     /// </summary>
-    [DataField]
-    public bool Activated = false;
+    [DataField("activated")] public bool Activated = false;
 
     public float UpdateTimerAccumulator = 0f;
 
-    public GasMixture AbsorbedGasMix = null;
+    /// <summary>
+    ///     Delta time between Update() calls storage.
+    /// </summary>
+    public float DeltaTime = 0f;
 
-    public DelamType PreferedDelamination = DelamType.Explosion;
+    public GasMixture AbsorbedGasMix = null;
 
     #region Constants
     /// <summary>
-    ///     Amount of seconds to pass before SM goes at it again.
+    ///     Amount of seconds to pass before another SM cycle.
     /// </summary>
-    public readonly float UpdateTimer = 1f;
+    [DataField("updateTimer")]
+    public float UpdateTimer = 1f;
 
     /// <summary>
     ///     The time in seconds for crystal to delaminate.
     ///     60 seconds by default; with a sliver removed - 30.
     /// </summary>
-    public float CountdownTimer => SliverRemoved ? 30f : 60f;
+    [DataField("countdownTimer")]
+    public float CountdownTimerRaw = 60f;
+    public float CountdownTimer => SliverRemoved ? CountdownTimerRaw / 2 : CountdownTimerRaw;
 
     /// <summary>
     ///     Lesser than that and it's not worth processing.
@@ -56,15 +61,15 @@ public sealed partial class SupermatterComponent : Component
     public const float MinimumMoleCount = .01f;
 
     public const float
-        BasePowerTransmissionRate = 1040,
-        HeatPenaltyThreshold = 40,
-        PowerPenaltyThreshold = 5000,
-        MolePenaltyThreshold = 1800,
+        BasePowerTransmissionRate = 1040f,
+        HeatPenaltyThreshold = 40f,
+        PowerPenaltyThreshold = 5000f,
+        MolePenaltyThreshold = 1800f,
         ReactionPowerModifier = .65f,
-        ThermalReleaseModifier = 4,
-        PlasmaReleaseModifier = 650,
-        OxygenReleaseModifier = 340,
-        GasHeatPowerScaling = 1 / 6;
+        ThermalReleaseModifier = 4f,
+        PlasmaReleaseModifier = 650f,
+        OxygenReleaseModifier = 340f,
+        GasHeatPowerScaling = 1f / 6f;
 
     // localised strings for "future i guess" :godo:
     public const string
@@ -95,6 +100,7 @@ public sealed partial class SupermatterComponent : Component
     /// <summary>
     ///     The portion of gasmix we should absorb.
     /// </summary>
+    [DataField("gasAbsorptionRatio")]
     public float AbsorptionRatio = .15f;
 
     /// <summary>
@@ -109,7 +115,7 @@ public sealed partial class SupermatterComponent : Component
     /// <summary>
     ///     Integrity used for announcements.
     /// </summary>
-    public float Integrity => 100 - Damage;
+    public float Integrity => 100f - Damage;
     /// <summary>
     ///     The damage we had before the cycle.
     ///     Used to check if we're currently hurting or healing.
@@ -129,26 +135,28 @@ public sealed partial class SupermatterComponent : Component
     /// <summary>
     ///     Multiplies our gas waste amount and temperature.
     /// </summary>
-    public float WasteMultiplier = 0;
+    public float WasteMultiplier = 0f;
 
-    [DataField]
-    public float DamageWarningPoint = 10;
+    [DataField("damageWarningPoint")]
+    public float DamageWarningPoint = 10f;
 
-    [DataField]
-    public float DangerPoint = 50;
+    [DataField("damageDangerPoint")]
+    public float DangerPoint = 50f;
 
-    [DataField]
-    public float EmergencyPoint = 75;
+    [DataField("damageEmergencyPoint")]
+    public float EmergencyPoint = 75f;
 
-    [DataField]
-    public float DelaminationPoint = 100;
+    [DataField("damageDelaminationPoint")]
+    public float DelaminationPoint = 100f;
 
     public bool AreWeDelaming = false;
+
+    public float DelamCountdownAccumulator = 0f;
 
     /// <summary>
     ///     A scaling value that affects the severity of explosions.
     /// </summary>
-    [DataField]
+    [DataField("explosionPower")]
     public float ExplosionPower = 35f;
 
     /// <summary>
