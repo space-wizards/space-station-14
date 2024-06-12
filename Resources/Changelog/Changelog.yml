@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: Door remotes can now only control doors specific to their type and do
-      not use the access of their user.
-    type: Tweak
-  id: 6215
-  time: '2024-03-24T00:48:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26371
 - author: DrSmugleaf
   changes:
   - message: Empty marking categories are now hidden in the markings picker.
@@ -3848,3 +3840,10 @@
   id: 6714
   time: '2024-06-12T13:32:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28803
+- author: deltanedas
+  changes:
+  - message: Fixed opening the PDA UI sometimes breaking.
+    type: Fix
+  id: 6715
+  time: '2024-06-12T18:10:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28896
