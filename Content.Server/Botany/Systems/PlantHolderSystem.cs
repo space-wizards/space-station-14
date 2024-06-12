@@ -57,7 +57,7 @@ public sealed class PlantHolderSystem : EntitySystem
         SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<PlantHolderComponent, SolutionTransferAttemptEvent>(OnSolutionAdded);
+        SubscribeLocalEvent<PlantHolderComponent, SolutionTransferSuccessEvent>(OnSolutionAdded);
     }
 
     public override void Update(float frameTime)
@@ -360,8 +360,10 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
-    private void OnSolutionAdded(Entity<PlantHolderComponent> entity, ref SolutionTransferAttemptEvent args)
+    private void OnSolutionAdded(Entity<PlantHolderComponent> entity, ref SolutionTransferSuccessEvent args)
     {
+        Log.Info("we have triggered");
+        Log.Info(SharedSolutionContainerSystem.ToPrettyString(args.TransfferdSolution));
         var (uid, component) = entity;
 
         //Only play splosh sound when using containers that would be dumped into the basin (as opposed to ie. sprayed on)
