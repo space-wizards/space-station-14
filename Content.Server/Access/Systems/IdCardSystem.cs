@@ -33,8 +33,11 @@ public sealed class IdCardSystem : SharedIdCardSystem
         if (TryComp<AccessComponent>(uid, out var access))
         {
             float randomPick = _random.NextFloat();
-            // if really unlucky, burn card
-            if (randomPick <= 0.15f)
+            bool autoBurn = false;
+            if (TryComp<MicrowaveComponent>(args.Microwave, out var micro))
+                autoBurn = !micro.CanMicrowaveIds;
+            // if really unlucky, burn card, also burn it if the microwave cannot handle ids
+            if (autoBurn || randomPick <= 0.15f)
             {
                 TryComp(uid, out TransformComponent? transformComponent);
                 if (transformComponent != null)
