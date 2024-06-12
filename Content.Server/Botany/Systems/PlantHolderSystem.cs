@@ -19,6 +19,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Tag;
+using Content.Shared.Fluids.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -259,6 +260,15 @@ public sealed class PlantHolderSystem : EntitySystem
             ForceUpdateByExternalCause(uid, component);
 
             return;
+        }
+
+        //Only play splosh sound when using containers that would be "dumped" into the basin (as opposed to ie. sprayed on)
+        if (TryComp(args.Used, out SpillableComponent? spill) && _solutionContainerSystem.TryGetRefillableSolution(args.Used, out var solCpmp, out var sol))
+        {
+            if(component.WateringSound != null && sol.Volume > 0)
+            {
+                _audio.PlayPvs(component.WateringSound, uid);
+            }
         }
 
         if (_tagSystem.HasTag(args.Used, "PlantSampleTaker"))
