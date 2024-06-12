@@ -59,6 +59,37 @@
   slippery: false
 
 - type: reagent
+  parent: Blood
+  id: RatBlood
+  name: reagent-name-rat-blood
+  group: Biological
+  desc: reagent-desc-rat-blood
+  flavor: metallic
+  color: "#750f0f"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-slimy
+  slippery: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+        conditions:
+          - !type:OrganType
+            type: Human
+            shouldHave: false
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Brute: -3
+            Burn: -1.25
+
+- type: reagent
   id: Slime
   name: reagent-name-slime
   group: Biological

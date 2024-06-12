@@ -13,6 +13,8 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
+  - type: Bloodstream
+    bloodReagent: RatBlood
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -170,6 +172,8 @@
     baseSprintSpeed : 3.5
   - type: InputMover
   - type: MobMover
+  - type: Bloodstream
+    bloodReagent: RatBlood
   - type: HTN
     rootTask:
       task: RatServantCompound
