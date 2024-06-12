@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.ReagentOnItem;
 
-[RegisterComponent, NetworkedComponent, ImplicitDataDefinitionForInheritors]
+[ImplicitDataDefinitionForInheritors]
 public abstract partial class ReagentOnItemComponent : Component
 {
 
