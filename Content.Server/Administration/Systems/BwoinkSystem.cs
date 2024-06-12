@@ -642,31 +642,23 @@ namespace Content.Server.Administration.Systems
             var stringbuilder = new StringBuilder();
 
             if (parameters.Icon != null)
-            {
                 stringbuilder.Append(parameters.Icon);
-            }
+            else if (parameters.IsAdmin)
+                stringbuilder.Append(":outbox_tray:");
+            else if (parameters.NoReceivers)
+                stringbuilder.Append(":sos:");
             else
-            {
-                if (parameters.IsAdmin)
-                    stringbuilder.Append(":outbox_tray:");
-                else if (parameters.NoReceivers)
-                    stringbuilder.Append(":sos:");
-                else
-                    stringbuilder.Append(":inbox_tray:");
-            }
+                stringbuilder.Append(":inbox_tray:");
 
             if (parameters.RoundTime != string.Empty && parameters.RoundState == GameRunLevel.InRound)
                 stringbuilder.Append($" **{parameters.RoundTime}**");
             if (!parameters.PlayedSound)
                 stringbuilder.Append(" **(S)**");
+
             if (parameters.Icon == null)
-            {
                 stringbuilder.Append($" **{parameters.Username}:** ");
-            }
             else
-            {
                 stringbuilder.Append($" **{parameters.Username}** ");
-            }
             stringbuilder.Append(parameters.Message);
             return stringbuilder.ToString();
         }
