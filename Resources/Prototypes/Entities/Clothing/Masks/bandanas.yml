@@ -12,6 +12,7 @@
     unfoldedSlots:
     - MASK
   - type: Mask
+    disableOnFolded: true
   - type: IngestionBlocker
   - type: IdentityBlocker
     coverage: MOUTH
