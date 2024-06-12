@@ -1,67 +1,4 @@
 ﻿Entries:
-- author: BlitzTheSquishy
-  changes:
-  - message: Irish Coffee recipe adjusted to be more logical
-    type: Tweak
-  id: 6207
-  time: '2024-03-22T08:23:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26327
-- author: SlamBamActionman
-  changes:
-  - message: Space glue/lube tubes can now be used through the right-click menu.
-    type: Tweak
-  id: 6208
-  time: '2024-03-22T09:37:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26002
-- author: RenQ
-  changes:
-  - message: brought back the classic long bedhead as an alternative to the current
-      one.
-    type: Add
-  id: 6209
-  time: '2024-03-22T17:35:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26336
-- author: metalgearsloth
-  changes:
-  - message: Fix NPCs getting stuck on railings.
-    type: Fix
-  id: 6210
-  time: '2024-03-23T01:42:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26351
-- author: Ubaser
-  changes:
-  - message: You can now purchase a set of 4 throwing knives in the uplink as a bundle
-      for 12 TC.
-    type: Add
-  id: 6211
-  time: '2024-03-23T04:13:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26026
-- author: ElectroJr
-  changes:
-  - message: Fixed a bug where partially airtight entities (e.g., thin windows or
-      doors) could let air leak out into space.
-    type: Fix
-  id: 6212
-  time: '2024-03-23T16:34:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/22521
-- author: Killerqu00
-  changes:
-  - message: Cable Coils are now small in size, taking only 1x2 space in containers.
-    type: Tweak
-  id: 6213
-  time: '2024-03-23T17:30:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26361
-- author: Tayrtahn
-  changes:
-  - message: Clumsy characters can no longer avoid bonking their heads by using the
-      Climb verb.
-    type: Fix
-  - message: Clumsy characters are less likely to bonk their heads when trying to
-      climb.
-    type: Tweak
-  id: 6214
-  time: '2024-03-23T19:29:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24977
 - author: nikthechampiongr
   changes:
   - message: Door remotes can now only control doors specific to their type and do
@@ -3853,3 +3790,61 @@
   id: 6706
   time: '2024-06-09T18:28:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28775
+- author: Zonespace27
+  changes:
+  - message: Fixed a typo under the "Cargonia" header in the glossary.
+    type: Fix
+  id: 6707
+  time: '2024-06-10T13:19:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28818
+- author: EmoGarbage404
+  changes:
+  - message: Fixed drinks page not having a search bar.
+    type: Fix
+  id: 6708
+  time: '2024-06-10T13:20:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28815
+- author: Aquif
+  changes:
+  - message: It is now possible to save after chaining you job unavailable preference.
+    type: Fix
+  id: 6709
+  time: '2024-06-11T02:48:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28839
+- author: lzk228
+  changes:
+  - message: Added reward info in cargo bounty label.
+    type: Tweak
+  id: 6710
+  time: '2024-06-11T09:33:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28853
+- author: Tayrtahn
+  changes:
+  - message: Announcements for the location of the evac shuttle, the armed nuke, and
+      more will no longer send you in the opposite direction.
+    type: Fix
+  id: 6711
+  time: '2024-06-11T22:18:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28869
+- author: Boaz1111
+  changes:
+  - message: Refactors Cluster's Armoury
+    type: Tweak
+  id: 6712
+  time: '2024-06-12T01:07:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28854
+- author: Deserty0
+  changes:
+  - message: '"no materials loaded" messege now appears in lathes!'
+    type: Fix
+  id: 6713
+  time: '2024-06-12T10:32:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28885
+- author: robertGN
+  changes:
+  - message: Syndicate communications consoles can no longer recall the emergency
+      shuttle.
+    type: Fix
+  id: 6714
+  time: '2024-06-12T13:32:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28803
