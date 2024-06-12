@@ -36,7 +36,7 @@ namespace Content.Server.Gravity
 
         private void OnUnanchorAttempt(Entity<GravityGeneratorComponent> ent, ref UnanchorAttemptEvent args)
         {
-            if (TryComp<ApcPowerReceiverComponent>(ent, out var apc) && apc.Powered)
+            if (ent.Comp.GravityActive)
             {
                 _popup.PopupEntity(Loc.GetString("gravity-generator-interact-failed"), ent);
                 args.Cancel();
