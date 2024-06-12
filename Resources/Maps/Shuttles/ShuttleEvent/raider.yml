@@ -185,11 +185,6 @@ entities:
     - type: Transform
       pos: 0.5,-4.5
       parent: 1
-  - uid: 68
-    components:
-    - type: Transform
-      pos: 0.5,-3.5
-      parent: 1
   - uid: 69
     components:
     - type: Transform
@@ -404,20 +399,20 @@ entities:
         01001001 00100000 01110100 01101000 01101001 01101110 01101011 00100000 01110100 01101000 01100101 01110010 01100101 01100110 01101111 01110010 00100000 01001001 00100000 01100001 01101101 [/bold][/color]
 - proto: PlayerBorgSyndicateInvasionGhostRoleSpawner
   entities:
-  - uid: 86
+  - uid: 48
     components:
     - type: Transform
-      pos: -0.5,-3.5
+      pos: 1.5,-3.5
       parent: 1
-  - uid: 87
+  - uid: 68
     components:
     - type: Transform
       pos: 0.5,-3.5
       parent: 1
-  - uid: 88
+  - uid: 86
     components:
     - type: Transform
-      pos: 1.5,-3.5
+      pos: -0.5,-3.5
       parent: 1
 - proto: PosterContrabandBorgFancyv2
   entities:
