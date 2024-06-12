@@ -321,6 +321,13 @@ entities:
     - type: Transform
       pos: 2.5,-3.5
       parent: 1
+- proto: Gyroscope
+  entities:
+  - uid: 87
+    components:
+    - type: Transform
+      pos: 0.5,0.5
+      parent: 1
 - proto: MiningWindow
   entities:
   - uid: 42
