@@ -1355,8 +1355,9 @@ entities:
 - proto: Jug
   entities:
   - uid: 52
-    name: jug (Tell-E-Crystaaal)
     components:
+    - type: MetaData
+      name: jug (Tell-E-Crystaaal)
     - type: Transform
       pos: 3.0812402,1.343455
       parent: 1
