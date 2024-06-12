@@ -4414,6 +4414,18 @@ entities:
     - type: Transform
       pos: -0.5,-6.5
       parent: 1
+- proto: PowerCellMedium
+  entities:
+  - uid: 881
+    components:
+    - type: Transform
+      pos: -3.264883,-14.25878
+      parent: 1
+  - uid: 882
+    components:
+    - type: Transform
+      pos: 4.692021,-14.3004465
+      parent: 1
 - proto: Poweredlight
   entities:
   - uid: 558
