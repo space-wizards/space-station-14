@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using Content.Client.Administration.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
@@ -13,185 +12,147 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Administration.UI.CustomControls
+namespace Content.Client.Administration.UI.CustomControls;
+
+[GenerateTypedNameReferences]
+public sealed partial class PlayerListControl : BoxContainer
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class PlayerListControl : BoxContainer
+    private readonly AdminSystem _adminSystem;
+
+    private readonly IEntityManager _entManager;
+    private readonly List<PlayerInfo> _sortedPlayerList = new();
+    private readonly IUserInterfaceManager _uiManager;
+
+    private List<PlayerInfo> _playerList = new();
+
+    private PlayerInfo? _selectedPlayer;
+    public Comparison<PlayerInfo>? Comparison;
+
+    public Func<PlayerInfo, string, string>? OverrideText;
+
+    public PlayerListControl()
     {
-        private readonly AdminSystem _adminSystem;
-
-        private List<PlayerInfo> _playerList = new();
-        private List<PlayerInfo> _sortedPlayerList = new();
-
-        public event Action<PlayerInfo?>? OnSelectionChanged;
-        public IReadOnlyList<PlayerInfo> PlayerInfo => _playerList;
-
-        public Func<PlayerInfo, string, string>? OverrideText;
-        public Comparison<PlayerInfo>? Comparison;
-
-        private IEntityManager _entManager;
-        private IUserInterfaceManager _uiManager;
-        private readonly SpriteSystem _sprites;
-
-        private PlayerInfo? _selectedPlayer;
-
-        public PlayerListControl()
-        {
-            _entManager = IoCManager.Resolve<IEntityManager>();
-            _uiManager = IoCManager.Resolve<IUserInterfaceManager>();
-            _sprites = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
-            _adminSystem = _entManager.System<AdminSystem>();
-            RobustXamlLoader.Load(this);
-            // Fill the Option data
-            PlayerListContainer.ItemPressed += PlayerListItemPressed;
-            PlayerListContainer.ItemKeyBindDown += PlayerListItemKeyBindDown;
-            PlayerListContainer.GenerateItem += GenerateButton;
-            PlayerListContainer.NoItemSelected += PlayerListNoItemSelected;
-            PopulateList(_adminSystem.PlayerList);
-            FilterLineEdit.OnTextChanged += _ => FilterList();
-            _adminSystem.PlayerListChanged += PopulateList;
-            BackgroundPanel.PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)};
-        }
-
-        private void PlayerListNoItemSelected()
-        {
-            _selectedPlayer = null;
-            OnSelectionChanged?.Invoke(null);
-        }
-
-        private void PlayerListItemPressed(BaseButton.ButtonEventArgs? args, ListData? data)
-        {
-            if (args == null || data is not PlayerListData {Info: var selectedPlayer})
-                return;
-
-            if (selectedPlayer == _selectedPlayer)
-                return;
-
-            if (args.Event.Function != EngineKeyFunctions.UIClick)
-                return;
-
-            OnSelectionChanged?.Invoke(selectedPlayer);
-            _selectedPlayer = selectedPlayer;
-
-            // update label text. Only required if there is some override (e.g. unread bwoink count).
-            if (OverrideText != null && args.Button.Children.FirstOrDefault()?.Children?.FirstOrDefault() is Label label)
-                label.Text = GetText(selectedPlayer);
-        }
-
-        private void PlayerListItemKeyBindDown(GUIBoundKeyEventArgs? args, ListData? data)
-        {
-            if (args == null || data is not PlayerListData { Info: var selectedPlayer })
-                return;
-
-            if (args.Function != EngineKeyFunctions.UIRightClick || selectedPlayer.NetEntity == null)
-                return;
-
-            _uiManager.GetUIController<VerbMenuUIController>().OpenVerbMenu(selectedPlayer.NetEntity.Value, true);
-            args.Handle();
-        }
-
-        public void StopFiltering()
-        {
-            FilterLineEdit.Text = string.Empty;
-        }
-
-        private void FilterList()
-        {
-            _sortedPlayerList.Clear();
-            foreach (var info in _playerList)
-            {
-                var displayName = $"{info.CharacterName} ({info.Username})";
-                if (info.IdentityName != info.CharacterName)
-                    displayName += $" [{info.IdentityName}]";
-                if (!string.IsNullOrEmpty(FilterLineEdit.Text)
-                    && !displayName.ToLowerInvariant().Contains(FilterLineEdit.Text.Trim().ToLowerInvariant()))
-                    continue;
-                _sortedPlayerList.Add(info);
-            }
-
-            if (Comparison != null)
-                _sortedPlayerList.Sort((a, b) => Comparison(a, b));
-
-            // Ensure pinned players are always at the top
-            var pinnedPlayers = _sortedPlayerList.Where(p => p.IsPinned).ToList();
-            var unpinnedPlayers = _sortedPlayerList.Where(p => !p.IsPinned).ToList();
-            _sortedPlayerList = pinnedPlayers.Concat(unpinnedPlayers).ToList();
-
-            PlayerListContainer.PopulateList(_sortedPlayerList.Select(info => new PlayerListData(info)).ToList());
-            if (_selectedPlayer != null)
-                PlayerListContainer.Select(new PlayerListData(_selectedPlayer));
-        }
-
-        public void PopulateList(IReadOnlyList<PlayerInfo>? players = null)
-        {
-            players ??= _adminSystem.PlayerList;
-
-            _playerList = players.ToList();
-            if (_selectedPlayer != null && !_playerList.Contains(_selectedPlayer))
-                _selectedPlayer = null;
-
-            FilterList();
-        }
-
-
-        private string GetText(PlayerInfo info)
-        {
-            var text = $"{info.CharacterName} ({info.Username})";
-            if (OverrideText != null)
-                text = OverrideText.Invoke(info, text);
-            return text;
-        }
-
-        private void GenerateButton(ListData data, ListContainerButton button)
-        {
-            if (data is not PlayerListData { Info: var info })
-                return;
-
-            var nameLabel = new Label
-            {
-                ClipText = true,
-                Text = GetText(info),
-                HorizontalExpand = true
-            };
-
-            var pinButton = new TextureButton
-            {
-                TextureNormal = _sprites.Frame0(new SpriteSpecifier.Texture(new("/Textures/Interface/Bwoink/un_pinned.png"))),
-                HorizontalAlignment = HAlignment.Right
-            };
-
-            // Set the initial texture based on the pinned status
-            UpdatePinButtonTexture(pinButton, info.IsPinned);
-
-            pinButton.OnPressed += _ =>
-            {
-                info.IsPinned = !info.IsPinned;
-                // Update the button texture based on the new pin status
-                UpdatePinButtonTexture(pinButton, info.IsPinned);
-                // Re-filter the list to ensure pinned items move to the top
-                FilterList();
-            };
-
-            var boxContainer = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                HorizontalExpand = true,
-                Children =
-                {
-                    nameLabel,
-                    pinButton
-                }
-            };
-
-            button.AddChild(boxContainer);
-            button.AddStyleClass(ListContainer.StyleClassListContainerButton);
-        }
-
-        private void UpdatePinButtonTexture(TextureButton pinButton, bool isPinned)
-        {
-            pinButton.TextureNormal = _sprites.Frame0(new SpriteSpecifier.Texture(new(isPinned ? "/Textures/Interface/Bwoink/pinned.png" : "/Textures/Interface/Bwoink/un_pinned.png")));
-        }
+        _entManager = IoCManager.Resolve<IEntityManager>();
+        _uiManager = IoCManager.Resolve<IUserInterfaceManager>();
+        _adminSystem = _entManager.System<AdminSystem>();
+        RobustXamlLoader.Load(this);
+        // Fill the Option data
+        PlayerListContainer.ItemPressed += PlayerListItemPressed;
+        PlayerListContainer.ItemKeyBindDown += PlayerListItemKeyBindDown;
+        PlayerListContainer.GenerateItem += GenerateButton;
+        PlayerListContainer.NoItemSelected += PlayerListNoItemSelected;
+        PopulateList(_adminSystem.PlayerList);
+        FilterLineEdit.OnTextChanged += _ => FilterList();
+        _adminSystem.PlayerListChanged += PopulateList;
+        BackgroundPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = new Color(32, 32, 40) };
     }
 
-    public record PlayerListData(PlayerInfo Info) : ListData;
+    public IReadOnlyList<PlayerInfo> PlayerInfo => _playerList;
+
+    public event Action<PlayerInfo?>? OnSelectionChanged;
+
+    private void PlayerListNoItemSelected()
+    {
+        _selectedPlayer = null;
+        OnSelectionChanged?.Invoke(null);
+    }
+
+    private void PlayerListItemPressed(BaseButton.ButtonEventArgs? args, ListData? data)
+    {
+        if (args == null || data is not PlayerListData { Info: var selectedPlayer })
+            return;
+
+        if (selectedPlayer == _selectedPlayer)
+            return;
+
+        if (args.Event.Function != EngineKeyFunctions.UIClick)
+            return;
+
+        OnSelectionChanged?.Invoke(selectedPlayer);
+        _selectedPlayer = selectedPlayer;
+
+        // update label text. Only required if there is some override (e.g. unread bwoink count).
+        if (OverrideText != null && args.Button.Children.FirstOrDefault()?.Children?.FirstOrDefault() is Label label)
+            label.Text = GetText(selectedPlayer);
+    }
+
+    private void PlayerListItemKeyBindDown(GUIBoundKeyEventArgs? args, ListData? data)
+    {
+        if (args == null || data is not PlayerListData { Info: var selectedPlayer })
+            return;
+
+        if (args.Function != EngineKeyFunctions.UIRightClick || selectedPlayer.NetEntity == null)
+            return;
+
+        _uiManager.GetUIController<VerbMenuUIController>().OpenVerbMenu(selectedPlayer.NetEntity.Value, true);
+        args.Handle();
+    }
+
+    public void StopFiltering()
+    {
+        FilterLineEdit.Text = string.Empty;
+    }
+
+    private void FilterList()
+    {
+        _sortedPlayerList.Clear();
+        foreach (var info in _playerList)
+        {
+            var displayName = $"{info.CharacterName} ({info.Username})";
+            if (info.IdentityName != info.CharacterName)
+                displayName += $" [{info.IdentityName}]";
+            if (!string.IsNullOrEmpty(FilterLineEdit.Text)
+                && !displayName.ToLowerInvariant().Contains(FilterLineEdit.Text.Trim().ToLowerInvariant()))
+                continue;
+            _sortedPlayerList.Add(info);
+        }
+
+        if (Comparison != null)
+            _sortedPlayerList.Sort((a, b) => Comparison(a, b));
+
+        // Ensure pinned players are always at the top
+        _sortedPlayerList.Sort((a, b) => a.IsPinned != b.IsPinned && a.IsPinned ? -1 : 1);
+
+        PlayerListContainer.PopulateList(_sortedPlayerList.Select(info => new PlayerListData(info)).ToList());
+        if (_selectedPlayer != null)
+            PlayerListContainer.Select(new PlayerListData(_selectedPlayer));
+    }
+
+    public void PopulateList(IReadOnlyList<PlayerInfo>? players = null)
+    {
+        players ??= _adminSystem.PlayerList;
+
+        _playerList = players.ToList();
+        if (_selectedPlayer != null && !_playerList.Contains(_selectedPlayer))
+            _selectedPlayer = null;
+
+        FilterList();
+    }
+
+
+    private string GetText(PlayerInfo info)
+    {
+        var text = $"{info.CharacterName} ({info.Username})";
+        if (OverrideText != null)
+            text = OverrideText.Invoke(info, text);
+        return text;
+    }
+
+    private void GenerateButton(ListData data, ListContainerButton button)
+    {
+        if (data is not PlayerListData { Info: var info })
+            return;
+
+        var entry = new PlayerListEntry();
+        entry.Setup(info, OverrideText);
+        entry.OnPinStatusChanged += _ =>
+        {
+            FilterList();
+        };
+
+        button.AddChild(entry);
+        button.AddStyleClass(ListContainer.StyleClassListContainerButton);
+    }
 }
+
+public record PlayerListData(PlayerInfo Info) : ListData;
