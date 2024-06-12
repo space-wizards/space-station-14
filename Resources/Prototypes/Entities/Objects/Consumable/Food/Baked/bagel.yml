@@ -41,10 +41,10 @@
     - Bagel
 
 - type: entity
-  name: poppyseed bagel
+  name: poppy seed bagel
   parent: FoodBagelBase
   id: FoodBagelPoppy
-  description: A delicious bagel topped with bicaridine-infused poppyseeds.
+  description: A delicious bagel topped with bicaridine-infused poppy seeds.
   components:
   - type: FlavorProfile
     flavors:
