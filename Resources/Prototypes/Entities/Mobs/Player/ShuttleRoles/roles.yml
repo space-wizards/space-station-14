@@ -420,6 +420,26 @@
       settings: VisitorMusician
 
 - type: entity
+  id: RandomHumanoidVisitorMusicianFancy
+  name: visiting fancy musician ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: musician
+    - type: RandomHumanoidSpawner
+      settings: VisitorMusicianFancy
+
+- type: entity
+  id: RandomHumanoidVisitorMusicianRelaxed
+  name: visiting relaxed musician ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: musician
+    - type: RandomHumanoidSpawner
+      settings: VisitorMusicianRelaxed
+
+- type: entity
   id: RandomHumanoidVisitorMime
   name: visiting mime ghost role
   components:

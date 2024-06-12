@@ -262,7 +262,7 @@
         state: banner_engineering
   - type: RandomSpawner
     prototypes:
-    - RandomHumanoidVisitorAtmosTechnician
+    - RandomHumanoidVisitorAtmosTech
     - RandomHumanoidVisitorTechnicalAssistant
     - RandomHumanoidVisitorEngineer
     rarePrototypes:
