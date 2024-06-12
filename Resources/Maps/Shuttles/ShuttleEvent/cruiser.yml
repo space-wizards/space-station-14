@@ -17,7 +17,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: grid
+      name: NT-Cruiser
     - type: Transform
       pos: 0.052083373,-0.6041667
       parent: invalid
@@ -71,224 +71,224 @@ entities:
             color: '#FFFFFFFF'
             id: BrickTileDarkLineE
           decals:
-            109: 1,-4
+            79: 1,-4
         - node:
             color: '#FFFFFFFF'
             id: BrickTileDarkLineN
           decals:
-            108: 0,-3
+            78: 0,-3
         - node:
             color: '#FFFFFFFF'
             id: BrickTileDarkLineS
           decals:
-            111: 0,-5
+            80: 0,-5
         - node:
             color: '#FFFFFFFF'
             id: BrickTileDarkLineW
           decals:
-            107: -1,-4
+            77: -1,-4
         - node:
             color: '#334E6DC8'
             id: BrickTileWhiteInnerNe
           decals:
-            11: 1,11
+            8: 1,11
         - node:
             color: '#334E6DC8'
             id: BrickTileWhiteInnerNw
           decals:
-            10: -1,11
+            7: -1,11
         - node:
             color: '#334E6DC8'
             id: BrickTileWhiteLineE
           decals:
-            9: 1,12
+            6: 1,12
         - node:
             color: '#334E6DC8'
             id: BrickTileWhiteLineW
           decals:
-            8: -1,12
+            5: -1,12
         - node:
             color: '#52B4E996'
             id: CheckerNESW
           decals:
-            85: 0,1
-            86: 0,2
-            87: 0,3
-            88: 0,4
+            69: 0,1
+            70: 0,2
+            71: 0,3
+            72: 0,4
         - node:
             color: '#FA750096'
             id: CheckerNESW
           decals:
-            38: -1,-2
+            34: -1,-2
         - node:
             color: '#FA750096'
             id: CheckerNWSE
           decals:
-            46: 1,-2
+            35: 1,-2
         - node:
             color: '#DE3A3A96'
             id: FullTileOverlayGreyscale
           decals:
-            12: 0,14
-            13: 0,15
+            9: 0,14
+            10: 0,15
         - node:
             color: '#FA750096'
             id: FullTileOverlayGreyscale
           decals:
-            48: -7,-3
-            49: -7,-2
-            50: -7,-1
-            52: 7,-3
-            53: 7,-2
-            54: 7,-1
+            36: -7,-3
+            37: -7,-2
+            38: -7,-1
+            39: 7,-3
+            40: 7,-2
+            41: 7,-1
         - node:
             color: '#334E6DC8'
             id: HalfTileOverlayGreyscale
           decals:
-            1: 0,13
+            0: 0,13
         - node:
             color: '#808080FF'
             id: HalfTileOverlayGreyscale
           decals:
-            77: -2,-2
-            78: 2,-2
+            62: -2,-2
+            63: 2,-2
         - node:
             color: '#FA750096'
             id: HalfTileOverlayGreyscale180
           decals:
-            79: -2,-2
-            80: 2,-2
+            64: -2,-2
+            65: 2,-2
         - node:
             color: '#808080FF'
             id: HalfTileOverlayGreyscale270
           decals:
-            55: -1,-1
-            67: -1,1
-            68: -1,2
-            69: -1,3
-            70: -1,4
-            71: -1,6
-            72: -1,7
-            73: -1,8
-            74: -1,9
+            42: -1,-1
+            52: -1,1
+            53: -1,2
+            54: -1,3
+            55: -1,4
+            56: -1,6
+            57: -1,7
+            58: -1,8
+            59: -1,9
         - node:
             color: '#DE3A3A96'
             id: HalfTileOverlayGreyscale270
           decals:
-            14: 1,14
-            84: 1,15
+            11: 1,14
+            68: 1,15
         - node:
             color: '#FA750096'
             id: HalfTileOverlayGreyscale270
           decals:
-            24: 1,9
-            25: 1,8
-            26: 1,7
-            27: 1,6
-            28: 1,4
-            29: 1,3
-            30: 1,2
-            31: 1,1
-            32: 1,-1
+            20: 1,9
+            21: 1,8
+            22: 1,7
+            23: 1,6
+            24: 1,4
+            25: 1,3
+            26: 1,2
+            27: 1,1
+            28: 1,-1
         - node:
             color: '#808080FF'
             id: HalfTileOverlayGreyscale90
           decals:
-            58: 1,-1
-            59: 1,1
-            60: 1,2
-            61: 1,3
-            62: 1,4
-            63: 1,7
-            64: 1,6
-            65: 1,8
-            66: 1,9
+            43: 1,-1
+            44: 1,1
+            45: 1,2
+            46: 1,3
+            47: 1,4
+            48: 1,7
+            49: 1,6
+            50: 1,8
+            51: 1,9
         - node:
             color: '#DE3A3A96'
             id: HalfTileOverlayGreyscale90
           decals:
-            16: -1,14
-            17: -1,15
+            12: -1,14
+            13: -1,15
         - node:
             color: '#FA750096'
             id: HalfTileOverlayGreyscale90
           decals:
-            20: -1,9
-            21: -1,8
-            22: -1,7
-            23: -1,6
-            33: -1,-1
-            34: -1,1
-            35: -1,2
-            36: -1,3
-            37: -1,4
+            16: -1,9
+            17: -1,8
+            18: -1,7
+            19: -1,6
+            29: -1,-1
+            30: -1,1
+            31: -1,2
+            32: -1,3
+            33: -1,4
         - node:
             color: '#808080FF'
             id: QuarterTileOverlayGreyscale
           decals:
-            75: -1,-2
+            60: -1,-2
         - node:
             color: '#DE3A3A96'
             id: QuarterTileOverlayGreyscale180
           decals:
-            18: -1,16
+            14: -1,16
         - node:
             color: '#DE3A3A96'
             id: QuarterTileOverlayGreyscale270
           decals:
-            19: 1,16
+            15: 1,16
         - node:
             color: '#808080FF'
             id: QuarterTileOverlayGreyscale90
           decals:
-            76: 1,-2
+            61: 1,-2
         - node:
             color: '#FFFFFFFF'
             id: StandClearGreyscale
           decals:
-            112: 0,-4
+            81: 0,-4
         - node:
             color: '#334E6DC8'
             id: ThreeQuarterTileOverlayGreyscale
           decals:
-            3: -1,13
-            6: -2,11
+            1: -1,13
+            4: -2,11
         - node:
             color: '#FA750096'
             id: ThreeQuarterTileOverlayGreyscale
           decals:
-            82: 7,-4
+            67: 7,-4
         - node:
             color: '#334E6DC8'
             id: ThreeQuarterTileOverlayGreyscale90
           decals:
-            4: 1,13
-            5: 2,11
+            2: 1,13
+            3: 2,11
         - node:
             color: '#FA750096'
             id: ThreeQuarterTileOverlayGreyscale90
           decals:
-            81: -7,-4
+            66: -7,-4
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerGreyscaleNE
           decals:
-            105: 1,-3
+            75: 1,-3
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerGreyscaleSW
           decals:
-            106: -1,-5
+            76: -1,-5
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerNW
           decals:
-            102: -1,-3
+            74: -1,-3
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerSE
           decals:
-            101: 1,-5
+            73: 1,-5
     - type: GridAtmosphere
       version: 2
       data:
@@ -600,41 +600,11 @@ entities:
       parent: 1
 - proto: BaseComputer
   entities:
-  - uid: 170
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 4.5,14.5
-      parent: 1
-  - uid: 171
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 4.5,13.5
-      parent: 1
   - uid: 173
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,12.5
-      parent: 1
-  - uid: 178
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -3.5,12.5
-      parent: 1
-  - uid: 179
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -3.5,13.5
-      parent: 1
-  - uid: 180
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -3.5,14.5
       parent: 1
 - proto: Bed
   entities:
@@ -1466,13 +1436,20 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -0.5,8.5
       parent: 1
-- proto: ComputerComms
+- proto: ComputerAlert
   entities:
-  - uid: 166
+  - uid: 177
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: -2.5,15.5
+      pos: -3.5,13.5
+      parent: 1
+- proto: ComputerComms
+  entities:
+  - uid: 180
+    components:
+    - type: Transform
+      pos: 1.5,13.5
       parent: 1
 - proto: ComputerIFF
   entities:
@@ -1484,10 +1461,11 @@ entities:
       parent: 1
 - proto: ComputerPowerMonitoring
   entities:
-  - uid: 177
+  - uid: 179
     components:
     - type: Transform
-      pos: 1.5,13.5
+      rot: 1.5707963267948966 rad
+      pos: -2.5,15.5
       parent: 1
 - proto: ComputerRadar
   entities:
@@ -1495,6 +1473,12 @@ entities:
     components:
     - type: Transform
       pos: 2.5,16.5
+      parent: 1
+  - uid: 170
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,13.5
       parent: 1
   - uid: 175
     components:
@@ -1514,6 +1498,20 @@ entities:
     components:
     - type: Transform
       pos: -0.5,13.5
+      parent: 1
+- proto: ComputerSurveillanceWirelessCameraMonitor
+  entities:
+  - uid: 166
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -3.5,14.5
+      parent: 1
+  - uid: 178
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,14.5
       parent: 1
 - proto: CrateEngineeringElectricalSupplies
   entities:
@@ -1557,13 +1555,51 @@ entities:
     - type: Transform
       pos: 1.5,5.5
       parent: 1
+- proto: EncryptionKeyFreelance
+  entities:
+  - uid: 550
+    components:
+    - type: Transform
+      pos: 0.4583333,13.465454
+      parent: 1
+  - uid: 551
+    components:
+    - type: Transform
+      pos: -3.291667,14.569621
+      parent: 1
+  - uid: 552
+    components:
+    - type: Transform
+      pos: -1.4583334,16.402954
+      parent: 1
+  - uid: 553
+    components:
+    - type: Transform
+      pos: 2.5416665,16.423786
+      parent: 1
+  - uid: 554
+    components:
+    - type: Transform
+      pos: 4.3333335,14.559204
+      parent: 1
+- proto: EngineeringVisitorSpawner
+  entities:
+  - uid: 547
+    components:
+    - type: Transform
+      pos: -1.5,15.5
+      parent: 1
 - proto: FaxMachineBase
   entities:
   - uid: 518
     components:
+    - type: MetaData
+      name: NT-Cruiser fax machine
     - type: Transform
       pos: -0.5,9.5
       parent: 1
+    - type: FaxMachine
+      name: NT-Cruiser
 - proto: FolderSpawner
   entities:
   - uid: 530
@@ -2800,6 +2836,13 @@ entities:
     - type: Transform
       pos: 3.5,11.5
       parent: 1
+- proto: SecurityVisitorSpawner
+  entities:
+  - uid: 546
+    components:
+    - type: Transform
+      pos: 2.5,15.5
+      parent: 1
 - proto: ShuttleGunPerforator
   entities:
   - uid: 161
@@ -3034,18 +3077,90 @@ entities:
     - type: Transform
       pos: 5.5,-5.5
       parent: 1
-- proto: SuitStorageEVASyndicate
+- proto: SuitStorageNTSRA
   entities:
   - uid: 401
     components:
     - type: Transform
-      pos: 3.5,-4.5
+      pos: -2.5,-4.5
       parent: 1
   - uid: 402
     components:
     - type: Transform
-      pos: -2.5,-4.5
+      pos: 3.5,-4.5
       parent: 1
+- proto: SurveillanceCameraRouterSecurity
+  entities:
+  - uid: 171
+    components:
+    - type: Transform
+      pos: -3.5,12.5
+      parent: 1
+- proto: SurveillanceCameraSecurity
+  entities:
+  - uid: 539
+    components:
+    - type: Transform
+      pos: 1.5,11.5
+      parent: 1
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Bridge
+  - uid: 540
+    components:
+    - type: Transform
+      pos: -0.5,6.5
+      parent: 1
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Dorms
+  - uid: 541
+    components:
+    - type: Transform
+      pos: -0.5,1.5
+      parent: 1
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Medical
+  - uid: 542
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.5,-1.5
+      parent: 1
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Aft Airlock
+  - uid: 543
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -5.5,-0.5
+      parent: 1
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Port Airlock
+  - uid: 544
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 6.5,-0.5
+      parent: 1
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Starboard Airlock
 - proto: Syringe
   entities:
   - uid: 208
@@ -3198,6 +3313,27 @@ entities:
     components:
     - type: Transform
       pos: -0.5,1.5
+      parent: 1
+- proto: VisitingCivilianSpawner
+  entities:
+  - uid: 548
+    components:
+    - type: Transform
+      pos: -2.5,14.5
+      parent: 1
+- proto: VisitingMedicalSpawner
+  entities:
+  - uid: 549
+    components:
+    - type: Transform
+      pos: 3.5,14.5
+      parent: 1
+- proto: VisitorCaptainSpawner
+  entities:
+  - uid: 545
+    components:
+    - type: Transform
+      pos: 0.5,12.5
       parent: 1
 - proto: WallShuttle
   entities:

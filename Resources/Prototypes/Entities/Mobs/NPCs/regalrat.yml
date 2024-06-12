@@ -89,7 +89,7 @@
     makeSentient: true
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-rat-king-rules
+    rules: ghost-role-information-rules-default-free-agent
     raffle:
       settings: default
   - type: GhostTakeoverAvailable

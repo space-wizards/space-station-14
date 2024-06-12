@@ -354,3 +354,4 @@ DisasterVictimSpawner: CommandVisitorSpawner
 LostCargoTechnicianSpawner: VisitorCargoTechnicianSpawner
 ClownTroupeSpawner: VisitorClownSpawner
 TravelingChefSpawner: VisitorChefSpawner
+SyndieDisasterVictimSpawner: SyndieVisitorSpawner

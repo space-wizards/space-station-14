@@ -301,7 +301,7 @@ entities:
   - uid: 233
     components:
     - type: Transform
-      pos: 3.3125,0.04029572
+      pos: 1.4895834,-2.5153644
       parent: 1
 - proto: CableApcExtension
   entities:
@@ -605,68 +605,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,4.5
       parent: 1
-- proto: ClearPDA
-  entities:
-  - uid: 235
-    components:
-    - type: Transform
-      pos: 0.96875,0.29029572
-      parent: 1
-- proto: ClothingBackpackMerc
-  entities:
-  - uid: 227
-    components:
-    - type: Transform
-      pos: 3.5520835,0.5923791
-      parent: 1
-- proto: ClothingBeltMercWebbing
-  entities:
-  - uid: 232
-    components:
-    - type: Transform
-      pos: 1.4895834,0.5923791
-      parent: 1
-- proto: ClothingHeadHelmetMerc
-  entities:
-  - uid: 230
-    components:
-    - type: Transform
-      pos: 2.1979167,0.7694624
-      parent: 1
-- proto: ClothingHeadsetGrey
-  entities:
-  - uid: 234
-    components:
-    - type: Transform
-      pos: 1.0416667,0.8319624
-      parent: 1
 - proto: ClothingNeckBling
   entities:
   - uid: 92
     components:
     - type: Transform
       pos: -0.4823134,0.61530876
-      parent: 1
-- proto: ClothingOuterVestWebMerc
-  entities:
-  - uid: 228
-    components:
-    - type: Transform
-      pos: 2.8020835,0.8111291
-      parent: 1
-- proto: ClothingShoesBootsMercFilled
-  entities:
-  - uid: 229
-    components:
-    - type: Transform
-      pos: 2.7395835,0.35279572
-      parent: 1
-- proto: ClothingUniformJumpsuitMercenary
-  entities:
-  - uid: 231
-    components:
-    - type: Transform
-      pos: 2.1979167,0.19654572
       parent: 1
 - proto: ComputerIFFSyndicate
   entities:
@@ -1172,7 +1116,7 @@ entities:
   - uid: 215
     components:
     - type: Transform
-      pos: -0.6663505,3.305516
+      pos: -0.5208334,3.5306551
       parent: 1
 - proto: MagazineBoxAntiMateriel
   entities:
@@ -1378,13 +1322,6 @@ entities:
     - type: Transform
       pos: 1.5,-2.5
       parent: 1
-- proto: RadioHandheld
-  entities:
-  - uid: 220
-    components:
-    - type: Transform
-      pos: -0.22885048,3.3263493
-      parent: 1
 - proto: ReinforcedPlasmaWindow
   entities:
   - uid: 71
@@ -1434,6 +1371,10 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,1.5
       parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        103:
+        - Pressed: DoorBolt
   - uid: 213
     components:
     - type: MetaData
@@ -1442,6 +1383,10 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,-0.5
       parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        104:
+        - Pressed: DoorBolt
 - proto: SMESBasic
   entities:
   - uid: 42
@@ -1520,6 +1465,13 @@ entities:
         - Right: Open
         - Left: Close
         - Middle: Close
+- proto: VisitorBlackmarketeerSpawner
+  entities:
+  - uid: 220
+    components:
+    - type: Transform
+      pos: 0.5,4.5
+      parent: 1
 - proto: WallShuttle
   entities:
   - uid: 7
@@ -1790,13 +1742,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,2.5
       parent: 1
-- proto: WeaponLaserSvalinn
-  entities:
-  - uid: 224
-    components:
-    - type: Transform
-      pos: -0.6976005,3.7846825
-      parent: 1
 - proto: WindoorSecurePlasma
   entities:
   - uid: 103
@@ -1805,10 +1750,26 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -0.5,0.5
       parent: 1
+    - type: DeviceLinkSink
+      links:
+      - 209
+      ports:
+      - DoorBolt
+      - Open
+      - Close
+      - Toggle
   - uid: 104
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,0.5
       parent: 1
+    - type: DeviceLinkSink
+      links:
+      - 213
+      ports:
+      - DoorBolt
+      - Open
+      - Close
+      - Toggle
 ...

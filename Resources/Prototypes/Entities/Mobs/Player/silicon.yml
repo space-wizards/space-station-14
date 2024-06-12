@@ -53,6 +53,19 @@
         startingItem: PowerCellHyper
 
 - type: entity
+  id: PlayerBorgSyndicateAssaultGhostRole
+  parent: PlayerBorgSyndicateAssaultBattery
+  suffix: Ghost role
+  components:
+    - type: GhostRole
+      name: ghost-role-information-syndicate-cyborg-assault-name
+      description: ghost-role-information-syndicate-cyborg-description
+      rules: ghost-role-information-rules-default-silicon
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+
+- type: entity
   id: PlayerBorgSyndicateSaboteurBattery
   parent: BorgChassisSyndicateSaboteur
   suffix: Battery, Module, Operative
@@ -78,9 +91,9 @@
   suffix: Ghost role
   components:
     - type: GhostRole
-      name: ghost-role-information-borg-saboteur-name
-      description: ghost-role-information-borg-saboteur-description
-      rules: ghost-role-information-borg-saboteur-rules
+      name: ghost-role-information-syndicate-cyborg-saboteur-name
+      description: ghost-role-information-syndicate-cyborg-description
+      rules: ghost-role-information-rules-default-silicon
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
@@ -93,8 +106,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi #!!
-        state: icon
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_syndicate
   - type: RandomSpawner
     prototypes:
     - PlayerBorgSyndicateAssaultGhostRole

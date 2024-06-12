@@ -782,12 +782,16 @@
     layers:
       - state: red
       - sprite: Structures/Decoration/banner.rsi
-        state: banner_syndicate
+        state: banner
   - type: RandomSpawner
     prototypes:
-    - RandomHumanoidChallengeVictimRD
-    - RandomHumanoidChallengeVictimCMO
     - RandomHumanoidChallengeVictimCaptain
+    - RandomHumanoidChallengeVictimCE
+    - RandomHumanoidChallengeVictimCMO
+    - RandomHumanoidChallengeVictimHOP
+    - RandomHumanoidChallengeVictimHOS
+    - RandomHumanoidChallengeVictimRD
+    - RandomHumanoidChallengeVictimQM
 
 # Security
 
@@ -820,7 +824,7 @@
 
 # Civilian
 
-# Misc
+### Misc
 
 - type: entity
   name: NanoTrasen visitor spawner
@@ -968,7 +972,7 @@
 
 - type: entity
   name: syndie disaster victim spawner
-  id: SyndieDisasterVictimSpawner
+  id: SyndieVisitorSpawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -978,7 +982,7 @@
         state: banner_syndicate
   - type: RandomSpawner
     prototypes:
-    - RandomHumanoidSyndieDisasterVictim
+    - RandomHumanoidSyndieVisitor
 
 - type: entity
   name: pirate crewman spawner

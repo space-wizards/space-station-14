@@ -60,23 +60,23 @@ entities:
             color: '#FFFFFFFF'
             id: WoodTrimThinCornerNe
           decals:
-            57: -4,6
+            7: -4,6
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinLineE
           decals:
-            49: -4,-1
-            50: -4,0
-            51: -4,1
-            52: -4,2
-            53: -4,3
-            54: -4,4
-            55: -4,5
+            0: -4,-1
+            1: -4,0
+            2: -4,1
+            3: -4,2
+            4: -4,3
+            5: -4,4
+            6: -4,5
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinLineN
           decals:
-            58: -5,6
+            8: -5,6
     - type: GridAtmosphere
       version: 2
       data:
@@ -215,7 +215,7 @@ entities:
   - uid: 3
     components:
     - type: Transform
-      pos: -0.43540406,6.0613155
+      pos: -0.4702698,5.8362265
       parent: 1
 - proto: CableApcExtension
   entities:
@@ -551,6 +551,20 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,-2.5
       parent: 1
+- proto: CartridgeAntiMateriel
+  entities:
+  - uid: 255
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.083498,6.5741763
+      parent: 1
+  - uid: 256
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -0.94808125,6.584593
+      parent: 1
 - proto: ChairPilotSeat
   entities:
   - uid: 69
@@ -590,13 +604,6 @@ entities:
     components:
     - type: Transform
       pos: -1.2800603,4.743966
-      parent: 1
-- proto: ClothingNeckCloakPirateCap
-  entities:
-  - uid: 112
-    components:
-    - type: Transform
-      pos: -2.4790745,7.691268
       parent: 1
 - proto: ComputerIFFSyndicate
   entities:
@@ -1081,6 +1088,18 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,-1.5
       parent: 1
+- proto: MagazineBoxAntiMateriel
+  entities:
+  - uid: 253
+    components:
+    - type: Transform
+      pos: -0.333498,6.7929263
+      parent: 1
+  - uid: 254
+    components:
+    - type: Transform
+      pos: -0.26058125,6.5950093
+      parent: 1
 - proto: MagazineBoxMagnum
   entities:
   - uid: 126
@@ -1115,6 +1134,13 @@ entities:
     components:
     - type: Transform
       pos: -0.5021744,4.5156937
+      parent: 1
+- proto: PirateCaptainScoonerSpawner
+  entities:
+  - uid: 112
+    components:
+    - type: Transform
+      pos: -2.5,7.5
       parent: 1
 - proto: PirateFlag
   entities:
@@ -1159,7 +1185,7 @@ entities:
   - uid: 233
     components:
     - type: Transform
-      pos: -2.192873,7.7687893
+      pos: -2.5712388,7.536887
       parent: 1
   - uid: 240
     components:
@@ -1170,6 +1196,18 @@ entities:
     components:
     - type: Transform
       pos: -3.4845395,2.591706
+      parent: 1
+- proto: PirateScoonerSpawner
+  entities:
+  - uid: 257
+    components:
+    - type: Transform
+      pos: -3.5,3.5
+      parent: 1
+  - uid: 258
+    components:
+    - type: Transform
+      pos: -3.5,1.5
       parent: 1
 - proto: PlasmaReinforcedWindowDirectional
   entities:
@@ -1197,6 +1235,25 @@ entities:
     components:
     - type: Transform
       pos: -2.5,-2.5
+      parent: 1
+- proto: PlasmaWindoorSecureSyndicateLocked
+  entities:
+  - uid: 224
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,1.5
+      parent: 1
+  - uid: 244
+    components:
+    - type: Transform
+      pos: -2.5,-0.5
+      parent: 1
+  - uid: 245
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,3.5
       parent: 1
 - proto: PowerCellMedium
   entities:
@@ -1545,16 +1602,6 @@ entities:
     - type: Transform
       pos: -0.74790406,6.7488155
       parent: 1
-  - uid: 244
-    components:
-    - type: Transform
-      pos: -0.64373744,6.5300655
-      parent: 1
-  - uid: 245
-    components:
-    - type: Transform
-      pos: -0.37290406,6.7488155
-      parent: 1
 - proto: SubstationBasic
   entities:
   - uid: 181
@@ -1696,7 +1743,7 @@ entities:
   - uid: 70
     components:
     - type: MetaData
-      name: weapon control
+      name: FIRE!
     - type: Transform
       pos: -3.5,6.5
       parent: 1
@@ -1728,160 +1775,153 @@ entities:
         - Middle: Off
 - proto: WallShuttle
   entities:
-  - uid: 142
+  - uid: 144
     components:
     - type: Transform
       pos: 0.5,0.5
       parent: 1
-  - uid: 144
+  - uid: 145
     components:
     - type: Transform
       pos: -4.5,7.5
       parent: 1
-  - uid: 145
+  - uid: 146
     components:
     - type: Transform
       pos: -4.5,8.5
       parent: 1
-  - uid: 146
+  - uid: 148
     components:
     - type: Transform
       pos: 0.5,4.5
       parent: 1
-  - uid: 148
+  - uid: 149
     components:
     - type: Transform
       pos: -5.5,7.5
       parent: 1
-  - uid: 149
+  - uid: 151
     components:
     - type: Transform
       pos: -0.5,7.5
       parent: 1
-  - uid: 151
+  - uid: 152
     components:
     - type: Transform
       pos: -0.5,8.5
       parent: 1
-  - uid: 152
+  - uid: 153
     components:
     - type: Transform
       pos: 0.5,-1.5
       parent: 1
-  - uid: 153
+  - uid: 154
     components:
     - type: Transform
       pos: -5.5,-1.5
       parent: 1
-  - uid: 154
+  - uid: 155
     components:
     - type: Transform
       pos: 0.5,6.5
       parent: 1
-  - uid: 155
+  - uid: 156
     components:
     - type: Transform
       pos: 0.5,7.5
       parent: 1
-  - uid: 156
+  - uid: 159
     components:
     - type: Transform
       pos: -5.5,6.5
       parent: 1
-  - uid: 159
+  - uid: 160
     components:
     - type: Transform
       pos: 0.5,2.5
       parent: 1
-  - uid: 160
+  - uid: 163
     components:
     - type: Transform
       pos: -2.5,-4.5
       parent: 1
-  - uid: 165
+  - uid: 164
     components:
     - type: Transform
       pos: -3.5,-3.5
       parent: 1
-  - uid: 171
+  - uid: 165
     components:
     - type: Transform
       pos: -1.5,-3.5
       parent: 1
 - proto: WallShuttleDiagonal
   entities:
-  - uid: 163
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-2.5
-      parent: 1
-  - uid: 164
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -1.5,-4.5
-      parent: 1
   - uid: 166
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -4.5,-3.5
+      rot: -1.5707963267948966 rad
+      pos: -4.5,-2.5
       parent: 1
   - uid: 167
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -0.5,-3.5
-      parent: 1
-  - uid: 168
-    components:
-    - type: Transform
-      pos: -0.5,-2.5
-      parent: 1
-  - uid: 169
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,-4.5
       parent: 1
-  - uid: 170
+  - uid: 168
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,-2.5
+      parent: 1
+  - uid: 169
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,-2.5
       parent: 1
+  - uid: 170
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -4.5,-3.5
+      parent: 1
+  - uid: 171
+    components:
+    - type: Transform
+      pos: -0.5,-2.5
+      parent: 1
   - uid: 172
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -4.5,-2.5
+      rot: 3.141592653589793 rad
+      pos: -0.5,-3.5
+      parent: 1
+  - uid: 223
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,-4.5
+      parent: 1
+- proto: WeaponPistolFlintlock
+  entities:
+  - uid: 117
+    components:
+    - type: Transform
+      pos: -0.5536032,6.440393
+      parent: 1
+  - uid: 142
+    components:
+    - type: Transform
+      pos: -0.5223532,6.252893
       parent: 1
 - proto: WeaponShotgunBlunderbuss
   entities:
   - uid: 94
     components:
     - type: Transform
-      pos: -0.512591,5.9948606
-      parent: 1
-- proto: WindoorSecurePlasma
-  entities:
-  - uid: 117
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -0.5,1.5
-      parent: 1
-  - uid: 223
-    components:
-    - type: Transform
-      pos: -2.5,-0.5
-      parent: 1
-  - uid: 224
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -0.5,3.5
+      pos: -0.63693655,5.784143
       parent: 1
 - proto: Wrench
   entities:

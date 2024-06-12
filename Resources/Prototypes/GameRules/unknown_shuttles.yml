@@ -43,15 +43,16 @@
   - type: LoadMapRule
     preloadedGrid: DisasterEvacPod
 
-- type: entity
-  parent: BaseUnknownShuttleRule
-  id: UnknownShuttleHonki
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
-  - type: LoadMapRule
-    preloadedGrid: Honki
+# The power of 3 clowns proved too strong for the players and had to be 1984ed. Replace this with a more engaging clown shuttle.
+# - type: entity
+  # parent: BaseUnknownShuttleRule
+  # id: UnknownShuttleHonki
+  # components:
+  # - type: StationEvent
+    # startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    # weight: 2
+  # - type: LoadMapRule
+    # preloadedGrid: Honki
 
 - type: entity
   parent: BaseUnknownShuttleRule
@@ -162,9 +163,10 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
+    weight: 1 # Its just a big ship, so it needs to be rarer to be interesting.
+    earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly. (5-6)
   - type: LoadMapRule
-    preloadedGrid: NTIncorpration
+    preloadedGrid: NTIncorporation
 
 - type: entity
   id: UnknownShuttleInstigator
@@ -172,7 +174,8 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
+    weight: 1 #  lower because antags.
+    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly, and because antags
   - type: LoadMapRule
     preloadedGrid: Instigator
 
@@ -202,7 +205,8 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
+    weight: .5 # lower because antags
+    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4)
   - type: LoadMapRule
     preloadedGrid: ManOWar
 
@@ -222,7 +226,8 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
+    weight: 4
+    maxOccurrences: 10
   - type: LoadMapRule
     preloadedGrid: Microshuttle
 
@@ -232,7 +237,8 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
+    weight: .5 # lower because antags
+    earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
   - type: LoadMapRule
     preloadedGrid: Raider
 
@@ -242,7 +248,8 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
+    weight: 1 # lower because antags
+    earliestStart: 35 # late to hopefully have enough ghosts to fill all roles quickly. (3)
   - type: LoadMapRule
     preloadedGrid: Scooner
 

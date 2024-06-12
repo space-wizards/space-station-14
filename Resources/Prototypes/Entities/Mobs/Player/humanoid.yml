@@ -8,6 +8,12 @@
     - type: GhostTakeoverAvailable
 
 - type: randomHumanoidSettings
+  id: EventHumanoidZedExempt
+  parent: EventHumanoid
+  components:
+    - type: InitialInfectedExempt
+
+- type: randomHumanoidSettings
   id: EventHumanoidMindShielded
   parent: EventHumanoid
   components:

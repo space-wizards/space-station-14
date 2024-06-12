@@ -264,6 +264,15 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,0.5
       parent: 1
+- proto: Beaker
+  entities:
+  - uid: 50
+    components:
+    - type: Transform
+      parent: 72
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: Bed
   entities:
   - uid: 106
@@ -312,6 +321,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+  - uid: 285
+    components:
+    - type: Transform
+      parent: 51
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: BoxPillCanister
   entities:
   - uid: 67
@@ -330,12 +346,11 @@ entities:
     - type: InsideEntityStorage
 - proto: BoxSurvival
   entities:
-  - uid: 233
+  - uid: 283
     components:
     - type: Transform
-      parent: 229
-    - type: Physics
-      canCollide: False
+      pos: 0.5044582,-2.6252952
+      parent: 1
 - proto: CableApcExtension
   entities:
   - uid: 167
@@ -638,101 +653,21 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,4.5
       parent: 1
-- proto: ChemDispenserEmpty
+- proto: ChanterelleSeeds
   entities:
-  - uid: 227
+  - uid: 265
     components:
     - type: Transform
-      pos: 2.5,1.5
-      parent: 1
-- proto: ChemMaster
-  entities:
-  - uid: 80
-    components:
-    - type: Transform
-      pos: 1.5,1.5
-      parent: 1
-- proto: ClearPDA
-  entities:
-  - uid: 235
-    components:
-    - type: Transform
-      pos: 0.23446727,3.370842
-      parent: 1
-- proto: ClothingBackpackDuffel
-  entities:
-  - uid: 229
-    components:
-    - type: Transform
-      pos: 0.48446727,1.4750085
-      parent: 1
-    - type: Storage
-      storedItems:
-        233:
-          position: 0,0
-          _rotation: South
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 233
-- proto: ClothingHeadHatBlacksoft
-  entities:
-  - uid: 228
-    components:
-    - type: Transform
-      pos: 2.8462002,0.2666752
-      parent: 1
-- proto: ClothingHeadsetGrey
-  entities:
-  - uid: 234
-    components:
-    - type: Transform
-      pos: 0.09905052,3.8291752
-      parent: 1
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ClothingNeckBling
   entities:
   - uid: 92
     components:
     - type: Transform
       pos: -0.4823134,0.61530876
-      parent: 1
-- proto: ClothingShoesColorOrange
-  entities:
-  - uid: 231
-    components:
-    - type: Transform
-      pos: 2.0241194,0.24584188
-      parent: 1
-- proto: ClothingUniformJumpsuitFamilyGuy
-  entities:
-  - uid: 232
-    components:
-    - type: Transform
-      pos: 2.182384,0.62084186
-      parent: 1
-- proto: ClothingUniformJumpsuitHawaiBlack
-  entities:
-  - uid: 50
-    components:
-    - type: Transform
-      pos: 1.1303006,0.57917523
-      parent: 1
-- proto: ClothingUniformJumpsuitHawaiBlue
-  entities:
-  - uid: 230
-    components:
-    - type: Transform
-      pos: 1.6928006,0.76667523
-      parent: 1
-- proto: ClothingUniformJumpsuitLoungewear
-  entities:
-  - uid: 51
-    components:
-    - type: Transform
-      pos: 2.6928008,0.71459186
       parent: 1
 - proto: ComputerIFFSyndicate
   entities:
@@ -757,15 +692,6 @@ entities:
     - type: Transform
       pos: 0.5,5.5
       parent: 1
-- proto: CryoxadoneBeakerSmall
-  entities:
-  - uid: 87
-    components:
-    - type: Transform
-      parent: 72
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: DresserFilled
   entities:
   - uid: 105
@@ -801,6 +727,91 @@ entities:
     - type: Transform
       pos: 0.8301803,5.339821
       parent: 1
+- proto: FlyAmanitaSeeds
+  entities:
+  - uid: 274
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 279
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: FoodFlyAmanita
+  entities:
+  - uid: 272
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 278
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: FoodMushroom
+  entities:
+  - uid: 268
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: FoodSpaceshroom
+  entities:
+  - uid: 266
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 267
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 269
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 270
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 271
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 273
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: GasPassiveVent
   entities:
   - uid: 221
@@ -1159,8 +1170,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.7459903
-        - 6.568249
+        - 1.8856695
+        - 7.0937095
         - 0
         - 0
         - 0
@@ -1177,16 +1188,59 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 77
-          - 69
-          - 67
-          - 66
-          - 68
-          - 70
-          - 73
-          - 74
-          - 75
           - 76
+          - 73
+          - 70
+          - 66
+          - 67
+          - 69
+          - 77
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+  - uid: 51
+    components:
+    - type: Transform
+      pos: 1.5,1.5
+      parent: 1
+    - type: Lock
+      locked: False
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.8856695
+        - 7.0937095
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 250
+          - 244
+          - 238
+          - 232
+          - 224
+          - 74
+          - 68
+          - 256
+          - 262
+          - 263
+          - 285
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -1195,6 +1249,49 @@ entities:
     components:
     - type: Transform
       pos: 2.5,-0.5
+      parent: 1
+    - type: Lock
+      locked: False
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.8856695
+        - 7.0937095
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 50
+          - 86
+          - 82
+          - 84
+          - 83
+          - 81
+          - 88
+          - 211
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+  - uid: 264
+    components:
+    - type: Transform
+      pos: 2.5,1.5
       parent: 1
     - type: Lock
       locked: False
@@ -1222,15 +1319,21 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 211
-          - 88
-          - 87
-          - 85
-          - 81
-          - 83
-          - 84
-          - 82
-          - 86
+          - 265
+          - 266
+          - 267
+          - 268
+          - 269
+          - 270
+          - 271
+          - 272
+          - 273
+          - 274
+          - 275
+          - 276
+          - 277
+          - 278
+          - 279
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -1247,15 +1350,312 @@ entities:
   - uid: 215
     components:
     - type: Transform
-      pos: -0.6663505,3.305516
+      pos: -0.48512518,3.499705
       parent: 1
 - proto: Jug
   entities:
   - uid: 52
+    name: jug (Tell-E-Crystaaal)
     components:
     - type: Transform
-      pos: 3.182384,1.277092
+      pos: 3.0812402,1.343455
       parent: 1
+    - type: Label
+      currentLabel: Tell-E-Crystaaal 
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Ephedrine
+              Quantity: 200
+- proto: JugCarbon
+  entities:
+  - uid: 284
+    components:
+    - type: Transform
+      pos: 3.0291567,-0.23987842
+      parent: 1
+- proto: LingzhiSeeds
+  entities:
+  - uid: 275
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: PillCanister
+  entities:
+  - uid: 74
+    components:
+    - type: MetaData
+      name: pill canister (space drugs 20u)
+    - type: Transform
+      parent: 51
+    - type: Storage
+      storedItems:
+        75:
+          position: 0,0
+          _rotation: South
+        80:
+          position: 1,0
+          _rotation: South
+        85:
+          position: 2,0
+          _rotation: South
+        87:
+          position: 3,0
+          _rotation: South
+        220:
+          position: 4,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 75
+          - 80
+          - 85
+          - 87
+          - 220
+    - type: Physics
+      canCollide: False
+    - type: Label
+      originalName: pill canister
+      currentLabel: space drugs 20u
+    - type: InsideEntityStorage
+  - uid: 224
+    components:
+    - type: Transform
+      parent: 51
+    - type: Storage
+      storedItems:
+        227:
+          position: 0,0
+          _rotation: South
+        228:
+          position: 1,0
+          _rotation: South
+        229:
+          position: 2,0
+          _rotation: South
+        230:
+          position: 3,0
+          _rotation: South
+        231:
+          position: 4,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 227
+          - 228
+          - 229
+          - 230
+          - 231
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 232
+    components:
+    - type: Transform
+      parent: 51
+    - type: Storage
+      storedItems:
+        233:
+          position: 0,0
+          _rotation: South
+        234:
+          position: 1,0
+          _rotation: South
+        235:
+          position: 2,0
+          _rotation: South
+        236:
+          position: 3,0
+          _rotation: South
+        237:
+          position: 4,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 233
+          - 234
+          - 235
+          - 236
+          - 237
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 238
+    components:
+    - type: MetaData
+      name: pill canister (space drugs 20u)
+    - type: Transform
+      parent: 51
+    - type: Storage
+      storedItems:
+        239:
+          position: 0,0
+          _rotation: South
+        240:
+          position: 1,0
+          _rotation: South
+        241:
+          position: 2,0
+          _rotation: South
+        242:
+          position: 3,0
+          _rotation: South
+        243:
+          position: 4,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 239
+          - 240
+          - 241
+          - 242
+          - 243
+    - type: Physics
+      canCollide: False
+    - type: Label
+      originalName: pill canister
+      currentLabel: space drugs 20u
+    - type: InsideEntityStorage
+  - uid: 244
+    components:
+    - type: MetaData
+      name: pill canister (space drugs 20u)
+    - type: Transform
+      parent: 51
+    - type: Storage
+      storedItems:
+        245:
+          position: 0,0
+          _rotation: South
+        246:
+          position: 1,0
+          _rotation: South
+        247:
+          position: 2,0
+          _rotation: South
+        248:
+          position: 3,0
+          _rotation: South
+        249:
+          position: 4,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 245
+          - 246
+          - 247
+          - 248
+          - 249
+    - type: Physics
+      canCollide: False
+    - type: Label
+      originalName: pill canister
+      currentLabel: space drugs 20u
+    - type: InsideEntityStorage
+  - uid: 250
+    components:
+    - type: MetaData
+      name: pill canister (space drugs 20u)
+    - type: Transform
+      parent: 51
+    - type: Storage
+      storedItems:
+        251:
+          position: 0,0
+          _rotation: South
+        252:
+          position: 1,0
+          _rotation: South
+        253:
+          position: 2,0
+          _rotation: South
+        254:
+          position: 3,0
+          _rotation: South
+        255:
+          position: 4,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 251
+          - 252
+          - 253
+          - 254
+          - 255
+    - type: Physics
+      canCollide: False
+    - type: Label
+      originalName: pill canister
+      currentLabel: space drugs 20u
+    - type: InsideEntityStorage
+  - uid: 256
+    components:
+    - type: MetaData
+      name: pill canister (space drugs 20u)
+    - type: Transform
+      parent: 51
+    - type: Storage
+      storedItems:
+        257:
+          position: 0,0
+          _rotation: South
+        258:
+          position: 1,0
+          _rotation: South
+        259:
+          position: 2,0
+          _rotation: South
+        260:
+          position: 3,0
+          _rotation: South
+        261:
+          position: 4,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 257
+          - 258
+          - 259
+          - 260
+          - 261
+    - type: Physics
+      canCollide: False
+    - type: Label
+      originalName: pill canister
+      currentLabel: space drugs 20u
+    - type: InsideEntityStorage
 - proto: PillCanisterBicaridine
   entities:
   - uid: 86
@@ -1276,13 +1676,6 @@ entities:
     - type: InsideEntityStorage
 - proto: PillCanisterHyronalin
   entities:
-  - uid: 68
-    components:
-    - type: Transform
-      parent: 49
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 77
     components:
     - type: Transform
@@ -1329,20 +1722,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 74
-    components:
-    - type: Transform
-      parent: 49
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 75
-    components:
-    - type: Transform
-      parent: 49
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: PillCanisterTricordrazine
   entities:
   - uid: 84
@@ -1352,6 +1731,158 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: PillSpaceDrugs
+  entities:
+  - uid: 75
+    components:
+    - type: Transform
+      parent: 74
+    - type: Physics
+      canCollide: False
+  - uid: 80
+    components:
+    - type: Transform
+      parent: 74
+    - type: Physics
+      canCollide: False
+  - uid: 85
+    components:
+    - type: Transform
+      parent: 74
+    - type: Physics
+      canCollide: False
+  - uid: 87
+    components:
+    - type: Transform
+      parent: 74
+    - type: Physics
+      canCollide: False
+  - uid: 220
+    components:
+    - type: Transform
+      parent: 74
+    - type: Physics
+      canCollide: False
+  - uid: 239
+    components:
+    - type: Transform
+      parent: 238
+    - type: Physics
+      canCollide: False
+  - uid: 240
+    components:
+    - type: Transform
+      parent: 238
+    - type: Physics
+      canCollide: False
+  - uid: 241
+    components:
+    - type: Transform
+      parent: 238
+    - type: Physics
+      canCollide: False
+  - uid: 242
+    components:
+    - type: Transform
+      parent: 238
+    - type: Physics
+      canCollide: False
+  - uid: 243
+    components:
+    - type: Transform
+      parent: 238
+    - type: Physics
+      canCollide: False
+  - uid: 245
+    components:
+    - type: Transform
+      parent: 244
+    - type: Physics
+      canCollide: False
+  - uid: 246
+    components:
+    - type: Transform
+      parent: 244
+    - type: Physics
+      canCollide: False
+  - uid: 247
+    components:
+    - type: Transform
+      parent: 244
+    - type: Physics
+      canCollide: False
+  - uid: 248
+    components:
+    - type: Transform
+      parent: 244
+    - type: Physics
+      canCollide: False
+  - uid: 249
+    components:
+    - type: Transform
+      parent: 244
+    - type: Physics
+      canCollide: False
+  - uid: 251
+    components:
+    - type: Transform
+      parent: 250
+    - type: Physics
+      canCollide: False
+  - uid: 252
+    components:
+    - type: Transform
+      parent: 250
+    - type: Physics
+      canCollide: False
+  - uid: 253
+    components:
+    - type: Transform
+      parent: 250
+    - type: Physics
+      canCollide: False
+  - uid: 254
+    components:
+    - type: Transform
+      parent: 250
+    - type: Physics
+      canCollide: False
+  - uid: 255
+    components:
+    - type: Transform
+      parent: 250
+    - type: Physics
+      canCollide: False
+  - uid: 257
+    components:
+    - type: Transform
+      parent: 256
+    - type: Physics
+      canCollide: False
+  - uid: 258
+    components:
+    - type: Transform
+      parent: 256
+    - type: Physics
+      canCollide: False
+  - uid: 259
+    components:
+    - type: Transform
+      parent: 256
+    - type: Physics
+      canCollide: False
+  - uid: 260
+    components:
+    - type: Transform
+      parent: 256
+    - type: Physics
+      canCollide: False
+  - uid: 261
+    components:
+    - type: Transform
+      parent: 256
+    - type: Physics
+      canCollide: False
 - proto: Poweredlight
   entities:
   - uid: 210
@@ -1375,22 +1906,8 @@ entities:
     - type: Transform
       pos: 1.5,-2.5
       parent: 1
-- proto: RadioHandheld
-  entities:
-  - uid: 220
-    components:
-    - type: Transform
-      pos: -0.22885048,3.3263493
-      parent: 1
 - proto: ReagentContainerMayo
   entities:
-  - uid: 85
-    components:
-    - type: Transform
-      parent: 72
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 88
     components:
     - type: Transform
@@ -1462,6 +1979,89 @@ entities:
     - type: Transform
       pos: 0.5,-3.5
       parent: 1
+- proto: Spaceshroom
+  entities:
+  - uid: 281
+    components:
+    - type: Transform
+      pos: 1.5,-2.5
+      parent: 1
+  - uid: 282
+    components:
+    - type: Transform
+      pos: -0.5,-2.5
+      parent: 1
+- proto: SteelcapSeeds
+  entities:
+  - uid: 277
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: StrangePill
+  entities:
+  - uid: 227
+    components:
+    - type: Transform
+      parent: 224
+    - type: Physics
+      canCollide: False
+  - uid: 228
+    components:
+    - type: Transform
+      parent: 224
+    - type: Physics
+      canCollide: False
+  - uid: 229
+    components:
+    - type: Transform
+      parent: 224
+    - type: Physics
+      canCollide: False
+  - uid: 230
+    components:
+    - type: Transform
+      parent: 224
+    - type: Physics
+      canCollide: False
+  - uid: 231
+    components:
+    - type: Transform
+      parent: 224
+    - type: Physics
+      canCollide: False
+  - uid: 233
+    components:
+    - type: Transform
+      parent: 232
+    - type: Physics
+      canCollide: False
+  - uid: 234
+    components:
+    - type: Transform
+      parent: 232
+    - type: Physics
+      canCollide: False
+  - uid: 235
+    components:
+    - type: Transform
+      parent: 232
+    - type: Physics
+      canCollide: False
+  - uid: 236
+    components:
+    - type: Transform
+      parent: 232
+    - type: Physics
+      canCollide: False
+  - uid: 237
+    components:
+    - type: Transform
+      parent: 232
+    - type: Physics
+      canCollide: False
 - proto: SubstationBasic
   entities:
   - uid: 43
@@ -1477,6 +2077,31 @@ entities:
       rot: 3.141592653589793 rad
       pos: -1.5,1.5
       parent: 1
+- proto: Syringe
+  entities:
+  - uid: 68
+    components:
+    - type: Transform
+      parent: 51
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 263
+    components:
+    - type: Transform
+      parent: 51
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: SyringeIpecac
+  entities:
+  - uid: 262
+    components:
+    - type: Transform
+      parent: 51
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: TablePlasmaGlass
   entities:
   - uid: 102
@@ -1514,6 +2139,15 @@ entities:
     - type: Transform
       pos: -3.5,3.5
       parent: 1
+- proto: TowercapSeeds
+  entities:
+  - uid: 276
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: TwoWayLever
   entities:
   - uid: 207
@@ -1533,6 +2167,13 @@ entities:
         - Right: Open
         - Left: Close
         - Middle: Close
+- proto: VisitorBlackmarketeerSpawner
+  entities:
+  - uid: 280
+    components:
+    - type: Transform
+      pos: 0.5,4.5
+      parent: 1
 - proto: WallShuttle
   entities:
   - uid: 7
@@ -1802,13 +2443,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,2.5
-      parent: 1
-- proto: WeaponLaserSvalinn
-  entities:
-  - uid: 224
-    components:
-    - type: Transform
-      pos: -0.6976005,3.7846825
       parent: 1
 - proto: WindoorSecurePlasma
   entities:

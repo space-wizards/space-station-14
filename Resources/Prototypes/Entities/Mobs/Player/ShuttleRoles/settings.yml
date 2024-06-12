@@ -3,15 +3,15 @@
 ### Visitors with Visitor ID
 
 # Command
-# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+# Following use EventHumanoidZedExempt since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
   id: VisitorHead
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidZedExempt
   components:
     - type: GhostRole
-      name: ghost-role-information-disaster-victim-name
-      description: ghost-role-information-disaster-victim-description
+      name: ghost-role-information-command-name
+      description: ghost-role-information-command-description
       rules: ghost-role-information-rules-default-crew-aligned
       raffle:
         settings: default
@@ -20,6 +20,9 @@
   id: VisitorCaptain
   parent: VisitorHead
   components:
+    - type: GhostRole
+      name: job-name-captain
+      description: ghost-role-information-command-description
     - type: Loadout
       prototypes: [ VisitorCaptain, VisitorCaptainAlt ]
 
@@ -27,6 +30,9 @@
   id: VisitorCE
   parent: VisitorHead
   components:
+    - type: GhostRole
+      name: job-name-ce
+      description: ghost-role-information-command-description
     - type: Loadout
       prototypes: [ VisitorCE, VisitorCEAlt ]
 
@@ -34,6 +40,9 @@
   id: VisitorCMO
   parent: VisitorHead
   components:
+    - type: GhostRole
+      name: job-name-cmo
+      description: ghost-role-information-command-description
     - type: Loadout
       prototypes: [ VisitorCMO, VisitorCMOAlt ]
 
@@ -41,6 +50,9 @@
   id: VisitorHOP
   parent: VisitorHead
   components:
+    - type: GhostRole
+      name: job-name-hop
+      description: ghost-role-information-command-description
     - type: Loadout
       prototypes: [ VisitorHOP, VisitorHOPAlt ]
 
@@ -48,6 +60,9 @@
   id: VisitorHOS
   parent: VisitorHead
   components:
+    - type: GhostRole
+      name: job-name-hos
+      description: ghost-role-information-command-description
     - type: Loadout
       prototypes: [ VisitorHOS, VisitorHOSAlt ]
 
@@ -55,6 +70,9 @@
   id: VisitorResearchDirector
   parent: VisitorHead
   components:
+    - type: GhostRole
+      name: job-name-rd
+      description: ghost-role-information-command-description
     - type: Loadout
       prototypes: [ VisitorRD, VisitorRDAlt ]
 
@@ -62,15 +80,18 @@
   id: VisitorQM
   parent: VisitorHead
   components:
+    - type: GhostRole
+      name: job-name-qm
+      description: ghost-role-information-command-description
     - type: Loadout
       prototypes: [ VisitorQM, VisitorQMAlt ]
 
 # Security
-# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+# Following use EventHumanoidZedExempt since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
   id: VisitorSecurity
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidZedExempt
   components:
     - type: GhostRole
       name: ghost-role-information-security-name
@@ -487,10 +508,11 @@
 # making changes to these should be done with care to avoid unbalancing challenging scenarios.
 
 # Command
-# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+# Following use EventHumanoidZedExempt since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
-  id: ChallengeVictimResearchDirector
+  id: ChallengeVictimCaptain
+  parent: EventHumanoidZedExempt
   randomizeName: false
   components:
     - type: GhostRole
@@ -501,7 +523,25 @@
         settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
-      prototypes: [ ChallengeVictimRD, ChallengeVictimRDAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+      prototypes: [ ChallengeVictimCaptain, ChallengeVictimCaptainAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimChiefEngineer
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimCE, ChallengeVictimCEAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
     - type: RandomMetadata
       nameSegments:
       - names_first
@@ -526,7 +566,7 @@
       - names_last
 
 - type: randomHumanoidSettings
-  id: ChallengeVictimCaptain
+  id: ChallengeVictimHeadOfPersonnel
   randomizeName: false
   components:
     - type: GhostRole
@@ -537,7 +577,61 @@
         settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
-      prototypes: [ ChallengeVictimCaptain, ChallengeVictimCaptainAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+      prototypes: [ ChallengeVictimHOP, ChallengeVictimHOPAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimHeadOfSecurity
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimHOS, ChallengeVictimHOSAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimResearchDirector
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimRD, ChallengeVictimRDAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimQuartermaster
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimQM, ChallengeVictimQMAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
     - type: RandomMetadata
       nameSegments:
       - names_first
@@ -587,9 +681,9 @@
       - Syndicate
     - type: NukeOperative
     - type: GhostRole
-      name: ghost-role-information-syndie-disaster-victim-name
-      description: ghost-role-information-syndie-disaster-victim-description
-      rules: ghost-role-information-syndie-disaster-victim-rules
+      name: ghost-role-information-syndie-soldier-teamlead-name
+      description: ghost-role-information-syndie-soldier-teamlead-description
+      rules: ghost-role-information-rules-default-team-antagonist
       raffle:
         settings: default
     - type: Loadout
@@ -604,9 +698,9 @@
       - Syndicate
     - type: NukeOperative
     - type: GhostRole
-      name: ghost-role-information-syndie-disaster-victim-name
-      description: ghost-role-information-syndie-disaster-victim-description
-      rules: ghost-role-information-syndie-disaster-victim-rules
+      name: ghost-role-information-syndie-soldier-name
+      description: ghost-role-information-syndie-soldier-description
+      rules: ghost-role-information-rules-default-team-antagonist
       raffle:
         settings: default
     - type: Loadout
@@ -622,7 +716,7 @@
     - type: GhostRole
       name: ghost-role-information-syndie-disaster-victim-name
       description: ghost-role-information-syndie-disaster-victim-description
-      rules: ghost-role-information-syndie-disaster-victim-rules
+      rules: ghost-role-information-rules-default-free-agent
       raffle:
         settings: short
     - type: Loadout
@@ -636,9 +730,9 @@
       factions:
       - Syndicate
     - type: GhostRole
-      name: ghost-role-information-syndie-disaster-victim-name
-      description: ghost-role-information-syndie-disaster-victim-description
-      rules: ghost-role-information-syndie-disaster-victim-rules
+      name: ghost-role-information-pirate-name
+      description: ghost-role-information-pirate-description
+      rules: ghost-role-information-rules-default-team-antagonist
       raffle:
         settings: default
     - type: Loadout
@@ -652,9 +746,9 @@
       factions:
       - Syndicate
     - type: GhostRole
-      name: ghost-role-information-syndie-disaster-victim-name
-      description: ghost-role-information-syndie-disaster-victim-description
-      rules: ghost-role-information-syndie-disaster-victim-rules
+      name: ghost-role-information-pirate-captain-name
+      description: ghost-role-information-pirate-captain-description
+      rules: ghost-role-information-rules-default-team-antagonist
       raffle:
         settings: default
     - type: Loadout
@@ -667,8 +761,8 @@
   parent: EventHumanoid
   components:
     - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
+      name: ghost-role-information-blackmarketeer-name
+      description: ghost-role-information-blackmarketeer-description
       rules: ghost-role-information-rules-default-free-agent
       raffle:
         settings: default
@@ -684,8 +778,8 @@
     - type: SlurredAccent
     - type: SouthernAccent
     - type: GhostRole
-      name: ghost-role-information-syndie-disaster-victim-name
-      description: ghost-role-information-syndie-disaster-victim-description
+      name: ghost-role-information-cossack-name
+      description: ghost-role-information-cossack-description
       rules: ghost-role-information-rules-default-free-agent
       raffle:
         settings: default

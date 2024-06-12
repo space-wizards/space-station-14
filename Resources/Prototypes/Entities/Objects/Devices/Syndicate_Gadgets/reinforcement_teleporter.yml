@@ -11,7 +11,7 @@
   - type: GhostRole
     name: ghost-role-information-syndicate-reinforcement-name
     description: ghost-role-information-syndicate-reinforcement-description
-    rules: ghost-role-information-syndicate-reinforcement-rules
+    rules: ghost-role-information-rules-default-solo-antagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -38,7 +38,7 @@
   - type: GhostRole
     name: ghost-role-information-syndicate-monkey-reinforcement-name
     description: ghost-role-information-syndicate-monkey-reinforcement-description
-    rules: ghost-role-information-syndicate-monkey-reinforcement-rules
+    rules: ghost-role-information-rules-default-familiar
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -63,7 +63,7 @@
   - type: GhostRole
     name: ghost-role-information-SyndiCat-name
     description: ghost-role-information-SyndiCat-description
-    rules: ghost-role-information-SyndiCat-rules
+    rules: ghost-role-information-rules-default-familiar
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -79,9 +79,9 @@
   suffix: NukeOps
   components:
     - type: GhostRole
-      name: Syndicate Assault Cyborg
-      description: Nuclear operatives needs reinforcements. You, a cold silicon killing machine, will help them.
-      rules: Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+      name: ghost-role-information-syndicate-cyborg-assault-name
+      description: ghost-role-information-syndicate-cyborg-description
+      rules: ghost-role-information-rules-default-silicon
       raffle:
         settings: default
     - type: GhostRoleMobSpawner

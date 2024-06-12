@@ -1484,6 +1484,28 @@ entities:
     - type: Transform
       pos: 0.5,9.5
       parent: 1
+- proto: CossackSpawner
+  entities:
+  - uid: 362
+    components:
+    - type: Transform
+      pos: -2.5,5.5
+      parent: 1
+  - uid: 363
+    components:
+    - type: Transform
+      pos: 3.5,5.5
+      parent: 1
+  - uid: 364
+    components:
+    - type: Transform
+      pos: 3.5,1.5
+      parent: 1
+  - uid: 365
+    components:
+    - type: Transform
+      pos: -2.5,1.5
+      parent: 1
 - proto: CrateEmergencyInternals
   entities:
   - uid: 93
@@ -1818,13 +1840,6 @@ entities:
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 317
-    components:
-    - type: Transform
-      pos: 1.5,0.5
-      parent: 1
-    - type: AtmosPipeColor
-      color: '#FF1212FF'
-  - uid: 318
     components:
     - type: Transform
       pos: 1.5,0.5

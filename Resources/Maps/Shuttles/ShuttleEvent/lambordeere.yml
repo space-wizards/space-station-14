@@ -63,107 +63,107 @@ entities:
             color: '#9FED5896'
             id: BrickTileSteelCornerNe
           decals:
-            38: 2,5
+            31: 2,5
         - node:
             color: '#9FED5896'
             id: BrickTileSteelCornerNw
           decals:
-            37: 1,5
+            30: 1,5
         - node:
             color: '#9FED5896'
             id: BrickTileSteelCornerSe
           decals:
-            46: 2,-2
+            36: 2,-2
         - node:
             color: '#9FED5896'
             id: BrickTileSteelCornerSw
           decals:
-            32: 1,-2
+            25: 1,-2
         - node:
             color: '#9FED5896'
             id: BrickTileSteelLineE
           decals:
-            26: 2,4
-            27: 2,3
-            29: 2,1
-            30: 2,-1
-            41: 2,2
-            42: 2,0
+            21: 2,4
+            22: 2,3
+            23: 2,1
+            24: 2,-1
+            32: 2,2
+            33: 2,0
         - node:
             color: '#9FED5896'
             id: BrickTileSteelLineW
           decals:
-            33: 1,-1
-            34: 1,1
-            35: 1,2
-            36: 1,3
-            43: 1,0
-            44: 1,4
+            26: 1,-1
+            27: 1,1
+            28: 1,2
+            29: 1,3
+            34: 1,0
+            35: 1,4
         - node:
             color: '#43990996'
             id: BrickTileWhiteCornerSw
           decals:
-            23: 0,6
+            18: 0,6
         - node:
             color: '#43990996'
             id: BrickTileWhiteEndE
           decals:
-            24: 1,6
+            19: 1,6
         - node:
             color: '#43990996'
             id: BrickTileWhiteEndN
           decals:
-            22: 0,7
+            17: 0,7
         - node:
             color: '#43990996'
             id: BrickTileWhiteInnerNe
           decals:
-            25: 0,6
+            20: 0,6
         - node:
             color: '#FFFFFFFF'
             id: Bushe1
           decals:
-            17: -2.2425046,-0.9936445
+            12: -2.2425046,-0.9936445
         - node:
             color: '#FFFFFFFF'
             id: Bushe2
           decals:
-            16: -1.9768796,-0.6030195
+            11: -1.9768796,-0.6030195
         - node:
             color: '#FFFFFFFF'
             id: Bushe3
           decals:
-            6: -2.3518796,2.7563555
+            4: -2.3518796,2.7563555
         - node:
             color: '#FFFFFFFF'
             id: Bushe4
           decals:
-            18: -1.8206296,-1.0092695
+            13: -1.8206296,-1.0092695
         - node:
             color: '#FFFFFFFF'
             id: Bushi1
           decals:
-            1: -0.6956296,-1.3217695
-            4: -2.2268796,2.9126055
-            8: -2.1487546,1.1938555
-            9: -2.1956296,5.2251053
-            11: -2.2737546,4.5376053
-            19: -1.2737546,-1.2905195
-            20: -2.1956296,0.25635552
-            21: -1.5862546,1.2251055
+            0: -0.6956296,-1.3217695
+            2: -2.2268796,2.9126055
+            5: -2.1487546,1.1938555
+            6: -2.1956296,5.2251053
+            8: -2.2737546,4.5376053
+            14: -1.2737546,-1.2905195
+            15: -2.1956296,0.25635552
+            16: -1.5862546,1.2251055
         - node:
             color: '#FFFFFFFF'
             id: Bushi3
           decals:
-            3: -2.3206296,3.4594805
-            10: -1.7112546,5.2719803
-            13: -2.2737546,0.7876055
+            1: -2.3206296,3.4594805
+            7: -1.7112546,5.2719803
+            10: -2.2737546,0.7876055
         - node:
             color: '#FFFFFFFF'
             id: Bushi4
           decals:
-            5: -1.8675046,2.6157305
-            12: -1.6800046,4.4907303
+            3: -1.8675046,2.6157305
+            9: -1.6800046,4.4907303
     - type: GridAtmosphere
       version: 2
       data:
@@ -1185,12 +1185,16 @@ entities:
   entities:
   - uid: 198
     components:
+    - type: MetaData
+      name: door bolts
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 0.5,5.5
       parent: 1
   - uid: 199
     components:
+    - type: MetaData
+      name: door bolts
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 0.5,2.5
@@ -1290,6 +1294,13 @@ entities:
     components:
     - type: Transform
       pos: -1.5,8.5
+      parent: 1
+- proto: VisitorBotanistSpawner
+  entities:
+  - uid: 213
+    components:
+    - type: Transform
+      pos: 0.5,6.5
       parent: 1
 - proto: WallShuttle
   entities:
