@@ -669,7 +669,6 @@ namespace Content.Server.Administration.Systems
             stringbuilder.Append(parameters.Message);
             return stringbuilder.ToString();
         }
-
     }
 }
 
@@ -704,5 +703,3 @@ public class AHelpMessageParams
         Icon = icon;
     }
 }
-
-
