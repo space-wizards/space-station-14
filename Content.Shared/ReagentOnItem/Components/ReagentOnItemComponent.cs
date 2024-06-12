@@ -1,10 +1,10 @@
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.ReagentOnItem;
 
 [RegisterComponent, NetworkedComponent, ImplicitDataDefinitionForInheritors]
-[AutoGenerateComponentState]
 public abstract partial class ReagentOnItemComponent : Component
 {
 
@@ -13,7 +13,6 @@ public abstract partial class ReagentOnItemComponent : Component
     ///     At zero it should remove itself from the item!
     /// </summary>
     [DataField]
-    [AutoNetworkedField]
     public FixedPoint2 EffectStacks;
 
     /// <summary>
@@ -21,4 +20,17 @@ public abstract partial class ReagentOnItemComponent : Component
     /// </summary>
     [DataField]
     public FixedPoint2 MaxStacks = 15;
+}
+
+[Serializable, NetSerializable]
+public sealed class ReagentOnItemComponentState : ComponentState
+{
+    public readonly FixedPoint2 EffectStacks;
+    public readonly FixedPoint2 MaxStacks;
+
+    public ReagentOnItemComponentState(FixedPoint2 effectStacks, FixedPoint2 maxStacks)
+    {
+        EffectStacks = effectStacks;
+        MaxStacks = maxStacks;
+    }
 }

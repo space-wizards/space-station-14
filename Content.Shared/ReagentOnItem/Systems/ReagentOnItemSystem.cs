@@ -8,6 +8,8 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.FixedPoint;
 using Content.Shared.Chemistry.Reagent;
 
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.ReagentOnItem;
 
 /// <summary>
@@ -36,7 +38,6 @@ public sealed class ReagentOnItemSystem : EntitySystem
             return false;
         }
 
-
         // Yes this code is sussy but its much better than what was used before.
         // All suspect code for this system is contained here (I hope).
 
@@ -52,16 +53,14 @@ public sealed class ReagentOnItemSystem : EntitySystem
         {
             var volSpaceLube = reagentMixture.RemoveReagent(spaceLubeId, reagentMixture.Volume);
             var lubed = EnsureComp<SpaceLubeOnItemComponent>(item);
-            ConvertReagentToStacks(lubed, spaceLubeId, volSpaceLube, reagentMixture);
-            Dirty(item, lubed);
+            ConvertReagentToStacks(item, lubed, spaceLubeId, volSpaceLube, reagentMixture);
         }
 
         if (reagentMixture.TryGetReagent(spaceGlueId, out var _))
         {
             var volSpaceGlue = reagentMixture.RemoveReagent(spaceGlueId, reagentMixture.Volume);
             var glued = EnsureComp<SpaceGlueOnItemComponent>(item);
-            ConvertReagentToStacks(glued, spaceGlueId, volSpaceGlue, reagentMixture);
-            Dirty(item, glued);
+            ConvertReagentToStacks(item, glued, spaceGlueId, volSpaceGlue, reagentMixture);
         }
 
         _puddle.TrySpillAt(item, reagentMixture, out var _, false);
@@ -73,11 +72,13 @@ public sealed class ReagentOnItemSystem : EntitySystem
     ///     Convert the reagent to stacks and add them to the component. 
     ///     Will put any extra reagent that couldn't be applied in the spill pool.
     /// </summary>
-    private static void ConvertReagentToStacks(ReagentOnItemComponent comp, ReagentId reagent, FixedPoint2 volToAdd, Solution spillPool)
+    private void ConvertReagentToStacks(EntityUid item, ReagentOnItemComponent comp, ReagentId reagent, FixedPoint2 volToAdd, Solution spillPool)
     {
         var total = comp.EffectStacks + volToAdd;
 
         comp.EffectStacks = FixedPoint2.Min(total, comp.MaxStacks);
+
+        Dirty(item, comp);
 
         if (total > comp.MaxStacks)
         {

@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Examine;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.ReagentOnItem;
 
@@ -22,6 +23,9 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<SpaceLubeOnItemComponent, ContainerGettingInsertedAttemptEvent>(OnHandPickUp);
         SubscribeLocalEvent<SpaceLubeOnItemComponent, ExaminedEvent>(OnExamine);
+
+        SubscribeLocalEvent<SpaceLubeOnItemComponent, ComponentGetState>(GetSpaceLubeState);
+        SubscribeLocalEvent<SpaceLubeOnItemComponent, ComponentHandleState>(HandleSpaceLubeState);
     }
 
     private void OnHandPickUp(EntityUid uid, SpaceLubeOnItemComponent component, ContainerGettingInsertedAttemptEvent args)
@@ -61,5 +65,19 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString("space-lube-on-item-inspect"));
         }
+    }
+
+    private void HandleSpaceLubeState(EntityUid uid, SpaceLubeOnItemComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not ReagentOnItemComponentState state)
+            return;
+
+        component.EffectStacks = state.EffectStacks;
+        component.MaxStacks = state.MaxStacks;
+    }
+
+    private void GetSpaceLubeState(EntityUid uid, SpaceLubeOnItemComponent component, ref ComponentGetState args)
+    {
+        args.State = new ReagentOnItemComponentState(component.EffectStacks, component.MaxStacks);
     }
 }

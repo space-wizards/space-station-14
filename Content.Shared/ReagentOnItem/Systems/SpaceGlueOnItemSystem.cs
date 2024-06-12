@@ -7,6 +7,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.ReagentOnItem;
 
@@ -22,6 +23,9 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
 
         SubscribeLocalEvent<SpaceGlueOnItemComponent, GotEquippedHandEvent>(OnHandPickUp);
         SubscribeLocalEvent<SpaceGlueOnItemComponent, ExaminedEvent>(OnExamine);
+
+        SubscribeLocalEvent<SpaceGlueOnItemComponent, ComponentGetState>(GetSpaceLubeState);
+        SubscribeLocalEvent<SpaceGlueOnItemComponent, ComponentHandleState>(HandleSpaceLubeState);
     }
 
     public override void Update(float frameTime)
@@ -71,6 +75,8 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
         glueComp.TimeOfNextCheck = _timing.CurTime + glueComp.DurationPerUnit;
         glueComp.EffectStacks -= 1;
 
+        Dirty(uid, glueComp);
+
         return true;
     }
 
@@ -87,5 +93,19 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
             args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-med"));
         else
             args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-high"));
+    }
+
+    private void HandleSpaceLubeState(EntityUid uid, SpaceGlueOnItemComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not ReagentOnItemComponentState state)
+            return;
+
+        component.EffectStacks = state.EffectStacks;
+        component.MaxStacks = state.MaxStacks;
+    }
+
+    private void GetSpaceLubeState(EntityUid uid, SpaceGlueOnItemComponent component, ref ComponentGetState args)
+    {
+        args.State = new ReagentOnItemComponentState(component.EffectStacks, component.MaxStacks);
     }
 }
