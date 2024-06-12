@@ -21,8 +21,16 @@ namespace Content.Client.PDA
         protected override void Open()
         {
             base.Open();
-            _menu = new PdaMenu();
+
+            if (_menu == null)
+                CreateMenu();
+
             _menu.OpenCenteredLeft();
+        }
+
+        private void CreateMenu()
+        {
+            _menu = new PdaMenu();
             _menu.OnClose += Close;
             _menu.FlashLightToggleButton.OnToggled += _ =>
             {
