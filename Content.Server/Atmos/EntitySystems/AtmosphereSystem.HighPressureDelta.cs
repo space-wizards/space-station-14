@@ -244,11 +244,11 @@ namespace Content.Server.Atmos.EntitySystems
                     if (throwTarget != EntityCoordinates.Invalid)
                     {
                         var pos = throwTarget.ToMap(EntityManager, _transformSystem).Position - xform.WorldPosition + dirVec;
-                        _physics.ApplyLinearImpulse(uid, pos * moveForce, body: physics);
+                        _physics.ApplyLinearImpulse(uid, pos.Normalized() * moveForce, body: physics);
                     }
                     else
                     {
-                        _physics.ApplyLinearImpulse(uid, dirVec * moveForce, body: physics);
+                        _physics.ApplyLinearImpulse(uid, dirVec.Normalized() * moveForce, body: physics);
                     }
 
                     component.LastHighPressureMovementAirCycle = cycle;
