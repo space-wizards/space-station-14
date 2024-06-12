@@ -136,7 +136,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("depressurizePressure")]
         public float DepressurizePressure = 0;
 
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("pressureLockoutOverride")]
         public bool PressureLockoutOverride = false;
         #endregion
