@@ -25,7 +25,7 @@ namespace Content.Client.PDA
             if (_menu == null)
                 CreateMenu();
 
-            _menu.OpenCenteredLeft();
+            _menu?.OpenCenteredLeft();
         }
 
         private void CreateMenu()
