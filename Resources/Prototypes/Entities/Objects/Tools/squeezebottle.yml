@@ -97,7 +97,7 @@
       map: [ "enum.SolutionContainerLayers.Overlay" ]
 
 - type: entity
-  parent: SqueezeBottle
+  parent: DrinkBase
   id: CrazyGlue
   name: CRAZY glue
   description: A bottle of CRAZY glue manufactured by Honk! Co. Uses a high throughput nozzle for increased flow!
@@ -105,6 +105,10 @@
   - type: ApplyReagentToItem
     amountConsumedOnUse: 7.5 # high throughput nozzle
     onSqueezeNoise: /Audio/Items/squeezebottle.ogg
+  - type: Openable
+    closeable: true
+    sound:
+      collection: packetOpenSounds
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -112,6 +116,8 @@
         reagents:
         - ReagentId: SpaceGlue
           Quantity: 100
+  - type: Appearance
+  - type: UseDelay
   - type: Sprite
     sprite: Objects/Consumable/Drinks/crazy_glue_bottle.rsi
     layers:
@@ -124,3 +130,5 @@
         enum.OpenableVisuals.Layer:
           True: {state: "cap_open_crazy"}
           False: {state: "cap_closed_crazy"}
+  - type: TrashOnSolutionEmpty
+    solution: drink
