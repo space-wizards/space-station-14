@@ -70,7 +70,7 @@
     wateringSound:
       path: /Audio/Effects/slosh.ogg
       params:
-        volume: -9
+        volume: -6
         variation: 0.20
   - type: Destructible
     thresholds:

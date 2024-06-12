@@ -27,6 +27,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Botany.Systems;
 
@@ -56,6 +57,7 @@ public sealed class PlantHolderSystem : EntitySystem
         SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<PlantHolderComponent, SolutionTransferAttemptEvent>(OnSolutionAdded);
     }
 
     public override void Update(float frameTime)
@@ -262,14 +264,6 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        //Only play splosh sound when using containers that would be "dumped" into the basin (as opposed to ie. sprayed on)
-        if (TryComp(args.Used, out SpillableComponent? spill) && _solutionContainerSystem.TryGetRefillableSolution(args.Used, out var solCpmp, out var sol))
-        {
-            if(component.WateringSound != null && sol.Volume > 0)
-            {
-                _audio.PlayPvs(component.WateringSound, uid);
-            }
-        }
 
         if (_tagSystem.HasTag(args.Used, "PlantSampleTaker"))
         {
@@ -366,6 +360,19 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
+    private void OnSolutionAdded(Entity<PlantHolderComponent> entity, ref SolutionTransferAttemptEvent args)
+    {
+        var (uid, component) = entity;
+
+        //Only play splosh sound when using containers that would be dumped into the basin (as opposed to ie. sprayed on)
+        if (TryComp(args.From, out SpillableComponent? spill))
+        {
+            if(component.WateringSound != null)
+            {
+                _audio.PlayPvs(component.WateringSound, uid);
+            }
+        }
+    }
     private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
     {
         DoHarvest(entity, args.User, entity.Comp);
