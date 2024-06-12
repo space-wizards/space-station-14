@@ -125,6 +125,7 @@ namespace Content.Server.Administration.Systems
                 {
                     var banMessage = Loc.GetString("bwoink-system-player-banned", ("banReason", ban.Reason));
                     NotifyAdmins(e.Session, banMessage, PlayerStatusType.Banned);
+                    _activeConversations.Remove(e.Session.UserId);
                     return;
                 }
             }
