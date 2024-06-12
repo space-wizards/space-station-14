@@ -19,6 +19,10 @@ public sealed partial class AdminMenuWindow : DefaultWindow
         MasterTabContainer.SetTabTitle((int) TabIndices.Round, Loc.GetString("admin-menu-round-tab"));
         MasterTabContainer.SetTabTitle((int) TabIndices.Server, Loc.GetString("admin-menu-server-tab"));
         MasterTabContainer.SetTabTitle((int) TabIndices.PanicBunker, Loc.GetString("admin-menu-panic-bunker-tab"));
+        /*
+         * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
+         */
+        MasterTabContainer.SetTabTitle((int) TabIndices.BabyJail, Loc.GetString("admin-menu-baby-jail-tab"));
         MasterTabContainer.SetTabTitle((int) TabIndices.Players, Loc.GetString("admin-menu-players-tab"));
         MasterTabContainer.SetTabTitle((int) TabIndices.Objects, Loc.GetString("admin-menu-objects-tab"));
         MasterTabContainer.OnTabChanged += TabChanged;
@@ -47,6 +51,7 @@ public sealed partial class AdminMenuWindow : DefaultWindow
         Round,
         Server,
         PanicBunker,
+        BabyJail,
         Players,
         Objects
     }
