@@ -38,6 +38,12 @@ public sealed partial class PerishableComponent : Component
     public TimeSpan PerishUpdateRate = TimeSpan.FromSeconds(5);
 
     /// <summary>
+    /// If rot generates moles of gas
+    /// </summary>
+    [DataField]
+    public bool CreateMols = true;
+
+    /// <summary>
     /// How many moles of gas released per second, per unit of mass.
     /// </summary>
     [DataField]

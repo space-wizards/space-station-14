@@ -34,6 +34,9 @@ public sealed class RottingSystem : SharedRottingSystem
         if (!TryComp<PerishableComponent>(uid, out var perishable))
             return;
 
+        if (!perishable.CreateMols)
+            return;
+
         var molsToDump = perishable.MolsPerSecondPerUnitMass * physics.FixturesMass * (float) component.TotalRotTime.TotalSeconds;
         var tileMix = _atmosphere.GetTileMixture(uid, excite: true);
         tileMix?.AdjustMoles(Gas.Ammonia, molsToDump);
@@ -121,6 +124,9 @@ public sealed class RottingSystem : SharedRottingSystem
             }
 
             if (!TryComp<PhysicsComponent>(uid, out var physics))
+                continue;
+
+            if (!perishable.CreateMols)
                 continue;
             // We need a way to get the mass of the mob alone without armor etc in the future
             // or just remove the mass mechanics altogether because they aren't good.
