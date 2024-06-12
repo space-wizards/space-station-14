@@ -136,7 +136,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("depressurizePressure")]
         public float DepressurizePressure = 0;
 
-        [DataField("pressureLockoutOverride")]
+        [DataField]
         public bool PressureLockoutOverride = false;
         #endregion
 
