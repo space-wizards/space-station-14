@@ -50,7 +50,13 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         {
             SendMessage(new JukeboxAddQueueMessage(songId));
         };
+
+        _menu.OnQueueRemove += index =>
+        {
+            SendMessage(new JukeboxRemoveQueueMessage(index));
+        };
         _menu.SetTime += SetTime;
+
         PopulateMusic();
         Reload();
     }

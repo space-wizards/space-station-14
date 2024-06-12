@@ -81,6 +81,12 @@ public sealed class JukeboxAddQueueMessage(ProtoId<JukeboxPrototype> songId) : B
 }
 
 [Serializable, NetSerializable]
+public sealed class JukeboxRemoveQueueMessage(int index) : BoundUserInterfaceMessage
+{
+    public int Index { get; } = index;
+}
+
+[Serializable, NetSerializable]
 public sealed class JukeboxSelectedMessage(ProtoId<JukeboxPrototype> songId) : BoundUserInterfaceMessage
 {
     public ProtoId<JukeboxPrototype> SongId { get; } = songId;

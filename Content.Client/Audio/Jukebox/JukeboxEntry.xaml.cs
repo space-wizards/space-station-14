@@ -31,11 +31,8 @@ public sealed partial class JukeboxEntry : BoxContainer
         Buttons();
     }
 
-    public JukeboxEntry(JukeboxPrototype? song)
+    public JukeboxEntry(JukeboxPrototype? song) : this()
     {
-        RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
-
         SetSong(song);
         Buttons();
     }
@@ -78,6 +75,16 @@ public sealed partial class JukeboxEntry : BoxContainer
     public void SetOnPressedStop(Action<BaseButton.ButtonEventArgs>? func)
     {
         StopButton.OnPressed += func;
+    }
+
+    public void SetOnPressedRemove(Action<JukeboxEntry, BaseButton.ButtonEventArgs>? func)
+    {
+        if (func == null)
+            return;
+
+        RemoveButton.OnPressed += args => {
+            func(this, args);
+        };
     }
 
     private void Buttons()

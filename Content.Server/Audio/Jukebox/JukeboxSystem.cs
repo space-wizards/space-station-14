@@ -29,6 +29,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         SubscribeLocalEvent<JukeboxComponent, JukeboxStopMessage>(OnJukeboxStop);
         SubscribeLocalEvent<JukeboxComponent, JukeboxSetTimeMessage>(OnJukeboxSetTime);
         SubscribeLocalEvent<JukeboxComponent, JukeboxAddQueueMessage>(OnJukeboxAddQueue);
+        SubscribeLocalEvent<JukeboxComponent, JukeboxRemoveQueueMessage>(OnJukeboxRemoveQueue);
         SubscribeLocalEvent<JukeboxComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<JukeboxComponent, ComponentShutdown>(OnComponentShutdown);
 
@@ -71,10 +72,22 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         }
     }
 
-    private void OnJukeboxAddQueue(EntityUid uid, JukeboxComponent component, ref JukeboxAddQueueMessage args)
+    private void OnJukeboxAddQueue(EntityUid uid, JukeboxComponent component, JukeboxAddQueueMessage args)
     {
         component.SongIdQueue.Add(args.SongId);
 
+        var state = GetUiState((uid, component));
+        _userInterfaceSystem.SetUiState(uid, JukeboxUiKey.Key, state);
+
+        Dirty(uid, component);
+    }
+
+    private void OnJukeboxRemoveQueue(EntityUid uid, JukeboxComponent component, JukeboxRemoveQueueMessage args)
+    {
+        if (args.Index < 0 || args.Index >= component.SongIdQueue.Count)
+            return;
+
+        component.SongIdQueue.RemoveAt(args.Index);
         var state = GetUiState((uid, component));
         _userInterfaceSystem.SetUiState(uid, JukeboxUiKey.Key, state);
 

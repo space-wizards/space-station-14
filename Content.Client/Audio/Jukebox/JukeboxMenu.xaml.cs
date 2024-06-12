@@ -31,6 +31,7 @@ public sealed partial class JukeboxMenu : FancyWindow
     public event Action? OnStopPressed;
     public event Action<ProtoId<JukeboxPrototype>>? OnSongSelected;
     public event Action<ProtoId<JukeboxPrototype>>? OnSongQueueAdd;
+    public event Action<int>? OnQueueRemove;
     public event Action<float>? SetTime;
 
     private EntityUid? _audio;
@@ -188,10 +189,13 @@ public sealed partial class JukeboxMenu : FancyWindow
 
             i += 1;
             var songControl = new JukeboxEntry(songProto) {EntryType = JukeboxEntry.Type.Queue};
-            var box = new BoxContainer();
-            box.AddChild(new Label() {Text= $"{i} "});
-            box.AddChild(songControl);
-            MusicListQueue.AddChild(box);
+            MusicListQueue.AddChild(songControl);
+
+            songControl.SetOnPressedRemove((source, args) => {
+                int index = source.GetPositionInParent();
+
+                OnQueueRemove?.Invoke(index);
+            });
         }
     }
 }
