@@ -81,6 +81,8 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
 
     public event CalcPlayTimeTrackersCallback? CalcTrackers;
 
+    public event Action<ICommonSession>? SessionPlayTimeUpdated;
+
     public void Initialize()
     {
         _sawmill = Logger.GetSawmill("play_time");
@@ -217,6 +219,7 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
         };
 
         _net.ServerSendMessage(msg, pSession.Channel);
+        SessionPlayTimeUpdated?.Invoke(pSession);
     }
 
     /// <summary>
