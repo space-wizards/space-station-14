@@ -5,17 +5,18 @@ using Content.Server.Doors.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Database;
+using Content.Shared.Maps;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-
 namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly FirelockSystem _firelockSystem = default!;
-
         private readonly TileAtmosphereComparer _monstermosComparer = new();
 
         private readonly TileAtmosphere?[] _equalizeTiles = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit];
@@ -549,8 +550,9 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile.Air.Temperature = Atmospherics.TCMB;
                 }
 
-                InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices);
-                HandleDecompressionFloorRip(mapGrid, otherTile, otherTile.MonstermosInfo.CurrentTransferAmount);
+                InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices, visuals);
+                if (MonstermosRipTiles && otherTile.PressureDifference > MonstermosRipTilesMinimumPressure)
+                    HandleDecompressionFloorRip(mapGrid, otherTile, otherTile.PressureDifference);
             }
 
             if (GridImpulse && tileCount > 0)
@@ -676,15 +678,17 @@ namespace Content.Server.Atmos.EntitySystems
             adj.MonstermosInfo[direction.GetOpposite()] -= amount;
         }
 
-        private void HandleDecompressionFloorRip(MapGridComponent mapGrid, TileAtmosphere tile, float sum)
+        private void HandleDecompressionFloorRip(MapGridComponent mapGrid, TileAtmosphere tile, float delta)
         {
-            if (!MonstermosRipTiles)
+            if (!mapGrid.TryGetTileRef(tile.GridIndices, out var tileRef))
                 return;
+            var tileref = tileRef.Tile;
 
-            var chance = MathHelper.Clamp(0.01f + (sum / SpacingMaxWind) * 0.3f, 0.003f, 0.3f);
-
-            if (sum > 20 && _robustRandom.Prob(chance))
+            var tileDef = (ContentTileDefinition) _tileDefinitionManager[tileref.TypeId];
+            if (!tileDef.Reinforced && tileDef.TileRipResistance < delta)
+            {
                 PryTile(mapGrid, tile.GridIndices);
+            }
         }
 
         private sealed class TileAtmosphereComparer : IComparer<TileAtmosphere?>
