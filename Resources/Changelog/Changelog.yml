@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix NPCs getting stuck on railings.
-    type: Fix
-  id: 6210
-  time: '2024-03-23T01:42:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26351
-- author: Ubaser
-  changes:
-  - message: You can now purchase a set of 4 throwing knives in the uplink as a bundle
-      for 12 TC.
-    type: Add
-  id: 6211
-  time: '2024-03-23T04:13:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26026
-- author: ElectroJr
-  changes:
-  - message: Fixed a bug where partially airtight entities (e.g., thin windows or
-      doors) could let air leak out into space.
-    type: Fix
-  id: 6212
-  time: '2024-03-23T16:34:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/22521
 - author: Killerqu00
   changes:
   - message: Cable Coils are now small in size, taking only 1x2 space in containers.
@@ -3852,3 +3829,25 @@
   id: 6709
   time: '2024-06-11T02:48:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28839
+- author: lzk228
+  changes:
+  - message: Added reward info in cargo bounty label.
+    type: Tweak
+  id: 6710
+  time: '2024-06-11T09:33:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28853
+- author: Tayrtahn
+  changes:
+  - message: Announcements for the location of the evac shuttle, the armed nuke, and
+      more will no longer send you in the opposite direction.
+    type: Fix
+  id: 6711
+  time: '2024-06-11T22:18:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28869
+- author: Boaz1111
+  changes:
+  - message: Refactors Cluster's Armoury
+    type: Tweak
+  id: 6712
+  time: '2024-06-12T01:07:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28854
