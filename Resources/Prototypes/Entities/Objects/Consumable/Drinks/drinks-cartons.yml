@@ -130,7 +130,7 @@
           Quantity: 50
   - type: Drink
   - type: Label
-    currentLabel: coconut water
+    currentLabel: reagent-name-coconut-water
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coconutwater.rsi
 
