@@ -625,6 +625,18 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -2.5,1.5
       parent: 1
+- proto: Bonfire
+  entities:
+  - uid: 318
+    components:
+    - type: Transform
+      pos: 0.5,5.5
+      parent: 1
+  - uid: 353
+    components:
+    - type: Transform
+      pos: 0.5,1.5
+      parent: 1
 - proto: BowImprovised
   entities:
   - uid: 126
@@ -2498,60 +2510,6 @@ entities:
     - type: Transform
       pos: 3.8678403,-0.21682113
       parent: 1
-  - uid: 353
-    components:
-    - type: Transform
-      pos: -0.60899353,6.549182
-      parent: 1
-    - type: IgnitionSource
-      ignited: True
-    missingComponents:
-    - ExpendableLight
-    - Item
-    - Pullable
-  - uid: 354
-    components:
-    - type: Transform
-      pos: 1.9951731,6.5595984
-      parent: 1
-    - type: IgnitionSource
-      ignited: True
-    missingComponents:
-    - Item
-    - Pullable
-  - uid: 355
-    components:
-    - type: Transform
-      pos: 0.61319244,-4.558635
-      parent: 1
-    - type: IgnitionSource
-      ignited: True
-    missingComponents:
-    - ExpendableLight
-    - Item
-    - Pullable
-  - uid: 356
-    components:
-    - type: Transform
-      pos: -0.022224247,-0.51553625
-      parent: 1
-    - type: IgnitionSource
-      ignited: True
-    missingComponents:
-    - ExpendableLight
-    - Item
-    - Pullable
-  - uid: 357
-    components:
-    - type: Transform
-      pos: 1.2902758,-0.525953
-      parent: 1
-    - type: IgnitionSource
-      ignited: True
-    missingComponents:
-    - ExpendableLight
-    - Item
-    - Pullable
 - proto: WallWood
   entities:
   - uid: 2
