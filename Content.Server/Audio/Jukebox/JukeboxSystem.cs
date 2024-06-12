@@ -18,6 +18,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
     public override void Initialize()
     {
@@ -73,6 +74,9 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     private void OnJukeboxAddQueue(EntityUid uid, JukeboxComponent component, ref JukeboxAddQueueMessage args)
     {
         component.SongIdQueue.Add(args.SongId);
+
+        var state = GetUiState((uid, component));
+        _userInterfaceSystem.SetUiState(uid, JukeboxUiKey.Key, state);
 
         Dirty(uid, component);
     }
@@ -153,19 +157,18 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             }
 
             if (comp.TimeWhenSongEnds == null)
+                continue;
+
             comp.Time += TimeSpan.FromSeconds(frameTime);
             if (comp.TimeWhenSongEnds < comp.Time)
             {
-                comp.TimeWhenSongEnds = null;
-                if (comp.SongIdQueue.Count == 0)
+                var next = SongQueueDequeue((uid, comp));
+                if (next == null)
                     continue;
 
-                var next = comp.SongIdQueue[0];
-                comp.SongIdQueue.RemoveAt(0);
-
-                comp.SelectedSongId = next;
-                var message = new JukeboxPlayingMessage();
-                OnJukeboxPlay(uid, comp, ref message);
+                OnJukeboxSelected(uid, comp, new JukeboxSelectedMessage(next.Value));
+                var messagePlay = new JukeboxPlayingMessage();
+                OnJukeboxPlay(uid, comp, ref messagePlay);
             }
         }
     }
@@ -193,5 +196,24 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         }
 
         _appearanceSystem.SetData(uid, JukeboxVisuals.VisualState, finalState);
+    }
+
+    private JukeboxBoundUserInterfaceState GetUiState(Entity<JukeboxComponent> ent)
+    {
+        return new JukeboxBoundUserInterfaceState(ent.Comp.SongIdQueue);
+    }
+
+    private ProtoId<JukeboxPrototype>? SongQueueDequeue(Entity<JukeboxComponent> ent)
+    {
+        if (ent.Comp.SongIdQueue.Count == 0)
+            return null;
+
+        var next = ent.Comp.SongIdQueue[0];
+        ent.Comp.SongIdQueue.RemoveAt(0);
+
+        var state = GetUiState(ent);
+        _userInterfaceSystem.SetUiState(ent.Owner, JukeboxUiKey.Key, state);
+
+        return next;
     }
 }

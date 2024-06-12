@@ -37,8 +37,6 @@ public sealed partial class JukeboxMenu : FancyWindow
 
     private float _lockTimer;
 
-    private int i = 0;
-
     public JukeboxMenu()
     {
         RobustXamlLoader.Load(this);
@@ -80,8 +78,6 @@ public sealed partial class JukeboxMenu : FancyWindow
     /// </summary>
     public void Populate(IEnumerable<JukeboxPrototype> jukeboxProtos)
     {
-        // MusicList.Clear();
-
         foreach (var entry in jukeboxProtos)
         {
             // MusicList.AddItem(entry.Name, metadata: entry.ID);
@@ -97,12 +93,6 @@ public sealed partial class JukeboxMenu : FancyWindow
                 if (song == null)
                     return;
 
-                var songControl = new JukeboxEntry(song) {EntryType = JukeboxEntry.Type.Queue};
-                var box = new BoxContainer();
-                box.AddChild(new Label() {Text= $"{i} "});
-                box.AddChild(songControl);
-                MusicListQueue.AddChild(box);
-                i += 1;
 
                 OnSongQueueAdd?.Invoke(song.ID);
             });
@@ -185,6 +175,23 @@ public sealed partial class JukeboxMenu : FancyWindow
         else
         {
             // SongName.Text = "---";
+        }
+    }
+    public void PopulateQueue(List<ProtoId<JukeboxPrototype>> queue)
+    {
+        MusicListQueue.RemoveAllChildren();
+        int i = 0;
+        foreach (var song in queue)
+        {
+            if (!_prototype.TryIndex(song, out var songProto))
+                continue;
+
+            i += 1;
+            var songControl = new JukeboxEntry(songProto) {EntryType = JukeboxEntry.Type.Queue};
+            var box = new BoxContainer();
+            box.AddChild(new Label() {Text= $"{i} "});
+            box.AddChild(songControl);
+            MusicListQueue.AddChild(box);
         }
     }
 }

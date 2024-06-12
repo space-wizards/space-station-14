@@ -12,7 +12,7 @@ public sealed partial class JukeboxComponent : Component
     public ProtoId<JukeboxPrototype>? SelectedSongId;
 
     [DataField, AutoNetworkedField]
-    public List<ProtoId<JukeboxPrototype>?> SongIdQueue = new();
+    public List<ProtoId<JukeboxPrototype>> SongIdQueue = new();
 
     [DataField, AutoNetworkedField]
     public EntityUid? AudioStream;
@@ -52,6 +52,17 @@ public sealed partial class JukeboxComponent : Component
     /// Counter to TimeWhenSongEnds
     /// </summary>
     public TimeSpan Time;
+}
+
+[Serializable, NetSerializable]
+public sealed class JukeboxBoundUserInterfaceState : BoundUserInterfaceState
+{
+    public readonly List<ProtoId<JukeboxPrototype>> SongIdQueue = new();
+
+    public JukeboxBoundUserInterfaceState(List<ProtoId<JukeboxPrototype>> queue)
+    {
+        SongIdQueue = queue;
+    }
 }
 
 [Serializable, NetSerializable]

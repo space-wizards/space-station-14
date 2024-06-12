@@ -118,5 +118,15 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         _menu.Dispose();
         _menu = null;
     }
+
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        var castState = (JukeboxBoundUserInterfaceState) state;
+
+        if (_menu == null)
+            return;
+
+        _menu.PopulateQueue(castState.SongIdQueue);
+    }
 }
 
