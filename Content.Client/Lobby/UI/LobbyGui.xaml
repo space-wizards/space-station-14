@@ -30,7 +30,6 @@
                                         <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public"
                                                             Text="{Loc 'ui-lobby-observe-button'}"
                                                             StyleClasses="ButtonBig" />
-                                                            <!-- WindowType="{x:Type lobbyUi:ObserveWarningWindow}" /> -->
                                         <Label Name="StartTime"
                                                Access="Public"
                                                Align="Left"
