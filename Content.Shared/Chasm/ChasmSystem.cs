@@ -24,7 +24,7 @@ public sealed class ChasmSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChasmComponent, StepTriggeredEvent>(OnStepTriggered);
+        SubscribeLocalEvent<ChasmComponent, StepTriggeredOffEvent>(OnStepTriggered);
         SubscribeLocalEvent<ChasmComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
         SubscribeLocalEvent<ChasmFallingComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
     }
@@ -47,7 +47,7 @@ public sealed class ChasmSystem : EntitySystem
         }
     }
 
-    private void OnStepTriggered(EntityUid uid, ChasmComponent component, ref StepTriggeredEvent args)
+    private void OnStepTriggered(EntityUid uid, ChasmComponent component, ref StepTriggeredOffEvent args)
     {
         // already doomed
         if (HasComp<ChasmFallingComponent>(args.Tripper))

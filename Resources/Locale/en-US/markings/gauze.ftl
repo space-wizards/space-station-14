@@ -1,17 +1,17 @@
 marking-GauzeLefteyePatch-gauze_lefteye_2 = Gauze eyepatch (Left)
 marking-GauzeLefteyePatch = Gauze eyepatch (Left)
 
-marking-GauzeLefteyeTape-gauze_lefteye_1 = Gauze eyepad (Left)
-marking-GauzeLefteyeTape = Gauze eyepad (Left)
+marking-GauzeLefteyePad-gauze_lefteye_1 = Gauze eyepad (Left)
+marking-GauzeLefteyePad = Gauze eyepad (Left)
 
 marking-GauzeRighteyePatch-gauze_righteye_2 = Gauze eyepatch (Right)
 marking-GauzeRighteyePatch = Gauze eyepatch (Right)
 
-marking-GauzeRighteyeTape-gauze_righteye_1 = Gauze eyepad (Right)
-marking-GauzeRighteyeTape = Gauze eyepad (Right)
+marking-GauzeRighteyePad-gauze_righteye_1 = Gauze eyepad (Right)
+marking-GauzeRighteyePad = Gauze eyepad (Right)
 
-marking-GauzeShoulder-gauze_shoulder = Gauze Shoulder
-marking-GauzeShoulder = Gauze Shoulder
+marking-GauzeShoulder-gauze_shoulder = Gauze Shoulder Sling
+marking-GauzeShoulder = Gauze Shoulder Sling
 
 marking-GauzeStomach-gauze_abdomen = Gauze Stomach Wrap
 marking-GauzeStomach = Gauze Stomach Wrap
@@ -46,17 +46,57 @@ marking-GauzeUpperLegRight = Gauze Thigh Wrap (Right)
 marking-GauzeBlindfold-gauze_blindfold = Gauze Blindfold
 marking-GauzeBlindfold = Gauze Blindfold
 
-marking-GauzeLizardBlindfold-gauze_lizardblindfold = Gauze Blindfold
+marking-GauzeLizardBlindfold-gauze_lizard_blindfold = Gauze Blindfold
 marking-GauzeLizardBlindfold = Gauze Blindfold
 
-marking-GauzeLizardFootRight-gauze_lizardfoot_r = Gauze Foot Wrap (Right)
+marking-GauzeLizardFootRight-gauze_lizard_foot_r = Gauze Foot Wrap (Right)
 marking-GauzeLizardFootRight = Gauze Foot Wrap (Right)
 
-marking-GauzeLizardFootLeft-gauze_lizardfoot_l = Gauze Foot Wrap (Left)
+marking-GauzeLizardFootLeft-gauze_lizard_foot_l = Gauze Foot Wrap (Left)
 marking-GauzeLizardFootLeft = Gauze Foot Wrap (Left)
 
-marking-GauzeLizardLefteyePatch-gauze_lizardlefteye = Adjusted Gauze eyepatch (Left)
-marking-GauzeLizardLefteyePatch = Adjusted Gauze eyepatch (Left)
+marking-GauzeLizardLefteyePatch-gauze_lizard_lefteye = Reptilian Gauze eyepatch (Left)
+marking-GauzeLizardLefteyePatch = Reptilian Gauze eyepatch (Left)
 
-marking-GauzeLizardRighteyePatch-gauze_lizardrighteye = Adjusted Gauze eyepatch (Right)
-marking-GauzeLizardRighteyePatch = Adjusted Gauze Eyepatch (Right)
+marking-GauzeLizardRighteyePatch-gauze_lizard_righteye = Reptilian Gauze eyepatch (Right)
+marking-GauzeLizardRighteyePatch = Reptilian Gauze Eyepatch (Right)
+
+marking-GauzeMothStomach-gauze_moth_abdomen = Insectoid Stomach Wrap
+marking-GauzeMothStomach = Insectoid Stomach Wrap
+
+marking-GauzeMothShoulder-gauze_moth_shoulder = Insectoid Shoulder Sling
+marking-GauzeMothShoulder = Insectoid Shoulder Sling
+
+marking-GauzeMothBlindfold-gauze_moth_blindfold = Insectoid Blindfold
+marking-GauzeMothBlindfold = Insectoid Blindfold
+
+marking-GauzeMothLeftEyePatch-gauze_moth_lefteye_2 = Insectoid Gauze eyepatch (Left)
+marking-GauzeMothLeftEyePatch = Insectoid Gauze eyepatch (Left)
+
+marking-GauzeMothLeftEyePad-gauze_moth_lefteye_1 = Insectoid Gauze eyepad (Left)
+marking-GauzeMothLeftEyePad = Insectoid Gauze eyepad (Left)
+
+marking-GauzeMothRightEyePatch-gauze_moth_righteye_2 = Insectoid Gauze eyepatch (Right)
+marking-GauzeMothRightEyePatch = Insectoid Gauze eyepatch (Right)
+
+marking-GauzeMothRightEyePad-gauze_moth_righteye_1 = Insectoid Gauze eyepad (Right)
+marking-GauzeMothRightEyePad = Insectoid Gauze eyepad (Right)
+
+marking-GauzeMothUpperArmRight-gauze_moth_upperarm_r = Insectoid Gauze Forearm Wrap (Right)
+marking-GauzeMothUpperArmRight = Insectoid Gauze Forearm Wrap (Right)
+
+marking-GauzeMothUpperArmLeft-gauze_moth_upperarm_l = Insectoid Gauze Forearm Wrap (Left)
+marking-GauzeMothUpperArmLeft = Insectoid Gauze Forearm Wrap (Left)
+
+marking-GauzeMothUpperLegRight-gauze_moth_upperleg_r = Insectoid Gauze Thigh Wrap (Right)
+marking-GauzeMothUpperLegRight = Insectoid Insectoid Gauze Thigh Wrap (Right)
+
+marking-GauzeMothUpperLegLeft-gauze_moth_upperleg_l = Insectoid Gauze Thigh Wrap (Left)
+marking-GauzeMothUpperLegLeft = Insectoid Gauze Thigh Wrap (Left)
+
+marking-GauzeMothLowerLegRight-gauze_moth_lowerleg_r = Insectoid Gauze Shin Wrap (Right)
+marking-GauzeMothLowerLegRight = Insectoid Gauze Shin Wrap (Right)
+
+marking-GauzeMothLowerLegLeft-gauze_moth_lowerleg_l = Insectoid Gauze Shin Wrap (Left)
+marking-GauzeMothLowerLegLeft = Insectoid Gauze Shin Wrap (Left)
+

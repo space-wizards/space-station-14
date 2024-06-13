@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.GameTicking.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -68,9 +69,9 @@ namespace Content.Server.StationEvents.Events
                 var spawnPosition = new MapCoordinates(center + offset, mapId);
                 var meteor = Spawn("MeteorLarge", spawnPosition);
                 var physics = EntityManager.GetComponent<PhysicsComponent>(meteor);
-                _physics.SetBodyStatus(physics, BodyStatus.InAir);
-                _physics.SetLinearDamping(physics, 0f);
-                _physics.SetAngularDamping(physics, 0f);
+                _physics.SetBodyStatus(meteor, physics, BodyStatus.InAir);
+                _physics.SetLinearDamping(meteor, physics, 0f);
+                _physics.SetAngularDamping(meteor, physics, 0f);
                 _physics.ApplyLinearImpulse(meteor, -offset.Normalized() * component.MeteorVelocity * physics.Mass, body: physics);
                 _physics.ApplyAngularImpulse(
                     meteor,

@@ -109,7 +109,7 @@
   components:
   - type: PointLight
     radius: 8
-    energy: 25
+    energy: 10
     color: "#daa3fd"
   - type: TriggerArtifact
   - type: FlashOnTrigger
@@ -257,7 +257,8 @@
   effectHint: artifact-effect-hint-release
   components:
   - type: RadiationSource
-    intensity: 2
+    intensity: 1
+    slope: 0.3
 
 - type: artifactEffect
   id: EffectKnock
@@ -556,7 +557,8 @@
   effectHint: artifact-effect-hint-release
   components:
   - type: RadiationSource
-    intensity: 6
+    intensity: 2
+    slope: 0.3
 
 - type: artifactEffect
   id: EffectMaterialSpawn

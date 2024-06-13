@@ -51,8 +51,6 @@ namespace Content.Shared.VendingMachines
 
         public bool Broken;
 
-        public bool ShouldSayThankYou;
-
         /// <summary>
         /// When true, will forcefully throw any object it dispenses
         /// </summary>
@@ -122,6 +120,14 @@ namespace Content.Shared.VendingMachines
         public float EjectAccumulator = 0f;
         public float DenyAccumulator = 0f;
         public float DispenseOnHitAccumulator = 0f;
+
+        /// <summary>
+        /// The quality of the stock in the vending machine on spawn.
+        /// Represents the percentage chance (0.0f = 0%, 1.0f = 100%) each set of items in the machine is fully-stocked.
+        /// If not fully stocked, the stock will have a random value between 0 (inclusive) and max stock (exclusive).
+        /// </summary>
+        [DataField]
+        public float InitialStockQuality = 1.0f;
 
         /// <summary>
         ///     While disabled by EMP it randomly ejects items

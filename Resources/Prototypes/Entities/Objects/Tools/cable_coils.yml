@@ -18,13 +18,17 @@
     sprite: Objects/Tools/cable-coils.rsi
   - type: Item
     sprite: Objects/Tools/cable-coils.rsi
-    size: Normal
+    size: Small
+    storedRotation: -90
   - type: CablePlacer
   - type: Clickable
   - type: StaticPrice
     price: 0
   - type: StackPrice
     price: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 15
 
 - type: entity
   id: CableHVStack

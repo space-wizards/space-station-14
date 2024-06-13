@@ -113,7 +113,7 @@ public sealed class NameIdentifierSystem : EntitySystem
         _metaData.SetEntityName(uid, group.FullName
             ? uniqueName
             : $"{meta.EntityName} ({uniqueName})", meta);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void InitialSetupPrototypes()

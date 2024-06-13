@@ -9,6 +9,7 @@
   - type: SmokeVisuals
   - type: Transform
     anchored: true
+  - type: Clickable
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -76,6 +77,9 @@
     animationState: foam-dissolve
   - type: Slippery
   - type: StepTrigger
+  # disabled until foam reagent duplication is fixed
+  #- type: ScoopableSolution
+  #  solution: solutionArea
 
 - type: entity
   id: MetalFoam
@@ -128,9 +132,10 @@
     snap:
     - Wall
   components:
-  - type: Tag
-    tags:
-    - RCDDeconstructWhitelist
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2  
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

@@ -59,7 +59,7 @@ public abstract class SharedDiceSystem : EntitySystem
         }
 
         die.CurrentValue = (side - die.Offset) * die.Multiplier;
-        Dirty(die);
+        Dirty(uid, die);
         UpdateVisuals(uid, die);
     }
 

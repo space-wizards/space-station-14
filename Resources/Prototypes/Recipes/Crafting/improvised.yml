@@ -99,41 +99,15 @@
     state: icon
 
 - type: construction
-  name: hairflower
-  id: hairflower
-  graph: hairflower
-  startNode: start
-  targetNode: hairflower
-  category: construction-category-clothing
-  description: "A red flower for beautiful ladies."
-  icon:
-    sprite: Clothing/Head/Misc/hairflower.rsi
-    state: icon
-  objectType: Item
-
-- type: construction
-  name: flower crown
-  id: flowercrown
-  graph: flowercrown
-  startNode: start
-  targetNode: flowercrown
-  category: construction-category-clothing
-  description: "A coronet of fresh and fragrant flowers."
-  icon:
-    sprite: Clothing/Head/Misc/flower-crown.rsi
-    state: icon
-  objectType: Item
-
-- type: construction
   name: flower wreath
   id: flowerwreath
   graph: flowerwreath
   startNode: start
   targetNode: flowerwreath
   category: construction-category-clothing
-  description: "A wreath of colourful flowers."
+  description: A wreath of colourful flowers. Can be worn both on head and neck.
   icon:
-    sprite: Clothing/Neck/Misc/flower-wreath.rsi
+    sprite: Clothing/Head/Misc/flower-wreath.rsi
     state: icon
   objectType: Item
 

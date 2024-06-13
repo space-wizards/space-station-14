@@ -81,8 +81,8 @@
   - type: ExtensionCableProvider
   - type: UserInterface
     interfaces:
-    - key: enum.ApcUiKey.Key
-      type: ApcBoundUserInterface
+      enum.ApcUiKey.Key:
+        type: ApcBoundUserInterface
   - type: ActivatableUI
     inHandsOnly: false
     singleUser: true
@@ -97,9 +97,6 @@
     supplyRampRate: 500
   - type: WallMount
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-apc
-    layoutId: APC
   - type: WiresVisuals
   - type: Damageable
     damageContainer: Inorganic

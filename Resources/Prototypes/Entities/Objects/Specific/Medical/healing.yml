@@ -710,6 +710,10 @@
   parent: Pill
   id: PillAmbuzolPlus
   components:
+    - type: Pill
+      pillType: 2
+    - type: Sprite
+      state: pill3
     - type: SolutionContainerManager
       solutions:
         food:
