@@ -34,7 +34,7 @@
 - type: startingGear
   id: AtmosphericTechnicianBackpack
   equipment:
-    back: ClothingBackpackAtmosphericsFilled
+    back: ClothingBackpackAtmospherics
 
 - type: loadout
   id: AtmosphericTechnicianSatchel
@@ -43,7 +43,7 @@
 - type: startingGear
   id: AtmosphericTechnicianSatchel
   equipment:
-    back: ClothingBackpackSatchelAtmosphericsFilled
+    back: ClothingBackpackSatchelAtmospherics
 
 - type: loadout
   id: AtmosphericTechnicianDuffel
@@ -52,7 +52,7 @@
 - type: startingGear
   id: AtmosphericTechnicianDuffel
   equipment:
-    back: ClothingBackpackDuffelAtmosphericsFilled
+    back: ClothingBackpackDuffelAtmospherics
 
 # OuterClothing
 - type: loadout

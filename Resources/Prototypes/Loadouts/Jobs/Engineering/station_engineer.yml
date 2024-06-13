@@ -118,7 +118,7 @@
 - type: startingGear
   id: StationEngineerBackpack
   equipment:
-    back: ClothingBackpackEngineeringFilled
+    back: ClothingBackpackEngineering
 
 - type: loadout
   id: StationEngineerSatchel
@@ -127,7 +127,7 @@
 - type: startingGear
   id: StationEngineerSatchel
   equipment:
-    back: ClothingBackpackSatchelEngineeringFilled
+    back: ClothingBackpackSatchelEngineering
 
 - type: loadout
   id: StationEngineerDuffel
@@ -136,7 +136,7 @@
 - type: startingGear
   id: StationEngineerDuffel
   equipment:
-    back: ClothingBackpackDuffelEngineeringFilled
+    back: ClothingBackpackDuffelEngineering
 
 # OuterClothing
 - type: loadout
