@@ -24,7 +24,8 @@ public sealed class SSDIndicatorSystem : EntitySystem
     private void OnPlayerDetached(EntityUid uid, SSDIndicatorComponent component, PlayerDetachedEvent args)
     {
         component.IsSSD = true;
-        EnsureComp<ForcedSleepingComponent>(uid);
+        if (!TerminatingOrDeleted(uid))
+            EnsureComp<ForcedSleepingComponent>(uid);
         Dirty(uid, component);
     }
 }
