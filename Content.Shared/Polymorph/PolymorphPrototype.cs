@@ -79,6 +79,12 @@ public sealed partial record PolymorphConfiguration
     public bool TransferHumanoidAppearance;
 
     /// <summary>
+    /// Whether we try to transfer chemicals & blood in the body across polymorphs
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public bool TransferBloodstream = true;
+
+    /// <summary>
     /// Whether or not the entity transfers its inventory and equipment between forms.
     /// </summary>
     [DataField(serverOnly: true)]

@@ -53,6 +53,15 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    angle: 30
+    animation: WeaponArcFist
+    attackRate: 0.625
+    damage:
+      types:
+        Blunt: 8
   - type: Geras
   - type: PassiveDamage # Around 8 damage a minute healed
     allowedStates:

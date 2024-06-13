@@ -5,6 +5,8 @@ using Content.Server.Mind.Commands;
 using Content.Server.Nutrition;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Buckle;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
@@ -15,6 +17,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 using Content.Shared.Popups;
+using Content.Server.Zombies;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -22,6 +25,10 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Zombies;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Polymorph.Systems;
 
@@ -45,6 +52,9 @@ public sealed partial class PolymorphSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly ZombieSystem _zombie = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     private const string RevertPolymorphId = "ActionRevertPolymorph";
 
@@ -223,6 +233,22 @@ public sealed partial class PolymorphSystem : EntitySystem
             _damageable.SetDamage(child, damageParent, damage);
         }
 
+        if(configuration.TransferBloodstream && TryComp<BloodstreamComponent>(child, out var bloodstream) && TryComp<BloodstreamComponent>(uid, out var parentBloodstream))
+        {
+            // First set the blood level percentage to be the same
+            float bloodLevel = _bloodstream.GetBloodLevelPercentage(uid);
+            if (_solutionContainerSystem.ResolveSolution(child, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var blood))
+            {
+                blood.RemoveAllSolution();
+                _bloodstream.TryModifyBloodLevel(child, bloodLevel * bloodstream.BloodMaxVolume);
+            }
+            // Then transfer chemicals over
+            if (_solutionContainerSystem.ResolveSolution(uid, parentBloodstream.ChemicalSolutionName, ref parentBloodstream.ChemicalSolution, out var parentSolution))
+            {
+                _bloodstream.TryAddToChemicals(child, parentSolution);
+            }
+        }
+
         if (configuration.Inventory == PolymorphInventoryChange.Transfer)
         {
             _inventory.TransferEntityInventories(uid, child);
@@ -247,6 +273,9 @@ public sealed partial class PolymorphSystem : EntitySystem
                 _hands.TryDrop(uid, held);
             }
         }
+
+        if (HasComp<ZombieComponent>(uid)) // Zombify polymorph if we're a zombie
+            _zombie.ZombifyEntity(child);
 
         if (configuration.TransferName && TryComp(uid, out MetaDataComponent? targetMeta))
             _metaData.SetEntityName(child, targetMeta.EntityName);
@@ -299,6 +328,24 @@ public sealed partial class PolymorphSystem : EntitySystem
             _damageable.SetDamage(parent, damageParent, damage);
         }
 
+        if (component.Configuration.TransferBloodstream && TryComp<BloodstreamComponent>(parent, out var bloodstream) && TryComp<BloodstreamComponent>(uid, out var childBloodstream))
+        {
+            // First set the blood level percentage to be the same
+            float bloodLevel = _bloodstream.GetBloodLevelPercentage(uid);
+            if (_solutionContainerSystem.ResolveSolution(parent, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var blood))
+            {
+                blood.RemoveAllSolution();
+                _bloodstream.TryModifyBloodLevel(parent, bloodLevel * bloodstream.BloodMaxVolume);
+            }
+            // Then flush transfer chemicals over
+            if (_solutionContainerSystem.ResolveSolution(parent, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution, out var chemicals)
+                && _solutionContainerSystem.ResolveSolution(uid, childBloodstream.ChemicalSolutionName, ref childBloodstream.ChemicalSolution, out var childSolution))
+            {
+                chemicals.RemoveAllSolution();
+                _bloodstream.TryAddToChemicals(parent, childSolution);
+            }
+        }
+
         if (component.Configuration.Inventory == PolymorphInventoryChange.Transfer)
         {
             _inventory.TransferEntityInventories(uid, parent);
@@ -323,6 +370,9 @@ public sealed partial class PolymorphSystem : EntitySystem
                 _hands.TryDrop(uid, held);
             }
         }
+
+        if (HasComp<ZombieComponent>(uid) && !HasComp<ZombieComponent>(parent)) // Zombify original if we're a zombie
+            _zombie.ZombifyEntity(parent);
 
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
             _mindSystem.TransferTo(mindId, parent, mind: mind);

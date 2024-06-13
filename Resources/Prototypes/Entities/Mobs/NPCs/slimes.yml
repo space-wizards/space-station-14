@@ -159,8 +159,8 @@
     size: Huge
   - type: Sprite
     color: "#FFFFFF55"
-  - type: MeleeWeapon
-    attackRate: 2
+  - type: MeleeWeapon # Twice as fast as a slime, half as deadly
+    attackRate: 1.25
     damage:
       types:
         Blunt: 4
@@ -173,6 +173,21 @@
   - type: Body
     prototype: Geras
     requiredLegs: 1
+  - type: Storage # from slimes
+    clickInsert: false
+    grid:
+    - 0,0,1,2
+    maxItemSize: Large
+    storageInsertSound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
 
 - type: entity
   name: blue slime

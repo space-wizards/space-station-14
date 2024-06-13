@@ -19,12 +19,6 @@ public sealed class GerasSystem : SharedGerasSystem
     {
         SubscribeLocalEvent<GerasComponent, MorphIntoGeras>(OnMorphIntoGeras);
         SubscribeLocalEvent<GerasComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<GerasComponent, EntityZombifiedEvent>(OnZombification);
-    }
-
-    private void OnZombification(EntityUid uid, GerasComponent component, EntityZombifiedEvent args)
-    {
-        _actionsSystem.RemoveAction(uid, component.GerasActionEntity);
     }
 
     private void OnMapInit(EntityUid uid, GerasComponent component, MapInitEvent args)
@@ -35,8 +29,6 @@ public sealed class GerasSystem : SharedGerasSystem
 
     private void OnMorphIntoGeras(EntityUid uid, GerasComponent component, MorphIntoGeras args)
     {
-        if (HasComp<ZombieComponent>(uid))
-            return; // i hate zomber.
 
         var ent = _polymorphSystem.PolymorphEntity(uid, component.GerasPolymorphId);
 
