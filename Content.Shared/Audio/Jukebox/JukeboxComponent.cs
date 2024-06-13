@@ -12,7 +12,7 @@ public sealed partial class JukeboxComponent : Component
     public ProtoId<JukeboxPrototype>? SelectedSongId;
 
     [DataField, AutoNetworkedField]
-    public List<ProtoId<JukeboxPrototype>> SongIdQueue = new();
+    public Queue<ProtoId<JukeboxPrototype>> SongIdQueue = new();
 
     [DataField, AutoNetworkedField]
     public EntityUid? AudioStream;

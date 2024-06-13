@@ -145,7 +145,7 @@ public sealed partial class JukeboxMenu : FancyWindow
         }
     }
 
-    public void PopulateQueue(List<ProtoId<JukeboxPrototype>> queue)
+    public void PopulateQueue(IEnumerable<ProtoId<JukeboxPrototype>> queue)
     {
         MusicListQueue.RemoveAllChildren();
         int i = 0;

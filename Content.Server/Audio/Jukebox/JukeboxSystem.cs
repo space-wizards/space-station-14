@@ -8,6 +8,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameStates;
+using System.Linq;
 using JukeboxComponent = Content.Shared.Audio.Jukebox.JukeboxComponent;
 
 namespace Content.Server.Audio.Jukebox;
@@ -81,7 +82,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         }
         else
         {
-            component.SongIdQueue.Add(args.SongId);
+            component.SongIdQueue.Enqueue(args.SongId);
         }
 
         Dirty(uid, component);
@@ -92,7 +93,13 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         if (args.Index < 0 || args.Index >= component.SongIdQueue.Count)
             return;
 
-        component.SongIdQueue.RemoveAt(args.Index);
+        var list = new List<ProtoId<JukeboxPrototype>>(component.SongIdQueue);
+        list.RemoveAt(args.Index);
+        component.SongIdQueue.Clear();
+        foreach (var entry in list)
+        {
+            component.SongIdQueue.Enqueue(entry);
+        }
 
         Dirty(uid, component);
     }
@@ -221,8 +228,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         if (ent.Comp.SongIdQueue.Count == 0)
             return null;
 
-        var next = ent.Comp.SongIdQueue[0];
-        ent.Comp.SongIdQueue.RemoveAt(0);
+        var next = ent.Comp.SongIdQueue.Dequeue();
         ent.Comp.TimeWhenSongEnds = null;
 
         return next;
