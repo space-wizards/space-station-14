@@ -5,7 +5,6 @@ using Content.Shared.Singularity.Components;
 using Robust.Shared.Utility;
 using System.Diagnostics;
 using Content.Server.Administration.Managers;
-using Content.Server.Radio.EntitySystems;
 using Content.Shared.CCVar;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -19,7 +18,6 @@ public sealed partial class ParticleAcceleratorSystem
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly RadioSystem _radio = default!;
 
     private void InitializeControlBoxSystem()
     {
@@ -81,9 +79,6 @@ public sealed partial class ParticleAcceleratorSystem
 
         if (user is { } player)
         {
-            var msg = Loc.GetString("particle-accelerator-radio-message-on");
-            _radio.SendRadioMessage(uid, msg, comp.WarningChannel, uid);
-
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} on");
         }
 
@@ -106,14 +101,11 @@ public sealed partial class ParticleAcceleratorSystem
 
         if (user is { } player)
         {
-            var msg = Loc.GetString("particle-accelerator-radio-message-off");
-            _radio.SendRadioMessage(uid, msg, comp.WarningChannel, uid);
-
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} off");
         }
 
         comp.Enabled = false;
-        SetStrength(uid, ParticleAcceleratorPowerState.Standby, user, comp, sendRadio: false);
+        SetStrength(uid, ParticleAcceleratorPowerState.Standby, user, comp);
         UpdatePowerDraw(uid, comp);
         PowerOff(uid, comp);
         UpdateUI(uid, comp);
@@ -151,7 +143,7 @@ public sealed partial class ParticleAcceleratorSystem
         UpdateUI(uid, comp);
     }
 
-    public void SetStrength(EntityUid uid, ParticleAcceleratorPowerState strength, EntityUid? user = null, ParticleAcceleratorControlBoxComponent? comp = null, bool sendRadio = true)
+    public void SetStrength(EntityUid uid, ParticleAcceleratorPowerState strength, EntityUid? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -189,7 +181,7 @@ public sealed partial class ParticleAcceleratorSystem
                     _chat.SendAdminAlert(player,
                         Loc.GetString("particle-accelerator-admin-power-strength-warning",
                         ("machine", ToPrettyString(uid)),
-                        ("powerState", strength),
+                        ("powerState", GetPANumericalLevel(strength)),
                         ("coordinates", pos.Coordinates)));
                     _audio.PlayGlobal("/Audio/Misc/adminlarm.ogg",
                         Filter.Empty().AddPlayers(_adminManager.ActiveAdmins),
@@ -197,13 +189,6 @@ public sealed partial class ParticleAcceleratorSystem
                         AudioParams.Default.WithVolume(-8f));
                     comp.EffectCooldown = _timing.CurTime + comp.CooldownDuration;
                 }
-            }
-
-            if (sendRadio)
-            {
-                var msg = Loc.GetString("particle-accelerator-radio-message-num",
-                    ("level", GetPANumericalLevel(strength)));
-                _radio.SendRadioMessage(uid, msg, comp.WarningChannel, uid);
             }
         }
 
