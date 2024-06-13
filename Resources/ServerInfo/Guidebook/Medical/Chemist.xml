@@ -51,7 +51,7 @@
   There are two main methods of delivery for Chemistry:
 
   - [color=cyan]Jugs[/color]: These are 200u containers which are perfect for doctors using syringes. The Chemist must apply a label so that others know what is inside of it, and it is up to the doctors to set the dosages.
-  - [color=cyan]Pill Canisters[/color]: These contain multiple pills of your specified dosage. This lets Chemistry have more control to stop accidental overdoses. Additionally, the labeler is unnecessary as it is labeled in the [color=cyan]Chem Master 4000[/color].
+  - [color=cyan]Pill Canisters[/color]: These contain multiple pills of your specified dosage. This lets Chemistry have more control to stop accidental overdoses. Additionally, the [color=cyan]Hand Labeler[/color] is unnecessary as it is labeled in the [color=cyan]Chem Master 4000[/color].
 
   ## Jugs
 
@@ -133,7 +133,7 @@
   - Now, get a new chemical [color=cyan]Jug[/color] from the [color=cyan]ChemVend[/color].
   - Finally, press [color=yellow][keybind="Use" /][/color] to insert the new Jug into the [color=cyan]Chemical Dispenser[/color].
 
-  And now that Chemical should be refilled! Additionally, you now have an extra empty Jug.
+  And now the [color=cyan]Chemicals[/color] should be refilled! Additionally, you now have an extra empty Jug.
 
   ## Chem Master 4000
 
@@ -165,7 +165,7 @@
   - Press [color=yellow][keybind="ExamineEntity" /][/color] to inspect the container.
   - Press [color=yellow][keybind="UIClick" /][/color] on the chemical examine verb.
 
-  To actually use the hotplate:
+  To actually use the [color=cyan]Hotplate[/color]:
 
   - Hold a [color=cyan]Beaker[/color] in your hand.
   - Press [color=yellow][keybind="Use" /][/color] to place the [color=cyan]Beaker[/color] on [color=cyan]Hotplate[/color].
@@ -217,7 +217,7 @@
   - [color=yellow]Transfer[/color] the reagent into a [color=cyan]Beaker[/color].
   - Press [color=yellow][keybind="Use" /][/color] on the [color=cyan]Electrolysis Unit[/color] while holding the [color=cyan]Beaker[/color] to insert it.
   - Press [color=yellow][keybind="ActivateItemInWorld" /][/color] on the [color=cyan]Electrolysis Unit[/color] to [color=yellow]start[/color] it.
-  - Finally, press [color=yellow][keybind="AltActivateItemInWorld" /][/color] to eject the [color=cyan]Beaker[/color] the into your hand.
+  - Finally, press [color=yellow][keybind="AltActivateItemInWorld" /][/color] to eject the [color=cyan]Beaker[/color] into your hand.
 
   ## Topicals
 
@@ -241,7 +241,7 @@
 
   For the remaining [color=cyan]Topicals[/color], insert the required materials into the [color=cyan]Medical Techfab[/color].
 
-  - [color=yellow]Insert[/color] your the required materials into the [color=cyan]Medical Techfab[/color] by pressing [color=yellow][keybind="Use" /][/color].
+  - [color=yellow]Insert[/color] your required materials into the [color=cyan]Medical Techfab[/color] by pressing [color=yellow][keybind="Use" /][/color].
   - With all the resources inserted, [color=yellow]open[/color] it by pressing [color=yellow][keybind="ActivateItemInWorld" /][/color].
   - [color=yellow]Search[/color] for the [color=cyan]Topical[/color]
   - Press [color=yellow][keybind="UIClick" /][/color] on the name of the [color=cyan]Topical[/color] to create it.
