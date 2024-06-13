@@ -1,10 +1,10 @@
 using System.Linq;
 using Content.Shared.Inventory;
 using Content.Shared.NameModifier.Components;
-using Robust.Shared.Collections;
 
 namespace Content.Shared.NameModifier.EntitySystems;
 
+/// <inheritdoc cref="NameModifierComponent"/>
 public sealed partial class NameModifierSystem : EntitySystem
 {
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -42,15 +42,21 @@ public sealed partial class NameModifierSystem : EntitySystem
     /// </remarks>
     public void RefreshNameModifiers(Entity<NameModifierComponent?> entity)
     {
+        // This Resolve allows other systems to call this method without needing to first try to get the
+        // NameModifierComponent and pass it in.
+        // Without it, calling RefreshNameModifiers(uid) on an entity that does have the component will
+        // cause the following code to see entity.Comp as null and behave accordingly, which causes
+        // all sorts of interesting problems.
         Resolve(entity, ref entity.Comp, logMissing: false);
 
         var meta = MetaData(entity);
 
         // Raise an event to get any modifiers
+        // If the entity already has the component, use its BaseName, otherwise use the entity's name from metadata
         var modifierEvent = new RefreshNameModifiersEvent(entity.Comp?.BaseName ?? meta.EntityName);
         RaiseLocalEvent(entity, ref modifierEvent);
 
-        // No modifiers
+        // Nothing add a modifier, so we can just use the base name
         if (modifierEvent.ModifierCount == 0)
         {
             // If the entity doesn't have the component, we're done
@@ -63,15 +69,16 @@ public sealed partial class NameModifierSystem : EntitySystem
             RemComp<NameModifierComponent>(entity);
             return;
         }
+        // We have at least one modifier, so we need to apply it to the entity.
 
         // Get the final name with modifiers applied
         var modifiedName = modifierEvent.GetModifiedName();
 
-        // Add the component if needed, and store the base name
+        // Add the component if needed, and initialize it with the base name
         if (!EnsureComp<NameModifierComponent>(entity, out var comp))
             SetBaseName((entity, comp), meta.EntityName);
 
-        // Set the entity's name with modifiers
+        // Set the entity's name with modifiers applied
         _metaData.SetEntityName(entity, modifiedName, meta, raiseEvents: false);
     }
 }
@@ -90,11 +97,14 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
     /// </summary>
     public readonly string BaseName;
 
-    private readonly List<(LocId LocId, int Priority, ValueList<(string, object)>? ExtraArgs)> _modifiers = [];
+    private readonly List<(LocId LocId, int Priority, List<(string, object)>? ExtraArgs)> _modifiers = [];
 
     /// <inheritdoc/>
     public SlotFlags TargetSlots => ~SlotFlags.POCKET;
 
+    /// <summary>
+    /// How many modifiers have been added to this event.
+    /// </summary>
     public int ModifierCount => _modifiers.Count;
 
     public RefreshNameModifiersEvent(string baseName)
@@ -107,9 +117,9 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
     /// The original name will be passed to Fluent as <c>$baseName</c> along with any <paramref name="extraArgs"/>.
     /// Modifiers with a higher <paramref name="priority"/> will be applied later.
     /// </summary>
-    public void AddModifier(LocId locId, int priority = 0, ValueList<(string, object)>? extraArgs = null)
+    public void AddModifier(LocId locId, int priority = 0, params (string, object)[]? extraArgs)
     {
-        _modifiers.Add((locId, priority, extraArgs));
+        _modifiers.Add((locId, priority, extraArgs?.ToList()));
     }
 
     /// <summary>
@@ -117,12 +127,17 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
     /// </summary>
     public string GetModifiedName()
     {
+        // Start out with the entity's name name
         var name = BaseName;
 
+        // Iterate through all the modifiers in priority order
         foreach (var modifier in _modifiers.OrderBy(n => n.Priority))
         {
+            // Grab any extra args needed by the Loc string
             var args = modifier.ExtraArgs ?? [];
+            // Add the current version of the entity name as an arg
             args.Add(("baseName", name));
+            // Resolve the Loc string and use the result as the base in the next iteration.
             name = Loc.GetString(modifier.LocId, args.ToArray());
         }
 

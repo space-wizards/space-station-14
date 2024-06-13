@@ -33,6 +33,6 @@ public abstract partial class SharedLabelSystem : EntitySystem
     private void OnRefreshNameModifiers(Entity<LabelComponent> entity, ref RefreshNameModifiersEvent args)
     {
         if (!string.IsNullOrEmpty(entity.Comp.CurrentLabel))
-            args.AddModifier("comp-label-format", extraArgs: [("label", entity.Comp.CurrentLabel)]);
+            args.AddModifier("comp-label-format", extraArgs: ("label", entity.Comp.CurrentLabel));
     }
 }

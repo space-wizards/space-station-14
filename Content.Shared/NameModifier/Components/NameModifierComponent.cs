@@ -1,3 +1,4 @@
+using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.NameModifier.Components;
@@ -8,12 +9,11 @@ namespace Content.Shared.NameModifier.Components;
 /// </summary>
 [RegisterComponent]
 [NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(NameModifierSystem))]
 public sealed partial class NameModifierComponent : Component
 {
     /// <summary>
-    /// The entity's name without any modifiers.
-    /// If you want to base a modifier on the entity's name, use this so that modifiers
-    /// aren't duplicated.
+    /// The entity's name without any modifiers applied.
     /// </summary>
     [DataField, AutoNetworkedField]
     public string BaseName = string.Empty;
