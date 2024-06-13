@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: DoutorWhite
-  changes:
-  - message: The icon representing the critical status has been changed
-    type: Tweak
-  - message: Medical Hud death icon animation fixed
-    type: Fix
-  id: 6219
-  time: '2024-03-24T16:38:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26391
 - author: ChaseFlorom
   changes:
   - message: removed cannabis thief objective.
@@ -3849,3 +3840,10 @@
   id: 6718
   time: '2024-06-13T02:17:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28903
+- author: Plykiya
+  changes:
+  - message: Gauze continues to heal even when you stop someone's bleeding.
+    type: Fix
+  id: 6719
+  time: '2024-06-13T02:19:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28844
