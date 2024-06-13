@@ -451,3 +451,109 @@
         Base: dead_small_purple_snake
   - type: SolutionTransfer
     maxTransferAmount: 1
+
+# Xeno Queen that can not be ghostrole / pry
+
+- type: entity
+  name: Queen
+  parent: SimpleSpaceMobBase
+  id: MobXenoQueenNoGhost
+  components:
+  - type: Insulated
+  - type: CombatMode
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: XenoCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavInteract: !type:Bool
+        true
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: NpcFactionMember
+    factions:
+    - Xeno
+  - type: Hands
+  - type: ComplexInteraction
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: Stamina
+    critThreshold: 200
+  - type: Bloodstream
+    bloodReagent: FluorosulfuricAcid
+    bloodMaxVolume: 650
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+     collection: AlienClaw
+    animation: WeaponArcBite
+    damage:
+     groups:
+       Brute: 12
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: running
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+  - type: Puller
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatXeno
+      amount: 5
+  - type: TypingIndicator
+    proto: alien
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: -150
+    currentTemperature: 310.15
+  - type: NoSlip
+  - type: Perishable #Ummmm the acid kills a lot of the bacteria or something
+    molsPerSecondPerUnitMass: 0.0005
+  - type: Speech
+    speechVerb: LargeMob
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/queen.rsi
+    offset: 0,0.4
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      300: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      150: 0.7
+  - type: MovementSpeedModifier
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 15500
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Tag
+    tags:
+    - CannotSuicide

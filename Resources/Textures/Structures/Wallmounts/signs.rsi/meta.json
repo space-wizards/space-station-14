@@ -299,6 +299,24 @@
             ]
         },
         {
+            "name": "direction_atmos",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
             "name": "direction_bar",
             "directions": 4,
             "delays": [

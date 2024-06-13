@@ -865,4 +865,4 @@
       sprite: Mobs/Aliens/Xenos/queen.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobXenoQueen
+    - MobXenoQueenNoGhost
