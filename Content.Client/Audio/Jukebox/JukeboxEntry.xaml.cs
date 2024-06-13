@@ -12,6 +12,7 @@ public sealed partial class JukeboxEntry : BoxContainer
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     private JukeboxPrototype? _song;
+    private bool _playPauseState = true;
 
     private Type _entryType;
     public Type EntryType
@@ -52,13 +53,26 @@ public sealed partial class JukeboxEntry : BoxContainer
         Buttons();
     }
 
-    public void SetOnPressedPlay(Action<JukeboxPrototype?, BaseButton.ButtonEventArgs>? func)
+    public void SetOnPressedPlay(Action<JukeboxPrototype?, bool, BaseButton.ButtonEventArgs>? func)
     {
         if (func == null)
             return;
 
         PlayButton.OnPressed += args => {
-            func(_song, args);
+            if (_entryType == Type.Current)
+            {
+                _playPauseState = !_playPauseState;
+                if (_playPauseState)
+                {
+                    PlayButton.Text = Loc.GetString("jukebox-menu-buttonplay");
+                }
+                else
+                {
+                    PlayButton.Text = Loc.GetString("jukebox-menu-buttonpause");
+                }
+            }
+
+            func(_song, !_playPauseState, args);
         };
     }
 

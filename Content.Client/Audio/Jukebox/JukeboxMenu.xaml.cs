@@ -46,12 +46,11 @@ public sealed partial class JukeboxMenu : FancyWindow
 
         CurrentSong.SetOnPressedStop(args =>
         {
-            // OnStopPressed?.Invoke();
-            OnPlayPressed?.Invoke(false);
+            OnStopPressed?.Invoke();
         });
-        CurrentSong.SetOnPressedPlay((song, args) =>
+        CurrentSong.SetOnPressedPlay((song, playPauseState, args) =>
         {
-            OnPlayPressed?.Invoke(true);
+            OnPlayPressed?.Invoke(playPauseState);
         });
         PlaybackSlider.OnReleased += PlaybackSliderKeyUp;
 
@@ -83,7 +82,7 @@ public sealed partial class JukeboxMenu : FancyWindow
         {
             // MusicList.AddItem(entry.Name, metadata: entry.ID);
             var songControl = new JukeboxEntry(entry) {EntryType = JukeboxEntry.Type.List};
-            songControl.SetOnPressedPlay((song, args) => {
+            songControl.SetOnPressedPlay((song, _, args) => {
                 if (song == null)
                     return;
                 OnSongSelected?.Invoke(song.ID);
