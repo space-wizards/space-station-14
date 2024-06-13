@@ -5,7 +5,6 @@ using Content.Server.Mind.Commands;
 using Content.Server.Nutrition;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Buckle;
 using Content.Shared.Damage;
@@ -28,7 +27,8 @@ using Robust.Shared.Utility;
 using Content.Shared.Zombies;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Components;
 
 namespace Content.Server.Polymorph.Systems;
 
@@ -55,6 +55,7 @@ public sealed partial class PolymorphSystem : EntitySystem
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly FlammableSystem _flammable = default!;
 
     private const string RevertPolymorphId = "ActionRevertPolymorph";
 
@@ -221,7 +222,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         var childXform = Transform(child);
         _transform.SetLocalRotation(child, targetTransformComp.LocalRotation, childXform);
 
-        if (_container.TryGetContainingContainer(uid, out var cont))
+        if (_container.TryGetContainingContainer((uid, null, null), out var cont))
             _container.Insert(child, cont);
 
         //Transfers all damage from the original to the new one
@@ -233,7 +234,11 @@ public sealed partial class PolymorphSystem : EntitySystem
             _damageable.SetDamage(child, damageParent, damage);
         }
 
-        if(configuration.TransferBloodstream && TryComp<BloodstreamComponent>(child, out var bloodstream) && TryComp<BloodstreamComponent>(uid, out var parentBloodstream))
+        //If there is firestacks transfer them
+        if (TryComp<FlammableComponent>(uid, out var fire))
+            _flammable.SetFireStacks(child, fire.FireStacks, ignite: fire.OnFire);
+
+        if (configuration.TransferBloodstream && TryComp<BloodstreamComponent>(child, out var bloodstream) && TryComp<BloodstreamComponent>(uid, out var parentBloodstream))
         {
             // First set the blood level percentage to be the same
             float bloodLevel = _bloodstream.GetBloodLevelPercentage(uid);
@@ -241,6 +246,8 @@ public sealed partial class PolymorphSystem : EntitySystem
             {
                 blood.RemoveAllSolution();
                 _bloodstream.TryModifyBloodLevel(child, bloodLevel * bloodstream.BloodMaxVolume);
+                _bloodstream.TryModifyBleedAmount(child, -1000); //Arbitiary value since it can't be set
+                _bloodstream.TryModifyBleedAmount(child, parentBloodstream.BleedAmount);
             }
             // Then transfer chemicals over
             if (_solutionContainerSystem.ResolveSolution(uid, parentBloodstream.ChemicalSolutionName, ref parentBloodstream.ChemicalSolution, out var parentSolution))
@@ -328,6 +335,10 @@ public sealed partial class PolymorphSystem : EntitySystem
             _damageable.SetDamage(parent, damageParent, damage);
         }
 
+        //If there is firestacks transfer them
+        if (TryComp<FlammableComponent>(uid, out var fire))
+            _flammable.SetFireStacks(parent, fire.FireStacks, ignite: fire.OnFire);
+
         if (component.Configuration.TransferBloodstream && TryComp<BloodstreamComponent>(parent, out var bloodstream) && TryComp<BloodstreamComponent>(uid, out var childBloodstream))
         {
             // First set the blood level percentage to be the same
@@ -336,6 +347,8 @@ public sealed partial class PolymorphSystem : EntitySystem
             {
                 blood.RemoveAllSolution();
                 _bloodstream.TryModifyBloodLevel(parent, bloodLevel * bloodstream.BloodMaxVolume);
+                _bloodstream.TryModifyBleedAmount(parent, -1000); //Arbitiary value since it can't be set
+                _bloodstream.TryModifyBleedAmount(parent, childBloodstream.BleedAmount);
             }
             // Then flush transfer chemicals over
             if (_solutionContainerSystem.ResolveSolution(parent, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution, out var chemicals)
