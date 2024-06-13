@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: SoulFN
-  changes:
-  - message: The borg tool module now has an industrial welding tool.
-    type: Tweak
-  id: 6221
-  time: '2024-03-24T22:35:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26332
-- author: IProduceWidgets
-  changes:
-  - message: Ammo techfab now accepts ingot and cloth material types.
-    type: Fix
-  id: 6222
-  time: '2024-03-25T00:43:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26413
-- author: Luminight
-  changes:
-  - message: Wooden fence gate sprites are no longer swapped.
-    type: Fix
-  id: 6223
-  time: '2024-03-25T00:55:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26409
 - author: Callmore
   changes:
   - message: Holoprojectors no longer come with a cell when made at a lathe.
@@ -3847,3 +3826,24 @@
   id: 6720
   time: '2024-06-13T06:30:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28756
+- author: Doomsdrayk
+  changes:
+  - message: The Drozd and C-20r do not unwield on use again.
+    type: Fix
+  id: 6721
+  time: '2024-06-13T18:10:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28728
+- author: EmoGarbage404
+  changes:
+  - message: Fixed constructed items rotating strangely.
+    type: Fix
+  id: 6722
+  time: '2024-06-13T18:21:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28427
+- author: lzk228
+  changes:
+  - message: Added order quantity to cargo invoice label.
+    type: Tweak
+  id: 6723
+  time: '2024-06-13T18:36:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28821

@@ -88,12 +88,6 @@
 
 # Vector [Deprecated use Drozd]
 - type: entity
-  parent:
-  - BaseGunMedium
-  - BaseGunSubMachineGunMag
-  - BaseGunMagVisuals
-  - BaseGun
-  id: WeaponSubMachineGunVector
   name: Vector
   suffix: Deprecated use Drozd
   description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
