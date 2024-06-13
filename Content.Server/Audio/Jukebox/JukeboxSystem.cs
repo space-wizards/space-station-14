@@ -33,7 +33,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         SubscribeLocalEvent<JukeboxComponent, JukeboxRemoveQueueMessage>(OnJukeboxRemoveQueue);
         SubscribeLocalEvent<JukeboxComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<JukeboxComponent, ComponentShutdown>(OnComponentShutdown);
-        SubscribeLocalEvent<JukeboxComponent, ComponentGetState>(OnJukeboxGetState);
 
         SubscribeLocalEvent<JukeboxComponent, PowerChangedEvent>(OnPowerChanged);
     }
@@ -215,16 +214,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         }
 
         _appearanceSystem.SetData(uid, JukeboxVisuals.VisualState, finalState);
-    }
-
-    private void OnJukeboxGetState(Entity<JukeboxComponent> ent, ref ComponentGetState args)
-    {
-        var isPlaying = false;
-        if (Exists(ent.Comp.AudioStream))
-        {
-            isPlaying = Audio.IsPlaying(ent.Comp.AudioStream);
-        }
-        args.State = new JukeboxComponentState(ent.Comp.SongIdQueue, isPlaying);
     }
 
     private ProtoId<JukeboxPrototype>? SongQueueDequeue(Entity<JukeboxComponent> ent)

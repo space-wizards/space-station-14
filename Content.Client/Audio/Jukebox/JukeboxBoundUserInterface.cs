@@ -80,6 +80,9 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         {
             _menu.SetSelectedSong(null, 0f);
         }
+
+        _menu.PopulateQueue(jukebox.SongIdQueue);
+        _menu.SetIsPlaying(EntMan.System<AudioSystem>().IsPlaying(jukebox.AudioStream));
     }
 
     public void PopulateMusic()
@@ -123,17 +126,6 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         _menu.OnClose -= Close;
         _menu.Dispose();
         _menu = null;
-    }
-
-    protected override void UpdateState(BoundUserInterfaceState state)
-    {
-        var castState = (JukeboxBoundUserInterfaceState) state;
-
-        if (_menu == null)
-            return;
-
-        _menu.PopulateQueue(castState.SongIdQueue);
-        _menu.SetIsPlaying(castState.IsPlaying);
     }
 }
 
