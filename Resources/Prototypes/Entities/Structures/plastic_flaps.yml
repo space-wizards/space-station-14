@@ -41,6 +41,7 @@
     mode: NoSprite
   - type: StaticPrice
     price: 83
+  - type: ThrownItemAvoid
 
 - type: entity
   id: PlasticFlapsClear
