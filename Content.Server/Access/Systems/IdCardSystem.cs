@@ -29,7 +29,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
 
     private void OnMicrowaved(EntityUid uid, IdCardComponent component, BeingMicrowavedEvent args)
     {
-        if (!component.CanMicrowave)
+        if (!component.CanMicrowave || !TryComp<MicrowaveComponent>(args.Microwave, out var micro) || micro.Broken)
             return;
 
         if (TryComp<AccessComponent>(uid, out var access))
@@ -77,13 +77,14 @@ public sealed class IdCardSystem : SharedIdCardSystem
             _adminLogger.Add(LogType.Action, LogImpact.Medium,
                     $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
 
-            if (!TryComp<MicrowaveComponent>(args.Microwave, out var micro) || micro.CanMicrowaveIdsSafely)
+            if (micro.CanMicrowaveIdsSafely)
                 return;
             // If it's not safe to microwave, maybe explode
             randomPick = _random.NextFloat();
 
             if (randomPick <= micro.ExplosionChance) // Uses the microwaves explosion chance to determine if we should explode
             {
+                micro.Broken = true; // Make broken before the explosion finishes so other ids don't finish copying
                 _explosion.TriggerExplosive(args.Microwave);
 
                 _adminLogger.Add(LogType.Action, LogImpact.Medium,
