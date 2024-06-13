@@ -188,7 +188,10 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             {
                 var next = SongQueueDequeue((uid, comp));
                 if (next == null)
+                {
+                    Stop((uid, comp));
                     continue;
+                }
 
                 OnJukeboxSelected(uid, comp, new JukeboxSelectedMessage(next.Value));
                 var messagePlay = new JukeboxPlayingMessage();
