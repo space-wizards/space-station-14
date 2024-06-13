@@ -86,6 +86,51 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
 
+# Vector [Deprecated use Drozd]
+- type: entity
+  parent:
+  - BaseGunMedium
+  - BaseGunSubMachineGunMag
+  - BaseGunMagVisuals
+  - BaseGun
+  id: WeaponSubMachineGunVector
+  name: Vector
+  suffix: Deprecated use Drozd
+  description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/vector.rsi
+  - type: Gun
+    fireRate: 6
+    minAngle: 2
+    maxAngle: 16
+    angleIncrease: 3
+    angleDecay: 16
+    selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineMagnumSubMachineGun
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineMagnumSubMachineGun
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeMagnum
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeMagnum
+
 # WT550
 - type: entity
   parent:
