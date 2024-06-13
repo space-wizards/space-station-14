@@ -362,8 +362,6 @@ public sealed class PlantHolderSystem : EntitySystem
 
     private void OnSolutionAdded(Entity<PlantHolderComponent> entity, ref SolutionTransferSuccessEvent args)
     {
-        Log.Info("we have triggered");
-        Log.Info(SharedSolutionContainerSystem.ToPrettyString(args.TransfferdSolution));
         var (uid, component) = entity;
 
         //Only play splosh sound when using containers that would be dumped into the basin (as opposed to ie. sprayed on)
