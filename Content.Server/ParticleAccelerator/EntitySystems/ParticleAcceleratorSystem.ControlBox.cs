@@ -78,9 +78,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         if (user is { } player)
-        {
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} on");
-        }
 
         comp.Enabled = true;
         UpdatePowerDraw(uid, comp);
@@ -100,9 +98,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         if (user is { } player)
-        {
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} off");
-        }
 
         comp.Enabled = false;
         SetStrength(uid, ParticleAcceleratorPowerState.Standby, user, comp);
@@ -164,9 +160,10 @@ public sealed partial class ParticleAcceleratorSystem
             var impact = strength switch
             {
                 ParticleAcceleratorPowerState.Standby => LogImpact.Low,
-                ParticleAcceleratorPowerState.Level0 => LogImpact.Medium,
-                ParticleAcceleratorPowerState.Level1 => LogImpact.High,
-                _ => LogImpact.Extreme,
+                ParticleAcceleratorPowerState.Level0
+                    or ParticleAcceleratorPowerState.Level1
+                    or ParticleAcceleratorPowerState.Level2 => LogImpact.Medium,
+                ParticleAcceleratorPowerState.Level3 => LogImpact.Extreme,
             };
 
             _adminLogger.Add(LogType.Action, impact, $"{ToPrettyString(player):player} has set the strength of {ToPrettyString(uid)} to {strength}");
