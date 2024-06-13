@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Access;
@@ -18,6 +19,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ExplosionSystem _explosion = default!;
 
     public override void Initialize()
     {
@@ -33,11 +35,9 @@ public sealed class IdCardSystem : SharedIdCardSystem
         if (TryComp<AccessComponent>(uid, out var access))
         {
             float randomPick = _random.NextFloat();
-            bool autoBurn = false;
-            if (TryComp<MicrowaveComponent>(args.Microwave, out var micro))
-                autoBurn = !micro.CanMicrowaveIds;
-            // if really unlucky, burn card, also burn it if the microwave cannot handle ids
-            if (autoBurn || randomPick <= 0.15f)
+
+            // if really unlucky, burn card
+            if (randomPick <= 0.15f)
             {
                 TryComp(uid, out TransformComponent? transformComponent);
                 if (transformComponent != null)
@@ -76,6 +76,20 @@ public sealed class IdCardSystem : SharedIdCardSystem
 
             _adminLogger.Add(LogType.Action, LogImpact.Medium,
                     $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
+
+            if (!TryComp<MicrowaveComponent>(args.Microwave, out var micro) || micro.CanMicrowaveIdsSafely)
+                return;
+            // If it's not safe to microwave, maybe explode
+            randomPick = _random.NextFloat();
+
+            if (randomPick <= micro.ExplosionChance) // Uses the microwaves explosion chance to determine if we should explode
+            {
+                _explosion.TriggerExplosive(args.Microwave);
+
+                _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                    $"{ToPrettyString(args.Microwave)} exploded copying {ToPrettyString(uid):entity}!");
+            }
+
         }
     }
 }

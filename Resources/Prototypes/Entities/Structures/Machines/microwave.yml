@@ -115,7 +115,8 @@
   - type: Microwave
     cookTimeMultiplier: 0.5
     capacity: 10
-    canMicrowaveIds: false
+    canMicrowaveIdsSafely: false
+    explosionChance: 0.3
   - type: Sprite
     sprite: Structures/Machines/microwave_syndie.rsi
     drawdepth: SmallObjects

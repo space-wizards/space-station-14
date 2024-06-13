@@ -103,10 +103,10 @@ namespace Content.Server.Kitchen.Components
         public float LightningChance = .75f;
 
         /// <summary>
-        /// If this microwave can give ids accesses when cooked
+        /// If this microwave can give ids accesses without exploding
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public bool CanMicrowaveIds = true;
+        public bool CanMicrowaveIdsSafely = true;
     }
 
     public sealed class BeingMicrowavedEvent : HandledEntityEventArgs
