@@ -242,7 +242,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         {
             // First set the blood level percentage to be the same
             float bloodLevel = _bloodstream.GetBloodLevelPercentage(uid);
-            if (_solutionContainerSystem.ResolveSolution(child, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var blood))
+            if (_solutionContainerSystem.TryGetSolution(child, bloodstream.BloodSolutionName, out _, out var blood))
             {
                 blood.RemoveAllSolution();
                 _bloodstream.TryModifyBloodLevel(child, bloodLevel * bloodstream.BloodMaxVolume);
@@ -250,7 +250,7 @@ public sealed partial class PolymorphSystem : EntitySystem
                 _bloodstream.TryModifyBleedAmount(child, parentBloodstream.BleedAmount);
             }
             // Then transfer chemicals over
-            if (_solutionContainerSystem.ResolveSolution(uid, parentBloodstream.ChemicalSolutionName, ref parentBloodstream.ChemicalSolution, out var parentSolution))
+            if (_solutionContainerSystem.TryGetSolution(uid, parentBloodstream.ChemicalSolutionName, out _, out var parentSolution))
             {
                 _bloodstream.TryAddToChemicals(child, parentSolution);
             }
@@ -343,7 +343,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         {
             // First set the blood level percentage to be the same
             float bloodLevel = _bloodstream.GetBloodLevelPercentage(uid);
-            if (_solutionContainerSystem.ResolveSolution(parent, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var blood))
+            if (_solutionContainerSystem.TryGetSolution(parent, bloodstream.BloodSolutionName, out _, out var blood))
             {
                 blood.RemoveAllSolution();
                 _bloodstream.TryModifyBloodLevel(parent, bloodLevel * bloodstream.BloodMaxVolume);
@@ -351,8 +351,8 @@ public sealed partial class PolymorphSystem : EntitySystem
                 _bloodstream.TryModifyBleedAmount(parent, childBloodstream.BleedAmount);
             }
             // Then flush transfer chemicals over
-            if (_solutionContainerSystem.ResolveSolution(parent, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution, out var chemicals)
-                && _solutionContainerSystem.ResolveSolution(uid, childBloodstream.ChemicalSolutionName, ref childBloodstream.ChemicalSolution, out var childSolution))
+            if (_solutionContainerSystem.TryGetSolution(parent, bloodstream.ChemicalSolutionName, out _, out var chemicals)
+                && _solutionContainerSystem.TryGetSolution(uid, childBloodstream.ChemicalSolutionName, out _, out var childSolution))
             {
                 chemicals.RemoveAllSolution();
                 _bloodstream.TryAddToChemicals(parent, childSolution);
