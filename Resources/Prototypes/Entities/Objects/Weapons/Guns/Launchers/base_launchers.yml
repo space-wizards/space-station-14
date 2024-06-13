@@ -59,10 +59,7 @@
 # A physics manipulating gun. Groups together the visual qualities of all physics guns.
 - type: entity
   abstract: true
-  parent:
-  - BaseItem
-  - PowerCellSlotMediumItem
-  id: BasePhysicsGun
+  id: BasePhysicsGunVisuals
   components:
   - type: Sprite
     layers:
@@ -71,9 +68,6 @@
       map: [ "unshaded" ]
       shader: unshaded
       visible: false
-  - type: Item
-    storedRotation: -90
-  - type: PowerCellDraw
   - type: Appearance
   - type: GenericVisualizer
     visuals:

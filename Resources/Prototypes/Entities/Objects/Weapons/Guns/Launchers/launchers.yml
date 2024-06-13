@@ -59,26 +59,37 @@
 
 # tether gun
 - type: entity
-  parent: BasePhysicsGun
+  parent:
+  - BaseItem
+  - PowerCellSlotMediumItem
+  - BasePhysicsGunVisuals
   id: WeaponTetherGun
   name: tether gun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+  - type: Item
+    storedRotation: -90
   - type: TetherGun
     frequency: 5
     dampingRatio: 4
+  - type: PowerCellDraw
 
 # force gun
 - type: entity
-  parent: BasePhysicsGun
+  parent:
+  - BaseItem
+  - PowerCellSlotMediumItem
+  - BasePhysicsGunVisuals
   id: WeaponForceGun
   name: force gun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
+  - type: Item
+    storedRotation: -90
   - type: ForceGun
     frequency: 15
     dampingRatio: 4
@@ -88,6 +99,7 @@
       path: /Audio/Weapons/soup.ogg
       params:
         volume: 2
+  - type: PowerCellDraw
 
 # grappling gun
 - type: entity
@@ -126,7 +138,9 @@
 # Admeme
 # tether gun [admeme]
 - type: entity
-  parent: BaseItem
+  parent:
+  - BaseItem
+  - BasePhysicsGunVisuals
   id: WeaponTetherGunAdmin
   name: tether gun
   suffix: Admeme
@@ -141,32 +155,14 @@
     frequency: 20
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
-    layers:
-    - state: base
-    - state: base-unshaded
-      map: [ "unshaded" ]
-      shader: unshaded
-      visible: false
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.TetherVisualsStatus.Key:
-        unshaded:
-          True: { visible: true }
-          False: { visible: false }
-  - type: ToggleableLightVisuals
-    spriteLayer: unshaded
-    inhandVisuals:
-      left:
-      - state: inhand-left-unshaded
-        shader: unshaded
-      right:
-      - state: inhand-right-unshaded
-        shader: unshaded
+  - type: Item
+    storedRotation: -90
 
 # force gun [admeme]
 - type: entity
-  parent: BaseItem
+  parent:
+  - BaseItem
+  - BasePhysicsGunVisuals
   id: WeaponForceGunAdmin
   name: force gun
   suffix: Admeme
@@ -184,28 +180,8 @@
     lineColor: "#18a2d5"
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
-    layers:
-    - state: base
-    - state: base-unshaded
-      map: [ "unshaded" ]
-      shader: unshaded
-      visible: false
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.TetherVisualsStatus.Key:
-        unshaded:
-          True: { visible: true }
-          False: { visible: false }
-  - type: ToggleableLightVisuals
-    spriteLayer: unshaded
-    inhandVisuals:
-      left:
-      - state: inhand-left-unshaded
-        shader: unshaded
-      right:
-      - state: inhand-right-unshaded
-        shader: unshaded
+  - type: Item
+    storedRotation: -90
 
 # multiple rocket launcher [admeme]
 - type: entity
