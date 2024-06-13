@@ -72,7 +72,7 @@
   - type: InputMover
   - type: MobMover
   - type: ZombieImmune
-  - type: ClothingRequiredStepTriggerImmune
+  - type: ProtectedFromStepTriggers
 
 - type: entity
   abstract: true
