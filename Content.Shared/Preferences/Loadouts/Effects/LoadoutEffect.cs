@@ -11,6 +11,7 @@ public abstract partial class LoadoutEffect
     /// Tries to validate the effect.
     /// </summary>
     public abstract bool Validate(
+        HumanoidCharacterProfile profile,
         RoleLoadout loadout,
         ICommonSession session,
         IDependencyCollection collection,

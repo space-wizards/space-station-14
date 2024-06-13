@@ -2,6 +2,7 @@ using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
@@ -17,7 +18,7 @@ namespace Content.Server.Construction.Conditions
         public SpriteSpecifier? GuideIconBoard { get; private set; }
 
         [DataField("guideIconParts")]
-        public SpriteSpecifier? GuideIconPart { get; private set; }
+        public SpriteSpecifier? GuideIconParts { get; private set; }
 
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
@@ -33,6 +34,8 @@ namespace Content.Server.Construction.Conditions
             var entity = args.Examined;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            var protoManager = IoCManager.Resolve<IPrototypeManager>();
+            var constructionSys = entityManager.System<ConstructionSystem>();
 
             if (!entityManager.TryGetComponent(entity, out MachineFrameComponent? machineFrame))
                 return false;
@@ -47,17 +50,6 @@ namespace Content.Server.Construction.Conditions
                 return false;
 
             args.PushMarkup(Loc.GetString("construction-condition-machine-frame-requirement-label"));
-            foreach (var (part, required) in machineFrame.Requirements)
-            {
-                var amount = required - machineFrame.Progress[part];
-
-                if(amount == 0)
-                    continue;
-
-                args.PushMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
-                                           ("amount", amount),
-                                           ("elementName", Loc.GetString(part))));
-            }
 
             foreach (var (material, required) in machineFrame.MaterialRequirements)
             {
@@ -65,10 +57,12 @@ namespace Content.Server.Construction.Conditions
 
                 if(amount == 0)
                     continue;
+                var stack = protoManager.Index(material);
+                var stackEnt = protoManager.Index(stack.Spawn);
 
                 args.PushMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
                                            ("amount", amount),
-                                           ("elementName", Loc.GetString(material))));
+                                           ("elementName", stackEnt.Name)));
             }
 
             foreach (var (compName, info) in machineFrame.ComponentRequirements)
@@ -78,9 +72,10 @@ namespace Content.Server.Construction.Conditions
                 if(amount == 0)
                     continue;
 
+                var examineName = constructionSys.GetExamineName(info);
                 args.PushMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
                                                 ("amount", info.Amount),
-                                                ("elementName", Loc.GetString(info.ExamineName))));
+                                                ("elementName", examineName)));
             }
 
             foreach (var (tagName, info) in machineFrame.TagRequirements)
@@ -90,9 +85,10 @@ namespace Content.Server.Construction.Conditions
                 if(amount == 0)
                     continue;
 
+                var examineName = constructionSys.GetExamineName(info);
                 args.PushMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
                                     ("amount", info.Amount),
-                                    ("elementName", Loc.GetString(info.ExamineName)))
+                                    ("elementName", examineName))
                                 + "\n");
             }
 
@@ -111,7 +107,7 @@ namespace Content.Server.Construction.Conditions
             yield return new ConstructionGuideEntry()
             {
                 Localization = "construction-step-condition-machine-frame-parts",
-                Icon = GuideIconPart,
+                Icon = GuideIconParts,
                 EntryNumber = 0, // Set this to anything so the guide generation takes this as a numbered step.
             };
         }

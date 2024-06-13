@@ -2,6 +2,7 @@
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
+using Robust.Client.Replays.Loading;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -37,7 +38,7 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
         if (mapPos.MapId == MapId.Nullspace)
             return;
 
-        var angle = (mapPos.Position - xform.MapPosition.Position).ToWorldAngle();
+        var angle = (mapPos.Position - _transform.GetMapCoordinates(player.Value, xform: xform).Position).ToWorldAngle();
 
         var curRot = _transform.GetWorldRotation(xform);
 

@@ -61,7 +61,8 @@ namespace Content.Server.Chemistry.ReactionEffects
         {
             var intensity = MathF.Min((float) args.Quantity * IntensityPerUnit, MaxTotalIntensity);
 
-            EntitySystem.Get<ExplosionSystem>().QueueExplosion(
+            args.EntityManager.System<ExplosionSystem>()
+                .QueueExplosion(
                 args.SolutionEntity,
                 ExplosionType,
                 intensity,

@@ -61,7 +61,7 @@
 - type: cargoProduct
   id: ServiceBureaucracy
   icon:
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: Objects/Misc/pens.rsi
     state: pen
   product: CrateServiceBureaucracy
   cost: 1000
@@ -173,7 +173,7 @@
   icon:
     sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
     state: icon
-  product: CrateJanitorExplosive
+  product: ClosetJanitorBombFilled
   cost: 1000
   category: cargoproduct-category-name-service
   group: market

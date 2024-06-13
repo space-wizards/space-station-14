@@ -122,7 +122,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             // PVS was turned off, ensure data gets sent to all clients.
-            var query = EntityQueryEnumerator<GasTileOverlayComponent, MetaDataComponent>();
+            var query = AllEntityQuery<GasTileOverlayComponent, MetaDataComponent>();
             while (query.MoveNext(out var uid, out var grid, out var meta))
             {
                 grid.ForceTick = _gameTiming.CurTick;
@@ -269,7 +269,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void UpdateOverlayData()
         {
             // TODO parallelize?
-            var query = EntityQueryEnumerator<GasTileOverlayComponent, GridAtmosphereComponent, MetaDataComponent>();
+            var query = AllEntityQuery<GasTileOverlayComponent, GridAtmosphereComponent, MetaDataComponent>();
             while (query.MoveNext(out var uid, out var overlay, out var gam, out var meta))
             {
                 var changed = false;

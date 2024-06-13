@@ -9,6 +9,7 @@ using Content.Shared.Stunnable;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -24,6 +25,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -42,7 +44,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
         if (args.Handled || comp.BatteryUid == null || !_gloves.AbilityCheck(uid, args, out var target))
             return;
 
-        if (target == uid || !comp.Whitelist.IsValid(target, EntityManager))
+        if (target == uid || _whitelistSystem.IsWhitelistFail(comp.Whitelist, target))
             return;
 
         if (_timing.CurTime < comp.NextStun)
