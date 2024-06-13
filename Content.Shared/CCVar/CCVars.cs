@@ -1924,6 +1924,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> GhostRoleTime =
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        /// Whether or not to kill the player's mob when ghosting, if it is in a critical state.
+        /// </summary>
+        public static readonly CVarDef<bool> GhostKillCrit =
+            CVarDef.Create("ghost.kill_crit", true, CVar.REPLICATED | CVar.SERVER);
+
         /*
          * Fire alarm
          */
