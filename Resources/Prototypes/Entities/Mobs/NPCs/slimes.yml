@@ -26,15 +26,6 @@
     thresholds:
       0: Alive
       120: Dead
-  - type: PassiveDamage # copied from slime person
-    allowedStates:
-    - Alive
-    damageCap: 65
-    damage:
-      types:
-        Heat: -0.14
-      groups:
-        Brute: -0.14
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Effects/Footsteps/slime1.ogg
@@ -182,6 +173,15 @@
   - type: Body
     prototype: Geras
     requiredLegs: 1
+  - type: PassiveDamage # copied from slime person
+    allowedStates:
+    - Alive
+    damageCap: 65
+    damage:
+      types:
+        Heat: -0.14
+      groups:
+        Brute: -0.14
   - type: Bloodstream
     bloodReagent: Slime
     bleedReductionAmount: 0.5
