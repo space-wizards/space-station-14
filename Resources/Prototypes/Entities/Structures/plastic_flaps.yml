@@ -118,6 +118,3 @@
         - MidImpassable
         - HighImpassable
   - type: Occluder
-  - type: Construction
-    graph: PlasticFlapsGraph
-    node: opaqueFlaps
