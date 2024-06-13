@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Baptr0b0t
-  changes:
-  - message: Fix access of command door remote. The captain must control his station.
-    type: Fix
-  id: 6217
-  time: '2024-03-24T05:19:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26378
-- author: ElectroJr
-  changes:
-  - message: Fixed the cargo & emergency shuttle not being airtight.
-    type: Fix
-  id: 6218
-  time: '2024-03-24T16:17:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26382
 - author: DoutorWhite
   changes:
   - message: The icon representing the critical status has been changed
@@ -3847,3 +3833,19 @@
   id: 6716
   time: '2024-06-12T22:56:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28906
+- author: stalengd
+  changes:
+  - message: Players can now correctly toggle internals on pets.
+    type: Fix
+  id: 6717
+  time: '2024-06-13T02:17:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28904
+- author: Cojoke-dot
+  changes:
+  - message: Tranquilizer Shotguns shells now have a unique sprite
+    type: Tweak
+  - message: You now print boxes of Tranquilizer Boxes rather than a single shell
+    type: Tweak
+  id: 6718
+  time: '2024-06-13T02:17:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28903
