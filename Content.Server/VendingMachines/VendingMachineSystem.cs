@@ -151,6 +151,16 @@ namespace Content.Server.VendingMachines
 
         private void OnDamage(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
         {
+            TryComp<DamageableComponent>(uid, out var comp);
+            if (comp == null)
+                return;
+
+            if (comp.TotalDamage == 0)
+            {
+                component.Broken = false;
+                TryUpdateVisualState(uid, component);
+            }
+
             if (component.Broken || component.DispenseOnHitCoolingDown ||
                 component.DispenseOnHitChance == null || args.DamageDelta == null)
                 return;
