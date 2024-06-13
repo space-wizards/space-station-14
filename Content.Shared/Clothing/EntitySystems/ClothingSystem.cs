@@ -98,6 +98,10 @@ public abstract class ClothingSystem : EntitySystem
                 {
                     if (comp.Slots.Contains(layer))
                     {
+                        if (_invSystem.TryGetContainingSlot(item, out var currentItemSlot)
+                        && currentItemSlot.SlotGroup != "Default")
+                            break;
+
                         //Checks for mask toggling. TODO: Make a generic system for this
                         if (comp.HideOnToggle && TryComp(item, out MaskComponent? mask) && TryComp(item, out ClothingComponent? clothing))
                         {
