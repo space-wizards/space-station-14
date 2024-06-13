@@ -113,11 +113,15 @@
                         </Label>
                     </PanelContainer>
                 </BoxContainer>
-                <BoxContainer
-                    Name="QueueList"
-                    Orientation="Vertical"
-                    VerticalExpand="True">
-                </BoxContainer>
+                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                    <BoxContainer
+                        Name="QueueList"
+                        Orientation="Vertical"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        RectClipContent="True">
+                    </BoxContainer>
+                </ScrollContainer>
             </BoxContainer>
             <BoxContainer
             VerticalExpand="True"
