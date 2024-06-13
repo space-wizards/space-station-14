@@ -6,9 +6,9 @@ using JetBrains.Annotations;
 using Robust.Shared.Random;
 using System.Linq;
 using Content.Server.Fluids.EntitySystems;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.GameTicking.Components;
 
 namespace Content.Server.StationEvents.Events;
 

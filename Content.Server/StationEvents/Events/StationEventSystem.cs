@@ -1,10 +1,10 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
+using Content.Shared.GameTicking.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -108,13 +108,4 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
             }
         }
     }
-
-    #region Helper Functions
-
-    protected void ForceEndSelf(EntityUid uid, GameRuleComponent? component = null)
-    {
-        GameTicker.EndGameRule(uid, component);
-    }
-
-    #endregion
 }
