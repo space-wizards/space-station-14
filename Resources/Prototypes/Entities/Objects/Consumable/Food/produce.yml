@@ -1923,7 +1923,7 @@
   name: cherry
   parent: FoodProduceBase
   id: FoodCherry
-  description: Juicy red cherry, a tiny flavor explosion!
+  description: Juicy red cherry with a pit inside.
   components:
   - type: FlavorProfile
     flavors:
