@@ -3,8 +3,8 @@
     HorizontalExpand="True"
 >
     <Label Name="SongName" Text="00:00 / 00:00" HorizontalAlignment="Left" HorizontalExpand="True"/>
-    <Button Name="PlayButton" Text="{Loc 'jukebox-menu-buttonplay'}" />
-    <Button Name="StopButton" Text="{Loc 'jukebox-menu-buttonstop'}" />
+    <Button Name="PlayButton" StyleClasses="OpenRight" Text="{Loc 'jukebox-menu-buttonplay'}" />
+    <Button Name="StopButton" StyleClasses="OpenLeft" Text="{Loc 'jukebox-menu-buttonstop'}" />
     <Button Name="RemoveButton" Text="{Loc 'jukebox-menu-buttonremove'}" />
-    <Button Name="QueueButton" Text="{Loc 'jukebox-menu-buttonqueue'}" />
+    <Button Name="QueueButton" StyleClasses="OpenLeft" Text="{Loc 'jukebox-menu-buttonqueue'}" />
 </BoxContainer>
