@@ -40,19 +40,11 @@ public sealed partial class JukeboxComponent : Component
 
     [ViewVariables]
     public float SelectAccumulator;
-
-    /// <summary>
-    /// Time when current selected song ends, null if paused or
-    /// not playing.
-    /// </summary>
-    [DataField]
-    public TimeSpan? TimeWhenSongEnds;
-
-    /// <summary>
-    /// Counter to TimeWhenSongEnds
-    /// </summary>
-    public TimeSpan Time;
 }
+
+[RegisterComponent]
+public sealed partial class JukeboxMusicComponent : Component
+{}
 
 [Serializable, NetSerializable]
 public sealed class JukeboxPlayingMessage : BoundUserInterfaceMessage;

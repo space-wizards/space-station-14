@@ -7,8 +7,6 @@ using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.GameStates;
-using System.Linq;
 using JukeboxComponent = Content.Shared.Audio.Jukebox.JukeboxComponent;
 
 namespace Content.Server.Audio.Jukebox;
@@ -36,6 +34,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         SubscribeLocalEvent<JukeboxComponent, ComponentShutdown>(OnComponentShutdown);
 
         SubscribeLocalEvent<JukeboxComponent, PowerChangedEvent>(OnPowerChanged);
+
+        SubscribeLocalEvent<JukeboxMusicComponent, ComponentShutdown>(OnAudioShutdown);
     }
 
     private void OnComponentInit(EntityUid uid, JukeboxComponent component, ComponentInit args)
@@ -83,7 +83,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnJukeboxPause(Entity<JukeboxComponent> ent, ref JukeboxPauseMessage args)
     {
-        ent.Comp.TimeWhenSongEnds = null;
         Audio.SetState(ent.Comp.AudioStream, AudioState.Paused);
 
         Dirty(ent);
@@ -95,12 +94,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         {
             var offset = actorComp.PlayerSession.Channel.Ping * 1.5f / 1000f;
             Audio.SetPlaybackPosition(component.AudioStream, args.SongTime + offset);
-
-            if (_entManager.TryGetComponent(component.AudioStream, out AudioComponent? audio))
-            {
-                var length = _audio.GetAudioLength(audio.FileName);
-                component.TimeWhenSongEnds = component.Time + length - TimeSpan.FromSeconds(audio.PlaybackPosition);
-            }
         }
     }
 
@@ -114,6 +107,26 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         }
     }
 
+    private void OnAudioShutdown(Entity<JukeboxMusicComponent> ent, ref ComponentShutdown args)
+    {
+        var query = EntityQueryEnumerator<JukeboxComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.AudioStream == ent.Owner)
+            {
+                var next = SongQueueDequeue((uid, comp));
+                if (next == null)
+                {
+                    Stop((uid, comp));
+                    continue;
+                }
+
+                OnJukeboxSelected(uid, comp, next.Value);
+                OnJukeboxPlay(uid, comp);
+            }
+        }
+    }
+
     private void OnJukeboxStop(Entity<JukeboxComponent> entity, ref JukeboxStopMessage args)
     {
         Stop(entity);
@@ -121,7 +134,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void Stop(Entity<JukeboxComponent> entity)
     {
-        entity.Comp.TimeWhenSongEnds = null;
         Audio.SetState(entity.Comp.AudioStream, AudioState.Stopped);
         Dirty(entity);
     }
@@ -148,23 +160,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
                     TryUpdateVisualState(uid, comp);
                 }
-            }
-
-            if (comp.TimeWhenSongEnds == null)
-                continue;
-
-            comp.Time += TimeSpan.FromSeconds(frameTime);
-            if (comp.TimeWhenSongEnds < comp.Time)
-            {
-                var next = SongQueueDequeue((uid, comp));
-                if (next == null)
-                {
-                    Stop((uid, comp));
-                    continue;
-                }
-
-                OnJukeboxSelected(uid, comp, next.Value);
-                OnJukeboxPlay(uid, comp);
             }
         }
     }
@@ -196,11 +191,9 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             }
 
             component.AudioStream = Audio.PlayPvs(jukeboxProto.Path, uid, AudioParams.Default.WithMaxDistance(10f))?.Entity;
-
-            if (_entManager.TryGetComponent(component.AudioStream, out AudioComponent? audio))
+            if (component.AudioStream != null)
             {
-                var length = _audio.GetAudioLength(audio.FileName);
-                component.TimeWhenSongEnds = component.Time + length - TimeSpan.FromSeconds(audio.PlaybackPosition);
+                AddComp<JukeboxMusicComponent>(component.AudioStream.Value);
             }
 
             Dirty(uid, component);
@@ -238,7 +231,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             return null;
 
         var next = ent.Comp.SongIdQueue.Dequeue();
-        ent.Comp.TimeWhenSongEnds = null;
 
         return next;
     }
