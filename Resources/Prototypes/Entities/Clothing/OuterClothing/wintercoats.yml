@@ -230,9 +230,9 @@
   description: A sturdy, utilitarian winter coat designed to protect a head of security from any brig-bound threats and hypothermic events.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coathosarmored.rsi
+    sprite: GreyStation/Clothing/OuterClothing/WinterCoats/coathosarmored.rsi #GreyStation
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coathosarmored.rsi
+    sprite: GreyStation/Clothing/OuterClothing/WinterCoats/coathosarmored.rsi #GreyStation
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterHOS
 
@@ -243,9 +243,9 @@
   description: A sturdy coat, a warm coat, but not an armored coat.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
+    sprite: GreyStation/Clothing/OuterClothing/WinterCoats/coathos.rsi #GreyStation
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
+    sprite: GreyStation/Clothing/OuterClothing/WinterCoats/coathos.rsi #GreyStation
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterHOS
 
