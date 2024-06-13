@@ -163,6 +163,22 @@
   - type: RandomSpawnRule
     prototype: MobRevenant
 
+- type: entity
+  id: RatKingSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 6.5
+    duration: 25
+  - type: VentCrittersRule
+    entries:
+    - id: SpawnPointGhostRatKing
+      prob: 0.001
 # disabled until event is rewritten to be more interesting
 #- type: entity
 #  id: FalseAlarm
@@ -222,7 +238,6 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 15
-    minimumPlayers: 15
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -235,10 +250,6 @@
       prob: 0.02
     - id: MobMouseCancer
       prob: 0.001
-    specialEntries:
-    - id: SpawnPointGhostRatKing
-      prob: 0.001
-
 - type: entity
   id: CockroachMigration
   parent: BaseStationEventShortDelay
