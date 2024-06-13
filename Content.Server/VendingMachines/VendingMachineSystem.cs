@@ -155,7 +155,7 @@ namespace Content.Server.VendingMachines
             if (comp == null)
                 return;
 
-            if (comp.TotalDamage == 0)
+            if (component.Broken && comp.TotalDamage == 0)
             {
                 component.Broken = false;
                 TryUpdateVisualState(uid, component);
