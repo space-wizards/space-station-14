@@ -13,6 +13,14 @@ public sealed partial class JukeboxEntry : BoxContainer
 
     private JukeboxPrototype? _song;
     private bool _playPauseState = true;
+    public bool PlayPauseState
+    {
+        get {return _playPauseState;}
+        set {
+            _playPauseState = value;
+            UpdateLabel();
+        }
+    }
 
     private Type _entryType;
     public Type EntryType
@@ -62,17 +70,10 @@ public sealed partial class JukeboxEntry : BoxContainer
             if (_entryType == Type.Current)
             {
                 _playPauseState = !_playPauseState;
-                if (_playPauseState)
-                {
-                    PlayButton.Text = Loc.GetString("jukebox-menu-buttonplay");
-                }
-                else
-                {
-                    PlayButton.Text = Loc.GetString("jukebox-menu-buttonpause");
-                }
+                UpdateLabel();
             }
 
-            func(_song, !_playPauseState, args);
+            func(_song, _playPauseState, args);
         };
     }
 
@@ -107,6 +108,18 @@ public sealed partial class JukeboxEntry : BoxContainer
         StopButton.Visible = _song != null && _entryType == Type.Current;
         RemoveButton.Visible = _song != null && _entryType == Type.Queue;
         QueueButton.Visible = _song != null && _entryType == Type.List;
+    }
+
+    private void UpdateLabel()
+    {
+        if (!_playPauseState)
+        {
+            PlayButton.Text = Loc.GetString("jukebox-menu-buttonplay");
+        }
+        else
+        {
+            PlayButton.Text = Loc.GetString("jukebox-menu-buttonpause");
+        }
     }
 
     public enum Type

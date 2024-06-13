@@ -160,4 +160,9 @@ public sealed partial class JukeboxMenu : FancyWindow
             });
         }
     }
+
+    public void SetIsPlaying(bool isPlaying)
+    {
+        CurrentSong.PlayPauseState = isPlaying;
+    }
 }

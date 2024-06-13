@@ -133,6 +133,7 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
             return;
 
         _menu.PopulateQueue(castState.SongIdQueue);
+        _menu.SetIsPlaying(castState.IsPlaying);
     }
 }
 

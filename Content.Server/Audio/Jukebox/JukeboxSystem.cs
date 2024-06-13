@@ -70,14 +70,22 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
             Dirty(uid, component);
         }
+        var state = GetUiState((uid, component));
+        _userInterfaceSystem.SetUiState(uid, JukeboxUiKey.Key, state);
     }
 
     private void OnJukeboxAddQueue(EntityUid uid, JukeboxComponent component, JukeboxAddQueueMessage args)
     {
-        component.SongIdQueue.Add(args.SongId);
-
-        var state = GetUiState((uid, component));
-        _userInterfaceSystem.SetUiState(uid, JukeboxUiKey.Key, state);
+        if (component.SelectedSongId == null)
+        {
+            component.SelectedSongId = args.SongId;
+        }
+        else
+        {
+            component.SongIdQueue.Add(args.SongId);
+            var state = GetUiState((uid, component));
+            _userInterfaceSystem.SetUiState(uid, JukeboxUiKey.Key, state);
+        }
 
         Dirty(uid, component);
     }
@@ -98,6 +106,10 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     {
         ent.Comp.TimeWhenSongEnds = null;
         Audio.SetState(ent.Comp.AudioStream, AudioState.Paused);
+        var state = GetUiState(ent);
+        _userInterfaceSystem.SetUiState(ent.Owner, JukeboxUiKey.Key, state);
+
+        Dirty(ent);
     }
 
     private void OnJukeboxSetTime(EntityUid uid, JukeboxComponent component, JukeboxSetTimeMessage args)
@@ -134,6 +146,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     {
         entity.Comp.TimeWhenSongEnds = null;
         Audio.SetState(entity.Comp.AudioStream, AudioState.Stopped);
+        var state = GetUiState(entity);
+        _userInterfaceSystem.SetUiState(entity.Owner, JukeboxUiKey.Key, state);
         Dirty(entity);
     }
 
@@ -213,7 +227,12 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private JukeboxBoundUserInterfaceState GetUiState(Entity<JukeboxComponent> ent)
     {
-        return new JukeboxBoundUserInterfaceState(ent.Comp.SongIdQueue);
+        var isPlaying = false;
+        if (Exists(ent.Comp.AudioStream))
+        {
+            isPlaying = Audio.IsPlaying(ent.Comp.AudioStream);
+        }
+        return new JukeboxBoundUserInterfaceState(ent.Comp.SongIdQueue, isPlaying);
     }
 
     private ProtoId<JukeboxPrototype>? SongQueueDequeue(Entity<JukeboxComponent> ent)
@@ -223,6 +242,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
         var next = ent.Comp.SongIdQueue[0];
         ent.Comp.SongIdQueue.RemoveAt(0);
+        ent.Comp.TimeWhenSongEnds = null;
 
         var state = GetUiState(ent);
         _userInterfaceSystem.SetUiState(ent.Owner, JukeboxUiKey.Key, state);
