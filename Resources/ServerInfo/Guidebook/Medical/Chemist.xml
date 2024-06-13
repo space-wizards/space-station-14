@@ -295,7 +295,7 @@
     <GuideEntityEmbed Entity="LargeBeaker"/>
   </Box>
 
-  <GuideReagentEmbed Reagent="Tranexamic Acid"/>
+  <GuideReagentEmbed Reagent="TranexamicAcid"/>
   <GuideReagentEmbed Reagent="Cryptobiolin"/>
 
   To make 10 [color=cyan]Medicated Sutures[/color] you will need:
