@@ -45,7 +45,7 @@ public sealed partial class DashAbilityComponent : Component
     };
 
     [DataField]
-    public int CollisionMask = (int) CollisionGroup.BulletImpassable;
+    public int CollisionMask = (int) CollisionGroup.Opaque;
 }
 
 public sealed partial class DashEvent : WorldTargetActionEvent { }
