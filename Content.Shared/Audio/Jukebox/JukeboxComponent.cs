@@ -58,10 +58,12 @@ public sealed partial class JukeboxComponent : Component
 public sealed class JukeboxBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly List<ProtoId<JukeboxPrototype>> SongIdQueue = new();
+    public readonly bool IsPlaying;
 
-    public JukeboxBoundUserInterfaceState(List<ProtoId<JukeboxPrototype>> queue)
+    public JukeboxBoundUserInterfaceState(List<ProtoId<JukeboxPrototype>> queue, bool isPlaying)
     {
         SongIdQueue = queue;
+        IsPlaying = isPlaying;
     }
 }
 
