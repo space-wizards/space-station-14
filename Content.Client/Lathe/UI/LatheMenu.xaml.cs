@@ -225,8 +225,6 @@ public sealed partial class LatheMenu : DefaultWindow
 
             var queuedRecipeLabel = new Label();
             queuedRecipeLabel.Text = $"{idx}. {recipe.Name}";
-
-
             queuedRecipeBox.AddChild(queuedRecipeProto);
             queuedRecipeBox.AddChild(queuedRecipeLabel);
             QueueList.AddChild(queuedRecipeBox);
