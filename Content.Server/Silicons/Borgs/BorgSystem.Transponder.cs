@@ -1,3 +1,4 @@
+using Content.Shared.Administration;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Emag.Components;
 using Content.Shared.Popups;
@@ -118,6 +119,9 @@ public sealed partial class BorgSystem
         var message = Loc.GetString(ent.Comp.DestroyingPopup, ("name", Name(ent)));
         Popup.PopupEntity(message, ent);
         _trigger.StartTimer(ent.Owner, user: null);
+
+        // prevent a shitter borg running into people
+        EnsureComp<AdminFrozenComponent>(ent);
     }
 
     private bool CheckEmagged(EntityUid uid, string name)
