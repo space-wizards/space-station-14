@@ -20,11 +20,6 @@ public sealed partial class JukeboxMenu : FancyWindow
     private AudioSystem _audioSystem;
 
     /// <summary>
-    /// Are we currently 'playing' or paused for the play / pause button.
-    /// </summary>
-    private bool _playState;
-
-    /// <summary>
     /// True if playing, false if paused.
     /// </summary>
     public event Action<bool>? OnPlayPressed;
@@ -53,8 +48,6 @@ public sealed partial class JukeboxMenu : FancyWindow
             OnPlayPressed?.Invoke(playPauseState);
         });
         PlaybackSlider.OnReleased += PlaybackSliderKeyUp;
-
-        SetPlayPauseButton(_audioSystem.IsPlaying(_audio), force: true);
     }
 
     public JukeboxMenu(AudioSystem audioSystem)
@@ -101,22 +94,6 @@ public sealed partial class JukeboxMenu : FancyWindow
         }
     }
 
-    public void SetPlayPauseButton(bool playing, bool force = false)
-    {
-        if (_playState == playing && !force)
-            return;
-
-        _playState = playing;
-
-        if (playing)
-        {
-            //PlayButton.Text = Loc.GetString("jukebox-menu-buttonpause");
-            return;
-        }
-
-        //PlayButton.Text = Loc.GetString("jukebox-menu-buttonplay");
-    }
-
     public void SetSelectedSong(ProtoId<JukeboxPrototype>? song, float length)
     {
         if (song == null)
@@ -126,7 +103,6 @@ public sealed partial class JukeboxMenu : FancyWindow
             return;
 
         CurrentSong.SetSong(songProto);
-        // SetSelectedSongText(name);
         PlaybackSlider.MaxValue = length;
         PlaybackSlider.SetValueWithoutEvent(0);
     }
@@ -162,21 +138,8 @@ public sealed partial class JukeboxMenu : FancyWindow
         {
             PlaybackSlider.SetValueWithoutEvent(0f);
         }
-
-        SetPlayPauseButton(_audioSystem.IsPlaying(_audio, audio));
     }
 
-    public void SetSelectedSongText(string? text)
-    {
-        if (!string.IsNullOrEmpty(text))
-        {
-            // SongName.Text = text;
-        }
-        else
-        {
-            // SongName.Text = "---";
-        }
-    }
     public void PopulateQueue(List<ProtoId<JukeboxPrototype>> queue)
     {
         MusicListQueue.RemoveAllChildren();
