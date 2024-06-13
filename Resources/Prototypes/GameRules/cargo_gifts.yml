@@ -29,7 +29,7 @@
       FoodPizza: 1              # 4 pizzas
       FoodBarSupply: 1
       FoodSoftdrinks: 1
-      CrateVendingMachineRestockDrinks: 1
+      CrateVendingMachineRestockRobustSoftdrinks: 1
 
 - type: entity
   id: GiftsPizzaPartyLarge
@@ -84,7 +84,7 @@
       CrateVendingMachineRestockHotDrinks: 3
       CrateVendingMachineRestockBooze: 1
       CrateVendingMachineRestockNutriMax: 1
-      CrateVendingMachineRestockDrinks: 2
+      CrateVendingMachineRestockRobustSoftdrinks: 2
       CrateVendingMachineRestockVendomat: 1
       CrateVendingMachineRestockGetmoreChocolateCorp: 1
 

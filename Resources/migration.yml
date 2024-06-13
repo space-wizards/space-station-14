@@ -348,7 +348,3 @@ DoorRemoteFirefight: null
 
 # 2024-06-03
 AirlockServiceCaptainLocked: AirlockCaptainLocked
-
-# 2024-06-13
-CrateVendingMachineRestockRobustSoftdrinksFilled: CrateVendingMachineRestockDrinksFilled
-VendingMachineRestockRobustSoftdrinks: VendingMachineRestockDrinks
