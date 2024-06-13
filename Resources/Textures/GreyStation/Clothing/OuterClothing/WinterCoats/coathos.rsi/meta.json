@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/a75dee2e6d236612dbd403dd5f8687ca930c01f1.",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/77cff42b6c514e73881a885036be4b4dd2949f62. Further modified by ps3moira.",
   "size": {
     "x": 32,
     "y": 32
@@ -11,11 +11,7 @@
       "name": "icon"
     },
     {
-      "name": "equipped-HELMET",
-      "directions": 4
-    },
-    {
-      "name": "equipped-HELMET-hamster",
+      "name": "equipped-OUTERCLOTHING",
       "directions": 4
     },
     {

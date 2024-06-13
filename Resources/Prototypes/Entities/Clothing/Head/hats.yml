@@ -317,9 +317,9 @@
   description: "There's a new sheriff in station."
   components:
   - type: Sprite
-    sprite: GreyStation/Clothing/Head/Hats/hoshat.rsi # Grey Station - Resprited
+    sprite: DeltaV/Clothing/Head/Hats/hoshat.rsi #GreyStation
   - type: Clothing
-    sprite: GreyStation/Clothing/Head/Hats/hoshat.rsi # Grey Station - Resprited
+    sprite: DeltaV/Clothing/Head/Hats/hoshat.rsi #GreyStation
   - type: Tag
     tags:
     - ClothMade
