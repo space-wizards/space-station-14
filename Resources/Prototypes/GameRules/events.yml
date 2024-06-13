@@ -176,7 +176,7 @@
     weight: 6.5
     duration: 25
   - type: VentCrittersRule
-    entries:
+    specialEntries:
     - id: SpawnPointGhostRatKing
       prob: 0.001
 # disabled until event is rewritten to be more interesting
