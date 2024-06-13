@@ -136,6 +136,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("depressurizePressure")]
         public float DepressurizePressure = 0;
 
+        // When true, ignore under-pressure lockout. Used to re-fill rooms in air alarm "Fill" mode.
         [DataField]
         public bool PressureLockoutOverride = false;
         #endregion
