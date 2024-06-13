@@ -132,7 +132,7 @@
 - type: entity
   id: CrateVendingMachineRestockRobustSoftdrinksFilled
   parent: CratePlastic
-  name: drinks restock crate
+  name: beverage restock crate
   description: Contains two restock boxes for beverage vending machines.
   components:
   - type: StorageFill
