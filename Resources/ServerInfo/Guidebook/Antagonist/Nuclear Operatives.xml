@@ -1,6 +1,6 @@
 <Document>
   # Nuclear Operatives
-  [italic]OPERATIVES STANDBY. YOUR OBJECTIVES ARE SIMPLE. DELIVER THE PAYLOAD AND GET OUT BEFORE THE PAYLOAD DETONATES. BEGIN MISSION.[/italic]
+  [color=#999999][italic]"OPERATIVES STANDBY. YOUR OBJECTIVES ARE SIMPLE. DELIVER THE PAYLOAD AND GET OUT BEFORE THE PAYLOAD DETONATES. BEGIN MISSION."[/italic][/color]
 
   You've just been chosen to be a nuclear operative for the Syndicate. You have one goal, to blow up one of Nanotrasen's finest vessels with a nuclear fission explosive.
 
@@ -29,21 +29,27 @@
   </Box>
 
   ## Preparation
-  Each member in your squad has been given an [color=cyan]uplink[/color] to purchase everything you will need for the mission.
+  Each member in your squad has been given an [color=cyan]uplink[/color] to purchase everything you will need for the mission, similar to [textlink="Traitors." link="Traitors"]
   
   <Box>
     <GuideEntityEmbed Entity="BaseUplinkRadio40TC" Caption="your uplink"/>
   </Box>
 
-  You have a variety of different tools at your disposal. Try mixing and matching items to execute your strategy as effciently as possible. You can purchase:
-  - [bold]Weaponry[/bold] and [bold]Ammo[/bold] to outgun Security personnel
-  - [bold]Explosives[/bold] for breaching the hull or tossing into crowds
-  - [bold]Wearables[/bold] including armor and chameleon gear
-  - [bold]Chemicals[/bold] for brewing medicine or dastardly concoctions
-  - [bold]Deception[/bold] gear for blending in or confusing crew
-  - [bold]Disruption[/bold] gear to hinder the crew's efforts
-  - [bold]Implants[/bold] of every sort for desperate fallback plans
-  - [bold]Allies[/bold] who range from monkeys to cyborgs
+  You can purchase the same kinds of gear Traitors can, but you have more quality gear than in a Traitor uplink and more telecrystals to spend.
+  <Box>
+    <GuideEntityEmbed Entity="WeaponLightMachineGunL6" Caption="Weaponry"/>
+    <GuideEntityEmbed Entity="MagazineLightRifleBox" State="icon" Caption="Ammo"/>
+    <GuideEntityEmbed Entity="C4" Caption="Explosives"/>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitJuggernaut" Caption="Wearables"/>
+    <GuideEntityEmbed Entity="Stimpack" Caption="Chemicals"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ChameleonProjector" Caption="Deception"/>
+    <GuideEntityEmbed Entity="Emag" Caption="Disruption"/>
+    <GuideEntityEmbed Entity="StorageImplanter" Caption="Implants"/>
+    <GuideEntityEmbed Entity="BorgChassisSyndicateAssault" Caption="Allies"/>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesOutlawGlasses" Caption="Pointless"/>
+  </Box>
 
   ## Getting to the Station
   You've got the plan, you've got the gear. Now, execute.
