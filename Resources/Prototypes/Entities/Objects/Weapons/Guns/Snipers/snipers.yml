@@ -50,7 +50,7 @@
   - BaseGunLarge
   - BaseGunAntiMaterielBallistic
   - BaseGun
-  id: WeaponSniperMusket
+  id: Musket
   name: musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:

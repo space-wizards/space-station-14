@@ -128,7 +128,7 @@
   - BaseGunBattery
   - BaseGunRedLaser
   - BaseGun
-  id: WeaponLaserRifle
+  id: WeaponLaserCarbine
   name: laser rifle
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
@@ -150,8 +150,8 @@
 
 # practice laser rifle
 - type: entity
-  parent: WeaponLaserRifle
-  id: WeaponLaserRiflePractice
+  parent: WeaponLaserCarbine
+  id: WeaponLaserCarbinePractice
   name: practice laser rifle
   description: This modified laser rifle fires nearly harmless beams in the 40-watt range, for target practice.
   components:

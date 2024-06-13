@@ -348,9 +348,3 @@ DoorRemoteFirefight: null
 
 # 2024-06-03
 AirlockServiceCaptainLocked: AirlockCaptainLocked
-
-# 2024-06-08
-WeaponLaserCarbine: WeaponLaserRifle
-WeaponLaserCarbinePractice: WeaponLaserRiflePractice
-BowImprovised: WeaponBowImprovised
-Musket: WeaponSniperMusket
