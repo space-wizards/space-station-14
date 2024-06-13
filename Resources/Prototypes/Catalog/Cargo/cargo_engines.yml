@@ -28,17 +28,17 @@
   category: cargoproduct-category-name-engineering
   group: market
 
-#- type: cargoProduct
-#  name: "emitter crate"
-#  id: EngineSingularityEmitter
-#  description: "Contains an emitter. Used only for dangerous applications."
-#  icon:
-#    sprite: Structures/Power/Generation/Singularity/emitter.rsi
-#    state: emitter2
-#  product: CrateEngineeringSingularityEmitter
-#  cost: 3000
-#  category: cargoproduct-category-name-engineering
-#  group: market
+- type: cargoProduct
+  name: "emitter crate"
+  id: EngineSingularityEmitter
+  description: "Contains an emitter. Used only for dangerous applications."
+  icon:
+    sprite: Structures/Power/Generation/Singularity/emitter.rsi
+    state: emitter2
+  product: CrateEngineeringSingularityEmitter
+  cost: 3000
+  category: cargoproduct-category-name-engineering
+  group: market
 
 - type: cargoProduct
   id: EngineSingularityCollector

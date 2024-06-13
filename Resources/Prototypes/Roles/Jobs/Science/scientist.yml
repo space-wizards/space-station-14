@@ -17,6 +17,7 @@
 - type: startingGear
   id: ScientistGear
   equipment:
-    shoes: ClothingShoesColorWhite
     ears: ClothingHeadsetScience
-
+  storage:
+    back:
+    - BoxSurvival

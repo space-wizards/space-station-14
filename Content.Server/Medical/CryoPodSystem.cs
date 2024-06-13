@@ -13,6 +13,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
+using Content.Shared.Atmos;
 using Content.Shared.UserInterface;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -193,7 +194,8 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
             healthAnalyzer.ScannedEntity = entity.Comp.BodyContainer.ContainedEntity;
         }
 
-        _userInterfaceSystem.TrySendUiMessage(
+        // TODO: This should be a state my dude
+        _userInterfaceSystem.ServerSendUiMessage(
             entity.Owner,
             HealthAnalyzerUiKey.Key,
             new HealthAnalyzerScannedUserMessage(GetNetEntity(entity.Comp.BodyContainer.ContainedEntity),
@@ -246,7 +248,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         else
         {
             RemComp<ActiveCryoPodComponent>(entity);
-            _uiSystem.TryCloseAll(entity.Owner, HealthAnalyzerUiKey.Key);
+            _uiSystem.CloseUi(entity.Owner, HealthAnalyzerUiKey.Key);
         }
         UpdateAppearance(entity.Owner, entity.Comp);
     }
@@ -276,10 +278,17 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         if (!TryComp(entity, out CryoPodAirComponent? cryoPodAir))
             return;
 
-        args.GasMixtures ??= new Dictionary<string, GasMixture?> { { Name(entity.Owner), cryoPodAir.Air } };
+        args.GasMixtures ??= new List<(string, GasMixture?)>();
+        args.GasMixtures.Add((Name(entity.Owner), cryoPodAir.Air));
         // If it's connected to a port, include the port side
-        if (_nodeContainer.TryGetNode(entity.Owner, entity.Comp.PortName, out PipeNode? port))
-            args.GasMixtures.Add(entity.Comp.PortName, port.Air);
+        // multiply by volume fraction to make sure to send only the gas inside the analyzed pipe element, not the whole pipe system
+        if (_nodeContainer.TryGetNode(entity.Owner, entity.Comp.PortName, out PipeNode? port) && port.Air.Volume != 0f)
+        {
+            var portAirLocal = port.Air.Clone();
+            portAirLocal.Multiply(port.Volume / port.Air.Volume);
+            portAirLocal.Volume = port.Volume;
+            args.GasMixtures.Add((entity.Comp.PortName, portAirLocal));
+        }
     }
 
     private void OnEjected(Entity<CryoPodComponent> cryoPod, ref EntRemovedFromContainerMessage args)
@@ -290,7 +299,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         }
 
         // if body is ejected - no need to display health-analyzer
-        _uiSystem.TryCloseAll(cryoPod.Owner, HealthAnalyzerUiKey.Key);
+        _uiSystem.CloseUi(cryoPod.Owner, HealthAnalyzerUiKey.Key);
     }
 
     #endregion

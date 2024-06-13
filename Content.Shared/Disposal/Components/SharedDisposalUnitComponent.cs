@@ -37,13 +37,6 @@ public abstract partial class SharedDisposalUnitComponent : Component
     public SoundSpecifier? InsertSound = new SoundPathSpecifier("/Audio/Effects/trashbag1.ogg");
 
     /// <summary>
-    /// Sound played when an item is thrown and misses the disposal unit.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundMiss")]
-    public SoundSpecifier? MissSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
-
-
-    /// <summary>
     /// State for this disposals unit.
     /// </summary>
     [DataField]

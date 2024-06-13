@@ -82,30 +82,12 @@
   equipment:
     neck: ClothingNeckMantleQM
 
-# Back
+# OuterClothing
 - type: loadout
-  id: QuartermasterBackpack
-  equipment: QuartermasterBackpack
+  id: QuartermasterWintercoat
+  equipment: QuartermasterWintercoat
 
 - type: startingGear
-  id: QuartermasterBackpack
+  id: QuartermasterWintercoat
   equipment:
-    back: ClothingBackpackQuartermasterFilled
-
-- type: loadout
-  id: QuartermasterSatchel
-  equipment: QuartermasterSatchel
-
-- type: startingGear
-  id: QuartermasterSatchel
-  equipment:
-    back: ClothingBackpackSatchelQuartermasterFilled
-
-- type: loadout
-  id: QuartermasterDuffel
-  equipment: QuartermasterDuffel
-
-- type: startingGear
-  id: QuartermasterDuffel
-  equipment:
-    back: ClothingBackpackDuffelQuartermasterFilled
+    outerClothing: ClothingOuterWinterQM

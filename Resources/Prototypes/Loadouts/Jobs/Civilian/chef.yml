@@ -55,3 +55,12 @@
   id: ChefJacket
   equipment:
     outerClothing: ClothingOuterJacketChef
+
+- type: loadout
+  id: ChefWintercoat
+  equipment: ChefWintercoat
+
+- type: startingGear
+  id: ChefWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterChef

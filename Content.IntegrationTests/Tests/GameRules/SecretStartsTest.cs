@@ -17,6 +17,7 @@ public sealed class SecretStartsTest
 
         var server = pair.Server;
         await server.WaitIdleAsync();
+        var entMan = server.ResolveDependency<IEntityManager>();
         var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
 
         await server.WaitAssertion(() =>
@@ -32,10 +33,7 @@ public sealed class SecretStartsTest
 
         await server.WaitAssertion(() =>
         {
-            foreach (var rule in gameTicker.GetAddedGameRules())
-            {
-                Assert.That(gameTicker.GetActiveGameRules(), Does.Contain(rule));
-            }
+            Assert.That(gameTicker.GetAddedGameRules().Count(), Is.GreaterThan(1), $"No additional rules started by secret rule.");
 
             // End all rules
             gameTicker.ClearGameRules();

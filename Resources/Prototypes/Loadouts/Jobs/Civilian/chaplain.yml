@@ -9,6 +9,15 @@
     head: ClothingHeadHatFez
 
 - type: loadout
+  id: ChaplainNunHood
+  equipment: ChaplainNunHood
+
+- type: startingGear
+  id: ChaplainNunHood
+  equipment:
+    head: ClothingHeadHatHoodNunHood
+
+- type: loadout
   id: ChaplainPlagueHat
   equipment: ChaplainPlagueHat
 
@@ -81,34 +90,6 @@
   id: ChaplainRobesLight
   equipment:
     jumpsuit: ClothingUniformJumpsuitMonasticRobeLight
-
-# Back
-- type: loadout
-  id: ChaplainBackpack
-  equipment: ChaplainBackpack
-
-- type: startingGear
-  id: ChaplainBackpack
-  equipment:
-    back: ClothingBackpackChaplainFilled
-
-- type: loadout
-  id: ChaplainSatchel
-  equipment: ChaplainSatchel
-
-- type: startingGear
-  id: ChaplainSatchel
-  equipment:
-    back: ClothingBackpackSatchelChaplainFilled
-
-- type: loadout
-  id: ChaplainDuffel
-  equipment: ChaplainDuffel
-
-- type: startingGear
-  id: ChaplainDuffel
-  equipment:
-    back: ClothingBackpackDuffelChaplainFilled
 
 # Neck
 - type: loadout

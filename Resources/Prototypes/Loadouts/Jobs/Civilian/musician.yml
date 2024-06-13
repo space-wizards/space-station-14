@@ -1,27 +1,9 @@
-# Back
+# Outerclothing
 - type: loadout
-  id: MusicianBackpack
-  equipment: MusicianBackpack
+  id: MusicianWintercoat
+  equipment: MusicianWintercoat
 
 - type: startingGear
-  id: MusicianBackpack
+  id: MusicianWintercoat
   equipment:
-    back: ClothingBackpackMusicianFilled
-
-- type: loadout
-  id: MusicianSatchel
-  equipment: MusicianSatchel
-
-- type: startingGear
-  id: MusicianSatchel
-  equipment:
-    back: ClothingBackpackSatchelMusicianFilled
-
-- type: loadout
-  id: MusicianDuffel
-  equipment: MusicianDuffel
-
-- type: startingGear
-  id: MusicianDuffel
-  equipment:
-    back: ClothingBackpackDuffelMusicianFilled
+    outerClothing: ClothingOuterWinterMusician

@@ -94,7 +94,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitChiefEngineer
   name: chief engineer's jumpsuit
-  description: It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of Chief Engineer. It has minor radiation shielding.
+  description: It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of Chief Engineer.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ce.rsi
@@ -263,6 +263,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/cmo.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cmo.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCMOTurtle
+  name: chief medical officer's turtleneck jumpsuit
+  description: It's a turtleneck worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/cmo_turtle.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/cmo_turtle.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -538,7 +549,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitScientist
   name: scientist jumpsuit
-  description: It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist.
+  description: It's made of a special fiber that increases perceived intelligence and decreases personal ethics. It has markings that denote the wearer as a scientist.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/scientist.rsi

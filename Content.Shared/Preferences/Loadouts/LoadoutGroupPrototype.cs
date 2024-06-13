@@ -6,7 +6,7 @@ namespace Content.Shared.Preferences.Loadouts;
 /// Corresponds to a set of loadouts for a particular slot.
 /// </summary>
 [Prototype("loadoutGroup")]
-public sealed class LoadoutGroupPrototype : IPrototype
+public sealed partial class LoadoutGroupPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; } = string.Empty;

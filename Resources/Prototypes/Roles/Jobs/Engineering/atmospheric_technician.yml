@@ -19,8 +19,10 @@
 - type: startingGear
   id: AtmosphericTechnicianGear
   equipment:
-    shoes: ClothingShoesColorWhite
     eyes: ClothingEyesGlassesMeson
     id: AtmosPDA
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
+  storage:
+    back:
+    - BoxSurvivalEngineering

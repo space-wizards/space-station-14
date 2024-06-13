@@ -25,7 +25,7 @@
 - type: startingGear
   id: ChemistBackpack
   equipment:
-    back: ClothingBackpackChemistryFilled
+    back: ClothingBackpackChemistry
 
 - type: loadout
   id: ChemistSatchel
@@ -34,7 +34,7 @@
 - type: startingGear
   id: ChemistSatchel
   equipment:
-    back: ClothingBackpackSatchelChemistryFilled
+    back: ClothingBackpackSatchelChemistry
 
 - type: loadout
   id: ChemistDuffel
@@ -43,7 +43,7 @@
 - type: startingGear
   id: ChemistDuffel
   equipment:
-    back: ClothingBackpackDuffelChemistryFilled
+    back: ClothingBackpackDuffelChemistry
 
 # Outer clothing
 - type: loadout
@@ -54,3 +54,13 @@
   id: ChemistLabCoat
   equipment:
     outerClothing: ClothingOuterCoatLabChem
+
+- type: loadout
+  id: ChemistWintercoat
+  equipment: ChemistWintercoat
+
+- type: startingGear
+  id: ChemistWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterChem
+

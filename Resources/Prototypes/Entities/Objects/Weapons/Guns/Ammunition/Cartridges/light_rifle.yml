@@ -42,21 +42,6 @@
         color: "#dbdbdb"
 
 - type: entity
-  id: CartridgeLightRifleRubber
-  name: cartridge (.30 rifle rubber)
-  parent: BaseCartridgeLightRifle
-  components:
-  - type: CartridgeAmmo
-    proto: BulletLightRifleRubber
-  - type: Sprite
-    layers:
-      - state: base
-        map: [ "enum.AmmoVisualLayers.Base" ]
-      - state: tip
-        map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#43c4f7"
-
-- type: entity
   id: CartridgeLightRifleIncendiary
   name: cartridge (.30 rifle incendiary)
   parent: BaseCartridgeLightRifle

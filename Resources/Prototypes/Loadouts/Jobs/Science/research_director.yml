@@ -43,34 +43,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtResearchDirector
 
-# Back
-- type: loadout
-  id: ResearchDirectorBackpack
-  equipment: ResearchDirectorBackpack
-
-- type: startingGear
-  id: ResearchDirectorBackpack
-  equipment:
-    back: ClothingBackpackResearchDirectorFilled
-
-- type: loadout
-  id: ResearchDirectorSatchel
-  equipment: ResearchDirectorSatchel
-
-- type: startingGear
-  id: ResearchDirectorSatchel
-  equipment:
-    back: ClothingBackpackSatchelResearchDirectorFilled
-
-- type: loadout
-  id: ResearchDirectorDuffel
-  equipment: ResearchDirectorDuffel
-
-- type: startingGear
-  id: ResearchDirectorDuffel
-  equipment:
-    back: ClothingBackpackDuffelResearchDirectorFilled
-
 # OuterClothing
 - type: loadout
   id: ResearchDirectorLabCoat
@@ -80,3 +52,12 @@
   id: ResearchDirectorLabCoat
   equipment:
     outerClothing: ClothingOuterCoatRD
+
+- type: loadout
+  id: ResearchDirectorWintercoat
+  equipment: ResearchDirectorWintercoat
+
+- type: startingGear
+  id: ResearchDirectorWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterRD

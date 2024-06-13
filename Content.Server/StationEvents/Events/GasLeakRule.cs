@@ -1,6 +1,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.GameTicking.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -28,10 +29,10 @@ namespace Content.Server.StationEvents.Events
                 component.LeakGas = RobustRandom.Pick(component.LeakableGases);
                 // Was 50-50 on using normal distribution.
                 var totalGas = RobustRandom.Next(component.MinimumGas, component.MaximumGas);
-                var startAfter = stationEvent.StartDelay;
                 component.MolesPerSecond = RobustRandom.Next(component.MinimumMolesPerSecond, component.MaximumMolesPerSecond);
 
-                stationEvent.EndTime = _timing.CurTime + TimeSpan.FromSeconds(totalGas / component.MolesPerSecond + startAfter.TotalSeconds);
+                if (gameRule.Delay is {} startAfter)
+                    stationEvent.EndTime = _timing.CurTime + TimeSpan.FromSeconds(totalGas / component.MolesPerSecond + startAfter.Next(RobustRandom));
             }
 
             // Look technically if you wanted to guarantee a leak you'd do this in announcement but having the announcement

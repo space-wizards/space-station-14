@@ -42,10 +42,13 @@
 - type: startingGear
   id: HoSGear
   equipment:
-    shoes: ClothingShoesBootsCombatFilled
     eyes: ClothingEyesGlassesSecurity
     id: HoSPDA
     gloves: ClothingHandsGlovesCombat
     ears: ClothingHeadsetAltSecurity
-    belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58
+  storage:
+    back:
+    - BoxSurvivalSecurity
+    - Flash
+    - MagazinePistol

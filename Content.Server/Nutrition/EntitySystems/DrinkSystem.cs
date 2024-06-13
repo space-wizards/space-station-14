@@ -5,7 +5,6 @@ using Content.Server.Chemistry.ReagentEffects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
 using Content.Server.Inventory;
-using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
@@ -16,7 +15,6 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -25,24 +23,21 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
-public sealed class DrinkSystem : EntitySystem
+public sealed class DrinkSystem : SharedDrinkSystem
 {
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly FlavorProfileSystem _flavorProfile = default!;
     [Dependency] private readonly FoodSystem _food = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
@@ -66,33 +61,10 @@ public sealed class DrinkSystem : EntitySystem
         SubscribeLocalEvent<DrinkComponent, ComponentInit>(OnDrinkInit);
         // run before inventory so for bucket it always tries to drink before equipping (when empty)
         // run after openable so its always open -> drink
-        SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse, before: new[] { typeof(ServerInventorySystem) }, after: new[] { typeof(OpenableSystem) });
+        SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse, before: [typeof(ServerInventorySystem)], after: [typeof(OpenableSystem)]);
         SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
-        // put drink amount after opened
-        SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<DrinkComponent, ConsumeDoAfterEvent>(OnDoAfter);
-
-        SubscribeLocalEvent<PressurizedDrinkComponent, LandEvent>(OnPressurizedDrinkLand);
-    }
-
-    private FixedPoint2 DrinkVolume(EntityUid uid, DrinkComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return FixedPoint2.Zero;
-
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out _, out var sol))
-            return FixedPoint2.Zero;
-
-        return sol.Volume;
-    }
-
-    public bool IsEmpty(EntityUid uid, DrinkComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return true;
-
-        return DrinkVolume(uid, component) <= 0;
     }
 
     /// <summary>
@@ -129,38 +101,6 @@ public sealed class DrinkSystem : EntitySystem
         return total;
     }
 
-    private void OnExamined(Entity<DrinkComponent> entity, ref ExaminedEvent args)
-    {
-        TryComp<OpenableComponent>(entity, out var openable);
-        if (_openable.IsClosed(entity.Owner, null, openable) || !args.IsInDetailsRange || !entity.Comp.Examinable)
-            return;
-
-        var empty = IsEmpty(entity, entity.Comp);
-        if (empty)
-        {
-            args.PushMarkup(Loc.GetString("drink-component-on-examine-is-empty"));
-            return;
-        }
-
-        if (HasComp<ExaminableSolutionComponent>(entity))
-        {
-            //provide exact measurement for beakers
-            args.PushText(Loc.GetString("drink-component-on-examine-exact-volume", ("amount", DrinkVolume(entity, entity.Comp))));
-        }
-        else
-        {
-            //general approximation
-            var remainingString = (int) _solutionContainer.PercentFull(entity) switch
-            {
-                100 => "drink-component-on-examine-is-full",
-                > 66 => "drink-component-on-examine-is-mostly-full",
-                > 33 => HalfEmptyOrHalfFull(args),
-                _ => "drink-component-on-examine-is-mostly-empty",
-            };
-            args.PushMarkup(Loc.GetString(remainingString));
-        }
-    }
-
     private void AfterInteract(Entity<DrinkComponent> entity, ref AfterInteractEvent args)
     {
         if (args.Handled || args.Target == null || !args.CanReach)
@@ -175,25 +115,6 @@ public sealed class DrinkSystem : EntitySystem
             return;
 
         args.Handled = TryDrink(args.User, args.User, entity.Comp, entity);
-    }
-
-    private void OnPressurizedDrinkLand(Entity<PressurizedDrinkComponent> entity, ref LandEvent args)
-    {
-        if (!TryComp<DrinkComponent>(entity, out var drink) || !TryComp<OpenableComponent>(entity, out var openable))
-            return;
-
-        if (!openable.Opened &&
-            _random.Prob(entity.Comp.BurstChance) &&
-            _solutionContainer.TryGetSolution(entity.Owner, drink.Solution, out var soln, out var interactions))
-        {
-            // using SetOpen instead of TryOpen to not play 2 sounds
-            _openable.SetOpen(entity, true, openable);
-
-            var solution = _solutionContainer.SplitSolution(soln.Value, interactions.Volume);
-            _puddle.TrySpillAt(entity, solution, out _);
-
-            _audio.PlayPvs(entity.Comp.BurstSound, entity);
-        }
     }
 
     private void OnDrinkInit(Entity<DrinkComponent> entity, ref ComponentInit args)
@@ -432,17 +353,5 @@ public sealed class DrinkSystem : EntitySystem
         };
 
         ev.Verbs.Add(verb);
-    }
-
-    // some see half empty, and others see half full
-    private string HalfEmptyOrHalfFull(ExaminedEvent args)
-    {
-        string remainingString = "drink-component-on-examine-is-half-full";
-
-        if (TryComp<MetaDataComponent>(args.Examiner, out var examiner) && examiner.EntityName.Length > 0
-            && string.Compare(examiner.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
-            remainingString = "drink-component-on-examine-is-half-empty";
-
-        return remainingString;
     }
 }

@@ -59,6 +59,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
         Subs.CVar(_configurationManager, CCVars.ICRandomCharacters, e => _randomizeCharacters = e, true);
 
         _spawnerCallbacks = new Dictionary<SpawnPriorityPreference, Action<PlayerSpawningEvent>>()
@@ -178,15 +179,6 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             profile = HumanoidCharacterProfile.RandomWithSpecies(speciesId);
         }
 
-        if (prototype?.StartingGear != null)
-        {
-            var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
-            EquipStartingGear(entity.Value, startingGear);
-            if (profile != null)
-                EquipIdCard(entity.Value, profile.Name, prototype, station);
-        }
-
-        // Run loadouts after so stuff like storage loadouts can get
         var jobLoadout = LoadoutSystem.GetJobPrototype(prototype?.ID);
 
         if (_prototypeManager.TryIndex(jobLoadout, out RoleLoadoutPrototype? roleProto))
@@ -201,31 +193,23 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
                 loadout.SetDefault(_prototypeManager);
             }
 
-            // Order loadout selections by the order they appear on the prototype.
-            foreach (var group in loadout.SelectedLoadouts.OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
-            {
-                foreach (var items in group.Value)
-                {
-                    if (!_prototypeManager.TryIndex(items.Prototype, out var loadoutProto))
-                    {
-                        Log.Error($"Unable to find loadout prototype for {items.Prototype}");
-                        continue;
-                    }
-
-                    if (!_prototypeManager.TryIndex(loadoutProto.Equipment, out var startingGear))
-                    {
-                        Log.Error($"Unable to find starting gear {loadoutProto.Equipment} for loadout {loadoutProto}");
-                        continue;
-                    }
-
-                    // Handle any extra data here.
-                    EquipStartingGear(entity.Value, startingGear);
-                }
-            }
+            EquipRoleLoadout(entity.Value, loadout, roleProto);
         }
+
+        if (prototype?.StartingGear != null)
+        {
+            var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
+            EquipStartingGear(entity.Value, startingGear, raiseEvent: false);
+        }
+
+        var gearEquippedEv = new StartingGearEquippedEvent(entity.Value);
+        RaiseLocalEvent(entity.Value, ref gearEquippedEv);
 
         if (profile != null)
         {
+            if (prototype != null)
+                SetPdaAndIdCardData(entity.Value, profile.Name, prototype, station);
+
             _humanoidSystem.LoadProfile(entity.Value, profile);
             _metaSystem.SetEntityName(entity.Value, profile.Name);
             if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
@@ -251,13 +235,13 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     }
 
     /// <summary>
-    /// Equips an ID card and PDA onto the given entity.
+    /// Sets the ID card and PDA name, job, and access data.
     /// </summary>
     /// <param name="entity">Entity to load out.</param>
     /// <param name="characterName">Character name to use for the ID.</param>
     /// <param name="jobPrototype">Job prototype to use for the PDA and ID.</param>
     /// <param name="station">The station this player is being spawned on.</param>
-    public void EquipIdCard(EntityUid entity, string characterName, JobPrototype jobPrototype, EntityUid? station)
+    public void SetPdaAndIdCardData(EntityUid entity, string characterName, JobPrototype jobPrototype, EntityUid? station)
     {
         if (!InventorySystem.TryGetSlotEntity(entity, "id", out var idUid))
             return;
@@ -272,10 +256,8 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         _cardSystem.TryChangeFullName(cardId, characterName, card);
         _cardSystem.TryChangeJobTitle(cardId, jobPrototype.LocalizedName, card);
 
-        if (_prototypeManager.TryIndex<StatusIconPrototype>(jobPrototype.Icon, out var jobIcon))
-        {
+        if (_prototypeManager.TryIndex(jobPrototype.Icon, out var jobIcon))
             _cardSystem.TryChangeJobIcon(cardId, jobIcon, card);
-        }
 
         var extendedAccess = false;
         if (station != null)

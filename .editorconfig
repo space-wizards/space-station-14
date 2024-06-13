@@ -9,9 +9,10 @@ indent_style = space
 tab_width = 4
 
 # New line preferences
-end_of_line = crlf:suggestion
+#end_of_line = crlf
 insert_final_newline = true
 trim_trailing_whitespace = true
+max_line_length = 120
 
 #### .NET Coding Conventions ####
 
@@ -104,7 +105,6 @@ csharp_preferred_modifier_order = public, private, protected, internal, new, abs
 
 # 'using' directive preferences
 csharp_using_directive_placement = outside_namespace:silent
-csharp_style_namespace_declarations = file_scoped:suggestion
 
 #### C# Formatting Rules ####
 
@@ -337,7 +337,11 @@ dotnet_naming_symbols.type_parameters_symbols.applicable_kinds = type_parameter
 
 # ReSharper properties
 resharper_braces_for_ifelse = required_for_multiline
+resharper_csharp_wrap_arguments_style = chop_if_long
+resharper_csharp_wrap_parameters_style = chop_if_long
 resharper_keep_existing_attribute_arrangement = true
+resharper_wrap_chained_binary_patterns = chop_if_long
+resharper_wrap_chained_method_calls = chop_if_long
 
 [*.{csproj,xml,yml,yaml,dll.config,msbuildproj,targets,props}]
 indent_size = 2

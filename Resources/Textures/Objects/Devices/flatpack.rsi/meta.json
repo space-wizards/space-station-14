@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC0-1.0",
-    "copyright": "Created by EmoGarbage404 (github) for SS14, solar-assembly-part taken from tgstation and modified at https://tgstation13.org/wiki/Guide_to_construction#Solar_Panels_and_Trackers, ame-part taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1b7952787c06c21ef1623e494dcfe7cb1f46e041; singularity-generator, tesla-generator, radiation-collector, containment-field-generator, tesla-coil, grounding-rod inner icons made by lzk228",
+    "copyright": "Created by EmoGarbage404 (github) for SS14, solar-assembly-part taken from tgstation and modified at https://tgstation13.org/wiki/Guide_to_construction#Solar_Panels_and_Trackers, ame-part taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1b7952787c06c21ef1623e494dcfe7cb1f46e041; singularity-generator, tesla-generator, radiation-collector, containment-field-generator, tesla-coil, grounding-rod inner icons made by lzk228; emitter made by pigeonpeas",
     "size": {
         "x": 32,
         "y": 32
@@ -39,6 +39,9 @@
         },
         {
             "name": "containment-field-generator"
+        },
+		{
+            "name": "emitter"
         }
     ]
 }

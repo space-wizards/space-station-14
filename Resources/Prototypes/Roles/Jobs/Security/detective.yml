@@ -24,8 +24,13 @@
 - type: startingGear
   id: DetectiveGear
   equipment:
-    shoes: ClothingShoesBootsCombatFilled
     eyes: ClothingEyesGlassesSecurity
     id: DetectivePDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltHolsterFilled
+  storage:
+    back:
+    - BoxSurvivalSecurity
+    - Flash
+    - ForensicPad
+    - ForensicScanner

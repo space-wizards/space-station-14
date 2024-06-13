@@ -40,6 +40,7 @@ namespace Content.Server.Database
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
         public DbSet<AdminWatchlist> AdminWatchlists { get; set; } = null!;
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
+        public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -314,6 +315,13 @@ namespace Content.Server.Database
                 .HasForeignKey(ban => ban.LastEditedById)
                 .HasPrincipalKey(author => author.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<RoleWhitelist>()
+                .HasOne(w => w.Player)
+                .WithMany(p => p.JobWhitelists)
+                .HasForeignKey(w => w.PlayerUserId)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -530,6 +538,7 @@ namespace Content.Server.Database
         public List<ServerBan> AdminServerBansLastEdited { get; set; } = null!;
         public List<ServerRoleBan> AdminServerRoleBansCreated { get; set; } = null!;
         public List<ServerRoleBan> AdminServerRoleBansLastEdited { get; set; } = null!;
+        public List<RoleWhitelist> JobWhitelists { get; set; } = null!;
     }
 
     [Table("whitelist")]
@@ -880,6 +889,10 @@ namespace Content.Server.Database
         Whitelist = 1,
         Full = 2,
         Panic = 3,
+        /*
+         * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
+         */
+        BabyJail = 4,
     }
 
     public class ServerBanHit
@@ -966,8 +979,35 @@ namespace Content.Server.Database
         public byte[] Data { get; set; } = default!;
     }
 
+    // Note: this interface isn't used by the game, but it *is* used by SS14.Admin.
+    // Don't remove! Or face the consequences!
+    public interface IAdminRemarksCommon
+    {
+        public int Id { get; }
+
+        public int? RoundId { get; }
+        public Round? Round { get; }
+
+        public Guid? PlayerUserId { get; }
+        public Player? Player { get; }
+        public TimeSpan PlaytimeAtNote { get; }
+
+        public string Message { get; }
+
+        public Player? CreatedBy { get; }
+
+        public DateTime CreatedAt { get; }
+
+        public Player? LastEditedBy { get; }
+
+        public DateTime? LastEditedAt { get; }
+        public DateTime? ExpirationTime { get; }
+
+        public bool Deleted { get; }
+    }
+
     [Index(nameof(PlayerUserId))]
-    public class AdminNote
+    public class AdminNote : IAdminRemarksCommon
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
 
@@ -1001,7 +1041,7 @@ namespace Content.Server.Database
     }
 
     [Index(nameof(PlayerUserId))]
-    public class AdminWatchlist
+    public class AdminWatchlist : IAdminRemarksCommon
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
 
@@ -1032,7 +1072,7 @@ namespace Content.Server.Database
     }
 
     [Index(nameof(PlayerUserId))]
-    public class AdminMessage
+    public class AdminMessage : IAdminRemarksCommon
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
 
@@ -1071,5 +1111,16 @@ namespace Content.Server.Database
         /// Whether the message has been dismissed permanently by the player.
         /// </summary>
         public bool Dismissed { get; set; }
+    }
+
+    [PrimaryKey(nameof(PlayerUserId), nameof(RoleId))]
+    public class RoleWhitelist
+    {
+        [Required, ForeignKey("Player")]
+        public Guid PlayerUserId { get; set; }
+        public Player Player { get; set; } = default!;
+
+        [Required]
+        public string RoleId { get; set; } = default!;
     }
 }
