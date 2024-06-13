@@ -50,13 +50,13 @@ guide-entry-command = Command
 guide-entry-service = Service
 
 guide-entry-newplayer = New? Start here!
-guide-entry-charactercreation = Character Creation
+guide-entry-charactercreation = Creating Characters
 guide-entry-species = Species
 guide-entry-yourfirstcharacter = Your First Character
 guide-entry-controls = Controls
 guide-entry-radio = Radio and Speech
 
-guide-entry-references = Tables and References
+guide-entry-references = Tables & References
 guide-entry-drinks = Drinks
 guide-entry-foodrecipes = Food Recipes
 guide-entry-chemicals = Chemicals
