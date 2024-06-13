@@ -104,6 +104,9 @@ public sealed partial class JukeboxMenu : FancyWindow
         if (!_prototype.TryIndex(song, out var songProto))
             return;
 
+        SongSelected.Text = Loc.GetString("jukebox-menu-selectedsong");
+        PlaybackSlider.Visible = true;
+        CurrentSong.Visible = true;
         CurrentSong.SetSong(songProto);
         PlaybackSlider.MaxValue = length;
         PlaybackSlider.SetValueWithoutEvent(0);

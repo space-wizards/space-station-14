@@ -14,12 +14,12 @@ SetSize="400 500" Title="{Loc 'jukebox-menu-title'}">
         </ScrollContainer>
         <BoxContainer Orientation="Vertical">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                <Label Name="SongSelected" Text="{Loc 'jukebox-menu-selectedsong'}" />
+                <Label Name="SongSelected" Text="{Loc 'jukebox-menu-selectedsong-none'}" />
                 <BoxContainer HorizontalExpand="True"/>
                 <Label Name="DurationLabel" Text="---" />
             </BoxContainer>
-            <Slider Name="PlaybackSlider" HorizontalExpand="True" />
-            <jb:JukeboxEntry Name="CurrentSong" EntryType="Current"/>
+            <Slider Name="PlaybackSlider" Visible="false" HorizontalExpand="True" />
+            <jb:JukeboxEntry Name="CurrentSong" Visible="false" EntryType="Current"/>
         </BoxContainer>
     </BoxContainer>
 </ui:FancyWindow>
