@@ -1,37 +1,4 @@
 ﻿Entries:
-- author: Killerqu00
-  changes:
-  - message: Cable Coils are now small in size, taking only 1x2 space in containers.
-    type: Tweak
-  id: 6213
-  time: '2024-03-23T17:30:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26361
-- author: Tayrtahn
-  changes:
-  - message: Clumsy characters can no longer avoid bonking their heads by using the
-      Climb verb.
-    type: Fix
-  - message: Clumsy characters are less likely to bonk their heads when trying to
-      climb.
-    type: Tweak
-  id: 6214
-  time: '2024-03-23T19:29:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24977
-- author: nikthechampiongr
-  changes:
-  - message: Door remotes can now only control doors specific to their type and do
-      not use the access of their user.
-    type: Tweak
-  id: 6215
-  time: '2024-03-24T00:48:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26371
-- author: DrSmugleaf
-  changes:
-  - message: Empty marking categories are now hidden in the markings picker.
-    type: Tweak
-  id: 6216
-  time: '2024-03-24T04:01:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26377
 - author: Baptr0b0t
   changes:
   - message: Fix access of command door remote. The captain must control his station.
@@ -3851,3 +3818,32 @@
   id: 6712
   time: '2024-06-12T01:07:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28854
+- author: Deserty0
+  changes:
+  - message: '"no materials loaded" messege now appears in lathes!'
+    type: Fix
+  id: 6713
+  time: '2024-06-12T10:32:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28885
+- author: robertGN
+  changes:
+  - message: Syndicate communications consoles can no longer recall the emergency
+      shuttle.
+    type: Fix
+  id: 6714
+  time: '2024-06-12T13:32:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28803
+- author: deltanedas
+  changes:
+  - message: Fixed opening the PDA UI sometimes breaking.
+    type: Fix
+  id: 6715
+  time: '2024-06-12T18:10:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28896
+- author: notafet
+  changes:
+  - message: The singularity is now safe to operate up to PA level 3.
+    type: Fix
+  id: 6716
+  time: '2024-06-12T22:56:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28906
