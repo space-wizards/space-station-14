@@ -73,7 +73,9 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
     public HashSet<string>? GetRoleBans(NetUserId playerUserId)
     {
-        return _cachedRoleBans.TryGetValue(playerUserId, out var roleBans) ? roleBans.Select(banDef => banDef.Role).ToHashSet() : null;
+        return _cachedRoleBans.TryGetValue(playerUserId, out var roleBans)
+            ? roleBans.Select(banDef => banDef.Role).ToHashSet()
+            : null;
     }
 
     private async Task CacheDbRoleBans(NetUserId userId, IPAddress? address = null, ImmutableArray<byte>? hwId = null)
@@ -263,13 +265,13 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         return $"Pardoned ban with id {banId}";
     }
 
-    public HashSet<string>? GetJobBans(NetUserId playerUserId)
+    public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId)
     {
         if (!_cachedRoleBans.TryGetValue(playerUserId, out var roleBans))
             return null;
         return roleBans
             .Where(ban => ban.Role.StartsWith(JobPrefix, StringComparison.Ordinal))
-            .Select(ban => ban.Role[JobPrefix.Length..])
+            .Select(ban => new ProtoId<JobPrototype>(ban.Role[JobPrefix.Length..]))
             .ToHashSet();
     }
     #endregion

@@ -59,11 +59,28 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             return;
         }
 
+        // In some instances we might not have picked up a new group for existing data.
+        foreach (var groupProto in roleProto.Groups)
+        {
+            if (SelectedLoadouts.ContainsKey(groupProto))
+                continue;
+
+            // Data will get set below.
+            SelectedLoadouts[groupProto] = new List<Loadout>();
+        }
+
         // Reset points to recalculate.
         Points = roleProto.Points;
 
         foreach (var (group, groupLoadouts) in SelectedLoadouts)
         {
+            // Check the group is even valid for this role.
+            if (!roleProto.Groups.Contains(group))
+            {
+                groupRemove.Add(group);
+                continue;
+            }
+
             // Dump if Group doesn't exist
             if (!protoManager.TryIndex(group, out var groupProto))
             {
@@ -120,7 +137,10 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
                     if (loadouts.Contains(defaultLoadout))
                         continue;
 
-                    // Still need to apply the effects even if validation is ignored.
+                    // Not valid so don't default to it anyway.
+                    if (!IsValid(profile, session, defaultLoadout.Prototype, collection, out _))
+                        continue;
+
                     loadouts.Add(defaultLoadout);
                     Apply(loadoutProto);
                 }
@@ -146,6 +166,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
     /// <summary>
     /// Resets the selected loadouts to default if no data is present.
     /// </summary>
+    /// <param name="force">Clear existing data first</param>
     public void SetDefault(IPrototypeManager protoManager, bool force = false)
     {
         if (force)

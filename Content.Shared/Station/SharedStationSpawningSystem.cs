@@ -15,9 +15,9 @@ public abstract class SharedStationSpawningSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly InventorySystem InventorySystem = default!;
-    [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private   readonly SharedStorageSystem _storage = default!;
-    [Dependency] private   readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedStorageSystem _storage = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     private EntityQuery<HandsComponent> _handsQuery;
     private EntityQuery<InventoryComponent> _inventoryQuery;
@@ -91,7 +91,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 if (!string.IsNullOrEmpty(equipmentStr))
                 {
                     var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, xform.Coordinates);
-                    InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, silent: true, force:true);
+                    InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, silent: true, force: true);
                 }
             }
         }
@@ -122,15 +122,15 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 if (entProtos.Count == 0)
                     continue;
 
-                foreach (var ent in entProtos)
-                {
-                    ents.Add(Spawn(ent, coords));
-                }
-
                 if (inventoryComp != null &&
                     InventorySystem.TryGetSlotEntity(entity, slot, out var slotEnt, inventoryComponent: inventoryComp) &&
                     _storageQuery.TryComp(slotEnt, out var storage))
                 {
+                    foreach (var ent in entProtos)
+                    {
+                        ents.Add(Spawn(ent, coords));
+                    }
+
                     foreach (var ent in ents)
                     {
                         _storage.Insert(slotEnt.Value, ent, out _, storageComp: storage, playSound: false);
