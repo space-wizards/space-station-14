@@ -321,16 +321,3 @@
           prob: 0.1
         - id: ShardGlassPlasma
           prob: 0.1
-
-- type: entity
-  id: CrateJanitorExplosive
-  parent: ClosetJanitorBomb
-  name: janitorial bomb suit crate
-  description: Supplies a bomb suit for cleaning up any explosive compounds, buy one today!
-  components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterSuitJanitorBomb
-        amount: 1
-      - id: ClothingHeadHelmetJanitorBombSuit
-        amount: 1

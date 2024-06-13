@@ -1,6 +1,8 @@
+using System.Linq;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
@@ -13,9 +15,9 @@ public abstract class SharedStationSpawningSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly InventorySystem InventorySystem = default!;
-    [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private   readonly SharedStorageSystem _storage = default!;
-    [Dependency] private   readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedStorageSystem _storage = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     private EntityQuery<HandsComponent> _handsQuery;
     private EntityQuery<InventoryComponent> _inventoryQuery;
@@ -29,6 +31,34 @@ public abstract class SharedStationSpawningSystem : EntitySystem
         _inventoryQuery = GetEntityQuery<InventoryComponent>();
         _storageQuery = GetEntityQuery<StorageComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
+    }
+
+    /// <summary>
+    ///     Equips the given starting gears from a `RoleLoadout` onto an entity.
+    /// </summary>
+    public void EquipRoleLoadout(EntityUid entity, RoleLoadout loadout, RoleLoadoutPrototype roleProto)
+    {
+        // Order loadout selections by the order they appear on the prototype.
+        foreach (var group in loadout.SelectedLoadouts.OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
+        {
+            foreach (var items in group.Value)
+            {
+                if (!PrototypeManager.TryIndex(items.Prototype, out var loadoutProto))
+                {
+                    Log.Error($"Unable to find loadout prototype for {items.Prototype}");
+                    continue;
+                }
+
+                if (!PrototypeManager.TryIndex(loadoutProto.Equipment, out var startingGear))
+                {
+                    Log.Error($"Unable to find starting gear {loadoutProto.Equipment} for loadout {loadoutProto}");
+                    continue;
+                }
+
+                // Handle any extra data here.
+                EquipStartingGear(entity, startingGear, raiseEvent: false);
+            }
+        }
     }
 
     /// <summary>
@@ -61,7 +91,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 if (!string.IsNullOrEmpty(equipmentStr))
                 {
                     var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, xform.Coordinates);
-                    InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, silent: true, force:true);
+                    InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, silent: true, force: true);
                 }
             }
         }
@@ -92,15 +122,15 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 if (entProtos.Count == 0)
                     continue;
 
-                foreach (var ent in entProtos)
-                {
-                    ents.Add(Spawn(ent, coords));
-                }
-
                 if (inventoryComp != null &&
                     InventorySystem.TryGetSlotEntity(entity, slot, out var slotEnt, inventoryComponent: inventoryComp) &&
                     _storageQuery.TryComp(slotEnt, out var storage))
                 {
+                    foreach (var ent in entProtos)
+                    {
+                        ents.Add(Spawn(ent, coords));
+                    }
+
                     foreach (var ent in ents)
                     {
                         _storage.Insert(slotEnt.Value, ent, out _, storageComp: storage, playSound: false);
@@ -112,7 +142,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
         if (raiseEvent)
         {
             var ev = new StartingGearEquippedEvent(entity);
-            RaiseLocalEvent(entity, ref ev, true);
+            RaiseLocalEvent(entity, ref ev);
         }
     }
 }

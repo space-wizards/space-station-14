@@ -12,8 +12,17 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
         [DataField]
         public float Amount { get; protected set; } = 1;
 
+        /// <summary>
+        /// Localisation key for the name of the adjusted attribute. Used for guidebook descriptions.
+        /// </summary>
         [DataField]
-        public float Prob { get; protected set; } = 1; // = (80);
+        public abstract string GuidebookAttributeName { get; set; }
+
+        /// <summary>
+        /// Whether the attribute in question is a good thing. Used for guidebook descriptions to determine the color of the number.
+        /// </summary>
+        [DataField]
+        public virtual bool GuidebookIsAttributePositive { get; protected set; } = true;
 
         /// <summary>
         ///     Checks if the plant holder can metabolize the reagent or not. Checks if it has an alive plant by default.
@@ -33,13 +42,21 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
                                     || mustHaveAlivePlant && (plantHolderComponent.Seed == null || plantHolderComponent.Dead))
                 return false;
 
-            if (Prob >= 1f)
-                return true;
-
-            // Dependencies are never injected for reagents if you intend to do that for this.
-            return !(Prob <= 0f) && IoCManager.Resolve<IRobustRandom>().Prob(Prob);
+            return true;
         }
 
-        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString("reagent-effect-guidebook-missing", ("chance", Probability));
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        {
+            string color;
+            if (GuidebookIsAttributePositive ^ Amount < 0.0)
+            {
+                color = "green";
+            }
+            else
+            {
+                color = "red";
+            }
+            return Loc.GetString("reagent-effect-guidebook-plant-attribute", ("attribute", Loc.GetString(GuidebookAttributeName)), ("amount", Amount.ToString("0.00")), ("colorName", color), ("chance", Probability));
+        }
     }
 }
