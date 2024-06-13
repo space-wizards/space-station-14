@@ -1,17 +1,15 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Robust.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Server.Construction.Components;
+using Content.Server.Kitchen.EntitySystems;
 
 namespace Content.Server.Access.Systems;
 
@@ -21,8 +19,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ExplosionSystem _explosion = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly MicrowaveSystem _microwave = default!;
 
     public override void Initialize()
     {
@@ -83,21 +80,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
             if (micro.CanMicrowaveIdsSafely)
                 return;
             // If it's not safe to microwave, maybe explode
-            randomPick = _random.NextFloat();
-
-            if (randomPick <= micro.ExplosionChance) // Uses the microwaves explosion chance to determine if we should explode
-            {
-                micro.Broken = true; // Make broken before the explosion finishes so other ids don't finish copying
-                _explosion.TriggerExplosive(args.Microwave);
-                if(TryComp<MachineComponent>(args.Microwave, out var machine))
-                {
-                    _container.CleanContainer(machine.BoardContainer);
-                    _container.EmptyContainer(machine.PartContainer);
-                }
-
-                _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                    $"{ToPrettyString(args.Microwave)} exploded copying {ToPrettyString(uid):entity}!");
-            }
+            _microwave.MaybeExplode((args.Microwave, micro));
 
         }
     }
