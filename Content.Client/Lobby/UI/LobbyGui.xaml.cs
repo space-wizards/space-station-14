@@ -23,8 +23,8 @@ namespace Content.Client.Lobby.UI
 
             LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
             OptionsButton.OnPressed += _ => UserInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
+            ObserveButton.OnPressed += _ => UserInterfaceManager.GetUIController<ObserveWarningWindowUIController>().ToggleWindow();
         }
-
         public void SwitchState(LobbyGuiState state)
         {
             DefaultState.Visible = false;
