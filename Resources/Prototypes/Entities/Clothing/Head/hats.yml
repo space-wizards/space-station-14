@@ -333,9 +333,14 @@
   description: A hat that makes you look like you carry a notched pistol, numbered one and nineteen more.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/outlawhat.rsi
+    sprite: GreyStation/Clothing/Head/Hats/outlawhat.rsi #GreyStation
   - type: Clothing
-    sprite: Clothing/Head/Hats/outlawhat.rsi
+    sprite: GreyStation/Clothing/Head/Hats/outlawhat.rsi #GreyStation
+  - type: Tag #GreyStation
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
