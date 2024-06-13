@@ -26,6 +26,7 @@
       map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: Appearance
   - type: UseDelay
+    delay: 1
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -118,6 +119,7 @@
           Quantity: 100
   - type: Appearance
   - type: UseDelay
+    delay: 0.75 # Ergonomic design allows for faster squeezes!
   - type: Sprite
     sprite: Objects/Consumable/Drinks/crazy_glue_bottle.rsi
     layers:

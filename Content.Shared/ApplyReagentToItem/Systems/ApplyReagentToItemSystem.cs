@@ -9,6 +9,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.ReagentOnItem;
+using Content.Shared.Timing;
 
 namespace Content.Shared.ApplyReagentToItem;
 
@@ -25,6 +26,7 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly ReagentOnItemSystem _reagentOnItem = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
@@ -71,11 +73,17 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
     /// </summary>
     private bool TryToApplyReagent(Entity<ApplyReagentToItemComponent> entity, EntityUid target, EntityUid actor)
     {
+
+        if (!TryComp(entity, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((entity, useDelay)))
+            return false;
+
         if (!HasComp<ItemComponent>(target))
         {
             _popup.PopupPredicted(Loc.GetString("apply-reagent-not-item-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
             return false;
         }
+
+        _useDelay.TryResetDelay((entity, useDelay));
 
         if (HasComp<ItemComponent>(target)
             && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solComp, out var solution))
