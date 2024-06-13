@@ -24,6 +24,7 @@
         - Impassable
         layer:
         - MidImpassable
+        - HighImpassable
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
@@ -71,6 +72,7 @@
         layer:
         - Opaque
         - MidImpassable
+        - HighImpassable
   - type: Occluder
   - type: Construction
     graph: PlasticFlapsGraph
@@ -97,19 +99,25 @@
 
 - type: entity
   id: PlasticFlapsAirtightOpaque
-  parent: PlasticFlapsBase
+  parent: PlasticFlapsAirtightClear
   name: airtight plastic flaps
   suffix: Airtight, Opaque
   description: Heavy duty, slightly stronger, airtight plastic flaps. Definitely can't get past those. No way.
   components:
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: Airtight
-  - type: StaticPrice
-    price: 100
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - Impassable
+        layer:
+        - Opaque
+        - MidImpassable
+        - HighImpassable
+  - type: Occluder
+  - type: Construction
+    graph: PlasticFlapsGraph
+    node: opaqueFlaps
