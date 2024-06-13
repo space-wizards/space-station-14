@@ -72,23 +72,21 @@
   id: GiftsVendingRestock
   parent: CargoGiftsBase
   components:
-    - type: StationEvent
-      weight: 4
-      startDelay: 10
-      duration: 120
-      minimumPlayers: 40
-      earliestStart: 30
-    - type: CargoGiftsRule
-      description: cargo-gift-vending
-      sender: cargo-gift-default-sender
-      dest: cargo-gift-dest-supp
-      gifts:
-        CrateVendingMachineRestockHotDrinks: 3
-        CrateVendingMachineRestockBooze: 1
-        CrateVendingMachineRestockNutriMax: 1
-        CrateVendingMachineRestockDrinksFilled: 2
-        CrateVendingMachineRestockVendomat: 1
-        CrateVendingMachineRestockGetmoreChocolateCorp: 1
+  - type: StationEvent
+    weight: 4
+    duration: 120
+    minimumPlayers: 40
+    earliestStart: 30
+  - type: CargoGiftsRule
+    description: cargo-gift-vending
+    dest: cargo-gift-dest-supp
+    gifts:
+      CrateVendingMachineRestockHotDrinks: 3
+      CrateVendingMachineRestockBooze: 1
+      CrateVendingMachineRestockNutriMax: 1
+      CrateVendingMachineRestockDrinksFilled: 2
+      CrateVendingMachineRestockVendomat: 1
+      CrateVendingMachineRestockGetmoreChocolateCorp: 1
 
 - type: entity
   id: GiftsJanitor
