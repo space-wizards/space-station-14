@@ -16,8 +16,7 @@ public sealed partial class ObjectsTab : Control
     private readonly Color _altColor = Color.FromHex("#292B38");
     private readonly Color _defaultColor = Color.FromHex("#2F2F3B");
     [Dependency] private readonly IEntityManager _entityManager = default!;
-
-    private readonly List<ObjectsTabSelection> _selections = new();
+    private readonly List<ObjectsTabSelection> _selections = [];
     [Dependency] private readonly IGameTiming _timing = default!;
     private bool _ascending;
     private ObjectsTabHeader.Header _headerClicked = ObjectsTabHeader.Header.ObjectName;
@@ -113,10 +112,12 @@ public sealed partial class ObjectsTab : Control
 
     private void GenerateButton(ListData data, ListContainerButton button)
     {
-        if (data is not ObjectsListData { Info: var info, BackgroundColor: var backgroundColor })
+        if (data is not ObjectsListData { Info: var info, BackgroundColor: var backgroundColor, })
             return;
 
-        var entry = new ObjectsTabEntry(info.Name, info.Entity, new StyleBoxFlat { BackgroundColor = backgroundColor });
+        var entry = new ObjectsTabEntry(info.Name,
+            info.Entity,
+            new StyleBoxFlat { BackgroundColor = backgroundColor, });
         button.ToolTip = $"{info.Name}, {info.Entity}";
 
         button.AddChild(entry);
@@ -124,7 +125,7 @@ public sealed partial class ObjectsTab : Control
 
     private bool DataFilterCondition(string filter, ListData listData)
     {
-        if (listData is not ObjectsListData { FilteringString: var filteringString })
+        if (listData is not ObjectsListData { FilteringString: var filteringString, })
             return false;
 
         // If the filter is empty, do not filter out any entries
@@ -140,7 +141,7 @@ public sealed partial class ObjectsTab : Control
         {
             ObjectsTabHeader.Header.ObjectName => entity.Name,
             ObjectsTabHeader.Header.EntityID => entity.Entity.ToString(),
-            _ => entity.Name
+            _ => entity.Name,
         };
     }
 
@@ -167,7 +168,7 @@ public sealed partial class ObjectsTab : Control
     {
         Grids,
         Maps,
-        Stations
+        Stations,
     }
 }
 

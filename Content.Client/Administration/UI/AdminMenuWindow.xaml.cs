@@ -13,26 +13,31 @@ public sealed partial class AdminMenuWindow : DefaultWindow
         MinSize = new Vector2(650, 250);
         Title = Loc.GetString("admin-menu-title");
         RobustXamlLoader.Load(this);
-        MasterTabContainer.SetTabTitle((int) TabIndices.Admin, Loc.GetString("admin-menu-admin-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndices.Adminbus, Loc.GetString("admin-menu-adminbus-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndices.Atmos, Loc.GetString("admin-menu-atmos-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndices.Round, Loc.GetString("admin-menu-round-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndices.Server, Loc.GetString("admin-menu-server-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndices.PanicBunker, Loc.GetString("admin-menu-panic-bunker-tab"));
+        MasterTabContainer.SetTabTitle((int) TabIndex.Admin, Loc.GetString("admin-menu-admin-tab"));
+        MasterTabContainer.SetTabTitle((int) TabIndex.Adminbus, Loc.GetString("admin-menu-adminbus-tab"));
+        MasterTabContainer.SetTabTitle((int) TabIndex.Atmos, Loc.GetString("admin-menu-atmos-tab"));
+        MasterTabContainer.SetTabTitle((int) TabIndex.Round, Loc.GetString("admin-menu-round-tab"));
+        MasterTabContainer.SetTabTitle((int) TabIndex.Server, Loc.GetString("admin-menu-server-tab"));
+        MasterTabContainer.SetTabTitle((int) TabIndex.PanicBunker, Loc.GetString("admin-menu-panic-bunker-tab"));
         /*
          * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
          */
-        MasterTabContainer.SetTabTitle((int) TabIndices.BabyJail, Loc.GetString("admin-menu-baby-jail-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndices.Players, Loc.GetString("admin-menu-players-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndices.Objects, Loc.GetString("admin-menu-objects-tab"));
-        MasterTabContainer.OnTabChanged += TabChanged;
+        MasterTabContainer.SetTabTitle((int) TabIndex.BabyJail, Loc.GetString("admin-menu-baby-jail-tab"));
+        MasterTabContainer.SetTabTitle((int) TabIndex.Players, Loc.GetString("admin-menu-players-tab"));
+        MasterTabContainer.SetTabTitle((int) TabIndex.Objects, Loc.GetString("admin-menu-objects-tab"));
+        MasterTabContainer.OnTabChanged += OnTabChanged;
     }
 
     public event Action? OnDisposed;
 
-    private void TabChanged(int tabIndex)
+    private void OnTabChanged(int tabIndex)
     {
-        if (tabIndex == (int) TabIndices.Objects)
+        TabChanged((TabIndex) tabIndex);
+    }
+
+    private void TabChanged(TabIndex tabIndex)
+    {
+        if (tabIndex == TabIndex.Objects)
             ObjectsTabControl.RefreshObjectList();
     }
 
@@ -43,7 +48,7 @@ public sealed partial class AdminMenuWindow : DefaultWindow
         OnDisposed = null;
     }
 
-    private enum TabIndices
+    private enum TabIndex
     {
         Admin = 0,
         Adminbus,
@@ -53,6 +58,6 @@ public sealed partial class AdminMenuWindow : DefaultWindow
         PanicBunker,
         BabyJail,
         Players,
-        Objects
+        Objects,
     }
 }
