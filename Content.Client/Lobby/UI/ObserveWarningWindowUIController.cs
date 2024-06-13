@@ -4,31 +4,31 @@ namespace Content.Client.Lobby.UI;
 
 public sealed class ObserveWarningWindowUIController : UIController
 {
-    private ObserveWarningWindow _optionsWindow = default!;
+    private ObserveWarningWindow _observeWarningWindow = default!;
 
     private void EnsureWindow()
     {
-        if (_optionsWindow is { Disposed: false })
+        if (_observeWarningWindow is { Disposed: false })
             return;
 
-        _optionsWindow = UIManager.CreateWindow<ObserveWarningWindow>();
+        _observeWarningWindow = UIManager.CreateWindow<ObserveWarningWindow>();
     }
 
     public void OpenWindow()
     {
         EnsureWindow();
 
-        _optionsWindow.OpenCentered();
-        _optionsWindow.MoveToFront();
+        _observeWarningWindow.OpenCentered();
+        _observeWarningWindow.MoveToFront();
     }
 
     public void ToggleWindow()
     {
         EnsureWindow();
 
-        if (_optionsWindow.IsOpen)
+        if (_observeWarningWindow.IsOpen)
         {
-            _optionsWindow.Close();
+            _observeWarningWindow.Close();
         }
         else
         {
