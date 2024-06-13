@@ -16,10 +16,10 @@
     - type: AccessReader
     - type: ActivatableUI
       key: enum.DoorElectronicsConfigurationUiKey.Key
-      allowedItems:
+      requiredItems:
         tags:
-        - Multitool
+        - DoorElectronicsConfigurator
     - type: UserInterface
       interfaces:
-      - key: enum.DoorElectronicsConfigurationUiKey.Key
-        type: DoorElectronicsBoundUserInterface
+        enum.DoorElectronicsConfigurationUiKey.Key:
+          type: DoorElectronicsBoundUserInterface

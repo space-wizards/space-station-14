@@ -45,8 +45,8 @@
     node: power
   - type: RCDDeconstructable
     cost: 2
-    delay: 2
-    fx: EffectRCDDeconstruct2  
+    delay: 0
+    fx: EffectRCDConstruct0  
 
 - type: entity
   parent: CableBase

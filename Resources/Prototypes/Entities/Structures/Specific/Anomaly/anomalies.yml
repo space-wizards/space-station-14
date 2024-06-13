@@ -90,7 +90,6 @@
     tempChange: 420
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileAnomalyFireball
-    targetNonSentientChance: 0.6
     projectileSpeed: 0.5
     minProjectiles: 3
     maxProjectiles: 6
@@ -330,7 +329,6 @@
     explosionMaxTileIntensity: 20
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileIcicle
-    targetNonSentientChance: 0.1
   - type: EntitySpawnAnomaly
     entries:
     - settings:
@@ -777,7 +775,6 @@
     - Desoxyephedrine
     - Ephedrine
     - THC
-    - THCOil
     - SpaceDrugs
     - Nocturine
     - MuteToxin

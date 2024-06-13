@@ -121,7 +121,6 @@
     actions:
     - !type:SetWiresPanelSecurity
       wiresAccessible: true
-      weldingAllowed: true
     edges:
     - to: glassElectronics
       conditions:
@@ -146,7 +145,6 @@
     actions:
     - !type:SetWiresPanelSecurity
       wiresAccessible: true
-      weldingAllowed: true
     edges:
     - to: wired
       conditions:

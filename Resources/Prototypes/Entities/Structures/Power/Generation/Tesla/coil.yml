@@ -59,9 +59,8 @@
     maxCharge: 1000000
     startingCharge: 0
   - type: BatteryDischarger
-    activeSupplyRate: 15000
   - type: TeslaCoil
-    chargeFromLightning: 500000
+    chargeFromLightning: 2000000
   - type: LightningTarget
     priority: 4
     hitProbability: 0.5

@@ -254,7 +254,7 @@ public sealed class StorageContainer : BaseWindow
 
         //todo. at some point, we may want to only rebuild the pieces that have actually received new data.
 
-        _pieceGrid.Children.Clear();
+        _pieceGrid.RemoveAllChildren();
         _pieceGrid.Rows = boundingGrid.Height + 1;
         _pieceGrid.Columns = boundingGrid.Width + 1;
         for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
@@ -275,18 +275,29 @@ public sealed class StorageContainer : BaseWindow
 
                     if (_entity.TryGetComponent<ItemComponent>(itemEnt, out var itemEntComponent))
                     {
-                        var gridPiece = new ItemGridPiece((itemEnt, itemEntComponent), itemPos, _entity)
+                        ItemGridPiece gridPiece;
+
+                        if (_storageController.CurrentlyDragging?.Entity is { } dragging
+                            && dragging == itemEnt)
                         {
-                            MinSize = size,
-                            Marked = Array.IndexOf(containedEntities, itemEnt) switch
+                            _storageController.CurrentlyDragging.Orphan();
+                            gridPiece = _storageController.CurrentlyDragging;
+                        }
+                        else
+                        {
+                            gridPiece = new ItemGridPiece((itemEnt, itemEntComponent), itemPos, _entity)
                             {
-                                0 => ItemGridPieceMarks.First,
-                                1 => ItemGridPieceMarks.Second,
-                                _ => null,
-                            }
-                        };
-                        gridPiece.OnPiecePressed += OnPiecePressed;
-                        gridPiece.OnPieceUnpressed += OnPieceUnpressed;
+                                MinSize = size,
+                                Marked = Array.IndexOf(containedEntities, itemEnt) switch
+                                {
+                                    0 => ItemGridPieceMarks.First,
+                                    1 => ItemGridPieceMarks.Second,
+                                    _ => null,
+                                }
+                            };
+                            gridPiece.OnPiecePressed += OnPiecePressed;
+                            gridPiece.OnPieceUnpressed += OnPieceUnpressed;
+                        }
 
                         control.AddChild(gridPiece);
                     }

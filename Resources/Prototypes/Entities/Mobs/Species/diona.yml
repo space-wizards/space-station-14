@@ -46,12 +46,12 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaled: true
+        scaleByQuantity: true
         damage:
           types:
-            Blunt: 2
-            Slash: 2
-            Piercing: 3
+            Blunt: 0.1
+            Slash: 0.1
+            Piercing: 0.15
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -61,10 +61,10 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaled: true
+        scaleByQuantity: true
         damage:
           types:
-            Poison: 5
+            Poison: 0.25
       - !type:PopupMessage
         type: Local
         visualType: Large
