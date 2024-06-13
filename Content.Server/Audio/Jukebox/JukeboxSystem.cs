@@ -7,6 +7,7 @@ using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.GameStates;
 using JukeboxComponent = Content.Shared.Audio.Jukebox.JukeboxComponent;
 
 namespace Content.Server.Audio.Jukebox;
@@ -32,6 +33,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         SubscribeLocalEvent<JukeboxComponent, JukeboxRemoveQueueMessage>(OnJukeboxRemoveQueue);
         SubscribeLocalEvent<JukeboxComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<JukeboxComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<JukeboxComponent, ComponentGetState>(OnJukeboxGetState);
 
         SubscribeLocalEvent<JukeboxComponent, PowerChangedEvent>(OnPowerChanged);
     }
@@ -70,8 +72,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
             Dirty(uid, component);
         }
-        var state = GetUiState((uid, component));
-        _userInterfaceSystem.SetUiState(uid, JukeboxUiKey.Key, state);
     }
 
     private void OnJukeboxAddQueue(EntityUid uid, JukeboxComponent component, JukeboxAddQueueMessage args)
@@ -83,8 +83,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         else
         {
             component.SongIdQueue.Add(args.SongId);
-            var state = GetUiState((uid, component));
-            _userInterfaceSystem.SetUiState(uid, JukeboxUiKey.Key, state);
         }
 
         Dirty(uid, component);
@@ -96,8 +94,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             return;
 
         component.SongIdQueue.RemoveAt(args.Index);
-        var state = GetUiState((uid, component));
-        _userInterfaceSystem.SetUiState(uid, JukeboxUiKey.Key, state);
 
         Dirty(uid, component);
     }
@@ -106,8 +102,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     {
         ent.Comp.TimeWhenSongEnds = null;
         Audio.SetState(ent.Comp.AudioStream, AudioState.Paused);
-        var state = GetUiState(ent);
-        _userInterfaceSystem.SetUiState(ent.Owner, JukeboxUiKey.Key, state);
 
         Dirty(ent);
     }
@@ -146,8 +140,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     {
         entity.Comp.TimeWhenSongEnds = null;
         Audio.SetState(entity.Comp.AudioStream, AudioState.Stopped);
-        var state = GetUiState(entity);
-        _userInterfaceSystem.SetUiState(entity.Owner, JukeboxUiKey.Key, state);
         Dirty(entity);
     }
 
@@ -225,14 +217,14 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         _appearanceSystem.SetData(uid, JukeboxVisuals.VisualState, finalState);
     }
 
-    private JukeboxBoundUserInterfaceState GetUiState(Entity<JukeboxComponent> ent)
+    private void OnJukeboxGetState(Entity<JukeboxComponent> ent, ref ComponentGetState args)
     {
         var isPlaying = false;
         if (Exists(ent.Comp.AudioStream))
         {
             isPlaying = Audio.IsPlaying(ent.Comp.AudioStream);
         }
-        return new JukeboxBoundUserInterfaceState(ent.Comp.SongIdQueue, isPlaying);
+        args.State = new JukeboxComponentState(ent.Comp.SongIdQueue, isPlaying);
     }
 
     private ProtoId<JukeboxPrototype>? SongQueueDequeue(Entity<JukeboxComponent> ent)
@@ -243,9 +235,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         var next = ent.Comp.SongIdQueue[0];
         ent.Comp.SongIdQueue.RemoveAt(0);
         ent.Comp.TimeWhenSongEnds = null;
-
-        var state = GetUiState(ent);
-        _userInterfaceSystem.SetUiState(ent.Owner, JukeboxUiKey.Key, state);
 
         return next;
     }
