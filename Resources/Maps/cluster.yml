@@ -3972,7 +3972,8 @@ entities:
           9,2:
             0: 30464
           9,3:
-            0: 119
+            0: 103
+            2: 16
           9,-1:
             0: 62591
           9,4:
@@ -4100,32 +4101,32 @@ entities:
             0: 65520
           10,-4:
             1: 8738
-            2: 8
-            3: 2048
+            3: 8
+            4: 2048
           10,-3:
             1: 8738
-            3: 2056
+            4: 2056
           10,-2:
             1: 8738
-            4: 8
-            5: 2048
+            5: 8
+            6: 2048
           10,-5:
             1: 8750
-            3: 2048
+            4: 2048
           11,-4:
-            2: 3
-            3: 768
+            3: 3
+            4: 768
             1: 34952
           11,-3:
-            3: 771
+            4: 771
             1: 34952
           11,-2:
-            4: 3
-            5: 768
+            5: 3
+            6: 768
             1: 34952
           11,-5:
             1: 34959
-            3: 768
+            4: 768
           12,-4:
             1: 12834
           12,-3:
@@ -4160,11 +4161,11 @@ entities:
             1: 7983
           8,-6:
             1: 61713
-            3: 204
+            4: 204
           9,-7:
             1: 20263
           9,-6:
-            3: 17
+            4: 17
             1: 62660
           10,-7:
             1: 4369
@@ -4359,7 +4360,7 @@ entities:
             0: 4352
           -1,16:
             1: 1
-            2: 128
+            3: 128
           -2,17:
             1: 8
           -1,17:
@@ -4387,6 +4388,21 @@ entities:
           moles:
           - 0
           - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+          - 20.078888
+          - 75.53487
           - 0
           - 0
           - 0
@@ -8213,13 +8229,6 @@ entities:
     - type: Transform
       pos: -14.475516,-1.6162148
       parent: 1
-- proto: BoxBeanbag
-  entities:
-  - uid: 5430
-    components:
-    - type: Transform
-      pos: 38.515625,12.538095
-      parent: 1
 - proto: BoxBodyBag
   entities:
   - uid: 5351
@@ -8506,18 +8515,6 @@ entities:
     - type: Transform
       pos: -12.516884,19.876278
       parent: 1
-- proto: BoxLethalshot
-  entities:
-  - uid: 5428
-    components:
-    - type: Transform
-      pos: 38.48653,12.471226
-      parent: 1
-  - uid: 5429
-    components:
-    - type: Transform
-      pos: 38.502155,12.596226
-      parent: 1
 - proto: BoxLightbulb
   entities:
   - uid: 7667
@@ -8538,20 +8535,6 @@ entities:
     components:
     - type: Transform
       pos: 12.611424,-0.37101722
-      parent: 1
-- proto: BoxMagazinePistol
-  entities:
-  - uid: 5423
-    components:
-    - type: Transform
-      pos: 37.484375,13.569345
-      parent: 1
-- proto: BoxMagazinePistolSubMachineGun
-  entities:
-  - uid: 5421
-    components:
-    - type: Transform
-      pos: 36.5625,13.600595
       parent: 1
 - proto: BoxMouthSwab
   entities:
@@ -54901,6 +54884,27 @@ entities:
       rot: 3.141592653589793 rad
       pos: -26.5,-30.5
       parent: 1
+- proto: GunSafePistolMk58
+  entities:
+  - uid: 5421
+    components:
+    - type: Transform
+      pos: 38.5,13.5
+      parent: 1
+- proto: GunSafeShotgunKammerer
+  entities:
+  - uid: 5423
+    components:
+    - type: Transform
+      pos: 38.5,12.5
+      parent: 1
+- proto: GunSafeSubMachineGunDrozd
+  entities:
+  - uid: 5435
+    components:
+    - type: Transform
+      pos: 38.5,11.5
+      parent: 1
 - proto: Handcuffs
   entities:
   - uid: 5063
@@ -56196,18 +56200,6 @@ entities:
     - type: Transform
       pos: 29.556211,16.447828
       parent: 1
-- proto: MagazinePistolSubMachineGun
-  entities:
-  - uid: 5311
-    components:
-    - type: Transform
-      pos: 18.504484,15.628139
-      parent: 1
-  - uid: 5312
-    components:
-    - type: Transform
-      pos: 18.77011,15.612514
-      parent: 1
 - proto: MagazinePistolSubMachineGunTopMounted
   entities:
   - uid: 1865
@@ -56222,25 +56214,37 @@ entities:
       parent: 1
 - proto: MagazineRifle
   entities:
-  - uid: 5432
+  - uid: 5428
     components:
     - type: Transform
-      pos: 38.28125,11.49122
+      pos: 36.271854,13.401509
+      parent: 1
+  - uid: 5429
+    components:
+    - type: Transform
+      pos: 36.50623,13.401509
+      parent: 1
+  - uid: 5431
+    components:
+    - type: Transform
+      pos: 36.72498,13.417134
       parent: 1
   - uid: 5433
     components:
     - type: Transform
-      pos: 38.421875,11.506845
+      pos: 36.646854,13.526509
       parent: 1
-  - uid: 5434
+- proto: MagazineShotgunBeanbag
+  entities:
+  - uid: 5436
     components:
     - type: Transform
-      pos: 38.59375,11.506845
+      pos: 38.602123,10.763362
       parent: 1
-  - uid: 5435
+  - uid: 7547
     components:
     - type: Transform
-      pos: 38.75,11.506845
+      pos: 38.602123,10.482112
       parent: 1
 - proto: MaintenanceFluffSpawner
   entities:
@@ -58142,6 +58146,65 @@ entities:
     components:
     - type: Transform
       pos: 35.5,-2.5
+      parent: 1
+- proto: PlasmaReinforcedWindowDirectional
+  entities:
+  - uid: 5404
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 38.5,11.5
+      parent: 1
+  - uid: 5405
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 38.5,12.5
+      parent: 1
+  - uid: 5406
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 38.5,10.5
+      parent: 1
+  - uid: 5407
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 38.5,13.5
+      parent: 1
+  - uid: 5418
+    components:
+    - type: Transform
+      pos: 37.5,10.5
+      parent: 1
+  - uid: 5424
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 38.5,13.5
+      parent: 1
+  - uid: 5427
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 37.5,13.5
+      parent: 1
+  - uid: 5430
+    components:
+    - type: Transform
+      pos: 36.5,10.5
+      parent: 1
+  - uid: 5432
+    components:
+    - type: Transform
+      pos: 38.5,10.5
+      parent: 1
+  - uid: 5434
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 36.5,13.5
       parent: 1
 - proto: PlasticFlapsAirtightClear
   entities:
@@ -67603,10 +67666,10 @@ entities:
     - type: Transform
       pos: 23.5,13.5
       parent: 1
-  - uid: 9331
+  - uid: 5422
     components:
     - type: Transform
-      pos: 38.5,10.5
+      pos: 37.5,13.5
       parent: 1
 - proto: SuitStorageWarden
   entities:
@@ -68483,6 +68546,11 @@ entities:
     - type: Transform
       pos: 0.5,18.5
       parent: 1
+  - uid: 5312
+    components:
+    - type: Transform
+      pos: 36.5,13.5
+      parent: 1
   - uid: 5314
     components:
     - type: Transform
@@ -68513,30 +68581,10 @@ entities:
     - type: Transform
       pos: 23.5,5.5
       parent: 1
-  - uid: 5404
-    components:
-    - type: Transform
-      pos: 36.5,13.5
-      parent: 1
-  - uid: 5405
-    components:
-    - type: Transform
-      pos: 37.5,13.5
-      parent: 1
-  - uid: 5406
-    components:
-    - type: Transform
-      pos: 38.5,13.5
-      parent: 1
-  - uid: 5407
-    components:
-    - type: Transform
-      pos: 38.5,12.5
-      parent: 1
   - uid: 5409
     components:
     - type: Transform
-      pos: 38.5,11.5
+      pos: 38.5,10.5
       parent: 1
   - uid: 5551
     components:
@@ -79771,15 +79819,17 @@ entities:
       parent: 1
 - proto: WeaponLaserCarbine
   entities:
-  - uid: 5424
-    components:
-    - type: Transform
-      pos: 38.328125,13.694345
-      parent: 1
   - uid: 5425
     components:
     - type: Transform
-      pos: 38.375,13.58497
+      rot: 1.5707963267948966 rad
+      pos: 38.039623,10.575862
+      parent: 1
+  - uid: 5426
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 38.30525,10.607112
       parent: 1
 - proto: WeaponPistolMk58
   entities:
@@ -79788,46 +79838,12 @@ entities:
     - type: Transform
       pos: 29.446836,16.541578
       parent: 1
-  - uid: 5422
-    components:
-    - type: Transform
-      pos: 37.46875,13.61622
-      parent: 1
-  - uid: 5436
-    components:
-    - type: Transform
-      pos: 37.546875,13.55372
-      parent: 1
 - proto: WeaponRifleLecter
   entities:
-  - uid: 5431
+  - uid: 5311
     components:
     - type: Transform
-      pos: 38.533405,11.484736
-      parent: 1
-- proto: WeaponShotgunKammerer
-  entities:
-  - uid: 5426
-    components:
-    - type: Transform
-      pos: 38.470905,12.377476
-      parent: 1
-  - uid: 5427
-    components:
-    - type: Transform
-      pos: 38.54903,12.330601
-      parent: 1
-- proto: WeaponSubMachineGunDrozd
-  entities:
-  - uid: 5310
-    components:
-    - type: Transform
-      pos: 18.660734,15.690639
-      parent: 1
-  - uid: 5418
-    components:
-    - type: Transform
-      pos: 36.546875,13.694345
+      pos: 36.459354,13.651509
       parent: 1
 - proto: WeaponSubMachineGunWt550
   entities:
@@ -80011,6 +80027,13 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-20.5
+      parent: 1
+- proto: WindoorSecureArmoryLocked
+  entities:
+  - uid: 5310
+    components:
+    - type: Transform
+      pos: 36.5,13.5
       parent: 1
 - proto: WindoorSecureCargoLocked
   entities:
@@ -80219,23 +80242,6 @@ entities:
     - type: DeviceLinkSink
       links:
       - 12487
-  - uid: 12003
-    components:
-    - type: Transform
-      pos: 36.5,13.5
-      parent: 1
-  - uid: 12004
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 38.5,12.5
-      parent: 1
-  - uid: 12005
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 38.5,11.5
-      parent: 1
 - proto: WindoorServiceLocked
   entities:
   - uid: 3375
@@ -80603,22 +80609,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 36.5,13.5
-      parent: 1
-  - uid: 12000
-    components:
-    - type: Transform
-      pos: 38.5,12.5
-      parent: 1
-  - uid: 12001
-    components:
-    - type: Transform
-      pos: 38.5,11.5
-      parent: 1
-  - uid: 12002
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 38.5,12.5
       parent: 1
 - proto: Wirecutter
   entities:
