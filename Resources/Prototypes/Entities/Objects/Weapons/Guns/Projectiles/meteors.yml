@@ -14,9 +14,14 @@
     damageDistribution:
       types:
         Blunt: 1
+  - type: TimedDespawn
+    lifetime: 120
   - type: Clickable
   - type: Physics
     bodyType: Dynamic
+    bodyStatus: InAir
+    angularDamping: 0
+    linearDamping: 0
   - type: Fixtures
     fixtures:
       projectile:
@@ -64,7 +69,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 100
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -163,4 +168,32 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+      - !type:ExplodeBehavior
+
+- type: entity
+  parent: BaseMeteor
+  id: MeteorUrist
+  name: Urist McMeteor
+  description: As a successful member of society with a stable unflinching psyche and limitless drive, natural affinity for finance and domination, you have been selected, no, you have been effortlessly guided by divine (biological) trauma towards this moment. The gates of destiny fling open, and once again you're left standing on pulsating nothingness. A strobing headache of the soul.
+  suffix: Meteor
+  components:
+  - type: Sprite
+    state: human_pixel
+  - type: Bloodstream
+    bloodMaxVolume: 500
+  - type: Explosive
+    totalIntensity: 25
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 3000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MaleScreams
+          params:
+            volume: 10
       - !type:ExplodeBehavior

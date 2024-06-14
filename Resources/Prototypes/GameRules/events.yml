@@ -197,23 +197,6 @@
   - type: KudzuGrowthRule
 
 - type: entity
-  id: MeteorSwarm
-  parent: BaseStationEventLongDelay
-  components:
-  - type: StationEvent
-    earliestStart: 30
-    weight: 7.5
-    minimumPlayers: 10 #Enough to hopefully have at least one engineering guy
-    startAnnouncement: station-event-meteor-swarm-start-announcement
-    endAnnouncement: station-event-meteor-swarm-end-announcement
-    startAudio:
-      path: /Audio/Announcements/meteors.ogg
-      params:
-        volume: -4
-    duration: null #ending is handled by MeteorSwarmRule
-  - type: MeteorSwarmRule
-
-- type: entity
   id: MouseMigration
   parent: BaseStationEventShortDelay
   components:
