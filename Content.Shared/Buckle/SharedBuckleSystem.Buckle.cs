@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -41,6 +42,7 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, StandAttemptEvent>(OnBuckleStandAttempt);
         SubscribeLocalEvent<BuckleComponent, ThrowPushbackAttemptEvent>(OnBuckleThrowPushbackAttempt);
         SubscribeLocalEvent<BuckleComponent, UpdateCanMoveEvent>(OnBuckleUpdateCanMove);
+        SubscribeLocalEvent<BuckleComponent, UncuffAttemptEvent>(OnUncuffAttempt);
     }
 
     [ValidatePrototypeId<AlertCategoryPrototype>]
@@ -144,6 +146,23 @@ public abstract partial class SharedBuckleSystem
 
         if (component.Buckled) // buckle shitcode
             args.Cancel();
+    }
+
+    private void OnUncuffAttempt(Entity<BuckleComponent> ent, ref UncuffAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        // If it isn't the person trying to unbuckle themselves then it doesn't matter.
+        if (args.User != args.Target)
+            return;
+
+        // Don't allow someone to uncuff themselves if buckled.
+        if (ent.Comp.Buckled)
+        {
+            args.Cancelled = true;
+            _popup.PopupClient(Loc.GetString("cuffable-component-cannot-remove-cuffs-buckled-message"), args.User, args.User);
+        }
     }
 
     public bool IsBuckled(EntityUid uid, BuckleComponent? component = null)

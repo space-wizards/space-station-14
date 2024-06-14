@@ -1,5 +1,6 @@
 cuffable-component-cannot-interact-message = You can't do that!
 cuffable-component-cannot-remove-cuffs-too-far-message = You are too far away to remove the restraints.
+cuffable-component-cannot-remove-cuffs-buckled-message = You can't reach the cuffs!
 
 cuffable-component-start-uncuffing-self = You start to painfully wriggle out of your restraints.
 cuffable-component-start-uncuffing-observer = {$user} starts unrestraining {$target}!
