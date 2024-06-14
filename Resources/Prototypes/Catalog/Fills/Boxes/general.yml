@@ -63,13 +63,10 @@
     layers:
       - state: box
       - state: lighttube
-<<<<<<< HEAD
-=======
   - type: StorageFill
     contents:
       - id: LightTube
         amount: 12
->>>>>>> wizards/master
 
 - type: entity
   name: mixed lights box
@@ -86,13 +83,6 @@
         amount: 6
       - id: LightBulb
         amount: 6
-<<<<<<< HEAD
-  - type: Sprite
-    layers:
-      - state: box
-      - state: lightmixed
-=======
->>>>>>> wizards/master
 
 - type: entity
   name: PDA box
