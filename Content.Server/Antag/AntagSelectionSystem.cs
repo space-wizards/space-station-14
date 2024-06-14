@@ -34,7 +34,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 {
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
@@ -223,67 +222,24 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             picking = false;
         }
 
-        if (def.Grouping == AntagPoolGrouping.Departments)
-            ChooseDepartmentAntags(ent, playerPool, count, def);
-        else
-            ChooseUngroupedAntags(ent, playerPool, count, def);
-    }
-
-    private void ChooseUngroupedAntags(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool pool, int count, AntagSelectionDefinition def)
-    {
-        for (var i = 0; i < count; i++)
+        playerPool = def.Grouping switch
         {
-            var session = (ICommonSession?) null;
-            if (def.PickPlayer)
-            {
-                if (!pool.TryPickAndTake(RobustRandom, out session))
-                    break;
+            AntagPoolGrouping.Departments => GroupDepartments(playerPool),
+            AntagPoolGrouping.Ungrouped => playerPool
+        };
 
-                if (ent.Comp.SelectedSessions.Contains(session))
-                    continue;
-            }
-
-            MakeAntag(ent, session, def);
-        }
-    }
-
-    private void ChooseDepartmentAntags(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool pool, int count, AntagSelectionDefinition def)
-    {
-        // first sort the pool into departments
-        var departments = new Dictionary<string, List<ICommonSession>>();
-        // only care about primary list here, could be improved in the future
-        foreach (var session in pool.PrimaryList)
-        {
-            if (!_mind.TryGetMind(session, out var mindId, out var mind))
-                continue;
-
-            if (!_jobs.MindTryGetJob(mindId, out _, out var job)
-                || !_jobs.TryGetPrimaryDepartment(job.ID, out var department))
-                continue;
-
-            if (departments.TryGetValue(department.ID, out var list))
-                list.Add(session);
-            else
-                departments[department.ID] = new() { session };
-        }
-
-        // then pick a random antag from each department
         for (var i = 0; i < count; i++)
         {
             var session = (ICommonSession?) null;
             if (picking)
             {
-                if (departments.Keys.Count == 0)
+                if (!playerPool.TryPickAndTake(RobustRandom, out session) && noSpawner)
                 {
                     Log.Warning($"Couldn't pick a player for {ToPrettyString(ent):rule}, no longer choosing antags for this definition");
                     break;
                 }
 
-                var department = _random.Pick(departments.Keys);
-                session = _random.Pick(departments[department]);
-                departments.Remove(department);
-
-                if (ent.Comp.SelectedSessions.Contains(session))
+                if (session != null && ent.Comp.SelectedSessions.Contains(session))
                 {
                     Log.Warning($"Somehow picked {session} for an antag when this rule already selected them previously");
                     continue;
@@ -418,6 +374,43 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
 
         return new AntagSelectionPlayerPool(new() { preferredList, fallbackList });
+    }
+
+    /// <summary>
+    /// Create a new selection pool where each list is a single department.
+    /// Picking a player removes the entire department from the pool.
+    /// The input pool is consumed and cannot be reused.
+    /// </summary>
+    public AntagSelectionPlayerPool GroupByDepartment(AntagSelectionPlayerPool pool)
+    {
+        // sort the player pool into departments, ignoring preferred/fallback status
+        var departments = new Dictionary<string, List<ICommonSession>>();
+        while (pool.MoveNext(out var session))
+        {
+            if (!_mind.TryGetMind(session, out var mindId, out var mind))
+                continue;
+
+            if (!_jobs.MindTryGetJob(mindId, out _, out var job)
+                || !_jobs.TryGetPrimaryDepartment(job.ID, out var department))
+                continue;
+
+            if (departments.TryGetValue(department.ID, out var list))
+                list.Add(session);
+            else
+                departments[department.ID] = new() { session };
+        }
+
+        // get the sessions of each department
+        var lists = new List<List<ICommonSession>>();
+        foreach (var (_, list) in departments)
+        {
+            lists.Add(list);
+        }
+
+        // department order is random instead of depending on dictionary iteration order
+        _random.Shuffle(lists);
+
+        return new AntagSelectionPlayerPool(lists, onePerPool: true);
     }
 
     /// <summary>
