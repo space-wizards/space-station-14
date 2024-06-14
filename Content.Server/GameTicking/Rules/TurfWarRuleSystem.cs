@@ -1,13 +1,10 @@
 using Content.Server.Antag;
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Objectives;
 using Content.Server.Roles;
 using Content.Server.Station.Systems;
 using Content.Shared.Doors.Components;
-using Content.Shared.Inventory;
 using Content.Shared.Mind;
-using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.SprayPainter.Components;
@@ -15,24 +12,16 @@ using Content.Shared.SprayPainter.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using System.Linq;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
 {
-    [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
-    [Dependency] private readonly IChatManager _chatMan = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedJobSystem _job = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
     public override void Initialize()
     {
@@ -40,7 +29,6 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
 
         SubscribeLocalEvent<TurfWarRuleComponent, AfterAntagEntitySelectedEvent>(OnSelected);
         SubscribeLocalEvent<TurfWarRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
-        SubscribeLocalEvent<TurfWarRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
 
         SubscribeLocalEvent<TurfTaggerRoleComponent, GetBriefingEvent>(OnGetBriefing);
     }
@@ -112,14 +100,6 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
             var name = Loc.GetString($"department-{department}");
             args.Text += "\n" + Loc.GetString("turf-war-round-end-result", ("place", i + 1), ("department", name), ("count", count));
         }
-    }
-
-    private void OnObjectivesTextGetInfo(Entity<TurfWarRuleComponent> ent, ref ObjectivesTextGetInfoEvent args)
-    {
-        args.Minds = _antag.GetAntagIdentifiers(ent.Owner);
-        args.AgentName = Loc.GetString("turf-war-round-end-agent-name");
-        // TODO: add this to AntagSelection after one of my antag refactoring prs then this code is unneeded
-        args.HideObjectives = true;
     }
 
     private void OnGetBriefing(Entity<TurfTaggerRoleComponent> ent, ref GetBriefingEvent args)

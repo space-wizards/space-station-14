@@ -49,6 +49,13 @@ public sealed partial class AntagSelectionComponent : Component
     /// </summary>
     [DataField]
     public LocId? AgentName;
+
+    /// <summary>
+    /// If <see cref="AgentName"/> is set, hides objectives of listed antags.
+    /// Useful if they are only relevant to the antag themselves and nobody else.
+    /// </summary>
+    [DataField]
+    public bool HideObjectives;
 }
 
 [DataDefinition]

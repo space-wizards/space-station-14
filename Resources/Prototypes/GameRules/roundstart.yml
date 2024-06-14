@@ -272,6 +272,8 @@
     minPlayers: 10
   - type: TurfWarRule
   - type: AntagSelection
+    agentName: turf-war-round-end-agent-name
+    hideObjectives: true
     definitions:
     - prefRoles: [ TurfTagger ]
       min: 2

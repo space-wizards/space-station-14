@@ -498,6 +498,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         args.Minds = ent.Comp.SelectedMinds;
         args.AgentName = Loc.GetString(name);
+        args.HideObjectives = ent.Comp.HideObjectives;
     }
 }
 
