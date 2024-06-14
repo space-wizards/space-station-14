@@ -1,4 +1,4 @@
-using Content.Server.Explosion.Components;
+using Content.Shared.Explosion.Components;
 
 namespace Content.Server.Explosion.EntitySystems;
 

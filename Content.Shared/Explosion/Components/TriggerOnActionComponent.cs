@@ -1,5 +1,7 @@
 using Content.Shared.Actions;
 
+namespace Content.Shared.Explosion.Components;
+
 /// <summary>
 /// Makes the entity trigger when an action is used.
 /// The action must raise <see cref="TriggerActionEvent"/>.
