@@ -194,7 +194,7 @@ public sealed partial class DungeonJob
                         {
                             for (var y = roomSize.Bottom; y < roomSize.Top; y++)
                             {
-                                var index = matty.Transform(new Vector2(x, y) + _grid.TileSizeHalfVector - packCenter).Floored();
+                                var index = Vector2.Transform(new Vector2(x, y) + _grid.TileSizeHalfVector - packCenter, matty).Floored();
 
                                 if (reservedTiles.Contains(index))
                                     continue;
@@ -248,7 +248,7 @@ public sealed partial class DungeonJob
                             continue;
                         }
 
-                        var tilePos = dungeonMatty.Transform(new Vector2i(x + room.Offset.X, y + room.Offset.Y) + tileOffset).Floored();
+                        var tilePos = Vector2.Transform(new Vector2i(x + room.Offset.X, y + room.Offset.Y) + tileOffset, dungeonMatty).Floored();
 
                         if (reservedTiles.Contains(tilePos))
                             continue;

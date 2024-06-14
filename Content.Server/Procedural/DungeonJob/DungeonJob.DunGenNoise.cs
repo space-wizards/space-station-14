@@ -18,7 +18,7 @@ public sealed partial class DungeonJob
     {
         var rand = new Random(seed);
         var tiles = new List<(Vector2i, Tile)>();
-        var matrix = Matrix3.CreateTranslation(position);
+        var matrix = Matrix3Helpers.CreateTranslation(position);
 
         foreach (var layer in dungen.Layers)
         {
@@ -92,7 +92,7 @@ public sealed partial class DungeonJob
                     roomArea = roomArea.UnionTile(node);
                     var tileDef = _tileDefManager[layer.Tile];
                     var variant = _tile.PickVariant((ContentTileDefinition) tileDef, rand);
-                    var adjusted = matrix.Transform(node + _grid.TileSizeHalfVector).Floored();
+                    var adjusted = Vector2.Transform(node + _grid.TileSizeHalfVector, matrix).Floored();
 
                     tiles.Add((adjusted, new Tile(tileDef.TileId, variant: variant)));
                     roomTiles.Add(adjusted);

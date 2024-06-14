@@ -13,6 +13,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -32,12 +33,13 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
     private readonly DecalSystem _decals;
     private readonly DungeonSystem _dungeon;
     private readonly EntityLookupSystem _lookup;
+    private readonly TagSystem _tags;
     private readonly TileSystem _tile;
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _transform;
 
+    private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
-    private EntityQuery<TagComponent> _tagQuery;
 
     private readonly DungeonConfigPrototype _gen;
     private readonly int _seed;
@@ -77,11 +79,12 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
         _dungeon = dungeon;
         _lookup = lookup;
         _tile = tile;
+        _tags = _entManager.System<TagSystem>();
         _maps = _entManager.System<SharedMapSystem>();
         _transform = transform;
 
+        _physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
         _xformQuery = _entManager.GetEntityQuery<TransformComponent>();
-        _tagQuery = _entManager.GetEntityQuery<TagComponent>();
 
         _gen = gen;
         _grid = grid;

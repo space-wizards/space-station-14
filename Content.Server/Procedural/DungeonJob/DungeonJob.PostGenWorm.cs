@@ -16,9 +16,9 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(WormCorridorPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (data == null || !data.Tiles.TryGetValue("FallbackTile", out var tileProto) || !_prototype.TryIndex(tileProto, out var tileDef))
+        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) || !_prototype.TryIndex(tileProto, out var tileDef))
         {
-            _sawmill.Error($"Null data unsupported for {nameof(WormCorridorPostGen)}");
+            _sawmill.Error($"Tried to run {nameof(WormCorridorPostGen)} without any dungeon data set which is unsupported");
             return;
         }
 

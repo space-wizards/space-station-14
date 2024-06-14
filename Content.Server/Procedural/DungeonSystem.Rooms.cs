@@ -170,7 +170,7 @@ public sealed partial class DungeonSystem
         foreach (var templateEnt in _lookup.GetEntitiesIntersecting(templateMapUid, bounds, LookupFlags.Uncontained))
         {
             var templateXform = _xformQuery.GetComponent(templateEnt);
-            var childPos = roomTransform.Transform(templateXform.LocalPosition - roomCenter);
+            var childPos = Vector2.Transform(templateXform.LocalPosition - roomCenter, roomTransform);
 
             if (!clearExisting && reservedTiles?.Contains(childPos.Floored()) == true)
                 continue;
@@ -202,7 +202,7 @@ public sealed partial class DungeonSystem
                 // Offset by 0.5 because decals are offset from bot-left corner
                 // So we convert it to center of tile then convert it back again after transform.
                 // Do these shenanigans because 32x32 decals assume as they are centered on bottom-left of tiles.
-                var position = roomTransform.Transform(decal.Coordinates + grid.TileSizeHalfVector - roomCenter);
+                var position = Vector2.Transform(decal.Coordinates + grid.TileSizeHalfVector - roomCenter, roomTransform);
                 position -= grid.TileSizeHalfVector;
 
                 if (!clearExisting && reservedTiles?.Contains(position.Floored()) == true)

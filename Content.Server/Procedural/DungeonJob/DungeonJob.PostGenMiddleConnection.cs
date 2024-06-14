@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
+using Content.Shared.Storage;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -14,11 +15,16 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(MiddleConnectionPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto))
+        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
+            !data.SpawnGroups.TryGetValue(DungeonDataKey.Entrance, out var entranceProto) ||
+            !_prototype.TryIndex(entranceProto, out var entrance))
         {
-            _sawmill.Error($"Dungeon data keys are missing for {nameof(gen)}");
+            _sawmill.Error($"Tried to run {nameof(MiddleConnectionPostGen)} without any dungeon data set which is unsupported");
             return;
         }
+
+        data.SpawnGroups.TryGetValue(DungeonDataKey.EntranceFlank, out var flankProto);
+        _prototype.TryIndex(flankProto, out var flank);
 
         // Grab all of the room bounds
         // Then, work out connections between them
@@ -61,7 +67,7 @@ public sealed partial class DungeonJob
         // TODO: Optional loops
 
         var roomConnections = new Dictionary<DungeonRoom, List<DungeonRoom>>();
-        var tileDef = _tileDefManager[gen.Tile];
+        var tileDef = _tileDefManager[tileProto];
 
         foreach (var (room, border) in roomBorders)
         {
@@ -105,23 +111,23 @@ public sealed partial class DungeonJob
                 for (var i = 0; i < nodeDistances.Count; i++)
                 {
                     var node = nodeDistances[i].Node;
-                    var gridPos = grid.GridTileToLocal(node);
+                    var gridPos = _maps.GridTileToLocal(_gridUid, _grid, node);
                     if (!_anchorable.TileFree(_grid, node, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                         continue;
 
                     width--;
-                    grid.SetTile(node, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
+                    _maps.SetTile(_gridUid, _grid, node, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
 
-                    if (gen.EdgeEntities != null && nodeDistances.Count - i <= 2)
+                    if (flank != null && nodeDistances.Count - i <= 2)
                     {
-                        _entManager.SpawnEntities(gridPos, gen.EdgeEntities);
+                        _entManager.SpawnEntities(gridPos, EntitySpawnCollection.GetSpawns(flank.Entries, random));
                     }
                     else
                     {
                         // Iterate neighbors and check for blockers, if so bulldoze
-                        ClearDoor(dungeon, grid, node);
+                        ClearDoor(dungeon, _grid, node);
 
-                        _entManager.SpawnEntities(gridPos, gen.Entities);
+                        _entManager.SpawnEntities(gridPos, EntitySpawnCollection.GetSpawns(entrance.Entries, random));
                     }
 
                     if (width == 0)

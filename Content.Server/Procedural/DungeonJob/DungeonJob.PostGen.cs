@@ -18,7 +18,7 @@ public sealed partial class DungeonJob
 
         while (anchored.MoveNext(out var uid))
         {
-            if (_tagQuery.TryGetComponent(uid, out var tagComp) && tagComp.Tags.Contains("Wall"))
+            if (_tags.HasTag(uid.Value, "Wall"))
                 return true;
         }
 
@@ -101,7 +101,6 @@ public sealed partial class DungeonJob
         var flags = strict
             ? LookupFlags.Dynamic | LookupFlags.Static | LookupFlags.StaticSundries
             : LookupFlags.Dynamic | LookupFlags.Static;
-        var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
 
         for (var x = -1; x <= 1; x++)
         {
@@ -116,9 +115,10 @@ public sealed partial class DungeonJob
                     continue;
 
                 // Shrink by 0.01 to avoid polygon overlap from neighboring tiles.
+                // TODO: Uhh entityset re-usage.
                 foreach (var ent in _lookup.GetEntitiesIntersecting(_gridUid, new Box2(neighbor * grid.TileSize, (neighbor + 1) * grid.TileSize).Enlarged(-0.1f), flags))
                 {
-                    if (!physicsQuery.TryGetComponent(ent, out var physics) ||
+                    if (!_physicsQuery.TryGetComponent(ent, out var physics) ||
                         !physics.Hard ||
                         (DungeonSystem.CollisionMask & physics.CollisionLayer) == 0x0 &&
                         (DungeonSystem.CollisionLayer & physics.CollisionMask) == 0x0)

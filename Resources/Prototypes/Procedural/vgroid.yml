@@ -12,8 +12,8 @@
       proto: VGRoidBlob
     - !type:PrototypeDunGen
       proto: VGRoidExteriorDungeons
-    #- !type:PrototypeDunGen
-    #  proto: VGRoidSmaller
+    - !type:PrototypeDunGen
+      proto: VGRoidSmaller
     #- VGRoidInteriorDungeons
     #- !type:PrototypeDunGen
     #  proto: VGRoidLargePaths
