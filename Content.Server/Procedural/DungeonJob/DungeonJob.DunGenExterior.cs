@@ -12,7 +12,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="ExteriorDunGen"/>
     /// </summary>
-    private async Task<ValueList<Dungeon>> GenerateExteriorDungeon(Vector2i position, DungeonData data, ExteriorDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
+    private async Task<List<Dungeon>> GenerateExteriorDungeon(Vector2i position, DungeonData data, ExteriorDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
     {
         DebugTools.Assert(_grid.ChunkCount > 0);
 
@@ -56,7 +56,7 @@ public sealed partial class DungeonJob
 
         if (dungeonSpawn == null)
         {
-            return new ValueList<Dungeon>()
+            return new List<Dungeon>()
             {
                 Dungeon.Empty
             };

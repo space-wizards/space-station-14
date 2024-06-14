@@ -1,7 +1,6 @@
 # Base configs
 - type: dungeonConfig
   id: PlanetBase
-  abstract: true
   layers:
   - !type:PrefabDunGen
     presets:
@@ -83,7 +82,7 @@
   id: Haunted
   data:
     entities:
-      Wall: WallRock
+      Walls: WallRock
     tiles:
       FallbackTile: FloorCaveDrought
     whitelist:

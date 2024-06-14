@@ -9,7 +9,6 @@ using Content.Shared.Procedural.PostGeneration;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Server.Physics;
-using Robust.Shared.Collections;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -21,7 +20,7 @@ using IDunGenLayer = Content.Shared.Procedural.IDunGenLayer;
 
 namespace Content.Server.Procedural.DungeonJob;
 
-public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
+public sealed partial class DungeonJob : Job<List<Dungeon>>
 {
     public bool TimeSlice = true;
 
@@ -96,7 +95,7 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
     /// <summary>
     /// Gets the relevant dungeon, running recursively as relevant.
     /// </summary>
-    private async Task<ValueList<Dungeon>> GetDungeons(
+    private async Task<List<Dungeon>> GetDungeons(
         Vector2i position,
         DungeonConfigPrototype config,
         DungeonData data,
@@ -104,7 +103,7 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
         HashSet<Vector2i> reservedTiles,
         int seed)
     {
-        var dungeons = new ValueList<Dungeon>();
+        var dungeons = new List<Dungeon>();
         var rand = new Random(seed);
         var count = rand.Next(config.MinCount, config.MaxCount);
 
@@ -123,7 +122,7 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
 
                 await SuspendDungeon();
                 if (!ValidateResume())
-                    return new ValueList<Dungeon>();
+                    return new List<Dungeon>();
             }
 
             seed = rand.Next();
@@ -132,7 +131,7 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
         return dungeons;
     }
 
-    protected override async Task<ValueList<Dungeon>> Process()
+    protected override async Task<List<Dungeon>?> Process()
     {
         _sawmill.Info($"Generating dungeon {_gen.ID} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
         _grid.CanSplit = false;
@@ -156,7 +155,7 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
         return dungeons;
     }
 
-    private async Task RunLayer(ValueList<Dungeon> dungeons, DungeonData data, Vector2i position, IDunGenLayer layer, HashSet<Vector2i> reservedTiles, int seed)
+    private async Task RunLayer(List<Dungeon> dungeons, DungeonData data, Vector2i position, IDunGenLayer layer, HashSet<Vector2i> reservedTiles, int seed)
     {
         _sawmill.Debug($"Doing postgen {layer.GetType()} for {_gen.ID} with seed {_seed}");
 
@@ -184,7 +183,10 @@ public sealed partial class DungeonJob : Job<ValueList<Dungeon>>
                 var groupConfig = _prototype.Index(prototypo.Proto);
                 position = (_position + random.NextVector2(groupConfig.MinOffset, groupConfig.MaxOffset)).Floored();
 
-                dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Data ?? data, groupConfig.Layers, reservedTiles, seed));
+                var dataCopy = groupConfig.Data.Clone();
+                dataCopy.Apply(data);
+
+                dungeons.AddRange(await GetDungeons(position, groupConfig, dataCopy, groupConfig.Layers, reservedTiles, seed));
                 break;
             case PrefabDunGen prefab:
                 dungeons.Add(await GeneratePrefabDungeon(position, data, prefab, reservedTiles, seed));

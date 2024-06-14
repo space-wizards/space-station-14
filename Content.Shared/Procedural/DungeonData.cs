@@ -1,7 +1,9 @@
+using System.Linq;
 using Content.Shared.Maps;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Procedural;
 
@@ -28,6 +30,51 @@ public sealed class DungeonData
     public Dictionary<DungeonDataKey, ProtoId<EntitySpawnEntryPrototype>> SpawnGroups = new();
     public Dictionary<DungeonDataKey, ProtoId<ContentTileDefinition>> Tiles = new();
     public Dictionary<DungeonDataKey, EntityWhitelist> Whitelists = new();
+
+    /// <summary>
+    /// Applies the specified data to this data.
+    /// </summary>
+    public void Apply(DungeonData data)
+    {
+        // Copy-paste moment.
+        foreach (var color in data.Colors)
+        {
+            Colors[color.Key] = color.Value;
+        }
+
+        foreach (var color in data.Entities)
+        {
+            Entities[color.Key] = color.Value;
+        }
+
+        foreach (var color in data.SpawnGroups)
+        {
+            SpawnGroups[color.Key] = color.Value;
+        }
+
+        foreach (var color in data.Tiles)
+        {
+            Tiles[color.Key] = color.Value;
+        }
+
+        foreach (var color in data.Whitelists)
+        {
+            Whitelists[color.Key] = color.Value;
+        }
+    }
+
+    public DungeonData Clone()
+    {
+        return new DungeonData
+        {
+            // Only shallow clones but won't matter for DungeonJob purposes.
+            Colors = Colors.ShallowClone(),
+            Entities = Entities.ShallowClone(),
+            SpawnGroups = SpawnGroups.ShallowClone(),
+            Tiles = Tiles.ShallowClone(),
+            Whitelists = Whitelists.ShallowClone(),
+        };
+    }
 }
 
 public enum DungeonDataKey : byte
@@ -38,6 +85,7 @@ public enum DungeonDataKey : byte
     // Entities
     Cabling,
     CornerWalls,
+    Junction,
     Walls,
 
     // SpawnGroups
