@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed an atmos bug, which was (probably) causing atmospherics on the
-      station to behave incorrectly.
-    type: Fix
-  id: 6234
-  time: '2024-03-26T04:44:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26441
 - author: nikthechampiongr
   changes:
   - message: Handcuffs will no longer try to uncuff themselves when they stop being
@@ -3849,3 +3841,10 @@
   id: 6733
   time: '2024-06-14T20:32:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28994
+- author: Vermidia
+  changes:
+  - message: allies callable by radio in the uplink now have unique icons
+    type: Tweak
+  id: 6734
+  time: '2024-06-14T21:44:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28954
