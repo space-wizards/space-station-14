@@ -83,10 +83,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 1
-    fillBaseName: dart
 
 - type: entity
   parent: Dart
@@ -126,6 +122,7 @@
         maxVol: 7
   - type: SolutionInjectOnEmbed
     transferAmount: 7
+    blockSlots: NONE
     solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 7

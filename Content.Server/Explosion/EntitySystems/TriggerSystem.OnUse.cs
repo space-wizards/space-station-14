@@ -171,7 +171,8 @@ public sealed partial class TriggerSystem
         if (args.Handled || HasComp<AutomatedTimerComponent>(uid) || component.UseVerbInstead)
             return;
 
-        _popupSystem.PopupEntity(Loc.GetString("trigger-activated", ("device", uid)), args.User, args.User);
+        if (component.DoPopup)
+            _popupSystem.PopupEntity(Loc.GetString("trigger-activated", ("device", uid)), args.User, args.User);
 
         HandleTimerTrigger(
             uid,

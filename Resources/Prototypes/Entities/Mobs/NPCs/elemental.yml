@@ -232,6 +232,8 @@
   - type: GhostRole
     prob: 0
     description: ghost-role-information-angry-slimes-description
+    raffle:
+      settings: short
   - type: NpcFactionMember
     factions:
     - SimpleHostile

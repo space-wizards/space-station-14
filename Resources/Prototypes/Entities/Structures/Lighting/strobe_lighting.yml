@@ -89,7 +89,7 @@
     on: false
     damage:
       types:
-        Heat: 5
+        Heat: 2
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork

@@ -22,7 +22,6 @@
     contentSize: 12000
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
-    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:
@@ -362,8 +361,8 @@
   components:
   - type: RandomMetadata
     nameSegments:
-    - book_hint_appearance
-    - book_type
+    - BookHintAppearances
+    - BookTypes
   - type: RandomSprite
     available:
       - cover:
@@ -424,33 +423,7 @@
   suffix: random visual, random story
   components:
   - type: PaperRandomStory
-    storySegments:
-    - "This is a "
-    - book_genre
-    - " about a "
-    - book_character_trait
-    - " "
-    - book_character
-    - " and "
-    - book_character_trait
-    - " "
-    - book_character
-    - ". Due to "
-    - book_event
-    - ", they "
-    - book_action_trait
-    - " "
-    - book_action
-    - " "
-    - book_character
-    - " "
-    - book_location
-    - ". \n\n"
-    - book_story_element
-    - " is "
-    - book_story_element_trait
-    - "."
-    storySeparator: ""
+    template: GenericStory
 
 - type: entity
   parent: BookBase

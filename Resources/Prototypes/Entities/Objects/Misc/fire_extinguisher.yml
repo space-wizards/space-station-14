@@ -46,7 +46,7 @@
   - type: Tool
     qualities:
     - Rolling
-    speed: 0.5 # its very big, akward to use
+    speedModifier: 0.5 # its very big, akward to use
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -54,6 +54,9 @@
         enabled:
           True: { state: fire_extinguisher_closed }
           False: { state: fire_extinguisher_open }
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   name: extinguisher spray
