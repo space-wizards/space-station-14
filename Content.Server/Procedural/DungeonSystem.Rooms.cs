@@ -68,7 +68,7 @@ public sealed partial class DungeonSystem
         bool clearExisting = false,
         bool rotation = false)
     {
-        var originTransform = Matrix3.CreateTranslation(origin);
+        var originTransform = Matrix3Helpers.CreateTranslation(origin.X, origin.Y);
         var roomRotation = Angle.Zero;
 
         if (rotation)
@@ -76,8 +76,8 @@ public sealed partial class DungeonSystem
             roomRotation = GetRoomRotation(room, random);
         }
 
-        var roomTransform = Matrix3.CreateTransform((Vector2) room.Size / 2f, roomRotation);
-        Matrix3.Multiply(roomTransform, originTransform, out var finalTransform);
+        var roomTransform = Matrix3Helpers.CreateTransform((Vector2) room.Size / 2f, roomRotation);
+        var finalTransform = Matrix3x2.Multiply(roomTransform, originTransform);
 
         SpawnRoom(gridUid, grid, finalTransform, room, reservedTiles, clearExisting);
     }
@@ -102,7 +102,7 @@ public sealed partial class DungeonSystem
     public void SpawnRoom(
         EntityUid gridUid,
         MapGridComponent grid,
-        Matrix3 roomTransform,
+        Matrix3x2 roomTransform,
         DungeonRoomPrototype room,
         HashSet<Vector2i>? reservedTiles = null,
         bool clearExisting = false)
@@ -118,7 +118,7 @@ public sealed partial class DungeonSystem
         // go BRRNNTTT on existing stuff
         if (clearExisting)
         {
-            var gridBounds = new Box2(roomTransform.Transform(Vector2.Zero), roomTransform.Transform(room.Size));
+            var gridBounds = new Box2(Vector2.Transform(Vector2.Zero, roomTransform), Vector2.Transform(room.Size, roomTransform));
             _entitySet.Clear();
             // Polygon skin moment
             gridBounds = gridBounds.Enlarged(-0.05f);
@@ -150,7 +150,7 @@ public sealed partial class DungeonSystem
                 var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
                 var tileRef = _maps.GetTileRef(templateMapUid, templateGrid, indices);
 
-                var tilePos = roomTransform.Transform(indices + tileOffset);
+                var tilePos = Vector2.Transform(indices + tileOffset, roomTransform);
                 var rounded = tilePos.Floored();
 
                 if (!clearExisting && reservedTiles?.Contains(rounded) == true)

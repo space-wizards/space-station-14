@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.Zombies;
 
 [RegisterComponent]
-public partial class InitialInfectedExemptComponent : Component
+public sealed partial class InitialInfectedExemptComponent : Component
 {
 
 }

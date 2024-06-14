@@ -32,6 +32,7 @@
       - DrinkBloodyMaryGlass
       - DrinkBooger
       - DrinkBraveBullGlass
+      - BudgetInsulsDrinkGlass
       - DrinkCarrotJuice
       - DrinkCoconutRum
       - DrinkChocolateGlass
@@ -57,6 +58,7 @@
       - DrinkIcedGreenTeaGlass
       - DrinkIcedBeerGlass
       - DrinkIceCreamGlass
+      - IrishBoolGlass
       - DrinkIrishCarBomb
       - DrinkIrishCoffeeGlass
       - DrinkLemonadeGlass
@@ -78,6 +80,7 @@
       - DrinkRewriter
       - DrinkRoyRogersGlass
       - DrinkRootBeerFloatGlass
+      - RubberneckGlass
       - DrinkRumGlass
       - DrinkSakeGlass
       - DrinkSbitenGlass
@@ -91,12 +94,15 @@
       - DrinkThreeMileIslandGlass
       - DrinkToxinsSpecialGlass
       - DrinkVodkaMartiniGlass
+      - DrinkVodkaRedBool
       - DrinkVodkaTonicGlass
       - DrinkWatermelonJuice
+      - DrinkWatermelonWakeup
       - DrinkWhiskeyColaGlass
       - DrinkWhiskeySodaGlass
       - DrinkWhiteRussianGlass
       - DrinkWineGlass
+      - XenoBasherGlass
       - DrinkShakeBlue
       - DrinkShakeWhite
       - DrinkTheMartinez
