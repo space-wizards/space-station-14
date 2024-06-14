@@ -31,8 +31,11 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
         {
             // Prevents shooting out of while inside of crates
             var shooter = EnsureComp<ProjectileComponent>(other).Shooter;
-            if (!_container.IsEntityOrParentInContainer(shooter))
-                args.Cancelled = true;
+            if (!shooter.HasValue)
+                return;
+
+            if (!_container.IsEntityOrParentInContainer(shooter.Value))
+               args.Cancelled = true;
         }
     }
 
