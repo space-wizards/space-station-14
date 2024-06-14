@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Weax
-  changes:
-  - message: Harmonicas can now be equipped (and played) in the neck slot.
-    type: Tweak
-  id: 6229
-  time: '2024-03-25T07:05:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26261
 - author: nikthechampiongr
   changes:
   - message: Mailing units no longer spontaneously turn into disposal units when flushed.
@@ -3845,3 +3838,11 @@
   id: 6728
   time: '2024-06-14T06:19:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28095
+- author: Moomoobeef
+  changes:
+  - message: Fax machines can now be purchased at cargo, for when you need more paper
+      pushing on your station!
+    type: Add
+  id: 6729
+  time: '2024-06-14T06:24:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28968
