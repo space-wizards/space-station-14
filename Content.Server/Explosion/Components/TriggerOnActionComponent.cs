@@ -10,4 +10,4 @@ public sealed partial class TriggerOnActionComponent : Component;
 /// <summary>
 /// Makes the entity trigger.
 /// </summary>
-public sealed class TriggerActionEvent : InstantActionEvent;
+public sealed partial class TriggerActionEvent : InstantActionEvent;
