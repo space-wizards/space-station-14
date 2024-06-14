@@ -6,5 +6,13 @@ namespace Content.Shared.IdentityManagement.Components;
 /// </summary>
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class IdBindComponent : Component;
+public sealed partial class IdBindComponent : Component
+{
+    /// <summary>
+    /// If true, also tries to get the PDA and set the owner to the entity
+    /// </summary>
+    [DataField]
+    public bool BindPDAOwner = true;
+
+}
 

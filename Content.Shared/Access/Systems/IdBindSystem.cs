@@ -1,4 +1,6 @@
 using Content.Shared.IdentityManagement.Components;
+using Content.Shared.Inventory;
+using Content.Shared.PDA;
 using Content.Shared.Roles;
 
 namespace Content.Shared.Access.Systems;
@@ -6,6 +8,8 @@ namespace Content.Shared.Access.Systems;
 public sealed class IdBindSystem : EntitySystem
 {
     [Dependency] private readonly SharedIdCardSystem _cardSystem = default!;
+    [Dependency] private readonly SharedPdaSystem _pdaSystem = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
@@ -30,8 +34,21 @@ public sealed class IdBindSystem : EntitySystem
         if (!_cardSystem.TryFindIdCard(ent, out var cardId))
             return;
 
-        if (TryComp<MetaDataComponent>(ent, out var data))
-            _cardSystem.TryChangeFullName(cardId, data.EntityName, cardId);
+        if (!TryComp<MetaDataComponent>(ent, out var data))
+            return;
+
+        _cardSystem.TryChangeFullName(cardId, data.EntityName, cardId);
+
+        if (!ent.Comp.BindPDAOwner)
+            return;
+
+        if (!_inventory.TryGetSlotEntity(cardId.Owner, "id", out var uPda))
+            return;
+
+        if (!TryComp<PdaComponent>(uPda, out var pDA))
+            return;
+
+        _pdaSystem.SetOwner(ent, pDA, data.EntityName);
     }
 }
 

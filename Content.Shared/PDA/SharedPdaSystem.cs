@@ -66,5 +66,10 @@ namespace Content.Shared.PDA
         {
             Appearance.SetData(uid, PdaVisuals.IdCardInserted, pda.ContainedId != null);
         }
+
+        public virtual void SetOwner(EntityUid uid, PdaComponent pda, string ownerName)
+        {
+
+        }
     }
 }
