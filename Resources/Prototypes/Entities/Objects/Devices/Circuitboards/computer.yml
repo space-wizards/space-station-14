@@ -38,12 +38,13 @@
   - type: ComputerBoard
     prototype: ComputerPowerMonitoring
   - type: PAIExpansionCard
-    key: enum.PowerMonitoringConsoleUiKey.Key
-    interface:
-      type: PowerMonitoringConsoleBoundUserInterface
-      requireInputValidation: false
     action: ActionPAIOpenPowerMonitor
     components:
+    - type: AddUserInterface
+      interfaces:
+        enum.PowerMonitoringConsoleUiKey.Key:
+          type: PowerMonitoringConsoleBoundUserInterface
+          requireInputValidation: false
     - type: PowerMonitoringConsole
     - type: PowerMonitoringCableNetworks
 
@@ -83,12 +84,13 @@
   - type: ComputerBoard
     prototype: ComputerCriminalRecords
   - type: PAIExpansionCard
-    key: enum.CriminalRecordsConsoleKey.Key
-    interface:
-      type: CriminalRecordsConsoleBoundUserInterface
-      requireInputValidation: false
     action: ActionPAIOpenCriminalRecords
     components:
+    - type: AddUserInterface
+      interfaces:
+        enum.CriminalRecordsConsoleKey.Key:
+          type: CriminalRecordsConsoleBoundUserInterface
+          requireInputValidation: false
     - type: CriminalRecordsConsole
     - type: AccessReader # read-only, unless you emag your little friend
       access: [["Security"]]
@@ -275,12 +277,13 @@
   - type: ComputerBoard
     prototype: ComputerCrewMonitoring
   - type: PAIExpansionCard
-    key: enum.CrewMonitoringUIKey.Key
-    interface:
-      type: CrewMonitoringBoundUserInterface
-      requireInputValidation: false
     action: ActionPAIOpenCrewMonitor
     components:
+    - type: AddUserInterface
+      interfaces:
+        enum.CrewMonitoringUIKey.Key:
+          type: CrewMonitoringBoundUserInterface
+          requireInputValidation: false
     - type: CrewMonitoringConsole
     - type: DeviceNetwork
       deviceNetId: Wireless

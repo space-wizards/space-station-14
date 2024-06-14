@@ -17,7 +17,6 @@ public sealed class PAIExpansionSystem : EntitySystem
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedWiresSystem _wires = default!;
 
     public override void Initialize()
@@ -82,8 +81,6 @@ public sealed class PAIExpansionSystem : EntitySystem
             return;
 
         var card = Comp<PAIExpansionCardComponent>(args.Entity);
-
-        _ui.SetUi(ent.Owner, card.Key, card.Interface);
         _actions.AddAction(ent, ref card.ActionEntity, card.Action, ent);
         EntityManager.AddComponents(ent, card.Components);
     }

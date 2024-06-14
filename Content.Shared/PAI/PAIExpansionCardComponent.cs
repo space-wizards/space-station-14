@@ -11,18 +11,6 @@ namespace Content.Shared.PAI;
 public sealed partial class PAIExpansionCardComponent : Component
 {
     /// <summary>
-    /// Key of the UI to add.
-    /// </summary>
-    [DataField(required: true)]
-    public Enum Key;
-
-    /// <summary>
-    /// User interface to add that the action opens.
-    /// </summary>
-    [DataField(required: true)]
-    public InterfaceData Interface = new();
-
-    /// <summary>
     /// Action to give the pAI once installed.
     /// </summary>
     [DataField(required: true)]
@@ -34,6 +22,11 @@ public sealed partial class PAIExpansionCardComponent : Component
     /// <summary>
     /// Components to add to the pAI once installed.
     /// </summary>
+    /// <remarks>
+    /// You don't have to worry about how they get removed since cards can't be removed.
+    /// All you need to manage is how it works with existing components,
+    /// e.g. for ui <c>AddUserInterfaceComponent</c> instead of bulldozing midi, map etc.
+    /// </remarks>
     [DataField(required: true)]
     public ComponentRegistry Components = new();
 
