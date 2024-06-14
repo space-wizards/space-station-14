@@ -224,7 +224,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         playerPool = def.Grouping switch
         {
-            AntagPoolGrouping.Departments => GroupDepartments(playerPool),
+            AntagPoolGrouping.Departments => GroupByDepartments(playerPool),
             AntagPoolGrouping.Ungrouped => playerPool
         };
 
@@ -408,7 +408,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
 
         // department order is random instead of depending on dictionary iteration order
-        _random.Shuffle(lists);
+        RobustRandom.Shuffle(lists);
 
         return new AntagSelectionPlayerPool(lists, onePerPool: true);
     }

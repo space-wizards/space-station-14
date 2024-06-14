@@ -254,7 +254,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
 public sealed class Summary
 {
-    public Dictionary<string, List<EntityUid>> Minds = new();
+    public Dictionary<string, List<(EntityUid, string)>> Minds = new();
     public bool HideObjectives;
 
     public Summary(bool hideObjectives)
