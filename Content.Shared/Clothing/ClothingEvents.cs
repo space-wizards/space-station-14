@@ -73,6 +73,10 @@ public readonly record struct ItemMaskToggledEvent(EntityUid Wearer, string? equ
 [ByRefEvent]
 public readonly record struct WearerMaskToggledEvent(bool IsToggled);
 
+
+public sealed partial class ToggleWeldingEvent : InstantActionEvent { }
+public readonly record struct ItemWeldingToggledEvent(EntityUid Wearer, bool Toggled);
+
 /// <summary>
 /// Raised on the clothing entity when it is equipped to a valid slot,
 /// as determined by <see cref="ClothingComponent.Slots"/>.

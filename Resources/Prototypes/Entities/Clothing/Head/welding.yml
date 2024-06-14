@@ -42,6 +42,18 @@
     slots:
     - Snout
 
+- type: entity 
+  id: ActionToggleWelding
+  name: Flip Welding Mask
+  description: For when you like to live dangerously and risk arc eye.
+  nospawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Head/Welding/welding.rsi, state: icon }
+    iconOn: { sprite: Clothing/Head/Welding/welding.rsi, state: icon-up }
+    event: !type:ToggleWeldingEvent
+
+
 - type: entity
   parent: WeldingMaskBaseFlippable
   id: WeldingMaskBaseFlipped

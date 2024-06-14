@@ -1,8 +1,10 @@
+using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Flash.Components;
 using Content.Shared.Foldable;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 
 namespace Content.Shared.Clothing.EntitySystems
@@ -10,6 +12,9 @@ namespace Content.Shared.Clothing.EntitySystems
     public sealed class WeldingMaskSystem : EntitySystem
     {
         [Dependency] private readonly MaskSystem _maskSystem = default!;
+        [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
+        [Dependency] private readonly InventorySystem _invSystem = default!;
+        [Dependency] private readonly FoldableSystem _foldableSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -17,8 +22,9 @@ namespace Content.Shared.Clothing.EntitySystems
             SubscribeLocalEvent<WeldingMaskComponent, FoldedEvent>(OnFold);
             SubscribeLocalEvent<WeldingMaskComponent, GotEquippedEvent>(OnEquip);
             SubscribeLocalEvent<WeldingMaskComponent, GotUnequippedEvent>(OnUnequip);
+            SubscribeLocalEvent<WeldingMaskComponent, GetItemActionsEvent>(OnGetActions);
+            SubscribeLocalEvent<WeldingMaskComponent, ToggleWeldingEvent>(OnToggleWeld);
         }
-
 
 
         //there probably is a better way to do this but it's 6am and I haven't slept.
@@ -29,6 +35,23 @@ namespace Content.Shared.Clothing.EntitySystems
             if (!ent.Comp.Folded)
                 Enable(ent, args.Equipee);
         }
+        private void OnGetActions(EntityUid uid, WeldingMaskComponent comp, GetItemActionsEvent args)
+        {
+            if (_invSystem.InSlotWithFlags(uid, SlotFlags.HEAD))
+                args.AddAction(ref comp.ToggleActionEntity, comp.ToggleAction);
+        }
+
+        private void OnToggleWeld(Entity<WeldingMaskComponent> ent, ref ToggleWeldingEvent args)
+        {
+            if (TryComp<FoldableComponent>(ent.Owner, out var comp))
+            {
+                bool a = _foldableSystem.TryToggleFold(ent.Owner, comp);
+                var ev = new ItemWeldingToggledEvent(ent.Comp.Equipee, a);
+                RaiseLocalEvent(ent.Owner, ev);
+            }
+        }
+
+
         private void OnUnequip(Entity<WeldingMaskComponent> ent, ref GotUnequippedEvent args)
         {
             ent.Comp.Equipee = EntityUid.Invalid;
@@ -65,11 +88,12 @@ namespace Content.Shared.Clothing.EntitySystems
 
         private void Enable(Entity<WeldingMaskComponent> ent, EntityUid uid)
         {
+            //i have no idea why this throws a bazillion errors, but they're not actual errors
             if (EnsureComp<WeldingVisionComponent>(uid, out var comp))
             {
-                Dirty(uid, comp);
                 comp.InnerDiameter = ent.Comp.InnerDiameter;
                 comp.OuterDiameter = ent.Comp.OuterDiameter;
+                Dirty(uid, comp);
             }
         }
 
