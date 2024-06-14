@@ -298,5 +298,12 @@ Entries:
   id: 36
   time: '2024-06-08T10:40:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28664
+- author: ShadowCommander
+  changes:
+  - message: Player tab playtime no longer changes to Unknown when a player reconnects.
+    type: Fix
+  id: 37
+  time: '2024-06-13T06:38:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28876
 Name: Admin
 Order: 1
