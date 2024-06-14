@@ -45,8 +45,17 @@ public sealed class MeteorSystem : EntitySystem
         {
             threshold = FixedPoint2.MaxValue;
         }
+        var otherEntDamage = CompOrNull<DamageableComponent>(args.OtherEntity)?.TotalDamage ?? FixedPoint2.Zero;
+        // account for the damage that the other entity has already taken: don't overkill
+        threshold -= otherEntDamage;
 
-        var damage = component.DamageDistribution * threshold;
+        // The max amount of damage our meteor can take before breaking.
+        var maxMeteorDamage = _destructible.DestroyedAt(uid) - CompOrNull<DamageableComponent>(uid)?.TotalDamage ?? FixedPoint2.Zero;
+
+        // Cap damage so we don't overkill the meteor
+        var trueDamage = FixedPoint2.Min(maxMeteorDamage, threshold);
+
+        var damage = component.DamageDistribution * trueDamage;
         _damageable.TryChangeDamage(args.OtherEntity, damage, true, origin: uid);
         _damageable.TryChangeDamage(uid, damage);
 
