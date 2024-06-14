@@ -29,7 +29,7 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
         {
             // Prevents shooting out of while inside of crates
             var shooter = EnsureComp<ProjectileComponent>(other).Shooter;
-            if (!HasComp<InsideEntityStorageComponent>(shooter))
+            if (CompOrNull<InsideEntityStorageComponent>(shooter)?.Storage != ent.Owner)
                 args.Cancelled = true;
         }
     }
