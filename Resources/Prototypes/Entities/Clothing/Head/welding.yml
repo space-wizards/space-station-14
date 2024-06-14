@@ -53,43 +53,6 @@
     iconOn: { sprite: Clothing/Head/Welding/welding.rsi, state: icon-up }
     event: !type:ToggleWeldingEvent
 
-
-- type: entity
-  parent: WeldingMaskBaseFlippable
-  id: WeldingMaskBaseFlipped
-  name: welding mask
-  suffix: up
-  abstract: true
-  components:
-  - type: Foldable
-    folded: true
-  - type: Mask
-    isToggled: true
-  - type: IdentityBlocker
-    coverage: NONE
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 200
-      Glass: 100
-  - type: StaticPrice
-    price: 50
-  - type: Clothing
-    equippedPrefix: flipped
-  - type: Item
-    heldPrefix: flipped
-  - type: Sprite
-    layers:
-    - state: icon
-      map: [ "unfoldedLayer" ]
-      visible: false
-    - state: icon-up
-      map: ["foldedLayer"]
-      visible: true
-  - type: Tag
-    tags:
-    - WhitelistChameleon
-    - WeldingMask
-
 - type: entity
   parent: WeldingMaskBaseFlippable
   id: ClothingHeadHatWelding
@@ -107,11 +70,6 @@
     - WeldingMask
 
 - type: entity
-  parent: [WeldingMaskBaseFlipped, ClothingHeadHatWelding]
-  id: ClothingHeadHatWeldingFlipped
-  name: lifted welding mask
-
-- type: entity
   parent: WeldingMaskBaseFlippable
   id: ClothingHeadHatWeldingMaskFlame
   name: flame welding mask
@@ -121,11 +79,6 @@
     sprite: Clothing/Head/Welding/flame_welding_mask.rsi
   - type: Clothing
     sprite: Clothing/Head/Welding/flame_welding_mask.rsi
-
-- type: entity
-  parent: [WeldingMaskBaseFlipped, ClothingHeadHatWeldingMaskFlame]
-  id: ClothingHeadHatWeldingMaskFlameFlipped
-  name: lifted flame welding mask
 
 - type: entity
   parent: WeldingMaskBaseFlippable
@@ -139,11 +92,6 @@
     sprite: Clothing/Head/Welding/blue_flame_welding_mask.rsi
 
 - type: entity
-  parent: [WeldingMaskBaseFlipped, ClothingHeadHatWeldingMaskFlameBlue]
-  id: ClothingHeadHatWeldingMaskFlameBlueFlipped
-  name: lifted blue-flame welding mask
-
-- type: entity
   parent: WeldingMaskBaseFlippable
   id: ClothingHeadHatWeldingMaskPainted
   name: painted welding mask
@@ -153,8 +101,3 @@
     sprite: Clothing/Head/Welding/paintedwelding.rsi
   - type: Clothing
     sprite: Clothing/Head/Welding/paintedwelding.rsi
-
-- type: entity
-  parent: [WeldingMaskBaseFlipped, ClothingHeadHatWeldingMaskPainted]
-  id: ClothingHeadHatWeldingMaskPaintedFlipped
-  name: lifted painted welding mask
