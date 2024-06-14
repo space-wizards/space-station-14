@@ -1,3 +1,4 @@
+using Content.Server.PDA.Ringer;
 using Content.Server.Store.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.FixedPoint;
@@ -5,11 +6,11 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.Store.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using System.Linq;
-using Content.Shared.Store.Components;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Store.Systems;
 
@@ -85,6 +86,10 @@ public sealed partial class StoreSystem : EntitySystem
             return;
 
         if (!TryComp<StoreComponent>(args.Target, out var store))
+            return;
+
+        // PDAs without uplinks shouldn't be allowed to have currency added
+        if (TryComp<RingerComponent>(args.Target, out var ringer) && !TryComp<RingerUplinkComponent>(args.Target, out var ringerUplink))
             return;
 
         var ev = new CurrencyInsertAttemptEvent(args.User, args.Target.Value, args.Used, store);
