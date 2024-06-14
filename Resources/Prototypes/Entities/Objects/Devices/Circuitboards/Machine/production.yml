@@ -1036,7 +1036,7 @@
   - type: InstantAction
     icon:
       sprite: Structures/Machines/microwave.rsi
-      state: mv0
+      state: mw
     useDelay: 5
     event: !type:TriggerActionEvent
 
