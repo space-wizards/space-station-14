@@ -133,11 +133,10 @@
   id: CrateServiceFaxMachine
   parent: CrateGenericSteel
   name: fax machine crate
-  description: A fax machine, a screwdriver to set the name with, and a manual.
+  description: A fax machine and a screwdriver to set the name with.
   components:
   - type: StorageFill
     contents:
-    - id: PaperWrittenFaxManual
     - id: Screwdriver
     - id: FaxMachineFlatpack
 

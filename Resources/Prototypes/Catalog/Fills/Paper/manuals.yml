@@ -7,14 +7,6 @@
     content: book-text-ame-scribbles
 
 - type: entity
-  id: PaperWrittenFaxManual
-  suffix: "Faxomatic 4200 Manual"
-  parent: Paper
-  components:
-  - type: Paper
-    content: book-text-fax-manual
-
-- type: entity
   parent: BaseItem
   id: HoloparasiteInfo
   name: "holoparasite terms and conditions"
