@@ -179,9 +179,13 @@
   components:
   - type: Sprite
     state: human_pixel
-  - type: Bloodstream
-    bloodMaxVolume: 1000
   - type: SolutionContainerManager
+    solutions:
+      blood:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Blood
+          Quantity: 1000
   - type: Explosive
     totalIntensity: 25
   - type: Destructible
@@ -197,4 +201,6 @@
           collection: MaleScreams
           params:
             volume: 10
+      - !type:SpillBehavior
+        solution: blood
       - !type:ExplodeBehavior
