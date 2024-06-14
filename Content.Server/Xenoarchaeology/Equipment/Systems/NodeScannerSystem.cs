@@ -15,8 +15,20 @@ public sealed class NodeScannerSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<NodeScannerComponent, BeforeRangedInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<NodeScannerComponent, BeforeRangedInteractEvent>(OnBeforeRangedInteract);
         SubscribeLocalEvent<NodeScannerComponent, GetVerbsEvent<UtilityVerb>>(AddScanVerb);
+    }
+
+    private void OnBeforeRangedInteract(EntityUid uid, NodeScannerComponent component, BeforeRangedInteractEvent args)
+    {
+        if (args.Handled || !args.CanReach || args.Target is not {} target)
+            return;
+
+        if (!TryComp<ArtifactComponent>(target, out var artifact) || artifact.CurrentNodeId == null)
+            return;
+
+        CreatePopup(uid, target, artifact);
+        args.Handled = true;
     }
 
     private void AddScanVerb(EntityUid uid, NodeScannerComponent component, GetVerbsEvent<UtilityVerb> args)
@@ -37,23 +49,6 @@ public sealed class NodeScannerSystem : EntitySystem
         };
 
         args.Verbs.Add(verb);
-    }
-
-    private void OnAfterInteract(EntityUid uid, NodeScannerComponent component, BeforeRangedInteractEvent args)
-    {
-        if (!args.CanReach || args.Target == null)
-            return;
-
-        if (!TryComp<ArtifactComponent>(args.Target, out var artifact) || artifact.CurrentNodeId == null)
-            return;
-
-        if (args.Handled)
-            return;
-        args.Handled = true;
-
-        var target = args.Target.Value;
-
-        CreatePopup(uid, target, artifact);
     }
 
     private void CreatePopup(EntityUid uid, EntityUid target, ArtifactComponent artifact)
