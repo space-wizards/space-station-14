@@ -1,4 +1,3 @@
-using Content.Server.PDA.Ringer;
 using Content.Server.Store.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.FixedPoint;
@@ -86,10 +85,6 @@ public sealed partial class StoreSystem : EntitySystem
             return;
 
         if (!TryComp<StoreComponent>(args.Target, out var store))
-            return;
-
-        // PDAs without uplinks shouldn't be allowed to have currency added
-        if (TryComp<RingerComponent>(args.Target, out var ringer) && !TryComp<RingerUplinkComponent>(args.Target, out var ringerUplink))
             return;
 
         var ev = new CurrencyInsertAttemptEvent(args.User, args.Target.Value, args.Used, store);
