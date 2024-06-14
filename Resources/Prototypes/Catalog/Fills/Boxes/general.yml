@@ -404,16 +404,13 @@
   - type: StorageFill
     contents:
       - id: Dart
-        amount: 3
+        amount: 2
       - id: DartBlue
-        amount: 3
+        amount: 2
       - id: DartPurple
-        amount: 3
+        amount: 2
       - id: DartYellow
-        amount: 3
-  - type: Storage
-    grid:
-    - 0,0,5,3
+        amount: 2
 
 - type: entity
   parent: BoxCardboard
