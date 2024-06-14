@@ -43,8 +43,6 @@ public sealed class PullingSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSys = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
 
     public override void Initialize()
     {
@@ -66,7 +64,6 @@ public sealed class PullingSystem : EntitySystem
         SubscribeLocalEvent<PullerComponent, DropHandItemsEvent>(OnDropHandItems);
 
         CommandBinds.Builder
-            .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(OnRequestMovePulledObject))
             .Bind(ContentKeyFunctions.ReleasePulledObject, InputCmdHandler.FromDelegate(OnReleasePulledObject, handle: false))
             .Register<PullingSystem>();
     }
@@ -223,7 +220,7 @@ public sealed class PullingSystem : EntitySystem
         if (TryComp<PullerComponent>(oldPuller, out var pullerComp))
         {
             var pullerUid = oldPuller.Value;
-            _alertsSystem.ClearAlert(pullerUid, AlertType.Pulling);
+            _alertsSystem.ClearAlert(pullerUid, pullerComp.PullingAlert);
             pullerComp.Pulling = null;
             Dirty(oldPuller.Value, pullerComp);
 
@@ -237,53 +234,12 @@ public sealed class PullingSystem : EntitySystem
         }
 
 
-        _alertsSystem.ClearAlert(pullableUid, AlertType.Pulled);
+        _alertsSystem.ClearAlert(pullableUid, pullableComp.PulledAlert);
     }
 
     public bool IsPulled(EntityUid uid, PullableComponent? component = null)
     {
         return Resolve(uid, ref component, false) && component.BeingPulled;
-    }
-
-    private bool OnRequestMovePulledObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-    {
-        if (session?.AttachedEntity is not { } player ||
-            !player.IsValid())
-        {
-            return false;
-        }
-
-        if (!TryComp<PullerComponent>(player, out var pullerComp))
-            return false;
-
-        var pulled = pullerComp.Pulling;
-
-        if (!HasComp<PullableComponent>(pulled))
-            return false;
-
-        if (_containerSystem.IsEntityInContainer(player))
-            return false;
-
-        // Cooldown buddy
-        if (_timing.CurTime < pullerComp.NextThrow)
-            return false;
-
-        pullerComp.NextThrow = _timing.CurTime + pullerComp.ThrowCooldown;
-
-        // Cap the distance
-        const float range = 2f;
-        var fromUserCoords = coords.WithEntityId(player, EntityManager);
-        var userCoords = new EntityCoordinates(player, Vector2.Zero);
-
-        if (!userCoords.InRange(EntityManager, _xformSys, fromUserCoords, range))
-        {
-            var userDirection = fromUserCoords.Position - userCoords.Position;
-            fromUserCoords = userCoords.Offset(userDirection.Normalized() * range);
-        }
-
-        Dirty(player, pullerComp);
-        _throwing.TryThrow(pulled.Value, fromUserCoords, user: player, strength: 4f, animated: false, recoil: false, playSound: false, doSpin: false);
-        return false;
     }
 
     public bool IsPulling(EntityUid puller, PullerComponent? component = null)
@@ -362,14 +318,17 @@ public sealed class PullingSystem : EntitySystem
         return !startPull.Cancelled && !getPulled.Cancelled;
     }
 
-    public bool TogglePull(EntityUid pullableUid, EntityUid pullerUid, PullableComponent pullable)
+    public bool TogglePull(Entity<PullableComponent?> pullable, EntityUid pullerUid)
     {
-        if (pullable.Puller == pullerUid)
+        if (!Resolve(pullable, ref pullable.Comp, false))
+            return false;
+
+        if (pullable.Comp.Puller == pullerUid)
         {
-            return TryStopPull(pullableUid, pullable);
+            return TryStopPull(pullable, pullable.Comp);
         }
 
-        return TryStartPull(pullerUid, pullableUid, pullableComp: pullable);
+        return TryStartPull(pullerUid, pullable, pullableComp: pullable);
     }
 
     public bool TogglePull(EntityUid pullerUid, PullerComponent puller)
@@ -377,7 +336,7 @@ public sealed class PullingSystem : EntitySystem
         if (!TryComp<PullableComponent>(puller.Pulling, out var pullable))
             return false;
 
-        return TogglePull(puller.Pulling.Value, pullerUid, pullable);
+        return TogglePull((puller.Pulling.Value, pullable), pullerUid);
     }
 
     public bool TryStartPull(EntityUid pullerUid, EntityUid pullableUid,
@@ -460,8 +419,8 @@ public sealed class PullingSystem : EntitySystem
 
         // Messaging
         var message = new PullStartedMessage(pullerUid, pullableUid);
-        _alertsSystem.ShowAlert(pullerUid, AlertType.Pulling);
-        _alertsSystem.ShowAlert(pullableUid, AlertType.Pulled);
+        _alertsSystem.ShowAlert(pullerUid, pullerComp.PullingAlert);
+        _alertsSystem.ShowAlert(pullableUid, pullableComp.PulledAlert);
 
         RaiseLocalEvent(pullerUid, message);
         RaiseLocalEvent(pullableUid, message);
