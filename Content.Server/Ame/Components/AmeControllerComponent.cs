@@ -51,11 +51,11 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
     /// <summary>
-    /// The sound used when injecting antimatter into the AME.
+    /// The sound used when injecting antimatter into the AME. #GreyStation - Changed it to bang.ogg
     /// </summary>
     [DataField("injectSound")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier InjectSound = new SoundCollectionSpecifier("MetalThud");
+    public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
 
     /// <summary>
     /// The last time this could have injected fuel into the AME.
