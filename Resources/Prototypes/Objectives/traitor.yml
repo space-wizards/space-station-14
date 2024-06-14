@@ -4,7 +4,7 @@
   id: BaseTraitorObjective
   components:
   - type: Objective
-    issuer: syndicate
+    issuer: traitor
   - type: RoleRequirement
     roles:
       components:
