@@ -37759,11 +37759,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 66.5,-52.5
       parent: 2
-  - uid: 4301
-    components:
-    - type: Transform
-      pos: 58.240814,-52.410294
-      parent: 2
   - uid: 4726
     components:
     - type: Transform
@@ -40292,11 +40287,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 60.5,-48.5
       parent: 2
-  - uid: 7738
-    components:
-    - type: Transform
-      pos: 60.5,-69.5
-      parent: 2
 - proto: ComputerCriminalRecords
   entities:
   - uid: 4405
@@ -40486,6 +40476,11 @@ entities:
       parent: 2
 - proto: ComputerStationRecords
   entities:
+  - uid: 4301
+    components:
+    - type: Transform
+      pos: 60.5,-69.5
+      parent: 2
   - uid: 16519
     components:
     - type: Transform
@@ -93398,6 +93393,18 @@ entities:
     components:
     - type: Transform
       pos: -8.5,-48.5
+      parent: 2
+- proto: SpawnPointLawyer
+  entities:
+  - uid: 7738
+    components:
+    - type: Transform
+      pos: 54.5,-48.5
+      parent: 2
+  - uid: 18044
+    components:
+    - type: Transform
+      pos: 54.5,-50.5
       parent: 2
 - proto: SpawnPointLibrarian
   entities:
