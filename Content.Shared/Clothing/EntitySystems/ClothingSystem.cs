@@ -92,15 +92,13 @@ public abstract class ClothingSystem : EntitySystem
             InventorySystem.InventorySlotEnumerator enumerator = _invSystem.GetSlotEnumerator(equipee);
 
             bool shouldLayerShow = true;
-            while (enumerator.NextItem(out EntityUid item))
+            while (enumerator.NextItem(out EntityUid item, out SlotDefinition? slot))
             {
                 if (TryComp(item, out HideLayerClothingComponent? comp))
                 {
                     if (comp.Slots.Contains(layer))
                     {
-                        if (_invSystem.TryGetContainingSlot(item, out var currentItemSlot)
-                        && currentItemSlot.SlotGroup != "Default")
-                            break;
+                        if (slot.SlotFlags == SlotFlags.POCKET) break;
 
                         //Checks for mask toggling. TODO: Make a generic system for this
                         if (comp.HideOnToggle && TryComp(item, out MaskComponent? mask) && TryComp(item, out ClothingComponent? clothing))
