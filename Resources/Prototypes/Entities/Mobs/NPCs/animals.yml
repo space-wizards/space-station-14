@@ -181,6 +181,9 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: SmallMob
+    speechSounds: Cluck
   - type: Tag
     tags:
     - DoorBumpOpener
