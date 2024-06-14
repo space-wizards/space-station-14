@@ -520,6 +520,8 @@ namespace Content.Server.Database
         public List<Round> Rounds { get; set; } = null!;
         public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
 
+        public DateTime? LastReadRules { get; set; }
+
         public List<AdminNote> AdminNotesReceived { get; set; } = null!;
         public List<AdminNote> AdminNotesCreated { get; set; } = null!;
         public List<AdminNote> AdminNotesLastEdited { get; set; } = null!;
@@ -887,6 +889,10 @@ namespace Content.Server.Database
         Whitelist = 1,
         Full = 2,
         Panic = 3,
+        /*
+         * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
+         */
+        BabyJail = 4,
     }
 
     public class ServerBanHit
