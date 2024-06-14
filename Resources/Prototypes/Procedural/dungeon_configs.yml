@@ -175,15 +175,15 @@
       - SpaceShip
       - Tall
   postGeneration:
-  
+
   - !type:CorridorPostGen
       tile: FloorCaveDrought
       width: 3
-      
+
   - !type:DungeonEntrancePostGen
       count: 5
       tile: FloorCaveDrought
-      entities: 
+      entities:
         - RandomWoodenWall
 
   - !type:RoomEntrancePostGen
@@ -195,12 +195,12 @@
       tile: FloorCaveDrought
       entities:
         - RandomWoodenWall
-      
+
   - !type:ExternalWindowPostGen
       tile: FloorCaveDrought
       entities:
         - RandomWoodenWall
-  
+
   - !type:WallMountPostGen
       tile: FloorCaveDrought
       spawns:
@@ -217,7 +217,7 @@
         - id: WallMining
           prob: 0.8
           orGroup: content
-          
+
   - !type:BoundaryWallPostGen
       tile: FloorCaveDrought
       wall: WallRock
@@ -225,13 +225,13 @@
 
   - !type:AutoCablingPostGen
       entity: Catwalk
-    
+
   - !type:JunctionPostGen
       tile: FloorCaveDrought
       width: 3
       entities:
         - RandomWoodenSupport
-  
+
   - !type:CornerClutterPostGen
       contents:
         - id: RandomStalagmiteOrCrystal
@@ -292,11 +292,11 @@
     - !type:JunctionPostGen
       width: 1
       entities:
-        - AirlockHydroGlassLocked
+        - AirlockGlass
 
     - !type:JunctionPostGen
       entities:
-        - AirlockHydroGlassLocked
+        - AirlockGlass
 
     - !type:AutoCablingPostGen
 
@@ -322,3 +322,40 @@
         SouthEast: BrickTileWhiteInnerSe
         NorthWest: BrickTileWhiteInnerNw
         NorthEast: BrickTileWhiteInnerNe
+
+# todo: Add a biome dungeon generator
+# Add corridor first gens that place rooms on top
+# Add a worm corridor gen (place subsequent corridors somewhere randomly along the path)
+# Place room entrances on ends of corridors touching a tile
+# Remove all room tiles from corridors
+# Fix paths up and try to reconnect all corridor tiles
+# Add a postgen step to spread rooms out, though it shouldn't spread into corridor exteriors
+
+- type: dungeonConfig
+  id: Haunted
+  generator: !type:PrefabDunGen
+    tile: FloorCaveDrought
+    roomWhitelist:
+    - Mineshaft
+    presets:
+    - Bucket
+    - Wow
+    - SpaceShip
+    - Tall
+  postGeneration:
+    - !type:WormCorridorPostGen
+      width: 3
+      tile: FloorCaveDrought
+
+    - !type:CorridorClutterPostGen
+      contents:
+      - id: FloraStalagmite1
+      - id: FloraStalagmite2
+      - id: FloraStalagmite3
+      - id: FloraStalagmite4
+      - id: FloraStalagmite5
+      - id: FloraStalagmite6
+
+    - !type:BoundaryWallPostGen
+      tile: FloorCaveDrought
+      wall: WallRock

@@ -38,7 +38,6 @@
   description: Yep, it's a tree.
   abstract: true
   components:
-  - type: IgnoreWeather
   - type: SpriteFade
   - type: Clickable
   - type: Sprite

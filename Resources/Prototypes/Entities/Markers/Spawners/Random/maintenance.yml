@@ -65,6 +65,8 @@
         - ClothingUniformJumpsuitPirate
         - ClothingShoesBootsCowboyFancy
         - ClothingHeadHatCowboyBountyHunter
+        - ClothingNeckAutismPin
+        - ClothingNeckGoldAutismPin
       rareChance: 0.01
       prototypes:
         - Lighter
@@ -77,7 +79,7 @@
         - ClothingHeadHatCone
         - ClothingNeckBling
         - ClothingHeadHelmetCosmonaut
-        - ClothingHeadHelmetScaf
+        - ClothingHeadHelmetBasic
         - ClothingShoeSlippersDuck
         - ClothingUnderSocksBee
         - ClothingUnderSocksCoder

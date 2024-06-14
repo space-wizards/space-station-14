@@ -23,8 +23,8 @@ public sealed partial class ContentAudioSystem
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-    private readonly AudioParams _lobbySoundtrackParams = new(-5f, 1, "Master", 0, 0, 0, false, 0f);
-    private readonly AudioParams _roundEndSoundEffectParams = new(-5f, 1, "Master", 0, 0, 0, false, 0f);
+    private readonly AudioParams _lobbySoundtrackParams = new(-5f, 1, 0, 0, 0, false, 0f);
+    private readonly AudioParams _roundEndSoundEffectParams = new(-5f, 1, 0, 0, 0, false, 0f);
 
     /// <summary>
     /// EntityUid of lobby restart sound component.

@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation at f349b842c84f500399bd5673e5e34a6bc45b001a, direct dmi link https://github.com/tgstation/tgstation/blob/f349b842c84f500399bd5673e5e34a6bc45b001a/icons/obj/stationobjs.dmi",
+  "states": [
+    {
+      "name": "on"
+    },
+    {
+      "name": "off"
+    },
+    {
+      "name": "select",
+	  "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+		  0.1,
+		  0.1,
+		  0.1
+        ]
+      ]
+    }
+  ]
+}

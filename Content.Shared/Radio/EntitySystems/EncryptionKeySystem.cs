@@ -6,10 +6,8 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Radio.Components;
-using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -106,7 +104,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
             TryInsertKey(uid, component, args);
         }
         else if (TryComp<ToolComponent>(args.Used, out var tool)
-                 && tool.Qualities.Contains(component.KeysExtractionMethod)
+                 && _tool.HasQuality(args.Used, component.KeysExtractionMethod, tool)
                  && component.KeyContainer.ContainedEntities.Count > 0) // dont block deconstruction
         {
             args.Handled = true;

@@ -13,10 +13,12 @@
     program: 2
   - type: UserInterface
     interfaces:
-    - key: enum.InstrumentUiKey.Key
-      type: InstrumentBoundUserInterface
-    - key: enum.StationMapUiKey.Key
-      type: UntrackedStationMapBoundUserInterface
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+        requireInputValidation: false
+      enum.StationMapUiKey.Key:
+        type: UntrackedStationMapBoundUserInterface
+        requireInputValidation: false
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
     layers:
@@ -134,10 +136,10 @@
   id: ActionPAIPlayMidi
   name: Play MIDI
   description: Open your portable MIDI interface to soothe your owner.
-  noSpawn: true
   components:
   - type: InstantAction
     checkCanInteract: false
+    checkConsciousness: false
     icon: Interface/Actions/pai-midi.png
     event: !type:OpenUiActionEvent
       key: enum.InstrumentUiKey.Key
@@ -146,10 +148,10 @@
   id: ActionPAIOpenMap
   name: Open Map
   description: Open your map interface and guide your owner.
-  noSpawn: true
   components:
     - type: InstantAction
       checkCanInteract: false
+      checkConsciousness: false
       icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
       event: !type:OpenUiActionEvent
         key: enum.StationMapUiKey.Key

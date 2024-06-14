@@ -1,0 +1,4 @@
+- files: ["hahaha.ogg", "pew_pew.ogg", "sting_*.ogg"]
+  license: "CC0-1.0"
+  copyright: "Recorded by https://github.com/Tayrtahn"
+  source: "https://github.com/space-wizards/space-station-14/pull/24200"

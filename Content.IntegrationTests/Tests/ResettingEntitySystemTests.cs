@@ -9,7 +9,6 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(RoundRestartCleanupEvent))]
     public sealed class ResettingEntitySystemTests
     {
-        [Reflect(false)]
         public sealed class TestRoundRestartCleanupEvent : EntitySystem
         {
             public bool HasBeenReset { get; set; }
@@ -48,8 +47,6 @@ namespace Content.IntegrationTests.Tests
                 var system = entitySystemManager.GetEntitySystem<TestRoundRestartCleanupEvent>();
 
                 system.HasBeenReset = false;
-
-                Assert.That(system.HasBeenReset, Is.False);
 
                 gameTicker.RestartRound();
 

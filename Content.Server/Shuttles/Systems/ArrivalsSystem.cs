@@ -1,18 +1,17 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Administration;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Parallax;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Salvage;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
+using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -22,7 +21,6 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
-using Robust.Shared.Spawners;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
@@ -51,7 +49,6 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private readonly RestrictedRangeSystem _restricted = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
@@ -82,7 +79,7 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationArrivalsComponent, ComponentStartup>(OnArrivalsStartup);
+        SubscribeLocalEvent<StationArrivalsComponent, StationPostInitEvent>(OnStationPostInit);
 
         SubscribeLocalEvent<ArrivalsShuttleComponent, ComponentStartup>(OnShuttleStartup);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLTagEvent>(OnShuttleTag);
@@ -192,7 +189,7 @@ public sealed class ArrivalsSystem : EntitySystem
         if (TryComp<DeviceNetworkComponent>(shuttleUid, out var netComp))
         {
             TryComp<FTLComponent>(shuttleUid, out var ftlComp);
-            var ftlTime = TimeSpan.FromSeconds(ftlComp?.TravelTime ?? ShuttleSystem.DefaultTravelTime);
+            var ftlTime = TimeSpan.FromSeconds(ftlComp?.TravelTime ?? _shuttles.DefaultTravelTime);
 
             var payload = new NetworkPayload
             {
@@ -258,7 +255,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
     private void OnArrivalsDocked(EntityUid uid, ArrivalsShuttleComponent component, ref FTLCompletedEvent args)
     {
-        TimeSpan dockTime = component.NextTransfer - _timing.CurTime + TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime);
+        var dockTime = component.NextTransfer - _timing.CurTime + TimeSpan.FromSeconds(_shuttles.DefaultStartupTime);
 
         if (TryComp<DeviceNetworkComponent>(uid, out var netComp))
         {
@@ -281,7 +278,7 @@ public sealed class ArrivalsSystem : EntitySystem
         foreach (var (ent, xform) in toDump)
         {
             var rotation = xform.LocalRotation;
-            _transform.SetCoordinates(ent, new EntityCoordinates(args.FromMapUid!.Value, args.FTLFrom.Transform(xform.LocalPosition)));
+            _transform.SetCoordinates(ent, new EntityCoordinates(args.FromMapUid!.Value, Vector2.Transform(xform.LocalPosition, args.FTLFrom)));
             _transform.SetWorldRotation(ent, args.FromRotation + rotation);
         }
     }
@@ -320,7 +317,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
         TryGetArrivals(out var arrivals);
 
-        if (TryComp<TransformComponent>(arrivals, out var arrivalsXform))
+        if (TryComp(arrivals, out TransformComponent? arrivalsXform))
         {
             var mapId = arrivalsXform.MapID;
 
@@ -417,14 +414,14 @@ public sealed class ArrivalsSystem : EntitySystem
         var curTime = _timing.CurTime;
         TryGetArrivals(out var arrivals);
 
-        if (TryComp<TransformComponent>(arrivals, out var arrivalsXform))
+        if (TryComp(arrivals, out TransformComponent? arrivalsXform))
         {
             while (query.MoveNext(out var uid, out var comp, out var shuttle, out var xform))
             {
                 if (comp.NextTransfer > curTime || !TryComp<StationDataComponent>(comp.Station, out var data))
                     continue;
 
-                var tripTime = ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultStartupTime;
+                var tripTime = _shuttles.DefaultTravelTime + _shuttles.DefaultStartupTime;
 
                 // Go back to arrivals source
                 if (xform.MapUid != arrivalsXform.MapUid)
@@ -535,7 +532,7 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
-    private void OnArrivalsStartup(EntityUid uid, StationArrivalsComponent component, ComponentStartup args)
+    private void OnStationPostInit(EntityUid uid, StationArrivalsComponent component, ref StationPostInitEvent args)
     {
         if (!Enabled)
             return;

@@ -49,7 +49,7 @@ namespace Content.Shared.Decals
                     data[index] = chunk;
             }
 
-            args.State = new DecalGridState(data) { AllChunks = new(component.ChunkCollection.ChunkCollection.Keys) };
+            args.State = new DecalGridDeltaState(data, new(component.ChunkCollection.ChunkCollection.Keys));
         }
 
         private void OnGridInitialize(GridInitializeEvent msg)
@@ -69,7 +69,7 @@ namespace Content.Shared.Decals
 
             // This **shouldn't** be required, but just in case we ever get entity prototypes that have decal grids, we
             // need to ensure that we send an initial full state to players.
-            Dirty(component);
+            Dirty(uid, component);
         }
 
         protected Dictionary<Vector2i, DecalChunk>? ChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
