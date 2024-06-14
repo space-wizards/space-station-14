@@ -33,7 +33,7 @@ public sealed partial class DocumentParsingManager
     public void Initialize()
     {
         _tagParser = TryOpeningTag
-            // .Assert(_tagControlParsers.ContainsKey, tag => $"unknown tag: {tag}")
+            .Assert(_tagControlParsers.ContainsKey, tag => $"unknown tag: {tag}")
             .Bind(tag => _tagControlParsers[tag]);
 
         _controlParser = OneOf(_tagParser, TryHeaderControl, ListControlParser, TextControlParser)
