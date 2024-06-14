@@ -20,6 +20,19 @@
   products:
     EggCooked: 0.5
 
+- type: reaction
+  id: SapBoiling
+  impact: Low
+  minTemp: 377
+  reactants:
+    Sap:
+      amount: 1.2
+  effects:
+  - !type:CreateGas
+    gas: WaterVapor
+  products:
+    Syrup: 0.1 #12:1 sap to syruop
+
 # Holy - TODO: make it so only the chaplain can use the bible to start these reactions, not anyone with a bible
 
 - type: reaction

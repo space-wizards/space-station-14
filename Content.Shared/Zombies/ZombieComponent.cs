@@ -14,7 +14,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Zombies;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ZombieComponent : Component, IAntagStatusIconComponent
+public sealed partial class ZombieComponent : Component
 {
     /// <summary>
     /// The baseline infection chance you have if you are completely nude
@@ -27,7 +27,7 @@ public sealed partial class ZombieComponent : Component, IAntagStatusIconCompone
     /// being invincible by bundling up.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float MinZombieInfectionChance = 0.50f;
+    public float MinZombieInfectionChance = 0.25f;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float ZombieMovementSpeedDebuff = 0.70f;
@@ -96,9 +96,6 @@ public sealed partial class ZombieComponent : Component, IAntagStatusIconCompone
 
     [DataField("zombieStatusIcon")]
     public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
-
-    [DataField]
-    public bool IconVisibleToGhost { get; set; } = true;
 
     /// <summary>
     /// Healing each second

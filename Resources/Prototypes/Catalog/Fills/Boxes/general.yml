@@ -39,10 +39,6 @@
   id: BoxLightbulb
   description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
-  - type: StorageFill
-    contents:
-      - id: LightBulb
-        amount: 12
   - type: Sprite
     layers:
       - state: box
@@ -53,36 +49,50 @@
     whitelist:
       components:
       - LightBulb
+  - type: StorageFill
+    contents:
+      - id: LightBulb
+        amount: 12
 
 - type: entity
   name: lighttube box
   parent: BoxLightbulb
   id: BoxLighttube
   components:
-  - type: StorageFill
-    contents:
-      - id: LightTube
-        amount: 12
   - type: Sprite
     layers:
       - state: box
       - state: lighttube
+<<<<<<< HEAD
+=======
+  - type: StorageFill
+    contents:
+      - id: LightTube
+        amount: 12
+>>>>>>> wizards/master
 
 - type: entity
   name: mixed lights box
   parent: BoxLightbulb
   id: BoxLightMixed
   components:
+  - type: Sprite
+    layers:
+      - state: box
+      - state: lightmixed
   - type: StorageFill
     contents:
       - id: LightTube
         amount: 6
       - id: LightBulb
         amount: 6
+<<<<<<< HEAD
   - type: Sprite
     layers:
       - state: box
       - state: lightmixed
+=======
+>>>>>>> wizards/master
 
 - type: entity
   name: PDA box
@@ -332,26 +342,6 @@
         amount: 2
 
 - type: entity
-  name: deathrattle implant box
-  parent: BoxCardboard
-  id: BoxDeathRattleImplants
-  description: Six deathrattle implants and handheld GPS devices for the whole squad.
-  components:
-  - type: StorageFill
-    contents:
-      - id: DeathRattleImplanter
-        amount: 6
-      - id: HandheldGPSBasic
-        amount: 6
-  - type: Storage
-    grid:
-    - 0,0,5,3
-  - type: Sprite
-    layers:
-      - state: box
-      - state: syringe
-
-- type: entity
   name: lead-lined box
   parent: BoxCardboard
   suffix: DEBUG
@@ -368,6 +358,7 @@
   description: This box filled with candles.
   parent: BoxCardboard
   id: BoxCandle
+  description: This box is specifically moulded to only carry candles.
   components:
   - type: Sprite
     layers:
@@ -375,19 +366,22 @@
       - state: candle
   - type: Storage
     grid:
-    - 0,0,9,2
+    - 0,0,5,3
+    whitelist:
+      tags:
+      - Candle
   - type: StorageFill
     contents:
       - id: Candle
-        amount: 3
+        amount: 4
       - id: CandleBlue
-        amount: 3
+        amount: 2
       - id: CandleRed
-        amount: 3
+        amount: 2
       - id: CandleGreen
-        amount: 3
+        amount: 2
       - id: CandlePurple
-        amount: 3
+        amount: 2
 
 - type: entity
   name: small candle box
@@ -397,22 +391,26 @@
   - type: StorageFill
     contents:
       - id: CandleSmall
-        amount: 5
+        amount: 8
       - id: CandleBlueSmall
-        amount: 5
+        amount: 4
       - id: CandleRedSmall
-        amount: 5
+        amount: 4
       - id: CandleGreenSmall
-        amount: 5
+        amount: 4
       - id: CandlePurpleSmall
-        amount: 5
+        amount: 4
 
 - type: entity
   name: darts box
   parent: BoxCardboard
   id: BoxDarts
-  description: This box filled with colorful darts.
+  description: A box filled with colorful darts.
   components:
+  - type: Sprite
+    layers:
+      - state: box
+      - state: darts
   - type: StorageFill
     contents:
       - id: Dart
@@ -426,10 +424,6 @@
   - type: Storage
     grid:
     - 0,0,5,3
-  - type: Sprite
-    layers:
-      - state: box
-      - state: darts
 
 - type: entity
   parent: BoxCardboard

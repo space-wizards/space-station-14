@@ -184,7 +184,7 @@ public sealed partial class ShuttleSystem
             return;
 
         if (!TryComp<DockingComponent>(uid, out var dock) ||
-            !TryComp<TransformComponent>(uid, out var xform) ||
+            !TryComp(uid, out TransformComponent? xform) ||
             xform.GridUid == null)
         {
             return;
@@ -196,7 +196,7 @@ public sealed partial class ShuttleSystem
 
         if (_loader.TryLoad(mapId, component.Path.ToString(), out var ent) &&
             ent.Count == 1 &&
-            TryComp<TransformComponent>(ent[0], out var shuttleXform))
+            TryComp(ent[0], out TransformComponent? shuttleXform))
         {
             var escape = GetSingleDock(ent[0]);
 

@@ -49,6 +49,7 @@
                 <Label Text="{Loc 'ui-options-general-speech'}"
                        FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
                        StyleClasses="LabelKeyText"/>
+                <CheckBox Name="ShowOocPatronColor" Text="{Loc 'ui-options-show-ooc-patron-color'}" />
                 <CheckBox Name="ShowLoocAboveHeadCheckBox" Text="{Loc 'ui-options-show-looc-on-head'}" />
                 <CheckBox Name="FancySpeechBubblesCheckBox" Text="{Loc 'ui-options-fancy-speech'}" />
                 <CheckBox Name="FancyNameBackgroundsCheckBox" Text="{Loc 'ui-options-fancy-name-background'}" />

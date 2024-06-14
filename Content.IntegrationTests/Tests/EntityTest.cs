@@ -19,6 +19,8 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(EntityUid))]
     public sealed class EntityTest
     {
+        private static readonly ProtoId<EntityCategoryPrototype> SpawnerCategory = "Spawner";
+
         [Test]
         public async Task SpawnAndDeleteAllEntitiesOnDifferentMaps()
         {
@@ -234,14 +236,6 @@ namespace Content.IntegrationTests.Tests
                 "StationEvent",
                 "TimedDespawn",
 
-                // Spawner entities
-                "DragonRift",
-                "RandomHumanoidSpawner",
-                "RandomSpawner",
-                "ConditionalSpawner",
-                "GhostRoleMobSpawner",
-                "NukeOperativeSpawner",
-                "TimedSpawner",
                 // makes an announcement on mapInit.
                 "AnnounceOnSpawn",
             };
@@ -253,6 +247,7 @@ namespace Content.IntegrationTests.Tests
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
                 .Where(p => !excluded.Any(p.Components.ContainsKey))
+                .Where(p => p.Categories.All(x => x.ID != SpawnerCategory))
                 .Select(p => p.ID)
                 .ToList();
 
@@ -345,50 +340,32 @@ namespace Content.IntegrationTests.Tests
                 "MapGrid",
                 "Broadphase",
                 "StationData", // errors when removed mid-round
+                "StationJobs",
                 "Actor", // We aren't testing actor components, those need their player session set.
                 "BlobFloorPlanBuilder", // Implodes if unconfigured.
                 "DebrisFeaturePlacerController", // Above.
                 "LoadedChunk", // Worldgen chunk loading malding.
                 "BiomeSelection", // Whaddya know, requires config.
+                "ActivatableUI", // Requires enum key
             };
+
+            // TODO TESTS
+            // auto ignore any components that have a "required" data field.
 
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
-
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
-            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
-            var mapSystem = entityManager.System<SharedMapSystem>();
             var logmill = server.ResolveDependency<ILogManager>().GetSawmill("EntityTest");
 
-            Entity<MapGridComponent> grid = default!;
-
-            await server.WaitPost(() =>
-            {
-                // Create a one tile grid to stave off the grid 0 monsters
-                var mapId = mapManager.CreateMap();
-
-                mapManager.AddUninitializedMap(mapId);
-
-                grid = mapManager.CreateGridEntity(mapId);
-
-                var tileDefinition = tileDefinitionManager["Plating"];
-                var tile = new Tile(tileDefinition.TileId);
-                var coordinates = new EntityCoordinates(grid.Owner, Vector2.Zero);
-
-                mapSystem.SetTile(grid.Owner, grid.Comp!, coordinates, tile);
-
-                mapManager.DoMapInitialize(mapId);
-            });
-
+            await pair.CreateTestMap();
             await server.WaitRunTicks(5);
+            var testLocation = pair.TestMap.GridCoords;
 
             await server.WaitAssertion(() =>
             {
                 Assert.Multiple(() =>
                 {
-                    var testLocation = new EntityCoordinates(grid.Owner, Vector2.Zero);
 
                     foreach (var type in componentFactory.AllRegisteredTypes)
                     {

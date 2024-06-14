@@ -150,6 +150,14 @@ namespace Content.Server.Chat.Managers
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin announcement: {message}");
         }
 
+        public void SendAdminAnnouncementMessage(ICommonSession player, string message, bool suppressLog = true)
+        {
+            var wrappedMessage = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
+                ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
+                ("message", FormattedMessage.EscapeText(message)));
+            ChatMessageToOne(ChatChannel.Admin, message, wrappedMessage, default, false, player.Channel);
+        }
+
         public void SendAdminAlert(string message)
         {
             var clients = _adminManager.ActiveAdmins.Select(p => p.Channel);
@@ -244,8 +252,7 @@ namespace Content.Server.Chat.Managers
                 var prefs = _preferencesManager.GetPreferences(player.UserId);
                 colorOverride = prefs.AdminOOCColor;
             }
-            if (player.Channel.UserData.PatronTier is { } patron &&
-                     PatronOocColors.TryGetValue(patron, out var patronColor))
+            if (  _netConfigManager.GetClientCVar(player.Channel, CCVars.ShowOocPatronColor) && player.Channel.UserData.PatronTier is { } patron && PatronOocColors.TryGetValue(patron, out var patronColor))
             {
                 wrappedMessage = Loc.GetString("chat-manager-send-ooc-patron-wrap-message", ("patronColor", patronColor),("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
             }

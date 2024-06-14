@@ -29,4 +29,10 @@ public sealed partial class SpillableComponent : Component
     /// </summary>
     [DataField]
     public FixedPoint2 MaxMeleeSpillAmount = FixedPoint2.New(20);
+
+    /// <summary>
+    ///     Should this item be spilled when thrown?
+    /// </summary>
+    [DataField]
+    public bool SpillWhenThrown = true;
 }

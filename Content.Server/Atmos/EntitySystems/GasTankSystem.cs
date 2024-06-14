@@ -75,7 +75,7 @@ namespace Content.Server.Atmos.EntitySystems
         public void UpdateUserInterface(Entity<GasTankComponent> ent, bool initialUpdate = false)
         {
             var (owner, component) = ent;
-            _ui.TrySetUiState(owner, SharedGasTankUiKey.Key,
+            _ui.SetUiState(owner, SharedGasTankUiKey.Key,
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = component.Air?.Pressure ?? 0,
@@ -220,7 +220,7 @@ namespace Content.Server.Atmos.EntitySystems
         public bool CanConnectToInternals(GasTankComponent component)
         {
             var internals = GetInternalsComponent(component, component.User);
-            return internals != null && internals.BreathToolEntity != null && !component.IsValveOpen;
+            return internals != null && internals.BreathTools.Count != 0 && !component.IsValveOpen;
         }
 
         public void ConnectToInternals(Entity<GasTankComponent> ent)
@@ -359,7 +359,8 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnAnalyzed(EntityUid uid, GasTankComponent component, GasAnalyzerScanEvent args)
         {
-            args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), component.Air} };
+            args.GasMixtures ??= new List<(string, GasMixture?)>();
+            args.GasMixtures.Add((Name(uid), component.Air));
         }
 
         private void OnGasTankPrice(EntityUid uid, GasTankComponent component, ref PriceCalculationEvent args)

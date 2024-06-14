@@ -19,7 +19,7 @@ public sealed partial class Ignite : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
-        var flamSys = EntitySystem.Get<FlammableSystem>();
+        var flamSys = args.EntityManager.System<FlammableSystem>();
         flamSys.Ignite(args.SolutionEntity, args.OrganEntity ?? args.SolutionEntity);
     }
 }

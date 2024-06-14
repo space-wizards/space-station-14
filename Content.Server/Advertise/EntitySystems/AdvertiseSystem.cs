@@ -37,13 +37,14 @@ public sealed class AdvertiseSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, AdvertiseComponent advert, MapInitEvent args)
     {
-        RandomizeNextAdvertTime(advert);
+        var prewarm = advert.Prewarm;
+        RandomizeNextAdvertTime(advert, prewarm);
         _nextCheckTime = MathHelper.Min(advert.NextAdvertisementTime, _nextCheckTime);
     }
 
-    private void RandomizeNextAdvertTime(AdvertiseComponent advert)
+    private void RandomizeNextAdvertTime(AdvertiseComponent advert, bool prewarm = false)
     {
-        var minDuration = Math.Max(1, advert.MinimumWait);
+        var minDuration = prewarm ? 0 : Math.Max(1, advert.MinimumWait);
         var maxDuration = Math.Max(minDuration, advert.MaximumWait);
         var waitDuration = TimeSpan.FromSeconds(_random.Next(minDuration, maxDuration));
 
@@ -61,7 +62,7 @@ public sealed class AdvertiseSystem : EntitySystem
             return;
 
         if (_prototypeManager.TryIndex(advert.Pack, out var advertisements))
-            _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Messages)), InGameICChatType.Speak, hideChat: true);
+            _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Values)), InGameICChatType.Speak, hideChat: true);
     }
 
     public override void Update(float frameTime)

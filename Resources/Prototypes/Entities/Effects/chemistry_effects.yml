@@ -77,8 +77,9 @@
     animationState: foam-dissolve
   - type: Slippery
   - type: StepTrigger
-  - type: ScoopableSolution
-    solution: solutionArea
+  # disabled until foam reagent duplication is fixed
+  #- type: ScoopableSolution
+  #  solution: solutionArea
 
 - type: entity
   id: MetalFoam

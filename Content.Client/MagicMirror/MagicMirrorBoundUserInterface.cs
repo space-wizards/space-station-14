@@ -72,9 +72,6 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
         if (!disposing)
             return;
 
-        if (_window != null)
-            _window.OnClose -= Close;
-
         _window?.Dispose();
     }
 }

@@ -9,7 +9,6 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Movement.Pulling.Components;
@@ -17,12 +16,11 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Stacks;
 using Content.Shared.Throwing;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -31,10 +29,10 @@ namespace Content.Server.Hands.Systems
     public sealed class HandsSystem : SharedHandsSystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly VirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
@@ -94,7 +92,8 @@ namespace Content.Server.Hands.Systems
             if (TryComp(uid, out PullerComponent? puller) && TryComp(puller.Pulling, out PullableComponent? pullable))
                 _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
 
-            if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
+            var offsetRandomCoordinates = _transformSystem.GetMoverCoordinates(args.Target).Offset(_random.NextVector2(1f, 1.5f));
+            if (!ThrowHeldItem(args.Target, offsetRandomCoordinates))
                 return;
 
             args.PopupPrefix = "disarm-action-";
@@ -160,7 +159,7 @@ namespace Content.Server.Hands.Systems
                     continue;
                 }
 
-                QueueDel(hand.HeldEntity.Value);
+                TryDrop(args.PullerUid, hand, handsComp: component);
                 break;
             }
         }

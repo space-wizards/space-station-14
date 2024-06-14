@@ -62,6 +62,21 @@
         prob: 0.1
 
 - type: entity
+  id: ClosetEmergencyN2FilledRandom
+  parent: ClosetEmergencyN2
+  suffix: Filled, Random
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskBreath
+      - id: EmergencyNitrogenTankFilled
+        prob: 0.80
+        orGroup: EmergencyTankOrRegularTank
+      - id: NitrogenTankFilled
+        prob: 0.20
+        orGroup: EmergencyTankOrRegularTank
+
+- type: entity
   id: ClosetFireFilled
   parent: ClosetFire
   suffix: Filled

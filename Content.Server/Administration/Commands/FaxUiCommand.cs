@@ -5,7 +5,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
 
-[AdminCommand(AdminFlags.Admin)]
+[AdminCommand(AdminFlags.Fun)]
 public sealed class FaxUiCommand : IConsoleCommand
 {
     public string Command => "faxui";
@@ -27,4 +27,3 @@ public sealed class FaxUiCommand : IConsoleCommand
         eui.OpenEui(ui, player);
     }
 }
-
