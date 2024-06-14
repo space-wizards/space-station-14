@@ -1055,7 +1055,7 @@
   icon: { sprite: /Textures/Structures/Specific/anomaly.rsi, state: anom4 }
   productEntity: ScramImplanter
   cost:
-    Telecrystal: 6 # it's a gamble that may kill you easily so 6 TC per 2 uses, second one more of a backup
+    Telecrystal: 3 # it's a gamble that will kill you(most of the time) so 3 TC per 2 uses, second one more of a backup
   categories:
     - UplinkImplants
 
