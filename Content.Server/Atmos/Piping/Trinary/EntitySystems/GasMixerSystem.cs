@@ -139,6 +139,9 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnMixerActivate(EntityUid uid, GasMixerComponent mixer, ActivateInWorldEvent args)
         {
+            if (args.Handled || !args.Complex)
+                return;
+
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 

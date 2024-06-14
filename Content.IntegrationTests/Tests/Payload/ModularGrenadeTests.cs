@@ -22,32 +22,32 @@ public sealed class ModularGrenadeTests : InteractionTest
         Target = SEntMan.GetNetEntity(await FindEntity("ModularGrenade"));
 
         await Drop();
-        await Interact(Cable);
+        await InteractUsing(Cable);
 
         // Insert & remove trigger
         AssertComp<OnUseTimerTriggerComponent>(false);
-        await Interact(Trigger);
+        await InteractUsing(Trigger);
         AssertComp<OnUseTimerTriggerComponent>();
         await FindEntity(Trigger, LookupFlags.Uncontained, shouldSucceed: false);
-        await Interact(Pry);
+        await InteractUsing(Pry);
         AssertComp<OnUseTimerTriggerComponent>(false);
 
         // Trigger was dropped to floor, not deleted.
         await FindEntity(Trigger, LookupFlags.Uncontained);
 
         // Re-insert
-        await Interact(Trigger);
+        await InteractUsing(Trigger);
         AssertComp<OnUseTimerTriggerComponent>();
 
         // Insert & remove payload.
-        await Interact(Payload);
+        await InteractUsing(Payload);
         await FindEntity(Payload, LookupFlags.Uncontained, shouldSucceed: false);
-        await Interact(Pry);
+        await InteractUsing(Pry);
         var ent = await FindEntity(Payload, LookupFlags.Uncontained);
         await Delete(ent);
 
         // successfully insert a second time
-        await Interact(Payload);
+        await InteractUsing(Payload);
         ent = await FindEntity(Payload);
         var sys = SEntMan.System<SharedContainerSystem>();
         Assert.That(sys.IsEntityInContainer(ent));
