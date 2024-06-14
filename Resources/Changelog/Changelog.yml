@@ -1,43 +1,6 @@
 ﻿Entries:
 - author: nikthechampiongr
   changes:
-  - message: Mailing units no longer spontaneously turn into disposal units when flushed.
-    type: Fix
-  id: 6230
-  time: '2024-03-25T13:20:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26383
-- author: Simyon
-  changes:
-  - message: All implants are now unable to be implanted more than once.
-    type: Tweak
-  id: 6231
-  time: '2024-03-26T00:16:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26250
-- author: EmoGarbage404
-  changes:
-  - message: Ninjas no longer wipe all technologies when using their gloves on a research
-      server.
-    type: Tweak
-  id: 6232
-  time: '2024-03-26T00:52:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26421
-- author: Dutch-VanDerLinde
-  changes:
-  - message: The chest rig is now available for purchase in the syndicate uplink.
-    type: Add
-  id: 6233
-  time: '2024-03-26T04:05:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26427
-- author: ElectroJr
-  changes:
-  - message: Fixed an atmos bug, which was (probably) causing atmospherics on the
-      station to behave incorrectly.
-    type: Fix
-  id: 6234
-  time: '2024-03-26T04:44:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26441
-- author: nikthechampiongr
-  changes:
   - message: Handcuffs will no longer try to uncuff themselves when they stop being
       dragged.
     type: Fix
@@ -3846,3 +3809,42 @@
   id: 6729
   time: '2024-06-14T06:24:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28968
+- author: Zonespace27
+  changes:
+  - message: Non-uplink PDAs can no longer have telecrystals inserted into them.
+    type: Fix
+  id: 6730
+  time: '2024-06-14T15:24:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28985
+- author: Aquif
+  changes:
+  - message: '"Space Drugs" have been renamed to "Space Mirage"'
+    type: Tweak
+  - message: '"Stimulants" have been renamed to "Hyperzine"'
+    type: Tweak
+  id: 6731
+  time: '2024-06-14T16:53:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28989
+- author: PJB3005
+  changes:
+  - message: Added pride month.
+    type: Add
+  - message: Made the nuke gay.
+    type: Add
+  id: 6732
+  time: '2024-06-14T17:22:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28992
+- author: Aeshus
+  changes:
+  - message: Loadouts now display all requirements.
+    type: Fix
+  id: 6733
+  time: '2024-06-14T20:32:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28994
+- author: Vermidia
+  changes:
+  - message: allies callable by radio in the uplink now have unique icons
+    type: Tweak
+  id: 6734
+  time: '2024-06-14T21:44:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28954
