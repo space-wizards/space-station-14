@@ -1,4 +1,3 @@
-using Content.Shared.Polymorph;
 using Content.Shared.Polymorph.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;

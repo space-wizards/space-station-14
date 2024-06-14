@@ -1,3 +1,4 @@
+using Content.Shared.Polymorph.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
@@ -7,7 +8,7 @@ namespace Content.Shared.Polymorph.Components;
 /// Added to a player when they use a chameleon projector.
 /// Handles making them invisible and revealing when damaged enough or switching hands.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedChameleonProjectorSystem))]
 public sealed partial class ChameleonDisguisedComponent : Component
 {
     /// <summary>
