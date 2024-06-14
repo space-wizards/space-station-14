@@ -42,7 +42,7 @@ public sealed class ActionContainerSystem : EntitySystem
         if (!TryComp<ActionsContainerComponent>(mindId, out var mindActionContainerComp))
             return;
 
-        if (!HasComp<GhostComponent>(uid) && mindActionContainerComp.Container.ContainedEntities.Count > 0)
+        if (!HasComp<GhostComponent>(uid) && mindActionContainerComp.Container.ContainedEntities.Count > 0 )
             _actions.GrantContainedActions(uid, mindId);
     }
 
@@ -90,8 +90,7 @@ public sealed class ActionContainerSystem : EntitySystem
         {
             if (!comp.Container.Contains(actionId.Value))
             {
-                Log.Error(
-                    $"Action {ToPrettyString(actionId.Value)} is not contained in the expected container {ToPrettyString(uid)}");
+                Log.Error($"Action {ToPrettyString(actionId.Value)} is not contained in the expected container {ToPrettyString(uid)}");
                 return false;
             }
 
@@ -228,10 +227,7 @@ public sealed class ActionContainerSystem : EntitySystem
     /// <summary>
     /// Adds a pre-existing action to an action container. If the action is already in some container it will first remove it.
     /// </summary>
-    public bool AddAction(EntityUid uid,
-        EntityUid actionId,
-        BaseActionComponent? action = null,
-        ActionsContainerComponent? comp = null)
+    public bool AddAction(EntityUid uid, EntityUid actionId, BaseActionComponent? action = null, ActionsContainerComponent? comp = null)
     {
         if (!_actions.ResolveActionData(actionId, ref action))
             return false;
@@ -272,8 +268,7 @@ public sealed class ActionContainerSystem : EntitySystem
         if (action.Container != null)
         {
             if (Exists(action.Container))
-                Log.Error(
-                    $"Failed to remove action {ToPrettyString(actionId)} from its container {ToPrettyString(action.Container)}?");
+                Log.Error($"Failed to remove action {ToPrettyString(actionId)} from its container {ToPrettyString(action.Container)}?");
             action.Container = null;
         }
 
@@ -297,9 +292,7 @@ public sealed class ActionContainerSystem : EntitySystem
         _container.ShutdownContainer(component.Container);
     }
 
-    private void OnEntityInserted(EntityUid uid,
-        ActionsContainerComponent component,
-        EntInsertedIntoContainerMessage args)
+    private void OnEntityInserted(EntityUid uid, ActionsContainerComponent component, EntInsertedIntoContainerMessage args)
     {
         if (args.Container.ID != ActionsContainerComponent.ContainerId)
             return;
@@ -317,9 +310,7 @@ public sealed class ActionContainerSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
     }
 
-    private void OnEntityRemoved(EntityUid uid,
-        ActionsContainerComponent component,
-        EntRemovedFromContainerMessage args)
+    private void OnEntityRemoved(EntityUid uid, ActionsContainerComponent component, EntRemovedFromContainerMessage args)
     {
         if (args.Container.ID != ActionsContainerComponent.ContainerId)
             return;
@@ -339,8 +330,7 @@ public sealed class ActionContainerSystem : EntitySystem
 
     private void OnActionAdded(EntityUid uid, ActionsContainerComponent component, ActionAddedEvent args)
     {
-        if (TryComp<MindComponent>(uid, out var mindComp) && mindComp.OwnedEntity != null &&
-            HasComp<ActionsContainerComponent>(mindComp.OwnedEntity.Value))
+        if (TryComp<MindComponent>(uid, out var mindComp) && mindComp.OwnedEntity != null && HasComp<ActionsContainerComponent>(mindComp.OwnedEntity.Value))
             _actions.GrantContainedAction(mindComp.OwnedEntity.Value, uid, args.Action);
     }
 }

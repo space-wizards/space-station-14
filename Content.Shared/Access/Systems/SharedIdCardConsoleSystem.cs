@@ -27,9 +27,7 @@ namespace Content.Shared.Access.Systems
 
         private void OnComponentInit(EntityUid uid, IdCardConsoleComponent component, ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(uid,
-                IdCardConsoleComponent.PrivilegedIdCardSlotId,
-                component.PrivilegedIdSlot);
+            _itemSlotsSystem.AddItemSlot(uid, IdCardConsoleComponent.PrivilegedIdCardSlotId, component.PrivilegedIdSlot);
             _itemSlotsSystem.AddItemSlot(uid, IdCardConsoleComponent.TargetIdCardSlotId, component.TargetIdSlot);
         }
 

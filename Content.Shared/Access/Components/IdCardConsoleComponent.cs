@@ -30,10 +30,7 @@ public sealed partial class IdCardConsoleComponent : Component
         public readonly List<ProtoId<AccessLevelPrototype>> AccessList;
         public readonly ProtoId<AccessLevelPrototype> JobPrototype;
 
-        public WriteToTargetIdMessage(string fullName,
-            string jobTitle,
-            List<ProtoId<AccessLevelPrototype>> accessList,
-            ProtoId<AccessLevelPrototype> jobPrototype)
+        public WriteToTargetIdMessage(string fullName, string jobTitle, List<ProtoId<AccessLevelPrototype>> accessList, ProtoId<AccessLevelPrototype> jobPrototype)
         {
             FullName = fullName;
             JobTitle = jobTitle;

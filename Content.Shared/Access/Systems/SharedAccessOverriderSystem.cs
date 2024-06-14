@@ -26,9 +26,7 @@ namespace Content.Shared.Access.Systems
 
         private void OnComponentInit(EntityUid uid, AccessOverriderComponent component, ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(uid,
-                AccessOverriderComponent.PrivilegedIdCardSlotId,
-                component.PrivilegedIdSlot);
+            _itemSlotsSystem.AddItemSlot(uid, AccessOverriderComponent.PrivilegedIdCardSlotId, component.PrivilegedIdSlot);
         }
 
         private void OnComponentRemove(EntityUid uid, AccessOverriderComponent component, ComponentRemove args)

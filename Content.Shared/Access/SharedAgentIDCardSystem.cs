@@ -30,10 +30,7 @@ namespace Content.Shared.Access.Systems
         public string CurrentJob { get; }
         public string CurrentJobIconId { get; }
 
-        public AgentIDCardBoundUserInterfaceState(string currentName,
-            string currentJob,
-            string currentJobIconId,
-            HashSet<ProtoId<StatusIconPrototype>> icons)
+        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob, string currentJobIconId, HashSet<ProtoId<StatusIconPrototype>> icons)
         {
             Icons = icons;
             CurrentName = currentName;

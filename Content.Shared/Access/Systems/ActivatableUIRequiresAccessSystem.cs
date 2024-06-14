@@ -3,7 +3,6 @@ using Content.Shared.UserInterface;
 using Content.Shared.Access.Components;
 
 namespace Content.Shared.Access.Systems;
-
 public sealed class ActivatableUIRequiresAccessSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
@@ -16,8 +15,7 @@ public sealed class ActivatableUIRequiresAccessSystem : EntitySystem
         SubscribeLocalEvent<ActivatableUIRequiresAccessComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
     }
 
-    private void OnUIOpenAttempt(Entity<ActivatableUIRequiresAccessComponent> activatableUI,
-        ref ActivatableUIOpenAttemptEvent args)
+    private void OnUIOpenAttempt(Entity<ActivatableUIRequiresAccessComponent> activatableUI, ref ActivatableUIOpenAttemptEvent args)
     {
         if (args.Cancelled)
             return;
@@ -30,3 +28,4 @@ public sealed class ActivatableUIRequiresAccessSystem : EntitySystem
         }
     }
 }
+

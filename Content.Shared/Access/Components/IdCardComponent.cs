@@ -8,10 +8,7 @@ namespace Content.Shared.Access.Components;
 
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
-[Access(typeof(SharedIdCardSystem),
-    typeof(SharedPdaSystem),
-    typeof(SharedAgentIdCardSystem),
-    Other = AccessPermissions.ReadWrite)]
+[Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
 public sealed partial class IdCardComponent : Component
 {
     [DataField("fullName"), ViewVariables(VVAccess.ReadWrite)]
@@ -21,10 +18,7 @@ public sealed partial class IdCardComponent : Component
 
     [DataField("jobTitle")]
     [AutoNetworkedField]
-    [Access(typeof(SharedIdCardSystem),
-         typeof(SharedPdaSystem),
-         typeof(SharedAgentIdCardSystem),
-         Other = AccessPermissions.ReadWrite), ViewVariables(VVAccess.ReadWrite)]
+    [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite), ViewVariables(VVAccess.ReadWrite)]
     public string? JobTitle;
 
     /// <summary>
