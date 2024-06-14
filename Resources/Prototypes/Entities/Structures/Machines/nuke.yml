@@ -16,6 +16,7 @@
       map: ["enum.NukeVisualLayers.Unlit"]
       shader: unshaded
       visible: false
+    - state: nuclearbomb_gay
     - state: nukefestive
       map: ["christmas"]
       visible: false
