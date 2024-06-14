@@ -55,7 +55,7 @@ public sealed class MeteorSystem : EntitySystem
         // Cap damage so we don't overkill the meteor
         var trueDamage = FixedPoint2.Min(maxMeteorDamage, threshold);
 
-        var damage = component.DamageDistribution * trueDamage;
+        var damage = component.DamageTypes * trueDamage;
         _damageable.TryChangeDamage(args.OtherEntity, damage, true, origin: uid);
         _damageable.TryChangeDamage(uid, damage);
 

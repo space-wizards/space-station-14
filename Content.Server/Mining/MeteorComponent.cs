@@ -5,7 +5,7 @@ namespace Content.Server.Mining;
 /// <summary>
 /// This is used for meteors which hit objects, dealing damage to destroy/kill the object and dealing equal damage back to itself.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(MeteorSystem))]
 public sealed partial class MeteorComponent : Component
 {
     /// <summary>
