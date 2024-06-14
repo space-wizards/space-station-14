@@ -613,6 +613,8 @@
     default: ClothingBeltSyndieHolster
   - type: UserInterface
     interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
       enum.ChameleonUiKey.Key:
         type: ChameleonBoundUserInterface
   - type: ExplosionResistance
