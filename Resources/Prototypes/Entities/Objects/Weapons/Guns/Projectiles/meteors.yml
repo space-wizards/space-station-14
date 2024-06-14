@@ -1,27 +1,20 @@
 - type: entity
-  id: MeteorLarge
+  id: BaseMeteor
   name: meteor
-  noSpawn: true
+  description: You prefer them when they're burning up in the atmosphere.
+  abstract: true
   components:
   - type: Sprite
     noRot: false
-    sprite: Objects/Weapons/Guns/Projectiles/meteor.rsi
-    scale: 4,4
-    layers:
-    - state: large
-      shader: unshaded
-  - type: ExplodeOnTrigger
-  - type: DeleteOnTrigger
-  - type: TriggerOnCollide
-    fixtureID: projectile
+    sprite: Objects/Misc/meteor.rsi
   - type: Projectile
     damage: {}
     deleteOnCollide: false
-  - type: Explosive
-    explosionType: Default
-    totalIntensity: 600.0
-    intensitySlope: 30
-    maxIntensity: 45
+  - type: Meteor
+    damageDistribution:
+      types:
+        Blunt: 1
+  - type: Clickable
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
@@ -29,12 +22,145 @@
       projectile:
         shape:
           !type:PhysShapeCircle
-          radius: 0.8
+          radius: 0.4
         density: 100
-        hard: true
-        # Didn't use MapGridComponent for now as the bounds are stuffed.
+        hard: false
         layer:
         - LargeMobLayer
         mask:
         - Impassable
         - BulletImpassable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Explosive
+    explosionType: Default
+    intensitySlope: 4
+    maxIntensity: 100
+
+- type: entity
+  parent: BaseMeteor
+  id: MeteorSpaceDust
+  name: space dust
+  description: Makes a station sneeze.
+  components:
+  - type: Sprite
+    state: space_dust
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 100
+        hard: false
+        layer:
+        - LargeMobLayer
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Explosive
+    totalIntensity: 25
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ExplodeBehavior
+
+- type: entity
+  parent: BaseMeteor
+  id: MeteorSmall
+  suffix: Small
+  components:
+  - type: Sprite
+    state: small
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 100
+        hard: false
+        layer:
+        - LargeMobLayer
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Explosive
+    totalIntensity: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1250
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ExplodeBehavior
+
+- type: entity
+  parent: BaseMeteor
+  id: MeteorMedium
+  suffix: Medium
+  components:
+  - type: Sprite
+    state: medium
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 100
+        hard: false
+        layer:
+        - LargeMobLayer
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Explosive
+    totalIntensity: 200
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1750
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ExplodeBehavior
+
+- type: entity
+  parent: BaseMeteor
+  id: MeteorLarge
+  suffix: Large
+  components:
+  - type: Sprite
+    state: big
+  - type: Explosive
+    totalIntensity: 300
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 2500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ExplodeBehavior
