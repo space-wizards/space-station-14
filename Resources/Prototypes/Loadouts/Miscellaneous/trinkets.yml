@@ -210,7 +210,10 @@
 - type: loadout
   id: ClothingNeckGoldAutismPin
   equipment: ClothingNeckGoldAutismPin
-
+  storage:
+    back:
+    - ClothingNeckGoldAutismPin
+ 
 - type: startingGear
   id: ClothingNeckLizardPin
   storage:
