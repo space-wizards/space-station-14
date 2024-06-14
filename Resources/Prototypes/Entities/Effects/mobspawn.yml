@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: MobSpawnCrabQuartz
   name: mobspawner quartzcrab
+  noSpawn: True
   components:
   - type: Transform
     anchored: True
@@ -30,6 +31,7 @@
   id: MobSpawnCrabIron
   parent: MobSpawnCrabQuartz
   name: mobspawner ironcrab
+  noSpawn: True
   components:
   - type: Sprite
     sprite: /Textures/Effects/mobspawn.rsi
@@ -41,6 +43,7 @@
   id: MobSpawnCrabSilver
   parent: MobSpawnCrabQuartz
   name: mobspawner silvercrab
+  noSpawn: True
   components:
   - type: Sprite
     sprite: /Textures/Effects/mobspawn.rsi
@@ -52,6 +55,7 @@
   id: MobSpawnCrabUranium
   parent: MobSpawnCrabQuartz
   name: mobspawner uraniumcrab
+  noSpawn: True
   components:
   - type: Sprite
     sprite: /Textures/Effects/mobspawn.rsi

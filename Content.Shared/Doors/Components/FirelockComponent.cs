@@ -19,8 +19,6 @@ namespace Content.Shared.Doors.Components
         [DataField("lockedPryTimeModifier"), ViewVariables(VVAccess.ReadWrite)]
         public float LockedPryTimeModifier = 1.5f;
 
-        [DataField("autocloseDelay")] public TimeSpan AutocloseDelay = TimeSpan.FromSeconds(3f);
-
         /// <summary>
         /// Maximum pressure difference before the firelock will refuse to open, in kPa.
         /// </summary>
