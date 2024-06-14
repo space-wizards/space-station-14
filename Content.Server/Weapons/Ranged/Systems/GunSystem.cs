@@ -207,19 +207,18 @@ public sealed partial class GunSystem : SharedGunSystem
                             var result = rayCastResults[0];
 
                             // Check if laser is shot from in a container
-                            if(lastHit.HasValue)
-                                if (!_container.IsEntityOrParentInContainer(lastHit.Value))
-                                    // Checks if the laser should pass over unless targeted by its user
-                                    foreach (var collide in rayCastResults)
+                            if (!_container.IsEntityOrParentInContainer(lastUser))
+                                // Checks if the laser should pass over unless targeted by its user
+                                foreach (var collide in rayCastResults)
+                                {
+                                    if (collide.HitEntity != gun.Target &&
+                                        CompOrNull<RequireProjectileTargetComponent>(collide.HitEntity)?.Active == true)
                                     {
-                                        if (collide.HitEntity != gun.Target &&
-                                            CompOrNull<RequireProjectileTargetComponent>(collide.HitEntity)?.Active == true)
-                                        {
-                                            continue;
-                                        }
+                                        continue;
+                                    }
 
-                                        result = collide;
-                                        break;
+                                    result = collide;
+                                    break;
                                     }
 
                             var hit = result.HitEntity;
