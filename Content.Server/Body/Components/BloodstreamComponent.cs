@@ -66,14 +66,14 @@ namespace Content.Server.Body.Components
         ///     The base bloodloss damage to be incurred if below <see cref="BloodlossThreshold"/>
         ///     The default values are defined per mob/species in YML.
         /// </summary>
-        [DataField]
+        [DataField(required: true)]
         public DamageSpecifier BloodlossDamage = new();
 
         /// <summary>
         ///     The base bloodloss damage to be healed if above <see cref="BloodlossThreshold"/>
         ///     The default values are defined per mob/species in YML.
         /// </summary>
-        [DataField]
+        [DataField(required: true)]
         public DamageSpecifier BloodlossHealDamage = new();
 
         // TODO shouldn't be hardcoded, should just use some organ simulation like bone marrow or smth.
