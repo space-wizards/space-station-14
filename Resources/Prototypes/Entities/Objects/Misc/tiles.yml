@@ -1134,3 +1134,275 @@
   - type: Construction
     graph: TileWoodLarge
     node: woodtilelarge
+    
+- type: entity
+  name: parquet wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodParquet
+  components:
+  - type: Sprite
+    state: wood_parquet
+  - type: Item
+    heldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodParquet
+  - type: Stack
+    stackType: FloorTileWood
+
+- type: entity
+  name: black wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodBlack
+  components:
+  - type: Sprite
+    state: wood_black
+  - type: Item
+    heldPrefix: wood-black
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodBlack
+  - type: Stack
+    stackType: FloorTileItemWoodBlack
+
+- type: entity
+  name: dark wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodDark
+  components:
+  - type: Sprite
+    state: wood_dark
+  - type: Item
+    heldPrefix: wood-dark
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodDark
+  - type: Stack
+    stackType: FloorTileItemWoodDark
+
+- type: entity
+  name: light wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodLight
+  components:
+  - type: Sprite
+    state: wood_light
+  - type: Item
+    heldPrefix: wood-light
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodLight
+  - type: Stack
+    stackType: FloorTileItemWoodLight
+
+- type: entity
+  name: red wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodRed
+  components:
+  - type: Sprite
+    state: wood_red
+  - type: Item
+    heldPrefix: wood-red
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodRed
+  - type: Stack
+    stackType: FloorTileItemWoodRed
+
+- type: entity
+  name: large black wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodLargeBlack
+  components:
+  - type: Sprite
+    state: wood_large_black
+  - type: Item
+    heldPrefix: wood-black
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodLargeBlack
+  - type: Stack
+    stackType: FloorTileItemWoodLargeBlack
+
+- type: entity
+  name: large dark wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodLargeDark
+  components:
+  - type: Sprite
+    state: wood_large_dark
+  - type: Item
+    heldPrefix: wood-dark
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodLargeDark
+  - type: Stack
+    stackType: FloorTileItemWoodLargeDark
+
+- type: entity
+  name: large light wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodLargeLight
+  components:
+  - type: Sprite
+    state: wood_large_light
+  - type: Item
+    heldPrefix: wood-light
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodLargeLight
+  - type: Stack
+    stackType: FloorTileItemWoodLargeLight
+
+- type: entity
+  name: large red wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodLargeRed
+  components:
+  - type: Sprite
+    state: wood_large_red
+  - type: Item
+    heldPrefix: wood-red
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodLargeRed
+  - type: Stack
+    stackType: FloorTileItemWoodLargeRed
+
+- type: entity
+  name: parquet black wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodParquetBlack
+  components:
+  - type: Sprite
+    state: wood_parquet_black
+  - type: Item
+    heldPrefix: wood-black
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodParquetBlack
+  - type: Stack
+    stackType: FloorTileItemWoodParquetBlack
+
+- type: entity
+  name: parquet dark wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodParquetDark
+  components:
+  - type: Sprite
+    state: wood_parquet_dark
+  - type: Item
+    heldPrefix: wood-dark
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodParquetDark
+  - type: Stack
+    stackType: FloorTileItemWoodParquetDark
+
+- type: entity
+  name: parquet light wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodParquetLight
+  components:
+  - type: Sprite
+    state: wood_parquet_light
+  - type: Item
+    heldPrefix: wood-light
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodParquetLight
+  - type: Stack
+    stackType: FloorTileItemWoodParquetLight
+
+- type: entity
+  name: parquet red wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodParquetRed
+  components:
+  - type: Sprite
+    state: wood_parquet_red
+  - type: Item
+    heldPrefix: wood-red
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodParquetRed
+  - type: Stack
+    stackType: FloorTileItemWoodParquetRed
+
+- type: entity
+  name: tile black wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodTileBlack
+  components:
+  - type: Sprite
+    state: wood_tile_black
+  - type: Item
+    heldPrefix: wood-black
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodTileBlack
+  - type: Stack
+    stackType: FloorTileItemWoodTileBlack
+
+- type: entity
+  name: tile dark wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodTileDark
+  components:
+  - type: Sprite
+    state: wood_tile_dark
+  - type: Item
+    heldPrefix: wood-dark
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodTileDark
+  - type: Stack
+    stackType: FloorTileItemWoodTileDark
+
+- type: entity
+  name: tile light wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodTileLight
+  components:
+  - type: Sprite
+    state: wood_tile_light
+  - type: Item
+    heldPrefix: wood-light
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodTileLight
+  - type: Stack
+    stackType: FloorTileItemWoodTileLight
+
+- type: entity
+  name: tile red wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodTileRed
+  components:
+  - type: Sprite
+    state: wood_tile_red
+  - type: Item
+    heldPrefix: wood-red
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodTileRed
+  - type: Stack
+    stackType: FloorTileItemWoodTileRed

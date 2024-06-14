@@ -448,6 +448,89 @@
     },
     {
       "name": "wood-large"
-    }
+    },
+    {
+	  "name": "wood_parquet"
+    },
+    {
+      "name": "wood_black"
+    },
+    {
+      "name": "wood_dark"
+    },
+    {
+      "name": "wood_light"
+    },
+    {
+      "name": "wood_red"
+    },
+    {
+      "name": "wood_large_black"
+    },
+    {
+      "name": "wood_large_dark"
+    },
+    {
+      "name": "wood_large_light"
+    },
+    {
+      "name": "wood_large_red"
+    },
+    {
+      "name": "wood_parquet_black"
+    },
+    {
+      "name": "wood_parquet_dark"
+    },
+    {
+      "name": "wood_parquet_light"
+    },
+    {
+      "name": "wood_parquet_red"
+    },
+    {
+      "name": "wood_tile_black"
+    },
+    {
+      "name": "wood_tile_dark"
+    },
+    {
+      "name": "wood_tile_light"
+    },
+    {
+      "name": "wood_tile_red"
+    },
+    {
+      "name": "wood-black-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "wood-black-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "wood-dark-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "wood-dark-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "wood-light-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "wood-light-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "wood-red-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "wood-red-inhand-left",
+      "directions": 4
+    }	
   ]
 }
