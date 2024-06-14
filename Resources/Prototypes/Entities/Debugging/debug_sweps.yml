@@ -3,6 +3,7 @@
   parent:
   - BaseGunSmall
   - BaseGunPistolMag
+  - BaseGun
   id: WeaponPistolDebug
   description: ded
   suffix: DEBUG
