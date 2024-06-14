@@ -32,7 +32,7 @@ public sealed class SpawnArtifactSystem : EntitySystem
         if (component.Spawns is not {} spawns)
             return;
 
-        var artifactCord = Transform(uid).MapPosition;
+        var artifactCord = _transform.GetMapCoordinates(uid);
         foreach (var spawn in EntitySpawnCollection.GetSpawns(spawns, _random))
         {
             var dx = _random.NextFloat(-component.Range, component.Range);

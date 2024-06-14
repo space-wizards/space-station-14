@@ -89,7 +89,7 @@ public partial class SharedGunSystem
 
     public bool TryRevolverInsert(EntityUid revolverUid, RevolverAmmoProviderComponent component, EntityUid uid, EntityUid? user)
     {
-        if (component.Whitelist?.IsValid(uid, EntityManager) == false)
+        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, uid))
             return false;
 
         // If it's a speedloader try to get ammo from it.

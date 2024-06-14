@@ -274,35 +274,13 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var coords = _transform.GetMoverCoordinates(position, xformQuery);
-
-            var ghost = Spawn(ObserverPrototypeName, coords);
-
-            // Try setting the ghost entity name to either the character name or the player name.
-            // If all else fails, it'll default to the default entity prototype name, "observer".
-            // However, that should rarely happen.
-            if (!string.IsNullOrWhiteSpace(mind.CharacterName))
-                _metaData.SetEntityName(ghost, mind.CharacterName);
-            else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                _metaData.SetEntityName(ghost, mind.Session.Name);
-
-            var ghostComponent = Comp<GhostComponent>(ghost);
-
-            if (mind.TimeOfDeath.HasValue)
-            {
-                _ghost.SetTimeOfDeath(ghost, mind.TimeOfDeath!.Value, ghostComponent);
-            }
+            var ghost = _ghost.SpawnGhost((mindId, mind), position, canReturn);
+            if (ghost == null)
+                return false;
 
             if (playerEntity != null)
                 _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
-            _ghost.SetCanReturnToBody(ghostComponent, canReturn);
-
-            if (canReturn)
-                _mind.Visit(mindId, ghost, mind);
-            else
-                _mind.TransferTo(mindId, ghost, mind: mind);
             return true;
         }
 
