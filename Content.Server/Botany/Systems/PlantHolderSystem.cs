@@ -367,10 +367,7 @@ public sealed class PlantHolderSystem : EntitySystem
         //Only play splosh sound when using containers that would be dumped into the basin (as opposed to ie. sprayed on)
         if (TryComp(args.From, out SpillableComponent? spill))
         {
-            if(component.WateringSound != null)
-            {
-                _audio.PlayPvs(component.WateringSound, uid);
-            }
+            _audio.PlayPvs(component.WateringSound, uid);
         }
     }
     private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
