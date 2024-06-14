@@ -1,76 +1,4 @@
 ﻿Entries:
-- author: ChaseFlorom
-  changes:
-  - message: removed cannabis thief objective.
-    type: Remove
-  id: 6220
-  time: '2024-03-24T22:02:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26412
-- author: SoulFN
-  changes:
-  - message: The borg tool module now has an industrial welding tool.
-    type: Tweak
-  id: 6221
-  time: '2024-03-24T22:35:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26332
-- author: IProduceWidgets
-  changes:
-  - message: Ammo techfab now accepts ingot and cloth material types.
-    type: Fix
-  id: 6222
-  time: '2024-03-25T00:43:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26413
-- author: Luminight
-  changes:
-  - message: Wooden fence gate sprites are no longer swapped.
-    type: Fix
-  id: 6223
-  time: '2024-03-25T00:55:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26409
-- author: Callmore
-  changes:
-  - message: Holoprojectors no longer come with a cell when made at a lathe.
-    type: Tweak
-  id: 6224
-  time: '2024-03-25T00:55:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26405
-- author: IProduceWidgets
-  changes:
-  - message: The captain can now return his laser to the glass display box.
-    type: Fix
-  id: 6225
-  time: '2024-03-25T00:58:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26398
-- author: IProduceWidgets
-  changes:
-  - message: More varieties of astro-grass are now available.
-    type: Add
-  - message: Astro-grass must now be cut instead of pried.
-    type: Tweak
-  id: 6226
-  time: '2024-03-25T01:14:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26381
-- author: Tayrtahn
-  changes:
-  - message: Parrots now sound more like parrots when they talk. RAWWK!
-    type: Add
-  id: 6227
-  time: '2024-03-25T01:26:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26340
-- author: DenisShvalov
-  changes:
-  - message: Added Cleaner Grenades that will help janitors in their work
-    type: Add
-  id: 6228
-  time: '2024-03-25T06:46:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25444
-- author: Weax
-  changes:
-  - message: Harmonicas can now be equipped (and played) in the neck slot.
-    type: Tweak
-  id: 6229
-  time: '2024-03-25T07:05:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26261
 - author: nikthechampiongr
   changes:
   - message: Mailing units no longer spontaneously turn into disposal units when flushed.
@@ -3847,3 +3775,74 @@
   id: 6719
   time: '2024-06-13T02:19:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28844
+- author: Doomsdrayk
+  changes:
+  - message: Fixed guns appearing to cycle their bolt when wielded.
+    type: Fix
+  id: 6720
+  time: '2024-06-13T06:30:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28756
+- author: Doomsdrayk
+  changes:
+  - message: The Drozd and C-20r do not unwield on use again.
+    type: Fix
+  id: 6721
+  time: '2024-06-13T18:10:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28728
+- author: EmoGarbage404
+  changes:
+  - message: Fixed constructed items rotating strangely.
+    type: Fix
+  id: 6722
+  time: '2024-06-13T18:21:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28427
+- author: lzk228
+  changes:
+  - message: Added order quantity to cargo invoice label.
+    type: Tweak
+  id: 6723
+  time: '2024-06-13T18:36:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28821
+- author: osjarw
+  changes:
+  - message: Added context menu action for scanning artifacts.
+    type: Add
+  id: 6724
+  time: '2024-06-14T02:01:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26873
+- author: Cojoke-dot
+  changes:
+  - message: Lasers now pass over things unless clicked like projectiles
+    type: Tweak
+  id: 6725
+  time: '2024-06-14T02:04:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28768
+- author: Boaz1111
+  changes:
+  - message: The PKA can now mine rocks in one hit again.
+    type: Tweak
+  id: 6726
+  time: '2024-06-14T02:40:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27476
+- author: KyuPolaris
+  changes:
+  - message: Chickens now make a clucking sound when they speak.
+    type: Add
+  id: 6727
+  time: '2024-06-14T02:43:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28948
+- author: Killerqu00
+  changes:
+  - message: Time between uncuff attempts is now 30 seconds instead of 6.
+    type: Tweak
+  id: 6728
+  time: '2024-06-14T06:19:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28095
+- author: Moomoobeef
+  changes:
+  - message: Fax machines can now be purchased at cargo, for when you need more paper
+      pushing on your station!
+    type: Add
+  id: 6729
+  time: '2024-06-14T06:24:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28968
