@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Simyon
-  changes:
-  - message: All implants are now unable to be implanted more than once.
-    type: Tweak
-  id: 6231
-  time: '2024-03-26T00:16:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26250
 - author: EmoGarbage404
   changes:
   - message: Ninjas no longer wipe all technologies when using their gloves on a research
@@ -3846,3 +3839,12 @@
   id: 6730
   time: '2024-06-14T15:24:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28985
+- author: Aquif
+  changes:
+  - message: '"Space Drugs" have been renamed to "Space Mirage"'
+    type: Tweak
+  - message: '"Stimulants" have been renamed to "Hyperzine"'
+    type: Tweak
+  id: 6731
+  time: '2024-06-14T16:53:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28989
