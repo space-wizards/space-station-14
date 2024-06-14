@@ -24,6 +24,7 @@
         <Label Text="{Loc admin-fax-stamp-color}" />
         <ColorSelectorSliders Margin="12 0 0 0" Name="StampColorSelector" Color="#BB3232"/>
         <Control MinHeight="10" />
+        <CheckBox Name="LockPageCheckbox" Text="{Loc admin-fax-lock-page}" ToolTip="{Loc admin-fax-lock-page-tooltip}"/>
         <Button Name="SendButton" Text="{Loc admin-fax-send}"></Button>
     </BoxContainer>
 </DefaultWindow>
