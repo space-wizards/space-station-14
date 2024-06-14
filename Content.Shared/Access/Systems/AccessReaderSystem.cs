@@ -43,8 +43,12 @@ public sealed class AccessReaderSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
     {
-        args.State = new AccessReaderComponentState(component.Enabled, component.DenyTags, component.AccessLists,
-            _recordsSystem.Convert(component.AccessKeys), component.AccessLog, component.AccessLogLimit);
+        args.State = new AccessReaderComponentState(component.Enabled,
+            component.DenyTags,
+            component.AccessLists,
+            _recordsSystem.Convert(component.AccessKeys),
+            component.AccessLog,
+            component.AccessLogLimit);
     }
 
     private void OnHandleState(EntityUid uid, AccessReaderComponent component, ref ComponentHandleState args)
@@ -136,6 +140,7 @@ public sealed class AccessReaderSystem : EntitySystem
                 return true;
             }
         }
+
         return true;
     }
 
@@ -169,7 +174,9 @@ public sealed class AccessReaderSystem : EntitySystem
         return false;
     }
 
-    private bool IsAllowedInternal(ICollection<ProtoId<AccessLevelPrototype>> access, ICollection<StationRecordKey> stationKeys, AccessReaderComponent reader)
+    private bool IsAllowedInternal(ICollection<ProtoId<AccessLevelPrototype>> access,
+        ICollection<StationRecordKey> stationKeys,
+        AccessReaderComponent reader)
     {
         return !reader.Enabled
                || AreAccessTagsAllowed(access, reader)
@@ -181,7 +188,8 @@ public sealed class AccessReaderSystem : EntitySystem
     /// </summary>
     /// <param name="accessTags">A list of access tags</param>
     /// <param name="reader">An access reader to check against</param>
-    public bool AreAccessTagsAllowed(ICollection<ProtoId<AccessLevelPrototype>> accessTags, AccessReaderComponent reader)
+    public bool AreAccessTagsAllowed(ICollection<ProtoId<AccessLevelPrototype>> accessTags,
+        AccessReaderComponent reader)
     {
         if (reader.DenyTags.Overlaps(accessTags))
         {
@@ -236,6 +244,7 @@ public sealed class AccessReaderSystem : EntitySystem
         {
             items.UnionWith(FindPotentialAccessItems(item));
         }
+
         items.Add(uid);
         return items;
     }
@@ -266,7 +275,9 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="uid">The entity that is being searched.</param>
     /// <param name="recordKeys"></param>
     /// <param name="items">All of the items to search for access. If none are passed in, <see cref="FindPotentialAccessItems"/> will be used.</param>
-    public bool FindStationRecordKeys(EntityUid uid, out ICollection<StationRecordKey> recordKeys, HashSet<EntityUid>? items = null)
+    public bool FindStationRecordKeys(EntityUid uid,
+        out ICollection<StationRecordKey> recordKeys,
+        HashSet<EntityUid>? items = null)
     {
         recordKeys = new HashSet<StationRecordKey>();
 
@@ -294,6 +305,7 @@ public sealed class AccessReaderSystem : EntitySystem
             // no tags, no problem
             return;
         }
+
         if (tags != null)
         {
             // existing tags, so copy to make sure we own them
@@ -302,6 +314,7 @@ public sealed class AccessReaderSystem : EntitySystem
                 tags = new(tags);
                 owned = true;
             }
+
             // then merge
             tags.UnionWith(targetTags);
         }
@@ -313,13 +326,16 @@ public sealed class AccessReaderSystem : EntitySystem
         }
     }
 
-    public void SetAccesses(EntityUid uid, AccessReaderComponent component, List<ProtoId<AccessLevelPrototype>> accesses)
+    public void SetAccesses(EntityUid uid,
+        AccessReaderComponent component,
+        List<ProtoId<AccessLevelPrototype>> accesses)
     {
         component.AccessLists.Clear();
         foreach (var access in accesses)
         {
-            component.AccessLists.Add(new HashSet<ProtoId<AccessLevelPrototype>>(){access});
+            component.AccessLists.Add(new HashSet<ProtoId<AccessLevelPrototype>>() { access });
         }
+
         Dirty(uid, component);
         RaiseLocalEvent(uid, new AccessReaderConfigurationChangedEvent());
     }

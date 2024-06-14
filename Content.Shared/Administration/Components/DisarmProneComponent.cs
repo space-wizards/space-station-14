@@ -10,5 +10,4 @@ namespace Content.Shared.Administration.Components;
 [Access(typeof(SharedMeleeWeaponSystem))]
 public sealed partial class DisarmProneComponent : Component
 {
-
 }

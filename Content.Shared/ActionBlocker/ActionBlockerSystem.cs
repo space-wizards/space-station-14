@@ -163,7 +163,10 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanAttack(EntityUid uid, EntityUid? target = null, Entity<MeleeWeaponComponent>? weapon = null, bool disarm = false)
+        public bool CanAttack(EntityUid uid,
+            EntityUid? target = null,
+            Entity<MeleeWeaponComponent>? weapon = null,
+            bool disarm = false)
         {
             // If target is in a container can we attack
             if (target != null && _container.IsEntityInContainer(target.Value))

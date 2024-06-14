@@ -99,7 +99,12 @@ public sealed class AccessReaderComponentState : ComponentState
 
     public int AccessLogLimit;
 
-    public AccessReaderComponentState(bool enabled, HashSet<ProtoId<AccessLevelPrototype>> denyTags, List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists, List<(NetEntity, uint)> accessKeys, Queue<AccessRecord> accessLog, int accessLogLimit)
+    public AccessReaderComponentState(bool enabled,
+        HashSet<ProtoId<AccessLevelPrototype>> denyTags,
+        List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists,
+        List<(NetEntity, uint)> accessKeys,
+        Queue<AccessRecord> accessLog,
+        int accessLogLimit)
     {
         Enabled = enabled;
         DenyTags = denyTags;

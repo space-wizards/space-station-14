@@ -66,7 +66,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         }
 
         if (TryComp(uid, out PdaComponent? pda)
-        && TryComp(pda.ContainedId, out idCardComp))
+            && TryComp(pda.ContainedId, out idCardComp))
         {
             idCard = (pda.ContainedId.Value, idCardComp);
             return true;
@@ -108,13 +108,18 @@ public abstract class SharedIdCardSystem : EntitySystem
 
         if (player != null)
         {
-            _adminLogger.Add(LogType.Identity, LogImpact.Low,
+            _adminLogger.Add(LogType.Identity,
+                LogImpact.Low,
                 $"{ToPrettyString(player.Value):player} has changed the job title of {ToPrettyString(uid):entity} to {jobTitle} ");
         }
+
         return true;
     }
 
-    public bool TryChangeJobIcon(EntityUid uid, StatusIconPrototype jobIcon, IdCardComponent? id = null, EntityUid? player = null)
+    public bool TryChangeJobIcon(EntityUid uid,
+        StatusIconPrototype jobIcon,
+        IdCardComponent? id = null,
+        EntityUid? player = null)
     {
         if (!Resolve(uid, ref id))
         {
@@ -131,7 +136,8 @@ public abstract class SharedIdCardSystem : EntitySystem
 
         if (player != null)
         {
-            _adminLogger.Add(LogType.Identity, LogImpact.Low,
+            _adminLogger.Add(LogType.Identity,
+                LogImpact.Low,
                 $"{ToPrettyString(player.Value):player} has changed the job icon of {ToPrettyString(uid):entity} to {jobIcon} ");
         }
 
@@ -186,9 +192,11 @@ public abstract class SharedIdCardSystem : EntitySystem
 
         if (player != null)
         {
-            _adminLogger.Add(LogType.Identity, LogImpact.Low,
+            _adminLogger.Add(LogType.Identity,
+                LogImpact.Low,
                 $"{ToPrettyString(player.Value):player} has changed the name of {ToPrettyString(uid):entity} to {fullName} ");
         }
+
         return true;
     }
 

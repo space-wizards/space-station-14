@@ -55,12 +55,14 @@ public sealed class IdExaminableSystem : EntitySystem
             {
                 return GetNameAndJob(id);
             }
+
             // ID Card
             if (EntityManager.TryGetComponent(idUid, out id))
             {
                 return GetNameAndJob(id);
             }
         }
+
         return null;
     }
 

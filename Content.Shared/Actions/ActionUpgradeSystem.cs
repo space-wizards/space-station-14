@@ -56,7 +56,10 @@ public sealed class ActionUpgradeSystem : EntitySystem
         _entityManager.DeleteEntity(uid);
     }
 
-    public bool TryUpgradeAction(EntityUid? actionId, out EntityUid? upgradeActionId, ActionUpgradeComponent? actionUpgradeComponent = null, int newLevel = 0)
+    public bool TryUpgradeAction(EntityUid? actionId,
+        out EntityUid? upgradeActionId,
+        ActionUpgradeComponent? actionUpgradeComponent = null,
+        int newLevel = 0)
     {
         upgradeActionId = null;
         if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
@@ -110,7 +113,9 @@ public sealed class ActionUpgradeSystem : EntitySystem
         return canLevel;
     }
 
-    private bool CanUpgrade(int newLevel, Dictionary<int, EntProtoId> levelDict,  [NotNullWhen(true)]out EntProtoId? newLevelProto)
+    private bool CanUpgrade(int newLevel,
+        Dictionary<int, EntProtoId> levelDict,
+        [NotNullWhen(true)] out EntProtoId? newLevelProto)
     {
         var canUpgrade = false;
         newLevelProto = null;
@@ -134,7 +139,10 @@ public sealed class ActionUpgradeSystem : EntitySystem
     /// <summary>
     ///     Raises a level by one
     /// </summary>
-    public EntityUid? UpgradeAction(EntityUid? actionId, ActionUpgradeComponent? actionUpgradeComponent = null, EntProtoId? newActionProto = null, int newLevel = 0)
+    public EntityUid? UpgradeAction(EntityUid? actionId,
+        ActionUpgradeComponent? actionUpgradeComponent = null,
+        EntProtoId? newActionProto = null,
+        int newLevel = 0)
     {
         if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
             return null;

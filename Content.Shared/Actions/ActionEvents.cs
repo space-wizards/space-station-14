@@ -41,7 +41,10 @@ public sealed class GetItemActionsEvent : EntityEventArgs
     /// </summary>
     public bool InHands => SlotFlags == null;
 
-    public GetItemActionsEvent(ActionContainerSystem system, EntityUid user, EntityUid provider, SlotFlags? slotFlags = null)
+    public GetItemActionsEvent(ActionContainerSystem system,
+        EntityUid user,
+        EntityUid provider,
+        SlotFlags? slotFlags = null)
     {
         _system = system;
         User = user;
@@ -110,7 +113,9 @@ public sealed class RequestPerformActionEvent : EntityEventArgs
 /// <remarks>
 ///     To define a new action for some system, you need to create an event that inherits from this class.
 /// </remarks>
-public abstract partial class InstantActionEvent : BaseActionEvent { }
+public abstract partial class InstantActionEvent : BaseActionEvent
+{
+}
 
 /// <summary>
 ///     This is the type of event that gets raised when an <see cref="EntityTargetAction"/> is performed. The <see

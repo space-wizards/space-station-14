@@ -87,7 +87,7 @@ public abstract partial class BaseActionComponent : Component
     /// <summary>
     ///     If enabled, charges will regenerate after a <see cref="Cooldown"/> is complete
     /// </summary>
-    [DataField("renewCharges")]public bool RenewCharges;
+    [DataField("renewCharges")] public bool RenewCharges;
 
     /// <summary>
     /// The entity that contains this action. If the action is innate, this may be the user themselves.
