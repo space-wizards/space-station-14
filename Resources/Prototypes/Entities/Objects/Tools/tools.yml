@@ -128,26 +128,28 @@
     price: 22
 
 - type: entity
-  name: crowbar
+  name: "crowbar"
   parent: BaseItem
-  id: Crowbar
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
+  id: BaseCrowbar
+  abstract: true
   components:
+  - type: Sprite
+    sprite: Objects/Tools/crowbar.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,1
+    sprite: Objects/Tools/crowbar.rsi
+    storedSprite:
+      sprite: Objects/Tools/crowbar.rsi
+      state: storage
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/crowbar_drop.ogg
   - type: Tag
     tags:
     - Crowbar
-  - type: Sprite
-    sprite: Objects/Tools/crowbar.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Tools/crowbar.rsi
-    size: Small
-    storedSprite:
-      sprite: Objects/Tools/crowbar.rsi
-      state: storage
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -167,11 +169,29 @@
   - type: StaticPrice
     price: 22
   - type: Prying
+  
+- type: entity
+  name: crowbar
+  parent: BaseCrowbar
+  id: Crowbar
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
+  components:
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Wieldable
+  - type: IncreaseDamageOnWield # Ideally it should also be a slightly slower attack speed, but that is for another day
+    damage:
+      types:
+        Blunt: 2
+        Structural: 5
 
 - type: entity
-  parent: Crowbar
-  id: CrowbarRed
   name: emergency crowbar
+  parent: BaseCrowbar
+  id: CrowbarRed
+  description: A pocket crowbar designed to pry open doors and firelocks during power outages.
   components:
   - type: Tag
     tags:
@@ -184,6 +204,17 @@
     storedSprite:
       sprite: Objects/Tools/crowbar.rsi
       state: red-storage
+  - type: Clothing
+    slots:
+    - Belt
+    - Pocket
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 6
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   name: multitool
