@@ -12,7 +12,7 @@
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BorderThickness="0 0 0 1" BackgroundColor="DarkRed" BorderColor="Black" />
                 </PanelContainer.PanelOverride>
-                <Label Margin="5" StyleClasses="bold" Text="Parsing Error" />
+                <Label Margin="5" StyleClasses="bold" Text="{Loc 'guidebook-parser-error'}" />
             </PanelContainer>
 
             <OutputPanel Margin="5" MinHeight="75" VerticalExpand="True" Name="Original">
