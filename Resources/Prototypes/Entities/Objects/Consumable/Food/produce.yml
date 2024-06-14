@@ -1472,6 +1472,10 @@
   id: FoodGlasstle
   description: A fragile crystal plant with lot of spiky thorns. 
   components:
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Hydroponics/glasstle.rsi
+    heldPrefix: produce  
   - type: FlavorProfile
     flavors:
       - sharp
