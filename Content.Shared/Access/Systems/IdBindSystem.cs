@@ -42,13 +42,14 @@ public sealed class IdBindSystem : EntitySystem
         if (!ent.Comp.BindPDAOwner)
             return;
 
-        if (!_inventory.TryGetSlotEntity(cardId.Owner, "id", out var uPda))
+        //Get PDA from main slot and set us as owner
+        if (!_inventory.TryGetSlotEntity(ent, "id", out var uPda))
             return;
 
         if (!TryComp<PdaComponent>(uPda, out var pDA))
             return;
 
-        _pdaSystem.SetOwner(ent, pDA, data.EntityName);
+        _pdaSystem.SetOwner(uPda.Value, pDA, data.EntityName);
     }
 }
 
