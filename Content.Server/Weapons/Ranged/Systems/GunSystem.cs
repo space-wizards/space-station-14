@@ -208,7 +208,7 @@ public sealed partial class GunSystem : SharedGunSystem
                             foreach (var collide in rayCastResults)
                             {
                                 if (collide.HitEntity != gun.Target &&
-                                    CompOrNull<RequireProjectileTargetComponent>(colide.HitEntity)?.Active == true)
+                                    CompOrNull<RequireProjectileTargetComponent>(collide.HitEntity)?.Active == true)
                                 {
                                     continue;
                                 }
