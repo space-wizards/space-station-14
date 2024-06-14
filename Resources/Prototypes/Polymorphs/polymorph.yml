@@ -84,7 +84,7 @@
     inventory: Drop
     transferDamage: true
     revertOnDeath: true
-    revertOnCrit: true
+    revertOnCrit: false
 
 # this is a test for transferring some visual appearance stuff
 - type: polymorph

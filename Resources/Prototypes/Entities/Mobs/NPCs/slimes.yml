@@ -150,7 +150,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Dead # weak af tho
+      80: Critical
+      100: Dead # weak af tho
   - type: NpcFactionMember
     factions:
     - NanoTrasen
@@ -168,27 +169,29 @@
     states:
       Alive:
         Base: blue_adult_slime
+      Critical:
+        Base: blue_adult_slime_dead
       Dead:
         Base: blue_adult_slime_dead
   - type: Body
     prototype: Geras
     requiredLegs: 1
-  - type: PassiveDamage # copied from slime person
+  - type: PassiveDamage # copied from slime person scaled
     allowedStates:
     - Alive
-    damageCap: 65
+    damageCap: 32
     damage:
       types:
-        Heat: -0.14
+        Heat: -0.07
       groups:
-        Brute: -0.14
+        Brute: -0.07
   - type: Bloodstream
     bloodReagent: Slime
     bleedReductionAmount: 0.5
-    bloodlossHealDamage: # Match with slime people but halved because half as much blood
+    bloodlossHealDamage: # Match with slime people but scaled
       types:
         Bloodloss:
-          -0.5
+          -0.25
   - type: Storage # from slimes
     clickInsert: false
     grid:
