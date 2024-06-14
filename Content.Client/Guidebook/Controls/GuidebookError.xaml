@@ -24,7 +24,7 @@
             </OutputPanel>
 
             <Collapsible Margin="5" MinHeight="75" VerticalExpand="True">
-                <CollapsibleHeading Title="Error Message" />
+                <CollapsibleHeading Title="{Loc 'guidebook-error-message' }" />
                 <CollapsibleBody VerticalExpand="True">
                     <OutputPanel Name="Error" VerticalExpand="True" MinHeight="100">
                         <OutputPanel.StyleBoxOverride>
