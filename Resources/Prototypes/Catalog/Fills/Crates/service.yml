@@ -130,6 +130,18 @@
     - id: NewtonCradle
 
 - type: entity
+  id: CrateServiceFaxMachine
+  parent: CrateGenericSteel
+  name: fax machine crate
+  description: A fax machine, a screwdriver to set the name with, and a manual.
+  components:
+  - type: StorageFill
+    contents:
+    - id: PaperWrittenFaxManual
+    - id: Screwdriver
+    - id: FaxMachineFlatpack
+
+- type: entity
   id: CrateServicePersonnel
   parent: CrateCommandSecure
   name: personnel crate

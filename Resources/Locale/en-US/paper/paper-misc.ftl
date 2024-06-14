@@ -26,3 +26,23 @@ book-text-ame-scribbles = I don't know if you're trained already, so I hope this
       The golden rule is 2 injection for every 1 core. You can go lower to save fuel.
       Higher will burn the engine out and eventually make it explode. Don't.
       Don't forget to refuel it, it tends to stop at the worst possible time.
+
+book-text-fax-manual = Congratulations on your purchase of a brand new [bold]Faxomatic 4200 Long Range Fax Machine![/bold]
+      The [bold]Faxomatic 4200[/bold] is capable of sending, receiving, copying, and printing papers of all kinds.
+
+      -[head=2][bold]Setup instructions:[/bold][/head]
+      1. place flatpack where you want the unit (LV must be avaliable)
+      2. use a multitool to open the flatpack
+      3. use the provided screwdriver to set the name on the unit
+      
+      Once you have followed these steps your [bold]Faxomatic 4200[/bold] is ready for use.
+
+      -[head=2][bold]Operating Instructions[/bold][/head]
+      Your [bold]Faxomatic 4200[/bold] is capable of 4 operations: Sending, Receiving, Copying, and Printing.
+      Your [bold]Faxomatic 4200[/bold] will receive faxes sent to it passively as long as it is wrenched down and powered.
+      In order to send a fax simply load the document you want to send into the machine through the top. Then select a destination through the dropdown (use "Refresh" to refresh destinations). Then press "Send"!
+      To copy a document, load it into the machine through the top and hit "Copy" instead of "Send".
+      To print a document, select which paper type you'd like to print (Paper or Office Paper), then press "Print" to select a document.
+       
+      -[head=2][bold]Warantee[/bold][/head]
+      The [bold]Faxomatic 4200[/bold] is sold [italic]as-is[/italic] with no warantee. The product is literally indestructable under proper usage so you shouldn't need one anyway.
