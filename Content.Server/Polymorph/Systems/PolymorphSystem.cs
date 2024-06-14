@@ -4,6 +4,8 @@ using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Nutrition;
 using Content.Server.Polymorph.Components;
+using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Buckle;
@@ -56,6 +58,7 @@ public sealed partial class PolymorphSystem : EntitySystem
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
+    [Dependency] private readonly TemperatureSystem _temperature = default!;
 
     private const string RevertPolymorphId = "ActionRevertPolymorph";
 
@@ -256,6 +259,9 @@ public sealed partial class PolymorphSystem : EntitySystem
             }
         }
 
+        if (TryComp<TemperatureComponent>(uid, out var temperature))
+            _temperature.ForceChangeTemperature(child, temperature.CurrentTemperature);
+
         if (configuration.Inventory == PolymorphInventoryChange.Transfer)
         {
             _inventory.TransferEntityInventories(uid, child);
@@ -358,6 +364,9 @@ public sealed partial class PolymorphSystem : EntitySystem
                 _bloodstream.TryAddToChemicals(parent, childSolution);
             }
         }
+
+        if (TryComp<TemperatureComponent>(uid, out var temperature))
+            _temperature.ForceChangeTemperature(parent, temperature.CurrentTemperature);
 
         if (component.Configuration.Inventory == PolymorphInventoryChange.Transfer)
         {
