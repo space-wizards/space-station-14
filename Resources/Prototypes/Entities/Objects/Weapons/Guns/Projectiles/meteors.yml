@@ -11,7 +11,7 @@
     damage: {}
     deleteOnCollide: false
   - type: Meteor
-    damageDistribution:
+    damageTypes:
       types:
         Blunt: 1
   - type: TimedDespawn

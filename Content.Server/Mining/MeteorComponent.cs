@@ -9,10 +9,13 @@ namespace Content.Server.Mining;
 public sealed partial class MeteorComponent : Component
 {
     /// <summary>
-    /// percentage distribution of damage applied. Is multiplied by the actual damage it needs to deal.
+    /// Damage specifier that is multiplied against the calculated damage amount to determine what damage is applied to the colliding entity.
     /// </summary>
+    /// <remarks>
+    /// The values of this should add up to 1 or else the damage will be scaled.
+    /// </remarks>
     [DataField]
-    public DamageSpecifier DamageDistribution = new();
+    public DamageSpecifier DamageTypes = new();
 
     /// <summary>
     /// A list of entities that this meteor has collided with. used to ensure no double collisions occur.
