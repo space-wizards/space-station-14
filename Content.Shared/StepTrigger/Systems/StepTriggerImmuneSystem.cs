@@ -11,19 +11,19 @@ public sealed class StepTriggerImmuneSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<ClothingRequiredStepTriggerComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
-        SubscribeLocalEvent<ClothingRequiredStepTriggerComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<PreventableStepTriggerComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
+        SubscribeLocalEvent<PreventableStepTriggerComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnStepTriggerAttempt(Entity<ClothingRequiredStepTriggerComponent> ent, ref StepTriggerAttemptEvent args)
+    private void OnStepTriggerAttempt(Entity<PreventableStepTriggerComponent> ent, ref StepTriggerAttemptEvent args)
     {
-        if (HasComp<ClothingRequiredStepTriggerImmuneComponent>(args.Tripper) || _inventory.TryGetInventoryEntity<ClothingRequiredStepTriggerImmuneComponent>(args.Tripper, out _))
+        if (HasComp<ProtectedFromStepTriggersComponent>(args.Tripper) || _inventory.TryGetInventoryEntity<ProtectedFromStepTriggersComponent>(args.Tripper, out _))
         {
             args.Cancelled = true;
         }
     }
 
-    private void OnExamined(EntityUid uid, ClothingRequiredStepTriggerComponent component, ExaminedEvent args)
+    private void OnExamined(EntityUid uid, PreventableStepTriggerComponent component, ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("clothing-required-step-trigger-examine"));
     }
