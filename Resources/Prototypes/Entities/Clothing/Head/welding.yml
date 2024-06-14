@@ -46,7 +46,7 @@
   id: ActionToggleWelding
   name: Flip Welding Mask
   description: For when you like to live dangerously and risk arc eye.
-  nospawn: true
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Clothing/Head/Welding/welding.rsi, state: icon }
