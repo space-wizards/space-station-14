@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: More varieties of astro-grass are now available.
-    type: Add
-  - message: Astro-grass must now be cut instead of pried.
-    type: Tweak
-  id: 6226
-  time: '2024-03-25T01:14:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26381
 - author: Tayrtahn
   changes:
   - message: Parrots now sound more like parrots when they talk. RAWWK!
@@ -3847,3 +3838,10 @@
   id: 6725
   time: '2024-06-14T02:04:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28768
+- author: Boaz1111
+  changes:
+  - message: The PKA can now mine rocks in one hit again.
+    type: Tweak
+  id: 6726
+  time: '2024-06-14T02:40:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27476
