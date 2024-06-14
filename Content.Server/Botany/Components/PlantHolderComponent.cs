@@ -24,7 +24,7 @@ public sealed partial class PlantHolderComponent : Component
     [DataField("lastCycle", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastCycle = TimeSpan.Zero;
 
-    [DataField("wateringSound")]
+    [DataField]
     public SoundSpecifier? WateringSound;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("updateSpriteAfterUpdate")]
