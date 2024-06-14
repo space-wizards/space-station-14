@@ -20,10 +20,16 @@ public sealed partial class SupermatterComponent : Component
         "HyperchargedLightning"
     };
     public readonly string SliverPrototype = "SupermatterSliver";
-    public readonly SoundSpecifier
-        SupermatterZapSound = new SoundPathSpecifier("/Audio/Weapons/emitter2.ogg"),
-        CalmAmbienceSound = new SoundPathSpecifier("/Audio/Ambience/Objects/supermatter_calm.ogg"),
-        DelamAmbienceSound = new SoundPathSpecifier("/Audio/Ambience/Objects/supermatter_calm.ogg");
+
+    [DataField("zapSound")]
+    public SoundSpecifier SupermatterZapSound = new SoundPathSpecifier("/Audio/Weapons/emitter2.ogg");
+
+    [DataField("calmAmbienceSound")]
+    public SoundSpecifier CalmAmbienceSound = new SoundPathSpecifier("/Audio/Ambience/Objects/supermatter_calm.ogg");
+
+    [DataField("delamAmbienceSound")]
+    public SoundSpecifier DelamAmbienceSound = new SoundPathSpecifier("/Audio/Ambience/Objects/supermatter_calm.ogg");
+
     public SoundSpecifier CurrentAmbience = new SoundPathSpecifier("/Audio/Ambience/Objects/supermatter_calm.ogg");
 
     /// <summary>
@@ -40,7 +46,6 @@ public sealed partial class SupermatterComponent : Component
 
     public GasMixture AbsorbedGasMix = null;
 
-    #region Constants
     /// <summary>
     ///     Amount of seconds to pass before another SM cycle.
     /// </summary>
@@ -70,32 +75,6 @@ public sealed partial class SupermatterComponent : Component
         PlasmaReleaseModifier = 650f,
         OxygenReleaseModifier = 340f,
         GasHeatPowerScaling = 1f / 6f;
-
-    // localised strings for "future i guess" :godo:
-    public const string
-        SmPowerExternalImmediate = "External Power Gain",
-        SmPowerExternalTrickle = "External Power Trickle",
-        SmPowerHeat = "Gas Heat Power Gain",
-
-        SmPowerloss = "Internal Power Decay",
-        SmPowerlossGas = "Gas Power Decay Negation",
-
-        SmZapBase = "Base Zap Transmission",
-        SmZapGas = "Gas Zap Transmission Modifier",
-
-        SmTempLimitBase = "Base Heat Resistance",
-        SmTempLimitGas = "Gas Heat Resistance",
-        SmTempLimitMoles = "Low Moles Heat Resistance",
-
-        SmDamageExternal = "External Damage",
-        SmDamageHeat = "Heat Damage",
-        SmDamagePower = "Charge Damage",
-        SmDamageMoles = "Molar Damage",
-        SmDamageHealHeat = "Low Temperature Healing",
-
-        SmWasteBase = "Base Waste Multiplier",
-        SmWasteGas = "Gas Waste Multiplier";
-    #endregion
 
     /// <summary>
     ///     The portion of gasmix we should absorb.

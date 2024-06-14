@@ -19,13 +19,11 @@ using Content.Server.Administration.Logs;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
-
-using Consts = Content.Server.Supermatter.Components.SupermatterComponent;
 using Content.Shared.Database;
 using Content.Server.Chat.Systems;
 using System.Text;
 using Content.Server.AlertLevel;
-using Content.Shared.Examine; // using an alias for readability
+using Content.Shared.Examine;
 
 namespace Content.Server.Supermatter.EntitySystems;
 
@@ -78,7 +76,7 @@ public sealed class SupermatterSystem : EntitySystem
                 ProcessDamage(uid, sm);
 
                 if (sm.AreWeDelaming)
-                    DelamCountdown(sm);
+                    DelamCountdown(uid, sm);
 
                 ProcessWaste(sm);
 
@@ -106,14 +104,14 @@ public sealed class SupermatterSystem : EntitySystem
 
         var moles = absorbedMix.TotalMoles;
 
-        if (moles <= Consts.MinimumMoleCount)
+        if (moles <= SupermatterComponent.MinimumMoleCount)
             return;
 
         for (int i = 0; i < gasPercentages.Length; i++)
         {
             var moleCount = absorbedMix.GetMoles(i);
 
-            if (moleCount <= Consts.MinimumMoleCount)
+            if (moleCount <= SupermatterComponent.MinimumMoleCount)
                 continue;
 
             gasPercentages[i] = moleCount / moles;
@@ -183,14 +181,14 @@ public sealed class SupermatterSystem : EntitySystem
     private void ProcessWaste(SupermatterComponent sm)
     {
         CalculateWaste(sm);
-        var deviceEnergy = sm.InternalEnergy * Consts.ReactionPowerModifier;
+        var deviceEnergy = sm.InternalEnergy * SupermatterComponent.ReactionPowerModifier;
 
         var mergeMix = sm.AbsorbedGasMix;
-        mergeMix.Temperature += deviceEnergy * sm.WasteMultiplier / Consts.ThermalReleaseModifier;
+        mergeMix.Temperature += deviceEnergy * sm.WasteMultiplier / SupermatterComponent.ThermalReleaseModifier;
         mergeMix.Temperature = Math.Clamp(mergeMix.Temperature, Atmospherics.TCMB, 2500 * sm.WasteMultiplier);
 
-        mergeMix.AdjustMoles(Gas.Plasma, Math.Max(deviceEnergy * sm.WasteMultiplier / Consts.PlasmaReleaseModifier, 0));
-        mergeMix.AdjustMoles(Gas.Oxygen, Math.Max((deviceEnergy + mergeMix.Temperature * sm.WasteMultiplier - Atmospherics.T0C) / Consts.OxygenReleaseModifier, 0));
+        mergeMix.AdjustMoles(Gas.Plasma, Math.Max(deviceEnergy * sm.WasteMultiplier / SupermatterComponent.PlasmaReleaseModifier, 0));
+        mergeMix.AdjustMoles(Gas.Oxygen, Math.Max((deviceEnergy + mergeMix.Temperature * sm.WasteMultiplier - Atmospherics.T0C) / SupermatterComponent.OxygenReleaseModifier, 0));
     }
 
     /// <summary>
@@ -215,99 +213,83 @@ public sealed class SupermatterSystem : EntitySystem
     /// <summary>
     ///     Perform calculation for power lost and gained this cycle.
     /// </summary>
-    private Dictionary<string, float> CalculateInternalEnergy(SupermatterComponent sm)
+    private void CalculateInternalEnergy(SupermatterComponent sm)
     {
-        var additivePower = new Dictionary<string, float>();
+        var powerExternalTrickle = sm.ExternalPowerTrickle != 0 ? Math.Max(sm.ExternalPowerTrickle / 10, 40) : 0;
+        sm.ExternalPowerTrickle -= Math.Min(powerExternalTrickle, sm.ExternalPowerTrickle);
 
-        additivePower[Consts.SmPowerExternalTrickle] = sm.ExternalPowerTrickle != 0 ? Math.Max(sm.ExternalPowerTrickle / 10, 40) : 0;
-        sm.ExternalPowerTrickle -= Math.Min(additivePower[Consts.SmPowerExternalTrickle], sm.ExternalPowerTrickle);
-
-        additivePower[Consts.SmPowerExternalImmediate] = sm.ExternalPowerImmediate;
+        var powerExternalImmediate = sm.ExternalPowerImmediate;
         sm.ExternalPowerImmediate = 0f;
 
-        additivePower[Consts.SmPowerHeat] = sm.HeatPowerGeneration * sm.AbsorbedGasMix.Temperature * Consts.GasHeatPowerScaling;
+        var powerHeat = sm.HeatPowerGeneration * sm.AbsorbedGasMix.Temperature * SupermatterComponent.GasHeatPowerScaling;
 
         var momentaryPower = sm.InternalEnergy;
-        foreach (var powergainType in additivePower.Keys)
-            momentaryPower += additivePower[powergainType];
+        momentaryPower += powerExternalTrickle + powerExternalImmediate;
+
+        var powerloss = 0f;
+        var powerlossGas = 0f;
 
         if (momentaryPower < sm.PowerlossLinearThreshold) // negative numbers
-            additivePower[Consts.SmPowerloss] = (float) Math.Pow(-1 * momentaryPower / 500, 3);
+            powerloss = (float) Math.Pow(-1 * momentaryPower / 500, 3);
         else
-            additivePower[Consts.SmPowerloss] = -1 * momentaryPower / 500 + sm.PowerlossLinearOffset;
+            powerloss = -1 * momentaryPower / 500 + sm.PowerlossLinearOffset;
 
-        additivePower[Consts.SmPowerlossGas] = -1 * sm.GasPowerlossInhibition * additivePower[Consts.SmPowerloss];
+        powerlossGas = -1 * sm.GasPowerlossInhibition * powerloss;
 
-        foreach (var powergainType in additivePower.Keys)
-            sm.InternalEnergy += additivePower[powergainType];
+        sm.InternalEnergy += powerExternalTrickle + powerExternalImmediate + powerHeat + powerloss + powerlossGas;
 
         sm.InternalEnergy = Math.Max(sm.InternalEnergy, 0);
-
-        return additivePower;
     }
     /// <summary>
     ///     Perform calculation for the main zap power transmission rate in W/MeV.
     /// </summary>
-    private Dictionary<string, float> CalculateZapRate(SupermatterComponent sm)
+    private void CalculateZapRate(SupermatterComponent sm)
     {
-        var additiveRate = new Dictionary<string, float>();
-
-        additiveRate[Consts.SmZapBase] = Consts.BasePowerTransmissionRate;
-        additiveRate[Consts.SmZapGas] = Consts.BasePowerTransmissionRate * sm.PowerTransmissionRate;
+        var zapBase = SupermatterComponent.BasePowerTransmissionRate;
+        var zapGas = SupermatterComponent.BasePowerTransmissionRate * sm.PowerTransmissionRate;
 
         sm.ZapTransmissionRate = 0f;
-        foreach (var transmissionType in additiveRate.Keys)
-            sm.ZapTransmissionRate += additiveRate[transmissionType];
+        sm.ZapTransmissionRate += zapBase + zapGas;
         sm.ZapTransmissionRate = Math.Max(sm.ZapTransmissionRate, 0);
-
-        return additiveRate;
     }
 
     /// <summary>
     ///     Calculate at which temperature the SM starts taking damage.
     /// </summary>
-    private Dictionary<string, float> CalculateTempLimit(SupermatterComponent sm)
+    private void CalculateTempLimit(SupermatterComponent sm)
     {
-        var additiveTemp = new Dictionary<string, float>();
-
-        var additiveTempBase = Atmospherics.T0C + Consts.HeatPenaltyThreshold;
-        additiveTemp[Consts.SmTempLimitBase] = additiveTempBase;
-        additiveTemp[Consts.SmTempLimitGas] = sm.GasHeatResistance * additiveTempBase;
-        additiveTemp[Consts.SmTempLimitMoles] = Math.Clamp(2 - sm.AbsorbedGasMix.TotalMoles / 100, 0, 1) * additiveTempBase;
+        var additiveTempBase = Atmospherics.T0C + SupermatterComponent.HeatPenaltyThreshold;
+        var tempLimitBase = additiveTempBase;
+        var tempLimitGas = sm.GasHeatResistance * additiveTempBase;
+        var tempLimitMoles = Math.Clamp(2 - sm.AbsorbedGasMix.TotalMoles / 100, 0, 1) * additiveTempBase;
 
         sm.TempLimit = 0f;
-        foreach (var resistanceType in additiveTemp.Keys)
-            sm.TempLimit += additiveTemp[resistanceType];
+        sm.TempLimit += tempLimitBase + tempLimitGas + tempLimitMoles;
         sm.TempLimit = Math.Max(sm.TempLimit, Atmospherics.TCMB);
-
-        return additiveTemp;
     }
 
     /// <summary>
     ///     Perform calculation for the damage taken or healed.
     /// </summary>
-    private Dictionary<string, float> CalculateDamage(SupermatterComponent sm)
+    private void CalculateDamage(SupermatterComponent sm)
     {
-        var additiveDamage = new Dictionary<string, float>();
-
-        additiveDamage[Consts.SmDamageExternal] = sm.ExternalDamageImmediate * Math.Clamp((sm.EmergencyPoint - sm.Damage) / sm.EmergencyPoint, 0, 1);
+        var damageExternal = sm.ExternalDamageImmediate * Math.Clamp((sm.EmergencyPoint - sm.Damage) / sm.EmergencyPoint, 0, 1);
         sm.ExternalDamageImmediate = 0f;
 
-        additiveDamage[Consts.SmDamageHeat] = Math.Clamp((sm.AbsorbedGasMix.Temperature - sm.TempLimit) / 24000, 0, .15f);
-        additiveDamage[Consts.SmDamagePower] = Math.Clamp((sm.InternalEnergy - Consts.PowerPenaltyThreshold) / 40000, 0, .1f);
-        additiveDamage[Consts.SmDamageMoles] = Math.Clamp((sm.AbsorbedGasMix.TotalMoles - Consts.MolePenaltyThreshold) / 3200, 0, .1f);
+        var damageHeat = Math.Clamp((sm.AbsorbedGasMix.Temperature - sm.TempLimit) / 24000, 0, .15f);
+        var damagePower = Math.Clamp((sm.InternalEnergy - SupermatterComponent.PowerPenaltyThreshold) / 40000, 0, .1f);
+        var damageMoles = Math.Clamp((sm.AbsorbedGasMix.TotalMoles - SupermatterComponent.MolePenaltyThreshold) / 3200, 0, .1f);
+
+        var damageHealHeat = 0f;
 
         if (sm.AbsorbedGasMix.TotalMoles > 0)
-            additiveDamage[Consts.SmDamageHealHeat] = Math.Clamp((sm.AbsorbedGasMix.TotalMoles - sm.TempLimit) / 6000, -.1f, 0);
+            damageHealHeat = Math.Clamp((sm.AbsorbedGasMix.TotalMoles - sm.TempLimit) / 6000, -.1f, 0);
 
         var totalDamage = 0f;
-        foreach (var damageType in additiveDamage.Keys)
-            totalDamage += additiveDamage[damageType];
+        totalDamage += damageHeat + damagePower + damageMoles + damageHealHeat;
 
         sm.Damage += totalDamage;
         sm.Damage = Math.Max(sm.Damage, 0);
-
-        return additiveDamage;
     }
 
     /// <summary>
@@ -315,19 +297,16 @@ public sealed class SupermatterSystem : EntitySystem
     ///     This number affects the temperature, plasma, and oxygen of the waste gas.
     ///     Multiplier is applied to energy for plasma and temperature but temperature for oxygen.
     /// </summary>
-    private Dictionary<string, float> CalculateWaste(SupermatterComponent sm)
+    private void CalculateWaste(SupermatterComponent sm)
     {
         sm.WasteMultiplier = 0f;
-        var additiveWaste = new Dictionary<string, float>();
 
-        additiveWaste[Consts.SmWasteBase] = 1;
-        additiveWaste[Consts.SmWasteGas] = sm.GasHeatModifier;
+        var wasteBase = 1;
+        var wasteGas = sm.GasHeatModifier;
 
-        foreach (var wasteType in additiveWaste.Keys)
-            sm.WasteMultiplier += additiveWaste[wasteType];
+        sm.WasteMultiplier += wasteBase + wasteGas;
 
         sm.WasteMultiplier = Math.Clamp(sm.WasteMultiplier, .5f, float.PositiveInfinity);
-        return additiveWaste;
     }
 
     /// <summary>
@@ -386,10 +365,10 @@ public sealed class SupermatterSystem : EntitySystem
     /// </summary>
     private DelamType ChooseDelam(SupermatterComponent sm)
     {
-        if (sm.AbsorbedGasMix.TotalMoles >= Consts.MolePenaltyThreshold)
+        if (sm.AbsorbedGasMix.TotalMoles >= SupermatterComponent.MolePenaltyThreshold)
             return DelamType.Singularity;
 
-        if (sm.InternalEnergy > Consts.PowerPenaltyThreshold)
+        if (sm.InternalEnergy > SupermatterComponent.PowerPenaltyThreshold)
             return DelamType.Tesla;
 
         // todo: add resonance cascade when hypernob and antinob gases get added
