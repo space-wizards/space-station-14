@@ -224,7 +224,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         playerPool = def.Grouping switch
         {
-            AntagPoolGrouping.Departments => GroupByDepartments(playerPool),
+            AntagPoolGrouping.Departments => GroupByDepartment(playerPool),
             AntagPoolGrouping.Ungrouped => playerPool
         };
 
