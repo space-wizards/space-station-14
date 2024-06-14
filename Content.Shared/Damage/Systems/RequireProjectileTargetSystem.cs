@@ -2,6 +2,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Standing;
 using Robust.Shared.Physics.Events;
+using Content.Shared.Storage.Components;
 
 namespace Content.Shared.Damage.Components;
 
@@ -26,7 +27,10 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
         if (HasComp<ProjectileComponent>(other) &&
             CompOrNull<TargetedProjectileComponent>(other)?.Target != ent)
         {
-            args.Cancelled = true;
+            // Prevents shooting out of while inside of crates
+            var shooter = EnsureComp<ProjectileComponent>(other).Shooter;
+            if (!HasComp<InsideEntityStorageComponent>(shooter))
+                args.Cancelled = true;
         }
     }
 
