@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: The chest rig is now available for purchase in the syndicate uplink.
-    type: Add
-  id: 6233
-  time: '2024-03-26T04:05:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26427
 - author: ElectroJr
   changes:
   - message: Fixed an atmos bug, which was (probably) causing atmospherics on the
@@ -3849,3 +3842,10 @@
   id: 6732
   time: '2024-06-14T17:22:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28992
+- author: Aeshus
+  changes:
+  - message: Loadouts now display all requirements.
+    type: Fix
+  id: 6733
+  time: '2024-06-14T20:32:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28994
