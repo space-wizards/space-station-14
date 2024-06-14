@@ -141,6 +141,9 @@ namespace Content.Server.Tabletop
 
         private void OnTabletopActivate(EntityUid uid, TabletopGameComponent component, ActivateInWorldEvent args)
         {
+            if (args.Handled || !args.Complex)
+                return;
+
             // Check that a player is attached to the entity.
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;

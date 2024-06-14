@@ -1,7 +1,11 @@
 using Content.Shared.CCVar;
+using Content.Shared.Ghost;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
+using Content.Shared.Stealth.Components;
+using Content.Shared.Whitelist;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.Configuration;
 
 namespace Content.Client.StatusIcon;
@@ -13,6 +17,8 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
 
     private bool _globalEnabled;
     private bool _localEnabled;
@@ -54,10 +60,34 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
         if (meta.EntityLifeStage >= EntityLifeStage.Terminating)
             return list;
 
-        var inContainer = (meta.Flags & MetaDataFlags.InContainer) != 0;
-        var ev = new GetStatusIconsEvent(list, inContainer);
+        var ev = new GetStatusIconsEvent(list);
         RaiseLocalEvent(uid, ref ev);
         return ev.StatusIcons;
     }
-}
 
+    /// <summary>
+    /// For overlay to check if an entity can be seen.
+    /// </summary>
+    public bool IsVisible(Entity<MetaDataComponent> ent, StatusIconData data)
+    {
+        var viewer = _playerManager.LocalSession?.AttachedEntity;
+
+        // Always show our icons to our entity
+        if (viewer == ent.Owner)
+            return true;
+
+        if (data.VisibleToGhosts && HasComp<GhostComponent>(viewer))
+            return true;
+
+        if (data.HideInContainer && (ent.Comp.Flags & MetaDataFlags.InContainer) != 0)
+            return false;
+
+        if (data.HideOnStealth && TryComp<StealthComponent>(ent, out var stealth) && stealth.Enabled)
+            return false;
+
+        if (data.ShowTo != null && !_entityWhitelist.IsValid(data.ShowTo, viewer))
+            return false;
+
+        return true;
+    }
+}

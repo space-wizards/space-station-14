@@ -31,5 +31,8 @@ roles-antag-space-ninja-objective = Use your stealth to sabotage the station, no
 roles-antag-thief-name = Thief
 roles-antag-thief-objective = Add some NT property to your personal collection without using violence.
 
+roles-antag-dragon-name = Space Dragon
+roles-antag-dragon-objective = Create a carp army to take over this quadrant.
+
 roles-antag-turf-tagger-name = Turf Tagger
 roles-antag-turf-tagger-objective = Spray every door to make your department own the station.

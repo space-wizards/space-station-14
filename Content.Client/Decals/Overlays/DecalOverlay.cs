@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -113,7 +114,7 @@ namespace Content.Client.Decals.Overlays
                     handle.DrawTexture(cache.Texture, decal.Coordinates, angle, decal.Color);
             }
 
-            handle.SetTransform(Matrix3.Identity);
+            handle.SetTransform(Matrix3x2.Identity);
         }
     }
 }
