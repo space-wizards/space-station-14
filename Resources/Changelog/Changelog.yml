@@ -1,70 +1,4 @@
 ﻿Entries:
-- author: Callmore
-  changes:
-  - message: Holoprojectors no longer come with a cell when made at a lathe.
-    type: Tweak
-  id: 6224
-  time: '2024-03-25T00:55:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26405
-- author: IProduceWidgets
-  changes:
-  - message: The captain can now return his laser to the glass display box.
-    type: Fix
-  id: 6225
-  time: '2024-03-25T00:58:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26398
-- author: IProduceWidgets
-  changes:
-  - message: More varieties of astro-grass are now available.
-    type: Add
-  - message: Astro-grass must now be cut instead of pried.
-    type: Tweak
-  id: 6226
-  time: '2024-03-25T01:14:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26381
-- author: Tayrtahn
-  changes:
-  - message: Parrots now sound more like parrots when they talk. RAWWK!
-    type: Add
-  id: 6227
-  time: '2024-03-25T01:26:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26340
-- author: DenisShvalov
-  changes:
-  - message: Added Cleaner Grenades that will help janitors in their work
-    type: Add
-  id: 6228
-  time: '2024-03-25T06:46:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25444
-- author: Weax
-  changes:
-  - message: Harmonicas can now be equipped (and played) in the neck slot.
-    type: Tweak
-  id: 6229
-  time: '2024-03-25T07:05:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26261
-- author: nikthechampiongr
-  changes:
-  - message: Mailing units no longer spontaneously turn into disposal units when flushed.
-    type: Fix
-  id: 6230
-  time: '2024-03-25T13:20:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26383
-- author: Simyon
-  changes:
-  - message: All implants are now unable to be implanted more than once.
-    type: Tweak
-  id: 6231
-  time: '2024-03-26T00:16:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26250
-- author: EmoGarbage404
-  changes:
-  - message: Ninjas no longer wipe all technologies when using their gloves on a research
-      server.
-    type: Tweak
-  id: 6232
-  time: '2024-03-26T00:52:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26421
 - author: Dutch-VanDerLinde
   changes:
   - message: The chest rig is now available for purchase in the syndicate uplink.
@@ -3847,3 +3781,71 @@
   id: 6723
   time: '2024-06-13T18:36:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28821
+- author: osjarw
+  changes:
+  - message: Added context menu action for scanning artifacts.
+    type: Add
+  id: 6724
+  time: '2024-06-14T02:01:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26873
+- author: Cojoke-dot
+  changes:
+  - message: Lasers now pass over things unless clicked like projectiles
+    type: Tweak
+  id: 6725
+  time: '2024-06-14T02:04:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28768
+- author: Boaz1111
+  changes:
+  - message: The PKA can now mine rocks in one hit again.
+    type: Tweak
+  id: 6726
+  time: '2024-06-14T02:40:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27476
+- author: KyuPolaris
+  changes:
+  - message: Chickens now make a clucking sound when they speak.
+    type: Add
+  id: 6727
+  time: '2024-06-14T02:43:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28948
+- author: Killerqu00
+  changes:
+  - message: Time between uncuff attempts is now 30 seconds instead of 6.
+    type: Tweak
+  id: 6728
+  time: '2024-06-14T06:19:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28095
+- author: Moomoobeef
+  changes:
+  - message: Fax machines can now be purchased at cargo, for when you need more paper
+      pushing on your station!
+    type: Add
+  id: 6729
+  time: '2024-06-14T06:24:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28968
+- author: Zonespace27
+  changes:
+  - message: Non-uplink PDAs can no longer have telecrystals inserted into them.
+    type: Fix
+  id: 6730
+  time: '2024-06-14T15:24:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28985
+- author: Aquif
+  changes:
+  - message: '"Space Drugs" have been renamed to "Space Mirage"'
+    type: Tweak
+  - message: '"Stimulants" have been renamed to "Hyperzine"'
+    type: Tweak
+  id: 6731
+  time: '2024-06-14T16:53:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28989
+- author: PJB3005
+  changes:
+  - message: Added pride month.
+    type: Add
+  - message: Made the nuke gay.
+    type: Add
+  id: 6732
+  time: '2024-06-14T17:22:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28992
