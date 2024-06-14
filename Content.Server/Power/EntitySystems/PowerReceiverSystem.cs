@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Power.Components;
+using Content.Server.Emp;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -42,6 +43,9 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<PowerSwitchComponent, GetVerbsEvent<AlternativeVerb>>(AddSwitchPowerVerb);
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentGetState>(OnGetState);
+
+            SubscribeLocalEvent<ApcPowerReceiverComponent, EmpPulseEvent>(OnEmpPulse);
+            SubscribeLocalEvent<ApcPowerReceiverComponent, EmpDisabledRemoved>(OnEmpEnd);
 
             _recQuery = GetEntityQuery<ApcPowerReceiverComponent>();
             _provQuery = GetEntityQuery<ApcPowerProviderComponent>();
@@ -203,6 +207,24 @@ namespace Content.Server.Power.EntitySystems
         public void SetLoad(ApcPowerReceiverComponent comp, float load)
         {
             comp.Load = load;
+        }
+
+        private void OnEmpPulse(EntityUid uid, ApcPowerReceiverComponent component, ref EmpPulseEvent args)
+        {
+            if (!component.PowerDisabled)
+            {
+                args.Affected = true;
+                args.Disabled = true;
+                TogglePower(uid, false);
+            }
+        }
+
+        private void OnEmpEnd(EntityUid uid, ApcPowerReceiverComponent component, ref EmpDisabledRemoved args)
+        {
+            if (component.PowerDisabled)
+            {
+                TogglePower(uid, false);
+            }
         }
     }
 }

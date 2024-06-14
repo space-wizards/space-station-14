@@ -1,4 +1,5 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Radio;
 using Content.Server.SurveillanceCamera;
@@ -77,7 +78,19 @@ public sealed class EmpSystem : SharedEmpSystem
         if (ev.Disabled)
         {
             var disabled = EnsureComp<EmpDisabledComponent>(uid);
-            disabled.DisabledUntil = Timing.CurTime + TimeSpan.FromSeconds(duration);
+            // couldnt use null-coalescing operator here sadge
+            if (disabled.DisabledUntil == TimeSpan.Zero)
+            {
+                disabled.DisabledUntil = Timing.CurTime;
+            }
+            disabled.DisabledUntil = disabled.DisabledUntil + TimeSpan.FromSeconds(duration);
+
+            /// i tried my best to go through the Pow3r server code but i literally couldn't find in relation to PowerNetworkBatteryComponent that uses the event system
+            /// the code is otherwise too esoteric for my innocent eyes
+            if (TryComp<PowerNetworkBatteryComponent>(uid, out var powerNetBattery))
+            {
+                powerNetBattery.CanCharge = false;
+            }
         }
     }
 
@@ -93,6 +106,11 @@ public sealed class EmpSystem : SharedEmpSystem
                 RemComp<EmpDisabledComponent>(uid);
                 var ev = new EmpDisabledRemoved();
                 RaiseLocalEvent(uid, ref ev);
+
+                if (TryComp<PowerNetworkBatteryComponent>(uid, out var powerNetBattery))
+                {
+                    powerNetBattery.CanCharge = true;
+                }
             }
         }
     }
