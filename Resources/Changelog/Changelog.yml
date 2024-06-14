@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Parrots now sound more like parrots when they talk. RAWWK!
-    type: Add
-  id: 6227
-  time: '2024-03-25T01:26:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26340
 - author: DenisShvalov
   changes:
   - message: Added Cleaner Grenades that will help janitors in their work
@@ -3845,3 +3838,10 @@
   id: 6726
   time: '2024-06-14T02:40:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27476
+- author: KyuPolaris
+  changes:
+  - message: Chickens now make a clucking sound when they speak.
+    type: Add
+  id: 6727
+  time: '2024-06-14T02:43:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28948
