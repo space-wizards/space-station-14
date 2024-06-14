@@ -180,7 +180,8 @@
   - type: Sprite
     state: human_pixel
   - type: Bloodstream
-    bloodMaxVolume: 500
+    bloodMaxVolume: 1000
+  - type: SolutionContainerManager
   - type: Explosive
     totalIntensity: 25
   - type: Destructible
