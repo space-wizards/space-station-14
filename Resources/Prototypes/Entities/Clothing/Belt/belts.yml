@@ -454,7 +454,7 @@
   - type: Appearance
 
 - type: entity
-  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase]
+  parent: ClothingBeltStorageBase
   id: ClothingBeltSecurity
   name: security belt
   description: Can hold security gear like handcuffs and flashes.
@@ -503,8 +503,6 @@
           - SmokeOnTrigger
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-  - type: ExplosionResistance
-    damageCoefficient: 0.5
 
 - type: entity
   parent: [ClothingBeltBase, ClothingSlotBase]
