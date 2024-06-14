@@ -2,6 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
+using Content.Shared.Whitelist;
 using Content.Shared.Wires;
 using Robust.Shared.Containers;
 
@@ -12,6 +13,7 @@ namespace Content.Shared.PAI;
 /// </summary>
 public sealed class PAIExpansionSystem : EntitySystem
 {
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -56,6 +58,10 @@ public sealed class PAIExpansionSystem : EntitySystem
         if (args.Slot.ID != ent.Comp.SlotId)
             return;
 
+        // the itemslot has it whitelisted
+        if (!TryComp<PAIExpansionCardComponent>(args.Item, out var card))
+            return;
+
         if (!_wires.IsPanelOpen(ent.Owner))
         {
             _popup.PopupClient(Loc.GetString(ent.Comp.PanelClosedPopup), ent, args.User);
@@ -63,7 +69,7 @@ public sealed class PAIExpansionSystem : EntitySystem
             return;
         }
 
-        if (TryComp<PAIExpansionCardComponent>(args.Item, out var card) && card.Whitelist?.IsValid(ent) == false)
+        if (_whitelist.IsWhitelistFail(card.Whitelist, ent))
         {
             _popup.PopupClient(Loc.GetString(card.WhitelistFailPopup), ent, args.User);
             args.Cancelled = true;
