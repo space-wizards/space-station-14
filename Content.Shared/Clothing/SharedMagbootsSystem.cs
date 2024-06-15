@@ -147,6 +147,17 @@ public sealed class SharedMagbootsSystem : EntitySystem
         if (!ent.Comp.On)
             return;
 
+        // do not cancel weightlessness if the person is in space.
+        if (ent.Comp.RequiresGrid)
+        {
+            var xform = Transform(args.Args.Entity);
+            if (TryComp<GravityComponent>(xform.GridUid, out var gravity) && gravity.Enabled ||
+                TryComp<GravityComponent>(xform.MapUid, out var mapGravity) && mapGravity.Enabled)
+            {
+                return;
+            }
+        }
+
         args.Args.IsWeightless = false;
         args.Args.Handled = true;
     }
