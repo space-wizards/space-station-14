@@ -6,6 +6,7 @@ using Content.Server.RoundEnd;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Zombies;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
@@ -15,7 +16,6 @@ using Content.Shared.Zombies;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Globalization;
-using Content.Server.GameTicking.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -35,7 +35,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PendingZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
+        SubscribeLocalEvent<IncurableZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
     }
 
     protected override void AppendRoundEndText(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule,
@@ -128,7 +128,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
     }
 
-    private void OnZombifySelf(EntityUid uid, PendingZombieComponent component, ZombifySelfActionEvent args)
+    private void OnZombifySelf(EntityUid uid, IncurableZombieComponent component, ZombifySelfActionEvent args)
     {
         _zombie.ZombifyEntity(uid);
         if (component.Action != null)

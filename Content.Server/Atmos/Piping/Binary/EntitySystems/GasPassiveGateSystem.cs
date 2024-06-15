@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             var T2 = outlet.Air.Temperature;
             var pressureDelta = P1 - P2;
 
-            float dt = 1/_atmosphereSystem.AtmosTickRate;
+            float dt = args.dt;
             float dV = 0;
             var denom = (T1*V2 + T2*V1);
 
@@ -63,7 +63,9 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 var transferMoles = n1 - (n1+n2)*T2*V1 / denom;
 
                 // Get the volume transfered to update our flow meter.
-                dV = n1*Atmospherics.R*T1/P1;
+                // When you remove x from one side and add x to the other the total difference is 2x.
+                // Also account for atmos speedup so that measured flow rate matches the setting on the volume pump.
+                dV = 2*transferMoles*Atmospherics.R*T1/P1 / _atmosphereSystem.Speedup;
 
                 // Actually transfer the gas.
                 _atmosphereSystem.Merge(outlet.Air, inlet.Air.Remove(transferMoles));

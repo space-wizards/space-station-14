@@ -14,6 +14,10 @@ namespace Content.Server.Ghost.Roles.Components
 
         [DataField("rules")] private string _roleRules = "ghost-role-component-default-rules";
 
+        // TODO ROLE TIMERS
+        // Actually make use of / enforce this requirement?
+        // Why is this even here.
+        // Move to ghost role prototype & respect CCvars.GameRoleTimerOverride
         [DataField("requirements")]
         public HashSet<JobRequirement>? Requirements;
 
@@ -40,7 +44,7 @@ namespace Content.Server.Ghost.Roles.Components
             set
             {
                 _roleName = value;
-                EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
+                IoCManager.Resolve<IEntityManager>().System<GhostRoleSystem>().UpdateAllEui();
             }
         }
 
@@ -52,7 +56,7 @@ namespace Content.Server.Ghost.Roles.Components
             set
             {
                 _roleDescription = value;
-                EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
+                IoCManager.Resolve<IEntityManager>().System<GhostRoleSystem>().UpdateAllEui();
             }
         }
 
@@ -64,7 +68,7 @@ namespace Content.Server.Ghost.Roles.Components
             set
             {
                 _roleRules = value;
-                EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
+                IoCManager.Resolve<IEntityManager>().System<GhostRoleSystem>().UpdateAllEui();
             }
         }
 

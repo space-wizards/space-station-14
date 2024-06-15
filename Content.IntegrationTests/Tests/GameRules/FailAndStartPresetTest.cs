@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Presets;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.GameTicking.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.GameRules;

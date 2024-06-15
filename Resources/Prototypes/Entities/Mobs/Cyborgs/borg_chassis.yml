@@ -192,7 +192,7 @@
 
 - type: entity
   id: BorgChassisMedical
-  parent: BaseBorgChassisNT
+  parent: [BaseBorgChassisNT, ShowMedicalIcons]
   name: medical cyborg
   components:
   - type: Sprite
@@ -255,8 +255,6 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHoverBorg
-      params:
-        volume: -6
 
 - type: entity
   id: BorgChassisService
@@ -323,8 +321,6 @@
           shader: unshaded
           map: ["light"]
           visible: false
-    - type: PointLight
-      color: "#dd200b"
     - type: BorgChassis
       maxModules: 3
       moduleWhitelist:
@@ -406,3 +402,7 @@
       noMindState: synd_engi
     - type: Construction
       node: syndicatesaboteur
+    - type: ShowHealthBars
+      damageContainers:
+      - Inorganic
+      - Silicon

@@ -84,7 +84,7 @@
 - type: entity
   id: FlatpackerNoBoardEffect
   categories:
-  - hideSpawnMenu
+  - HideSpawnMenu
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi

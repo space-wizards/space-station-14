@@ -1,4 +1,3 @@
-reagent-physical-desc-skunky = skunky
 reagent-physical-desc-soapy = soapy
 reagent-physical-desc-ferrous = ferrous
 reagent-physical-desc-nothing = nothing
