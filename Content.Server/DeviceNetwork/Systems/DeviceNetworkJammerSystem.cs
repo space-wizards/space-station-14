@@ -17,20 +17,20 @@ public sealed class DeviceNetworkJammerSystem : SharedDeviceNetworkJammerSystem
         SubscribeLocalEvent<TransformComponent, BeforePacketSentEvent>(BeforePacketSent);
     }
 
-    private void BeforePacketSent(EntityUid uid, TransformComponent xform, BeforePacketSentEvent ev)
+    private void BeforePacketSent(Entity<TransformComponent> xform, ref BeforePacketSentEvent ev)
     {
         if (ev.Cancelled)
             return;
 
         var query = EntityQueryEnumerator<DeviceNetworkJammerComponent, TransformComponent>();
 
-        while (query.MoveNext(out uid, out var jammerComp, out var jammerXform))
+        while (query.MoveNext(out var uid, out var jammerComp, out var jammerXform))
         {
             if (!_jammer.GetJammableNetworks((uid, jammerComp)).Contains(ev.NetworkId))
                 continue;
 
             if (_transform.InRange(jammerXform.Coordinates, ev.SenderTransform.Coordinates, jammerComp.Range)
-                || _transform.InRange(jammerXform.Coordinates, xform.Coordinates, jammerComp.Range))
+                || _transform.InRange(jammerXform.Coordinates, xform.Comp.Coordinates, jammerComp.Range))
             {
                 ev.Cancel();
                 return;
