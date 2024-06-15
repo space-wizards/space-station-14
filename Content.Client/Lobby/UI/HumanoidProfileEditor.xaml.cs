@@ -946,7 +946,7 @@ namespace Content.Client.Lobby.UI
                             if (loadout == null)
                             {
                                 loadout = new RoleLoadout(roleLoadoutProto.ID);
-                                loadout.SetDefault(_prototypeManager);
+                                loadout.SetDefault(Profile, _playerManager.LocalSession, _prototypeManager);
                             }
 
                             OpenLoadout(job, loadout, roleLoadoutProto);
