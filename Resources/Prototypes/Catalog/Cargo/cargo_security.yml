@@ -69,16 +69,6 @@
   group: market
 
 - type: cargoProduct
-  id: SecurityBiosuit
-  icon:
-    sprite: Clothing/Head/Hoods/Bio/security.rsi
-    state: icon
-  product: CrateSecurityBiosuit
-  cost: 800
-  category: cargoproduct-category-name-security
-  group: market
-
-- type: cargoProduct
   id: SecurityBarrier
   icon:
     sprite: Objects/Specific/Security/barrier.rsi
