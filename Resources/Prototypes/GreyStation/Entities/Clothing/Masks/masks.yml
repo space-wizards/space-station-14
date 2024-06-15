@@ -135,7 +135,6 @@
   components:
   - type: Sprite
     sprite: GreyStation/Clothing/Mask/troll.rsi
-    scale: 0.8, 0.8 # GreyStation - Scale down sprite because it looks too big
   - type: Clothing
     sprite: GreyStation/Clothing/Mask/troll.rsi
   - type: HideLayerClothing
