@@ -884,9 +884,7 @@
   loadouts:
   - CombatBoots
   - JackBoots
-  - CowboyBlack
   - SecurityWinterBoots
-  - Highheel
 
 - type: loadoutGroup
   id: SecurityPDA

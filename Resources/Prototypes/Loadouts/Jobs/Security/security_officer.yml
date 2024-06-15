@@ -197,24 +197,6 @@
     shoes: ClothingShoesBootsJackFilled
 
 - type: loadout
-  id: CowboyBlack
-  equipment: CowboyBlack
-
-- type: startingGear
-  id: CowboyBlack
-  equipment:
-    shoes: ClothingShoesBootsCowboyBlackFilled
-
-- type: loadout
-  id: Highheel
-  equipment: Highheel
-
-- type: startingGear
-  id: Highheel
-  equipment:
-    shoes: ClothingShoesHighheelBootsFilled
-
-- type: loadout
   id: SecurityWinterBoots
   equipment: SecurityWinterBoots
 
