@@ -20,18 +20,15 @@ public sealed class MeteorSchedulerSystem : GameRuleSystem<MeteorSchedulerCompon
     private TimeSpan _meteorMinDelay;
     private TimeSpan _meteorMaxDelay;
 
-    public MeteorSchedulerSystem()
+    protected override void Started(EntityUid uid, MeteorSchedulerComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
+        base.Started(uid, component, gameRule, args);
+
         _meteorMinDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMinTime));
         _meteorMaxDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMaxTime));
 
         _cfg.OnValueChanged(CCVars.MeteorSwarmMinTime, f => { _meteorMinDelay = TimeSpan.FromMinutes(f); });
         _cfg.OnValueChanged(CCVars.MeteorSwarmMaxTime, f => { _meteorMaxDelay = TimeSpan.FromMinutes(f); });
-    }
-
-    protected override void Started(EntityUid uid, MeteorSchedulerComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
-    {
-        base.Started(uid, component, gameRule, args);
 
         component.NextSwarmTime = Timing.CurTime + RobustRandom.Next(_meteorMinDelay, _meteorMaxDelay);
     }
