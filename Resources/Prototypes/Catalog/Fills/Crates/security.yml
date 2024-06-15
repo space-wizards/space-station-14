@@ -72,15 +72,21 @@
 - type: entity
   id: CrateSecuritySupplies
   parent: CrateSecgear
-  name: security supplies crate
+  name: officer gear crate
   description: Contains various supplies for the station's Security team. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
-      - id: BoxHandcuff
-      - id: BoxSechud
-#      - SecBelt
-#      - SecGasmask
+      - id: ClothingEyesGlassesSecurity
+        amount: 2
+      - id: ClothingHandsGlovesColorBlack
+        amount: 2
+      - id: ClothingShoesBootsCombatFilled
+        amount: 2 # yes they get knives
+      - id: ClothingMaskGasSecurity
+        amount: 2
+      - id: ClothingBeltSecurity
+        amount: 2
 #      - SpacelawBook
 
 - type: entity
