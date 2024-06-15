@@ -24,11 +24,8 @@ public sealed class MeteorSchedulerSystem : GameRuleSystem<MeteorSchedulerCompon
     {
         base.Started(uid, component, gameRule, args);
 
-        _meteorMinDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMinTime));
-        _meteorMaxDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMaxTime));
-
-        _cfg.OnValueChanged(CCVars.MeteorSwarmMinTime, f => { _meteorMinDelay = TimeSpan.FromMinutes(f); });
-        _cfg.OnValueChanged(CCVars.MeteorSwarmMaxTime, f => { _meteorMaxDelay = TimeSpan.FromMinutes(f); });
+        _cfg.OnValueChanged(CCVars.MeteorSwarmMinTime, f => { _meteorMinDelay = TimeSpan.FromMinutes(f); }, true);
+        _cfg.OnValueChanged(CCVars.MeteorSwarmMaxTime, f => { _meteorMaxDelay = TimeSpan.FromMinutes(f); }, true);
 
         component.NextSwarmTime = Timing.CurTime + RobustRandom.Next(_meteorMinDelay, _meteorMaxDelay);
     }
