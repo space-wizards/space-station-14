@@ -10,7 +10,7 @@ public sealed partial class StencilOverlay
 {
     private List<Entity<MapGridComponent>> _grids = new();
 
-    private void DrawWeather(in OverlayDrawArgs args, WeatherPrototype weatherProto, float alpha, Matrix3 invMatrix)
+    private void DrawWeather(in OverlayDrawArgs args, WeatherPrototype weatherProto, float alpha, Matrix3x2 invMatrix)
     {
         var worldHandle = args.WorldHandle;
         var mapId = args.MapId;
@@ -32,7 +32,7 @@ public sealed partial class StencilOverlay
             foreach (var grid in _grids)
             {
                 var matrix = _transform.GetWorldMatrix(grid, xformQuery);
-                Matrix3.Multiply(in matrix, in invMatrix, out var matty);
+                var matty =  Matrix3x2.Multiply(matrix, invMatrix);
                 worldHandle.SetTransform(matty);
 
                 foreach (var tile in grid.Comp.GetTilesIntersecting(worldAABB))
@@ -52,7 +52,7 @@ public sealed partial class StencilOverlay
 
         }, Color.Transparent);
 
-        worldHandle.SetTransform(Matrix3.Identity);
+        worldHandle.SetTransform(Matrix3x2.Identity);
         worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilMask").Instance());
         worldHandle.DrawTextureRect(_blep!.Texture, worldBounds);
         var curTime = _timing.RealTime;
@@ -62,7 +62,7 @@ public sealed partial class StencilOverlay
         worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilDraw").Instance());
         _parallax.DrawParallax(worldHandle, worldAABB, sprite, curTime, position, Vector2.Zero, modulate: (weatherProto.Color ?? Color.White).WithAlpha(alpha));
 
-        worldHandle.SetTransform(Matrix3.Identity);
+        worldHandle.SetTransform(Matrix3x2.Identity);
         worldHandle.UseShader(null);
     }
 }

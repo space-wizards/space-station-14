@@ -1,3 +1,4 @@
+using Content.Shared.Alert;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -16,4 +17,7 @@ public sealed partial class MagbootsComponent : Component
 
     [DataField("on"), AutoNetworkedField]
     public bool On;
+
+    [DataField]
+    public ProtoId<AlertPrototype> MagbootsAlert = "Magboots";
 }
