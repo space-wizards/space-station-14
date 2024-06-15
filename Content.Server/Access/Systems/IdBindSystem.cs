@@ -1,35 +1,26 @@
-using Content.Shared.IdentityManagement.Components;
+using Content.Server.Access.Components;
+using Content.Server.PDA;
 using Content.Shared.Inventory;
+using Content.Shared.Mind.Components;
 using Content.Shared.PDA;
 using Content.Shared.Roles;
 
-namespace Content.Shared.Access.Systems;
+namespace Content.Server.Access.Systems;
 
 public sealed class IdBindSystem : EntitySystem
 {
-    [Dependency] private readonly SharedIdCardSystem _cardSystem = default!;
-    [Dependency] private readonly SharedPdaSystem _pdaSystem = default!;
+    [Dependency] private readonly IdCardSystem _cardSystem = default!;
+    [Dependency] private readonly PdaSystem _pdaSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        //Activate on being added or when starting gear is equipped
-        SubscribeLocalEvent<IdBindComponent, StartingGearEquippedEvent>(StartAttempt);
-        SubscribeLocalEvent<IdBindComponent, ComponentInit>(StartAttempt);
+        //Activate on mind being added
+        SubscribeLocalEvent<IdBindComponent, MindAddedMessage>(TryBind);
     }
 
-    private void StartAttempt(Entity<IdBindComponent> ent, ref StartingGearEquippedEvent args)
-    {
-        TryBind(ent);
-    }
-
-    private void StartAttempt(Entity<IdBindComponent> ent, ref ComponentInit args)
-    {
-        TryBind(ent);
-    }
-
-    private void TryBind(Entity<IdBindComponent> ent)
+    private void TryBind(Entity<IdBindComponent> ent, ref MindAddedMessage args)
     {
         if (!_cardSystem.TryFindIdCard(ent, out var cardId))
             return;
@@ -50,6 +41,8 @@ public sealed class IdBindSystem : EntitySystem
             return;
 
         _pdaSystem.SetOwner(uPda.Value, pDA, data.EntityName);
+        //Remove after running once
+        EntityManager.RemoveComponent(ent, ent.Comp);
     }
 }
 
