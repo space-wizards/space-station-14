@@ -437,6 +437,7 @@
   - MimeSuspendersRed
   - MimeSuspendersBlack
 
+- type: loadoutGroup
   id: MusicianOuterClothing
   name: loadout-group-musician-outerclothing
   minLimit: 0
