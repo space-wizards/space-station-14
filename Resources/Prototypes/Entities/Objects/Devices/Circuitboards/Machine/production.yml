@@ -1034,9 +1034,6 @@
         Capacitor: 1
         Glass: 2
         Cable: 2
-    - type: Tag
-      tags:
-      - SyndicateMicrowaveMachineBoard
 
 - type: entity
   id: FatExtractorMachineCircuitboard
