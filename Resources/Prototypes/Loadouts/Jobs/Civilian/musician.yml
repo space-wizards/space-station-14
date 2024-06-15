@@ -7,3 +7,256 @@
   id: MusicianWintercoat
   equipment:
     outerClothing: ClothingOuterWinterMusician
+
+# Instruments
+- type: loadout
+  id: Glockenspiel
+  equipment: Glockenspiel
+
+- type: startingGear
+  id: Glockenspiel
+  equipment:
+    outerClothing: GlockenspielInstrument
+
+- type: loadout
+  id: MusicBox
+  equipment: MusicBox
+
+- type: startingGear
+  id: MusicBox
+  equipment:
+    outerClothing: MusicBoxInstrument
+
+- type: loadout
+  id: Xylophone
+  equipment: Xylophone
+
+- type: startingGear
+  id: Xylophone
+  equipment:
+    outerClothing: XylophoneInstrument
+
+- type: loadout
+  id: Microphone
+  equipment: Microphone
+
+- type: startingGear
+  id: Microphone
+  equipment:
+    outerClothing: MicrophoneInstrument
+
+- type: loadout
+  id: Synthesizer
+  equipment: Synthesizer
+
+- type: startingGear
+  id: Synthesizer
+  equipment:
+    outerClothing: SynthesizerInstrument
+
+- type: loadout
+  id: Kalimba
+  equipment: Kalimba
+
+- type: startingGear
+  id: Kalimba
+  equipment:
+    outerClothing: KalimbaInstrument
+
+- type: loadout
+  id: Woodblock
+  equipment: Woodblock
+
+- type: startingGear
+  id: Woodblock
+  equipment:
+    outerClothing: WoodblockInstrument
+
+- type: loadout
+  id: ElectricGuitar
+  equipment: ElectricGuitar
+
+- type: startingGear
+  id: ElectricGuitar
+  equipment:
+    outerClothing: ElectricGuitarInstrument
+
+- type: loadout
+  id: BassGuitar
+  equipment: BassGuitar
+
+- type: startingGear
+  id: BassGuitar
+  equipment:
+    outerClothing: BassGuitarInstrument
+
+- type: loadout
+  id: RockGuitar
+  equipment: RockGuitar
+
+- type: startingGear
+  id: RockGuitar
+  equipment:
+    outerClothing: RockGuitarInstrument
+
+- type: loadout
+  id: AcousticGuitar
+  equipment: AcousticGuitar
+
+- type: startingGear
+  id: AcousticGuitar
+  equipment:
+    outerClothing: AcousticGuitarInstrument
+
+- type: loadout
+  id: Banjo
+  equipment: Banjo
+
+- type: startingGear
+  id: Banjo
+  equipment:
+    outerClothing: BanjoInstrument
+
+- type: loadout
+  id: Violin
+  equipment: Violin
+
+- type: startingGear
+  id: Violin
+  equipment:
+    outerClothing: ViolinInstrument
+
+- type: loadout
+  id: Viola
+  equipment: Viola
+
+- type: startingGear
+  id: Viola
+  equipment:
+    outerClothing: ViolaInstrument
+
+- type: loadout
+  id: Cello
+  equipment: Cello
+
+- type: startingGear
+  id: Cello
+  equipment:
+    outerClothing: CelloInstrument
+
+- type: loadout
+  id: Trumpet
+  equipment: Trumpet
+
+- type: startingGear
+  id: Trumpet
+  equipment:
+    outerClothing: TrumpetInstrument
+
+- type: loadout
+  id: Trombone
+  equipment: Trombone
+
+- type: startingGear
+  id: Trombone
+  equipment:
+    outerClothing: TromboneInstrument
+
+- type: loadout
+  id: FrenchHorn
+  equipment: FrenchHorn
+
+- type: startingGear
+  id: FrenchHorn
+  equipment:
+    outerClothing: FrenchHornInstrument
+
+- type: loadout
+  id: Euphonium
+  equipment: Euphonium
+
+- type: startingGear
+  id: Euphonium
+  equipment:
+    outerClothing: EuphoniumInstrument
+
+- type: loadout
+  id: Saxophone
+  equipment: Saxophone
+
+- type: startingGear
+  id: Saxophone
+  equipment:
+    outerClothing: SaxophoneInstrument
+
+- type: loadout
+  id: Accordion
+  equipment: Accordion
+
+- type: startingGear
+  id: Accordion
+  equipment:
+    outerClothing: AccordionInstrument
+
+- type: loadout
+  id: Harmonica
+  equipment: Harmonica
+
+- type: startingGear
+  id: Harmonica
+  equipment:
+    outerClothing: HarmonicaInstrument
+
+- type: loadout
+  id: Clarinet
+  equipment: Clarinet
+
+- type: startingGear
+  id: Clarinet
+  equipment:
+    outerClothing: ClarinetInstrument
+
+- type: loadout
+  id: Flute
+  equipment: Flute
+
+- type: startingGear
+  id: Flute
+  equipment:
+    outerClothing: FluteInstrument
+
+- type: loadout
+  id: Recorder
+  equipment: Recorder
+
+- type: startingGear
+  id: Recorder
+  equipment:
+    outerClothing: RecorderInstrument
+
+- type: loadout
+  id: PanFlute
+  equipment: PanFlute
+
+- type: startingGear
+  id: PanFlute
+  equipment:
+    outerClothing: PanFluteInstrument
+
+- type: loadout
+  id: Ocarina
+  equipment: Ocarina
+
+- type: startingGear
+  id: Ocarina
+  equipment:
+    outerClothing: OcarinaInstrument
+
+- type: loadout
+  id: Bagpipe
+  equipment: Bagpipe
+
+- type: startingGear
+  id: Bagpipe
+  equipment:
+    outerClothing: BagpipeInstrument
