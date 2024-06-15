@@ -30,13 +30,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
     private void OnMicrowaved(EntityUid uid, IdCardComponent component, BeingMicrowavedEvent args)
     {
         if (!component.CanMicrowave || !TryComp<MicrowaveComponent>(args.Microwave, out var micro) || micro.Broken)
-            return;
-
-        if (micro.CanMicrowaveIdsSafely)
-        {
-            _microwave.Explode((args.Microwave, micro));
-            return;
-        }       
+            return;   
 
         if (TryComp<AccessComponent>(uid, out var access))
         {
@@ -58,6 +52,14 @@ public sealed class IdCardSystem : SharedIdCardSystem
                 EntityManager.QueueDeleteEntity(uid);
                 return;
             }
+
+            //Explode if the microwave can't handle it
+            if (!micro.CanMicrowaveIdsSafely)
+            {
+                _microwave.Explode((args.Microwave, micro));
+                return;
+            }
+
             // If they're unlucky, brick their ID
             if (randomPick <= 0.25f)
             {
