@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Voicemasks can now mimic speech verbs, like flutters or growls.
-    type: Tweak
-  id: 6245
-  time: '2024-03-28T06:36:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25768
 - author: EmoGarbage404
   changes:
   - message: Electrocution damage is no longer based on the power supplied and is
@@ -3857,3 +3850,11 @@
   id: 6744
   time: '2024-06-15T06:02:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28971
+- author: metalgearsloth
+  changes:
+  - message: Fix the character profile sometimes thinking there's changes to save
+      even if the loadouts haven't changed.
+    type: Fix
+  id: 6745
+  time: '2024-06-15T06:52:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28737
