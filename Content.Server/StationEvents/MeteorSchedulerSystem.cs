@@ -22,6 +22,8 @@ public sealed class MeteorSchedulerSystem : GameRuleSystem<MeteorSchedulerCompon
 
     public override void Initialize()
     {
+        base.Initialize();
+
         _cfg.OnValueChanged(CCVars.MeteorSwarmMinTime, f => { _meteorMinDelay = TimeSpan.FromMinutes(f); }, true);
         _cfg.OnValueChanged(CCVars.MeteorSwarmMaxTime, f => { _meteorMaxDelay = TimeSpan.FromMinutes(f); }, true);
     }
