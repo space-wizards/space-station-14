@@ -1,12 +1,15 @@
-using Content.Server.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
-public sealed class DeviceNetworkJammerSystem : EntitySystem
+/// <inheritdoc/>
+public sealed class DeviceNetworkJammerSystem : SharedDeviceNetworkJammerSystem
 {
-    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -21,13 +24,13 @@ public sealed class DeviceNetworkJammerSystem : EntitySystem
 
         var query = EntityQueryEnumerator<DeviceNetworkJammerComponent, TransformComponent>();
 
-        while (query.MoveNext(out _, out var jammerComp, out var jammerXform))
+        while (query.MoveNext(out uid, out var jammerComp, out var jammerXform))
         {
-            if (!jammerComp.JammableNetworks.Contains(ev.NetworkId))
+            if (!_jammer.GetJammableNetworks((uid, jammerComp)).Contains(ev.NetworkId))
                 continue;
 
-            if (jammerXform.Coordinates.InRange(EntityManager, _transform, ev.SenderTransform.Coordinates, jammerComp.Range)
-                || jammerXform.Coordinates.InRange(EntityManager, _transform, xform.Coordinates, jammerComp.Range))
+            if (_transform.InRange(jammerXform.Coordinates, ev.SenderTransform.Coordinates, jammerComp.Range)
+                || _transform.InRange(jammerXform.Coordinates, xform.Coordinates, jammerComp.Range))
             {
                 ev.Cancel();
                 return;
