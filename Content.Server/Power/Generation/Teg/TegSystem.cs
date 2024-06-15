@@ -128,7 +128,6 @@ public sealed class TegSystem : EntitySystem
         // Shift ramp position based on demand and generation from previous tick.
         var curRamp = component.RampPosition;
         var lastDraw = supplier.CurrentSupply;
-        // Limit amount lost/gained based on power factor.
         curRamp = MathHelper.Clamp(lastDraw, curRamp / component.RampFactor, curRamp * component.RampFactor);
         curRamp = MathF.Max(curRamp, component.RampMinimum);
         component.RampPosition = curRamp;
@@ -140,14 +139,9 @@ public sealed class TegSystem : EntitySystem
             var hotA = airA.Temperature > airB.Temperature;
             var cHot = hotA ? cA : cB;
 
-            // Calculate maximum amount of energy to generate this tick based on ramping above.
-            // This clamps the thermal energy transfer as well.
-            var targetEnergy = curRamp / _atmosphere.AtmosTickRate;
-            var transferMax = targetEnergy / (component.ThermalEfficiency * component.PowerFactor);
-
             // Calculate thermal and electrical energy transfer between the two sides.
             var δT = MathF.Abs(airA.Temperature - airB.Temperature);
-            var transfer = Math.Min(δT * cA * cB / (cA + cB - cHot * component.ThermalEfficiency), transferMax);
+            var transfer = δT * cA * cB / (cA + cB - cHot * component.ThermalEfficiency);
             electricalEnergy = transfer * component.ThermalEfficiency * component.PowerFactor;
             var outTransfer = transfer * (1 - component.ThermalEfficiency);
 
