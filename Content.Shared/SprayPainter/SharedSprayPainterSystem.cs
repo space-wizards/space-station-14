@@ -4,7 +4,6 @@ using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Paint;
 using Content.Shared.SprayPainter.Components;
 using Content.Shared.SprayPainter.Prototypes;
 using Robust.Shared.Audio.Systems;
@@ -129,8 +128,6 @@ public abstract class SharedSprayPainterSystem : EntitySystem
             _popup.PopupClient(msg, args.User, args.User);
             return;
         }
-
-        RemComp<PaintedComponent>(ent);
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, painter.AirlockSprayTime, new SprayPainterDoorDoAfterEvent(sprite, style.Department), args.Used, target: ent, used: args.Used)
         {

@@ -70,3 +70,11 @@ public enum RevenantVisuals : byte
     Stunned,
     Harvesting,
 }
+
+[NetSerializable, Serializable]
+public enum RevenantVisualLayers : byte
+{
+    Digit1,
+    Digit2,
+    Digit3
+}

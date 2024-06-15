@@ -4,8 +4,8 @@
   id: BasicRobotics
   name: research-technology-basic-robotics
   icon:
-    sprite: Mobs/Silicon/drone.rsi
-    state: drone
+    sprite: Structures/Machines/exosuit_fabricator.rsi
+    state: fab-idle
   discipline: Experimental
   tier: 1
   cost: 5000
@@ -68,6 +68,7 @@
   cost: 7500
   recipeUnlocks:
   - ClothingShoesBootsMagSci
+  - ClothingShoesBootsMoon
 
 - type: technology
   id: AnomalyCoreHarnessing
@@ -87,13 +88,12 @@
   id: AbnormalArtifactManipulation
   name: research-technology-abnormal-artifact-manipulation
   icon:
-    sprite: Structures/Machines/traversal_distorter.rsi
-    state: display
+    sprite: Structures/Machines/artifact_crusher.rsi
+    state: icon
   discipline: Experimental
   tier: 2
   cost: 5000
   recipeUnlocks:
-  - TraversalDistorterMachineCircuitboard
   - ArtifactCrusherMachineCircuitboard
 
 - type: technology
@@ -111,18 +111,6 @@
   - AnomalyVesselExperimentalCircuitboard
   technologyPrerequisites:
   - BasicAnomalousResearch
-
-- type: technology
-  id: RapidPartExchange
-  name: research-technology-rped
-  icon:
-    sprite: Objects/Specific/Research/rped.rsi
-    state: icon
-  discipline: Experimental
-  tier: 2
-  cost: 7500
-  recipeUnlocks:
-  - RPED
 
 - type: technology
   id: DeterrenceTechnologies

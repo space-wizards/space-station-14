@@ -62,7 +62,6 @@
     solution: soap
   - type: DeleteOnSolutionEmpty
     solution: soap
-  - type: PaintRemover
   - type: FlavorProfile
     flavors:
       - clean

@@ -15,8 +15,8 @@ public abstract class SharedWeatherSystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] protected readonly IPrototypeManager ProtoMan = default!;
-    [Dependency] private   readonly ITileDefinitionManager _tileDefManager = default!;
-    [Dependency] private   readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private EntityQuery<BlockWeatherComponent> _blockQuery;
@@ -129,7 +129,7 @@ public abstract class SharedWeatherSystem : EntitySystem
                 // Shutting down
                 if (endTime != null && remainingTime < WeatherComponent.ShutdownTime)
                 {
-                    SetState(WeatherState.Ending, comp, weather, weatherProto);
+                    SetState(uid, WeatherState.Ending, comp, weather, weatherProto);
                 }
                 // Starting up
                 else
@@ -139,7 +139,7 @@ public abstract class SharedWeatherSystem : EntitySystem
 
                     if (elapsed < WeatherComponent.StartupTime)
                     {
-                        SetState(WeatherState.Starting, comp, weather, weatherProto);
+                        SetState(uid, WeatherState.Starting, comp, weather, weatherProto);
                     }
                 }
 
@@ -182,15 +182,15 @@ public abstract class SharedWeatherSystem : EntitySystem
         }
 
         if (proto != null)
-            StartWeather(weatherComp, proto, endTime);
+            StartWeather(mapUid, weatherComp, proto, endTime);
     }
 
     /// <summary>
     /// Run every tick when the weather is running.
     /// </summary>
-    protected virtual void Run(EntityUid uid, WeatherData weather, WeatherPrototype weatherProto, float frameTime) {}
+    protected virtual void Run(EntityUid uid, WeatherData weather, WeatherPrototype weatherProto, float frameTime) { }
 
-    protected void StartWeather(WeatherComponent component, WeatherPrototype weather, TimeSpan? endTime)
+    protected void StartWeather(EntityUid uid, WeatherComponent component, WeatherPrototype weather, TimeSpan? endTime)
     {
         if (component.Weather.ContainsKey(weather.ID))
             return;
@@ -202,7 +202,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         };
 
         component.Weather.Add(weather.ID, data);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     protected virtual void EndWeather(EntityUid uid, WeatherComponent component, string proto)
@@ -216,13 +216,13 @@ public abstract class SharedWeatherSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    protected virtual bool SetState(WeatherState state, WeatherComponent component, WeatherData weather, WeatherPrototype weatherProto)
+    protected virtual bool SetState(EntityUid uid, WeatherState state, WeatherComponent component, WeatherData weather, WeatherPrototype weatherProto)
     {
         if (weather.State.Equals(state))
             return false;
 
         weather.State = state;
-        Dirty(component);
+        Dirty(uid, component);
         return true;
     }
 

@@ -206,7 +206,7 @@
       visuals:
        # toggle color of the unshaded light:
        enum.OutletInjectorVisuals.Enabled:
-         unshaded:
+         enum.LightLayers.Unshaded:
            True: { color: "#5eff5e" }
            False: { color: "#990000" }
     - type: Appearance
@@ -239,16 +239,14 @@
     - type: AtmosDevice
     - type: UserInterface
       interfaces:
-      - key: enum.ThermomachineUiKey.Key
-        type: GasThermomachineBoundUserInterface
+        enum.ThermomachineUiKey.Key:
+          type: GasThermomachineBoundUserInterface
     - type: ActivatableUI
       inHandsOnly: false
       key: enum.ThermomachineUiKey.Key
     - type: WiresPanel
-    - type: Wires
-      boardName: wires-board-name-thermomachine
-      layoutId: Thermomachine
     - type: WiresVisuals
+    - type: PipeRestrictOverlap
     - type: NodeContainer
       nodes:
         pipe:
@@ -307,7 +305,6 @@
   suffix: Enabled
   components:
   - type: GasThermoMachine
-    enabled: true
   - type: ApcPowerReceiver
     powerDisabled: false
 
@@ -352,7 +349,6 @@
   suffix: Enabled
   components:
   - type: GasThermoMachine
-    enabled: true
   - type: ApcPowerReceiver
     powerDisabled: false
 
@@ -387,7 +383,7 @@
     board: HellfireHeaterMachineCircuitBoard
 
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   id: BaseGasCondenser
   name: condenser
   description: Condenses gases into liquids. Now we just need some plumbing.
@@ -425,14 +421,12 @@
   - type: GasCondenser
   - type: AtmosPipeColor
   - type: AtmosDevice
+  - type: PipeRestrictOverlap
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Machine
     board: CondenserMachineCircuitBoard
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-condenser
-    layoutId: Condenser
   - type: WiresVisuals
   - type: Destructible
     thresholds:
@@ -465,7 +459,8 @@
     solutions:
       tank:
         maxVol: 400
-        canMix: true
+  - type: MixableSolution
+    solution: tank
   - type: DrainableSolution
     solution: tank
   - type: ExaminableSolution

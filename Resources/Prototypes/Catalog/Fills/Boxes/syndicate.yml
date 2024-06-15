@@ -31,3 +31,39 @@
         amount: 2
       - id: BaseChemistryEmptyVial
       - id: SyringeStimulants
+
+- type: entity
+  parent: BoxCardboard
+  id: ThrowingKnivesKit
+  name: throwing knives kit
+  description: A set of 4 syndicate branded throwing knives, perfect for embedding into the body of your victims.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,3,1
+  - type: StorageFill
+    contents:
+      - id: ThrowingKnife
+        amount: 4
+  - type: Sprite
+    layers:
+      - state: box_of_doom
+      - state: throwing_knives
+
+- type: entity
+  name: deathrattle implant box
+  parent: BoxCardboard
+  id: BoxDeathRattleImplants
+  description: Six deathrattle implants for the whole squad.
+  components:
+  - type: Sprite
+    layers:
+      - state: box_of_doom
+      - state: syringe
+  - type: Storage
+    grid:
+    - 0,0,5,3
+  - type: StorageFill
+    contents:
+      - id: DeathRattleImplanter
+        amount: 6

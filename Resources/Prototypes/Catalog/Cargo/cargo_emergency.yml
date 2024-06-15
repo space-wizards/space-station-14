@@ -4,7 +4,7 @@
     sprite: Clothing/Head/Helmets/bombsuit.rsi
     state: icon
   product: CrateEmergencyExplosive
-  cost: 650
+  cost: 1000
   category: cargoproduct-category-name-emergency
   group: market
 

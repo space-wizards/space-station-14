@@ -1,4 +1,5 @@
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Store;
@@ -14,13 +15,13 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
 {
     public readonly HashSet<ListingData> Listings;
 
-    public readonly Dictionary<string, FixedPoint2> Balance;
+    public readonly Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance;
 
     public readonly bool ShowFooter;
 
     public readonly bool AllowRefund;
 
-    public StoreUpdateState(HashSet<ListingData> listings, Dictionary<string, FixedPoint2> balance, bool showFooter, bool allowRefund)
+    public StoreUpdateState(HashSet<ListingData> listings, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance, bool showFooter, bool allowRefund)
     {
         Listings = listings;
         Balance = balance;
@@ -29,26 +30,10 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
     }
 }
 
-/// <summary>
-/// initializes miscellaneous data about the store.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class StoreInitializeState : BoundUserInterfaceState
-{
-    public readonly string Name;
-
-    public StoreInitializeState(string name)
-    {
-        Name = name;
-    }
-}
-
 [Serializable, NetSerializable]
 public sealed class StoreRequestUpdateInterfaceMessage : BoundUserInterfaceMessage
 {
-    public StoreRequestUpdateInterfaceMessage()
-    {
-    }
+
 }
 
 [Serializable, NetSerializable]

@@ -1,8 +1,6 @@
-using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using System.Diagnostics.CodeAnalysis;
 
@@ -14,7 +12,6 @@ namespace Content.Server.Atmos.EntitySystems;
 public sealed class AirFilterSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -34,7 +31,7 @@ public sealed class AirFilterSystem : EntitySystem
         if (air.Pressure >= intake.Pressure)
             return;
 
-        var environment = _atmosphere.GetContainingMixture(uid, true, true);
+        var environment = _atmosphere.GetContainingMixture(uid, args.Grid, args.Map, true, true);
         // nothing to intake from
         if (environment == null)
             return;
@@ -66,12 +63,11 @@ public sealed class AirFilterSystem : EntitySystem
         var oxygen = air.GetMoles(filter.Oxygen) / air.TotalMoles;
         var gases = oxygen >= filter.TargetOxygen ? filter.Gases : filter.OverflowGases;
 
-        var coordinates = Transform(uid).MapPosition;
         GasMixture? destination = null;
-        if (_map.TryFindGridAt(coordinates, out _, out var grid))
+        if (args.Grid is {} grid)
         {
-            var tile = grid.GetTileRef(coordinates);
-            destination = _atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true);
+            var position = _transform.GetGridTilePositionOrDefault(uid);
+            destination = _atmosphere.GetTileMixture(grid, args.Map, position, true);
         }
 
         if (destination != null)
