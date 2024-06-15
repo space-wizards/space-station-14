@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Jake Huxell
-  changes:
-  - message: Fixed late join menu scrolling to the top whenever a new player joins
-      the round.
-    type: Fix
-  id: 6239
-  time: '2024-03-28T01:43:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26483
 - author: blueDev2
   changes:
   - message: Generalized bounties to allow selling them off-station
@@ -3848,3 +3840,11 @@
   id: 6738
   time: '2024-06-15T03:13:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28920
+- author: Brandon-Huu
+  changes:
+  - message: Removed the six Handheld GPS devices from the syndicate deathrattle implant
+      box.
+    type: Remove
+  id: 6739
+  time: '2024-06-15T03:23:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28999
