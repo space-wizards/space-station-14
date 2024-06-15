@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Various announcements now announce location on the map (near Medical,
-      etc.) instead of simply displaying coordinates.
-    type: Tweak
-  id: 6242
-  time: '2024-03-28T05:53:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26437
 - author: Tayrtahn
   changes:
   - message: Arcade machines now advertise and make noise to bring in players.
@@ -3855,3 +3847,14 @@
   id: 6741
   time: '2024-06-15T03:43:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29009
+- author: EmoGarbage404
+  changes:
+  - message: Attempting to uncuff oneself while being pulled will now take twice as
+      long.
+    type: Tweak
+  - message: Reduced cooldown after attempting to uncuff oneself back to previous
+      values.
+    type: Tweak
+  id: 6742
+  time: '2024-06-15T04:01:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29008
