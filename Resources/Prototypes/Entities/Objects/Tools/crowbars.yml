@@ -40,15 +40,15 @@
   description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Crowbar/crowbar.rsi
+    sprite: Objects/Tools/Crowbars/crowbar.rsi
     state: icon
   - type: Item
     size: Normal
     shape:
     - 0,0,0,1
-    sprite: Objects/Tools/Crowbar/crowbar.rsi
+    sprite: Objects/Tools/Crowbars/crowbar.rsi
     storedSprite:
-      sprite: Objects/Tools/Crowbar/crowbar.rsi
+      sprite: Objects/Tools/Crowbars/crowbar.rsi
       state: storage
 
 - type: entity
@@ -62,15 +62,15 @@
     - Crowbar
     - CrowbarRed
   - type: Sprite
-    sprite: Objects/Tools/Crowbar/red_crowbar.rsi
+    sprite: Objects/Tools/Crowbars/red_crowbar.rsi
     state: icon
   - type: Item
     size: Normal
     shape:
     - 0,0,0,1
-    sprite: Objects/Tools/Crowbar/red_crowbar.rsi
+    sprite: Objects/Tools/Crowbars/red_crowbar.rsi
     storedSprite:
-      sprite: Objects/Tools/Crowbar/red_crowbar.rsi
+      sprite: Objects/Tools/Crowbars/red_crowbar.rsi
       state: storage
 
 - type: entity
@@ -80,15 +80,15 @@
   description: A multipurpose tool to pry open doors and fight interdimensional invaders, printed from an autolathe.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Crowbar/green_crowbar.rsi
+    sprite: Objects/Tools/Crowbars/green_crowbar.rsi
     state: icon
   - type: Item
     size: Normal
     shape:
     - 0,0,0,1
-    sprite: Objects/Tools/Crowbar/green_crowbar.rsi
+    sprite: Objects/Tools/Crowbars/green_crowbar.rsi
     storedSprite:
-      sprite: Objects/Tools/Crowbar/green_crowbar.rsi
+      sprite: Objects/Tools/Crowbars/green_crowbar.rsi
       state: storage
 
 - type: entity
@@ -98,15 +98,15 @@
   description: A multipurpose tool to pry open doors and fight interdimensional invaders, ordered by Cargo.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Crowbar/orange_crowbar.rsi
+    sprite: Objects/Tools/Crowbars/orange_crowbar.rsi
     state: icon
   - type: Item
     size: Normal
     shape:
     - 0,0,0,1
-    sprite: Objects/Tools/Crowbar/orange_crowbar.rsi
+    sprite: Objects/Tools/Crowbars/orange_crowbar.rsi
     storedSprite:
-      sprite: Objects/Tools/Crowbar/orange_crowbar.rsi
+      sprite: Objects/Tools/Crowbars/orange_crowbar.rsi
       state: storage
 
 - type: entity
@@ -116,13 +116,13 @@
   description: A pocket crowbar designed to pry open doors and firelocks during power outages, dispensed from Engineering.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Crowbar/yellow_crowbar.rsi
+    sprite: Objects/Tools/Crowbars/yellow_crowbar.rsi
     state: icon
   - type: Item
     size: Normal
     shape:
     - 0,0,0,1
-    sprite: Objects/Tools/Crowbar/yellow_crowbar.rsi
+    sprite: Objects/Tools/Crowbars/yellow_crowbar.rsi
     storedSprite:
-      sprite: Objects/Tools/Crowbar/yellow_crowbar.rsi
+      sprite: Objects/Tools/Crowbars/yellow_crowbar.rsi
       state: storage
