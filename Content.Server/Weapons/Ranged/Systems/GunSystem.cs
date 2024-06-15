@@ -17,6 +17,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Reflect;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -182,11 +183,11 @@ public sealed partial class GunSystem : SharedGunSystem
                 case HitscanPrototype hitscan:
 
                     EntityUid? lastHit = null;
+                    var fromEffect = fromCoordinates;
                     var dir = mapDirection.Normalized();
 
                     //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
                     var lastUser = user ?? gunUid;
-
                     if (hitscan.Reflective != ReflectType.None)
                     {
                         for (var reflectAttempt = 0; reflectAttempt < 3; reflectAttempt++)
@@ -201,7 +202,7 @@ public sealed partial class GunSystem : SharedGunSystem
                             var hit = result.HitEntity;
                             lastHit = hit;
 
-                            FireEffects(fromMap, result.Distance, dir.Normalized().ToAngle(), hitscan, hit);
+                            FireEffects(fromEffect, result.Distance, dir.Normalized().ToAngle(), hitscan, hit);
 
                             var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false);
                             RaiseLocalEvent(hit, ref ev);
@@ -209,7 +210,8 @@ public sealed partial class GunSystem : SharedGunSystem
                             if (!ev.Reflected)
                                 break;
 
-                            fromMap = TransformSystem.ToMapCoordinates(Transform(hit).Coordinates);
+                            fromEffect = Transform(hit).Coordinates;
+                            fromMap = TransformSystem.ToMapCoordinates(fromEffect);
                             dir = ev.Direction;
                             lastUser = hit;
                         }
@@ -255,7 +257,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                     else
                     {
-                        FireEffects(fromMap, hitscan.MaxLength, dir.Normalized().ToAngle(), hitscan);
+                        FireEffects(fromCoordinates, hitscan.MaxLength, dir.Normalized().ToAngle(), hitscan);
                     }
 
                     Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
@@ -373,30 +375,37 @@ public sealed partial class GunSystem : SharedGunSystem
     // TODO: Pseudo RNG so the client can predict these.
     #region Hitscan effects
 
-    private void FireEffects(MapCoordinates fromCoordinates, float distance, Angle mapDirection, HitscanPrototype hitscan, EntityUid? hitEntity = null)
+    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle mapDirection, HitscanPrototype hitscan, EntityUid? hitEntity = null)
     {
         // Lord
         // Forgive me for the shitcode I am about to do
         // Effects tempt me not
-        var sprites = new List<(MapCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
-        var mapDirectionVec = mapDirection.ToVec().Normalized();
+        var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
+        var effectDirection = mapDirection.ToVec().Normalized();
+
+        // we need to subtract any grid rotation to properly offset the effect parts
+        if (MapManager.TryFindGridAt(TransformSystem.ToMapCoordinates(fromCoordinates), out var gridUid, out _)) {
+            var gridRotation = TransformSystem.GetWorldRotation(gridUid);
+            effectDirection = (effectDirection.ToAngle() - gridRotation).ToVec().Normalized();
+        }
+
 
         if (distance >= 1f)
         {
             if (hitscan.MuzzleFlash != null)
             {
-                sprites.Add((fromCoordinates.Offset(mapDirectionVec / 2), mapDirection, hitscan.MuzzleFlash, 1f));
+                sprites.Add((GetNetCoordinates(fromCoordinates.Offset(effectDirection / 2)), mapDirection, hitscan.MuzzleFlash, 1f));
             }
 
             if (hitscan.TravelFlash != null)
             {
-                sprites.Add((fromCoordinates.Offset(mapDirectionVec * (distance + 0.5f) / 2), mapDirection, hitscan.TravelFlash, distance - 1.5f));
+                sprites.Add((GetNetCoordinates(fromCoordinates.Offset(effectDirection * (distance + 0.5f) / 2)), mapDirection, hitscan.TravelFlash, distance - 1.5f));
             }
         }
 
         if (hitscan.ImpactFlash != null)
         {
-            sprites.Add((fromCoordinates.Offset(mapDirectionVec * distance), mapDirection.FlipPositive(), hitscan.ImpactFlash, 1f));
+            sprites.Add((GetNetCoordinates(fromCoordinates.Offset(effectDirection * distance)), mapDirection.FlipPositive(), hitscan.ImpactFlash, 1f));
         }
 
         if (sprites.Count > 0)

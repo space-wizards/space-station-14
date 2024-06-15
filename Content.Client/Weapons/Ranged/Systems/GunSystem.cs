@@ -99,7 +99,7 @@ public sealed partial class GunSystem : SharedGunSystem
             if (a.Sprite is not SpriteSpecifier.Rsi rsi)
                 continue;
 
-            var ent = Spawn(HitscanProto, a.coordinates, rotation: a.angle);
+            var ent = Spawn(HitscanProto, TransformSystem.ToMapCoordinates(GetCoordinates(a.coordinates)), rotation: a.angle);
             var sprite = Comp<SpriteComponent>(ent);
             sprite[EffectLayers.Unshaded].AutoAnimated = false;
             sprite.LayerSetSprite(EffectLayers.Unshaded, rsi);
@@ -368,6 +368,6 @@ public sealed partial class GunSystem : SharedGunSystem
         var uidPlayer = EnsureComp<AnimationPlayerComponent>(gunUid);
 
         _animPlayer.Stop(gunUid, uidPlayer, "muzzle-flash-light");
-        _animPlayer.Play((gunUid, uidPlayer), animTwo,"muzzle-flash-light");
+        _animPlayer.Play((gunUid, uidPlayer), animTwo, "muzzle-flash-light");
     }
 }
