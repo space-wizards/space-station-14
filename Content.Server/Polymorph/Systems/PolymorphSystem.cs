@@ -8,7 +8,6 @@ using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.CriminalRecords;
 using Content.Shared.Buckle;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
@@ -27,14 +26,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Security.Components;
 using Content.Shared.Zombies;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Components;
 using Content.Shared.IdentityManagement.Components;
-using Content.Shared.CriminalRecords.Systems;
+using Content.Server.CriminalRecords.Systems;
 
 namespace Content.Server.Polymorph.Systems;
 
@@ -63,6 +61,7 @@ public sealed partial class PolymorphSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
+    [Dependency] private readonly CriminalRecordsConsoleSystem _criminalRecords = default!;
 
     private const string RevertPolymorphId = "ActionRevertPolymorph";
 
@@ -181,7 +180,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             Revert((ent, ent));
         }
     }
-    
+
     /// <summary>
     /// Polymorphs the target entity into the specific polymorph prototype
     /// </summary>
@@ -302,11 +301,8 @@ public sealed partial class PolymorphSystem : EntitySystem
                 var childIdentity = EnsureComp<IdentityComponent>(child);
                 childIdentity.IdentityEntitySlot = identity.IdentityEntitySlot;
             }
-            if (TryComp<CriminalRecordComponent>(uid, out var records))
-            {
-                var childRecords = EnsureComp<CriminalRecordComponent>(child);
-                childRecords.StatusIcon = records.StatusIcon;
-            }
+
+            _criminalRecords.CheckNewIdentity(child);
         }
 
         if (configuration.TransferHumanoidAppearance)
@@ -409,14 +405,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             }
         }
 
-        if (component.Configuration.TransferName)
-        {
-            if (TryComp<CriminalRecordComponent>(uid, out var records))
-            {
-                var parentRecords = EnsureComp<CriminalRecordComponent>(parent);
-                parentRecords.StatusIcon = records.StatusIcon;
-            }
-        }
+        _criminalRecords.CheckNewIdentity(parent);
 
         if (HasComp<ZombieComponent>(uid) && !HasComp<ZombieComponent>(parent)) // Zombify original if we're a zombie
             _zombie.ZombifyEntity(parent);
