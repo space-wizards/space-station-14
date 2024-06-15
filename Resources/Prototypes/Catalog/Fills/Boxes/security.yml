@@ -31,7 +31,7 @@
 - type: entity
   name: stinger box
   parent: BoxCardboard
-  id: BoxFlashbang
+  id: BoxStinger
   description: 'WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.'
   components:
   - type: StorageFill
@@ -46,7 +46,7 @@
  - type: entity
   name: tear gas box
   parent: BoxCardboard
-  id: BoxFlashbang
+  id: BoxTearGas
   description: 'WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.'
   components:
   - type: StorageFill
