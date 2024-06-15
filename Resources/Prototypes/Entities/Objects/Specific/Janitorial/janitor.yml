@@ -276,6 +276,7 @@
     materialComposition:
       Plastic: 50
       Gold: 10
+      Wood: 25
 
 - type: weightedRandomEntity
   id: PlungerLoot
