@@ -289,7 +289,7 @@ public sealed class ReflectSystem : EntitySystem
 
         EnsureComp<ReflectUserComponent>(args.User);
 
-        if (_toggle.IsActivated(reflector.owner))
+        if (_toggle.IsActivated(reflector.Owner))
             EnableAlert(args.User);
     }
 

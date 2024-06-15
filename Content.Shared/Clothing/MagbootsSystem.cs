@@ -16,6 +16,7 @@ public sealed class SharedMagbootsSystem : EntitySystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly ClothingSystem _clothing = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
 
@@ -26,6 +27,7 @@ public sealed class SharedMagbootsSystem : EntitySystem
         SubscribeLocalEvent<MagbootsComponent, ItemToggledEvent>(OnToggled);
         SubscribeLocalEvent<MagbootsComponent, ClothingGotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<MagbootsComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<MagbootsComponent, IsWeightlessEvent>(OnIsWeightless);
         SubscribeLocalEvent<MagbootsComponent, InventoryRelayedEvent<IsWeightlessEvent>>(OnIsWeightless);
     }
 
@@ -62,20 +64,22 @@ public sealed class SharedMagbootsSystem : EntitySystem
             moved.Enabled = !state;
 
         if (state)
-            _alerts.ShowAlert(parent, ent.Comp.MagbootsAlert);
+            _alerts.ShowAlert(user, ent.Comp.MagbootsAlert);
         else
-            _alerts.ClearAlert(parent, ent.Comp.MagbootsAlert);
+            _alerts.ClearAlert(user, ent.Comp.MagbootsAlert);
+    }
+
+    private void OnIsWeightless(Entity<MagbootsComponent> ent, ref IsWeightlessEvent args)
+    {
+        if (args.Handled || !_toggle.IsActivated(ent.Owner))
+            return;
+
+        args.IsWeightless = false;
+        args.Handled = true;
     }
 
     private void OnIsWeightless(Entity<MagbootsComponent> ent, ref InventoryRelayedEvent<IsWeightlessEvent> args)
     {
-        if (args.Args.Handled)
-            return;
-
-        if (!_toggle.IsActivated(ent.Owner))
-            return;
-
-        args.Args.IsWeightless = ent.Comp.AntiGravity;
-        args.Args.Handled = true;
+        OnIsWeightless(ent, ref args.Args);
     }
 }
