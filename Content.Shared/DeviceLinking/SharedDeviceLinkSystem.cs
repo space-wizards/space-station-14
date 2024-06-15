@@ -132,13 +132,12 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// <summary>
     /// Ensures that its links get deleted when a sink gets removed
     /// </summary>
-    private void OnSinkRemoved(EntityUid sinkUid, DeviceLinkSinkComponent sinkComponent, ComponentRemove args)
+    private void OnSinkRemoved(Entity<DeviceLinkSinkComponent> sink, ref ComponentRemove args)
     {
-        var query = GetEntityQuery<DeviceLinkSourceComponent>();
-        foreach (var linkedSource in sinkComponent.LinkedSources)
+        foreach (var source in sink.Comp.LinkedSources)
         {
-            if (query.TryGetComponent(sinkUid, out var source))
-                RemoveSinkFromSourceInternal(linkedSource, sinkUid, source, sinkComponent);
+            if (TryComp(source, out DeviceLinkSourceComponent? comp))
+                RemoveSinkFromSourceInternal(source, sink, comp, sink);
         }
     }
 
