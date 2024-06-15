@@ -95,7 +95,7 @@
   name: crowbar
   parent: BaseCrowbar
   id: CrowbarOrange
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders, ordered by Cargo.
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders, found in toolboxes.
   components:
   - type: Sprite
     sprite: Objects/Tools/Crowbars/orange_crowbar.rsi
