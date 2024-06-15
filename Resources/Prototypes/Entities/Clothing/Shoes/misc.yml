@@ -149,6 +149,6 @@
     sprite: Clothing/Shoes/Boots/moonboots.rsi
   - type: AntiGravityClothing
   - type: StaticPrice
-    price: 200
+    price: 75
   - type: Tag
     tags: [ ]

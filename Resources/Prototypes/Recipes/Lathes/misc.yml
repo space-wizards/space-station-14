@@ -131,7 +131,7 @@
   result: ClothingShoesBootsMoon
   completetime: 2
   materials:
-    Steel: 400
+    Steel: 600
 
 - type: latheRecipe
   id: ClothingShoesBootsSpeed
