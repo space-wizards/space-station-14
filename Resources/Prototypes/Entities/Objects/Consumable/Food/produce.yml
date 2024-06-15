@@ -1967,3 +1967,14 @@
     tags:
     - Recyclable
     - Trash
+  - type: SolutionContainerManager
+  solutions:
+    food:
+      maxVol: 1
+      reagents:
+      - ReagentId: Toxin
+        Quantity: 1
+- type: Extractable
+  grindableSolutionName: food
+- type: Seed
+  seedId: cherry
