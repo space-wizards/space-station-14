@@ -129,3 +129,17 @@ public enum PolymorphInventoryChange : byte
     Drop,
     Transfer,
 }
+
+public sealed class PolymorphedEvent : EntityEventArgs
+{
+    public EntityUid CurrentEntity;
+    public EntityUid NewEntity;
+    public bool IsRevert;
+
+    public PolymorphedEvent(EntityUid currEn, EntityUid newEn, bool revert = false)
+    {
+        CurrentEntity = currEn;
+        NewEntity = newEn;
+        IsRevert = revert;
+    }
+}

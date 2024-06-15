@@ -318,6 +318,9 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (PausedMap != null)
             _transform.SetParent(uid, targetTransformComp, PausedMap.Value);
 
+        var ev = new PolymorphedEvent(uid, child);
+        RaiseLocalEvent(uid, ev);
+
         return child;
     }
 
@@ -424,6 +427,9 @@ public sealed partial class PolymorphSystem : EntitySystem
                 ("child", Identity.Entity(parent, EntityManager))),
             parent);
         QueueDel(uid);
+
+        var ev = new PolymorphedEvent(uid, parent, true);
+        RaiseLocalEvent(uid, ev);
 
         return parent;
     }
