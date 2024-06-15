@@ -37,6 +37,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedDamageableSystem _damageable = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
 
@@ -45,9 +46,10 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ChameleonDisguiseComponent, InteractHandEvent>(OnDisguiseInteractHand, before: [typeof(SharedItemSystem)]);
+        SubscribeLocalEvent<ChameleonDisguiseComponent, DamageChangedEvent>(OnDisguiseDamaged);
         SubscribeLocalEvent<ChameleonDisguiseComponent, ComponentShutdown>(OnDisguiseShutdown);
 
-        SubscribeLocalEvent<ChameleonDisguisedComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<ChameleonDisguisedComponent, DamageChangedEvent>(OnUserDamaged);
 
         SubscribeLocalEvent<ChameleonProjectorComponent, AfterInteractEvent>(OnInteract);
         SubscribeLocalEvent<ChameleonProjectorComponent, GetVerbsEvent<UtilityVerb>>(OnGetVerbs);
@@ -66,6 +68,13 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
         args.Handled = true;
     }
 
+    private void OnDisguiseDamaged(Entity<ChameleonDisguiseComponent> ent, ref DamageChangeEvent args)
+    {
+        // anything that would damage both like an explosion gets doubled
+        // feature? projector makes your atoms weaker or some bs
+        _damageable.TryChangeDamage(ent.Comp.User, args.DamageDelta);
+    }
+
     private void OnDisguiseShutdown(Entity<ChameleonDisguiseComponent> ent, ref ComponentShutdown args)
     {
         _actions.RemoveProvidedActions(ent.Comp.User, ent.Comp.Projector);
@@ -75,7 +84,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
     #region Disguised player
 
-    private void OnDamageChanged(Entity<ChameleonDisguisedComponent> ent, ref DamageChangedEvent args)
+    private void OnUserDamaged(Entity<ChameleonDisguisedComponent> ent, ref DamageChangedEvent args)
     {
         if (args.DamageDelta is not {} damage)
             return;
