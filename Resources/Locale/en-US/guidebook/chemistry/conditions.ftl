@@ -29,7 +29,7 @@ reagent-effect-condition-guidebook-mob-state-condition =
     the mob is { $state }
 
 reagent-effect-condition-guidebook-job-condition =
-    the drinker's job is { $job }
+    the target's job is { $job }
 
 reagent-effect-condition-guidebook-solution-temperature =
     the solution's temperature is { $max ->

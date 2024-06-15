@@ -41,7 +41,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         
         public override string GuidebookExplanation(IPrototypeManager prototype)
         {
-            var localizedNames = Job.Select(jobId => Loc.GetString(prototype.Index(jobId).LocalizedName)).ToList();
+            var localizedNames = Job.Select(jobId => prototype.Index(jobId).LocalizedName).ToList();
             return Loc.GetString("reagent-effect-condition-guidebook-job-condition", ("job", ContentLocalizationManager.FormatListToOr(localizedNames)));
         }
     }
