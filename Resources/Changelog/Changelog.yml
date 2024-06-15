@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Crotalus
-  changes:
-  - message: Reagent grinder auto-modes
-    type: Add
-  id: 6250
-  time: '2024-03-29T06:30:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26290
 - author: deltanedas
   changes:
   - message: Multiple bombs exploding at once on a tile now combine to have a larger
@@ -3860,3 +3853,10 @@
   id: 6749
   time: '2024-06-15T17:50:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29004
+- author: notafet
+  changes:
+  - message: The TEG must now be operated at higher temperatures to generate power.
+    type: Tweak
+  id: 6750
+  time: '2024-06-15T21:05:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29050
