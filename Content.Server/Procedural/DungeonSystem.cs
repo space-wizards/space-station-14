@@ -250,7 +250,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             throw job.Exception;
         }
 
-        return job.Result;
+        return job.Result!;
     }
 
     public Angle GetDungeonRotation(int seed)
