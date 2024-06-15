@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Construction.Components;
+using Content.Shared.Coordinates;
 using Content.Shared.Damage;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -43,7 +44,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChameleonDisguiseComponent, GotEquippedHandEvent>(OnDisguiseEquippedHand);
+        SubscribeLocalEvent<ChameleonDisguiseComponent, InteractHandEvent>(OnDisguiseInteractHand, before: [typeof(SharedItemSystem)]);
         SubscribeLocalEvent<ChameleonDisguiseComponent, ComponentShutdown>(OnDisguiseShutdown);
 
         SubscribeLocalEvent<ChameleonDisguisedComponent, DamageChangedEvent>(OnDamageChanged);
@@ -59,7 +60,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
     #region Disguise entity
 
-    private void OnDisguiseEquippedHand(Entity<ChameleonDisguiseComponent> ent, ref GotEquippedHandEvent args)
+    private void OnDisguiseInteractHand(Entity<ChameleonDisguiseComponent> ent, ref InteractHandEvent args)
     {
         TryReveal(ent.Comp.User);
         args.Handled = true;
@@ -78,6 +79,8 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     {
         if (args.DamageDelta is not {} damage)
             return;
+
+        Log.Debug($"Damage changed for {ent} - {damage}");
 
         // reveal once enough damage is taken for the disguise to reveal itself
         var total = damage.GetTotal();
@@ -209,10 +212,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
         proj.Disguised = user;
 
-        var xform = Transform(user);
-        var disguise = Spawn(proj.DisguiseProto, xform.Coordinates);
-        var disguiseXform = Transform(disguise);
-        _xform.SetParent(disguise, disguiseXform, user, xform);
+        var disguise = SpawnAttachedTo(proj.DisguiseProto, user.ToCoordinates());
 
         var disguised = AddComp<ChameleonDisguisedComponent>(user);
         disguised.Disguise = disguise;
