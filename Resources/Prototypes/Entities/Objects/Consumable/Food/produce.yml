@@ -901,14 +901,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
         - ReagentId: Tricordrazine
-          Quantity: 5
+          Quantity: 16
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/golden_apple.rsi
   - type: Produce
