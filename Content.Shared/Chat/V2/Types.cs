@@ -1,9 +1,10 @@
 using Content.Shared.Chat.V2.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Chat.V2;
 
 /// <summary>
-/// Defines a generic chat event.
+/// Defines a chat event being passed around inside the chat process.
 /// </summary>
 public interface IChatEvent
 {
@@ -47,4 +48,13 @@ public interface IChatEvent
 
         Id = id;
     }
+
+    public ICommonSession SenderSession
+    {
+        get;
+    }
+
+    public ChatSuccessEvent ToSuccessEvent();
+
+    public IChatEvent Clone();
 }

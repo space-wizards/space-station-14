@@ -1,7 +1,10 @@
-﻿using Content.Shared.Chat.V2.Prototypes;
+﻿using System.Runtime.InteropServices;
+using Content.Shared.Chat.V2.Prototypes;
 using Content.Shared.Radio;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.V2.Systems;
 
@@ -12,6 +15,14 @@ namespace Content.Shared.Chat.V2.Systems;
 public struct ChatContext
 {
     public Dictionary<string, object> Values;
+
+    public ChatContext Clone()
+    {
+        var outCtx = new ChatContext();
+        outCtx.Values = Values.ShallowClone();
+
+        return outCtx;
+    }
 }
 
 #region Attempt Events
@@ -22,14 +33,15 @@ public struct ChatContext
 /// <param name="sender">Who sent the message</param>
 /// <param name="message">The message sent.</param>
 [Serializable, NetSerializable]
-public abstract class ChatAttemptEvent(ChatContext context, NetEntity sender, string message) : EntityEventArgs
+public abstract class ChatAttemptEvent(ChatContext context, ICommonSession session, NetEntity sender, string message) : EntityEventArgs
 {
     public ChatContext Context = context;
+    public ICommonSession SenderSession = session;
     public NetEntity Sender = sender;
     public string Message = message;
 
     public abstract ChatFailedEvent ToFailMessage(string reason);
-    public abstract IChatEvent ToSuccessMessage();
+    public abstract ChatEvent ToCreatedEvent(string asName);
 }
 
 /// <summary>
@@ -42,23 +54,24 @@ public abstract class ChatAttemptEvent(ChatContext context, NetEntity sender, st
 [Serializable, NetSerializable]
 public sealed class AttemptVerbalChatEvent(
     ChatContext context,
+    ICommonSession session,
     NetEntity sender,
     string message,
     ProtoId<VerbalChatChannelPrototype> chatChannel,
     ProtoId<RadioChannelPrototype>? radioChannel
-) : ChatAttemptEvent(context, sender, message)
+) : ChatAttemptEvent(context, session, sender, message)
 {
     public ProtoId<RadioChannelPrototype>? RadioChannel = radioChannel;
     public ProtoId<VerbalChatChannelPrototype> ChatChannel = chatChannel;
 
-    public override ChatFailedEvent ToFailMessage(string reason)
+    public override VerbalChatFailedEvent ToFailMessage(string reason)
     {
         return new VerbalChatFailedEvent(Context, Sender, reason);
     }
 
-    public override IChatEvent ToSuccessMessage()
+    public override VerbalChatCreatedEvent ToCreatedEvent(string asName)
     {
-        return new VerbalChatCreatedEvent(Context, Sender, ChatChannel, RadioChannel, Message);
+        return new VerbalChatCreatedEvent(Context, SenderSession, Sender, ChatChannel, RadioChannel, Message, asName);
     }
 }
 
@@ -70,21 +83,22 @@ public sealed class AttemptVerbalChatEvent(
 [Serializable, NetSerializable]
 public sealed class AttemptVisualChatEvent(
     ChatContext context,
+    ICommonSession session,
     NetEntity sender,
     ProtoId<VisualChatChannelPrototype> channel,
     string message
-) : ChatAttemptEvent(context, sender, message)
+) : ChatAttemptEvent(context, session, sender, message)
 {
     public ProtoId<VisualChatChannelPrototype> Channel = channel;
 
-    public override ChatFailedEvent ToFailMessage(string reason)
+    public override VisualChatFailedEvent ToFailMessage(string reason)
     {
         return new VisualChatFailedEvent(Context, Sender, reason);
     }
 
-    public override IChatEvent ToSuccessMessage()
+    public override VisualChatCreatedEvent ToCreatedEvent(string asName)
     {
-        return new VisualChatCreatedEvent(Context, Sender, Channel, message);
+        return new VisualChatCreatedEvent(Context, SenderSession, Sender, Channel, Message, asName);
     }
 }
 
@@ -97,21 +111,22 @@ public sealed class AttemptVisualChatEvent(
 [Serializable, NetSerializable]
 public sealed class AttemptAnnouncementEvent(
     ChatContext context,
+    ICommonSession session,
     NetEntity sender,
     string message,
     NetEntity console
-) : ChatAttemptEvent(context, sender, message)
+) : ChatAttemptEvent(context, session, sender, message)
 {
     public NetEntity Console = console;
 
-    public override ChatFailedEvent ToFailMessage(string reason)
+    public override AnnouncementFailedEvent ToFailMessage(string reason)
     {
         return new AnnouncementFailedEvent(Context, Sender, reason);
     }
 
-    public override IChatEvent ToSuccessMessage()
+    public override AnnouncementCreatedEvent ToCreatedEvent(string asName)
     {
-        return new AnnouncementCreatedEvent(Context, Sender, Console, Message);
+        return new AnnouncementCreatedEvent(Context, SenderSession, Sender, Console, Message, asName);
     }
 }
 
@@ -124,21 +139,22 @@ public sealed class AttemptAnnouncementEvent(
 [Serializable, NetSerializable]
 public sealed class AttemptOutOfCharacterChatEvent(
     ChatContext context,
+    ICommonSession session,
     NetEntity sender,
     string message,
     ProtoId<OutOfCharacterChannelPrototype> channel
-) : ChatAttemptEvent(context, sender, message)
+) : ChatAttemptEvent(context, session, sender, message)
 {
     public ProtoId<OutOfCharacterChannelPrototype> Channel = channel;
 
-    public override ChatFailedEvent ToFailMessage(string reason)
+    public override OutOfCharacterChatFailed ToFailMessage(string reason)
     {
         return new OutOfCharacterChatFailed(Context, Sender, reason);
     }
 
-    public override IChatEvent ToSuccessMessage()
+    public override OutOfCharacterChatCreatedEvent ToCreatedEvent(string asName)
     {
-        return new OutOfCharacterChatCreatedEvent(Context, Sender, Channel, Message);
+        return new OutOfCharacterChatCreatedEvent(Context, SenderSession, Sender, Channel, Message, asName);
     }
 }
 
@@ -234,10 +250,10 @@ public sealed class VisualChatEvent(
     string asName,
     string message,
     uint id,
-    ProtoId<OutOfCharacterChannelPrototype>  chatChannel
+    ProtoId<VisualChatChannelPrototype>  chatChannel
 ) : ChatSuccessEvent(context, speaker, asName, message, id)
 {
-    public ProtoId<OutOfCharacterChannelPrototype> ChatChannel = chatChannel;
+    public ProtoId<VisualChatChannelPrototype> ChatChannel = chatChannel;
 }
 
 /// <summary>
@@ -308,18 +324,19 @@ public sealed class SubtleChatEvent(NetEntity target, string message) : EntityEv
 
 #region Validated Events
 /// <summary>
-/// Notifies that a chat attempt input from a player has been validated and sanatized, ready for further processing.
+/// Notifies that a chat attempt input from a player has been validated, ready for further processing.
 /// </summary>
 /// <param name="ev"></param>
-public sealed class ChatAttemptValidatedEvent(IChatEvent ev) : EntityEventArgs
+public sealed class ChatAttemptValidatedEvent<T>(T ev) : EntityEventArgs where T : ChatEvent
 {
-    public IChatEvent Event = ev;
+    public ChatEvent Event = ev;
 }
 
 /// <summary>
 /// Notifies that a chat message needs validating.
 /// </summary>
 /// <param name="attemptEvent">The chat message to validate</param>
+[ByRefEvent]
 public sealed class ChatValidationEvent<T>(T attemptEvent) where T : ChatAttemptEvent
 {
     public readonly T Event = attemptEvent;
@@ -363,12 +380,16 @@ public sealed class ChatSanitizationEvent<T>(T attemptEvent) where T : IChatEven
     }
 }
 
-public abstract class ChatEvent(ChatContext context, NetEntity sender, string message) : IChatEvent
+public abstract class ChatEvent(ChatContext context, ICommonSession session, NetEntity sender, string message, string asName) : IChatEvent
 {
     public ChatContext Context { get; } = context;
     public NetEntity Sender { get; set; } = sender;
     public string Message { get; set; } = message;
     public uint Id { get; set; }
+    public string AsName { get; set; } = asName;
+    public ICommonSession SenderSession { get; } = session;
+    public abstract ChatSuccessEvent ToSuccessEvent();
+    public abstract IChatEvent Clone();
 }
 
 /// <summary>
@@ -376,12 +397,24 @@ public abstract class ChatEvent(ChatContext context, NetEntity sender, string me
 /// </summary>
 public sealed class AnnouncementCreatedEvent(
     ChatContext context,
+    ICommonSession session,
     NetEntity sender,
     NetEntity console,
-    string message
-) : ChatEvent(context, sender, message)
+    string message,
+    string asName
+) : ChatEvent(context, session, sender, message, asName)
 {
     public NetEntity Console = console;
+
+    public override ChatSuccessEvent ToSuccessEvent()
+    {
+        return new AnnouncementEvent(Context, AsName, Message, Id, null);
+    }
+
+    public override AnnouncementCreatedEvent Clone()
+    {
+        return new AnnouncementCreatedEvent(Context.Clone(), SenderSession, Sender, Console, Message, AsName);
+    }
 }
 
 /// <summary>
@@ -389,12 +422,24 @@ public sealed class AnnouncementCreatedEvent(
 /// </summary>
 public sealed class OutOfCharacterChatCreatedEvent(
     ChatContext context,
+    ICommonSession session,
     NetEntity sender,
     ProtoId<OutOfCharacterChannelPrototype> channel,
-    string message
-) : ChatEvent(context, sender, message)
+    string message,
+    string asName
+) : ChatEvent(context, session, sender, message, asName)
 {
     public ProtoId<OutOfCharacterChannelPrototype> Channel = channel;
+
+    public override ChatSuccessEvent ToSuccessEvent()
+    {
+        return new OutOfCharacterChatEvent(Context, Sender, AsName, Message, Id, Channel);
+    }
+
+    public override OutOfCharacterChatCreatedEvent Clone()
+    {
+        return new OutOfCharacterChatCreatedEvent(Context.Clone(), SenderSession, Sender, Channel, Message, AsName);
+    }
 }
 
 /// <summary>
@@ -402,12 +447,24 @@ public sealed class OutOfCharacterChatCreatedEvent(
 /// </summary>
 public sealed class VisualChatCreatedEvent(
     ChatContext context,
+    ICommonSession session,
     NetEntity sender,
     ProtoId<VisualChatChannelPrototype> channel,
-    string message
-) : ChatEvent(context, sender, message)
+    string message,
+    string asName
+) : ChatEvent(context, session, sender, message, asName)
 {
     public ProtoId<VisualChatChannelPrototype> Channel = channel;
+
+    public override ChatSuccessEvent ToSuccessEvent()
+    {
+        return new VisualChatEvent(Context.Clone(), Sender, AsName, Message, Id, Channel);
+    }
+
+    public override VisualChatCreatedEvent Clone()
+    {
+        return new VisualChatCreatedEvent(Context.Clone(), SenderSession, Sender, Channel, Message, AsName);
+    }
 }
 
 /// <summary>
@@ -415,14 +472,96 @@ public sealed class VisualChatCreatedEvent(
 /// </summary>
 public sealed class VerbalChatCreatedEvent(
     ChatContext context,
+    ICommonSession session,
     NetEntity sender,
     ProtoId<VerbalChatChannelPrototype> chatChannel,
     ProtoId<RadioChannelPrototype>? radioChannel,
-    string message
-) : ChatEvent(context, sender, message)
+    string message,
+    string asName
+) : ChatEvent(context, session, sender, message, asName)
 {
     public ProtoId<RadioChannelPrototype>? RadioChannel = radioChannel;
     public ProtoId<VerbalChatChannelPrototype> ChatChannel = chatChannel;
+
+    public override ChatSuccessEvent ToSuccessEvent()
+    {
+        return new VerbalChatEvent(Context.Clone(), Sender, AsName, Message, Id, ChatChannel);
+    }
+
+    public override VerbalChatCreatedEvent Clone()
+    {
+        return new VerbalChatCreatedEvent(Context.Clone(), SenderSession, Sender, ChatChannel, RadioChannel, Message, AsName);
+    }
+}
+
+#endregion
+
+#region Core Message Events
+
+/// <summary>
+/// Notifies that a chat message has been created.
+/// </summary>
+/// <param name="ev"></param>
+[Serializable, NetSerializable]
+public sealed class MessageCreatedEvent<T>(T ev) : EntityEventArgs where T : ChatEvent
+{
+    public T Event = ev;
+}
+
+/// <summary>
+/// Notifies that a chat message has been changed.
+/// </summary>
+/// <param name="id"></param>
+/// <param name="newMessage"></param>
+[Serializable, NetSerializable]
+public sealed class MessagePatchedEvent(uint id, string newMessage) : EntityEventArgs
+{
+    public uint MessageId = id;
+    public string NewMessage = newMessage;
+}
+
+/// <summary>
+/// Notifies that a chat message has been deleted.
+/// </summary>
+/// <param name="id"></param>
+[Serializable, NetSerializable]
+public sealed class MessageDeletedEvent(uint id) : EntityEventArgs
+{
+    public uint MessageId = id;
+}
+
+/// <summary>
+/// Notifies that a player's messages have been nuked.
+/// </summary>
+/// <param name="set"></param>
+[Serializable, NetSerializable]
+public sealed class MessagesNukedEvent(List<uint> set) : EntityEventArgs
+{
+    public uint[] MessageIds = CollectionsMarshal.AsSpan(set).ToArray();
+}
+
+#endregion
+
+#region Post-Creation events
+
+[ByRefEvent]
+public sealed class GeneralChatMutationEvent<T>(T ev) : EntityEventArgs where T : ChatEvent
+{
+    public T Event = ev;
+}
+
+[ByRefEvent]
+public sealed class ChatTargetCalculationEvent<T>(T ev) : EntityEventArgs where T : ChatEvent
+{
+    public T Event = ev;
+    public IList<ICommonSession> Targets = new List<ICommonSession>();
+}
+
+[ByRefEvent]
+public sealed class ChatSpecificMutationEvent<T>(T ev, ICommonSession target) : EntityEventArgs where T : ChatEvent
+{
+    public T Event = ev;
+    public ICommonSession Target = target;
 }
 
 #endregion

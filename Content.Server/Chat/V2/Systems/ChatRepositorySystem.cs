@@ -9,7 +9,7 @@ using Robust.Shared.Replays;
 namespace Content.Server.Chat.V2.Systems;
 
 /// <summary>
-/// Stores <see cref="IChatEvent"/>, gives them UIDs, and issues <see cref="MessageCreatedEvent"/>.
+/// Stores ChatEvents, gives them UIDs, and issues MessageCreatedEvents.
 /// Allows for deletion of messages.
 /// </summary>
 public sealed class ChatRepositorySystem : EntitySystem
@@ -32,15 +32,18 @@ public sealed class ChatRepositorySystem : EntitySystem
             Refresh();
         };
 
-        SubscribeNetworkEvent<ChatAttemptValidatedEvent>(ev => Add(ev.Event));
+        SubscribeNetworkEvent<ChatAttemptValidatedEvent<AnnouncementCreatedEvent>>(ev => Add(ev.Event));
+        SubscribeNetworkEvent<ChatAttemptValidatedEvent<VerbalChatCreatedEvent>>(ev => Add(ev.Event));
+        SubscribeNetworkEvent<ChatAttemptValidatedEvent<VisualChatCreatedEvent>>(ev => Add(ev.Event));
+        SubscribeNetworkEvent<ChatAttemptValidatedEvent<OutOfCharacterChatCreatedEvent>>(ev => Add(ev.Event));
     }
 
     /// <summary>
-    /// Adds an <see cref="IChatEvent"/> to the repo and raises it with a UID for consumption elsewhere.
+    /// Adds a <see cref="ChatEvent"/> to the repo and raises it with a UID for consumption elsewhere.
     /// </summary>
     /// <param name="ev">The event to store and raise</param>
     /// <returns>If storing and raising succeeded.</returns>
-    public bool Add(IChatEvent ev)
+    public bool Add<T>(T ev) where T : ChatEvent
     {
         var entityUid = GetEntity(ev.Sender);
 
@@ -67,7 +70,8 @@ public sealed class ChatRepositorySystem : EntitySystem
 
         CollectionsMarshal.GetValueRefOrAddDefault(_playerMessages, storedEv.UserId, out _)?.Add(messageId);
 
-        RaiseLocalEvent(entityUid, new MessageCreatedEvent(ev), true);
+        var outEv = new MessageCreatedEvent<T>(ev);
+        RaiseLocalEvent(entityUid, outEv, true);
 
         return true;
     }
@@ -138,18 +142,16 @@ public sealed class ChatRepositorySystem : EntitySystem
     /// <param name="reason">Why nuking failed, if it did.</param>
     /// <returns>If nuking did anything.</returns>
     /// <remarks>Note that this could be a <b>very large</b> event, as we send every single event ID over the wire.
-    /// By necessity we can't leak the player-source of chat messages (or if they even have the same origin) because of
-    /// client modders who could use that information to cheat/metagrudge/etc >:(</remarks>
+    /// By necessity, we can't leak the player-source of chat messages (or if they even have the same origin) because of
+    /// client modders who could use that information to cheat/metagrudge/etc. >:(</remarks>
     public bool NukeForUsername(string userName, [NotNullWhen(false)] out string? reason)
     {
-        if (!_player.TryGetUserId(userName, out var userId))
-        {
-            reason = Loc.GetString("command-error-nukechatmessages-usernames-usernamenotexist", ("username", userName));
+        if (_player.TryGetUserId(userName, out var userId))
+            return NukeForUserId(userId, out reason);
 
-            return false;
-        }
+        reason = Loc.GetString("command-error-nukechatmessages-usernames-usernamenotexist", ("username", userName));
 
-        return NukeForUserId(userId, out reason);
+        return false;
     }
 
     /// <summary>
@@ -160,8 +162,8 @@ public sealed class ChatRepositorySystem : EntitySystem
     /// <param name="reason">Why nuking failed, if it did.</param>
     /// <returns>If nuking did anything.</returns>
     /// <remarks>Note that this could be a <b>very large</b> event, as we send every single event ID over the wire.
-    /// By necessity we can't leak the player-source of chat messages (or if they even have the same origin) because of
-    /// client modders who could use that information to cheat/metagrudge/etc >:(</remarks>
+    /// By necessity, we can't leak the player-source of chat messages (or if they even have the same origin) because of
+    /// client modders who could use that information to cheat/metagrudge/etc. >:(</remarks>
     public bool NukeForUserId(NetUserId userId, [NotNullWhen(false)] out string? reason)
     {
         if (!_playerMessages.TryGetValue(userId, out var dict))

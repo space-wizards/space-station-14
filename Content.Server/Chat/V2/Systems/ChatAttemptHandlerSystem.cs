@@ -1,8 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Chat.V2;
-using Content.Shared.Chat.V2.Components;
+﻿using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Server.Chat.V2.Systems;
 
@@ -15,13 +12,13 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<AttemptVerbalChatEvent>(OnAttemptChat);
-        SubscribeNetworkEvent<AttemptVisualChatEvent>(OnAttemptChat);
-        SubscribeNetworkEvent<AttemptAnnouncementEvent>(OnAttemptChat);
-        SubscribeNetworkEvent<AttemptOutOfCharacterChatEvent>(OnAttemptChat);
+        SubscribeNetworkEvent<AttemptVerbalChatEvent>(OnAttemptChat<AttemptVerbalChatEvent, VerbalChatCreatedEvent>);
+        SubscribeNetworkEvent<AttemptVisualChatEvent>(OnAttemptChat<AttemptVisualChatEvent, VisualChatCreatedEvent>);
+        SubscribeNetworkEvent<AttemptAnnouncementEvent>(OnAttemptChat<AttemptAnnouncementEvent, AnnouncementCreatedEvent>);
+        SubscribeNetworkEvent<AttemptOutOfCharacterChatEvent>(OnAttemptChat<AttemptOutOfCharacterChatEvent, OutOfCharacterChatCreatedEvent>);
     }
 
-    private void OnAttemptChat(ChatAttemptEvent ev, EntitySessionEventArgs args)
+    private void OnAttemptChat<T1, T2>(T1 ev, EntitySessionEventArgs args) where T1 : ChatAttemptEvent where T2 : ChatEvent
     {
         if (!ValidateMessage(ev, out var reason))
         {
@@ -30,10 +27,12 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
             return;
         }
 
-        var success = ev.ToSuccessMessage();
+        var success = ev.ToCreatedEvent(Name(GetEntity(ev.Sender)));
+        if (success is not T2 typedSuccess)
+            return;
 
         SanitizeMessage(success);
-        RaiseLocalEvent(new ChatAttemptValidatedEvent(success));
+        RaiseLocalEvent(new ChatAttemptValidatedEvent<T2>(typedSuccess));
     }
 
     /// <summary>
@@ -45,7 +44,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
 
         // Raise both the general and specific ChatValidationEvents. This allows for general
         var validate = new ChatValidationEvent<ChatAttemptEvent>(ev);
-        RaiseLocalEvent(entityUid, validate);
+        RaiseLocalEvent(entityUid, ref validate);
 
         if (validate.IsCancelled)
         {
@@ -55,7 +54,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
         }
 
         var validateT = new ChatValidationEvent<T>(ev);
-        RaiseLocalEvent(entityUid, validateT);
+        RaiseLocalEvent(entityUid, ref validateT);
 
         if (validate.IsCancelled)
         {
