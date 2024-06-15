@@ -243,9 +243,9 @@ namespace Content.Client.Administration.UI.Bwoink
         {
             UpdateButtons();
 
+            AHelpHelper.HideAllPanels();
             if (ch != null)
             {
-                AHelpHelper.HideAllPanels();
                 var panel = AHelpHelper.EnsurePanel(ch.Value);
                 panel.Visible = true;
             }
