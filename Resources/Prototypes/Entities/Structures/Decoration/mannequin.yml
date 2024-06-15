@@ -26,7 +26,7 @@
     graph: Mannequin
     node: mannequin
   - type: Damageable
-    damageContainer: Wood
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
