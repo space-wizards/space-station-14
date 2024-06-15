@@ -42,21 +42,17 @@ public sealed partial class NameModifierSystem : EntitySystem
     /// </remarks>
     public void RefreshNameModifiers(Entity<NameModifierComponent?> entity)
     {
-        // This Resolve allows other systems to call this method without needing to first try to get the
-        // NameModifierComponent and pass it in.
-        // Without it, calling RefreshNameModifiers(uid) on an entity that does have the component will
-        // cause the following code to see entity.Comp as null and behave accordingly, which causes
-        // all sorts of interesting problems.
-        Resolve(entity, ref entity.Comp, logMissing: false);
-
         var meta = MetaData(entity);
+        var baseName = meta.EntityName;
+        if (Resolve(entity, ref entity.Comp, logMissing: false))
+            baseName = entity.Comp.BaseName;
 
         // Raise an event to get any modifiers
         // If the entity already has the component, use its BaseName, otherwise use the entity's name from metadata
-        var modifierEvent = new RefreshNameModifiersEvent(entity.Comp?.BaseName ?? meta.EntityName);
+        var modifierEvent = new RefreshNameModifiersEvent(baseName);
         RaiseLocalEvent(entity, ref modifierEvent);
 
-        // Nothing add a modifier, so we can just use the base name
+        // Nothing added a modifier, so we can just use the base name
         if (modifierEvent.ModifierCount == 0)
         {
             // If the entity doesn't have the component, we're done
