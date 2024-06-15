@@ -1,4 +1,5 @@
 - type: entity
+  save: false
   id: Mannequin
   parent: BaseStructureDynamic
   name: mannequin
