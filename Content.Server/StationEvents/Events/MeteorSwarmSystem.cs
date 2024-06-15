@@ -29,7 +29,7 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
         component.WaveCounter = component.Waves.Next(RobustRandom);
 
         if (component.Announcement is { } locId)
-            _chat.DispatchGlobalAnnouncement(Loc.GetString(locId), playSound: false, colorOverride: Color.Yellow);
+            _chat.DispatchGlobalAnnouncement(Loc.GetString(locId), playSound: false, colorOverride: Color.Gold);
         _audio.PlayGlobal(component.AnnouncementSound, Filter.Broadcast(), true);
     }
 
