@@ -1,6 +1,8 @@
+using System.Linq;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Localizations;
 using Robust.Shared.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -14,8 +16,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 {    
     public sealed partial class JobCondition : ReagentEffectCondition
     {
-        //TO DO: make this use protoid
-        [DataField] public List<string> Job = new List<string> {"Passenger"};
+        [DataField(required: true)] public List<ProtoId<JobPrototype>> Job;
                 
         public override bool Condition(ReagentEffectArgs args)
         {   
@@ -40,8 +41,8 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         
         public override string GuidebookExplanation(IPrototypeManager prototype)
         {
-            string Jobs = String.Join(" or ", Job.ToArray());
-            return Loc.GetString("reagent-effect-condition-guidebook-job-condition", ("job", Jobs));
+            var localizedNames = Job.Select(jobId => Loc.GetString(prototype.Index(jobId).LocalizedName)).ToList();
+            return Loc.GetString("reagent-effect-condition-guidebook-job-condition", ("job", ContentLocalizationManager.FormatListToOr(localizedNames)));
         }
     }
 }
