@@ -4,10 +4,22 @@
   name: mannequin
   description: It can wear any clothing with style.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: Structures/Decoration/mannequin.rsi
     state: mannequin
     noRot: true
+    layers:
+    - map: [ "mannequin" ]
+      sprite: Structures/Decoration/mannequin.rsi
+      state: mannequin
+    - map: [ "jumpsuit" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "neck" ]
+    - map: [ "back" ]
+    - map: [ "mask" ]
+    - map: [ "head" ] 
   - type: Rotatable
   - type: Fixtures
     fixtures:
