@@ -156,6 +156,32 @@ namespace Content.Shared.Hands
         }
     }
 
+    [PublicAPI]
+    public sealed class AttemptedHandPickupEvent : CancellableEntityEventArgs
+    {
+        /// <summary>
+        ///     Entity that equipped the item.
+        /// </summary>
+        public EntityUid User { get; }
+
+        /// <summary>
+        ///     Item that was equipped.
+        /// </summary>
+        public EntityUid Equipped { get; }
+
+        /// <summary>
+        ///     Hand that the item was placed into.
+        /// </summary>
+        public Hand Hand { get; }
+
+        public AttemptedHandPickupEvent(EntityUid user, EntityUid equipped, Hand hand)
+        {
+            User = user;
+            Equipped = equipped;
+            Hand = hand;
+        }
+    }
+
     /// <summary>
     ///     Raised when putting an entity into a hand slot
     /// </summary>

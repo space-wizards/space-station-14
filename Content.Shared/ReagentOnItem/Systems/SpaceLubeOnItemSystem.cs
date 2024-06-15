@@ -8,6 +8,8 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Examine;
 using Robust.Shared.GameStates;
+using Content.Shared.Hands;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Shared.ReagentOnItem;
 
@@ -18,19 +20,31 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
+
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SpaceLubeOnItemComponent, ContainerGettingInsertedAttemptEvent>(OnHandPickUp);
+        SubscribeLocalEvent<SpaceLubeOnItemComponent, AttemptedHandPickupEvent>(OnHandPickUp);
         SubscribeLocalEvent<SpaceLubeOnItemComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<SpaceLubeOnItemComponent, ComponentGetState>(GetSpaceLubeState);
         SubscribeLocalEvent<SpaceLubeOnItemComponent, ComponentHandleState>(HandleSpaceLubeState);
     }
 
-    private void OnHandPickUp(EntityUid uid, SpaceLubeOnItemComponent component, ContainerGettingInsertedAttemptEvent args)
+    private void OnHandPickUp(EntityUid uid, SpaceLubeOnItemComponent component, AttemptedHandPickupEvent args)
     {
-        _inventory.TryGetSlotEntity(args.Container.Owner, "gloves", out var gloves);
+        if (args.Cancelled)
+            return;
+
+        var handContainer = args.Hand.Container;
+        if (handContainer == null)
+            return;
+
+        var entityWhoPickedUp = handContainer.Owner;
+
+        _inventory.TryGetSlotEntity(entityWhoPickedUp, "gloves", out var gloves);
 
         if (HasComp<NonStickSurfaceComponent>(gloves))
             return;
@@ -41,6 +55,8 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
             return;
         }
 
+        args.Cancel();
+
         var randDouble = _random.NextDouble();
         if (randDouble > 1 - component.ChanceToDecreaseReagentOnGrab)
         {
@@ -49,14 +65,17 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
 
         Dirty(uid, component);
 
-        args.Cancel();
+        // _transform.SetCoordinates(uid, Transform(entityWhoPickedUp).Coordinates);
+        // _transform.AttachToGridOrMap(uid);
+        var xform = Transform(entityWhoPickedUp);
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var worldPos = _xform.GetWorldPosition(xform, xformQuery);
+        var delta = worldPos - _xform.GetWorldPosition(uid, xformQuery);
+        
+        var rotation = new Angle((3.14159/3)*(((2*_random.NextDouble())-1)));
 
-        var user = args.Container.Owner;
-        _transform.SetCoordinates(uid, Transform(user).Coordinates);
-        _transform.AttachToGridOrMap(uid);
-        _throwing.TryThrow(uid, _random.NextVector2(), strength: component.PowerOfThrowOnPickup);
-        _popup.PopupPredicted(Loc.GetString("space-lube-on-item-slip", ("target", Identity.Entity(uid, EntityManager))), user, user, PopupType.MediumCaution);
-
+        _throwing.TryThrow(uid, rot.RotateVec(delta.Normalized()), strength: component.PowerOfThrowOnPickup);
+        _popup.PopupPredicted(Loc.GetString("space-lube-on-item-slip", ("target", Identity.Entity(uid, EntityManager))), entityWhoPickedUp, entityWhoPickedUp, PopupType.MediumCaution);
     }
 
     private void OnExamine(EntityUid uid, SpaceLubeOnItemComponent comp, ExaminedEvent args)

@@ -1,7 +1,6 @@
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Popups;
-using Content.Shared.ReagentOnItem;
 using Robust.Shared.Timing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
