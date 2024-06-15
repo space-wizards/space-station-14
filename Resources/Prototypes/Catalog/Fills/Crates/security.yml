@@ -2,7 +2,18 @@
   id: CrateSecurityArmor
   parent: CrateSecgear
   name: armor crate
-  description: Three vests of well-rounded, decently-protective armor. Requires Security access to open.
+  description: Contains three well-rounded Type I vests. Requires Security access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterArmorBasic
+        amount: 3
+
+- type: entity
+  id: CrateSecurityArmorBulletproof
+  parent: CrateSecgear
+  name: armor crate
+  description: Contains three bulletproof Type III vests. Requires Security access to open.
   components:
   - type: StorageFill
     contents:

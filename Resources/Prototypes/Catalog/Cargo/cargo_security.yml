@@ -9,6 +9,16 @@
   group: market
 
 - type: cargoProduct
+  id: SecurityArmorBulletproof
+  icon:
+    sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
+    state: icon
+  product: CrateSecurityArmorBulletproof
+  cost: 700
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
   id: SecurityHelmet
   icon:
     sprite: Clothing/Head/Helmets/security.rsi
