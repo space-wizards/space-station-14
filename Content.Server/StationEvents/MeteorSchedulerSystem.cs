@@ -1,7 +1,9 @@
 using Content.Server.GameTicking.Rules;
 using Content.Server.StationEvents.Components;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Random.Helpers;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents;
@@ -13,12 +15,16 @@ namespace Content.Server.StationEvents;
 public sealed class MeteorSchedulerSystem : GameRuleSystem<MeteorSchedulerComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     protected override void Started(EntityUid uid, MeteorSchedulerComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
 
-        component.NextSwarmTime = Timing.CurTime + RobustRandom.Next(component.MinSwarmDelay, component.MaxSwarmDelay);
+        var minDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMinTime));
+        var maxDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMaxTime));
+
+        component.NextSwarmTime = Timing.CurTime + RobustRandom.Next(minDelay, maxDelay);
     }
 
     protected override void ActiveTick(EntityUid uid, MeteorSchedulerComponent component, GameRuleComponent gameRule, float frameTime)
@@ -28,7 +34,11 @@ public sealed class MeteorSchedulerSystem : GameRuleSystem<MeteorSchedulerCompon
         if (Timing.CurTime < component.NextSwarmTime)
             return;
         RunSwarm((uid, component));
-        component.NextSwarmTime += RobustRandom.Next(component.MinSwarmDelay, component.MaxSwarmDelay);
+
+        var minDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMinTime));
+        var maxDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMaxTime));
+
+        component.NextSwarmTime += RobustRandom.Next(minDelay, maxDelay);
     }
 
     private void RunSwarm(Entity<MeteorSchedulerComponent> ent)
