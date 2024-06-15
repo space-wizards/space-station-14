@@ -39,6 +39,7 @@
       - !type:EmptyAllContainersBehaviour
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: ContainerContainer
   - type: Inventory
     templateId: mannequin
   - type: InventorySlots
