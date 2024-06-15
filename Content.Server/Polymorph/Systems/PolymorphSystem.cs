@@ -8,6 +8,7 @@ using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.CriminalRecords;
 using Content.Shared.Buckle;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
@@ -26,11 +27,14 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Security.Components;
 using Content.Shared.Zombies;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Components;
+using Content.Shared.IdentityManagement.Components;
+using Content.Shared.CriminalRecords.Systems;
 
 namespace Content.Server.Polymorph.Systems;
 
@@ -177,7 +181,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             Revert((ent, ent));
         }
     }
-
+    
     /// <summary>
     /// Polymorphs the target entity into the specific polymorph prototype
     /// </summary>
@@ -291,7 +295,19 @@ public sealed partial class PolymorphSystem : EntitySystem
             _zombie.ZombifyEntity(child);
 
         if (configuration.TransferName && TryComp(uid, out MetaDataComponent? targetMeta))
+        {
             _metaData.SetEntityName(child, targetMeta.EntityName);
+            if (TryComp<IdentityComponent>(uid, out var identity))
+            {
+                var childIdentity = EnsureComp<IdentityComponent>(child);
+                childIdentity.IdentityEntitySlot = identity.IdentityEntitySlot;
+            }
+            if (TryComp<CriminalRecordComponent>(uid, out var records))
+            {
+                var childRecords = EnsureComp<CriminalRecordComponent>(child);
+                childRecords.StatusIcon = records.StatusIcon;
+            }
+        }
 
         if (configuration.TransferHumanoidAppearance)
         {
@@ -390,6 +406,15 @@ public sealed partial class PolymorphSystem : EntitySystem
             foreach (var held in _hands.EnumerateHeld(uid))
             {
                 _hands.TryDrop(uid, held);
+            }
+        }
+
+        if (component.Configuration.TransferName)
+        {
+            if (TryComp<CriminalRecordComponent>(uid, out var records))
+            {
+                var parentRecords = EnsureComp<CriminalRecordComponent>(parent);
+                parentRecords.StatusIcon = records.StatusIcon;
             }
         }
 
