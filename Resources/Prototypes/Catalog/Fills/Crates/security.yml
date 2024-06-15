@@ -84,6 +84,27 @@
 #      - SpacelawBook
 
 - type: entity
+  id: CrateForensics
+  parent: CrateSecgear
+  name: forensics crate
+  description: Contains a forensic scanner, LogProde cartridge, box of forensic pads, and box of evidence markers. Requires Security access to open.
+  components:
+  - type: StorageFill
+    contents: # no gloves, suffer the fibres for losing your detective
+      - id: ForensicScanner
+      - id: LogProbeCartridge
+      - id: BoxForensicPad
+      - id: BoxEvidenceMarkers
+      - id: DrinkDetFlask
+        prob: 0.5 # so you're telling me the detective got drunk...
+      - id: ClothingBeltHolsterFilled
+        prob: 0.1 # ...lost their gun...
+      - id: MobRandomCargoCorpse
+        prob: 0.05 # ...and locked themselves in a crate from the outside?
+        # cargo tech stand-in for detective because warden corpse could be spawned
+        # also it gets creepier for cargo techs that break into this crate
+
+- type: entity
   id: CrateRestraints
   parent: CrateSecgear
   name: restraints crate
