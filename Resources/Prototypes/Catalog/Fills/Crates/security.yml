@@ -32,22 +32,22 @@
         amount: 3
 
 - type: entity
-  id: CrateSecurityNonlethal
+  id: CrateSecurityNonlethalStun
   parent: CrateSecgear
-  name: nonlethals crate
-  description: Disabler weapons. Requires Security access to open.
+  name: nonlethal stun crate
+  description: Containers two disablers, stunbatons, flashes, zipties. Requires Security access to open.
   components:
   - type: StorageFill
-    contents:
+    contents: # throwables in another crate to avoid swamping cargo with multiple disablers for bolas or stingers
       - id: WeaponDisabler
-        amount: 3
+        amount: 2
       - id: Stunbaton
-        amount: 3
-      - id: BoxFlashbang
+        amount: 2
       - id: Flash
-        amount: 3
+        amount: 2
+      - id: Zipties # bare minimum, order actual restraints with your nonlethals
+        amount: 4
 #      - Pepperspray
-#      - GrenadeTeargas
 
 - type: entity
   id: CrateSecurityRiot
@@ -125,6 +125,23 @@
         amount: 1
       - id: straitjacket
         amount: 2
+
+- type: entity
+  id: CrateSecNonlethalThrowables
+  parent: CrateSecgear
+  name: nonlethal throwables crate
+  description: Contains a box of flashbangs, box of stingers, box of tear gas, and four bolas. Requires Security access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxFlashbang
+        amount: 1
+      - id: BoxStinger
+        amount: 1
+      - id: BoxTearGas
+        amount: 1
+      - id: bolas # replace with e-bolas
+        amount: 4
 
 - type: entity
   id: CrateSecurityTrackingMindshieldImplants
