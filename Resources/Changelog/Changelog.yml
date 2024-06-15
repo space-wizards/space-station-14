@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Simyon
-  changes:
-  - message: The space dragon can now open doors by bumping into them!
-    type: Tweak
-  id: 6241
-  time: '2024-03-28T05:41:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26490
 - author: EmoGarbage404
   changes:
   - message: Various announcements now announce location on the map (near Medical,
@@ -3854,3 +3847,11 @@
   id: 6740
   time: '2024-06-15T03:38:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28974
+- author: EmoGarbage404
+  changes:
+  - message: Added Moon Boots! This science research item allows you to move like
+      you're in zero-gravity.
+    type: Add
+  id: 6741
+  time: '2024-06-15T03:43:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29009
