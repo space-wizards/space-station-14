@@ -1,9 +1,7 @@
 using Content.Shared.Alert;
-using Content.Shared.Clothing;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Serialization;
@@ -15,12 +13,9 @@ namespace Content.Shared.Gravity
     {
         [Dependency] protected readonly IGameTiming Timing = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
-        [Dependency] private readonly InventorySystem _inventory = default!;
 
         [ValidatePrototypeId<AlertPrototype>]
         public const string WeightlessAlert = "Weightless";
-
-        private EntityQuery<InventoryComponent> _inventoryQuery;
 
         public bool IsWeightless(EntityUid uid, PhysicsComponent? body = null, TransformComponent? xform = null)
         {
@@ -32,6 +27,11 @@ namespace Content.Shared.Gravity
             if (TryComp<MovementIgnoreGravityComponent>(uid, out var ignoreGravityComponent))
                 return ignoreGravityComponent.Weightless;
 
+            var ev = new IsWeightlessEvent(uid);
+            RaiseLocalEvent(uid, ref ev);
+            if (ev.Handled)
+                return ev.IsWeightless;
+
             if (!Resolve(uid, ref xform))
                 return true;
 
@@ -42,34 +42,12 @@ namespace Content.Shared.Gravity
                 return false;
             }
 
-            // If there's no gravity comp at all (i.e. space) then nothing can hold you down
-            if (gravity == null && mapGravity == null)
-                return true;
-
-            // Check for something holding us down
-            // If the planet has gravity component and no gravity it will still give gravity
-            var ev = new CheckGravityEvent();
-            RaiseLocalEvent(uid, ref ev);
-            if (ev.Handled)
-                return false;
-
-            if (_inventoryQuery.TryComp(uid, out var inv))
-            {
-                _inventory.RelayEvent((uid, inv), ref ev);
-                if (ev.Handled)
-                    return false;
-            }
-
-            // on a grid without gravity and no magboots, floating time
             return true;
         }
 
         public override void Initialize()
         {
             base.Initialize();
-
-            _inventoryQuery = GetEntityQuery<InventoryComponent>();
-
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
             SubscribeLocalEvent<AlertSyncEvent>(OnAlertsSync);
             SubscribeLocalEvent<AlertsComponent, EntParentChangedMessage>(OnAlertsParentChange);
@@ -86,9 +64,11 @@ namespace Content.Shared.Gravity
 
         private void OnHandleState(EntityUid uid, GravityComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not GravityComponentState state) return;
+            if (args.Current is not GravityComponentState state)
+                return;
 
-            if (component.EnabledVV == state.Enabled) return;
+            if (component.EnabledVV == state.Enabled)
+                return;
             component.EnabledVV = state.Enabled;
             var ev = new GravityChangedEvent(uid, component.EnabledVV);
             RaiseLocalEvent(uid, ref ev, true);
@@ -102,9 +82,10 @@ namespace Content.Shared.Gravity
         private void OnGravityChange(ref GravityChangedEvent ev)
         {
             var alerts = AllEntityQuery<AlertsComponent, TransformComponent>();
-            while(alerts.MoveNext(out var uid, out var comp, out var xform))
+            while(alerts.MoveNext(out var uid, out _, out var xform))
             {
-                if (xform.GridUid != ev.ChangedGridIndex) continue;
+                if (xform.GridUid != ev.ChangedGridIndex)
+                    continue;
 
                 if (!ev.HasGravity)
                 {
@@ -156,5 +137,11 @@ namespace Content.Shared.Gravity
                 Enabled = enabled;
             }
         }
+    }
+
+    [ByRefEvent]
+    public record struct IsWeightlessEvent(EntityUid Entity, bool IsWeightless = false, bool Handled = false) : IInventoryRelayEvent
+    {
+        SlotFlags IInventoryRelayEvent.TargetSlots => ~SlotFlags.POCKET;
     }
 }
