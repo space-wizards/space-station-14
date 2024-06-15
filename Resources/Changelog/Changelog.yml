@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: Artifact node IDs are now only 3-digits long
-    type: Tweak
-  id: 6238
-  time: '2024-03-27T23:26:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26482
 - author: Jake Huxell
   changes:
   - message: Fixed late join menu scrolling to the top whenever a new player joins
@@ -3847,3 +3840,11 @@
   id: 6737
   time: '2024-06-15T03:00:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28951
+- author: robertGN
+  changes:
+  - message: Using a welder on vending machines now correctly repairs the vending
+      machine.
+    type: Fix
+  id: 6738
+  time: '2024-06-15T03:13:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28920
