@@ -156,8 +156,11 @@ namespace Content.Shared.Hands
         }
     }
 
+    /// <summary>
+    ///     Raised right before picking an item up.
+    /// </summary>
     [PublicAPI]
-    public sealed class AttemptedHandPickupEvent : CancellableEntityEventArgs
+    public abstract class AttemptedHandPickupEvent : CancellableEntityEventArgs
     {
         /// <summary>
         ///     Entity that equipped the item.
@@ -239,6 +242,23 @@ namespace Content.Shared.Hands
             Hand = hand;
         }
     }
+
+    /// <summary>
+    /// Raised on an entity right before it gets picked up.
+    /// </summary>
+    public sealed class GotAttemptedHandPickupEvent : AttemptedHandPickupEvent
+    {
+        public GotAttemptedHandPickupEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
+    }
+
+    /// <summary>
+    /// Raised directed on a user right before it picks something up.
+    /// </summary>
+    public sealed class DidAttemptedHandPickupEvent : AttemptedHandPickupEvent
+    {
+        public DidAttemptedHandPickupEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
+    }
+
 
     /// <summary>
     /// Raised directed on an entity when it is equipped into hands.

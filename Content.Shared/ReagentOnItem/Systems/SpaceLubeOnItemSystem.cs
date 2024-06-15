@@ -26,14 +26,14 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SpaceLubeOnItemComponent, AttemptedHandPickupEvent>(OnHandPickUp);
+        SubscribeLocalEvent<SpaceLubeOnItemComponent, GotAttemptedHandPickupEvent>(OnHandPickUp);
         SubscribeLocalEvent<SpaceLubeOnItemComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<SpaceLubeOnItemComponent, ComponentGetState>(GetSpaceLubeState);
         SubscribeLocalEvent<SpaceLubeOnItemComponent, ComponentHandleState>(HandleSpaceLubeState);
     }
 
-    private void OnHandPickUp(EntityUid uid, SpaceLubeOnItemComponent component, AttemptedHandPickupEvent args)
+    private void OnHandPickUp(EntityUid uid, SpaceLubeOnItemComponent component, GotAttemptedHandPickupEvent args)
     {
         if (args.Cancelled)
             return;
@@ -65,16 +65,18 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
 
         Dirty(uid, component);
 
-        // _transform.SetCoordinates(uid, Transform(entityWhoPickedUp).Coordinates);
-        // _transform.AttachToGridOrMap(uid);
-        var xform = Transform(entityWhoPickedUp);
+        var entTransform = Transform(entityWhoPickedUp);
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var worldPos = _xform.GetWorldPosition(xform, xformQuery);
-        var delta = worldPos - _xform.GetWorldPosition(uid, xformQuery);
-        
-        var rotation = new Angle((3.14159/3)*(((2*_random.NextDouble())-1)));
+        var worldPos = _xform.GetWorldPosition(entTransform, xformQuery);
+        var vecFromObjectToEnt = worldPos - _xform.GetWorldPosition(uid, xformQuery);
 
-        _throwing.TryThrow(uid, rotation.RotateVec(delta.Normalized()), strength: component.PowerOfThrowOnPickup);
+        // This calculates the spread of the crowbar so it wont go in a straight line
+        // to the entity picking it up!
+        var randNegPosOne = 2 * _random.NextDouble() - 1;
+        var spread = Math.PI / 5;
+        var rotation = new Angle(spread * randNegPosOne);
+
+        _throwing.TryThrow(uid, rotation.RotateVec(vecFromObjectToEnt.Normalized()), strength: component.PowerOfThrowOnPickup);
         _popup.PopupPredicted(Loc.GetString("space-lube-on-item-slip", ("target", Identity.Entity(uid, EntityManager))), entityWhoPickedUp, entityWhoPickedUp, PopupType.MediumCaution);
     }
 
