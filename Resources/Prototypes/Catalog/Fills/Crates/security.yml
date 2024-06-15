@@ -120,7 +120,7 @@
 - type: entity
   id: CrateSecurityTrackingMindshieldImplants
   name: implanter crate
-  description: Contains 4 MindShield implants and 4 tracking implant. Requires Security access to open.
+  description: Contains four mindshield and four tracking implants. Requires Security access to open.
   parent: CrateSecgear
   components:
   - type: StorageFill
