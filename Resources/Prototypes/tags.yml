@@ -254,7 +254,7 @@
 
 - type: Tag
   id: CableCoil
-  
+
 - type: Tag
   id: Candle
 
@@ -1204,6 +1204,9 @@
 
 - type: Tag
   id: Syndicate
+
+- type: Tag
+  id: SyndicateMicrowaveMachineBoard
 
 - type: Tag
   id: SyndicateSegwayKeys
