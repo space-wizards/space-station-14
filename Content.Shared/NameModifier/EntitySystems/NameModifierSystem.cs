@@ -97,7 +97,7 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
     /// </summary>
     public readonly string BaseName;
 
-    private readonly List<(LocId LocId, int Priority, List<(string, object)>? ExtraArgs)> _modifiers = [];
+    private readonly List<(LocId LocId, int Priority, (string, object)[] ExtraArgs)> _modifiers = [];
 
     /// <inheritdoc/>
     public SlotFlags TargetSlots => ~SlotFlags.POCKET;
@@ -117,9 +117,9 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
     /// The original name will be passed to Fluent as <c>$baseName</c> along with any <paramref name="extraArgs"/>.
     /// Modifiers with a higher <paramref name="priority"/> will be applied later.
     /// </summary>
-    public void AddModifier(LocId locId, int priority = 0, params (string, object)[]? extraArgs)
+    public void AddModifier(LocId locId, int priority = 0, params (string, object)[] extraArgs)
     {
-        _modifiers.Add((locId, priority, extraArgs?.ToList()));
+        _modifiers.Add((locId, priority, extraArgs));
     }
 
     /// <summary>
@@ -134,11 +134,12 @@ public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
         foreach (var modifier in _modifiers.OrderBy(n => n.Priority))
         {
             // Grab any extra args needed by the Loc string
-            var args = modifier.ExtraArgs ?? [];
+            var args = modifier.ExtraArgs;
             // Add the current version of the entity name as an arg
-            args.Add(("baseName", name));
+            Array.Resize(ref args, args.Length + 1);
+            args[^1] = ("baseName", name);
             // Resolve the Loc string and use the result as the base in the next iteration.
-            name = Loc.GetString(modifier.LocId, args.ToArray());
+            name = Loc.GetString(modifier.LocId, args);
         }
 
         return name;
