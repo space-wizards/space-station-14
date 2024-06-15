@@ -1,0 +1,12 @@
+- type: job
+  id: Prisoner
+  name: job-name-prisoner
+  description: job-description-prisoner
+  playTimeTracker: JobPrisoner
+  requirements:
+  - !type:RoleTimeRequirement
+    role: JobPassenger
+    time: 21600
+  startingGear: PrisonerGear
+  icon: "JobIconPrisoner"
+  supervisors: job-supervisors-security

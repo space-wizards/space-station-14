@@ -1,0 +1,9 @@
+
+
+# Security
+- type: roleLoadout
+  id: JobPrisoner
+  groups:
+  - PrisonerJumpsuit
+  - CommonBackpack
+  - Trinkets
