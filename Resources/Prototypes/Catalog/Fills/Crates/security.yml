@@ -73,7 +73,7 @@
   id: CrateSecuritySupplies
   parent: CrateSecgear
   name: officer gear crate
-  description: Contains various supplies for the station's Security team. Requires Security access to open.
+  description: Contains two SecGlasses, black gloves, combat boots, protective masks, and empty security belts. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
