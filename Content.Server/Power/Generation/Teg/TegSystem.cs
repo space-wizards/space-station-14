@@ -137,12 +137,28 @@ public sealed class TegSystem : EntitySystem
         if (airA.Pressure > 0 && airB.Pressure > 0)
         {
             var hotA = airA.Temperature > airB.Temperature;
-            var cHot = hotA ? cA : cB;
 
             // Calculate thermal and electrical energy transfer between the two sides.
-            var δT = MathF.Abs(airA.Temperature - airB.Temperature);
-            var transfer = δT * cA * cB / (cA + cB - cHot * component.ThermalEfficiency);
-            electricalEnergy = transfer * component.ThermalEfficiency * component.PowerFactor;
+            // Assume temperature equalizes, i.e. Ta*cA + Tb*cB = Tf*(cA+cB)
+            var Tf = (airA.Temperature * cA + airB.Temperature * cB) / (cA + cB);
+            // The maximum energy we can extract is (Ta - Tf)*cA, which is equal to (Tf - Tb)*cB
+            var Wmax = MathF.Abs(airA.Temperature - Tf) * cA;
+
+            var N = component.ThermalEfficiency;
+
+            // Calculate Carnot efficiency
+            var Thot = hotA ? airA.Temperature : airB.Temperature;
+            var Tcold = hotA ? airB.Temperature : airA.Temperature;
+            var Nmax = 1 - Tcold / Thot;
+            N = MathF.Min(N, Nmax); // clamp by Carnot efficiency
+
+            // Reduce efficiency at low temperature differences to encourage burn chambers (instead
+            // of just feeding the TEG room temperature gas from an infinite gas miner).
+            var dT = Thot - Tcold;
+            N *= MathF.Tanh(dT/700); // https://www.wolframalpha.com/input?i=tanh(x/700)+from+0+to+1000
+
+            var transfer = Wmax * N;
+            electricalEnergy = transfer * component.PowerFactor;
             var outTransfer = transfer * (1 - component.ThermalEfficiency);
 
             // Adjust thermal energy in transferred gas mixtures.
