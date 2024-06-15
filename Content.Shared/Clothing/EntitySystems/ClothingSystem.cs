@@ -98,21 +98,22 @@ public abstract class ClothingSystem : EntitySystem
                 {
                     if (comp.Slots.Contains(layer))
                     {
-                        if (slot.SlotFlags == SlotFlags.POCKET) break;
-
-                        //Checks for mask toggling. TODO: Make a generic system for this
-                        if (comp.HideOnToggle && TryComp(item, out MaskComponent? mask) && TryComp(item, out ClothingComponent? clothing))
+                        if (TryComp(item, out ClothingComponent? clothing) && clothing.Slots == slot.SlotFlags)
                         {
-                            if (clothing.EquippedPrefix != mask.EquippedPrefix)
+                            //Checks for mask toggling. TODO: Make a generic system for this
+                            if (comp.HideOnToggle && TryComp(item, out MaskComponent? mask))
+                            {
+                                if (clothing.EquippedPrefix != mask.EquippedPrefix)
+                                {
+                                    shouldLayerShow = false;
+                                    break;
+                                }
+                            }
+                            else
                             {
                                 shouldLayerShow = false;
                                 break;
                             }
-                        }
-                        else
-                        {
-                            shouldLayerShow = false;
-                            break;
                         }
                     }
                 }
