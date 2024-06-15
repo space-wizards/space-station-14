@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Ghagliiarghii
-  changes:
-  - message: Removed Donk Pocket Bounty from Cargo
-    type: Remove
-  - message: Removed Box of Hugs Bounty from Cargo
-    type: Remove
-  id: 6237
-  time: '2024-03-27T21:50:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26481
 - author: Vermidia
   changes:
   - message: Artifact node IDs are now only 3-digits long
@@ -3845,3 +3836,14 @@
   id: 6736
   time: '2024-06-15T02:58:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28943
+- author: Vermidia
+  changes:
+  - message: Nukie planet now has an improved Donk co. microwave, which cooks twice
+      as fast but is more likely to explode. It can't handle id cards without exploding.
+    type: Add
+  - message: Made microwave explosions destroy the machine board and spit out the
+      machine parts.
+    type: Tweak
+  id: 6737
+  time: '2024-06-15T03:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28951
