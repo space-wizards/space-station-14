@@ -883,7 +883,10 @@
   name: loadout-group-security-shoes
   loadouts:
   - CombatBoots
+  - JackBoots
+  - CowboyBlack
   - SecurityWinterBoots
+  - Highheel
 
 - type: loadoutGroup
   id: SecurityPDA

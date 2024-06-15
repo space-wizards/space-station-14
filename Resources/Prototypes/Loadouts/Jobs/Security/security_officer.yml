@@ -188,13 +188,40 @@
     shoes: ClothingShoesBootsCombatFilled
 
 - type: loadout
+  id: JackBoots
+  equipment: JackBoots
+
+- type: startingGear
+  id: JackBoots
+  equipment:
+    shoes: ClothingShoesBootsJackFilled
+
+- type: loadout
+  id: CowboyBlack
+  equipment: CowboyBlack
+
+- type: startingGear
+  id: CowboyBlack
+  equipment:
+    shoes: ClothingShoesBootsCowboyBlackFilled
+
+- type: loadout
+  id: Highheel
+  equipment: Highheel
+
+- type: startingGear
+  id: Highheel
+  equipment:
+    shoes: ClothingShoesHighheelBootsFilled
+
+- type: loadout
   id: SecurityWinterBoots
   equipment: SecurityWinterBoots
 
 - type: startingGear
   id: SecurityWinterBoots
   equipment:
-    shoes: ClothingShoesBootsWinterSec
+    shoes: ClothingShoesBootsWinterSecFilled
 
 # PDA
 - type: loadout
