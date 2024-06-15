@@ -61,6 +61,7 @@ public sealed class PullingSystem : EntitySystem
         SubscribeLocalEvent<PullableComponent, EntGotInsertedIntoContainerMessage>(OnPullableContainerInsert);
         SubscribeLocalEvent<PullableComponent, ModifyUncuffDurationEvent>(OnModifyUncuffDuration);
 
+        SubscribeLocalEvent<PullerComponent, AfterAutoHandleStateEvent>(OnAfterState);
         SubscribeLocalEvent<PullerComponent, EntGotInsertedIntoContainerMessage>(OnPullerContainerInsert);
         SubscribeLocalEvent<PullerComponent, EntityUnpausedEvent>(OnPullerUnpaused);
         SubscribeLocalEvent<PullerComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
@@ -70,6 +71,14 @@ public sealed class PullingSystem : EntitySystem
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ReleasePulledObject, InputCmdHandler.FromDelegate(OnReleasePulledObject, handle: false))
             .Register<PullingSystem>();
+    }
+
+    private void OnAfterState(Entity<PullerComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        if (ent.Comp.Pulling == null)
+            RemComp<ActivePullerComponent>(ent.Owner);
+        else
+            EnsureComp<ActivePullerComponent>(ent.Owner);
     }
 
     private void OnDropHandItems(EntityUid uid, PullerComponent pullerComp, DropHandItemsEvent args)
@@ -228,6 +237,9 @@ public sealed class PullingSystem : EntitySystem
         }
 
         var oldPuller = pullableComp.Puller;
+        if (oldPuller != null)
+            RemComp<ActivePullerComponent>(oldPuller.Value);
+
         pullableComp.PullJointId = null;
         pullableComp.Puller = null;
         Dirty(pullableUid, pullableComp);
@@ -410,6 +422,7 @@ public sealed class PullingSystem : EntitySystem
         // Use net entity so it's consistent across client and server.
         pullableComp.PullJointId = $"pull-joint-{GetNetEntity(pullableUid)}";
 
+        EnsureComp<ActivePullerComponent>(pullerUid);
         pullerComp.Pulling = pullableUid;
         pullableComp.Puller = pullerUid;
 
