@@ -59,11 +59,28 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             return;
         }
 
+        // In some instances we might not have picked up a new group for existing data.
+        foreach (var groupProto in roleProto.Groups)
+        {
+            if (SelectedLoadouts.ContainsKey(groupProto))
+                continue;
+
+            // Data will get set below.
+            SelectedLoadouts[groupProto] = new List<Loadout>();
+        }
+
         // Reset points to recalculate.
         Points = roleProto.Points;
 
         foreach (var (group, groupLoadouts) in SelectedLoadouts)
         {
+            // Check the group is even valid for this role.
+            if (!roleProto.Groups.Contains(group))
+            {
+                groupRemove.Add(group);
+                continue;
+            }
+
             // Dump if Group doesn't exist
             if (!protoManager.TryIndex(group, out var groupProto))
             {
