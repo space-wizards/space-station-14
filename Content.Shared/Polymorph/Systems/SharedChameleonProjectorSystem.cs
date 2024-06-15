@@ -80,8 +80,6 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
         if (args.DamageDelta is not {} damage)
             return;
 
-        Log.Debug($"Damage changed for {ent} - {damage}");
-
         // reveal once enough damage is taken for the disguise to reveal itself
         var total = damage.GetTotal();
         if (total > ent.Comp.Integrity)

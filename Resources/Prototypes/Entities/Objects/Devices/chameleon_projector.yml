@@ -31,6 +31,8 @@
   - type: Transform
     noRot: true # players rotation and anchor is used instead
   - type: InteractionOutline
+  - type: Clickable
+  - type: Damageable
   - type: ChameleonDisguise
 
 # actions
