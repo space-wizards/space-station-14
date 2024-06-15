@@ -32,6 +32,12 @@ public sealed class IdCardSystem : SharedIdCardSystem
         if (!component.CanMicrowave || !TryComp<MicrowaveComponent>(args.Microwave, out var micro) || micro.Broken)
             return;
 
+        if (micro.CanMicrowaveIdsSafely)
+        {
+            _microwave.Explode((args.Microwave, micro));
+            return;
+        }       
+
         if (TryComp<AccessComponent>(uid, out var access))
         {
             float randomPick = _random.NextFloat();
@@ -76,11 +82,6 @@ public sealed class IdCardSystem : SharedIdCardSystem
 
             _adminLogger.Add(LogType.Action, LogImpact.Medium,
                     $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
-
-            if (micro.CanMicrowaveIdsSafely)
-                return;
-            // If it's not safe to microwave, maybe explode
-            _microwave.MaybeExplode((args.Microwave, micro));
 
         }
     }

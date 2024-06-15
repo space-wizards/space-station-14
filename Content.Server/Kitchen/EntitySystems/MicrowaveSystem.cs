@@ -413,18 +413,6 @@ namespace Content.Server.Kitchen.EntitySystems
         }
 
         /// <summary>
-        /// Unlike RollMalfunction, MaybeExplode checks immediately if the microwave should explode. Useful for explosion that should happen immediately - such as ID card cooking
-        /// </summary>
-        /// <param name="ent"></param>
-        public void MaybeExplode(Entity<MicrowaveComponent> ent)
-        {
-            var randomPick = _random.NextFloat();
-
-            if (randomPick <= ent.Comp.ExplosionChance) // Uses the microwaves explosion chance to determine if we should explode
-                Explode(ent);
-        }
-
-        /// <summary>
         /// Explodes the microwave internally, turning it into a broken state, destroying its board, and spitting out its machine parts
         /// </summary>
         /// <param name="ent"></param>
