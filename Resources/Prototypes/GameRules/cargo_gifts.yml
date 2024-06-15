@@ -192,5 +192,5 @@
     dest: cargo-gift-dest-sec
     gifts:
       SecurityRiot: 2
-      SecurityRestraints: 2
+      SecurityRestraints: 1
       SecurityNonLethal: 2

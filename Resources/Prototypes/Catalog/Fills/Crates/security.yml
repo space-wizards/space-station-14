@@ -108,13 +108,15 @@
   id: CrateRestraints
   parent: CrateSecgear
   name: restraints crate
-  description: Contains two boxes each of handcuffs and zipties. Requires Security access to open.
+  description: Contains a box of handcuffs, box of zipties, and two straitjackets. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
       - id: BoxHandcuff
-        amount: 2
+        amount: 1
       - id: BoxZiptie
+        amount: 1
+      - id: straitjacket
         amount: 2
 
 - type: entity
