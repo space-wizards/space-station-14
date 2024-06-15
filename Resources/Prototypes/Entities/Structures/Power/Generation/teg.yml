@@ -80,10 +80,11 @@
       supplyRampTolerance: 10000000000
 
     - type: Appearance
-    - type: ApcPowerReceiver
-      powerLoad: 1000
+    #- type: ApcPowerReceiver
+    #  powerLoad: 0 #the TEG keeps creating an ApcPowerReceiverComponent upon creation
+    #  needsPower: false
 
-    - type: LitOnPowered
+    #- type: LitOnPowered
     - type: PointLight
       enabled: false
       castShadows: false

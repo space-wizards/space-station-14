@@ -106,12 +106,6 @@ public sealed class TegSystem : EntitySystem
             return;
 
         var supplier = Comp<PowerSupplierComponent>(uid);
-        var powerReceiver = Comp<ApcPowerReceiverComponent>(uid);
-        if (!powerReceiver.Powered)
-        {
-            supplier.MaxSupply = 0;
-            return;
-        }
 
         var circA = tegGroup.CirculatorA!.Owner;
         var circB = tegGroup.CirculatorB!.Owner;
@@ -184,27 +178,20 @@ public sealed class TegSystem : EntitySystem
         _atmosphere.Merge(outletA.Air, airA);
         _atmosphere.Merge(outletB.Air, airB);
 
-        UpdateAppearance(uid, component, powerReceiver, tegGroup);
+        UpdateAppearance(uid, component, tegGroup);
     }
 
     private void UpdateAppearance(
         EntityUid uid,
         TegGeneratorComponent component,
-        ApcPowerReceiverComponent powerReceiver,
         TegNodeGroup nodeGroup)
     {
         int powerLevel;
-        if (powerReceiver.Powered)
-        {
-            powerLevel = ContentHelpers.RoundToLevels(
-                component.RampPosition - component.RampMinimum,
-                component.MaxVisualPower - component.RampMinimum,
-                12);
-        }
-        else
-        {
-            powerLevel = 0;
-        }
+        powerLevel = ContentHelpers.RoundToLevels(
+            component.RampPosition - component.RampMinimum,
+            component.MaxVisualPower - component.RampMinimum,
+            12);
+
 
         _ambientSound.SetAmbience(uid, powerLevel >= 1);
         // TODO: Ok so this introduces popping which is a major shame big rip.
@@ -214,8 +201,8 @@ public sealed class TegSystem : EntitySystem
 
         if (nodeGroup.IsFullyBuilt)
         {
-            UpdateCirculatorAppearance(nodeGroup.CirculatorA!.Owner, powerReceiver.Powered);
-            UpdateCirculatorAppearance(nodeGroup.CirculatorB!.Owner, powerReceiver.Powered);
+            UpdateCirculatorAppearance(nodeGroup.CirculatorA!.Owner);
+            UpdateCirculatorAppearance(nodeGroup.CirculatorB!.Owner);
         }
     }
 
@@ -228,11 +215,7 @@ public sealed class TegSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var powerReceiver = Comp<ApcPowerReceiverComponent>(uid);
-
-        powerReceiver.PowerDisabled = !group.IsFullyBuilt;
-
-        UpdateAppearance(uid, component, powerReceiver, group);
+        UpdateAppearance(uid, component, group);
     }
 
     [Access(typeof(TegNodeGroup))]
@@ -248,16 +231,17 @@ public sealed class TegSystem : EntitySystem
         // Otherwise, make sure circulator is set to nothing.
         if (!group.IsFullyBuilt)
         {
-            UpdateCirculatorAppearance(uid, false);
+            UpdateCirculatorAppearance(uid);
         }
     }
 
-    private void UpdateCirculatorAppearance(EntityUid uid, bool powered)
+    private void UpdateCirculatorAppearance(EntityUid uid)
     {
         var circ = Comp<TegCirculatorComponent>(uid);
+        var powered = true;
 
         TegCirculatorSpeed speed;
-        if (powered && circ.LastPressureDelta > 0 && circ.LastMolesTransferred > 0)
+        if (circ.LastPressureDelta > 0 && circ.LastMolesTransferred > 0)
         {
             if (circ.LastPressureDelta > circ.VisualSpeedDelta)
                 speed = TegCirculatorSpeed.SpeedFast;
@@ -267,6 +251,7 @@ public sealed class TegSystem : EntitySystem
         else
         {
             speed = TegCirculatorSpeed.SpeedStill;
+            powered = false;
         }
 
         _appearance.SetData(uid, TegVisuals.CirculatorSpeed, speed);
@@ -289,7 +274,7 @@ public sealed class TegSystem : EntitySystem
         if (nodeGroup == null)
             return;
 
-        UpdateAppearance(uid, component, Comp<ApcPowerReceiverComponent>(uid), nodeGroup);
+        UpdateAppearance(uid, component, nodeGroup);
     }
 
     /// <returns>Null if the node group is not yet available. This can happen during initialization.</returns>
