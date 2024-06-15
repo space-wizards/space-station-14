@@ -74,7 +74,7 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
         
         var rotation = new Angle((3.14159/3)*(((2*_random.NextDouble())-1)));
 
-        _throwing.TryThrow(uid, rot.RotateVec(delta.Normalized()), strength: component.PowerOfThrowOnPickup);
+        _throwing.TryThrow(uid, rotation.RotateVec(delta.Normalized()), strength: component.PowerOfThrowOnPickup);
         _popup.PopupPredicted(Loc.GetString("space-lube-on-item-slip", ("target", Identity.Entity(uid, EntityManager))), entityWhoPickedUp, entityWhoPickedUp, PopupType.MediumCaution);
     }
 
