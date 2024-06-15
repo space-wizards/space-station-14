@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Jake Huxell
-  changes:
-  - message: Reduced game build warning count.
-    type: Fix
-  id: 6248
-  time: '2024-03-29T05:28:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26518
 - author: wafehling
   changes:
   - message: Added a chemistry recipe to make crystal shards.
@@ -3860,3 +3853,10 @@
   id: 6747
   time: '2024-06-15T15:17:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29024
+- author: Ian321
+  changes:
+  - message: Donk co. microwaves now have their own machine board.
+    type: Fix
+  id: 6748
+  time: '2024-06-15T15:44:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29037
