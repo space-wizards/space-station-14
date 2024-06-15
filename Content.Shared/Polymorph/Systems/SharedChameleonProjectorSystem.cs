@@ -2,6 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.Construction.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -68,7 +69,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnDisguiseDamaged(Entity<ChameleonDisguiseComponent> ent, ref DamageChangeEvent args)
+    private void OnDisguiseDamaged(Entity<ChameleonDisguiseComponent> ent, ref DamageChangedEvent args)
     {
         // anything that would damage both like an explosion gets doubled
         // feature? projector makes your atoms weaker or some bs
