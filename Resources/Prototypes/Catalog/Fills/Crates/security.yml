@@ -52,8 +52,8 @@
 - type: entity
   id: CrateSecurityRiot
   parent: CrateSecgear
-  name: swat crate
-  description: Contains two sets of riot armor, helmets, shields, and enforcers loaded with beanbags. Extra ammo is included. Requires Armory access to open.
+  name: riot crate
+  description: Contains two sets of riot armor, helmets, shields, protective masks, and enforcers with extra beanbags. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
@@ -67,7 +67,8 @@
         amount: 2
       - id: RiotShield
         amount: 2
-#      - SecGasmask
+      - id: ClothingMaskGasSecurity
+        amount: 2
 
 - type: entity
   id: CrateSecuritySupplies
