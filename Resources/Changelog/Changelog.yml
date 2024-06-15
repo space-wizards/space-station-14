@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Electrocution damage is no longer based on the power supplied and is
-      instead based on the wire voltage (LV, MV, or HV).
-    type: Tweak
-  id: 6246
-  time: '2024-03-28T20:44:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26455
 - author: Jake Huxell
   changes:
   - message: Late join menu correctly respects client role restrictions.
@@ -3858,3 +3850,11 @@
   id: 6745
   time: '2024-06-15T06:52:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28737
+- author: EmoGarbage404
+  changes:
+  - message: Fixed borgs and other non-humans getting deleted by salvage magnet wrecks
+      disappearing.
+    type: Fix
+  id: 6746
+  time: '2024-06-15T13:19:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29006
