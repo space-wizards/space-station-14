@@ -59,7 +59,7 @@ public sealed class PullingSystem : EntitySystem
         SubscribeLocalEvent<PullableComponent, JointRemovedEvent>(OnJointRemoved);
         SubscribeLocalEvent<PullableComponent, GetVerbsEvent<Verb>>(AddPullVerbs);
         SubscribeLocalEvent<PullableComponent, EntGotInsertedIntoContainerMessage>(OnPullableContainerInsert);
-        SubscribeLocalEvent<PullableComponent, UncuffAttemptEvent>(OnPullableUncuffAttempt);
+        SubscribeLocalEvent<PullableComponent, ModifyUncuffDurationEvent>(OnModifyUncuffDuration);
 
         SubscribeLocalEvent<PullerComponent, EntGotInsertedIntoContainerMessage>(OnPullerContainerInsert);
         SubscribeLocalEvent<PullerComponent, EntityUnpausedEvent>(OnPullerUnpaused);
@@ -98,11 +98,8 @@ public sealed class PullingSystem : EntitySystem
         TryStopPull(ent.Owner, ent.Comp);
     }
 
-    private void OnPullableUncuffAttempt(Entity<PullableComponent> ent, ref UncuffAttemptEvent args)
+    private void OnModifyUncuffDuration(Entity<PullableComponent> ent, ref ModifyUncuffDurationEvent args)
     {
-        if (args.Cancelled)
-            return;
-
         if (!ent.Comp.BeingPulled)
             return;
 
@@ -110,8 +107,7 @@ public sealed class PullingSystem : EntitySystem
         if (args.User != args.Target)
             return;
 
-        args.Cancelled = true;
-        _popup.PopupClient(Loc.GetString("cuffable-component-cannot-remove-cuffs-pulled-message"), args.User, args.User);
+        args.Duration *= 2;
     }
 
     public override void Shutdown()
