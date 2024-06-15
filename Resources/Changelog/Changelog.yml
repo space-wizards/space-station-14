@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: blueDev2
-  changes:
-  - message: Generalized bounties to allow selling them off-station
-    type: Tweak
-  id: 6240
-  time: '2024-03-28T04:06:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26469
 - author: Simyon
   changes:
   - message: The space dragon can now open doors by bumping into them!
@@ -3848,3 +3841,16 @@
   id: 6739
   time: '2024-06-15T03:23:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28999
+- author: EmoGarbage404
+  changes:
+  - message: Revamped meteors. Meteors now crash through several walls before exploding.
+      They can still come in a weaker "space dust" form where they don't break through
+      structures.
+    type: Add
+  - message: Meteor and space dust events now occur on regular intervals during a
+      round rather than being tied to station events. Expect to see more of them during
+      a round.
+    type: Add
+  id: 6740
+  time: '2024-06-15T03:38:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28974
