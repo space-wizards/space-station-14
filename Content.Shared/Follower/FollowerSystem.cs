@@ -129,15 +129,8 @@ public sealed class FollowerSystem : EntitySystem
 
     private void OnPolymorph(Entity<FollowedComponent> ent, ref PolymorphedEvent args)
     {
-        if (args.IsRevert)
-        {
-            StopAllFollowers(ent); // This is for the fact that followers seem to break following on a revert
-            return;
-        }
         foreach (var follower in ent.Comp.Following)
-        {
             StartFollowingEntity(follower, args.NewEntity);
-        }
     }
 
     /// <summary>
@@ -242,7 +235,7 @@ public sealed class FollowerSystem : EntitySystem
 
         if (_netMan.IsClient)
         {
-            _transform.DetachParentToNull(uid, xform);
+            _transform.DetachEntity(uid, xform);
             return;
         }
 

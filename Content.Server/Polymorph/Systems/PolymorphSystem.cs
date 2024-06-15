@@ -33,6 +33,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Follower;
 
 namespace Content.Server.Polymorph.Systems;
 
@@ -318,7 +319,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (PausedMap != null)
             _transform.SetParent(uid, targetTransformComp, PausedMap.Value);
 
-        var ev = new PolymorphedEvent(uid, child);
+        var ev = new PolymorphedEvent(child);
         RaiseLocalEvent(uid, ev);
 
         return child;
@@ -422,14 +423,14 @@ public sealed partial class PolymorphSystem : EntitySystem
         // if an item polymorph was picked up, put it back down after reverting
         _transform.AttachToGridOrMap(parent, parentXform);
 
+        var ev = new PolymorphedEvent(parent, true);
+        RaiseLocalEvent(uid, ev);
+
         _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",
                 ("parent", Identity.Entity(uid, EntityManager)),
                 ("child", Identity.Entity(parent, EntityManager))),
             parent);
         QueueDel(uid);
-
-        var ev = new PolymorphedEvent(uid, parent, true);
-        RaiseLocalEvent(uid, ev);
 
         return parent;
     }
