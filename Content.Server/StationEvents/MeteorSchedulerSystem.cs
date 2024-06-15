@@ -17,14 +17,23 @@ public sealed class MeteorSchedulerSystem : GameRuleSystem<MeteorSchedulerCompon
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
+    private TimeSpan _meteorMinDelay;
+    private TimeSpan _meteorMaxDelay;
+
+    public MeteorSchedulerSystem()
+    {
+        _meteorMinDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMinTime));
+        _meteorMaxDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMaxTime));
+
+        _cfg.OnValueChanged(CCVars.MeteorSwarmMinTime, f => { _meteorMinDelay = TimeSpan.FromMinutes(f); });
+        _cfg.OnValueChanged(CCVars.MeteorSwarmMaxTime, f => { _meteorMaxDelay = TimeSpan.FromMinutes(f); });
+    }
+
     protected override void Started(EntityUid uid, MeteorSchedulerComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
 
-        var minDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMinTime));
-        var maxDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMaxTime));
-
-        component.NextSwarmTime = Timing.CurTime + RobustRandom.Next(minDelay, maxDelay);
+        component.NextSwarmTime = Timing.CurTime + RobustRandom.Next(_meteorMinDelay, _meteorMaxDelay);
     }
 
     protected override void ActiveTick(EntityUid uid, MeteorSchedulerComponent component, GameRuleComponent gameRule, float frameTime)
@@ -35,10 +44,7 @@ public sealed class MeteorSchedulerSystem : GameRuleSystem<MeteorSchedulerCompon
             return;
         RunSwarm((uid, component));
 
-        var minDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMinTime));
-        var maxDelay = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MeteorSwarmMaxTime));
-
-        component.NextSwarmTime += RobustRandom.Next(minDelay, maxDelay);
+        component.NextSwarmTime += RobustRandom.Next(_meteorMinDelay, _meteorMaxDelay);
     }
 
     private void RunSwarm(Entity<MeteorSchedulerComponent> ent)
