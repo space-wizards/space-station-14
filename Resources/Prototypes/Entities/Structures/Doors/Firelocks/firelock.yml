@@ -134,6 +134,7 @@
       enabled: false
       castShadows: false
     - type: NavMapDoor
+    - type: SyncSprite
 
 - type: entity
   id: Firelock
