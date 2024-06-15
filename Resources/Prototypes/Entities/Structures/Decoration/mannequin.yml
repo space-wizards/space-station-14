@@ -1,5 +1,4 @@
 - type: entity
-  save: false
   id: Mannequin
   parent: BaseStructureDynamic
   name: mannequin
@@ -53,6 +52,15 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: ContainerContainer
+    containers:
+      jumpsuit: !type:ContainerSlot { }
+      outerClothing: !type:ContainerSlot { }
+      neck: !type:ContainerSlot { }
+      mask: !type:ContainerSlot { }
+      eyes: !type:ContainerSlot { }
+      head: !type:ContainerSlot { }
+      suitstorage: !type:ContainerSlot { }
+      back: !type:ContainerSlot { }
   - type: Inventory
     templateId: mannequin
   - type: InventorySlots
