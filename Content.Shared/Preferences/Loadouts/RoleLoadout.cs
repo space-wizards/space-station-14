@@ -295,7 +295,25 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
-        return Role.Equals(other.Role) && SelectedLoadouts.SequenceEqual(other.SelectedLoadouts) && Points == other.Points;
+
+        if (!Role.Equals(other.Role) ||
+            SelectedLoadouts.Count != other.SelectedLoadouts.Count ||
+            Points != other.Points)
+        {
+            return false;
+        }
+
+        // Tried using SequenceEqual but it stinky so.
+        foreach (var (key, value) in SelectedLoadouts)
+        {
+            if (!other.SelectedLoadouts.TryGetValue(key, out var otherValue) ||
+                !otherValue.SequenceEqual(value))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public override bool Equals(object? obj)
