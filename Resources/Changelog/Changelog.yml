@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: wafehling
-  changes:
-  - message: Added a chemistry recipe to make crystal shards.
-    type: Add
-  id: 6249
-  time: '2024-03-29T06:13:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26269
 - author: Crotalus
   changes:
   - message: Reagent grinder auto-modes
@@ -3860,3 +3853,10 @@
   id: 6748
   time: '2024-06-15T15:44:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29037
+- author: BombasterDS
+  changes:
+  - message: Added craftable mannequin that you can hang clothing on!
+    type: Add
+  id: 6749
+  time: '2024-06-15T17:50:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29004
