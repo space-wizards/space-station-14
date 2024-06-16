@@ -36,6 +36,7 @@ cargo-console-paper-print-name = Order #{$orderNumber}
 cargo-console-paper-print-text =
     Order #{$orderNumber}
     Item: {$itemName}
+    Quantity: {$orderQuantity}
     Requested by: {$requester}
     Reason: {$reason}
     Approved by: {$approver}

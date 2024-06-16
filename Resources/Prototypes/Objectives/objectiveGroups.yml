@@ -96,13 +96,6 @@
     ThiefObjectiveGroupAnimal: 2
 
 - type: weightedRandom
-  id: ThiefEscapeObjectiveGroups
-  weights:
-    ThiefObjectiveGroupEscape: 1
-
-
-
-- type: weightedRandom
   id: ThiefObjectiveGroupCollection
   weights:
     HeadCloakStealCollectionObjective: 1           #command

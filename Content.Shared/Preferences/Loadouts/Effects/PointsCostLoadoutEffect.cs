@@ -13,7 +13,7 @@ public sealed partial class PointsCostLoadoutEffect : LoadoutEffect
     public override bool Validate(
         HumanoidCharacterProfile profile,
         RoleLoadout loadout,
-        ICommonSession session,
+        ICommonSession? session,
         IDependencyCollection collection,
         [NotNullWhen(false)] out FormattedMessage? reason)
     {

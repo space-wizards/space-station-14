@@ -2,6 +2,7 @@ using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mobs.Components;
@@ -24,12 +25,15 @@ public sealed partial class MobThresholdsComponent : Component
     /// Used for alternate health alerts (silicons, for example)
     /// </summary>
     [DataField("stateAlertDict")]
-    public Dictionary<MobState, AlertType> StateAlertDict = new()
+    public Dictionary<MobState, ProtoId<AlertPrototype>> StateAlertDict = new()
     {
-        {MobState.Alive, AlertType.HumanHealth},
-        {MobState.Critical, AlertType.HumanCrit},
-        {MobState.Dead, AlertType.HumanDead},
+        {MobState.Alive, "HumanHealth"},
+        {MobState.Critical, "HumanCrit"},
+        {MobState.Dead, "HumanDead"},
     };
+
+    [DataField]
+    public ProtoId<AlertCategoryPrototype> HealthAlertCategory = "Health";
 
     /// <summary>
     /// Whether or not this entity should display damage overlays (robots don't feel pain, black out etc.)
@@ -53,19 +57,19 @@ public sealed class MobThresholdsComponentState : ComponentState
 
     public MobState CurrentThresholdState;
 
-    public Dictionary<MobState, AlertType> StateAlertDict = new()
-    {
-        {MobState.Alive, AlertType.HumanHealth},
-        {MobState.Critical, AlertType.HumanCrit},
-        {MobState.Dead, AlertType.HumanDead},
-    };
+    public Dictionary<MobState, ProtoId<AlertPrototype>> StateAlertDict;
 
     public bool ShowOverlays;
 
     public bool AllowRevives;
 
-    public MobThresholdsComponentState(Dictionary<FixedPoint2, MobState> unsortedThresholds, bool triggersAlerts, MobState currentThresholdState,
-        Dictionary<MobState, AlertType> stateAlertDict, bool showOverlays, bool allowRevives)
+    public MobThresholdsComponentState(Dictionary<FixedPoint2, MobState> unsortedThresholds,
+        bool triggersAlerts,
+        MobState currentThresholdState,
+        Dictionary<MobState,
+        ProtoId<AlertPrototype>> stateAlertDict,
+        bool showOverlays,
+        bool allowRevives)
     {
         UnsortedThresholds = unsortedThresholds;
         TriggersAlerts = triggersAlerts;

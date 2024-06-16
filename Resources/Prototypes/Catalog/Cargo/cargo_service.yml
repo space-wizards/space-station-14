@@ -69,6 +69,16 @@
   group: market
 
 - type: cargoProduct
+  id: ServiceFaxMachine
+  icon:
+    sprite: Structures/Machines/fax_machine.rsi
+    state: icon
+  product: CrateServiceFaxMachine
+  cost: 2000
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
   id: ServicePersonnel
   icon:
     sprite: Objects/Misc/id_cards.rsi
@@ -173,7 +183,7 @@
   icon:
     sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
     state: icon
-  product: CrateJanitorExplosive
+  product: ClosetJanitorBombFilled
   cost: 1000
   category: cargoproduct-category-name-service
   group: market

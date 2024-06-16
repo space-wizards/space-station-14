@@ -12,7 +12,7 @@ public sealed partial class PanicBunkerTab : Control
     [Dependency] private readonly IConsoleHost _console = default!;
 
     private string _minAccountAge;
-    private string _minOverallHours;
+    private string _minOverallMinutes;
 
     public PanicBunkerTab()
     {
@@ -25,9 +25,9 @@ public sealed partial class PanicBunkerTab : Control
         MinAccountAge.OnFocusExit += args => SendMinAccountAge(args.Text);
         _minAccountAge = MinAccountAge.Text;
 
-        MinOverallHours.OnTextEntered += args => SendMinOverallHours(args.Text);
-        MinOverallHours.OnFocusExit += args => SendMinOverallHours(args.Text);
-        _minOverallHours = MinOverallHours.Text;
+        MinOverallMinutes.OnTextEntered += args => SendMinOverallMinutes(args.Text);
+        MinOverallMinutes.OnFocusExit += args => SendMinOverallMinutes(args.Text);
+        _minOverallMinutes = MinOverallMinutes.Text;
     }
 
     private void SendMinAccountAge(string text)
@@ -42,16 +42,16 @@ public sealed partial class PanicBunkerTab : Control
         _console.ExecuteCommand($"panicbunker_min_account_age {minutes}");
     }
 
-    private void SendMinOverallHours(string text)
+    private void SendMinOverallMinutes(string text)
     {
         if (string.IsNullOrWhiteSpace(text) ||
-            text == _minOverallHours ||
-            !int.TryParse(text, out var hours))
+            text == _minOverallMinutes ||
+            !int.TryParse(text, out var minutes))
         {
             return;
         }
 
-        _console.ExecuteCommand($"panicbunker_min_overall_hours {hours}");
+        _console.ExecuteCommand($"panicbunker_min_overall_minutes {minutes}");
     }
 
     public void UpdateStatus(PanicBunkerStatus status)
@@ -68,10 +68,10 @@ public sealed partial class PanicBunkerTab : Control
         CountDeadminnedButton.Pressed = status.CountDeadminnedAdmins;
         ShowReasonButton.Pressed = status.ShowReason;
 
-        MinAccountAge.Text = status.MinAccountAgeHours.ToString();
+        MinAccountAge.Text = status.MinAccountAgeMinutes.ToString();
         _minAccountAge = MinAccountAge.Text;
 
-        MinOverallHours.Text = status.MinOverallHours.ToString();
-        _minOverallHours = MinOverallHours.Text;
+        MinOverallMinutes.Text = status.MinOverallMinutes.ToString();
+        _minOverallMinutes = MinOverallMinutes.Text;
     }
 }

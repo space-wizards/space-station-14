@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -53,7 +53,7 @@ public abstract class BaseBulletRenderer : Control
     {
         // Scale rendering in this control by UIScale.
         var currentTransform = handle.GetTransform();
-        handle.SetTransform(Matrix3.CreateScale(new Vector2(UIScale)) * currentTransform);
+        handle.SetTransform(Matrix3Helpers.CreateScale(new Vector2(UIScale)) * currentTransform);
 
         var countPerRow = CountPerRow(Size.X);
 
