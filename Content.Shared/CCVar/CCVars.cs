@@ -1925,7 +1925,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
-        /// Whether or not to kill the player's mob when ghosting, if it is in a critical state.
+        /// Whether or not to kill the player's mob on ghosting, when it is in a critical health state.
         /// </summary>
         public static readonly CVarDef<bool> GhostKillCrit =
             CVarDef.Create("ghost.kill_crit", true, CVar.REPLICATED | CVar.SERVER);
