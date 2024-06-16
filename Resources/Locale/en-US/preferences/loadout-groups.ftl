@@ -2,6 +2,7 @@
 loadout-group-trinkets = Trinkets
 loadout-group-glasses = Glasses
 loadout-group-backpack = Backpack
+loadout-group-instruments = Instruments
 
 # Command
 loadout-group-captain-head = Captain head
