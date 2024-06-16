@@ -211,7 +211,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeRocket
+      - CartridgeRocket
     proto: MeteorMedium
 
 # immovable rod launcher [admeme]
