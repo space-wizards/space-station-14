@@ -1615,7 +1615,7 @@
   name: seeds-cherry-name
   noun: seeds-noun-seeds
   displayName: seeds-cherry-display-name
-  plantRsi: Objects\Specific\Hydroponics\cherry.rsi
+  plantRsi: Objects/Specific/Hydroponics/cherry.rsi
   packetPrototype: CherrySeeds
   productPrototypes:
     - FoodCherry
