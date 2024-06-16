@@ -18,12 +18,12 @@ public sealed class AttachedEntityValidationSystem : EntitySystem
 
         _entityNotOwnedBySender = Loc.GetString(EntityNotOwnedBySender);
 
-        SubscribeLocalEvent<ChatValidationEvent<AttemptVerbalChatEvent>>(OnValidationEvent);
-        SubscribeLocalEvent<ChatValidationEvent<AttemptVisualChatEvent>>(OnValidationEvent);
-        SubscribeLocalEvent<ChatValidationEvent<AttemptAnnouncementEvent>>(OnValidationEvent);
+        SubscribeLocalEvent<ChatSentEvent<VerbalChatSentEvent>>(OnValidationEvent);
+        SubscribeLocalEvent<ChatSentEvent<VisualChatSentEvent>>(OnValidationEvent);
+        SubscribeLocalEvent<ChatSentEvent<AnnouncementSentEvent>>(OnValidationEvent);
     }
 
-    private void OnValidationEvent<T>(ChatValidationEvent<T> msg, EntitySessionEventArgs args) where T : ChatAttemptEvent
+    private void OnValidationEvent<T>(ChatSentEvent<T> msg, EntitySessionEventArgs args) where T : SendableChatEvent
     {
         if (args.SenderSession.AttachedEntity != null || args.SenderSession.AttachedEntity != GetEntity(msg.Event.Sender))
             msg.Cancel(_entityNotOwnedBySender);

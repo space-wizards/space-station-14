@@ -22,10 +22,10 @@ public sealed class DeadChatValidationSystem : EntitySystem
 
         _deadChatFailed = Loc.GetString(DeadChatFailed);
 
-        SubscribeLocalEvent<ChatValidationEvent<AttemptOutOfCharacterChatEvent>>(OnValidateAttemptOutOfCharacterChatEvent);
+        SubscribeLocalEvent<ChatSentEvent<OutOfCharacterChatSentEvent>>(OnValidateAttemptOutOfCharacterChatEvent);
     }
 
-    private void OnValidateAttemptOutOfCharacterChatEvent(ChatValidationEvent<AttemptOutOfCharacterChatEvent> msg, EntitySessionEventArgs args)
+    private void OnValidateAttemptOutOfCharacterChatEvent(ChatSentEvent<OutOfCharacterChatSentEvent> msg, EntitySessionEventArgs args)
     {
         if (!_proto.TryIndex(msg.Event.Channel, out var proto))
             msg.Cancel(_deadChatFailed);

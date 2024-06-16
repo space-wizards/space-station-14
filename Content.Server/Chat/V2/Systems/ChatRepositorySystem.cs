@@ -32,18 +32,18 @@ public sealed class ChatRepositorySystem : EntitySystem
             Refresh();
         };
 
-        SubscribeNetworkEvent<ChatAttemptValidatedEvent<AnnouncementCreatedEvent>>(ev => Add(ev.Event));
-        SubscribeNetworkEvent<ChatAttemptValidatedEvent<VerbalChatCreatedEvent>>(ev => Add(ev.Event));
-        SubscribeNetworkEvent<ChatAttemptValidatedEvent<VisualChatCreatedEvent>>(ev => Add(ev.Event));
-        SubscribeNetworkEvent<ChatAttemptValidatedEvent<OutOfCharacterChatCreatedEvent>>(ev => Add(ev.Event));
+        SubscribeNetworkEvent<ChatCreatedEvent<AnnouncementCreatedEvent>>(ev => Add(ev.Event));
+        SubscribeNetworkEvent<ChatCreatedEvent<VerbalChatCreatedEvent>>(ev => Add(ev.Event));
+        SubscribeNetworkEvent<ChatCreatedEvent<VisualChatCreatedEvent>>(ev => Add(ev.Event));
+        SubscribeNetworkEvent<ChatCreatedEvent<OutOfCharacterChatCreatedEvent>>(ev => Add(ev.Event));
     }
 
     /// <summary>
-    /// Adds a <see cref="ChatEvent"/> to the repo and raises it with a UID for consumption elsewhere.
+    /// Adds a <see cref="CreatedChatEvent"/> to the repo and raises it with a UID for consumption elsewhere.
     /// </summary>
     /// <param name="ev">The event to store and raise</param>
     /// <returns>If storing and raising succeeded.</returns>
-    public bool Add<T>(T ev) where T : ChatEvent
+    public bool Add<T>(T ev) where T : CreatedChatEvent
     {
         var entityUid = GetEntity(ev.Sender);
 
@@ -81,7 +81,7 @@ public sealed class ChatRepositorySystem : EntitySystem
     /// </summary>
     /// <param name="id">The UID of a event.</param>
     /// <returns>The event, if it exists.</returns>
-    public IChatEvent? GetEventFor(uint id)
+    public ICreatedChatEvent? GetEventFor(uint id)
     {
         return _messages.TryGetValue(id, out var record) ? record.StoredEvent : null;
     }

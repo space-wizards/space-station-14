@@ -17,10 +17,10 @@ public sealed class RadioChannelValidationSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChatValidationEvent<AttemptVerbalChatEvent>>(OnValidateAttemptVerbalChatEvent);
+        SubscribeLocalEvent<ChatSentEvent<VerbalChatSentEvent>>(OnValidateAttemptVerbalChatEvent);
     }
 
-    private void OnValidateAttemptVerbalChatEvent(ChatValidationEvent<AttemptVerbalChatEvent> msg, EntitySessionEventArgs args)
+    private void OnValidateAttemptVerbalChatEvent(ChatSentEvent<VerbalChatSentEvent> msg, EntitySessionEventArgs args)
     {
         if (msg.Event.RadioChannel == null)
             return;

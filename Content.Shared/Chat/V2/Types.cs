@@ -6,7 +6,7 @@ namespace Content.Shared.Chat.V2;
 /// <summary>
 /// Defines a chat event being passed around inside the chat process.
 /// </summary>
-public interface IChatEvent
+public interface ICreatedChatEvent
 {
     public ChatContext Context
     {
@@ -54,7 +54,7 @@ public interface IChatEvent
         get;
     }
 
-    public ChatSuccessEvent ToSuccessEvent();
+    public ChatReceivedEvent ToReceivedEvent();
 
-    public IChatEvent Clone();
+    public ICreatedChatEvent Clone();
 }

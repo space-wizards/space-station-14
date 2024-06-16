@@ -12,13 +12,13 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<AttemptVerbalChatEvent>(OnAttemptChat<AttemptVerbalChatEvent, VerbalChatCreatedEvent>);
-        SubscribeNetworkEvent<AttemptVisualChatEvent>(OnAttemptChat<AttemptVisualChatEvent, VisualChatCreatedEvent>);
-        SubscribeNetworkEvent<AttemptAnnouncementEvent>(OnAttemptChat<AttemptAnnouncementEvent, AnnouncementCreatedEvent>);
-        SubscribeNetworkEvent<AttemptOutOfCharacterChatEvent>(OnAttemptChat<AttemptOutOfCharacterChatEvent, OutOfCharacterChatCreatedEvent>);
+        SubscribeNetworkEvent<VerbalChatSentEvent>(OnAttemptChat<VerbalChatSentEvent, VerbalChatCreatedEvent>);
+        SubscribeNetworkEvent<VisualChatSentEvent>(OnAttemptChat<VisualChatSentEvent, VisualChatCreatedEvent>);
+        SubscribeNetworkEvent<AnnouncementSentEvent>(OnAttemptChat<AnnouncementSentEvent, AnnouncementCreatedEvent>);
+        SubscribeNetworkEvent<OutOfCharacterChatSentEvent>(OnAttemptChat<OutOfCharacterChatSentEvent, OutOfCharacterChatCreatedEvent>);
     }
 
-    private void OnAttemptChat<T1, T2>(T1 ev, EntitySessionEventArgs args) where T1 : ChatAttemptEvent where T2 : ChatEvent
+    private void OnAttemptChat<T1, T2>(T1 ev, EntitySessionEventArgs args) where T1 : SendableChatEvent where T2 : CreatedChatEvent
     {
         if (!ValidateMessage(ev, out var reason))
         {
@@ -32,18 +32,18 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
             return;
 
         SanitizeMessage(success);
-        RaiseLocalEvent(new ChatAttemptValidatedEvent<T2>(typedSuccess));
+        RaiseLocalEvent(new ChatCreatedEvent<T2>(typedSuccess));
     }
 
     /// <summary>
     /// Validates messages. Return true means the message is valid.
     /// </summary>
-    private bool ValidateMessage<T>(T ev, out string reason) where T : ChatAttemptEvent
+    private bool ValidateMessage<T>(T ev, out string reason) where T : SendableChatEvent
     {
         var entityUid = GetEntity(ev.Sender);
 
         // Raise both the general and specific ChatValidationEvents. This allows for general
-        var validate = new ChatValidationEvent<ChatAttemptEvent>(ev);
+        var validate = new ChatSentEvent<SendableChatEvent>(ev);
         RaiseLocalEvent(entityUid, ref validate);
 
         if (validate.IsCancelled)
@@ -53,7 +53,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
             return false;
         }
 
-        var validateT = new ChatValidationEvent<T>(ev);
+        var validateT = new ChatSentEvent<T>(ev);
         RaiseLocalEvent(entityUid, ref validateT);
 
         if (validate.IsCancelled)
@@ -71,7 +71,7 @@ public sealed class ChatAttemptHandlerSystem : EntitySystem
     /// <summary>
     /// Sanitizes messages. The return string is sanitized.
     /// </summary>
-    private void SanitizeMessage<T>(T evt) where T : IChatEvent
+    private void SanitizeMessage<T>(T evt) where T : ICreatedChatEvent
     {
         var sanitize = new ChatSanitizationEvent<T>(evt);
         RaiseLocalEvent(sanitize);

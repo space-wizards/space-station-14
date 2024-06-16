@@ -15,11 +15,11 @@ public sealed class HasRequiredComponentValidationSystem : EntitySystem
 
         _missingRequiredComponent = Loc.GetString(MissingRequiredComponent);
 
-        SubscribeLocalEvent<ChatValidationEvent<AttemptVerbalChatEvent>>(OnValidationEvent<AttemptVerbalChatEvent, CanVerbalChatComponent>);
-        SubscribeLocalEvent<ChatValidationEvent<AttemptVisualChatEvent>>(OnValidationEvent<AttemptVisualChatEvent, CanVisualChatComponent>);
+        SubscribeLocalEvent<ChatSentEvent<VerbalChatSentEvent>>(OnValidationEvent<VerbalChatSentEvent, CanVerbalChatComponent>);
+        SubscribeLocalEvent<ChatSentEvent<VisualChatSentEvent>>(OnValidationEvent<VisualChatSentEvent, CanVisualChatComponent>);
     }
 
-    private void OnValidationEvent<T1, T2>(ChatValidationEvent<T1> validationEvent, EntitySessionEventArgs args) where T1 : ChatAttemptEvent where T2 : Component
+    private void OnValidationEvent<T1, T2>(ChatSentEvent<T1> validationEvent, EntitySessionEventArgs args) where T1 : SendableChatEvent where T2 : Component
     {
         if (HasComp<T2>(GetEntity(validationEvent.Event.Sender)))
             validationEvent.Cancel(_missingRequiredComponent);

@@ -6,7 +6,7 @@ namespace Content.Server.Chat.V2.Systems;
 /// <summary>
 /// This handles created messages and handles the lifecycle of a created message from creation to transmission to clients.
 /// </summary>
-public sealed class CreatedMessageHandlingSystem : EntitySystem
+public sealed class CreatedMessageSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -17,7 +17,7 @@ public sealed class CreatedMessageHandlingSystem : EntitySystem
         SubscribeLocalEvent<MessageCreatedEvent<OutOfCharacterChatCreatedEvent>>(OnOocMessageCreatedEvent);
     }
 
-    private void OnMessageCreatedEvent<T>(MessageCreatedEvent<T> ev, EntitySessionEventArgs args) where T : ChatEvent
+    private void OnMessageCreatedEvent<T>(MessageCreatedEvent<T> ev, EntitySessionEventArgs args) where T : CreatedChatEvent
     {
         var entity = GetEntity(ev.Event.Sender);
 
@@ -39,7 +39,7 @@ public sealed class CreatedMessageHandlingSystem : EntitySystem
             var specificMutationEv = new ChatSpecificMutationEvent<T>(chatEvent, target);
             RaiseLocalEvent(ref specificMutationEv);
 
-            RaiseNetworkEvent(chatEvent.ToSuccessEvent(), target);
+            RaiseNetworkEvent(chatEvent.ToReceivedEvent(), target);
         }
     }
 
@@ -50,7 +50,7 @@ public sealed class CreatedMessageHandlingSystem : EntitySystem
 
         foreach (var target in targetCalculationEv.Targets)
         {
-            RaiseNetworkEvent(ev.Event.ToSuccessEvent(), target);
+            RaiseNetworkEvent(ev.Event.ToReceivedEvent(), target);
         }
     }
 }
