@@ -191,6 +191,9 @@
       - FloorReinforced
   - type: Stack
     stackType: FloorTileReinforced
+  - type: ToolRefinable
+    refineResult:
+    - id: PartRodMetal1
 
 # TODO add a catwalk tile item once tile smoothing is supported
 
