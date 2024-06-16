@@ -691,10 +691,10 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
-    Tricordrazine:
+    DoctorsDelight:
       Min: 3
-      Max: 16
-      PotencyDivisor: 7 
+      Max: 13
+      PotencyDivisor: 10 
 
 - type: seed
   id: corn

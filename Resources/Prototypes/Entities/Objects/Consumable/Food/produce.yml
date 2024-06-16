@@ -907,8 +907,8 @@
           Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
-        - ReagentId: Tricordrazine
-          Quantity: 16
+        - ReagentId: DoctorsDelight
+          Quantity: 13
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/golden_apple.rsi
   - type: Produce
