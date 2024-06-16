@@ -621,7 +621,7 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepHull
-  itemDrop: FloorTileItemReinforced
+  itemDrop: PartRodMetal1
   heatCapacity: 10000
 
 - type: tile
