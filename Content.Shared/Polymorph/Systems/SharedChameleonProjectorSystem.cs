@@ -73,7 +73,8 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     {
         // anything that would damage both like an explosion gets doubled
         // feature? projector makes your atoms weaker or some bs
-        _damageable.TryChangeDamage(ent.Comp.User, args.DamageDelta);
+        if (args.DamageDelta is {} damage)
+            _damageable.TryChangeDamage(ent.Comp.User, damage);
     }
 
     private void OnDisguiseShutdown(Entity<ChameleonDisguiseComponent> ent, ref ComponentShutdown args)
