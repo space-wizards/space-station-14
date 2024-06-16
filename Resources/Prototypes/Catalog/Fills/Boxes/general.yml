@@ -345,7 +345,6 @@
 
 - type: entity
   name: candle box
-  description: This box filled with candles.
   parent: BoxCardboard
   id: BoxCandle
   description: This box is specifically moulded to only carry candles.
