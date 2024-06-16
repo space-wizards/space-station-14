@@ -32,10 +32,6 @@ public sealed class TechnologyDiskSystem : EntitySystem
 
     private void OnMapInit(Entity<TechnologyDiskComponent> ent, ref MapInitEvent args)
     {
-        // This is server-only business
-        if (!_net.IsServer)
-            return;
-
         if (ent.Comp.Recipes != null)
             return;
 
