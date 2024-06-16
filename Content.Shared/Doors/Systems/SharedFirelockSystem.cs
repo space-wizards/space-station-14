@@ -28,7 +28,7 @@ public abstract class SharedFirelockSystem : EntitySystem
 
         // Visuals
         SubscribeLocalEvent<FirelockComponent, MapInitEvent>(UpdateVisuals);
-        SubscribeLocalEvent<FirelockComponent, ComponentStartup>(UpdateVisuals);
+        SubscribeLocalEvent<FirelockComponent, ComponentStartup>(OnComponentStartup);
 
         SubscribeLocalEvent<FirelockComponent, ExaminedEvent>(OnExamined);
     }
@@ -104,6 +104,11 @@ public abstract class SharedFirelockSystem : EntitySystem
     #endregion
 
     #region Visuals
+
+    protected virtual void OnComponentStartup(Entity<FirelockComponent> ent, ref ComponentStartup args)
+    {
+        UpdateVisuals(ent.Owner,ent.Comp, args);
+    }
 
     private void UpdateVisuals(EntityUid uid, FirelockComponent component, EntityEventArgs args) => UpdateVisuals(uid, component);
 
