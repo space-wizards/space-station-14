@@ -31,6 +31,8 @@ internal sealed class ChargerSystem : EntitySystem
         SubscribeLocalEvent<ChargerComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<ChargerComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
         SubscribeLocalEvent<ChargerComponent, ExaminedEvent>(OnChargerExamine);
+
+        SubscribeLocalEvent<ChargerComponent, ChargerUpdateStatusEvent>(OnUpdateStatus);
     }
 
     private void OnStartup(EntityUid uid, ChargerComponent component, ComponentStartup args)
@@ -45,19 +47,18 @@ internal sealed class ChargerSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<ActiveChargerComponent, ChargerComponent, ContainerManagerComponent>();
-        while (query.MoveNext(out var uid, out _, out var charger, out var containerComp))
+        var query = EntityQueryEnumerator<ChargingComponent>();
+        while (query.MoveNext(out var uid, out var charging))
         {
-            if (!_container.TryGetContainer(uid, charger.SlotId, out var container, containerComp))
+            var chargerEnt = charging.charger.Owner;
+
+            if (charging.charger.Status == CellChargerStatus.Off || charging.charger.Status == CellChargerStatus.Empty)
                 continue;
 
-            if (charger.Status == CellChargerStatus.Empty || charger.Status == CellChargerStatus.Charged || container.ContainedEntities.Count == 0)
+            if (TryComp<EmpDisabledComponent>(chargerEnt, out _))
                 continue;
 
-            foreach (var contained in container.ContainedEntities)
-            {
-                TransferPower(uid, contained, charger, frameTime);
-            }
+            TransferPower(chargerEnt, uid, charging.charger, frameTime);
         }
     }
 
@@ -74,6 +75,9 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.SlotId)
             return;
 
+        var charging = EnsureComp<ChargingComponent>(args.Entity);
+        charging.charger = component;
+
         UpdateStatus(uid, component);
     }
 
@@ -82,6 +86,8 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.SlotId)
             return;
 
+        if (TryComp<ChargingComponent>(args.Entity, out _))
+            RemComp<ChargingComponent>(args.Entity);
         UpdateStatus(uid, component);
     }
 
@@ -115,6 +121,11 @@ internal sealed class ChargerSystem : EntitySystem
             args.Cancelled = true;
     }
 
+    private void OnUpdateStatus(EntityUid uid, ChargerComponent component, ref ChargerUpdateStatusEvent args)
+    {
+        UpdateStatus(uid, component);
+    }
+
     private void UpdateStatus(EntityUid uid, ChargerComponent component)
     {
         var status = GetStatus(uid, component);
@@ -129,15 +140,6 @@ internal sealed class ChargerSystem : EntitySystem
 
         component.Status = status;
 
-        if (component.Status == CellChargerStatus.Charging)
-        {
-            AddComp<ActiveChargerComponent>(uid);
-        }
-        else
-        {
-            RemComp<ActiveChargerComponent>(uid);
-        }
-
         switch (component.Status)
         {
             case CellChargerStatus.Off:
@@ -149,7 +151,7 @@ internal sealed class ChargerSystem : EntitySystem
                 _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Empty, appearance);
                 break;
             case CellChargerStatus.Charging:
-                receiver.Load = component.ChargeRate;
+                receiver.Load = component.ChargeRate; //does not scale with multiple slotted batteries
                 _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Charging, appearance);
                 break;
             case CellChargerStatus.Charged:
@@ -182,18 +184,28 @@ internal sealed class ChargerSystem : EntitySystem
         if (container.ContainedEntities.Count == 0)
             return CellChargerStatus.Empty;
 
-        if (!SearchForBattery(container.ContainedEntities[0], out _, out var heldBattery))
-            return CellChargerStatus.Off;
+        var statusOut = CellChargerStatus.Off;
 
-        // do not charge EMP'd batteries*
-        // actually this causes rechargers to not recharge power cells after EMP ends, will need to use the event system
-        //if (TryComp<EmpDisabledComponent>(container.ContainedEntities[0], out var emp))
-        //    return CellChargerStatus.Empty;
+        foreach (var containedEntity in container.ContainedEntities)
+        {
+            // if none of the slotted items are actually batteries, represent the charger as off
+            if (!SearchForBattery(containedEntity, out _, out var heldBattery))
+                continue;
 
-        if (Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
-            return CellChargerStatus.Charged;
+            // if all batteries are either EMP'd or fully charged, represent the charger as fully charged
+            statusOut = CellChargerStatus.Charged;
+            if (TryComp<EmpDisabledComponent>(containedEntity, out var emp))
+                continue;
 
-        return CellChargerStatus.Charging;
+            if (Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
+                continue;
+
+            // if we have atleast one battery being charged, represent the charger as charging;
+            statusOut = CellChargerStatus.Charging;
+            break;
+        }
+
+        return statusOut;
     }
 
     private void TransferPower(EntityUid uid, EntityUid targetEntity, ChargerComponent component, float frameTime)
@@ -210,15 +222,11 @@ internal sealed class ChargerSystem : EntitySystem
         if (!SearchForBattery(targetEntity, out var batteryUid, out var heldBattery))
             return;
 
-        // do not charge EMP'd batteries
-        if (TryComp<EmpDisabledComponent>(batteryUid, out var emp))
-            return;
-
-        _battery.SetCharge(batteryUid.Value, heldBattery.CurrentCharge + component.ChargeRate * frameTime, heldBattery);
+        _battery.TrySetCharge(batteryUid.Value, heldBattery.CurrentCharge + component.ChargeRate * frameTime, heldBattery);
         // Just so the sprite won't be set to 99.99999% visibility
         if (heldBattery.MaxCharge - heldBattery.CurrentCharge < 0.01)
         {
-            _battery.SetCharge(batteryUid.Value, heldBattery.MaxCharge, heldBattery);
+            _battery.TrySetCharge(batteryUid.Value, heldBattery.MaxCharge, heldBattery);
         }
 
         UpdateStatus(uid, component);
@@ -236,3 +244,6 @@ internal sealed class ChargerSystem : EntitySystem
         return true;
     }
 }
+
+[ByRefEvent]
+public record struct ChargerUpdateStatusEvent();
