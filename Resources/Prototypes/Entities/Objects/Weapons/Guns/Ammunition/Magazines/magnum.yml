@@ -49,8 +49,8 @@
 
 - type: entity
   id: MagazineMagnumEmpty
-  name: pistol magazine (.45 magnum any)
-  suffix: empty
+  name: pistol magazine (.45 magnum)
+  suffix: Empty
   parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
@@ -62,7 +62,7 @@
 
 - type: entity
   id: MagazineMagnum
-  name: pistol magazine (.45 magnum)
+  name: pistol magazine (.45 magnum lethal)
   parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
