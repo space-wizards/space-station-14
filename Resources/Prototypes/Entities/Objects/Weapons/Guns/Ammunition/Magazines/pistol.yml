@@ -74,6 +74,8 @@
     tags:
       - MagazinePistolSubMachineGun
   - type: BallisticAmmoProvider
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
     mayTransfer: true
     whitelist:
       tags:
@@ -258,17 +260,11 @@
 
 - type: entity
   id: MagazinePistolSubMachineGun
-  name: SMG magazine (.35 auto)
+  name: SMG magazine (.35 auto lethal)
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
-    capacity: 30
     proto: CartridgePistol
-    whitelist:
-      tags:
-        - CartridgePistol
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
   - type: Sprite
     layers:
     - state: red
@@ -278,8 +274,8 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunEmpty
-  name: SMG magazine (.35 auto any)
-  suffix: empty
+  name: SMG magazine (.35 auto)
+  suffix: Empty
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -288,6 +284,8 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolSubMachineGunPractice
