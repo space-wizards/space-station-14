@@ -20,15 +20,15 @@ public partial class ArtifactSystem
     private void HandleGhost(GhostAttemptHandleEvent ev)
     {
         // Return if CanReturnGlobal is already false
-        if(ev.CanReturnGlobal == false)
+        if (ev.CanReturnGlobal == false)
             return;
 
-        if(!TryComp<ArtifactComponent>(ev.Mind.CurrentEntity, out var artifact))
+        if (!TryComp<ArtifactComponent>(ev.Mind.CurrentEntity, out var artifact))
             return;
-        if(!TryComp<MindContainerComponent>(ev.Mind.CurrentEntity, out var mindcontainer))
+        if (!TryComp<MindContainerComponent>(ev.Mind.CurrentEntity, out var mindcontainer))
             return;
 
-        if(!mindcontainer.Mind.HasValue)
+        if (!mindcontainer.Mind.HasValue)
             return;
 
         ev.Handled = true;
