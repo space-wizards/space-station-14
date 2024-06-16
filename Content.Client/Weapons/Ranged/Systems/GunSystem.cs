@@ -99,6 +99,9 @@ public sealed partial class GunSystem : SharedGunSystem
             if (a.Sprite is not SpriteSpecifier.Rsi rsi)
                 continue;
 
+            // we intentonally use this specific `Spawn` overload since it deals with grid
+            // rotation for us. we have to make sure grid rotation is accounted for for each
+            // *indivisual* sprite segment of the laser effect, 
             var ent = Spawn(HitscanProto, TransformSystem.ToMapCoordinates(GetCoordinates(a.coordinates)), rotation: a.angle);
             var sprite = Comp<SpriteComponent>(ent);
             sprite[EffectLayers.Unshaded].AutoAnimated = false;
@@ -368,6 +371,6 @@ public sealed partial class GunSystem : SharedGunSystem
         var uidPlayer = EnsureComp<AnimationPlayerComponent>(gunUid);
 
         _animPlayer.Stop(gunUid, uidPlayer, "muzzle-flash-light");
-        _animPlayer.Play((gunUid, uidPlayer), animTwo, "muzzle-flash-light");
+        _animPlayer.Play((gunUid, uidPlayer), animTwo,"muzzle-flash-light");
     }
 }
