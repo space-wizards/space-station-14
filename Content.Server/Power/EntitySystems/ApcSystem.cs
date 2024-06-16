@@ -1,4 +1,3 @@
-using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.Pow3r;
@@ -36,8 +35,6 @@ public sealed class ApcSystem : EntitySystem
         SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
         SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
         SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
-
-        SubscribeLocalEvent<ApcComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
     public override void Update(float deltaTime)
@@ -188,16 +185,6 @@ public sealed class ApcSystem : EntitySystem
         }
 
         return ApcExternalPowerState.Good;
-    }
-
-    private void OnEmpPulse(EntityUid uid, ApcComponent component, ref EmpPulseEvent args)
-    {
-        if (component.MainBreakerEnabled)
-        {
-            args.Affected = true;
-            args.Disabled = true;
-            ApcToggleBreaker(uid, component);
-        }
     }
 }
 
