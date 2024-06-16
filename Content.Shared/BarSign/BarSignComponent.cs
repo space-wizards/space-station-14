@@ -25,3 +25,9 @@ public sealed class SetBarSignMessage(ProtoId<BarSignPrototype> sign) : BoundUse
 {
     public ProtoId<BarSignPrototype> Sign = sign;
 }
+
+[Serializable, NetSerializable]
+public sealed class BarSignBuiState(ProtoId<BarSignPrototype> sign) : BoundUserInterfaceState
+{
+    public ProtoId<BarSignPrototype> Sign = sign;
+}
