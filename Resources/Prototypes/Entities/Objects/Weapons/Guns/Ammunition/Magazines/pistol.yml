@@ -1,6 +1,6 @@
 - type: entity
   id: BaseMagazinePistol
-  name: pistol magazine (.35 auto)
+  name: pistol magazine (.35 auto lethal)
   parent: BaseItem
   abstract: true
   components:
@@ -139,7 +139,7 @@
 
 - type: entity
   id: MagazinePistol
-  name: pistol magazine (.35 auto)
+  name: pistol magazine (.35 auto lethal)
   parent: BaseMagazinePistol
   components:
   - type: BallisticAmmoProvider
@@ -153,8 +153,8 @@
 
 - type: entity
   id: MagazinePistolEmpty
-  name: pistol magazine (.35 auto any)
-  suffix: empty
+  name: pistol magazine (.35 auto)
+  suffix: Empty
   parent: MagazinePistol
   components:
   - type: BallisticAmmoProvider
