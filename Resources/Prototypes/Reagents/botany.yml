@@ -162,7 +162,7 @@
   desc: reagent-desc-sedin
   flavor: bitter
   color: "#3CB371"
-  physicalDesc: reagent-physical-desc-dark-brown
+  physicalDesc: reagent-physical-desc-sickly
   plantMetabolism:
     - !type:PlantAdjustHealth
       amount: -2
