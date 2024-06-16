@@ -35,7 +35,7 @@
 # Magazines
 - type: entity
   id: MagazineRifle
-  name: "magazine (.20 rifle)"
+  name: "magazine (.20 rifle lethal)"
   parent: BaseMagazineRifle
   components:
   - type: BallisticAmmoProvider
@@ -49,8 +49,8 @@
 
 - type: entity
   id: MagazineRifleEmpty
-  name: "magazine (.20 rifle any)"
-  suffix: empty
+  name: "magazine (.20 rifle)"
+  suffix: Empty
   parent: MagazineRifle
   components:
   - type: BallisticAmmoProvider
