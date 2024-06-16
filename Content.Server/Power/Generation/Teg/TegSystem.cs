@@ -179,7 +179,7 @@ public sealed class TegSystem : EntitySystem
         component.LastGeneration = electricalEnergy;
 
         // Turn energy (at atmos tick rate) into wattage.
-        var power = electricalEnergy * _atmosphere.AtmosTickRate;
+        var power = electricalEnergy / args.dt;
         // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
         supplier.MaxSupply = power * component.RampFactor;
 
