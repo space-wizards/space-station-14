@@ -1,4 +1,4 @@
-﻿reagent-effect-condition-guidebook-total-damage =
+reagent-effect-condition-guidebook-total-damage =
     { $max ->
         [2147483648] it has at least {NATURALFIXED($min, 2)} total damage
         *[other] { $min ->
@@ -27,6 +27,9 @@ reagent-effect-condition-guidebook-reagent-threshold =
 
 reagent-effect-condition-guidebook-mob-state-condition =
     the mob is { $state }
+
+reagent-effect-condition-guidebook-job-condition =
+    the target's job is { $job }
 
 reagent-effect-condition-guidebook-solution-temperature =
     the solution's temperature is { $max ->
@@ -57,3 +60,5 @@ reagent-effect-condition-guidebook-has-tag =
                  [true] does not have
                  *[false] has
                 } the tag {$tag}
+
+reagent-effect-condition-guidebook-this-reagent = this reagent

@@ -92,23 +92,29 @@ public abstract class ClothingSystem : EntitySystem
             InventorySystem.InventorySlotEnumerator enumerator = _invSystem.GetSlotEnumerator(equipee);
 
             bool shouldLayerShow = true;
-            while (enumerator.NextItem(out EntityUid item))
+            while (enumerator.NextItem(out EntityUid item, out SlotDefinition? slot))
             {
                 if (TryComp(item, out HideLayerClothingComponent? comp))
                 {
-                    //Checks for mask toggling. TODO: Make a generic system for this
-                    if (comp.HideOnToggle && TryComp(item, out MaskComponent? mask) && TryComp(item, out ClothingComponent? clothing))
+                    if (comp.Slots.Contains(layer))
                     {
-                        if (clothing.EquippedPrefix != mask.EquippedPrefix)
+                        if (TryComp(item, out ClothingComponent? clothing) && clothing.Slots == slot.SlotFlags)
                         {
-                            shouldLayerShow = false;
-                            break;
+                            //Checks for mask toggling. TODO: Make a generic system for this
+                            if (comp.HideOnToggle && TryComp(item, out MaskComponent? mask))
+                            {
+                                if (clothing.EquippedPrefix != mask.EquippedPrefix)
+                                {
+                                    shouldLayerShow = false;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                shouldLayerShow = false;
+                                break;
+                            }
                         }
-                    }
-                    else
-                    {
-                        shouldLayerShow = false;
-                        break;
                     }
                 }
             }

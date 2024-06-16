@@ -17,7 +17,7 @@ namespace Content.YAMLLinter
     {
         private static async Task<int> Main(string[] _)
         {
-            PoolManager.Startup(null);
+            PoolManager.Startup();
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -99,7 +99,7 @@ namespace Content.YAMLLinter
                         yamlErrors[kind] = set;
                 }
 
-                fieldErrors = protoMan.ValidateFields(prototypes);
+                fieldErrors = protoMan.ValidateStaticFields(prototypes);
             });
 
             return (yamlErrors, fieldErrors);

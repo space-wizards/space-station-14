@@ -167,7 +167,7 @@ namespace Content.Server.Bible
             {
                 Act = () =>
                 {
-                    if (!TryComp<TransformComponent>(args.User, out var userXform))
+                    if (!TryComp(args.User, out TransformComponent? userXform))
                         return;
 
                     AttemptSummon((uid, component), args.User, userXform);
@@ -241,7 +241,7 @@ namespace Content.Server.Bible
             // If this is going to use a ghost role mob spawner, attach it to the bible.
             if (HasComp<GhostRoleMobSpawnerComponent>(familiar))
             {
-                _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), user, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), user, user, PopupType.Medium);
                 _transform.SetParent(familiar, uid);
             }
             component.AlreadySummoned = true;

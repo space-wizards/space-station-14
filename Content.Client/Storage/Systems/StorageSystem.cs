@@ -1,4 +1,5 @@
-﻿using System.Linq;
+using System.Linq;
+using System.Numerics;
 using Content.Client.Animations;
 using Content.Shared.Hands;
 using Content.Shared.Storage;
@@ -111,7 +112,7 @@ public sealed class StorageSystem : SharedStorageSystem
         if (!Resolve(entity, ref entity.Comp, false))
             return;
 
-        if (entity.Comp.OpenInterfaces.GetValueOrDefault(StorageComponent.StorageUiKey.Key) is not { } bui)
+        if (entity.Comp.ClientOpenInterfaces.GetValueOrDefault(StorageComponent.StorageUiKey.Key) is not { } bui)
             return;
 
         bui.Close();
@@ -149,7 +150,7 @@ public sealed class StorageSystem : SharedStorageSystem
         }
 
         var finalMapPos = finalCoords.ToMapPos(EntityManager, TransformSystem);
-        var finalPos = TransformSystem.GetInvWorldMatrix(initialCoords.EntityId).Transform(finalMapPos);
+        var finalPos = Vector2.Transform(finalMapPos, TransformSystem.GetInvWorldMatrix(initialCoords.EntityId));
 
         _entityPickupAnimation.AnimateEntityPickup(item, initialCoords, finalPos, initialAngle);
     }

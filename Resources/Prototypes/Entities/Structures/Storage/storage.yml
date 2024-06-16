@@ -27,9 +27,9 @@
           bounds: "-0.3,-0.3,0.3,0.3"
         density: 140
         mask:
-        - MachineMask
+        - TableMask
         layer:
-        - MachineLayer
+        - TableLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
