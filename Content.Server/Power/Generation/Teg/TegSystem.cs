@@ -171,7 +171,11 @@ public sealed class TegSystem : EntitySystem
         // Turn energy (at atmos tick rate) into wattage.
         var power = electricalEnergy * _atmosphere.AtmosTickRate;
         // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
-        supplier.MaxSupply = power * component.RampFactor;
+        power *= component.RampFactor;
+
+        // Direct 1000w to power the TEG, and everything else to the station
+        supplier.MaxSupply = Math.Max(power - 1000, 0);
+        powerReceiver.Load = Math.Max(1000 - power, 0);
 
         var circAComp = Comp<TegCirculatorComponent>(circA);
         var circBComp = Comp<TegCirculatorComponent>(circB);
