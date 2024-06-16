@@ -1022,6 +1022,20 @@
       - MicrowaveMachineBoard
 
 - type: entity
+  id: SyndicateMicrowaveMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: donk co. microwave machine board
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: SyndicateMicrowave
+      stackRequirements:
+        Capacitor: 1
+        Glass: 2
+        Cable: 2
+
+- type: entity
   id: FatExtractorMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: lipid extractor machine board
