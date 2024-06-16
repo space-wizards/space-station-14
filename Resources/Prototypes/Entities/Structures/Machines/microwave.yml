@@ -121,5 +121,5 @@
     sprite: Structures/Machines/microwave_syndie.rsi
     drawdepth: SmallObjects
     snapCardinals: true
-
-
+  - type: Machine
+    board: SyndicateMicrowaveMachineCircuitboard
