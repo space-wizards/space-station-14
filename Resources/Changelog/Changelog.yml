@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SonicHDC
-  changes:
-  - message: Added unzipping for lab coats!
-    type: Add
-  id: 6255
-  time: '2024-03-30T03:31:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26494
 - author: Zealith-Gamer
   changes:
   - message: Items being pulled no longer spin when being thrown.
@@ -3859,3 +3852,11 @@
   id: 6754
   time: '2024-06-16T00:24:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29064
+- author: Keer-Sar
+  changes:
+  - message: Non-humanoids' names are now capitalized when inserting materials into
+      machines.
+    type: Fix
+  id: 6755
+  time: '2024-06-16T02:06:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29071
