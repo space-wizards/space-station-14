@@ -394,3 +394,6 @@
     - id: BoxDonkSoftBox
       prob: 0.008
       orGroup: NotUseful
+    - id: GrenadeFoamDart
+      prob: 0.001
+      orGroup: NotUseful
