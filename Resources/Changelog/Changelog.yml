@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Hyposprays can now be toggled to draw from solution containers like jugs
-      and beakers.
-    type: Tweak
-  id: 6257
-  time: '2024-03-30T03:59:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25544
-- author: EdenTheLiznerd
-  changes:
-  - message: Amanita toxin now kills you slightly slower, providing you time to seek
-      charcoal before it's too late
-    type: Tweak
-  id: 6258
-  time: '2024-03-30T04:00:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25830
 - author: liltenhead
   changes:
   - message: Changed the syndicate hardbomb to have less of a chance to completely
@@ -3860,3 +3844,17 @@
   id: 6756
   time: '2024-06-16T03:38:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29034
+- author: deltanedas
+  changes:
+  - message: Tarantulas now use Mechanotoxin, a venom that slows you down over time.
+    type: Tweak
+  id: 6757
+  time: '2024-06-16T11:26:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29066
+- author: Cojoke-dot
+  changes:
+  - message: Musicians can now select instruments in their loadout
+    type: Add
+  id: 6758
+  time: '2024-06-16T11:27:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29059
