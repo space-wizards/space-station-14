@@ -10,6 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Storage.Components;
 using Robust.Server.Containers;
 using Content.Shared.Whitelist;
+using Content.Shared.Emp;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -185,6 +186,10 @@ internal sealed class ChargerSystem : EntitySystem
         if (!SearchForBattery(container.ContainedEntities[0], out _, out var heldBattery))
             return CellChargerStatus.Off;
 
+        // do not charge EMP'd batteries
+        if (TryComp<EmpDisabledComponent>(container.ContainedEntities[0], out var emp))
+            return CellChargerStatus.Empty;
+
         if (Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
             return CellChargerStatus.Charged;
 
@@ -203,6 +208,10 @@ internal sealed class ChargerSystem : EntitySystem
             return;
 
         if (!SearchForBattery(targetEntity, out var batteryUid, out var heldBattery))
+            return;
+
+        // do not charge EMP'd batteries
+        if (TryComp<EmpDisabledComponent>(batteryUid, out var emp))
             return;
 
         _battery.SetCharge(batteryUid.Value, heldBattery.CurrentCharge + component.ChargeRate * frameTime, heldBattery);

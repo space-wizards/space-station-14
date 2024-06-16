@@ -100,6 +100,7 @@ namespace Content.Server.Power.EntitySystems
         private void OnEmpPulse(EntityUid uid, BatteryComponent component, ref EmpPulseEvent args)
         {
             args.Affected = true;
+            args.Disabled = true;
             UseCharge(uid, args.EnergyConsumption, component);
         }
 
