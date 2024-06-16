@@ -35,6 +35,9 @@ public sealed class NameIdentifierSystem : EntitySystem
 
     private void OnComponentShutdown(EntityUid uid, NameIdentifierComponent component, ComponentShutdown args)
     {
+        if (!component.IsEnabled)
+            return;
+
         if (CurrentIds.TryGetValue(component.Group, out var ids))
         {
             // Avoid inserting the value right back at the end or shuffling in place:
@@ -82,6 +85,9 @@ public sealed class NameIdentifierSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, NameIdentifierComponent component, MapInitEvent args)
     {
+        if (!component.IsEnabled)
+            return;
+
         if (!_prototypeManager.TryIndex<NameIdentifierGroupPrototype>(component.Group, out var group))
             return;
 

@@ -9,7 +9,13 @@
   - type: CanBackflip
     clappaSfx: /Audio/Animals/slugclappa.ogg
   - type: NameIdentifier
-    group: Scurret
+    enabled: False
+  - type: RandomMetadata
+    nameSeparator: "-"
+    nameSegments:
+      - NamesFirstScurret
+      - NamesMiddleScurret
+      - NamesLastScurret
   - type: ReplacementAccent
     accent: scurret
   - type: Sprite
@@ -97,11 +103,6 @@
   - type: Food
   - type: Hunger
     baseDecayRate: 0.3
-
-- type: nameIdentifierGroup
-  id: Scurret
-  minValue: 1
-  maxValue: 99
 
 - type: inventoryTemplate
   id: scurret
@@ -192,6 +193,17 @@
   components:
     - type: Loadout
       prototypes: [ PizzaDeliveryCritterGear ]
+    - type: NpcFactionMember
+      factions:
+      - Passive
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-pizza-delivery-critter-name
+      description: ghost-role-information-pizza-delivery-critter-description
+      rules: ghost-role-information-pizza-delivery-critter-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
 
 - type: startingGear
   id: PizzaDeliveryCritterGear
@@ -206,3 +218,25 @@
     # ears: ClothingHeadsetAltCentCom
     # belt: ClothingBeltJanitorFilled
     # pocket1: Flare
+
+# Pizza Delivery Critter
+
+- type: entity
+  id: SpawnPointGhostPizzaDeliveryCritter
+  name: ghost role spawn point
+  suffix: pizza delivery critter
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Consumable/Food/Baked/pizza.rsi
+        state: arnold-slice
+  - type: GhostRole
+    name: ghost-role-information-pizza-delivery-critter-name
+    description: ghost-role-information-pizza-delivery-critter-description
+    rules: ghost-role-information-pizza-delivery-critter-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobPizzaDeliveryScurret

@@ -23,4 +23,7 @@ public sealed partial class NameIdentifierComponent : Component
     /// </summary>
     [DataField("fullIdentifier"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public string FullIdentifier = string.Empty;
+
+    [DataField("enabled"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool IsEnabled = true;
 }
