@@ -17,19 +17,18 @@
   abstract: true
   components:
   - type: Appearance
+  - type: FlippableClothingVisuals
   - type: Foldable
     canFoldInsideContainer: true
     unfoldVerbText: fold-flip-verb
     foldVerbText: fold-flip-verb
   - type: FoldableClothing
-    foldedEquippedPrefix: flipped
-    foldedHeldPrefix: flipped
   - type: Sprite
     layers:
-    - state: icon
-      map: [ "unfoldedLayer" ]
-    - state: icon
-      map: ["foldedLayer"]
+    - map: [ "unfoldedLayer" ]
+      state: icon
+    - map: ["foldedLayer"]
+      state: icon
       visible: false
       scale: -1,1
 
@@ -41,16 +40,12 @@
   components:
   - type: Foldable
     folded: true
-  - type: Clothing
-    equippedPrefix: flipped
-  - type: Item
-    heldPrefix: flipped
   - type: Sprite
     layers:
-    - state: icon
-      map: [ "unfoldedLayer" ]
+    - map: [ "unfoldedLayer" ]
+      state: icon
       visible: false
-    - state: icon
-      map: ["foldedLayer"]
+    - map: ["foldedLayer"]
+      state: icon
       visible: true
       scale: -1,1
