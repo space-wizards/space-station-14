@@ -35,8 +35,8 @@
 
 - type: entity
   id: MagazineShotgunEmpty
-  name: ammo drum (.50 shells any)
-  suffix: empty
+  name: ammo drum (.50 shells)
+  suffix: Empty
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
