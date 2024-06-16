@@ -133,6 +133,19 @@
   - type: Appearance
 
 - type: entity
+  id: MagazinePistolCaselessRifleEmpty
+  name: pistol magazine (.25 caseless)
+  suffix: Empty
+  parent: BaseMagazinePistolCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+
+- type: entity
   id: MagazineCaselessRifle
   name: "magazine (.25 caseless)"
   parent: BaseMagazineCaselessRifle
