@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-NC-4.0",
-    "copyright": "Taken from https://github.com/tgstation/tgstation/ at commit fb2d71495bfe81446159ef528534193d09dd8d34, bolt-open modified from icon.png by Flareguy",
+    "copyright": "taken from https://github.com/tgstation/tgstation/commit/0a9e4d0cf0afa0ccbfdcbebf2a89ad3ce22083e7 and modified from the foam force poster by IProduceWidgets (github)",
     "size": {
         "x": 32,
         "y": 32

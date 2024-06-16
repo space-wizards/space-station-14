@@ -4,12 +4,59 @@
   name: foam dart
   parent: BaseItem
   components:
-    - type: Tag
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.05,-0.15
+            - -0.05,0.25
+            - 0.05,-0.15
+            - 0.05,0.25
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Tag
+    tags:
+      - BulletFoam
+      - Trash
+  - type: Ammo
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    layers:
+      - state: foamdart
+  - type: EmbeddableProjectile
+    removalTime: .2
+  - type: ThrowingAngle
+    angle: 180
+
+- type: entity
+  name: Foam Force Astro Ace
+  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  id: WeaponRifleFoam
+  description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/foam_rifle.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Rifles/foam_rifle.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Rifles/foam_rifle_inhand_64x.rsi
+  - type: BallisticAmmoProvider    
+    whitelist:
       tags:
-        - BulletFoam
-        - Trash
-    - type: Ammo
-    - type: Sprite
-      sprite: Objects/Fun/toys.rsi
-      layers:
-        - state: foamdart
+      - BulletFoam
+    capacity: 10
+    proto: BulletFoam
+  - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
