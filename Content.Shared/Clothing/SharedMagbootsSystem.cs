@@ -17,6 +17,7 @@ public sealed class SharedMagbootsSystem : EntitySystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly ClothingSpeedModifierSystem _clothingSpeedModifier = default!;
     [Dependency] private readonly ClothingSystem _clothing = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedActionsSystem _sharedActions = default!;
     [Dependency] private readonly SharedActionsSystem _actionContainer = default!;
@@ -145,6 +146,10 @@ public sealed class SharedMagbootsSystem : EntitySystem
             return;
 
         if (!ent.Comp.On)
+            return;
+
+        // do not cancel weightlessness if the person is in off-grid.
+        if (ent.Comp.RequiresGrid && !_gravity.EntityOnGravitySupportingGridOrMap(ent.Owner))
             return;
 
         args.Args.IsWeightless = false;

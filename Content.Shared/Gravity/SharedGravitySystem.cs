@@ -17,6 +17,8 @@ namespace Content.Shared.Gravity
         [ValidatePrototypeId<AlertPrototype>]
         public const string WeightlessAlert = "Weightless";
 
+        private EntityQuery<GravityComponent> _gravityQuery;
+
         public bool IsWeightless(EntityUid uid, PhysicsComponent? body = null, TransformComponent? xform = null)
         {
             Resolve(uid, ref body, false);
@@ -36,13 +38,33 @@ namespace Content.Shared.Gravity
                 return true;
 
             // If grid / map has gravity
-            if (TryComp<GravityComponent>(xform.GridUid, out var gravity) && gravity.Enabled ||
-                 TryComp<GravityComponent>(xform.MapUid, out var mapGravity) && mapGravity.Enabled)
-            {
+            if (EntityGridOrMapHaveGravity((uid, xform)))
                 return false;
-            }
 
             return true;
+        }
+
+        /// <summary>
+        /// Checks if a given entity is currently standing on a grid or map that supports having gravity at all.
+        /// </summary>
+        public bool EntityOnGravitySupportingGridOrMap(Entity<TransformComponent?> entity)
+        {
+            entity.Comp ??= Transform(entity);
+
+            return _gravityQuery.HasComp(entity.Comp.GridUid) ||
+                   _gravityQuery.HasComp(entity.Comp.MapUid);
+        }
+
+
+        /// <summary>
+        /// Checks if a given entity is currently standing on a grid or map that has gravity of some kind.
+        /// </summary>
+        public bool EntityGridOrMapHaveGravity(Entity<TransformComponent?> entity)
+        {
+            entity.Comp ??= Transform(entity);
+
+            return _gravityQuery.TryComp(entity.Comp.GridUid, out var gravity) && gravity.Enabled ||
+                   _gravityQuery.TryComp(entity.Comp.MapUid, out var mapGravity) && mapGravity.Enabled;
         }
 
         public override void Initialize()
@@ -54,6 +76,8 @@ namespace Content.Shared.Gravity
             SubscribeLocalEvent<GravityChangedEvent>(OnGravityChange);
             SubscribeLocalEvent<GravityComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<GravityComponent, ComponentHandleState>(OnHandleState);
+
+            _gravityQuery = GetEntityQuery<GravityComponent>();
         }
 
         public override void Update(float frameTime)
