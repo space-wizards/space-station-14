@@ -1940,7 +1940,7 @@
         - ReagentId: Vitamin
           Quantity: 3
   - type: Sprite
-    sprite: Objects\Specific\Hydroponics\cherry.rsi
+    sprite: Objects/Specific/Hydroponics/cherry.rsi
   - type: Produce
     seedId: cherry
   - type: Extractable
