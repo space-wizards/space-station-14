@@ -34,7 +34,7 @@
     singleUser: true
   - type: UserInterface
     interfaces:
-      - key: enum.RadarConsoleUiKey.Key
+      enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
   - type: StaticPrice
     price: 150

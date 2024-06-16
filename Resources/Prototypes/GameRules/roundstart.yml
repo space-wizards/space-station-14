@@ -1,12 +1,20 @@
 - type: entity
   id: BaseGameRule
   abstract: true
-  noSpawn: true
   components:
   - type: GameRule
 
 - type: entity
-  noSpawn: true
+  parent: BaseGameRule
+  id: RespawnDeadRule
+  components:
+  - type: RespawnDeadRule
+    alwaysRespawnDead: true
+  - type: RespawnTracker
+    respawnDelay: 10
+    deleteBody: false
+
+- type: entity
   parent: BaseGameRule
   id: SubGamemodesRule
   components:
@@ -18,7 +26,6 @@
 - type: entity
   id: DeathMatch31
   parent: BaseGameRule
-  noSpawn: true
   components:
   - type: DeathMatchRule
     rewardSpawns:
@@ -48,7 +55,6 @@
 - type: entity
   id: InactivityTimeRestart
   parent: BaseGameRule
-  noSpawn: true
   components:
   - type: InactivityRule
     inactivityMaxTime: 600
@@ -57,76 +63,198 @@
 - type: entity
   id: MaxTimeRestart
   parent: BaseGameRule
-  noSpawn: true
   components:
   - type: MaxTimeRestartRule
     roundMaxTime: 300
     roundEndDelay: 10
 
 - type: entity
-  id: Nukeops
+  abstract: true
   parent: BaseGameRule
-  noSpawn: true
+  id: BaseNukeopsRule
+  components:
+  - type: RandomMetadata #this generates the random operation name cuz it's cool.
+    nameSegments:
+    - operationPrefix
+    - operationSuffix
+  - type: NukeopsRule
+  - type: RuleGrids
+  - type: AntagSelection
+  - type: AntagLoadProfileRule
+
+- type: entity
+  parent: BaseNukeopsRule
+  id: Nukeops
   components:
   - type: GameRule
     minPlayers: 20
-  - type: NukeopsRule
-    faction: Syndicate
+  - type: LoadMapRule
+    gameMap: NukieOutpost
+  - type: AntagSelection
+    selectionTime: PrePlayerSpawn
+    definitions:
+    - prefRoles: [ NukeopsCommander ]
+      fallbackRoles: [ Nukeops, NukeopsMedic ]
+      spawnerPrototype: SpawnPointNukeopsCommander
+      startingGear: SyndicateCommanderGearFull
+      components:
+      - type: NukeOperative
+      - type: RandomMetadata
+        nameSegments:
+        - nukeops-role-commander
+        - SyndicateNamesElite
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindComponents:
+      - type: NukeopsRole
+        prototype: NukeopsCommander
+    - prefRoles: [ NukeopsMedic ]
+      fallbackRoles: [ Nukeops, NukeopsCommander ]
+      spawnerPrototype: SpawnPointNukeopsMedic
+      startingGear: SyndicateOperativeMedicFull
+      components:
+      - type: NukeOperative
+      - type: RandomMetadata
+        nameSegments:
+        - nukeops-role-agent
+        - SyndicateNamesNormal
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindComponents:
+      - type: NukeopsRole
+        prototype: NukeopsMedic
+    - prefRoles: [ Nukeops ]
+      fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
+      spawnerPrototype: SpawnPointNukeopsOperative
+      max: 3
+      playerRatio: 10
+      startingGear: SyndicateOperativeGearFull
+      components:
+      - type: NukeOperative
+      - type: RandomMetadata
+        nameSegments:
+        - nukeops-role-operator
+        - SyndicateNamesNormal
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindComponents:
+      - type: NukeopsRole
+        prototype: Nukeops
 
 - type: entity
-  id: Pirates
+  abstract: true
   parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: PiratesRule
-
-- type: entity
-  id: Traitor
-  parent: BaseGameRule
-  noSpawn: true
+  id: BaseTraitorRule
   components:
   - type: TraitorRule
+  # TODO: codewords in yml
+  # TODO: uplink in yml
+  - type: AntagRandomObjectives
+    sets:
+    - groups: TraitorObjectiveGroups
+    maxDifficulty: 5
+  - type: AntagSelection
+    agentName: traitor-round-end-agent-name
+
+- type: entity
+  parent: BaseTraitorRule
+  id: Traitor
+  components:
+  - type: GameRule
+    minPlayers: 5
+    delay:
+      min: 240
+      max: 420
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      max: 8
+      playerRatio: 10
+      lateJoinAdditional: true
+      mindComponents:
+      - type: TraitorRole
+        prototype: Traitor
 
 - type: entity
   id: Revolutionary
   parent: BaseGameRule
-  noSpawn: true
   components:
+  - type: GameRule
+    minPlayers: 15
   - type: RevolutionaryRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ HeadRev ]
+      max: 3
+      playerRatio: 15
+      briefing:
+        text: head-rev-role-greeting
+        color: CornflowerBlue
+        sound: "/Audio/Ambience/Antag/headrev_start.ogg"
+      startingGear: HeadRevGear
+      components:
+      - type: Revolutionary
+      - type: HeadRevolutionary
+      mindComponents:
+      - type: RevolutionaryRole
+        prototype: HeadRev
 
 - type: entity
   id: Sandbox
   parent: BaseGameRule
-  noSpawn: true
   components:
   - type: SandboxRule
 
 - type: entity
   id: Secret
   parent: BaseGameRule
-  noSpawn: true
   components:
   - type: SecretRule
 
 - type: entity
   id: Zombie
   parent: BaseGameRule
-  noSpawn: true
   components:
+  - type: GameRule
+    minPlayers: 20
+    delay:
+      min: 600
+      max: 900
   - type: ZombieRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ InitialInfected ]
+      max: 6
+      playerRatio: 10
+      blacklist:
+        components:
+        - ZombieImmune
+        - InitialInfectedExempt
+      briefing:
+        text: zombie-patientzero-role-greeting
+        color: Plum
+        sound: "/Audio/Ambience/Antag/zombie_start.ogg"
+      components:
+      - type: PendingZombie
+      - type: ZombifyOnDeath
+      - type: IncurableZombie
+      mindComponents:
+      - type: InitialInfectedRole
+        prototype: InitialInfected
 
 # event schedulers
 - type: entity
   id: BasicStationEventScheduler
   parent: BaseGameRule
-  noSpawn: true
   components:
   - type: BasicStationEventScheduler
 
 - type: entity
   id: RampingStationEventScheduler
   parent: BaseGameRule
-  noSpawn: true
   components:
   - type: RampingStationEventScheduler
 
@@ -134,7 +262,6 @@
 - type: entity
   id: BasicRoundstartVariation
   parent: BaseGameRule
-  noSpawn: true
   components:
   - type: RoundstartStationVariationRule
     rules:
@@ -142,7 +269,6 @@
     - id: BasicTrashVariationPass
     - id: SolidWallRustingVariationPass
     - id: ReinforcedWallRustingVariationPass
-    - id: CutWireVariationPass
     - id: BasicPuddleMessVariationPass
       prob: 0.99
       orGroup: puddleMess

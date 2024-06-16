@@ -17,6 +17,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Reflect;
+using Content.Shared.Damage.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -105,7 +106,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // Update shot based on the recoil
         toMap = fromMap.Position + angle.ToVec() * mapDirection.Length();
         mapDirection = toMap - fromMap.Position;
-        var gunVelocity = Physics.GetMapLinearVelocity(gunUid);
+        var gunVelocity = Physics.GetMapLinearVelocity(fromEnt);
 
         // I must be high because this was getting tripped even when true.
         // DebugTools.Assert(direction != Vector2.Zero);
@@ -154,7 +155,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         });
 
                         SetCartridgeSpent(ent.Value, cartridge, true);
-                        MuzzleFlash(gunUid, cartridge, user);
+                        MuzzleFlash(gunUid, cartridge, mapDirection.ToAngle(), user);
                         Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
 
                         if (cartridge.DeleteOnSpawn)
@@ -175,7 +176,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 // Ammo shoots itself
                 case AmmoComponent newAmmo:
                     shotProjectiles.Add(ent!.Value);
-                    MuzzleFlash(gunUid, newAmmo, user);
+                    MuzzleFlash(gunUid, newAmmo, mapDirection.ToAngle(), user);
                     Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
                     ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, gunUid, user);
                     break;
@@ -202,6 +203,20 @@ public sealed partial class GunSystem : SharedGunSystem
                                 break;
 
                             var result = rayCastResults[0];
+
+                            // Checks if the laser should pass over unless targeted by its user
+                            foreach (var collide in rayCastResults)
+                            {
+                                if (collide.HitEntity != gun.Target &&
+                                    CompOrNull<RequireProjectileTargetComponent>(collide.HitEntity)?.Active == true)
+                                {
+                                    continue;
+                                }
+
+                                result = collide;
+                                break;
+                            }
+
                             var hit = result.HitEntity;
                             lastHit = hit;
 
@@ -237,7 +252,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         {
                             if (!Deleted(hitEntity))
                             {
-                                if (dmg.Any())
+                                if (dmg.AnyPositive())
                                 {
                                     _color.RaiseEffect(Color.Red, new List<EntityUid>() { hitEntity }, Filter.Pvs(hitEntity, entityManager: EntityManager));
                                 }
@@ -278,6 +293,13 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private void ShootOrThrow(EntityUid uid, Vector2 mapDirection, Vector2 gunVelocity, GunComponent gun, EntityUid gunUid, EntityUid? user)
     {
+        if (gun.Target is { } target && !TerminatingOrDeleted(target))
+        {
+            var targeted = EnsureComp<TargetedProjectileComponent>(uid);
+            targeted.Target = target;
+            Dirty(uid, targeted);
+        }
+
         // Do a throw
         if (!HasComp<ProjectileComponent>(uid))
         {
@@ -326,9 +348,9 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user) { }
 
-    protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null)
+    protected override void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? user = null)
     {
-        var filter = Filter.Pvs(uid, entityManager: EntityManager);
+        var filter = Filter.Pvs(gunUid, entityManager: EntityManager);
 
         if (TryComp<ActorComponent>(user, out var actor))
             filter.RemovePlayer(actor.PlayerSession);
@@ -389,7 +411,7 @@ public sealed partial class GunSystem : SharedGunSystem
             var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform, xformQuery);
 
             fromCoordinates = new EntityCoordinates(gridUid.Value,
-                gridInvMatrix.Transform(fromCoordinates.ToMapPos(EntityManager, TransformSystem)));
+                Vector2.Transform(fromCoordinates.ToMapPos(EntityManager, TransformSystem), gridInvMatrix));
 
             // Use the fallback angle I guess?
             angle -= gridRot;

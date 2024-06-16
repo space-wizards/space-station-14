@@ -11,7 +11,7 @@ reagent-name-plant-b-gone = plant-B-gone
 reagent-desc-plant-b-gone = A harmful toxic mixture to kill plantlife. Very effective against kudzu.
 
 reagent-name-robust-harvest = robust harvest
-reagent-desc-robust-harvest = A highly effective fertilizer, with a limited potency-boosting effect on plants. Be careful with it's usage since using too much has a chance to reduce the plant yield. It has a positive effect on dionas.
+reagent-desc-robust-harvest = A highly effective fertilizer with a limited potency-boosting effect on plants. Use it cautiously, as excessive application can reduce plant yield. It has a particularly beneficial effect on dionas.
 
 reagent-name-weed-killer = weed killer
 reagent-desc-weed-killer = A mixture that targets weeds. Very effective against kudzu. While useful it slowly poisons plants with toxins, be careful when using it.

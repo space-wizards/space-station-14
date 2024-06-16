@@ -34,7 +34,7 @@
           bounds: "-0.4,-0.4,0.4,0.29"
         density: 50
         mask:
-        - SmallMobMask #this is so they can go under plastic flaps
+        - CrateMask #this is so they can go under plastic flaps
         layer:
         - MachineLayer
   - type: EntityStorage
@@ -89,6 +89,7 @@
     node: crategenericsteel
     containers:
       - entity_storage
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: CrateGeneric
@@ -123,6 +124,7 @@
       shader: unshaded
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.5,0"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Damageable
     damageContainer: StructuralInorganic
