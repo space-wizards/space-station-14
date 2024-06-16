@@ -268,3 +268,13 @@
   storage:
     back:
     - OcarinaInstrument
+
+- type: loadout
+  id: Bagpipe
+  equipment: Bagpipe
+
+- type: startingGear
+  id: Bagpipe
+  storage:
+    back:
+    - BagpipeInstrument
