@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: liltenhead
-  changes:
-  - message: Changed the syndicate hardbomb to have less of a chance to completely
-      destroy tiles.
-    type: Tweak
-  id: 6259
-  time: '2024-03-30T04:36:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26548
 - author: takemysoult
   changes:
   - message: stimulants removes chloral hydrate from body
@@ -3858,3 +3850,11 @@
   id: 6758
   time: '2024-06-16T11:27:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29059
+- author: ElectroJr
+  changes:
+  - message: Fixed pianos, office chairs & other objects not rotating while being
+      pulled.
+    type: Fix
+  id: 6759
+  time: '2024-06-16T11:30:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29032
