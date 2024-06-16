@@ -37,6 +37,13 @@ public sealed class HeldSpeedModifierSystem : EntitySystem
         {
             walkMod = clothingSpeedModifier.WalkModifier;
             sprintMod = clothingSpeedModifier.SprintModifier;
+
+            // If ClothingSpeedModifier is 0.6 it will make it 0.8, 0.5 - 0.75 etc.
+            if (component.HalfSpeedModifier)
+            {
+                walkMod = (walkMod + 1) / 2;
+                sprintMod = (sprintMod + 1) / 2;
+            }
         }
 
         args.Args.ModifySpeed(walkMod, sprintMod);

@@ -31,4 +31,10 @@ public sealed partial class HeldSpeedModifierComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool MirrorClothingModifier = true;
+
+    /// <summary>
+    /// If true, it will take only half of <see cref="ClothingSpeedModifierComponent"/> speed.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool HalfSpeedModifier = true;
 }
