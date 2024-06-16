@@ -38,3 +38,12 @@
       item:
       - KukriKnife
 
+- type: entity
+  id: ClothingHeadHatArnoldsPizzaFilled
+  parent: ClothingHeadHatArnoldsPizza
+  suffix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - ArnoldsPizzaPen

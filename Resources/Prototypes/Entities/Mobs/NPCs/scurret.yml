@@ -181,3 +181,28 @@
     icon: Interface/Actions/backflip.png
     event: !type:BackflipActionEvent
     checkCanInteract: false
+
+# Delivery Critter
+
+- type: entity
+  name: Pizza Delivery Scurret
+  id: MobPizzaDeliveryScurret
+  parent: MobScurret
+  description: Commonly known as Wawas, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds' Pizza's "loyal workforce". This one is here to deliver pizza.
+  components:
+    - type: Loadout
+      prototypes: [ PizzaDeliveryCritterGear ]
+
+- type: startingGear
+  id: PizzaDeliveryCritterGear
+  equipment:
+    head: ClothingHeadHatArnoldsPizzaFilled
+    # jumpsuit: ClothingUniformJumpsuitERTJanitor
+    # back: ClothingBackpackERTJanitor
+    # shoes: ClothingShoesGaloshes
+    # gloves: ClothingHandsGlovesColorPurple
+    # outerClothing: ClothingOuterArmorBasicSlim
+    # id: ERTJanitorPDA
+    # ears: ClothingHeadsetAltCentCom
+    # belt: ClothingBeltJanitorFilled
+    # pocket1: Flare
