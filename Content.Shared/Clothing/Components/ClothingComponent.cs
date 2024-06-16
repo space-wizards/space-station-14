@@ -16,7 +16,6 @@ namespace Content.Shared.Clothing.Components;
 public sealed partial class ClothingComponent : Component
 {
     [DataField("clothingVisuals")]
-    [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)] // TODO remove execute permissions.
     public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 
     [ViewVariables(VVAccess.ReadWrite)]
