@@ -2,7 +2,7 @@
   name: flash
   parent: BaseItem
   id: FlashBloodBrother
-  description: "A special flash with a trigger, which causes the victim to be brainwashed to help you with your tasks. WARNING: SINGLE USE ONLY!"
+  description: "A special flash with a trigger, which causes the victim to be brainwashed into becoming your brother. WARNING: SINGLE USE ONLY!"
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/flash.rsi
@@ -14,6 +14,7 @@
         visible: false
         shader: unshaded
     - type: Flash
+    - type: BloodBrotherConverter
     - type: LimitedCharges
       maxCharges: 1
       charges: 1

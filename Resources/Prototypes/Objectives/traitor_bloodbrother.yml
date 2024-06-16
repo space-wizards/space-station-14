@@ -4,28 +4,14 @@
   id: BaseBloodBrotherObjective
   components:
   - type: Objective
-    issuer: blood brother
-  - type: RoleRequirement
-    roles:
-      components:
-      - BloodBrotherRole
-
-- type: entity
-  abstract: true
-  parent: [BaseBloodBrotherObjective, BaseStealObjective]
-  id: BaseBloodBrotherStealObjective
-  components:
-  - type: StealCondition
-    verifyMapExistence: true
-  - type: ObjectiveLimit
-    limit: 2
+    issuer: bloodbrother
 
 #- type: entity
 #  noSpawn: true
 #  parent: [BaseBloodBrotherObjective, BaseLivingObjective]
 #  id: BloodBrotherHijackShuttleObjective
 #  name: Hijack the emergency shuttle
-#  description: Leave on the shuttle free and clear of the loyal Nanotrasen crew, syndicate agents and other crew on board. The entire team must remain alive on the shuttle.
+#  description: Leave on the shuttle free and clear of whatever crew on board. The entire team must remain alive on the shuttle.
 #  components:
 #    - type: Objective
 #      icon:
@@ -35,183 +21,13 @@
 
 - type: entity
   noSpawn: true
-  parent: [BaseBloodBrotherObjective, BaseKillObjective]
-  id: BloodBrotherKillRandomPersonObjective
-  description: Do it however you like. We want him dead.
-  components:
-  - type: Objective
-    unique: false
-  - type: TargetObjective
-    title: objective-condition-kill-person-title
-  - type: PickRandomPerson
-  - type: KillPersonCondition
-    requireDead: true
-
-- type: entity
-  noSpawn: true
   parent: BaseBloodBrotherObjective
   id: BloodbrotherAliveObjective
-  name: Keep your team alive and well.
+  name: The entire team must escape on the evacuation shuttle alive and unrestrained, or else everything will be in vain!
   components:
   - type: Objective
     difficulty: 0
     icon:
       sprite: Objects/Specific/Medical/defib.rsi
       state: icon
-
-# steal
-
-## cmo
-
-- type: entity
-  abstract: true
-  parent: BaseBloodBrotherStealObjective
-  id: BaseBloodBrotherCMOStealObjective
-  components:
-  - type: NotJobRequirement
-    job: ChiefMedicalOfficer
-  - type: StealCondition
-    owner: job-name-cmo
-
-- type: entity
-  noSpawn: true
-  parent: BaseBloodBrotherCMOStealObjective
-  id: BloodBrotherCMOHyposprayStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: Hypospray
-
-- type: entity
-  noSpawn: true
-  parent: BaseBloodBrotherCMOStealObjective
-  id: BloodBrotherCMOCrewMonitorStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: HandheldCrewMonitor
-
-## rd
-
-- type: entity
-  abstract: true
-  parent: BaseBloodBrotherStealObjective
-  id: BaseBloodBrotherRDStealObjective
-  components:
-  - type: NotJobRequirement
-    job: ResearchDirector
-  - type: StealCondition
-    owner: job-name-rd
-
-- type: entity
-  noSpawn: true
-  parent: BaseBloodBrotherRDStealObjective
-  id: BloodBrotherRDHardsuitStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: ClothingOuterHardsuitRd
-
-- type: entity
-  noSpawn: true
-  parent: BaseBloodBrotherRDStealObjective
-  id: BloodBrotherHandTeleporterStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: HandTeleporter
-
-## hos
-
-- type: entity
-  noSpawn: true
-  parent: BaseBloodBrotherStealObjective
-  id: BloodBrotherSecretDocumentsStealObjective
-  components:
-  - type: NotJobRequirement
-    job: HeadOfSecurity
-  - type: StealCondition
-    stealGroup: BookSecretDocuments
-    owner: job-name-hos
-
-## ce
-
-- type: entity
-  noSpawn: true
-  parent: BaseBloodBrotherStealObjective
-  id: BloodBrotherMagbootsStealObjective
-  components:
-  - type: NotJobRequirement
-    job: ChiefEngineer
-  - type: StealCondition
-    stealGroup: ClothingShoesBootsMagAdv
-    owner: job-name-ce
-
-## qm
-
-- type: entity
-  noSpawn: true
-  parent: BaseBloodBrotherStealObjective
-  id: BloodBrotherClipboardStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Quartermaster
-  - type: StealCondition
-    stealGroup: BoxFolderQmClipboard
-    owner: job-name-qm
-
-## hop
-
-- type: entity
-  noSpawn: true
-  parent: BaseBloodBrotherStealObjective
-  id: BloodBrotherCorgiMeatStealObjective
-  components:
-  - type: NotJobRequirement
-    job: HeadOfPersonnel
-  - type: ObjectiveLimit
-    limit: 3 # ian only has 2 slices, 3 obj for drama
-  - type: StealCondition
-    stealGroup: FoodMeatCorgi
-    owner: objective-condition-steal-Ian
-
-## cap
-
-- type: entity
-  abstract: true
-  parent: BaseBloodBrotherStealObjective
-  id: BaseBloodBrotherCaptainObjective
-  components:
-  - type: NotJobRequirement
-    job: Captain
-
-- type: entity
-  noSpawn: true
-  parent: BaseBloodBrotherCaptainObjective
-  id: BloodBrotherCaptainIDStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: CaptainIDCard
-
-- type: entity
-  noSpawn: true
-  parent: BaseBloodBrotherCaptainObjective
-  id: BloodBrotherCaptainJetpackStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: JetpackCaptainFilled
-
-- type: entity
-  noSpawn: true
-  parent: BaseBloodBrotherCaptainObjective
-  id: BloodBrotherCaptainGunStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: WeaponAntiqueLaser
-    owner: job-name-captain
-
-- type: entity
-  noSpawn: true
-  parent: BaseBloodBrotherCaptainObjective
-  id: BloodBrotherNukeDiskStealObjective
-  components:
-  - type: NotCommandRequirement
-  - type: StealCondition
-    stealGroup: NukeDisk
-    owner: objective-condition-steal-station
+  - type: EscapeShuttleTeamCondition

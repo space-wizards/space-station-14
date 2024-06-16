@@ -37,17 +37,19 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
     {
         if (args.Session == null) return;
 
-        MakeBloodBrother(args.EntityUid, ent);
+        MakeBloodBrother(args.EntityUid);
     }
 
-    public bool MakeBloodBrother(EntityUid uid, BloodBrotherRuleComponent component, bool brainwashed = false)
+    public bool MakeBloodBrother(EntityUid uid, string teamID = "")
     {
         if (!_mindSystem.TryGetMind(uid, out var mindId, out var mind))
             return false;
-        if (HasComp<BloodBrotherComponent>(mindId))
+        if (HasComp<SharedBloodBrotherComponent>(mindId))
+            return false;
+        if (TryComp<BloodBrotherRuleComponent>(uid, out var component))
             return false;
 
-        _roleSystem.MindAddRole(mindId, new BloodBrotherComponent());
+        _roleSystem.MindAddRole(mindId, new SharedBloodBrotherComponent());
         component.Minds.Add(mindId);
 
         //if (component.NumberOfAntags < 2)
@@ -93,11 +95,11 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
         return true;
     }
 
-    public string GetBriefing(BloodBrotherRuleComponent component, bool brainwashed = false, bool charMenu = false)
+    public string GetBriefing(string teamID = "", bool shortBrief = false)
     {
         var sb = new StringBuilder();
 
-        if (charMenu)
+        if (shortBrief)
         {
             sb.AppendLine(Loc.GetString("bloodbrother-briefing-short"));
             return sb.ToString();
@@ -131,11 +133,16 @@ public sealed class BloodBrotherRuleSystem : GameRuleSystem<BloodBrotherRuleComp
         var target = Comp<TargetObjectiveComponent>(objective.Value).Target;
 
         // if objective targeted towards another bloodbro we roll another
-        if (target != null && Comp<BloodBrotherComponent>((EntityUid) target) != null)
+        if (target != null && Comp<SharedBloodBrotherComponent>((EntityUid) target) != null)
             return RollObjective(id, mind);
 
         return objective;
     }
+    private EntityUid? GetTeamLeader(BloodBrotherRuleComponent comp, string teamID)
+    {
+
+    }
+
     public List<(EntityUid Id, MindComponent Mind)> GetOtherBroMindsAliveAndConnected(MindComponent ourMind)
     {
         List<(EntityUid Id, MindComponent Mind)> allBros = new();
