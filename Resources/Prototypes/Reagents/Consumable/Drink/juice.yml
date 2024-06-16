@@ -143,3 +143,12 @@
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+
+- type: reagent
+  id: JuiceCherry
+  name: reagent-name-juice-cherry
+  parent: BaseJuice
+  desc: reagent-desc-juice-cherry
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: cherry
+  color: "#84031a"
