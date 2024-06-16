@@ -23,12 +23,15 @@ public partial class ArtifactSystem
         if(ev.CanReturnGlobal == false)
             return;
 
-        if(!TryComp<ArtifactComponent>(ev.Mind.CurrentEntity!.Value, out var artifact))
+        if(!TryComp<ArtifactComponent>(ev.Mind.CurrentEntity, out var artifact))
             return;
-        if(!TryComp<MindContainerComponent>(ev.Mind.CurrentEntity!.Value, out var mindcontainer))
+        if(!TryComp<MindContainerComponent>(ev.Mind.CurrentEntity, out var mindcontainer))
+            return;
+
+        if(!mindcontainer.Mind.HasValue)
             return;
 
         ev.Handled = true;
-        ev.Result = _gameTicker.OnGhostAttempt(mindcontainer.Mind!.Value, false, false, ev.Mind);
+        ev.Result = _gameTicker.OnGhostAttempt(mindcontainer.Mind.Value, false, false, ev.Mind);
     }
 }
