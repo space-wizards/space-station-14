@@ -59,7 +59,7 @@
   id: SecurityJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtSec
-    
+
 - type: loadout
   id: SecurityJumpsuitGrey
   equipment: SecurityJumpsuitGrey
