@@ -62,7 +62,7 @@ public sealed partial class OpenableSystem : EntitySystem
         if (args.Handled || !ent.Comp.OpenableByHand)
             return;
 
-        args.Handled = TryToggle(ent, args.User);
+        args.Handled = TryOpen(ent, ent, args.User);
     }
 
     private void OnActivated(Entity<OpenableComponent> ent, ref ActivateInWorldEvent args)

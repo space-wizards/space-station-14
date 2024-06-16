@@ -1,8 +1,11 @@
 using System.Linq;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Humanoid;
+using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Station;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -15,6 +18,7 @@ public sealed class LoadoutSystem : EntitySystem
 {
     // Shared so we can predict it for placement manager.
 
+    [Dependency] private readonly ActorSystem _actors = default!;
     [Dependency] private readonly SharedStationSpawningSystem _station = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -125,7 +129,17 @@ public sealed class LoadoutSystem : EntitySystem
         var id = _random.Pick(component.RoleLoadout);
         var proto = _protoMan.Index(id);
         var loadout = new RoleLoadout(id);
-        loadout.SetDefault(_protoMan, true);
+        loadout.SetDefault(GetProfile(uid), _actors.GetSession(uid), _protoMan, true);
         _station.EquipRoleLoadout(uid, loadout, proto);
+    }
+
+    public HumanoidCharacterProfile GetProfile(EntityUid? uid)
+    {
+        if (TryComp(uid, out HumanoidAppearanceComponent? appearance))
+        {
+            return HumanoidCharacterProfile.DefaultWithSpecies(appearance.Species);
+        }
+
+        return HumanoidCharacterProfile.Random();
     }
 }
