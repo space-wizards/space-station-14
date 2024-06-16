@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Added an industrial reagent grinder to the basic hydroponics research.
-      It grinds things into reagents like a recycler.
-    type: Add
-  id: 6254
-  time: '2024-03-30T02:46:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25020
 - author: SonicHDC
   changes:
   - message: Added unzipping for lab coats!
@@ -3860,3 +3852,10 @@
   id: 6753
   time: '2024-06-15T22:38:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29018
+- author: Keer-Sar
+  changes:
+  - message: Fixed a spelling error in the cargo bounty for lungs.
+    type: Fix
+  id: 6754
+  time: '2024-06-16T00:24:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29064
