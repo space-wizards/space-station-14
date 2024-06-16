@@ -135,20 +135,3 @@
   name: barsign-prototype-name-spacebucks
   icon: "spacebucks"
   description: barsign-prototype-description-spacebucks
-
-# Hidden signs list below this point
-- type: barSign
-  id: EmpBarSign
-  name: ""
-  icon: "empbarsign"
-  description: barsign-prototype-description-empbarsign
-  renameArea: false
-  hidden: true
-
-- type: barSign
-  id: SignOff
-  name: ""
-  icon: "empty"
-  description: barsign-prototype-description-sign-off
-  renameArea: false
-  hidden: true

@@ -1,0 +1,16 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'barsign-ui-menu'}"
+    MinSize="280 180"
+    SetSize="280 180">
+    <BoxContainer VerticalExpand="True" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 5 10 10">
+        <BoxContainer Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Text="{Loc 'barsign-ui-set-label'}" HorizontalAlignment="Center"/>
+            <OptionButton Name="SignOptions" HorizontalAlignment="Center" VerticalAlignment="Center" MinSize="175 60"/>
+            <Control MinHeight="20"/>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
+
+
