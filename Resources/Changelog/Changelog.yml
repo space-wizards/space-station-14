@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: takemysoult
-  changes:
-  - message: stimulants removes chloral hydrate from body
-    type: Tweak
-  id: 6260
-  time: '2024-03-30T06:52:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25886
 - author: Flareguy
   changes:
   - message: Removed SCAF armor.
@@ -3858,3 +3851,11 @@
   id: 6759
   time: '2024-06-16T11:30:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29032
+- author: deltanedas
+  changes:
+  - message: Added the Carp Hardsuit to the uplink which is spaceproof and makes carp
+      think you are one of them.
+    type: Add
+  id: 6760
+  time: '2024-06-16T11:57:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25155
