@@ -388,7 +388,7 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="accessor">The accessor to log</param>
     private void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor)
     {
-        if (IsPaused(ent))
+        if (IsPaused(ent) || ent.Comp.LoggingDisabled)
             return;
 
         if (ent.Comp.AccessLog.Count >= ent.Comp.AccessLogLimit)
