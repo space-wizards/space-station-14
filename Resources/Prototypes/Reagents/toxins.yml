@@ -672,7 +672,7 @@
   desc: reagent-desc-mechanotoxin
   flavor: sweet
   color: "#00b408"
-  physicalDesc: reagent-physical-desc-clear
+  physicalDesc: reagent-physical-desc-nondescript
   metabolisms:
     Poison:
       metabolismRate: 0.2 # Slower metabolism so it can build up over time for slowdown
