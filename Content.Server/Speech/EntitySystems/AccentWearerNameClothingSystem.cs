@@ -5,6 +5,7 @@ using Content.Shared.NameModifier.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
+/// <inheritdoc cref="AccentWearerNameClothingComponent"/>
 public sealed class AccentWearerNameClothingSystem : EntitySystem
 {
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
