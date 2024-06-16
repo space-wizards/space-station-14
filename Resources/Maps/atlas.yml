@@ -3049,11 +3049,9 @@ entities:
       devices:
       - 1989
       - 845
-      - 7333
       - 1231
       - 3817
       - 3815
-      - 929
       - 7599
   - uid: 7372
     components:
@@ -26014,6 +26012,13 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#0055CCFF'
+  - uid: 8670
+    components:
+    - type: Transform
+      pos: 2.5,9.5
+      parent: 30
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasPipeFourway
   entities:
   - uid: 391
@@ -33505,6 +33510,13 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#990000FF'
+  - uid: 8671
+    components:
+    - type: Transform
+      pos: 2.5,8.5
+      parent: 30
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasPipeTJunction
   entities:
   - uid: 388
@@ -34703,6 +34715,14 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#0055CCFF'
+  - uid: 7333
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 1.5,9.5
+      parent: 30
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 7336
     components:
     - type: Transform
@@ -35638,6 +35658,13 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#0055CCFF'
+  - uid: 8669
+    components:
+    - type: Transform
+      pos: 2.5,6.5
+      parent: 30
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
 - proto: GasVentScrubber
   entities:
   - uid: 373
@@ -35743,10 +35770,10 @@ entities:
   - uid: 929
     components:
     - type: Transform
-      pos: 2.5,6.5
+      pos: 1.5,10.5
       parent: 30
     - type: AtmosPipeColor
-      color: '#0055CCFF'
+      color: '#990000FF'
   - uid: 1099
     components:
     - type: Transform
@@ -36190,14 +36217,6 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#990000FF'
-  - uid: 7333
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 1.5,9.5
-      parent: 30
-    - type: AtmosPipeColor
-      color: '#990000FF'
   - uid: 7349
     components:
     - type: Transform
@@ -36307,6 +36326,14 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -35.5,-14.5
+      parent: 30
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 8668
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,7.5
       parent: 30
     - type: AtmosPipeColor
       color: '#990000FF'
