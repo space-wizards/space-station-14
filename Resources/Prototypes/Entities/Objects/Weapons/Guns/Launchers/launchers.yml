@@ -209,10 +209,10 @@
   description: It fires large meteors
   components:
   - type: BallisticAmmoProvider
-    proto: MeteorLarge
     whitelist:
       tags:
-      - CartridgeRocket
+        - CartridgeRocket
+    proto: MeteorMedium
 
 # immovable rod launcher [admeme]
 - type: entity
