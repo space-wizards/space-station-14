@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -39,15 +38,14 @@ public sealed class TechnologyDiskSystem : EntitySystem
         var tier = int.Parse(weightedRandom.Pick(_random));
 
         //get a list of every distinct recipe in all the technologies.
-        var techs = new List<ProtoId<LatheRecipePrototype>>();
+        var techs = new HashSet<ProtoId<LatheRecipePrototype>>();
         foreach (var tech in _protoMan.EnumeratePrototypes<TechnologyPrototype>())
         {
             if (tech.Tier != tier)
                 continue;
 
-            techs.AddRange(tech.RecipeUnlocks);
+            techs.UnionWith(tech.RecipeUnlocks);
         }
-        techs = techs.Distinct().ToList();
 
         if (techs.Count == 0)
             return;
