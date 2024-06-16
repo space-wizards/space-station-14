@@ -1,49 +1,4 @@
 ﻿Entries:
-- author: Crotalus
-  changes:
-  - message: Reagent grinder auto-modes
-    type: Add
-  id: 6250
-  time: '2024-03-29T06:30:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26290
-- author: deltanedas
-  changes:
-  - message: Multiple bombs exploding at once on a tile now combine to have a larger
-      explosion rather than stacking the same small explosion.
-    type: Tweak
-  id: 6251
-  time: '2024-03-29T23:46:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25664
-- author: Mephisto72
-  changes:
-  - message: Ion Storms are now more likely to alter a Borg's laws.
-    type: Tweak
-  id: 6252
-  time: '2024-03-30T00:01:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26539
-- author: arimah
-  changes:
-  - message: Holoparasites, holoclowns and other guardians correctly transfer damage
-      to their hosts again.
-    type: Fix
-  id: 6253
-  time: '2024-03-30T01:25:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26541
-- author: Boaz1111
-  changes:
-  - message: Added an industrial reagent grinder to the basic hydroponics research.
-      It grinds things into reagents like a recycler.
-    type: Add
-  id: 6254
-  time: '2024-03-30T02:46:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25020
-- author: SonicHDC
-  changes:
-  - message: Added unzipping for lab coats!
-    type: Add
-  id: 6255
-  time: '2024-03-30T03:31:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26494
 - author: Zealith-Gamer
   changes:
   - message: Items being pulled no longer spin when being thrown.
@@ -3860,3 +3815,48 @@
   id: 6749
   time: '2024-06-15T17:50:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29004
+- author: notafet
+  changes:
+  - message: The TEG must now be operated at higher temperatures to generate power.
+    type: Tweak
+  id: 6750
+  time: '2024-06-15T21:05:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29050
+- author: lzk228
+  changes:
+  - message: Fixed ability for mime to not choose any mask.
+    type: Fix
+  id: 6751
+  time: '2024-06-15T21:32:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29056
+- author: FunTust
+  changes:
+  - message: Fixed hair disappearing when hats are tucked away in a pocket.
+    type: Fix
+  id: 6752
+  time: '2024-06-15T21:42:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28949
+- author: Cojoke-dot
+  changes:
+  - message: You can now find Jackboots in the security load-outs
+    type: Add
+  - message: The Sec drobe no longer has a Cowboy hat or boots
+    type: Remove
+  id: 6753
+  time: '2024-06-15T22:38:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29018
+- author: Keer-Sar
+  changes:
+  - message: Fixed a spelling error in the cargo bounty for lungs.
+    type: Fix
+  id: 6754
+  time: '2024-06-16T00:24:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29064
+- author: Keer-Sar
+  changes:
+  - message: Non-humanoids' names are now capitalized when inserting materials into
+      machines.
+    type: Fix
+  id: 6755
+  time: '2024-06-16T02:06:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29071
