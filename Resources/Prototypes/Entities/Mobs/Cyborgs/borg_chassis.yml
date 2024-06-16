@@ -246,12 +246,6 @@
   - type: Inventory
     templateId: borgDutch
   - type: SolutionScanner
-  - type: ShowHealthBars
-    damageContainers:
-    - Biological
-  - type: ShowHealthIcons
-    damageContainers:
-    - Biological
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHoverBorg
@@ -335,7 +329,7 @@
 
 - type: entity
   id: BorgChassisSyndicateMedical
-  parent: BaseBorgChassisSyndicate
+  parent: [BaseBorgChassisSyndicate, ShowMedicalIcons]
   name: syndicate medical cyborg
   description: A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities.
   components:
@@ -362,12 +356,6 @@
     - type: Construction
       node: syndicatemedical
     - type: SolutionScanner
-    - type: ShowHealthBars
-      damageContainers:
-      - Biological
-    - type: ShowHealthIcons
-      damageContainers:
-      - Biological
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepHoverBorg
