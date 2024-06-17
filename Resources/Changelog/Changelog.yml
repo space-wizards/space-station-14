@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Security glasses have been moved from research to roundstart gear. All
-      officers now start with them instead of sunglasses by default.
-    type: Tweak
-  - message: You can now craft security glasses.
-    type: Add
-  id: 6264
-  time: '2024-03-31T03:00:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26487
 - author: brainfood1183
   changes:
   - message: Toilets can now be connected to the disposal system.
@@ -3859,3 +3849,12 @@
   id: 6763
   time: '2024-06-17T03:21:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26277
+- author: deltanedas
+  changes:
+  - message: Borgs now have a 10 second beeping timer that paralyzes them when being
+      exploded with the robotics console and a 5 second delay when being disabled
+      with it.
+    type: Tweak
+  id: 6764
+  time: '2024-06-17T03:30:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27876
