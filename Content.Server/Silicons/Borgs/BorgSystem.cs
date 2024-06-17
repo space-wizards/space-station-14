@@ -43,8 +43,8 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly TriggerSystem _trigger = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
