@@ -18,22 +18,25 @@ public sealed class RulesManager
     public void Initialize()
     {
         _netManager.Connected += OnConnected;
-        _netManager.RegisterNetMessage<ShowRulesPopupMessage>();
+        _netManager.RegisterNetMessage<SendRulesInformationMessage>();
         _netManager.RegisterNetMessage<RulesAcceptedMessage>(OnRulesAccepted);
     }
 
     private async void OnConnected(object? sender, NetChannelArgs e)
     {
-        if (IPAddress.IsLoopback(e.Channel.RemoteEndPoint.Address) && _cfg.GetCVar(CCVars.RulesExemptLocal))
-            return;
+         var isLocalhost = IPAddress.IsLoopback(e.Channel.RemoteEndPoint.Address) &&
+                               _cfg.GetCVar(CCVars.RulesExemptLocal);
 
         var lastRead = await _dbManager.GetLastReadRules(e.Channel.UserId);
-        if (lastRead > LastValidReadTime)
-            return;
+        var hasCooldown = lastRead > LastValidReadTime;
 
-        var message = new ShowRulesPopupMessage();
-        message.PopupTime = _cfg.GetCVar(CCVars.RulesWaitTime);
-        _netManager.ServerSendMessage(message, e.Channel);
+        var showRulesMessage = new SendRulesInformationMessage
+        {
+            PopupTime = _cfg.GetCVar(CCVars.RulesWaitTime),
+            CoreRules = _cfg.GetCVar(CCVars.RulesFile),
+            ShouldShowRules = !isLocalhost && !hasCooldown
+        };
+        _netManager.ServerSendMessage(showRulesMessage, e.Channel);
     }
 
     private async void OnRulesAccepted(RulesAcceptedMessage message)
