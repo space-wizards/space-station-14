@@ -1032,6 +1032,30 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await db.DbContext.SaveChangesAsync();
         }
 
+        public async Task<DateTimeOffset?> GetLastReadRules(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            return NormalizeDatabaseTime(await db.DbContext.Player
+                .Where(dbPlayer => dbPlayer.UserId == player)
+                .Select(dbPlayer => dbPlayer.LastReadRules)
+                .SingleOrDefaultAsync());
+        }
+
+        public async Task SetLastReadRules(NetUserId player, DateTimeOffset date)
+        {
+            await using var db = await GetDb();
+
+            var dbPlayer = await db.DbContext.Player.Where(dbPlayer => dbPlayer.UserId == player).SingleOrDefaultAsync();
+            if (dbPlayer == null)
+            {
+                return;
+            }
+
+            dbPlayer.LastReadRules = date.UtcDateTime;
+            await db.DbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         #region Uploaded Resources Logs
