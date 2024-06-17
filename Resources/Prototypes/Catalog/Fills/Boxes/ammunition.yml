@@ -89,10 +89,10 @@
         amount: 3
 
 - type: entity
-  name: box of SMG (.35 auto lethal) magazines
+  name: box of pistol (.35 auto lethal) magazines
   parent: BoxMagazine
   id: BoxMagazinePistol
-  description: A box full of SMG (.35 auto lethal) magazines.
+  description: A box full of pistol (.35 auto lethal) magazines.
   components:
   - type: StorageFill
     contents:
