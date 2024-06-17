@@ -801,6 +801,20 @@
     node: diagonalshuttleWall
 
 - type: entity
+  id: WallShuttleDiagonalArnolds
+  description: Keeps the pizza scent in and the customers out.
+  parent: WallShuttleDiagonal
+  suffix: Arnolds, Diagonal
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Structures/Walls/arnolds_shuttle_diagonal.rsi
+    state: state0
+  - type: Icon
+    sprite: Structures/Walls/arnolds_shuttle_diagonal.rsi
+    state: state0
+
+- type: entity
   parent: WallReinforced
   id: WallShuttle
   name: shuttle wall
@@ -831,6 +845,18 @@
           5: { state: shuttle_construct-5, visible: true}
   - type: Reflect
     reflectProb: 1
+
+- type: entity
+  id: WallShuttleArnolds
+  description: Keeps the pizza scent in and the customers out.
+  parent: WallShuttle
+  suffix: Arnolds
+  components:
+    - type: Sprite
+      sprite: Structures/Walls/arnolds_shuttle.rsi
+    - type: Icon
+      sprite: Structures/Walls/arnolds_shuttle.rsi
+      state: full
 
 - type: entity
   parent: WallSolid

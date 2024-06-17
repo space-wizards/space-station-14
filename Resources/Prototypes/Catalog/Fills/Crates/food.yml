@@ -13,6 +13,24 @@
       prob: 0.01
 
 - type: entity
+  id: CrateFoodPizzaArnolds
+  parent: CratePlastic
+  name: arnolds' special pizza delivery
+  description: A box of pizzas, provided as a surprise to the crew by Arnolds' Pizza, on behalf of Nanotrasen. Includes 6 Arnolds' Specials.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodPizzaArnold
+      amount: 6
+    - id: KnifePlastic
+    - id: LidSalami
+      prob: 0.01
+  - type: Icon
+    sprite: Structures/Storage/Crates/arnolds.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/arnolds.rsi
+
+- type: entity
   id: CrateFoodPizzaLarge
   parent: CratePlastic
   name: disaster pizza delivery

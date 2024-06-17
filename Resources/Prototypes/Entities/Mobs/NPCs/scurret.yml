@@ -102,7 +102,11 @@
   - type: InventorySlots
   - type: Food
   - type: Hunger
-    baseDecayRate: 0.3
+    baseDecayRate: 0.666
+  - type: Tag
+    tags:
+      - CanPilot # Inexplicably, Wawas have a natural aptitude for space flight
+
 
 - type: inventoryTemplate
   id: scurret
@@ -209,6 +213,8 @@
   id: PizzaDeliveryCritterGear
   equipment:
     head: ClothingHeadHatArnoldsPizzaFilled
+    # Change this to a visitor PDA
+    id: PassengerPDA
     # jumpsuit: ClothingUniformJumpsuitERTJanitor
     # back: ClothingBackpackERTJanitor
     # shoes: ClothingShoesGaloshes
