@@ -1,6 +1,7 @@
 using Content.Server.Electrocution;
 using Content.Server.Power.Components;
 using Content.Server.Wires;
+using Content.Shared.Emp;
 using Content.Shared.Power;
 using Content.Shared.Wires;
 
@@ -77,6 +78,9 @@ public sealed partial class PowerWireAction : BaseWireAction
             {
                 return;
             }
+
+            if (EntityManager.TryGetComponent<EmpDisabledComponent>(owner, out var emp))
+                return;
 
             power.PowerDisabled = false;
         }
