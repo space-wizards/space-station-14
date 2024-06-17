@@ -586,7 +586,7 @@
     stealGroup: WeaponAntiqueLaser
   - type: SentienceTarget # I hope this is only the captain's gun
     flavorKind: station-event-random-sentience-flavor-inanimate
-    weight: 0.0001 # 10,000 times less likely than 1 regular animal
+    weight: 0.0002 # 5,000 times less likely than 1 regular animal
 
 - type: entity
   name: advanced laser pistol
