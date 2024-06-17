@@ -35,7 +35,7 @@
   id: CrateSecurityNonlethal
   parent: CrateSecgear
   name: nonlethal stun crate
-  description: Containers two disablers, stunbatons, flashes, zipties. Requires Security access to open.
+  description: Contains two disablers, stunbatons, flashes, and zipties. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
