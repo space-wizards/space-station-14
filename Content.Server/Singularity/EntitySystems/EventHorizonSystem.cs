@@ -116,10 +116,12 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     public void ConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
     {
-        if (!EntityManager.IsQueuedForDeletion(morsel) // I saw it log twice a few times for some reason?
-        && (HasComp<MindContainerComponent>(morsel)
+        if (EntityManager.IsQueuedForDeletion(morsel)) // already handled, and we're substepping
+            return;
+
+        if (HasComp<MindContainerComponent>(morsel)
             || _tagSystem.HasTag(morsel, "HighRiskItem")
-            || HasComp<ContainmentFieldGeneratorComponent>(morsel)))
+            || HasComp<ContainmentFieldGeneratorComponent>(morsel))
         {
             _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} entered the event horizon of {ToPrettyString(hungry)} and was deleted");
         }
