@@ -13,7 +13,7 @@
     Cough:
       collection: MaleCoughs
     CatMeow:
-      collection: CatMeows
+      collection: CatMeows2
     CatHisses:
       collection: CatHisses
     MonkeyScreeches:
@@ -53,7 +53,7 @@
     Cough:
       collection: FemaleCoughs
     CatMeow:
-      collection: CatMeows
+      collection: CatMeows2
     CatHisses:
       collection: CatHisses
     MonkeyScreeches:
@@ -95,7 +95,7 @@
     Crying:
       collection: MaleCry
     CatMeow:
-      collection: CatMeows
+      collection: CatMeows2
     Weh:
       collection: Weh
     Gasp:
@@ -119,7 +119,7 @@
     Crying:
       collection: FemaleCry
     CatMeow:
-      collection: CatMeows
+      collection: /Audio/Animals/lizard_happy.ogg
     Weh:
       collection: Weh
 
@@ -137,7 +137,7 @@
     Cough:
       collection: MaleCoughs
     CatMeow:
-      collection: CatMeows
+      collection: CatMeows2
     CatHisses:
       collection: CatHisses
     MonkeyScreeches:
@@ -179,7 +179,7 @@
     Cough:
       collection: FemaleCoughs
     CatMeow:
-      collection: CatMeows
+      collection: CatMeows2
     CatHisses:
       collection: CatHisses
     MonkeyScreeches:
@@ -228,7 +228,7 @@
     Honk:
       collection: BikeHorn
     CatMeow:
-      collection: CatMeows
+      collection: CatMeows2
     Weh:
       collection: Weh
     Gasp:
@@ -252,7 +252,7 @@
     Click:
       path: /Audio/Voice/Arachnid/arachnid_click.ogg
     CatMeow:
-      collection: CatMeows
+      collection: CatMeows2
     Weh:
       collection: Weh
     Gasp:
@@ -272,7 +272,7 @@
     Cough:
       collection: MaleCoughs
     CatMeow:
-      collection: CatMeows
+      collection: CatMeows2
     CatHisses:
       collection: CatHisses
     MonkeyScreeches:
@@ -313,7 +313,7 @@
     Cough:
       collection: FemaleCoughs
     CatMeow:
-      collection: CatMeows
+      collection: CatMeows2
     CatHisses:
       collection: CatHisses
     MonkeyScreeches:
@@ -358,7 +358,7 @@
     Squeak:
       path: /Audio/Voice/Moth/moth_squeak.ogg
     CatMeow:
-      collection: CatMeows
+      collection: CatMeows2
     Weh:
       collection: Weh
     Gasp:
