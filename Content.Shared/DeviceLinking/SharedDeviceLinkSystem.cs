@@ -138,6 +138,8 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         {
             if (TryComp(source, out DeviceLinkSourceComponent? comp))
                 RemoveSinkFromSourceInternal(source, sink, comp, sink);
+            else
+                Log.Error($"Device sink {ToPrettyString(sink)} source list contains invalid entity: {ToPrettyString(source)}");
         }
     }
 
@@ -413,8 +415,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         sinkComponent.LinkedSources.Remove(sourceUid);
         sourceComponent.LinkedPorts.Remove(sinkUid);
-        var outputLists = sourceComponent.Outputs.Values;
-        foreach (var outputList in outputLists)
+        foreach (var outputList in sourceComponent.Outputs.Values)
         {
             outputList.Remove(sinkUid);
         }
