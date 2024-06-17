@@ -166,12 +166,15 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
     /// <summary>
     /// Resets the selected loadouts to default if no data is present.
     /// </summary>
-    /// <param name="force">Clear existing data first</param>
-    public void SetDefault(IPrototypeManager protoManager, bool force = false)
+    public void SetDefault(HumanoidCharacterProfile? profile, ICommonSession? session, IPrototypeManager protoManager, bool force = false)
     {
+        if (profile == null)
+            return;
+
         if (force)
             SelectedLoadouts.Clear();
 
+        var collection = IoCManager.Instance!;
         var roleProto = protoManager.Index(Role);
 
         for (var i = roleProto.Groups.Count - 1; i >= 0; i--)
@@ -184,14 +187,28 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             if (SelectedLoadouts.ContainsKey(group))
                 continue;
 
-            SelectedLoadouts[group] = new List<Loadout>();
+            var loadouts = new List<Loadout>();
+            SelectedLoadouts[group] = loadouts;
 
             if (groupProto.MinLimit > 0)
             {
                 // Apply any loadouts we can.
                 for (var j = 0; j < Math.Min(groupProto.MinLimit, groupProto.Loadouts.Count); j++)
                 {
-                    AddLoadout(group, groupProto.Loadouts[j], protoManager);
+                    if (!protoManager.TryIndex(groupProto.Loadouts[j], out var loadoutProto))
+                        continue;
+
+                    var defaultLoadout = new Loadout()
+                    {
+                        Prototype = loadoutProto.ID,
+                    };
+
+                    // Not valid so don't default to it anyway.
+                    if (!IsValid(profile, session, defaultLoadout.Prototype, collection, out _))
+                        continue;
+
+                    loadouts.Add(defaultLoadout);
+                    Apply(loadoutProto);
                 }
             }
         }
@@ -200,7 +217,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
     /// <summary>
     /// Returns whether a loadout is valid or not.
     /// </summary>
-    public bool IsValid(HumanoidCharacterProfile profile, ICommonSession session, ProtoId<LoadoutPrototype> loadout, IDependencyCollection collection, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool IsValid(HumanoidCharacterProfile profile, ICommonSession? session, ProtoId<LoadoutPrototype> loadout, IDependencyCollection collection, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
@@ -295,7 +312,25 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
-        return Role.Equals(other.Role) && SelectedLoadouts.SequenceEqual(other.SelectedLoadouts) && Points == other.Points;
+
+        if (!Role.Equals(other.Role) ||
+            SelectedLoadouts.Count != other.SelectedLoadouts.Count ||
+            Points != other.Points)
+        {
+            return false;
+        }
+
+        // Tried using SequenceEqual but it stinky so.
+        foreach (var (key, value) in SelectedLoadouts)
+        {
+            if (!other.SelectedLoadouts.TryGetValue(key, out var otherValue) ||
+                !otherValue.SequenceEqual(value))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public override bool Equals(object? obj)
