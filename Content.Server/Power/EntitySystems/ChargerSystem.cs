@@ -209,7 +209,6 @@ internal sealed class ChargerSystem : EntitySystem
 
         foreach (var containedEntity in container.ContainedEntities)
         {
-            // if none of the slotted items are actually batteries, represent the charger as off
             if (!SearchForBattery(containedEntity, out _, out _))
                 continue;
 
@@ -226,7 +225,6 @@ internal sealed class ChargerSystem : EntitySystem
 
         foreach (var containedEntity in container.ContainedEntities)
         {
-            // if none of the slotted items are actually batteries, represent the charger as off
             if (!SearchForBattery(containedEntity, out _, out _))
                 continue;
 
