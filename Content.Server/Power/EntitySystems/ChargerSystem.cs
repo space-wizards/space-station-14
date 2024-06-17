@@ -52,6 +52,10 @@ internal sealed class ChargerSystem : EntitySystem
     private void StartChargingBattery(EntityUid uid, ChargerComponent component, EntityUid target)
     {
         bool charge = true;
+
+        if (HasComp<EmpDisabledComponent>(uid))
+            charge = false;
+        else
         if (!TryComp<BatteryComponent>(target, out var battery))
             charge = false;
         else
