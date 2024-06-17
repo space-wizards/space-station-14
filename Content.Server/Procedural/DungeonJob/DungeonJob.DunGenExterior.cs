@@ -63,7 +63,7 @@ public sealed partial class DungeonJob
         }
 
         var config = _prototype.Index(dungen.Proto);
-        var dungeons = await GetDungeons(dungeonSpawn.Value, config, config.Data, config.Layers, reservedTiles, seed);
+        var dungeons = await GetDungeons(dungeonSpawn.Value, config, config.Data, config.Layers, config.ReserveTiles, reservedTiles, seed);
 
         return dungeons;
     }

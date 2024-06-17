@@ -17,9 +17,11 @@
     #- VGRoidInteriorDungeons
     #- !type:PrototypeDunGen
     #  proto: VGRoidLargePaths
-    #- VGRoidSmallPaths
+    - !type:PrototypeDunGen
+      proto: VGRoidSmallPaths
     #- VGRoidOres
-    #- VGRoidFill
+    - !type:PrototypeDunGen
+      proto: VGRoidFill
 
 # Configs
 - type: dungeonConfig
@@ -46,7 +48,7 @@
   maxOffset: 150
   layers:
   - !type:NoiseDistanceDunGen
-    size: 256, 256
+    size: 200, 200
     distanceConfig: !type:DunGenEuclideanSquaredDistance
     layers:
     - tile: FloorAsteroidSand
@@ -61,29 +63,19 @@
 
 - type: dungeonConfig
   id: VGRoidExteriorDungeons
-  minCount: 1
+  minCount: 2
   maxCount: 3
   reserveTiles: true
   layers:
   - !type:ExteriorDunGen
     proto: Experiment
-  # TODO:
-  # Need to cleanup dungeon initialisation a bit
-  # Need to make sure alltiles is accurate.
-  # Need a way to reserve tiles so dungeons don't overlap.
-  # - Need a thing to run it N times
-  # - Need a config to place it on the grid exterior
-  # Need a way to share snowylabs shit with the base dungeon
-  # Maybe put a thing on dungeonconfigprototype for tile configs / decal configs
-  # Maybe make postgen actually dungens?
-
 
 #- type: dungeonConfig
 #  id: VGRoidInteriorDungeons
 #  minCount: 3
 #  maxCount: 5
 #  # Just randomly spawn these in bounds, doesn't really matter if they go out.
-#
+
 #- type: dungeonConfig
 #  id: VGRoidLargePaths
 #  reserveTiles: true
@@ -93,19 +85,32 @@
 #    - tile: FloorAsteroidSand
 #      threshold: 0.70
 #      noise:
-#        frequency: 0.010
+#        frequency: 0.040
 #        noiseType: Perlin
 #        fractalType: Ridged
 #        octaves: 2
 #        gain: 2.0
 
-#
-#- type: dungeonConfig
-#  id: VGRoidSmallPaths
-#
+- type: dungeonConfig
+  id: VGRoidSmallPaths
+  reserveTiles: true
+  layers:
+  - !type:ReplaceTileDunGen
+    layers:
+    - tile: FloorAsteroidSand
+      threshold: 0.75
+      noise:
+        frequency: 0.040
+        noiseType: OpenSimplex2
+        fractalType: Ridged
+        lacunarity: 1.5
+        octaves: 2
+        gain: 2.0
+
 #- type: dungeonConfig
 #  id: VGRoidOres
 
+# Fill with rocks.
 - type: dungeonConfig
   id: VGRoidFill
   layers:

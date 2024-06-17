@@ -29,15 +29,14 @@
           fractalType: FBm
           octaves: 2
           lacunarity: 2
-  # Everything else
-  postGeneration:
-    # Generate biome
-    - !type:BiomePostGen
-      biomeTemplate: Asteroid
 
-    # Generate ore veins
-    - !type:MarkerLayerPostGen
-      markerTemplate: AsteroidOre
+  # Generate biome
+  - !type:BiomePostGen
+    biomeTemplate: Asteroid
+
+  # Generate ore veins
+  - !type:MarkerLayerPostGen
+    markerTemplate: AsteroidOre
 
 # Multiple smaller asteroids
 # This is a pain so we generate fewer tiles

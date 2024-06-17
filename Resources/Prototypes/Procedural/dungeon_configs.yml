@@ -60,12 +60,12 @@
     entities:
       Cabling: CableApcExtension
       CornerWalls: WallReinforced
-      Junction: BaseAirlock
       Walls: WallSolid
     spawnGroups:
       CornerClutter: BaseClutter
       Entrance: BaseAirlock
       EntranceFlank: BaseWindow
+      Junction: BaseAirlock
       WallMounts: ScienceLabsWalls
       Window: BaseWindow
     tiles:
@@ -85,7 +85,7 @@
       Walls: WallRock
     tiles:
       FallbackTile: FloorCaveDrought
-    whitelist:
+    whitelists:
       Rooms:
         tags:
         - Mineshaft
@@ -119,12 +119,12 @@
     entities:
       Cabling: CableApcExtension
       CornerWalls: WallReinforced
-      Junction: BaseAirlock
       Walls: WallSolid
     spawnGroups:
       CornerClutter: BaseClutter
       Entrance: LavaBrigEntrance
       EntranceFlank: BaseWindow
+      Junction: BaseAirlock
       WallMounts: ScienceLabsWalls
       Window: BaseWindow
     whitelists:
@@ -144,11 +144,11 @@
       CornerClutter: MineshaftClutter
       Entrance: BaseWoodWall
       EntranceFlank: BaseWoodWall
-      Junction: RandomWoodenSupport
+      Junction: BaseWoodSupport
       Window: BaseWoodWall
     tiles:
       FallbackTile: FloorCaveDrought
-    whitelist:
+    whitelists:
       Rooms:
         tags:
         - Mineshaft
@@ -163,13 +163,13 @@
       Decals: "#4cc7aa96"
     entities:
       Cabling: CableApcExtension
-      CornerClutter: BaseClutter
       CornerWalls: WallSilver
-      Junction: BaseAirlock
       Walls: WallSilver
     spawnGroups:
+      CornerClutter: BaseClutter
       Entrance: SnowyLabsEntrance
       EntranceFlank: BaseWindow
+      Junction: BaseAirlock
       WallMounts: SnowyLabsWalls
       Window: BaseWindow
     tiles:

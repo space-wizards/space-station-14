@@ -44,7 +44,7 @@ public sealed class Dungeon
         RefreshAllTiles();
     }
 
-    private void RefreshAllTiles()
+    public void RefreshAllTiles()
     {
         _allTiles.Clear();
         _allTiles.UnionWith(RoomTiles);
@@ -60,8 +60,6 @@ public sealed class Dungeon
 
         RoomTiles.Clear();
         RoomExteriorTiles.Clear();
-        CorridorTiles.Clear();
-        CorridorExteriorTiles.Clear();
         Entrances.Clear();
 
         foreach (var room in _rooms)

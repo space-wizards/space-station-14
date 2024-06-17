@@ -178,6 +178,7 @@ public sealed partial class DungeonJob
         WidenCorridor(dungeon, gen.Width, main.Network);
         dungeon.CorridorTiles.UnionWith(main.Network);
         BuildCorridorExterior(dungeon);
+        dungeon.RefreshAllTiles();
 
         var tiles = new List<(Vector2i Index, Tile Tile)>();
 

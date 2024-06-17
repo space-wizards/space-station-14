@@ -15,10 +15,10 @@ public sealed partial class DungeonJob
     private async Task PostGen(RoomEntrancePostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
-            data.SpawnGroups.TryGetValue(DungeonDataKey.Entrance, out var entranceProtos) ||
+            !data.SpawnGroups.TryGetValue(DungeonDataKey.Entrance, out var entranceProtos) ||
             !_prototype.TryIndex(entranceProtos, out var entranceIn))
         {
-            _sawmill.Error($"Unable to find dungeon keys for {nameof(RoomEntrancePostGen)}");
+            LogDataError(typeof(RoomEntrancePostGen));
             return;
         }
 

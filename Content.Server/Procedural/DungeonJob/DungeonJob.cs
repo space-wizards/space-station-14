@@ -95,11 +95,13 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
     /// <summary>
     /// Gets the relevant dungeon, running recursively as relevant.
     /// </summary>
+    /// <param name="reserve">Should we reserve tiles even if the config doesn't specify.</param>
     private async Task<List<Dungeon>> GetDungeons(
         Vector2i position,
         DungeonConfigPrototype config,
         DungeonData data,
         List<IDunGenLayer> layers,
+        bool reserve,
         HashSet<Vector2i> reservedTiles,
         int seed)
     {
@@ -109,15 +111,18 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
         for (var i = 0; i < count; i++)
         {
-            position += rand.NextVector2(config.MinOffset, config.MaxOffset).Floored();
+            position += rand.NextPolarVector2(config.MinOffset, config.MaxOffset).Floored();
 
             foreach (var layer in layers)
             {
                 await RunLayer(dungeons, data, position, layer, reservedTiles, seed);
 
-                if (config.ReserveTiles)
+                if (reserve)
                 {
-                    reservedTiles.UnionWith(dungeons[^1].AllTiles);
+                    foreach (var dungeon in dungeons)
+                    {
+                        reservedTiles.UnionWith(dungeon.AllTiles);
+                    }
                 }
 
                 await SuspendDungeon();
@@ -136,18 +141,13 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         _sawmill.Info($"Generating dungeon {_gen.ID} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
         _grid.CanSplit = false;
         var random = new Random(_seed);
-        var position = (_position + random.NextVector2(_gen.MinOffset, _gen.MaxOffset)).Floored();
+        var position = (_position + random.NextPolarVector2(_gen.MinOffset, _gen.MaxOffset)).Floored();
 
         // Tiles we can no longer generate on due to being reserved elsewhere.
         var reservedTiles = new HashSet<Vector2i>();
 
-        var dungeons = await GetDungeons(position, _gen, _gen.Data, _gen.Layers, reservedTiles, _seed);
+        var dungeons = await GetDungeons(position, _gen, _gen.Data, _gen.Layers, _gen.ReserveTiles, reservedTiles, _seed);
         // To make it slightly more deterministic treat this RNG as separate ig.
-
-        foreach (var dungeon in dungeons)
-        {
-            DebugTools.Assert(dungeon.RoomTiles.Count > 0);
-        }
 
         // Defer splitting so they don't get spammed and so we don't have to worry about tracking the grid along the way.
         _grid.CanSplit = true;
@@ -181,15 +181,19 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 break;
             case PrototypeDunGen prototypo:
                 var groupConfig = _prototype.Index(prototypo.Proto);
-                position = (_position + random.NextVector2(groupConfig.MinOffset, groupConfig.MaxOffset)).Floored();
+                position = (position + random.NextPolarVector2(groupConfig.MinOffset, groupConfig.MaxOffset)).Floored();
 
                 var dataCopy = groupConfig.Data.Clone();
                 dataCopy.Apply(data);
 
-                dungeons.AddRange(await GetDungeons(position, groupConfig, dataCopy, groupConfig.Layers, reservedTiles, seed));
+                dungeons.AddRange(await GetDungeons(position, groupConfig, dataCopy, groupConfig.Layers, groupConfig.ReserveTiles, reservedTiles, seed));
                 break;
             case PrefabDunGen prefab:
                 dungeons.Add(await GeneratePrefabDungeon(position, data, prefab, reservedTiles, seed));
+                break;
+
+            case ReplaceTileDunGen replace:
+                dungeons.Add(await GenerateTileReplacementDungeon(replace, data, reservedTiles, random));
                 break;
 
             // Postgen
@@ -251,7 +255,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
     private void LogDataError(Type type)
     {
-        _sawmill.Error($"Unable to find dungeon data for {type}");
+        _sawmill.Error($"Unable to find dungeon data keys for {type}");
     }
 
     [Pure]

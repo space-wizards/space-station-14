@@ -110,6 +110,7 @@ public sealed partial class DungeonJob
 
         _maps.SetTiles(_gridUid, _grid, setTiles);
         dungeon.CorridorTiles.UnionWith(corridorTiles);
+        dungeon.RefreshAllTiles();
         BuildCorridorExterior(dungeon);
     }
 }

@@ -19,7 +19,7 @@ public sealed partial class DungeonJob
         if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
             !data.Whitelists.TryGetValue(DungeonDataKey.Rooms, out var roomWhitelist))
         {
-            _sawmill.Error($"Unable to find dungeon data keys for {nameof(PrefabDunGen)}");
+            LogDataError(typeof(PrefabDunGen));
             return Dungeon.Empty;
         }
 
@@ -289,12 +289,6 @@ public sealed partial class DungeonJob
 
         foreach (var room in dungeon.Rooms)
         {
-            dungeon.RoomTiles.UnionWith(room.Tiles);
-            dungeon.RoomExteriorTiles.UnionWith(room.Exterior);
-        }
-
-        foreach (var room in dungeon.Rooms)
-        {
             dungeonCenter += room.Center;
             SetDungeonEntrance(dungeon, room, reservedTiles, random);
         }
@@ -351,7 +345,6 @@ public sealed partial class DungeonJob
                     continue;
 
                 room.Entrances.Add(entrancePos);
-                dungeon.Entrances.Add(entrancePos);
                 break;
             }
         }
