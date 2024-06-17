@@ -110,7 +110,7 @@
 - type: startingGear
   id: SecurityBackpack
   equipment:
-    back: ClothingBackpackSecurityFilled
+    back: ClothingBackpackSecurity
 
 - type: loadout
   id: SecuritySatchel
@@ -119,7 +119,7 @@
 - type: startingGear
   id: SecuritySatchel
   equipment:
-    back: ClothingBackpackSatchelSecurityFilled
+    back: ClothingBackpackSatchelSecurity
 
 - type: loadout
   id: SecurityDuffel
@@ -128,7 +128,7 @@
 - type: startingGear
   id: SecurityDuffel
   equipment:
-    back: ClothingBackpackDuffelSecurityFilled
+    back: ClothingBackpackDuffelSecurity
 
 # Belt
 - type: loadout
@@ -188,13 +188,22 @@
     shoes: ClothingShoesBootsCombatFilled
 
 - type: loadout
+  id: JackBoots
+  equipment: JackBoots
+
+- type: startingGear
+  id: JackBoots
+  equipment:
+    shoes: ClothingShoesBootsJackFilled
+
+- type: loadout
   id: SecurityWinterBoots
   equipment: SecurityWinterBoots
 
 - type: startingGear
   id: SecurityWinterBoots
   equipment:
-    shoes: ClothingShoesBootsWinterSec
+    shoes: ClothingShoesBootsWinterSecFilled
 
 # PDA
 - type: loadout

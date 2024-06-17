@@ -60,7 +60,8 @@ public sealed class MaterialArbitrageTest
         }
 
         // Lets assume the possible lathe for resource multipliers:
-        var multiplier = MathF.Pow(LatheComponent.DefaultPartRatingMaterialUseMultiplier, MachinePartComponent.MaxRating - 1);
+        // TODO: each recipe can technically have its own cost multiplier associated with it, so this test needs redone to factor that in.
+        var multiplier = MathF.Pow(0.85f, 3);
 
         // create construction dictionary
         Dictionary<string, ConstructionComponent> constructionRecipes = new();
@@ -103,7 +104,7 @@ public sealed class MaterialArbitrageTest
                         continue;
 
                     var stackProto = protoManager.Index<StackPrototype>(materialStep.MaterialPrototypeId);
-                    var spawnProto = protoManager.Index<EntityPrototype>(stackProto.Spawn);
+                    var spawnProto = protoManager.Index(stackProto.Spawn);
 
                     if (!spawnProto.Components.ContainsKey(materialName) ||
                         !spawnProto.Components.TryGetValue(compositionName, out var compositionReg))

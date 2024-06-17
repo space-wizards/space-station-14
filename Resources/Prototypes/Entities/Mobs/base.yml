@@ -43,6 +43,8 @@
   - type: MovementSpeedModifier
   - type: Polymorphable
   - type: StatusIcon
+  - type: RequireProjectileTarget
+    active: False
 
 # Used for mobs that have health and can take damage.
 - type: entity
