@@ -133,6 +133,6 @@
     price: 1500
   - type: Prayable
     sentMessage: prayer-popup-notify-lamp-sent
-    notifiactionPrefix: prayer-chat-notify-lamp
+    notificationPrefix: prayer-chat-notify-lamp
     verb: prayer-verbs-rub
     verbImage: null
