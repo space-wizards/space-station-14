@@ -20,7 +20,7 @@
   id: TallCabinet
   name: tall cabinet
   description: A cabinet for all your filing needs.
-  graph: filingCabinet
+  graph: FilingCabinet
   startNode: start
   targetNode: tallCabinet
   category: construction-category-storage
@@ -37,7 +37,7 @@
   id: ChestDrawer
   name: chest drawer
   description: A small drawer for all your filing needs, Now with wheels!
-  graph: filingCabinet
+  graph: FilingCabinet
   startNode: start
   targetNode: chestDrawer
   category: construction-category-storage
