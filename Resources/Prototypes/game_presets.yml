@@ -22,7 +22,6 @@
     - Zombie
     - TurfWar
     - RampingStationEventScheduler
-    - BasicRoundstartVariation
     - GameRuleMeteorScheduler
 
 - type: gamePreset
