@@ -1,7 +1,7 @@
 {
     "version": 1,
-    "license": "CC-BY-NC-4.0",
-    "copyright": "taken from https://github.com/tgstation/tgstation/commit/0a9e4d0cf0afa0ccbfdcbebf2a89ad3ce22083e7 and modified from the foam force poster by IProduceWidgets (github)",
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from  at commit https://github.com/tgstation/tgstation/commit/f01de25493e2bd2706ef9b0303cb0d7b5e3e471b and modified from the foam force poster by IProduceWidgets (github)",
     "size": {
         "x": 32,
         "y": 32
