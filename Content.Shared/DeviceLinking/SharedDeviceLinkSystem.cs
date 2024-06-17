@@ -52,7 +52,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
             foreach (var link in invalidLinks)
             {
-                Log.Error($"Device source {ToPrettyString(source)} contains invalid links to entity {ToPrettyString(sink)}: {link.Item1}->{link.Item2}");
+                Log.Warning($"Device source {ToPrettyString(source)} contains invalid links to entity {ToPrettyString(sink)}: {link.Item1}->{link.Item2}");
                 links.Remove(link);
             }
 
@@ -69,7 +69,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         foreach (var sink in invalidSinks)
         {
             source.Comp.LinkedPorts.Remove(sink);
-            Log.Error($"Device source {ToPrettyString(source)} contains invalid sink: {ToPrettyString(sink)}");
+            Log.Warning($"Device source {ToPrettyString(source)} contains invalid sink: {ToPrettyString(sink)}");
         }
     }
     #endregion
