@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Syndicate duffelbag storage increased from 8x5 to 9x5.
-    type: Tweak
-  id: 6262
-  time: '2024-03-31T02:21:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26565
 - author: Velcroboy
   changes:
   - message: Changed plastic flaps to be completely constructable/deconstructable
@@ -3859,3 +3852,10 @@
   id: 6761
   time: '2024-06-16T23:24:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28982
+- author: notafet
+  changes:
+  - message: Adjust TEG power generation levels.
+    type: Tweak
+  id: 6762
+  time: '2024-06-17T01:13:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29112
