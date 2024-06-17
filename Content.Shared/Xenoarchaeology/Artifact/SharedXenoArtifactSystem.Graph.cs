@@ -1,0 +1,442 @@
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Xenoarchaeology.Artifact.Components;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared.Xenoarchaeology.Artifact;
+
+/// <summary>
+/// User-friendly API for viewing and modifying the complex graph relationship in XenoArtifacts
+/// </summary>
+public sealed partial class SharedXenoArtifactSystem
+{
+    public int GetIndex(Entity<XenoArtifactComponent> ent, EntityUid node)
+    {
+        for (var i = 0; i < ent.Comp.NodeVertices.Length; i++)
+        {
+            if (!TryGetNode((ent, ent), i, out var iNode))
+                continue;
+
+            if (node != iNode.Value.Owner)
+                continue;
+
+            return i;
+        }
+
+        throw new ArgumentException($"node {ToPrettyString(node)} is not present in {ToPrettyString(ent)}");
+    }
+
+    public bool TryGetIndex(Entity<XenoArtifactComponent?> ent, EntityUid node, [NotNullWhen(true)] out int? index)
+    {
+        index = null;
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        for (var i = 0; i < ent.Comp.NodeVertices.Length; i++)
+        {
+            if (!TryGetNode(ent, i, out var iNode))
+                continue;
+
+            if (node != iNode.Value.Owner)
+                continue;
+
+            index = i;
+            return true;
+        }
+
+        return false;
+    }
+
+    public Entity<XenoArtifactNodeComponent> GetNode(Entity<XenoArtifactComponent> ent, int index)
+    {
+        if (ent.Comp.NodeVertices[index] is { } uid)
+            return (uid, XenoArtifactNode(uid));
+
+        throw new ArgumentException($"index {index} does not correspond to an existing node in {ToPrettyString(ent)}");
+    }
+
+    public bool TryGetNode(Entity<XenoArtifactComponent?> ent, int index, [NotNullWhen(true)] out Entity<XenoArtifactNodeComponent>? node)
+    {
+        node = null;
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        if (index < 0 || index >= ent.Comp.NodeVertices.Length)
+            return false;
+
+        if (ent.Comp.NodeVertices[index] is { } uid)
+            node = (uid, XenoArtifactNode(uid));
+
+        return node != null;
+    }
+
+    /// <summary>
+    /// Gets the index of the first empty spot in the NodeVertices array.
+    /// If there is none, resizes both arrays and returns the new index.
+    /// </summary>
+    public int GetFreeNodeIndex(Entity<XenoArtifactComponent> ent)
+    {
+        var length = ent.Comp.NodeVertices.Length;
+        for (var i = 0; i < length; i++)
+        {
+            if (TryGetNode((ent, ent), i, out _))
+                continue;
+
+            return i;
+        }
+
+        ResizeNodeGraph(ent, length + 1);
+        return length;
+    }
+
+    public IEnumerable<Entity<XenoArtifactNodeComponent>> GetAllNodes(Entity<XenoArtifactComponent> ent)
+    {
+        foreach (var node in ent.Comp.NodeVertices)
+        {
+            if (node is not null)
+                yield return (node.Value, XenoArtifactNode(node.Value));
+        }
+    }
+
+    public IEnumerable<int> GetAllNodeIndices(Entity<XenoArtifactComponent> ent)
+    {
+        for (var i = 0; i < ent.Comp.NodeVertices.Length; i++)
+        {
+            if (ent.Comp.NodeVertices[i] is not null)
+                yield return i;
+        }
+    }
+
+    public bool AddEdge(Entity<XenoArtifactComponent?> ent, EntityUid from, EntityUid to, bool dirty = true)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        if (!TryGetIndex(ent, from, out var fromIdx) ||
+            !TryGetIndex(ent, to, out var toIdx))
+            return false;
+
+        return AddEdge(ent, fromIdx.Value, toIdx.Value, dirty: dirty);
+    }
+
+    public bool AddEdge(Entity<XenoArtifactComponent?> ent, int fromIdx, int toIdx, bool dirty = true)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        Debug.Assert(fromIdx >= 0 && fromIdx < ent.Comp.NodeVertices.Length, $"fromIdx \"{fromIdx}\" is out of bounds!");
+        Debug.Assert(toIdx >= 0 && toIdx < ent.Comp.NodeVertices.Length, $"toIdx \"{toIdx}\" is out of bounds!");
+
+        if (ent.Comp.NodeAdjacencyMatrix[fromIdx, toIdx])
+            return false; //Edge is already present
+
+        // TODO: add a safety check to prohibit cyclic paths.
+
+        ent.Comp.NodeAdjacencyMatrix[fromIdx, toIdx] = true;
+        if (dirty)
+            RebuildCachedActiveNodes(ent);
+        return true;
+    }
+
+    public bool RemoveEdge(Entity<XenoArtifactComponent?> ent, EntityUid from, EntityUid to, bool dirty = true)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        if (!TryGetIndex(ent, from, out var fromIdx) ||
+            !TryGetIndex(ent, to, out var toIdx))
+            return false;
+
+        return RemoveEdge(ent, fromIdx.Value, toIdx.Value, dirty);
+    }
+
+    public bool RemoveEdge(Entity<XenoArtifactComponent?> ent, int fromIdx, int toIdx, bool dirty = true)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        Debug.Assert(fromIdx >= 0 && fromIdx < ent.Comp.NodeVertices.Length, $"fromIdx \"{fromIdx}\" is out of bounds!");
+        Debug.Assert(toIdx >= 0 && toIdx < ent.Comp.NodeVertices.Length, $"toIdx \"{toIdx}\" is out of bounds!");
+
+        if (!ent.Comp.NodeAdjacencyMatrix[fromIdx, toIdx])
+            return false; //Edge doesn't exist
+
+        ent.Comp.NodeAdjacencyMatrix[fromIdx, toIdx] = false;
+
+        if (dirty)
+            RebuildCachedActiveNodes(ent);
+        return true;
+    }
+
+    public bool AddNode(Entity<XenoArtifactComponent?> ent,
+        EntProtoId<XenoArtifactNodeComponent> prototype,
+        [NotNullWhen(true)] out Entity<XenoArtifactNodeComponent>? node,
+        bool dirty = true)
+    {
+        node = null;
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        var uid = Spawn(prototype.Id);
+        node = (uid, XenoArtifactNode(uid));
+        return AddNode(ent, (node.Value, node.Value.Comp), dirty: dirty);
+    }
+
+    public bool AddNode(Entity<XenoArtifactComponent?> ent, Entity<XenoArtifactNodeComponent?> node, bool dirty = true)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+        node.Comp ??= XenoArtifactNode(node);
+        node.Comp.Attached = ent;
+
+        var nodeIdx = GetFreeNodeIndex((ent, ent.Comp));
+        _container.Insert(node.Owner, ent.Comp.NodeContainer);
+        ent.Comp.NodeVertices[nodeIdx] = node;
+
+        Dirty(node);
+        if (dirty)
+            RebuildCachedActiveNodes(ent);
+        return true;
+    }
+
+    public bool RemoveNode(Entity<XenoArtifactComponent?> ent, Entity<XenoArtifactNodeComponent?> node, bool dirty = true)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+        node.Comp ??= XenoArtifactNode(node);
+
+        if (!TryGetIndex(ent, node, out var idx))
+            return false; // node isn't attached to this entity.
+
+        RemoveAllNodeEdges(ent, idx.Value, dirty: false);
+
+        _container.Remove(node.Owner, ent.Comp.NodeContainer);
+        node.Comp.Attached = null;
+        ent.Comp.NodeVertices[idx.Value] = null;
+        if (dirty)
+        {
+            RebuildCachedActiveNodes(ent);
+            Dirty(ent);
+        }
+        Dirty(node);
+        return true;
+    }
+
+    public void RemoveAllNodeEdges(Entity<XenoArtifactComponent?> ent, int nodeIdx, bool dirty = true)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        var predecessors = GetDirectPredecessorNodes(ent, nodeIdx);
+        foreach (var p in predecessors)
+        {
+            RemoveEdge(ent, p, nodeIdx, dirty: false);
+        }
+
+        var successors = GetDirectSuccessorNodes(ent, nodeIdx);
+        foreach (var s in successors)
+        {
+            RemoveEdge(ent, nodeIdx, s, dirty: false);
+        }
+
+        if (dirty)
+        {
+            RebuildCachedActiveNodes(ent);
+            Dirty(ent);
+        }
+    }
+
+    public HashSet<Entity<XenoArtifactNodeComponent>> GetDirectPredecessorNodes(Entity<XenoArtifactComponent?> ent, EntityUid node)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return new();
+
+        if (!TryGetIndex(ent, node, out var index))
+            return new();
+
+        var indices = GetDirectPredecessorNodes(ent, index.Value);
+        var output = new HashSet<Entity<XenoArtifactNodeComponent>>();
+        foreach (var i in indices)
+        {
+            if (TryGetNode(ent, i, out var predecessor))
+                output.Add(predecessor.Value);
+        }
+
+        return output;
+    }
+
+    public HashSet<int> GetDirectPredecessorNodes(Entity<XenoArtifactComponent?> ent, int nodeIdx)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return new();
+        Debug.Assert(nodeIdx >= 0 && nodeIdx < ent.Comp.NodeVertices.Length, $"node index \"{nodeIdx}\" is out of bounds!");
+
+        var indices = new HashSet<int>();
+        for (var i = 0; i < ent.Comp.NodeAdjacencyMatrixRows; i++)
+        {
+            if (ent.Comp.NodeAdjacencyMatrix[i, nodeIdx])
+                indices.Add(i);
+        }
+
+        return indices;
+    }
+
+    public HashSet<Entity<XenoArtifactNodeComponent>> GetDirectSuccessorNodes(Entity<XenoArtifactComponent?> ent, EntityUid node)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return new();
+
+        if (!TryGetIndex(ent, node, out var index))
+            return new();
+
+        var indices = GetDirectSuccessorNodes(ent, index.Value);
+        var output = new HashSet<Entity<XenoArtifactNodeComponent>>();
+        foreach (var i in indices)
+        {
+            if (TryGetNode(ent, i, out var successor))
+                output.Add(successor.Value);
+        }
+
+        return output;
+    }
+
+    public HashSet<int> GetDirectSuccessorNodes(Entity<XenoArtifactComponent?> ent, int nodeIdx)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return new();
+        Debug.Assert(nodeIdx >= 0 && nodeIdx < ent.Comp.NodeVertices.Length, $"node index \"{nodeIdx}\" is out of bounds!");
+
+        var indices = new HashSet<int>();
+        for (var i = 0; i < ent.Comp.NodeAdjacencyMatrixColumns; i++)
+        {
+            if (ent.Comp.NodeAdjacencyMatrix[nodeIdx, i])
+                indices.Add(i);
+        }
+
+        return indices;
+    }
+
+    public HashSet<Entity<XenoArtifactNodeComponent>> GetPredecessorNodes(Entity<XenoArtifactComponent?> ent, Entity<XenoArtifactNodeComponent> node)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return new();
+
+        var predecessors = GetPredecessorNodes(ent, GetIndex((ent, ent.Comp), node));
+        var output = new HashSet<Entity<XenoArtifactNodeComponent>>();
+        foreach (var p in predecessors)
+        {
+            output.Add(GetNode((ent, ent.Comp), p));
+        }
+
+        return output;
+    }
+
+    public HashSet<int> GetPredecessorNodes(Entity<XenoArtifactComponent?> ent, int nodeIdx)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return new();
+
+        var predecessors = GetDirectPredecessorNodes(ent, nodeIdx);
+        if (predecessors.Count == 0)
+            return new();
+
+        var output = new HashSet<int>();
+        foreach (var p in predecessors)
+        {
+            output.Add(p);
+            var recursivePredecessors = GetPredecessorNodes(ent, p);
+            foreach (var rp in recursivePredecessors)
+            {
+                output.Add(rp);
+            }
+        }
+
+        return output;
+    }
+
+    public HashSet<Entity<XenoArtifactNodeComponent>> GetSuccessorNodes(Entity<XenoArtifactComponent?> ent, Entity<XenoArtifactNodeComponent> node)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return new();
+
+        var successors = GetSuccessorNodes(ent, GetIndex((ent, ent.Comp), node));
+        var output = new HashSet<Entity<XenoArtifactNodeComponent>>();
+        foreach (var s in successors)
+        {
+            output.Add(GetNode((ent, ent.Comp), s));
+        }
+
+        return output;
+    }
+
+    public HashSet<int> GetSuccessorNodes(Entity<XenoArtifactComponent?> ent, int nodeIdx)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return new();
+
+        var successors = GetDirectSuccessorNodes(ent, nodeIdx);
+        if (successors.Count == 0)
+            return new();
+
+        var output = new HashSet<int>();
+        foreach (var s in successors)
+        {
+            output.Add(s);
+            var recursiveSuccessors = GetSuccessorNodes(ent, s);
+            foreach (var rs in recursiveSuccessors)
+            {
+                output.Add(rs);
+            }
+        }
+
+        return output;
+    }
+
+    public bool NodeHasEdge(Entity<XenoArtifactComponent?> ent,
+        Entity<XenoArtifactNodeComponent?> from,
+        Entity<XenoArtifactNodeComponent?> to)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return new();
+
+        var fromIdx = GetIndex((ent, ent.Comp), from);
+        var toIdx = GetIndex((ent, ent.Comp), to);
+
+        return ent.Comp.NodeAdjacencyMatrix[fromIdx, toIdx];
+    }
+
+    /// <summary>
+    /// Resizes the adjacency matrix and vertices array to newLength
+    /// </summary>
+    protected void ResizeNodeGraph(Entity<XenoArtifactComponent> ent, int newSize)
+    {
+        Array.Resize(ref ent.Comp.NodeVertices, newSize);
+        ent.Comp.NodeAdjacencyMatrix = XenoArtifactGraphHelpers.ResizeArray(ent.Comp.NodeAdjacencyMatrix, newSize, newSize);
+        Dirty(ent);
+    }
+}
+
+public static class XenoArtifactGraphHelpers
+{
+    /// <summary>
+    /// Resizes a 2d array to the specified dimensions, retaining the positions of existing values in the array.
+    /// Taken from https://stackoverflow.com/a/9059866.
+    /// </summary>
+    public static T[,] ResizeArray<T>(T[,] original, int x, int y)
+    {
+        var newArray = new T[x, y];
+        var minX = Math.Min(original.GetLength(0), newArray.GetLength(0));
+        var minY = Math.Min(original.GetLength(1), newArray.GetLength(1));
+
+        for (var i = 0; i < minY; ++i)
+        {
+            Array.Copy(original,
+                i * original.GetLength(0),
+                newArray,
+                i * newArray.GetLength(0),
+                minX);
+        }
+
+        return newArray;
+    }
+}
