@@ -32,7 +32,7 @@
         amount: 3
 
 - type: entity
-  id: CrateSecurityNonlethalStun
+  id: CrateSecurityNonlethal
   parent: CrateSecgear
   name: nonlethal stun crate
   description: Containers two disablers, stunbatons, flashes, zipties. Requires Security access to open.

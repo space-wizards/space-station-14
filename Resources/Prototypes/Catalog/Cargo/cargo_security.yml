@@ -34,7 +34,7 @@
     sprite: Objects/Weapons/Guns/Battery/disabler.rsi
     state: base
   product: CrateSecurityNonlethal
-  cost: 4000
+  cost: 2200
   category: cargoproduct-category-name-security
   group: market
 
