@@ -1,13 +1,17 @@
 using System.Linq;
-using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.Dataset;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
 public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRuleComponent>
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     protected override void Started(EntityUid uid, RandomSentienceRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         if (!TryGetRandomStation(out var station))
@@ -23,7 +27,7 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
             targetList.Add((targetUid, target));
         }
 
-        var toMakeSentient = RobustRandom.Next(2, 5);
+        var toMakeSentient = _random.Next(component.MinSentiences, component.MaxSentiences);
 
         var groups = new HashSet<string>();
 
@@ -33,8 +37,8 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
             var totalWeight = targetList.Sum(x => x.Comp.Weight);
             // This initial target should never be picked.
             // It's just so that target doesn't need to be nullable and as a safety fallback for id floating point errors ever mess up the comparison in the foreach.
-            Entity<SentienceTargetComponent> target = targetList[0];
-            var chosenWeight = RobustRandom.NextFloat(totalWeight);
+            var target = targetList[0];
+            var chosenWeight = _random.NextFloat(totalWeight);
             var currentWeight = 0.0;
             foreach (var potentialTarget in targetList)
             {
@@ -67,8 +71,9 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
             (EntityUid) station, // cast from nullable. If this was null, we wouldn't be here
             Loc.GetString("station-event-random-sentience-announcement",
                 ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
-                ("data", Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}")),
-                ("strength", Loc.GetString($"random-sentience-event-strength-{RobustRandom.Next(1, 8)}"))),
+                ("data", Loc.GetString(_random.Pick(_prototype.Index<LocalizedDatasetPrototype>("RandomSentienceEventData").Values))),
+                ("strength", Loc.GetString(_random.Pick(_prototype.Index<LocalizedDatasetPrototype>("RandomSentienceEventStrength").Values)))
+            ),
             playDefaultSound: false,
             colorOverride: Color.Gold
         );
