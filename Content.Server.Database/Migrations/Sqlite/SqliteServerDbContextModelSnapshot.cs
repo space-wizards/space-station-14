@@ -608,6 +608,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("first_seen_time");
 
+                    b.Property<DateTime?>("LastReadRules")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("last_read_rules");
+
                     b.Property<string>("LastSeenAddress")
                         .IsRequired()
                         .HasColumnType("TEXT")
