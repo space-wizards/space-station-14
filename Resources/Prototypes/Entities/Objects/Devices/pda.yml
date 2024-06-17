@@ -106,6 +106,8 @@
   - type: SentienceTarget # sentient PDA = pAI lite
     flavorKind: station-event-random-sentience-flavor-mechanical
     weight: 0.001 # 1,000 PDAs = as likely to be picked as 1 regular animal
+  - type: BlockMovement
+    blockInteraction: false # lets the PDA toggle its own flashlight
   - type: TypingIndicator
     proto: robot
   - type: Speech
@@ -224,6 +226,8 @@
     borderColor: "#d7d7d0"
   - type: Icon
     state: pda-cook
+  - type: ReplacementAccent # for random sentience event
+    accent: italian
 
 - type: entity
   parent: BasePDA
@@ -305,6 +309,7 @@
     accentHColor: "#333333"
   - type: Icon
     state: pda-mime
+  - type: Muted # for random sentience event
 
 - type: entity
   name: chaplain PDA

@@ -16,7 +16,7 @@ public partial class SharedInteractionSystem
     {
         SubscribeLocalEvent<BlockMovementComponent, UpdateCanMoveEvent>(OnMoveAttempt);
         SubscribeLocalEvent<BlockMovementComponent, UseAttemptEvent>(CancelEvent);
-        SubscribeLocalEvent<BlockMovementComponent, InteractionAttemptEvent>(CancelEvent);
+        SubscribeLocalEvent<BlockMovementComponent, InteractionAttemptEvent>(CancelInteractionEvent);
         SubscribeLocalEvent<BlockMovementComponent, DropAttemptEvent>(CancelEvent);
         SubscribeLocalEvent<BlockMovementComponent, PickupAttemptEvent>(CancelEvent);
         SubscribeLocalEvent<BlockMovementComponent, ChangeDirectionAttemptEvent>(CancelEvent);
@@ -31,6 +31,12 @@ public partial class SharedInteractionSystem
             return;
 
         args.Cancel(); // no more scurrying around
+    }
+
+    private void CancelInteractionEvent(EntityUid uid, BlockMovementComponent component, CancellableEntityEventArgs args)
+    {
+        if (component.BlockInteraction)
+            args.Cancel();
     }
 
     private void CancelEvent(EntityUid uid, BlockMovementComponent component, CancellableEntityEventArgs args)
