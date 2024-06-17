@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.BarSign;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -15,7 +16,13 @@ public sealed class BarSignBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
     {
         base.Open();
 
-        _menu = new(Owner, EntMan, _prototype);
+        var sign = EntMan.GetComponentOrNull<BarSignComponent>(Owner)?.Current is { } current
+            ? _prototype.Index(current)
+            : null;
+        var allSigns =Shared.BarSign.BarSignSystem.GetAllBarSigns(_prototype)
+            .OrderBy(p => Loc.GetString(p.Name))
+            .ToList();
+        _menu = new(Owner, sign, allSigns);
 
         _menu.OnSignSelected += id =>
         {
@@ -32,7 +39,9 @@ public sealed class BarSignBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
 
         if (state is not BarSignBuiState buiState)
             return;
-        _menu?.UpdateState(buiState);
+
+        if (_prototype.TryIndex(buiState.Sign, out var signPrototype))
+            _menu?.UpdateState(signPrototype);
     }
 
     protected override void Dispose(bool disposing)

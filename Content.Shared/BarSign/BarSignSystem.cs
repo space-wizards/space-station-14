@@ -21,13 +21,13 @@ public sealed class BarSignSystem : EntitySystem
         });
     }
 
-    private void OnMapInit(EntityUid uid, BarSignComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<BarSignComponent> ent, ref MapInitEvent args)
     {
-        if (component.Current != null)
+        if (ent.Comp.Current != null)
             return;
 
         var newPrototype = _random.Pick(GetAllBarSigns(_prototypeManager));
-        SetBarSign((uid, component), newPrototype);
+        SetBarSign(ent, newPrototype);
     }
 
     private void OnSetBarSignMessage(Entity<BarSignComponent> ent, ref SetBarSignMessage args)

@@ -10,24 +10,19 @@ namespace Content.Client.BarSign.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class BarSignMenu : FancyWindow
 {
-    private readonly IPrototypeManager _prototype;
-
     private string? _currentId;
 
     private readonly List<BarSignPrototype> _cachedPrototypes = new();
 
     public event Action<string>? OnSignSelected;
 
-    public BarSignMenu(EntityUid owner, IEntityManager entMan, IPrototypeManager protoMan)
+    public BarSignMenu(EntityUid owner, BarSignPrototype? currentSign, List<BarSignPrototype> signs)
     {
         RobustXamlLoader.Load(this);
-        _prototype = protoMan;
-        _currentId = entMan.GetComponentOrNull<BarSignComponent>(owner)?.Current;
+        _currentId = currentSign?.ID;
 
         _cachedPrototypes.Clear();
-        _cachedPrototypes = Shared.BarSign.BarSignSystem.GetAllBarSigns(_prototype)
-            .OrderBy(p => Loc.GetString(p.Name))
-            .ToList();
+        _cachedPrototypes = signs;
         foreach (var proto in _cachedPrototypes)
         {
             SignOptions.AddItem(Loc.GetString(proto.Name));
@@ -39,19 +34,19 @@ public sealed partial class BarSignMenu : FancyWindow
             SignOptions.SelectId(idx.Id);
         };
 
-        if (_currentId != null)
+        if (currentSign != null)
         {
-            var idx = _cachedPrototypes.IndexOf(_prototype.Index<BarSignPrototype>(_currentId));
+            var idx = _cachedPrototypes.IndexOf(currentSign);
             SignOptions.TrySelectId(idx);
         }
     }
 
-    public void UpdateState(BarSignBuiState buiState)
+    public void UpdateState(BarSignPrototype newSign)
     {
-        if (_currentId != null && buiState.Sign == _currentId)
+        if (_currentId != null && newSign.ID == _currentId)
             return;
-        _currentId = buiState.Sign;
-        var idx = _cachedPrototypes.IndexOf(_prototype.Index(buiState.Sign));
+        _currentId = newSign.ID;
+        var idx = _cachedPrototypes.IndexOf(newSign);
         SignOptions.TrySelectId(idx);
     }
 }
