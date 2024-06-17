@@ -212,10 +212,6 @@ public sealed class SatiationSystem : EntitySystem
         return true;
     }
 
-    ///
-    /// <summary>
-    ///
-    /// </summary>
     private SatiationThreashold GetThreshold(Satiation satiation, float? level = null)
     {
 

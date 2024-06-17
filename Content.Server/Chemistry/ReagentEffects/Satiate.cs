@@ -7,14 +7,14 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.ReagentEffects
 {
     /// <summary>
-    /// Default metabolism for drink reagents. Attempts to find a ThirstComponent on the target,
-    /// and to update it's thirst values.
+    /// Default metabolism for drink reagents. Attempts to find a SatiationComponent on the target,
+    /// and to update it's satiation values.
     /// </summary>
     public sealed partial class Satiate : ReagentEffect
     {
         private const float DefaultSatiationFactor = 3.0f;
 
-        /// How much thirst is satiated each metabolism tick. Not currently tied to
+        /// How much is satiated each metabolism tick. Not currently tied to
         /// rate or anything.
         [DataField("factor")]
         public float SatiationFactor { get; set; } = DefaultSatiationFactor;
@@ -22,7 +22,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField]
         public ProtoId<SatiationTypePrototype> SatiationType = "Hunger";
 
-        /// Satiate thirst if a ThirstComponent can be found
+        /// Satiate thirst if a SatiationComponent can be found
         public override void Effect(ReagentEffectArgs args)
         {
             var uid = args.SolutionEntity;
