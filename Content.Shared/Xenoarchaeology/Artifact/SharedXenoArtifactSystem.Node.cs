@@ -32,7 +32,8 @@ public sealed partial class SharedXenoArtifactSystem
             return;
 
         ent.Comp.Locked = false;
-        // TODO: update the cached active node data.
+        if (ent.Comp.Attached is { } artifact)
+            RebuildCachedActiveNodes(artifact);
         Dirty(ent);
     }
 
