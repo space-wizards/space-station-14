@@ -1,7 +1,6 @@
 ﻿using Content.Server.Actions;
+using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
-using BackflipActionEvent = Content.Shared.Movement.Components.BackflipActionEvent;
-using CanBackflipComponent = Content.Shared.Movement.Components.CanBackflipComponent;
 
 namespace Content.Server.Movement.Systems;
 
@@ -15,6 +14,7 @@ public sealed class BackflipSystem : EntitySystem
 
         SubscribeLocalEvent<CanBackflipComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<CanBackflipComponent, BackflipActionEvent>(OnBackflipAction);
+        SubscribeLocalEvent<CanBackflipComponent, InteractionAttemptFailed>(OnInteractFailed);
     }
 
     private void OnInit(EntityUid uid, CanBackflipComponent component, MapInitEvent args)
@@ -24,8 +24,18 @@ public sealed class BackflipSystem : EntitySystem
 
     public void OnBackflipAction(EntityUid uid, CanBackflipComponent comp, BackflipActionEvent args)
     {
-        RaiseNetworkEvent(new DoABackFlipEvent(GetNetEntity(uid), comp.ClappaSfx));
+        RaiseNetworkEvent(new DoABackFlipEvent(GetNetEntity(uid), comp.SoundEffect));
 
         args.Handled = true;
+    }
+
+    public void OnInteractFailed(EntityUid uid, CanBackflipComponent comp, InteractionAttemptFailed args)
+    {
+        if (!comp.BackflipOnFailedInteract)
+        {
+            return;
+        }
+
+        RaiseLocalEvent(uid, new BackflipActionEvent());
     }
 }

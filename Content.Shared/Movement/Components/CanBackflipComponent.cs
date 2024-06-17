@@ -14,7 +14,10 @@ public sealed partial class CanBackflipComponent : Component
     public EntityUid? BackflipActionEntity;
 
     [DataField]
-    public string ClappaSfx = "";
+    public string SoundEffect = "";
+
+    [DataField]
+    public bool BackflipOnFailedInteract;
 }
 
 public sealed partial class BackflipActionEvent : InstantActionEvent

@@ -1,25 +1,27 @@
-﻿- type: entity
-  name: Scurret
+﻿# Defines the scurret, a small, agile sapient species intended for players who want to play as something similar to an ewok.
+# Although based on MobBaseAncestor, this species does not have a "developed" playable species it is an ancestor to.
+
+- type: entity
+  name: scurret
   id: MobScurret
   parent: MobBaseAncestor
   description: Commonly known as Wawas, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds' Pizza's "loyal workforce".
   components:
-  # Basics
-  - type: Scurret
+  # Agile, so can backflip as an ability.
   - type: CanBackflip
-    clappaSfx: /Audio/Animals/slugclappa.ogg
+    soundEffect: /Audio/Weapons/punchmiss.ogg
+    backflipOnFailedInteract: true
+  # Custom names
   - type: NameIdentifier
     enabled: False
   - type: RandomMetadata
-    nameSeparator: "-"
     nameSegments:
       - NamesFirstScurret
-      - NamesMiddleScurret
       - NamesLastScurret
   - type: ReplacementAccent
     accent: scurret
   - type: Sprite
-    drawdepth: SmallMobs
+    # drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       sprite: Mobs/Animals/scurret.rsi
@@ -29,11 +31,13 @@
       sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-2
       visible: false
+  # They come in a variety of colours
   - type: RandomSprite
     getAllGroups: true
     available:
     - enum.DamageStateVisualLayers.Base:
         scurret: ScurretColors
+  # Custom art for dead scurrets; these don't work well given they use equipment, so consider removing these?
   - type: DamageStateVisuals
     states:
       Alive:
@@ -42,6 +46,7 @@
         Base: scurret_oof
       Dead:
         Base: scurret_rip
+  # Only about as tough as a monkey
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -52,11 +57,12 @@
     coldDamageThreshold: 285
     currentTemperature: 310.15
     specificHeat: 42
+  # Good eatin', you monster.
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeat
-      amount: 4 # Good eatin', you monster.
+      amount: 4
   # They wawa
   - type: Speech
     speechVerb: Wawa
@@ -73,7 +79,7 @@
       path: /Audio/Animals/wawa_chillin.ogg
     interactFailureSound:
       path: /Audio/Animals/wawa_chatter.ogg
-  # They nyoom and go under doors/tables
+  # They nyoom
   - type: MovementSpeedModifier
     baseWalkSpeed: 5 # nyoom
     baseSprintSpeed: 7 # NYOOOOOM
@@ -84,19 +90,20 @@
     animation: WeaponArcBite
     damage:
       types:
-        Piercing: 15 # NOM - Do NOT mess with skugs.
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.2
-        density: 120
-        mask:
-        - SmallMobMask
-        layer:
-        - SmallMobLayer
+        Piercing: 15 # NOM
+  # TODO: the finished version of this may have small-critter movement to go past doors, but to avoid shittery with this development build this has been disabled.
+  # - type: Physics
+  # - type: Fixtures
+  #   fixtures:
+  #     fix1:
+  #       shape:
+  #         !type:PhysShapeCircle
+  #         radius: 0.2
+  #       density: 120
+  #       mask:
+  #       - SmallMobMask
+  #       layer:
+  #       - SmallMobLayer
   - type: Inventory
     templateId: scurret
   - type: InventorySlots
@@ -105,7 +112,7 @@
     baseDecayRate: 0.666
   - type: Tag
     tags:
-      - CanPilot # Inexplicably, Wawas have a natural aptitude for space flight
+      - CanPilot # Inexplicably, scurrets have a natural aptitude for spaceflight
 
 
 - type: inventoryTemplate
@@ -215,15 +222,6 @@
     head: ClothingHeadHatArnoldsPizzaFilled
     # Change this to a visitor PDA
     id: PassengerPDA
-    # jumpsuit: ClothingUniformJumpsuitERTJanitor
-    # back: ClothingBackpackERTJanitor
-    # shoes: ClothingShoesGaloshes
-    # gloves: ClothingHandsGlovesColorPurple
-    # outerClothing: ClothingOuterArmorBasicSlim
-    # id: ERTJanitorPDA
-    # ears: ClothingHeadsetAltCentCom
-    # belt: ClothingBeltJanitorFilled
-    # pocket1: Flare
 
 # Pizza Delivery Critter
 
