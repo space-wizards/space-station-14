@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: Additional construction options have been added to the Rapid Construction
-      Device (RCD), along with a radial style UI for fast navigation
-    type: Add
-  - message: The number of charges and the length of time required to build a structure
-      with the RCD now vary depending on the complexity of the constructed fixture
-    type: Tweak
-  id: 6267
-  time: '2024-03-31T04:29:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/22799
 - author: UBlueberry
   changes:
   - message: Nanotransen is now recruitin' personnel that speak with a Southern drawl.
@@ -3858,3 +3847,10 @@
   id: 6766
   time: '2024-06-17T10:53:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29022
+- author: Tayrtahn
+  changes:
+  - message: Chemical jugs no longer spawn with two labels.
+    type: Fix
+  id: 6767
+  time: '2024-06-17T23:09:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29137
