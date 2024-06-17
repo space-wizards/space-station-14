@@ -55,7 +55,7 @@ internal sealed class ChargerSystem : EntitySystem
             if (charging.charger.Status == CellChargerStatus.Off || charging.charger.Status == CellChargerStatus.Empty)
                 continue;
 
-            if (TryComp<EmpDisabledComponent>(chargerEnt, out _))
+            if (HasComp<EmpDisabledComponent>(chargerEnt))
                 continue;
 
             TransferPower(chargerEnt, uid, charging.charger, frameTime);
@@ -86,7 +86,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.SlotId)
             return;
 
-        if (TryComp<ChargingComponent>(args.Entity, out _))
+        if (HasComp<ChargingComponent>(args.Entity))
             RemComp<ChargingComponent>(args.Entity);
         UpdateStatus(uid, component);
     }
@@ -194,7 +194,7 @@ internal sealed class ChargerSystem : EntitySystem
 
             // if all batteries are either EMP'd or fully charged, represent the charger as fully charged
             statusOut = CellChargerStatus.Charged;
-            if (TryComp<EmpDisabledComponent>(containedEntity, out var emp))
+            if (HasComp<EmpDisabledComponent>(containedEntity))
                 continue;
 
             if (Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)

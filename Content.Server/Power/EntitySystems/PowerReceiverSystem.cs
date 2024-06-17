@@ -207,7 +207,7 @@ namespace Content.Server.Power.EntitySystems
 
         public bool TryTogglePower(EntityUid uid, bool playSwitchSound = true, ApcPowerReceiverComponent? receiver = null, EntityUid? user = null)
         {
-            if (TryComp<EmpDisabledComponent>(uid, out var emp))
+            if (HasComp<EmpDisabledComponent>(uid))
                 return false;
 
             return TogglePower(uid, playSwitchSound, receiver, user);
