@@ -103,6 +103,9 @@
     - DoorBumpOpener
   - type: Input
     context: "human"
+  - type: SentienceTarget # sentient PDA = pAI lite
+    flavorKind: station-event-random-sentience-flavor-mechanical
+    weight: 0.00001 # 100,000 PDAs = as likely to be picked as 1 regular animal
 
 - type: entity
   parent: BasePDA
