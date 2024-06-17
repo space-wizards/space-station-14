@@ -26,6 +26,13 @@
   - /Audio/Animals/cat_meow.ogg
 
 - type: soundCollection
+  id: CatMeows2
+  files:
+  - /Audio/Animals/cat_meow3.ogg
+  - /Audio/Animals/cat_meow4.ogg
+  - /Audio/Animals/cat_meow4.ogg
+
+- type: soundCollection
   id: CatHisses
   files:
   - /Audio/Animals/cat_hiss.ogg
