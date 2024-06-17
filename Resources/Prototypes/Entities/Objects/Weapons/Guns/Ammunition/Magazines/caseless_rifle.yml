@@ -94,14 +94,14 @@
 
 - type: entity
   id: MagazinePistolCaselessRifle
-  name: "pistol magazine (.25 caseless)"
+  name: "pistol magazine (.25 caseless lethal)"
   parent: BaseMagazinePistolCaselessRifle
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
     capacity: 10
   - type: Sprite
-    slayers:
+    layers:
     - state: red
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
@@ -144,6 +144,13 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: false
+  - type: Appearance
 
 - type: entity
   id: MagazineCaselessRifle
