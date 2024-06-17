@@ -274,6 +274,23 @@ public sealed partial class BorgSystem
             return false;
         }
 
+        if (TryComp<ItemBorgModuleComponent>(module, out var itemModuleComp))
+        {
+            foreach (var containedModuleUid in component.ModuleContainer.ContainedEntities)
+            {
+                if (!TryComp<ItemBorgModuleComponent>(containedModuleUid, out var containedItemModuleComp))
+                    continue;
+
+                if (containedItemModuleComp.Items.Count == itemModuleComp.Items.Count &&
+                    containedItemModuleComp.Items.All(itemModuleComp.Items.Contains))
+                {
+                    if (user != null)
+                        Popup.PopupEntity(Loc.GetString("borg-module-duplicate"), uid, user.Value);
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 

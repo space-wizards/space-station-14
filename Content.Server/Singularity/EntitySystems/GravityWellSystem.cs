@@ -1,6 +1,6 @@
 using System.Numerics;
-using Content.Server.Atmos.Components;
 using Content.Server.Singularity.Components;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Singularity.EntitySystems;
 using Robust.Shared.Map;
