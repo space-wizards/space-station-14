@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: brainfood1183
-  changes:
-  - message: Toilets can now be connected to the disposal system.
-    type: Add
-  id: 6265
-  time: '2024-03-31T03:21:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/22133
 - author: DrMelon
   changes:
   - message: Syndicate Uplinks now have a searchbar to help those dirty, rotten antagonists
@@ -3858,3 +3851,11 @@
   id: 6764
   time: '2024-06-17T03:30:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27876
+- author: EmoGarbage404
+  changes:
+  - message: Changed meteor swarm spawning to be less clumped up and favor hitting
+      multiple areas more.
+    type: Tweak
+  id: 6765
+  time: '2024-06-17T05:20:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29057
