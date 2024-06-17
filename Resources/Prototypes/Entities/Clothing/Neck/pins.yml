@@ -184,7 +184,7 @@
       neck:
       - state: goldautism-equipped
       
- - type: entity
+- type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckVulturePin
   name: vulture pin
@@ -200,7 +200,7 @@
       neck:
       - state: vulture-equipped
 
- - type: entity
+- type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckMirosPin
   name: miros pin
@@ -216,7 +216,7 @@
       neck:
       - state: miros-equipped
       
- - type: entity
+- type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckLizardPin
   name: lizard pin
@@ -232,7 +232,7 @@
       neck:
       - state: lizard-equipped
       
-  - type: entity
+- type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckLeviathanPin
   name: leviathan pin
@@ -248,7 +248,7 @@
       neck:
       - state: leviathan-equipped
  
-  - type: entity
+- type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckSalamanderPin
   name: salamander pin
@@ -264,7 +264,7 @@
       neck:
       - state: salamander-equipped
       
-  - type: entity
+- type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckAxolotlPin
   name: axolotl pin
@@ -280,7 +280,7 @@
       neck:
       - state: axolotl-equipped
 
- - type: entity
+- type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckFrontierPin
   name: frontier pin
@@ -296,7 +296,7 @@
       neck:
       - state: frontier-equipped
 
- - type: entity
+- type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckDeltaVPin
   name: delta-v pin
@@ -312,7 +312,7 @@
       neck:
       - state: delta-v-equipped
 
- - type: entity
+- type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckCosmaticDriftPin
   name: cosmatic-drift pin
