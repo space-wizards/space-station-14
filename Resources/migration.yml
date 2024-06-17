@@ -348,3 +348,28 @@ DoorRemoteFirefight: null
 
 # 2024-06-03
 AirlockServiceCaptainLocked: AirlockCaptainLocked
+
+# 2024-06-17
+d20Dice: D20Dice
+d12Dice: D12Dice
+d10Dice: D10Dice
+d8Dice: D8Dice
+d6Dice: D6Dice
+d4Dice: D4Dice
+trayScanner: TrayScanner
+hydroponicsSoil: HydroponicsSoil
+hydroponicsTray: HydroponicsTray
+filingCabinet: FilingCabinet
+filingCabinetTall: FilingCabinetTall
+filingCabinetDrawer: FilingCabinetDrawer
+filingCabinetRandom: FilingCabinetRandom
+filingCabinetTallRandom: FilingCabinetTallRandom
+filingCabinetDrawerRandom: FilingCabinetDrawerRandom
+computerBodyScanner: ComputerBodyScanner
+
+
+
+
+
+
+
