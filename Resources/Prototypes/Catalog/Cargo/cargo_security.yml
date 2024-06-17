@@ -74,7 +74,7 @@
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
   product: CrateRestraints
-  cost: 1000
+  cost: 800
   category: cargoproduct-category-name-security
   group: market
 

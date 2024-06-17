@@ -53,7 +53,7 @@
   id: CrateSecurityRiot
   parent: CrateSecgear
   name: riot crate
-  description: Contains two sets of riot armor, helmets, shields, protective masks, and enforcers with extra beanbags. Requires Armory access to open.
+  description: Contains two sets of riot armor, helmets, shields, protective masks, enforcers with beanbags shells, and beanbag shell boxes. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
