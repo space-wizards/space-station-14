@@ -8,7 +8,7 @@ bloodbrother-round-end-agent-name = a brother of {$partner}
 objective-issuer-bloodbrothers = [color=red]Blood Brother[/color]
 
 bloodbrother-briefing-start =
-    You are a brother of {$partner} the {$job}.
+    You are a brother of {$partner} the {$job}
 bloodbrother-briefing-start-nopartner =
     You are in need of a brother.
     You have a special single charge flash to convert a crewmemebr into becoming your partner in crime.
