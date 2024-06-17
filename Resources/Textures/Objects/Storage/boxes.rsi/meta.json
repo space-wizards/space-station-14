@@ -14,27 +14,6 @@
             "name": "bodybags"
         },
         {
-            "name": "clown"
-        },
-        {
-            "name": "internals"
-        },
-        {
-            "name": "extendedtank"
-        },
-        {
-            "name": "emergencytank"
-        },
-        {
-            "name": "heart"
-        },
-        {
-            "name": "meson"
-        },
-        {
-            "name": "sechud"
-        },
-        {
             "name": "bottle"
         },
         {
@@ -59,28 +38,46 @@
             "name": "box_of_doom_big"
         },
         {
+            "name": "box_olive"
+        },
+        {
             "name": "box_security"
         },
         {
             "name": "box_science"
         },
         {
-            "name": "box_olive"
+            "name": "candle"
         },
         {
             "name": "circuit"
         },
         {
+            "name": "clown"
+        },
+        {
+            "name": "darts"
+        },
+        {
             "name": "disk"
+        },
+        {
+            "name": "emergencytank"
+        },
+        {
+            "name": "encryptokey"
         },
         {
             "name": "evidence_markers"
         },
         {
-            "name": "flashbang"
+            "name": "extendedtank"
         },
         {
             "name": "flare"
+        },
+        {
+            "name": "flashbang"
         },
         {
             "name": "forensic"
@@ -92,6 +89,12 @@
             "name": "handcuff"
         },
         {
+            "name": "headset"
+        },
+        {
+            "name": "heart"
+        },
+        {
             "name": "holo"
         },
         {
@@ -99,6 +102,9 @@
         },
         {
             "name": "inflatable"
+        },
+        {
+            "name": "internals"
         },
         {
             "name": "latex"
@@ -113,10 +119,61 @@
             "name": "lighttube"
         },
         {
-            "name": "omegacart"
+            "name": "magazine"
         },
         {
-            "name": "magazine"
+            "name": "magakmslethal"
+        },
+        {
+            "name": "magakmspractice"
+        },
+        {
+            "name": "magdrumbeanbag"
+        },
+        {
+            "name": "magdrumincendiary"
+        },
+        {
+            "name": "magdrumpellets"
+        },
+        {
+            "name": "magdrumslug"
+        },
+        {
+            "name": "maghighcapacitypistollethal"
+        },
+        {
+            "name": "maghighcapacitypistolpractice"
+        },
+        {
+            "name": "maglecterlethal"
+        },
+        {
+            "name": "maglecterpractice"
+        },
+        {
+            "name": "magpistollethal"
+        },
+        {
+            "name": "magpistolpractice"
+        },
+        {
+            "name": "magsmgpractice"
+        },
+        {
+            "name": "magsmglethal"
+        },
+        {
+            "name": "magvectorlethal"
+        },
+        {
+            "name": "magvectorpractice"
+        },
+        {
+            "name": "magwt550lethal"
+        },
+        {
+            "name": "meson"
         },
         {
             "name": "mousetraps"
@@ -125,56 +182,16 @@
             "name": "nitrile"
         },
         {
+            "name": "omegacart"
+        },
+        {
             "name": "pda"
         },
         {
             "name": "pillbox"
         },
         {
-            "name": "solution_trays"
-        },
-        {
-            "name": "sterile"
-        },
-        {
-            "name": "swab"
-        },
-        {
-            "name": "syringe"
-        },
-        {
-            "name": "throwing_knives"
-        },
-        {
-            "name": "trashbag"
-        },
-        {
-            "name": "writing"
-        },
-        {
-            "name": "writing_of_doom"
-        },
-        {
-            "name": "headset"
-        },
-        {
-            "name": "encryptokey"
-        },
-        {
-            "name": "inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "hug-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "hug-inhand-right",
-            "directions": 4
+            "name": "sechud"
         },
         {
             "name": "shellbeanbag"
@@ -201,22 +218,56 @@
             "name": "shelluranium"
         },
         {
+            "name": "shelltoy"
+        },
+        {
             "name": "shelltranquilizer"
         },
         {
-            "name": "shelltoy"
+            "name": "solution_trays"
+        },
+        {
+            "name": "sterile"
+        },
+        {
+            "name": "swab"
+        },
+        {
+            "name": "syringe"
+        },
+        {
+            "name": "throwing_knives"
+        },
+        {
+            "name": "trashbag"
+        },
+        {
+            "name": "vials"
+        },
+        {
+            "name": "writing"
+        },
+        {
+            "name": "writing_of_doom"
         },
         {
             "name": "ziptie"
         },
         {
-            "name": "candle"
+            "name": "hug-inhand-left",
+            "directions": 4
         },
         {
-            "name": "darts"
+            "name": "hug-inhand-right",
+            "directions": 4
         },
         {
-            "name": "vials"
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
         }
     ]
 }
