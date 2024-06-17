@@ -13,6 +13,11 @@
   copyright: "Created by freesound user 'TRNGLE. The original audio split to mono, and converted from WAV to OGG format"
   source: "https://freesound.org/people/TRNGLE/sounds/362652/"
 
+- files: ["cat_meow3.ogg", "cat_meow4.ogg", "cat_meow5.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Original sound by https://freesound.org/people/ignotus/ - cut out three clips of cat meowing, cleaned up, and converted to ogg."
+  source: "https://freesound.org/people/ignotus/sounds/26104/"
+
 - files: ["cat_hiss.ogg"]
   license: "CC0-1.0"
   copyright: "Modified from 'Meow 4.wav' by freesound user 'TRNGLE'. The original audio was trimmed, split to mono, and converted from WAV to OGG format"
