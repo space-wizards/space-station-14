@@ -302,8 +302,7 @@ namespace Content.Server.Gravity
             var ent = (uid, component, powerReceiver);
 
             // convert from normalised energy to watts and subtract
-            float load = Math.Max(powerReceiver.Load, component.IdlePowerUse);
-            float maxEnergy = load / component.ChargeRate;
+            float maxEnergy = component.ActivePowerUse / component.ChargeRate;
             float currentEnergy = maxEnergy * component.Charge;
             currentEnergy = Math.Max(0, currentEnergy - args.EnergyConsumption);
 
