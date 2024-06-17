@@ -54,7 +54,7 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
     state: icon
   product: CrateSecuritySupplies
-  cost: 1000
+  cost: 800
   category: cargoproduct-category-name-security
   group: market
 
