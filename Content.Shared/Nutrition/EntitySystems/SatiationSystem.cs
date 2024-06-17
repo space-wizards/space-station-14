@@ -65,7 +65,7 @@ public sealed class SatiationSystem : EntitySystem
                 (int) proto.Thresholds[SatiationThreashold.Okay]);
             SetSatiation(ent, satiation, amount);
             UpdateCurrentThreshold(ent, satiation);
-            DoThresholdEffects(ent.Owner, satiation, false);
+            DoThresholdEffects(ent.Owner, satiation, true);
         }
         Dirty(ent);
     }
