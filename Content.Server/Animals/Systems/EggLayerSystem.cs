@@ -17,7 +17,7 @@ namespace Content.Server.Animals.Systems;
 
 /// <summary>
 ///     Gives ability to produce eggs, produces endless if the
-///     owner has no HungerComponent
+///     owner has no SatiationComponent
 /// </summary>
 public sealed class EggLayerSystem : EntitySystem
 {
@@ -79,10 +79,9 @@ public sealed class EggLayerSystem : EntitySystem
             return false;
 
         // Allow infinitely laying eggs if they can't get hungry
-        if (TryComp<SatiationComponent>(uid, out var component))
+        if (TryComp<SatiationComponent>(uid, out var component)
+            && _satiation.TryGetCurrentSatiation((uid, component), egglayer.UsedSatiation, out var current))
         {
-            if (!_satiation.TryGetCurrentSatiation((uid, component), egglayer.UsedSatiation, out var current))
-                return false;
 
             if (current < egglayer.SatiationUsage)
             {

@@ -18,7 +18,7 @@ namespace Content.Server.Animals.Systems;
 
 /// <summary>
 ///     Gives ability to produce milkable reagents, produces endless if the
-///     owner has no HungerComponent
+///     owner has no SatiationComponent
 /// </summary>
 internal sealed class UdderSystem : EntitySystem
 {
@@ -54,11 +54,11 @@ internal sealed class UdderSystem : EntitySystem
                 continue;
 
             // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
-            if (EntityManager.TryGetComponent(uid, out SatiationComponent? satiation))
+            if (EntityManager.TryGetComponent(uid, out SatiationComponent? satiation)
+                && _satiation.TryGetSatiationThreshold((uid, satiation), udder.UsedSatiation, out var threshold))
             {
                 // Is there enough nutrition to produce reagent?
-                if (!_satiation.TryGetSatiationThreshold((uid, satiation), udder.UsedSatiation, out var threshold)
-                        || threshold < SatiationThreashold.Okay)
+                if (threshold < SatiationThreashold.Okay)
                     continue;
 
                 _satiation.ModifySatiation((uid, satiation), udder.UsedSatiation, -udder.SatiationUsage);

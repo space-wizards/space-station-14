@@ -6,13 +6,12 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition;
 using Robust.Shared.Timing;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
 ///     Gives ability to produce fiber reagents, produces endless if the
-///     owner has no HungerComponent
+///     owner has no SatiationComponent
 /// </summary>
 public sealed class WoolySystem : EntitySystem
 {
@@ -45,11 +44,11 @@ public sealed class WoolySystem : EntitySystem
                 continue;
 
             // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
-            if (EntityManager.TryGetComponent(uid, out SatiationComponent? satiation))
+            if (EntityManager.TryGetComponent(uid, out SatiationComponent? satiation)
+                && _satiation.TryGetSatiationThreshold((uid, satiation), wooly.UsedSatiation, out var threshold))
             {
                 // Is there enough nutrition to produce reagent?
-                if (!_satiation.TryGetSatiationThreshold((uid, satiation), wooly.UsedSatiation, out var threshold)
-                        || threshold < SatiationThreashold.Okay)
+                if (threshold < SatiationThreashold.Okay)
                     continue;
 
                 _satiation.ModifySatiation((uid, satiation), wooly.UsedSatiation, -wooly.SatiationUsage);
