@@ -246,11 +246,6 @@ namespace Content.Shared.Atmos
         public const float N2ODecompositionRate = 2f;
 
         /// <summary>
-        ///     Divisor for Ammonia Oxygen reaction so that it doesn't happen instantaneously.
-        /// </summary>
-        public const float AmmoniaOxygenReactionRate = 10f;
-
-        /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
         /// </summary>
         public const float HazardHighPressure = 550f;
