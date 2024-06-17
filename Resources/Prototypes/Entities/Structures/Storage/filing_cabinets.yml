@@ -16,10 +16,10 @@
         - Write
   - type: Sprite
     sprite: Structures/Storage/cabinets.rsi
-    state: Filingcabinet
+    state: filingcabinet
     noRot: true
     layers:
-    - state: Filingcabinet
+    - state: filingcabinet
     - state: filingcabinet-open
       map: ["openLayer"]
   - type: UserInterface
@@ -64,7 +64,7 @@
             max: 2
   - type: Construction
     graph: FilingCabinet
-    node: FilingCabinet
+    node: filingCabinet
   - type: StaticPrice
     price: 20
 
