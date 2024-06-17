@@ -38,8 +38,8 @@
 - type: loadoutGroup
   id: Survival
   name: loadout-group-survival-basic
-  minLimit: 1
-  maxLimit: 1
+  minLimit: 2
+  maxLimit: 2
   loadouts:
   - EmergencyNitrogen
   - EmergencyOxygen
@@ -708,8 +708,8 @@
 - type: loadoutGroup
   id: SurvivalExtended
   name: loadout-group-survival-extended
-  minLimit: 1
-  maxLimit: 1
+  minLimit: 2
+  maxLimit: 2
   loadouts:
   - EmergencyNitrogenExtended
   - EmergencyOxygenExtended
@@ -987,8 +987,8 @@
 - type: loadoutGroup
   id: SurvivalSecurity
   name: loadout-group-survival-security
-  minLimit: 1
-  maxLimit: 1
+  minLimit: 2
+  maxLimit: 2
   loadouts:
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
@@ -1168,8 +1168,8 @@
 - type: loadoutGroup
   id: SurvivalMedical
   name: loadout-group-survival-medical
-  minLimit: 1
-  maxLimit: 1
+  minLimit: 2
+  maxLimit: 2
   loadouts:
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
