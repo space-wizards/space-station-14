@@ -4,6 +4,7 @@
   components:
   - type: GameRule
     minPlayers: 25
+    cancelPresetOnTooFewPlayers: false
   - type: MeteorScheduler
 
 - type: weightedRandomEntity

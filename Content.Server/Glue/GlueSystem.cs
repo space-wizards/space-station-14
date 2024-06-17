@@ -6,6 +6,7 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Item;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -20,9 +21,9 @@ public sealed class GlueSystem : SharedGlueSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     public override void Initialize()
     {
@@ -32,6 +33,7 @@ public sealed class GlueSystem : SharedGlueSystem
         SubscribeLocalEvent<GluedComponent, ComponentInit>(OnGluedInit);
         SubscribeLocalEvent<GlueComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
         SubscribeLocalEvent<GluedComponent, GotEquippedHandEvent>(OnHandPickUp);
+        SubscribeLocalEvent<GluedComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
     }
 
     // When glue bottle is used on item it will apply the glued and unremoveable components.
@@ -95,27 +97,22 @@ public sealed class GlueSystem : SharedGlueSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<GluedComponent, UnremoveableComponent, MetaDataComponent>();
-        while (query.MoveNext(out var uid, out var glue, out var _, out var meta))
+        var query = EntityQueryEnumerator<GluedComponent, UnremoveableComponent>();
+        while (query.MoveNext(out var uid, out var glue, out var _))
         {
             if (_timing.CurTime < glue.Until)
                 continue;
 
-            // Instead of string matching, just reconstruct the expected name and compare
-            if (meta.EntityName == Loc.GetString("glued-name-prefix", ("target", glue.BeforeGluedEntityName)))
-                _metaData.SetEntityName(uid, glue.BeforeGluedEntityName);
-
             RemComp<UnremoveableComponent>(uid);
             RemComp<GluedComponent>(uid);
+
+            _nameMod.RefreshNameModifiers(uid);
         }
     }
 
     private void OnGluedInit(Entity<GluedComponent> entity, ref ComponentInit args)
     {
-        var meta = MetaData(entity);
-        var name = meta.EntityName;
-        entity.Comp.BeforeGluedEntityName = meta.EntityName;
-        _metaData.SetEntityName(entity.Owner, Loc.GetString("glued-name-prefix", ("target", name)));
+        _nameMod.RefreshNameModifiers(entity.Owner);
     }
 
     private void OnHandPickUp(Entity<GluedComponent> entity, ref GotEquippedHandEvent args)
@@ -123,5 +120,10 @@ public sealed class GlueSystem : SharedGlueSystem
         var comp = EnsureComp<UnremoveableComponent>(entity);
         comp.DeleteOnDrop = false;
         entity.Comp.Until = _timing.CurTime + entity.Comp.Duration;
+    }
+
+    private void OnRefreshNameModifiers(Entity<GluedComponent> entity, ref RefreshNameModifiersEvent args)
+    {
+        args.AddModifier("glued-name-prefix");
     }
 }
