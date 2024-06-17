@@ -1,7 +1,7 @@
 - type: entity
   id: CrateSecurityArmor
   parent: CrateSecgear
-  name: armor crate
+  name: Type I vest crate
   description: Contains three well-rounded Type I vests. Requires Security access to open.
   components:
   - type: StorageFill
@@ -12,7 +12,7 @@
 - type: entity
   id: CrateSecurityArmorBulletproof
   parent: CrateSecgear
-  name: armor crate
+  name: Type III vest crate
   description: Contains three bulletproof Type III vests. Requires Security access to open.
   components:
   - type: StorageFill
@@ -38,7 +38,7 @@
   description: Containers two disablers, stunbatons, flashes, zipties. Requires Security access to open.
   components:
   - type: StorageFill
-    contents: # throwables in another crate to avoid swamping cargo with multiple disablers for bolas or stingers
+    contents:
       - id: WeaponDisabler
         amount: 2
       - id: Stunbaton
@@ -46,7 +46,7 @@
       - id: Flash
         amount: 2
       - id: Zipties # bare minimum, order actual restraints with your nonlethals
-        amount: 4
+        amount: 2
 #      - Pepperspray
 
 - type: entity
@@ -88,10 +88,11 @@
         amount: 2
       - id: ClothingBeltSecurity
         amount: 2
-#      - SpacelawBook
+      - id: BookSecurity
+        amount: 2
 
 - type: entity
-  id: CrateForensics
+  id: CrateSecurityForensics
   parent: CrateSecgear
   name: forensics crate
   description: Contains a forensic scanner, LogProde cartridge, box of forensic pads, and box of evidence markers. Requires Security access to open.
@@ -103,13 +104,11 @@
       - id: BoxForensicPad
       - id: BoxEvidenceMarkers
       - id: DrinkDetFlask
-        prob: 0.5 # so you're telling me the detective got drunk...
+        prob: 0.2 # so you're telling me the detective got drunk...
       - id: ClothingBeltHolsterFilled
         prob: 0.1 # ...lost their gun...
       - id: MobRandomCargoCorpse
-        prob: 0.05 # ...and locked themselves in a crate from the outside?
-        # cargo tech stand-in for detective because warden corpse could be spawned
-        # also it gets creepier for cargo techs that break into this crate
+        prob: 0.05 # ...and locked themselves in from the outside?
 
 - type: entity
   id: CrateRestraints
@@ -123,7 +122,7 @@
         amount: 1
       - id: BoxZiptie
         amount: 1
-      - id: straitjacket
+      - id: ClothingOuterStraightjacket
         amount: 2
 
 - type: entity
@@ -140,13 +139,13 @@
         amount: 1
       - id: BoxTearGas
         amount: 1
-      - id: bolas # replace with e-bolas
+      - id: Bola # replace with 4 e-bolas or e-bola box
         amount: 4
 
 - type: entity
   id: CrateSecurityTrackingMindshieldImplants
   name: implanter crate
-  description: Contains four mindshield and four tracking implants. Requires Security access to open.
+  description: Contains four mindshield implants, and four tracking implants. Requires Security access to open.
   parent: CrateSecgear
   components:
   - type: StorageFill

@@ -51,10 +51,20 @@
 - type: cargoProduct
   id: SecuritySupplies
   icon:
-    sprite: Objects/Storage/boxes.rsi
-    state: box_security
+    sprite: Clothing/Shoes/Boots/combatboots.rsi
+    state: icon
   product: CrateSecuritySupplies
-  cost: 500
+  cost: 1000
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityForensics
+  icon:
+    sprite: Clothing/Head/Hats/brownfedora.rsi
+    state: icon
+  product: CrateSecurityForensics
+  cost: 1500
   category: cargoproduct-category-name-security
   group: market
 
@@ -69,11 +79,31 @@
   group: market
 
 - type: cargoProduct
+  id: SecurityNonlethalThrowables
+  icon:
+    sprite: Objects/Weapons/Grenades/stingergrenade.rsi
+    state: icon
+  product: CrateSecurityNonlethalThrowables
+  cost: 800
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityShield
+  icon:
+    sprite: Objects/Weapons/Melee/shields.rsi
+    state: riot_bullet-icon
+  product: CrateSecurityShield
+  cost: 800
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
   id: SecurityBarrier
   icon:
     sprite: Objects/Specific/Security/barrier.rsi
     state: idle
   product: DeployableBarrier
-  cost: 1000
+  cost: 350
   category: cargoproduct-category-name-security
   group: market

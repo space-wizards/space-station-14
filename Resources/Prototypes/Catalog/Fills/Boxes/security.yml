@@ -43,7 +43,7 @@
       - state: box_security
       - state: flashbang
 
- - type: entity
+- type: entity
   name: tear gas box
   parent: BoxCardboard
   id: BoxTearGas
