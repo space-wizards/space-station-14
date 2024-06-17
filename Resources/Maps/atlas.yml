@@ -20145,7 +20145,7 @@ entities:
       linkedPorts:
         4674:
         - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 2613
     components:
@@ -20831,7 +20831,7 @@ entities:
     - type: Transform
       pos: -43.5,-20.5
       parent: 30
-- proto: d6Dice
+- proto: D6Dice
   entities:
   - uid: 3329
     components:
@@ -24101,14 +24101,14 @@ entities:
     - type: Transform
       pos: 30.5,8.5
       parent: 30
-- proto: filingCabinet
+- proto: FilingCabinet
   entities:
   - uid: 877
     components:
     - type: Transform
       pos: 3.5,7.5
       parent: 30
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 3710
     components:
@@ -38735,7 +38735,7 @@ entities:
     - type: Transform
       pos: 2.6552258,17.63096
       parent: 30
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 2006
     components:

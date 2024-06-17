@@ -241,7 +241,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         {
             // pop up drag shadow under mouse
             var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
-            _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
+            _dragShadow = EntityManager.SpawnEntity("DragShadow", mousePos);
             var dragSprite = Comp<SpriteComponent>(_dragShadow.Value);
             dragSprite.CopyFrom(draggedSprite);
             dragSprite.RenderOrder = EntityManager.CurrentTick.Value;

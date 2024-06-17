@@ -117,7 +117,7 @@
     - CableMVStackLingering10
     - CableHVStackLingering10
     - Wirecutter
-    - trayScanner
+    - TrayScanner
 
 - type: entity
   id: BorgModuleFireExtinguisher

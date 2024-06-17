@@ -371,7 +371,7 @@ entities:
     - type: Transform
       pos: -3.5,-2.5
       parent: 55
-- proto: d4Dice
+- proto: D4Dice
   entities:
   - uid: 13
     components:

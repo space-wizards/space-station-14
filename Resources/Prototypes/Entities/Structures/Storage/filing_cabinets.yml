@@ -16,10 +16,10 @@
         - Write
   - type: Sprite
     sprite: Structures/Storage/cabinets.rsi
-    state: filingcabinet
+    state: Filingcabinet
     noRot: true
     layers:
-    - state: filingcabinet
+    - state: Filingcabinet
     - state: filingcabinet-open
       map: ["openLayer"]
   - type: UserInterface
@@ -64,13 +64,13 @@
             max: 2
   - type: Construction
     graph: FilingCabinet
-    node: filingCabinet
+    node: FilingCabinet
   - type: StaticPrice
     price: 20
 
 - type: entity
   name: tall cabinet
-  parent: filingCabinet
+  parent: FilingCabinet
   id: FilingCabinetTall
   suffix: Empty
   components:
@@ -183,16 +183,16 @@
         orGroup: Folder
 
 - type: entity
-  parent: [filingCabinet, BaseBureaucraticStorageFill]
+  parent: [FilingCabinet, BaseBureaucraticStorageFill]
   id: FilingCabinetRandom
   suffix: Random
 
 - type: entity
-  parent: [filingCabinetTall, BaseBureaucraticStorageFill]
+  parent: [FilingCabinetTall, BaseBureaucraticStorageFill]
   id: FilingCabinetTallRandom
   suffix: Random
 
 - type: entity
-  parent: [filingCabinetDrawer, BaseBureaucraticStorageFill]
+  parent: [FilingCabinetDrawer, BaseBureaucraticStorageFill]
   id: FilingCabinetDrawerRandom
   suffix: Random

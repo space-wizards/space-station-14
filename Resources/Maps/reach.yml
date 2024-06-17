@@ -9487,7 +9487,7 @@ entities:
     - type: Transform
       pos: 24.549932,2.4577096
       parent: 407
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 1783
     components:

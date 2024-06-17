@@ -60678,7 +60678,7 @@ entities:
       linkedPorts:
         7357:
         - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 6865
     components:
@@ -69262,7 +69262,7 @@ entities:
     - type: FaxMachine
       destinationAddress: Captain
       name: Captain
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 1000
     components:
@@ -69314,14 +69314,14 @@ entities:
     - type: Transform
       pos: 76.5,-18.5
       parent: 2
-- proto: filingCabinetRandom
+- proto: FilingCabinetRandom
   entities:
   - uid: 4502
     components:
     - type: Transform
       pos: -50.5,-14.5
       parent: 2
-- proto: filingCabinetTallRandom
+- proto: FilingCabinetTallRandom
   entities:
   - uid: 4656
     components:
@@ -99942,7 +99942,7 @@ entities:
     - type: Transform
       pos: 67.5,-54.5
       parent: 2
-- proto: hydroponicsSoil
+- proto: HydroponicsSoil
   entities:
   - uid: 16319
     components:
@@ -99995,7 +99995,7 @@ entities:
     - type: Transform
       pos: 79.58107,-5.4075103
       parent: 2
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 903
     components:
@@ -124315,7 +124315,7 @@ entities:
     - type: Transform
       pos: -27.617392,-17.536655
       parent: 2
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 21861
     components:

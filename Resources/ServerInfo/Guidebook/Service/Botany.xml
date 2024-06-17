@@ -11,7 +11,7 @@ There are many tools that can be used to keep your crops healthy and growing. Th
 
 ## Hydroponics Tray
 <Box>
-<GuideEntityEmbed Entity="hydroponicsTray"/>
+<GuideEntityEmbed Entity="HydroponicsTray"/>
 </Box>
 It's a hydroponics tray, it grows plants with water. First fill the tray with water, then add seeds. 
 Hydroponics tray lights indicate different things depending on color and position:

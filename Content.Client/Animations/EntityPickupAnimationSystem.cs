@@ -44,7 +44,7 @@ public sealed class EntityPickupAnimationSystem : EntitySystem
         if (IsPaused(uid, metadata))
             return;
 
-        var animatableClone = Spawn("clientsideclone", initial);
+        var animatableClone = Spawn("ClientSideClone", initial);
         EnsureComp<EntityPickupAnimationComponent>(animatableClone);
         var val = metadata.EntityName;
         _metaData.SetEntityName(animatableClone, val);

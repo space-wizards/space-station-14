@@ -53085,7 +53085,7 @@ entities:
       linkedPorts:
         22233:
         - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 7584
     components:
@@ -54572,7 +54572,7 @@ entities:
     - type: Transform
       pos: -33.36232,-13.359482
       parent: 30
-- proto: d20Dice
+- proto: D20Dice
   entities:
   - uid: 19470
     components:
@@ -54580,7 +54580,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -75.2108,-63.97015
       parent: 30
-- proto: d6Dice
+- proto: D6Dice
   entities:
   - uid: 15133
     components:
@@ -54608,7 +54608,7 @@ entities:
     - type: Transform
       pos: 12.684977,58.457973
       parent: 30
-- proto: d8Dice
+- proto: D8Dice
   entities:
   - uid: 19472
     components:
@@ -61584,7 +61584,7 @@ entities:
     - type: Transform
       pos: -75.5,-63.5
       parent: 30
-- proto: filingCabinet
+- proto: FilingCabinet
   entities:
   - uid: 6899
     components:
@@ -61611,7 +61611,7 @@ entities:
     - type: Transform
       pos: 43.5,37.5
       parent: 30
-- proto: filingCabinetDrawer
+- proto: FilingCabinetDrawer
   entities:
   - uid: 12856
     components:
@@ -61623,7 +61623,7 @@ entities:
     - type: Transform
       pos: 23.5,15.5
       parent: 30
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 5726
     components:
@@ -61635,7 +61635,7 @@ entities:
     - type: Transform
       pos: -3.5,40.5
       parent: 30
-- proto: filingCabinetRandom
+- proto: FilingCabinetRandom
   entities:
   - uid: 21370
     components:
@@ -96267,7 +96267,7 @@ entities:
     - type: Transform
       pos: 34.5,30.5
       parent: 30
-- proto: hydroponicsSoil
+- proto: HydroponicsSoil
   entities:
   - uid: 17963
     components:
@@ -96389,7 +96389,7 @@ entities:
     - type: Transform
       pos: -76.56253,-53.662086
       parent: 30
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 328
     components:
@@ -122487,7 +122487,7 @@ entities:
     - type: Transform
       pos: 44.5157,21.682869
       parent: 30
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 5669
     components:

@@ -23,7 +23,7 @@
       prototypes:
         - RemoteSignaller
         - GeigerCounter
-        - trayScanner
+        - TrayScanner
         - FlashlightLantern
         - ClothingHandsGlovesColorBlack
         - Lighter
@@ -67,7 +67,7 @@
         - GeigerCounter
         - GasAnalyzer
         - Multitool
-        - trayScanner
+        - TrayScanner
         - FlashlightLantern
         - ClothingHandsGlovesColorBlack
         - ClothingMaskGas

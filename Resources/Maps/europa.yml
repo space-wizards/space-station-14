@@ -34373,7 +34373,7 @@ entities:
     - type: FaxMachine
       destinationAddress: Captain
       name: Captain
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 1223
     components:
@@ -54461,7 +54461,7 @@ entities:
     - type: Transform
       pos: -42.439854,-7.352214
       parent: 1
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 131
     components:

@@ -7502,7 +7502,7 @@ entities:
           - 564
     - type: Physics
       canCollide: False
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 261
     components:

@@ -923,7 +923,7 @@ entities:
       parent: 325
     - type: FaxMachine
       name: Striker
-- proto: filingCabinetRandom
+- proto: FilingCabinetRandom
   entities:
   - uid: 75
     components:

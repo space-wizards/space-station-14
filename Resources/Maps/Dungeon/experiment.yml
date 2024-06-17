@@ -6435,7 +6435,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,43.5
       parent: 1653
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 1546
     components:
@@ -6746,7 +6746,7 @@ entities:
     - type: Transform
       pos: 39.5,1.5
       parent: 1653
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 464
     components:
@@ -6773,7 +6773,7 @@ entities:
     - type: Transform
       pos: 35.5,16.5
       parent: 1653
-- proto: filingCabinetRandom
+- proto: FilingCabinetRandom
   entities:
   - uid: 1482
     components:
@@ -6785,7 +6785,7 @@ entities:
     - type: Transform
       pos: 32.5,12.5
       parent: 1653
-- proto: filingCabinetTallRandom
+- proto: FilingCabinetTallRandom
   entities:
   - uid: 1338
     components:
@@ -7266,7 +7266,7 @@ entities:
     - type: Transform
       pos: 18.469873,9.442207
       parent: 1653
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 1354
     components:

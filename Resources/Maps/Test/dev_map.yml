@@ -3831,7 +3831,7 @@ entities:
       fixtures: {}
     missingComponents:
     - TimedDespawn
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 756
     components:
@@ -5726,7 +5726,7 @@ entities:
     - type: Transform
       pos: -1.6653601,11.616664
       parent: 179
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 758
     components:

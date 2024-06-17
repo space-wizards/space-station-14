@@ -253,7 +253,7 @@
     - type: Sprite
       state: cpu_medical
     - type: ComputerBoard
-      prototype: computerBodyScanner
+      prototype: ComputerBodyScanner
 
 - type: entity
   parent: BaseComputerCircuitboard

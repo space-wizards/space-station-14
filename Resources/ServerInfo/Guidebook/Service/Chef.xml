@@ -52,7 +52,7 @@ Place wheat in a grinder (with a beaker placed inside) and grind it up!
 Ask Botany for what you need, without a botanist, you may need to grow more plants yourself.
 <Box>
 <GuideEntityEmbed Entity="SignHydro1" Caption=" "/>
-<GuideEntityEmbed Entity="hydroponicsTray"/>
+<GuideEntityEmbed Entity="HydroponicsTray"/>
 <GuideEntityEmbed Entity="WheatBushel"/>
 <GuideEntityEmbed Entity="SignHydro2" Caption=" "/>
 </Box>

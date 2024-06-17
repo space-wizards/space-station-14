@@ -18778,7 +18778,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 21.5,-16.5
       parent: 1668
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 611
     components:
@@ -20850,7 +20850,7 @@ entities:
       parent: 1668
     - type: FaxMachine
       name: CentComm
-- proto: filingCabinet
+- proto: FilingCabinet
   entities:
   - uid: 594
     components:
@@ -20882,7 +20882,7 @@ entities:
     - type: Transform
       pos: -23.5,-9.5
       parent: 1668
-- proto: filingCabinetDrawer
+- proto: FilingCabinetDrawer
   entities:
   - uid: 1628
     components:
@@ -20894,7 +20894,7 @@ entities:
     - type: Transform
       pos: -11.5,14.5
       parent: 1668
-- proto: filingCabinetTall
+- proto: FilingCabinetTall
   entities:
   - uid: 1626
     components:

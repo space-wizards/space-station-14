@@ -47,7 +47,7 @@
   <Box>
   <GuideEntityEmbed Entity="Multitool"/>
   <GuideEntityEmbed Entity="Crowbar"/>
-  <GuideEntityEmbed Entity="trayScanner"/>
+  <GuideEntityEmbed Entity="TrayScanner"/>
   </Box>
 
 </Document>

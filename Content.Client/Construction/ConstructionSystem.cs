@@ -203,7 +203,7 @@ namespace Content.Client.Construction
             if (!CheckConstructionConditions(prototype, loc, dir, user, showPopup: true))
                 return false;
 
-            ghost = EntityManager.SpawnEntity("constructionghost", loc);
+            ghost = EntityManager.SpawnEntity("ConstructionGhost", loc);
             var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost.Value);
             comp.Prototype = prototype;
             EntityManager.GetComponent<TransformComponent>(ghost.Value).LocalRotation = dir.ToAngle();

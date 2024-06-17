@@ -179,7 +179,7 @@
   storage:
     back:
     - GasAnalyzer
-    - trayScanner
+    - TrayScanner
     - AccessConfiguratorUniversal
 
 #Gladiator with spear

@@ -184,7 +184,7 @@
         - Wrench
         - Crowbar
         - NetworkConfigurator
-        - trayScanner
+        - TrayScanner
         - GasAnalyzer
         - SprayPainter
         - AppraisalTool

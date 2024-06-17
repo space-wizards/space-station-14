@@ -28779,14 +28779,14 @@ entities:
     - type: Transform
       pos: 25.5,12.5
       parent: 1
-- proto: d20Dice
+- proto: D20Dice
   entities:
   - uid: 5591
     components:
     - type: Transform
       pos: -39.55801,-5.7503414
       parent: 1
-- proto: d8Dice
+- proto: D8Dice
   entities:
   - uid: 5592
     components:
@@ -55119,7 +55119,7 @@ entities:
     - type: Transform
       pos: -2.465951,-0.3052745
       parent: 1
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 4939
     components:

@@ -27829,7 +27829,7 @@ entities:
       linkedPorts:
         9418:
         - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 7285
     components:
@@ -28724,7 +28724,7 @@ entities:
     - type: Transform
       pos: -0.49411595,-30.373203
       parent: 31
-- proto: d20Dice
+- proto: D20Dice
   entities:
   - uid: 2357
     components:
@@ -28736,7 +28736,7 @@ entities:
     - type: Transform
       pos: 11.36982,-23.570984
       parent: 31
-- proto: d6Dice
+- proto: D6Dice
   entities:
   - uid: 4249
     components:
@@ -28748,7 +28748,7 @@ entities:
     - type: Transform
       pos: 10.46357,-23.664734
       parent: 31
-- proto: d8Dice
+- proto: D8Dice
   entities:
   - uid: 2358
     components:
@@ -32565,7 +32565,7 @@ entities:
       parent: 31
     - type: FaxMachine
       name: captain's office
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 4637
     components:
@@ -32577,7 +32577,7 @@ entities:
     - type: Transform
       pos: 9.5,18.5
       parent: 31
-- proto: filingCabinetRandom
+- proto: FilingCabinetRandom
   entities:
   - uid: 4216
     components:
@@ -32604,7 +32604,7 @@ entities:
     - type: Transform
       pos: -2.5,14.5
       parent: 31
-- proto: filingCabinetTallRandom
+- proto: FilingCabinetTallRandom
   entities:
   - uid: 1424
     components:
@@ -48261,7 +48261,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -13.5,-37.5
       parent: 31
-- proto: hydroponicsSoil
+- proto: HydroponicsSoil
   entities:
   - uid: 9666
     components:
@@ -48338,7 +48338,7 @@ entities:
     - type: Transform
       pos: -18.353035,8.817266
       parent: 31
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 775
     components:
@@ -61084,7 +61084,7 @@ entities:
     - type: Transform
       pos: 38.48186,-17.514906
       parent: 31
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 8901
     components:

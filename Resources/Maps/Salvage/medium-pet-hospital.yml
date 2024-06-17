@@ -845,7 +845,7 @@ entities:
     - type: Transform
       pos: 12.48807,-1.4498396
       parent: 289
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 271
     components:

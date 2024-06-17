@@ -39,7 +39,7 @@
       - id: Multitool
       - id: HolofanProjector
       - id: GasAnalyzer
-      - id: trayScanner
+      - id: TrayScanner
 
 - type: entity
   id: ClothingBeltSecurityFilled

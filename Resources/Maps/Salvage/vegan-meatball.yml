@@ -468,7 +468,7 @@ entities:
     - type: Transform
       pos: -5.120013,-1.1100138
       parent: 1
-- proto: hydroponicsSoil
+- proto: HydroponicsSoil
   entities:
   - uid: 230
     components:

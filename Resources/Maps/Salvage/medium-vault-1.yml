@@ -1063,7 +1063,7 @@ entities:
     - type: Transform
       pos: -0.5,4.5
       parent: 222
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 215
     components:

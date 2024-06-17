@@ -69549,7 +69549,7 @@ entities:
       linkedPorts:
         21199:
         - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 2390
     components:
@@ -71502,7 +71502,7 @@ entities:
     - type: Transform
       pos: 29.484377,-32.156303
       parent: 8364
-- proto: d10Dice
+- proto: D10Dice
   entities:
   - uid: 10852
     components:
@@ -71514,7 +71514,7 @@ entities:
     - type: Transform
       pos: 55.5,0.5
       parent: 8364
-- proto: d12Dice
+- proto: D12Dice
   entities:
   - uid: 10854
     components:
@@ -71526,7 +71526,7 @@ entities:
     - type: Transform
       pos: 55.5,0.5
       parent: 8364
-- proto: d20Dice
+- proto: D20Dice
   entities:
   - uid: 6522
     components:
@@ -71548,7 +71548,7 @@ entities:
     - type: Transform
       pos: 55.5,18.5
       parent: 8364
-- proto: d4Dice
+- proto: D4Dice
   entities:
   - uid: 10869
     components:
@@ -71565,7 +71565,7 @@ entities:
     - type: Transform
       pos: 57.5,20.5
       parent: 8364
-- proto: d6Dice
+- proto: D6Dice
   entities:
   - uid: 903
     components:
@@ -71612,7 +71612,7 @@ entities:
     - type: Transform
       pos: 20.517843,-9.418598
       parent: 8364
-- proto: d8Dice
+- proto: D8Dice
   entities:
   - uid: 10871
     components:
@@ -81773,7 +81773,7 @@ entities:
     - type: Transform
       pos: 12.5,10.5
       parent: 8364
-- proto: filingCabinet
+- proto: FilingCabinet
   entities:
   - uid: 537
     components:
@@ -81815,7 +81815,7 @@ entities:
     - type: Transform
       pos: 57.5,3.5
       parent: 8364
-- proto: filingCabinetDrawer
+- proto: FilingCabinetDrawer
   entities:
   - uid: 5293
     components:
@@ -81852,7 +81852,7 @@ entities:
     - type: Transform
       pos: 63.5,-17.5
       parent: 8364
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 2354
     components:
@@ -81869,7 +81869,7 @@ entities:
     - type: Transform
       pos: 4.5,-51.5
       parent: 8364
-- proto: filingCabinetRandom
+- proto: FilingCabinetRandom
   entities:
   - uid: 274
     components:
@@ -81886,7 +81886,7 @@ entities:
     - type: Transform
       pos: -32.5,-31.5
       parent: 8364
-- proto: filingCabinetTall
+- proto: FilingCabinetTall
   entities:
   - uid: 17686
     components:
@@ -120589,7 +120589,7 @@ entities:
     - type: Transform
       pos: 62.5,10.5
       parent: 8364
-- proto: hydroponicsSoil
+- proto: HydroponicsSoil
   entities:
   - uid: 13196
     components:
@@ -120729,7 +120729,7 @@ entities:
     - type: Transform
       pos: 1.5683146,51.57647
       parent: 8364
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 10619
     components:
@@ -149353,7 +149353,7 @@ entities:
     - type: Transform
       pos: 2.6832485,-34.158478
       parent: 8364
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 2389
     components:

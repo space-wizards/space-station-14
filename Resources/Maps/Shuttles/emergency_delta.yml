@@ -2702,7 +2702,7 @@ entities:
     - type: Transform
       pos: -10.630073,-3.4031057
       parent: 1
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 418
     components:

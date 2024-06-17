@@ -21,7 +21,7 @@
         prob: 0.7
       - id: Multitool
         prob: 0.2
-      - id: trayScanner
+      - id: TrayScanner
         prob: 0.7
       - id: GasAnalyzer
         prob: 0.7
@@ -136,7 +136,7 @@
     contents:
       - id: ClothingHandsGlovesColorYellow
       - id: ClothingMaskGas
-      - id: trayScanner
+      - id: TrayScanner
       - id: RCD
       - id: RCDAmmo
 
