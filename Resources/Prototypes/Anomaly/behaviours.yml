@@ -13,7 +13,6 @@
     Reflect: 1
     NonSensivity: 1
     Sensivity: 1
-    Invisibility: 1
   #Hard
     Fast: 0.5
     Strenght: 0.5
@@ -21,10 +20,12 @@
     InconstancyParticle: 0.5
     FullUnknown: 0.5
     Jumping: 0.3
+    Invisibility: 0.5
   #Complex
     FastUnknown: 0.2
     JumpingUnknown: 0.1
     InconstancyParticleUnknown: 0.1
+    InvisibilityJumping: 0.1
 
 
 # Easy x0.5 point production
@@ -102,17 +103,6 @@
   particleSensivity: 1.5
   description: anomaly-behavior-sensivity
 
-- type: anomalyBehavior
-  id: Invisibility
-  earnPointModifier: 1.2
-  description: anomaly-behavior-invisibility
-  components:
-  - type: Stealth
-    maxVisibility: 1.2
-  - type: StealthOnMove
-    passiveVisibilityRate: -0.37
-    movementVisibilityRate: 0.20
-
 # Hard x2 point production
 
 - type: anomalyBehavior
@@ -166,6 +156,17 @@
     randomStartSecretMin: 4
     randomStartSecretMax: 6
 
+- type: anomalyBehavior
+  id: Invisibility
+  earnPointModifier: 1.6
+  description: anomaly-behavior-invisibility
+  components:
+  - type: Stealth
+    maxVisibility: 1.2
+  - type: StealthOnMove
+    passiveVisibilityRate: -0.37
+    movementVisibilityRate: 0.20
+
 # Complex Effects
 
 - type: anomalyBehavior
@@ -182,7 +183,6 @@
   - type: SecretDataAnomaly
     randomStartSecretMin: 3
     randomStartSecretMax: 5
-
 
 - type: anomalyBehavior
   id: FastUnknown
@@ -205,3 +205,20 @@
   - type: SecretDataAnomaly
     randomStartSecretMin: 3
     randomStartSecretMax: 5
+
+- type: anomalyBehavior
+  id: InvisibilityJumping
+  earnPointModifier: 1.95
+  description: anomaly-behavior-invisibility
+  components:
+  - type: ChaoticJump
+    jumpMinInterval: 15
+    jumpMaxInterval: 25
+    rangeMin: 1
+    rangeMax: 1
+    effect: PuddleSparkle
+  - type: Stealth
+    maxVisibility: 1.2
+  - type: StealthOnMove
+    passiveVisibilityRate: -0.37
+    movementVisibilityRate: 0.20
