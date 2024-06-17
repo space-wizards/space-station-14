@@ -3,6 +3,7 @@ using Content.Shared.Dataset;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -71,8 +72,8 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
             station.Value,
             Loc.GetString("station-event-random-sentience-announcement",
                 ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
-                ("data", Loc.GetString(_random.Pick(_prototype.Index<LocalizedDatasetPrototype>("RandomSentienceEventData").Values))),
-                ("strength", Loc.GetString(_random.Pick(_prototype.Index<LocalizedDatasetPrototype>("RandomSentienceEventStrength").Values)))
+                ("data", _random.Pick(_prototype.Index<LocalizedDatasetPrototype>("RandomSentienceEventData"))),
+                ("strength", _random.Pick(_prototype.Index<LocalizedDatasetPrototype>("RandomSentienceEventStrength")))
             ),
             playDefaultSound: false,
             colorOverride: Color.Gold
