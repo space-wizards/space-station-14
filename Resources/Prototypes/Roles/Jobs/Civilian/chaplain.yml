@@ -22,6 +22,6 @@
     ears: ClothingHeadsetService
   storage:
     back:
-    - BoxSurvival
+    #- BoxSurvival
     - Bible
     - RubberStampChaplain

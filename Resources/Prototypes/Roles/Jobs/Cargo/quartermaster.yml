@@ -44,5 +44,5 @@
     pocket1: AppraisalTool
   storage:
     back:
-    - BoxSurvival
+    #- BoxSurvival
     - Flash

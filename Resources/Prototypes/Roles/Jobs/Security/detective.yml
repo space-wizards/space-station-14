@@ -30,7 +30,7 @@
     belt: ClothingBeltHolsterFilled
   storage:
     back:
-    - BoxSurvivalSecurity
+    #- BoxSurvivalSecurity
     - Flash
     - ForensicPad
     - ForensicScanner

@@ -36,5 +36,5 @@
     ears: ClothingHeadsetRD
   storage:
     back:
-    - BoxSurvival
+    #- BoxSurvival
     - Flash

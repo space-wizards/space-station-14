@@ -35,6 +35,15 @@
   - GlassesJamjar
   - GlassesJensen
 
+- type: loadoutGroup
+  id: Survival
+  name: loadout-group-survival-basic
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - EmergencyNitrogen
+  - EmergencyOxygen
+
 # Command
 - type: loadoutGroup
   id: CaptainHead
@@ -696,6 +705,15 @@
   - WhiteShoes
   - EngineeringWinterBoots
 
+- type: loadoutGroup
+  id: SurvivalExtended
+  name: loadout-group-survival-extended
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - EmergencyNitrogenExtended
+  - EmergencyOxygenExtended
+
 # Science
 - type: loadoutGroup
   id: ResearchDirectorHead
@@ -966,6 +984,15 @@
   - RedJumpsuit
   - RedJumpskirt
 
+- type: loadoutGroup
+  id: SurvivalSecurity
+  name: loadout-group-survival-security
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - EmergencyNitrogenSecurity
+  - EmergencyOxygenSecurity
+
 # Medical
 - type: loadoutGroup
   id: ChiefMedicalOfficerHead
@@ -1137,6 +1164,15 @@
   loadouts:
   - BlueShoes
   - MedicalWinterBoots
+
+- type: loadoutGroup
+  id: SurvivalMedical
+  name: loadout-group-survival-medical
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - EmergencyNitrogenMedical
+  - EmergencyOxygenMedical
 
 # Wildcards
 - type: loadoutGroup

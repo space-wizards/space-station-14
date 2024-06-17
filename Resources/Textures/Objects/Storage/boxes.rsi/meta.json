@@ -23,7 +23,13 @@
             "name": "extendedtank"
         },
         {
+            "name": "extendedtanknitrogen"
+        },
+        {
             "name": "emergencytank"
+        },
+        {
+            "name": "emergencytanknitrogen"
         },
         {
             "name": "heart"

@@ -26,5 +26,5 @@
     - BriefcaseBrownFilled
   storage:
     back:
-    - BoxSurvival
+    #- BoxSurvival
     - RubberStampLawyer

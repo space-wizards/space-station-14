@@ -66,5 +66,5 @@
     belt: BoxFolderClipboard
   storage:
     back:
-    - BoxSurvival
+    #- BoxSurvival
     - Flash
