@@ -241,11 +241,6 @@ namespace Content.Shared.Atmos
         public const float FrezonProductionConversionRate = 50f;
 
         /// <summary>
-        ///     The maximum portion of the N2O that can decompose each reaction tick. (50%)
-        /// </summary>
-        public const float N2ODecompositionRate = 2f;
-
-        /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
         /// </summary>
         public const float HazardHighPressure = 550f;
