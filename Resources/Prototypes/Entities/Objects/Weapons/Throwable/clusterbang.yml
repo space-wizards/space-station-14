@@ -246,7 +246,7 @@
   parent: GrenadeShrapnel
   id: GrenadeFoamDart
   name: foam dart grenade
-  description: Releases a bothersome spray of foam darts that causes severe welching.
+  description: Releases a bothersome spray of foam darts that cause severe welching.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/foamdart.rsi
