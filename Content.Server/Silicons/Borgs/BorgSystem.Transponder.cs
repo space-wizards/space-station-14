@@ -1,6 +1,6 @@
-using Content.Shared.Administration;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Emag.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Robotics;
 using Content.Shared.Silicons.Borgs.Components;
@@ -121,7 +121,7 @@ public sealed partial class BorgSystem
         _trigger.StartTimer(ent.Owner, user: null);
 
         // prevent a shitter borg running into people
-        EnsureComp<AdminFrozenComponent>(ent);
+        RemComp<InputMoverComponent>(ent);
     }
 
     private bool CheckEmagged(EntityUid uid, string name)
