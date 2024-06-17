@@ -1,6 +1,6 @@
 - type: entity
   name: soil
-  id: hydroponicsSoil
+  id: HydroponicsSoil
   placement:
     mode: SnapgridCenter
   components:

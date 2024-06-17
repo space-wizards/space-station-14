@@ -1,6 +1,6 @@
 - type: entity
   name: drag shadow
-  id: dragshadow
+  id: DragShadow
   noSpawn: true
   components:
   - type: Tag

@@ -1,6 +1,6 @@
 ﻿- type: entity
   name: hover entity
-  id: hoverentity
+  id: HoverEntity
   noSpawn: true
   components:
     - type: Sprite

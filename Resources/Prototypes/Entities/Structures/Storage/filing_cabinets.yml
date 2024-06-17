@@ -1,7 +1,7 @@
 - type: entity
   name: filing cabinet
   parent: [ BaseStructureDynamic, BaseBagOpenClose ]
-  id: filingCabinet
+  id: FilingCabinet
   suffix: Empty
   description: A cabinet for all your filing needs.
   components:
@@ -71,7 +71,7 @@
 - type: entity
   name: tall cabinet
   parent: filingCabinet
-  id: filingCabinetTall
+  id: FilingCabinetTall
   suffix: Empty
   components:
   - type: Sprite
@@ -89,7 +89,7 @@
 - type: entity
   name: chest drawer
   parent: BaseStructureDynamic
-  id: filingCabinetDrawer
+  id: FilingCabinetDrawer
   suffix: Empty
   description: A small drawer for all your filing needs, Now with wheels!
   components:
@@ -184,15 +184,15 @@
 
 - type: entity
   parent: [filingCabinet, BaseBureaucraticStorageFill]
-  id: filingCabinetRandom
+  id: FilingCabinetRandom
   suffix: Random
 
 - type: entity
   parent: [filingCabinetTall, BaseBureaucraticStorageFill]
-  id: filingCabinetTallRandom
+  id: FilingCabinetTallRandom
   suffix: Random
 
 - type: entity
   parent: [filingCabinetDrawer, BaseBureaucraticStorageFill]
-  id: filingCabinetDrawerRandom
+  id: FilingCabinetDrawerRandom
   suffix: Random

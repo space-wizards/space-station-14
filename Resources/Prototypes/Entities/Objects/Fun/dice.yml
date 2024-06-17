@@ -30,7 +30,7 @@
 
 - type: entity
   parent: BaseDice
-  id: d20Dice
+  id: D20Dice
   name: d20
   description: A die with twenty sides. The preferred die to throw at the GM.
   components:
@@ -42,7 +42,7 @@
 
 - type: entity
   parent: BaseDice
-  id: d12Dice
+  id: D12Dice
   name: d12
   description: A die with twelve sides. There's an air of neglect about it.
   components:
@@ -54,7 +54,7 @@
 
 - type: entity
   parent: BaseDice
-  id: d10Dice
+  id: D10Dice
   name: d10
   description: A die with ten sides. Useful for percentages.
   components:
@@ -67,7 +67,7 @@
 
 - type: entity
   parent: BaseDice
-  id: d8Dice
+  id: D8Dice
   name: d8
   description: A die with eight sides. It feels... lucky.
   components:
@@ -79,7 +79,7 @@
 
 - type: entity
   parent: BaseDice
-  id: d6Dice
+  id: D6Dice
   name: d6
   description: A die with six sides. Basic and serviceable.
   components:
@@ -91,7 +91,7 @@
 
 - type: entity
   parent: BaseDice
-  id: d4Dice
+  id: D4Dice
   name: d4
   description: A die with four sides. The nerd's caltrop.
   components:

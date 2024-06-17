@@ -1,6 +1,6 @@
 - type: entity
   name: construction ghost
-  id: constructionghost
+  id: ConstructionGhost
   noSpawn: true
   components:
   - type: Sprite

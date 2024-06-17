@@ -1,6 +1,6 @@
 - type: entity
   name: clientsideclone
-  id: clientsideclone
+  id: ClientSideClone
   noSpawn: true
   components:
   - type: Sprite
