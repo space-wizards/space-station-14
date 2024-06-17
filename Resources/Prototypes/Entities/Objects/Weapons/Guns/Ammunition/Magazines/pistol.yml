@@ -33,7 +33,7 @@
 
 - type: entity
   id: BaseMagazinePistolHighCapacity
-  name: machine pistol magazine (.35 auto)
+  name: high-capacity pistol magazine (.35 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -211,7 +211,7 @@
 
 - type: entity
   id: MagazinePistolHighCapacityEmpty
-  name: machine pistol magazine (.35 auto)
+  name: high-capacity pistol magazine (.35 auto)
   suffix: Empty
   parent: BaseMagazinePistolHighCapacity
   components:
@@ -226,7 +226,7 @@
 
 - type: entity
   id: MagazinePistolHighCapacity
-  name: machine pistol magazine (.35 auto lethal)
+  name: high-capacity pistol magazine (.35 auto lethal)
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
@@ -240,11 +240,11 @@
 
 - type: entity
   id: MagazinePistolHighCapacityPractice
-  name: machine pistol magazine (.35 auto practice)
+  name: high-capacity pistol magazine (.35 auto practice)
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolPractice
   - type: Sprite
     layers:
     - state: practice
@@ -254,11 +254,11 @@
 
 - type: entity
   id: MagazinePistolHighCapacityIncendiary
-  name: machine pistol magazine (.35 auto incendiary)
+  name: high-capacity pistol magazine (.35 auto incendiary)
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolIncendiary
   - type: Sprite
     layers:
     - state: incendiary
