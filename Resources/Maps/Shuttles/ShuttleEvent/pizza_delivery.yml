@@ -293,6 +293,8 @@ entities:
   entities:
   - uid: 20
     components:
+    - type: PointLight
+      enabled: true
     - type: Transform
       pos: 0.5,1.5
       parent: 1
@@ -369,7 +371,7 @@ entities:
         Deliver these six pizzas to the nearby Nanotrasen station and your family will be safe this winter. Do not allow this shuttle to fall into hostile hands.
 
 
-        Your shuttle's generator may run out of fuel. Refuel it with the solid plasma in the orange crate behind the pilot seat.
+        Your shuttle's generator may run out of fuel. Refuel it with the solid plasma in the orange crate behind the pilot seat. Make sure the generator is in MV mode.
 
 
         - Wallace Warrington, Quartermaster
