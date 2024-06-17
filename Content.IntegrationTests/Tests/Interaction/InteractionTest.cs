@@ -142,6 +142,7 @@ public abstract partial class InteractionTest
   - type: ComplexInteraction
   - type: MindContainer
   - type: Stripping
+  - type: Puller
   - type: Tag
     tags:
     - CanPilot
@@ -207,8 +208,8 @@ public abstract partial class InteractionTest
             SEntMan.System<SharedMindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
 
             old = cPlayerMan.LocalEntity;
-            Player = SEntMan.GetNetEntity(SEntMan.SpawnEntity(PlayerPrototype, SEntMan.GetCoordinates(PlayerCoords)));
-            SPlayer = SEntMan.GetEntity(Player);
+            SPlayer = SEntMan.SpawnEntity(PlayerPrototype, SEntMan.GetCoordinates(PlayerCoords));
+            Player = SEntMan.GetNetEntity(SPlayer);
             Server.PlayerMan.SetAttachedEntity(ServerSession, SPlayer);
             Hands = SEntMan.GetComponent<HandsComponent>(SPlayer);
             DoAfters = SEntMan.GetComponent<DoAfterComponent>(SPlayer);
