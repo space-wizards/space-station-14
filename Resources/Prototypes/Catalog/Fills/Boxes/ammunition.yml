@@ -19,6 +19,10 @@
     contents:
       - id: MagazinePistolCaselessRifle
         amount: 4
+  - type: Sprite
+    layers:
+      - state: box_security
+      - state: magcaselesslethal
 
 - type: entity
   name: box of (.25 caseless practice) magazines
