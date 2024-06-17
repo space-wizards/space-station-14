@@ -68,7 +68,7 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
         var kind3 = groupList.Count > 2 ? groupList[2] : "???";
 
         ChatSystem.DispatchStationAnnouncement(
-            (EntityUid) station, // cast from nullable. If this was null, we wouldn't be here
+            station.Value,
             Loc.GetString("station-event-random-sentience-announcement",
                 ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
                 ("data", Loc.GetString(_random.Pick(_prototype.Index<LocalizedDatasetPrototype>("RandomSentienceEventData").Values))),
