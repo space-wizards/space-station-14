@@ -46,7 +46,9 @@ namespace Content.Server.Chemistry.ReactionEffects
         public override bool ShouldLog => true;
 
         protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-            => Loc.GetString("reagent-effect-guidebook-missing");
+            => Loc.GetString("reagent-effect-guidebook-area-reaction",
+                    ("duration", _duration)
+                );
 
         public override LogImpact LogImpact => LogImpact.High;
 

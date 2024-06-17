@@ -305,5 +305,13 @@ Entries:
   id: 37
   time: '2024-06-13T06:38:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28876
+- author: nikthechampiongr
+  changes:
+  - message: The ahelp panel properly deselects a player when they are no longer on
+      the player list.
+    type: Fix
+  id: 38
+  time: '2024-06-15T11:25:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28899
 Name: Admin
 Order: 1
