@@ -4499,20 +4499,6 @@ entities:
     - type: Transform
       pos: 3.5402613,7.6028175
       parent: 1
-- proto: ActionToggleLight
-  entities:
-  - uid: 9312
-    components:
-    - type: Transform
-      parent: 12532
-    - type: InstantAction
-      container: 12532
-  - uid: 9313
-    components:
-    - type: Transform
-      parent: 12533
-    - type: InstantAction
-      container: 12533
 - proto: AirAlarm
   entities:
   - uid: 8049
@@ -35985,39 +35971,11 @@ entities:
     - type: Transform
       pos: 16.59333,23.726284
       parent: 1
-    - type: HandheldLight
-      toggleActionEntity: 9312
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 9312
-    - type: ActionsContainer
   - uid: 12533
     components:
     - type: Transform
       pos: 16.59333,23.476284
       parent: 1
-    - type: HandheldLight
-      toggleActionEntity: 9313
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 9313
-    - type: ActionsContainer
 - proto: Floodlight
   entities:
   - uid: 7307

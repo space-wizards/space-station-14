@@ -1,50 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Removed SCAF armor.
-    type: Remove
-  id: 6261
-  time: '2024-03-31T02:01:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26566
-- author: lzk228
-  changes:
-  - message: Syndicate duffelbag storage increased from 8x5 to 9x5.
-    type: Tweak
-  id: 6262
-  time: '2024-03-31T02:21:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26565
-- author: Velcroboy
-  changes:
-  - message: Changed plastic flaps to be completely constructable/deconstructable
-    type: Tweak
-  id: 6263
-  time: '2024-03-31T02:24:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26341
-- author: Flareguy
-  changes:
-  - message: Security glasses have been moved from research to roundstart gear. All
-      officers now start with them instead of sunglasses by default.
-    type: Tweak
-  - message: You can now craft security glasses.
-    type: Add
-  id: 6264
-  time: '2024-03-31T03:00:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26487
-- author: brainfood1183
-  changes:
-  - message: Toilets can now be connected to the disposal system.
-    type: Add
-  id: 6265
-  time: '2024-03-31T03:21:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/22133
-- author: DrMelon
-  changes:
-  - message: Syndicate Uplinks now have a searchbar to help those dirty, rotten antagonists
-      find appropriate equipment more easily!
-    type: Tweak
-  id: 6266
-  time: '2024-03-31T04:09:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24287
 - author: chromiumboy
   changes:
   - message: Additional construction options have been added to the Rapid Construction
@@ -3859,3 +3813,48 @@
   id: 6760
   time: '2024-06-16T11:57:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25155
+- author: Futuristic
+  changes:
+  - message: RandomSentience event was removed
+    type: Remove
+  id: 6761
+  time: '2024-06-16T23:24:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28982
+- author: notafet
+  changes:
+  - message: Adjust TEG power generation levels.
+    type: Tweak
+  id: 6762
+  time: '2024-06-17T01:13:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29112
+- author: Cojoke-dot, AJCM-git
+  changes:
+  - message: You can now flip your eyepatches to the other eye! Yarrrrr!
+    type: Add
+  id: 6763
+  time: '2024-06-17T03:21:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26277
+- author: deltanedas
+  changes:
+  - message: Borgs now have a 10 second beeping timer that paralyzes them when being
+      exploded with the robotics console and a 5 second delay when being disabled
+      with it.
+    type: Tweak
+  id: 6764
+  time: '2024-06-17T03:30:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27876
+- author: EmoGarbage404
+  changes:
+  - message: Changed meteor swarm spawning to be less clumped up and favor hitting
+      multiple areas more.
+    type: Tweak
+  id: 6765
+  time: '2024-06-17T05:20:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29057
+- author: Ubaser
+  changes:
+  - message: Added new reptilian horns, "Demonic".
+    type: Add
+  id: 6766
+  time: '2024-06-17T10:53:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29022
