@@ -84,6 +84,7 @@ public abstract partial class InteractionTest
     protected NetEntity? Target;
 
     protected EntityUid? STarget => ToServer(Target);
+
     protected EntityUid? CTarget => ToClient(Target);
 
     /// <summary>
@@ -128,7 +129,6 @@ public abstract partial class InteractionTest
 
     public float TickPeriod => (float) STiming.TickPeriod.TotalSeconds;
 
-
     // Simple mob that has one hand and can perform misc interactions.
     [TestPrototypes]
     private const string TestPrototypes = @"
@@ -143,6 +143,7 @@ public abstract partial class InteractionTest
   - type: MindContainer
   - type: Stripping
   - type: Puller
+  - type: Physics
   - type: Tag
     tags:
     - CanPilot

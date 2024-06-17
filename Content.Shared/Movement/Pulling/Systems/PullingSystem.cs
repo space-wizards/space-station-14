@@ -396,11 +396,8 @@ public sealed class PullingSystem : EntitySystem
         if (!CanPull(pullerUid, pullableUid))
             return false;
 
-        if (!EntityManager.TryGetComponent<PhysicsComponent>(pullerUid, out var pullerPhysics) ||
-            !EntityManager.TryGetComponent<PhysicsComponent>(pullableUid, out var pullablePhysics))
-        {
+        if (!HasComp<PhysicsComponent>(pullerUid) || !TryComp(pullableUid, out PhysicsComponent? pullablePhysics))
             return false;
-        }
 
         // Ensure that the puller is not currently pulling anything.
         if (TryComp<PullableComponent>(pullerComp.Pulling, out var oldPullable)
@@ -445,7 +442,7 @@ public sealed class PullingSystem : EntitySystem
         {
             // Joint startup
             var union = _physics.GetHardAABB(pullerUid).Union(_physics.GetHardAABB(pullableUid, body: pullablePhysics));
-            var length = Math.Max((float) union.Size.X, (float) union.Size.Y) * 0.75f;
+            var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
             var joint = _joints.CreateDistanceJoint(pullableUid, pullerUid, id: pullableComp.PullJointId);
             joint.CollideConnected = false;

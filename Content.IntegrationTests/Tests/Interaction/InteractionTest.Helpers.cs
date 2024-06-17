@@ -84,8 +84,8 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Spawn an entity entity and set it as the target.
     /// </summary>
-    [MemberNotNull(nameof(Target))]
-    protected async Task SpawnTarget(string prototype)
+    [MemberNotNull(nameof(Target), nameof(STarget), nameof(CTarget))]
+    protected async Task<NetEntity> SpawnTarget(string prototype)
     {
         Target = NetEntity.Invalid;
         await Server.WaitPost(() =>
@@ -95,6 +95,9 @@ public abstract partial class InteractionTest
 
         await RunTicks(5);
         AssertPrototype(prototype);
+#pragma warning disable CS8774 // Member must have a non-null value when exiting.
+        return Target!.Value;
+#pragma warning restore CS8774 // Member must have a non-null value when exiting.
     }
 
     /// <summary>
