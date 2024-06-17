@@ -1,15 +1,16 @@
 using Content.Server.Power.Components;
+using Content.Server.Emp;
 using Content.Server.PowerCell;
 using Content.Shared.Examine;
 using Content.Shared.Power;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Emp;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Storage.Components;
 using Robust.Server.Containers;
 using Content.Shared.Whitelist;
-using Content.Shared.Emp;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -33,6 +34,9 @@ internal sealed class ChargerSystem : EntitySystem
         SubscribeLocalEvent<ChargerComponent, ExaminedEvent>(OnChargerExamine);
 
         SubscribeLocalEvent<ChargerComponent, ChargerUpdateStatusEvent>(OnUpdateStatus);
+    
+        SubscribeLocalEvent<ChargerComponent, EmpPulseEvent>(OnEmpPulse);
+        SubscribeLocalEvent<ChargerComponent, EmpDisabledRemoved>(OnEmpDisabledRemoved);
     }
 
     private void OnStartup(EntityUid uid, ChargerComponent component, ComponentStartup args)
@@ -45,20 +49,54 @@ internal sealed class ChargerSystem : EntitySystem
         args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", (int) component.ChargeRate)));
     }
 
+    private void StartChargingBattery(EntityUid uid, ChargerComponent component, EntityUid target)
+    {
+        bool charge = true;
+        if (!TryComp<BatteryComponent>(target, out var battery))
+            charge = false;
+        else
+        if (Math.Abs(battery.MaxCharge - battery.CurrentCharge) < 0.01)
+            charge = false;
+
+        // wrap functionality in an if statement instead of returning...
+        if (charge)
+        {
+            var charging = EnsureComp<ChargingComponent>(target);
+            charging.charger = component;
+        }
+
+        // ...so the status always updates (for insertin a power cell)
+        UpdateStatus(uid, component);
+    }
+
+    private void StopChargingBattery(EntityUid uid, ChargerComponent component, EntityUid target)
+    {
+        if (HasComp<ChargingComponent>(target))
+            RemComp<ChargingComponent>(target);
+        UpdateStatus(uid, component);
+    }
+
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<ChargingComponent>();
         while (query.MoveNext(out var uid, out var charging))
         {
-            var chargerEnt = charging.charger.Owner;
+            var chargerUid = charging.charger.Owner;
+            if (!TryComp<ChargerComponent>(chargerUid, out var chargerComponent))
+                continue;
 
             if (charging.charger.Status == CellChargerStatus.Off || charging.charger.Status == CellChargerStatus.Empty)
                 continue;
 
-            if (HasComp<EmpDisabledComponent>(chargerEnt))
+            if (HasComp<EmpDisabledComponent>(chargerUid))
                 continue;
 
-            TransferPower(chargerEnt, uid, charging.charger, frameTime);
+            if (!TryComp<BatteryComponent>(uid, out var battery))
+                continue;
+
+            if (Math.Abs(battery.MaxCharge - battery.CurrentCharge) < 0.01)
+                StopChargingBattery(chargerUid,chargerComponent, uid);
+            TransferPower(chargerUid, uid, charging.charger, frameTime);
         }
     }
 
@@ -75,10 +113,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.SlotId)
             return;
 
-        var charging = EnsureComp<ChargingComponent>(args.Entity);
-        charging.charger = component;
-
-        UpdateStatus(uid, component);
+        StartChargingBattery(uid, component, args.Entity);
     }
 
     private void OnRemoved(EntityUid uid, ChargerComponent component, EntRemovedFromContainerMessage args)
@@ -86,9 +121,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.SlotId)
             return;
 
-        if (HasComp<ChargingComponent>(args.Entity))
-            RemComp<ChargingComponent>(args.Entity);
-        UpdateStatus(uid, component);
+        StopChargingBattery(uid, component, args.Entity);
     }
 
     /// <summary>
@@ -163,6 +196,43 @@ internal sealed class ChargerSystem : EntitySystem
         }
     }
     
+    private void OnEmpPulse(EntityUid uid, ChargerComponent component, ref EmpPulseEvent args)
+    {
+        // we don't care if we haven't been disabled
+        if (!args.Disabled)
+            return;
+
+        // if the recharger is hit by an emp pulse,
+        // stop recharging contained batteries to save resources
+        if (!_container.TryGetContainer(uid, component.SlotId, out var container))
+            return;
+
+        foreach (var containedEntity in container.ContainedEntities)
+        {
+            // if none of the slotted items are actually batteries, represent the charger as off
+            if (!SearchForBattery(containedEntity, out _, out _))
+                continue;
+
+            StopChargingBattery(uid, component, containedEntity);
+        }
+    }
+
+    private void OnEmpDisabledRemoved(EntityUid uid, ChargerComponent component, ref EmpDisabledRemoved args)
+    {
+        // if an emp disable subsides,
+        // attempt to start charging all batteries
+        if (!_container.TryGetContainer(uid, component.SlotId, out var container))
+            return;
+
+        foreach (var containedEntity in container.ContainedEntities)
+        {
+            // if none of the slotted items are actually batteries, represent the charger as off
+            if (!SearchForBattery(containedEntity, out _, out _))
+                continue;
+
+            StartChargingBattery(uid, component, containedEntity);
+        }
+    }
 
     private CellChargerStatus GetStatus(EntityUid uid, ChargerComponent component)
     {
@@ -189,7 +259,7 @@ internal sealed class ChargerSystem : EntitySystem
         foreach (var containedEntity in container.ContainedEntities)
         {
             // if none of the slotted items are actually batteries, represent the charger as off
-            if (!SearchForBattery(containedEntity, out _, out var heldBattery))
+            if (!SearchForBattery(containedEntity, out _, out _))
                 continue;
 
             // if all batteries are either EMP'd or fully charged, represent the charger as fully charged
@@ -197,7 +267,7 @@ internal sealed class ChargerSystem : EntitySystem
             if (HasComp<EmpDisabledComponent>(containedEntity))
                 continue;
 
-            if (Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
+            if (!HasComp<ChargingComponent>(containedEntity))
                 continue;
 
             // if we have atleast one battery being charged, represent the charger as charging;
