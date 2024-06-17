@@ -105,7 +105,11 @@
     context: "human"
   - type: SentienceTarget # sentient PDA = pAI lite
     flavorKind: station-event-random-sentience-flavor-mechanical
-    weight: 0.0001 # 10,000 PDAs = as likely to be picked as 1 regular animal
+    weight: 0.001 # 1,000 PDAs = as likely to be picked as 1 regular animal
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
 
 - type: entity
   parent: BasePDA
