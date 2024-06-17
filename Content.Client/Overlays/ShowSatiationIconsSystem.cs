@@ -18,7 +18,7 @@ public sealed class ShowSatiationIconsSystem : EquipmentHudSystem<ShowSatiationI
 
     private void OnGetStatusIconsEvent(Entity<SatiationComponent> ent, ref GetStatusIconsEvent ev)
     {
-        if (!IsActive || ev.InContainer)
+        if (!IsActive)
             return;
 
         if (!TryComp<ShowSatiationIconsComponent>(ent.Owner, out var showIcons))
