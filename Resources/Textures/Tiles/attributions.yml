@@ -34,7 +34,7 @@
 - files: ["grass.png", "junglegrass.png", "grassdark.png", "grassjungle.png", "grasslight.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Created by Ko4erga (discord)"
-  source: "izmenit"
+  source: "https://github.com/space-wizards/space-station-14/pull/29134"
 
 - files: ["super_reinforced.png"]
   license: "CC-BY-SA-3.0"
