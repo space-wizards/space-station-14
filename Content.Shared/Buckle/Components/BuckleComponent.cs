@@ -72,10 +72,11 @@ public sealed partial class BuckleComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class BuckleState(NetEntity? buckledTo, bool dontCollide) : ComponentState
+public sealed class BuckleState(NetEntity? buckledTo, bool dontCollide, TimeSpan? buckleTime) : ComponentState
 {
     public readonly NetEntity? BuckledTo = buckledTo;
     public readonly bool DontCollide = dontCollide;
+    public readonly TimeSpan? BuckleTime = buckleTime;
 }
 
 

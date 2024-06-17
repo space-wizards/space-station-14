@@ -54,7 +54,7 @@ public abstract partial class SharedBuckleSystem
 
     private void OnGetState(Entity<BuckleComponent> ent, ref ComponentGetState args)
     {
-        args.State = new BuckleState(GetNetEntity(ent.Comp.BuckledTo), ent.Comp.DontCollide);
+        args.State = new BuckleState(GetNetEntity(ent.Comp.BuckledTo), ent.Comp.DontCollide, ent.Comp.BuckleTime);
     }
 
     private void OnBuckleComponentShutdown(Entity<BuckleComponent> ent, ref ComponentShutdown args)

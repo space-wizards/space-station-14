@@ -63,6 +63,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
             return;
 
         ent.Comp.DontCollide = state.DontCollide;
+        ent.Comp.BuckleTime = state.BuckleTime;
         var strapUid = EnsureEntity<BuckleComponent>(state.BuckledTo, ent);
 
         SetBuckledTo(ent, strapUid == null ? null : new (strapUid.Value, null));
