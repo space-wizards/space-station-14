@@ -2855,14 +2855,6 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: NavMap
-- proto: ActionToggleLight
-  entities:
-  - uid: 7876
-    components:
-    - type: Transform
-      parent: 7875
-    - type: InstantAction
-      container: 7875
 - proto: AirAlarm
   entities:
   - uid: 1942
@@ -39104,22 +39096,8 @@ entities:
     - type: Transform
       pos: -43.645462,-17.224262
       parent: 30
-    - type: HandheldLight
-      toggleActionEntity: 7876
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7876
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
 - proto: LemonSeeds
   entities:
   - uid: 8448
