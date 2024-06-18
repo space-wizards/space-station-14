@@ -8,8 +8,11 @@ namespace Content.Shared.Xenoarchaeology.Artifact;
 /// <summary>
 /// User-friendly API for viewing and modifying the complex graph relationship in XenoArtifacts
 /// </summary>
-public sealed partial class SharedXenoArtifactSystem
+public abstract partial class SharedXenoArtifactSystem
 {
+    /// <summary>
+    /// Gets the index corresponding to a given node, throwing if the node is not present.
+    /// </summary>
     public int GetIndex(Entity<XenoArtifactComponent> ent, EntityUid node)
     {
         for (var i = 0; i < ent.Comp.NodeVertices.Length; i++)

@@ -1,5 +1,8 @@
+using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Random;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.Components;
 
@@ -43,6 +46,30 @@ public sealed partial class XenoArtifactComponent : Component
 
     public int NodeAdjacencyMatrixRows => NodeAdjacencyMatrix.GetLength(0);
     public int NodeAdjacencyMatrixColumns => NodeAdjacencyMatrix.GetLength(1);
+    #endregion
+
+    #region GenerationInfo
+    /// <summary>
+    /// The total number of nodes that make up this artifact.
+    /// </summary>
+    [DataField]
+    public MinMax NodeCount = new(10, 20);
+
+    /// <summary>
+    /// The amount of nodes that go in each segment.
+    /// A segment is an interconnected series of nodes.
+    /// </summary>
+    [DataField]
+    public MinMax SegmentSize = new(5, 8);
+
+    /// <summary>
+    /// For each "layer" in a segment (set of nodes with equal depth), how many will we generate?
+    /// </summary>
+    [DataField]
+    public MinMax NodesPerSegmentLayer = new(1, 3);
+
+    [DataField]
+    public ProtoId<WeightedRandomEntityPrototype> EffectWeights = "XenoArtifactEffectsDefault";
     #endregion
 }
 

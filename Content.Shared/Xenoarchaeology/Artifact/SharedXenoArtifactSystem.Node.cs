@@ -2,7 +2,7 @@ using Content.Shared.Xenoarchaeology.Artifact.Components;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
-public sealed partial class SharedXenoArtifactSystem
+public abstract partial class SharedXenoArtifactSystem
 {
     private EntityQuery<XenoArtifactNodeComponent> _nodeQuery;
 

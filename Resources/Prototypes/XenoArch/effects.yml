@@ -1,0 +1,6 @@
+- type: entity
+  id: XenoArtifactEffectTest
+  name: test effect
+  noSpawn: true
+  components:
+  - type: XenoArtifactNode
