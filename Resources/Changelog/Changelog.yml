@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrTeaspoon
-  changes:
-  - message: Hypopen no longer shows chemical contents when examined, when not held
-      by the examinee.
-    type: Fix
-  id: 6270
-  time: '2024-03-31T04:59:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26453
 - author: lzk228
   changes:
   - message: Hairflower was removed.
@@ -3853,3 +3845,10 @@
   id: 6769
   time: '2024-06-18T12:11:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28157
+- author: lzk228
+  changes:
+  - message: Warning cones added to the Engivend.
+    type: Add
+  id: 6770
+  time: '2024-06-18T14:02:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29085
