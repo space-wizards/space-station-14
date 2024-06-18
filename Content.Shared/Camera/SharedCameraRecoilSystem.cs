@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Movement.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
@@ -27,7 +28,7 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     /// </summary>
     protected const float KickMagnitudeMax = 1f;
 
-    [Dependency] private readonly SharedEyeSystem _eye = default!;
+    [Dependency] private readonly SharedContentEyeSystem _eye = default!;
 
     public override void Initialize()
     {
@@ -58,9 +59,7 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
             if (magnitude <= 0.005f)
             {
                 recoil.CurrentKick = Vector2.Zero;
-                var ev = new GetEyeOffsetEvent();
-                RaiseLocalEvent(uid, ref ev);
-                _eye.SetOffset(uid, ev.Offset, eye);
+                _eye.UpdateEyeOffset((uid, eye));
             }
             else // Continually restore camera to 0.
             {
@@ -76,10 +75,7 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
                     y = 0;
 
                 recoil.CurrentKick = new Vector2(x, y);
-
-                var ev = new GetEyeOffsetEvent();
-                RaiseLocalEvent(uid, ref ev);
-                _eye.SetOffset(uid, ev.Offset, eye);
+                _eye.UpdateEyeOffset((uid, eye));
             }
         }
     }
