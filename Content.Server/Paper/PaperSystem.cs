@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Abilities.Mime;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
 using Content.Shared.UserInterface;
@@ -153,6 +154,22 @@ namespace Content.Server.Paper
 
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
                     $"{ToPrettyString(args.Actor):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
+
+                //If the user is a mime make their writings incomprehensible 
+                if(HasComp<MimePowersComponent>(args.Actor))
+                {
+                  var content = args.Text.ToCharArray();
+                  for(int index = 0; index < args.Text.Length; index++)
+                  {
+                    if(args.Text[index] == ' ')
+                    {
+                      continue;
+                    }
+
+                    content[index] = '?';
+                  }
+                  paperComp.Content = new string(content);
+                }
 
                 _audio.PlayPvs(paperComp.Sound, uid);
             }
