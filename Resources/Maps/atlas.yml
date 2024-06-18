@@ -20716,13 +20716,6 @@ entities:
     - type: Transform
       pos: 9.5,-5.5
       parent: 30
-- proto: CrateMindShieldImplants
-  entities:
-  - uid: 8364
-    components:
-    - type: Transform
-      pos: 10.5,23.5
-      parent: 30
 - proto: CrateNPCCow
   entities:
   - uid: 3510
@@ -20736,6 +20729,13 @@ entities:
     components:
     - type: Transform
       pos: 38.5,0.5
+      parent: 30
+- proto: CrateSecurityTrackingMindshieldImplants
+  entities:
+  - uid: 7876
+    components:
+    - type: Transform
+      pos: 10.5,23.5
       parent: 30
 - proto: CrateTrackingImplants
   entities:
