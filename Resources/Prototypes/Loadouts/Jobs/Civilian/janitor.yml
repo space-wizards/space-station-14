@@ -5,7 +5,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobJanitor
-      time: 36000 #10 hrs
+      time: 187200 #52 hrs (1 hour per week for 1 year)
 
 # Head
 - type: loadout
