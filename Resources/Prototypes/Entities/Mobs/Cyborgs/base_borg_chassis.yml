@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseMob
+  parent: [BaseMob, StripableInventoryBase]
   id: BaseBorgChassis
   name: cyborg
   description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
@@ -77,8 +77,6 @@
   - type: SiliconLawProvider
     laws: Crewsimov
   - type: IonStormTarget
-  - type: Strippable
-  - type: InventorySlots
   - type: Inventory
     templateId: borg
   - type: Hands
