@@ -66,7 +66,8 @@ internal sealed class ChargerSystem : EntitySystem
         if (charge)
         {
             var charging = EnsureComp<ChargingComponent>(target);
-            charging.charger = component;
+            charging.ChargerUid = uid;
+            charging.ChargerComponent = component;
         }
 
         // ...so the status always updates (for insertin a power cell)
@@ -85,22 +86,21 @@ internal sealed class ChargerSystem : EntitySystem
         var query = EntityQueryEnumerator<ChargingComponent>();
         while (query.MoveNext(out var uid, out var charging))
         {
-            var chargerUid = charging.charger.Owner;
-            if (!TryComp<ChargerComponent>(chargerUid, out var chargerComponent))
+            if (!TryComp<ChargerComponent>(charging.ChargerUid, out var chargerComponent))
                 continue;
 
-            if (charging.charger.Status == CellChargerStatus.Off || charging.charger.Status == CellChargerStatus.Empty)
+            if (charging.ChargerComponent.Status == CellChargerStatus.Off || charging.ChargerComponent.Status == CellChargerStatus.Empty)
                 continue;
 
-            if (HasComp<EmpDisabledComponent>(chargerUid))
+            if (HasComp<EmpDisabledComponent>(charging.ChargerUid))
                 continue;
 
             if (!TryComp<BatteryComponent>(uid, out var battery))
                 continue;
 
             if (Math.Abs(battery.MaxCharge - battery.CurrentCharge) < 0.01)
-                StopChargingBattery(chargerUid,chargerComponent, uid);
-            TransferPower(chargerUid, uid, charging.charger, frameTime);
+                StopChargingBattery(charging.ChargerUid, charging.ChargerComponent, uid);
+            TransferPower(charging.ChargerUid, uid, charging.ChargerComponent, frameTime);
         }
     }
 

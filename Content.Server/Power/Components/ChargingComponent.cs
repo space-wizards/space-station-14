@@ -7,8 +7,13 @@ namespace Content.Server.Power.Components
     public sealed partial class ChargingComponent : Component
     {
         ///<summary>
-        ///References the charger that is currently powering this battery
+        ///References the entity of the charger that is currently powering this battery
         ///</summary>
-        public ChargerComponent charger;
+        public EntityUid ChargerUid;
+
+        ///<summary>
+        ///References the component of the charger that is currently powering this battery
+        ///</summary>
+        public ChargerComponent ChargerComponent;
     }
 }
