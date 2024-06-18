@@ -184,8 +184,9 @@ public sealed class TegSystem : EntitySystem
         power *= component.RampFactor;
 
         // Direct 1000w to power the TEG, and everything else to the station
-        supplier.MaxSupply = Math.Max(power - 1000, 0);
-        powerReceiver.Load = Math.Max(1000 - power, 0);
+        const float load = 1000;
+        supplier.MaxSupply = Math.Max(power - load, 0);
+        powerReceiver.Load = Math.Max(load - power, 0);
 
         var circAComp = Comp<TegCirculatorComponent>(circA);
         var circBComp = Comp<TegCirculatorComponent>(circB);
