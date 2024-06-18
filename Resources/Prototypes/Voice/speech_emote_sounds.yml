@@ -122,6 +122,10 @@
       collection: CatMeows2
     Weh:
       collection: Weh
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
 
 - type: emoteSounds
   id: MaleSlime
