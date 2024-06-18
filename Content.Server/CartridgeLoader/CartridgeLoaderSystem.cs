@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.PDA;
@@ -191,7 +191,10 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (container.Count >= loader.DiskSpace)
             return false;
 
-        // TODO cancel duplicate program installations
+        foreach (var program in GetInstalled(loaderUid))
+            if (Prototype(program)?.ID == prototype)
+                return false;
+
         var ev = new ProgramInstallationAttempt(loaderUid, prototype);
         RaiseLocalEvent(ref ev);
 
