@@ -182,7 +182,7 @@
       - BoxHug
 
 - type: entity
-  name: box of hugs n2 no2
+  name: box of hugs n2 # TODO change this back
   parent: BoxCardboard
   id: BoxHugNitrogen
   description: A special box for sensitive people.
@@ -197,7 +197,6 @@
   - type: StorageFill
     contents:
     - id: ClothingMaskBreath
-    - id: EmergencyFunnyOxygenTankFilled
     - id: EmergencyNitrogenTankFilled
     - id: EmergencyMedipen
     - id: Flare
