@@ -10,7 +10,7 @@ namespace Content.Shared.Nutrition.Components;
 [AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class SatiationComponent : Component
 {
-    [DataField]
+    [DataField(required: true)]
     [AutoNetworkedField]
     public Dictionary<ProtoId<SatiationTypePrototype>, Satiation> Satiations = new();
 
