@@ -37,24 +37,6 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  parent: BoxSurvival
-  id: BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
-  suffix: Universal
-  components:
-  - type: Sprite
-    layers:
-    - state: internals
-    - state: extendedtank
-  - type: StorageFill
-    contents:
-    - id: ClothingMaskBreath
-    - id: ExtendedEmergencyNitrogenTankFilled
-    - id: EmergencyMedipen
-    - id: ExtendedEmergencyOxygenTankFilled
-    - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
-
-- type: entity
   name: extended-capacity survival box
   parent: BoxCardboard
   id: BoxSurvivalEngineering
@@ -90,7 +72,7 @@
     - id: DrinkWaterBottleFull
   # Intentionally wrong picture on the box. NT did not care enough to change it.
   - type: Label
-    currentLabel: reagent-name-nitrogen # TODO: change this
+    currentLabel: reagent-name-nitrogen
 
 - type: entity
   name: survival box

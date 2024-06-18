@@ -10,8 +10,7 @@
     ears: ClothingHeadsetService
   storage:
     back:
-    #- BoxSurvival
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvival
 
 - type: startingGear
   id: WizardRedGear

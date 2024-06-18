@@ -24,7 +24,7 @@
     belt: ClothingBeltJanitorFilled
   #storage:
     #back:
-    #- BoxSurvival
+    #- Stuff
 
 - type: startingGear
   id: JanitorMaidGear

@@ -31,8 +31,7 @@
     pocket2: FlashlightSeclite
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Replace with B.S.Engineering once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -58,8 +57,7 @@
     pocket2: FlashlightSeclite
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -87,8 +85,7 @@
     - AirTankFilled
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -134,8 +131,7 @@
     pocket2: DrinkWaterBottleFull
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - BoxCandle
     - BoxBodyBag
     - DrinkWaterMelonJuiceJug
@@ -168,8 +164,7 @@
     pocket2: DrinkWaterBottleFull
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - BoxCandle
     - BoxBodyBag
     - DrinkWaterMelonJuiceJug
@@ -216,8 +211,7 @@
     pocket2: GasAnalyzer
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - trayScanner
     - RCD
     - RCDAmmo
@@ -247,8 +241,7 @@
     pocket2: GasAnalyzer
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - trayScanner
     - RCD
     - RCDAmmo
@@ -293,8 +286,7 @@
     pocket2: FlashlightSeclite
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -320,8 +312,7 @@
     pocket2: FlashlightSeclite
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -349,8 +340,7 @@
     - AirTankFilled
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -390,8 +380,7 @@
     pocket1: Flare
   storage:
     back:
-    #- BoxSurvivalMedical # Is this actually supposed to be Medical? All other ERT has Extended
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalMedical # Is this actually supposed to be Medical? All other ERT has Extended
     - Hypospray
     - MedkitAdvancedFilled
     - CrowbarRed
@@ -416,8 +405,7 @@
     pocket1: Flare
   storage:
     back:
-    #- BoxSurvivalMedical # Is this actually supposed to be Medical? All other ERT has Extended
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalMedical # Is this actually supposed to be Medical? All other ERT has Extended
     - Hypospray
     - MedkitAdvancedFilled
     - CrowbarRed
@@ -456,8 +444,7 @@
     pocket1: Flare
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - LightReplacer
     - BoxLightMixed
     - BoxLightMixed
@@ -481,8 +468,7 @@
     pocket1: Flare
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - LightReplacer
     - BoxLightMixed
     - BoxLightMixed

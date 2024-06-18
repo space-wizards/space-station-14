@@ -13,9 +13,9 @@
     shoes: ClothingShoesBootsJack
     id: PassengerPDA
     ears: ClothingHeadsetGrey
-  #storage:
-    #back:
-    #- BoxSurvival
+  storage:
+    back:
+    - BoxSurvival
 
 #Deathsquad Outfit
 - type: startingGear
@@ -36,8 +36,7 @@
     belt: ClothingBeltMilitaryWebbingMedFilled
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - WeaponPulseRifle
     - WeaponPulsePistol
     - WeaponRevolverMateba
@@ -75,8 +74,7 @@
     id: SyndiPDA
   storage:
     back:
-    #- BoxSurvival
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvival
 
 # Syndicate Footsoldier Gear
 - type: startingGear
@@ -100,8 +98,7 @@
     gloves: ClothingHandsGlovesCombat
   storage:
     back:
-    #- BoxSurvivalSecurity
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalSecurity
     - Flash
     - MagazinePistol
 
@@ -124,8 +121,7 @@
     belt: ClothingBeltBandolier
   storage:
     back:
-    #- BoxSurvivalEngineering
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvivalEngineering
     - WeaponShotgunDoubleBarreled
     - BoxShotgunIncendiary
     - GrenadeFlashBang

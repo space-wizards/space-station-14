@@ -28,8 +28,7 @@
     - JetpackBlackFilled
   storage:
     back: # belt holds katana so satchel has the tools for sabotaging things
-    #- BoxSurvival
-    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
+    - BoxSurvival
     - Crowbar
     - Wrench
     - Screwdriver
