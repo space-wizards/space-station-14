@@ -107,6 +107,8 @@
     proto: robot
   - type: ZombieImmune
   - type: StepTriggerImmune
+  - type: NoSlip
+  - type: Insulated
 
 - type: entity
   parent: MobSiliconBase
@@ -233,7 +235,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3
-  - type: NoSlip
   - type: HTN
     rootTask:
       task: CleanbotCompound
@@ -246,7 +247,7 @@
       path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
-  parent: MobSiliconBase
+  parent: [MobSiliconBase, ShowMedicalIcons]
   id: MobMedibot
   name: medibot
   description: No substitute for a doctor, but better than nothing.
@@ -280,19 +281,14 @@
   - type: Construction
     graph: MediBot
     node: bot
-  - type: NoSlip
   - type: Anchorable
   - type: InteractionPopup
     interactSuccessString: petting-success-medibot
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: ShowHealthBars
-    damageContainers:
-    - Biological
-  - type: ShowHealthIcons
-    damageContainers:
-    - Biological
+  - type: Advertise
+    pack: MedibotAds
 
 - type: entity
   parent: MobSiliconBase

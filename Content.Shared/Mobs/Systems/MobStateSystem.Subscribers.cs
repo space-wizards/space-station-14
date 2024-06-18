@@ -31,7 +31,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, UseAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(CheckAct);
-        SubscribeLocalEvent<MobStateComponent, ConsciousAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, ConsciousAttemptEvent>(CheckConcious);
         SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(OnSpeakAttempt);
         SubscribeLocalEvent<MobStateComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
@@ -46,7 +46,17 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
         SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
         SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
-        SubscribeLocalEvent<MobStateComponent, PreventCollideEvent>(OnPreventCollide);
+    }
+
+    private void CheckConcious(Entity<MobStateComponent> ent, ref ConsciousAttemptEvent args)
+    {
+        switch (ent.Comp.CurrentState)
+        {
+            case MobState.Dead:
+            case MobState.Critical:
+                args.Cancelled = true;
+                break;
+        }
     }
 
     private void OnStateExitSubscribers(EntityUid target, MobStateComponent component, MobState state)
@@ -177,22 +187,6 @@ public partial class MobStateSystem
     private void OnAttemptPacifiedAttack(Entity<MobStateComponent> ent, ref AttemptPacifiedAttackEvent args)
     {
         args.Cancelled = true;
-    }
-
-    private void OnPreventCollide(Entity<MobStateComponent> ent, ref PreventCollideEvent args)
-    {
-        if (args.Cancelled)
-            return;
-
-        if (IsAlive(ent, ent))
-            return;
-
-        var other = args.OtherEntity;
-        if (HasComp<ProjectileComponent>(other) &&
-            CompOrNull<TargetedProjectileComponent>(other)?.Target != ent.Owner)
-        {
-            args.Cancelled = true;
-        }
     }
 
     #endregion

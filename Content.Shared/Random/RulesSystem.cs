@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -14,7 +15,7 @@ public sealed class RulesSystem : EntitySystem
     [Dependency] private readonly AccessReaderSystem _reader = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     public bool IsTrue(EntityUid uid, RulesPrototype rules)
     {
         var inRange = new HashSet<Entity<IComponent>>();
@@ -26,7 +27,7 @@ public sealed class RulesSystem : EntitySystem
                     break;
                 case GridInRangeRule griddy:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform))
+                    if (!TryComp(uid, out TransformComponent? xform))
                     {
                         return false;
                     }
@@ -50,7 +51,7 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case InSpaceRule:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    if (!TryComp(uid, out TransformComponent? xform) ||
                         xform.GridUid != null)
                     {
                         return false;
@@ -146,7 +147,7 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case NearbyEntitiesRule entity:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    if (!TryComp(uid, out TransformComponent? xform) ||
                         xform.MapUid == null)
                     {
                         return false;
@@ -158,7 +159,7 @@ public sealed class RulesSystem : EntitySystem
 
                     foreach (var ent in _lookup.GetEntitiesInRange(xform.MapID, worldPos, entity.Range))
                     {
-                        if (!entity.Whitelist.IsValid(ent, EntityManager))
+                        if (_whitelistSystem.IsWhitelistFail(entity.Whitelist, ent))
                             continue;
 
                         count++;
@@ -177,7 +178,7 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case NearbyTilesPercentRule tiles:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    if (!TryComp(uid, out TransformComponent? xform) ||
                         !TryComp<MapGridComponent>(xform.GridUid, out var grid))
                     {
                         return false;
@@ -227,7 +228,7 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case OnMapGridRule:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    if (!TryComp(uid, out TransformComponent? xform) ||
                         xform.GridUid != xform.MapUid ||
                         xform.MapUid == null)
                     {
