@@ -29,6 +29,13 @@
     - PinpointerSyndicateNuclear
     - DeathAcidifierImplanter
 
+# Syndicate Reinforcement NukeOps
+- type: startingGear
+  id: SyndicateOperativeGearReinforcementNukeOps
+  parent: SyndicateOperativeGearExtremelyBasic
+  equipment:
+    id: SyndiPDA
+
 #Syndicate Operative Outfit - Basic
 - type: startingGear
   id: SyndicateOperativeGearBasic
