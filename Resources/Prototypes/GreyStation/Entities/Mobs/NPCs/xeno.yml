@@ -1,19 +1,17 @@
 - type: entity
-  name: Vasquez
-  description: A rather small xeno wearing a maid outfit. Stop asking them to lay eggs for you.
-  parent:
-  - BaseSimpleMob
-  - MobCombat
-  - MobBloodstream
-  - MobFlammable
+  parent: [BaseSimpleMob, MobCombat, MobBloodstream, MobFlammable]
   id: MobXenoMaid
   suffix: AI
+  name: Vasquez
+  description: A rather small xeno wearing a maid outfit. Stop asking them to lay eggs for you.
   components:
-  - type: InstantAction
-    useDelay: 10
-    icon: Interface/Actions/scream.png
-    event: !type:ScreamActionEvent
-    checkCanInteract: false
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: GreyStation/Mobs/Aliens/Xenos/xenomaid.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+    scale: 1.1, 1.1
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
@@ -42,19 +40,12 @@
     availableModes:
       - FullAuto
     soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: GreyStation/Mobs/Aliens/Xenos/xenomaid.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: running
-    scale: 1.4, 1.3
   - type: Fixtures
     fixtures:
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: .49
+          radius: 0.49
         density: 300
         mask:
         - MobMask
