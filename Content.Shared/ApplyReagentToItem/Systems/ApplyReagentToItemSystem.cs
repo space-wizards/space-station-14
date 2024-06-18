@@ -41,7 +41,7 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!args.CanReach || args.Target is not { Valid: true } target)
+        if (!args.CanReach || args.Target is not { Valid: true } target || !HasComp<ItemComponent>(target))
             return;
 
         if (TryToApplyReagent(entity, target, args.User))
@@ -51,7 +51,7 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
     private void OnUtilityVerb(Entity<ApplyReagentToItemComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || args.Target is not { Valid: true } target
-            || _openable.IsClosed(entity))
+            || _openable.IsClosed(entity) || !HasComp<ItemComponent>(target))
             return;
 
         var user = args.User;
@@ -79,7 +79,6 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
 
         if (!HasComp<ItemComponent>(target))
         {
-            _popup.PopupPredicted(Loc.GetString("apply-reagent-not-item-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
             return false;
         }
 

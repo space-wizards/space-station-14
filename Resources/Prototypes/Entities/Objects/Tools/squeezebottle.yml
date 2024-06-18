@@ -103,8 +103,10 @@
   name: CRAZY glue
   description: A bottle of CRAZY glue manufactured by Honk! Co. Uses a high throughput nozzle for increased flow!
   components:
+  - type: Drink
+    forceFeedDelay: 2 # Pefect for pranks!
   - type: ApplyReagentToItem
-    amountConsumedOnUse: 7.5 # high throughput nozzle
+    amountConsumedOnUse: 7.5 # High throughput nozzle
     onSqueezeNoise: /Audio/Items/squeezebottle.ogg
   - type: Openable
     closeable: true
