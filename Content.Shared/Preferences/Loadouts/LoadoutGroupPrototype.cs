@@ -33,7 +33,7 @@ public sealed partial class LoadoutGroupPrototype : IPrototype
     /// Hides the loadout group from the player.
     /// </summary>
     [DataField]
-    public bool Hidden = false;
+    public bool Hidden;
 
     [DataField(required: true)]
     public List<ProtoId<LoadoutPrototype>> Loadouts = new();

@@ -29,7 +29,7 @@ public sealed partial class LoadoutWindow : FancyWindow
             if (!protoManager.TryIndex(group, out var groupProto))
                 continue;
 
-            if (groupProto.Hidden == true)
+            if (groupProto.Hidden)
                 continue;
 
             var container = new LoadoutGroupContainer(profile, loadout, protoManager.Index(group), session, collection);
