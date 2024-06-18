@@ -158,17 +158,10 @@ namespace Content.Server.Paper
                 //If the user is a mime make their writings incomprehensible 
                 if(HasComp<MimePowersComponent>(args.Actor))
                 {
-                  var content = args.Text.ToCharArray();
-                  for(int index = 0; index < args.Text.Length; index++)
-                  {
-                    if(args.Text[index] == ' ')
-                    {
-                      continue;
-                    }
-
-                    content[index] = '?';
-                  }
-                  paperComp.Content = new string(content);
+                  paperComp.Content = new string(
+                      args.Text.OrderBy(c => Guid.NewGuid())
+                      .ToArray()
+                      );
                 }
 
                 _audio.PlayPvs(paperComp.Sound, uid);
