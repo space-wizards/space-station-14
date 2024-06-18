@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Hairflower was removed.
-    type: Remove
-  - message: Now you can wear poppy (and other flowers) on your head instead of crafting
-      hairflower with it.
-    type: Tweak
-  id: 6271
-  time: '2024-03-31T05:33:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25475
 - author: EmoGarbage404
   changes:
   - message: Borgs, Emitters, and APEs can no longer have their panels opened while
@@ -3852,3 +3842,11 @@
   id: 6770
   time: '2024-06-18T14:02:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29085
+- author: Errant
+  changes:
+  - message: The strip interface layout of arachnids is now consistent with other
+      species.
+    type: Tweak
+  id: 6771
+  time: '2024-06-18T14:10:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29165
