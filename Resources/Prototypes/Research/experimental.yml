@@ -140,14 +140,15 @@
     - WeaponForceGun
     - WeaponTetherGun
 
-- type: technology
-  id: QuantumLeaping
-  name: research-technology-quantum-leaping
-  icon:
-    sprite: Objects/Devices/swapper.rsi
-    state: icon
-  discipline: Experimental
-  tier: 3
-  cost: 10000
-  recipeUnlocks:
-  - DeviceQuantumSpinInverter
+# RE-ENABLE WHEN NOT BUGGED AS MUCH!!!
+#- type: technology
+#  id: QuantumLeaping
+#  name: research-technology-quantum-leaping
+#  icon:
+#    sprite: Objects/Devices/swapper.rsi
+#    state: icon
+#  discipline: Experimental
+#  tier: 3
+#  cost: 10000
+#  recipeUnlocks:
+#  - DeviceQuantumSpinInverter
