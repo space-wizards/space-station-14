@@ -36,15 +36,6 @@
     jumpsuit: ClothingUniformJumpskirtHoSAlt
 
 - type: loadout
-  id: HeadofSecurityJumpsuitBlue
-  equipment: HeadofSecurityJumpsuitBlue
-
-- type: startingGear
-  id: HeadofSecurityJumpsuitBlue
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitHoSBlue
-
-- type: loadout
   id: HeadofSecurityJumpsuitGrey
   equipment: HeadofSecurityJumpsuitGrey
 
