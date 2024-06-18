@@ -76,20 +76,20 @@
 #  maxCount: 5
 #  # Just randomly spawn these in bounds, doesn't really matter if they go out.
 
-#- type: dungeonConfig
-#  id: VGRoidLargePaths
-#  reserveTiles: true
-#  layers:
-#  - !type:ReplaceTileDunGen
-#    layers:
-#    - tile: FloorAsteroidSand
-#      threshold: 0.70
-#      noise:
-#        frequency: 0.040
-#        noiseType: Perlin
-#        fractalType: Ridged
-#        octaves: 2
-#        gain: 2.0
+- type: dungeonConfig
+  id: VGRoidLargePaths
+  reserveTiles: true
+  layers:
+  - !type:DungeonConnectorPostGen
+    layers:
+    - tile: FloorAsteroidSand
+      threshold: 0.70
+      noise:
+        frequency: 0.040
+        noiseType: Perlin
+        fractalType: Ridged
+        octaves: 2
+        gain: 2.0
 
 - type: dungeonConfig
   id: VGRoidSmallPaths
