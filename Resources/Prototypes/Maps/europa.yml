@@ -2,6 +2,8 @@
   id: Europa
   mapName: 'Europa'
   mapPath: /Maps/europa.yml
+  randomOffset: false
+  randomRotation: false
   minPlayers: 0
   maxPlayers: 40
   stations:

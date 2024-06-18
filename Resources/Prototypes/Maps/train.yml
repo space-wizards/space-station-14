@@ -2,6 +2,8 @@
   id: Train
   mapName: 'Train'
   mapPath: /Maps/train.yml
+  randomOffset: false
+  randomRotation: false
   minPlayers: 10
   maxPlayers: 50
   stations:

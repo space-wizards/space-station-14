@@ -27,10 +27,12 @@ namespace Content.Server.Station.Systems;
 [PublicAPI]
 public sealed class StationSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MapSystem _map = default!;
@@ -43,16 +45,11 @@ public sealed class StationSystem : EntitySystem
         _sawmill = _logManager.GetSawmill("station");
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
-        SubscribeLocalEvent<PreGameMapLoad>(OnPreGameMapLoad);
         SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
         SubscribeLocalEvent<StationDataComponent, ComponentStartup>(OnStationAdd);
         SubscribeLocalEvent<StationDataComponent, ComponentShutdown>(OnStationDeleted);
         SubscribeLocalEvent<StationMemberComponent, ComponentShutdown>(OnStationGridDeleted);
         SubscribeLocalEvent<StationMemberComponent, PostGridSplitEvent>(OnStationSplitEvent);
-
-        Subs.CVar(_configurationManager, CCVars.StationOffset, x => _randomStationOffset = x, true);
-        Subs.CVar(_configurationManager, CCVars.MaxStationOffset, x => _maxRandomStationOffset = x, true);
-        Subs.CVar(_configurationManager, CCVars.StationRotation, x => _randomStationRotation = x, true);
 
         _player.PlayerStatusChanged += OnPlayerStatusChanged;
     }
@@ -104,19 +101,6 @@ public sealed class StationSystem : EntitySystem
         }
 
         RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), Filter.Broadcast());
-    }
-
-    private void OnPreGameMapLoad(PreGameMapLoad ev)
-    {
-        // this is only for maps loaded during round setup!
-        if (_gameTicker.RunLevel == GameRunLevel.InRound)
-            return;
-
-        if (_randomStationOffset)
-            ev.Options.Offset += _random.NextVector2(_maxRandomStationOffset);
-
-        if (_randomStationRotation)
-            ev.Options.Rotation = _random.NextAngle();
     }
 
     private void OnPostGameMapLoad(PostGameMapLoad ev)
