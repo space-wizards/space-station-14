@@ -1,6 +1,5 @@
 using System.Numerics;
 using JetBrains.Annotations;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Camera;
@@ -30,6 +29,16 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
 
     [Dependency] private readonly SharedEyeSystem _eye = default!;
 
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<CameraRecoilComponent, GetEyeOffsetEvent>(OnCameraRecoilGetEyeOffset);
+    }
+
+    private void OnCameraRecoilGetEyeOffset(Entity<CameraRecoilComponent> ent, ref GetEyeOffsetEvent args)
+    {
+        args.Offset += ent.Comp.BaseOffset + ent.Comp.CurrentKick;
+    }
+
     /// <summary>
     ///     Applies explosion/recoil/etc kickback to the view of the entity.
     /// </summary>
@@ -39,10 +48,8 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     /// </remarks>
     public abstract void KickCamera(EntityUid euid, Vector2 kickback, CameraRecoilComponent? component = null);
 
-    public override void FrameUpdate(float frameTime)
+    private void UpdateEyes(float frameTime)
     {
-        base.FrameUpdate(frameTime);
-
         var query = AllEntityQuery<EyeComponent, CameraRecoilComponent>();
 
         while (query.MoveNext(out var uid, out var eye, out var recoil))
@@ -51,7 +58,9 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
             if (magnitude <= 0.005f)
             {
                 recoil.CurrentKick = Vector2.Zero;
-                _eye.SetOffset(uid, recoil.BaseOffset + recoil.CurrentKick, eye);
+                var ev = new GetEyeOffsetEvent();
+                RaiseLocalEvent(uid, ref ev);
+                _eye.SetOffset(uid, ev.Offset, eye);
             }
             else // Continually restore camera to 0.
             {
@@ -60,15 +69,29 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
                 var restoreRate = MathHelper.Lerp(RestoreRateMin, RestoreRateMax, Math.Min(1, recoil.LastKickTime / RestoreRateRamp));
                 var restore = normalized * restoreRate * frameTime;
                 var (x, y) = recoil.CurrentKick - restore;
-                if (Math.Sign(x) != Math.Sign(recoil.CurrentKick.X)) x = 0;
+                if (Math.Sign(x) != Math.Sign(recoil.CurrentKick.X))
+                    x = 0;
 
-                if (Math.Sign(y) != Math.Sign(recoil.CurrentKick.Y)) y = 0;
+                if (Math.Sign(y) != Math.Sign(recoil.CurrentKick.Y))
+                    y = 0;
 
                 recoil.CurrentKick = new Vector2(x, y);
 
-                _eye.SetOffset(uid, recoil.BaseOffset + recoil.CurrentKick, eye);
+                var ev = new GetEyeOffsetEvent();
+                RaiseLocalEvent(uid, ref ev);
+                _eye.SetOffset(uid, ev.Offset, eye);
             }
         }
+    }
+
+    public override void Update(float frameTime)
+    {
+        UpdateEyes(frameTime);
+    }
+
+    public override void FrameUpdate(float frameTime)
+    {
+        UpdateEyes(frameTime);
     }
 }
 
