@@ -10,7 +10,7 @@ public sealed partial class SpaceLubeOnItemComponent : ReagentOnItemComponent
     ///     Probability to reduce the amount of reagent after a grab.
     /// </summary>
     [DataField]
-    public double ChanceToDecreaseReagentOnGrab = .35;
+    public double ChanceToDecreaseReagentOnGrab = .45;
 
     /// <summary>
     ///     How far will the item be thrown when someone tries to pick it up
