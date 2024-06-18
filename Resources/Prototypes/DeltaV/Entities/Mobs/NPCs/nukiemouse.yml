@@ -142,6 +142,8 @@
     requiredLegs: 1 # TODO: More than 1 leg
   - type: Bloodstream
     bloodMaxVolume: 60
+  - type: CanEscapeInventory
+    baseResistTime: 3
   - type: MobPrice
     price: 250 # Their suits, while tiny, go for quite a bit on the market
   - type: IntrinsicRadioReceiver
