@@ -58,7 +58,7 @@
   id: EmergencyOxygenExtended
   storage:
     back:
-    - BoxSurvivalExtended
+    - BoxSurvivalEngineering
 
 - type: loadout
   id: EmergencyNitrogenExtended
@@ -71,7 +71,7 @@
   id: EmergencyNitrogenExtended
   storage:
     back:
-    - BoxSurvivalExtendedNitrogen
+    - BoxSurvivalEngineeringNitrogen
 
 # Medical
 - type: loadout

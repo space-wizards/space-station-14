@@ -12,7 +12,8 @@
     ears: ClothingHeadsetService
   storage:
     back:
-    - BoxSurvival
+    #- BoxSurvival
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
 
 - type: startingGear
   id: CultistGear
@@ -26,4 +27,5 @@
     ears: ClothingHeadsetService
   storage:
     back:
-    - BoxSurvival
+    #- BoxSurvival
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns

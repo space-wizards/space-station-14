@@ -31,7 +31,8 @@
     pocket2: FlashlightSeclite
   storage:
     back:
-    - BoxSurvivalEngineering
+    #- BoxSurvivalEngineering
+    - BoxSurvivalUniversal # TODO: Replace with B.S.Engineering once Loadouts work on midround spawns
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -57,7 +58,8 @@
     pocket2: FlashlightSeclite
   storage:
     back:
-    - BoxSurvivalEngineering
+    #- BoxSurvivalEngineering
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -85,7 +87,8 @@
     - AirTankFilled
   storage:
     back:
-    - BoxSurvivalEngineering
+    #- BoxSurvivalEngineering
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -131,7 +134,8 @@
     pocket2: DrinkWaterBottleFull
   storage:
     back:
-    - BoxSurvivalEngineering
+    #- BoxSurvivalEngineering
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - BoxCandle
     - BoxBodyBag
     - DrinkWaterMelonJuiceJug
@@ -164,7 +168,8 @@
     pocket2: DrinkWaterBottleFull
   storage:
     back:
-    - BoxSurvivalEngineering
+    #- BoxSurvivalEngineering
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - BoxCandle
     - BoxBodyBag
     - DrinkWaterMelonJuiceJug
@@ -211,7 +216,8 @@
     pocket2: GasAnalyzer
   storage:
     back:
-    - BoxSurvivalEngineering
+    #- BoxSurvivalEngineering
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - trayScanner
     - RCD
     - RCDAmmo
@@ -241,7 +247,8 @@
     pocket2: GasAnalyzer
   storage:
     back:
-    - BoxSurvivalEngineering
+    #- BoxSurvivalEngineering
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - trayScanner
     - RCD
     - RCDAmmo
@@ -286,7 +293,8 @@
     pocket2: FlashlightSeclite
   storage:
     back:
-    - BoxSurvivalEngineering
+    #- BoxSurvivalEngineering
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -312,7 +320,8 @@
     pocket2: FlashlightSeclite
   storage:
     back:
-    - BoxSurvivalEngineering
+    #- BoxSurvivalEngineering
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -340,7 +349,8 @@
     - AirTankFilled
   storage:
     back:
-    - BoxSurvivalEngineering
+    #- BoxSurvivalEngineering
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -380,7 +390,8 @@
     pocket1: Flare
   storage:
     back:
-    - BoxSurvivalMedical
+    #- BoxSurvivalMedical # Is this actually supposed to be Medical? All other ERT has Extended
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - Hypospray
     - MedkitAdvancedFilled
     - CrowbarRed
@@ -405,7 +416,8 @@
     pocket1: Flare
   storage:
     back:
-    - BoxSurvivalMedical
+    #- BoxSurvivalMedical # Is this actually supposed to be Medical? All other ERT has Extended
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - Hypospray
     - MedkitAdvancedFilled
     - CrowbarRed
@@ -444,7 +456,8 @@
     pocket1: Flare
   storage:
     back:
-    - BoxSurvivalEngineering
+    #- BoxSurvivalEngineering
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - LightReplacer
     - BoxLightMixed
     - BoxLightMixed
@@ -468,7 +481,8 @@
     pocket1: Flare
   storage:
     back:
-    - BoxSurvivalEngineering
+    #- BoxSurvivalEngineering
+    - BoxSurvivalUniversal # TODO: Remove once Loadouts work on midround spawns
     - LightReplacer
     - BoxLightMixed
     - BoxLightMixed

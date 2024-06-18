@@ -435,3 +435,15 @@
   - Glasses
   - Trinkets
   - Survival
+
+# Adminspawn Mobs (forced loadouts only)
+
+- type: roleLoadout
+  id: JobERTLeader
+  groups:
+  - Survival
+
+- type: roleLoadout
+  id: JobERTChaplain
+  groups:
+  - SurvivalSecurity
