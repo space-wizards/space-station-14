@@ -114,7 +114,7 @@ namespace Content.Server.Power.EntitySystems
                 return;
 
             var ev = new ChargerUpdateStatusEvent(); 
-            RaiseLocalEvent<ChargerUpdateStatusEvent>(charging.charger.Owner, ref ev);
+            RaiseLocalEvent<ChargerUpdateStatusEvent>(charging.ChargerUid, ref ev);
         }
 
         public float UseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
