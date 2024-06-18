@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Flower crown and wreath were combined. Now you can wear wreath both on
-      head and on neck.
-    type: Tweak
-  id: 6273
-  time: '2024-03-31T08:52:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26605
 - author: Ubaser
   changes:
   - message: Throwing knives now additionally do armour piercing damage.
@@ -3851,3 +3843,10 @@
   id: 6772
   time: '2024-06-18T15:04:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29103
+- author: metalgearsloth
+  changes:
+  - message: Fix lathe materials sometimes flickering.
+    type: Fix
+  id: 6773
+  time: '2024-06-18T21:47:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29167
