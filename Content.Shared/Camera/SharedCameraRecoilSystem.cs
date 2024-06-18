@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Movement.Systems;
 using JetBrains.Annotations;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Camera;
@@ -29,6 +30,7 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     protected const float KickMagnitudeMax = 1f;
 
     [Dependency] private readonly SharedContentEyeSystem _eye = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -82,7 +84,8 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        UpdateEyes(frameTime);
+        if (_net.IsServer)
+            UpdateEyes(frameTime);
     }
 
     public override void FrameUpdate(float frameTime)
