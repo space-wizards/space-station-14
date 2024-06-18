@@ -8,6 +8,8 @@ using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Robust.Shared.GameStates;
 using Robust.Shared.Random;
+using Content.Shared.NameModifier.EntitySystems;
+
 
 namespace Content.Shared.ReagentOnItem;
 
@@ -17,6 +19,8 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
+
 
     public override void Initialize()
     {
@@ -24,10 +28,18 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
 
         SubscribeLocalEvent<SpaceGlueOnItemComponent, GotEquippedHandEvent>(OnHandPickUp);
         SubscribeLocalEvent<SpaceGlueOnItemComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<SpaceGlueOnItemComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SpaceGlueOnItemComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
 
-        SubscribeLocalEvent<SpaceGlueOnItemComponent, ComponentGetState>(GetSpaceLubeState);
-        SubscribeLocalEvent<SpaceGlueOnItemComponent, ComponentHandleState>(HandleSpaceLubeState);
+        SubscribeLocalEvent<SpaceGlueOnItemComponent, ComponentGetState>(GetSpaceGlueState);
+        SubscribeLocalEvent<SpaceGlueOnItemComponent, ComponentHandleState>(HandleSpaceGlueState);
     }
+
+    private void OnInit(EntityUid uid, SpaceGlueOnItemComponent component, ComponentInit args)
+    {
+        _nameMod.RefreshNameModifiers(uid);
+    }
+
 
     public override void Update(float frameTime)
     {
@@ -43,6 +55,7 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
             {
                 RemCompDeferred<UnremoveableComponent>(uid);
                 RemCompDeferred<SpaceGlueOnItemComponent>(uid);
+                _nameMod.RefreshNameModifiers(uid);
             }
         }
     }
@@ -98,7 +111,12 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
             args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-high"));
     }
 
-    private void HandleSpaceLubeState(EntityUid uid, SpaceGlueOnItemComponent component, ref ComponentHandleState args)
+    private void OnRefreshNameModifiers(Entity<SpaceGlueOnItemComponent> entity, ref RefreshNameModifiersEvent args)
+    {
+        args.AddModifier("glued-name-prefix");
+    }
+
+    private void HandleSpaceGlueState(EntityUid uid, SpaceGlueOnItemComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not ReagentOnItemComponentState state)
             return;
@@ -107,7 +125,7 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
         component.MaxStacks = state.MaxStacks;
     }
 
-    private void GetSpaceLubeState(EntityUid uid, SpaceGlueOnItemComponent component, ref ComponentGetState args)
+    private void GetSpaceGlueState(EntityUid uid, SpaceGlueOnItemComponent component, ref ComponentGetState args)
     {
         args.State = new ReagentOnItemComponentState(component.EffectStacks, component.MaxStacks);
     }

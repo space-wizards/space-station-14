@@ -10,6 +10,7 @@ using Content.Shared.Examine;
 using Robust.Shared.GameStates;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.NameModifier.EntitySystems;
 
 namespace Content.Shared.ReagentOnItem;
 
@@ -17,20 +18,26 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
 {
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<SpaceLubeOnItemComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SpaceLubeOnItemComponent, GotAttemptedHandPickupEvent>(OnHandPickUp);
         SubscribeLocalEvent<SpaceLubeOnItemComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<SpaceLubeOnItemComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
 
         SubscribeLocalEvent<SpaceLubeOnItemComponent, ComponentGetState>(GetSpaceLubeState);
         SubscribeLocalEvent<SpaceLubeOnItemComponent, ComponentHandleState>(HandleSpaceLubeState);
+    }
+
+    private void OnInit(EntityUid uid, SpaceLubeOnItemComponent component, ComponentInit args)
+    {
+        _nameMod.RefreshNameModifiers(uid);
     }
 
     private void OnHandPickUp(EntityUid uid, SpaceLubeOnItemComponent component, GotAttemptedHandPickupEvent args)
@@ -52,6 +59,7 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
         if (component.EffectStacks < 1)
         {
             RemComp<SpaceLubeOnItemComponent>(uid);
+            _nameMod.RefreshNameModifiers(uid);
             return;
         }
 
@@ -86,6 +94,11 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString("space-lube-on-item-inspect"));
         }
+    }
+
+    private void OnRefreshNameModifiers(Entity<SpaceLubeOnItemComponent> entity, ref RefreshNameModifiersEvent args)
+    {
+        args.AddModifier("lubed-name-prefix");
     }
 
     private void HandleSpaceLubeState(EntityUid uid, SpaceLubeOnItemComponent component, ref ComponentHandleState args)
