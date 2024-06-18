@@ -7,8 +7,8 @@
     public struct InteractionAttemptEvent(EntityUid uid, EntityUid? target)
     {
         public bool Cancelled;
-        public EntityUid Uid = uid;
-        public EntityUid? Target = target;
+        public readonly EntityUid Uid = uid;
+        public readonly EntityUid? Target = target;
     }
 
     /// <summary>
