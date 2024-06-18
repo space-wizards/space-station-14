@@ -7,6 +7,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Robust.Shared.GameStates;
+using Robust.Shared.Random;
 
 namespace Content.Shared.ReagentOnItem;
 
@@ -15,6 +16,7 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -71,7 +73,9 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
         var unremoveComp = EnsureComp<UnremoveableComponent>(uid);
         unremoveComp.DeleteOnDrop = false;
 
-        glueComp.TimeOfNextCheck = _timing.CurTime + glueComp.DurationPerUnit;
+        var duration = _random.Next(glueComp.MinimumDurationPerUnit, glueComp.MaximumDurationPerUnit);
+
+        glueComp.TimeOfNextCheck = _timing.CurTime + duration;
         glueComp.EffectStacks -= 1;
 
         Dirty(uid, glueComp);

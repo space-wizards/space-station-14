@@ -12,8 +12,14 @@ public sealed partial class SpaceGlueOnItemComponent : ReagentOnItemComponent
     public TimeSpan TimeOfNextCheck;
 
     /// <summary>
-    ///     How long the item will be stuck to someones hand per unit of glue.
+    ///     The minimum time the item will be stuck to someones hand for one unit of glue.
     /// </summary>
     [DataField]
-    public TimeSpan DurationPerUnit = TimeSpan.FromSeconds(6);
+    public TimeSpan MinimumDurationPerUnit = TimeSpan.FromSeconds(4);
+
+    /// <summary>
+    ///     The maximum time the item will be stuck to someones hand for one unit of glue.
+    /// </summary>
+    [DataField]
+    public TimeSpan MaximumDurationPerUnit = TimeSpan.FromSeconds(6);
 }
