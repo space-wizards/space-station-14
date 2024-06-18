@@ -70,7 +70,7 @@ namespace Content.Shared.ActionBlocker
                 return false;
 
             var ev = new InteractionAttemptEvent(user, target);
-            RaiseLocalEvent(user, ev);
+            RaiseLocalEvent(user, ref ev);
 
             if (ev.Cancelled)
                 return false;
