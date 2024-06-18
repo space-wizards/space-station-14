@@ -1,0 +1,58 @@
+- type: entity
+  id: SpaceMine
+  name: space mine
+  description: Echoes of former wars... Space mines hanging motionless in the air and waiting for careless shuttles.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Pullable
+  - type: MovedByPressure
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.25
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineMask
+  - type: Sprite
+    sprite: Structures/space_mine.rsi
+    layers:
+    - state: mine1
+      map: ["random"]
+    drawdepth: Mobs
+  - type: RandomSprite
+    available:
+    - random:
+        mine1: ""
+        mine2: ""
+        mine3: ""
+        mine4: ""
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 3
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: TriggerOnCollide
+    fixtureID: fix1
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 15
+    intensitySlope: 3
+    totalIntensity: 150
+    canCreateVacuum: true
+  - type: Construction
+    graph: SpaceMine
+    node: start

@@ -1,0 +1,26 @@
+- type: constructionGraph
+  id: SpaceMine
+  start: start
+  graph:
+    - node: start
+      entity: SpaceMine
+      edges:
+        - to: empty
+          steps:
+          - tool: Screwing
+            doAfter: 2
+          - tool: Welding
+            doAfter: 3
+          completed:
+          - !type:SpawnPrototype
+            prototype: SheetSteel1
+            amount: 3
+          - !type:SpawnPrototype
+            prototype: SheetUranium1
+            amount: 1
+          - !type:SpawnPrototype
+            prototype: CableMVStack
+            amount: 2
+          - !type:DeleteEntity
+          
+    - node: empty
