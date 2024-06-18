@@ -119,7 +119,7 @@
     Crying:
       collection: FemaleCry
     CatMeow:
-      collection: /Audio/Animals/lizard_happy.ogg
+      collection: CatMeows2
     Weh:
       collection: Weh
 
