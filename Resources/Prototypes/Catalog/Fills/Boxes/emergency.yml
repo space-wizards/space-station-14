@@ -204,8 +204,7 @@
       - id: ClothingMaskGasSyndicate
       - id: ExtendedEmergencyOxygenTankFilled
       - id: EmergencyMedipen
-      - id: ExtendedEmergencyNitrogenTankFilled # TODO: Remove once Loadouts work on midround spawns
-      #- id: Flare
+      - id: Flare
       - id: FoodSnackNutribrick
   - type: Sprite
     layers:
