@@ -28,5 +28,5 @@ public sealed partial class ThiefUndeterminedBackpackComponent : Component
     /// Max number of sets you can select.
     /// </summary>
     [DataField]
-    private int MaxSelectedSets = 2;
+    public int MaxSelectedSets = 2;
 }
