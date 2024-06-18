@@ -30,7 +30,7 @@
   files:
   - /Audio/Animals/cat_meow3.ogg
   - /Audio/Animals/cat_meow4.ogg
-  - /Audio/Animals/cat_meow4.ogg
+  - /Audio/Animals/cat_meow5.ogg
 
 - type: soundCollection
   id: CatHisses
