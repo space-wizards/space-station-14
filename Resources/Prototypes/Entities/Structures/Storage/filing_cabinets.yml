@@ -64,7 +64,7 @@
             max: 2
   - type: Construction
     graph: FilingCabinet
-    node: filingCabinet
+    node: FilingCabinet
   - type: StaticPrice
     price: 20
 

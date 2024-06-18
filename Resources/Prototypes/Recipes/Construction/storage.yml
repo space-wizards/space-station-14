@@ -5,7 +5,7 @@
   description: A cabinet for all your filing needs.
   graph: FilingCabinet
   startNode: start
-  targetNode: filingCabinet
+  targetNode: FilingCabinet
   category: construction-category-storage
   icon:
     sprite: Structures/Storage/cabinets.rsi
