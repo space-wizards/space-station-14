@@ -13,6 +13,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Content.Shared.Verbs;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Forensics
 {
@@ -125,7 +126,7 @@ namespace Content.Server.Forensics
             var verb = new UtilityVerb()
             {
                 Act = () => TryStartCleaning(entity, user, target),
-                IconEntity = GetNetEntity(entity),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/bubbles.svg.192dpi.png")),
                 Text = Loc.GetString(Loc.GetString("forensics-verb-text")),
                 Message = Loc.GetString(Loc.GetString("forensics-verb-message")),
                 // This is important because if its true using the cleaning device will count as touching the object.

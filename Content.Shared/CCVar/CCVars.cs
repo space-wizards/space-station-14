@@ -124,6 +124,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float>
             EventsRampingAverageChaos = CVarDef.Create("events.ramping_average_chaos", 6f, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Minimum time between meteor swarms in minutes.
+        /// </summary>
+        public static readonly CVarDef<float>
+            MeteorSwarmMinTime = CVarDef.Create("events.meteor_swarm_min_time", 7.5f, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Maximum time between meteor swarms in minutes.
+        /// </summary>
+        public static readonly CVarDef<float>
+            MeteorSwarmMaxTime = CVarDef.Create("events.meteor_swarm_max_time", 12.5f, CVar.ARCHIVE | CVar.SERVERONLY);
+
         /*
          * Game
          */
@@ -822,7 +834,7 @@ namespace Content.Shared.CCVar
         ///     Minimum particle accelerator strength to create an admin alert message.
         /// </summary>
         public static readonly CVarDef<int> AdminAlertParticleAcceleratorMinPowerState =
-            CVarDef.Create("admin.alert.particle_accelerator_min_power_state", 3, CVar.SERVERONLY);
+            CVarDef.Create("admin.alert.particle_accelerator_min_power_state", 5, CVar.SERVERONLY); // strength 4
 
         /// <summary>
         ///     Should the ban details in admin channel include PII? (IP, HWID, etc)
@@ -1426,6 +1438,18 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.arrivals_returns", false, CVar.SERVERONLY);
 
         /// <summary>
+        /// Should all players be forced to spawn at departures, even on roundstart, even if their loadout says they spawn in cryo?
+        /// </summary>
+        public static readonly CVarDef<bool> ForceArrivals =
+            CVarDef.Create("shuttle.force_arrivals", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Should all players who spawn at arrivals have godmode until they leave the map?
+        /// </summary>
+        public static readonly CVarDef<bool> GodmodeArrivals =
+            CVarDef.Create("shuttle.godmode_arrivals", false, CVar.SERVERONLY);
+
+        /// <summary>
         /// Whether to automatically spawn escape shuttles.
         /// </summary>
         public static readonly CVarDef<bool> GridFill =
@@ -1844,7 +1868,7 @@ namespace Content.Shared.CCVar
         /// Don't show rules to localhost/loopback interface.
         /// </summary>
         public static readonly CVarDef<bool> RulesExemptLocal =
-            CVarDef.Create("rules.exempt_local", false, CVar.SERVERONLY);
+            CVarDef.Create("rules.exempt_local", true, CVar.SERVERONLY);
 
 
         /*
@@ -1923,6 +1947,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// Whether or not to kill the player's mob on ghosting, when it is in a critical health state.
+        /// </summary>
+        public static readonly CVarDef<bool> GhostKillCrit =
+            CVarDef.Create("ghost.kill_crit", true, CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Fire alarm

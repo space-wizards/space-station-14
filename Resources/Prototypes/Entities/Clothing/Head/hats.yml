@@ -489,6 +489,8 @@
   - type: Appearance
   - type: AddAccentClothing
     accent: RussianAccent
+  - type: RussianAccent
+  - type: AccentWearerNameClothing
   - type: Foldable
     canFoldInsideContainer: true
   - type: FoldableClothing
