@@ -74,7 +74,7 @@ void fragment() {
     maxa = max(a, maxa);
     mina = min(a, mina);
 
-	lowp float sampledLight = outline_fullbright ? 1.0 : clamp( (pow( zGrayscale_BT601(lightSample.rgb) * light_whitepoint, light_gamma) / light_whitepoint ) * light_boost, 0.0, 1.0);
+	lowp float sampledLight = outline_fullbright ? 1.0 : clamp( (pow( zGrayscale_BT601(LIGHT.rgb) * light_whitepoint, light_gamma) / light_whitepoint ) * light_boost, 0.0, 1.0);
 	COLOR = mix(col, outline_color * vec4(vec3(1.0), sampledLight), maxa - col.a);
-	lightSample = vec3(1.0);
+	LIGHT = vec4(1.0);
 }
