@@ -34,7 +34,7 @@
   id: SyndicateOperativeGearReinforcementNukeOps
   parent: SyndicateOperativeGearExtremelyBasic
   equipment:
-    id: SyndiPDA
+    id: SyndiPDA #Do not give a PDA to the normal Reinforcement - it will spawn with a 20TC uplink
 
 #Syndicate Operative Outfit - Basic
 - type: startingGear

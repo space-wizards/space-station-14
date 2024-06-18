@@ -49,16 +49,6 @@
     - DeathAcidifierImplanter # crew will try to steal their amazing hardsuits
     - FreedomImplanter
 
-# Syndicate Operative Outfit - NukeOps Reinforcement
-- type: startingGear
-  id: SyndicateOperativeGearReinforcementNukeOps
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackDuffelSyndicateOperative
-    shoes: ClothingShoesBootsCombatFilled
-    gloves: ClothingHandsGlovesColorBlack
-    id: SyndiPDA #Do not give a PDA to the normal Reinforcement - it will spawn with a 20TC uplink
-
 # Syndicate Operative Outfit - Civilian
 - type: startingGear
   id: SyndicateOperativeGearCivilian
