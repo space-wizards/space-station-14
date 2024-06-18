@@ -110,7 +110,7 @@ namespace Content.Shared.ActionBlocker
         public bool CanConsciouslyPerformAction(EntityUid user)
         {
             var ev = new ConsciousAttemptEvent(user);
-            RaiseLocalEvent(user, ev);
+            RaiseLocalEvent(user, ref ev);
 
             return !ev.Cancelled;
         }

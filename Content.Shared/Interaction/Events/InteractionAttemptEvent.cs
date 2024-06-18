@@ -14,9 +14,11 @@
     /// <summary>
     /// Raised to determine whether an entity is conscious to perform an action.
     /// </summary>
-    public sealed class ConsciousAttemptEvent(EntityUid Uid) : CancellableEntityEventArgs
+    [ByRefEvent]
+    public struct ConsciousAttemptEvent(EntityUid uid)
     {
-        public EntityUid Uid { get; } = Uid;
+        public bool Cancelled;
+        public readonly EntityUid Uid = uid;
     }
 
     /// <summary>
