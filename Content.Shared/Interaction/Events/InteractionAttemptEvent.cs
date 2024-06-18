@@ -23,15 +23,11 @@
     ///     Event raised directed at the target entity of an interaction to see if the user is allowed to perform some
     ///     generic interaction.
     /// </summary>
-    public sealed class GettingInteractedWithAttemptEvent : CancellableEntityEventArgs
+    [ByRefEvent]
+    public struct GettingInteractedWithAttemptEvent(EntityUid uid, EntityUid? target)
     {
-        public GettingInteractedWithAttemptEvent(EntityUid uid, EntityUid? target)
-        {
-            Uid = uid;
-            Target = target;
-        }
-
-        public EntityUid Uid { get; }
-        public EntityUid? Target { get; }
+        public bool Cancelled;
+        public readonly EntityUid Uid = uid;
+        public readonly EntityUid? Target = target;
     }
 }

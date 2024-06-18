@@ -79,7 +79,7 @@ namespace Content.Shared.ActionBlocker
                 return true;
 
             var targetEv = new GettingInteractedWithAttemptEvent(user, target);
-            RaiseLocalEvent(target.Value, targetEv);
+            RaiseLocalEvent(target.Value, ref targetEv);
 
             return !targetEv.Cancelled;
         }
