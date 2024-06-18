@@ -2,14 +2,14 @@
   id: Train
   mapName: 'Train'
   mapPath: /Maps/train.yml
+  maxRandomOffset: 0
+  randomRotation: false
   minPlayers: 10
   maxPlayers: 50
   stations:
     Train:
       stationProto: StandardNanotrasenStation
       components:
-        - type: StationRandomTransform
-          enableStationRotation: false
         - type: StationNameSetup
           mapNameTemplate: 'Train "Sentipode" {0}-{1}'
           nameGenerator:
