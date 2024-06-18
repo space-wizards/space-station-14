@@ -91,6 +91,7 @@ public sealed partial class ContentAudioSystem
     {
         _state.OnStateChanged -= OnStateChange;
         _ambientMusicStream = _audio.Stop(_ambientMusicStream);
+        _ambientLoopStream = _audio.Stop(_ambientLoopStream);
     }
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
