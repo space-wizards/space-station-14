@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Borgs, Emitters, and APEs can no longer have their panels opened while
-      locked. APEs and Emitters additionally cannot be unanchored either.
-    type: Add
-  id: 6272
-  time: '2024-03-31T06:34:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26600
 - author: lzk228
   changes:
   - message: Flower crown and wreath were combined. Now you can wear wreath both on
@@ -3850,3 +3842,12 @@
   id: 6771
   time: '2024-06-18T14:10:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29165
+- author: IProduceWidgets
+  changes:
+  - message: Foam Force rifle to cargo lottery!
+    type: Add
+  - message: Foam darts now stick to things they hit!
+    type: Tweak
+  id: 6772
+  time: '2024-06-18T15:04:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29103
