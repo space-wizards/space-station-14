@@ -1,15 +1,12 @@
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
-using Content.Shared.ReagentOnItem;
 using Content.Shared.Throwing;
-using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Examine;
 using Robust.Shared.GameStates;
 using Content.Shared.Hands;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.NameModifier.EntitySystems;
 
 namespace Content.Shared.ReagentOnItem;
