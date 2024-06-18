@@ -160,7 +160,7 @@ public abstract class SharedConveyorController : VirtualController
 
         localPos += Convey(direction, bestSpeed, frameTime, itemRelative);
 
-        TransformSystem.SetLocalPositionNoLerp(entity, localPos, xform);
+        TransformSystem.SetLocalPosition(entity, localPos, xform);
 
         // Force it awake for collisionwake reasons.
         Physics.SetAwake((entity, physics), true);
