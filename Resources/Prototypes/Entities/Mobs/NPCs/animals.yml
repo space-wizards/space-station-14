@@ -767,7 +767,7 @@
     reagentId: Milk
     quantityPerUpdate: 25
     growthDelay: 30
-    UsedSatiation: Hunger
+    usedSatiation: Hunger
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -921,7 +921,7 @@
     reagentId: MilkGoat
     quantityPerUpdate: 25
     growthDelay: 20
-    UsedSatiation: Hunger
+    usedSatiation: Hunger
   - type: Wooly
     usedSatiation: Hunger
   - type: Food
