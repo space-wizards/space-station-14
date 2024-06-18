@@ -127,9 +127,6 @@ public sealed class SupermatterSystem : EntitySystem
         heatPowerGeneration = Math.Clamp(heatPowerGeneration, 0, 1);
         powerlossInhibition = Math.Clamp(powerlossInhibition, 0, 1);
 
-        // todo: add special gas effects, e.g. miasma getting fully consumed
-
-        sm.AbsorbedGasMix = absorbedMix;
         sm.PowerTransmissionRate = powerTransmissionRate;
         sm.GasHeatModifier = heatModifier;
         sm.GasHeatResistance = heatResistance;
@@ -139,21 +136,17 @@ public sealed class SupermatterSystem : EntitySystem
     /// <summary>
     ///     Shoot lightning and radiate everything based on whatever power there is.
     /// </summary>
-    private void ProcessPower(EntityUid uid, SupermatterComponent sm, float frameTime)
+    private void ProcessPower(EntityUid uid, SupermatterComponent sm)
     {
-        CalculateInternalEnergy(sm);
-        CalculateZapRate(sm);
+        var powerHeat = sm.HeatPowerGeneration * sm.AbsorbedGasMix.Temperature * SupermatterComponent.GasHeatPowerScaling;
+        var powerloss = -1 * sm.GasPowerlossInhibition;
+        var atmosStrength = Math.Clamp((powerHeat + powerloss) * sm.PowerTransmissionRate, 0, 2);
+
+        var damageStrength = Math.Clamp(sm.Damage / sm.DelaminationPoint, 0, 1);
+        var strength = Math.Clamp(atmosStrength + damageStrength, 0, sm.LightningPrototypeIDs.Length - 1);
 
         _sound.PlayPvs(sm.SupermatterZapSound, uid);
-
-        // very shitty and should not be working like that.
-        // need to redo the entirety of lightning to make it work as intended.
-        // so, redo later :godo:
-        var strength = sm.InternalEnergy * sm.ZapTransmissionRate * frameTime;
-        var strengthNormalized = 1 / (sm.LightningPrototypeIDs.Length - strength) * sm.LightningPrototypeIDs.Length;
-        if (strengthNormalized < 0)
-            strengthNormalized *= -1;
-        _lightning.ShootRandomLightnings(uid, 3, (int) strengthNormalized, sm.LightningPrototypeIDs[(int) strengthNormalized]);
+        _lightning.ShootRandomLightnings(uid, 3, (int) strength, sm.LightningPrototypeIDs[(int) strength]);
         Comp<RadiationSourceComponent>(uid).Intensity = strength;
     }
     /// <summary>
@@ -161,9 +154,30 @@ public sealed class SupermatterSystem : EntitySystem
     /// </summary>
     private void ProcessDamage(EntityUid uid, SupermatterComponent sm)
     {
-        CalculateTempLimit(sm);
+        var additiveTempBase = Atmospherics.T0C + SupermatterComponent.HeatPenaltyThreshold;
+        var tempLimitBase = additiveTempBase;
+        var tempLimitGas = sm.GasHeatResistance * additiveTempBase;
+        var tempLimitMoles = Math.Clamp(2 - sm.AbsorbedGasMix.TotalMoles / 100, 0, 1) * additiveTempBase;
+
+        sm.TempLimit = Math.Max(tempLimitBase + tempLimitGas + tempLimitMoles, Atmospherics.TCMB);
+
         sm.DamageArchived = sm.Damage;
-        CalculateDamage(sm);
+
+        var damageExternal = sm.ExternalDamageImmediate * Math.Clamp((sm.EmergencyPoint - sm.Damage) / sm.EmergencyPoint, 0, 1);
+        sm.ExternalDamageImmediate = 0f;
+
+        var damageHeat = Math.Clamp((sm.AbsorbedGasMix.Temperature - sm.TempLimit) / 24000, 0, .15f);
+        var damagePower = Math.Clamp((sm.InternalEnergy - SupermatterComponent.PowerPenaltyThreshold) / 40000, 0, .1f);
+        var damageMoles = Math.Clamp((sm.AbsorbedGasMix.TotalMoles - SupermatterComponent.MolePenaltyThreshold) / 3200, 0, .1f);
+
+        var damageHealHeat = 0f;
+
+        if (sm.AbsorbedGasMix.TotalMoles > 0)
+            damageHealHeat = Math.Clamp((sm.AbsorbedGasMix.TotalMoles - sm.TempLimit) / 6000, -.1f, 0);
+
+        var totalDamage = damageExternal + damageHeat + damagePower + damageMoles + damageHealHeat;
+
+        sm.Damage += Math.Max(totalDamage, 0);
 
         if (sm.Damage > sm.DelaminationPoint)
             sm.AreWeDelaming = true;
@@ -180,15 +194,14 @@ public sealed class SupermatterSystem : EntitySystem
     /// </summary>
     private void ProcessWaste(SupermatterComponent sm)
     {
-        CalculateWaste(sm);
-        var deviceEnergy = sm.InternalEnergy * SupermatterComponent.ReactionPowerModifier;
+        sm.WasteMultiplier = Math.Clamp(1f + sm.GasHeatModifier, .5f, float.PositiveInfinity);
 
         var mergeMix = sm.AbsorbedGasMix;
-        mergeMix.Temperature += deviceEnergy * sm.WasteMultiplier / SupermatterComponent.ThermalReleaseModifier;
+        mergeMix.Temperature += .65f * sm.WasteMultiplier / SupermatterComponent.ThermalReleaseModifier;
         mergeMix.Temperature = Math.Clamp(mergeMix.Temperature, Atmospherics.TCMB, 2500 * sm.WasteMultiplier);
 
-        mergeMix.AdjustMoles(Gas.Plasma, Math.Max(deviceEnergy * sm.WasteMultiplier / SupermatterComponent.PlasmaReleaseModifier, 0));
-        mergeMix.AdjustMoles(Gas.Oxygen, Math.Max((deviceEnergy + mergeMix.Temperature * sm.WasteMultiplier - Atmospherics.T0C) / SupermatterComponent.OxygenReleaseModifier, 0));
+        mergeMix.AdjustMoles(Gas.Plasma, Math.Max(.65f * sm.WasteMultiplier / SupermatterComponent.PlasmaReleaseModifier, 0));
+        mergeMix.AdjustMoles(Gas.Oxygen, Math.Max((.65f + mergeMix.Temperature * sm.WasteMultiplier - Atmospherics.T0C) / SupermatterComponent.OxygenReleaseModifier, 0));
     }
 
     /// <summary>
@@ -208,105 +221,6 @@ public sealed class SupermatterSystem : EntitySystem
 
         if (ambienceComp.Sound != sm.CurrentAmbience)
             _ambience.SetSound(uid, sm.CurrentAmbience, ambienceComp);
-    }
-
-    /// <summary>
-    ///     Perform calculation for power lost and gained this cycle.
-    /// </summary>
-    private void CalculateInternalEnergy(SupermatterComponent sm)
-    {
-        var powerExternalTrickle = sm.ExternalPowerTrickle != 0 ? Math.Max(sm.ExternalPowerTrickle / 10, 40) : 0;
-        sm.ExternalPowerTrickle -= Math.Min(powerExternalTrickle, sm.ExternalPowerTrickle);
-
-        var powerExternalImmediate = sm.ExternalPowerImmediate;
-        sm.ExternalPowerImmediate = 0f;
-
-        var powerHeat = sm.HeatPowerGeneration * sm.AbsorbedGasMix.Temperature * SupermatterComponent.GasHeatPowerScaling;
-
-        var momentaryPower = sm.InternalEnergy;
-        momentaryPower += powerExternalTrickle + powerExternalImmediate;
-
-        var powerloss = 0f;
-        var powerlossGas = 0f;
-
-        if (momentaryPower < sm.PowerlossLinearThreshold) // negative numbers
-            powerloss = (float) Math.Pow(-1 * momentaryPower / 500, 3);
-        else
-            powerloss = -1 * momentaryPower / 500 + sm.PowerlossLinearOffset;
-
-        powerlossGas = -1 * sm.GasPowerlossInhibition * powerloss;
-
-        sm.InternalEnergy += powerExternalTrickle + powerExternalImmediate + powerHeat + powerloss + powerlossGas;
-
-        sm.InternalEnergy = Math.Max(sm.InternalEnergy, 0);
-    }
-    /// <summary>
-    ///     Perform calculation for the main zap power transmission rate in W/MeV.
-    /// </summary>
-    private void CalculateZapRate(SupermatterComponent sm)
-    {
-        var zapBase = SupermatterComponent.BasePowerTransmissionRate;
-        var zapGas = SupermatterComponent.BasePowerTransmissionRate * sm.PowerTransmissionRate;
-
-        sm.ZapTransmissionRate = 0f;
-        sm.ZapTransmissionRate += zapBase + zapGas;
-        sm.ZapTransmissionRate = Math.Max(sm.ZapTransmissionRate, 0);
-    }
-
-    /// <summary>
-    ///     Calculate at which temperature the SM starts taking damage.
-    /// </summary>
-    private void CalculateTempLimit(SupermatterComponent sm)
-    {
-        var additiveTempBase = Atmospherics.T0C + SupermatterComponent.HeatPenaltyThreshold;
-        var tempLimitBase = additiveTempBase;
-        var tempLimitGas = sm.GasHeatResistance * additiveTempBase;
-        var tempLimitMoles = Math.Clamp(2 - sm.AbsorbedGasMix.TotalMoles / 100, 0, 1) * additiveTempBase;
-
-        sm.TempLimit = 0f;
-        sm.TempLimit += tempLimitBase + tempLimitGas + tempLimitMoles;
-        sm.TempLimit = Math.Max(sm.TempLimit, Atmospherics.TCMB);
-    }
-
-    /// <summary>
-    ///     Perform calculation for the damage taken or healed.
-    /// </summary>
-    private void CalculateDamage(SupermatterComponent sm)
-    {
-        var damageExternal = sm.ExternalDamageImmediate * Math.Clamp((sm.EmergencyPoint - sm.Damage) / sm.EmergencyPoint, 0, 1);
-        sm.ExternalDamageImmediate = 0f;
-
-        var damageHeat = Math.Clamp((sm.AbsorbedGasMix.Temperature - sm.TempLimit) / 24000, 0, .15f);
-        var damagePower = Math.Clamp((sm.InternalEnergy - SupermatterComponent.PowerPenaltyThreshold) / 40000, 0, .1f);
-        var damageMoles = Math.Clamp((sm.AbsorbedGasMix.TotalMoles - SupermatterComponent.MolePenaltyThreshold) / 3200, 0, .1f);
-
-        var damageHealHeat = 0f;
-
-        if (sm.AbsorbedGasMix.TotalMoles > 0)
-            damageHealHeat = Math.Clamp((sm.AbsorbedGasMix.TotalMoles - sm.TempLimit) / 6000, -.1f, 0);
-
-        var totalDamage = 0f;
-        totalDamage += damageHeat + damagePower + damageMoles + damageHealHeat;
-
-        sm.Damage += totalDamage;
-        sm.Damage = Math.Max(sm.Damage, 0);
-    }
-
-    /// <summary>
-    ///     Perform calculation for the waste multiplier.
-    ///     This number affects the temperature, plasma, and oxygen of the waste gas.
-    ///     Multiplier is applied to energy for plasma and temperature but temperature for oxygen.
-    /// </summary>
-    private void CalculateWaste(SupermatterComponent sm)
-    {
-        sm.WasteMultiplier = 0f;
-
-        var wasteBase = 1;
-        var wasteGas = sm.GasHeatModifier;
-
-        sm.WasteMultiplier += wasteBase + wasteGas;
-
-        sm.WasteMultiplier = Math.Clamp(sm.WasteMultiplier, .5f, float.PositiveInfinity);
     }
 
     /// <summary>
@@ -451,7 +365,7 @@ public sealed class SupermatterSystem : EntitySystem
             sm.Activated = true;
 
         Vaporize(uid);
-        ProcessPower(uid, sm, sm.DeltaTime);
+        ProcessPower(uid, sm);
         ProcessDamage(uid, sm);
     }
 
@@ -503,7 +417,7 @@ public sealed class SupermatterSystem : EntitySystem
 
         sm.Damage += args.DamageDelta?.GetTotal().Int() / 100 ?? 0;
 
-        ProcessPower(uid, sm, sm.DeltaTime);
+        ProcessPower(uid, sm);
         ProcessDamage(uid, sm);
     }
 
