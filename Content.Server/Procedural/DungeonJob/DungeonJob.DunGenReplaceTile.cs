@@ -3,6 +3,7 @@ using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Map;
+using Robust.Shared.Random;
 
 namespace Content.Server.Procedural.DungeonJob;
 
@@ -19,20 +20,31 @@ public sealed partial class DungeonJob
 
         while (tiles.MoveNext(out var tileRef))
         {
-            var tile = tileRef.Value.GridIndices;
+            var node = tileRef.Value.GridIndices;
 
-            if (reservedTiles.Contains(tile))
+            if (reservedTiles.Contains(node))
                 continue;
 
             foreach (var layer in gen.Layers)
             {
-                var value = layer.Noise.GetNoise(tile.X, tile.Y);
+                var value = layer.Noise.GetNoise(node.X, node.Y);
 
                 if (value < layer.Threshold)
                     continue;
 
-                replacements.Add((tile, _tileDefManager.GetVariantTile(_prototype.Index(layer.Tile), random)));
-                reserved.Add(tile);
+                Tile tile;
+
+                if (random.Prob(gen.VariantWeight))
+                {
+                    tile = _tileDefManager.GetVariantTile(_prototype.Index(layer.Tile), random);
+                }
+                else
+                {
+                    tile = new Tile(_prototype.Index(layer.Tile).TileId);
+                }
+
+                replacements.Add((node, tile));
+                reserved.Add(node);
                 break;
             }
 

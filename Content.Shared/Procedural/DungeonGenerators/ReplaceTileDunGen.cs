@@ -9,6 +9,12 @@ namespace Content.Shared.Procedural.DungeonGenerators;
 /// </summary>
 public sealed partial class ReplaceTileDunGen : IDunGenLayer
 {
+    /// <summary>
+    /// Chance for a non-variant tile to be used, in case they're too noisy.
+    /// </summary>
+    [DataField]
+    public float VariantWeight = 0.1f;
+
     [DataField(required: true)]
     public List<ReplaceTileLayer> Layers = new();
 }

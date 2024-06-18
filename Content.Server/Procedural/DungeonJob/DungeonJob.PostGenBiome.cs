@@ -26,6 +26,9 @@ public sealed partial class DungeonJob
 
         foreach (var node in dungeon.RoomTiles)
         {
+            if (reservedTiles.Contains(node))
+                continue;
+
             // Need to set per-tile to override data.
             if (biomeSystem.TryGetTile(node, biomeComp.Layers, seed, _grid, out var tile))
             {

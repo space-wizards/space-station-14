@@ -101,7 +101,6 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         DungeonConfigPrototype config,
         DungeonData data,
         List<IDunGenLayer> layers,
-        bool reserve,
         HashSet<Vector2i> reservedTiles,
         int seed)
     {
@@ -117,7 +116,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             {
                 await RunLayer(dungeons, data, position, layer, reservedTiles, seed);
 
-                if (reserve)
+                if (config.ReserveTiles)
                 {
                     foreach (var dungeon in dungeons)
                     {
@@ -146,7 +145,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         // Tiles we can no longer generate on due to being reserved elsewhere.
         var reservedTiles = new HashSet<Vector2i>();
 
-        var dungeons = await GetDungeons(position, _gen, _gen.Data, _gen.Layers, _gen.ReserveTiles, reservedTiles, _seed);
+        var dungeons = await GetDungeons(position, _gen, _gen.Data, _gen.Layers, reservedTiles, _seed);
         // To make it slightly more deterministic treat this RNG as separate ig.
 
         // Defer splitting so they don't get spammed and so we don't have to worry about tracking the grid along the way.
@@ -186,7 +185,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 var dataCopy = groupConfig.Data.Clone();
                 dataCopy.Apply(data);
 
-                dungeons.AddRange(await GetDungeons(position, groupConfig, dataCopy, groupConfig.Layers, groupConfig.ReserveTiles, reservedTiles, seed));
+                dungeons.AddRange(await GetDungeons(position, groupConfig, dataCopy, groupConfig.Layers, reservedTiles, seed));
                 break;
             case PrefabDunGen prefab:
                 dungeons.Add(await GeneratePrefabDungeon(position, data, prefab, reservedTiles, seed));

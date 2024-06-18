@@ -28,7 +28,7 @@
   id: VGRoidBlob
   layers:
   - !type:NoiseDistanceDunGen
-    size: 384, 384
+    size: 272, 272
     distanceConfig: !type:DunGenEuclideanSquaredDistance
       blendWeight: 0.80
     layers:
@@ -44,17 +44,17 @@
 
 - type: dungeonConfig
   id: VGRoidSmaller
-  minOffset: 100
-  maxOffset: 150
+  minOffset: 40
+  maxOffset: 60
   layers:
   - !type:NoiseDistanceDunGen
-    size: 200, 200
+    size: 150, 150
     distanceConfig: !type:DunGenEuclideanSquaredDistance
     layers:
     - tile: FloorAsteroidSand
       threshold: 0.50
       noise:
-        frequency: 0.040
+        frequency: 0.080
         noiseType: OpenSimplex2
         fractalType: FBm
         octaves: 5

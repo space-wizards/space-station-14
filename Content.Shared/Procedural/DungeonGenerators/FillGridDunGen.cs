@@ -7,6 +7,6 @@ namespace Content.Shared.Procedural.DungeonGenerators;
 /// </summary>
 public sealed partial class FillGridDunGen : IDunGenLayer
 {
-    [DataField]
+    [DataField(required: true)]
     public EntProtoId Proto;
 }
