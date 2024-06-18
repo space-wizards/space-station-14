@@ -160,7 +160,7 @@ namespace Content.Server.GameTicking
             // whereas the command can also be used on an existing map.
             var loadOpts = loadOptions ?? new MapLoadOptions();
 
-            if (map.RandomOffset)
+            if (map.MaxRandomOffset != 0f)
                 loadOpts.Offset = _robustRandom.NextVector2(map.MaxRandomOffset);
 
             if (map.RandomRotation)

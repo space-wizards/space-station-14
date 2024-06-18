@@ -2,7 +2,7 @@
   id: Europa
   mapName: 'Europa'
   mapPath: /Maps/europa.yml
-  randomOffset: false
+  maxRandomOffset: 0
   randomRotation: false
   minPlayers: 0
   maxPlayers: 40

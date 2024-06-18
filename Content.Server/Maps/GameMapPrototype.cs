@@ -23,13 +23,10 @@ public sealed partial class GameMapPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     [DataField]
-    public bool RandomOffset = true;
+    public float MaxRandomOffset = 1000f;
 
     [DataField]
     public bool RandomRotation = true;
-
-    [DataField]
-    public float MaxRandomOffset = 1000f;
 
     /// <summary>
     /// Name of the map to use in generic messages, like the map vote.
