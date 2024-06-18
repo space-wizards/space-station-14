@@ -98,4 +98,4 @@ reagent-name-mopwata = mopwata
 reagent-desc-mopwata = Dirty, stagnant mop water.
 
 reagent-name-calicosmall = calico small
-reagent-desc-calicosmall = A Nanotrasen homebrew of felinium. Do not injest.
+reagent-desc-calicosmall = A Nanotrasen homebrew of felinium. Do not ingest.
