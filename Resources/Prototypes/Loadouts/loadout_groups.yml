@@ -40,6 +40,7 @@
   name: loadout-group-survival-basic
   minLimit: 2
   maxLimit: 2
+  hidden: true
   loadouts:
   - EmergencyNitrogen
   - EmergencyOxygen
@@ -710,6 +711,7 @@
   name: loadout-group-survival-extended
   minLimit: 2
   maxLimit: 2
+  hidden: true
   loadouts:
   - EmergencyNitrogenExtended
   - EmergencyOxygenExtended
@@ -989,6 +991,7 @@
   name: loadout-group-survival-security
   minLimit: 2
   maxLimit: 2
+  hidden: true
   loadouts:
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
@@ -1170,6 +1173,7 @@
   name: loadout-group-survival-medical
   minLimit: 2
   maxLimit: 2
+  hidden: true
   loadouts:
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
