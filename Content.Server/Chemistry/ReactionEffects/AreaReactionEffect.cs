@@ -6,6 +6,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -45,7 +46,9 @@ namespace Content.Server.Chemistry.ReactionEffects
         public override bool ShouldLog => true;
 
         protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-            => Loc.GetString("reagent-effect-guidebook-missing");
+            => Loc.GetString("reagent-effect-guidebook-area-reaction",
+                    ("duration", _duration)
+                );
 
         public override LogImpact LogImpact => LogImpact.High;
 
@@ -58,15 +61,18 @@ namespace Content.Server.Chemistry.ReactionEffects
             var splitSolution = args.Source.SplitSolution(args.Source.Volume);
             var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
             var mapManager = IoCManager.Resolve<IMapManager>();
+            var mapSys = args.EntityManager.System<MapSystem>();
+            var sys = args.EntityManager.System<TransformSystem>();
+            var mapCoords = sys.GetMapCoordinates(args.SolutionEntity, xform: transform);
 
-            if (!mapManager.TryFindGridAt(transform.MapPosition, out _, out var grid) ||
-                !grid.TryGetTileRef(transform.Coordinates, out var tileRef) ||
+            if (!mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
+                !mapSys.TryGetTileRef(gridUid, grid, transform.Coordinates, out var tileRef) ||
                 tileRef.Tile.IsSpace())
             {
                 return;
             }
 
-            var coords = grid.MapToGrid(transform.MapPosition);
+            var coords = mapSys.MapToGrid(gridUid, mapCoords);
             var ent = args.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
 
             var smoke = args.EntityManager.System<SmokeSystem>();

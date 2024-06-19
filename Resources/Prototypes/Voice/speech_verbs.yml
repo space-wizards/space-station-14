@@ -1,30 +1,36 @@
 ﻿- type: speechVerb
   id: Default
+  name: chat-speech-verb-name-default
   speechVerbStrings:
   - chat-speech-verb-default
 
 - type: speechVerb
   id: DefaultQuestion
+  name: chat-speech-verb-name-question
   speechVerbStrings:
   - chat-speech-verb-question
 
 - type: speechVerb
   id: DefaultStutter
+  name: chat-speech-verb-name-stutter
   speechVerbStrings:
   - chat-speech-verb-stutter
 
 - type: speechVerb
   id: DefaultMumble
+  name: chat-speech-verb-name-mumble
   speechVerbStrings:
   - chat-speech-verb-mumble
 
 - type: speechVerb
   id: DefaultExclamation
+  name: chat-speech-verb-name-exclamation
   speechVerbStrings:
   - chat-speech-verb-exclamation
 
 - type: speechVerb
   id: DefaultExclamationStrong
+  name: chat-speech-verb-name-exclamation-strong
   bold: true
   speechVerbStrings:
   - chat-speech-verb-exclamation-strong
@@ -32,6 +38,7 @@
 
 - type: speechVerb
   id: Arachnid
+  name: chat-speech-verb-name-arachnid
   speechVerbStrings:
   - chat-speech-verb-insect-1
   - chat-speech-verb-insect-2
@@ -40,6 +47,7 @@
 
 - type: speechVerb
   id: Moth
+  name: chat-speech-verb-name-moth
   speechVerbStrings:
   - chat-speech-verb-winged-1
   - chat-speech-verb-winged-2
@@ -48,12 +56,14 @@
 
 - type: speechVerb
   id: Robotic
+  name: chat-speech-verb-name-robotic
   speechVerbStrings:
   - chat-speech-verb-robotic-1
   - chat-speech-verb-robotic-2
 
 - type: speechVerb
   id: Reptilian
+  name: chat-speech-verb-name-reptilian
   speechVerbStrings:
   - chat-speech-verb-reptilian-1
   - chat-speech-verb-reptilian-2
@@ -62,6 +72,7 @@
 
 - type: speechVerb
   id: Skeleton
+  name: chat-speech-verb-name-skeleton
   speechVerbStrings:
   - chat-speech-verb-skeleton-1
   - chat-speech-verb-skeleton-2
@@ -69,6 +80,7 @@
 
 - type: speechVerb
   id: Slime
+  name: chat-speech-verb-name-slime
   speechVerbStrings:
   - chat-speech-verb-slime-1
   - chat-speech-verb-slime-2
@@ -76,13 +88,15 @@
 
 - type: speechVerb
   id: Vox
+  name: chat-speech-verb-name-vox
   speechVerbStrings:
-    - chat-speech-verb-vox-1
-    - chat-speech-verb-vox-2
-    - chat-speech-verb-vox-3
+  - chat-speech-verb-vox-1
+  - chat-speech-verb-vox-2
+  - chat-speech-verb-vox-3
 
 - type: speechVerb
   id: Plant
+  name: chat-speech-verb-name-plant
   speechVerbStrings:
   - chat-speech-verb-plant-1
   - chat-speech-verb-plant-2
@@ -90,6 +104,7 @@
 
 - type: speechVerb
   id: Canine
+  name: chat-speech-verb-name-canine
   speechVerbStrings:
   - chat-speech-verb-canine-1
   - chat-speech-verb-canine-2
@@ -97,24 +112,36 @@
 
 - type: speechVerb
   id: LargeMob
+  name: chat-speech-verb-name-large-mob
   speechVerbStrings:
   - chat-speech-verb-large-mob-1
   - chat-speech-verb-large-mob-2
 
 - type: speechVerb
   id: SmallMob
+  name: chat-speech-verb-name-small-mob
   speechVerbStrings:
   - chat-speech-verb-small-mob-1
   - chat-speech-verb-small-mob-2
 
 - type: speechVerb
   id: Monkey
+  name: chat-speech-verb-name-monkey
   speechVerbStrings:
   - chat-speech-verb-monkey-1
   - chat-speech-verb-monkey-2
 
 - type: speechVerb
+  id: Parrot
+  name: chat-speech-verb-name-parrot
+  speechVerbStrings:
+  - chat-speech-verb-parrot-1
+  - chat-speech-verb-parrot-2
+  - chat-speech-verb-parrot-3
+
+- type: speechVerb
   id: Cluwne
+  name: chat-speech-verb-name-cluwne
   speechVerbStrings:
   - chat-speech-verb-cluwne-1
   - chat-speech-verb-cluwne-2
@@ -122,6 +149,7 @@
 
 - type: speechVerb
   id: Ghost
+  name: chat-speech-verb-name-ghost
   speechVerbStrings:
   - chat-speech-verb-ghost-1
   - chat-speech-verb-ghost-2
@@ -131,6 +159,7 @@
 
 - type: speechVerb
   id: Electricity
+  name: chat-speech-verb-name-electricity
   speechVerbStrings:
   - chat-speech-verb-electricity-1
   - chat-speech-verb-electricity-2

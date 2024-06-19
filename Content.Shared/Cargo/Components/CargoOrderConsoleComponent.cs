@@ -1,6 +1,8 @@
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Content.Shared.Radio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Cargo.Components;
 
@@ -21,5 +23,11 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public List<string> AllowedGroups = new() { "market" };
+
+    /// <summary>
+    /// Radio channel on which order approval announcements are transmitted
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<RadioChannelPrototype> AnnouncementChannel = "Supply";
 }
 

@@ -58,66 +58,95 @@ chat-speech-verb-suffix-question = ?
 chat-speech-verb-suffix-stutter = -
 chat-speech-verb-suffix-mumble = ..
 
+chat-speech-verb-name-none = None
+chat-speech-verb-name-default = Default
 chat-speech-verb-default = says
+chat-speech-verb-name-exclamation = Exclaiming
 chat-speech-verb-exclamation = exclaims
+chat-speech-verb-name-exclamation-strong = Yelling
 chat-speech-verb-exclamation-strong = yells
+chat-speech-verb-name-question = Asking
 chat-speech-verb-question = asks
+chat-speech-verb-name-stutter = Stuttering
 chat-speech-verb-stutter = stutters
+chat-speech-verb-name-mumble = Mumbling
 chat-speech-verb-mumble = mumbles
 
+chat-speech-verb-name-arachnid = Arachnid
 chat-speech-verb-insect-1 = chitters
 chat-speech-verb-insect-2 = chirps
 chat-speech-verb-insect-3 = clicks
 
+chat-speech-verb-name-moth = Moth
 chat-speech-verb-winged-1 = flutters
 chat-speech-verb-winged-2 = flaps
 chat-speech-verb-winged-3 = buzzes
 
+chat-speech-verb-name-slime = Slime
 chat-speech-verb-slime-1 = sloshes
 chat-speech-verb-slime-2 = burbles
 chat-speech-verb-slime-3 = oozes
 
+chat-speech-verb-name-plant = Diona
 chat-speech-verb-plant-1 = rustles
 chat-speech-verb-plant-2 = sways
 chat-speech-verb-plant-3 = creaks
 
+chat-speech-verb-name-robotic = Robotic
 chat-speech-verb-robotic-1 = states
 chat-speech-verb-robotic-2 = beeps
+chat-speech-verb-robotic-3 = boops
 
+chat-speech-verb-name-reptilian = Reptilian
 chat-speech-verb-reptilian-1 = hisses
 chat-speech-verb-reptilian-2 = snorts
 chat-speech-verb-reptilian-3 = huffs
 
+chat-speech-verb-name-skeleton = Skeleton
 chat-speech-verb-skeleton-1 = rattles
 chat-speech-verb-skeleton-2 = clacks
 chat-speech-verb-skeleton-3 = gnashes
 
+chat-speech-verb-name-vox = Vox
 chat-speech-verb-vox-1 = screeches
 chat-speech-verb-vox-2 = shrieks
 chat-speech-verb-vox-3 = croaks
 
+chat-speech-verb-name-canine = Canine
 chat-speech-verb-canine-1 = barks
 chat-speech-verb-canine-2 = woofs
 chat-speech-verb-canine-3 = howls
 
+chat-speech-verb-name-small-mob = Mouse
 chat-speech-verb-small-mob-1 = squeaks
 chat-speech-verb-small-mob-2 = pieps
 
+chat-speech-verb-name-large-mob = Carp
 chat-speech-verb-large-mob-1 = roars
 chat-speech-verb-large-mob-2 = growls
 
+chat-speech-verb-name-monkey = Monkey
 chat-speech-verb-monkey-1 = chimpers
 chat-speech-verb-monkey-2 = screeches
+
+chat-speech-verb-name-cluwne = Cluwne
+
+chat-speech-verb-name-parrot = Parrot
+chat-speech-verb-parrot-1 = squawks
+chat-speech-verb-parrot-2 = tweets
+chat-speech-verb-parrot-3 = chirps
 
 chat-speech-verb-cluwne-1 = giggles
 chat-speech-verb-cluwne-2 = guffaws
 chat-speech-verb-cluwne-3 = laughs
 
+chat-speech-verb-name-ghost = Ghost
 chat-speech-verb-ghost-1 = complains
 chat-speech-verb-ghost-2 = breathes
 chat-speech-verb-ghost-3 = hums
 chat-speech-verb-ghost-4 = mutters
 
+chat-speech-verb-name-electricity = Electricity
 chat-speech-verb-electricity-1 = crackles
 chat-speech-verb-electricity-2 = buzzes
 chat-speech-verb-electricity-3 = screeches

@@ -1,11 +1,11 @@
-﻿<Document>
-# Construction
+<Document>
+  # Construction
 
-By pressing [color=#a4885c]G[/color], one can open the construction menu, which allows you to craft and build a variety of objects.
+  By pressing [color=#a4885c][keybind="OpenCraftingMenu"][/color], one can open the construction menu, which allows you to craft and build a variety of objects.
 
-When placing objects that "snap" to the grid, you can hold [color=#a4885c]shift[/color] to place an entire line at a time, and [color=#a4885c]ctrl[/color] to place an entire square at a time.
+  When placing objects that "snap" to the grid, you can hold [color=#a4885c]Shift[/color] to place an entire line at a time, and [color=#a4885c]Ctrl[/color] to place an entire grid at a time.
 
-When crafting objects with a lot of ingredients, keep in mind you don't have to hold everything at once, you can simply place the ingredients on the floor or on a table near you and they'll be used up during crafting like normal.
+  When crafting objects with a lot of ingredients, keep in mind you don't have to hold everything at once; you can simply place the ingredients on the floor, in your backpack or on a table near you, and they'll be used up during crafting like normal.
 
-When placing a "building ghost" somewhere in the world press [color=#a4885c]Middle Mouse Button[/color] to rotate the ghost clockwise.
+  When placing a "building ghost" somewhere in the world, press [color=#a4885c][keybind="EditorRotateObject"][/color] to rotate the ghost clockwise. If you are building a mirrorable component (think: Gas Mixers/Filters), you can press [color=#a4885c][keybind="EditorFlipObject"][/color] to flip the ghost.
 </Document>

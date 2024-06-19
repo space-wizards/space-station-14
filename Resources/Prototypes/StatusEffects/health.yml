@@ -1,7 +1,0 @@
-- type: statusIcon
-  id: HealthIconFine
-  priority: 1
-  icon:
-    sprite: /Textures/Interface/Misc/health_icons.rsi
-    state: Fine
-  locationPreference: Right

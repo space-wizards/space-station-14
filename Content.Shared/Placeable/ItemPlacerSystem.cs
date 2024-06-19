@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Physics.Events;
+using Content.Shared.Whitelist;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Placeable;
@@ -11,6 +12,7 @@ public sealed class ItemPlacerSystem : EntitySystem
 {
     [Dependency] private readonly CollisionWakeSystem _wake = default!;
     [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -22,7 +24,7 @@ public sealed class ItemPlacerSystem : EntitySystem
 
     private void OnStartCollide(EntityUid uid, ItemPlacerComponent comp, ref StartCollideEvent args)
     {
-        if (comp.Whitelist != null && !comp.Whitelist.IsValid(args.OtherEntity))
+        if (_whitelistSystem.IsWhitelistFail(comp.Whitelist, args.OtherEntity))
             return;
 
         if (TryComp<CollisionWakeComponent>(args.OtherEntity, out var wakeComp))

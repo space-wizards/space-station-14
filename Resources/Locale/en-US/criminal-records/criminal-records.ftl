@@ -31,14 +31,14 @@ criminal-records-permission-denied = Permission denied
 
 ## Security channel notifications
 
-criminal-records-console-wanted = {$name} is wanted by {$officer} for: {$reason}.
+criminal-records-console-wanted = {$name} was made wanted by {$officer} for: {$reason}.
 criminal-records-console-suspected = {$officer} marked {$name} as suspicious because of: {$reason}
-criminal-records-console-not-suspected = {$name} is no longer a suspect.
+criminal-records-console-not-suspected = {$name} has been cleared of suspicion by {$officer}.
 criminal-records-console-detained = {$name} has been detained by {$officer}.
 criminal-records-console-released = {$name} has been released by {$officer}.
-criminal-records-console-not-wanted = {$name} is no longer wanted.
+criminal-records-console-not-wanted = {$officer} cleared the wanted status of {$name}.
 criminal-records-console-paroled = {$name} has been released on parole by {$officer}.
-criminal-records-console-not-parole = {$name} is no longer on parole.
+criminal-records-console-not-parole = {$officer} cleared the parole status of {$name}.
 criminal-records-console-unknown-officer = <unknown officer>
 
 ## Filters

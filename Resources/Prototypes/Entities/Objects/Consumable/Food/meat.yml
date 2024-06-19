@@ -400,6 +400,9 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 3
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatCutlet
 
 - type: entity
   name: raw lizard meat
@@ -596,6 +599,8 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatTomatoCutlet
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: salami
@@ -715,6 +720,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: plain-cooked
@@ -774,6 +780,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: product-cooked
@@ -942,6 +949,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: goliath-cooked
@@ -971,6 +979,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: rouny-cooked
@@ -996,6 +1005,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: lizard-cooked
@@ -1262,6 +1272,8 @@
   - type: Sprite
     state: salami-slice
     color: red
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   name: salami slice

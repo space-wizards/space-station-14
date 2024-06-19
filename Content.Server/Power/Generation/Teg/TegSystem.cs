@@ -7,6 +7,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Shared.Atmos;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
 using Content.Shared.Power.Generation.Teg;
@@ -127,7 +128,6 @@ public sealed class TegSystem : EntitySystem
         // Shift ramp position based on demand and generation from previous tick.
         var curRamp = component.RampPosition;
         var lastDraw = supplier.CurrentSupply;
-        // Limit amount lost/gained based on power factor.
         curRamp = MathHelper.Clamp(lastDraw, curRamp / component.RampFactor, curRamp * component.RampFactor);
         curRamp = MathF.Max(curRamp, component.RampMinimum);
         component.RampPosition = curRamp;
@@ -137,17 +137,28 @@ public sealed class TegSystem : EntitySystem
         if (airA.Pressure > 0 && airB.Pressure > 0)
         {
             var hotA = airA.Temperature > airB.Temperature;
-            var cHot = hotA ? cA : cB;
-
-            // Calculate maximum amount of energy to generate this tick based on ramping above.
-            // This clamps the thermal energy transfer as well.
-            var targetEnergy = curRamp / _atmosphere.AtmosTickRate;
-            var transferMax = targetEnergy / (component.ThermalEfficiency * component.PowerFactor);
 
             // Calculate thermal and electrical energy transfer between the two sides.
-            var δT = MathF.Abs(airA.Temperature - airB.Temperature);
-            var transfer = Math.Min(δT * cA * cB / (cA + cB - cHot * component.ThermalEfficiency), transferMax);
-            electricalEnergy = transfer * component.ThermalEfficiency * component.PowerFactor;
+            // Assume temperature equalizes, i.e. Ta*cA + Tb*cB = Tf*(cA+cB)
+            var Tf = (airA.Temperature * cA + airB.Temperature * cB) / (cA + cB);
+            // The maximum energy we can extract is (Ta - Tf)*cA, which is equal to (Tf - Tb)*cB
+            var Wmax = MathF.Abs(airA.Temperature - Tf) * cA;
+
+            var N = component.ThermalEfficiency;
+
+            // Calculate Carnot efficiency
+            var Thot = hotA ? airA.Temperature : airB.Temperature;
+            var Tcold = hotA ? airB.Temperature : airA.Temperature;
+            var Nmax = 1 - Tcold / Thot;
+            N = MathF.Min(N, Nmax); // clamp by Carnot efficiency
+
+            // Reduce efficiency at low temperature differences to encourage burn chambers (instead
+            // of just feeding the TEG room temperature gas from an infinite gas miner).
+            var dT = Thot - Tcold;
+            N *= MathF.Tanh(dT/700); // https://www.wolframalpha.com/input?i=tanh(x/700)+from+0+to+1000
+
+            var transfer = Wmax * N;
+            electricalEnergy = transfer * component.PowerFactor;
             var outTransfer = transfer * (1 - component.ThermalEfficiency);
 
             // Adjust thermal energy in transferred gas mixtures.
@@ -168,7 +179,7 @@ public sealed class TegSystem : EntitySystem
         component.LastGeneration = electricalEnergy;
 
         // Turn energy (at atmos tick rate) into wattage.
-        var power = electricalEnergy * _atmosphere.AtmosTickRate;
+        var power = electricalEnergy / args.dt;
         // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
         supplier.MaxSupply = power * component.RampFactor;
 

@@ -68,6 +68,9 @@ marking-LizardFrillsDivinity = Lizard Frills (Divinity)
 marking-LizardFrillsBig-frills_big = Lizard Frills (Big)
 marking-LizardFrillsBig = Lizard Frills (Big)
 
+marking-LizardFrillsNeckfull-frills_neckfull = Lizard Frills (Neckfull)
+marking-LizardFrillsNeckfull = Lizard Frills (Neckfull)
+
 marking-LizardHornsDouble-horns_double = Lizard Horns (Double)
 marking-LizardHornsDouble = Lizard Horns (Double)
 
@@ -90,6 +93,9 @@ marking-LizardHornsMyrsore = Lizard Horns (Myrsore)
 marking-LizardHornsBighorn-horns_bighorn = Lizard Horns (Bighorn)
 marking-LizardHornsBighorn = Lizard Horns (Bighorn)
 
+marking-LizardHornsDemonic-horns_demonic = Lizard Horns (Demonic)
+marking-LizardHornsDemonic = Lizard Horns (Demonic)
+
 marking-LizardHornsKoboldEars-horns_kobold_ears = Lizard Ears (Kobold)
 marking-LizardHornsKoboldEars = Lizard Ears (Kobold)
 
@@ -101,3 +107,7 @@ marking-LizardChestUnderbelly = Lizard Chest (Underbelly)
 
 marking-LizardChestBackspikes-body_backspikes = Lizard Back spikes (Four)
 marking-LizardChestBackspikes = Lizard Back spikes (Four)
+
+marking-LizardSnoutSplotch = Lizard Snout (Splotch)
+marking-LizardSnoutSplotch-snout_splotch_primary = Muzzle
+marking-LizardSnoutSplotch-snout_splotch_secondary = Snoot

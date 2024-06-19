@@ -1,15 +1,73 @@
 ﻿- type: entity
-  id: GlassBoxLaser
-  name: glass box
-  description: A sturdy showcase for an expensive exhibit.
-  parent: BaseStructureDynamic
-  placement:
-    mode: SnapgridCenter
+  parent: [BaseStructureDynamic, BaseItemCabinetGlass]
+  id: BaseGlassBox
+  abstract: true
   components:
-  - type: Anchorable
-    delay: 4
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 1000
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Anchorable
+    delay: 4
+
+- type: entity
+  id: GlassBox
+  name: glass box
+  description: A sturdy showcase for an expensive exhibit.
+  parent: BaseGlassBox
+  abstract: true # TODO: Temporarily abstract. Remove it after item scaling in cabinets is implemented.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/glassbox.rsi
+    layers:
+    - state: base
+    - state: caplaser # TODO: Remove it after item scaling in cabinets is implemented.
+      map: ["enum.ItemCabinetVisuals.Layer"]
+      visible: true
+    - state: glass
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: locked
+      shader: unshaded
+      map: ["enum.LockVisualLayers.Lock"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 1000
+        mask:
+        - MachineMask
+        layer:
+        - LowImpassable
+        - MidImpassable
+        - BulletImpassable
+  - type: AccessReader
+  - type: Repairable
+    fuelCost: 15
+    doAfterDelay: 5
+  - type: Lock
+  - type: LockVisuals
+  - type: DamageVisuals
+    thresholds: [4, 8, 12] # TODO: Fix damage visuals on open state.
+    damageDivisor: 7.555
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Storage/glassbox.rsi
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -17,123 +75,141 @@
     soundGroups:
       Brute:
         collection: GlassSmash
-  - type: Physics
-    bodyType: Static
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Sprite
-    sprite: Structures/Storage/glassbox.rsi
-    layers:
-    - state: glassbox
-    - state: caplaser
-      map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
-      visible: true
-    - state: glass
-      map: ["enum.ItemCabinetVisualLayers.Door"]
-  - type: ItemCabinet
-    cabinetSlot:
-      ejectOnInteract: true
-      whitelist:
-        tags:
-        - WeaponAntiqueLaser
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass
-  - type: Lock
-  - type: AccessReader
-    access: [["Captain"]]
-  - type: ItemSlots
-  - type: ContainerContainer
-    containers:
-      ItemCabinet: !type:ContainerSlot
-  - type: Repairable
-  - type: Appearance
-  - type: DamageVisuals
-    thresholds: [4, 8, 12]
-    damageDivisor: 7.555
-    trackAllDamage: true
-    damageOverlay:
-      sprite: Structures/Storage/glassbox.rsi
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 150
       behaviors:
-        - !type:EmptyAllContainersBehaviour
-        - !type:PlaySoundBehavior
-          sound:
-            collection: WindowShatter
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            ShardGlassReinforced:
-              min: 1
-              max: 1
-            GlassBoxLaserBroken:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+      - !type:EmptyAllContainersBehaviour
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 10
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassReinforced:
+            min: 1
+            max: 2
+      - !type:ChangeConstructionNodeBehavior
+        node: brokenGlassBox
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: GlassBoxLaser
+  parent: GlassBox
+  suffix: AntiqueLaser
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+  - type: Construction
+    graph: GlassBox
+    node: glassBox
+  - type: ItemSlots
+    slots:
+      ItemCabinet:
+        ejectOnInteract: true
+        whitelist:
+          tags:
+          - WeaponAntiqueLaser
+        ejectSound: /Audio/Machines/machine_switch.ogg
 
 - type: entity
   id: GlassBoxLaserOpen
   parent: GlassBoxLaser
-  suffix: Open
+  suffix: AntiqueLaser, Open
   components:
-  - type: ItemCabinet
+  - type: Openable
     opened: true
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass
+  - type: Lock
+    locked: false
 
 - type: entity
   id: GlassBoxLaserFilled
   parent: GlassBoxLaser
-  suffix: Filled
+  suffix: AntiqueLaser, Filled
   components:
-  - type: ItemCabinet
-    cabinetSlot:
-      startingItem: WeaponAntiqueLaser
-      ejectOnInteract: true
-      whitelist:
-        tags:
-        - WeaponAntiqueLaser
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - WeaponAntiqueLaser
 
 - type: entity
+  parent: [GlassBoxLaserFilled, GlassBoxLaserOpen]
   id: GlassBoxLaserFilledOpen
-  parent: GlassBoxLaserFilled
-  suffix: Filled, Open
-  components:
-  - type: ItemCabinet
-    opened: true
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass
+  suffix: AntiqueLaser, Filled, Open
 
 - type: entity
-  id: GlassBoxLaserBroken
+  id: GlassBoxFrame
+  name: glass box frame
+  description: A glassless sturdy showcase for an expensive exhibit.
+  parent: BaseGlassBox
+  suffix: Frame
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/glassbox.rsi
+    layers:
+    - state: base
+  - type: Construction
+    graph: GlassBox
+    node: boxMissingWires
+  - type: Climbable
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 2
+            max: 5
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  id: GlassBoxBroken
   name: broken glass box
   description: A broken showcase for a stolen expensive exhibit.
-  parent: BaseStructureDynamic
+  parent: GlassBoxFrame
   suffix: Broken
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Transform
-    anchored: true
-  - type: Physics
-    bodyType: Static
   - type: Sprite
     sprite: Structures/Storage/glassbox.rsi
     layers:
-    - state: glassbox
-    - state: glass-4
-  - type: Clickable
-  - type: InteractionOutline
+    - state: base
+    - state: glass-broken
+  - type: Construction
+    graph: GlassBox
+    node: brokenGlassBox
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassReinforced:
+            min: 1
+            max: 1
+          MaterialWoodPlank1:
+            min: 2
+            max: 5
+      - !type:DoActsBehavior
+        acts: ["Destruction"]

@@ -1,17 +1,15 @@
 using Content.Server.Ninja.Events;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
-using Content.Shared.Whitelist;
-using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -23,11 +21,11 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -46,7 +44,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
         if (args.Handled || comp.BatteryUid == null || !_gloves.AbilityCheck(uid, args, out var target))
             return;
 
-        if (target == uid || !comp.Whitelist.IsValid(target, EntityManager))
+        if (target == uid || _whitelistSystem.IsWhitelistFail(comp.Whitelist, target))
             return;
 
         if (_timing.CurTime < comp.NextStun)
