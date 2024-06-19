@@ -7,13 +7,6 @@
   - type: ConfirmableAction
     popup: suicide-action-popup
 
-- type: entity
-  id: BaseGeraAction
-  abstract: true
-  components:
-  - type: ConfirmableAction
-    popup: gera-transformation-popup
-
 # actions
 
 - type: entity
@@ -168,11 +161,12 @@
     event: !type:UseDnaScramblerImplantEvent
 
 - type: entity
-  parent: BaseGeraAction
   id: ActionMorphGeras
   name: Morph into Geras
   description:  Morphs you into a Geras - a miniature version of you which allows you to move fast, at the cost of your inventory.
   components:
+  - type: ConfirmableAction
+    popup: gera-transformation-popup
   - type: InstantAction
     itemIconStyle: BigAction
     useDelay: 10 # prevent spam
