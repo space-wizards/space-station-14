@@ -104,3 +104,10 @@
   materials:
     Steel: 250
     Glass: 1000
+
+- type: latheRecipe
+  id: WetFloorSign
+  result: WetFloorSign
+  completetime: 2
+  materials:
+    Plastic: 200
