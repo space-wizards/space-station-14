@@ -138,9 +138,10 @@ public sealed class PryingSystem : EntitySystem
         {
             BreakOnDamage = true,
             BreakOnMove = true,
+            NeedHand = tool != user,
         };
 
-        if (tool != null)
+        if (tool != user && tool != null)
         {
             _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is using {ToPrettyString(tool.Value)} to pry {ToPrettyString(target)}");
         }
