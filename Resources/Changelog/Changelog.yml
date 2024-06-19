@@ -1,39 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Throwing knives now additionally do armour piercing damage.
-    type: Tweak
-  id: 6274
-  time: '2024-03-31T11:48:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26380
-- author: graevy
-  changes:
-  - message: clicking the brig timer button will now cancel its countdown
-    type: Tweak
-  id: 6275
-  time: '2024-03-31T20:44:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26557
-- author: lzk228
-  changes:
-  - message: Briefcases was added to CuraDrobe and LawDrobe.
-    type: Tweak
-  id: 6276
-  time: '2024-03-31T20:52:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26527
-- author: RiceMar
-  changes:
-  - message: Added milk cartons to the BoozeOMat vendor. Got milk?
-    type: Add
-  id: 6277
-  time: '2024-04-01T00:07:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26635
-- author: nikthechampiongr
-  changes:
-  - message: Radio jammers now actually block suit sensors.
-    type: Fix
-  id: 6278
-  time: '2024-04-01T02:13:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26632
 - author: Flareguy
   changes:
   - message: All wheeled objects now have lower friction. Portable items, like fuel
@@ -3850,3 +3815,38 @@
   id: 6773
   time: '2024-06-18T21:47:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29167
+- author: osjarw
+  changes:
+  - message: Fix air alarms not alarming air.
+    type: Fix
+  id: 6774
+  time: '2024-06-19T00:20:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29172
+- author: EmoGarbage404
+  changes:
+  - message: Slightly decreased meteor frequency.
+    type: Tweak
+  id: 6775
+  time: '2024-06-19T01:57:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29194
+- author: Flareguy
+  changes:
+  - message: Resprited most of Security's basic attire.
+    type: Tweak
+  id: 6776
+  time: '2024-06-19T02:04:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29082
+- author: Beck Thompson, UbaserB
+  changes:
+  - message: Added some happier messages for the medibot!
+    type: Add
+  id: 6777
+  time: '2024-06-19T02:28:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29147
+- author: HolySSSS
+  changes:
+  - message: Short Raffle is now much shorter.
+    type: Tweak
+  id: 6778
+  time: '2024-06-19T02:41:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28685
