@@ -19,10 +19,10 @@ public sealed class BarSignBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
         var sign = EntMan.GetComponentOrNull<BarSignComponent>(Owner)?.Current is { } current
             ? _prototype.Index(current)
             : null;
-        var allSigns =Shared.BarSign.BarSignSystem.GetAllBarSigns(_prototype)
+        var allSigns = Shared.BarSign.BarSignSystem.GetAllBarSigns(_prototype)
             .OrderBy(p => Loc.GetString(p.Name))
             .ToList();
-        _menu = new(Owner, sign, allSigns);
+        _menu = new(sign, allSigns);
 
         _menu.OnSignSelected += id =>
         {
@@ -33,14 +33,9 @@ public sealed class BarSignBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
         _menu.OpenCentered();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public void Update(ProtoId<BarSignPrototype>? sign)
     {
-        base.UpdateState(state);
-
-        if (state is not BarSignBuiState buiState)
-            return;
-
-        if (_prototype.TryIndex(buiState.Sign, out var signPrototype))
+        if (_prototype.TryIndex(sign, out var signPrototype))
             _menu?.UpdateState(signPrototype);
     }
 

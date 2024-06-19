@@ -1,3 +1,4 @@
+using Content.Client.BarSign.Ui;
 using Content.Shared.BarSign;
 using Content.Shared.Power;
 using Robust.Client.GameObjects;
@@ -8,6 +9,7 @@ namespace Content.Client.BarSign;
 public sealed class BarSignSystem : VisualizerSystem<BarSignComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
@@ -17,6 +19,9 @@ public sealed class BarSignSystem : VisualizerSystem<BarSignComponent>
 
     private void OnAfterAutoHandleState(EntityUid uid, BarSignComponent component, ref AfterAutoHandleStateEvent args)
     {
+        if (_ui.TryGetOpenUi<BarSignBoundUserInterface>(uid, BarSignUiKey.Key, out var bui))
+            bui.Update(component.Current);
+
         UpdateAppearance(uid, component);
     }
 

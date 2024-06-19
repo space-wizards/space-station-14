@@ -9,7 +9,6 @@ public sealed class BarSignSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
 
     public override void Initialize()
     {
@@ -44,8 +43,6 @@ public sealed class BarSignSystem : EntitySystem
         var name = Loc.GetString(newPrototype.Name);
         _metaData.SetEntityName(ent, name, meta);
         _metaData.SetEntityDescription(ent, Loc.GetString(newPrototype.Description), meta);
-
-        _userInterface.SetUiState(ent.Owner, BarSignUiKey.Key, new BarSignBuiState(newPrototype.ID));
 
         ent.Comp.Current = newPrototype.ID;
         Dirty(ent);
