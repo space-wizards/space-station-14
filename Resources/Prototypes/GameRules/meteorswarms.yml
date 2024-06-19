@@ -10,10 +10,10 @@
 - type: weightedRandomEntity
   id: DefaultConfig
   weights:
-    GameRuleSpaceDustMinor: 44
-    GameRuleSpaceDustMajor: 22
-    GameRuleMeteorSwarmSmall: 18
-    GameRuleMeteorSwarmMedium: 10
+    GameRuleSpaceDustMinor: 70
+    GameRuleSpaceDustMajor: 40
+    GameRuleMeteorSwarmSmall: 12
+    GameRuleMeteorSwarmMedium: 9
     GameRuleMeteorSwarmLarge: 5
     GameRuleUristSwarm: 0.05
 
