@@ -65,8 +65,8 @@
   components:
   - type: MeteorSwarm
     meteors:
-      MeteorSmall: 7
-      MeteorMedium: 3
+      MeteorSmall: 8.5
+      MeteorMedium: 1.5
 
 - type: entity
   parent: GameRuleMeteorSwarm
@@ -74,9 +74,9 @@
   components:
   - type: MeteorSwarm
     meteors:
-      MeteorSmall: 3
+      MeteorSmall: 3.5
       MeteorMedium: 6
-      MeteorLarge: 1
+      MeteorLarge: 0.5
 
 - type: entity
   parent: GameRuleMeteorSwarm
@@ -84,9 +84,9 @@
   components:
   - type: MeteorSwarm
     meteors:
-      MeteorSmall: 2
+      MeteorSmall: 3
       MeteorMedium: 4
-      MeteorLarge: 4
+      MeteorLarge: 3
 
 - type: entity
   parent: GameRuleMeteorSwarm
