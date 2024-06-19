@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Keer-Sar
-  changes:
-  - message: Cyborgs now have audio for some emotes.
-    type: Add
-  id: 6282
-  time: '2024-04-01T04:35:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26594
-- author: SlamBamActionman
-  changes:
-  - message: Added Coordinates Disks to the Salvage expeditions console, which are
-      now a requirement for expedition FTL.
-    type: Add
-  id: 6283
-  time: '2024-04-01T04:50:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23240
 - author: kseandi
   changes:
   - message: NT has declassified the documentation for door electronics, now anyone
@@ -3845,3 +3830,21 @@
   id: 6781
   time: '2024-06-19T14:49:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29208
+- author: Flareguy
+  changes:
+  - message: Emergency Toolboxes now have a different fill that contains more utility
+      items then before.
+    type: Tweak
+  - message: Added the pocket fire extinguisher. You can currently only find them
+      in the emergency toolbox.
+    type: Add
+  id: 6782
+  time: '2024-06-19T18:13:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29202
+- author: lzk228
+  changes:
+  - message: Warning cone and wet floor sign recipes added to the autolathe.
+    type: Add
+  id: 6783
+  time: '2024-06-19T18:13:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29205
