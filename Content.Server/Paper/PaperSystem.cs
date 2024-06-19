@@ -159,7 +159,8 @@ namespace Content.Server.Paper
                 if(HasComp<MimePowersComponent>(args.Actor))
                 {
                   paperComp.Content = new string(
-                      args.Text.OrderBy(c => Guid.NewGuid())
+                      args.Text
+                      .OrderBy(c => Guid.NewGuid())
                       .ToArray()
                       );
                 }
