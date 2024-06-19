@@ -45,7 +45,6 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
 
         _historyWindow = new(comp.MaxStringLength);
         _historyWindow.OnAddHistory += line => SendMessage(new CriminalRecordAddHistory(line));
-        _historyWindow.OnDeleteHistory += index => SendMessage(new CriminalRecordDeleteHistory(index));
 
         _historyWindow.Close(); // leave closed until user opens it
     }
