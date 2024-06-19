@@ -837,7 +837,7 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtMusician
   name: musician's skirt
-  description: A fancy skirt for the musically inclined.  Perfect for any lounge act!
+  description: A fancy skirt for the musically inclined. Perfect for any lounge act!
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
