@@ -78,9 +78,6 @@ public sealed partial class LatheMenu : DefaultWindow
     /// </summary>
     public void PopulateRecipes()
     {
-        if (!_entityManager.TryGetComponent<LatheComponent>(_owner, out var component))
-            return;
-
         var recipesToShow = new List<LatheRecipePrototype>();
         foreach (var recipe in Recipes)
         {
