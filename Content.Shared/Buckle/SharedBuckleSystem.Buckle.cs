@@ -485,7 +485,7 @@ public abstract partial class SharedBuckleSystem
         if (buckle.Comp.BuckledTo is not { } strapUid)
             return false;
 
-        if (HasComp<GluedComponent>(buckleComp.BuckledTo))
+        if (HasComp<GluedComponent>(buckle.Comp.BuckledTo))
             return false;
 
         if (!TryComp(strapUid, out StrapComponent? strapComp))
