@@ -70,7 +70,7 @@ public sealed class PersistantSlimeStorageSystem : EntitySystem
             if (!args.IsRevert)
                 return;
 
-            _containerSystem.EmptyContainer(storage.Container, destination: args.NewEntity.ToCoordinates());
+            _containerSystem.EmptyContainer(storage.Container, true, destination: null);
             return;
         }
 
@@ -79,7 +79,7 @@ public sealed class PersistantSlimeStorageSystem : EntitySystem
         //Empty if we still have items
         if(storage.Container.ContainedEntities.Count != 0)
         {
-            _containerSystem.EmptyContainer(storage.Container, destination: args.NewEntity.ToCoordinates());
+            _containerSystem.EmptyContainer(storage.Container, true, destination: null);
         }
     }
 }
