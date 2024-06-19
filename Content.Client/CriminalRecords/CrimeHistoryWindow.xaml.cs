@@ -13,7 +13,6 @@ namespace Content.Client.CriminalRecords;
 public sealed partial class CrimeHistoryWindow : FancyWindow
 {
     public Action<string>? OnAddHistory;
-    public Action<uint>? OnDeleteHistory;
 
     private uint _maxLength;
     private uint? _index;
@@ -56,33 +55,18 @@ public sealed partial class CrimeHistoryWindow : FancyWindow
                 OnAddHistory?.Invoke(line);
                 // adding deselects so prevent deleting yeah
                 _index = null;
-                DeleteButton.Disabled = true;
             };
 
             // prevent MoveToFront being called on a closed window and double closing
             _dialog.OnClose += () => { _dialog = null; };
         };
-        DeleteButton.OnPressed += _ =>
-        {
-            if (_index is not {} index)
-                return;
-
-            OnDeleteHistory?.Invoke(index);
-            // prevent total spam wiping
-            History.ClearSelected();
-            _index = null;
-            DeleteButton.Disabled = true;
-        };
-
         History.OnItemSelected += args =>
         {
             _index = (uint) args.ItemIndex;
-            DeleteButton.Disabled = false;
         };
         History.OnItemDeselected += args =>
         {
             _index = null;
-            DeleteButton.Disabled = true;
         };
     }
 
