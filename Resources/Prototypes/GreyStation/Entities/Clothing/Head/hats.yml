@@ -167,3 +167,19 @@
     slots:
     - Hair
     - Snout
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoshatCowboy
+  name: head of security's hat
+  description: "There's a new sheriff in station."
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Head/Hats/hoshat.rsi #GreyStation
+  - type: Clothing
+    sprite: DeltaV/Clothing/Head/Hats/hoshat.rsi #GreyStation
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon

@@ -832,6 +832,7 @@
   loadouts:
   - HeadofSecurityHead
   - HeadofSecurityBeret
+  - HeadofSecurityCowboy
 
 - type: loadoutGroup
   id: HeadofSecurityJumpsuit
