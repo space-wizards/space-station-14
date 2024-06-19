@@ -193,10 +193,10 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  name: extended-capacity survival box
+  name: tactical survival box
   parent: BoxCardboard
   id: BoxSurvivalSyndicate
-  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
+  description: It's a box with advanced internals inside. This one is labelled to contain an extended-capacity oxygen tank.
   suffix: Syndicate
   components:
   - type: StorageFill
@@ -212,9 +212,10 @@
       - state: extendedtank
 
 - type: entity
-  name: extended-capacity survival box
+  name: tactical survival box
   parent: BoxSurvivalSyndicate
   id: BoxSurvivalSyndicateNitrogen
+  description: It's a box with advanced internals inside. This one is labelled to contain an extended-capacity nitrogen tank.
   suffix: Syndicate N2
   components:
   - type: StorageFill
@@ -224,6 +225,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-  # Intentionally wrong picture on the box. NT did not care enough to change it.
-  - type: Label
-    currentLabel: reagent-name-nitrogen
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: nitrogentank

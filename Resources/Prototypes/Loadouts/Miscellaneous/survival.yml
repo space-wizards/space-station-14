@@ -46,6 +46,33 @@
     back:
     - BoxSurvivalNitrogen
 
+# Clown
+- type: loadout
+  id: EmergencyOxygenClown
+  equipment: EmergencyOxygenClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+
+- type: startingGear
+  id: EmergencyOxygenClown
+  storage:
+    back:
+    - BoxHug
+
+- type: loadout
+  id: EmergencyNitrogenClown
+  equipment: EmergencyNitrogenClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+
+- type: startingGear
+  id: EmergencyNitrogenClown
+  storage:
+    back:
+    - BoxHugNitrogen
+
 # Engineering / Extended
 - type: loadout
   id: EmergencyOxygenExtended
@@ -126,3 +153,30 @@
   storage:
     back:
     - BoxSurvivalSecurityNitrogen
+
+# Syndicate
+- type: loadout
+  id: EmergencyOxygenSyndicate
+  equipment: EmergencyOxygenSyndicate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+
+- type: startingGear
+  id: EmergencyOxygenSyndicate
+  storage:
+    back:
+    - BoxSurvivalSyndicate
+
+- type: loadout
+  id: EmergencyNitrogenSyndicate
+  equipment: EmergencyNitrogenSyndicate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+
+- type: startingGear
+  id: EmergencyNitrogenSyndicate
+  storage:
+    back:
+    - BoxSurvivalSyndicateNitrogen

@@ -436,14 +436,34 @@
   - Trinkets
   - Survival
 
-# Adminspawn Mobs (forced loadouts only)
+# These loadouts will be used without player configuration, thus they must be designed to work without manual selection
 
 - type: roleLoadout
-  id: JobERTLeader
+  id: LoadoutSurvivalStandard
   groups:
   - Survival
 
 - type: roleLoadout
-  id: JobERTChaplain
+  id: LoadoutSurvivalClown
+  groups:
+  - SurvivalClown
+
+- type: roleLoadout
+  id: LoadoutSurvivalExtended
+  groups:
+  - SurvivalExtended
+
+- type: roleLoadout
+  id: LoadoutSurvivalMedical
+  groups:
+  - SurvivalMedical
+
+- type: roleLoadout
+  id: LoadoutSurvivalSecurity
   groups:
   - SurvivalSecurity
+
+- type: roleLoadout
+  id: LoadoutSurvivalSyndicate
+  groups:
+  - SurvivalSyndicate
