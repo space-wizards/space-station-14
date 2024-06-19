@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: RiceMar
-  changes:
-  - message: Added milk cartons to the BoozeOMat vendor. Got milk?
-    type: Add
-  id: 6277
-  time: '2024-04-01T00:07:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26635
 - author: nikthechampiongr
   changes:
   - message: Radio jammers now actually block suit sensors.
@@ -3850,3 +3843,10 @@
   id: 6776
   time: '2024-06-19T02:04:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29082
+- author: Beck Thompson, UbaserB
+  changes:
+  - message: Added some happier messages for the medibot!
+    type: Add
+  id: 6777
+  time: '2024-06-19T02:28:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29147
