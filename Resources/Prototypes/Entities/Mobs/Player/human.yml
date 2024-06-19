@@ -80,7 +80,6 @@
     randomizeName: false
   - type: Loadout
     prototypes: [SpaceNinjaGear]
-    roleLoadout: [SurvivalSpaceNinja]
   - type: NpcFactionMember
     factions:
     - Syndicate

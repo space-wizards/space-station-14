@@ -467,9 +467,3 @@
   id: LoadoutSurvivalSyndicate
   groups:
   - SurvivalSyndicate
-
-- type: roleLoadout
-  id: SurvivalSpaceNinja
-  groups:
-  - LargeTank
-  - Survival

@@ -180,28 +180,3 @@
   storage:
     back:
     - BoxSurvivalSyndicateNitrogen
-
-# Other
-- type: loadout
-  id: LargeTankOxygen
-  equipment: LargeTankOxygen
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: OxygenBreather
-
-- type: startingGear
-  id: LargeTankOxygen
-  equipment:
-    suitstorage: OxygenTankFilled
-
-- type: loadout
-  id: LargeTankNitrogen
-  equipment: LargeTankNitrogen
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: NitrogenBreather
-
-- type: startingGear
-  id: LargeTankNitrogen
-  equipment:
-    suitstorage: NitrogenTankFilled

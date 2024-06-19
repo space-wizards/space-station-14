@@ -1222,13 +1222,3 @@
   loadouts:
   - EmergencyNitrogenSyndicate
   - EmergencyOxygenSyndicate
-
-- type: loadoutGroup
-  id: LargeTank
-  name: loadout-group-tank-large
-  minLimit: 2
-  maxLimit: 2
-  hidden: true
-  loadouts:
-  - LargeTankNitrogen
-  - LargeTankOxygen

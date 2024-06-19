@@ -23,12 +23,12 @@
     pocket1: SpiderCharge
     pocket2: PinpointerStation
     belt: EnergyKatana
-    # large gas tank is from SurvivalSpaceNinja loadout
+    suitstorage: OxygenTankFilled
   inhand:
     - JetpackBlackFilled
   storage:
     back: # belt holds katana so satchel has the tools for sabotaging things
-    # Survival Box is from SurvivalSpaceNinja Loadout
+    - BoxSurvival
     - Crowbar
     - Wrench
     - Screwdriver
