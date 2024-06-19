@@ -406,20 +406,20 @@ public abstract partial class SharedBuckleSystem
             buckleComp.BuckledTo is not { } strapUid)
             return false;
 
-        // When entity the user buckled to is glued
-        if (HasComp<GluedComponent>(buckleComp.BuckledTo))
-        {
-            var message = Loc.GetString(buckleUid == userUid
-                ? "buckle-component-glued"
-                : "buckle-component-other-glued",
-                ("owner", Identity.Entity(buckleUid, EntityManager)), ("strap", buckleComp.BuckledTo));
-            if (_netManager.IsServer)
-            _popup.PopupEntity(message, userUid, PopupType.Medium);
-            return false;
-        }
-
         if (!force)
         {
+            // When entity the user buckled to is glued
+            if (HasComp<GluedComponent>(buckleComp.BuckledTo))
+            {
+                var message = Loc.GetString(buckleUid == userUid
+                    ? "buckle-component-glued"
+                    : "buckle-component-other-glued",
+                    ("owner", Identity.Entity(buckleUid, EntityManager)), ("strap", buckleComp.BuckledTo));
+                if (_netManager.IsServer)
+                _popup.PopupEntity(message, userUid, PopupType.Medium);
+                return false;
+            }
+
             var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, userUid, false);
             RaiseLocalEvent(attemptEvent.BuckledEntity, ref attemptEvent);
             RaiseLocalEvent(attemptEvent.StrapEntity, ref attemptEvent);
