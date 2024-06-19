@@ -128,7 +128,7 @@ namespace Content.Shared.CCVar
         ///     Minimum time between meteor swarms in minutes.
         /// </summary>
         public static readonly CVarDef<float>
-            MeteorSwarmMinTime = CVarDef.Create("events.meteor_swarm_min_time", 10.5f, CVar.ARCHIVE | CVar.SERVERONLY);
+            MeteorSwarmMinTime = CVarDef.Create("events.meteor_swarm_min_time", 10.0f, CVar.ARCHIVE | CVar.SERVERONLY);
 
         /// <summary>
         ///     Maximum time between meteor swarms in minutes.
