@@ -142,7 +142,7 @@
       path: "/Audio/Effects/flash_bang.ogg"
 
 - type: entity
-  parent: GrenadeShrapnel
+  parent: ScatteringGrenadeBase
   id: GrenadeFoamDart
   name: foam dart grenade
   description: Releases a bothersome spray of foam darts that cause severe welching.
