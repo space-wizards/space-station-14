@@ -34,6 +34,24 @@
 		},
 		{
 			"name": "solar_tracker_broken"
+		},
+		{
+			"name": "solar_assembly_uncabled"
+		},
+		{
+			"name": "solar_assembly_tracker_circuit_uncabled"
+		},
+		{
+			"name": "solar_panel_glass_uncabled"
+		},
+		{
+			"name": "solar_panel_plasma_uncabled"
+		},
+		{
+			"name": "solar_panel_uranium_uncabled"
+		},
+		{
+			"name": "solar_tracker_uncabled"
 		}
 	]
 }
