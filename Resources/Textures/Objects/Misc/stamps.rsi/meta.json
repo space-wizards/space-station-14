@@ -1,59 +1,65 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. New stamp- icons taken from tgstation at https://github.com/tgstation/tgstation/commit/fb1012102257b7b0a08d861fd2b8ba963c416e93. stamp-warden is a darker version of stamp-hos.",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "stamp-cap"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. New stamp- icons taken from tgstation at https://github.com/tgstation/tgstation/commit/fb1012102257b7b0a08d861fd2b8ba963c416e93. stamp-warden is a darker version of stamp-hos. stamp-lawyer is a darker version of stamp-cap.",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "stamp-ce"
-    },
-    {
-      "name": "stamp-centcom"
-    },
-    {
-      "name": "stamp-chaplain"
-    },
-    {
-      "name": "stamp-clown"
-    },
-    {
-      "name": "stamp-cmo"
-    },
-    {
-      "name": "stamp-deny"
-    },
-    {
-      "name": "stamp-hop"
-    },
-    {
-      "name": "stamp-hos"
-    },
-    {
-      "name": "stamp-ok"
-    },
-    {
-      "name": "stamp-mime"
-    },
-    {
-      "name": "stamp-qm"
-    },
-    {
-      "name": "stamp-rd"
-    },
-    {
-      "name": "stamp-syndicate"
-    },
-    {
-      "name": "stamp-trader"
-    },
-    {
-      "name": "stamp-warden"
-    }
-  ]
+    "states": [
+        {
+            "name": "stamp-cap"
+        },
+        {
+            "name": "stamp-ce"
+        },
+        {
+            "name": "stamp-centcom"
+        },
+        {
+            "name": "stamp-chaplain"
+        },
+        {
+            "name": "stamp-lawyer"
+        },
+        {
+            "name": "stamp-clown"
+        },
+        {
+            "name": "stamp-cmo"
+        },
+        {
+            "name": "stamp-deny"
+        },
+        {
+            "name": "stamp-detective"
+        },
+        {
+            "name": "stamp-hop"
+        },
+        {
+            "name": "stamp-hos"
+        },
+        {
+            "name": "stamp-ok"
+        },
+        {
+            "name": "stamp-mime"
+        },
+        {
+            "name": "stamp-qm"
+        },
+        {
+            "name": "stamp-rd"
+        },
+        {
+            "name": "stamp-syndicate"
+        },
+        {
+            "name": "stamp-trader"
+        },
+        {
+            "name": "stamp-warden"
+        }
+    ]
 }

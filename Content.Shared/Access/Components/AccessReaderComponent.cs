@@ -1,5 +1,6 @@
 using Content.Shared.StationRecords;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
@@ -23,15 +24,15 @@ public sealed partial class AccessReaderComponent : Component
     /// The set of tags that will automatically deny an allowed check, if any of them are present.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField(customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
-    public HashSet<string> DenyTags = new();
+    [DataField]
+    public HashSet<ProtoId<AccessLevelPrototype>> DenyTags = new();
 
     /// <summary>
     /// List of access groups that grant access to this reader. Only a single matching group is required to gain access.
     /// A group matches if it is a subset of the set being checked against.
     /// </summary>
     [DataField("access")] [ViewVariables(VVAccess.ReadWrite)]
-    public List<HashSet<string>> AccessLists = new();
+    public List<HashSet<ProtoId<AccessLevelPrototype>>> AccessLists = new();
 
     /// <summary>
     /// A list of <see cref="StationRecordKey"/>s that grant access. Only a single matching key is required to gain
@@ -88,9 +89,9 @@ public sealed class AccessReaderComponentState : ComponentState
 {
     public bool Enabled;
 
-    public HashSet<string> DenyTags;
+    public HashSet<ProtoId<AccessLevelPrototype>> DenyTags;
 
-    public List<HashSet<string>> AccessLists;
+    public List<HashSet<ProtoId<AccessLevelPrototype>>> AccessLists;
 
     public List<(NetEntity, uint)> AccessKeys;
 
@@ -98,7 +99,7 @@ public sealed class AccessReaderComponentState : ComponentState
 
     public int AccessLogLimit;
 
-    public AccessReaderComponentState(bool enabled, HashSet<string> denyTags, List<HashSet<string>> accessLists, List<(NetEntity, uint)> accessKeys, Queue<AccessRecord> accessLog, int accessLogLimit)
+    public AccessReaderComponentState(bool enabled, HashSet<ProtoId<AccessLevelPrototype>> denyTags, List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists, List<(NetEntity, uint)> accessKeys, Queue<AccessRecord> accessLog, int accessLogLimit)
     {
         Enabled = enabled;
         DenyTags = denyTags;
@@ -106,5 +107,12 @@ public sealed class AccessReaderComponentState : ComponentState
         AccessKeys = accessKeys;
         AccessLog = accessLog;
         AccessLogLimit = accessLogLimit;
+    }
+}
+
+public sealed class AccessReaderConfigurationChangedEvent : EntityEventArgs
+{
+    public AccessReaderConfigurationChangedEvent()
+    {
     }
 }

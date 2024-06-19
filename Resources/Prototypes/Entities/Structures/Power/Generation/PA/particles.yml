@@ -19,7 +19,6 @@
       damage:
         types:
           Radiation: 25
-    - type: CanPenetrate
     - type: Physics
     - type: Fixtures
       fixtures:

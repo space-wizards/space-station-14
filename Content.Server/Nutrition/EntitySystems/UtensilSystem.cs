@@ -1,11 +1,11 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Server.Nutrition.Components;
-using Content.Shared.Nutrition.Components;
-using Content.Shared.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -25,7 +25,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(ItemSlotsSystem) });
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnAfterInteract(EntityUid uid, UtensilComponent component, AfterInteractEvent ev)
         {
-            if (ev.Target == null || !ev.CanReach)
+            if (ev.Handled || ev.Target == null || !ev.CanReach)
                 return;
 
             var result = TryUseUtensil(ev.User, ev.Target.Value, component);

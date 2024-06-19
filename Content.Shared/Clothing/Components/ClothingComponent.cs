@@ -16,8 +16,13 @@ namespace Content.Shared.Clothing.Components;
 public sealed partial class ClothingComponent : Component
 {
     [DataField("clothingVisuals")]
-    [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)] // TODO remove execute permissions.
     public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
+
+    /// <summary>
+    /// The name of the layer in the user that this piece of clothing will map to
+    /// </summary>
+    [DataField]
+    public string? MappedLayer;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("quickEquip")]
@@ -66,6 +71,9 @@ public sealed partial class ClothingComponent : Component
     [DataField("unisexMask")]
     public ClothingMask UnisexMask = ClothingMask.UniformFull;
 
+    /// <summary>
+    /// Name of the inventory slot the clothing is in.
+    /// </summary>
     public string? InSlot;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -118,4 +126,3 @@ public sealed partial class ClothingUnequipDoAfterEvent : DoAfterEvent
 
     public override DoAfterEvent Clone() => this;
 }
-

@@ -31,7 +31,6 @@
       price: 40
     - type: Tag
       tags:
-        - DroneUsable
         - WallmountSubstationElectronics
 
 # Wallmount Generator
@@ -51,7 +50,6 @@
       Glass: 90
   - type: Tag
     tags:
-      - DroneUsable
       - WallmountGeneratorElectronics
 
 # APU
@@ -68,7 +66,6 @@
       price: 40
     - type: Tag
       tags:
-        - DroneUsable
         - WallmountGeneratorAPUElectronics
 
 # Solar Tracker Electronics
@@ -85,5 +82,4 @@
       price: 85
     - type: Tag
       tags:
-        - DroneUsable
         - SolarTrackerElectronics

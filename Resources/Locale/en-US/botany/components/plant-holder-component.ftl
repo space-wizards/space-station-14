@@ -32,4 +32,4 @@ plant-holder-component-light-improper-warning = The [color=yellow]improper light
 plant-holder-component-heat-improper-warning = The [color=orange]improper temperature level alert[/color] is blinking.
 plant-holder-component-pressure-improper-warning = The [color=lightblue]improper environment pressure alert[/color] is blinking.
 plant-holder-component-gas-missing-warning = The [color=cyan]improper gas environment alert[/color] is blinking.
-plant-holder-component-early-sample = It is not ready to sample, but you cut a bit of the plant anyway.
+plant-holder-component-early-sample-message = The plant hasn't grown enough to take a sample yet.

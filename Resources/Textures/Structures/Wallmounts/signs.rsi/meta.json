@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c, except numerical signs which were created by discord: brainfood#7460, states: 'survival' and 'ntmining' from https://github.com/tgstation/tgstation/commit/f743754ec3ef446c8172388431effa73aeddb7ff#diff-b429dd7fccbca60d740d4887c1077a178abf1efffe57e7ae2a0b607c8a9e2202, 'janitor' edited by forgotmyotheraccount on github",
+  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c, except numerical signs which were created by discord: brainfood#7460, states: 'survival' and 'ntmining' from https://github.com/tgstation/tgstation/commit/f743754ec3ef446c8172388431effa73aeddb7ff#diff-b429dd7fccbca60d740d4887c1077a178abf1efffe57e7ae2a0b607c8a9e2202, 'janitor' edited by forgotmyotheraccount on github, 'arcade', 'barbershop', 'direction_exam', 'direction_icu', 'laundromat', 'news', 'reception', and 'salvage' made by rosieposieeee (github)",
     "states": [
         {
             "name": "ai",
@@ -27,7 +27,23 @@
             "name": "anomaly2"
         },
         {
+            "name": "arcade",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
             "name": "armory",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "barbershop",
             "delays": [
                 [
                     1
@@ -284,6 +300,42 @@
         },
         {
             "name": "direction_bar",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "direction_exam",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "direction_icu",
             "directions": 4,
             "delays": [
                 [
@@ -831,6 +883,14 @@
             ]
         },
         {
+            "name": "laundromat",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
             "name": "law",
             "delays": [
                 [
@@ -888,6 +948,14 @@
         },
         {
             "name": "morgue",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "news",
             "delays": [
                 [
                     1
@@ -967,6 +1035,14 @@
             ]
         },
         {
+            "name": "reception",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
             "name": "rnd",
             "delays": [
                 [
@@ -976,6 +1052,14 @@
         },
         {
             "name": "robo",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "salvage",
             "delays": [
                 [
                     1

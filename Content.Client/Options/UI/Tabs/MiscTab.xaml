@@ -4,57 +4,68 @@
                   xmlns:xNamespace="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:s="clr-namespace:Content.Client.Stylesheets">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
-            <Label Text="{Loc 'ui-options-general-ui-style'}"
-                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
-                   StyleClasses="LabelKeyText"/>
-            <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'ui-options-hud-theme'}" />
-                <Control MinSize="4 0" />
-                <OptionButton Name="HudThemeOption" />
+        <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+            <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
+                <Label Text="{Loc 'ui-options-general-ui-style'}"
+                       FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                       StyleClasses="LabelKeyText"/>
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'ui-options-hud-theme'}" />
+                    <Control MinSize="4 0" />
+                    <OptionButton Name="HudThemeOption" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'ui-options-hud-layout'}" />
+                    <Control MinSize="4 0" />
+                    <OptionButton Name="HudLayoutOption" />
+                </BoxContainer>
+                <Label Text="{Loc 'ui-options-general-accessibility'}"
+                       FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                       StyleClasses="LabelKeyText"/>
+                <CheckBox Name="ReducedMotionCheckBox" Text="{Loc 'ui-options-reduced-motion'}" />
+                <CheckBox Name="EnableColorNameCheckBox" Text="{Loc 'ui-options-enable-color-name'}" />
+                <CheckBox Name="ColorblindFriendlyCheckBox" Text="{Loc 'ui-options-colorblind-friendly'}" />
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'ui-options-chat-window-opacity'}" Margin="8 0" />
+                    <Slider Name="ChatWindowOpacitySlider"
+                            MinValue="0"
+                            MaxValue="1"
+                            MinWidth="200" />
+                    <Label Name="ChatWindowOpacityLabel" Margin="8 0" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'ui-options-screen-shake-intensity'}" Margin="8 0" />
+                    <Slider Name="ScreenShakeIntensitySlider"
+                            MinValue="0"
+                            MaxValue="100"
+                            Rounded="True"
+                            MinWidth="200" />
+                    <Label Name="ScreenShakeIntensityLabel" Margin="8 0" />
+                </BoxContainer>
+                <Label Text="{Loc 'ui-options-general-discord'}"
+                       FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                       StyleClasses="LabelKeyText"/>
+                <CheckBox Name="DiscordRich" Text="{Loc 'ui-options-discordrich'}" />
+                <Label Text="{Loc 'ui-options-general-speech'}"
+                       FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                       StyleClasses="LabelKeyText"/>
+                <CheckBox Name="ShowOocPatronColor" Text="{Loc 'ui-options-show-ooc-patron-color'}" />
+                <CheckBox Name="ShowLoocAboveHeadCheckBox" Text="{Loc 'ui-options-show-looc-on-head'}" />
+                <CheckBox Name="FancySpeechBubblesCheckBox" Text="{Loc 'ui-options-fancy-speech'}" />
+                <CheckBox Name="FancyNameBackgroundsCheckBox" Text="{Loc 'ui-options-fancy-name-background'}" />
+                <Label Text="{Loc 'ui-options-general-cursor'}"
+                       FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                       StyleClasses="LabelKeyText"/>
+                <CheckBox Name="ShowHeldItemCheckBox" Text="{Loc 'ui-options-show-held-item'}" />
+                <CheckBox Name="ShowCombatModeIndicatorsCheckBox" Text="{Loc 'ui-options-show-combat-mode-indicators'}" />
+                <Label Text="{Loc 'ui-options-general-storage'}"
+                       FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                       StyleClasses="LabelKeyText"/>
+                <CheckBox Name="OpaqueStorageWindowCheckBox" Text="{Loc 'ui-options-opaque-storage-window'}" />
+                <CheckBox Name="StaticStorageUI" Text="{Loc 'ui-options-static-storage-ui'}" />
+                <!-- <CheckBox Name="ToggleWalk" Text="{Loc 'ui-options-hotkey-toggle-walk'}" /> -->
             </BoxContainer>
-            <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'ui-options-hud-layout'}" />
-                <Control MinSize="4 0" />
-                <OptionButton Name="HudLayoutOption" />
-            </BoxContainer>
-            <Label Text="{Loc 'ui-options-general-accessibility'}"
-                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
-                   StyleClasses="LabelKeyText"/>
-            <CheckBox Name="ReducedMotionCheckBox" Text="{Loc 'ui-options-reduced-motion'}" />
-            <CheckBox Name="EnableColorNameCheckBox" Text="{Loc 'ui-options-enable-color-name'}" />
-            <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'ui-options-screen-shake-intensity'}" Margin="8 0" />
-                <Slider Name="ScreenShakeIntensitySlider"
-                        MinValue="0"
-                        MaxValue="100"
-                        Rounded="True"
-                        MinWidth="200" />
-                <Label Name="ScreenShakeIntensityLabel" Margin="8 0" />
-            </BoxContainer>
-            <Label Text="{Loc 'ui-options-general-discord'}"
-                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
-                   StyleClasses="LabelKeyText"/>
-            <CheckBox Name="DiscordRich" Text="{Loc 'ui-options-discordrich'}" />
-            <Label Text="{Loc 'ui-options-general-speech'}"
-                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
-                   StyleClasses="LabelKeyText"/>
-            <CheckBox Name="ShowLoocAboveHeadCheckBox" Text="{Loc 'ui-options-show-looc-on-head'}" />
-            <CheckBox Name="FancySpeechBubblesCheckBox" Text="{Loc 'ui-options-fancy-speech'}" />
-            <CheckBox Name="FancyNameBackgroundsCheckBox" Text="{Loc 'ui-options-fancy-name-background'}" />
-            <Label Text="{Loc 'ui-options-general-cursor'}"
-                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
-                   StyleClasses="LabelKeyText"/>
-            <CheckBox Name="ShowHeldItemCheckBox" Text="{Loc 'ui-options-show-held-item'}" />
-            <CheckBox Name="ShowCombatModeIndicatorsCheckBox" Text="{Loc 'ui-options-show-combat-mode-indicators'}" />
-            <Label Text="{Loc 'ui-options-general-storage'}"
-                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
-                   StyleClasses="LabelKeyText"/>
-            <CheckBox Name="OpaqueStorageWindowCheckBox" Text="{Loc 'ui-options-opaque-storage-window'}" />
-            <CheckBox Name="StaticStorageUI" Text="{Loc 'ui-options-static-storage-ui'}" />
-            <!-- <CheckBox Name="ToggleWalk" Text="{Loc 'ui-options-hotkey-toggle-walk'}" /> -->
-
-        </BoxContainer>
+        </ScrollContainer>
         <controls:StripeBack HasBottomEdge="False" HasMargins="False">
             <Button Name="ApplyButton"
                     Text="{Loc 'ui-options-apply'}"
@@ -63,6 +74,3 @@
         </controls:StripeBack>
     </BoxContainer>
 </tabs:MiscTab>
-
-
-

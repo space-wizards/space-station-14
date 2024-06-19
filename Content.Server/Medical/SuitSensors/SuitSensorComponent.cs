@@ -7,7 +7,7 @@ namespace Content.Server.Medical.SuitSensors;
 ///     Tracking device, embedded in almost all uniforms and jumpsuits.
 ///     If enabled, will report to crew monitoring console owners position and status.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 [Access(typeof(SuitSensorSystem))]
 public sealed partial class SuitSensorComponent : Component
 {
@@ -57,6 +57,7 @@ public sealed partial class SuitSensorComponent : Component
     ///     Next time when sensor updated owners status
     /// </summary>
     [DataField("nextUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextUpdate = TimeSpan.Zero;
 
     /// <summary>

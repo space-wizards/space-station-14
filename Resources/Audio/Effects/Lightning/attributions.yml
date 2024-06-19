@@ -2,3 +2,13 @@
   license: CC-BY-NC-SA-3.0
   copyright: Citadel Station 13
   source: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/35a1723e98a60f375df590ca572cc90f1bb80bd5
+
+- files: ["strobeepsilon.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by dj-34 (https://github.com/dj-34). Modified by Ko4erga"
+  source: "https://github.com/ss220-space/Paradise/blob/05043bcfb35c2e7bcf1efbdbfbf976e1a2504bc2/sound/effects/epsilon.ogg" 
+
+- files: ["strobe.ogg"]
+  source: "https://freesound.org/people/blukotek/sounds/431651/"
+  license: "CC0-1.0"
+  copyright: "Piotr Zaczek (blukotek) on freesound.org. Modified by Ko4erga"

@@ -46,17 +46,14 @@ namespace Content.IntegrationTests.Tests.Fluids
             var server = pair.Server;
 
             var testMap = await pair.CreateTestMap();
+            var grid = testMap.Grid.Comp;
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<PuddleSystem>();
 
-            MapGridComponent grid = null;
-
             // Remove all tiles
             await server.WaitPost(() =>
             {
-                grid = testMap.MapGrid;
-
                 foreach (var tile in grid.GetAllTiles())
                 {
                     grid.SetTile(tile.GridIndices, Tile.Empty);
@@ -67,7 +64,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             await server.WaitAssertion(() =>
             {
-                var coordinates = grid.ToCoordinates();
+                var coordinates = grid.Owner.ToCoordinates();
                 var solution = new Solution("Water", FixedPoint2.New(20));
 
                 Assert.That(spillSystem.TrySpillAt(coordinates, solution, out _), Is.False);

@@ -21,15 +21,18 @@ using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.NPC.Components;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Content.Shared.Prying.Components;
@@ -57,7 +60,6 @@ namespace Content.Server.Zombies
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly MindSystem _mind = default!;
         [Dependency] private readonly SharedRoleSystem _roles = default!;
-        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         /// <summary>
@@ -78,7 +80,7 @@ namespace Content.Server.Zombies
         /// <param name="target">the entity being zombified</param>
         /// <param name="mobState"></param>
         /// <remarks>
-        ///     ALRIGHT BIG BOY. YOU'VE COME TO THE LAYER OF THE BEAST. THIS IS YOUR WARNING.
+        ///     ALRIGHT BIG BOYS, GIRLS AND ANYONE ELSE. YOU'VE COME TO THE LAYER OF THE BEAST. THIS IS YOUR WARNING.
         ///     This function is the god function for zombie stuff, and it is cursed. I have
         ///     attempted to label everything thouroughly for your sanity. I have attempted to
         ///     rewrite this, but this is how it shall lie eternal. Turn back now.
@@ -105,6 +107,7 @@ namespace Content.Server.Zombies
             RemComp<ReproductiveComponent>(target);
             RemComp<ReproductivePartnerComponent>(target);
             RemComp<LegsParalyzedComponent>(target);
+            RemComp<ComplexInteractionComponent>(target);
 
             //funny voice
             var accentType = "zombie";
@@ -125,7 +128,10 @@ namespace Content.Server.Zombies
             var melee = EnsureComp<MeleeWeaponComponent>(target);
             melee.Animation = zombiecomp.AttackAnimation;
             melee.WideAnimation = zombiecomp.AttackAnimation;
+            melee.AltDisarm = false;
             melee.Range = 1.2f;
+            melee.Angle = 0.0f;
+            melee.HitSound = zombiecomp.BiteSound;
 
             if (mobState.CurrentState == MobState.Alive)
             {
@@ -181,7 +187,7 @@ namespace Content.Server.Zombies
                 Dirty(target, pryComp);
             }
 
-            Dirty(melee);
+            Dirty(target, melee);
 
             //The zombie gets the assigned damage weaknesses and strengths
             _damageable.SetDamageModifierSetId(target, "Zombie");
@@ -212,19 +218,18 @@ namespace Content.Server.Zombies
                 _damageable.SetAllDamage(target, damageablecomp, 0);
             _mobState.ChangeMobState(target, MobState.Alive);
 
-            var factionComp = EnsureComp<NpcFactionMemberComponent>(target);
-            foreach (var id in new List<string>(factionComp.Factions))
-            {
-                _faction.RemoveFaction(target, id);
-            }
+            _faction.ClearFactions(target, dirty: false);
             _faction.AddFaction(target, "Zombie");
 
             //gives it the funny "Zombie ___" name.
-            var meta = MetaData(target);
-            zombiecomp.BeforeZombifiedEntityName = meta.EntityName;
-            _metaData.SetEntityName(target, Loc.GetString("zombie-name-prefix", ("target", meta.EntityName)), meta);
+            _nameMod.RefreshNameModifiers(target);
 
             _identity.QueueIdentityUpdate(target);
+
+            var htn = EnsureComp<HTNComponent>(target);
+            htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
+            htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
+            _npc.SleepNPC(target, htn);
 
             //He's gotta have a mind
             var hasMind = _mind.TryGetMind(target, out var mindId, out _);
@@ -241,9 +246,6 @@ namespace Content.Server.Zombies
             }
             else
             {
-                var htn = EnsureComp<HTNComponent>(target);
-                htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
-                htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
                 _npc.WakeNPC(target, htn);
             }
 
@@ -263,7 +265,9 @@ namespace Content.Server.Zombies
                 RemComp(target, handsComp);
             }
 
-            RemComp<SharedPullerComponent>(target);
+            // Sloth: What the fuck?
+            // How long until compregistry lmao.
+            RemComp<PullerComponent>(target);
 
             // No longer waiting to become a zombie:
             // Requires deferral because this is (probably) the event which called ZombifyEntity in the first place.

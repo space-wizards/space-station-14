@@ -8,6 +8,9 @@
   - type: Sprite
   - type: StaticPrice
     price: 20
+  - type: Tag
+    tags:
+    - SurgeryTool
 
 # Cautery
 
@@ -75,6 +78,8 @@
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     storedRotation: 90
   - type: MeleeWeapon
+    wideAnimationRotation: 90
+    swingLeft: true
     attackRate: 1.5
     damage:
       types:
@@ -173,7 +178,7 @@
   - type: Tool
     qualities:
       - Sawing
-    speed: 1.0
+    speedModifier: 1.0
 # No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
 
 - type: entity
@@ -195,7 +200,7 @@
   - type: Tool
     qualities:
       - Sawing
-    speed: 0.5
+    speedModifier: 0.5
 
 - type: entity
   name: circular saw
@@ -217,7 +222,7 @@
   - type: Tool
     qualities:
       - Sawing
-    speed: 1.5
+    speedModifier: 1.5
 
 - type: entity
   name: advanced circular saw
@@ -240,4 +245,4 @@
   - type: Tool
     qualities:
       - Sawing
-    speed: 2.0
+    speedModifier: 2.0

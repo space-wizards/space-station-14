@@ -110,10 +110,26 @@
       Blunt: 15
       Piercing: 6
       Structural: 40
-  tileBreakChance: [ 0.75, 0.95, 1 ]
-  tileBreakIntensity: [ 1, 10, 15 ]
-  tileBreakRerollReduction: 30
+  tileBreakChance: [ 0, 0.5, 1 ]
+  tileBreakIntensity: [ 0, 10, 30 ]
+  tileBreakRerollReduction: 10
   intensityPerState: 20
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 6
+
+- type: explosion
+  id: FireBomb
+  damagePerIntensity:
+    types:
+      Heat: 1
+      Blunt: 2
+      Piercing: 3
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 6
+  fireStacks: 2
+
+# STOP
+# BEFORE YOU ADD MORE EXPLOSION TYPES CONSIDER IF AN EXISTING ONE IS SUITABLE
+# ADDING NEW ONES IS PROHIBITIVELY EXPENSIVE

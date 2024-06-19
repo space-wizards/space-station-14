@@ -44,7 +44,6 @@
   - type: Tag
     tags:
     - DoorBumpOpener
-    - ShoesRequiredStepTriggerImmune
   - type: MobState
     allowedStates:
       - Alive
@@ -73,6 +72,8 @@
   - type: InputMover
   - type: MobMover
   - type: ZombieImmune
+  - type: ClothingRequiredStepTriggerImmune
+    slots: All
 
 - type: entity
   abstract: true
@@ -99,6 +100,8 @@
   - type: NpcFactionMember
     factions:
       - SimpleHostile
+  - type: Damageable
+    damageContainer: StructuralInorganic
 
 - type: entity
   parent: MobOreCrab
@@ -226,6 +229,11 @@
   parent: [ MobAdultSlimes, MobCombat ]
   description: It consists of a liquid, and it wants to dissolve you in itself.
   components:
+  - type: GhostRole
+    prob: 0
+    description: ghost-role-information-angry-slimes-description
+    raffle:
+      settings: short
   - type: NpcFactionMember
     factions:
     - SimpleHostile

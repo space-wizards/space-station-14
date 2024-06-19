@@ -11,6 +11,12 @@ namespace Content.Shared.Kitchen
     }
 
     [Serializable, NetSerializable]
+    public sealed class ReagentGrinderToggleAutoModeMessage : BoundUserInterfaceMessage
+    {
+        public ReagentGrinderToggleAutoModeMessage() { }
+    }
+
+    [Serializable, NetSerializable]
     public sealed class ReagentGrinderStartMessage : BoundUserInterfaceMessage
     {
         public readonly GrinderProgram Program;
@@ -75,6 +81,13 @@ namespace Content.Shared.Kitchen
         Key
     }
 
+    public enum GrinderAutoMode : byte
+    {
+        Off,
+        Grind,
+        Juice
+    }
+
     [NetSerializable, Serializable]
     public sealed class ReagentGrinderInterfaceState : BoundUserInterfaceState
     {
@@ -85,13 +98,16 @@ namespace Content.Shared.Kitchen
         public bool CanGrind;
         public NetEntity[] ChamberContents;
         public ReagentQuantity[]? ReagentQuantities;
-        public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, bool powered, bool canJuice, bool canGrind, NetEntity[] chamberContents, ReagentQuantity[]? heldBeakerContents)
+        public GrinderAutoMode AutoMode;
+
+        public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, bool powered, bool canJuice, bool canGrind, GrinderAutoMode autoMode, NetEntity[] chamberContents, ReagentQuantity[]? heldBeakerContents)
         {
             IsBusy = isBusy;
             HasBeakerIn = hasBeaker;
             Powered = powered;
             CanJuice = canJuice;
             CanGrind = canGrind;
+            AutoMode = autoMode;
             ChamberContents = chamberContents;
             ReagentQuantities = heldBeakerContents;
         }

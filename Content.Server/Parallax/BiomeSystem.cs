@@ -29,6 +29,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Utility;
+using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumerator;
 
 namespace Content.Server.Parallax;
 
@@ -38,6 +39,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IParallelManager _parallel = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
@@ -118,6 +120,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             SetSeed(uid, component, _random.Next());
         }
 
+        if (_proto.TryIndex(component.Template, out var biome))
+            SetTemplate(uid, component, biome);
+
         var xform = Transform(uid);
         var mapId = xform.MapID;
 
@@ -148,6 +153,15 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 }
             }
         }
+    }
+
+    public void SetEnabled(Entity<BiomeComponent?> ent, bool enabled = true)
+    {
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.Enabled == enabled)
+            return;
+
+        ent.Comp.Enabled = enabled;
+        Dirty(ent, ent.Comp);
     }
 
     public void SetSeed(EntityUid uid, BiomeComponent component, int seed, bool dirty = true)
@@ -972,7 +986,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     /// <summary>
     /// Creates a simple planet setup for a map.
     /// </summary>
-    public void EnsurePlanet(EntityUid mapUid, BiomeTemplatePrototype biomeTemplate, int? seed = null, MetaDataComponent? metadata = null)
+    public void EnsurePlanet(EntityUid mapUid, BiomeTemplatePrototype biomeTemplate, int? seed = null, MetaDataComponent? metadata = null, Color? mapLight = null)
     {
         if (!Resolve(mapUid, ref metadata))
             return;
@@ -997,23 +1011,16 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         // Lava: #A34931
 
         var light = EnsureComp<MapLightComponent>(mapUid);
-        light.AmbientLightColor = Color.FromHex("#D8B059");
+        light.AmbientLightColor = mapLight ?? Color.FromHex("#D8B059");
         Dirty(mapUid, light, metadata);
-
-        // Atmos
-        var atmos = EnsureComp<MapAtmosphereComponent>(mapUid);
 
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
         moles[(int) Gas.Nitrogen] = 82.10312f;
 
-        var mixture = new GasMixture(2500)
-        {
-            Temperature = 293.15f,
-            Moles = moles,
-        };
+        var mixture = new GasMixture(moles, Atmospherics.T20C);
 
-        _atmos.SetMapAtmosphere(mapUid, false, mixture, atmos);
+        _atmos.SetMapAtmosphere(mapUid, false, mixture);
     }
 
     /// <summary>

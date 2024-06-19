@@ -211,8 +211,8 @@
   - type: Strippable
   - type: UserInterface
     interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -274,8 +274,8 @@
   - type: Strippable
   - type: UserInterface
     interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -373,8 +373,8 @@
   - type: Strippable
   - type: UserInterface
     interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -529,7 +529,7 @@
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
-      path: /Audio/Animals/fox_squeak.ogg
+      collection: Fox
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -593,8 +593,7 @@
     - CannotSuicide
     - Hamster
     - VimPilot
-  - type: StealTarget
-    stealGroup: AnimalHamlet
+    - ChefPilot
 
 - type: entity
   name: Shiva
@@ -747,6 +746,9 @@
       types:
         Blunt: 1
         Caustic: 1
+  - type: MultiHandedItem
+  - type: Item
+    size: Huge
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-slime
   - type: MobPrice
@@ -758,8 +760,6 @@
     attributes:
       proper: true
       gender: female
-  - type: StealTarget
-    stealGroup: AnimalSmile
 
 - type: entity
   name: Pun Pun
@@ -782,7 +782,6 @@
       amount: 3
     - id: DrinkTequilaBottleFull
       amount: 1
-  - type: Flashable
   - type: Tag
     tags:
     - CannotSuicide
@@ -794,8 +793,6 @@
     attributes:
       proper: true
       gender: male
-  - type: StealTarget
-    stealGroup: AnimalPunPun
 
 - type: entity
   name: Tropico
@@ -811,7 +808,6 @@
 #    name: ghost-role-information-tropico-name
 #    description: ghost-role-information-tropico-description
 #  - type: GhostTakeoverAvailable
-#  - type: Flashable
   - type: Tag
     tags:
     - VimPilot

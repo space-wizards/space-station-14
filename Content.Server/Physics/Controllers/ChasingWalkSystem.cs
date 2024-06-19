@@ -27,19 +27,12 @@ public sealed class ChasingWalkSystem : VirtualController
         base.Initialize();
 
         SubscribeLocalEvent<ChasingWalkComponent, MapInitEvent>(OnChasingMapInit);
-        SubscribeLocalEvent<ChasingWalkComponent, EntityUnpausedEvent>(OnChasingUnpaused);
     }
 
     private void OnChasingMapInit(EntityUid uid, ChasingWalkComponent component, MapInitEvent args)
     {
         component.NextImpulseTime = _gameTiming.CurTime;
         component.NextChangeVectorTime = _gameTiming.CurTime;
-    }
-
-    private void OnChasingUnpaused(EntityUid uid, ChasingWalkComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextImpulseTime += args.PausedTime;
-        component.NextChangeVectorTime += args.PausedTime;
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -104,6 +97,6 @@ public sealed class ChasingWalkSystem : VirtualController
         var speed = delta.Length() > 0 ? delta.Normalized() * component.Speed : Vector2.Zero;
 
         _physics.SetLinearVelocity(uid, speed);
-        _physics.SetBodyStatus(physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
+        _physics.SetBodyStatus(uid, physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
     }
 }

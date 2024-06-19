@@ -125,15 +125,37 @@ namespace Content.Server.Chat.Managers
                 _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
         }
 
-        public void SendAdminAnnouncement(string message)
+        public void SendAdminAnnouncement(string message, AdminFlags? flagBlacklist, AdminFlags? flagWhitelist)
         {
-            var clients = _adminManager.ActiveAdmins.Select(p => p.Channel);
+            var clients = _adminManager.ActiveAdmins.Where(p =>
+            {
+                var adminData = _adminManager.GetAdminData(p);
+
+                DebugTools.AssertNotNull(adminData);
+
+                if (adminData == null)
+                    return false;
+
+                if (flagBlacklist != null && adminData.HasFlag(flagBlacklist.Value))
+                    return false;
+
+                return flagWhitelist == null || adminData.HasFlag(flagWhitelist.Value);
+
+            }).Select(p => p.Channel);
 
             var wrappedMessage = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")), ("message", FormattedMessage.EscapeText(message)));
 
             ChatMessageToMany(ChatChannel.Admin, message, wrappedMessage, default, false, true, clients);
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin announcement: {message}");
+        }
+
+        public void SendAdminAnnouncementMessage(ICommonSession player, string message, bool suppressLog = true)
+        {
+            var wrappedMessage = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
+                ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
+                ("message", FormattedMessage.EscapeText(message)));
+            ChatMessageToOne(ChatChannel.Admin, message, wrappedMessage, default, false, player.Channel);
         }
 
         public void SendAdminAlert(string message)
@@ -230,8 +252,7 @@ namespace Content.Server.Chat.Managers
                 var prefs = _preferencesManager.GetPreferences(player.UserId);
                 colorOverride = prefs.AdminOOCColor;
             }
-            if (player.Channel.UserData.PatronTier is { } patron &&
-                     PatronOocColors.TryGetValue(patron, out var patronColor))
+            if (  _netConfigManager.GetClientCVar(player.Channel, CCVars.ShowOocPatronColor) && player.Channel.UserData.PatronTier is { } patron && PatronOocColors.TryGetValue(patron, out var patronColor))
             {
                 wrappedMessage = Loc.GetString("chat-manager-send-ooc-patron-wrap-message", ("patronColor", patronColor),("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
             }

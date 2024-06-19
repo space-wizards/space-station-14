@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "tgstation at ff1c30ac123dd28c6b5fee11e7f03654f5daa731, plasma windows from paradise at 44c12c6d9d0e42a9d3a582dff7e9a8d72b6ea68a",
+  "copyright": "tgstation at ff1c30ac123dd28c6b5fee11e7f03654f5daa731, plasma windows from paradise at 44c12c6d9d0e42a9d3a582dff7e9a8d72b6ea68a, uranium windows made via edit by SphiraI(github), clockwork windows from https://github.com/tgstation/tgstation/blob/21b42d49ecf2b87f665b5f122368f6a247676721/icons/obj/smooth_structures/structure_variations.dmi",
   "size": {
     "x": 32,
     "y": 32
@@ -24,12 +24,24 @@
       "directions": 4
     },
 	{
-	  "name": "plasma_window",
+	  "name": "clock_window",
 	  "directions": 4
 	},
 	{
-	  "name": "plasma_reinforced_window",
+	  "name": "plasma_window",
 	  "directions": 4
-	}
+	},
+    {
+        "name": "plasma_reinforced_window",
+        "directions": 4
+    },
+    {
+        "name": "uranium_window",
+        "directions": 4
+    },
+    {
+        "name": "uranium_reinforced_window",
+        "directions": 4
+    }
   ]
 }

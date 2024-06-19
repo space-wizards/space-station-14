@@ -36,7 +36,7 @@ public sealed class RCDAmmoSystem : EntitySystem
         if (args.Handled || !args.CanReach || !_timing.IsFirstTimePredicted)
             return;
 
-        if (args.Target is not {Valid: true} target ||
+        if (args.Target is not { Valid: true } target ||
             !HasComp<RCDComponent>(target) ||
             !TryComp<LimitedChargesComponent>(target, out var charges))
             return;
@@ -53,7 +53,7 @@ public sealed class RCDAmmoSystem : EntitySystem
         _popup.PopupClient(Loc.GetString("rcd-ammo-component-after-interact-refilled"), target, user);
         _charges.AddCharges(target, count, charges);
         comp.Charges -= count;
-        Dirty(comp);
+        Dirty(uid, comp);
 
         // prevent having useless ammo with 0 charges
         if (comp.Charges <= 0)

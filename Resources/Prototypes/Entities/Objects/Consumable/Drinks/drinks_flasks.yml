@@ -7,6 +7,8 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 300
+  - type: FitsInDispenser
+    solution: drink
 
 - type: entity
   parent: FlaskBase

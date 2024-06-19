@@ -5,6 +5,7 @@
     SciFlash: 4
     ProximitySensor: 3
     ClothingEyesHudDiagnostic: 2
+    ClothingEyesEyepatchHudDiag: 2
     RemoteSignaller: 3
     Igniter: 3 # its more ordnance but yeah
     HandheldHealthAnalyzer: 3

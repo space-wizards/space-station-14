@@ -3,6 +3,7 @@ using Content.Shared.Chat;
 using Content.Shared.NukeOps;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
+using Robust.Shared.Timing;
 
 namespace Content.Client.NukeOps;
 
@@ -10,6 +11,8 @@ namespace Content.Client.NukeOps;
 public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
     [ViewVariables]
     private WarDeclaratorWindow? _window;
@@ -20,7 +23,7 @@ public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = new WarDeclaratorWindow();
+        _window = new WarDeclaratorWindow(_gameTiming, _localizationManager);
         if (State != null)
             UpdateState(State);
 
@@ -42,7 +45,8 @@ public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        if (disposing) _window?.Dispose();
+        if (disposing)
+            _window?.Dispose();
     }
 
     private void OnWarDeclaratorActivated(string message)

@@ -1,6 +1,4 @@
-using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 
@@ -9,11 +7,6 @@ namespace Content.Server.Fluids.EntitySystems;
 public sealed partial class PuddleSystem
 {
     private static readonly TimeSpan EvaporationCooldown = TimeSpan.FromSeconds(1);
-
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Water = "Water";
-
-    public static string[] EvaporationReagents = new[] { Water };
 
     private void OnEvaporationMapInit(Entity<EvaporationComponent> entity, ref MapInitEvent args)
     {
@@ -63,10 +56,5 @@ public sealed partial class PuddleSystem
                 QueueDel(uid);
             }
         }
-    }
-
-    public bool CanFullyEvaporate(Solution solution)
-    {
-        return solution.GetTotalPrototypeQuantity(EvaporationReagents) == solution.Volume;
     }
 }

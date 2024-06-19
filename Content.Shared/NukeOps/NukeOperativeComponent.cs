@@ -13,14 +13,9 @@ namespace Content.Shared.NukeOps;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NukeOperativeComponent : Component
 {
-    /// <summary>
-    ///     Path to antagonist alert sound.
-    /// </summary>
-    [DataField("greetSoundNotification")]
-    public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/nukeops_start.ogg");
 
     /// <summary>
-    ///     
+    ///
     /// </summary>
     [DataField("syndStatusIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
     public string SyndStatusIcon = "SyndicateFaction";
