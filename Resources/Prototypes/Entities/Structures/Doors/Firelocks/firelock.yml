@@ -69,7 +69,7 @@
       openTimeTwo: 0.6
       state: Open
       bumpOpen: false
-      clickOpen: true
+      clickOpen: false
       crushDamage:
         types:
           Blunt: 15
