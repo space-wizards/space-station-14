@@ -191,9 +191,12 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (container.Count >= loader.DiskSpace)
             return false;
 
-        foreach (var program in GetInstalled(loaderUid))
-            if (Prototype(program)?.ID == prototype)
-                return false;
+        if (TryComp(loader.CartridgeSlot.Item, out CartridgeComponent? loadedCartridge))
+            foreach (var program in GetInstalled(loaderUid))
+            {
+                if (TryComp(program, out CartridgeComponent? installedCartridge) && installedCartridge.ProgramName == loadedCartridge.ProgramName)
+                    return false;
+            }
 
         var ev = new ProgramInstallationAttempt(loaderUid, prototype);
         RaiseLocalEvent(ref ev);
