@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Guidebook;
 using Content.Client.Humanoid;
 using Content.Client.Inventory;
 using Content.Client.Lobby.UI;
@@ -22,7 +23,6 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby;
@@ -42,6 +42,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     [UISystemDependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [UISystemDependency] private readonly ClientInventorySystem _inventory = default!;
     [UISystemDependency] private readonly StationSpawningSystem _spawn = default!;
+    [UISystemDependency] private readonly GuidebookSystem _guide = default!;
 
     private CharacterSetupGui? _characterSetup;
     private HumanoidProfileEditor? _profileEditor;
@@ -70,12 +71,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             _profileEditor?.RefreshFlavorText();
         });
 
-        _configurationManager.OnValueChanged(CCVars.GameRoleTimers, args =>
-        {
-            _profileEditor?.RefreshAntags();
-            _profileEditor?.RefreshJobs();
-            _profileEditor?.RefreshLoadouts();
-        });
+        _configurationManager.OnValueChanged(CCVars.GameRoleTimers, _ => RefreshProfileEditor());
+
+        _configurationManager.OnValueChanged(CCVars.GameRoleWhitelist, _ => RefreshProfileEditor());
     }
 
     private LobbyCharacterPreviewPanel? GetLobbyPreview()
@@ -193,6 +191,13 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         PreviewPanel.SetSummaryText(humanoid.Summary);
     }
 
+    private void RefreshProfileEditor()
+    {
+        _profileEditor?.RefreshAntags();
+        _profileEditor?.RefreshJobs();
+        _profileEditor?.RefreshLoadouts();
+    }
+
     private void SaveProfile()
     {
         DebugTools.Assert(EditedProfile != null);
@@ -228,6 +233,8 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             _prototypeManager,
             _requirements,
             _markings);
+
+        _profileEditor.OnOpenGuidebook += _guide.OpenHelp;
 
         _characterSetup = new CharacterSetupGui(EntityManager, _prototypeManager, _resourceCache, _preferencesManager, _profileEditor);
 
@@ -287,7 +294,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
         if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
         {
-            var loadout = profile.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), profile.Species, EntityManager, _prototypeManager);
+            var loadout = profile.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), _playerManager.LocalSession, profile.Species, EntityManager, _prototypeManager);
             GiveDummyLoadout(dummy, loadout);
         }
     }
@@ -299,7 +306,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     {
         var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
         // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract (what is resharper smoking?)
-        return _prototypeManager.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
+        return _prototypeManager.Index<JobPrototype>(highPriorityJob.Id ?? SharedGameTicker.FallbackOverflowJob);
     }
 
     public void GiveDummyLoadout(EntityUid uid, RoleLoadout? roleLoadout)
@@ -407,7 +414,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
             if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
             {
-                var loadout = humanoid.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), humanoid.Species, EntityManager, _prototypeManager);
+                var loadout = humanoid.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), _playerManager.LocalSession, humanoid.Species, EntityManager, _prototypeManager);
                 GiveDummyLoadout(dummyEnt, loadout);
             }
         }

@@ -1,3 +1,4 @@
+using Content.Shared.Alert;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -16,4 +17,13 @@ public sealed partial class MagbootsComponent : Component
 
     [DataField("on"), AutoNetworkedField]
     public bool On;
+
+    [DataField]
+    public ProtoId<AlertPrototype> MagbootsAlert = "Magboots";
+
+    /// <summary>
+    /// If true, the user must be standing on a grid or planet map to experience the weightlessness-canceling effect
+    /// </summary>
+    [DataField]
+    public bool RequiresGrid = true;
 }

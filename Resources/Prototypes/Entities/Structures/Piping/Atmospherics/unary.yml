@@ -246,6 +246,7 @@
       key: enum.ThermomachineUiKey.Key
     - type: WiresPanel
     - type: WiresVisuals
+    - type: PipeRestrictOverlap
     - type: NodeContainer
       nodes:
         pipe:
@@ -382,7 +383,7 @@
     board: HellfireHeaterMachineCircuitBoard
 
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   id: BaseGasCondenser
   name: condenser
   description: Condenses gases into liquids. Now we just need some plumbing.
@@ -420,6 +421,7 @@
   - type: GasCondenser
   - type: AtmosPipeColor
   - type: AtmosDevice
+  - type: PipeRestrictOverlap
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Machine

@@ -209,10 +209,11 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DisposalUnitComponent, MetaDataComponent>();
+        var query = AllEntityQuery<DisposalUnitComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var unit, out var metadata))
         {
-            Update(uid, unit, metadata, frameTime);
+            if (!metadata.EntityPaused)
+                Update(uid, unit, metadata, frameTime);
         }
     }
 
@@ -262,6 +263,9 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     private void OnActivate(EntityUid uid, SharedDisposalUnitComponent component, ActivateInWorldEvent args)
     {
+        if (args.Handled || !args.Complex)
+            return;
+
         if (!TryComp(args.User, out ActorComponent? actor))
         {
             return;

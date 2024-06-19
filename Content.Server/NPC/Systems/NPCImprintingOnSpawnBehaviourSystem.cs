@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
+using Content.Shared.Whitelist;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -13,6 +14,7 @@ public sealed partial class NPCImprintingOnSpawnBehaviourSystem : SharedNPCImpri
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -27,7 +29,7 @@ public sealed partial class NPCImprintingOnSpawnBehaviourSystem : SharedNPCImpri
 
         foreach (var friend in friends)
         {
-            if (imprinting.Comp.Whitelist?.IsValid(friend) != false)
+            if (_whitelistSystem.IsWhitelistPassOrNull(imprinting.Comp.Whitelist, friend))
             {
                 AddImprintingTarget(imprinting, friend, imprinting.Comp);
             }
