@@ -1086,11 +1086,23 @@
   - WhiteJumpskirt
 
 - type: loadoutGroup
+  id: ChemistHead
+  name: loadout-group-Chemist-head
+  minLimit: 0
+  loadouts:
+  - BlueSurgeryCap
+  - GreenSurgeryCap
+  - PurpleSurgeryCap
+
+- type: loadoutGroup
   id: ChemistJumpsuit
   name: loadout-group-chemist-jumpsuit
   loadouts:
   - ChemistJumpsuit
   - ChemistJumpskirt
+  - MedicalBlueScrubs
+  - MedicalGreenScrubs
+  - MedicalPurpleScrubs
 
 - type: loadoutGroup
   id: ChemistOuterClothing
