@@ -3,7 +3,7 @@ prayer-verbs-pray = Pray
 prayer-verbs-call = Call
 prayer-chat-notify-pray = PRAYER
 prayer-chat-notify-honkmother = HONKMOTHER
-prayer-chat-notify-centcom = CENTCOM
+prayer-chat-notify-centcom = CENTCOMM
 prayer-chat-notify-syndicate = SYNDICATE
 
 prayer-popup-subtle-default = You hear a voice in your head...
