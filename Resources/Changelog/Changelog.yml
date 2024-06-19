@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: spears, darts, and hypodarts can inject targets again.
-    type: Fix
-  - message: arrows can no longer inject targets they don't actually hit.
-    type: Fix
-  id: 6280
-  time: '2024-04-01T03:39:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26268
 - author: SoulFN
   changes:
   - message: Changed textures of the assault borg modules
@@ -3847,3 +3838,10 @@
   id: 6779
   time: '2024-06-19T13:21:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29187
+- author: Just_Art
+  changes:
+  - message: Musician's jumpskirt added to loadouts.
+    type: Add
+  id: 6780
+  time: '2024-06-19T14:06:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29203
