@@ -29,6 +29,12 @@ public sealed partial class LoadoutGroupPrototype : IPrototype
     [DataField]
     public int MaxLimit = 1;
 
+    /// <summary>
+    /// Hides the loadout group from the player.
+    /// </summary>
+    [DataField]
+    public bool Hidden;
+
     [DataField(required: true)]
     public List<ProtoId<LoadoutPrototype>> Loadouts = new();
 }
