@@ -1,20 +1,19 @@
 using Content.Server.Supermatter.EntitySystems;
-using Robust.Shared.GameStates;
 using Content.Shared.Atmos;
+using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Supermatter.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class SupermatterComponent : Component
 {
     /// <summary>
     ///     Lightning prototype IDs that the supermatter should spit out.
-    ///     From 0 (LightningRevenant) to 3 (HyperchargedLightning).
     /// </summary>
     public readonly string[] LightningPrototypeIDs =
     {
-        "LightningRevenant",
+        "Lightning",
         "ChargedLightning",
         "SuperchargedLightning",
         "HyperchargedLightning"
@@ -44,7 +43,8 @@ public sealed partial class SupermatterComponent : Component
     /// </summary>
     public float DeltaTime = 0f;
 
-    public GasMixture AbsorbedGasMix = null;
+    [ViewVariables]
+    public GasMixture AbsorbedGasMix = new();
 
     /// <summary>
     ///     Amount of seconds to pass before another SM cycle.
@@ -66,14 +66,12 @@ public sealed partial class SupermatterComponent : Component
     public const float MinimumMoleCount = .01f;
 
     public const float
-        BasePowerTransmissionRate = 1040f,
         HeatPenaltyThreshold = 40f,
-        PowerPenaltyThreshold = 5000f,
+        PowerPenaltyThreshold = 3f,
         MolePenaltyThreshold = 1800f,
-        ReactionPowerModifier = .65f,
         ThermalReleaseModifier = 4f,
-        PlasmaReleaseModifier = 650f,
-        OxygenReleaseModifier = 340f,
+        PlasmaReleaseModifier = 5f,
+        OxygenReleaseModifier = 2.5f,
         GasHeatPowerScaling = 1f / 6f;
 
     /// <summary>
@@ -90,21 +88,8 @@ public sealed partial class SupermatterComponent : Component
     /// <summary>
     ///     The amount of damage the SM currently has.
     /// </summary>
+    [DataField]
     public float Damage = 0f;
-    /// <summary>
-    ///     Integrity used for announcements.
-    /// </summary>
-    public float Integrity => 100f - Damage;
-    /// <summary>
-    ///     The damage we had before the cycle.
-    ///     Used to check if we're currently hurting or healing.
-    /// </summary>
-    public float DamageArchived = 0f;
-
-    /// <summary>
-    ///     The zap power transmission over internal energy. W/MeV
-    /// </summary>
-    public float ZapTransmissionRate = BasePowerTransmissionRate;
 
     /// <summary>
     ///     The temperature at which the supermatter crystal will begin to take damage.
@@ -128,6 +113,7 @@ public sealed partial class SupermatterComponent : Component
     [DataField("damageDelaminationPoint")]
     public float DelaminationPoint = 100f;
 
+    [ViewVariables]
     public bool AreWeDelaming = false;
 
     public float DelamCountdownAccumulator = 0f;
@@ -141,22 +127,27 @@ public sealed partial class SupermatterComponent : Component
     /// <summary>
     ///     Affects the heat SM makes.
     /// </summary>
+    [ViewVariables]
     public float GasHeatModifier = 0f;
     /// <summary>
     ///     Affters the minimum point at which SM takes damage.
     /// </summary>
+    [ViewVariables]
     public float GasHeatResistance = 0f;
     /// <summary>
     ///     How much power decay is negated. Complete power decay negation at 1.
     /// </summary>
+    [ViewVariables]
     public float GasPowerlossInhibition = 0f;
     /// <summary>
     ///     Affects the amount of power the main SM zap makes.
     /// </summary>
+    [ViewVariables]
     public float PowerTransmissionRate = 0f;
     /// <summary>
     ///     Affects the power gain the SM experiences from heat.
     /// </summary>
+    [ViewVariables]
     public float HeatPowerGeneration = 0f;
 
     /// <summary>
@@ -211,27 +202,34 @@ public sealed partial class SupermatterComponent : Component
 /// <summary>
 ///     Stores gas properties used for the supermatter.
 /// </summary>
-public struct GasFact
+[Serializable]
+[DataDefinition]
+public sealed partial class GasFact
 {
     /// <summary>
     ///     Affects the amount of power the main SM zap makes.
     /// </summary>
+    [ViewVariables]
     public float PowerTransmissionRate;
     /// <summary>
     ///     Affects the heat SM makes.
     /// </summary>
+    [ViewVariables]
     public float HeatModifier;
     /// <summary>
     ///     Affters the minimum point at which SM takes damage.
     /// </summary>
+    [ViewVariables]
     public float HeatResistance;
     /// <summary>
     ///     Affects the power gain the SM experiences from heat.
     /// </summary>
+    [ViewVariables]
     public float HeatPowerGeneration;
     /// <summary>
     ///     How much power decay is negated. Complete power decay negation at 1.
     /// </summary>
+    [ViewVariables]
     public float PowerlossInhibition;
 
     public GasFact(float? transmissionRate = null, float? heatModifier = null, float? heatResistance = null, float? heatPowerGeneration = null, float? powerlossInhibition = null)

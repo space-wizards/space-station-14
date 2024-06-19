@@ -299,12 +299,11 @@
 - type: entity
   noSpawn: true
   parent: BaseTraitorStealObjective
-  id: StealSupermatterSilverObjective
-  name: Cut off a silver from the supermatter crystal.
-  description: Use any cutting tool that comes in handy. A scalpel is more recommended. Also, don't die of radiation poisoning.
+  id: StealSupermatterSliverObjective
   components:
   - type: Objective
     difficulty: 2.5
-  - type: NotCommandRequirement
   - type: StealCondition
     stealGroup: SupermatterSliver
+    objectiveText: Cut off a sliver from the supermatter crystal.
+    descriptionText: Use any cutting tool that comes in handy. A scalpel is more recommended. Also, don't die of radiation poisoning.

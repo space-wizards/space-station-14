@@ -2,6 +2,8 @@
   id: SupermatterCrystal
   name: supermatter crystal
   description: A strangely translucent and iridescent crystal.
+  placement:
+    mode: SnapgridCenter
   components:
     - type: Supermatter
     - type: Transform
@@ -51,7 +53,5 @@
     - type: SinguloFood # instant level 6 babye, it's SM!!
       energy: 5000
     - type: WarpPoint
-      follow: false
+      follow: true
       location: supermatter
-    - type: GravityWell
-      baseRadialAcceleration: 0.1

@@ -6,11 +6,11 @@
   components:
     - type: PointLight
       enabled: true
-      radius: 10
-      energy: 5
+      radius: 3
+      energy: 2
       color: "#fff633"
     - type: RadiationSource
-      intensity: 5
+      intensity: 1
     - type: Icon
       sprite: Objects/Misc/supermatter_sliver.rsi
       state: icon

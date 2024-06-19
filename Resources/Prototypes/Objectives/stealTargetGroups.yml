@@ -1,10 +1,10 @@
 # Traitor single items
 
 - type: stealTargetGroup
-  id: SupermatterSilver
-  name: supermatter silver
+  id: SupermatterSliver
+  name: supermatter sliver
   sprite:
-    sprite: Objects/Misc/supermatter_silver.rsi
+    sprite: Objects/Misc/supermatter_sliver.rsi
     state: icon
 
 - type: stealTargetGroup
