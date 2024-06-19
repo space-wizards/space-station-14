@@ -28,7 +28,7 @@ public sealed class LoadoutTests
 
 - type: loadoutGroup
   id: LoadoutTesterJumpsuit
-  name: test
+  name: generic-unknown
   loadouts:
   - TestJumpsuit
 
