@@ -141,3 +141,30 @@
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
 
+- type: entity
+  parent: GrenadeShrapnel
+  id: GrenadeFoamDart
+  name: foam dart grenade
+  description: Releases a bothersome spray of foam darts that cause severe welching.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/foamdart.rsi
+    layers:
+    - state: icon
+      map: ["Base"]
+    - state: primed
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ScatteringGrenade
+    fillPrototype: BulletFoam
+    capacity: 30
+    velocity: 70
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
