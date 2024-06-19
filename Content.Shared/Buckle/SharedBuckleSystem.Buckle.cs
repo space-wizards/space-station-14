@@ -4,6 +4,7 @@ using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Database;
+using Content.Shared.Glue;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -404,6 +405,18 @@ public abstract partial class SharedBuckleSystem
         if (!Resolve(buckleUid, ref buckleComp, false) ||
             buckleComp.BuckledTo is not { } strapUid)
             return false;
+
+        // When entity the user buckled to is glued
+        if (HasComp<GluedComponent>(buckleComp.BuckledTo))
+        {
+            var message = Loc.GetString(buckleUid == userUid
+                ? "buckle-component-glued"
+                : "buckle-component-other-glued",
+                ("owner", Identity.Entity(buckleUid, EntityManager)), ("strap", buckleComp.BuckledTo));
+            if (_netManager.IsServer)
+            _popup.PopupEntity(message, userUid, PopupType.Medium);
+            return false;
+        }
 
         if (!force)
         {

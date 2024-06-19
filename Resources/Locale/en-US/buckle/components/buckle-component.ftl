@@ -5,3 +5,5 @@ buckle-component-cannot-buckle-message = You can't buckle yourself there!
 buckle-component-other-cannot-buckle-message = You can't buckle {$owner} there!
 buckle-component-cannot-fit-message = You can't fit there!
 buckle-component-other-cannot-fit-message = {$owner} can't fit there!
+buckle-component-glued = You are glued to { THE($strap) }!
+buckle-component-other-glued = {$owner} is glued to { THE($strap) }!

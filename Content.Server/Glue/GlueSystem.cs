@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Database;
 using Content.Shared.Glue;
 using Content.Shared.Hands;
@@ -71,22 +72,25 @@ public sealed class GlueSystem : SharedGlueSystem
     private bool TryGlue(Entity<GlueComponent> entity, EntityUid target, EntityUid actor)
     {
         // if item is glued then don't apply glue again so it can be removed for reasonable time
-        if (HasComp<GluedComponent>(target) || !HasComp<ItemComponent>(target))
+        if (HasComp<GluedComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("glue-failure", ("target", target)), actor, actor, PopupType.Medium);
             return false;
         }
 
-        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
+        if (HasComp<ItemComponent>(target) || HasComp<StrapComponent>(target))
         {
-            var quantity = solution.RemoveReagent(entity.Comp.Reagent, entity.Comp.ConsumptionUnit);
-            if (quantity > 0)
+            if (_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
             {
-                EnsureComp<GluedComponent>(target).Duration = quantity.Double() * entity.Comp.DurationPerUnit;
-                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
-                _audio.PlayPvs(entity.Comp.Squeeze, entity.Owner);
-                _popup.PopupEntity(Loc.GetString("glue-success", ("target", target)), actor, actor, PopupType.Medium);
-                return true;
+                var quantity = solution.RemoveReagent(entity.Comp.Reagent, entity.Comp.ConsumptionUnit);
+                if (quantity > 0)
+                {
+                    EnsureComp<GluedComponent>(target).Duration = quantity.Double() * entity.Comp.DurationPerUnit;
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
+                    _audio.PlayPvs(entity.Comp.Squeeze, entity.Owner);
+                    _popup.PopupEntity(Loc.GetString("glue-success", ("target", target)), actor, actor, PopupType.Medium);
+                    return true;
+                }
             }
         }
         _popup.PopupEntity(Loc.GetString("glue-failure", ("target", target)), actor, actor, PopupType.Medium);
