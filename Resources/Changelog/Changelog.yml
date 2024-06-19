@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Briefcases was added to CuraDrobe and LawDrobe.
-    type: Tweak
-  id: 6276
-  time: '2024-03-31T20:52:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26527
 - author: RiceMar
   changes:
   - message: Added milk cartons to the BoozeOMat vendor. Got milk?
@@ -3850,3 +3843,10 @@
   id: 6775
   time: '2024-06-19T01:57:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29194
+- author: Flareguy
+  changes:
+  - message: Resprited most of Security's basic attire.
+    type: Tweak
+  id: 6776
+  time: '2024-06-19T02:04:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29082
