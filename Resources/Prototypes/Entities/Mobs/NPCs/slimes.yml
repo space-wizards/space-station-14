@@ -207,6 +207,7 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+  - type: PersistantSlimeStorage
 
 - type: entity
   name: blue slime
