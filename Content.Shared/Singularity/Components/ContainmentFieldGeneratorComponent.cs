@@ -73,7 +73,6 @@ public sealed partial class ContainmentFieldGeneratorComponent : Component
     /// Which fixture ID should test collision with from the entity that powers the generator?
     /// Prevents the generator from being powered by fly-by fixtures.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public string SourceFixtureId = "projectile";
 
