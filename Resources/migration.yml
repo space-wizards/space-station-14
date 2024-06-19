@@ -356,3 +356,6 @@ filingCabinetDrawer: FilingCabinetDrawer
 filingCabinetRandom: FilingCabinetFilled
 filingCabinetTallRandom: FilingCabinetTallFilled
 filingCabinetDrawerRandom: FilingCabinetDrawerFilled
+
+# 2024-06-15
+ClothingOuterCoatInspector: ClothingOuterCoatDetectiveLoadout

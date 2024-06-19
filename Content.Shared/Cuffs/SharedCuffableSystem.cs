@@ -79,12 +79,18 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<CuffableComponent, PickupAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, AttackAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, UseAttemptEvent>(CheckAct);
-            SubscribeLocalEvent<CuffableComponent, InteractionAttemptEvent>(CheckAct);
+            SubscribeLocalEvent<CuffableComponent, InteractionAttemptEvent>(CheckInteract);
 
             SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
             SubscribeLocalEvent<HandcuffComponent, AddCuffDoAfterEvent>(OnAddCuffDoAfter);
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
+        }
+
+        private void CheckInteract(Entity<CuffableComponent> ent, ref InteractionAttemptEvent args)
+        {
+            if (!ent.Comp.CanStillInteract)
+                args.Cancelled = true;
         }
 
         private void OnUncuffAttempt(ref UncuffAttemptEvent args)
@@ -561,7 +567,10 @@ namespace Content.Shared.Cuffs
                 return;
             }
 
-            var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
+
+            var ev = new ModifyUncuffDurationEvent(user, target, isOwner ? cuff.BreakoutTime : cuff.UncuffTime);
+            RaiseLocalEvent(user, ref ev);
+            var uncuffTime = ev.Duration;
 
             if (isOwner)
             {
