@@ -17,11 +17,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtChemistry
 
-#Head
-- type: loadout
-  id: ChemistHead
-  equipment: ChemistHead
-
 # Back
 - type: loadout
   id: ChemistBackpack
