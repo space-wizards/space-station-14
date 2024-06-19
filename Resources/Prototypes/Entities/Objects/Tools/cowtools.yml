@@ -92,6 +92,7 @@
     qualities:
     - Prying
   - type: ToolTileCompatible
+    delay: 10
   - type: Prying
     speedModifier: 0.05
 

@@ -18,6 +18,7 @@
     slots:
       - Belt
   - type: ToolTileCompatible
+    delay: 0.5
   - type: Tool
   - type: Prying
     speedModifier: 1.5
