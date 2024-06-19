@@ -19,14 +19,10 @@
       - Belt
   - type: ToolTileCompatible
   - type: Tool
-    qualities:
-      - Prying
-    speedModifier: 1.5
-    useSound: /Audio/Items/jaws_pry.ogg
   - type: Prying
+    speedModifier: 1.5
     pryPowered: true
     useSound: /Audio/Items/jaws_pry.ogg
-  - type: ToolForcePowered
   - type: MultipleTool
     statusShowBehavior: true
     entries:
@@ -66,9 +62,7 @@
       right:
       - state: syn_inhand-right
     size: Normal
-  - type: Tool
-    qualities:
-      - Prying
+  - type: Prying
     speedModifier: 3.0
   - type: MultipleTool
     entries:
