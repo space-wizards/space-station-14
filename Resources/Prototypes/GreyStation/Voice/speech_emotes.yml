@@ -15,3 +15,12 @@
   - fart!
   - farts!
   - farted!
+
+- type: emote
+  id: SecHailerDeathgasp
+  name: chat-emote-name-deathgasp
+  icon: Interface/Emotes/deathgasp.png
+  whitelist:
+    components:
+    - MobState
+  chatMessages: ["chat-emote-msg-deathgasp"]
