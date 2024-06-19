@@ -17,6 +17,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Geras;
 
+/// <summary>
+/// Uses for transfering items between forms that share persistantSlimeStorage components.
+/// Also shows items contained in storages on examine
+/// </summary>
 public sealed class PersistantSlimeStorageSystem : EntitySystem
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -33,12 +37,11 @@ public sealed class PersistantSlimeStorageSystem : EntitySystem
         SubscribeLocalEvent<PersistantSlimeStorageComponent, ExaminedEvent>(OnExamine);
     }
 
-    private void OnTryRemoveItem(Entity<PersistantSlimeStorageComponent> ent, ref ContainerIsRemovingAttemptEvent args)
-    {
-        //If we are removing an item from ourselves
-        if (ent.Owner == args.EntityUid)
-            return;
-    }
+    /// <summary>
+    /// Gets contained items and adds them to examine
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="args"></param>
     private void OnExamine(Entity<PersistantSlimeStorageComponent> ent, ref ExaminedEvent args)
     {
         if (!_entityManager.TryGetComponent<StorageComponent>(ent, out var storage))
@@ -60,6 +63,11 @@ public sealed class PersistantSlimeStorageSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Tries to transfer items between polymorphs
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="args"></param>
     private void OnPolymorph(Entity<PersistantSlimeStorageComponent> ent, ref PolymorphedEvent args)
     {
         if (!_entityManager.TryGetComponent<StorageComponent>(ent, out var storage))

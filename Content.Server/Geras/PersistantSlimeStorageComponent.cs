@@ -4,5 +4,5 @@ namespace Content.Server.Geras;
 public sealed partial class PersistantSlimeStorageComponent : Component
 {
     [DataField]
-    public TimeSpan InsertRemoveTime = TimeSpan.FromSeconds(3f); // Same as pockets by default
+    public TimeSpan InsertRemoveTime = TimeSpan.FromSeconds(3f); // Same as pockets by default,
 }
