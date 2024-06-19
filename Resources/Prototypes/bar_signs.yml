@@ -3,7 +3,7 @@
   name: barsign-prototype-name-harmbaton
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "theharmbaton"
+    state: theharmbaton
   description: barsign-prototype-description-harmbaton
 
 - type: barSign
@@ -11,7 +11,7 @@
   name: barsign-prototype-name-singulo
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "thesingulo"
+    state: thesingulo
   description: barsign-prototype-description-singulo
 
 - type: barSign
@@ -19,7 +19,7 @@
   name: barsign-prototype-name-drunk-carp
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "thedrunkcarp"
+    state: thedrunkcarp
   description: barsign-prototype-description-drunk-carp
 
 - type: barSign
@@ -27,7 +27,7 @@
   name: barsign-prototype-name-officer-beersky
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "officerbeersky"
+    state: officerbeersky
   description: barsign-prototype-description-officer-beersky
 
 - type: barSign
@@ -35,7 +35,7 @@
   name: barsign-prototype-name-outer-spess
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "theouterspess"
+    state: theouterspess
   description: barsign-prototype-description-outer-spess
 
 - type: barSign
@@ -43,7 +43,7 @@
   name: barsign-prototype-name-coderbus
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "thecoderbus"
+    state: thecoderbus
   description: barsign-prototype-description-coderbus
 
 - type: barSign
@@ -51,7 +51,7 @@
   name: barsign-prototype-name-robusta-cafe
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "robustacafe"
+    state: robustacafe
   description: barsign-prototype-description-robusta-cafe
 
 - type: barSign
@@ -59,7 +59,7 @@
   name: barsign-prototype-name-emergency-rum-party
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "emergencyrumparty"
+    state: emergencyrumparty
   description: barsign-prototype-description-emergency-rum-party
 
 - type: barSign
@@ -67,7 +67,7 @@
   name: barsign-prototype-name-combo-cafe
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "combocafe"
+    state: combocafe
   description: barsign-prototype-description-combo-cafe
 
 - type: barSign
@@ -75,7 +75,7 @@
   name: barsign-prototype-name-ale-nath
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "thealenath"
+    state: thealenath
   description: barsign-prototype-description-ale-nath
 
 - type: barSign
@@ -83,7 +83,7 @@
   name: barsign-prototype-name-the-net
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "thenet"
+    state: thenet
   description: barsign-prototype-description-the-net
 
 - type: barSign
@@ -91,7 +91,7 @@
   name: barsign-prototype-name-maid-cafe
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "maidcafe"
+    state: maidcafe
   description: barsign-prototype-description-maid-cafe
 
 - type: barSign
@@ -99,7 +99,7 @@
   name: barsign-prototype-name-maltese-falcon
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "maltesefalcon"
+    state: maltesefalcon
   description: barsign-prototype-description-maltese-falcon
 
 - type: barSign
@@ -107,7 +107,7 @@
   name: barsign-prototype-name-the-sun
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "thesun"
+    state: thesun
   description: barsign-prototype-description-the-sun
 
 - type: barSign
@@ -115,7 +115,7 @@
   name: barsign-prototype-name-the-birdcage
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "birdcage"
+    state: birdcage
   description: barsign-prototype-description-the-birdcage
 
 - type: barSign
@@ -123,7 +123,7 @@
   name: barsign-prototype-name-zocalo
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "zocalo"
+    state: zocalo
   description: barsign-prototype-description-zocalo
 
 - type: barSign
@@ -131,7 +131,7 @@
   name: barsign-prototype-name-lv426
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "lv426"
+    state: lv426
   description: barsign-prototype-description-lv426
 
 - type: barSign
@@ -139,7 +139,7 @@
   name: barsign-prototype-name-wiggle-room
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "thewiggleroom"
+    state: thewiggleroom
   description: barsign-prototype-description-wiggle-room
 
 - type: barSign
@@ -147,7 +147,7 @@
   name: barsign-prototype-name-the-lightbulb
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "the_lightbulb"
+    state: the_lightbulb
   description: barsign-prototype-description-the-lightbulb
 
 - type: barSign
@@ -155,7 +155,7 @@
   name: barsign-prototype-name-goose
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "goose"
+    state: goose
   description: barsign-prototype-description-goose
 
 - type: barSign
@@ -163,7 +163,7 @@
   name: barsign-prototype-name-enginechange
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "enginechange"
+    state: enginechange
   description: barsign-prototype-description-enginechange
 
 - type: barSign
@@ -171,7 +171,7 @@
   name: barsign-prototype-name-emprah
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "emprah"
+    state: emprah
   description: barsign-prototype-description-emprah
 
 - type: barSign
@@ -179,5 +179,5 @@
   name: barsign-prototype-name-spacebucks
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
-    state: "spacebucks"
+    state: spacebucks
   description: barsign-prototype-description-spacebucks
