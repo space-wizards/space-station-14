@@ -20,6 +20,9 @@
   - type: ToolTileCompatible
     delay: 0.5
   - type: Tool
+    qualities:
+      - Prying
+    useSound: /Audio/Items/jaws_pry.ogg
   - type: Prying
     speedModifier: 1.5
     pryPowered: true
