@@ -3,6 +3,7 @@ using Content.Shared.Random;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.Components;
 
@@ -18,14 +19,13 @@ public sealed partial class XenoArtifactComponent : Component
     [ViewVariables]
     public Container NodeContainer = default!;
 
+    // todo: instead of networking this what if we just reconstructed on the client... hm...
     /// <summary>
     /// The nodes in this artifact that are currently "active."
     /// This is cached and updated when nodes are removed, added, or unlocked.
     /// </summary>
     [DataField]
     public List<EntityUid> CachedActiveNodes = new();
-
-    //TODO: can't serialize entityuid arrays. Well fuck.
 
     // NOTE: you should not be accessing any of these values directly. Use the methods in SharedXenoArtifactSystem.Graph
     #region Graph
@@ -76,4 +76,16 @@ public sealed partial class XenoArtifactComponent : Component
     #endregion
 }
 
-// TODO: manually implement component state. yeesh.
+[Serializable, NetSerializable]
+public sealed class XenoArtifactComponentState : ComponentState
+{
+    public List<NetEntity?> NodeVertices;
+
+    public List<List<bool>> NodeAdjacencyMatrix;
+
+    public XenoArtifactComponentState(List<NetEntity?> nodeVertices, List<List<bool>> nodeAdjacencyMatrix)
+    {
+        NodeVertices = nodeVertices;
+        NodeAdjacencyMatrix = nodeAdjacencyMatrix;
+    }
+}
