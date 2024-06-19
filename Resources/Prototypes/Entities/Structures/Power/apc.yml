@@ -26,7 +26,7 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Power/apc.rsi
+    sprite: GreyStation/Structures/Power/apc.rsi #GreyStation Sprite Change
     layers:
     - state: base
     - state: panel
