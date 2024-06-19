@@ -1,14 +1,12 @@
 - type: entity
   id: SpaceMine
+  parent: BaseStructureDynamic
   name: space mine
-  description: Echoes of former wars... Space mines hanging motionless in the air and waiting for careless shuttles.
+  suffix: Safe
+  description: Echoes of former wars... Mines hanging motionless in the space and waiting for careless shuttles.
   components:
-  - type: Clickable
   - type: InteractionOutline
-  - type: Pullable
   - type: MovedByPressure
-  - type: Physics
-    bodyType: Dynamic
   - type: Fixtures
     fixtures:
       fix1:
@@ -39,11 +37,29 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: SpaceMine
+    node: start
+
+- type: entity
+  id: SpaceMineArmed
+  parent: SpaceMine
+  suffix: Armed
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
         damage: 3
       behaviors:
       - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: TriggerOnGridCollide
   - type: TriggerOnCollide
     fixtureID: fix1
   - type: ExplodeOnTrigger
@@ -53,6 +69,22 @@
     intensitySlope: 3
     totalIntensity: 150
     canCreateVacuum: true
-  - type: Construction
-    graph: SpaceMine
-    node: start
+
+- type: entity
+  id: RandomSpaceMine
+  name: space mine random spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/space_mine.rsi
+      state: mine1
+  - type: RandomSpawner
+    offset: 0.5
+    prototypes:
+    - SpaceMine
+    chance: 0.8
+    rarePrototypes:
+    - SpaceMineArmed
+    rareChance: 0.4

@@ -32,6 +32,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Player;
 using Content.Shared.Coordinates;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Explosion.EntitySystems
@@ -95,6 +96,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
             SubscribeLocalEvent<TriggerWhenEmptyComponent, OnEmptyGunShotEvent>(OnEmptyTriggered);
             SubscribeLocalEvent<RepeatingTriggerComponent, MapInitEvent>(OnRepeatInit);
+            SubscribeLocalEvent<TriggerOnGridCollideComponent, EntParentChangedMessage>(OnGridCollide);
 
             SubscribeLocalEvent<SpawnOnTriggerComponent, TriggerEvent>(OnSpawnTrigger);
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
@@ -248,6 +250,14 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnRepeatInit(Entity<RepeatingTriggerComponent> ent, ref MapInitEvent args)
         {
             ent.Comp.NextTrigger = _timing.CurTime + ent.Comp.Delay;
+        }
+
+        private void OnGridCollide(Entity<TriggerOnGridCollideComponent> ent, ref EntParentChangedMessage args)
+        {
+            if (!TryComp<MapGridComponent>(Transform(ent).ParentUid, out var grid))
+                return;
+
+            Trigger(ent);
         }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
