@@ -23,18 +23,23 @@ public sealed partial class XenoArtifactSystem
     {
         var segmentSize = GetArtifactSegmentSize(ent, nodeCount);
         nodeCount -= segmentSize;
-        PopulateArtifactSegmentRecursive(ent, ref segmentSize);
+        PopulateArtifactSegmentRecursive(ent, ref segmentSize, ensureLayerConnected: true);
 
         // TODO: store the segments in a list somewhere so we don't have to rebuild them constantly.
         // Or maybe just rebuild them manually like we do active nodes??? hard to say.
     }
 
-    private List<Entity<XenoArtifactNodeComponent>> PopulateArtifactSegmentRecursive(Entity<XenoArtifactComponent> ent, ref int segmentSize, int layerMaxMod = 0)
+    private List<Entity<XenoArtifactNodeComponent>> PopulateArtifactSegmentRecursive(
+        Entity<XenoArtifactComponent> ent,
+        ref int segmentSize,
+        int layerMinMod = 0,
+        int layerMaxMod = 0,
+        bool ensureLayerConnected = false)
     {
         if (segmentSize == 0)
             return new();
 
-        var layerMin = ent.Comp.NodesPerSegmentLayer.Min;
+        var layerMin = Math.Min(ent.Comp.NodesPerSegmentLayer.Min + layerMinMod, segmentSize);
         var layerMax = Math.Min(ent.Comp.NodesPerSegmentLayer.Max + layerMaxMod, segmentSize);
 
         // Default to one node if we had shenanigans and ended up with weird layer counts.
@@ -49,24 +54,39 @@ public sealed partial class XenoArtifactSystem
             nodes.Add(CreateRandomNode(ent));
         }
 
-        var layerMod = nodes.Count / 2; // cumulative modifier to enable slight growth for something like 3 -> 4
-        var successors = PopulateArtifactSegmentRecursive(ent, ref segmentSize, layerMod);
+        var minMod = ent.Comp.NodeContainer.Count < 3 ? 0 : 1; // Try to stop boring linear generation.
+        var maxMod = nodes.Count / 2; // cumulative modifier to enable slight growth for something like 3 -> 4
+        var successors = PopulateArtifactSegmentRecursive(
+            ent,
+            ref segmentSize,
+            layerMinMod: minMod,
+            layerMaxMod: maxMod);
         if (successors.Count == 0)
             return nodes;
 
         // We do the picks from node -> successor and from successor -> node to ensure that no nodes get orphaned without connections.
-        foreach (var node in nodes)
-        {
-            var successor = RobustRandom.Pick(successors);
-            AddEdge((ent, ent), node, successor);
-        }
         foreach (var successor in successors)
         {
             var node = RobustRandom.Pick(nodes);
-            AddEdge((ent, ent), node, successor);
+            AddEdge((ent, ent), node, successor, dirty: false);
         }
 
-        // TODO: if gen is bad, consider implementing random scattering
+        if (ensureLayerConnected)
+        {
+            foreach (var node in nodes)
+            {
+                var successor = RobustRandom.Pick(successors);
+                AddEdge((ent, ent), node, successor, dirty: false);
+            }
+        }
+
+        var reverseScatterCount = ent.Comp.ReverseScatterPerLayer.Next(RobustRandom);
+        for (var i = 0; i < reverseScatterCount; i++)
+        {
+            var node = RobustRandom.Pick(nodes);
+            var successor = RobustRandom.Pick(successors);
+            AddEdge((ent, ent), node, successor, dirty: false);
+        }
 
         return nodes;
     }

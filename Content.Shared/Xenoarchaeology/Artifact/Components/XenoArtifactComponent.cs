@@ -53,7 +53,7 @@ public sealed partial class XenoArtifactComponent : Component
     /// The total number of nodes that make up this artifact.
     /// </summary>
     [DataField]
-    public MinMax NodeCount = new(10, 20);
+    public MinMax NodeCount = new(10, 24);
 
     /// <summary>
     /// The amount of nodes that go in each segment.
@@ -67,6 +67,9 @@ public sealed partial class XenoArtifactComponent : Component
     /// </summary>
     [DataField]
     public MinMax NodesPerSegmentLayer = new(1, 3);
+
+    [DataField]
+    public MinMax ReverseScatterPerLayer = new(0, 2);
 
     [DataField]
     public ProtoId<WeightedRandomEntityPrototype> EffectWeights = "XenoArtifactEffectsDefault";
