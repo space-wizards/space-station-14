@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.PDA;
@@ -164,6 +164,15 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (!Resolve(loaderUid, ref loader))
             return false;
 
+        if (!TryComp(cartridgeUid, out CartridgeComponent? loadedCartridge))
+            return false;
+
+        foreach (var program in GetInstalled(loaderUid))
+        {
+            if (TryComp(program, out CartridgeComponent? installedCartridge) && installedCartridge.ProgramName == loadedCartridge.ProgramName)
+                return false;
+        }
+
         //This will eventually be replaced by serializing and deserializing the cartridge to copy it when something needs
         //the data on the cartridge to carry over when installing
 
@@ -191,7 +200,6 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (container.Count >= loader.DiskSpace)
             return false;
 
-        // TODO cancel duplicate program installations
         var ev = new ProgramInstallationAttempt(loaderUid, prototype);
         RaiseLocalEvent(ref ev);
 

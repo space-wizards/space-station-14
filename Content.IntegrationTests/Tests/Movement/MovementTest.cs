@@ -1,8 +1,9 @@
 #nullable enable
 using System.Numerics;
+using Content.IntegrationTests.Tests.Interaction;
 using Robust.Shared.GameObjects;
 
-namespace Content.IntegrationTests.Tests.Interaction;
+namespace Content.IntegrationTests.Tests.Movement;
 
 /// <summary>
 /// This is a variation of <see cref="InteractionTest"/> that sets up the player with a normal human entity and a simple

@@ -197,6 +197,8 @@
       - HandheldStationMap
       - ClothingHeadHatWelding
       - SqueezeBottle
+      - WetFloorSign
+      - ClothingHeadHatCone
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot

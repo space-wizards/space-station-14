@@ -326,6 +326,9 @@ public sealed class RespiratorSystem : EntitySystem
         Entity<RespiratorComponent> ent,
         ref ApplyMetabolicMultiplierEvent args)
     {
+        // TODO REFACTOR THIS
+        // This will slowly drift over time due to floating point errors.
+        // Instead, raise an event with the base rates and allow modifiers to get applied to it.
         if (args.Apply)
         {
             ent.Comp.UpdateInterval *= args.Multiplier;

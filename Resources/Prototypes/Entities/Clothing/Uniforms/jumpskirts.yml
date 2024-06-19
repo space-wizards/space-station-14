@@ -832,3 +832,14 @@
     sprite: Clothing/Uniforms/Jumpskirt/olddress.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/olddress.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtMusician
+  name: musician's skirt
+  description: A fancy skirt for the musically inclined. Perfect for any lounge act!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
