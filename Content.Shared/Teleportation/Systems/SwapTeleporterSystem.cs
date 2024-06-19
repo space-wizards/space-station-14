@@ -153,6 +153,14 @@ public sealed class SwapTeleporterSystem : EntitySystem
         var teleEnt = GetTeleportingEntity((uid, xform));
         var otherTeleEnt = GetTeleportingEntity((linkedEnt, Transform(linkedEnt)));
 
+        if (_container.TryGetOuterContainer(teleEnt, Transform(teleEnt), out var othercontainer) &&
+            !_container.CanInsert(teleEnt, othercontainer))
+            return;
+
+        if (_container.TryGetOuterContainer(otherTeleEnt, Transform(otherTeleEnt), out var container) &&
+            !_container.CanInsert(otherTeleEnt, container))
+            return;
+
         _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-other",
             ("entity", Identity.Entity(linkedEnt, EntityManager))),
             otherTeleEnt,
