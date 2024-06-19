@@ -9,9 +9,9 @@
   description: Standard security gear. Protects the head from impacts.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Helmets/security.rsi
+    sprite: GreyStation/Clothing/Head/Helmets/security.rsi #GreyStation
   - type: Clothing
-    sprite: Clothing/Head/Helmets/security.rsi
+    sprite: GreyStation/Clothing/Head/Helmets/security.rsi #GreyStation
   - type: Armor #Values seem to let the user survive one extra hit if attacked consistently.
     modifiers:
       coefficients:
