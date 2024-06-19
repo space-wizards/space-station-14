@@ -1,4 +1,15 @@
 - type: entity
+  abstract: true
+  parent: MarkerBase
+  id: BaseAntagSpawner
+  name: ghost role spawn point
+  components:
+  - type: GhostRole
+    raffle:
+      settings: default
+  - type: GhostRoleAntagSpawner
+
+- type: entity
   id: SpawnPointGhostRatKing
   name: ghost role spawn point
   suffix: rat king
@@ -83,18 +94,13 @@
 
 - type: entity
   noSpawn: true
+  parent: BaseAntagSpawner
   id: SpawnPointLoneNukeOperative
-  name: ghost role spawn point
-  suffix: loneops
-  parent: MarkerBase
   components:
   - type: GhostRole
     name: ghost-role-information-loneop-name
     description: ghost-role-information-loneop-description
     rules: ghost-role-information-loneop-rules
-    raffle:
-      settings: default
-  - type: GhostRoleAntagSpawner
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -103,20 +109,41 @@
         state: radiation
 
 - type: entity
-  parent: MarkerBase
-  id: SpawnPointGhostDragon
   noSpawn: true
-  name: ghost role spawn point
-  suffix: dragon
+  parent: SpawnPointLoneNukeOperative
+  id: SpawnPointNukeopsCommander
+  components:
+  - type: GhostRole
+    name: roles-antag-nuclear-operative-commander-name
+    description: roles-antag-nuclear-operative-commander-objective
+
+- type: entity
+  noSpawn: true
+  parent: SpawnPointLoneNukeOperative
+  id: SpawnPointNukeopsMedic
+  components:
+  - type: GhostRole
+    name: roles-antag-nuclear-operative-agent-name
+    description: roles-antag-nuclear-operative-agent-objective
+
+- type: entity
+  noSpawn: true
+  parent: SpawnPointLoneNukeOperative
+  id: SpawnPointNukeopsOperative
+  components:
+  - type: GhostRole
+    name: roles-antag-nuclear-operative-name
+    description: roles-antag-nuclear-operative-objective
+
+- type: entity
+  noSpawn: true
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostDragon
   components:
   - type: GhostRole
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
     rules: ghost-role-component-default-rules
-    raffle:
-      settings: default
-  - type: GhostRoleMobSpawner
-    prototype: MobDragon
   - type: Sprite
     layers:
     - state: green

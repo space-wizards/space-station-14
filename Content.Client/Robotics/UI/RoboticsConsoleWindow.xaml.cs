@@ -17,7 +17,6 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     private readonly LockSystem _lock;
     private readonly SpriteSystem _sprite;
 
@@ -135,7 +134,7 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         BorgInfo.SetMessage(text);
 
         // how the turntables
-        DisableButton.Disabled = !data.HasBrain;
+        DisableButton.Disabled = !(data.HasBrain && data.CanDisable);
         DestroyButton.Disabled = _timing.CurTime < _console.Comp1.NextDestroy;
     }
 

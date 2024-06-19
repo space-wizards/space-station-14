@@ -16,8 +16,6 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
-          overflowJobs:
-            - Passenger
           availableJobs:
             #service
             Captain: [ 1, 1 ]
@@ -54,7 +52,7 @@
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 2, 2 ]
-            CargoTechnician: [ 1, 1 ]
+            CargoTechnician: [ 2, 2 ]
             #civillian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]

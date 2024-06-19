@@ -244,7 +244,7 @@ namespace Content.Client.LateJoin
                             VerticalAlignment = VAlignment.Center
                         };
 
-                        var jobIcon = _prototypeManager.Index<StatusIconPrototype>(prototype.Icon);
+                        var jobIcon = _prototypeManager.Index(prototype.Icon);
                         icon.Texture = _sprites.Frame0(jobIcon.Icon);
                         jobSelector.AddChild(icon);
 
@@ -290,7 +290,7 @@ namespace Content.Client.LateJoin
             }
         }
 
-        private void JobsAvailableUpdated(IReadOnlyDictionary<NetEntity, Dictionary<string, uint?>> updatedJobs)
+        private void JobsAvailableUpdated(IReadOnlyDictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>> updatedJobs)
         {
             foreach (var stationEntries in updatedJobs)
             {
@@ -337,10 +337,10 @@ namespace Content.Client.LateJoin
         public Label JobLabel { get; }
         public string JobId { get; }
         public string JobLocalisedName { get; }
-        public uint? Amount { get; private set; }
+        public int? Amount { get; private set; }
         private bool _initialised = false;
 
-        public JobButton(Label jobLabel, string jobId, string jobLocalisedName, uint? amount)
+        public JobButton(Label jobLabel, ProtoId<JobPrototype> jobId, string jobLocalisedName, int? amount)
         {
             JobLabel = jobLabel;
             JobId = jobId;
@@ -350,7 +350,7 @@ namespace Content.Client.LateJoin
             _initialised = true;
         }
 
-        public void RefreshLabel(uint? amount)
+        public void RefreshLabel(int? amount)
         {
             if (Amount == amount && _initialised)
             {

@@ -10,12 +10,15 @@ using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Pointing;
+using Content.Shared.Projectiles;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -28,7 +31,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, UseAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(CheckAct);
-        SubscribeLocalEvent<MobStateComponent, ConsciousAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, ConsciousAttemptEvent>(CheckConcious);
         SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(OnSpeakAttempt);
         SubscribeLocalEvent<MobStateComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
@@ -43,6 +46,17 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
         SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
         SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
+    }
+
+    private void CheckConcious(Entity<MobStateComponent> ent, ref ConsciousAttemptEvent args)
+    {
+        switch (ent.Comp.CurrentState)
+        {
+            case MobState.Dead:
+            case MobState.Critical:
+                args.Cancelled = true;
+                break;
+        }
     }
 
     private void OnStateExitSubscribers(EntityUid target, MobStateComponent component, MobState state)

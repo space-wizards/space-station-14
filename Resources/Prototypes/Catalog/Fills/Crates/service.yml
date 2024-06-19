@@ -130,6 +130,17 @@
     - id: NewtonCradle
 
 - type: entity
+  id: CrateServiceFaxMachine
+  parent: CrateGenericSteel
+  name: fax machine crate
+  description: A fax machine and a screwdriver to set the name with.
+  components:
+  - type: StorageFill
+    contents:
+    - id: Screwdriver
+    - id: FaxMachineFlatpack
+
+- type: entity
   id: CrateServicePersonnel
   parent: CrateCommandSecure
   name: personnel crate
@@ -321,16 +332,3 @@
           prob: 0.1
         - id: ShardGlassPlasma
           prob: 0.1
-
-- type: entity
-  id: CrateJanitorExplosive
-  parent: ClosetJanitorBomb
-  name: janitorial bomb suit crate
-  description: Supplies a bomb suit for cleaning up any explosive compounds, buy one today!
-  components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterSuitJanitorBomb
-        amount: 1
-      - id: ClothingHeadHelmetJanitorBombSuit
-        amount: 1
