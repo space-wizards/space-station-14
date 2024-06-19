@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: kseandi
-  changes:
-  - message: NT has declassified the documentation for door electronics, now anyone
-      can configure its access using network configurator or multitool.
-    type: Add
-  id: 6284
-  time: '2024-04-01T06:06:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/17778
 - author: musicmanvr
   changes:
   - message: Added Sol Dry, 8 new cocktails and coconut water.
@@ -3848,3 +3840,11 @@
   id: 6783
   time: '2024-06-19T18:13:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29205
+- author: arimah
+  changes:
+  - message: Containment field generators can no longer be powered by an emitter bolt
+      flying past them. The bolt must hit them directly.
+    type: Fix
+  id: 6784
+  time: '2024-06-19T23:51:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29225
