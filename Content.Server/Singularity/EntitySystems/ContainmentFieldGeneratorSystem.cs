@@ -65,7 +65,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// </summary>
     private void HandleGeneratorCollide(Entity<ContainmentFieldGeneratorComponent> generator, ref StartCollideEvent args)
     {
-        if (_tags.HasTag(args.OtherEntity, generator.Comp.IDTag))
+        if (_tags.HasTag(args.OtherEntity, generator.Comp.IDTag) &&
+            args.OtherFixtureId == generator.Comp.SourceFixtureId)
         {
             ReceivePower(generator.Comp.PowerReceived, generator);
             generator.Comp.Accumulator = 0f;
