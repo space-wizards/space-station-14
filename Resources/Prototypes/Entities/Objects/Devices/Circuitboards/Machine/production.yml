@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board
@@ -10,6 +10,22 @@
         MatterBin: 3
         Manipulator: 1
         Glass: 1
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: Test
+  name: Test
+  description: Test descriptions
+  components:
+    - type: Sprite
+      state: something-something here
+    - type: MachineBoard
+      prototype: MachineTestName
+      stackRequirements:
+        Capacitor: 2
+        Cable: 2
+        Glass: 3
+        Uranium: 1
 
 - type: entity
   parent: BaseMachineCircuitboard

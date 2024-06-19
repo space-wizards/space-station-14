@@ -188,7 +188,7 @@
   id: Moth # Slightly worse at shock but better against cold
   coefficients:
     Cold: 0.7
-    Shock: 1.5
+    Heat: 1.15
 
 - type: damageModifierSet
   id: Vox
