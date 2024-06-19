@@ -115,6 +115,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     /// the event that this tool-use cancelled an existing DoAfter</param>
     /// <param name="fuel">Amount of fuel that should be taken from the tool.</param>
     /// <param name="toolComponent">The tool component.</param>
+    /// <param name="blockDuplicates">Sets <see cref="DoAfterArgs.BlockDuplicate"/> and <see cref="DoAfterArgs.CancelDuplicate"/>.</param>
     /// <returns>Returns true if any interaction takes place.</returns>
     public bool UseTool(
         EntityUid tool,
@@ -125,7 +126,8 @@ public abstract partial class SharedToolSystem : EntitySystem
         DoAfterEvent doAfterEv,
         out DoAfterId? id,
         float fuel = 0,
-        ToolComponent? toolComponent = null)
+        ToolComponent? toolComponent = null,
+        bool blockDuplicates = true)
     {
         id = null;
         if (!Resolve(tool, ref toolComponent, false))
@@ -141,7 +143,9 @@ public abstract partial class SharedToolSystem : EntitySystem
             BreakOnMove = true,
             BreakOnWeightlessMove = false,
             NeedHand = tool != user,
-            AttemptFrequency = fuel > 0 ? AttemptFrequency.EveryTick : AttemptFrequency.Never
+            AttemptFrequency = fuel > 0 ? AttemptFrequency.EveryTick : AttemptFrequency.Never,
+            BlockDuplicate = blockDuplicates,
+            CancelDuplicate = blockDuplicates,
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);

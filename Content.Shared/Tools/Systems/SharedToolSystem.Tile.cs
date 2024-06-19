@@ -1,4 +1,5 @@
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
@@ -86,7 +87,7 @@ public abstract partial class SharedToolSystem
             return false;
 
         var args = new TileToolDoAfterEvent(GetNetCoordinates(coordinates));
-        UseTool(ent, user, ent, comp.Delay, tool.Qualities, args, out _, toolComponent: tool);
+        UseTool(ent, user, ent, comp.Delay, tool.Qualities, args, out _, toolComponent: tool, blockDuplicates: false);
         return true;
     }
 
