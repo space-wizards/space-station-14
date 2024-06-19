@@ -43,6 +43,9 @@
       - id: MobBingus
         prob: 0.005
         orGroup: MobCat
+      - id: MobPipi
+        prob: 0.005
+        orGroup: MobCat
 
 - type: entity
   id: CrateNPCChicken

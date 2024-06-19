@@ -6,6 +6,7 @@ petting-success-generic = You pet {THE($target)} on {POSS-ADJ($target)} head.
 petting-success-soft-floofy = You pet {THE($target)} on {POSS-ADJ($target)} soft floofy head.
 
 petting-success-bingus = You pet {THE($target)} on {POSS-ADJ($target)} wrinkly little head.
+petting-success-pipi = You pet {THE($target)} on {POSS-ADJ($target)} empty little head.
 petting-success-bird = You pet {THE($target)} on {POSS-ADJ($target)} cute feathery head.
 petting-success-carp = You pet {THE($target)} on {POSS-ADJ($target)} fishy little head.
 petting-success-cat = You pet {THE($target)} on {POSS-ADJ($target)} fuzzy little head.
