@@ -142,6 +142,12 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
         var revComp = EnsureComp<RevolutionaryComponent>(ev.Target);
+        var head = false;
+        if(HasComp<HeadRevolutionaryFlashComponent>(ev.Used))
+        {
+          EnsureComp<HeadRevolutionaryComponent>(ev.Target);
+          head = true;
+        }
 
         if (ev.User != null)
         {
@@ -157,7 +163,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         if (mind?.Session != null)
-            _antag.SendBriefing(mind.Session, Loc.GetString("rev-role-greeting"), Color.Red, revComp.RevStartSound);
+            _antag.SendBriefing(mind.Session, Loc.GetString(head ? "head-rev-role-greeting"  :"rev-role-greeting"), Color.Red, revComp.RevStartSound);
     }
 
     //TODO: Enemies of the revolution

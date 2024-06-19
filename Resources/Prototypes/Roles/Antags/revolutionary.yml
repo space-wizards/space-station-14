@@ -19,4 +19,5 @@
   storage:
     back:
     - Flash
+    - HeadRevFlash
     - ClothingEyesGlassesSunglasses

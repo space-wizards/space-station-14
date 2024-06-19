@@ -171,6 +171,17 @@
 - type: entity
   name: flash
   parent: Flash
+  suffix: Head Revolutionary
+  id: HeadRevFlash
+  components:
+    - type: LimitedCharges
+      maxCharges: 2
+      charges: 2
+    - type: HeadRevolutionaryFlash
+
+- type: entity
+  name: flash
+  parent: Flash
   suffix: 2 charges
   id: SciFlash
   components:

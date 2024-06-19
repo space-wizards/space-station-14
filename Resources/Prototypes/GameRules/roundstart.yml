@@ -188,7 +188,7 @@
   - type: AntagSelection
     definitions:
     - prefRoles: [ HeadRev ]
-      max: 3
+      max: 1
       playerRatio: 15
       briefing:
         text: head-rev-role-greeting
