@@ -336,7 +336,13 @@ public sealed class InjectorSystem : SharedInjectorSystem
         var temporarilyRemovedSolution = new Solution();
         if (injector.Comp.ReagentWhitelist is { } reagentWhitelist)
         {
-            var reagentPrototypeWhitelistArray = reagentWhitelist.Select(x => (string) x).ToArray();
+            string[] reagentPrototypeWhitelistArray = new string[reagentWhitelist.Count];
+            var i = 0;
+            foreach (var reagent in reagentWhitelist)
+            {
+                reagentPrototypeWhitelistArray[i] = reagent;
+                ++i;
+            }
             temporarilyRemovedSolution = applicableTargetSolution.SplitSolutionWithout(applicableTargetSolution.Volume, reagentPrototypeWhitelistArray);
         }
 
