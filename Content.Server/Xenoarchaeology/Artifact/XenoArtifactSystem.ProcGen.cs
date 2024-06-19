@@ -34,7 +34,8 @@ public sealed partial class XenoArtifactSystem
         ref int segmentSize,
         int layerMinMod = 0,
         int layerMaxMod = 0,
-        bool ensureLayerConnected = false)
+        bool ensureLayerConnected = false,
+        int iteration = 0)
     {
         if (segmentSize == 0)
             return new();
@@ -51,7 +52,7 @@ public sealed partial class XenoArtifactSystem
         var nodes = new List<Entity<XenoArtifactNodeComponent>>();
         for (var i = 0; i < nodeCount; i++)
         {
-            nodes.Add(CreateRandomNode(ent));
+            nodes.Add(CreateRandomNode(ent, iteration));
         }
 
         var minMod = ent.Comp.NodeContainer.Count < 3 ? 0 : 1; // Try to stop boring linear generation.
@@ -60,7 +61,9 @@ public sealed partial class XenoArtifactSystem
             ent,
             ref segmentSize,
             layerMinMod: minMod,
-            layerMaxMod: maxMod);
+            layerMaxMod: maxMod,
+            iteration: iteration + 1);
+
         if (successors.Count == 0)
             return nodes;
 
@@ -111,12 +114,14 @@ public sealed partial class XenoArtifactSystem
         return segmentSize;
     }
 
-    private Entity<XenoArtifactNodeComponent> CreateRandomNode(Entity<XenoArtifactComponent> ent)
+    private Entity<XenoArtifactNodeComponent> CreateRandomNode(Entity<XenoArtifactComponent> ent, int depth = 0)
     {
         var proto = PrototypeManager.Index(ent.Comp.EffectWeights).Pick(RobustRandom);
 
         AddNode((ent, ent), proto, out var nodeEnt, dirty: false);
         DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
+
+        nodeEnt.Value.Comp.Depth = depth;
 
         // TODO: setup trigger or effect or smth. idk quite how we're gonna do this.
 

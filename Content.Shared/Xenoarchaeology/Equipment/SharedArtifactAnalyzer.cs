@@ -4,12 +4,6 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
 [Serializable, NetSerializable]
-public enum ArtifactAnalzyerUiKey : byte
-{
-    Key
-}
-
-[Serializable, NetSerializable]
 public sealed class AnalysisConsoleServerSelectionMessage : BoundUserInterfaceMessage
 {
 }

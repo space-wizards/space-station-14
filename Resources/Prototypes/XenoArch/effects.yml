@@ -4,3 +4,5 @@
   noSpawn: true
   components:
   - type: XenoArtifactNode
+  - type: NameIdentifier
+    group: XenoArtifactNode

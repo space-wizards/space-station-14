@@ -9,6 +9,13 @@ namespace Content.Shared.Xenoarchaeology.Artifact.Components;
 public sealed partial class XenoArtifactNodeComponent : Component
 {
     /// <summary>
+    /// Depth within the graph generation.
+    /// Used for sorting.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int Depth;
+
+    /// <summary>
     /// Denotes whether or not an artifact node has been activated through the required triggers.
     /// </summary>
     [DataField, AutoNetworkedField]

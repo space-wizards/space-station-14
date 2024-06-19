@@ -1,18 +1,14 @@
 using Content.Shared.Xenoarchaeology.Equipment;
+using Content.Shared.Xenoarchaeology.Equipment.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.Xenoarchaeology.Ui;
 
 [UsedImplicitly]
-public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
+public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private AnalysisConsoleMenu? _consoleMenu;
-
-    public AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {
@@ -49,18 +45,9 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
         };
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public void Update(Entity<AnalysisConsoleComponent> ent)
     {
-        base.UpdateState(state);
-
-        switch (state)
-        {
-            case AnalysisConsoleUpdateState msg:
-                _consoleMenu?.SetButtonsDisabled(msg);
-                _consoleMenu?.UpdateInformationDisplay(msg);
-                _consoleMenu?.UpdateProgressBar(msg);
-                break;
-        }
+        _consoleMenu?.Update(ent);
     }
 
     protected override void Dispose(bool disposing)
