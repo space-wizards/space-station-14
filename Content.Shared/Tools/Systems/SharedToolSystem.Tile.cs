@@ -39,7 +39,7 @@ public abstract partial class SharedToolSystem
             return;
         var coordinates = GetCoordinates(args.Coordinates);
 
-        var gridUid = coordinates.GetGridUid(EntityManager);
+        var gridUid = _transformSystem.GetGrid(coordinates.EntityId);
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
         {
             Log.Error("Attempted use tool on a non-existent grid?");
@@ -53,8 +53,10 @@ public abstract partial class SharedToolSystem
         if (!TryDeconstructWithToolQualities(tileRef, tool.Qualities))
             return;
 
-        AdminLogger.Add(LogType.LatticeCut, LogImpact.Medium,
-                $"{ToPrettyString(args.User):player} used {ToPrettyString(ent)} to edit the tile at {args.Coordinates}");
+        AdminLogger.Add(
+            LogType.LatticeCut,
+            LogImpact.Medium,
+            $"{ToPrettyString(args.User):player} used {ToPrettyString(ent)} to edit the tile at {args.Coordinates}");
         args.Handled = true;
     }
 
@@ -66,7 +68,7 @@ public abstract partial class SharedToolSystem
         var comp = ent.Comp1!;
         var tool = ent.Comp2!;
 
-        if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out var gridUid, out var mapGrid))
+        if (!_mapManager.TryFindGridAt(_transformSystem.ToMapCoordinates(clickLocation), out var gridUid, out var mapGrid))
             return false;
 
         var tileRef = _maps.GetTileRef(gridUid, mapGrid, clickLocation);
