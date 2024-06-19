@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: spears, darts, and hypodarts can inject targets again.
-    type: Fix
-  - message: arrows can no longer inject targets they don't actually hit.
-    type: Fix
-  id: 6280
-  time: '2024-04-01T03:39:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26268
-- author: SoulFN
-  changes:
-  - message: Changed textures of the assault borg modules
-    type: Tweak
-  id: 6281
-  time: '2024-04-01T04:21:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26502
 - author: Keer-Sar
   changes:
   - message: Cyborgs now have audio for some emotes.
@@ -3847,3 +3831,17 @@
   id: 6779
   time: '2024-06-19T13:21:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29187
+- author: Just_Art
+  changes:
+  - message: Musician's jumpskirt added to loadouts.
+    type: Add
+  id: 6780
+  time: '2024-06-19T14:06:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29203
+- author: Flareguy
+  changes:
+  - message: Made the HOS's cap look significantly better.
+    type: Tweak
+  id: 6781
+  time: '2024-06-19T14:49:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29208

@@ -1,13 +1,14 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.RadioJammer;
+namespace Content.Shared.Radio.Components;
 
 /// <summary>
 /// When activated (<see cref="ActiveRadioJammerComponent"/>) prevents from sending messages in range
 /// Suit sensors will also stop working.
 /// </summary>
 [NetworkedComponent, RegisterComponent]
+[AutoGenerateComponentState]
 public sealed partial class RadioJammerComponent : Component
 {
     [DataDefinition]
@@ -26,7 +27,7 @@ public sealed partial class RadioJammerComponent : Component
         public float Range;
 
         /// <summary>
-        /// The message that is displayed when switched 
+        /// The message that is displayed when switched.
         /// to this setting.
         /// </summary>
         [DataField(required: true)]
@@ -49,6 +50,7 @@ public sealed partial class RadioJammerComponent : Component
     /// Index of the currently selected setting.
     /// </summary>
     [DataField]
+    [AutoNetworkedField]
     public int SelectedPowerLevel = 1;
 }
 
