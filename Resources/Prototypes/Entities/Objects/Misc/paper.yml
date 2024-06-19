@@ -413,7 +413,7 @@
   name: CentComm folder
   parent: BoxFolderBase
   suffix: DO NOT MAP
-  description: CentCom's miserable little pile of secrets!
+  description: CentComm's miserable little pile of secrets!
   components:
   - type: Sprite
     layers:
