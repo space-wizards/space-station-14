@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: Radio jammers now actually block suit sensors.
-    type: Fix
-  id: 6278
-  time: '2024-04-01T02:13:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26632
 - author: Flareguy
   changes:
   - message: All wheeled objects now have lower friction. Portable items, like fuel
@@ -3850,3 +3843,10 @@
   id: 6777
   time: '2024-06-19T02:28:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29147
+- author: HolySSSS
+  changes:
+  - message: Short Raffle is now much shorter.
+    type: Tweak
+  id: 6778
+  time: '2024-06-19T02:41:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28685
