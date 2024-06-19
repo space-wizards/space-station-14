@@ -442,6 +442,15 @@
 
 - type: entity
   parent: BaseThiefStealAnimalObjective
+  id: PipiStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: AnimalPipi
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealAnimalObjective
   id: McGriffStealObjective
   components:
   - type: NotJobRequirement
