@@ -2,7 +2,10 @@ thief-backpack-window-title = thief toolbox
 
 thief-backpack-window-description =
     Inside are your tools of the trade, which will dissolve when you're ready.
-    Choose two different kits.
+    Choose {$maxCount} different {$maxCount ->
+        [1] set
+        *[other] sets
+    } from the list.
 
 thief-backpack-window-selected = Kits selected: ({$selectedCount}/{$maxCount})
 
