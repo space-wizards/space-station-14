@@ -51,3 +51,11 @@
     weight: 2
   - type: LoadMapRule
     preloadedGrid: SyndieEvacPod
+
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: UnknownShuttlePirateShip
+  components:
+  - type: StationEvent
+  - type: LoadMapRule
+    preloadedGrid: PirateShip

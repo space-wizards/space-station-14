@@ -27,3 +27,8 @@
   id: SyndieEvacPod
   path: /Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml
   copies: 2
+
+- type: preloadedGrid
+  id: PirateShip
+  path: /Maps/Shuttles/ShuttleEvent/pirate.yml
+  copies: 1
