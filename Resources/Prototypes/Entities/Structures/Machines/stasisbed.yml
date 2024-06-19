@@ -47,15 +47,9 @@
     board: StasisBedMachineCircuitboard
   - type: Physics
     bodyType: Static
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.05"
-        density: 190
-        mask:
-        - LowImpassable
+  - type: Anchorable
+    flags: 0
+  - type: Climbable
   - type: GuideHelp
     guides:
     - Medical Doctor

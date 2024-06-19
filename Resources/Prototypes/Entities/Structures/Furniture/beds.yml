@@ -20,6 +20,8 @@
         density: 190
         mask:
         - TableMask
+        layer:
+        - TableLayer
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: bed
@@ -55,7 +57,9 @@
     anchored: true
     noRot: true
   - type: Anchorable
+    flags: 0
   - type: Pullable
+  - type: Climbable
 
 
 - type: entity

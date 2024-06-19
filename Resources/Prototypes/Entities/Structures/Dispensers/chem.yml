@@ -5,6 +5,17 @@
   parent: ReagentDispenserBase
   description: An industrial grade chemical dispenser.
   components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Sprite
     sprite: Structures/dispensers.rsi
     state: industrial-working
