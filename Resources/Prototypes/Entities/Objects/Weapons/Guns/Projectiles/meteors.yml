@@ -41,7 +41,7 @@
     explosionType: Default
     intensitySlope: 2
     maxIntensity: 100
-    maxTileBreak: 0.25
+    maxTileBreak: 1
     tileBreakScale: 2
 
 
