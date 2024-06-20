@@ -1384,7 +1384,12 @@ public abstract class SharedStorageSystem : EntitySystem
 
         // If we specify a max item size, use that
         if (uid.Comp.MaxItemSize != null)
-            return _prototype.Index(uid.Comp.MaxItemSize.Value);
+        {
+            if (_prototype.TryIndex(uid.Comp.MaxItemSize.Value, out var proto))
+                return proto;
+
+            Log.Error($"{ToPrettyString(uid.Owner)} tried to get invalid item size prototype: {uid.Comp.MaxItemSize.Value}. Stack trace:\\n{Environment.StackTrace}");
+        }
 
         if (!_itemQuery.TryGetComponent(uid, out var item))
             return _defaultStorageMaxItemSize;
