@@ -3,15 +3,15 @@ ghost-role-component-default-rules = All normal rules apply unless an administra
                                      You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                      You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                      You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
-ghost-role-information-nonantagonist-rules = You are a [color=green][bold]Non-antagonist[/bold][/color]. You are generally protected by Space Law, and should not seek to harm the station and its crew.
+ghost-role-information-nonantagonist-rules = You are a [color=green][bold]Non-antagonist[/bold][/color]. You should generally not seek to harm the station and its crew.
                                              You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                              You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                              You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
-ghost-role-information-freeagent-rules = You are a [color=yellow][bold]Free Agent[/bold][/color]. You are not protected by Space Law, and you do not have to be bound by it if you so choose.
+ghost-role-information-freeagent-rules = You are a [color=yellow][bold]Free Agent[/bold][/color]. You are free to act as either an antagonist or a non-antagonist.
                                          You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                          You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                          You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
-ghost-role-information-antagonist-rules = You are a [color=red][bold]Solo Antagonist[/bold][/color]. Your intentions are clear, and harmful to the station and its crew. You are not bound by Space Law.
+ghost-role-information-antagonist-rules = You are a [color=red][bold]Solo Antagonist[/bold][/color]. Your intentions are clear, and harmful to the station and its crew.
                                           You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                           You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                           You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
