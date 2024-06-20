@@ -110,13 +110,12 @@ public sealed partial class ShakeableSystem : EntitySystem
             return false;
 
         //Try to mix chemicals
-        if (_solution.TryGetMixableSolution(entity.Owner, out var solution, out _) && EntityManager.TryGetComponent<ReactionMixerComponent>(entity, out var mixer))
+        if (EntityManager.TryGetComponent<ReactionMixerComponent>(entity, out var mixer) && _solution.TryGetMixableSolution(entity.Owner, out var solution, out _))
             _solution.UpdateChemicals(solution.Value, true, mixer);
 
 
         var ev = new ShakeEvent(user);
         RaiseLocalEvent(entity, ref ev);
-
 
         return true;
     }
