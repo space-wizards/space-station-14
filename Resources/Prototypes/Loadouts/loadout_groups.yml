@@ -402,7 +402,6 @@
 - type: loadoutGroup
   id: MimeMask
   name: loadout-group-mime-mask
-  minLimit: 0
   loadouts:
   - MimeMask
   - MimeMaskSad
@@ -431,11 +430,53 @@
   - MimeWintercoat
 
 - type: loadoutGroup
+  id: MusicianJumpsuit
+  name: loadout-group-musician-jumpsuit
+  loadouts:
+  - MusicianJumpsuit
+  - MusicianJumpskirt
+
+- type: loadoutGroup
   id: MusicianOuterClothing
   name: loadout-group-musician-outerclothing
   minLimit: 0
   loadouts:
   - MusicianWintercoat
+
+- type: loadoutGroup
+  id: Instruments
+  name: loadout-group-instruments
+  minLimit: 0
+  maxLimit: 2
+  loadouts:
+  - Glockenspiel
+  - MusicBox
+  - Xylophone
+  - Microphone
+  - Synthesizer
+  - Kalimba
+  - Woodblock
+  - ElectricGuitar
+  - BassGuitar
+  - RockGuitar
+  - AcousticGuitar
+  - Banjo
+  - Violin
+  - Viola
+  - Cello
+  - Trumpet
+  - Trombone
+  - FrenchHorn
+  - Euphonium
+  - Saxophone
+  - Accordion
+  - Harmonica
+  - Clarinet
+  - Flute
+  - Recorder
+  - PanFlute
+  - Ocarina
+  - Bagpipe
 
 # Cargo
 - type: loadoutGroup
@@ -883,6 +924,7 @@
   name: loadout-group-security-shoes
   loadouts:
   - CombatBoots
+  - JackBoots
   - SecurityWinterBoots
 
 - type: loadoutGroup
