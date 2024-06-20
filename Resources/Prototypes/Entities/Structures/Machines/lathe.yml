@@ -196,18 +196,21 @@
       - WeaponCapacitorRechargerCircuitboard
       - HandheldStationMap
       - ClothingHeadHatWelding
+      - WetFloorSign
+      - ClothingHeadHatCone
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
       - BoxShotgunFlare
       - BoxShotgunSlug
+      - CombatKnife
       - MagazineBoxLightRifle
       - MagazineBoxMagnum
       - MagazineBoxPistol
       - MagazineBoxRifle
       - MagazineLightRifle
       - MagazineLightRifleEmpty
-      - MagazinePistol 
+      - MagazinePistol
       - MagazinePistolEmpty
       - MagazinePistolSubMachineGun
       - MagazinePistolSubMachineGunEmpty
@@ -307,6 +310,7 @@
       - WeaponGauntletGorilla
       - SynthesizerInstrument
       - ClothingShoesBootsMagSci
+      - ClothingShoesBootsMoon
       - ClothingShoesBootsSpeed
       - NodeScanner
       - HolofanProjector
@@ -706,9 +710,10 @@
     staticRecipes:
       - BoxLethalshot
       - BoxShotgunFlare
-      - BoxShotgunPractice 
+      - BoxShotgunPractice
       - BoxShotgunSlug
       - ClothingEyesHudSecurity
+      - CombatKnife
       - Flash
       - ForensicPad
       - Handcuffs
@@ -722,7 +727,7 @@
       - MagazineBoxRiflePractice
       - MagazineLightRifle
       - MagazineLightRifleEmpty
-      - MagazinePistol 
+      - MagazinePistol
       - MagazinePistolEmpty
       - MagazinePistolSubMachineGun
       - MagazinePistolSubMachineGunEmpty
@@ -835,8 +840,8 @@
         - MagazineBoxRifle
         - MagazineLightRifle
         - MagazineLightRifleEmpty
-        - MagazinePistol 
-        - MagazinePistolEmpty 
+        - MagazinePistol
+        - MagazinePistolEmpty
         - MagazineRifle
         - MagazineRifleEmpty
         - MagazineShotgun
