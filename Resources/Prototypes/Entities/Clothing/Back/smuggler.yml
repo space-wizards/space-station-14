@@ -53,7 +53,7 @@
         prob: 0.025
         maxAmount: 5
         orGroup: Generic3
-      - id: StrangePill   #move to pill bottle?
+      - id: StrangePill
         prob: 0.025
         maxAmount: 5
         orGroup: Generic3
@@ -282,6 +282,9 @@
       - id: ChemDispenserMachineCircuitboard
         prob: 0.05
         orGroup: Circuitboards
+      - id: SyndicateMicrowaveMachineCircuitboard
+        prob: 0.05
+        orGroup: Circuitboards
       - id: HydroponicsTrayMachineCircuitboard
         prob: 0.05
         orGroup: Circuitboards
@@ -294,7 +297,16 @@
       - id: PortableGeneratorSuperPacmanMachineCircuitboard
         prob: 0.05
         orGroup: Circuitboards
+      - id: HellfireFreezerMachineCircuitBoard
+        prob: 0.05
+        orGroup: Circuitboards
+      - id: HellfireHeaterMachineCircuitBoard
+        prob: 0.05
+        orGroup: Circuitboards
       - id: ReagentGrinderMachineCircuitboard
+        prob: 0.05
+        orGroup: Circuitboards
+      - id: ReagentGrinderIndustrialMachineCircuitboard
         prob: 0.05
         orGroup: Circuitboards
       - id: BoozeDispenserMachineCircuitboard
@@ -303,13 +315,19 @@
       - id: MiniGravityGeneratorCircuitboard
         prob: 0.05
         orGroup: Circuitboards
-      - id: TraversalDistorterMachineCircuitboard
+      - id: AmmoTechFabCircuitboard
         prob: 0.05
         orGroup: Circuitboards
       - id: CryoPodMachineCircuitboard
         prob: 0.05
         orGroup: Circuitboards
+      - id: PowerCageRechargerCircuitboard
+        prob: 0.05
+        orGroup: Circuitboards
       - id: ShuttleConsoleCircuitboard
+        prob: 0.05
+        orGroup: Circuitboards
+      - id: TurboItemRechargerCircuitboard
         prob: 0.05
         orGroup: Circuitboards
       - id: SpaceCash
@@ -639,26 +657,26 @@
 
       - id: SpaceCash100
         prob: 0.95
-        orGroup: Alchohol
+        orGroup: alcohol
       - id: DrinkCognacBottleFull
         prob: 0.10
         maxAmount: 4
-        orGroup: Alchohol
+        orGroup: alcohol
       - id: DrinkGildlagerBottleFull
         prob: 0.10
         maxAmount: 4
-        orGroup: Alchohol
+        orGroup: alcohol
       - id: DrinkPatronBottleFull
         prob: 0.10
         maxAmount: 4
-        orGroup: Alchohol
+        orGroup: alcohol
       - id: DrinkRumBottleFull
         prob: 0.10
         maxAmount: 4
-        orGroup: Alchohol
+        orGroup: alcohol
       - id: SpaceCash
         prob: 0.10
-        orGroup: Alchohol #4x medium
+        orGroup: alcohol  #4x medium
 
       - id: SpaceCash100
         prob: 0.95
@@ -817,7 +835,7 @@
 
       - id: SpaceCash100
         prob: 0.95
-        orGroup: Alchohol
+        orGroup: Gear
       - id: JetpackMiniFilled
         prob: 0.10
         orGroup: Gear
@@ -860,6 +878,12 @@
         orGroup: Gadgets
       - id: HoloClownInjector
         prob: 0.02
+        orGroup: Gadgets
+      - id: MagicalLamp
+        prob: 0.01
+        orGroup: Gadgets
+      - id: ChameleonProjector
+        prob: 0.01
         orGroup: Gadgets
       - id: SpaceCash
         prob: 0.02
