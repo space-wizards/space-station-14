@@ -55,9 +55,6 @@ public sealed class WarDeclaratorSystem : EntitySystem
 
     private void OnActivated(Entity<WarDeclaratorComponent> ent, ref WarDeclaratorActivateMessage args)
     {
-        if (args.Session.AttachedEntity is not {} playerEntity)
-            return;
-
         var ev = new WarDeclaredEvent(ent.Comp.CurrentStatus, ent);
         RaiseLocalEvent(ref ev);
 
@@ -75,7 +72,7 @@ public sealed class WarDeclaratorSystem : EntitySystem
         {
             var title = Loc.GetString(ent.Comp.SenderTitle);
             _chat.DispatchGlobalAnnouncement(ent.Comp.Message, title, true, ent.Comp.Sound, ent.Comp.Color);
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(playerEntity):player} has declared war with this text: {ent.Comp.Message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(args.Actor):player} has declared war with this text: {ent.Comp.Message}");
         }
 
         UpdateUI(ent, ev.Status);
@@ -83,8 +80,8 @@ public sealed class WarDeclaratorSystem : EntitySystem
 
     private void UpdateUI(Entity<WarDeclaratorComponent> ent, WarConditionStatus? status = null)
     {
-        _userInterfaceSystem.TrySetUiState(
-            ent,
+        _userInterfaceSystem.SetUiState(
+            ent.Owner,
             WarDeclaratorUiKey.Key,
             new WarDeclaratorBoundUserInterfaceState(status, ent.Comp.DisableAt, ent.Comp.ShuttleDisabledTime));
     }

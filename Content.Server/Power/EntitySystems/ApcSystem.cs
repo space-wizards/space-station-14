@@ -8,6 +8,7 @@ using Content.Shared.APC;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -44,7 +45,7 @@ public sealed class ApcSystem : EntitySystem
         var query = EntityQueryEnumerator<ApcComponent, PowerNetworkBatteryComponent, UserInterfaceComponent>();
         while (query.MoveNext(out var uid, out var apc, out var battery, out var ui))
         {
-            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
+            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime && _ui.IsUiOpen((uid, ui), ApcUiKey.Key))
             {
                 apc.LastUiUpdate = _gameTiming.CurTime;
                 UpdateUIState(uid, apc, battery);
@@ -66,11 +67,8 @@ public sealed class ApcSystem : EntitySystem
     //Update the HasAccess var for UI to read
     private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
     {
-        if (args.Session.AttachedEntity == null)
-            return;
-
         // TODO: this should be per-player not stored on the apc
-        component.HasAccess = _accessReader.IsAllowed(args.Session.AttachedEntity.Value, uid);
+        component.HasAccess = _accessReader.IsAllowed(args.Actor, uid);
         UpdateApcState(uid, component);
     }
 
@@ -81,21 +79,18 @@ public sealed class ApcSystem : EntitySystem
         if (attemptEv.Cancelled)
         {
             _popup.PopupCursor(Loc.GetString("apc-component-on-toggle-cancel"),
-                args.Session, PopupType.Medium);
+                args.Actor, PopupType.Medium);
             return;
         }
 
-        if (args.Session.AttachedEntity == null)
-            return;
-
-        if (_accessReader.IsAllowed(args.Session.AttachedEntity.Value, uid))
+        if (_accessReader.IsAllowed(args.Actor, uid))
         {
             ApcToggleBreaker(uid, component);
         }
         else
         {
             _popup.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
-                args.Session, PopupType.Medium);
+                args.Actor, PopupType.Medium);
         }
     }
 
@@ -153,12 +148,16 @@ public sealed class ApcSystem : EntitySystem
             return;
 
         var battery = netBat.NetworkBattery;
+        const int ChargeAccuracy = 5;
+
+        // TODO: Fix ContentHelpers or make a new one coz this is cooked.
+        var charge = ContentHelpers.RoundToNearestLevels(battery.CurrentStorage / battery.Capacity, 1.0, 100 / ChargeAccuracy) / 100f * ChargeAccuracy;
 
         var state = new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.HasAccess,
             (int) MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
-            battery.CurrentStorage / battery.Capacity);
+            charge);
 
-        _ui.TrySetUiState(uid, ApcUiKey.Key, state, ui: ui);
+        _ui.SetUiState((uid, ui), ApcUiKey.Key, state);
     }
 
     private ApcChargeState CalcChargeState(EntityUid uid, PowerState.Battery battery)

@@ -3,6 +3,7 @@
   name: trait-blindness-name
   description: trait-blindness-desc
   traitGear: WhiteCane
+  category: Disabilities
   whitelist:
     components:
       - Blindable
@@ -10,9 +11,23 @@
     - type: PermanentBlindness
 
 - type: trait
+  id: PoorVision
+  name: trait-poor-vision-name
+  description: trait-poor-vision-desc
+  traitGear: ClothingEyesGlasses
+  category: Disabilities
+  whitelist:
+    components:
+      - Blindable
+  components:
+    - type: PermanentBlindness
+      blindness: 4
+
+- type: trait
   id: Narcolepsy
   name: trait-narcolepsy-name
   description: trait-narcolepsy-desc
+  category: Disabilities
   components:
     - type: Narcolepsy
       timeBetweenIncidents: 300, 600
@@ -22,13 +37,43 @@
   id: Pacifist
   name: trait-pacifist-name
   description: trait-pacifist-desc
+  category: Disabilities
   components:
     - type: Pacified
+
+- type: trait
+  id: Unrevivable
+  name: trait-unrevivable-name
+  description: trait-unrevivable-desc
+  category: Disabilities
+  components:
+    - type: Unrevivable
+
+- type: trait
+  id: Muted
+  name: trait-muted-name
+  description: trait-muted-desc
+  category: Disabilities
+  blacklist:
+    components:
+      - BorgChassis
+  components:
+    - type: Muted
+
+- type: trait
+  id: LightweightDrunk
+  name: trait-lightweight-name
+  description: trait-lightweight-desc
+  category: Disabilities
+  components:
+    - type: LightweightDrunk
+      boozeStrengthMultiplier: 2
 
 - type: trait
   id: Paracusia
   name: trait-paracusia-name
   description: trait-paracusia-desc
+  category: Disabilities
   components:
     - type: Paracusia
       minTimeBetweenIncidents: 0.1
@@ -38,32 +83,9 @@
         collection: Paracusia
 
 - type: trait
-  id: Unrevivable
-  name: trait-unrevivable-name
-  description: trait-unrevivable-desc
-  components:
-    - type: Unrevivable
-
-- type: trait
-  id: Muted
-  name: trait-muted-name
-  description: trait-muted-desc
-  blacklist:
-    components:
-      - BorgChassis
-  components:
-    - type: Muted
-
-- type: trait
-  id: FrontalLisp
-  name: trait-frontal-lisp-name
-  description: trait-frontal-lisp-desc
-  components:
-    - type: FrontalLisp
-
-- type: trait
   id: Snoring
   name: trait-snoring-name
   description: trait-snoring-desc
+  category: Disabilities
   components:
     - type: Snoring

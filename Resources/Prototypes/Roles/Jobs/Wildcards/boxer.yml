@@ -13,13 +13,10 @@
 - type: startingGear
   id: BoxerGear
   equipment:
-    jumpsuit: UniformShortsRed
-    back: ClothingBackpackFilled
     id: BoxerPDA
     ears: ClothingHeadsetService
-    gloves: ClothingHandsGlovesBoxingRed
     shoes: ClothingShoesColorRed
     belt: ClothingBeltChampion
-  innerClothingSkirt: UniformShortsRedWithTop
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  #storage:
+    #back:
+    #- Stuff

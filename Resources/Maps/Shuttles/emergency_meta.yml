@@ -68,6 +68,10 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+    - type: DeviceNetwork
+      configurators: []
+      deviceLists: []
+      transmitFrequencyId: ShuttleTimer
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -461,85 +465,6 @@ entities:
     - type: RadiationGridResistance
     - type: GravityShake
       shakeTimes: 10
-- proto: ActionToggleLight
-  entities:
-  - uid: 4
-    components:
-    - type: Transform
-      parent: 3
-    - type: InstantAction
-      container: 3
-  - uid: 5
-    components:
-    - type: Transform
-      parent: 3
-    - type: InstantAction
-      container: 3
-  - uid: 12
-    components:
-    - type: Transform
-      parent: 11
-    - type: InstantAction
-      container: 11
-  - uid: 13
-    components:
-    - type: Transform
-      parent: 11
-    - type: InstantAction
-      container: 11
-  - uid: 22
-    components:
-    - type: Transform
-      parent: 21
-    - type: InstantAction
-      container: 21
-  - uid: 23
-    components:
-    - type: Transform
-      parent: 21
-    - type: InstantAction
-      container: 21
-  - uid: 32
-    components:
-    - type: Transform
-      parent: 31
-    - type: InstantAction
-      container: 31
-  - uid: 33
-    components:
-    - type: Transform
-      parent: 31
-    - type: InstantAction
-      container: 31
-  - uid: 42
-    components:
-    - type: Transform
-      parent: 41
-    - type: InstantAction
-      container: 41
-  - uid: 43
-    components:
-    - type: Transform
-      parent: 41
-    - type: InstantAction
-      container: 41
-- proto: ActionToggleSuitPiece
-  entities:
-  - uid: 51
-    components:
-    - type: Transform
-      parent: 50
-    - type: InstantAction
-      container: 50
-      entIcon: 52
-- proto: ActionVendingThrow
-  entities:
-  - uid: 54
-    components:
-    - type: Transform
-      parent: 53
-    - type: InstantAction
-      container: 53
 - proto: AirCanister
   entities:
   - uid: 55
@@ -2600,27 +2525,8 @@ entities:
     components:
     - type: Transform
       parent: 2
-    - type: HandheldLight
-      selfToggleActionEntity: 5
-      toggleActionEntity: 4
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 6
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 4
-          - 5
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: Actions
-      actions:
-      - 5
     - type: InsideEntityStorage
 - proto: ClothingMaskBreath
   entities:
@@ -2751,23 +2657,8 @@ entities:
     - type: Transform
       pos: 11.467667,-10.363369
       parent: 1
-    - type: ToggleableClothing
-      clothingUid: 52
-      actionEntity: 51
-    - type: ContainerContainer
-      containers:
-        toggleable-clothing: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 52
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 51
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
 - proto: ClothingOuterSuitFire
   entities:
   - uid: 8
@@ -3287,102 +3178,26 @@ entities:
     components:
     - type: Transform
       parent: 10
-    - type: HandheldLight
-      selfToggleActionEntity: 13
-      toggleActionEntity: 12
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 14
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 12
-          - 13
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: Actions
-      actions:
-      - 13
   - uid: 21
     components:
     - type: Transform
       parent: 20
-    - type: HandheldLight
-      selfToggleActionEntity: 23
-      toggleActionEntity: 22
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 24
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 22
-          - 23
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: Actions
-      actions:
-      - 23
   - uid: 31
     components:
     - type: Transform
       parent: 30
-    - type: HandheldLight
-      selfToggleActionEntity: 33
-      toggleActionEntity: 32
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 34
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 32
-          - 33
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: Actions
-      actions:
-      - 33
   - uid: 41
     components:
     - type: Transform
       parent: 40
-    - type: HandheldLight
-      selfToggleActionEntity: 43
-      toggleActionEntity: 42
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 44
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 42
-          - 43
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: Actions
-      actions:
-      - 43
 - proto: FoodBoxDonut
   entities:
   - uid: 583
@@ -7513,17 +7328,6 @@ entities:
     - type: Transform
       pos: 16.5,-0.5
       parent: 1
-    - type: VendingMachine
-      actionEntity: 54
-    - type: Actions
-      actions:
-      - 54
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 54
 - proto: VendingMachineWallMedical
   entities:
   - uid: 926

@@ -1,0 +1,471 @@
+# Command
+- type: roleLoadout
+  id: JobCaptain
+  groups:
+  - CaptainHead
+  - CaptainNeck
+  - CaptainJumpsuit
+  - CaptainBackpack
+  - CaptainOuterClothing
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobHeadOfPersonnel
+  groups:
+  - HoPHead
+  - HoPNeck
+  - HoPJumpsuit
+  - HoPBackpack
+  - HoPOuterClothing
+  - Glasses
+  - Trinkets
+  - Survival
+
+# Civilian
+- type: roleLoadout
+  id: JobPassenger
+  groups:
+  - PassengerJumpsuit
+  - CommonBackpack
+  - PassengerFace
+  - PassengerGloves
+  - PassengerOuterClothing
+  - PassengerShoes
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobBartender
+  groups:
+  - BartenderHead
+  - BartenderJumpsuit
+  - CommonBackpack
+  - BartenderOuterClothing
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobServiceWorker
+  groups:
+  - BartenderJumpsuit
+  - CommonBackpack
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobChef
+  groups:
+  - ChefHead
+  - ChefMask
+  - ChefJumpsuit
+  - CommonBackpack
+  - ChefOuterClothing
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobLibrarian
+  groups:
+  - LibrarianJumpsuit
+  - CommonBackpack
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobLawyer
+  groups:
+  - LawyerNeck
+  - LawyerJumpsuit
+  - CommonBackpack
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobChaplain
+  groups:
+  - ChaplainHead
+  - ChaplainMask
+  - ChaplainNeck
+  - ChaplainJumpsuit
+  - CommonBackpack
+  - ChaplainOuterClothing
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobJanitor
+  groups:
+  - JanitorHead
+  - JanitorJumpsuit
+  - JanitorGloves
+  - CommonBackpack
+  - JanitorOuterClothing
+  - Glasses
+  - Trinkets
+  - JanitorPlunger
+  - Survival
+
+- type: roleLoadout
+  id: JobBotanist
+  groups:
+  - BotanistHead
+  - BotanistJumpsuit
+  - BotanistBackpack
+  - BotanistOuterClothing
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobClown
+  groups:
+  - ClownHead
+  - ClownJumpsuit
+  - ClownBackpack
+  - ClownOuterClothing
+  - ClownShoes
+  - Glasses
+  - Trinkets
+  - SurvivalClown
+
+- type: roleLoadout
+  id: JobMime
+  groups:
+  - MimeHead
+  - MimeMask
+  - MimeJumpsuit
+  - MimeBackpack
+  - MimeOuterClothing
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobMusician
+  groups:
+  - MusicianJumpsuit
+  - CommonBackpack
+  - MusicianOuterClothing
+  - Glasses
+  - Trinkets
+  - Instruments
+  - Survival
+
+# Cargo
+- type: roleLoadout
+  id: JobQuartermaster
+  groups:
+  - QuartermasterHead
+  - QuartermasterNeck
+  - QuartermasterJumpsuit
+  - CargoTechnicianBackpack
+  - QuartermasterOuterClothing
+  - QuartermasterShoes
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobCargoTechnician
+  groups:
+  - CargoTechnicianHead
+  - CargoTechnicianJumpsuit
+  - CargoTechnicianBackpack
+  - CargoTechnicianOuterClothing
+  - CargoTechnicianShoes
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobSalvageSpecialist
+  groups:
+  - SalvageSpecialistBackpack
+  - SalvageSpecialistOuterClothing
+  - SalvageSpecialistShoes
+  - Glasses
+  - Trinkets
+  - Survival
+
+# Engineering
+- type: roleLoadout
+  id: JobChiefEngineer
+  groups:
+  - ChiefEngineerHead
+  - ChiefEngineerJumpsuit
+  - StationEngineerBackpack
+  - ChiefEngineerNeck
+  - ChiefEngineerOuterClothing
+  - ChiefEngineerShoes
+  - Trinkets
+  - SurvivalExtended
+
+- type: roleLoadout
+  id: JobTechnicalAssistant
+  groups:
+  - TechnicalAssistantJumpsuit
+  - StationEngineerBackpack
+  - Trinkets
+  - SurvivalExtended
+
+- type: roleLoadout
+  id: JobStationEngineer
+  groups:
+  - StationEngineerHead
+  - StationEngineerJumpsuit
+  - StationEngineerBackpack
+  - StationEngineerOuterClothing
+  - StationEngineerShoes
+  - StationEngineerID
+  - Trinkets
+  - SurvivalExtended
+
+- type: roleLoadout
+  id: JobAtmosphericTechnician
+  groups:
+  - AtmosphericTechnicianJumpsuit
+  - AtmosphericTechnicianBackpack
+  - AtmosphericTechnicianOuterClothing
+  - AtmosphericTechnicianShoes
+  - Trinkets
+  - SurvivalExtended
+
+# Science
+- type: roleLoadout
+  id: JobResearchDirector
+  groups:
+  - ResearchDirectorHead
+  - ResearchDirectorNeck
+  - ResearchDirectorJumpsuit
+  - ScientistBackpack
+  - ResearchDirectorOuterClothing
+  - ScientistGloves
+  - ResearchDirectorShoes
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobScientist
+  groups:
+  - ScientistHead
+  - ScientistNeck
+  - ScientistJumpsuit
+  - ScientistBackpack
+  - ScientistOuterClothing
+  - ScientistGloves
+  - ScientistShoes
+  - ScientistPDA
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobResearchAssistant
+  groups:
+  - ResearchAssistantJumpsuit
+  - ScientistBackpack
+  - Glasses
+  - Trinkets
+  - Survival
+
+# Security
+- type: roleLoadout
+  id: JobHeadOfSecurity
+  groups:
+  - HeadofSecurityHead
+  - HeadofSecurityNeck
+  - HeadofSecurityJumpsuit
+  - SecurityBackpack
+  - SecurityBelt
+  - HeadofSecurityOuterClothing
+  - SecurityShoes
+  - Trinkets
+  - SurvivalSecurity
+
+- type: roleLoadout
+  id: JobWarden
+  groups:
+  - WardenHead
+  - WardenJumpsuit
+  - SecurityBackpack
+  - SecurityBelt
+  - WardenOuterClothing
+  - SecurityShoes
+  - Trinkets
+  - SurvivalSecurity
+
+- type: roleLoadout
+  id: JobSecurityOfficer
+  groups:
+  - SecurityHead
+  - SecurityJumpsuit
+  - SecurityBackpack
+  - SecurityOuterClothing
+  - SecurityShoes
+  - SecurityPDA
+  - SecurityBelt
+  - Trinkets
+  - SurvivalSecurity
+
+- type: roleLoadout
+  id: JobDetective
+  groups:
+  - DetectiveHead
+  - DetectiveNeck
+  - DetectiveJumpsuit
+  - SecurityBackpack
+  - DetectiveOuterClothing
+  - SecurityShoes
+  - Trinkets
+  - SurvivalSecurity
+
+- type: roleLoadout
+  id: JobSecurityCadet
+  groups:
+  - SecurityCadetJumpsuit
+  - SecurityBackpack
+  - Trinkets
+  - SurvivalSecurity
+
+# Medical
+- type: roleLoadout
+  id: JobChiefMedicalOfficer
+  groups:
+  - ChiefMedicalOfficerHead
+  - MedicalMask
+  - ChiefMedicalOfficerJumpsuit
+  - MedicalGloves
+  - MedicalBackpack
+  - ChiefMedicalOfficerOuterClothing
+  - ChiefMedicalOfficerNeck
+  - ChiefMedicalOfficerShoes
+  - Glasses
+  - Trinkets
+  - SurvivalMedical
+
+- type: roleLoadout
+  id: JobMedicalDoctor
+  groups:
+  - MedicalDoctorHead
+  - MedicalMask
+  - MedicalDoctorJumpsuit
+  - MedicalGloves
+  - MedicalBackpack
+  - MedicalDoctorOuterClothing
+  - MedicalShoes
+  - MedicalDoctorPDA
+  - Glasses
+  - Trinkets
+  - SurvivalMedical
+
+- type: roleLoadout
+  id: JobMedicalIntern
+  groups:
+  - MedicalInternJumpsuit
+  - MedicalBackpack
+  - Glasses
+  - Trinkets
+  - SurvivalMedical
+
+- type: roleLoadout
+  id: JobChemist
+  groups:
+  - MedicalMask
+  - ChemistJumpsuit
+  - MedicalGloves
+  - ChemistBackpack
+  - ChemistOuterClothing
+  - MedicalShoes
+  - Trinkets
+  - SurvivalMedical
+
+- type: roleLoadout
+  id: JobParamedic
+  groups:
+  - ParamedicHead
+  - MedicalMask
+  - ParamedicJumpsuit
+  - MedicalGloves
+  - MedicalBackpack
+  - ParamedicOuterClothing
+  - ParamedicShoes
+  - Glasses
+  - Trinkets
+  - SurvivalMedical
+
+# Wildcards
+- type: roleLoadout
+  id: JobZookeeper
+  groups:
+  - CommonBackpack
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobReporter
+  groups:
+  - ReporterJumpsuit
+  - CommonBackpack
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobPsychologist
+  groups:
+  - MedicalBackpack
+  - Glasses
+  - Trinkets
+  - Survival
+
+- type: roleLoadout
+  id: JobBoxer
+  groups:
+  - BoxerJumpsuit
+  - BoxerGloves
+  - CommonBackpack
+  - Glasses
+  - Trinkets
+  - Survival
+
+# These loadouts will be used without player configuration, thus they must be designed to work without manual selection
+
+- type: roleLoadout
+  id: LoadoutSurvivalStandard
+  groups:
+  - Survival
+
+- type: roleLoadout
+  id: LoadoutSurvivalClown
+  groups:
+  - SurvivalClown
+
+- type: roleLoadout
+  id: LoadoutSurvivalExtended
+  groups:
+  - SurvivalExtended
+
+- type: roleLoadout
+  id: LoadoutSurvivalMedical
+  groups:
+  - SurvivalMedical
+
+- type: roleLoadout
+  id: LoadoutSurvivalSecurity
+  groups:
+  - SurvivalSecurity
+
+- type: roleLoadout
+  id: LoadoutSurvivalSyndicate
+  groups:
+  - SurvivalSyndicate

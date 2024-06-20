@@ -10,6 +10,8 @@
       makeSentient: true
       name: ghost-role-information-behonker-name
       description: ghost-role-information-behonker-description
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: HTN
       rootTask:
@@ -76,8 +78,8 @@
         - id: BikeHorn
     - type: UserInterface
       interfaces:
-      - key: enum.StrippingUiKey.Key
-        type: StrippableBoundUserInterface
+        enum.StrippingUiKey.Key:
+          type: StrippableBoundUserInterface
     - type: MobThresholds
       thresholds:
         0: Alive

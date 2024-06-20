@@ -3,7 +3,6 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
-using Content.Server.HealthExaminable;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Chemistry.Components;
@@ -13,6 +12,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Drunk;
 using Content.Shared.FixedPoint;
+using Content.Shared.HealthExaminable;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
@@ -268,6 +268,9 @@ public sealed class BloodstreamSystem : EntitySystem
         Entity<BloodstreamComponent> ent,
         ref ApplyMetabolicMultiplierEvent args)
     {
+        // TODO REFACTOR THIS
+        // This will slowly drift over time due to floating point errors.
+        // Instead, raise an event with the base rates and allow modifiers to get applied to it.
         if (args.Apply)
         {
             ent.Comp.UpdateInterval *= args.Multiplier;
@@ -392,11 +395,11 @@ public sealed class BloodstreamSystem : EntitySystem
         component.BleedAmount = Math.Clamp(component.BleedAmount, 0, component.MaxBleedAmount);
 
         if (component.BleedAmount == 0)
-            _alertsSystem.ClearAlert(uid, AlertType.Bleed);
+            _alertsSystem.ClearAlert(uid, component.BleedingAlert);
         else
         {
             var severity = (short) Math.Clamp(Math.Round(component.BleedAmount, MidpointRounding.ToZero), 0, 10);
-            _alertsSystem.ShowAlert(uid, AlertType.Bleed, severity);
+            _alertsSystem.ShowAlert(uid, component.BleedingAlert, severity);
         }
 
         return true;

@@ -245,8 +245,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.AttemptFrequency == AttemptFrequency.StartAndEnd && !TryAttemptEvent(doAfter))
             return false;
 
-        if (args.Delay <= TimeSpan.Zero ||
-            _tag.HasTag(args.User, "InstantDoAfters"))
+        // TODO DO AFTER
+        // Why does this tag exist? Just make this a bool on the component?
+        if (args.Delay <= TimeSpan.Zero || _tag.HasTag(args.User, "InstantDoAfters"))
         {
             RaiseDoAfterEvents(doAfter, comp);
             // We don't store instant do-afters. This is just a lazy way of hiding them from client-side visuals.
@@ -309,7 +310,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         if ((conditions & DuplicateConditions.SameEvent) != 0
-            && args.Event.GetType() != otherArgs.Event.GetType())
+            && !args.Event.IsDuplicate(otherArgs.Event))
         {
             return false;
         }

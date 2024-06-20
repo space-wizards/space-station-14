@@ -1,0 +1,80 @@
+# Professional HoP Time
+- type: loadoutEffectGroup
+  id: ProfessionalHoP
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfPersonnel
+      time: 54000 #15 hrs, special reward for HoP mains
+
+# Jumpsuit
+- type: loadout
+  id: HoPJumpsuit
+  equipment: HoPJumpsuit
+
+- type: startingGear
+  id: HoPJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoP
+
+- type: loadout
+  id: HoPJumpskirt
+  equipment: HoPJumpskirt
+
+- type: startingGear
+  id: HoPJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHoP
+
+# Head
+- type: loadout
+  id: HoPHead
+  equipment: HoPHead
+
+- type: startingGear
+  id: HoPHead
+  equipment:
+    head: ClothingHeadHatHopcap
+
+# Neck
+- type: loadout
+  id: HoPCloak
+  equipment: HoPCloak
+
+- type: startingGear
+  id: HoPCloak
+  equipment:
+    neck: ClothingNeckCloakHop
+
+- type: loadout
+  id: HoPMantle
+  equipment: HoPMantle
+
+- type: startingGear
+  id: HoPMantle
+  equipment:
+    neck: ClothingNeckMantleHOP
+
+# Back
+- type: loadout
+  id: HoPBackpackIan
+  equipment: HoPBackpackIan
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ProfessionalHoP
+
+- type: startingGear
+  id: HoPBackpackIan
+  equipment:
+    back: ClothingBackpackIan
+
+# Outerclothing
+- type: loadout
+  id: HoPWintercoat
+  equipment: HoPWintercoat
+
+- type: startingGear
+  id: HoPWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterHoP

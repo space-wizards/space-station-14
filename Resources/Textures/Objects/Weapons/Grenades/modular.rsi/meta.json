@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/29c0ed1b000619cb5398ef921000a8d4502ba0b6 and modified by Swept",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/29c0ed1b000619cb5398ef921000a8d4502ba0b6 and modified by Swept & ElectroSR",
   "size": {
     "x": 32,
     "y": 32
@@ -17,6 +17,10 @@
     },
     {
         "name": "no-payload",
+        "directions": 1
+    },
+    {
+        "name": "no-trigger",
         "directions": 1
     },
     {

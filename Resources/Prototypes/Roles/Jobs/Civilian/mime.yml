@@ -21,26 +21,21 @@
 - type: startingGear
   id: MimeGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitMime
-    back: ClothingBackpackMimeFilled
-    head: ClothingHeadHatBeret
     belt: ClothingBeltSuspenders
-    gloves: ClothingHandsGlovesLatex
+    gloves: ClothingHandsGlovesColorWhite
     shoes: ClothingShoesColorWhite
     pocket1: CrayonMime
     pocket2: Paper
-    mask: ClothingMaskMime
     id: MimePDA
     ears: ClothingHeadsetService
-  innerClothingSkirt: ClothingUniformJumpskirtMime
-  satchel: ClothingBackpackSatchelMimeFilled
-  duffelbag: ClothingBackpackDuffelMimeFilled
+  storage:
+    back:
+    - RubberStampMime
 
 - type: entity
   id: ActionMimeInvisibleWall
   name: Create Invisible Wall
   description: Create an invisible wall in front of you, if placeable there.
-  noSpawn: true
   components:
   - type: InstantAction
     priority: -1

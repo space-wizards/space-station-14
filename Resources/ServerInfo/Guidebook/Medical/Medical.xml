@@ -2,21 +2,31 @@
 # Medical
 This is the department where people go to when they're hurt, it's up to the folks working here to fix them.
 
+## Personnel
+[color=#5b97bc]Medical[/color]'s staff is made up of Medical Interns, Medical Doctors, Paramedics and Chemists. [color=#5b97bc]Medical[/color] is run by the Chief Medical Officer.
+
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineMedicalDoctor" Caption="Doctor"/>
+    <GuideEntityEmbed Entity="ToyFigurineParamedic" Caption="Paramedic"/>
+    <GuideEntityEmbed Entity="ToyFigurineChemist" Caption="Chemist"/>
+    <GuideEntityEmbed Entity="ToyFigurineChiefMedicalOfficer" Caption="CMO"/>
+  </Box>
+  
 Right now, medbay is divided into two different sets of care:
 
 ## Medical Treatment
-<Box>
-<GuideEntityEmbed Entity="Brutepack"/>
-<GuideEntityEmbed Entity="Bloodpack"/>
-<GuideEntityEmbed Entity="Ointment"/>
-<GuideEntityEmbed Entity="Gauze"/>
-<GuideEntityEmbed Entity="HandheldHealthAnalyzer"/>
-</Box>
+  <Box>
+    <GuideEntityEmbed Entity="Brutepack"/>
+    <GuideEntityEmbed Entity="Bloodpack"/>
+    <GuideEntityEmbed Entity="Ointment"/>
+    <GuideEntityEmbed Entity="Gauze"/>
+    <GuideEntityEmbed Entity="HandheldHealthAnalyzer"/>
+  </Box>
 ## Chemical Production
-<Box>
-<GuideEntityEmbed Entity="ChemDispenser"/>
-<GuideEntityEmbed Entity="LargeBeaker"/>
-<GuideEntityEmbed Entity="PillCanister"/>
-<GuideEntityEmbed Entity="chem_master"/>
-</Box>
+  <Box>
+    <GuideEntityEmbed Entity="ChemDispenser"/>
+    <GuideEntityEmbed Entity="LargeBeaker"/>
+    <GuideEntityEmbed Entity="PillCanister"/>
+    <GuideEntityEmbed Entity="ChemMaster"/>
+  </Box>
 </Document>

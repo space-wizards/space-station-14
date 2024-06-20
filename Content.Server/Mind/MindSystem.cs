@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
+using Content.Server.Ghost;
 using Content.Server.Mind.Commands;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
@@ -9,10 +10,8 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Players;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Mind;
@@ -22,8 +21,7 @@ public sealed class MindSystem : SharedMindSystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedGhostSystem _ghosts = default!;
+    [Dependency] private readonly GhostSystem _ghosts = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
@@ -63,8 +61,8 @@ public sealed class MindSystem : SharedMindSystem
             && !Terminating(visiting))
         {
             TransferTo(mindId, visiting, mind: mind);
-            if (TryComp(visiting, out GhostComponent? ghost))
-                _ghosts.SetCanReturnToBody(ghost, false);
+            if (TryComp(visiting, out GhostComponent? ghostComp))
+                _ghosts.SetCanReturnToBody(ghostComp, false);
             return;
         }
 
@@ -74,40 +72,13 @@ public sealed class MindSystem : SharedMindSystem
         if (!component.GhostOnShutdown || mind.Session == null || _gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
             return;
 
-        var xform = Transform(uid);
-        var gridId = xform.GridUid;
-        var spawnPosition = Transform(uid).Coordinates;
-
-        // Use a regular timer here because the entity has probably been deleted.
-        Timer.Spawn(0, () =>
-        {
-            // Make extra sure the round didn't end between spawning the timer and it being executed.
-            if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
-                return;
-
-            // Async this so that we don't throw if the grid we're on is being deleted.
-            if (!HasComp<MapGridComponent>(gridId))
-                spawnPosition = _gameTicker.GetObserverSpawnPoint();
-
-            // TODO refactor observer spawning.
-            // please.
-            if (!spawnPosition.IsValid(EntityManager))
-            {
-                // This should be an error, if it didn't cause tests to start erroring when they delete a player.
-                Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
-                TransferTo(mindId, null, createGhost: false, mind: mind);
-                return;
-            }
-
-            var ghost = Spawn(GameTicker.ObserverPrototypeName, spawnPosition);
-            var ghostComponent = Comp<GhostComponent>(ghost);
-            _ghosts.SetCanReturnToBody(ghostComponent, false);
-
+        var ghost = _ghosts.SpawnGhost((mindId, mind), uid);
+        if (ghost != null)
             // Log these to make sure they're not causing the GameTicker round restart bugs...
             Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
-            _metaData.SetEntityName(ghost, mind.CharacterName ?? string.Empty);
-            TransferTo(mindId, ghost, mind: mind);
-        });
+        else
+            // This should be an error, if it didn't cause tests to start erroring when they delete a player.
+            Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
     }
 
     public override bool TryGetMind(NetUserId user, [NotNullWhen(true)] out EntityUid? mindId, [NotNullWhen(true)] out MindComponent? mind)
@@ -357,16 +328,17 @@ public sealed class MindSystem : SharedMindSystem
         mind.UserId = userId;
         mind.OriginalOwnerUserId ??= userId;
 
+        // The UserId may not have a current session, but user data may still exist for disconnected players.
+        // So we cannot combine this with the TryGetSessionById() check below.
+        if (_players.GetPlayerData(userId.Value).ContentData() is { } data)
+            data.Mind = mindId;
+
         if (_players.TryGetSessionById(userId.Value, out var ret))
         {
             mind.Session = ret;
             _pvsOverride.AddSessionOverride(netMind, ret);
             _players.SetAttachedEntity(ret, mind.CurrentEntity);
         }
-
-        // session may be null, but user data may still exist for disconnected players.
-        if (_players.GetPlayerData(userId.Value).ContentData() is { } data)
-            data.Mind = mindId;
     }
 
     public void ControlMob(EntityUid user, EntityUid target)

@@ -78,6 +78,13 @@ namespace Content.Shared.Verbs
         public readonly SortedSet<TVerb> Verbs = new();
 
         /// <summary>
+        /// Additional verb categories to show in the pop-up menu, even if there are no verbs currently associated
+        /// with that category. This is mainly useful to prevent verb menu pop-in. E.g., admins will get admin/debug
+        /// related verbs on entities, even though most of those verbs are all defined server-side.
+        /// </summary>
+        public readonly List<VerbCategory> ExtraCategories;
+
+        /// <summary>
         ///     Can the user physically access the target?
         /// </summary>
         /// <remarks>
@@ -123,7 +130,7 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public readonly EntityUid? Using;
 
-        public GetVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, HandsComponent? hands, bool canInteract, bool canAccess)
+        public GetVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, HandsComponent? hands, bool canInteract, bool canAccess, List<VerbCategory> extraCategories)
         {
             User = user;
             Target = target;
@@ -131,6 +138,7 @@ namespace Content.Shared.Verbs
             Hands = hands;
             CanAccess = canAccess;
             CanInteract = canInteract;
+            ExtraCategories = extraCategories;
         }
     }
 }

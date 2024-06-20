@@ -12,24 +12,31 @@ namespace Content.IntegrationTests.Tests.Destructible
         public const string DamagePrototypes = $@"
 - type: damageType
   id: TestBlunt
+  name: damage-type-blunt
 
 - type: damageType
   id: TestSlash
+  name: damage-type-slash
 
 - type: damageType
   id: TestPiercing
+  name: damage-type-piercing
 
 - type: damageType
   id: TestHeat
+  name: damage-type-heat
 
 - type: damageType
   id: TestShock
+  name: damage-type-shock
 
 - type: damageType
   id: TestCold
+  name: damage-type-cold
 
 - type: damageGroup
   id: TestBrute
+  name: damage-group-brute
   damageTypes:
     - TestBlunt
     - TestSlash
@@ -37,6 +44,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
 - type: damageGroup
   id: TestBurn
+  name: damage-group-burn
   damageTypes:
     - TestHeat
     - TestShock
