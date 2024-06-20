@@ -66,7 +66,7 @@ public abstract class SharedFirelockSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (!component.Powered || args.ToolUsed || args.PryPowered)
+        if (!component.Powered || args.StrongPry || args.PryPowered)
             return;
 
         args.Cancelled = true;

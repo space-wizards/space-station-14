@@ -43,7 +43,7 @@ public sealed partial class PryingComponent : Component
 /// Cancel to stop the entity from being pried open.
 /// </summary>
 [ByRefEvent]
-public record struct BeforePryEvent(EntityUid User, bool PryPowered, bool Force, bool ToolUsed)
+public record struct BeforePryEvent(EntityUid User, bool PryPowered, bool Force, bool StrongPry)
 {
     public readonly EntityUid User = User;
 
@@ -59,9 +59,9 @@ public record struct BeforePryEvent(EntityUid User, bool PryPowered, bool Force,
     public readonly bool Force = Force;
 
     /// <summary>
-    /// Whether a tool was used to pry the door or not.
+    /// Whether anything other than bare hands were used. This should only be false if prying is being performed without a prying comp.
     /// </summary>
-    public readonly bool ToolUsed = ToolUsed;
+    public readonly bool StrongPry = StrongPry;
 
     public string? Message;
 
