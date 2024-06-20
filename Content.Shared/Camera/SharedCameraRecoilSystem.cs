@@ -43,9 +43,9 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     {
         base.FrameUpdate(frameTime);
 
-        var query = AllEntityQuery<EyeComponent, CameraRecoilComponent>();
+        var query = AllEntityQuery<CameraRecoilComponent, EyeComponent>();
 
-        while (query.MoveNext(out var uid, out var eye, out var recoil))
+        while (query.MoveNext(out var uid, out var recoil, out var eye))
         {
             var magnitude = recoil.CurrentKick.Length();
             if (magnitude <= 0.005f)
