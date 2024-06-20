@@ -72,6 +72,15 @@
   equipment:
     head: ClothingHeadHatBeretHoS
 
+- type: loadout
+  id: HeadofSecurityCowboy
+  equipment: HeadofSecurityCowboy
+
+- type: startingGear
+  id: HeadofSecurityCowboy
+  equipment:
+    head: ClothingHeadHatHoshatCowboy
+
 # Neck
 - type: loadout
   id: HeadofSecurityCloak

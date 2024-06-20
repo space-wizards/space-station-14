@@ -388,23 +388,23 @@
   description: A jumpskirt made of strong material, providing robust protection.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpskirt/security.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
-      - state: overlay-inhand-left
-        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
-      right:
-      - state: inhand-right
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
-      - state: overlay-inhand-right
-        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpskirt/security.rsi # Grey Station - Resprited
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left
+#        color: "#C12D30"
+#        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+#      - state: overlay-inhand-left
+#        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+#      right:
+#      - state: inhand-right
+#        color: "#C12D30"
+#        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+#      - state: overlay-inhand-right
+#        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
 
 
 - type: entity
@@ -414,23 +414,23 @@
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpskirt/warden.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
-      - state: overlay-inhand-left
-        sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
-      right:
-      - state: inhand-right
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
-      - state: overlay-inhand-right
-        sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpskirt/warden.rsi # Grey Station - Resprited
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left
+#        color: "#C12D30"
+#        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+#      - state: overlay-inhand-left
+#        sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+#      right:
+#      - state: inhand-right
+#        color: "#C12D30"
+#        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+#      - state: overlay-inhand-right
+#        sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
 
 
 - type: entity
@@ -832,3 +832,14 @@
     sprite: Clothing/Uniforms/Jumpskirt/olddress.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/olddress.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtMusician
+  name: musician's skirt
+  description: A fancy skirt for the musically inclined. Perfect for any lounge act!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
