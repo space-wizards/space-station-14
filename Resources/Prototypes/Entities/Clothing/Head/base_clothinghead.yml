@@ -265,3 +265,5 @@
   - type: HideLayerClothing
     slots:
     - Hair
+    - HeadTop
+    - HeadSide
