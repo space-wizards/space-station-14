@@ -3712,17 +3712,12 @@ entities:
           showEnts: False
           occludes: True
           ents: []
-- proto: SpawnPointPirates
+- proto: PirateSpawner
   entities:
   - uid: 550
     components:
     - type: Transform
       pos: 0.5,-3.5
-      parent: 1
-  - uid: 551
-    components:
-    - type: Transform
-      pos: -8.5,9.5
       parent: 1
   - uid: 552
     components:
@@ -3733,11 +3728,6 @@ entities:
     components:
     - type: Transform
       pos: -7.5,5.5
-      parent: 1
-  - uid: 554
-    components:
-    - type: Transform
-      pos: -2.5,10.5
       parent: 1
   - uid: 555
     components:
@@ -3758,6 +3748,20 @@ entities:
     components:
     - type: Transform
       pos: -3.5,-3.5
+      parent: 1
+- proto: PirateCaptainSpawner
+  entities:
+  - uid: 775
+    components:
+    - type: Transform
+      pos: -8.5,9.5
+      parent: 1
+- proto: PirateFirstmateSpawner
+  entities:
+  - uid: 776
+    components:
+    - type: Transform
+      pos: -2.5,10.5
       parent: 1
 - proto: StoolBar
   entities:

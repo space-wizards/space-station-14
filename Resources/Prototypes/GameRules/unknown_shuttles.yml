@@ -56,6 +56,7 @@
   parent: BaseUnknownShuttleRule
   id: UnknownShuttlePirateShip
   components:
+  - type: StationVariationPassRule
   - type: StationEvent
   - type: LoadMapRule
     preloadedGrid: PirateShip
