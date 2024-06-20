@@ -114,7 +114,6 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
 #if DEBUG
                 DebugTools.Assert(!_animation.HasRunningAnimation(ent, AnimationKey));
 #endif
-                continue;
             }
 
             _animation.Stop(ent, AnimationKey);
