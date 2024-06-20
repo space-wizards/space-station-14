@@ -19,7 +19,7 @@ internal sealed partial class ChatManager
                 CVarAdminAnnounceDelay = CCVars.ChatRateLimitAnnounceAdminsDelay,
                 PlayerLimitedAction = RateLimitPlayerLimited,
                 AdminAnnounceAction = RateLimitAlertAdmins,
-                AdminLogType = LogType.Unknown,
+                AdminLogType = LogType.ChatRateLimited,
             });
     }
 

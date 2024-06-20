@@ -14,8 +14,19 @@ namespace Content.Server.Players.RateLimiting;
 /// General-purpose system to rate limit actions taken by clients, such as chat messages.
 /// </summary>
 /// <remarks>
+/// <para>
 /// Different categories of rate limits must be registered ahead of time by calling <see cref="Register"/>.
 /// Once registered, you can simply call <see cref="CountAction"/> to count a rate-limited action for a player.
+/// </para>
+/// <para>
+/// This system is intended for rate limiting player actions over short periods,
+/// to ward against spam that can cause technical issues such as admin client load.
+/// It should not be used for in-game actions or similar.
+/// </para>
+/// <para>
+/// Rate limits are reset when a client reconnects.
+/// This should not be an issue for the reasonably short rate limit periods this system is intended for.
+/// </para>
 /// </remarks>
 /// <seealso cref="RateLimitRegistration"/>
 public sealed class PlayerRateLimitManager
@@ -222,7 +233,7 @@ public sealed class RateLimitRegistration
     /// <summary>
     /// Log type used to log rate limit violations to the admin logs system.
     /// </summary>
-    public LogType AdminLogType { get; init; } = LogType.ChatRateLimited;
+    public LogType AdminLogType { get; init; } = LogType.RateLimited;
 }
 
 /// <summary>
