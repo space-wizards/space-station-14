@@ -178,7 +178,7 @@ ghost-role-information-hellspawn-description = Bring death to those who do not f
 
 ghost-role-information-Death-Squad-name = Death Squad Operative
 ghost-role-information-Death-Squad-description = One of Nanotrasen's top internal affairs agents. Await orders from CentComm or an official.
-ghost-role-information-Death-Squad-rules = You are required to obey orders given by your superior, but are a [color=yellow][bold]Free Agent[/bold][/color] for all other purposes.
+ghost-role-information-Death-Squad-rules = You are required to obey orders given by your superior, you are effectively their [color=blue][bold]Familiar[/bold][/color].
 
 ghost-role-information-SyndiCat-name = SyndiCat
 ghost-role-information-SyndiCat-description = You're the faithful trained pet of nuclear operatives with a microbomb. Serve your master to the death!
