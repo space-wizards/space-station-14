@@ -3,7 +3,7 @@ using Content.Shared.Random;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.Components;
 
@@ -11,10 +11,13 @@ namespace Content.Shared.Xenoarchaeology.Artifact.Components;
 /// This is used for handling interactions with artifacts as well as
 /// storing data about artifact node graphs.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedXenoArtifactSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedXenoArtifactSystem)), AutoGenerateComponentState]
 public sealed partial class XenoArtifactComponent : Component
 {
     public static string NodeContainerId = "node-container";
+
+    [DataField]
+    public bool DoGeneration = true;
 
     [ViewVariables]
     public Container NodeContainer = default!;
@@ -24,8 +27,8 @@ public sealed partial class XenoArtifactComponent : Component
     /// The nodes in this artifact that are currently "active."
     /// This is cached and updated when nodes are removed, added, or unlocked.
     /// </summary>
-    [DataField]
-    public List<EntityUid> CachedActiveNodes = new();
+    [DataField, AutoNetworkedField]
+    public List<NetEntity> CachedActiveNodes = new();
 
     // NOTE: you should not be accessing any of these values directly. Use the methods in SharedXenoArtifactSystem.Graph
     #region Graph
@@ -33,19 +36,19 @@ public sealed partial class XenoArtifactComponent : Component
     /// List of all of the nodes currently on this artifact.
     /// Indexes are used as a lookup table for <see cref="NodeAdjacencyMatrix"/>.
     /// </summary>
-    [DataField]
-    public EntityUid?[] NodeVertices = [];
+    [DataField, AutoNetworkedField]
+    public NetEntity?[] NodeVertices = [];
 
     /// <summary>
     /// Adjacency matrix that stores connections between this artifact's nodes.
     /// A value of "true" denotes an directed edge from node1 to node2, where the location of the vertex is (node1, node2)
     /// A value of "false" denotes no edge.
     /// </summary>
-    [DataField]
-    public bool[,] NodeAdjacencyMatrix = { };
+    [DataField, AutoNetworkedField]
+    public List<List<bool>> NodeAdjacencyMatrix = new();
 
-    public int NodeAdjacencyMatrixRows => NodeAdjacencyMatrix.GetLength(0);
-    public int NodeAdjacencyMatrixColumns => NodeAdjacencyMatrix.GetLength(1);
+    public int NodeAdjacencyMatrixRows => NodeAdjacencyMatrix.Count;
+    public int NodeAdjacencyMatrixColumns => NodeAdjacencyMatrix.TryGetValue(0, out var value) ? value.Count : 0;
     #endregion
 
     #region GenerationInfo
@@ -74,18 +77,4 @@ public sealed partial class XenoArtifactComponent : Component
     [DataField]
     public ProtoId<WeightedRandomEntityPrototype> EffectWeights = "XenoArtifactEffectsDefault";
     #endregion
-}
-
-[Serializable, NetSerializable]
-public sealed class XenoArtifactComponentState : ComponentState
-{
-    public List<NetEntity?> NodeVertices;
-
-    public List<List<bool>> NodeAdjacencyMatrix;
-
-    public XenoArtifactComponentState(List<NetEntity?> nodeVertices, List<List<bool>> nodeAdjacencyMatrix)
-    {
-        NodeVertices = nodeVertices;
-        NodeAdjacencyMatrix = nodeAdjacencyMatrix;
-    }
 }

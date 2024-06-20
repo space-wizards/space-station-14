@@ -39,7 +39,7 @@ public sealed class XenoArtifactCommand : ToolshedCommand
             sb.Append($"\n{i:D2}|");
             for (var j = 0; j < nodeCount; j++)
             {
-                var value = comp.NodeAdjacencyMatrix[i, j]
+                var value = comp.NodeAdjacencyMatrix[i][j]
                     ? "X"
                     : " ";
                 sb.Append($" {value} |");

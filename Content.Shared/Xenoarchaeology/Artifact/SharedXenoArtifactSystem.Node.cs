@@ -113,7 +113,7 @@ public abstract partial class SharedXenoArtifactSystem
                     continue;
             }
 
-            ent.Comp.CachedActiveNodes.Add(node);
+            ent.Comp.CachedActiveNodes.Add(GetNetEntity(node));
         }
 
         Dirty(ent);

@@ -15,6 +15,7 @@ public sealed class XenoArtifactTest
   name: artifact
   components:
   - type: XenoArtifact
+    doGeneration: false
 
 - type: entity
   id: TestArtifactNode
@@ -300,7 +301,7 @@ public sealed class XenoArtifactTest
 
             artifactSystem.RebuildCachedActiveNodes(artifactEnt);
 
-            var activeNodes = new[] { node3!.Value.Owner, node5!.Value.Owner };
+            var activeNodes = new[] { entManager.GetNetEntity(node3!.Value.Owner), entManager.GetNetEntity(node5!.Value.Owner) };
             Assert.That(artifactEnt.Item2.CachedActiveNodes, Is.SupersetOf(activeNodes));
             Assert.That(artifactEnt.Item2.CachedActiveNodes, Has.Count.EqualTo(activeNodes.Length));
 

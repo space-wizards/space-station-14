@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -52,7 +53,7 @@ public abstract partial class SharedXenoArtifactSystem
 
     public Entity<XenoArtifactNodeComponent> GetNode(Entity<XenoArtifactComponent> ent, int index)
     {
-        if (ent.Comp.NodeVertices[index] is { } uid)
+        if (ent.Comp.NodeVertices[index] is { } netUid && GetEntity(netUid) is var uid)
             return (uid, XenoArtifactNode(uid));
 
         throw new ArgumentException($"index {index} does not correspond to an existing node in {ToPrettyString(ent)}");
@@ -67,7 +68,7 @@ public abstract partial class SharedXenoArtifactSystem
         if (index < 0 || index >= ent.Comp.NodeVertices.Length)
             return false;
 
-        if (ent.Comp.NodeVertices[index] is { } uid)
+        if (ent.Comp.NodeVertices[index] is { } netUid && GetEntity(netUid) is var uid)
             node = (uid, XenoArtifactNode(uid));
 
         return node != null;
@@ -82,7 +83,7 @@ public abstract partial class SharedXenoArtifactSystem
         var length = ent.Comp.NodeVertices.Length;
         for (var i = 0; i < length; i++)
         {
-            if (TryGetNode((ent, ent), i, out _))
+            if (ent.Comp.NodeVertices[i] != null)
                 continue;
 
             return i;
@@ -94,10 +95,10 @@ public abstract partial class SharedXenoArtifactSystem
 
     public IEnumerable<Entity<XenoArtifactNodeComponent>> GetAllNodes(Entity<XenoArtifactComponent> ent)
     {
-        foreach (var node in ent.Comp.NodeVertices)
+        foreach (var netNode in ent.Comp.NodeVertices)
         {
-            if (node is not null)
-                yield return (node.Value, XenoArtifactNode(node.Value));
+            if (GetEntity(netNode) is { } node)
+                yield return (node, XenoArtifactNode(node));
         }
     }
 
@@ -130,12 +131,12 @@ public abstract partial class SharedXenoArtifactSystem
         DebugTools.Assert(fromIdx >= 0 && fromIdx < ent.Comp.NodeVertices.Length, $"fromIdx is out of bounds!");
         DebugTools.Assert(toIdx >= 0 && toIdx < ent.Comp.NodeVertices.Length, $"toIdx is out of bounds!");
 
-        if (ent.Comp.NodeAdjacencyMatrix[fromIdx, toIdx])
+        if (ent.Comp.NodeAdjacencyMatrix[fromIdx][toIdx])
             return false; //Edge is already present
 
         // TODO: add a safety check to prohibit cyclic paths.
 
-        ent.Comp.NodeAdjacencyMatrix[fromIdx, toIdx] = true;
+        ent.Comp.NodeAdjacencyMatrix[fromIdx][toIdx] = true;
         if (dirty)
             RebuildCachedActiveNodes(ent);
         return true;
@@ -161,10 +162,10 @@ public abstract partial class SharedXenoArtifactSystem
         DebugTools.Assert(fromIdx >= 0 && fromIdx < ent.Comp.NodeVertices.Length, $"fromIdx is out of bounds!");
         DebugTools.Assert(toIdx >= 0 && toIdx < ent.Comp.NodeVertices.Length, $"toIdx  is out of bounds!");
 
-        if (!ent.Comp.NodeAdjacencyMatrix[fromIdx, toIdx])
+        if (!ent.Comp.NodeAdjacencyMatrix[fromIdx][toIdx])
             return false; //Edge doesn't exist
 
-        ent.Comp.NodeAdjacencyMatrix[fromIdx, toIdx] = false;
+        ent.Comp.NodeAdjacencyMatrix[fromIdx][toIdx] = false;
 
         if (dirty)
             RebuildCachedActiveNodes(ent);
@@ -194,7 +195,7 @@ public abstract partial class SharedXenoArtifactSystem
 
         var nodeIdx = GetFreeNodeIndex((ent, ent.Comp));
         _container.Insert(node.Owner, ent.Comp.NodeContainer);
-        ent.Comp.NodeVertices[nodeIdx] = node;
+        ent.Comp.NodeVertices[nodeIdx] = GetNetEntity(node);
 
         Dirty(node);
         if (dirty)
@@ -277,7 +278,7 @@ public abstract partial class SharedXenoArtifactSystem
         var indices = new HashSet<int>();
         for (var i = 0; i < ent.Comp.NodeAdjacencyMatrixRows; i++)
         {
-            if (ent.Comp.NodeAdjacencyMatrix[i, nodeIdx])
+            if (ent.Comp.NodeAdjacencyMatrix[i][nodeIdx])
                 indices.Add(i);
         }
 
@@ -312,7 +313,7 @@ public abstract partial class SharedXenoArtifactSystem
         var indices = new HashSet<int>();
         for (var i = 0; i < ent.Comp.NodeAdjacencyMatrixColumns; i++)
         {
-            if (ent.Comp.NodeAdjacencyMatrix[nodeIdx, i])
+            if (ent.Comp.NodeAdjacencyMatrix[nodeIdx][i])
                 indices.Add(i);
         }
 
@@ -405,41 +406,29 @@ public abstract partial class SharedXenoArtifactSystem
         var fromIdx = GetIndex((ent, ent.Comp), from);
         var toIdx = GetIndex((ent, ent.Comp), to);
 
-        return ent.Comp.NodeAdjacencyMatrix[fromIdx, toIdx];
+        return ent.Comp.NodeAdjacencyMatrix[fromIdx][toIdx];
     }
 
     /// <summary>
     /// Resizes the adjacency matrix and vertices array to newLength
+    /// or at least what it WOULD do if i wasn't forced to used shitty lists.
     /// </summary>
     protected void ResizeNodeGraph(Entity<XenoArtifactComponent> ent, int newSize)
     {
         Array.Resize(ref ent.Comp.NodeVertices, newSize);
-        ent.Comp.NodeAdjacencyMatrix = XenoArtifactGraphHelpers.ResizeArray(ent.Comp.NodeAdjacencyMatrix, newSize, newSize);
-        Dirty(ent);
-    }
-}
 
-public static class XenoArtifactGraphHelpers
-{
-    /// <summary>
-    /// Resizes a 2d array to the specified dimensions, retaining the positions of existing values in the array.
-    /// Taken from https://stackoverflow.com/a/9059866.
-    /// </summary>
-    public static T[,] ResizeArray<T>(T[,] original, int x, int y)
-    {
-        var newArray = new T[x, y];
-        var minX = Math.Min(original.GetLength(0), newArray.GetLength(0));
-        var minY = Math.Min(original.GetLength(1), newArray.GetLength(1));
-
-        for (var i = 0; i < minY; ++i)
+        while (ent.Comp.NodeAdjacencyMatrix.Count < newSize)
         {
-            Array.Copy(original,
-                i * original.GetLength(0),
-                newArray,
-                i * newArray.GetLength(0),
-                minX);
+            ent.Comp.NodeAdjacencyMatrix.Add(new());
         }
 
-        return newArray;
+        foreach (var row in ent.Comp.NodeAdjacencyMatrix)
+        {
+            while (row.Count < newSize)
+            {
+                row.Add(false);
+            }
+        }
+        Dirty(ent);
     }
 }
