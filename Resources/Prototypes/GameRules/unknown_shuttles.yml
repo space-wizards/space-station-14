@@ -43,7 +43,7 @@
   - type: LoadMapRule
     preloadedGrid: DisasterEvacPod
 
-# The power of 3 clowns proved too strong for the players and had to be 1984ed. Replace this with a more engaging clown shuttle.
+# The power of 3 clowns proved too strong for the players and had to be 1984'ed. Replace this with a more engaging clown shuttle.
 # - type: entity
   # parent: BaseUnknownShuttleRule
   # id: UnknownShuttleHonki
