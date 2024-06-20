@@ -40,7 +40,7 @@ public sealed partial class SupermatterComponent : Component
     public string SingularityPrototype = "Singularity";
 
     [DataField("supermatterKudzuSpawnPrototype")]
-    public string SupermatterKudzuPrototype = "";
+    public string SupermatterKudzuPrototype = "SupermatterKudzu";
 
     /// <summary>
     ///     If a supermatter sliver has been removed. Lowers the delamination countdown time.
@@ -85,6 +85,9 @@ public sealed partial class SupermatterComponent : Component
     /// </summary>
     [DataField("announcementTimer")]
     public float AnnouncementTimer = 60f;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int? PreferredDelamType = 0;
 
     /// <summary>
     ///     The time in seconds for crystal to delaminate.
@@ -256,8 +259,8 @@ public sealed partial class GasFact
 /// </summary>
 public enum DelamType : sbyte
 {
-    Explosion,
-    Tesla,
-    Singularity,
-    ResonanceCascade,
+    Explosion = 0,
+    Tesla = 1,
+    Singularity = 2,
+    ResonanceCascade = 3,
 }

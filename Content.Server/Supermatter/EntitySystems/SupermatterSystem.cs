@@ -86,18 +86,25 @@ public sealed class SupermatterSystem : EntitySystem
         ProcessAtmos(uid, sm);
 
         if (sm.ZapTimerAccumulator >= sm.ZapTimer)
+        {
+            sm.ZapTimerAccumulator = 0f;
             ProcessPower(uid, sm);
+        }
 
         ProcessDamage(uid, sm);
 
         // due to how damage calculation works, it will do the announcement only if sm is consistently taking damage
-        if (sm.AnnouncementTimerAccumulator > sm.AnnouncementTimer && sm.Damage > sm.DamageArchive)
+        if (sm.Damage > sm.DamageArchive)
         {
-            var loc = "danger";
-            if (sm.Damage > sm.DamageEmergencyPoint)
-                loc = "critical";
+            if (sm.AnnouncementTimerAccumulator > sm.AnnouncementTimer)
+            {
+                sm.AnnouncementTimerAccumulator = 0f;
+                var loc = "danger";
+                if (sm.Damage > sm.DamageEmergencyPoint)
+                    loc = "critical";
 
-            SupermatterAlert(uid, Loc.GetString($"supermatter-announcement-{loc}", ("integrity", sm.DelaminationPoint - sm.Damage)));
+                SupermatterAlert(uid, Loc.GetString($"supermatter-announcement-{loc}", ("integrity", sm.DelaminationPoint - sm.Damage)));
+            }
         }
 
         if (sm.AreWeDelaming)
@@ -173,7 +180,7 @@ public sealed class SupermatterSystem : EntitySystem
         var lightningProto = sm.LightningPrototypeIDs[(int) Math.Clamp(strength, 0, 3)];
 
         _sound.PlayPvs(SupermatterComponent.SupermatterZapSound, uid);
-        _lightning.ShootRandomLightnings(uid, 3, (int) strength <= 0 ? 1 : (int) strength, lightningProto);
+        _lightning.ShootRandomLightnings(uid, 3, (int) strength < 1 ? 1 : (int) strength, lightningProto);
         Comp<RadiationSourceComponent>(uid).Intensity = 1 + strength;
     }
     /// <summary>
@@ -209,7 +216,7 @@ public sealed class SupermatterSystem : EntitySystem
 
         if (sm.Damage > sm.DamageDangerPoint)
         {
-            if (_random.Prob(.025f))
+            if (_random.Prob(.0001f))
                 GenerateAnomaly(uid);
             return;
         }
@@ -223,7 +230,7 @@ public sealed class SupermatterSystem : EntitySystem
         var mix = _atmos.GetContainingMixture((uid, Transform(uid)), true, true) ?? new();
         var mergeMix = sm.AbsorbedGasMix;
 
-        mergeMix.Temperature += .65f * sm.WasteMultiplier / SupermatterComponent.ThermalReleaseModifier;
+        mergeMix.Temperature += .65f * sm.WasteMultiplier * SupermatterComponent.ThermalReleaseModifier;
         mergeMix.Temperature = Math.Clamp(mergeMix.Temperature, Atmospherics.TCMB, 2500 * sm.WasteMultiplier);
 
         mergeMix.AdjustMoles(Gas.Plasma, Math.Max(.65f * sm.InternalEnergy * sm.WasteMultiplier * SupermatterComponent.PlasmaReleaseModifier, 0));
@@ -300,8 +307,8 @@ public sealed class SupermatterSystem : EntitySystem
     /// </summary>
     private void Delaminate(EntityUid uid, SupermatterComponent sm)
     {
-        var delamType = ChooseDelam(sm);
-        Delaminate(uid, sm, delamType);
+        sm.PreferredDelamType = sm.PreferredDelamType ?? (int) ChooseDelam(sm);
+        Delaminate(uid, sm, (DelamType) sm.PreferredDelamType);
     }
 
     /// <summary>
@@ -386,6 +393,8 @@ public sealed class SupermatterSystem : EntitySystem
             if (stationUid != null)
                 _alert.SetLevel(stationUid.Value, alertLevel, true, true, true, false);
 
+            SupermatterAlert(uid, sb.ToString());
+
             sm.DelamAnnouncementHappened = true;
         }
 
@@ -394,6 +403,7 @@ public sealed class SupermatterSystem : EntitySystem
             // yay!
             sm.DelamCountdownAccumulator = 0;
             sm.DelamAnnouncementHappened = false;
+            sm.AreWeDelaming = false;
             SupermatterAlert(uid, Loc.GetString("supermatter-announcement-safe"));
             return;
         }
