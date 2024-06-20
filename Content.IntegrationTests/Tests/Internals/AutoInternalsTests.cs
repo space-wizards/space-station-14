@@ -3,8 +3,6 @@ using Content.Server.Body.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles.Jobs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Internals;
 
@@ -20,8 +18,6 @@ public sealed class AutoInternalsTests
 
         var testMap = await pair.CreateTestMap();
 
-        var mapMan = server.ResolveDependency<IMapManager>();
-        var entMan = server.ResolveDependency<IEntityManager>();
         var stationSpawning = server.System<StationSpawningSystem>();
         var atmos = server.System<AtmosphereSystem>();
         var internals = server.System<InternalsSystem>();
@@ -37,7 +33,7 @@ public sealed class AutoInternalsTests
             Assert.That(atmos.HasAtmosphere(testMap.Grid), Is.False, "Test map has atmosphere - test needs adjustment!");
             Assert.That(internals.AreInternalsWorking(dummy), "Internals did not automatically connect!");
 
-            entMan.DeleteEntity(dummy);
+            server.EntMan.DeleteEntity(dummy);
         });
 
         await pair.CleanReturnAsync();
@@ -51,19 +47,17 @@ public sealed class AutoInternalsTests
 
         var testMap = await pair.CreateTestMap();
 
-        var mapMan = server.ResolveDependency<IMapManager>();
-        var entMan = server.ResolveDependency<IEntityManager>();
         var atmos = server.System<AtmosphereSystem>();
         var internals = server.System<InternalsSystem>();
 
         await server.WaitAssertion(() =>
         {
-            var dummy = entMan.Spawn("TestInternalsDummyEntity", testMap.MapCoords);
+            var dummy = server.EntMan.Spawn("TestInternalsDummyEntity", testMap.MapCoords);
 
             Assert.That(atmos.HasAtmosphere(testMap.Grid), Is.False, "Test map has atmosphere - test needs adjustment!");
             Assert.That(internals.AreInternalsWorking(dummy), "Internals did not automatically connect!");
 
-            entMan.DeleteEntity(dummy);
+            server.EntMan.DeleteEntity(dummy);
         });
 
         await pair.CleanReturnAsync();
