@@ -28,7 +28,7 @@ public partial class SharedInteractionSystem
 
     private void CancelInteractEvent(Entity<BlockMovementComponent> ent, ref InteractionAttemptEvent args)
     {
-        if (component.BlockInteraction)
+        if (ent.Comp.BlockInteraction)
             args.Cancelled = true;
     }
 
