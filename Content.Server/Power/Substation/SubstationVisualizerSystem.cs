@@ -52,9 +52,10 @@ internal sealed class SubstationVisualizerSystem : EntitySystem
         PowerState.Battery battery = netBattery.NetworkBattery;
 
         if (battery.CurrentReceiving == 0 && MathHelper.CloseTo(battery.CurrentStorage / battery.Capacity, 0))
-        {
             return SubstationChargeState.Dead;
-        }
+        else
+        if (MathHelper.CloseTo(battery.CurrentStorage / battery.Capacity, 1))
+            return SubstationChargeState.Full;
 
         return (battery.CurrentSupply - battery.CurrentReceiving) switch
         {
