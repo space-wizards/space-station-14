@@ -137,10 +137,12 @@
 - type: roleLoadout
   id: JobMusician
   groups:
+  - MusicianJumpsuit
   - CommonBackpack
   - MusicianOuterClothing
   - Glasses
   - Trinkets
+  - Instruments
 
 # Cargo
 - type: roleLoadout

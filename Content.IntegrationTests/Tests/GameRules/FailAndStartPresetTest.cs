@@ -140,6 +140,8 @@ public sealed class TestRuleSystem : EntitySystem
         while (query.MoveNext(out _, out _, out var gameRule))
         {
             var minPlayers = gameRule.MinPlayers;
+            if (!gameRule.CancelPresetOnTooFewPlayers)
+                continue;
             if (args.Players.Length >= minPlayers)
                 continue;
 

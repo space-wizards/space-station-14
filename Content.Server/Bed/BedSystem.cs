@@ -1,6 +1,5 @@
 using Content.Server.Actions;
 using Content.Server.Bed.Components;
-using Content.Server.Bed.Sleep;
 using Content.Server.Body.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -12,6 +11,7 @@ using Content.Shared.Damage;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Bed
 {
@@ -27,25 +27,29 @@ namespace Content.Server.Bed
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<HealOnBuckleComponent, BuckleChangeEvent>(ManageUpdateList);
-            SubscribeLocalEvent<StasisBedComponent, BuckleChangeEvent>(OnBuckleChange);
+            SubscribeLocalEvent<HealOnBuckleComponent, StrappedEvent>(OnStrapped);
+            SubscribeLocalEvent<HealOnBuckleComponent, UnstrappedEvent>(OnUnstrapped);
+            SubscribeLocalEvent<StasisBedComponent, StrappedEvent>(OnStasisStrapped);
+            SubscribeLocalEvent<StasisBedComponent, UnstrappedEvent>(OnStasisUnstrapped);
             SubscribeLocalEvent<StasisBedComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<StasisBedComponent, GotEmaggedEvent>(OnEmagged);
         }
 
-        private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, ref BuckleChangeEvent args)
+        private void OnStrapped(Entity<HealOnBuckleComponent> bed, ref StrappedEvent args)
         {
-            if (args.Buckling)
-            {
-                AddComp<HealOnBuckleHealingComponent>(uid);
-                component.NextHealTime = _timing.CurTime + TimeSpan.FromSeconds(component.HealTime);
-                _actionsSystem.AddAction(args.BuckledEntity, ref component.SleepAction, SleepingSystem.SleepActionId, uid);
-                return;
-            }
+            EnsureComp<HealOnBuckleHealingComponent>(bed);
+            bed.Comp.NextHealTime = _timing.CurTime + TimeSpan.FromSeconds(bed.Comp.HealTime);
+            _actionsSystem.AddAction(args.Buckle, ref bed.Comp.SleepAction, SleepingSystem.SleepActionId, bed);
 
-            _actionsSystem.RemoveAction(args.BuckledEntity, component.SleepAction);
-            _sleepingSystem.TryWaking(args.BuckledEntity);
-            RemComp<HealOnBuckleHealingComponent>(uid);
+            // Single action entity, cannot strap multiple entities to the same bed.
+            DebugTools.AssertEqual(args.Strap.Comp.BuckledEntities.Count, 1);
+        }
+
+        private void OnUnstrapped(Entity<HealOnBuckleComponent> bed, ref UnstrappedEvent args)
+        {
+            _actionsSystem.RemoveAction(args.Buckle, bed.Comp.SleepAction);
+            _sleepingSystem.TryWaking(args.Buckle.Owner);
+            RemComp<HealOnBuckleHealingComponent>(bed);
         }
 
         public override void Update(float frameTime)
@@ -83,18 +87,22 @@ namespace Content.Server.Bed
             _appearance.SetData(uid, StasisBedVisuals.IsOn, isOn);
         }
 
-        private void OnBuckleChange(EntityUid uid, StasisBedComponent component, ref BuckleChangeEvent args)
+        private void OnStasisStrapped(Entity<StasisBedComponent> bed, ref StrappedEvent args)
         {
-            // In testing this also received an unbuckle event when the bed is destroyed
-            // So don't worry about that
-            if (!HasComp<BodyComponent>(args.BuckledEntity))
+            if (!HasComp<BodyComponent>(args.Buckle) || !this.IsPowered(bed, EntityManager))
                 return;
 
-            if (!this.IsPowered(uid, EntityManager))
+            var metabolicEvent = new ApplyMetabolicMultiplierEvent(args.Buckle, bed.Comp.Multiplier, true);
+            RaiseLocalEvent(args.Buckle, ref metabolicEvent);
+        }
+
+        private void OnStasisUnstrapped(Entity<StasisBedComponent> bed, ref UnstrappedEvent args)
+        {
+            if (!HasComp<BodyComponent>(args.Buckle) || !this.IsPowered(bed, EntityManager))
                 return;
 
-            var metabolicEvent = new ApplyMetabolicMultiplierEvent(args.BuckledEntity, component.Multiplier, args.Buckling);
-            RaiseLocalEvent(args.BuckledEntity, ref metabolicEvent);
+            var metabolicEvent = new ApplyMetabolicMultiplierEvent(args.Buckle, bed.Comp.Multiplier, false);
+            RaiseLocalEvent(args.Buckle, ref metabolicEvent);
         }
 
         private void OnPowerChanged(EntityUid uid, StasisBedComponent component, ref PowerChangedEvent args)
