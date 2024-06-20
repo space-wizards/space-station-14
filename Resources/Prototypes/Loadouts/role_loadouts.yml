@@ -137,6 +137,7 @@
 - type: roleLoadout
   id: JobMusician
   groups:
+  - MusicianJumpsuit
   - CommonBackpack
   - MusicianOuterClothing
   - Glasses

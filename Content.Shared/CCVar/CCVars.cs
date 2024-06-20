@@ -128,13 +128,13 @@ namespace Content.Shared.CCVar
         ///     Minimum time between meteor swarms in minutes.
         /// </summary>
         public static readonly CVarDef<float>
-            MeteorSwarmMinTime = CVarDef.Create("events.meteor_swarm_min_time", 7.5f, CVar.ARCHIVE | CVar.SERVERONLY);
+            MeteorSwarmMinTime = CVarDef.Create("events.meteor_swarm_min_time", 12.5f, CVar.ARCHIVE | CVar.SERVERONLY);
 
         /// <summary>
         ///     Maximum time between meteor swarms in minutes.
         /// </summary>
         public static readonly CVarDef<float>
-            MeteorSwarmMaxTime = CVarDef.Create("events.meteor_swarm_max_time", 12.5f, CVar.ARCHIVE | CVar.SERVERONLY);
+            MeteorSwarmMaxTime = CVarDef.Create("events.meteor_swarm_max_time", 17.5f, CVar.ARCHIVE | CVar.SERVERONLY);
 
         /*
          * Game
@@ -431,6 +431,14 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> RoundEndSoundCollection =
             CVarDef.Create("game.round_end_sound_collection", "RoundEnd", CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether or not to add every player as a global override to PVS at round end.
+        /// This will allow all players to see their clothing in the round screen player list screen,
+        /// but may cause lag during round end with very high player counts.
+        /// </summary>
+        public static readonly CVarDef<bool> RoundEndPVSOverrides =
+            CVarDef.Create("game.round_end_pvs_overrides", true, CVar.SERVERONLY);
 
         /*
          * Discord
