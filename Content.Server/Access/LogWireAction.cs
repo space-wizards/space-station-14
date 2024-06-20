@@ -16,7 +16,7 @@ public sealed partial class LogWireAction : ComponentWireAction<AccessReaderComp
     public int PulseTimeout = 30;
 
     [DataField]
-    public LocId PulseLog = "log-wire-pulse-log";
+    public LocId PulseLog = "log-wire-pulse-access-log";
 
     private AccessReaderSystem _access = default!;
 
