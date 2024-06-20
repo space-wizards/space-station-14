@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: musicmanvr
-  changes:
-  - message: Added Sol Dry, 8 new cocktails and coconut water.
-    type: Add
-  id: 6285
-  time: '2024-04-01T06:41:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25367
 - author: f0x-n3rd
   changes:
   - message: Added pages for each categories from the chemical page in the guidebook,
@@ -3848,3 +3841,10 @@
   id: 6784
   time: '2024-06-19T23:51:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29225
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Lizard frills and moth antenna are now hidden by hardsuit helmets.
+    type: Tweak
+  id: 6785
+  time: '2024-06-20T00:09:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29214
