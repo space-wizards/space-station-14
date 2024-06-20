@@ -6,7 +6,6 @@ using Content.Client.Lobby.UI.Loadouts;
 using Content.Client.Lobby.UI.Roles;
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
-using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
@@ -511,7 +510,7 @@ namespace Content.Client.Lobby.UI
                     {
                         Text = Loc.GetString(category.Name),
                         Margin = new Thickness(0, 10, 0, 0),
-                        StyleClasses = { StyleBase.StyleClassLabelHeading },
+                        StyleClasses = { Stylesheets.Redux.StyleClasses.LabelSubtext },
                     });
                 }
 
