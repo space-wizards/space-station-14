@@ -21,20 +21,34 @@ public sealed partial class SupermatterComponent : Component
     public readonly string SliverPrototype = "SupermatterSliver";
 
     [DataField("zapSound")]
-    public SoundSpecifier SupermatterZapSound = new SoundPathSpecifier("/Audio/Weapons/emitter2.ogg");
+    public static SoundSpecifier SupermatterZapSound = new SoundPathSpecifier("/Audio/Weapons/emitter2.ogg");
 
     [DataField("calmAmbienceSound")]
     public SoundSpecifier CalmAmbienceSound = new SoundPathSpecifier("/Audio/Ambience/Objects/supermatter_calm.ogg");
 
     [DataField("delamAmbienceSound")]
-    public SoundSpecifier DelamAmbienceSound = new SoundPathSpecifier("/Audio/Ambience/Objects/supermatter_calm.ogg");
+    public SoundSpecifier DelamAmbienceSound = new SoundPathSpecifier("/Audio/Ambience/Objects/supermatter_delam.ogg");
 
+    [ViewVariables]
     public SoundSpecifier CurrentAmbience = new SoundPathSpecifier("/Audio/Ambience/Objects/supermatter_calm.ogg");
+
+    [DataField("vaporizeSound")]
+    public static SoundSpecifier VaporizeSound = new SoundPathSpecifier("/Audio/Effects/gib2.ogg");
+
+    [DataField("teslaSpawnPrototype")]
+    public string TeslaPrototype = "";
+
+    [DataField("singularitySpawnPrototype")]
+    public string SingularityPrototype = "";
+
+    [DataField("supermatterKudzuSpawnPrototype")]
+    public string SupermatterKudzuPrototype = "";
 
     /// <summary>
     ///     Indicates whether supermatter crystal is active or not.
     /// </summary>
-    [DataField("activated")] public bool Activated = false;
+    [DataField("activated")]
+    public bool Activated = false;
 
     public float UpdateTimerAccumulator = 0f;
 
@@ -83,12 +97,13 @@ public sealed partial class SupermatterComponent : Component
     /// <summary>
     ///     This value effects gas output, damage and power generation.
     /// </summary>
+    [ViewVariables]
     public float InternalEnergy = 0f;
 
     /// <summary>
     ///     The amount of damage the SM currently has.
     /// </summary>
-    [DataField]
+    [DataField("damage")]
     public float Damage = 0f;
 
     /// <summary>
@@ -99,6 +114,7 @@ public sealed partial class SupermatterComponent : Component
     /// <summary>
     ///     Multiplies our gas waste amount and temperature.
     /// </summary>
+    [ViewVariables]
     public float WasteMultiplier = 0f;
 
     [DataField("damageWarningPoint")]
@@ -113,9 +129,10 @@ public sealed partial class SupermatterComponent : Component
     [DataField("damageDelaminationPoint")]
     public float DelaminationPoint = 100f;
 
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadOnly)]
     public bool AreWeDelaming = false;
 
+    [ViewVariables(VVAccess.ReadWrite)]
     public float DelamCountdownAccumulator = 0f;
 
     /// <summary>
@@ -194,7 +211,7 @@ public sealed partial class SupermatterComponent : Component
         new (transmissionRate: 3f, heatModifier: 9f, heatPowerGeneration: 1f), // tritium
         new (transmissionRate: -.25f, heatModifier: 11f, heatPowerGeneration: 1f), // vapor
         new (heatPowerGeneration: .5f), // ommonium
-        new (heatResistance: 5), // n2o
+        new (heatResistance: 5f), // n2o
         new (transmissionRate: -3f, heatModifier: 9f, heatResistance: 1f, heatPowerGeneration: 1f), // frezon
     };
 }
@@ -247,8 +264,8 @@ public sealed partial class GasFact
 /// </summary>
 public enum DelamType : sbyte
 {
-    Explosion, // a big explosion. really big. even bigger than syndie bomb.
-    Tesla, // tesla with like 8 mini other teslas.
-    Singularity, // instant level 6 singuloose. people are so screwed.
-    ResonanceCascade, // total crew death. // save for whenever anti and hyper nobilium gases get added
+    Explosion,
+    Tesla,
+    Singularity,
+    ResonanceCascade,
 }

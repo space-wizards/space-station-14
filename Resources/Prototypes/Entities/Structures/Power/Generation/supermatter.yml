@@ -50,8 +50,13 @@
       volume: -2
       sound:
         path: /Audio/Ambience/Objects/supermatter_calm.ogg
-    - type: SinguloFood # instant level 6 babye, it's SM!!
-      energy: 5000
+    - type: SinguloFood
+      energy: 7500
     - type: WarpPoint
       follow: true
       location: supermatter
+    - type: Explosive
+      explosionType: HardBomb
+      totalIntensity: 5000.0
+      intensitySlope: 4
+      maxIntensity: 500

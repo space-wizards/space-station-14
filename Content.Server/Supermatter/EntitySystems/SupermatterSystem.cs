@@ -25,6 +25,9 @@ using System.Text;
 using Content.Server.AlertLevel;
 using Content.Shared.Examine;
 using Content.Shared.Damage.Prototypes;
+using Content.Server.DoAfter;
+using Robust.Shared.Audio;
+using Content.Server.Explosion.EntitySystems;
 
 namespace Content.Server.Supermatter.EntitySystems;
 
@@ -42,6 +45,8 @@ public sealed class SupermatterSystem : EntitySystem
     [Dependency] private readonly AnomalySystem _anomaly = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly ExplosionSystem _explosion = default!;
 
     public override void Initialize()
     {
@@ -153,7 +158,7 @@ public sealed class SupermatterSystem : EntitySystem
         sm.InternalEnergy = strength;
         var lightningProto = sm.LightningPrototypeIDs[(int) Math.Clamp(strength, 0, 3)];
 
-        _sound.PlayPvs(sm.SupermatterZapSound, uid);
+        _sound.PlayPvs(SupermatterComponent.SupermatterZapSound, uid);
         _lightning.ShootRandomLightnings(uid, 3, (int) strength, lightningProto);
         Comp<RadiationSourceComponent>(uid).Intensity = strength;
     }
@@ -201,14 +206,14 @@ public sealed class SupermatterSystem : EntitySystem
     private void ProcessWaste(EntityUid uid, SupermatterComponent sm)
     {
         sm.WasteMultiplier = Math.Clamp(1f + sm.GasHeatModifier, .5f, float.PositiveInfinity);
-        var mix = _atmos.GetTileMixture(uid) ?? new();
+        var mix = _atmos.GetContainingMixture((uid, Transform(uid)), true, true) ?? new();
         var mergeMix = sm.AbsorbedGasMix;
 
         mergeMix.Temperature += .65f * sm.WasteMultiplier / SupermatterComponent.ThermalReleaseModifier;
         mergeMix.Temperature = Math.Clamp(mergeMix.Temperature, Atmospherics.TCMB, 2500 * sm.WasteMultiplier);
 
-        mergeMix.AdjustMoles(Gas.Plasma, Math.Max(.65f * sm.WasteMultiplier / SupermatterComponent.PlasmaReleaseModifier, 0));
-        mergeMix.AdjustMoles(Gas.Oxygen, Math.Max((.65f + mergeMix.Temperature * sm.WasteMultiplier - Atmospherics.T0C) / SupermatterComponent.OxygenReleaseModifier, 0));
+        mergeMix.SetMoles(Gas.Plasma, Math.Max(.65f * sm.InternalEnergy * sm.WasteMultiplier / SupermatterComponent.PlasmaReleaseModifier, 0));
+        mergeMix.SetMoles(Gas.Oxygen, Math.Max((.65f + mergeMix.Temperature * sm.WasteMultiplier - Atmospherics.T0C) / SupermatterComponent.OxygenReleaseModifier, 0));
 
         _atmos.Merge(mix, mergeMix);
     }
@@ -239,6 +244,9 @@ public sealed class SupermatterSystem : EntitySystem
     {
         var delamType = ChooseDelam(sm);
 
+        var stationUid = _station.GetStationInMap(Transform(uid).MapID);
+        var alertLevel = string.Empty;
+
         var sb = new StringBuilder();
         sb.Append(Loc.GetString("supermatter-announcement-delam"));
         switch (delamType)
@@ -246,19 +254,26 @@ public sealed class SupermatterSystem : EntitySystem
             case DelamType.Explosion:
             default:
                 sb.Append(" " + Loc.GetString("supermatter-announcement-delam-explosion"));
+                alertLevel = "yellow";
                 break;
             case DelamType.Tesla:
                 sb.Append(" " + Loc.GetString("supermatter-announcement-delam-tesla"));
+                alertLevel = "delta";
                 break;
             case DelamType.Singularity:
                 sb.Append(" " + Loc.GetString("supermatter-announcement-delam-singuloose"));
+                alertLevel = "delta";
                 break;
             case DelamType.ResonanceCascade:
                 sb.Append(" " + Loc.GetString("supermatter-announcement-delam-cascade"));
+                alertLevel = "delta";
                 break;
         }
+        // make it cancellable in case there are crazy engineers that managed to contain the delam
+        if (stationUid != null)
+            _alert.SetLevel(stationUid.Value, alertLevel, true, true, true, false);
 
-        SupermatterAlert(uid, sb.ToString(), true, delamType);
+        SupermatterAlert(uid, sb.ToString());
         Delaminate(uid, sm, delamType);
     }
 
@@ -269,18 +284,22 @@ public sealed class SupermatterSystem : EntitySystem
     {
         GenerateAnomaly(uid, _random.Next(2, 4));
 
+        var prototypeId = string.Empty;
         switch (type)
         {
             case DelamType.Explosion:
             default:
-                break;
+                _explosion.TriggerExplosive(uid); return;
             case DelamType.Tesla:
-                break;
+                prototypeId = sm.TeslaPrototype; break;
             case DelamType.Singularity:
-                break;
+                prototypeId = sm.SingularityPrototype; break;
             case DelamType.ResonanceCascade:
-                break;
+                prototypeId = sm.SupermatterKudzuPrototype; break;
         }
+        if (string.IsNullOrWhiteSpace(prototypeId))
+            return;
+        EntityManager.SpawnEntity(prototypeId, Transform(uid).Coordinates);
     }
 
     /// <summary>
@@ -307,10 +326,12 @@ public sealed class SupermatterSystem : EntitySystem
         if (sm.Damage < sm.DelaminationPoint)
         {
             // yay!
+            sm.DelamCountdownAccumulator = 0;
             return;
         }
         if (sm.DelamCountdownAccumulator >= sm.CountdownTimer) // uh oh
             Delaminate(uid, sm);
+        sm.DelamCountdownAccumulator++;
     }
 
     private void GenerateAnomaly(EntityUid uid, float amount = 1)
@@ -336,21 +357,8 @@ public sealed class SupermatterSystem : EntitySystem
     ///     Make console alerts, set station codes, etc. etc.
     /// </summary>
     /// <param name="customSender"> If true, the message will be sent from Central Command </param>
-    public void SupermatterAlert(EntityUid uid, string message, bool isDelamming = false, DelamType? delamType = null, bool customSender = false)
+    public void SupermatterAlert(EntityUid uid, string message, bool customSender = false)
     {
-        if (isDelamming)
-        {
-            switch (delamType)
-            {
-                case DelamType.Explosion:
-                default:
-                    break;
-                case DelamType.Tesla:
-                case DelamType.Singularity:
-                case DelamType.ResonanceCascade:
-                    break;
-            }
-        }
         _chat.DispatchStationAnnouncement(uid, message, customSender ? "Central Command" : Loc.GetString("supermatter-announcement-sender"), false, null, Color.LightYellow);
     }
 
@@ -359,7 +367,10 @@ public sealed class SupermatterSystem : EntitySystem
     /// </summary>
     private void Vaporize(EntityUid uid)
     {
-
+        if (EntityManager.IsQueuedForDeletion(uid))
+            return;
+        EntityManager.QueueDeleteEntity(uid);
+        _sound.PlayPvs(SupermatterComponent.VaporizeSound, uid);
 
         // getting discombobulated by the SM is the same as permanent round removal so why not log that
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{EntityManager.ToPrettyString(uid):player} has been vaporized by the supermatter.");
@@ -390,7 +401,7 @@ public sealed class SupermatterSystem : EntitySystem
                 _adminLogger.Add(LogType.Action, LogImpact.High, $"{EntityManager.ToPrettyString(uid):player} is trying to extract a sliver from the supermatter crystal.");
                 _popup.PopupClient(Loc.GetString("supermatter-tamper-begin"), args.User);
 
-                new DoAfterArgs(EntityManager, uid, 30, new SupermatterDoAfterEvent(), args.Used)
+                var dargs = new DoAfterArgs(EntityManager, uid, 30, new SupermatterDoAfterEvent(), args.Used)
                 {
                     BreakOnDamage = true,
                     BreakOnHandChange = true,
@@ -399,6 +410,7 @@ public sealed class SupermatterSystem : EntitySystem
                     NeedHand = true,
                     RequireCanInteract = true,
                 };
+                _doAfter.TryStartDoAfter(dargs);
             }
         }
     }
