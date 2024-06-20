@@ -18,7 +18,7 @@
   - type: Slippery
     launchForwardsMultiplier: 3.5
   - type: StepTrigger
-    intersectRatio: 0.2
+    intersectRatio: 0.18
   - type: CollisionWake
     enabled: false
   - type: Physics
