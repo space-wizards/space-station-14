@@ -247,14 +247,14 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     private void UnreadAHelpReceived()
     {
         GameAHelpButton?.StyleClasses.Add(MenuButton.StyleClassRedTopButton);
-        LobbyAHelpButton?.StyleClasses.Add(StyleNano.StyleClassButtonColorRed);
+        LobbyAHelpButton?.StyleClasses.Add(Stylesheets.Redux.StyleClasses.Negative);
         _hasUnreadAHelp = true;
     }
 
     private void UnreadAHelpRead()
     {
         GameAHelpButton?.StyleClasses.Remove(MenuButton.StyleClassRedTopButton);
-        LobbyAHelpButton?.StyleClasses.Remove(StyleNano.StyleClassButtonColorRed);
+        LobbyAHelpButton?.StyleClasses.Remove(Stylesheets.Redux.StyleClasses.Negative);
         _hasUnreadAHelp = false;
     }
 

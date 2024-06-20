@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client.Resources;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -12,21 +13,6 @@ namespace Content.Client.Stylesheets
 {
     public abstract class StyleBase
     {
-        public const string ClassHighDivider = "HighDivider";
-        public const string ClassLowDivider = "LowDivider";
-        public const string StyleClassLabelHeading = "LabelHeading";
-        public const string StyleClassLabelSubText = "LabelSubText";
-        public const string StyleClassItalic = "Italic";
-
-        public const string ClassAngleRect = "AngleRect";
-
-        public const string ButtonOpenRight = "OpenRight";
-        public const string ButtonOpenLeft = "OpenLeft";
-        public const string ButtonOpenBoth = "OpenBoth";
-        public const string ButtonSquare = "ButtonSquare";
-
-        public const string ButtonCaution = "Caution";
-
         public const int DefaultGrabberSize = 10;
 
         public abstract Stylesheet Stylesheet { get; }
@@ -165,7 +151,7 @@ namespace Content.Client.Stylesheets
 
                 // Default font.
                 new StyleRule(
-                    new SelectorElement(null, new[] {StyleClassItalic}, null, null),
+                    new SelectorElement(null, new[] {StyleClasses.Italic}, null, null),
                     new[]
                     {
                         new StyleProperty("font", notoSans12Italic),

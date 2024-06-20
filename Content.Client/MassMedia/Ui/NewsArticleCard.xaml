@@ -21,7 +21,7 @@
                     HorizontalAlignment="Right" Margin="8 6 6 6" SetHeight="19" SetWidth="52" Access="Public">
                 <Button.StyleClasses>
                     <system:String>ButtonSmall</system:String>
-                    <system:String>ButtonColorRed</system:String>
+                    <system:String>negative</system:String>
                 </Button.StyleClasses>
             </controls:ConfirmButton>
         </BoxContainer>

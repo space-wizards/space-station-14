@@ -80,5 +80,8 @@ namespace Content.Client.UserInterface.Controls
 
             return mode;
         }
+
+        public string HeaderClass { set => WindowHeader.SetOnlyStyleClass(value); }
+        public string TitleClass { set => WindowTitle.SetOnlyStyleClass(value); }
     }
 }

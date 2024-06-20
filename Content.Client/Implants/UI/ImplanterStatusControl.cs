@@ -16,7 +16,7 @@ public sealed class ImplanterStatusControl : Control
     public ImplanterStatusControl(ImplanterComponent parent)
     {
         _parent = parent;
-        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+        _label = new RichTextLabel { StyleClasses = { Stylesheets.Redux.StyleClasses.StyleClassItemStatus } };
         _label.MaxWidth = 350;
         AddChild(new ClipControl { Children = { _label } });
 

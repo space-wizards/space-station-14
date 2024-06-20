@@ -75,7 +75,7 @@ namespace Content.Client.Arcade
             };
             grid.AddChild(newGame);
 
-            Contents.AddChild(grid);
+            ContentsContainer.AddChild(grid);
         }
 
         private void UpdateMetadata(SharedSpaceVillainArcadeComponent.SpaceVillainArcadeMetaDataUpdateMessage message)

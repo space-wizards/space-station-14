@@ -43,7 +43,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         FooterPanel.PanelOverride = footerStyleBox;
         MainPanel.PanelOverride = new StyleBoxFlat(Color.FromHex(PanelBgColor));
 
-        ButtonClear.AddStyleClass("ButtonColorRed");
+        ButtonClear.AddStyleClass("negative");
         ButtonLinkDefault.Disabled = true;
 
         _links = new LinksRender(ButtonContainerLeft, ButtonContainerRight);

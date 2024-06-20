@@ -20,7 +20,7 @@ namespace Content.Client.Strip
             _bui = bui;
 
             var box = new BoxContainer() { Orientation = LayoutOrientation.Vertical, Margin = new Thickness(0, 8) };
-            Contents.AddChild(box);
+            ContentsContainer.AddChild(box);
             box.AddChild(SnareContainer);
             box.AddChild(HandsContainer);
             box.AddChild(InventoryContainer);

@@ -110,7 +110,7 @@ namespace Content.Client.ParticleAccelerator.UI
             {
                 ToggleMode = false,
                 Text = Loc.GetString("particle-accelerator-control-menu-off-button"),
-                StyleClasses = { StyleBase.ButtonOpenRight },
+                StyleClasses = { Stylesheets.Redux.StyleClasses.ButtonOpenRight },
             };
             _offButton.OnPressed += args => owner.SendEnableMessage(false);
 
@@ -118,7 +118,7 @@ namespace Content.Client.ParticleAccelerator.UI
             {
                 ToggleMode = false,
                 Text = Loc.GetString("particle-accelerator-control-menu-on-button"),
-                StyleClasses = { StyleBase.ButtonOpenLeft },
+                StyleClasses = { Stylesheets.Redux.StyleClasses.ButtonOpenLeft },
             };
             _onButton.OnPressed += args => owner.SendEnableMessage(true);
 
@@ -133,7 +133,7 @@ namespace Content.Client.ParticleAccelerator.UI
             var serviceManual = new Label
             {
                 HorizontalAlignment = HAlignment.Center,
-                StyleClasses = { StyleBase.StyleClassLabelSubText },
+                StyleClasses = { Stylesheets.Redux.StyleClasses.LabelSubtext },
                 Text = Loc.GetString("particle-accelerator-control-menu-service-manual-reference")
             };
             _drawLabel = new Label();
@@ -296,7 +296,7 @@ namespace Content.Client.ParticleAccelerator.UI
                                 Margin = new Thickness(4, 4, 0, 4),
                                 Text = Loc.GetString("particle-accelerator-control-menu-check-containment-field-warning"),
                                 HorizontalAlignment = HAlignment.Center,
-                                StyleClasses = {StyleBase.StyleClassLabelSubText},
+                                StyleClasses = {Stylesheets.Redux.StyleClasses.LabelSubtext},
                             }
                         }
                     },
@@ -309,7 +309,7 @@ namespace Content.Client.ParticleAccelerator.UI
                             new Label
                             {
                                 Text = Loc.GetString("particle-accelerator-control-menu-foo-bar-baz"),
-                                StyleClasses = {StyleBase.StyleClassLabelSubText}
+                                StyleClasses = {Stylesheets.Redux.StyleClasses.LabelSubtext}
                             }
                         }
                     },

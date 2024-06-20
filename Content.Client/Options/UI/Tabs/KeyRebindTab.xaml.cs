@@ -131,7 +131,7 @@ namespace Content.Client.Options.UI.Tabs
                 {
                     Text = Loc.GetString(headerContents),
                     FontColorOverride = StyleNano.NanoGold,
-                    StyleClasses = { StyleNano.StyleClassLabelKeyText }
+                    StyleClasses = { Stylesheets.Redux.StyleClasses.StyleClassLabelKeyText }
                 });
             }
 
@@ -475,9 +475,9 @@ namespace Content.Client.Options.UI.Tabs
                     HorizontalAlignment = HAlignment.Left
                 };
 
-                BindButton1 = new BindButton(parent, this, StyleBase.ButtonOpenRight);
-                BindButton2 = new BindButton(parent, this, StyleBase.ButtonOpenLeft);
-                ResetButton = new Button { Text = Loc.GetString("ui-options-bind-reset"), StyleClasses = { StyleBase.ButtonCaution } };
+                BindButton1 = new BindButton(parent, this, Stylesheets.Redux.StyleClasses.ButtonOpenRight);
+                BindButton2 = new BindButton(parent, this, Stylesheets.Redux.StyleClasses.ButtonOpenLeft);
+                ResetButton = new Button { Text = Loc.GetString("ui-options-bind-reset"), StyleClasses = { Stylesheets.Redux.StyleClasses.Negative } };
 
                 var hBox = new BoxContainer
                 {

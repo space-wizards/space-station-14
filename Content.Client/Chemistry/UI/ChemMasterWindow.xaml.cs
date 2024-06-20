@@ -46,14 +46,14 @@ namespace Content.Client.Chemistry.UI
             {
                 // For every button decide which stylebase to have
                 // Every row has 10 buttons
-                String styleBase = StyleBase.ButtonOpenBoth;
+                String styleBase = Stylesheets.Redux.StyleClasses.ButtonOpenBoth;
                 uint modulo = i % 10;
                 if (i > 0 && modulo == 0)
-                    styleBase = StyleBase.ButtonOpenRight;
+                    styleBase = Stylesheets.Redux.StyleClasses.ButtonOpenRight;
                 else if (i > 0 && modulo == 9)
-                    styleBase = StyleBase.ButtonOpenLeft;
+                    styleBase = Stylesheets.Redux.StyleClasses.ButtonOpenLeft;
                 else if (i == 0)
-                    styleBase = StyleBase.ButtonOpenRight;
+                    styleBase = Stylesheets.Redux.StyleClasses.ButtonOpenRight;
 
                 // Generate buttons
                 PillTypeButtons[i] = new Button
@@ -205,13 +205,13 @@ namespace Content.Client.Chemistry.UI
                             // Padding
                             new Control {HorizontalExpand = true},
 
-                            MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, true, StyleBase.ButtonOpenRight),
-                            MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("50", ChemMasterReagentAmount.U50, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("100", ChemMasterReagentAmount.U100, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton(Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, reagent, true, StyleBase.ButtonOpenLeft),
+                            MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, true, Stylesheets.Redux.StyleClasses.ButtonOpenRight),
+                            MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent, true, Stylesheets.Redux.StyleClasses.ButtonOpenBoth),
+                            MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent, true, Stylesheets.Redux.StyleClasses.ButtonOpenBoth),
+                            MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent, true, Stylesheets.Redux.StyleClasses.ButtonOpenBoth),
+                            MakeReagentButton("50", ChemMasterReagentAmount.U50, reagent, true, Stylesheets.Redux.StyleClasses.ButtonOpenBoth),
+                            MakeReagentButton("100", ChemMasterReagentAmount.U100, reagent, true, Stylesheets.Redux.StyleClasses.ButtonOpenBoth),
+                            MakeReagentButton(Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, reagent, true, Stylesheets.Redux.StyleClasses.ButtonOpenLeft),
                         }
                     });
                 }
@@ -294,20 +294,20 @@ namespace Content.Client.Chemistry.UI
                         cs.Add(new Control { HorizontalExpand = true });
 
                         cs.Add(MakeReagentButton(
-                            "1", ChemMasterReagentAmount.U1, id, false, StyleBase.ButtonOpenRight));
+                            "1", ChemMasterReagentAmount.U1, id, false, Stylesheets.Redux.StyleClasses.ButtonOpenRight));
                         cs.Add(MakeReagentButton(
-                            "5", ChemMasterReagentAmount.U5, id, false, StyleBase.ButtonOpenBoth));
+                            "5", ChemMasterReagentAmount.U5, id, false, Stylesheets.Redux.StyleClasses.ButtonOpenBoth));
                         cs.Add(MakeReagentButton(
-                            "10", ChemMasterReagentAmount.U10, id, false, StyleBase.ButtonOpenBoth));
+                            "10", ChemMasterReagentAmount.U10, id, false, Stylesheets.Redux.StyleClasses.ButtonOpenBoth));
                         cs.Add(MakeReagentButton(
-                            "25", ChemMasterReagentAmount.U25, id, false, StyleBase.ButtonOpenBoth));
+                            "25", ChemMasterReagentAmount.U25, id, false, Stylesheets.Redux.StyleClasses.ButtonOpenBoth));
                         cs.Add(MakeReagentButton(
-                            "50", ChemMasterReagentAmount.U50, id, false, StyleBase.ButtonOpenBoth));
+                            "50", ChemMasterReagentAmount.U50, id, false, Stylesheets.Redux.StyleClasses.ButtonOpenBoth));
                         cs.Add(MakeReagentButton(
-                            "100", ChemMasterReagentAmount.U100, id, false, StyleBase.ButtonOpenBoth));
+                            "100", ChemMasterReagentAmount.U100, id, false, Stylesheets.Redux.StyleClasses.ButtonOpenBoth));
                         cs.Add(MakeReagentButton(
                             Loc.GetString("chem-master-window-buffer-all-amount"),
-                            ChemMasterReagentAmount.All, id, false, StyleBase.ButtonOpenLeft));
+                            ChemMasterReagentAmount.All, id, false, Stylesheets.Redux.StyleClasses.ButtonOpenLeft));
                     }
 
                     control.Children.Add(inner);

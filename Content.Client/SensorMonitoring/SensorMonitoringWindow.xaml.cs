@@ -109,7 +109,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
 
         foreach (var sensor in _sensorData.Values)
         {
-            var labelName = new Label { Text = sensor.Name, StyleClasses = { StyleBase.StyleClassLabelHeading } };
+            var labelName = new Label { Text = sensor.Name, StyleClasses = { Stylesheets.Redux.StyleClasses.LabelHeading } };
             var labelAddress = new Label
             {
                 Text = sensor.Address,
@@ -152,7 +152,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
                 });
 
                 Asdf.AddChild(new GraphView(stream.Samples, startTime, curTime, maxValue) { MinHeight = 150 });
-                Asdf.AddChild(new PanelContainer { StyleClasses = { StyleBase.ClassLowDivider } });
+                Asdf.AddChild(new PanelContainer { StyleClasses = { Stylesheets.Redux.StyleClasses.LowDivider } });
             }
         }
     }

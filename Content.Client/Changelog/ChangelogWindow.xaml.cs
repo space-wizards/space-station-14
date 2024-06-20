@@ -21,7 +21,7 @@ namespace Content.Client.Changelog
         public ChangelogWindow()
         {
             RobustXamlLoader.Load(this);
-            WindowTitle.AddStyleClass(StyleBase.StyleClassLabelHeading);
+            WindowTitle.AddStyleClass(Stylesheets.Redux.StyleClasses.LabelHeading);
             Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
         }
 

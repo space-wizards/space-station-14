@@ -49,12 +49,12 @@ namespace Content.Client.Access.UI
                 if (!_prototypeManager.TryIndex(jobIconId, out var jobIcon))
                     continue;
 
-                String styleBase = StyleBase.ButtonOpenBoth;
+                String styleBase = Stylesheets.Redux.StyleClasses.ButtonOpenBoth;
                 var modulo = i % JobIconColumnCount;
                 if (modulo == 0)
-                    styleBase = StyleBase.ButtonOpenRight;
+                    styleBase = Stylesheets.Redux.StyleClasses.ButtonOpenRight;
                 else if (modulo == JobIconColumnCount - 1)
-                    styleBase = StyleBase.ButtonOpenLeft;
+                    styleBase = Stylesheets.Redux.StyleClasses.ButtonOpenLeft;
 
                 // Generate buttons
                 var jobIconButton = new Button

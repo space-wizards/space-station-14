@@ -1,3 +1,5 @@
+using Content.Client.Stylesheets.Redux;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
@@ -14,7 +16,7 @@ namespace Content.Client.Stylesheets
 
         public void Initialize()
         {
-            SheetNano = new StyleNano(_resourceCache).Stylesheet;
+            SheetNano = new NanotrasenStylesheet(new PalettedStylesheet.NoConfig()).Stylesheet;
             SheetSpace = new StyleSpace(_resourceCache).Stylesheet;
 
             _userInterfaceManager.Stylesheet = SheetNano;

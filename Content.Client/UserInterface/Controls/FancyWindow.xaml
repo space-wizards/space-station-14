@@ -7,7 +7,7 @@
 
     <BoxContainer Orientation="Vertical">
         <Control>
-            <PanelContainer StyleClasses="WindowHeadingBackground" />
+            <PanelContainer StyleClasses="WindowHeadingBackground" Name="WindowHeader" />
             <BoxContainer Margin="4 2 8 0" Orientation="Horizontal">
                 <Label Name="WindowTitle"
                        HorizontalExpand="True" VAlign="Center" StyleClasses="FancyWindowTitle" />
@@ -17,6 +17,6 @@
             </BoxContainer>
         </Control>
         <PanelContainer StyleClasses="LowDivider" />
-        <Control Access="Public" Name="ContentsContainer" Margin="0 2" RectClipContent="True" VerticalExpand="true" />
+        <Control Access="Public" Name="ContentsContainer" StyleClasses="WindowContentsContainer" RectClipContent="True" VerticalExpand="true" />
     </BoxContainer>
 </controls:FancyWindow>

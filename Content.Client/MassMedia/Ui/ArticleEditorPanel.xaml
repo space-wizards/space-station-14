@@ -43,7 +43,7 @@
         <BoxContainer Orientation="Horizontal" Margin="12 5 12 8">
             <Control>
                 <Button Name="ButtonCancel" SetHeight="32" SetWidth="85"
-                        StyleClasses="ButtonColorRed" Text="{Loc news-write-ui-cancel-text}"/>
+                        StyleClasses="negative" Text="{Loc news-write-ui-cancel-text}"/>
             </Control>
             <Control HorizontalExpand="True"/>
             <BoxContainer Orientation="Horizontal">

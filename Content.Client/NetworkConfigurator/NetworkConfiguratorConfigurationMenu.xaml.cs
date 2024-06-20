@@ -13,8 +13,8 @@ public sealed partial class NetworkConfiguratorConfigurationMenu : FancyWindow
     {
         RobustXamlLoader.Load(this);
 
-        Clear.StyleClasses.Add(StyleBase.ButtonOpenLeft);
-        Clear.StyleClasses.Add(StyleNano.StyleClassButtonColorRed);
+        Clear.StyleClasses.Add(Stylesheets.Redux.StyleClasses.ButtonOpenLeft);
+        Clear.StyleClasses.Add(Stylesheets.Redux.StyleClasses.Negative);
     }
 
     public void UpdateState(DeviceListUserInterfaceState state)

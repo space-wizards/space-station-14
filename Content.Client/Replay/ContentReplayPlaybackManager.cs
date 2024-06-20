@@ -5,6 +5,7 @@ using Content.Client.MainMenu;
 using Content.Client.Replay.Spectator;
 using Content.Client.Replay.UI.Loading;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Shared.Chat;
 using Content.Shared.Effects;
@@ -60,7 +61,7 @@ public sealed class ContentReplayPlaybackManager
     public bool IsScreenshotMode = false;
 
     private bool _initialized;
-    
+
     /// <summary>
     /// Most recently loaded file, for re-attempting the load with error tolerance.
     /// Required because the zip reader auto-disposes and I'm too lazy to change it so that
@@ -114,10 +115,10 @@ public sealed class ContentReplayPlaybackManager
         {
             var button = new Button
             {
-                Text = Loc.GetString("replay-loading-retry"), 
-                StyleClasses = { StyleBase.ButtonCaution }
+                Text = Loc.GetString("replay-loading-retry"),
+                StyleClasses = { StyleClasses.Negative }
             };
-            
+
             button.OnPressed += _ =>
             {
                 _cfg.SetCVar(CVars.ReplayIgnoreErrors, true);
@@ -129,7 +130,7 @@ public sealed class ContentReplayPlaybackManager
 
                 _loadMan.LoadAndStartReplay(reader);
             };
-            
+
             box.AddChild(button);
         }
 
