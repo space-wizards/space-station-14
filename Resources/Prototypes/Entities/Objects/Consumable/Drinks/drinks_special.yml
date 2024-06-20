@@ -36,6 +36,7 @@
       Steel: 50
   - type: ReactionMixer
     mixOnInteract: false
+    mixMessage: "shake-mixing-success"
     reactionTypes:
     - Shake
 

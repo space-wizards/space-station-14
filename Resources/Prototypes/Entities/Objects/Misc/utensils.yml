@@ -89,6 +89,7 @@
     speedModifier: 0.1 # you can try
   - type: ReactionMixer
     mixMessage: "spoon-mixing-success"
+    timeToMix: 0.5
     reactionTypes:
     - Stir
 
@@ -109,6 +110,7 @@
     speedModifier: 0.1 # you can try
   - type: ReactionMixer
     mixMessage: "spoon-mixing-success"
+    timeToMix: 0.5
     reactionTypes:
     - Stir
 
@@ -147,6 +149,7 @@
     - Spoon
   - type: ReactionMixer
     mixMessage: "spoon-mixing-success"
+    timeToMix: 0.5
     reactionTypes:
     - Stir
   - type: MeleeWeapon

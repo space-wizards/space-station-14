@@ -1,5 +1,7 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.DoAfter;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Reaction;
 
@@ -26,9 +28,21 @@ public sealed partial class ReactionMixerComponent : Component
     [ViewVariables]
     [DataField]
     public bool MixOnInteract = true;
+
+    /// <summary>
+    ///     How long it takes to mix with this
+    /// </summary>
+    [ViewVariables]
+    [DataField]
+    public TimeSpan TimeToMix = TimeSpan.FromSeconds(0);
 }
 
 [ByRefEvent]
 public record struct MixingAttemptEvent(EntityUid Mixed, bool Cancelled = false);
 
 public readonly record struct AfterMixingEvent(EntityUid Mixed, EntityUid Mixer);
+
+[Serializable, NetSerializable]
+public sealed partial class ReactionMixDoAfterEvent : SimpleDoAfterEvent
+{
+}

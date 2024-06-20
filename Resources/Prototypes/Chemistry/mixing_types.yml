@@ -58,6 +58,7 @@
   icon:
     sprite: Objects/Consumable/Drinks/shaker.rsi
     state: icon
+
 - type: mixingCategory
   id: Stir
   verbText: mixing-verb-stir
