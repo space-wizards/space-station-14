@@ -90,7 +90,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     private void OnSubnetRequest(EntityUid uid, SurveillanceCameraMonitorComponent component,
         SurveillanceCameraMonitorSubnetRequestMessage args)
     {
-        if (args.Actor is { Valid: true } && !Deleted(args.Actor))
+        if (args.Actor is { Valid: true } actor && !Deleted(actor))
         {
             SetActiveSubnet(uid, args.Subnet, component);
         }
