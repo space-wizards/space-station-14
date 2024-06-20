@@ -601,6 +601,9 @@
   id: MobSpiderShiva
   description: The first defender of the station.
   components:
+  - type: Prying
+    pryPowered: false
+    force: false
   - type: InteractionPopup
     successChance: 0.5 # spider is mean
     interactSuccessString: petting-success-tarantula
