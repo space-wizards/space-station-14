@@ -1,4 +1,5 @@
-- [ ] Inventory \[X] button looks weird
+- [x] Inventory \[X] button looks weird
+  - Styles for `TextureButton` were not implemented
 - [ ] \[X] button is misaligned on FancyWindow also title text too kinda
 - [ ] Right click menu has no colors
 - [ ] autolathe and protolathe open to the left (also make them Fancy)

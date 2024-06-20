@@ -10,6 +10,13 @@ namespace Content.Client.Stylesheets.Redux.NTSheetlets;
 
 public sealed class PalettedButtonSheetlet : Sheetlet<PalettedStylesheet>
 {
+    // this is hardcoded, but the other option is adding another field to the palette class. doesn't seem worth it
+    private readonly Color[] _textureButtonPalette = new[]
+    {
+        Color.FromHex("#ffffff"), Color.FromHex("#d0d0d0"), Color.FromHex("#b0b0b0"), Color.FromHex("#909090"),
+        Color.FromHex("#707070"), Color.FromHex("#505050"),
+    };
+
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         var cfg = (IButtonConfig) sheet;
@@ -39,6 +46,7 @@ public sealed class PalettedButtonSheetlet : Sheetlet<PalettedStylesheet>
         MakeButtonRules(cfg, rules, cfg.ButtonPalette, null);
         MakeButtonRules(cfg, rules, cfg.PositiveButtonPalette, StyleClasses.Positive);
         MakeButtonRules(cfg, rules, cfg.NegativeButtonPalette, StyleClasses.Negative);
+        MakeButtonRules<TextureButton>(cfg, rules, _textureButtonPalette, null);
 
         return rules.ToArray();
     }
@@ -149,5 +157,4 @@ public interface IButtonConfig : ISheetletConfig
     {
         return ConfigureOpenBothButton(sheet);
     }
-
 }
