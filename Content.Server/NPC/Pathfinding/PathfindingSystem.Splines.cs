@@ -1,4 +1,3 @@
-using System.Text;
 using Robust.Shared.Collections;
 using Robust.Shared.Random;
 
@@ -9,13 +8,11 @@ public sealed partial class PathfindingSystem
     /// <summary>
     /// Gets a spline path from start to end.
     /// </summary>
-    public List<Vector2i> GetSplinePath(SplinePathArgs args, Random random)
+    public SplinePathResult GetSplinePath(SplinePathArgs args, Random random)
     {
-        var start = args.Start;
-        var end = args.End;
+        var start = args.Args.Start;
+        var end = args.Args.End;
 
-        var frontier = new PriorityQueue<Vector2i, float>();
-        var cameFrom = new Dictionary<Vector2i, Vector2i>();
         var path = new List<Vector2i>();
 
         var distance = (end - start).Length;
@@ -69,76 +66,45 @@ public sealed partial class PathfindingSystem
 
         // TODO: Add rotation version or straight-line version for pathfinder config
         // Move the worm pathfinder to here I think.
-        var count = 0;
+        var cameFrom = new Dictionary<Vector2i, Vector2i>();
 
         for (var i = 0; i < spline.Count - 1; i++)
         {
             var point = spline[i];
             var target = spline[i + 1];
-            frontier.Clear();
-            frontier.Enqueue(point, 0f);
-            cameFrom.Clear();
-            var found = false;
+            var aStarArgs = args.Args with { Start = point, End = target };
 
-            // TODO: Generic pathfinder method instead of this.
-            while (frontier.TryDequeue(out var node, out _) && count < args.Limit)
+            var aStarResult = GetPath(aStarArgs);
+
+            if (aStarResult == SimplePathResult.NoPath)
+                return SplinePathResult.NoPath;
+
+            path.AddRange(aStarResult.Path[1..]);
+
+            foreach (var a in aStarResult.CameFrom)
             {
-                if (node == target)
-                {
-                    found = true;
-                    // Found target
-                    break;
-                }
-
-                if (args.Diagonals)
-                {
-                    for (var x = -1; x <= 1; x++)
-                    {
-                        for (var y = -1; y <= 1; y++)
-                        {
-                            // TODO: G score + f score and shit.
-                            // Move A* pathfinder to common method.
-                            // Needs way to get tile-node costs dynamically too for walls and shit
-                            var neighbor = node + new Vector2i(x, y);
-                            frontier.Enqueue(neighbor, 0f);
-                        }
-                    }
-                }
-                else
-                {
-                    for (var x = -1; x <= 1; x++)
-                    {
-                        for (var y = -1; y <= 1; y++)
-                        {
-                            if (x != 0 && y != 0)
-                                continue;
-
-                            // TODO: G score + f score and shit.
-                            var neighbor = node + new Vector2i(x, y);
-                            frontier.Enqueue(neighbor, 0f);
-                        }
-                    }
-                }
+                cameFrom[a.Key] = a.Value;
             }
-
-            if (found)
-                continue;
-
-            // TODO: Abort.
         }
 
-        return path;
+        return new SplinePathResult()
+        {
+            Path = path,
+            CameFrom = cameFrom,
+        };
     }
 
-    public record struct SplinePathArgs()
+    public record struct SplinePathResult
     {
-        public Vector2i Start;
-        public Vector2i End;
+        public static SplinePathResult NoPath = new();
 
-        /// <summary>
-        /// Can we get diagonal neighbors.
-        /// </summary>
-        public bool Diagonals = false;
+        public List<Vector2i> Path;
+        public Dictionary<Vector2i, Vector2i> CameFrom;
+    }
+
+    public record struct SplinePathArgs(PathArgs Args)
+    {
+        public PathArgs Args = Args;
 
         public float MaxRatio = 0.8f;
 
@@ -146,7 +112,5 @@ public sealed partial class PathfindingSystem
         /// Minimum distance between subdivisions.
         /// </summary>
         public int Distance = 5;
-
-        public int Limit = 10000;
     }
 }
