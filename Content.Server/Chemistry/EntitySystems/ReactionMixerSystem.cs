@@ -1,11 +1,11 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Popups;
-using Content.Shared.DoAfter;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
