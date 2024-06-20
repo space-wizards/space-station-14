@@ -1,13 +1,22 @@
 - type: entity
   parent: ClothingBackpackSatchel
-  id: ClothingBackpackSatchelSmuggler
+  id: ClothingBackpackSatchelSmugglerBase
   name: Smuggler's Satchel
-  noSpawn: true
   description: A dingy, suspicious looking satchel.
+  suffix: Empty
+  #Moved to base so all bags could be stashed under tiles.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/smuggler.rsi
+    state: icon
+
+- type: entity
+  parent: ClothingBackpackSatchelSmugglerBase
+  id: ClothingBackpackSatchelSmuggler
+  noSpawn: true
   placement:
     mode: SnapgridCenter
   components:
-  #Moved to base so all bags could be stashed under tiles.
   - type: Transform
     anchored: true
   - type: Physics
@@ -16,10 +25,20 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/smuggler.rsi
     state: icon
+
+- type: entity
+  parent: ClothingBackpackSatchelSmuggler
+  id: ClothingBackpackSatchelSmugglerOne
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/smuggler.rsi
+    state: icon
   - type: StorageFill
     contents:
-  #number after each group is potential max weight. If combined PMW is too high, it could result in an over-filled bag/error.
-  #number after each group is potential max inventory capacity. If combined PMIC is too high, it could result in an over-filled bag/error.
+    #number after each group is potential max weight. If combined PMW is too high, it could result in an over-filled bag/error.
+    #number after each group is potential max inventory capacity. If combined PMIC is too high, it could result in an over-filled bag/error.
+
       - id: SpaceCash100
         prob: 0.95
         orGroup: Generic1
@@ -949,7 +968,7 @@
         state: icon
   - type: RandomSpawner
     prototypes:
-      - ClothingBackpackSatchelSmuggler
+      - ClothingBackpackSatchelSmugglerOne
       - ClothingBackpackSatchelSmugglerTwo
       - ClothingBackpackSatchelSmugglerThree
       - ClothingBackpackSatchelSmugglerFour
@@ -966,6 +985,7 @@
   id: BriefcaseCash
   suffix: Smuggler
   description: A handy briefcase.
+  noSpawn: true
   placement:
     mode: SnapgridCenter
   components:
