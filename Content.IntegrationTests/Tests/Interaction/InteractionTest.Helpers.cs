@@ -84,8 +84,9 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Spawn an entity entity and set it as the target.
     /// </summary>
-    [MemberNotNull(nameof(Target))]
-    protected async Task SpawnTarget(string prototype)
+    [MemberNotNull(nameof(Target), nameof(STarget), nameof(CTarget))]
+#pragma warning disable CS8774 // Member must have a non-null value when exiting.
+    protected async Task<NetEntity> SpawnTarget(string prototype)
     {
         Target = NetEntity.Invalid;
         await Server.WaitPost(() =>
@@ -95,7 +96,9 @@ public abstract partial class InteractionTest
 
         await RunTicks(5);
         AssertPrototype(prototype);
+        return Target!.Value;
     }
+#pragma warning restore CS8774 // Member must have a non-null value when exiting.
 
     /// <summary>
     /// Spawn an entity in preparation for deconstruction
@@ -1170,14 +1173,17 @@ public abstract partial class InteractionTest
 
     #region Inputs
 
+
+
     /// <summary>
     ///     Make the client press and then release a key. This assumes the key is currently released.
+    ///     This will default to using the <see cref="Target"/> entity and <see cref="TargetCoords"/> coordinates.
     /// </summary>
     protected async Task PressKey(
         BoundKeyFunction key,
         int ticks = 1,
         NetCoordinates? coordinates = null,
-        NetEntity cursorEntity = default)
+        NetEntity? cursorEntity = null)
     {
         await SetKey(key, BoundKeyState.Down, coordinates, cursorEntity);
         await RunTicks(ticks);
@@ -1186,15 +1192,17 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    ///     Make the client press or release a key
+    ///     Make the client press or release a key.
+    ///     This will default to using the <see cref="Target"/> entity and <see cref="TargetCoords"/> coordinates.
     /// </summary>
     protected async Task SetKey(
         BoundKeyFunction key,
         BoundKeyState state,
         NetCoordinates? coordinates = null,
-        NetEntity cursorEntity = default)
+        NetEntity? cursorEntity = null)
     {
         var coords = coordinates ?? TargetCoords;
+        var target = cursorEntity ?? Target ?? default;
         ScreenCoordinates screen = default;
 
         var funcId = InputManager.NetworkBindMap.KeyFunctionID(key);
@@ -1203,7 +1211,7 @@ public abstract partial class InteractionTest
             State = state,
             Coordinates = CEntMan.GetCoordinates(coords),
             ScreenCoordinates = screen,
-            Uid = CEntMan.GetEntity(cursorEntity),
+            Uid = CEntMan.GetEntity(target),
         };
 
         await Client.WaitPost(() => InputSystem.HandleInputCommand(ClientSession, key, message));
