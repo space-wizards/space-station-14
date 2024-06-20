@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: osjarw
-  changes:
-  - message: Air injectors finally have working indicator lights while enabled.
-    type: Fix
-  id: 6291
-  time: '2024-04-02T05:17:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26654
 - author: Simyon
   changes:
   - message: The hands of cyborgs are now explosion proof. Your beakers wont ever
@@ -3842,3 +3835,10 @@
   id: 6790
   time: '2024-06-20T12:22:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29227
+- author: Redfire1331
+  changes:
+  - message: You can now eat cup ramen with chopsticks.
+    type: Tweak
+  id: 6791
+  time: '2024-06-20T12:34:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27826
