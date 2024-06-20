@@ -6,6 +6,7 @@ using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Interaction;
 
+// TODO deduplicate with AdminFrozenComponent
 /// <summary>
 /// Handles <see cref="BlockMovementComponent"/>, which prevents various
 /// kinds of movement and interactions when attached to an entity.
@@ -16,7 +17,7 @@ public partial class SharedInteractionSystem
     {
         SubscribeLocalEvent<BlockMovementComponent, UpdateCanMoveEvent>(OnMoveAttempt);
         SubscribeLocalEvent<BlockMovementComponent, UseAttemptEvent>(CancelEvent);
-        SubscribeLocalEvent<BlockMovementComponent, InteractionAttemptEvent>(CancelInteractionEvent);
+        SubscribeLocalEvent<BlockMovementComponent, InteractionAttemptEvent>(CancelInteractEvent);
         SubscribeLocalEvent<BlockMovementComponent, DropAttemptEvent>(CancelEvent);
         SubscribeLocalEvent<BlockMovementComponent, PickupAttemptEvent>(CancelEvent);
         SubscribeLocalEvent<BlockMovementComponent, ChangeDirectionAttemptEvent>(CancelEvent);
@@ -25,18 +26,18 @@ public partial class SharedInteractionSystem
         SubscribeLocalEvent<BlockMovementComponent, ComponentShutdown>(OnBlockingShutdown);
     }
 
+    private void CancelInteractEvent(Entity<BlockMovementComponent> ent, ref InteractionAttemptEvent args)
+    {
+        if (component.BlockInteraction)
+            args.Cancelled = true;
+    }
+
     private void OnMoveAttempt(EntityUid uid, BlockMovementComponent component, UpdateCanMoveEvent args)
     {
         if (component.LifeStage > ComponentLifeStage.Running)
             return;
 
         args.Cancel(); // no more scurrying around
-    }
-
-    private void CancelInteractionEvent(EntityUid uid, BlockMovementComponent component, CancellableEntityEventArgs args)
-    {
-        if (component.BlockInteraction)
-            args.Cancel();
     }
 
     private void CancelEvent(EntityUid uid, BlockMovementComponent component, CancellableEntityEventArgs args)
