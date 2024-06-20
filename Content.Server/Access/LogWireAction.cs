@@ -31,7 +31,7 @@ public sealed partial class LogWireAction : ComponentWireAction<AccessReaderComp
     {
         base.Initialize();
 
-        _acces = EntityManager.System<AccessReaderSystem>();
+        _access = EntityManager.System<AccessReaderSystem>();
     }
 
     public override bool Cut(EntityUid user, Wire wire, AccessReaderComponent comp)
