@@ -34,7 +34,7 @@ public sealed partial class ReactionMixerComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField]
-    public TimeSpan TimeToMix = TimeSpan.FromSeconds(0);
+    public TimeSpan TimeToMix = TimeSpan.Zero;
 }
 
 [ByRefEvent]
