@@ -1,6 +1,7 @@
 using Content.Server.Wires;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Emag.Components;
 using Content.Shared.Wires;
 
@@ -14,12 +15,24 @@ public sealed partial class LogWireAction : ComponentWireAction<AccessReaderComp
     [DataField]
     public int PulseTimeout = 30;
 
+    [DataField]
+    public LocId PulseLog = "log-wire-pulse-log";
+
+    private AccessReaderSystem _access = default!;
+
     public override StatusLightState? GetLightState(Wire wire, AccessReaderComponent comp)
     {
         return comp.LoggingDisabled ? StatusLightState.Off : StatusLightState.On;
     }
 
     public override object StatusKey => AccessWireActionKey.Status;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _acces = EntityManager.System<AccessReaderSystem>();
+    }
 
     public override bool Cut(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
@@ -37,6 +50,7 @@ public sealed partial class LogWireAction : ComponentWireAction<AccessReaderComp
 
     public override void Pulse(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
+        _access.LogAccess((wire.Owner, comp), Loc.GetString(PulseLog));
         comp.LoggingDisabled = true;
         WiresSystem.StartWireAction(wire.Owner, PulseTimeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitPulseCancel, wire));
     }
