@@ -5,6 +5,7 @@ using Content.Shared.Popups;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
+using Linguini.Syntax.Ast;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
@@ -150,16 +151,17 @@ public sealed class SwapTeleporterSystem : EntitySystem
             return;
         }
 
-        var teleEnt = GetTeleportingEntity((uid, xform));
-        var otherTeleEnt = GetTeleportingEntity((linkedEnt, Transform(linkedEnt)));
+        var (teleEnt, cont) = GetTeleportingEntity((uid, xform));
+        var (otherTeleEnt, othercont) = GetTeleportingEntity((linkedEnt, Transform(linkedEnt)));
 
-        if (_container.TryGetOuterContainer(teleEnt, Transform(teleEnt), out var othercontainer) &&
-            !_container.CanInsert(teleEnt, othercontainer))
+        if (othercont != null || cont != null)
+        {
+            _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-fail", ("entity", Identity.Entity(linkedEnt, EntityManager))),
+                teleEnt,
+                teleEnt,
+                PopupType.MediumCaution);
             return;
-
-        if (_container.TryGetOuterContainer(otherTeleEnt, Transform(otherTeleEnt), out var container) &&
-            !_container.CanInsert(otherTeleEnt, container))
-            return;
+        }
 
         _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-other",
             ("entity", Identity.Entity(linkedEnt, EntityManager))),
@@ -192,20 +194,20 @@ public sealed class SwapTeleporterSystem : EntitySystem
             DestroyLink(linked, user); // the linked one is shown globally
     }
 
-    private EntityUid GetTeleportingEntity(Entity<TransformComponent> ent)
+    private (EntityUid, BaseContainer?) GetTeleportingEntity(Entity<TransformComponent> ent)
     {
         var parent = ent.Comp.ParentUid;
         if (_container.TryGetOuterContainer(ent, ent, out var container))
             parent = container.Owner;
 
         if (HasComp<MapGridComponent>(parent) || HasComp<MapComponent>(parent))
-            return ent;
+            return (ent, container);
 
         if (!_xformQuery.TryGetComponent(parent, out var parentXform) || parentXform.Anchored)
-            return ent;
+            return (ent, container);
 
         if (!TryComp<PhysicsComponent>(parent, out var body) || body.BodyType == BodyType.Static)
-            return ent;
+            return (ent, container);
 
         return GetTeleportingEntity((parent, parentXform));
     }
