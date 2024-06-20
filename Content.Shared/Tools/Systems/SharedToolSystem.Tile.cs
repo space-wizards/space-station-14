@@ -37,17 +37,17 @@ public abstract partial class SharedToolSystem
 
         if (!TryComp<ToolComponent>(ent, out var tool))
             return;
-        var coordinates = GetCoordinates(args.Coordinates);
 
-        var gridUid = _transformSystem.GetGrid(coordinates.EntityId);
+        var gridUid = GetEntity(args.Grid);
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
         {
             Log.Error("Attempted use tool on a non-existent grid?");
             return;
         }
 
-        var tileRef = _maps.GetTileRef(gridUid.Value, grid, coordinates);
-        if (comp.RequiresUnobstructed && _turfs.IsTileBlocked(gridUid.Value, tileRef.GridIndices, CollisionGroup.MobMask))
+        var tileRef = _maps.GetTileRef(gridUid, grid, args.GridTile);
+        var coords = _maps.ToCoordinates(tileRef, grid);
+        if (comp.RequiresUnobstructed && _turfs.IsTileBlocked(gridUid, tileRef.GridIndices, CollisionGroup.MobMask))
             return;
 
         if (!TryDeconstructWithToolQualities(tileRef, tool.Qualities))
@@ -56,7 +56,7 @@ public abstract partial class SharedToolSystem
         AdminLogger.Add(
             LogType.LatticeCut,
             LogImpact.Medium,
-            $"{ToPrettyString(args.User):player} used {ToPrettyString(ent)} to edit the tile at {args.Coordinates}");
+            $"{ToPrettyString(args.User):player} used {ToPrettyString(ent)} to edit the tile at {coords}");
         args.Handled = true;
     }
 
@@ -87,7 +87,7 @@ public abstract partial class SharedToolSystem
         if (!InteractionSystem.InRangeUnobstructed(user, coordinates, popup: false))
             return false;
 
-        var args = new TileToolDoAfterEvent(GetNetCoordinates(coordinates));
+        var args = new TileToolDoAfterEvent(GetNetEntity(gridUid), tileRef.GridIndices);
         UseTool(ent, user, ent, comp.Delay, tool.Qualities, args, out _, toolComponent: tool);
         return true;
     }
