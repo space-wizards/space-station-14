@@ -124,7 +124,7 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
                 continue;
             }
 
-            comp = EnsureComp<ColorFlashEffectComponent>(ent);
+            var comp = EnsureComp<ColorFlashEffectComponent>(ent);
             comp.NetSyncEnabled = false;
             comp.Color = sprite.Color;
 
