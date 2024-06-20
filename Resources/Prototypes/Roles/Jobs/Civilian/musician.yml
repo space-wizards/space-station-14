@@ -22,6 +22,6 @@
     shoes: ClothingShoesBootsLaceup
     id: MusicianPDA
     ears: ClothingHeadsetService
-  storage:
-    back:
-    - BoxSurvival
+  #storage:
+    #back:
+    #- Stuff

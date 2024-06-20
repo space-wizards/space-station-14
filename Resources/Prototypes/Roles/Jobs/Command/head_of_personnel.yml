@@ -60,5 +60,4 @@
     belt: BoxFolderClipboard
   storage:
     back:
-    - BoxSurvival
     - Flash
