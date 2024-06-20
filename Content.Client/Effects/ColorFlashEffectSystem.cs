@@ -109,12 +109,12 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
                 continue;
             }
 
-#if DEBUG
             if (!TryComp(ent, out ColorFlashEffectComponent? comp))
             {
+#if DEBUG
                 DebugTools.Assert(!_animation.HasRunningAnimation(ent, AnimationKey));
-            }
 #endif
+            }
 
             _animation.Stop(ent, AnimationKey);
             var animation = GetDamageAnimation(ent, color, sprite);
@@ -124,7 +124,7 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
                 continue;
             }
 
-            comp = EnsureComp<ColorFlashEffectComponent>(ent);
+            EnsureComp<ColorFlashEffectComponent>(ent, out comp);
             comp.NetSyncEnabled = false;
             comp.Color = sprite.Color;
 
