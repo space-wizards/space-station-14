@@ -86,11 +86,13 @@ namespace Content.Server.Database
 
             var exempt = await GetBanExemptionCore(db, userId);
 
+            var newPlayer = !await db.SqliteDbContext.Player.AnyAsync(p => p.UserId == userId);
+
             // SQLite can't do the net masking stuff we need to match IP address ranges.
             // So just pull down the whole list into memory.
             var bans = await GetAllBans(db.SqliteDbContext, includeUnbanned: false, exempt);
 
-            return bans.FirstOrDefault(b => BanMatches(b, address, userId, hwId, exempt)) is { } foundBan
+            return bans.FirstOrDefault(b => BanMatches(b, address, userId, hwId, exempt, newPlayer)) is { } foundBan
                 ? ConvertBan(foundBan)
                 : null;
         }
@@ -103,12 +105,14 @@ namespace Content.Server.Database
 
             var exempt = await GetBanExemptionCore(db, userId);
 
+            var newPlayer = !await db.SqliteDbContext.Player.AnyAsync(p => p.UserId == userId);
+
             // SQLite can't do the net masking stuff we need to match IP address ranges.
             // So just pull down the whole list into memory.
             var queryBans = await GetAllBans(db.SqliteDbContext, includeUnbanned, exempt);
 
             return queryBans
-                .Where(b => BanMatches(b, address, userId, hwId, exempt))
+                .Where(b => BanMatches(b, address, userId, hwId, exempt, newPlayer))
                 .Select(ConvertBan)
                 .ToList()!;
         }
@@ -137,10 +141,15 @@ namespace Content.Server.Database
             IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
-            ServerBanExemptFlags? exemptFlags)
+            ServerBanExemptFlags? exemptFlags,
+            bool newPlayer)
         {
             if (!exemptFlags.GetValueOrDefault(ServerBanExemptFlags.None).HasFlag(ServerBanExemptFlags.IP)
-                && address != null && ban.Address is not null && address.IsInSubnet(ban.Address.ToTuple().Value))
+                && address != null
+                && ban.Address is not null
+                && address.IsInSubnet(ban.Address.ToTuple().Value)
+                && (!ban.ExemptFlags.HasFlag(ServerBanExemptFlags.BlacklistedRange) ||
+                     newPlayer && !exemptFlags.GetValueOrDefault(ServerBanExemptFlags.None).HasFlag(ServerBanExemptFlags.BlacklistedRange)))
             {
                 return true;
             }
