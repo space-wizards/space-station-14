@@ -19,6 +19,10 @@ ghost-role-information-familiar-rules = You are a [color=blue][bold]Familiar[/bo
                                         You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                         You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                         You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+ghost-role-information-silicon-rules = You are a [color=blue][bold]Silicon[/bold][/color]. Obey your laws. You are a Free Agent if you are not currently bound by any laws.
+                                       You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                       You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                       You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
 
 ghost-role-information-mouse-name = Mouse
 ghost-role-information-mouse-description = A hungry and mischievous mouse.
@@ -73,23 +77,11 @@ ghost-role-information-rat-king-description = You are the Rat King, your interes
 ghost-role-information-rat-servant-name = Rat Servant
 ghost-role-information-rat-servant-description = You are a Rat Servant. You must follow your king's orders.
 
-ghost-role-information-salvage-carp-name = Space carp on salvage wreck
-ghost-role-information-salvage-carp-description = Defend the loot inside the salvage wreck!
-
 ghost-role-information-sentient-carp-name = Sentient Carp
 ghost-role-information-sentient-carp-description = Help the dragon flood the station with carps!
 
-ghost-role-information-salvage-shark-name = Space sharkminnow on salvage wreck
-ghost-role-information-salvage-shark-description = Help the younger fellow carp protect their prey. Smell the blood!
-
 ghost-role-information-willow-name = Willow the kangaroo
 ghost-role-information-willow-description = You're a kangaroo named willow! Willow likes to box.
-
-ghost-role-information-space-tick-name = Space tick
-ghost-role-information-space-tick-description = Wreak havoc on the station!
-
-ghost-role-information-salvage-tick-name = Space tick on salvage wreck
-ghost-role-information-salvage-tick-description = Defend the loot inside the salvage wreck!
 
 ghost-role-information-honkbot-name = Honkbot
 ghost-role-information-honkbot-description = An artificial being of pure evil.
@@ -100,39 +92,13 @@ ghost-role-information-jonkbot-description = An artificial being of pure evil.
 ghost-role-information-mimebot-name = Mimebot
 ghost-role-information-mimebot-description = A Mimebot, act like a mime but don't act like a greytider.
 
-ghost-role-information-taxibot-name = TaxiBot
-ghost-role-information-taxibot-description = Drive the station crew to their destination.
-
 ghost-role-information-supplybot-name = SupplyBot
 ghost-role-information-supplybot-description = Deliver goods around the station.
 
 ghost-role-information-space-bear-name = Space bear
 ghost-role-information-space-bear-description = Your tummy rumbles, and these people look really yummy... What a feast!
 
-ghost-role-information-salvage-bear-name = Space bear on salvage wreck
-ghost-role-information-salvage-bear-description = Defend the loot inside the salvage wreck!
-
-ghost-role-information-space-kangaroo-name = Space kangaroo
-ghost-role-information-space-kangaroo-description = Give the crew a taste of your sharp claws!
-
-ghost-role-information-salvage-kangaroo-name = Space kangaroo on salvage wreck
-ghost-role-information-salvage-kangaroo-description = Defend the loot inside the salvage wreck!
-
-ghost-role-information-space-spider-name = Space spider
-ghost-role-information-space-spider-description =  Space spiders are just as aggressive as regular spiders, feed.
-
-ghost-role-information-salvage-spider-name = Space spider on salvage wreck
-ghost-role-information-salvage-spider-description = Space spiders are just as aggressive as regular spiders, feed.
-
-ghost-role-information-space-cobra-name = Space cobra
-ghost-role-information-space-cobra-description = Space cobras really don't like guests, and will always snack on a visitor.
-
-ghost-role-information-salvage-cobra-name = Space cobra on salvage wreck
-ghost-role-information-salvage-cobra-description = Space cobras really don't like guests, and will always snack on a visitor.
-
-ghost-role-information-salvage-flesh-name = Aberrant flesh on salvage wreck
-ghost-role-information-salvage-flesh-description = Defend the loot inside the salvage wreck!
-
+# Still exists as a commented out reference for Tropico. Keeping it around. -TsjipTsjip, 2024-06-20
 ghost-role-information-tropico-name = Tropico
 ghost-role-information-tropico-description = The noble companion of Atmosia, and its most stalwart defender. Viva!
 
@@ -167,9 +133,6 @@ ghost-role-information-skeleton-biker-description = Ride around on your sweet ri
 
 ghost-role-information-closet-skeleton-name = Closet Skeleton
 ghost-role-information-closet-skeleton-description = You are arguably one of the oldest members of the station! Get your old job back, or cause chaos! The world is yours to shape.
-
-ghost-role-information-onestar-mecha-name = Onestar Mecha
-ghost-role-information-onestar-mecha-description = You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...
 
 ghost-role-information-remilia-name = Remilia, the chaplain's familiar
 ghost-role-information-remilia-description = Follow and obey the chaplain. Eat fruit. Screech loudly into people's ears and write it off as echolocation.
@@ -262,4 +225,3 @@ ghost-role-information-artifact-description = Enact your eldritch whims. Forcibl
 
 ghost-role-information-syndie-assaultborg-name = Syndicate Assault Borg
 ghost-role-information-syndie-assaultborg-description = Nuclear operatives needs reinforcements. You, a cold silicon killing machine, will help them. More dakka!
-ghost-role-information-syndie-assaultborg-rules = You are a [bold][color=blue]Silicon[/color] [color=red]Team Antagonist[/color][/bold] with the agents who summoned you.
