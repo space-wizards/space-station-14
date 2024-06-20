@@ -14,7 +14,6 @@
         - NamesLastMilitary
     - type: RandomHumanoidSpawner
       settings: PanzerOfficer
-    - type: InitialInfectedExempt
 
 - type: randomHumanoidSettings
   id: PanzerOfficer
@@ -33,4 +32,3 @@
     nameSegments:
       - NamesFirstMilitaryLeader
       - NamesLastMilitary
-  - type: InitialInfectedExempt
