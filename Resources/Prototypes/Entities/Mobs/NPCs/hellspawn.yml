@@ -11,7 +11,7 @@
     allowMovement: true
     makeSentient: true
     name: ghost-role-information-hellspawn-name
-    description: ghost-role-information-hellspawn-description
+    description: ghost-role-information-antagonist-description
     raffle:
       settings: default
   - type: RotationVisuals
