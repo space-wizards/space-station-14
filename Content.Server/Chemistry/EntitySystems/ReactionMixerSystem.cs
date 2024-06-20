@@ -40,14 +40,14 @@ public sealed partial class ReactionMixerSystem : EntitySystem
     private void OnDoAfter(Entity<ReactionMixerComponent> entity, ref ReactionMixDoAfterEvent args)
     {
         //Do again to get the solution again
-        if (!MixAttempt(entity, args.Target.Value, out var solution))
+        if (!MixAttempt(entity, args.Target!.Value, out var solution))
             return;
 
-        _popup.PopupEntity(Loc.GetString(entity.Comp.MixMessage, ("mixed", Identity.Entity(args.Target.Value, EntityManager)), ("mixer", Identity.Entity(entity.Owner, EntityManager))), args.User, args.User);
+        _popup.PopupEntity(Loc.GetString(entity.Comp.MixMessage, ("mixed", Identity.Entity(args.Target!.Value, EntityManager)), ("mixer", Identity.Entity(entity.Owner, EntityManager))), args.User, args.User);
 
-        _solutionContainers.UpdateChemicals(solution.Value, true, entity.Comp);
+        _solutionContainers.UpdateChemicals(solution!.Value, true, entity.Comp);
 
-        var afterMixingEvent = new AfterMixingEvent(entity, args.Target.Value);
+        var afterMixingEvent = new AfterMixingEvent(entity, args.Target!.Value);
         RaiseLocalEvent(entity, afterMixingEvent);
     }
 
@@ -56,7 +56,7 @@ public sealed partial class ReactionMixerSystem : EntitySystem
         if (!MixAttempt(entity, entity, out var solution))
             return;
 
-        _solutionContainers.UpdateChemicals(solution.Value, true, entity.Comp);
+        _solutionContainers.UpdateChemicals(solution!.Value, true, entity.Comp);
 
         var afterMixingEvent = new AfterMixingEvent(entity, entity);
         RaiseLocalEvent(entity, afterMixingEvent);
