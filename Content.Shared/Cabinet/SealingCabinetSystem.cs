@@ -21,8 +21,7 @@ public sealed class SealingCabinetSystem : EntitySystem
 
     private void OnOpenAttempt(Entity<SealingCabinetComponent> ent, ref OpenableOpenAttemptEvent args)
     {
-        var cabinet = (ent, Comp<ItemCabinetComponent>(ent));
-        if (!_cabinet.HasItem(cabinet))
+        if (!_cabinet.HasItem(ent.Owner))
             return;
 
         args.Cancelled = true;
@@ -35,8 +34,7 @@ public sealed class SealingCabinetSystem : EntitySystem
         if (!ent.Comp.Emaggable)
             return;
 
-        var cabinet = (ent, Comp<ItemCabinetComponent>(ent));
-        if (!_cabinet.HasItem(cabinet) || _openable.IsOpen(ent))
+        if (!_cabinet.HasItem(ent.Owner) || _openable.IsOpen(ent))
             return;
 
         _openable.SetOpen(ent, true);
