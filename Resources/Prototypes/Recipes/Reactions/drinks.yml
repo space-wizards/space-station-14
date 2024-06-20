@@ -50,8 +50,6 @@
 
 - type: reaction
   id: Antifreeze
-  requiredMixerCategories:
-  - Stir
   reactants:
     Cream:
       amount: 1
@@ -64,8 +62,6 @@
 
 - type: reaction
   id: ArnoldPalmer
-  requiredMixerCategories:
-  - Shake
   reactants:
     IcedTea:
       amount: 1
@@ -100,8 +96,6 @@
 
 - type: reaction
   id: BudgetInsulsDrink
-  requiredMixerCategories:
-  - Stir
   reactants:
     Tequila:
       amount: 1
@@ -128,8 +122,6 @@
 
 - type: reaction
   id: CogChamp
-  requiredMixerCategories:
-  - Shake
   reactants:
     Cognac:
       amount: 1
@@ -164,8 +156,6 @@
 
 - type: reaction
   id: Barefoot
-  requiredMixerCategories:
-  - Stir
   reactants:
     Cream:
       amount: 1
@@ -178,8 +168,6 @@
 
 - type: reaction
   id: BananaHonk
-  requiredMixerCategories:
-  - Stir
   reactants:
     Cream:
       amount: 1
@@ -206,8 +194,6 @@
 
 - type: reaction
   id: BlackRussian
-  requiredMixerCategories:
-  - Shake
   reactants:
     CoffeeLiqueur:
       amount: 1
@@ -219,7 +205,7 @@
 - type: reaction
   id: BloodyMary
   requiredMixerCategories:
-  - Shake
+  - Stir
   reactants:
     JuiceLime:
       amount: 1
@@ -327,7 +313,7 @@
 - type: reaction
   id: DevilsKiss
   requiredMixerCategories:
-  - Shake
+  - Stir
   reactants:
     Rum:
       amount: 1
@@ -465,8 +451,6 @@
 
 - type: reaction
   id: Grog
-  requiredMixerCategories:
-  - Shake
   reactants:
     Rum:
       amount: 1
@@ -574,8 +558,6 @@
 
 - type: reaction
   id: IrishBool
-  requiredMixerCategories:
-  - Stir
   reactants:
     EnergyDrink:
       amount: 1
@@ -586,8 +568,6 @@
 
 - type: reaction
   id: IrishCarBomb
-  requiredMixerCategories:
-  - Shake
   reactants:
     Ale:
       amount: 1
@@ -648,6 +628,8 @@
 
 - type: reaction
   id: LemonLime
+  requiredMixerCategories:
+  - Stir
   reactants:
     JuiceLemon:
       amount: 1
@@ -688,8 +670,6 @@
 
 - type: reaction
   id: ManhattanProject
-  requiredMixerCategories:
-  - Shake
   reactants:
     Whiskey:
       amount: 10
@@ -700,8 +680,6 @@
 
 - type: reaction
   id: ManlyDorf
-  requiredMixerCategories:
-  - Shake
   reactants:
     Ale:
       amount: 2
@@ -712,8 +690,6 @@
 
 - type: reaction
   id: Margarita
-  requiredMixerCategories:
-  - Shake
   reactants:
     Tequila:
       amount: 2
@@ -763,8 +739,6 @@
 
 - type: reaction
   id: Moonshine
-  requiredMixerCategories:
-  - Shake
   reactants:
     Tequila:
       amount: 1
@@ -788,8 +762,6 @@
 
 - type: reaction
   id: NuclearCola
-  requiredMixerCategories:
-  - Shake
   reactants:
     Cola:
       amount: 5
@@ -828,8 +800,6 @@
 
 - type: reaction
   id: PinaColada
-  requiredMixerCategories:
-  - Stir
   reactants:
     JuicePineapple:
       amount: 3
@@ -844,8 +814,6 @@
 
 - type: reaction
   id: Posca
-  requiredMixerCategories:
-  - Stir
   reactants:
     TableSalt:
       amount: 1
@@ -858,8 +826,6 @@
 
 - type: reaction
   id: RedMead
-  requiredMixerCategories:
-  - Shake
   reactants:
     Mead:
       amount: 1
@@ -870,8 +836,6 @@
 
 - type: reaction
   id: Rewriter
-  requiredMixerCategories:
-  - Stir
   reactants:
     Coffee:
       amount: 1
@@ -892,8 +856,6 @@
 
 - type: reaction
   id: RoyRogers
-  requiredMixerCategories:
-  - Stir
   reactants:
     Cola:
       amount: 2
@@ -904,8 +866,6 @@
 
 - type: reaction
   id: Rubberneck
-  requiredMixerCategories:
-  - Stir
   reactants:
     EnergyDrink:
       amount: 2
@@ -918,8 +878,6 @@
 
 - type: reaction
   id: Sbiten
-  requiredMixerCategories:
-  - Shake
   reactants:
     Vodka:
       amount: 1
@@ -942,8 +900,6 @@
 
 - type: reaction
   id: ShirleyTemple
-  requiredMixerCategories:
-  - Shake
   reactants:
     SolDry:
       amount: 2
@@ -954,8 +910,6 @@
 
 - type: reaction
   id: Silencer
-  requiredMixerCategories:
-  - Shake
   reactants:
     Nothing:
       amount: 1
@@ -981,8 +935,6 @@
 
 - type: reaction
   id: SnowWhite
-  requiredMixerCategories:
-  - Stir
   reactants:
     Beer:
       amount: 1
@@ -993,8 +945,6 @@
 
 - type: reaction
   id: SoyLatte
-  requiredMixerCategories:
-  - Stir
   reactants:
     Coffee:
       amount: 1
@@ -1005,8 +955,6 @@
 
 - type: reaction
   id: Starkist
-  requiredMixerCategories:
-  - Stir
   reactants:
     Cola:
       amount: 1
@@ -1017,8 +965,6 @@
 
 - type: reaction
   id: SuiDream
-  requiredMixerCategories:
-  - Stir
   reactants:
     SpaceUp:
       amount: 1
@@ -1031,8 +977,6 @@
 
 - type: reaction
   id: SyndicateBomb
-  requiredMixerCategories:
-  - Shake
   reactants:
     Beer:
       amount: 1
@@ -1043,8 +987,6 @@
 
 - type: reaction
   id: TequilaSunrise
-  requiredMixerCategories:
-  - Stir
   reactants:
     JuiceOrange:
       amount: 1
@@ -1055,8 +997,6 @@
 
 - type: reaction
   id: ThreeMileIsland
-  requiredMixerCategories:
-  - Shake
   reactants:
     LongIslandIcedTea:
       amount: 10
@@ -1093,8 +1033,6 @@
 
 - type: reaction
   id: VodkaRedBool
-  requiredMixerCategories:
-  - Stir
   reactants:
     Vodka:
       amount: 1
@@ -1105,8 +1043,6 @@
 
 - type: reaction
   id: VodkaTonic
-  requiredMixerCategories:
-  - Stir
   reactants:
     Vodka:
       amount: 1
@@ -1127,8 +1063,6 @@
 
 - type: reaction
   id: WatermelonWakeup
-  requiredMixerCategories:
-  - Stir
   reactants:
     JuiceWatermelon:
       amount: 1
@@ -1141,8 +1075,6 @@
 
 - type: reaction
   id: WhiteRussian
-  requiredMixerCategories:
-  - Shake
   reactants:
     BlackRussian:
       amount: 2
