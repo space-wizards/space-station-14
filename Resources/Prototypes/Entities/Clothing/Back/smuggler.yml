@@ -842,7 +842,7 @@
       - id: HandheldGPSBasic
         prob: 0.10
         orGroup: Gear
-      - id: RPED
+      - id: WelderIndustrialAdvanced
         prob: 0.10
         orGroup: Gear
       - id: HandheldStationMap
