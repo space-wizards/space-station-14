@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: added procedurally generating books to library.
-    type: Add
-  - message: full books resprite
-    type: Add
-  id: 6289
-  time: '2024-04-01T21:00:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25840
 - author: osjarw
   changes:
   - message: Ambuzol plus pills now have different sprites from ambuzol pills. Now
@@ -3846,3 +3837,10 @@
   id: 6788
   time: '2024-06-20T11:16:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28371
+- author: lzk228
+  changes:
+  - message: Cube boxes buffed 6 -> 8 cubes.
+    type: Tweak
+  id: 6789
+  time: '2024-06-20T11:58:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29251
