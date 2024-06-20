@@ -20,7 +20,7 @@ public sealed partial class ReactionMixerSystem : EntitySystem
 
     private void OnAfterInteract(Entity<ReactionMixerComponent> entity, ref AfterInteractEvent args)
     {
-        if (!args.Target.HasValue || !args.CanReach)
+        if (!args.Target.HasValue || !args.CanReach || !entity.Comp.MixOnInteract)
             return;
 
         var mixAttemptEvent = new MixingAttemptEvent(entity);

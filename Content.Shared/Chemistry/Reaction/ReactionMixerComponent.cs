@@ -19,6 +19,13 @@ public sealed partial class ReactionMixerComponent : Component
     [ViewVariables]
     [DataField]
     public LocId MixMessage = "default-mixing-success";
+
+    /// <summary>
+    ///     Defines if interacting is enough to mix with this component
+    /// </summary>
+    [ViewVariables]
+    [DataField]
+    public bool MixOnInteract = true;
 }
 
 [ByRefEvent]

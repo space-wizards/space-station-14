@@ -1,3 +1,5 @@
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -15,6 +17,7 @@ public sealed partial class ShakeableSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
 
     public override void Initialize()
     {
@@ -106,8 +109,14 @@ public sealed partial class ShakeableSystem : EntitySystem
         if (!CanShake(entity, user))
             return false;
 
+        //Try to mix chemicals
+        if (_solution.TryGetMixableSolution(entity.Owner, out var solution, out _) && EntityManager.TryGetComponent<ReactionMixerComponent>(entity, out var mixer))
+            _solution.UpdateChemicals(solution.Value, true, mixer);
+
+
         var ev = new ShakeEvent(user);
         RaiseLocalEvent(entity, ref ev);
+
 
         return true;
     }
