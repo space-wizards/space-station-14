@@ -10,7 +10,7 @@
       energy: 2
       color: "#fff633"
     - type: RadiationSource
-      intensity: 1
+      intensity: 2.5
     - type: Icon
       sprite: Objects/Misc/supermatter_sliver.rsi
       state: icon

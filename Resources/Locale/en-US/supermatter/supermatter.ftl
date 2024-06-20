@@ -16,11 +16,10 @@ supermatter-announcement-cc-tamper =
     Engineering department, report to the supermatter engine immediately.
 
 supermatter-announcement-delam-countdown =
-    DANGER! The supermatter crystal has reached critical integrity failure.
-    Estimated time until delamination: {$seconds} seconds.
-
-supermatter-announcement-delam =
     CRYSTAL DELAMINATION IMMINENT. The supermatter crystal has reached critical integrity failure.
+
+supermatter-announcement-delam-countdown =
+    Estimated time until delamination: {$seconds} seconds.
 
 supermatter-announcement-delam-explosion =
     Engaging casualty destabilization field.

@@ -1,6 +1,4 @@
-using Content.Server.Supermatter.EntitySystems;
 using Content.Shared.Atmos;
-using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Supermatter.Components;
@@ -33,16 +31,22 @@ public sealed partial class SupermatterComponent : Component
     public SoundSpecifier CurrentAmbience = new SoundPathSpecifier("/Audio/Ambience/Objects/supermatter_calm.ogg");
 
     [DataField("vaporizeSound")]
-    public static SoundSpecifier VaporizeSound = new SoundPathSpecifier("/Audio/Effects/gib2.ogg");
+    public static SoundSpecifier VaporizeSound = new SoundPathSpecifier("/Audio/Effects/Grenades/Supermatter/supermatter_start.ogg");
 
     [DataField("teslaSpawnPrototype")]
-    public string TeslaPrototype = "";
+    public string TeslaPrototype = "TeslaEnergyBall";
 
     [DataField("singularitySpawnPrototype")]
-    public string SingularityPrototype = "";
+    public string SingularityPrototype = "Singularity";
 
     [DataField("supermatterKudzuSpawnPrototype")]
     public string SupermatterKudzuPrototype = "";
+
+    /// <summary>
+    ///     If a supermatter sliver has been removed. Lowers the delamination countdown time.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool SliverRemoved = false;
 
     /// <summary>
     ///     Indicates whether supermatter crystal is active or not.
@@ -50,15 +54,19 @@ public sealed partial class SupermatterComponent : Component
     [DataField("activated")]
     public bool Activated = false;
 
-    public float UpdateTimerAccumulator = 0f;
+    [ViewVariables]
+    public GasMixture AbsorbedGasMix = new();
 
     /// <summary>
     ///     Delta time between Update() calls storage.
     /// </summary>
     public float DeltaTime = 0f;
 
-    [ViewVariables]
-    public GasMixture AbsorbedGasMix = new();
+    public float UpdateTimerAccumulator = 0f;
+
+    public float ZapTimerAccumulator = 0f;
+
+    public float AnnouncementTimerAccumulator = 0f;
 
     /// <summary>
     ///     Amount of seconds to pass before another SM cycle.
@@ -67,26 +75,27 @@ public sealed partial class SupermatterComponent : Component
     public float UpdateTimer = 1f;
 
     /// <summary>
-    ///     The time in seconds for crystal to delaminate.
-    ///     60 seconds by default; with a sliver removed - 30.
+    ///     Amount of seconds to pass before SM does it's zap.
     /// </summary>
-    [DataField("countdownTimer")]
-    public float CountdownTimerRaw = 60f;
-    public float CountdownTimer => SliverRemoved ? CountdownTimerRaw / 2 : CountdownTimerRaw;
+    [DataField("zapTimer")]
+    public float ZapTimer = 10f;
 
     /// <summary>
-    ///     Lesser than that and it's not worth processing.
+    ///     Amount of seconds to pass before makes an announcement.
     /// </summary>
-    public const float MinimumMoleCount = .01f;
+    [DataField("announcementTimer")]
+    public float AnnouncementTimer = 60f;
 
-    public const float
-        HeatPenaltyThreshold = 40f,
-        PowerPenaltyThreshold = 3f,
-        MolePenaltyThreshold = 1800f,
-        ThermalReleaseModifier = 4f,
-        PlasmaReleaseModifier = 5f,
-        OxygenReleaseModifier = 2.5f,
-        GasHeatPowerScaling = 1f / 6f;
+    /// <summary>
+    ///     The time in seconds for crystal to delaminate.
+    /// </summary>
+    [DataField("countdownTimer")]
+    public float DelamCountdownTimerRaw = 120f;
+    public float DelamCountdownTimer => SliverRemoved ? DelamCountdownTimerRaw / 2 : DelamCountdownTimerRaw;
+    public bool DelamAnnouncementHappened = false;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float DelamCountdownAccumulator = 0f;
 
     /// <summary>
     ///     The portion of gasmix we should absorb.
@@ -97,7 +106,7 @@ public sealed partial class SupermatterComponent : Component
     /// <summary>
     ///     This value effects gas output, damage and power generation.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadOnly)]
     public float InternalEnergy = 0f;
 
     /// <summary>
@@ -107,24 +116,33 @@ public sealed partial class SupermatterComponent : Component
     public float Damage = 0f;
 
     /// <summary>
+    ///     The amount of damage SM had before the cycle.
+    /// </summary>
+    public float DamageArchive = 0f;
+
+    /// <summary>
+    ///     The damage taken from direct hits, e.g. laser weapons
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float ExternalDamage = 0f;
+
+    /// <summary>
     ///     The temperature at which the supermatter crystal will begin to take damage.
     /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
     public float TempLimit = Atmospherics.T0C + HeatPenaltyThreshold;
 
     /// <summary>
     ///     Multiplies our gas waste amount and temperature.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadOnly)]
     public float WasteMultiplier = 0f;
 
-    [DataField("damageWarningPoint")]
-    public float DamageWarningPoint = 10f;
-
     [DataField("damageDangerPoint")]
-    public float DangerPoint = 50f;
+    public float DamageDangerPoint = 50f;
 
     [DataField("damageEmergencyPoint")]
-    public float EmergencyPoint = 75f;
+    public float DamageEmergencyPoint = 75f;
 
     [DataField("damageDelaminationPoint")]
     public float DelaminationPoint = 100f;
@@ -132,70 +150,44 @@ public sealed partial class SupermatterComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public bool AreWeDelaming = false;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float DelamCountdownAccumulator = 0f;
-
-    /// <summary>
-    ///     A scaling value that affects the severity of explosions.
-    /// </summary>
-    [DataField("explosionPower")]
-    public float ExplosionPower = 35f;
-
     /// <summary>
     ///     Affects the heat SM makes.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadOnly)]
     public float GasHeatModifier = 0f;
     /// <summary>
     ///     Affters the minimum point at which SM takes damage.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadOnly)]
     public float GasHeatResistance = 0f;
     /// <summary>
     ///     How much power decay is negated. Complete power decay negation at 1.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadOnly)]
     public float GasPowerlossInhibition = 0f;
     /// <summary>
     ///     Affects the amount of power the main SM zap makes.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadOnly)]
     public float PowerTransmissionRate = 0f;
     /// <summary>
     ///     Affects the power gain the SM experiences from heat.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadOnly)]
     public float HeatPowerGeneration = 0f;
 
     /// <summary>
-    ///     External power that is added over time instead of immediately.
+    ///     Lesser than that and it's not worth processing.
     /// </summary>
-    public float ExternalPowerTrickle = 0f;
-    /// <summary>
-    ///     External power that is added to the SM on next
-    ///     <see cref="SupermatterSystem.ProcessAtmos(EntityUid, SupermatterComponent)"/> call.
-    /// </summary>
-    public float ExternalPowerImmediate = 0f;
+    public const float MinimumMoleCount = .01f;
 
-    /// <summary>
-    ///     External damage that is added to the SM on next
-    ///     <see cref="SupermatterSystem.ProcessAtmos(EntityUid, SupermatterComponent)"/> call.
-    /// </summary>
-    public float ExternalDamageImmediate = 0f;
-
-    /// <summary>
-    ///     The power threshold required to transform the powerloss function into a linear function from a cubic function.
-    /// </summary>
-    public float PowerlossLinearThreshold = 0f;
-    /// <summary>
-    ///     The offset of the linear powerloss function set so the transition is differentiable.
-    /// </summary>
-    public float PowerlossLinearOffset = 0f;
-
-    /// <summary>
-    ///     If a supermatter sliver has been removed. Lowers the delamination countdown time.
-    /// </summary>
-    public bool SliverRemoved = false;
+    public const float HeatPenaltyThreshold = 40f;
+    public const float PowerPenaltyThreshold = 3f;
+    public const float MolePenaltyThreshold = 900f;
+    public const float ThermalReleaseModifier = 4f;
+    public const float PlasmaReleaseModifier = 1.5f;
+    public const float OxygenReleaseModifier = 2.5f;
+    public const float GasHeatPowerScaling = 1f / 6f;
 
     /// <summary>
     ///     Stores gas properties used for the supermatter.
@@ -226,27 +218,27 @@ public sealed partial class GasFact
     /// <summary>
     ///     Affects the amount of power the main SM zap makes.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     public float PowerTransmissionRate;
     /// <summary>
     ///     Affects the heat SM makes.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     public float HeatModifier;
     /// <summary>
     ///     Affters the minimum point at which SM takes damage.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     public float HeatResistance;
     /// <summary>
     ///     Affects the power gain the SM experiences from heat.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     public float HeatPowerGeneration;
     /// <summary>
     ///     How much power decay is negated. Complete power decay negation at 1.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     public float PowerlossInhibition;
 
     public GasFact(float? transmissionRate = null, float? heatModifier = null, float? heatResistance = null, float? heatPowerGeneration = null, float? powerlossInhibition = null)
