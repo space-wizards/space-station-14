@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sk1tch
-  changes:
-  - message: Added chat window opacity slider to options.
-    type: Add
-  id: 6288
-  time: '2024-04-01T20:48:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24990
 - author: TheShuEd
   changes:
   - message: added procedurally generating books to library.
@@ -3846,3 +3839,10 @@
   id: 6787
   time: '2024-06-20T11:12:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27817
+- author: neutrino-laser
+  changes:
+  - message: Syndicate smokes pack now has 10 cigarettes as intended.
+    type: Fix
+  id: 6788
+  time: '2024-06-20T11:16:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28371
