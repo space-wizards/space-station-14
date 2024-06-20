@@ -3,6 +3,12 @@ loadout-group-trinkets = Trinkets
 loadout-group-glasses = Glasses
 loadout-group-backpack = Backpack
 loadout-group-instruments = Instruments
+loadout-group-survival-basic = Survival Box
+loadout-group-survival-extended = Extended Survival Box
+loadout-group-survival-clown = Clown Survival Box
+loadout-group-survival-medical = Medical Survival Box
+loadout-group-survival-security = Security Survival Box
+loadout-group-survival-syndicate = Github is forcing me to write text that is literally twice-impossible for the player to ever see, send help
 
 # Command
 loadout-group-captain-head = Captain head
