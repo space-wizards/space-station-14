@@ -22,7 +22,7 @@
       NavSmash: !type:Bool
         true
   - type: Tool
-    speedModifier: 1.5
+    speed: 1.5
     qualities:
       - Prying
   - type: Prying
@@ -65,10 +65,10 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      50: Dead
+      80: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      25: 0.5
+      60: 0.5
   - type: Stamina
     critThreshold: 200
   - type: Bloodstream
@@ -82,7 +82,9 @@
     animation: WeaponArcBite
     damage:
       groups:
-        Brute: 6
+        Brute: 10
+      types:
+        Structural: 15
   - type: DamageStateVisuals
     rotate: true
     states:
@@ -140,12 +142,12 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      200: Dead
   - type: Stamina
     critThreshold: 300
   - type: SlowOnDamage
     speedModifierThresholds:
-      50: 0.7
+      150: 0.7
   - type: Fixtures
     fixtures:
       fix1:
@@ -157,6 +159,15 @@
         - MobMask
         layer:
         - MobLayer
+  - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 6
+      types:
+        Slash: 10
+        Structural: 10
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 5
 
 - type: entity
   name: Drone
@@ -173,14 +184,16 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Dead
+      120: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      40: 0.7
+      100: 0.5
   - type: MeleeWeapon
     damage:
       groups:
-        Brute: 6
+        Brute: 10
+      types:
+        Structural: 10
   - type: MovementSpeedModifier
     baseSprintSpeed: 4
   - type: Fixtures
@@ -213,12 +226,14 @@
       300: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      150: 0.7
-  - type: MovementSpeedModifier
+      220: 0.7
   - type: MeleeWeapon
     damage:
      groups:
-       Brute: 12
+       Brute: 15
+     types:
+       Slash: 10
+       Structural: 20
   - type: Fixtures
     fixtures:
       fix1:
@@ -233,6 +248,8 @@
   - type: Tag
     tags:
     - CannotSuicide
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 6
 
 - type: entity
   name: Ravager
@@ -249,16 +266,18 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      150: Dead
   - type: MovementSpeedModifier
-    baseSprintSpeed: 4
+    baseSprintSpeed: 5
   - type: MeleeWeapon
     damage:
      groups:
-       Brute: 10
+       Brute: 20
+     types:
+       Structural: 15
   - type: SlowOnDamage
     speedModifierThresholds:
-      50: 0.7
+      110: 0.5
   - type: Fixtures
     fixtures:
       fix1:
@@ -284,11 +303,20 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
   - type: MovementSpeedModifier
-    baseSprintSpeed: 6.0
+    baseSprintSpeed: 6.3
   - type: MeleeWeapon
     damage:
      groups:
-       Brute: 5
+       Brute: 10
+     types:
+       Slash: 5
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      80: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.5
   - type: Fixtures
     fixtures:
       fix1:
