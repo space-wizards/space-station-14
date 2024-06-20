@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: osjarw
   changes:
-  - message: Ambuzol plus pills now have different sprites from ambuzol pills. Now
-      CBURN agents and Nukies who bought the syndicate zombie bundle might realize
-      that they also have some ambuzol plus.
-    type: Tweak
-  id: 6290
-  time: '2024-04-02T00:50:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26651
-- author: osjarw
-  changes:
   - message: Air injectors finally have working indicator lights while enabled.
     type: Fix
   id: 6291
@@ -3844,3 +3835,10 @@
   id: 6789
   time: '2024-06-20T11:58:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29251
+- author: Boaz1111
+  changes:
+  - message: Explosive technology has been moved to T1 arsenal
+    type: Tweak
+  id: 6790
+  time: '2024-06-20T12:22:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29227
