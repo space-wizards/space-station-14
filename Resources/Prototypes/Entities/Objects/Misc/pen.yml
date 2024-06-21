@@ -104,3 +104,14 @@
   components:
   - type: Sprite
     state: pen_hop
+
+- type: entity
+  name: Arnolds' Pizza-branded pen
+  parent: Pen
+  id: ArnoldsPizzaPen
+  description: A cheap racing-green-colored pen with the Arnolds' Pizza logo stamped on it.
+  components:
+  - type: Sprite
+    state: pen_pizza
+  - type: Item
+    heldPrefix: pen_pizza

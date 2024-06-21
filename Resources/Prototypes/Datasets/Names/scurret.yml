@@ -1,0 +1,76 @@
+﻿- type: dataset
+  id: NamesFirstScurret
+  values:
+# Emotions
+  - Wawa
+  - Calm
+  - Contented
+  - Patient
+  - Relaxed
+  - Serene
+  - Blissful
+  - Eager
+  - Happy
+  - Inspired
+  - Lively
+  - Playful
+  - Radiant
+  - Vibrant
+  - Brave
+  - Capable
+  - Confident
+  - Daring
+  - Proud
+  - Valiant
+  - Caring
+  - Compassionate
+  - Empathic
+# Properties
+  - Strong
+  - Free
+  - Lucky
+  - Worthy
+  - Blessed
+  - Fortunate
+  - Trusting
+  - Fast
+
+- type: dataset
+  id: NamesLastScurret
+  values:
+# The names of things that exist in wetlands
+  - Wawa
+  - Trees
+  - Plants
+  - Rocks
+  - Rivers
+  - Groves
+  - Lakes
+  - Marshes
+  - Springs
+  - Reeds
+  - Sunshine
+  - Rain
+  - Clouds
+  - Snowfall
+  - Stones
+  - Pebbles
+  - Fishes
+  - Insects
+  - Fruits
+  - Flowers
+  - Blossoms
+  - Fogs
+  - Willows
+  - Alders
+  - Birches
+  - Poplars
+  - Marigolds
+  - Robins
+  - Orchids
+  - Rushes
+  - Lillies
+  - Violets
+  - Maples
+  - Oaks
+  - Hazels

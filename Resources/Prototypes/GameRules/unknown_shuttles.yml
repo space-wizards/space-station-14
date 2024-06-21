@@ -51,3 +51,10 @@
     weight: 2
   - type: LoadMapRule
     preloadedGrid: SyndieEvacPod
+
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: UnknownShuttlePizzaDelivery
+  components:
+  - type: LoadMapRule
+    preloadedGrid: PizzaDeliveryShuttle

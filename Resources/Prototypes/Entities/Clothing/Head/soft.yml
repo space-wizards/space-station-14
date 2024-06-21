@@ -18,7 +18,7 @@
     - state: icon_flipped
       map: ["foldedLayer"]
       visible: false
-      
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHeadHatBaseFlipped
@@ -98,7 +98,7 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatQMsoft]
   id: ClothingHeadHatQMsoftFlipped
   name: quartermaster's cap
-    
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatCorpsoft
@@ -285,7 +285,7 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBizarreSoft]
   id: ClothingHeadHatBizarreSoftFlipped
   name: troublemaker's cap
-    
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatParamedicsoft
@@ -312,3 +312,27 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadHeadHatBaseFlippable
+  id: ClothingHeadHatArnoldsPizza
+  name: Arnolds' Pizza delivery cap
+  description: A racing-green baseball cap with an Arnolds' Pizza logo on the front. Its washing tag reads 'Product of Planet Wawa. 85% polyester, 15% scurret fur.'
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Soft/arnoldspizzasoft.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Soft/arnoldspizzasoft.rsi
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-soft-pen
+        whitelist:
+          tags:
+          - Pen
+# Note: this item is not listed as being ClothMade. It's made out of polyester!
+
+- type: entity
+  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatArnoldsPizza]
+  id: ClothingHeadHatArnoldsPizzaFlipped
+  name: Arnolds' Pizza delivery cap

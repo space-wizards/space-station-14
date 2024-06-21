@@ -252,3 +252,7 @@ ghost-role-information-artifact-name = Sentient Artifact
 ghost-role-information-artifact-description =
       Enact your eldritch whims.
       Forcibly activate your nodes for good or for evil.
+
+ghost-role-information-pizza-delivery-critter-name = Arnolds' Pizza Delivery Specialist
+ghost-role-information-pizza-delivery-critter-description = You are a "loyal employee" of Arnolds' Pizza, here to deliver pizza to a "deserving" Nanotrasen crew.
+ghost-role-information-pizza-delivery-critter-rules = Normal station crew rules apply, although you're not technically a member of the crew.

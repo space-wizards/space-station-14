@@ -13,6 +13,16 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Interaction;
 
+public sealed class InteractionAttemptFailed(EntityUid target)
+{
+    public EntityUid Target = target;
+}
+
+public sealed class InteractionAttemptSucceeded(EntityUid target)
+{
+    public EntityUid Target = target;
+}
+
 public sealed class InteractionPopupSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -100,6 +110,8 @@ public sealed class InteractionPopupSystem : EntitySystem
 
             if (component.InteractSuccessSpawn != null)
                 Spawn(component.InteractSuccessSpawn, _transform.GetMapCoordinates(uid));
+
+            RaiseLocalEvent(target, new InteractionAttemptSucceeded(target));
         }
         else
         {
@@ -111,6 +123,8 @@ public sealed class InteractionPopupSystem : EntitySystem
 
             if (component.InteractFailureSpawn != null)
                 Spawn(component.InteractFailureSpawn, _transform.GetMapCoordinates(uid));
+
+            RaiseLocalEvent(target, new InteractionAttemptFailed(target));
         }
 
         if (component.MessagePerceivedByOthers != null)

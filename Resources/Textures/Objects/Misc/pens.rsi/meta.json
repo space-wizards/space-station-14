@@ -32,6 +32,9 @@
       "name": "pen_red"
     },
     {
+        "name": "pen_pizza"
+    },
+    {
       "name": "pen-inhand-left",
       "directions": 4
     },
