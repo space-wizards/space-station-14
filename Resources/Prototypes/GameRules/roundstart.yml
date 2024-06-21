@@ -278,7 +278,7 @@
     - id: LoneOpsSpawn
     - id: RevenantSpawn
 #    - id: MassHallucination    # What the fuck is this? Is it its own whoosiwhatsit and not an event?
-    - id: SleeperAgentsRule
+    - id: SleeperAgents
     - id: AnomalySpawn
     - id: SolarFlare
     - id: KudzuGrowth
