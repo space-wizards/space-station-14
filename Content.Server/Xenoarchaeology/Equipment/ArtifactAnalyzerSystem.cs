@@ -126,7 +126,7 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
             if (!TryComp<AnalysisConsoleComponent>(source, out var analysis))
                 continue;
             component.Console = source;
-            analysis.AnalyzerEntity = uid;
+            analysis.AnalyzerEntity = GetNetEntity(uid);
             return;
         }
     }
@@ -136,8 +136,10 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         if (!TryComp<ArtifactAnalyzerComponent>(args.Sink, out var analyzer))
             return;
 
-        component.AnalyzerEntity = args.Sink;
+        component.AnalyzerEntity = GetNetEntity(args.Sink);
         analyzer.Console = uid;
+        Dirty(uid, component);
+        Dirty(args.Sink, analyzer);
 
         UpdateUserInterface(uid, component);
     }
@@ -146,8 +148,8 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
     {
         if (args.Port == component.LinkingPort && component.AnalyzerEntity != null)
         {
-            if (TryComp<ArtifactAnalyzerComponent>(component.AnalyzerEntity, out var analyzezr))
-                analyzezr.Console = null;
+            // if (TryComp<ArtifactAnalyzerComponent>(component.AnalyzerEntity, out var analyzezr))
+            //     analyzezr.Console = null;
             component.AnalyzerEntity = null;
         }
 
@@ -159,41 +161,8 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         if (!Resolve(uid, ref component, false))
             return;
 
-        EntityUid? artifact = null;
-        FormattedMessage? msg = null;
-        TimeSpan? totalTime = null;
-        var canScan = false;
-        var canPrint = false;
-        var points = 0;
+        return;
 
-        if (TryComp<ArtifactAnalyzerComponent>(component.AnalyzerEntity, out var analyzer))
-        {
-            msg = GetArtifactScanMessage(analyzer);
-            totalTime = analyzer.AnalysisDuration;
-            if (TryComp<ItemPlacerComponent>(component.AnalyzerEntity, out var placer))
-                canScan = placer.PlacedEntities.Any();
-            canPrint = analyzer.ReadyToPrint;
-
-            // the artifact that's actually on the scanner right now.
-            if (GetArtifactForAnalysis(component.AnalyzerEntity, placer) is { } current)
-                points = _artifact.GetResearchPointValue(current);
-        }
-
-        var analyzerConnected = component.AnalyzerEntity != null;
-        var serverConnected = TryComp<ResearchClientComponent>(uid, out var client) && client.ConnectedToServer;
-
-        var scanning = TryComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity, out var active);
-        var paused = active != null ? active.AnalysisPaused : false;
-
-        var biasDirection = BiasDirection.Up;
-
-        if (TryComp<TraversalDistorterComponent>(component.AnalyzerEntity, out var trav))
-            biasDirection = trav.BiasDirection;
-
-        var state = new AnalysisConsoleUpdateState(GetNetEntity(artifact), analyzerConnected, serverConnected,
-            canScan, canPrint, msg, scanning, paused, active?.StartTime, active?.AccumulatedRunTime, totalTime, points, biasDirection == BiasDirection.Down);
-
-        _ui.SetUiState(uid, ArtifactAnalzyerUiKey.Key, state);
     }
 
     /// <summary>
@@ -217,25 +186,6 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
     {
         if (component.AnalyzerEntity == null)
             return;
-
-        if (HasComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity))
-            return;
-
-        var ent = GetArtifactForAnalysis(component.AnalyzerEntity);
-        if (ent == null)
-            return;
-
-        var activeComp = EnsureComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity.Value);
-        activeComp.StartTime = _timing.CurTime;
-        activeComp.AccumulatedRunTime = TimeSpan.Zero;
-        activeComp.Artifact = ent.Value;
-
-        if (TryComp<ApcPowerReceiverComponent>(component.AnalyzerEntity.Value, out var powa))
-            activeComp.AnalysisPaused = !powa.Powered;
-
-        var activeArtifact = EnsureComp<ActiveScannedArtifactComponent>(ent.Value);
-        activeArtifact.Scanner = component.AnalyzerEntity.Value;
-        UpdateUserInterface(uid, component);
     }
 
     private void OnPrintButton(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsolePrintButtonPressedMessage args)
@@ -264,23 +214,23 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         if (!_research.TryGetClientServer(uid, out var server, out var serverComponent))
             return;
 
-        var artifact = GetArtifactForAnalysis(component.AnalyzerEntity);
-        if (artifact == null)
-            return;
-
-        var pointValue = _artifact.GetResearchPointValue(artifact.Value);
-
-        // no new nodes triggered so nothing to add
-        if (pointValue == 0)
-            return;
-
-        _research.ModifyServerPoints(server.Value, pointValue, serverComponent);
-        _artifact.AdjustConsumedPoints(artifact.Value, pointValue);
-
-        _audio.PlayPvs(component.ExtractSound, component.AnalyzerEntity.Value, AudioParams.Default.WithVolume(2f));
-
-        _popup.PopupEntity(Loc.GetString("analyzer-artifact-extract-popup"),
-            component.AnalyzerEntity.Value, PopupType.Large);
+        // var artifact = GetArtifactForAnalysis(component.AnalyzerEntity);
+        // if (artifact == null)
+        //     return;
+        //
+        // var pointValue = _artifact.GetResearchPointValue(artifact.Value);
+        //
+        // // no new nodes triggered so nothing to add
+        // if (pointValue == 0)
+        //     return;
+        //
+        // _research.ModifyServerPoints(server.Value, pointValue, serverComponent);
+        // _artifact.AdjustConsumedPoints(artifact.Value, pointValue);
+        //
+        // _audio.PlayPvs(component.ExtractSound, component.AnalyzerEntity.Value, AudioParams.Default.WithVolume(2f));
+        //
+        // _popup.PopupEntity(Loc.GetString("analyzer-artifact-extract-popup"),
+        //     component.AnalyzerEntity.Value, PopupType.Large);
 
         UpdateUserInterface(uid, component);
     }
@@ -290,11 +240,11 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         if (component.AnalyzerEntity == null)
             return;
 
-        if (!TryComp<TraversalDistorterComponent>(component.AnalyzerEntity, out var trav))
-            return;
-
-        if (!_traversalDistorter.SetState(component.AnalyzerEntity.Value, trav, args.IsDown))
-            return;
+        // if (!TryComp<TraversalDistorterComponent>(component.AnalyzerEntity, out var trav))
+        //     return;
+        //
+        // if (!_traversalDistorter.SetState(component.AnalyzerEntity.Value, trav, args.IsDown))
+        //     return;
 
         UpdateUserInterface(uid, component);
     }

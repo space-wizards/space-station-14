@@ -14,7 +14,7 @@ public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKe
     {
         base.Open();
 
-        _consoleMenu = new AnalysisConsoleMenu();
+        _consoleMenu = new AnalysisConsoleMenu(Owner);
 
         _consoleMenu.OnClose += Close;
         _consoleMenu.OpenCentered();

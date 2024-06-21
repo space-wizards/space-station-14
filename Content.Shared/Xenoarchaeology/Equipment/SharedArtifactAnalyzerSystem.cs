@@ -10,6 +10,8 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<ArtifactAnalyzerComponent, ItemPlacedEvent>(OnItemPlaced);
         SubscribeLocalEvent<ArtifactAnalyzerComponent, ItemRemovedEvent>(OnItemRemoved);
     }
@@ -33,10 +35,11 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
     {
         analyzer = null;
 
-        if (!TryComp<ArtifactAnalyzerComponent>(ent.Comp.AnalyzerEntity, out var comp))
+        var analyzerUid = GetEntity(ent.Comp.AnalyzerEntity);
+        if (!TryComp<ArtifactAnalyzerComponent>(analyzerUid, out var comp))
             return false;
 
-        analyzer = (ent.Comp.AnalyzerEntity.Value, comp);
+        analyzer = (analyzerUid.Value, comp);
         return true;
     }
 

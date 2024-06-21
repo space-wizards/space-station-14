@@ -17,7 +17,7 @@ public sealed partial class AnalysisConsoleComponent : Component
     /// Can be null if not linked.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? AnalyzerEntity;
+    public NetEntity? AnalyzerEntity;
 
     /// <summary>
     /// The sound played when an artifact has points extracted.

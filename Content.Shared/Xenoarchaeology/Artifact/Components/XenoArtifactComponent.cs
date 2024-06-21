@@ -30,6 +30,9 @@ public sealed partial class XenoArtifactComponent : Component
     [DataField, AutoNetworkedField]
     public List<NetEntity> CachedActiveNodes = new();
 
+    [DataField, AutoNetworkedField]
+    public List<List<NetEntity>> CachedSegments = new();
+
     // NOTE: you should not be accessing any of these values directly. Use the methods in SharedXenoArtifactSystem.Graph
     #region Graph
     /// <summary>

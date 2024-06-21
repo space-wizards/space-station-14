@@ -28,19 +28,23 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     public event Action? OnUpBiasButtonPressed;
     public event Action? OnDownBiasButtonPressed;
 
-    public AnalysisConsoleMenu()
+    public AnalysisConsoleMenu(EntityUid owner)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
         _xenoArtifact = _ent.System<XenoArtifactSystem>();
         _artifactAnalyzer = _ent.System<ArtifactAnalyzerSystem>();
+
+        var comp = _ent.GetComponent<AnalysisConsoleComponent>(owner);
+        _artifactAnalyzer.TryGetArtifactFromConsole((owner, comp), out var arti);
+        GraphControl.SetArtifact(arti);
     }
 
     public void Update(Entity<AnalysisConsoleComponent> ent)
     {
-        Logger.Debug("Ok we got a message here:");
-        Logger.Debug($"arti not null : {_artifactAnalyzer.TryGetArtifactFromConsole(ent, out _)}");
+        _artifactAnalyzer.TryGetArtifactFromConsole(ent, out var arti);
+        GraphControl.SetArtifact(arti);
     }
 }
 
