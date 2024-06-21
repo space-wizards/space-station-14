@@ -235,3 +235,24 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
+
+- type: entity
+  parent: [ClothingEyesBase, ShowSecurityIcons]
+  id: ClothingEyesGlassesCaptain
+  name: captain's sunglasses
+  description: The Captain's personal sunglasses that has been upgraded with a Security HUD, flash protetion, and welding protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/capglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/capglasses.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: Construction
+    graph: GlassesSecHUD
+    node: glassesSec
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: IdentityBlocker
+    coverage: EYES
