@@ -22,7 +22,7 @@
     storedRotation: -90
   - type: Slippery
   - type: StepTrigger
-    intersectRatio: 0.18
+    intersectRatio: 0.2
   - type: CollisionWake
     enabled: false
   - type: Physics
