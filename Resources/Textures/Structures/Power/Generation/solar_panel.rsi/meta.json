@@ -52,6 +52,9 @@
 		},
 		{
 			"name": "solar_tracker_uncabled"
+		},
+		{
+			"name": "solar_tracker_broken_uncabled"
 		}
 	]
 }
