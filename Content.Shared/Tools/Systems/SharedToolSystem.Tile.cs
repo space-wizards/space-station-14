@@ -37,24 +37,26 @@ public abstract partial class SharedToolSystem
 
         if (!TryComp<ToolComponent>(ent, out var tool))
             return;
-        var coordinates = GetCoordinates(args.Coordinates);
 
-        var gridUid = coordinates.GetGridUid(EntityManager);
+        var gridUid = GetEntity(args.Grid);
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
         {
             Log.Error("Attempted use tool on a non-existent grid?");
             return;
         }
 
-        var tileRef = _maps.GetTileRef(gridUid.Value, grid, coordinates);
-        if (comp.RequiresUnobstructed && _turfs.IsTileBlocked(gridUid.Value, tileRef.GridIndices, CollisionGroup.MobMask))
+        var tileRef = _maps.GetTileRef(gridUid, grid, args.GridTile);
+        var coords = _maps.ToCoordinates(tileRef, grid);
+        if (comp.RequiresUnobstructed && _turfs.IsTileBlocked(gridUid, tileRef.GridIndices, CollisionGroup.MobMask))
             return;
 
         if (!TryDeconstructWithToolQualities(tileRef, tool.Qualities))
             return;
 
-        AdminLogger.Add(LogType.LatticeCut, LogImpact.Medium,
-                $"{ToPrettyString(args.User):player} used {ToPrettyString(ent)} to edit the tile at {args.Coordinates}");
+        AdminLogger.Add(
+            LogType.LatticeCut,
+            LogImpact.Medium,
+            $"{ToPrettyString(args.User):player} used {ToPrettyString(ent)} to edit the tile at {coords}");
         args.Handled = true;
     }
 
@@ -66,7 +68,7 @@ public abstract partial class SharedToolSystem
         var comp = ent.Comp1!;
         var tool = ent.Comp2!;
 
-        if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out var gridUid, out var mapGrid))
+        if (!_mapManager.TryFindGridAt(_transformSystem.ToMapCoordinates(clickLocation), out var gridUid, out var mapGrid))
             return false;
 
         var tileRef = _maps.GetTileRef(gridUid, mapGrid, clickLocation);
@@ -85,7 +87,7 @@ public abstract partial class SharedToolSystem
         if (!InteractionSystem.InRangeUnobstructed(user, coordinates, popup: false))
             return false;
 
-        var args = new TileToolDoAfterEvent(GetNetCoordinates(coordinates));
+        var args = new TileToolDoAfterEvent(GetNetEntity(gridUid), tileRef.GridIndices);
         UseTool(ent, user, ent, comp.Delay, tool.Qualities, args, out _, toolComponent: tool);
         return true;
     }

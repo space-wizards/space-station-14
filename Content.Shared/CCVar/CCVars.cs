@@ -128,13 +128,13 @@ namespace Content.Shared.CCVar
         ///     Minimum time between meteor swarms in minutes.
         /// </summary>
         public static readonly CVarDef<float>
-            MeteorSwarmMinTime = CVarDef.Create("events.meteor_swarm_min_time", 7.5f, CVar.ARCHIVE | CVar.SERVERONLY);
+            MeteorSwarmMinTime = CVarDef.Create("events.meteor_swarm_min_time", 12.5f, CVar.ARCHIVE | CVar.SERVERONLY);
 
         /// <summary>
         ///     Maximum time between meteor swarms in minutes.
         /// </summary>
         public static readonly CVarDef<float>
-            MeteorSwarmMaxTime = CVarDef.Create("events.meteor_swarm_max_time", 12.5f, CVar.ARCHIVE | CVar.SERVERONLY);
+            MeteorSwarmMaxTime = CVarDef.Create("events.meteor_swarm_max_time", 17.5f, CVar.ARCHIVE | CVar.SERVERONLY);
 
         /*
          * Game
@@ -882,6 +882,25 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> AdminBypassMaxPlayers =
             CVarDef.Create("admin.bypass_max_players", true, CVar.SERVERONLY);
+
+        /*
+         * AHELP
+         */
+
+        /// <summary>
+        /// Ahelp rate limit values are accounted in periods of this size (seconds).
+        /// After the period has passed, the count resets.
+        /// </summary>
+        /// <seealso cref="AhelpRateLimitCount"/>
+        public static readonly CVarDef<int> AhelpRateLimitPeriod =
+            CVarDef.Create("ahelp.rate_limit_period", 2, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How many ahelp messages are allowed in a single rate limit period.
+        /// </summary>
+        /// <seealso cref="AhelpRateLimitPeriod"/>
+        public static readonly CVarDef<int> AhelpRateLimitCount =
+            CVarDef.Create("ahelp.rate_limit_count", 10, CVar.SERVERONLY);
 
         /*
          * Explosions
