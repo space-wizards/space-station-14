@@ -940,6 +940,9 @@
   id: NukeOpsUplink
 
 - type: Tag
+  id: DebugUplink
+
+- type: Tag
   id: Ointment
 
 - type: Tag
