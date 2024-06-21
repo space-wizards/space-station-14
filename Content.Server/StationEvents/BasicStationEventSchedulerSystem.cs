@@ -24,8 +24,8 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly EventManagerSystem _event = default!;
 
         // someome yell at me if I forget to change this back, I need to test it without dying of old
-        public const float MinEventTime = 15; // 60 * 3;
-        public const float MaxEventTime = 15; // 60 * 10;
+        public const float MinEventTime = 60 * 3; // 60 * 3;
+        public const float MaxEventTime = 60 * 10; // 60 * 10;
 
         protected override void Ended(EntityUid uid, BasicStationEventSchedulerComponent component, GameRuleComponent gameRule,
             GameRuleEndedEvent args)
