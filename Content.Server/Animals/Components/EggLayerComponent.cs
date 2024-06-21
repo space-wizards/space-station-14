@@ -48,11 +48,6 @@ public sealed partial class EggLayerComponent : Component
     public float HungerUsage = 25f;
 
     [DataField] public EntityUid? Action;
-    /// <summary>
-    ///     How long to wait before producing.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan GrowthDelay = TimeSpan.FromMinutes(1);
 
     /// <summary>
     ///     When to next try to produce.

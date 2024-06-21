@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
@@ -33,6 +34,7 @@ internal sealed class UdderSystem : EntitySystem
 
         SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
         SubscribeLocalEvent<UdderComponent, MilkingDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<UdderComponent, ExaminedEvent>(OnExamine);
     }
 
     public override void Update(float frameTime)
@@ -51,6 +53,12 @@ internal sealed class UdderSystem : EntitySystem
             if (_mobState.IsDead(uid))
                 continue;
 
+            if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution, out var solution))
+                continue;
+
+            if (solution.AvailableVolume == 0)
+                continue;
+
             // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
             if (EntityManager.TryGetComponent(uid, out HungerComponent? hunger))
             {
@@ -60,9 +68,6 @@ internal sealed class UdderSystem : EntitySystem
 
                 _hunger.ModifyHunger(uid, -udder.HungerUsage, hunger);
             }
-
-            if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution))
-                continue;
 
             //TODO: toxins from bloodstream !?
             _solutionContainerSystem.TryAddReagent(udder.Solution.Value, udder.ReagentId, udder.QuantityPerUpdate, out _);
@@ -133,5 +138,21 @@ internal sealed class UdderSystem : EntitySystem
             Priority = 2
         };
         args.Verbs.Add(verb);
+    }
+
+    private void OnExamine(Entity<UdderComponent> entity, ref ExaminedEvent args)
+    {
+        if (EntityManager.TryGetComponent(entity, out HungerComponent? hunger))
+        {
+            if (_hunger.GetHungerThreshold(hunger) == HungerThreshold.Overfed)
+                args.PushMarkup(Loc.GetString("udder-system-examine-overfed"));
+
+            if (_hunger.GetHungerThreshold(hunger) <= HungerThreshold.Peckish)
+                args.PushMarkup(Loc.GetString("udder-system-examine-hungry"));
+        }
+        else
+        {
+            args.PushMarkup(Loc.GetString("udder-system-examine-none"));
+        }
     }
 }

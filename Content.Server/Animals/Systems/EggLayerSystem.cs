@@ -57,7 +57,7 @@ public sealed class EggLayerSystem : EntitySystem
                 continue;
 
             // Hungerlevel check/modification is done in TryLayEgg()
-            // so its used for player controlled chickens as well.
+            // so it's used for player controlled chickens as well.
 
             TryLayEgg(uid, eggLayer);
         }

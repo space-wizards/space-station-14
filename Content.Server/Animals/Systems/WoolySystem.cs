@@ -42,6 +42,12 @@ public sealed class WoolySystem : EntitySystem
             if (_mobState.IsDead(uid))
                 continue;
 
+            if (!_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution, out var solution))
+                continue;
+
+            if (solution.AvailableVolume == 0)
+                continue;
+
             // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
             if (EntityManager.TryGetComponent(uid, out HungerComponent? hunger))
             {
@@ -51,9 +57,6 @@ public sealed class WoolySystem : EntitySystem
 
                 _hunger.ModifyHunger(uid, -wooly.HungerUsage, hunger);
             }
-
-            if (!_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution))
-                continue;
 
             _solutionContainer.TryAddReagent(wooly.Solution.Value, wooly.ReagentId, wooly.Quantity, out _);
         }
