@@ -2,8 +2,6 @@ using Content.Server.Animals.Systems;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Content.Shared.FixedPoint;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Animals.Components;
@@ -47,7 +45,7 @@ public sealed partial class EggLayerComponent : Component
     ///     The amount of nutrient consumed on update.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float HungerUsage = 10f;
+    public float HungerUsage = 25f;
 
     [DataField] public EntityUid? Action;
     /// <summary>

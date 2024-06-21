@@ -18,8 +18,8 @@ namespace Content.Server.Animals.Components
         /// <summary>
         ///     The reagent to produce.
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadOnly)]
-        public ProtoId<ReagentPrototype> ReagentId = "Milk";
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public ProtoId<ReagentPrototype> ReagentId = default!;
 
         /// <summary>
         ///     The name of <see cref="Solution"/>.
@@ -36,7 +36,7 @@ namespace Content.Server.Animals.Components
         /// <summary>
         ///     The amount of reagent to be generated on update.
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadOnly)]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 QuantityPerUpdate = 25;
 
         /// <summary>

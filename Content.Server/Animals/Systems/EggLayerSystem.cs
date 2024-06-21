@@ -14,7 +14,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-///     Gives the ability to lay eggs/other things ;
+///     Gives the ability to lay eggs/other things;
 ///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
 public sealed class EggLayerSystem : EntitySystem
@@ -71,6 +71,7 @@ public sealed class EggLayerSystem : EntitySystem
 
     private void OnEggLayAction(EntityUid uid, EggLayerComponent egglayer, EggLayInstantActionEvent args)
     {
+        // Cooldown is handeled by ActionAnimalLayEgg in types.yml.
         args.Handled = TryLayEgg(uid, egglayer);
     }
 

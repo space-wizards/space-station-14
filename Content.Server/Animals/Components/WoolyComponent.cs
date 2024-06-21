@@ -36,7 +36,7 @@ public sealed partial class WoolyComponent : Component
     /// <summary>
     ///     The amount of reagent to be generated on update.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 Quantity = 25;
 
     /// <summary>
