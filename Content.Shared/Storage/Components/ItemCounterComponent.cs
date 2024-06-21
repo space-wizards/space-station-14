@@ -1,4 +1,4 @@
-﻿using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
 
 namespace Content.Shared.Storage.Components
@@ -56,5 +56,12 @@ namespace Content.Shared.Storage.Components
         [DataField("layerStates")]
         [ViewVariables(VVAccess.ReadWrite)]
         public List<string> LayerStates = new();
+
+        /// <summary>
+        /// Whether to show stack visuals only when handling a container. Defaults to true
+        /// </summary>
+        [DataField("openContainerOnly")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool OpenContainerOnly = true;
     }
 }

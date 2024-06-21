@@ -31,7 +31,12 @@ public sealed class ItemCounterSystem : SharedItemCounterSystem
 
         if (!_appearanceSystem.TryGetData<bool>(uid, StackVisuals.Hide, out var hidden, args.Component))
             hidden = false;
-        
+
+        // override the stack visuals hide property if the stack visuals should show regardless of whether a player
+        // is handling a container
+        if (!comp.OpenContainerOnly)
+            hidden = false;
+
         if (comp.IsComposite)
             ProcessCompositeSprite(uid, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
         else
