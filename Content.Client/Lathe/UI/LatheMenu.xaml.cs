@@ -78,9 +78,6 @@ public sealed partial class LatheMenu : DefaultWindow
     /// </summary>
     public void PopulateRecipes()
     {
-        if (!_entityManager.TryGetComponent<LatheComponent>(_owner, out var component))
-            return;
-
         var recipesToShow = new List<LatheRecipePrototype>();
         foreach (var recipe in Recipes)
         {
@@ -108,21 +105,13 @@ public sealed partial class LatheMenu : DefaultWindow
         RecipeList.Children.Clear();
         foreach (var prototype in sortedRecipesToShow)
         {
-            List<Texture> textures;
+            EntityPrototype? recipeProto = null;
             if (_prototypeManager.TryIndex(prototype.Result, out EntityPrototype? entityProto) && entityProto != null)
-            {
-                textures = SpriteComponent.GetPrototypeTextures(entityProto, _resources).Select(o => o.Default).ToList();
-            }
-            else
-            {
-                textures = prototype.Icon == null
-                    ? new List<Texture> { _spriteSystem.GetPrototypeIcon(prototype.Result).Default }
-                    : new List<Texture> { _spriteSystem.Frame0(prototype.Icon) };
-            }
+                recipeProto = entityProto;
 
             var canProduce = _lathe.CanProduce(_owner, prototype, quantity);
 
-            var control = new RecipeControl(prototype, () => GenerateTooltipText(prototype), canProduce, textures);
+            var control = new RecipeControl(prototype, () => GenerateTooltipText(prototype), canProduce, recipeProto);
             control.OnButtonPressed += s =>
             {
                 if (!int.TryParse(AmountLineEdit.Text, out var amount) || amount <= 0)
@@ -219,14 +208,23 @@ public sealed partial class LatheMenu : DefaultWindow
     /// <param name="queue"></param>
     public void PopulateQueueList(List<LatheRecipePrototype> queue)
     {
-        QueueList.Clear();
+        QueueList.DisposeAllChildren();
+
         var idx = 1;
         foreach (var recipe in queue)
         {
-            var icon = recipe.Icon == null
-                ? _spriteSystem.GetPrototypeIcon(recipe.Result).Default
-                : _spriteSystem.Frame0(recipe.Icon);
-            QueueList.AddItem($"{idx}. {recipe.Name}", icon);
+            var queuedRecipeBox = new BoxContainer();
+            queuedRecipeBox.Orientation = BoxContainer.LayoutOrientation.Horizontal;
+
+            var queuedRecipeProto = new EntityPrototypeView();
+            if (_prototypeManager.TryIndex(recipe.Result, out EntityPrototype? entityProto) && entityProto != null)
+                queuedRecipeProto.SetPrototype(entityProto);
+
+            var queuedRecipeLabel = new Label();
+            queuedRecipeLabel.Text = $"{idx}. {recipe.Name}";
+            queuedRecipeBox.AddChild(queuedRecipeProto);
+            queuedRecipeBox.AddChild(queuedRecipeLabel);
+            QueueList.AddChild(queuedRecipeBox);
             idx++;
         }
     }
@@ -236,9 +234,10 @@ public sealed partial class LatheMenu : DefaultWindow
         FabricatingContainer.Visible = recipe != null;
         if (recipe == null)
             return;
-        Icon.Texture = recipe.Icon == null
-            ? _spriteSystem.GetPrototypeIcon(recipe.Result).Default
-            : _spriteSystem.Frame0(recipe.Icon);
+
+        if (_prototypeManager.TryIndex(recipe.Result, out EntityPrototype? entityProto) && entityProto != null)
+            FabricatingEntityProto.SetPrototype(entityProto);
+
         NameLabel.Text = $"{recipe.Name}";
     }
 

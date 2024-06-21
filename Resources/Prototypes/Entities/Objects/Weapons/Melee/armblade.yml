@@ -18,7 +18,4 @@
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/armblade.rsi
-  - type: Tool
-    qualities:
-      - Prying
   - type: Prying
