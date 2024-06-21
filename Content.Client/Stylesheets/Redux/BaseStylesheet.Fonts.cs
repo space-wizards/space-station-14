@@ -12,7 +12,7 @@ public abstract partial class BaseStylesheet : IStyleResources
 {
     [Dependency] protected readonly ISandboxHelper SandboxHelper = default!;
     [Dependency] protected readonly IReflectionManager ReflectionManager = default!;
-    [Dependency] protected readonly IResourceCache ResCache = default!;
+    [Dependency] protected internal readonly IResourceCache ResCache = default!;
 
     public Stylesheet Stylesheet { get; init; }
 

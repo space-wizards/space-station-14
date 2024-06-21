@@ -18,6 +18,7 @@ using System.Numerics;
 using JetBrains.Annotations;
 using Content.Shared.Atmos;
 using System.Linq;
+using Content.Client.Stylesheets.Redux.Sheetlets.Hud;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Pinpointer.UI;
@@ -129,7 +130,7 @@ public partial class NavMapControl : MapGridControl
         {
             PanelOverride = new StyleBoxFlat()
             {
-                BackgroundColor = StyleNano.ButtonColorContext.WithAlpha(1f),
+                BackgroundColor = ContextMenuSheetlet.ContextButtonPalette[1].WithAlpha(1f),
                 BorderColor = StyleNano.PanelDark
             },
             VerticalExpand = false,

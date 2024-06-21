@@ -105,12 +105,6 @@ namespace Content.Client.Stylesheets
         public static readonly Color PointGreen = Color.FromHex("#38b026");
         public static readonly Color PointMagenta = Color.FromHex("#FF00FF");
 
-        // Context menu button colors
-        public static readonly Color ButtonColorContext = Color.FromHex("#1119");
-        public static readonly Color ButtonColorContextHover = Color.DarkSlateGray;
-        public static readonly Color ButtonColorContextPressed = Color.LightSlateGray;
-        public static readonly Color ButtonColorContextDisabled = Color.Black;
-
         // Examine button colors
         public static readonly Color ExamineButtonColorContext = Color.Transparent;
         public static readonly Color ExamineButtonColorContextHover = Color.DarkSlateGray;
@@ -191,11 +185,7 @@ namespace Content.Client.Stylesheets
             };
             borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
 
-            var contextMenuBackground = new StyleBoxTexture
-            {
-                Texture = borderedWindowBackgroundTex,
-            };
-            contextMenuBackground.SetPatchMargin(StyleBox.Margin.All, ContextMenuElement.ElementMargin);
+
 
             var invSlotBgTex = resCache.GetTexture("/Textures/Interface/Inventory/inv_slot_background.png");
             var invSlotBg = new StyleBoxTexture
@@ -510,9 +500,6 @@ namespace Content.Client.Stylesheets
             };
             paperBackground.SetPatchMargin(StyleBox.Margin.All, 16.0f);
 
-            var contextMenuExpansionTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
-            var verbMenuConfirmationTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
-
             // south-facing arrow:
             var directionIconArrowTex = resCache.GetTexture("/Textures/Interface/VerbIcons/drop.svg.192dpi.png");
             var directionIconQuestionTex = resCache.GetTexture("/Textures/Interface/VerbIcons/information.svg.192dpi.png");
@@ -676,69 +663,6 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                     }),
-
-                // Context Menu window
-                Element<PanelContainer>().Class(ContextMenuPopup.StyleClassContextMenuPopup)
-                    .Prop(PanelContainer.StylePropertyPanel, contextMenuBackground),
-
-                // Context menu buttons
-                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
-
-                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
-                    .Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContext),
-
-                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
-                    .Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContextHover),
-
-                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
-                    .Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContextPressed),
-
-                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
-                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContextDisabled),
-
-                // Context Menu Labels
-                Element<RichTextLabel>().Class(InteractionVerb.DefaultTextStyleClass)
-                    .Prop(Label.StylePropertyFont, notoSansBoldItalic12),
-
-                Element<RichTextLabel>().Class(ActivationVerb.DefaultTextStyleClass)
-                    .Prop(Label.StylePropertyFont, notoSansBold12),
-
-                Element<RichTextLabel>().Class(AlternativeVerb.DefaultTextStyleClass)
-                    .Prop(Label.StylePropertyFont, notoSansItalic12),
-
-                Element<RichTextLabel>().Class(Verb.DefaultTextStyleClass)
-                    .Prop(Label.StylePropertyFont, notoSans12),
-
-                Element<TextureRect>().Class(ContextMenuElement.StyleClassContextMenuExpansionTexture)
-                    .Prop(TextureRect.StylePropertyTexture, contextMenuExpansionTexture),
-
-                Element<TextureRect>().Class(VerbMenuElement.StyleClassVerbMenuConfirmationTexture)
-                    .Prop(TextureRect.StylePropertyTexture, verbMenuConfirmationTexture),
-
-                // Context menu confirm buttons
-                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
-
-                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
-                    .Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
-
-                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
-                    .Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
-
-                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
-                    .Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
-
-                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
-                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
 
                 // Examine buttons
                 Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
