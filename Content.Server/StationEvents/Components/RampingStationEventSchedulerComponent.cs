@@ -1,4 +1,6 @@
-﻿namespace Content.Server.StationEvents.Components;
+using Content.Shared.Storage;
+
+namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(RampingStationEventSchedulerSystem))]
 public sealed partial class RampingStationEventSchedulerComponent : Component
@@ -14,4 +16,10 @@ public sealed partial class RampingStationEventSchedulerComponent : Component
 
     [DataField("timeUntilNextEvent"), ViewVariables(VVAccess.ReadWrite)]
     public float TimeUntilNextEvent;
+
+    /// <summary>
+    /// The gamerules that the scheduler can choose from
+    /// </summary>
+    [DataField(required: true)]
+    public List<EntitySpawnEntry> ScheduledGameRules = new();
 }

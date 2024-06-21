@@ -254,12 +254,74 @@
   parent: BaseGameRule
   components:
   - type: BasicStationEventScheduler
+    scheduledGameRules:
+    - id: ClosetSkeleton
+    - id: MouseMigration
+    - id: SlimesSpawn
+    - id: BluespaceArtifact
+    - id: ClericalError
+    - id: IonStorm
+    - id: KingRatMigration
+    - id: CockroachMigration
+    - id: SpiderClownSpawn
+    - id: VentClog
+    - id: GasLeak
+    - id: ImmovableRodSpawn
+    - id: BreakerFlip
+    - id: PowerGridCheck
+    - id: BluespaceLocker
+    - id: NinjaSpawn
+    - id: BureaucraticError
+    - id: DragonSpawn
+    - id: SpiderSpawn
+    - id: MimicVendorRule
+    - id: LoneOpsSpawn
+    - id: RevenantSpawn
+#    - id: MassHallucination    # What the fuck is this? Is it its own whoosiwhatsit and not an event?
+    - id: SleeperAgentsRule
+    - id: AnomalySpawn
+    - id: SolarFlare
+    - id: KudzuGrowth
+    - id: ZombieOutbreak
+#    - id: CargoGiftMasterRule
+#    - id: ShuttleEventMasterRule
 
 - type: entity
   id: RampingStationEventScheduler
   parent: BaseGameRule
   components:
   - type: RampingStationEventScheduler
+    scheduledGameRules:
+    - id: ClosetSkeleton
+    - id: MouseMigration
+    - id: SlimesSpawn
+    - id: BluespaceArtifact
+    - id: ClericalError
+    - id: IonStorm
+    - id: KingRatMigration
+    - id: CockroachMigration
+    - id: SpiderClownSpawn
+    - id: VentClog
+    - id: GasLeak
+    - id: ImmovableRodSpawn
+    - id: BreakerFlip
+    - id: PowerGridCheck
+    - id: BluespaceLocker
+    - id: NinjaSpawn
+    - id: BureaucraticError
+    - id: DragonSpawn
+    - id: SpiderSpawn
+    - id: MimicVendorRule
+    - id: LoneOpsSpawn
+    - id: RevenantSpawn
+#    - id: MassHallucination    # What the fuck is this? Is it its own whoosiwhatsit and not an event?
+    - id: SleeperAgents
+    - id: AnomalySpawn
+    - id: SolarFlare
+    - id: KudzuGrowth
+    - id: ZombieOutbreak
+#    - id: CargoGiftMasterRule
+#    - id: ShuttleEventMasterRule
 
 # variation passes
 - type: entity

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -7,11 +8,13 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Storage;
 
 namespace Content.Server.StationEvents;
 
 public sealed class EventManagerSystem : EntitySystem
 {
+    [Dependency] private readonly IComponentFactory _compFac = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -44,7 +47,7 @@ public sealed class EventManagerSystem : EntitySystem
         }
 
         var ent = GameTicker.AddGameRule(randomEvent);
-        var str = Loc.GetString("station-event-system-run-event",("eventName", ToPrettyString(ent)));
+        var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ent)));
         _chat.SendAdminAlert(str);
         Log.Info(str);
         return str;
@@ -59,6 +62,61 @@ public sealed class EventManagerSystem : EntitySystem
         Log.Info($"Picking from {availableEvents.Count} total available events");
         return FindEvent(availableEvents);
     }
+
+    /// <summary>
+    /// Randomly runs an event from provided list.
+    /// </summary>
+    public string? RunLimitedEvent(List<EntitySpawnEntry>? limitedEventsList)
+    {
+        if (limitedEventsList != null)
+        {
+
+
+            var selectedEvents = EntitySpawnCollection.GetSpawns(limitedEventsList, _random); // storage function for game rules, smh my head.
+            // fuck it though, it works and gives us all the random selection utility we want.
+
+            Log.Info($"Picking from {limitedEventsList.Count} subsetted events");
+
+            var limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
+            foreach (var eventid in selectedEvents)
+            {
+                if (!_prototype.TryIndex(eventid, out var eventproto))
+                {
+                    Log.Warning("An event ID has no prototype index!");
+                    continue;
+                }
+
+                if (eventproto.Abstract)
+                    continue;
+
+                var stationEvent = _compFac.GetComponent<StationEventComponent>(); // I think this fails to an exception? but I can't imagine a time when you would be okay with a fucked event scheduler / a scheduler trying to pull a non-station event.
+
+                limitedEvents.Add(eventproto, stationEvent);
+            }
+
+            var randomLimitedEvent = FindEvent(limitedEvents); // this picks the event, It might be better to use the EntitySpawnEntry to do it, but we still need to account for maxuimums or players counts and whatnot.
+            if (randomLimitedEvent == null)
+            {
+                Log.Warning("The selected random event is null!");
+                return null;
+            }
+
+            if (!_prototype.TryIndex(randomLimitedEvent, out _))
+            {
+                Log.Warning("A requested event is not available!");
+                return null;
+            }
+
+            var ent = GameTicker.AddGameRule(randomLimitedEvent);
+            var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ent)));
+            _chat.SendAdminAlert(str);
+            Log.Info(str);
+            return str;
+        }
+        Log.Warning("A scheduler has requested null as event!");
+        return null;
+    }
+
 
     /// <summary>
     /// Pick a random event from the available events at this time, also considering their weightings.

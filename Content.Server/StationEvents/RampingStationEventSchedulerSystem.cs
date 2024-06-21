@@ -1,4 +1,4 @@
-﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
@@ -63,7 +63,7 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingS
             }
 
             PickNextEventTime(uid, scheduler);
-            _event.RunRandomEvent();
+            _event.RunLimitedEvent(scheduler.ScheduledGameRules);
         }
     }
 
