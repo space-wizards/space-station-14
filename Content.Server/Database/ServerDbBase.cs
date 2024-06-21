@@ -625,9 +625,8 @@ namespace Content.Server.Database
             return record == null ? null : MakePlayerRecord(record);
         }
 
-        public async Task<bool> PlayerRecordExists(NetUserId userId)
+        protected async Task<bool> PlayerRecordExists(DbGuard db, NetUserId userId)
         {
-            await using var db = await GetDb();
             return await db.DbContext.Player.AnyAsync(p => p.UserId == userId);
         }
 

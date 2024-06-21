@@ -86,7 +86,7 @@ namespace Content.Server.Database
 
             var exempt = await GetBanExemptionCore(db, userId);
 
-            var newPlayer = userId == null || !await PlayerRecordExists(userId.Value);
+            var newPlayer = userId == null || !await PlayerRecordExists(db, userId.Value);
 
             // SQLite can't do the net masking stuff we need to match IP address ranges.
             // So just pull down the whole list into memory.

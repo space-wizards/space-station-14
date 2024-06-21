@@ -78,7 +78,7 @@ namespace Content.Server.Database
             await using var db = await GetDbImpl();
 
             var exempt = await GetBanExemptionCore(db, userId);
-            var newPlayer = userId == null || !await PlayerRecordExists(userId.Value);
+            var newPlayer = userId == null || !await PlayerRecordExists(db, userId.Value);
             var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false, exempt, newPlayer)
                 .OrderByDescending(b => b.BanTime);
 
