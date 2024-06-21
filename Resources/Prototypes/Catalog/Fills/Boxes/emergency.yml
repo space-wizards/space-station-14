@@ -1,5 +1,4 @@
 - type: entity
-  name: survival box
   parent: [BoxCardboard, ContentsExplosionResistanceBase]
   id: BoxSurvival
   name: survival box
@@ -39,7 +38,6 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  name: extended-capacity survival box
   parent: BoxSurvival
   id: BoxSurvivalEngineering
   name: extended-capacity survival box
@@ -60,7 +58,6 @@
     - state: extendedtank
 
 - type: entity
-  name: survival box
   parent: BoxSurvivalEngineering
   id: BoxSurvivalEngineeringNitrogen
   suffix: Extended N2
@@ -196,7 +193,6 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  name: extended-capacity survival box
   parent: BoxSurvival
   id: BoxSurvivalSyndicate
   name: extended-capacity survival box
