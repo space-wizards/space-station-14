@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics;
+﻿using Content.Client.Stylesheets.Redux.Sheetlets;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -60,7 +61,7 @@ public sealed class PalettedWindowSheetlet : Sheetlet<PalettedStylesheet>
                 .Margin(3),
         };
 
-        PalettedButtonSheetlet.MakeButtonRules(buttonCfg, rules, buttonCfg.NegativeButtonPalette, DefaultWindow.StyleClassWindowCloseButton);
+        NTButtonSheetlet.MakeButtonRules(buttonCfg, rules, buttonCfg.NegativeButtonPalette, DefaultWindow.StyleClassWindowCloseButton);
 
         return rules.ToArray();
     }

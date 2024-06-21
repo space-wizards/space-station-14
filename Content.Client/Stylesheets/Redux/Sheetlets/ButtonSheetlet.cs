@@ -1,14 +1,14 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
-using static Robust.Client.UserInterface.StylesheetHelpers;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
+using static Robust.Client.UserInterface.StylesheetHelpers;
 
-namespace Content.Client.Stylesheets.Redux.NTSheetlets;
+namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
-public sealed class PalettedButtonSheetlet : Sheetlet<PalettedStylesheet>
+public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
 {
     // this is hardcoded, but the other option is adding another field to the palette class. doesn't seem worth it
     private readonly Color[] _textureButtonPalette = new[]
@@ -20,10 +20,7 @@ public sealed class PalettedButtonSheetlet : Sheetlet<PalettedStylesheet>
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         var cfg = (IButtonConfig) sheet;
-        var rules = new List<StyleRule>();
-
-        // ReSharper disable MissingLinebreak
-        rules.AddRange(new StyleRule[]
+        var rules =  new List<StyleRule>
         {
             // Set textures for the kinds of buttons
             CButton()
@@ -40,20 +37,11 @@ public sealed class PalettedButtonSheetlet : Sheetlet<PalettedStylesheet>
             // Ensure labels in buttons are aligned.
             E<Label>().Class(Button.StyleClassButton)
                 .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
-        });
-        // ReSharper restore MissingLinebreak
-
-        MakeButtonRules(cfg, rules, cfg.ButtonPalette, null);
-        MakeButtonRules(cfg, rules, cfg.PositiveButtonPalette, StyleClasses.Positive);
-        MakeButtonRules(cfg, rules, cfg.NegativeButtonPalette, StyleClasses.Negative);
+        };
+        // Texture button modulation
         MakeButtonRules<TextureButton>(cfg, rules, _textureButtonPalette, null);
 
         return rules.ToArray();
-    }
-
-    private static MutableSelectorElement CButton()
-    {
-        return E<ContainerButton>().Class(ContainerButton.StyleClassButton);
     }
 
     public static void MakeButtonRules<T>(IButtonConfig _, List<StyleRule> rules, IReadOnlyList<Color> palette, string? styleclass)
@@ -61,10 +49,10 @@ public sealed class PalettedButtonSheetlet : Sheetlet<PalettedStylesheet>
     {
         rules.AddRange(new StyleRule[]
         {
-            E<T>().MaybeClass(styleclass).ButtonNormal().Prop(Button.StylePropertyModulateSelf, palette[1]),
-            E<T>().MaybeClass(styleclass).ButtonHovered().Prop(Button.StylePropertyModulateSelf, palette[0]),
-            E<T>().MaybeClass(styleclass).ButtonPressed().Prop(Button.StylePropertyModulateSelf, palette[2]),
-            E<T>().MaybeClass(styleclass).ButtonDisabled().Prop(Button.StylePropertyModulateSelf, palette[4])
+            E<T>().MaybeClass(styleclass).ButtonNormal().Modulate(palette[1]),
+            E<T>().MaybeClass(styleclass).ButtonHovered().Modulate(palette[0]),
+            E<T>().MaybeClass(styleclass).ButtonPressed().Modulate(palette[2]),
+            E<T>().MaybeClass(styleclass).ButtonDisabled().Modulate(palette[4])
         });
     }
 
@@ -77,6 +65,11 @@ public sealed class PalettedButtonSheetlet : Sheetlet<PalettedStylesheet>
             Element().MaybeClass(styleclass).ButtonPressed().Prop(Button.StylePropertyModulateSelf, palette[2]),
             Element().MaybeClass(styleclass).ButtonDisabled().Prop(Button.StylePropertyModulateSelf, palette[4])
         });
+    }
+
+    internal static MutableSelectorElement CButton()
+    {
+        return E<ContainerButton>().Class(ContainerButton.StyleClassButton);
     }
 }
 
@@ -158,3 +151,4 @@ public interface IButtonConfig : ISheetletConfig
         return ConfigureOpenBothButton(sheet);
     }
 }
+

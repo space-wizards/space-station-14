@@ -83,7 +83,7 @@ public static class StylesheetHelpers
         return selector.Prop(nameof(Control.HorizontalExpand), val);
     }
 
-    public static MutableSelector VerticalAlignment(this MutableSelector selector, Control.VAlignment  val)
+    public static MutableSelector VerticalAlignment(this MutableSelector selector, Control.VAlignment val)
     {
         return selector.Prop(nameof(Control.VerticalExpand), val);
     }
@@ -120,12 +120,17 @@ public static class StylesheetHelpers
 
     public static MutableSelectorElement E<T>() where T : Control
     {
-        return new() {Type = typeof(T)};
+        return new() { Type = typeof(T) };
     }
 
     public static MutableSelector Panel(this MutableSelector selector, StyleBox panel)
     {
         return selector.Prop(PanelContainer.StylePropertyPanel, panel);
+    }
+
+    public static MutableSelector Font(this MutableSelector selector, Font font)
+    {
+        return selector.Prop(Label.StylePropertyFont, font);
     }
 
     public static StyleBoxTexture IntoPatch(this Texture texture, StyleBox.Margin patchMargin, float amount)

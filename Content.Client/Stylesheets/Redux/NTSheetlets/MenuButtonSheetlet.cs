@@ -1,5 +1,6 @@
 ﻿using Content.Client.Stylesheets.Redux.Fonts;
 using Content.Client.Stylesheets.Redux.NTSheetlets;
+using Content.Client.Stylesheets.Redux.Sheetlets;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -36,8 +37,8 @@ public sealed class MenuButtonSheetlet : Sheetlet<PalettedStylesheet>
             // new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
         };
 
-        PalettedButtonSheetlet.MakeButtonRules<MenuButton>(cfg, rules, cfg.ButtonPalette, null);
-        PalettedButtonSheetlet.MakeButtonRules<MenuButton>(cfg, rules, cfg.NegativeButtonPalette, MenuButton.StyleClassRedTopButton);
+        NTButtonSheetlet.MakeButtonRules<MenuButton>(cfg, rules, cfg.ButtonPalette, null);
+        NTButtonSheetlet.MakeButtonRules<MenuButton>(cfg, rules, cfg.NegativeButtonPalette, MenuButton.StyleClassRedTopButton);
 
         return rules.ToArray();
     }

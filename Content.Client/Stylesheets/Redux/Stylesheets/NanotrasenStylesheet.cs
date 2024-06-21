@@ -49,7 +49,7 @@ public partial class NanotrasenStylesheet : PalettedStylesheet
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#757575")),
             },
             // Load the rules for common buttons.
-            GetSheetletRules<PalettedButtonSheetlet>(),
+            GetSheetletRules<NTButtonSheetlet>(),
             // Rules for windows.
             GetSheetletRules<PalettedWindowSheetlet>(),
             // Rules for panels.
