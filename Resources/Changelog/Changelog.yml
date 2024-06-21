@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Disabled scooping foam due to a reagent duplication bug.
-    type: Fix
-  id: 6296
-  time: '2024-04-03T13:41:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26686
 - author: Aserovich
   changes:
   - message: New lobby art!
@@ -3845,3 +3838,13 @@
   id: 6795
   time: '2024-06-21T03:02:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29268
+- author: slarticodefast
+  changes:
+  - message: Fixed initial infected status icons not showing up.
+    type: Fix
+  - message: Added an antagonist message to the character menu for initial infected
+      and zombies.
+    type: Add
+  id: 6796
+  time: '2024-06-21T05:42:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29259

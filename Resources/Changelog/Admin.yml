@@ -313,5 +313,12 @@ Entries:
   id: 38
   time: '2024-06-15T11:25:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28899
+- author: slarticodefast
+  changes:
+  - message: Added the "Make Inititial Infected" verb to the antag control.
+    type: Add
+  id: 39
+  time: '2024-06-21T05:42:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29259
 Name: Admin
 Order: 1
