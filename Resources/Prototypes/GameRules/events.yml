@@ -277,7 +277,7 @@
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
-  
+
 - type: entity
   parent: BaseGameRule
   id: SolarFlare
@@ -393,7 +393,7 @@
       blacklist:
         components:
         - ZombieImmune
-        - InitialInfectedExempt
+        - AntagImmune
       briefing:
         text: zombie-patientzero-role-greeting
         color: Plum
@@ -404,6 +404,7 @@
         maxInitialInfectedGrace: 450
       - type: ZombifyOnDeath
       - type: IncurableZombie
+      - type: InitialInfected
       mindComponents:
       - type: InitialInfectedRole
         prototype: InitialInfected
@@ -444,7 +445,7 @@
 
 - type: entity
   parent: BaseTraitorRule
-  id: SleeperAgentsRule
+  id: SleeperAgents
   components:
   - type: StationEvent
     earliestStart: 30
@@ -457,13 +458,17 @@
   - type: AlertLevelInterceptionRule
   - type: AntagSelection
     definitions:
-    - prefRoles: [ Traitor ]
+    - prefRoles: [ TraitorSleeper ]
+      fallbackRoles: [ Traitor ]
       min: 1
       max: 2
       playerRatio: 10
+      blacklist:
+        components:
+        - AntagImmune
       mindComponents:
       - type: TraitorRole
-        prototype: Traitor
+        prototype: TraitorSleeper
 
 - type: entity
   id: MassHallucinations
