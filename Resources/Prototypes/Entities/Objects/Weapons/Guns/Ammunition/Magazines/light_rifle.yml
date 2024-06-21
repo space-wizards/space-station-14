@@ -56,7 +56,7 @@
 
 - type: entity
   id: MagazineLightRifle
-  name: "magazine (.30 rifle lethal)"
+  name: "AKMS magazine (.30 rifle lethal)"
   parent: BaseMagazineLightRifle
   components:
   - type: BallisticAmmoProvider
@@ -70,7 +70,7 @@
 
 - type: entity
   id: MagazineLightRifleEmpty
-  name: "magazine (.30 rifle)"
+  name: "AKMS magazine (.30 rifle)"
   suffix: Empty
   parent: MagazineLightRifle
   components:
@@ -85,7 +85,7 @@
 
 - type: entity
   id: MagazineLightRiflePractice
-  name: "magazine (.30 rifle practice)"
+  name: "AKMS magazine (.30 rifle practice)"
   parent: BaseMagazineLightRifle
   components:
   - type: BallisticAmmoProvider
@@ -99,7 +99,7 @@
 
 - type: entity
   id: MagazineLightRifleUranium
-  name: "magazine (.30 rifle uranium)"
+  name: "AKMS magazine (.30 rifle uranium)"
   parent: BaseMagazineLightRifle
   components:
   - type: BallisticAmmoProvider
@@ -113,7 +113,7 @@
 
 - type: entity
   id: MagazineLightRifleIncendiary
-  name: "magazine (.30 rifle incendiary)"
+  name: "AKMS magazine (.30 rifle incendiary)"
   parent: MagazineLightRifle
   components:
   - type: BallisticAmmoProvider
