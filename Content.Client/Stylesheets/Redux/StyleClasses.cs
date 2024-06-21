@@ -46,4 +46,8 @@ public static class StyleClasses
     public const string ChatPanel = "ChatPanel";
     public const string ChatLineEdit = "chatLineEdit";
     public const string StyleClassLabelKeyText = "LabelKeyText";
+
+    public const string TooltipPanel = "tooltipPanel";
+    public const string TooltipTitle = "tooltipTitle";
+    public const string TooltipDesc = "tooltipDesc";
 }

@@ -7,8 +7,6 @@ using Content.Client.Resources;
 using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Controls.FancyTree;
-using Content.Client.Verbs.UI;
-using Content.Shared.Verbs;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -52,11 +50,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassTooltipAlertTitle = "tooltipAlertTitle";
         public const string StyleClassTooltipAlertDescription = "tooltipAlertDesc";
         public const string StyleClassTooltipAlertCooldown = "tooltipAlertCooldown";
-        public const string StyleClassTooltipActionTitle = "tooltipActionTitle";
-        public const string StyleClassTooltipActionDescription = "tooltipActionDesc";
-        public const string StyleClassTooltipActionCooldown = "tooltipActionCooldown";
-        public const string StyleClassTooltipActionRequirements = "tooltipActionCooldown";
-        public const string StyleClassTooltipActionCharges = "tooltipActionCharges";
+
         public const string StyleClassHotbarSlotNumber = "hotbarSlotNumber";
         public const string StyleClassActionSearchBox = "actionSearchBox";
         public const string StyleClassActionMenuItemRevoked = "actionMenuItemRevoked";
@@ -834,10 +828,10 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
                 }),
 
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new [] { StyleClassTooltipPanel }, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
-                }),
+                // new StyleRule(new SelectorElement(typeof(PanelContainer), new [] { StyleClassTooltipPanel }, null, null), new[]
+                // {
+                //     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                // }),
 
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "sayBox"}, null, null), new[]
                 {
@@ -883,28 +877,6 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertCooldown}, null, null), new[]
                 {
                     new StyleProperty("font", notoSans16)
-                }),
-
-                // action tooltip
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionTitle}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSansBold16)
-                }),
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionDescription}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans15)
-                }),
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionCooldown}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans15)
-                }),
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionRequirements}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans15)
-                }),
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionCharges}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans15)
                 }),
 
                 // small number for the entity counter in the entity menu

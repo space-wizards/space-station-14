@@ -11,18 +11,26 @@
 - [ ] lathes open to the right (also make them fancy)
 - [ ] Resizing windows is like, too precise
 - [ ] `NavMapControl.cs:133` fix this
+- [x] Create a HUD stylesheet for examine, right click, chat etc. perhaps, distinguish from NT Ui
+    - [ ] (remove `ContextMenuSheetlet.cs:16`)
+    - [ ] seperated chat ui
+    - [ ] Admin / debug menus
+    - [ ] I cheat on the "resources are access locked" thing in `ContextMenuSheetlet.cs:36`. This needs to be fixed!
+    - [x] Tooltips!
+- [ ] `BaseSheetlets`
+- [ ] `CrewMonitoringWindow` uses `TooltipDesc` for some reason??
 
 TL;DR port all of `StyleNano` into sheetlets
 
-Another PR:
+### Significant Interface Changes
+
+- Tooltips on action menu now is slightly transparent for consistency w/ examine popup
+
+### Another PR:
 
 - [ ] kill not-fancy windows
 - [ ] Top menu button spacing inconsistent
 - [ ] Guidebook opens to the right? (probably fine)
-- [ ] Create a HUD stylesheet for examine, right click, chat etc. perhaps, distinguish from NT Ui
-    - (remove `ContextMenuSheetlet.cs:16`)
-    - have the primary color be slightly transparent,
-    - secondary neutral gray for seperated chat and lobby ui
-    - I cheat on the "resources are access locked" thing in `ContextMenuSheetlet.cs:36`. This needs to be fixed!
 - [ ] Create a syndicate stylesheet for uplink, syndicate consoles
 - [ ] `[X]` button is misaligned on FancyWindow also title text too kinda
+- [ ] Make a consistent `Tooltip` component that can be used for `ActionAlertTooltip`, ``

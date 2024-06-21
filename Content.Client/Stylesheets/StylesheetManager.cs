@@ -12,11 +12,14 @@ namespace Content.Client.Stylesheets
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         public Stylesheet SheetNano { get; private set; } = default!;
+        public Stylesheet SheetInterface { get; private set; } = default!;
+
         public Stylesheet SheetSpace { get; private set; } = default!;
 
         public void Initialize()
         {
             SheetNano = new NanotrasenStylesheet(new PalettedStylesheet.NoConfig()).Stylesheet;
+            SheetInterface = new InterfaceStylesheet(new PalettedStylesheet.NoConfig()).Stylesheet;
             SheetSpace = new StyleSpace(_resourceCache).Stylesheet;
 
             _userInterfaceManager.Stylesheet = SheetNano;

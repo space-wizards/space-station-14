@@ -14,12 +14,14 @@ public sealed class ChatSheetlet : Sheetlet<PalettedStylesheet>
 
         var chatBg = new StyleBoxFlat(chatColor);
 
-        return new StyleRule[]
-        {
-            E<PanelContainer>().Class(StyleClasses.ChatPanel)
+        return
+        [
+            E<PanelContainer>()
+                .Class(StyleClasses.ChatPanel)
                 .Panel(chatBg),
-            E<LineEdit>().Class(StyleClasses.ChatLineEdit)
+            E<LineEdit>()
+                .Class(StyleClasses.ChatLineEdit)
                 .Prop(LineEdit.StylePropertyStyleBox, new StyleBoxEmpty()),
-        };
+        ];
     }
 }

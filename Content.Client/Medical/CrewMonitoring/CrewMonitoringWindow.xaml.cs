@@ -108,7 +108,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             deparmentLabel.SetMessage(department);
-            deparmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
+            deparmentLabel.StyleClasses.Add(Stylesheets.Redux.StyleClasses.TooltipDesc);
 
             SensorsTable.AddChild(deparmentLabel);
 
@@ -134,7 +134,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             deparmentLabel.SetMessage(Loc.GetString("crew-monitoring-user-interface-no-department"));
-            deparmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
+            deparmentLabel.StyleClasses.Add(Stylesheets.Redux.StyleClasses.TooltipDesc);
 
             SensorsTable.AddChild(deparmentLabel);
 
