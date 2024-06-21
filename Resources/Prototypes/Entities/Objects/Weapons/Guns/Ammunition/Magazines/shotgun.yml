@@ -35,7 +35,7 @@
 
 - type: entity
   id: MagazineShotgunEmpty
-  name: ammo drum (.50 shells)
+  name: bulldog ammo drum (.50 shells)
   suffix: Empty
   parent: BaseMagazineShotgun
   components:
@@ -44,7 +44,7 @@
 
 - type: entity
   id: MagazineShotgun
-  name: ammo drum (.50 pellet)
+  name: bulldog ammo drum (.50 pellet)
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
@@ -58,7 +58,7 @@
 
 - type: entity
   id: MagazineShotgunBeanbag
-  name: ammo drum (.50 beanbags)
+  name: bulldog ammo drum (.50 beanbags)
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
@@ -72,7 +72,7 @@
 
 - type: entity
   id: MagazineShotgunSlug
-  name: ammo drum (.50 slug)
+  name: bulldog ammo drum (.50 slug)
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
@@ -86,7 +86,7 @@
 
 - type: entity
   id: MagazineShotgunIncendiary
-  name: ammo drum (.50 incendiary)
+  name: bulldog ammo drum (.50 incendiary)
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
@@ -100,7 +100,7 @@
 
 - type: entity
   id: MagazineShotgunPractice
-  name: ammo drum (.50 practice)
+  name: bulldog ammo drum (.50 practice)
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
@@ -114,7 +114,7 @@
 
 - type: entity
   id: MagazineShotgunUranium
-  name: ammo drum (.50 uranium)
+  name: bulldog ammo drum (.50 uranium)
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
