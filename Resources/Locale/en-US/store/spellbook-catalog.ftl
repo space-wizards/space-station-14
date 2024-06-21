@@ -17,6 +17,9 @@ spellbook-polymorph-rod-desc = Change into an Immovable Rod with limited movemen
 spellbook-charge-name = Charge
 spellbook-charge-desc = Adds a charge back to your wand!
 
+spellbook-spacegrease-name = Space Grease
+spellbook-spacegrease-desc = Everyone loves a slip n' slide!
+
 # Equipment
 
 spellbook-wand-polymorph-door-name = Wand of Entrance
