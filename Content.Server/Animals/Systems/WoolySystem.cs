@@ -9,8 +9,8 @@ using Robust.Shared.Timing;
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-///     Gives ability to produce fiber reagents, produces endless if the 
-///     owner has no HungerComponent
+///     Gives ability to produce fiber reagents; produces endlessly if the 
+///     owner has no HungerComponent.
 /// </summary>
 public sealed class WoolySystem : EntitySystem
 {

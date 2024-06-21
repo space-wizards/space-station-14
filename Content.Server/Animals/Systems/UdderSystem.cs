@@ -15,8 +15,8 @@ using Robust.Shared.Timing;
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-///     Gives ability to produce milkable reagents, produces endless if the
-///     owner has no HungerComponent
+///     Gives the ability to produce milkable reagents;
+///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
 internal sealed class UdderSystem : EntitySystem
 {

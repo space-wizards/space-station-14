@@ -8,7 +8,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.Animals.Components;
 
 /// <summary>
-///     Lets an entity produce wool fibers. Uses hunger if present.
+///     Gives the ability to produce wool fibers;
+///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
 
 [RegisterComponent, Access(typeof(WoolySystem))]
