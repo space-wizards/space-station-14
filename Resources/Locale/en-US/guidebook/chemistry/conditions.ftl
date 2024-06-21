@@ -28,6 +28,9 @@ reagent-effect-condition-guidebook-reagent-threshold =
 reagent-effect-condition-guidebook-mob-state-condition =
     the mob is { $state }
 
+reagent-effect-condition-guidebook-job-condition =
+    the target's job is { $job }
+
 reagent-effect-condition-guidebook-solution-temperature =
     the solution's temperature is { $max ->
             [2147483648] at least {NATURALFIXED($min, 2)}k

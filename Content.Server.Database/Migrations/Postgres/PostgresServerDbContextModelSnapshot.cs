@@ -559,6 +559,8 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasIndex("ServerId")
                         .HasDatabaseName("IX_connection_log_server_id");
 
+                    b.HasIndex("Time");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("connection_log", null, t =>
@@ -647,6 +649,10 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<DateTime>("FirstSeenTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("first_seen_time");
+
+                    b.Property<DateTime?>("LastReadRules")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_read_rules");
 
                     b.Property<IPAddress>("LastSeenAddress")
                         .IsRequired()

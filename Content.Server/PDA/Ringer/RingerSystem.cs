@@ -43,13 +43,19 @@ namespace Content.Server.PDA.Ringer
             SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(RingerPlayRingtone);
             SubscribeLocalEvent<RingerComponent, RingerRequestUpdateInterfaceMessage>(UpdateRingerUserInterfaceDriver);
 
-            SubscribeLocalEvent<RingerUplinkComponent, CurrencyInsertAttemptEvent>(OnCurrencyInsert);
+            SubscribeLocalEvent<RingerComponent, CurrencyInsertAttemptEvent>(OnCurrencyInsert);
         }
 
         //Event Functions
 
-        private void OnCurrencyInsert(EntityUid uid, RingerUplinkComponent uplink, CurrencyInsertAttemptEvent args)
+        private void OnCurrencyInsert(EntityUid uid, RingerComponent ringer, CurrencyInsertAttemptEvent args)
         {
+            if (!TryComp<RingerUplinkComponent>(uid, out var uplink))
+            {
+                args.Cancel();
+                return;
+            }
+
             // if the store can be locked, it must be unlocked first before inserting currency. Stops traitor checking.
             if (!uplink.Unlocked)
                 args.Cancel();

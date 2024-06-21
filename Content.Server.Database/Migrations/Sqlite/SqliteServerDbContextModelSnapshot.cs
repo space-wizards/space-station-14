@@ -528,6 +528,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasIndex("ServerId")
                         .HasDatabaseName("IX_connection_log_server_id");
 
+                    b.HasIndex("Time");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("connection_log", (string)null);
@@ -607,6 +609,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<DateTime>("FirstSeenTime")
                         .HasColumnType("TEXT")
                         .HasColumnName("first_seen_time");
+
+                    b.Property<DateTime?>("LastReadRules")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("last_read_rules");
 
                     b.Property<string>("LastSeenAddress")
                         .IsRequired()
