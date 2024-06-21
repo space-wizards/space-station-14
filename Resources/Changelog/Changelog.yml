@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Dropped items are no longer rotated to world north.
-    type: Fix
-  id: 6295
-  time: '2024-04-03T05:31:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26662
 - author: deltanedas
   changes:
   - message: Disabled scooping foam due to a reagent duplication bug.
@@ -3845,3 +3838,10 @@
   id: 6794
   time: '2024-06-20T14:19:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29210
+- author: MilenVolf
+  changes:
+  - message: Stasis bed can be toggled on or off!
+    type: Tweak
+  id: 6795
+  time: '2024-06-21T03:02:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29268
