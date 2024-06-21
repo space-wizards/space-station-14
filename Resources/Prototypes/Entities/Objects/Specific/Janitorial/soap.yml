@@ -218,8 +218,8 @@
   - type: SolutionContainerVisuals
     fillBaseName: omega-
   - type: Slippery
-    paralyzeTime: 6
-    launchForwardsMultiplier: 3.5
+    paralyzeTime: 5.0
+    launchForwardsMultiplier: 3.0
   - type: Item
     heldPrefix: omega
   - type: SolutionContainerManager
