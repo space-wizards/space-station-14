@@ -312,12 +312,6 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnInsertAttempt(Entity<MicrowaveComponent> ent, ref ContainerIsInsertingAttemptEvent args)
         {
-            if (!(TryComp<ApcPowerReceiverComponent>(ent, out var apc) && apc.Powered))
-            {
-                args.Cancel();
-                return;
-            }
-
             if (ent.Comp.Broken)
             {
                 args.Cancel();
