@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
-public sealed partial class NanotrasenStylesheet : IButtonConfig, IPanelPalette
+public sealed partial class NanotrasenStylesheet : IPanelPalette
 {
     /*
      * NT Colors.

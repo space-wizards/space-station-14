@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
-public sealed partial class NanotrasenStylesheet
+public sealed partial class NanotrasenStylesheet : IButtonConfig
 {
     ResPath IButtonConfig.BaseButtonTexturePath => new("button.svg.96dpi.png");
     ResPath IButtonConfig.OpenLeftButtonTexturePath => new("button.svg.96dpi.png");
