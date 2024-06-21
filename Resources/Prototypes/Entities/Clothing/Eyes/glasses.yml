@@ -240,7 +240,7 @@
   parent: [ClothingEyesBase, ShowSecurityIcons]
   id: ClothingEyesGlassesCaptain
   name: captain's sunglasses
-  description: The Captain's personal sunglasses that has been upgraded with a Security HUD, flash protetion, and welding protection.
+  description: The Captain's personal sunglasses that has been upgraded with a Multi-HUD, flash protetion, and welding protection.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/capglasses.rsi
@@ -249,7 +249,7 @@
   - type: FlashImmunity
   - type: EyeProtection
   - type: Construction
-    graph: GlassesSecHUD
+    graph: HudMedSec
     node: glassesSec
   - type: Tag
     tags:
