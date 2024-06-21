@@ -60,15 +60,4 @@ public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
             }
         }
     }
-
-    /// Read in the list of game rules
-
-    /// Select one (or more) at random
-
-    /// Add rule
-
-    /// start rule
-
-
-
 }
