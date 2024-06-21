@@ -20,7 +20,7 @@
 
 - type: entity
   id: CartridgeRifle
-  name: cartridge (.20 rifle)
+  name: cartridge (.20 rifle lethal)
   parent: BaseCartridgeRifle
   components:
   - type: CartridgeAmmo

@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseCartridge
   id: CartridgeAntiMateriel
-  name: cartridge (.60 anti-materiel)
+  name: cartridge (.60 anti-materiel lethal)
   components:
   - type: Tag
     tags:

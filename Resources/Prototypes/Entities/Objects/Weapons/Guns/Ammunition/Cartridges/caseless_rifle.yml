@@ -23,7 +23,7 @@
 
 - type: entity
   id: CartridgeCaselessRifle
-  name: cartridge (.25 caseless)
+  name: cartridge (.25 caseless lethal)
   parent: BaseCartridgeCaselessRifle
   components:
   - type: CartridgeAmmo
