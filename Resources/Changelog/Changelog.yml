@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Aserovich
-  changes:
-  - message: New lobby art!
-    type: Add
-  id: 6297
-  time: '2024-04-04T05:28:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26505
 - author: Beck Thompson
   changes:
   - message: Items thrown at disposals now have to be insertable to display the miss
@@ -3848,3 +3841,11 @@
   id: 6796
   time: '2024-06-21T05:42:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29259
+- author: Chief_Engineer and TsjipTsjip
+  changes:
+  - message: All ghostroles now have their role type, as defined in the rules, defined
+      in their ghostrole request box.
+    type: Tweak
+  id: 6797
+  time: '2024-06-21T09:41:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29249
