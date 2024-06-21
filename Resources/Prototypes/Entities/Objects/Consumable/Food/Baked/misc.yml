@@ -94,6 +94,17 @@
   components:
   - type: Sprite
     state: muffin-cherry
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
+        #- ReagentId: JuiceCherry
+         #Quantity: 2
   - type: Tag
     tags:
     - Fruit
