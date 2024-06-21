@@ -283,8 +283,8 @@
     - id: SolarFlare
     - id: KudzuGrowth
     - id: ZombieOutbreak
-#    - id: CargoGiftMasterRule
-#    - id: ShuttleEventMasterRule
+    - id: RandomCargoGiftsRule
+    - id: RandomUnknownShuttleRule
 
 - type: entity
   id: RampingStationEventScheduler
@@ -314,14 +314,13 @@
     - id: MimicVendorRule
     - id: LoneOpsSpawn
     - id: RevenantSpawn
-#    - id: MassHallucination    # What the fuck is this? Is it its own whoosiwhatsit and not an event?
     - id: SleeperAgents
     - id: AnomalySpawn
     - id: SolarFlare
     - id: KudzuGrowth
     - id: ZombieOutbreak
 #    - id: CargoGiftMasterRule
-#    - id: ShuttleEventMasterRule
+    - id: RandomUnknownShuttleRule
 
 # variation passes
 - type: entity

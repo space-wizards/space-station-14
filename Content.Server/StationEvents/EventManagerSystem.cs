@@ -70,7 +70,13 @@ public sealed class EventManagerSystem : EntitySystem
     {
         if (limitedEventsList != null)
         {
+            var availableEvents = AvailableEvents(); // handles the player counts and individual event restrictions
 
+            if (availableEvents.Count == 0)
+            {
+                Log.Warning("No events were available to run!");
+                return null;
+            }
 
             var selectedEvents = EntitySpawnCollection.GetSpawns(limitedEventsList, _random); // storage function for game rules, smh my head.
             // fuck it though, it works and gives us all the random selection utility we want.
@@ -89,12 +95,16 @@ public sealed class EventManagerSystem : EntitySystem
                 if (eventproto.Abstract)
                     continue;
 
-                var stationEvent = _compFac.GetComponent<StationEventComponent>(); // I think this fails to an exception? but I can't imagine a time when you would be okay with a fucked event scheduler / a scheduler trying to pull a non-station event.
+                if (!eventproto.TryGetComponent<StationEventComponent>(out var stationEvent, _compFac))
+                    continue;
+
+                if (!availableEvents.ContainsKey(eventproto))
+                    continue;
 
                 limitedEvents.Add(eventproto, stationEvent);
             }
 
-            var randomLimitedEvent = FindEvent(limitedEvents); // this picks the event, It might be better to use the EntitySpawnEntry to do it, but we still need to account for maxuimums or players counts and whatnot.
+            var randomLimitedEvent = FindEvent(limitedEvents); // this picks the event, It might be better to use the GetSpawns to do it, but that will be a major rebalancing fuck.
             if (randomLimitedEvent == null)
             {
                 Log.Warning("The selected random event is null!");
