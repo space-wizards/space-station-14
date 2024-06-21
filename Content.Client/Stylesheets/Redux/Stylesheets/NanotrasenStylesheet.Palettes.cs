@@ -14,7 +14,7 @@ public sealed partial class NanotrasenStylesheet : IButtonConfig, IPanelPalette
      */
 
     private static readonly Color PrimaryColor = Color.FromHex("#575B7F");
-    private static readonly Color SecondaryColor = Color.FromHex("#5B5D6C");
+    private static readonly Color SecondaryColor = Color.FromHex("#5B5D6E");
     private static readonly Color PositiveColor = Color.FromHex("#3E6C45");
     private static readonly Color NegativeColor = Color.FromHex("#CF2F2F");
     private static readonly Color HighlightColor = Color.FromHex("#A88B5E");
@@ -23,50 +23,50 @@ public sealed partial class NanotrasenStylesheet : IButtonConfig, IPanelPalette
     public override Color[] PrimaryPalette { get; } =  new[]
     {
         PrimaryColor,
-        PrimaryColor.NudgeLightness(-7.5f),
-        PrimaryColor.NudgeLightness(-7.5f * 2),
-        PrimaryColor.NudgeLightness(-7.5f * 3),
-        PrimaryColor.NudgeLightness(-7.5f * 4),
+        PrimaryColor.NudgeLightness(-6f),
+        PrimaryColor.NudgeLightness(-12f),
+        PrimaryColor.NudgeLightness(-18f),
+        PrimaryColor.NudgeLightness(-24f),
     };
 
     // The secondary/mundane palette used by background elements.
     public override Color[] SecondaryPalette { get; } = new[]
     {
         SecondaryColor,
-        SecondaryColor.NudgeLightness(-7.5f),
-        SecondaryColor.NudgeLightness(-7.5f * 2),
-        SecondaryColor.NudgeLightness(-7.5f * 3),
-        SecondaryColor.NudgeLightness(-7.5f * 4),
+        SecondaryColor.NudgeLightness(-6f),
+        SecondaryColor.NudgeLightness(-12f),
+        SecondaryColor.NudgeLightness(-18f),
+        SecondaryColor.NudgeLightness(-24f),
     };
 
     // A (traditionally) green palette used for positive actions.
     public override Color[] PositivePalette { get; } = new[]
     {
         PositiveColor,
-        PositiveColor.NudgeLightness(-7.5f),
-        PositiveColor.NudgeLightness(-7.5f * 2),
-        PositiveColor.NudgeLightness(-7.5f * 3),
-        PositiveColor.NudgeLightness(-7.5f * 4),
+        PositiveColor.NudgeLightness(-6f),
+        PositiveColor.NudgeLightness(-12f),
+        PositiveColor.NudgeLightness(-18f),
+        PositiveColor.NudgeLightness(-24f),
     };
 
     // A (traditionally) red palette used for negative actions.
     public override Color[] NegativePalette { get; } = new[]
     {
         NegativeColor,
-        NegativeColor.NudgeLightness(-7.5f),
-        NegativeColor.NudgeLightness(-7.5f * 2),
-        NegativeColor.NudgeLightness(-7.5f * 3),
-        NegativeColor.NudgeLightness(-7.5f * 4),
+        NegativeColor.NudgeLightness(-6f),
+        NegativeColor.NudgeLightness(-12f),
+        NegativeColor.NudgeLightness(-18f),
+        NegativeColor.NudgeLightness(-24f),
     };
 
 
     public override Color[] HighlightPalette { get; } = new[]
     {
         HighlightColor,
-        HighlightColor.NudgeLightness(-7.5f),
-        HighlightColor.NudgeLightness(-7.5f * 2),
-        HighlightColor.NudgeLightness(-7.5f * 3),
-        HighlightColor.NudgeLightness(-7.5f * 4),
+        HighlightColor.NudgeLightness(-6f),
+        HighlightColor.NudgeLightness(-12f),
+        HighlightColor.NudgeLightness(-18f),
+        HighlightColor.NudgeLightness(-24f),
     };
 
 

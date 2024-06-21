@@ -3,7 +3,7 @@
 - [x] Right click menu has no colors
     - Ported `ContextMenu` styles from `StyleNano.cs`
 - [ ] Admin Message window exit button is basically indistinguishable from the red header
-- [ ] Colors are slightly too dark IMO
+- [x] Colors are slightly too dark IMO
 - [ ] Text when editing paper is white
 - [ ] Stamps look weird?
 - [ ] `ScrollContainer` has no scrollbar!!!
