@@ -70,7 +70,7 @@
   components:
     - type: StaticPrice
       price: 90
-          - type: Blocking
+    - type: Blocking
       passiveBlockModifier:
         coefficients:
           Blunt: 0.7
