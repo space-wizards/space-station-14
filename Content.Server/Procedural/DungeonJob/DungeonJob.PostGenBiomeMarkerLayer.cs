@@ -17,8 +17,11 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(BiomeMarkerLayerPostGen postGen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!_entManager.TryGetComponent(_gridUid, out BiomeComponent? biomeComp))
-            return;
+        // If we're adding biome then disable it and just use for markers.
+        if (_entManager.EnsureComponent(_gridUid, out BiomeComponent biomeComp))
+        {
+            biomeComp.Enabled = false;
+        }
 
         var biomeSystem = _entManager.System<BiomeSystem>();
         var weightedRandom = _prototype.Index(postGen.MarkerTemplate);

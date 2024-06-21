@@ -97,6 +97,7 @@ public enum DungeonDataKey : byte
 
     // Tiles
     FallbackTile,
+    WidenTile,
 
     // Whitelists
     Rooms,

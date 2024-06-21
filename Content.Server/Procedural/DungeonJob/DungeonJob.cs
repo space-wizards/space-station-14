@@ -106,7 +106,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
     {
         var dungeons = new List<Dungeon>();
         var rand = new Random(seed);
-        var count = rand.Next(config.MinCount, config.MaxCount);
+        var count = rand.Next(config.MinCount, config.MaxCount + 1);
 
         for (var i = 0; i < count; i++)
         {
@@ -195,9 +195,16 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 dungeons.Add(await GenerateTileReplacementDungeon(replace, data, reservedTiles, random));
                 break;
 
+            case SplineDungeonConnectorPostGen spline:
+                dungeons.Add(await PostGen(spline, data, dungeons, reservedTiles, random));
+                break;
+
             // Postgen
             case AutoCablingPostGen cabling:
                 await PostGen(cabling, data, dungeons[^1], reservedTiles, random);
+                break;
+            case BiomeMarkerLayerPostGen markerPost:
+                await PostGen(markerPost, data, dungeons[^1], reservedTiles, random);
                 break;
             case BiomePostGen biome:
                 await PostGen(biome, data, dungeons[^1], reservedTiles, random);
@@ -234,9 +241,6 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 break;
             case InternalWindowPostGen internalWindow:
                 await PostGen(internalWindow, data, dungeons[^1], reservedTiles, random);
-                break;
-            case BiomeMarkerLayerPostGen markerPost:
-                await PostGen(markerPost, data, dungeons[^1], reservedTiles, random);
                 break;
             case RoomEntrancePostGen rEntrance:
                 await PostGen(rEntrance, data, dungeons[^1], reservedTiles, random);

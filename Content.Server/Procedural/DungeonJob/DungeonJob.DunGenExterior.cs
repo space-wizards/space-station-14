@@ -3,6 +3,7 @@ using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Robust.Shared.Collections;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -18,26 +19,11 @@ public sealed partial class DungeonJob
 
         var rand = new Random(seed);
         var aabb = new Box2i(_grid.LocalAABB.BottomLeft.Floored(), _grid.LocalAABB.TopRight.Floored());
+        var angle = rand.NextAngle();
 
-        var index = rand.Next((int) (aabb.Width * 2f + aabb.Height * 2f) + 1);
-        Vector2i startTile;
+        var distance = Math.Max(aabb.Width / 2f + 1f, aabb.Height / 2f + 1f);
 
-        if (index < aabb.Width)
-        {
-            startTile = new Vector2i(index, aabb.Bottom - 1);
-        }
-        else if (index < aabb.Width * 2)
-        {
-            startTile = new Vector2i(index - aabb.Width, aabb.Top + 1);
-        }
-        else if (index < aabb.Width * 2 + aabb.Height)
-        {
-            startTile = new Vector2i(aabb.Left - 1, index - aabb.Width * 2 + aabb.Height);
-        }
-        else
-        {
-            startTile = new Vector2i(aabb.Right + 1, index - aabb.Width * 2 + aabb.Height);
-        }
+        var startTile = new Vector2i(0, (int) distance).Rotate(angle);
 
         Vector2i? dungeonSpawn = null;
 

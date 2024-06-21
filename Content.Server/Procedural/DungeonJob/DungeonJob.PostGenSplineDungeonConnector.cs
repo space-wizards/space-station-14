@@ -1,10 +1,10 @@
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.NPC.Pathfinding;
-using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Procedural.DungeonJob;
 
@@ -13,7 +13,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="SplineDungeonConnectorPostGen"/>
     /// </summary>
-    private async Task PostGen(
+    private async Task<Dungeon> PostGen(
         SplineDungeonConnectorPostGen gen,
         DungeonData data,
         List<Dungeon> dungeons,
@@ -25,7 +25,14 @@ public sealed partial class DungeonJob
 
         // NOOP
         if (dungeons.Count <= 1)
-            return;
+            return Dungeon.Empty;
+
+        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var fallback) ||
+            !data.Tiles.TryGetValue(DungeonDataKey.WidenTile, out var widen))
+        {
+            LogDataError(typeof(SplineDungeonConnectorPostGen));
+            return Dungeon.Empty;
+        }
 
         var nodes = new List<Vector2i>();
 
@@ -45,35 +52,80 @@ public sealed partial class DungeonJob
         await SuspendDungeon();
 
         if (!ValidateResume())
-            return;
+            return Dungeon.Empty;
 
         var tiles = new List<(Vector2i Index, Tile Tile)>();
+        var pathfinding = _entManager.System<PathfindingSystem>();
+        var allTiles = new HashSet<Vector2i>();
 
         foreach (var pair in tree)
         {
-            var path = _entManager.System<PathfindingSystem>().GetSplinePath(new PathfindingSystem.SplinePathArgs()
+            var path = pathfinding.GetSplinePath(new PathfindingSystem.SplinePathArgs()
             {
+                Distance = gen.DivisionDistance,
+                MaxRatio = gen.VarianceMax,
                 Args = new PathfindingSystem.PathArgs()
                 {
                     Start = pair.Start,
                     End = pair.End,
                 }
-            }, random);
+            },
+            random);
 
             await SuspendDungeon();
 
             if (!ValidateResume())
-                return;
+                return Dungeon.Empty;
+
+            var wide = pathfinding.GetWiden(new PathfindingSystem.WidenArgs()
+            {
+                Path = path.Path,
+            },
+            random);
+
+            tiles.Clear();
+            allTiles.EnsureCapacity(allTiles.Count + wide.Count);
+
+            foreach (var node in wide)
+            {
+                if (reservedTiles.Contains(node))
+                    continue;
+
+                allTiles.Add(node);
+                Tile tile;
+
+                if (random.Prob(0.9f))
+                {
+                    tile = new Tile(_prototype.Index(widen).TileId);
+                }
+                else
+                {
+                    tile = _tileDefManager.GetVariantTile(widen, random);
+                }
+
+                tiles.Add((node, tile));
+            }
+
+            _maps.SetTiles(_gridUid, _grid, tiles);
+            tiles.Clear();
+            allTiles.EnsureCapacity(allTiles.Count + path.Path.Count);
 
             foreach (var node in path.Path)
             {
                 if (reservedTiles.Contains(node))
                     continue;
 
-                tiles.Add((node, new Tile(_prototype.Index(new ProtoId<ContentTileDefinition>("FloorSteel")).TileId)));
+                allTiles.Add(node);
+                tiles.Add((node, new Tile(_prototype.Index(fallback).TileId)));
             }
+
+            _maps.SetTiles(_gridUid, _grid, tiles);
         }
 
-        _maps.SetTiles(_gridUid, _grid, tiles);
+        var dungy = new Dungeon();
+        var dungyRoom = new DungeonRoom(allTiles, Vector2.Zero, Box2i.Empty, new HashSet<Vector2i>());
+        dungy.AddRoom(dungyRoom);
+
+        return dungy;
     }
 }

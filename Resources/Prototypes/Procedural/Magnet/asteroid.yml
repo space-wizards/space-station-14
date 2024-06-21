@@ -35,7 +35,7 @@
     biomeTemplate: Asteroid
 
   # Generate ore veins
-  - !type:MarkerLayerPostGen
+  - !type:BiomeMarkerLayerPostGen
     markerTemplate: AsteroidOre
 
 # Multiple smaller asteroids
@@ -62,7 +62,7 @@
     biomeTemplate: Asteroid
 
   # Generate ore veins
-  - !type:MarkerLayerPostGen
+  - !type:BiomeMarkerLayerPostGen
     markerTemplate: AsteroidOre
 
 # Long and spindly, less smooth than blob
@@ -89,7 +89,7 @@
     biomeTemplate: Asteroid
 
   # Generate ore veins
-  - !type:MarkerLayerPostGen
+  - !type:BiomeMarkerLayerPostGen
     markerTemplate: AsteroidOre
 
 # Lots of holes in it
@@ -115,5 +115,5 @@
     biomeTemplate: Asteroid
 
   # Generate ore veins
-  - !type:MarkerLayerPostGen
+  - !type:BiomeMarkerLayerPostGen
     markerTemplate: AsteroidOre

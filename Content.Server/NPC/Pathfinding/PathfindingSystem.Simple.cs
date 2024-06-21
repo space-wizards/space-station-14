@@ -11,6 +11,7 @@ public sealed partial class PathfindingSystem
         var costSoFar = new Dictionary<Vector2i, float>();
         var frontier = new PriorityQueue<Vector2i, float>();
 
+        costSoFar[args.Start] = 0f;
         frontier.Enqueue(args.Start, 0f);
         var count = 0;
 

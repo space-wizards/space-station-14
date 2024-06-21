@@ -17,56 +17,63 @@ public sealed partial class PathfindingSystem
 
         var distance = (end - start).Length;
         var remaining = distance;
-        var pairs = new ValueList<(Vector2i Start, Vector2i End)>();
-        pairs.Add((start, end));
-        var spline = new ValueList<Vector2i>()
-        {
-            start,
-        };
+        var pairs = new ValueList<(Vector2i Start, Vector2i End)> { (start, end) };
 
         // Sub-divide recursively
         while (remaining > args.Distance)
         {
-            // Essentially we need a point half-way between Points A and B.
-            // We then pick somewhere randomly perpendicular to this line and sub-divide there.
+            remaining /= 2f;
 
-            var pointA = pairs[0].Start;
-            var pointB = pairs[0].End;
-            var vector = pointB - pointA;
-            var halfway = vector / 2f;
+            var i = 0;
 
-            // Finding the point
+            while (i < pairs.Count)
+            {
+                var pointA = pairs[i].Start;
+                var pointB = pairs[i].End;
+                var vector = pointB - pointA;
+                var halfway = vector / 2f;
 
-            // B / cos(alpha) = C
+                // Finding the point
+                var adj = halfway.Length();
+                var opposite = args.MaxRatio * adj;
+                var hypotenuse = MathF.Sqrt(MathF.Pow(adj, 2) + MathF.Pow(opposite, 2));
 
-            var C = (float) (halfway.Length() / Math.Cos(Angle.FromDegrees(45)));
+                // Okay so essentially we have 2 points and no poly
+                // We add 2 other points to form a diamond and want some point halfway between randomly offset.
+                var angle = new Angle(MathF.Atan(opposite / adj));
+                var pointAPerp = pointA + angle.RotateVec(halfway).Normalized() * hypotenuse;
+                var pointBPerp = pointA + (-angle).RotateVec(halfway).Normalized() * hypotenuse;
 
-            var pointAPerp = pointA + Angle.FromDegrees(45).RotateVec(halfway.Normalized() * C);
-            var pointBPerp = pointA - Angle.FromDegrees(45).RotateVec(halfway);
-            var perpLine = pointBPerp - pointAPerp;
+                var perpLine = pointBPerp - pointAPerp;
+                var perpHalfway = perpLine.Length() / 2f;
 
-            var minRatio = 1f - args.MaxRatio;
-            var maxRatio = args.MaxRatio;
+                var splinePoint = (pointAPerp + perpLine.Normalized() * random.NextFloat(-args.MaxRatio, args.MaxRatio) * perpHalfway).Floored();
 
-            var splinePoint = (random.NextFloat(minRatio, maxRatio) * perpLine).Floored();
+                // We essentially take (A, B) and turn it into (A, C) & (C, B)
+                pairs[i] = (pointA, splinePoint);
+                pairs.Insert(i + 1, (splinePoint, pointB));
 
-            spline.Add(splinePoint);
-
-            pairs.Add((pointA, splinePoint));
-            pairs.Add((splinePoint, pointB));
-            remaining -= halfway.Length();
-
-            // Yes shuffle but uhh alternative is a stack
-            pairs.RemoveAt(0);
+                i+= 2;
+            }
         }
 
-        spline.Add(end);
+        var spline = new ValueList<Vector2i>(pairs.Count - 1)
+        {
+            start
+        };
+
+        foreach (var pair in pairs)
+        {
+            spline.Add(pair.End);
+        }
 
         // Now we need to pathfind between each node on the spline.
 
         // TODO: Add rotation version or straight-line version for pathfinder config
         // Move the worm pathfinder to here I think.
         var cameFrom = new Dictionary<Vector2i, Vector2i>();
+
+        // TODO: Need to get rid of the branch bullshit.
 
         for (var i = 0; i < spline.Count - 1; i++)
         {
@@ -106,7 +113,7 @@ public sealed partial class PathfindingSystem
     {
         public PathArgs Args = Args;
 
-        public float MaxRatio = 0.8f;
+        public float MaxRatio = 0.25f;
 
         /// <summary>
         /// Minimum distance between subdivisions.

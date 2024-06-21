@@ -77,7 +77,7 @@ public sealed partial class DungeonJob
                     isValid = true;
 
                     // Entrance wew
-                    _maps.SetTile(_gridUid, _grid, tile, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
+                    _maps.SetTile(_gridUid, _grid, tile, _tile.GetVariantTile(tileDef, random));
                     ClearDoor(dungeon, _grid, tile);
                     var gridCoords = _maps.GridTileToLocal(_gridUid, _grid, tile);
                     // Need to offset the spawn to avoid spawning in the room.
@@ -88,7 +88,7 @@ public sealed partial class DungeonJob
                     }
 
                     // Clear out any biome tiles nearby to avoid blocking it
-                    foreach (var nearTile in _maps.GetTilesIntersecting(_gridUid, _grid, new Circle(gridCoords.Position, 1.5f), false))
+                    foreach (var nearTile in _maps.GetLocalTilesIntersecting(_gridUid, _grid, new Circle(gridCoords.Position, 1.5f), false))
                     {
                         if (dungeon.RoomTiles.Contains(nearTile.GridIndices) ||
                             dungeon.RoomExteriorTiles.Contains(nearTile.GridIndices) ||

@@ -11,17 +11,18 @@
     - !type:PrototypeDunGen
       proto: VGRoidBlob
     - !type:PrototypeDunGen
-      proto: VGRoidExteriorDungeons
+      proto: VGRoidExterior
     - !type:PrototypeDunGen
       proto: VGRoidSmaller
-    #- VGRoidInteriorDungeons
-    - !type:PrototypeDunGen
-      proto: VGRoidLargePaths
     - !type:PrototypeDunGen
       proto: VGRoidSmallPaths
-    #- VGRoidOres
+    # Fill
     - !type:PrototypeDunGen
       proto: VGRoidFill
+    # Ores
+    - !type:BiomeMarkerLayerPostGen
+      markerTemplate: AsteroidOre
+      count: 30
 
 # Configs
 - type: dungeonConfig
@@ -62,10 +63,22 @@
         gain: 0.5
 
 - type: dungeonConfig
+  id: VGRoidExterior
+  reserveTiles: true
+  data:
+    tiles:
+      FallbackTile: FloorSteel
+      WidenTile: FloorAsteroidSand
+  layers:
+  - !type:PrototypeDunGen
+    proto: VGRoidExteriorDungeons
+  - !type:SplineDungeonConnectorPostGen
+
+- type: dungeonConfig
   id: VGRoidExteriorDungeons
+  reserveTiles: true
   minCount: 2
   maxCount: 3
-  reserveTiles: true
   layers:
   - !type:ExteriorDunGen
     proto: Experiment
@@ -75,14 +88,6 @@
 #  minCount: 3
 #  maxCount: 5
 #  # Just randomly spawn these in bounds, doesn't really matter if they go out.
-
-- type: dungeonConfig
-  id: VGRoidLargePaths
-  reserveTiles: true
-  layers:
-  - !type:SplineDungeonConnectorPostGen
-    layers:
-    - tile: FloorAsteroidSand
 
 - type: dungeonConfig
   id: VGRoidSmallPaths
@@ -108,4 +113,4 @@
   id: VGRoidFill
   layers:
   - !type:FillGridDunGen
-    proto: AsteroidRock
+    proto: IronRock

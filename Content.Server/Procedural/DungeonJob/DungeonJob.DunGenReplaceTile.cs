@@ -10,7 +10,7 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="BiomeMarkerLayerPostGen"/>
+    /// <see cref="ReplaceTileDunGen"/>
     /// </summary>
     private async Task<Dungeon> GenerateTileReplacementDungeon(ReplaceTileDunGen gen, DungeonData data, HashSet<Vector2i> reservedTiles, Random random)
     {
