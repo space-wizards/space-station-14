@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Examine;
@@ -59,6 +60,15 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<SleepingComponent, InteractHandEvent>(OnInteractHand);
 
         SubscribeLocalEvent<ForcedSleepingComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SleepingComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
+    }
+
+    private void OnUnbuckleAttempt(Entity<SleepingComponent> ent, ref UnbuckleAttemptEvent args)
+    {
+        // TODO is this necessary?
+        // Shouldn't the interaction have already been blocked by a general interaction check?
+        if (ent.Owner == args.User)
+            args.Cancelled = true;
     }
 
     private void OnBedSleepAction(Entity<ActionsContainerComponent> ent, ref SleepActionEvent args)
@@ -153,7 +163,7 @@ public sealed partial class SleepingSystem : EntitySystem
 
     private void OnConsciousAttempt(Entity<SleepingComponent> ent, ref ConsciousAttemptEvent args)
     {
-        args.Cancel();
+        args.Cancelled = true;
     }
 
     private void OnExamined(Entity<SleepingComponent> ent, ref ExaminedEvent args)
