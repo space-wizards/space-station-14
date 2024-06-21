@@ -20,7 +20,7 @@
     enabled: true
     # Design intent: a robust captain or tot can sacrifice movement to make the most of this weapon, but they have to
     # really restrict themselves to walking speed or less.
-    reflectProb: 0.5
+    reflectProb: 0.3
     velocityBeforeNotMaxProb: 1.0
     velocityBeforeMinProb: 3.0
     minReflectProb: 0.1
