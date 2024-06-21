@@ -84,7 +84,7 @@
   parent: [ClothingOuterBase, AllowSuitStorageClothing]
   id: ClothingOuterVestTank
   name: tank harness
-  description: A simplistic harness that can hold a gas tank.
+  description: A simple harness that can hold a gas tank.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/tankharness.rsi
