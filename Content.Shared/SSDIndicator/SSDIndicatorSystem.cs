@@ -1,5 +1,4 @@
-﻿using Content.Shared.Mind.Components;
-using Content.Shared.NPC;
+﻿using Robust.Shared.Player;
 
 namespace Content.Shared.SSDIndicator;
 
@@ -10,30 +9,18 @@ public sealed class SSDIndicatorSystem : EntitySystem
 {
     public override void Initialize()
     {
-        SubscribeLocalEvent<SSDIndicatorComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<SSDIndicatorComponent, MindAddedMessage>(OnMindAdded);
-        SubscribeLocalEvent<SSDIndicatorComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<SSDIndicatorComponent, PlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<SSDIndicatorComponent, PlayerDetachedEvent>(OnPlayerDetached);
     }
 
-    private void OnInit(EntityUid uid, SSDIndicatorComponent component, ComponentInit args)
-    {
-        if (HasComp<ActiveNPCComponent>(uid))
-            return;
-
-        component.IsSSD = !HasComp<MindContainerComponent>(uid);
-    }
-
-    private void OnMindAdded(EntityUid uid, SSDIndicatorComponent component, MindAddedMessage args)
+    private void OnPlayerAttached(EntityUid uid, SSDIndicatorComponent component, PlayerAttachedEvent args)
     {
         component.IsSSD = false;
         Dirty(uid, component);
     }
 
-    private void OnMindRemoved(EntityUid uid, SSDIndicatorComponent component, MindRemovedMessage args)
+    private void OnPlayerDetached(EntityUid uid, SSDIndicatorComponent component, PlayerDetachedEvent args)
     {
-        if (HasComp<ActiveNPCComponent>(uid))
-            return;
-
         component.IsSSD = true;
         Dirty(uid, component);
     }

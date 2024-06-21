@@ -48,14 +48,17 @@ namespace Content.Server.Stunnable.Systems
             ? Loc.GetString("comp-stunbaton-examined-on")
             : Loc.GetString("comp-stunbaton-examined-off");
             args.PushMarkup(onMsg);
+
+            if (TryComp<BatteryComponent>(entity.Owner, out var battery))
+            {
+                var count = (int) (battery.CurrentCharge / entity.Comp.EnergyPerUse);
+                args.PushMarkup(Loc.GetString("melee-battery-examine", ("color", "yellow"), ("count", count)));
+            }
         }
 
         private void ToggleDone(Entity<StunbatonComponent> entity, ref ItemToggledEvent args)
         {
-            if (!TryComp<ItemComponent>(entity, out var item))
-                return;
-
-            _item.SetHeldPrefix(entity.Owner, args.Activated ? "on" : "off", component: item);
+            _item.SetHeldPrefix(entity.Owner, args.Activated ? "on" : "off");
         }
 
         private void TryTurnOn(Entity<StunbatonComponent> entity, ref ItemToggleActivateAttemptEvent args)

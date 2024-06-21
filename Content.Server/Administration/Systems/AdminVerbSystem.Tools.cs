@@ -35,13 +35,14 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    [Dependency] private readonly DoorBoltSystem _boltsSystem = default!;
+    [Dependency] private readonly DoorSystem _door = default!;
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
     [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
@@ -78,7 +79,7 @@ public sealed partial class AdminVerbSystem
                         : new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/bolt.png")),
                     Act = () =>
                     {
-                        _boltsSystem.SetBoltsWithAudio(args.Target, bolts, !bolts.BoltsDown);
+                        _door.SetBoltsDown((args.Target, bolts), !bolts.BoltsDown);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString(bolts.BoltsDown
@@ -718,9 +719,21 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Fun/caps.rsi"), "mag-6"),
                 Act = () =>
                 {
-                    _quickDialog.OpenDialog(player, "Set Bullet Amount", $"Amount (max {ballisticAmmo.Capacity}):", (int amount) =>
+                    _quickDialog.OpenDialog(player, "Set Bullet Amount", $"Amount (standard {ballisticAmmo.Capacity}):", (string amount) =>
                     {
-                        ballisticAmmo.UnspawnedCount = amount;
+                        if (!int.TryParse(amount, out var result))
+                            return;
+
+                        if (result > 0)
+                        {
+                            ballisticAmmo.UnspawnedCount = result;
+                        }
+                        else
+                        {
+                            ballisticAmmo.UnspawnedCount = 0;
+                        }
+
+                        _gun.UpdateBallisticAppearance(args.Target, ballisticAmmo);
                     });
                 },
                 Impact = LogImpact.Medium,
@@ -832,14 +845,14 @@ public sealed partial class AdminVerbSystem
     {
         var allAccess = _prototypeManager
             .EnumeratePrototypes<AccessLevelPrototype>()
-            .Select(p => p.ID).ToArray();
+            .Select(p => new ProtoId<AccessLevelPrototype>(p.ID)).ToArray();
 
         _accessSystem.TrySetTags(entity, allAccess);
     }
 
     private void RevokeAllAccess(EntityUid entity)
     {
-        _accessSystem.TrySetTags(entity, Array.Empty<string>());
+        _accessSystem.TrySetTags(entity, new List<ProtoId<AccessLevelPrototype>>());
     }
 
     public enum TricksVerbPriorities

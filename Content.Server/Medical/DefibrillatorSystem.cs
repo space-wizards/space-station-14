@@ -50,19 +50,10 @@ public sealed class DefibrillatorSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<DefibrillatorComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<DefibrillatorComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<DefibrillatorComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
         SubscribeLocalEvent<DefibrillatorComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<DefibrillatorComponent, DefibrillatorZapDoAfterEvent>(OnDoAfter);
-    }
-
-    private void OnUnpaused(EntityUid uid, DefibrillatorComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.NextZapTime == null)
-            return;
-
-        component.NextZapTime = component.NextZapTime.Value + args.PausedTime;
     }
 
     private void OnUseInHand(EntityUid uid, DefibrillatorComponent component, UseInHandEvent args)
@@ -171,6 +162,9 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (_mobState.IsAlive(target, mobState))
             return false;
 
+        if (!component.CanDefibCrit && _mobState.IsCritical(target, mobState))
+            return false;
+
         return true;
     }
 
@@ -187,10 +181,9 @@ public sealed class DefibrillatorSystem : EntitySystem
             uid, target, uid)
             {
                 BlockDuplicate = true,
-                BreakOnUserMove = true,
-                BreakOnTargetMove = true,
                 BreakOnHandChange = true,
-                NeedHand = true
+                NeedHand = true,
+                BreakOnMove = !component.AllowDoAfterMovement
             });
     }
 
@@ -265,6 +258,10 @@ public sealed class DefibrillatorSystem : EntitySystem
         // if we don't have enough power left for another shot, turn it off
         if (!_powerCell.HasActivatableCharge(uid))
             TryDisable(uid, component);
+
+        // TODO clean up this clown show above
+        var ev = new TargetDefibrillatedEvent(user, (uid, component));
+        RaiseLocalEvent(target, ref ev);
     }
 
     public override void Update(float frameTime)

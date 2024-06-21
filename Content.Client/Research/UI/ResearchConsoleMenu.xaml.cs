@@ -63,7 +63,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
             MinHeight = 10
         });
 
-        var hasAccess = _player.LocalPlayer?.ControlledEntity is not { } local ||
+        var hasAccess = _player.LocalEntity is not { } local ||
                         !_entity.TryGetComponent<AccessReaderComponent>(Entity, out var access) ||
                         _accessReader.IsAllowed(local, Entity, access);
         foreach (var techId in _technologyDatabase.CurrentTechnologyCards)

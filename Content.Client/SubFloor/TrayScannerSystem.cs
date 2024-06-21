@@ -33,7 +33,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
             return;
 
         // TODO: Multiple viewports or w/e
-        var player = _player.LocalPlayer?.ControlledEntity;
+        var player = _player.LocalEntity;
         var xformQuery = GetEntityQuery<TransformComponent>();
 
         if (!xformQuery.TryGetComponent(player, out var playerXform))

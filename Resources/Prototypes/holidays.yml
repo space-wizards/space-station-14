@@ -25,12 +25,6 @@
   beginMonth: February
 
 - type: holiday
-  id: TravisScottDay
-  name: holiday-name-travis-scott-day
-  beginDay: 10
-  beginMonth: February
-
-- type: holiday
   id: ValentinesDay
   name: holiday-name-valentines-day
   beginDay: 13
@@ -443,3 +437,10 @@
   name: holiday-name-friday-thirteenth
   shouldCelebrate:
     !type:FridayThirteenth { }
+
+- type: holiday
+  id: PrideMonth
+  name: holiday-name-pride-month
+  beginDay: 1
+  endDay: 31
+  beginMonth: June

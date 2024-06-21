@@ -38,7 +38,7 @@ public abstract class SharedChargesSystem : EntitySystem
         var old = comp.Charges;
         comp.Charges = Math.Clamp(comp.Charges + change, 0, comp.MaxCharges);
         if (comp.Charges != old)
-            Dirty(comp);
+            Dirty(uid, comp);
     }
 
     /// <summary>
@@ -60,5 +60,27 @@ public abstract class SharedChargesSystem : EntitySystem
     {
         if (Resolve(uid, ref comp, false))
             AddCharges(uid, -1, comp);
+    }
+
+    /// <summary>
+    /// Gets the limited charges component and returns true if the number of charges remaining is less than the specified value.
+    /// Will return false if there is no limited charges component.
+    /// </summary>
+    public bool HasInsufficientCharges(EntityUid uid, int requiredCharges, LimitedChargesComponent? comp = null)
+    {
+        // can't be empty if there are no limited charges
+        if (!Resolve(uid, ref comp, false))
+            return false;
+
+        return comp.Charges < requiredCharges;
+    }
+
+    /// <summary>
+    /// Uses up a specified number of charges. Must check HasInsufficentCharges beforehand to prevent using with insufficient remaining charges.
+    /// </summary>
+    public virtual void UseCharges(EntityUid uid, int chargesUsed, LimitedChargesComponent? comp = null)
+    {
+        if (Resolve(uid, ref comp, false))
+            AddCharges(uid, -chargesUsed, comp);
     }
 }

@@ -1,0 +1,107 @@
+# ied crafted from random stuff
+# ideally it would be dynamic and work by actually sparking the solution but that doesnt exist yet :(
+# with that you could make napalm ied instead of welding fuel with no additional complexity
+- type: entity
+  parent: BaseItem
+  id: FireBomb
+  name: fire bomb
+  description: A weak, improvised incendiary device.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Bombs/ied.rsi
+    layers:
+    - state: base
+      map: ["enum.TriggerVisualLayers.Base"]
+    - state: fuel
+    - state: wires
+  - type: Item
+    sprite: Objects/Consumable/Drinks/cola.rsi
+  - type: OnUseTimerTrigger
+    delay: 5
+    examinable: false
+    initialBeepDelay: 0
+    beepSound:
+      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+      params:
+        volume: 1
+  - type: RandomTimerTrigger
+    min: 0
+    max: 15
+  - type: Explosive # Weak explosion in a very small radius. Ignites surrounding entities.
+    explosionType: FireBomb
+    totalIntensity: 25
+    intensitySlope: 5
+    maxIntensity: 3
+    canCreateVacuum: false
+  - type: ExplodeOnTrigger
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: TimerTriggerVisuals
+    unprimedSprite: base
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+  - type: Construction
+    graph: FireBomb
+    node: firebomb
+
+# has igniter but no fuel or wires
+- type: entity
+  parent: DrinkColaCanEmpty
+  id: FireBombEmpty
+  name: fire bomb
+  suffix: empty
+  description: A weak, improvised incendiary device. This one has no fuel.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Bombs/ied.rsi
+    layers:
+    - state: base
+      map: ["enum.OpenableVisuals.Layer"]
+  # bad dog
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "base"}
+          False: {state: "base"}
+  - type: Construction
+    graph: FireBomb
+    node: empty
+    defaultTarget: firebomb
+  - type: Tag
+    tags:
+    - Trash
+    # no DrinkCan, prevent using it to make another ied
+
+- type: entity
+  parent: FireBombEmpty
+  id: FireBombFuel
+  suffix: fuel
+  description: A weak, improvised incendiary device. This one is missing wires.
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fuel
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 30
+  - type: Construction
+    node: fuel
+    defaultTarget: firebomb
+  - type: Tag
+    tags: []

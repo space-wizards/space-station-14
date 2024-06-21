@@ -1,4 +1,6 @@
+using Content.Shared.Alert;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Damage.Components;
@@ -6,7 +8,7 @@ namespace Content.Shared.Damage.Components;
 /// <summary>
 /// Add to an entity to paralyze it whenever it reaches critical amounts of Stamina DamageType.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
 public sealed partial class StaminaComponent : Component
 {
     /// <summary>
@@ -49,5 +51,9 @@ public sealed partial class StaminaComponent : Component
     /// To avoid continuously updating our data we track the last time we updated so we can extrapolate our current stamina.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan NextUpdate = TimeSpan.Zero;
+
+    [DataField]
+    public ProtoId<AlertPrototype> StaminaAlert = "Stamina";
 }

@@ -134,6 +134,15 @@
     Plastic: 250
 
 - type: latheRecipe
+  id: HandHeldMassScanner
+  result: HandHeldMassScannerEmpty
+  category: Tools
+  completetime: 2
+  materials:
+    Steel: 800
+    Glass: 300
+
+- type: latheRecipe
   id: HandheldGPSBasic
   result: HandheldGPSBasic
   category: Tools
@@ -180,24 +189,13 @@
 
 - type: latheRecipe
   id: HolofanProjector
-  result: HolofanProjector
+  result: HolofanProjectorEmpty
   category: Tools
   completetime: 8
-  materials: # Inherited materials and time from PowerCellMedium recipe
-    Steel: 600
-    Glass: 350
-    Plastic: 150
-    Gold: 10
-
-- type: latheRecipe
-  id: RPED
-  result: RPED
-  category: Tools
-  completetime: 10
   materials:
-    Steel: 650
-    Plastic: 150
-    Gold: 50
+    Steel: 300
+    Glass: 50
+    Plastic: 50
 
 - type: latheRecipe
   id: MiningDrill
@@ -230,7 +228,7 @@
 
 - type: latheRecipe
   id: HoloprojectorField
-  result: HoloprojectorField
+  result: HoloprojectorFieldEmpty
   category: Tools
   completetime: 3
   materials:

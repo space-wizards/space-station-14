@@ -1,0 +1,8 @@
+- type: soundCollection
+  id: PaperScribbles
+  files:
+  - /Audio/Items/Paper/paper_scribble1.ogg
+  - /Audio/Items/Paper/paper_scribble2.ogg
+  - /Audio/Items/Paper/paper_scribble3.ogg
+  - /Audio/Items/Paper/paper_scribble4.ogg
+  - /Audio/Items/Paper/paper_scribble5.ogg

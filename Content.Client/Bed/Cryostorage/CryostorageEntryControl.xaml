@@ -11,7 +11,7 @@
         <PanelContainer.PanelOverride>
             <graphics:StyleBoxFlat BackgroundColor="{xNamespace:Static style:StyleNano.ButtonColorDisabled}" />
         </PanelContainer.PanelOverride>
-        <Collapsible Orientation="Vertical" Name="Collapsible">
+        <Collapsible Name="Collapsible">
             <CollapsibleHeading Name="Heading" MinHeight="35"/>
             <CollapsibleBody Name="Body">
                 <BoxContainer Name="ItemsContainer" Orientation="Vertical" HorizontalExpand="True"/>

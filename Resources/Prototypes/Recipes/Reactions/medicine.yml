@@ -213,7 +213,7 @@
       amount: 1
     Ammonia:
       amount: 1
-    Blood:
+    ZombieBlood:
       amount: 2
   products:
     Ambuzol: 4
@@ -223,11 +223,10 @@
   reactants:
     Ambuzol:
       amount: 5
-    ZombieBlood:
-      amount: 15
+    Omnizine:
+      amount: 5
   products:
-    Blood: 15
-    AmbuzolPlus: 5
+    AmbuzolPlus: 10
 
 - type: reaction
   id: Synaptizine
@@ -298,6 +297,18 @@
       amount: 1
   products:
     Lipozine: 3
+
+- type: reaction
+  id: Mannitol
+  reactants:
+    Hydrogen:
+      amount: 1
+    Water:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Mannitol: 3
 
 - type: reaction
   id: MindbreakerToxin
@@ -543,11 +554,21 @@
       amount: 1
     Silicon:
       amount: 1
-    Benzene:
-      amount: 1
   products:
     Insuzine: 3
-    Ash: 1
+
+- type: reaction
+  id: Opporozidone
+  minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
+  reactants:
+    Cognizine: 
+      amount: 1
+    Plasma:
+      amount: 2
+    Doxarubixadone:
+      amount: 1
+  products:
+    Opporozidone: 3
 
 - type: reaction
   id: Necrosol
@@ -575,3 +596,43 @@
       amount: 2
   products:
       Aloxadone: 4
+
+- type: reaction
+  id: Psicodine
+  impact: Medium
+  reactants:
+    Mannitol:
+      amount: 2
+    Impedrezene:
+      amount: 1
+    Water:
+      amount: 2
+  products:
+      Psicodine: 4
+
+- type: reaction
+  id: Lipolicide
+  reactants:
+    Ephedrine:
+      amount: 1
+    Diethylamine:
+      amount: 1
+    Mercury:
+      amount: 1
+  products:
+    Lipolicide: 3
+
+- type: reaction
+  id: Happiness
+  reactants:
+    Laughter:
+      amount: 2
+    Epinephrine:
+      amount: 1
+    Ethanol:
+      amount: 1
+    Plasma:
+      amount: 5
+      catalyst: true
+  products:
+    Happiness: 4

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Salvage;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Clothing;
@@ -42,7 +42,7 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
                 if (!magXform.Coordinates.TryDistance(EntityManager, xform.Coordinates, out var distance))
                     continue;
 
-                if (distance > trigger.Range)
+                if (distance > trigger.MagbootRange)
                     continue;
 
                 _toActivate.Add(artifactUid);

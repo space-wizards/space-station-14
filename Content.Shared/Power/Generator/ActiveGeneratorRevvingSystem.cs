@@ -1,12 +1,7 @@
-using Content.Shared.DoAfter;
-
 namespace Content.Shared.Power.Generator;
 
 public sealed class ActiveGeneratorRevvingSystem: EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly EntityManager _entity = default!;
-
     public override void Initialize()
     {
         base.Initialize();

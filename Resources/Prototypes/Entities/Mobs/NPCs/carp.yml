@@ -15,7 +15,7 @@
           true
     - type: NpcFactionMember
       factions:
-        - SimpleHostile
+      - Dragon
     - type: Sprite
       drawdepth: Mobs
       sprite: Mobs/Aliens/Carps/space.rsi
@@ -163,6 +163,9 @@
       makeSentient: true
       name: ghost-role-information-sentient-carp-name
       description: ghost-role-information-sentient-carp-description
+      rules: ghost-role-information-space-dragon-summoned-carp-rules
+      raffle:
+        settings: short
     - type: GhostTakeoverAvailable
     - type: HTN
       rootTask:

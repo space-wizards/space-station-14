@@ -38,12 +38,15 @@ namespace Content.Shared.Administration
             public NetUserId TrueSender { get; }
             public string Text { get; }
 
-            public BwoinkTextMessage(NetUserId userId, NetUserId trueSender, string text, DateTime? sentAt = default)
+            public bool PlaySound { get; }
+
+            public BwoinkTextMessage(NetUserId userId, NetUserId trueSender, string text, DateTime? sentAt = default, bool playSound = true)
             {
                 SentAt = sentAt ?? DateTime.Now;
                 UserId = userId;
                 TrueSender = trueSender;
                 Text = text;
+                PlaySound = playSound;
             }
         }
     }

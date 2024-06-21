@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: BaseAnimalOrgan
+  id: BaseAnimalOrganUnGibbable
   parent: BaseItem
   abstract: true
   components:
@@ -23,6 +23,12 @@
     tags:
       - Meat
 
+- type: entity
+  id: BaseAnimalOrgan
+  parent: BaseAnimalOrganUnGibbable
+  abstract: true
+  components:
+  - type: Gibbable
 
 - type: entity
   id: OrganAnimalLungs

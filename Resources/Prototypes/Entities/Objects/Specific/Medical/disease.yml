@@ -20,6 +20,27 @@
     - Botany
 
 - type: entity
+  parent: BaseAmmoProvider # this is for cycling swabs out and not spawning 30 entities, trust
+  id: BoxMouthSwab
+  name: sterile swab dispenser
+  description: Dispenses 30 sterile swabs, extremely useful for botany.
+  components:
+  - type: Sprite
+    layers:
+    - state: boxwide
+    - state: swab
+  - type: BallisticAmmoProvider
+    whitelist:
+      components:
+      - BotanySwab
+    proto: DiseaseSwab
+    capacity: 30
+  - type: GuideHelp
+    guides:
+  # - Virology (when it's back)
+    - Botany
+
+- type: entity
   parent: BaseItem
   id: Vaccine
   name: vaccine

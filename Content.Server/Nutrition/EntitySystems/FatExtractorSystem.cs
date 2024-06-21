@@ -27,16 +27,10 @@ public sealed class FatExtractorSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<FatExtractorComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<FatExtractorComponent, GotEmaggedEvent>(OnGotEmagged);
         SubscribeLocalEvent<FatExtractorComponent, StorageAfterCloseEvent>(OnClosed);
         SubscribeLocalEvent<FatExtractorComponent, StorageAfterOpenEvent>(OnOpen);
         SubscribeLocalEvent<FatExtractorComponent, PowerChangedEvent>(OnPowerChanged);
-    }
-
-    private void OnUnpaused(EntityUid uid, FatExtractorComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextUpdate += args.PausedTime;
     }
 
     private void OnGotEmagged(EntityUid uid, FatExtractorComponent component, ref GotEmaggedEvent args)

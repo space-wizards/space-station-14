@@ -1,0 +1,36 @@
+<Control xmlns="https://spacestation14.io" HorizontalExpand="True">
+    <BoxContainer Name="MainContainer"
+                  Orientation="Horizontal"
+                  HorizontalExpand="True">
+        <PanelContainer Name="ColorPanel"
+                        VerticalExpand="True"
+                        SetWidth="7"
+                        Margin="0 1 0 0" />
+        <Button Name="MainButton"
+                HorizontalExpand="True"
+                VerticalExpand="True"
+                StyleClasses="ButtonSquare"
+                Margin="-1 0 0 0">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical"
+                              VerticalExpand="True"
+                              HorizontalExpand="True"
+                              Margin="-5 0 0 0">
+                    <Label Name="ReagentNameLabel" />
+                    <Label Name="FillLabel"
+                           StyleClasses="LabelSubText"
+                           Margin="0 -5 0 0" />
+                </BoxContainer>
+            </BoxContainer>
+        </Button>
+        <Button Name="EjectButton"
+                StyleClasses="OpenLeft"
+                VerticalExpand="True"
+                SetWidth="20">
+            <Label Name="EjectButtonIcon"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Margin="-7 -4 0 0" />
+        </Button>
+    </BoxContainer>
+</Control>

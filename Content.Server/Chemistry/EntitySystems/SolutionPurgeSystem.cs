@@ -10,13 +10,6 @@ public sealed class SolutionPurgeSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SolutionPurgeComponent, EntityUnpausedEvent>(OnUnpaused);
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -32,10 +25,5 @@ public sealed class SolutionPurgeSystem : EntitySystem
             if (_solutionContainer.TryGetSolution((uid, manager), purge.Solution, out var solution))
                 _solutionContainer.SplitSolutionWithout(solution.Value, purge.Quantity, purge.Preserve.ToArray());
         }
-    }
-
-    private void OnUnpaused(Entity<SolutionPurgeComponent> entity, ref EntityUnpausedEvent args)
-    {
-        entity.Comp.NextPurgeTime += args.PausedTime;
     }
 }

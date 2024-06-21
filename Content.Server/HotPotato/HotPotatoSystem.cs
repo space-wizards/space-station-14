@@ -29,7 +29,7 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
         comp.CanTransfer = false;
         _ambientSound.SetAmbience(uid, true);
         _damageOnHolding.SetEnabled(uid, true);
-        Dirty(comp);
+        Dirty(uid, comp);
     }
 
     private void OnMeleeHit(EntityUid uid, HotPotatoComponent comp, MeleeHitEvent args)
@@ -56,6 +56,6 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
             break;
         }
         comp.CanTransfer = false;
-        Dirty(comp);
+        Dirty(uid, comp);
     }
 }

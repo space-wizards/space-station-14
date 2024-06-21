@@ -1,0 +1,94 @@
+- type: entity
+  abstract: true
+  id: MobRatvarBase #can't have the clockwork justiciar be associated with his (im)mortal enemy
+  name: Ratvar
+  description: Your mind aches as it fails to understand the complex mechanics of what is before you.
+  components:
+  - type: Sprite
+    sprite: Mobs/Demons/ratvar.rsi
+    drawdepth: Ghosts
+    scale: 1.15,1.15
+    layers:
+    - state: ratvar
+      shader: unshaded
+
+- type: entity
+  parent: MobRatvarBase
+  id: MobRatvarSpawn
+  suffix: Spawn
+  components:
+  - type: Sprite
+    layers:
+    - state: spawn
+      shader: unshaded
+  - type: TimedDespawn
+    lifetime: 3.5
+  - type: SpawnOnDespawn
+    prototype: MobRatvar
+
+- type: entity
+  parent: [MobRatvarBase, BaseMob]
+  id: MobRatvar
+  components:
+  - type: AnnounceOnSpawn
+    message: ratvar-has-risen
+    sender: ratvar-has-risen-sender
+    sound:
+      path: /Audio/Misc/ratvar_reveal.ogg
+    color: "#BE8700"
+  - type: CargoSellBlacklist
+  - type: ContentEye
+    maxZoom: 2.0,2.0
+  - type: Fixtures
+    fixtures:
+      EventHorizonCollider:
+        shape:
+          !type:PhysShapeCircle
+            radius: 5
+        hard: false
+        restitution: 0.8
+        density: 1
+        mask:
+        - AllMask
+        layer:
+        - AllMask
+      EventHorizonConsumer:
+        shape:
+          !type:PhysShapeCircle
+            radius: 5
+        hard: false
+        mask:
+        - AllMask
+        layer:
+        - AllMask
+  - type: Input
+    context: "ghost"
+  - type: MovementIgnoreGravity
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Syndicate
+    globalReceive: true
+  - type: Physics
+    bodyType: Dynamic
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  - type: EventHorizon
+    radius: 5
+    canBreachContainment: true
+  - type: GravityWell
+    baseRadialAcceleration: 6
+    maxRange: 8
+  - type: WarpPoint
+    follow: true
+    location: Ratvar

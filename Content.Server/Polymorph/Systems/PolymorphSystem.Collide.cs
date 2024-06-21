@@ -1,15 +1,27 @@
 using Content.Server.Polymorph.Components;
+using Content.Shared.Polymorph;
 using Content.Shared.Projectiles;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Polymorph.Systems;
 
 public partial class PolymorphSystem
 {
-    // Need to do this so we don't get a collection enumeration error in physics by polymorphing
-    // an entity we're colliding with
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+
+    /// <summary>
+    /// Need to do this so we don't get a collection enumeration error in physics by polymorphing
+    /// an entity we're colliding with
+    /// </summary>
     private Queue<PolymorphQueuedData> _queuedPolymorphUpdates = new();
+
+    private void InitializeCollide()
+    {
+        SubscribeLocalEvent<PolymorphOnCollideComponent, StartCollideEvent>(OnPolymorphCollide);
+    }
 
     public void UpdateCollide()
     {
@@ -20,15 +32,8 @@ public partial class PolymorphSystem
 
             var ent = PolymorphEntity(data.Ent, data.Polymorph);
             if (ent != null)
-            {
                 _audio.PlayPvs(data.Sound, ent.Value);
-            }
         }
-    }
-
-    private void InitializeCollide()
-    {
-        SubscribeLocalEvent<PolymorphOnCollideComponent, StartCollideEvent>(OnPolymorphCollide);
     }
 
     private void OnPolymorphCollide(EntityUid uid, PolymorphOnCollideComponent component, ref StartCollideEvent args)
@@ -37,8 +42,8 @@ public partial class PolymorphSystem
             return;
 
         var other = args.OtherEntity;
-        if (!component.Whitelist.IsValid(other)
-            || component.Blacklist != null && component.Blacklist.IsValid(other))
+        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, other) ||
+            _whitelistSystem.IsBlacklistPass(component.Blacklist, other))
             return;
 
         _queuedPolymorphUpdates.Enqueue(new (other, component.Sound, component.Polymorph));
@@ -49,9 +54,9 @@ public struct PolymorphQueuedData
 {
     public EntityUid Ent;
     public SoundSpecifier Sound;
-    public string Polymorph;
+    public ProtoId<PolymorphPrototype> Polymorph;
 
-    public PolymorphQueuedData(EntityUid ent, SoundSpecifier sound, string polymorph)
+    public PolymorphQueuedData(EntityUid ent, SoundSpecifier sound, ProtoId<PolymorphPrototype> polymorph)
     {
         Ent = ent;
         Sound = sound;

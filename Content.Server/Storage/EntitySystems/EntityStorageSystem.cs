@@ -33,6 +33,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         base.Initialize();
 
         /* CompRef things */
+        SubscribeLocalEvent<EntityStorageComponent, EntityUnpausedEvent>(OnEntityUnpausedEvent);
         SubscribeLocalEvent<EntityStorageComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<EntityStorageComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<EntityStorageComponent, ActivateInWorldEvent>(OnInteract, after: new[] { typeof(LockSystem) });

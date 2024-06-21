@@ -34,6 +34,14 @@ public abstract partial class DoAfterEvent : HandledEntityEventArgs
     public EntityUid? Used => DoAfter.Args.Used;
     public DoAfterArgs Args => DoAfter.Args;
     #endregion
+
+    /// <summary>
+    /// Check whether this event is "the same" as another event for duplicate checking.
+    /// </summary>
+    public virtual bool IsDuplicate(DoAfterEvent other)
+    {
+        return GetType() == other.GetType();
+    }
 }
 
 /// <summary>
@@ -73,7 +81,7 @@ public sealed partial class DoAfterAttemptEvent<TEvent> : CancellableEntityEvent
     public readonly DoAfter DoAfter;
 
     /// <summary>
-    ///     The event that the DoAfter will raise after sucesfully finishing. Given that this event has the data
+    ///     The event that the DoAfter will raise after successfully finishing. Given that this event has the data
     ///     required to perform the interaction, it should also contain the data required to validate/attempt the
     ///     interaction.
     /// </summary>

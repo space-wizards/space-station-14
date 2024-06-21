@@ -1,1 +1,436 @@
-{"version": 1, "license": "CC-BY-SA-3.0", "copyright": "Taken from  at commit https://github.com/tgstation/tgstation/commit/f01de25493e2bd2706ef9b0303cb0d7b5e3e471b. poster52_contraband, poster53_contraband and poster54_contraband taken from https://github.com/vgstation-coders/vgstation13/blob/435ed5f2a7926e91cc31abac3a0d47d7e9ad7ed4/icons/obj/posters.dmi. originmap, poster55_contraband, poster56_contraband, poster57_contraband and poster39_legit by discord brainfood#7460", "size": {"x": 32, "y": 32}, "states": [{"name": "rolled_contraband"}, {"name": "rolled_legit"}, {"name": "poster_being_set", "delays": [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]}, {"name": "pinningposter"}, {"name": "poster_broken"}, {"name": "poster1_contraband"}, {"name": "poster2_contraband"}, {"name": "poster3_contraband"}, {"name": "poster4_contraband"}, {"name": "poster5_contraband"}, {"name": "poster6_contraband"}, {"name": "poster7_contraband"}, {"name": "poster8_contraband"}, {"name": "poster9_contraband"}, {"name": "poster10_contraband"}, {"name": "poster11_contraband"}, {"name": "poster12_contraband"}, {"name": "poster13_contraband"}, {"name": "poster14_contraband"}, {"name": "poster15_contraband"}, {"name": "poster16_contraband"}, {"name": "poster17_contraband"}, {"name": "poster18_contraband"}, {"name": "poster19_contraband"}, {"name": "poster20_contraband"}, {"name": "poster21_contraband"}, {"name": "poster22_contraband"}, {"name": "poster23_contraband"}, {"name": "poster24_contraband"}, {"name": "poster25_contraband"}, {"name": "poster26_contraband"}, {"name": "poster27_contraband"}, {"name": "poster28_contraband"}, {"name": "poster29_contraband"}, {"name": "poster30_contraband"}, {"name": "poster31_contraband"}, {"name": "poster32_contraband"}, {"name": "poster33_contraband"}, {"name": "poster35_contraband"}, {"name": "poster36_contraband"}, {"name": "poster37_contraband"}, {"name": "poster38_contraband"}, {"name": "poster39_contraband"}, {"name": "poster40_contraband"}, {"name": "poster41_contraband"}, {"name": "poster42_contraband"}, {"name": "poster43_contraband"}, {"name": "poster44_contraband"}, {"name": "poster45_contraband"}, {"name": "poster46_contraband"}, {"name": "poster47_contraband"}, {"name": "poster48_contraband"}, {"name": "poster50_contraband"}, {"name": "poster55_contraband"}, {"name": "poster56_contraband"}, {"name": "poster57_contraband"}, {"name": "poster58_contraband"}, {"name": "poster59_contraband"}, {"name": "poster60_contraband"}, {"name": "poster61_contraband"}, {"name": "poster62_contraband"}, {"name": "poster51_contraband"}, {"name": "poster1_legit"}, {"name": "poster2_legit"}, {"name": "poster3_legit"}, {"name": "poster4_legit"}, {"name": "poster5_legit"}, {"name": "poster6_legit"}, {"name": "poster7_legit"}, {"name": "poster8_legit"}, {"name": "poster9_legit"}, {"name": "poster10_legit"}, {"name": "poster11_legit"}, {"name": "poster12_legit"}, {"name": "poster13_legit"}, {"name": "poster14_legit"}, {"name": "poster15_legit"}, {"name": "poster16_legit"}, {"name": "poster17_legit"}, {"name": "poster18_legit"}, {"name": "poster19_legit"}, {"name": "poster20_legit"}, {"name": "poster21_legit"}, {"name": "poster22_legit"}, {"name": "poster23_legit"}, {"name": "poster24_legit"}, {"name": "poster25_legit"}, {"name": "poster26_legit"}, {"name": "poster27_legit"}, {"name": "poster28_legit"}, {"name": "poster29_legit"}, {"name": "poster30_legit"}, {"name": "poster31_legit"}, {"name": "poster32_legit"}, {"name": "poster33_legit"}, {"name": "poster34_legit"}, {"name": "poster35_legit"}, {"name": "poster36_legit"}, {"name": "poster37_legit"}, {"name": "poster38_legit"}, {"name": "poster39_legit"}, {"name": "poster40_legit"}, {"name": "poster41_legit"}, {"name": "poster42_legit"}, {"name": "poster43_legit"}, {"name": "poster44_legit"}, {"name": "poster45_legit"}, {"name": "poster46_legit"}, {"name": "poster47_legit"}, {"name": "poster48_legit"}, {"name": "poster49_legit"}, {"name": "poster50_legit"}, {"name": "poster51_legit"}, {"name": "random_legit"}, {"name": "random_contraband"}, {"name": "random_anything"}, {"name": "poster52_contraband", "directions": 1, "delays": [[1.0]]}, {"name": "poster53_contraband", "directions": 1, "delays": [[1.0]]}, {"name": "poster54_contraband", "directions": 1, "delays": [[1.0]]}, {"name": "bagelmap", "directions": 1, "delays": [[1.0]]}, {"name": "deltamap", "directions": 1, "delays": [[1.0]]}, {"name": "marathonmap", "directions": 1, "delays": [[1.0]]}, {"name": "originmap", "delays": [[1.0]]}, {"name": "moosemap", "directions": 1, "delays": [[1.0]]}, {"name": "packedmap", "directions": 1, "delays": [[1.0]]}, {"name": "pillarmap", "directions": 1, "delays": [[1.0]]}, {"name": "salternmap", "directions": 1, "delays": [[1.0]]}, {"name": "splitmap", "directions": 1, "delays": [[1.0]]}, {"name": "lighthousemap", "directions": 1, "delays": [[1.0]]}, {"name": "waystationmap", "directions": 1, "delays": [[1.0]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from  at commit https://github.com/tgstation/tgstation/commit/f01de25493e2bd2706ef9b0303cb0d7b5e3e471b.     poster52_contraband, poster53_contraband and poster54_contraband taken from https://github.com/vgstation-coders/vgstation13/blob/435ed5f2a7926e91cc31abac3a0d47d7e9ad7ed4/icons/obj/posters.dmi.     originmap, poster55_contraband, poster56_contraband, poster57_contraband and poster39_legit by discord brainfood#7460,     poster63_contraband by discord foboscheshir_",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "rolled_contraband"
+    },
+    {
+      "name": "rolled_legit"
+    },
+    {
+      "name": "poster_being_set",
+      "delays": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "pinningposter"
+    },
+    {
+      "name": "poster_broken"
+    },
+    {
+      "name": "poster1_contraband"
+    },
+    {
+      "name": "poster2_contraband"
+    },
+    {
+      "name": "poster3_contraband"
+    },
+    {
+      "name": "poster4_contraband"
+    },
+    {
+      "name": "poster5_contraband"
+    },
+    {
+      "name": "poster6_contraband"
+    },
+    {
+      "name": "poster7_contraband"
+    },
+    {
+      "name": "poster8_contraband"
+    },
+    {
+      "name": "poster9_contraband"
+    },
+    {
+      "name": "poster10_contraband"
+    },
+    {
+      "name": "poster11_contraband"
+    },
+    {
+      "name": "poster12_contraband"
+    },
+    {
+      "name": "poster13_contraband"
+    },
+    {
+      "name": "poster14_contraband"
+    },
+    {
+      "name": "poster15_contraband"
+    },
+    {
+      "name": "poster16_contraband"
+    },
+    {
+      "name": "poster17_contraband"
+    },
+    {
+      "name": "poster18_contraband"
+    },
+    {
+      "name": "poster19_contraband"
+    },
+    {
+      "name": "poster20_contraband"
+    },
+    {
+      "name": "poster21_contraband"
+    },
+    {
+      "name": "poster22_contraband"
+    },
+    {
+      "name": "poster23_contraband"
+    },
+    {
+      "name": "poster24_contraband"
+    },
+    {
+      "name": "poster25_contraband"
+    },
+    {
+      "name": "poster26_contraband"
+    },
+    {
+      "name": "poster27_contraband"
+    },
+    {
+      "name": "poster28_contraband"
+    },
+    {
+      "name": "poster29_contraband"
+    },
+    {
+      "name": "poster30_contraband"
+    },
+    {
+      "name": "poster31_contraband"
+    },
+    {
+      "name": "poster32_contraband"
+    },
+    {
+      "name": "poster33_contraband"
+    },
+    {
+      "name": "poster35_contraband"
+    },
+    {
+      "name": "poster36_contraband"
+    },
+    {
+      "name": "poster37_contraband"
+    },
+    {
+      "name": "poster38_contraband"
+    },
+    {
+      "name": "poster39_contraband"
+    },
+    {
+      "name": "poster40_contraband"
+    },
+    {
+      "name": "poster41_contraband"
+    },
+    {
+      "name": "poster42_contraband"
+    },
+    {
+      "name": "poster43_contraband"
+    },
+    {
+      "name": "poster44_contraband"
+    },
+    {
+      "name": "poster45_contraband"
+    },
+    {
+      "name": "poster46_contraband"
+    },
+    {
+      "name": "poster47_contraband"
+    },
+    {
+      "name": "poster48_contraband"
+    },
+    {
+      "name": "poster50_contraband"
+    },
+    {
+      "name": "poster55_contraband"
+    },
+    {
+      "name": "poster56_contraband"
+    },
+    {
+      "name": "poster57_contraband"
+    },
+    {
+      "name": "poster58_contraband"
+    },
+    {
+      "name": "poster59_contraband"
+    },
+    {
+      "name": "poster60_contraband"
+    },
+    {
+      "name": "poster61_contraband"
+    },
+    {
+      "name": "poster62_contraband"
+    },
+    {
+      "name": "poster63_contraband"
+    },
+    {
+      "name": "poster51_contraband"
+    },
+    {
+      "name": "poster1_legit"
+    },
+    {
+      "name": "poster2_legit"
+    },
+    {
+      "name": "poster3_legit"
+    },
+    {
+      "name": "poster4_legit"
+    },
+    {
+      "name": "poster5_legit"
+    },
+    {
+      "name": "poster6_legit"
+    },
+    {
+      "name": "poster7_legit"
+    },
+    {
+      "name": "poster8_legit"
+    },
+    {
+      "name": "poster9_legit"
+    },
+    {
+      "name": "poster10_legit"
+    },
+    {
+      "name": "poster11_legit"
+    },
+    {
+      "name": "poster12_legit"
+    },
+    {
+      "name": "poster13_legit"
+    },
+    {
+      "name": "poster14_legit"
+    },
+    {
+      "name": "poster15_legit"
+    },
+    {
+      "name": "poster16_legit"
+    },
+    {
+      "name": "poster17_legit"
+    },
+    {
+      "name": "poster18_legit"
+    },
+    {
+      "name": "poster19_legit"
+    },
+    {
+      "name": "poster20_legit"
+    },
+    {
+      "name": "poster21_legit"
+    },
+    {
+      "name": "poster22_legit"
+    },
+    {
+      "name": "poster23_legit"
+    },
+    {
+      "name": "poster24_legit"
+    },
+    {
+      "name": "poster25_legit"
+    },
+    {
+      "name": "poster26_legit"
+    },
+    {
+      "name": "poster27_legit"
+    },
+    {
+      "name": "poster28_legit"
+    },
+    {
+      "name": "poster29_legit"
+    },
+    {
+      "name": "poster30_legit"
+    },
+    {
+      "name": "poster31_legit"
+    },
+    {
+      "name": "poster32_legit"
+    },
+    {
+      "name": "poster33_legit"
+    },
+    {
+      "name": "poster34_legit"
+    },
+    {
+      "name": "poster35_legit"
+    },
+    {
+      "name": "poster36_legit"
+    },
+    {
+      "name": "poster37_legit"
+    },
+    {
+      "name": "poster38_legit"
+    },
+    {
+      "name": "poster39_legit"
+    },
+    {
+      "name": "poster40_legit"
+    },
+    {
+      "name": "poster41_legit"
+    },
+    {
+      "name": "poster42_legit"
+    },
+    {
+      "name": "poster43_legit"
+    },
+    {
+      "name": "poster44_legit"
+    },
+    {
+      "name": "poster45_legit"
+    },
+    {
+      "name": "poster46_legit"
+    },
+    {
+      "name": "poster47_legit"
+    },
+    {
+      "name": "poster48_legit"
+    },
+    {
+      "name": "poster49_legit"
+    },
+    {
+      "name": "poster50_legit"
+    },
+    {
+      "name": "poster51_legit"
+    },
+    {
+      "name": "random_legit"
+    },
+    {
+      "name": "random_contraband"
+    },
+    {
+      "name": "random_anything"
+    },
+    {
+      "name": "poster52_contraband"
+    },
+    {
+      "name": "poster53_contraband"
+    },
+    {
+      "name": "poster54_contraband"
+    },
+    {
+      "name": "bagelmap"
+    },
+    {
+      "name": "deltamap"
+    },
+    {
+      "name": "marathonmap"
+    },
+    {
+      "name": "originmap"
+    },
+    {
+      "name": "moosemap"
+    },
+    {
+      "name": "packedmap"
+    },
+    {
+      "name": "pillarmap"
+    },
+    {
+      "name": "salternmap"
+    },
+    {
+      "name": "splitmap"
+    },
+    {
+      "name": "lighthousemap"
+    },
+    {
+      "name": "waystationmap"
+    }
+  ]
+}

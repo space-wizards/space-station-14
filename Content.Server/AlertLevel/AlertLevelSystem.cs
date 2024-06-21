@@ -96,6 +96,16 @@ public sealed class AlertLevelSystem : EntitySystem
         RaiseLocalEvent(new AlertLevelPrototypeReloadedEvent());
     }
 
+    public string GetLevel(EntityUid station, AlertLevelComponent? alert = null)
+    {
+        if (!Resolve(station, ref alert))
+        {
+            return string.Empty;
+        }
+
+        return alert.CurrentLevel;
+    }
+
     public float GetAlertLevelDelay(EntityUid station, AlertLevelComponent? alert = null)
     {
         if (!Resolve(station, ref alert))
@@ -168,7 +178,7 @@ public sealed class AlertLevelSystem : EntitySystem
             if (detail.Sound != null)
             {
                 var filter = _stationSystem.GetInOwningStation(station);
-                _audio.PlayGlobal(detail.Sound.GetSound(), filter, true, detail.Sound.Params);
+                _audio.PlayGlobal(detail.Sound, filter, true, detail.Sound.Params);
             }
             else
             {

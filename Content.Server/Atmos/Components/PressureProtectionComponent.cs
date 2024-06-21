@@ -1,18 +1,33 @@
-﻿namespace Content.Server.Atmos.Components
+﻿using Content.Server.Atmos.EntitySystems;
+
+namespace Content.Server.Atmos.Components;
+
+[RegisterComponent]
+[Access(typeof(BarotraumaSystem))]
+public sealed partial class PressureProtectionComponent : Component
 {
-    [RegisterComponent]
-    public sealed partial class PressureProtectionComponent : Component
-    {
-        [DataField("highPressureMultiplier")]
-        public float HighPressureMultiplier { get; private set; } = 1f;
+    [DataField]
+    public float HighPressureMultiplier = 1f;
 
-        [DataField("highPressureModifier")]
-        public float HighPressureModifier { get; private set; } = 0f;
+    [DataField]
+    public float HighPressureModifier;
 
-        [DataField("lowPressureMultiplier")]
-        public float LowPressureMultiplier { get; private set; } = 1f;
+    [DataField]
+    public float LowPressureMultiplier = 1f;
 
-        [DataField("lowPressureModifier")]
-        public float LowPressureModifier { get; private set; } = 0f;
-    }
+    [DataField]
+    public float LowPressureModifier;
 }
+
+/// <summary>
+/// Event raised on an entity with <see cref="PressureProtectionComponent"/> in order to adjust its default values.
+/// </summary>
+[ByRefEvent]
+public record struct GetPressureProtectionValuesEvent
+{
+    public float HighPressureMultiplier;
+    public float HighPressureModifier;
+    public float LowPressureMultiplier;
+    public float LowPressureModifier;
+}
+

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-NC-SA-3.0",
-  "copyright": "mirrorcult",
+  "copyright": "mirrorcult, texturized by aexxie",
   "size": {
     "x": 32,
     "y": 32
@@ -9,6 +9,45 @@
   "states": [
 	{
       "name": "fulltile_overlay"
+    },
+    {
+      "name": "brick_box"
+    },
+    {
+      "name": "brick_corner_ne"
+    },
+    {
+      "name": "brick_corner_nw"
+    },
+    {
+      "name": "brick_corner_se"
+    },
+    {
+      "name": "brick_corner_sw"
+    },
+    {
+      "name": "brick_end_e"
+    },
+    {
+      "name": "brick_end_n"
+    },
+    {
+      "name": "brick_end_s"
+    },
+    {
+      "name": "brick_end_w"
+    },
+    {
+      "name": "brick_line_e"
+    },
+    {
+      "name": "brick_line_n"
+    },
+    {
+      "name": "brick_line_s"
+    },
+    {
+      "name": "brick_line_w"
     },
     {
       "name": "halftile_overlay"
@@ -81,6 +120,57 @@
     },
     {
       "name": "minitile_diagonal_b"
+    },
+    {
+      "name": "minitile_box"
+    },
+    {
+      "name": "minitile_corner_ne"
+    },
+    {
+      "name": "minitile_corner_nw"
+    },
+    {
+      "name": "minitile_corner_se"
+    },
+    {
+      "name": "minitile_corner_sw"
+    },
+    {
+      "name": "minitile_end_e"
+    },
+    {
+      "name": "minitile_end_n"
+    },
+    {
+      "name": "minitile_end_s"
+    },
+    {
+      "name": "minitile_end_w"
+    },
+    {
+      "name": "minitile_inner_ne"
+    },
+    {
+      "name": "minitile_inner_nw"
+    },
+    {
+      "name": "minitile_inner_se"
+    },
+    {
+      "name": "minitile_inner_sw"
+    },
+    {
+      "name": "minitile_line_e"
+    },
+    {
+      "name": "minitile_line_n"
+    },
+    {
+      "name": "minitile_line_s"
+    },
+    {
+      "name": "minitile_line_w"
     },
     {
       "name": "mono"

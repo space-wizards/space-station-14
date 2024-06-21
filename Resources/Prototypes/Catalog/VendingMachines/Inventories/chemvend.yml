@@ -3,25 +3,25 @@
   startingInventory:
     Jug: 4
     JugAluminium: 2
-    JugCarbon: 2
-    JugChlorine: 2
+    JugCarbon: 4
+    JugChlorine: 1
     JugCopper: 2
     JugEthanol: 2
-    JugFluorine: 2
-    JugHydrogen: 2
-    JugIodine: 2
+    JugFluorine: 1
+    JugHydrogen: 3
+    JugIodine: 1
     JugIron: 2
     JugLithium: 2
-    JugMercury: 2
-    JugNitrogen: 2
-    JugOxygen: 2
-    JugPhosphorus: 2
+    JugMercury: 1
+    JugNitrogen: 3
+    JugOxygen: 3
+    JugPhosphorus: 1
     JugPotassium: 2
-    JugRadium: 2
+    JugRadium: 1
     JugSilicon: 2
     JugSodium: 2
-    JugSugar: 2
-    JugSulfur: 2
+    JugSugar: 3
+    JugSulfur: 1
   emaggedInventory:
     ToxinChemistryBottle: 1
 
@@ -30,25 +30,25 @@
   startingInventory:
     Jug: 4
     JugAluminium: 2
-    JugCarbon: 2
-    JugChlorine: 2
+    JugCarbon: 4
+    JugChlorine: 1
     JugCopper: 2
     JugEthanol: 2
-    JugFluorine: 2
-    JugHydrogen: 2
-    JugIodine: 2
+    JugFluorine: 1
+    JugHydrogen: 3
+    JugIodine: 1
     JugIron: 2
     JugLithium: 2
-    JugMercury: 2
-    JugNitrogen: 2
-    JugOxygen: 2
-    JugPhosphorus: 2
+    JugMercury: 1
+    JugNitrogen: 3
+    JugOxygen: 3
+    JugPhosphorus: 1
     JugPotassium: 2
-    JugRadium: 2
+    JugRadium: 1
     JugSilicon: 2
     JugSodium: 2
-    JugSugar: 2
-    JugSulfur: 2
+    JugSugar: 3
+    JugSulfur: 1
     JugWeldingFuel: 1
   emaggedInventory:
     PaxChemistryBottle: 3

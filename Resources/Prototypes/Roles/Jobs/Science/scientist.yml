@@ -17,12 +17,7 @@
 - type: startingGear
   id: ScientistGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitScientist
-    back: ClothingBackpackScienceFilled
-    shoes: ClothingShoesColorWhite
-    outerClothing: ClothingOuterCoatRnd
-    id: SciencePDA
     ears: ClothingHeadsetScience
-  innerClothingSkirt: ClothingUniformJumpskirtScientist
-  satchel: ClothingBackpackSatchelScienceFilled
-  duffelbag: ClothingBackpackDuffelScienceFilled
+  #storage:
+    #back:
+    #- Stuff

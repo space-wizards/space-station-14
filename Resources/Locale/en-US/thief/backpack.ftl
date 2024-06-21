@@ -3,7 +3,10 @@ thief-backpack-window-title = thief toolbox
 thief-backpack-window-description =
     This toolbox is filled with unspecified contents.
     Now you need to remember what you put in it.
-    Choose 2 different sets from the list.
+    Choose {$maxCount} different {$maxCount ->
+        [1] set
+        *[other] sets
+    } from the list.
 
 thief-backpack-window-selected = Kits selected: ({$selectedCount}/{$maxCount})
 
@@ -15,9 +18,9 @@ thief-backpack-button-deselect = Select [X]
 
 thief-backpack-category-chameleon-name = chameleon's kit
 thief-backpack-category-chameleon-description =
-    Includes a full set of clothing that contain
-    chameleon technology, allowing you to disguise
-    as pretty much anything on the station.
+    Includes a full set of clothing that contains chameleon technology,
+    Contains a chameleon projector to help disguise yourself as objects,
+    You'll be able to disguise yourself as almost anything and anyone.
 
 thief-backpack-category-tools-name = bearcatcher's kit
 thief-backpack-category-tools-description =

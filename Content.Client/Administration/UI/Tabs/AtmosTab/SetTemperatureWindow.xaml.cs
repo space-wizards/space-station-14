@@ -30,7 +30,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
 
             while (gridQuery.MoveNext(out var uid, out _))
             {
-                var player = playerManager.LocalPlayer?.ControlledEntity;
+                var player = playerManager.LocalEntity;
                 var playerGrid = entManager.GetComponentOrNull<TransformComponent>(player)?.GridUid;
                 GridOptions.AddItem($"{uid} {(playerGrid == uid ? " (Current)" : "")}");
                 _data.Add(entManager.GetNetEntity(uid));
