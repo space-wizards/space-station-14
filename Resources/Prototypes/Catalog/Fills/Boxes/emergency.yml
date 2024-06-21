@@ -79,7 +79,7 @@
 
 - type: entity
 
-  parent: BoxCardboard
+  parent: BoxSurvival
   id: BoxSurvivalSecurity
   name: survival box
   description: It's a box with basic internals inside.
@@ -118,7 +118,7 @@
 
 - type: entity
 
-  parent: BoxCardboard
+  parent: BoxSurvival
   id: BoxSurvivalMedical
   name: survival box
   description: It's a box with basic internals inside.
