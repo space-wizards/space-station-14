@@ -5,6 +5,7 @@ ui-options-tab-graphics = Graphics
 ui-options-tab-controls = Controls
 ui-options-tab-audio = Audio
 ui-options-tab-network = Network
+ui-options-tab-localization = Localization
 ui-options-tab-misc = General
 
 ui-options-apply = Apply
@@ -263,6 +264,10 @@ ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will
                                        out-of-view entities. Lowering this can help reduce
                                        stuttering when walking around, but could occasionally
                                        lead to mispredicts and other issues.
+
+## Localization menu
+ui-options-culture = Language
+ui-options-culture-change-popup = You need to restart the game for the changes to take effect
 
 ## Toggle window console command
 cmd-options-desc = Opens options menu, optionally with a specific tab selected.
