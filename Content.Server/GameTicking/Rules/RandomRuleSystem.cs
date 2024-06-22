@@ -41,7 +41,7 @@ public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
             {
                 if (selectedRules == null)
                     return;
-                /// If the station is already initialized, just start the rule, otherwise let that happen at the start of round.
+                // If the station is already initialized, just start the rule, otherwise let that happen at the start of round.
                 if (GameTicker.RunLevel <= GameRunLevel.InRound)
                 {
                     GameTicker.AddGameRule(rule);
@@ -68,7 +68,7 @@ public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
                 slag = rule;
             }
 
-            ///prevents same gamerule twice in one run.
+            // prevents same gamerule twice in one run.
             if (!string.IsNullOrEmpty(slag))
             {
                 selectedRules.RemoveAt(selectedRules.IndexOf(slag));
