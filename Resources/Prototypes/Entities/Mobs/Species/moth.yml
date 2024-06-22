@@ -7,6 +7,8 @@
   components:
   - type: HumanoidAppearance
     species: Moth
+    hideLayersOnEquip:
+    - HeadTop
   - type: Hunger
   - type: Thirst
   - type: Icon
@@ -22,7 +24,7 @@
     accent: zombieMoth
   - type: Speech
     speechVerb: Moth
-    allowedEmotes: ['Chitter']
+    allowedEmotes: ['Chitter', 'Squeak']
   - type: TypingIndicator
     typingIndicatorOverrideList: [moth]
   - type: Butcherable

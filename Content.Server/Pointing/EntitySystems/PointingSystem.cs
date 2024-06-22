@@ -88,7 +88,10 @@ namespace Content.Server.Pointing.EntitySystems
                         ? viewerPointedAtMessage
                         : viewerMessage;
 
-                RaiseNetworkEvent(new PopupEntityEvent(message, PopupType.Small, netSource), viewerEntity);
+                // Someone pointing at YOU is slightly more important
+                var popupType = viewerEntity == pointed ? PopupType.Medium : PopupType.Small;
+
+                RaiseNetworkEvent(new PopupEntityEvent(message, popupType, netSource), viewerEntity);
             }
 
             _replay.RecordServerMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, netSource));
@@ -171,7 +174,7 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 var arrowVisibility = EntityManager.EnsureComponent<VisibilityComponent>(arrow);
                 layer = playerVisibility.Layer;
-                _visibilitySystem.SetLayer(arrow, arrowVisibility, layer);
+                _visibilitySystem.SetLayer((arrow, arrowVisibility), (ushort) layer);
             }
 
             // Get players that are in range and whose visibility layer matches the arrow's.
@@ -183,7 +186,7 @@ namespace Content.Server.Pointing.EntitySystems
                     (eyeComp.VisibilityMask & layer) == 0)
                     return false;
 
-                return Transform(ent).MapPosition.InRange(Transform(player).MapPosition, PointingRange);
+                return _transform.GetMapCoordinates(ent).InRange(_transform.GetMapCoordinates(player), PointingRange);
             }
 
             var viewers = Filter.Empty()

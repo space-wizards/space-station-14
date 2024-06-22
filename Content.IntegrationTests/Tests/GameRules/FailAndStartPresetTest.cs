@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Presets;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.GameTicking.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.GameRules;
@@ -140,6 +140,8 @@ public sealed class TestRuleSystem : EntitySystem
         while (query.MoveNext(out _, out _, out var gameRule))
         {
             var minPlayers = gameRule.MinPlayers;
+            if (!gameRule.CancelPresetOnTooFewPlayers)
+                continue;
             if (args.Players.Length >= minPlayers)
                 continue;
 

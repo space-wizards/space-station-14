@@ -316,7 +316,7 @@ namespace Content.Server.Voting.Managers
             timeSpan = default;
 
             // Admins can always call votes.
-            if (_adminMgr.HasAdminFlag(initiator, AdminFlags.Admin))
+            if (_adminMgr.HasAdminFlag(initiator, AdminFlags.Moderator))
             {
                 isAdmin = true;
                 return true;
@@ -370,7 +370,7 @@ namespace Content.Server.Voting.Managers
                 .Select(e => e.Data)
                 .ToImmutableArray();
             // Store all votes in order for webhooks
-            var voteTally = new List<int>(); 
+            var voteTally = new List<int>();
             foreach(var entry in v.Entries)
             {
                 voteTally.Add(entry.Votes);

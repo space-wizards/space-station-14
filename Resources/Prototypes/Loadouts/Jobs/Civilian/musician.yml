@@ -1,30 +1,21 @@
-# Back
+# Jumpsuit
 - type: loadout
-  id: MusicianBackpack
-  equipment: MusicianBackpack
+  id: MusicianJumpsuit
+  equipment: MusicianJumpsuit
 
 - type: startingGear
-  id: MusicianBackpack
+  id: MusicianJumpsuit
   equipment:
-    back: ClothingBackpackMusicianFilled
+    jumpsuit: ClothingUniformJumpsuitMusician
 
 - type: loadout
-  id: MusicianSatchel
-  equipment: MusicianSatchel
+  id: MusicianJumpskirt
+  equipment: MusicianJumpskirt
 
 - type: startingGear
-  id: MusicianSatchel
+  id: MusicianJumpskirt
   equipment:
-    back: ClothingBackpackSatchelMusicianFilled
-
-- type: loadout
-  id: MusicianDuffel
-  equipment: MusicianDuffel
-
-- type: startingGear
-  id: MusicianDuffel
-  equipment:
-    back: ClothingBackpackDuffelMusicianFilled
+    jumpsuit: ClothingUniformJumpskirtMusician
 
 # Outerclothing
 - type: loadout

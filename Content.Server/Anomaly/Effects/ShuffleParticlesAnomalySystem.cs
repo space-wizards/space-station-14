@@ -15,26 +15,26 @@ public sealed class ShuffleParticlesAnomalySystem : EntitySystem
         SubscribeLocalEvent<ShuffleParticlesAnomalyComponent, StartCollideEvent>(OnStartCollide);
     }
 
-    private void OnStartCollide(EntityUid uid, ShuffleParticlesAnomalyComponent shuffle, StartCollideEvent args)
+    private void OnStartCollide(Entity<ShuffleParticlesAnomalyComponent> ent, ref StartCollideEvent args)
     {
-        if (!TryComp<AnomalyComponent>(uid, out var anomaly))
+        if (!TryComp<AnomalyComponent>(ent, out var anomaly))
             return;
 
-        if (shuffle.ShuffleOnParticleHit && _random.Prob(shuffle.Prob))
-            _anomaly.ShuffleParticlesEffect(anomaly);
-
-        if (!TryComp<AnomalousParticleComponent>(args.OtherEntity, out var particle))
+        if (!HasComp<AnomalousParticleComponent>(args.OtherEntity))
             return;
+
+        if (ent.Comp.ShuffleOnParticleHit && _random.Prob(ent.Comp.Prob))
+            _anomaly.ShuffleParticlesEffect((ent, anomaly));
     }
 
-    private void OnPulse(EntityUid uid, ShuffleParticlesAnomalyComponent shuffle, AnomalyPulseEvent args)
+    private void OnPulse(Entity<ShuffleParticlesAnomalyComponent> ent, ref AnomalyPulseEvent args)
     {
-        if (!TryComp<AnomalyComponent>(uid, out var anomaly))
+        if (!TryComp<AnomalyComponent>(ent, out var anomaly))
             return;
 
-        if (shuffle.ShuffleOnPulse && _random.Prob(shuffle.Prob))
+        if (ent.Comp.ShuffleOnPulse && _random.Prob(ent.Comp.Prob))
         {
-            _anomaly.ShuffleParticlesEffect(anomaly);
+            _anomaly.ShuffleParticlesEffect((ent, anomaly));
         }
     }
 }

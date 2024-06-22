@@ -38,8 +38,8 @@ public sealed partial class EntityWhitelist
     [DataField]
     public List<ProtoId<ItemSizePrototype>>? Sizes;
 
-    [NonSerialized]
-    private List<ComponentRegistration>? _registrations;
+    [NonSerialized, Access(typeof(EntityWhitelistSystem))]
+    public List<ComponentRegistration>? Registrations;
 
     /// <summary>
     ///     Tags that are allowed in the whitelist.
@@ -54,68 +54,4 @@ public sealed partial class EntityWhitelist
     /// </summary>
     [DataField]
     public bool RequireAll;
-
-    public void UpdateRegistrations()
-    {
-
-        if (Components == null)
-            return;
-
-        var compFact = IoCManager.Resolve<IComponentFactory>();
-        _registrations = new List<ComponentRegistration>();
-        foreach (var name in Components)
-        {
-            var availability = compFact.GetComponentAvailability(name);
-            if (compFact.TryGetRegistration(name, out var registration)
-                && availability == ComponentAvailability.Available)
-            {
-                _registrations.Add(registration);
-            }
-            else if (availability == ComponentAvailability.Unknown)
-            {
-                Logger.Warning($"Unknown component name {name} passed to EntityWhitelist!");
-            }
-        }
-    }
-
-    /// <summary>
-    ///     Returns whether a given entity fits the whitelist.
-    /// </summary>
-    public bool IsValid(EntityUid uid, IEntityManager? entityManager = null)
-    {
-        if (Components != null && _registrations == null)
-            UpdateRegistrations();
-
-        IoCManager.Resolve(ref entityManager);
-        if (_registrations != null)
-        {
-            foreach (var reg in _registrations)
-            {
-                if (entityManager.HasComponent(uid, reg.Type))
-                {
-                    if (!RequireAll)
-                        return true;
-                }
-                else if (RequireAll)
-                    return false;
-            }
-        }
-
-        if (Sizes != null && entityManager.TryGetComponent(uid, out ItemComponent? itemComp))
-        {
-            if (Sizes.Contains(itemComp.Size))
-                return true;
-        }
-
-        if (Tags != null && entityManager.TryGetComponent(uid, out TagComponent? tags))
-        {
-            var tagSystem = entityManager.System<TagSystem>();
-            return RequireAll ? tagSystem.HasAllTags(tags, Tags) : tagSystem.HasAnyTag(tags, Tags);
-        }
-
-        if (RequireAll)
-            return true;
-
-        return false;
-    }
 }
