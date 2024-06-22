@@ -38,6 +38,7 @@
 # A small gun that can be equipped in the belt slot.
 - type: entity
   abstract: true
+  parent: BaseGun
   id: BaseGunSmall
   components:
   - type: Item
@@ -58,6 +59,7 @@
 # A large gun that can be equipped in the back slot.
 - type: entity
   abstract: true
+  parent: BaseGun
   id: BaseGunMedium
   components:
   - type: Item
@@ -72,6 +74,7 @@
 # A gun that is large enough to not fit well in bags and be equipped on the back.
 - type: entity
   abstract: true
+  parent: BaseGun
   id: BaseGunLarge
   components:
   - type: Item
@@ -86,6 +89,7 @@
 # A massive gun that requires multiple hands to carry and slows the carrier.
 - type: entity
   abstract: true
+  parent: BaseGun
   id: BaseGunHeavy
   components:
   - type: Item
