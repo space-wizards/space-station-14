@@ -185,6 +185,30 @@
         ActionFireball: -1
 
 - type: entity
+  id: SpawnSpaceGreaseSpellbook
+  name: space grease spellbook
+  parent: BaseSpellbook
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_old
+        color: "#ba5a14"
+      - state: decor_wingette_circle
+        color: gold
+      - state: detail_rivets
+        color: gold
+      - state: detail_bookmark
+        color: "#e89b3c"
+      - state: overlay_dirt
+      - state: icon_magic_grease
+        shader: unshaded
+    - type: Spellbook
+      spellActions:
+        ActionSpawnSpaceGreaseSpell: -1
+
+- type: entity
   id: ScrollRunes
   name: scroll of runes
   parent: BaseSpellbook

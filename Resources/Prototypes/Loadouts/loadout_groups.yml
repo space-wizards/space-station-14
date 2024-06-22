@@ -38,8 +38,8 @@
 - type: loadoutGroup
   id: Survival
   name: loadout-group-survival-basic
-  minLimit: 2
-  maxLimit: 2
+  minLimit: 1
+  maxLimit: 1
   hidden: true
   loadouts:
   - EmergencyNitrogen

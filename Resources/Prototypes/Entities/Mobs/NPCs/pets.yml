@@ -875,7 +875,7 @@
   - type: Grammar
     attributes:
       proper: true
-      gender: epicene
+      gender: female
   - type: Tag
     tags:
     - CannotSuicide
