@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -138,7 +137,7 @@ public abstract partial class SharedXenoArtifactSystem
 
         ent.Comp.NodeAdjacencyMatrix[fromIdx][toIdx] = true;
         if (dirty)
-            RebuildCachedActiveNodes(ent);
+            RebuildNodeData(ent);
         return true;
     }
 
@@ -168,7 +167,7 @@ public abstract partial class SharedXenoArtifactSystem
         ent.Comp.NodeAdjacencyMatrix[fromIdx][toIdx] = false;
 
         if (dirty)
-            RebuildCachedActiveNodes(ent);
+            RebuildNodeData(ent);
         return true;
     }
 
@@ -199,7 +198,7 @@ public abstract partial class SharedXenoArtifactSystem
 
         Dirty(node);
         if (dirty)
-            RebuildCachedActiveNodes(ent);
+            RebuildNodeData(ent);
         return true;
     }
 
@@ -219,8 +218,7 @@ public abstract partial class SharedXenoArtifactSystem
         ent.Comp.NodeVertices[idx.Value] = null;
         if (dirty)
         {
-            RebuildCachedActiveNodes(ent);
-            Dirty(ent);
+            RebuildNodeData(ent);
         }
         Dirty(node);
         return true;
@@ -245,8 +243,7 @@ public abstract partial class SharedXenoArtifactSystem
 
         if (dirty)
         {
-            RebuildCachedActiveNodes(ent);
-            Dirty(ent);
+            RebuildNodeData(ent);
         }
     }
 

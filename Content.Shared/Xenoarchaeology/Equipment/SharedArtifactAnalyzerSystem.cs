@@ -1,4 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Placeable;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
@@ -14,6 +16,10 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
 
         SubscribeLocalEvent<ArtifactAnalyzerComponent, ItemPlacedEvent>(OnItemPlaced);
         SubscribeLocalEvent<ArtifactAnalyzerComponent, ItemRemovedEvent>(OnItemRemoved);
+        SubscribeLocalEvent<ArtifactAnalyzerComponent, MapInitEvent>(OnMapInit);
+
+        SubscribeLocalEvent<AnalysisConsoleComponent, NewLinkEvent>(OnNewLink);
+        SubscribeLocalEvent<AnalysisConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
     }
 
     private void OnItemPlaced(Entity<ArtifactAnalyzerComponent> ent, ref ItemPlacedEvent args)
@@ -28,6 +34,48 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
             return;
 
         ent.Comp.CurrentArtifact = null;
+        Dirty(ent);
+    }
+
+    private void OnMapInit(Entity<ArtifactAnalyzerComponent> ent, ref MapInitEvent args)
+    {
+        if (!TryComp<DeviceLinkSinkComponent>(ent, out var sink))
+            return;
+
+        foreach (var source in sink.LinkedSources)
+        {
+            if (!TryComp<AnalysisConsoleComponent>(source, out var analysis))
+                continue;
+            analysis.AnalyzerEntity = GetNetEntity(ent);
+            ent.Comp.Console = source;
+            Dirty(source, analysis);
+            Dirty(ent);
+            break;
+        }
+    }
+
+    private void OnNewLink(Entity<AnalysisConsoleComponent> ent, ref NewLinkEvent args)
+    {
+        if (!TryComp<ArtifactAnalyzerComponent>(args.Sink, out var analyzer))
+            return;
+
+        ent.Comp.AnalyzerEntity = GetNetEntity(args.Sink);
+        analyzer.Console = ent;
+        Dirty(args.Sink, analyzer);
+        Dirty(ent);
+    }
+
+    private void OnPortDisconnected(Entity<AnalysisConsoleComponent> ent, ref PortDisconnectedEvent args)
+    {
+        if (args.Port != ent.Comp.LinkingPort || ent.Comp.AnalyzerEntity == null)
+            return;
+
+        if (TryComp<ArtifactAnalyzerComponent>(GetEntity(ent.Comp.AnalyzerEntity), out var analyzer))
+        {
+            analyzer.Console = null;
+            Dirty(GetEntity(ent.Comp.AnalyzerEntity.Value), analyzer);
+        }
+        ent.Comp.AnalyzerEntity = null;
         Dirty(ent);
     }
 

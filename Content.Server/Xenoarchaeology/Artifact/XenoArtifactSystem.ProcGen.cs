@@ -16,7 +16,7 @@ public sealed partial class XenoArtifactSystem
             GenerateArtifactSegment(ent, ref nodeCount);
         }
 
-        RebuildCachedActiveNodes((ent, ent));
+        RebuildNodeData((ent, ent));
     }
 
     private void GenerateArtifactSegment(Entity<XenoArtifactComponent> ent, ref int nodeCount)
@@ -24,9 +24,6 @@ public sealed partial class XenoArtifactSystem
         var segmentSize = GetArtifactSegmentSize(ent, nodeCount);
         nodeCount -= segmentSize;
         PopulateArtifactSegmentRecursive(ent, ref segmentSize, ensureLayerConnected: true);
-
-        // TODO: store the segments in a list somewhere so we don't have to rebuild them constantly.
-        // Or maybe just rebuild them manually like we do active nodes??? hard to say.
     }
 
     private List<Entity<XenoArtifactNodeComponent>> PopulateArtifactSegmentRecursive(
@@ -66,6 +63,9 @@ public sealed partial class XenoArtifactSystem
 
         if (successors.Count == 0)
             return nodes;
+
+        // TODO: this doesn't actually make sure that the segment is interconnected.
+        // You can still occasionally get orphaned segments.
 
         // We do the picks from node -> successor and from successor -> node to ensure that no nodes get orphaned without connections.
         foreach (var successor in successors)

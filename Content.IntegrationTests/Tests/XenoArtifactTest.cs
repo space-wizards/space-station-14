@@ -43,15 +43,15 @@ public sealed class XenoArtifactTest
             var artifactEnt = (artifactUid, entManager.GetComponent<XenoArtifactComponent>(artifactUid));
 
             // Create 3 nodes
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3, false));
 
             Assert.That(artifactSystem.GetAllNodeIndices(artifactEnt).Count(), Is.EqualTo(3));
 
             // Add connection from 1 -> 2 and 2-> 3
-            artifactSystem.AddEdge(artifactEnt, node1!.Value, node2!.Value);
-            artifactSystem.AddEdge(artifactEnt, node2!.Value, node3!.Value);
+            artifactSystem.AddEdge(artifactEnt, node1!.Value, node2!.Value, false);
+            artifactSystem.AddEdge(artifactEnt, node2!.Value, node3!.Value, false);
 
             // Assert that successors and direct successors are counted correctly for node 1.
             Assert.That(artifactSystem.GetDirectSuccessorNodes(artifactEnt, node1!.Value).Count, Is.EqualTo(1));
@@ -97,26 +97,26 @@ public sealed class XenoArtifactTest
             var artifactEnt = (artifactUid, entManager.GetComponent<XenoArtifactComponent>(artifactUid));
 
             // Create 3 nodes
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node4));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node5));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node4, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node5, false));
 
             Assert.That(artifactSystem.GetAllNodeIndices(artifactEnt).Count(), Is.EqualTo(5));
 
             // Add connection: 1 -> 2 -> 3 -> 4 -> 5
-            artifactSystem.AddEdge(artifactEnt, node1!.Value, node2!.Value);
-            artifactSystem.AddEdge(artifactEnt, node2!.Value, node3!.Value);
-            artifactSystem.AddEdge(artifactEnt, node3!.Value, node4!.Value);
-            artifactSystem.AddEdge(artifactEnt, node4!.Value, node5!.Value);
+            artifactSystem.AddEdge(artifactEnt, node1!.Value, node2!.Value, false);
+            artifactSystem.AddEdge(artifactEnt, node2!.Value, node3!.Value, false);
+            artifactSystem.AddEdge(artifactEnt, node3!.Value, node4!.Value, false);
+            artifactSystem.AddEdge(artifactEnt, node4!.Value, node5!.Value, false);
 
             // Make sure we have a continuous connection between the two ends of the graph.
             Assert.That(artifactSystem.GetSuccessorNodes(artifactEnt, node1.Value), Has.Count.EqualTo(4));
             Assert.That(artifactSystem.GetPredecessorNodes(artifactEnt, node5.Value), Has.Count.EqualTo(4));
 
             // Remove the node and make sure it's no longer in the artifact.
-            Assert.That(artifactSystem.RemoveNode(artifactEnt, node3!.Value));
+            Assert.That(artifactSystem.RemoveNode(artifactEnt, node3!.Value, false));
             Assert.That(artifactSystem.TryGetIndex(artifactEnt, node3!.Value, out _), Is.False, "Node 3 still present in artifact.");
 
             // Check to make sure that we got rid of all the connections.
@@ -146,13 +146,13 @@ public sealed class XenoArtifactTest
             var artifactEnt = (artifactUid, entManager.GetComponent<XenoArtifactComponent>(artifactUid));
 
             // Create 3 nodes
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3, false));
 
             // Add connection: 1 -> 2 -> 3
-            artifactSystem.AddEdge(artifactEnt, node1!.Value, node2!.Value);
-            artifactSystem.AddEdge(artifactEnt, node2!.Value, node3!.Value);
+            artifactSystem.AddEdge(artifactEnt, node1!.Value, node2!.Value, false);
+            artifactSystem.AddEdge(artifactEnt, node2!.Value, node3!.Value, false);
 
             // Make sure our connection is set up
             Assert.That(artifactSystem.NodeHasEdge(artifactEnt, node1.Value, node2.Value));
@@ -209,20 +209,20 @@ public sealed class XenoArtifactTest
             var artifactEnt = (artifactUid, entManager.GetComponent<XenoArtifactComponent>(artifactUid));
 
             // Create 3 nodes
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3, false));
 
             // Add connection: 1 -> 2 -> 3
-            artifactSystem.AddEdge(artifactEnt, node1!.Value, node2!.Value);
-            artifactSystem.AddEdge(artifactEnt, node2!.Value, node3!.Value);
+            artifactSystem.AddEdge(artifactEnt, node1!.Value, node2!.Value, false);
+            artifactSystem.AddEdge(artifactEnt, node2!.Value, node3!.Value, false);
 
             // Make sure our connection is set up
             Assert.That(artifactSystem.NodeHasEdge(artifactEnt, node1.Value, node2.Value));
             Assert.That(artifactSystem.NodeHasEdge(artifactEnt, node2.Value, node3.Value));
 
             // Remove middle node, severing connections
-            artifactSystem.RemoveNode(artifactEnt, node2!.Value);
+            artifactSystem.RemoveNode(artifactEnt, node2!.Value, false);
 
             // Make sure our connection are properly severed.
             Assert.That(artifactSystem.GetSuccessorNodes(artifactEnt, node1.Value), Is.Empty);
@@ -232,7 +232,7 @@ public sealed class XenoArtifactTest
             Assert.That(artifactEnt.Item2.NodeAdjacencyMatrixRows, Is.EqualTo(3));
             Assert.That(artifactEnt.Item2.NodeAdjacencyMatrixColumns, Is.EqualTo(3));
 
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node4));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node4, false));
 
             // Make sure that adding in a new node didn't add a new slot but instead re-used the middle slot.
             Assert.That(artifactEnt.Item2.NodeAdjacencyMatrixRows, Is.EqualTo(3));
@@ -267,14 +267,14 @@ public sealed class XenoArtifactTest
             var artifactUid = entManager.Spawn("TestArtifact");
             var artifactEnt = (artifactUid, entManager.GetComponent<XenoArtifactComponent>(artifactUid));
 
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node4));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node5));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node6));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node7));
-            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node8));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node4, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node5, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node6, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node7, false));
+            Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node8, false));
 
             //                       /----( 6 )
             //           /----[*3 ]-/----( 7 )----( 8 )
@@ -283,23 +283,21 @@ public sealed class XenoArtifactTest
             // [ 1 ]--/----[ 2 ]--/----( 4 )
             // Diagram of the example generation. Nodes in [brackets] are unlocked, nodes in (braces) are locked
             // and nodes with an *asterisk are supposed to be active.
-            artifactSystem.AddEdge(artifactEnt, node1!.Value, node2!.Value);
-            artifactSystem.AddEdge(artifactEnt, node1!.Value, node3!.Value);
+            artifactSystem.AddEdge(artifactEnt, node1!.Value, node2!.Value, false);
+            artifactSystem.AddEdge(artifactEnt, node1!.Value, node3!.Value, false);
 
-            artifactSystem.AddEdge(artifactEnt, node2!.Value, node4!.Value);
-            artifactSystem.AddEdge(artifactEnt, node2!.Value, node5!.Value);
+            artifactSystem.AddEdge(artifactEnt, node2!.Value, node4!.Value, false);
+            artifactSystem.AddEdge(artifactEnt, node2!.Value, node5!.Value, false);
 
-            artifactSystem.AddEdge(artifactEnt, node3!.Value, node6!.Value);
-            artifactSystem.AddEdge(artifactEnt, node3!.Value, node7!.Value);
+            artifactSystem.AddEdge(artifactEnt, node3!.Value, node6!.Value, false);
+            artifactSystem.AddEdge(artifactEnt, node3!.Value, node7!.Value, false);
 
-            artifactSystem.AddEdge(artifactEnt, node7!.Value, node8!.Value);
+            artifactSystem.AddEdge(artifactEnt, node7!.Value, node8!.Value, false);
 
             artifactSystem.SetNodeUnlocked(node1!.Value);
             artifactSystem.SetNodeUnlocked(node2!.Value);
             artifactSystem.SetNodeUnlocked(node3!.Value);
             artifactSystem.SetNodeUnlocked(node5!.Value);
-
-            artifactSystem.RebuildCachedActiveNodes(artifactEnt);
 
             var activeNodes = new[] { entManager.GetNetEntity(node3!.Value.Owner), entManager.GetNetEntity(node5!.Value.Owner) };
             Assert.That(artifactEnt.Item2.CachedActiveNodes, Is.SupersetOf(activeNodes));
@@ -310,4 +308,6 @@ public sealed class XenoArtifactTest
 
         await pair.CleanReturnAsync();
     }
+
+    // TODO: write test for segments because we'll probably need that.
 }

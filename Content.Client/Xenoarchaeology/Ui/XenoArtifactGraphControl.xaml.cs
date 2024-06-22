@@ -17,8 +17,13 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
     private Entity<XenoArtifactComponent>? _artifact;
 
     private float NodeRadius => 25 * UIScale;
-
     private float NodeDiameter => NodeRadius * 2;
+    private float MinYSpacing => NodeDiameter * 0.75f;
+    private float MaxYSpacing => NodeDiameter * 1.5f;
+    private float MinXSpacing => NodeDiameter * 0.33f;
+    private float MaxXSpacing => NodeDiameter * 1f;
+    private float MinXSegmentSpacing => NodeDiameter * 0.5f;
+    private float MaxXSegmentSpacing => NodeDiameter * 3f;
 
     public XenoArtifactGraphControl()
     {
@@ -40,16 +45,81 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
 
         var artiSys = _entityManager.System<XenoArtifactSystem>();
 
-        var bottomLeft = Position + Size with { X = 0 };
+        var maxDepth = artiSys.GetAllNodes(_artifact.Value).Max(s => s.Comp.Depth);
+        var segments = artiSys.GetSegments(_artifact.Value);
 
-        var tiers = artiSys.GetAllNodes(_artifact.Value).OrderBy(e => e.Comp.Depth).ToList();
+        var bottomLeft = Position // the position
+                         + new Vector2(0, Size.Y * UIScale) // the scaled height of the control
+                         + new Vector2(NodeRadius, -NodeRadius); // offset half a node so we don't render off screen
 
-        for (var i = 0; i < tiers.Count; i++)
+        var controlHeight = bottomLeft.Y;
+        var controlWidth = Size.X * UIScale - NodeRadius;
+
+        var ySpacing = 0f;
+        if (maxDepth != 0)
+            ySpacing = Math.Clamp((controlHeight - ((maxDepth + 1) * NodeDiameter)) / maxDepth, MinYSpacing, MaxYSpacing);
+
+        var segmentWidths = segments.Sum(GetBiggestWidth);
+        var segmentSpacing = Math.Clamp((controlWidth - segmentWidths) / (segments.Count - 1), MinXSegmentSpacing, MaxXSegmentSpacing);
+        var segmentOffset = Math.Max((controlWidth - (segmentWidths) - (segmentSpacing * (segments.Count - 1))) / 2, 0);
+
+        bottomLeft.X += segmentOffset;
+        bottomLeft.Y -= (controlHeight - (ySpacing * maxDepth) - (NodeDiameter * (maxDepth + 1))) / 2;
+
+        foreach (var segment in segments)
         {
-            var node = tiers[i];
-            var pos = bottomLeft + new Vector2(NodeDiameter * i + NodeRadius,  -NodeRadius + NodeDiameter * node.Comp.Depth);
-            handle.DrawCircle(pos, NodeRadius, Color.White, false);
+            var orderedNodes = artiSys.GetDepthOrderedNodes(segment);
+
+            foreach (var (_, nodes) in orderedNodes)
+            {
+                for (var i = 0; i < nodes.Count; i++)
+                {
+                    var node = nodes[i];
+                    var pos =  GetNodePos(node);
+                    handle.DrawCircle(pos, NodeRadius, Color.White, false);
+                }
+            }
+
+            foreach (var node in segment)
+            {
+                var from = GetNodePos(node) + new Vector2(0, -NodeRadius);
+                var successors = artiSys.GetDirectSuccessorNodes((_artifact.Value, _artifact.Value.Comp), node);
+                foreach (var s in successors)
+                {
+                    var to = GetNodePos(s) + new Vector2(0, NodeRadius);
+                    handle.DrawLine(from, to, Color.White);
+                }
+            }
+
+            bottomLeft.X += GetBiggestWidth(segment) + segmentSpacing;
         }
+
+        Vector2 GetNodePos(Entity<XenoArtifactNodeComponent> node)
+        {
+            var yPos = -(NodeDiameter + ySpacing) * node.Comp.Depth;
+
+            var segment = segments!.First(s => s.Contains(node));
+            var depthOrderedNodes = artiSys!.GetDepthOrderedNodes(segment);
+            var biggestTier = depthOrderedNodes.Max(s => s.Value.Count);
+            var nodesInLayer = depthOrderedNodes.GetValueOrDefault(node.Comp.Depth)!.Count;
+            var biggestWidth = (NodeDiameter + MinXSpacing) * biggestTier;
+
+            var xSpacing = Math.Clamp((biggestWidth - (NodeDiameter * nodesInLayer)) / (nodesInLayer - 1), MinXSpacing, MaxXSpacing);
+            var layerXOffset = (biggestWidth - (xSpacing * (nodesInLayer - 1)) - (NodeDiameter * nodesInLayer)) / 2;
+
+            var index = depthOrderedNodes.GetValueOrDefault(node.Comp.Depth)!.IndexOf(node);
+
+            var xPos = NodeDiameter * index + (xSpacing * index) + layerXOffset;
+
+            return bottomLeft + new Vector2(xPos, yPos);
+        }
+    }
+
+    private float GetBiggestWidth(List<Entity<XenoArtifactNodeComponent>> nodes)
+    {
+        var artiSys = _entityManager.System<XenoArtifactSystem>();
+        var num = artiSys.GetDepthOrderedNodes(nodes).Max(p => p.Value.Count);
+        return (NodeDiameter * num) + MinXSpacing * (num - 1);
     }
 }
 

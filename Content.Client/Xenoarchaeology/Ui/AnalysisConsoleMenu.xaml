@@ -4,8 +4,8 @@
     xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
     xmlns:ui="clr-namespace:Content.Client.Xenoarchaeology.Ui"
     Title="{Loc 'analysis-console-menu-title'}"
-    MinSize="620 280"
-    SetSize="620 280">
+    MinSize="700 350"
+    SetSize="950 500">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
         <BoxContainer Margin="10 10 10 10" MinWidth="150" Orientation="Vertical"
             VerticalExpand="True" SizeFlagsStretchRatio="1">
@@ -54,12 +54,12 @@
             </BoxContainer>
         </BoxContainer>
         <customControls:VSeparator StyleClasses="LowDivider" />
-        <PanelContainer Margin="10 10 10 10" HorizontalExpand="True" SizeFlagsStretchRatio="3">
+        <PanelContainer Margin="10 10 10 10" HorizontalExpand="True" SizeFlagsStretchRatio="3" RectClipContent="True">
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
             </PanelContainer.PanelOverride>
-            <BoxContainer Margin="10 10 10 10" Orientation="Horizontal">
-                <ui:XenoArtifactGraphControl Name="GraphControl"/>
+            <BoxContainer Margin="10 10 10 10" Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+                <ui:XenoArtifactGraphControl Name="GraphControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </BoxContainer>
         </PanelContainer>
     </BoxContainer>

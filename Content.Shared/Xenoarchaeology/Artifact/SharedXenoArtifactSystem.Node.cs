@@ -1,4 +1,6 @@
+using System.Linq;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
@@ -70,6 +72,49 @@ public abstract partial class SharedXenoArtifactSystem
         Dirty(ent);
     }
 
+    public List<List<Entity<XenoArtifactNodeComponent>>> GetSegments(Entity<XenoArtifactComponent> ent)
+    {
+        var output = new List<List<Entity<XenoArtifactNodeComponent>>>();
+
+        foreach (var segment in ent.Comp.CachedSegments)
+        {
+            var outSegment = new List<Entity<XenoArtifactNodeComponent>>();
+            foreach (var netNode in segment)
+            {
+                var node = GetEntity(netNode);
+                outSegment.Add((node, XenoArtifactNode(node)));
+            }
+
+            output.Add(outSegment);
+        }
+
+        return output;
+    }
+
+    public Dictionary<int, List<Entity<XenoArtifactNodeComponent>>> GetDepthOrderedNodes(IEnumerable<Entity<XenoArtifactNodeComponent>> nodes)
+    {
+        var output = new Dictionary<int, List<Entity<XenoArtifactNodeComponent>>>();
+
+        foreach (var node in nodes)
+        {
+            var depthList = output.GetOrNew(node.Comp.Depth);
+            depthList.Add(node);
+        }
+
+        return output;
+    }
+
+    /// <summary>
+    /// Rebuilds all the data associated with nodes in an artifact.
+    /// </summary>
+    public void RebuildNodeData(Entity<XenoArtifactComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+        RebuildCachedActiveNodes(ent);
+        RebuildCachedSegments(ent);
+    }
+
     /// <summary>
     /// Clears all cached active nodes and rebuilds the list using the current node state.
     /// Active nodes have the following property:
@@ -117,5 +162,52 @@ public abstract partial class SharedXenoArtifactSystem
         }
 
         Dirty(ent);
+    }
+
+    public void RebuildCachedSegments(Entity<XenoArtifactComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.CachedSegments.Clear();
+        foreach (var node in GetAllNodes((ent, ent.Comp)))
+        {
+            var segment = new List<Entity<XenoArtifactNodeComponent>>();
+            GetSegmentNodesRecursive((ent, ent.Comp), node, ref segment);
+
+
+            if (segment.Count == 0)
+                continue;
+
+            ent.Comp.CachedSegments.Add(segment.Select(n => GetNetEntity(n.Owner)).ToList());
+        }
+
+        Dirty(ent);
+    }
+
+    private void GetSegmentNodesRecursive(
+        Entity<XenoArtifactComponent> ent,
+        Entity<XenoArtifactNodeComponent> node,
+        ref List<Entity<XenoArtifactNodeComponent>> segment)
+    {
+        if (ent.Comp.CachedSegments.Any(s => s.Contains(GetNetEntity(node))))
+            return;
+
+        if (segment.Contains(node))
+            return;
+
+        segment.Add(node);
+
+        var predecessors = GetDirectPredecessorNodes((ent, ent), node);
+        foreach (var p in predecessors)
+        {
+            GetSegmentNodesRecursive(ent, p, ref segment);
+        }
+
+        var successors = GetDirectSuccessorNodes((ent, ent), node);
+        foreach (var s in successors)
+        {
+            GetSegmentNodesRecursive(ent, s, ref segment);
+        }
     }
 }
