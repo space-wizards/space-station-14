@@ -52,3 +52,8 @@
   license: "CC0-1.0"
   copyright: "psychpsyo on Github/Twitter"
   source: "https://github.com/space-wizards/space-station-14"
+
+- files: ["reclaimer-lobby-ice.webp" , "reclaimer-lobby-nuke.webp"]
+  license: "CC-BY-NC-SA"
+  copyright: "GetOutMarutak,aka.Snicket on Discord/github/Cara/Ko-fi"
+  source: "https://github.com/space-wizards/space-station-14"
