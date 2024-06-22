@@ -53185,7 +53185,12 @@ entities:
   - uid: 3735
     components:
     - type: Transform
-      pos: -15.5,-30.5
+      pos: -16.5,-30.5
+      parent: 31
+  - uid: 7544
+    components:
+    - type: Transform
+      pos: -14.5,-30.5
       parent: 31
 - proto: RandomBoard
   entities:
