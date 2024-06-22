@@ -5,11 +5,11 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.Store.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using System.Linq;
-using Content.Shared.Store.Components;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Store.Systems;
 

@@ -23,7 +23,7 @@
     - Unstackable
 
 - type: entity
-  parent: [GasUnaryBase, BaseAtmosMonitor]
+  parent: [GasUnaryBase, AirSensorBase]
   id: GasVentPump
   name: air vent
   description: Has a valve and a pump attached to it.
@@ -85,7 +85,7 @@
     node: passivevent
 
 - type: entity
-  parent: [GasUnaryBase, BaseAtmosMonitor]
+  parent: [GasUnaryBase, AirSensorBase]
   id: GasVentScrubber
   name: air scrubber
   description: Has a valve and pump attached to it.

@@ -2,7 +2,7 @@
 # it should have a tag that AirAlarm checks
 - type: entity
   abstract: true
-  id: BaseAtmosMonitor
+  id: AirSensorBase
   components:
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
@@ -30,7 +30,7 @@
       Frezon: danger
 
 - type: entity
-  parent: BaseAtmosMonitor
+  parent: AirSensorBase
   id: AirSensor
   name: air sensor
   description: Air sensor. It senses air.
