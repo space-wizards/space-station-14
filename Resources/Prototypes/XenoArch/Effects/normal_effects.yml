@@ -323,9 +323,9 @@
   - type: Explosive
     deleteAfterExplosion: false
     explosionType: Cryo
-    totalIntensity: 300
+    totalIntensity: 400
     intensitySlope: 2
-    maxIntensity: 1.5
+    maxIntensity: 50
 
 - type: artifactEffect
   id: EffectRareMaterialSpawn
