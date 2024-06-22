@@ -320,5 +320,15 @@ Entries:
   id: 39
   time: '2024-06-21T05:42:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29259
+- author: nikthechampiongr
+  changes:
+  - message: It is now possible to issue BlacklistedRanges bans(This requires you
+      to edit the database manually at the moment.) Bans marked as BlacklistedRange
+      will lead to players joining for the first time who match an ip range to be
+      denied. Players that have joined the server before will be unaffected.
+    type: Add
+  id: 40
+  time: '2024-06-21T12:06:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29258
 Name: Admin
 Order: 1

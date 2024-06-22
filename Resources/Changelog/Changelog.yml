@@ -1,92 +1,4 @@
 ﻿Entries:
-- author: Aserovich
-  changes:
-  - message: New lobby art!
-    type: Add
-  id: 6297
-  time: '2024-04-04T05:28:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26505
-- author: Beck Thompson
-  changes:
-  - message: Items thrown at disposals now have to be insertable to display the miss
-      message.
-    type: Fix
-  id: 6298
-  time: '2024-04-04T06:25:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26716
-- author: Tayrtahn
-  changes:
-  - message: Some devices may have broken wiring at the start of each round.
-    type: Add
-  id: 6299
-  time: '2024-04-04T06:28:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26695
-- author: lzk228
-  changes:
-  - message: Turning off thrusters and gyroscopes now stop consume power.
-    type: Fix
-  id: 6300
-  time: '2024-04-04T06:28:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26690
-- author: Aexxie
-  changes:
-  - message: Added the option to disable your OOC Patron name color.
-    type: Add
-  id: 6301
-  time: '2024-04-04T07:20:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26653
-- author: DinoWattz
-  changes:
-  - message: Fixed pocket slots being able to hide character snout markings.
-    type: Fix
-  id: 6302
-  time: '2024-04-04T08:35:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26708
-- author: VasilisThePikachu
-  changes:
-  - message: Mop buckets and Janitorial Trolleys will not spill their contents as
-      soon as they are pushed.
-    type: Fix
-  - message: Mop buckets are no longer solid. So you can now walk through them.
-    type: Fix
-  id: 6303
-  time: '2024-04-04T08:39:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26706
-- author: ZeroDayDaemon
-  changes:
-  - message: Lowered the number of ducks in the duck crate and reduced the price of
-      it.
-    type: Tweak
-  id: 6304
-  time: '2024-04-04T19:30:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26729
-- author: PrPleGoo
-  changes:
-  - message: The medical HUD's brightness now scales with lighting again.
-    type: Tweak
-  - message: Most HUD icon's brightness now scale with lighting.
-    type: Tweak
-  id: 6305
-  time: '2024-04-04T23:05:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26726
-- author: Daemon
-  changes:
-  - message: Practice projectiles have been given standardized minimal damage.
-    type: Tweak
-  - message: The practice laser gun now works with shooting targets.
-    type: Tweak
-  id: 6306
-  time: '2024-04-05T03:15:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26731
-- author: Daemon
-  changes:
-  - message: Shooting targets can now have their popup type changed with a left click
-      to show total damage, damage of a single hit, both, or just a notice that it
-      was hit.
-    type: Tweak
-  id: 6307
-  time: '2024-04-05T07:19:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26734
 - author: Vermidia
   changes:
   - message: Baseball bats now require a knife to craft
@@ -3848,3 +3760,85 @@
   id: 6796
   time: '2024-06-21T05:42:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29259
+- author: Chief_Engineer and TsjipTsjip
+  changes:
+  - message: All ghostroles now have their role type, as defined in the rules, defined
+      in their ghostrole request box.
+    type: Tweak
+  id: 6797
+  time: '2024-06-21T09:41:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29249
+- author: ElectroJr
+  changes:
+  - message: Fixed not being able to pick up folded rollerbeds.
+    type: Fix
+  - message: Fixed not being able to unbuckle entities by clicking on them.
+    type: Fix
+  id: 6798
+  time: '2024-06-21T10:50:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29293
+- author: Macoron
+  changes:
+  - message: Fixed SSD indicator for dwarfs.
+    type: Fix
+  id: 6799
+  time: '2024-06-22T01:11:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29310
+- author: EmoGarbage404
+  changes:
+  - message: Deconstructing a damaged AME core now yields steel instead of a full
+      AME flatpack.
+    type: Tweak
+  id: 6800
+  time: '2024-06-22T04:15:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29317
+- author: Errant
+  changes:
+  - message: Items should no longer be missing from backpacks at spawn.
+    type: Fix
+  id: 6801
+  time: '2024-06-22T10:43:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29336
+- author: Donchan, marboww
+  changes:
+  - message: New Nuke Detonation Song "Sound Station 14"
+    type: Add
+  id: 6802
+  time: '2024-06-22T15:09:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29345
+- author: deltanedas
+  changes:
+  - message: Doors access logging can now be disabled by snipping or pulsing a LOG
+      wire.
+    type: Tweak
+  id: 6803
+  time: '2024-06-22T15:12:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29094
+- author: notafet
+  changes:
+  - message: Reduce air alarm sensitivity to plasma, tritium, and carbon dioxide.
+    type: Tweak
+  id: 6804
+  time: '2024-06-22T15:22:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29331
+- author: Damn Feds
+  changes:
+  - message: thief toolbox kits now better describe contents
+    type: Tweak
+  id: 6805
+  time: '2024-06-22T15:44:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27771
+- author: lzk228
+  changes:
+  - message: Prying reinforced tile now will give you back metal rod
+    type: Tweak
+  id: 6806
+  time: '2024-06-22T15:47:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29084
+- author: nikthechampiongr
+  changes:
+  - message: Locked firelocks can no longer be pried by hand when powered.
+    type: Tweak
+  id: 6807
+  time: '2024-06-22T17:49:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29221
