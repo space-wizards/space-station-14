@@ -10,26 +10,24 @@ namespace Content.Shared.Animals;
 ///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
 [RegisterComponent]
-[Virtual]
-[Access(typeof(SharedUdderComponent)), AutoGenerateComponentPause]
-public partial class SharedUdderComponent : Component
+[AutoGenerateComponentPause]
+public sealed partial class UdderComponent : Component
 {
     /// <summary>
     ///     The reagent to produce.
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public ProtoId<ReagentPrototype> ReagentId = default!;
 
     /// <summary>
     ///     The name of <see cref="Solution"/>.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public string SolutionName = "udder";
 
     /// <summary>
     ///     The solution to add reagent to.
     /// </summary>
-    [DataField]
     public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>
@@ -55,6 +53,6 @@ public partial class SharedUdderComponent : Component
     /// </summary>
     //[DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), Access(typeof(SharedUdderSystem))]
     //public TimeSpan NextGrowth = TimeSpan.FromSeconds(0);
-    [AutoPausedField, Access(typeof(SharedUdderSystem))]
+    [AutoPausedField, Access(typeof(UdderSystem))]
     public TimeSpan NextGrowth = TimeSpan.Zero;
 }

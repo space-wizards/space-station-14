@@ -11,8 +11,7 @@ namespace Content.Shared.Animals;
 ///     Gives ability to produce fiber reagents;
 ///     produces endlessly if the owner has no HungerComponent.
 /// </summary>
-[Access(typeof(SharedWoolySystem))]
-public abstract class SharedWoolySystem : EntitySystem
+public sealed class WoolySystem : EntitySystem
 {
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -23,7 +22,7 @@ public abstract class SharedWoolySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedWoolyComponent, SharedBeforeFullyEatenEvent>(OnBeforeFullyEaten);
+        SubscribeLocalEvent<WoolyComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
         Logger.Info("Subscribed to SharedBeforeFullyEatenEvent for SharedWoolyComponent");
     }
 
@@ -31,7 +30,7 @@ public abstract class SharedWoolySystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<SharedWoolyComponent>();
+        var query = EntityQueryEnumerator<WoolyComponent>();
         var now = _timing.CurTime;
         while (query.MoveNext(out var uid, out var wooly))
         {
@@ -63,7 +62,7 @@ public abstract class SharedWoolySystem : EntitySystem
         }
     }
 
-    private void OnBeforeFullyEaten(Entity<SharedWoolyComponent> ent, ref SharedBeforeFullyEatenEvent args)
+    private void OnBeforeFullyEaten(Entity<WoolyComponent> ent, ref BeforeFullyEatenEvent args)
     {
         // don't want moths to delete goats after eating them
         Logger.Info($"OnBeforeFullyEaten called for entity {ent}");

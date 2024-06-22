@@ -17,8 +17,7 @@ namespace Content.Shared.Animals;
 ///     Gives the ability to produce milkable reagents;
 ///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
-[Access(typeof(SharedUdderSystem))]
-public abstract class SharedUdderSystem : EntitySystem
+public abstract class UdderSystem : EntitySystem
 {
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -31,16 +30,16 @@ public abstract class SharedUdderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedUdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
-        SubscribeLocalEvent<SharedUdderComponent, MilkingDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<SharedUdderComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
+        SubscribeLocalEvent<UdderComponent, MilkingDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<UdderComponent, ExaminedEvent>(OnExamine);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<SharedUdderComponent>();
+        var query = EntityQueryEnumerator<UdderComponent>();
         var now = _timing.CurTime;
         while (query.MoveNext(out var uid, out var udder))
         {
@@ -73,7 +72,7 @@ public abstract class SharedUdderSystem : EntitySystem
         }
     }
 
-    private void AttemptMilk(Entity<SharedUdderComponent?> udder, EntityUid userUid, EntityUid containerUid)
+    private void AttemptMilk(Entity<UdderComponent?> udder, EntityUid userUid, EntityUid containerUid)
     {
         if (!Resolve(udder, ref udder.Comp))
             return;
@@ -88,7 +87,7 @@ public abstract class SharedUdderSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doargs);
     }
 
-    private void OnDoAfter(Entity<SharedUdderComponent> entity, ref MilkingDoAfterEvent args)
+    private void OnDoAfter(Entity<UdderComponent> entity, ref MilkingDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Args.Used == null)
             return;
@@ -117,7 +116,7 @@ public abstract class SharedUdderSystem : EntitySystem
             args.Args.User, PopupType.Medium);
     }
 
-    private void AddMilkVerb(Entity<SharedUdderComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
+    private void AddMilkVerb(Entity<UdderComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (args.Using == null ||
              !args.CanInteract ||
@@ -139,7 +138,7 @@ public abstract class SharedUdderSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void OnExamine(Entity<SharedUdderComponent> entity, ref ExaminedEvent args)
+    private void OnExamine(Entity<UdderComponent> entity, ref ExaminedEvent args)
     {
         var entityIdentity = ("entity", Identity.Entity(args.Examined, EntityManager));
 

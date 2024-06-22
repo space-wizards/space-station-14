@@ -2,7 +2,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Animals;
 
@@ -11,9 +10,8 @@ namespace Content.Shared.Animals;
 ///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
 [RegisterComponent]
-[Virtual]
-[Access(typeof(SharedWoolyComponent)), AutoGenerateComponentPause]
-public partial class SharedWoolyComponent : Component
+[AutoGenerateComponentPause]
+public sealed partial class WoolyComponent : Component
 {
     /// <summary>
     ///     The reagent to grow.
@@ -56,6 +54,6 @@ public partial class SharedWoolyComponent : Component
     /// </summary>
     //[DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), Access(typeof(SharedWoolySystem))]
     //public TimeSpan NextGrowth = TimeSpan.FromSeconds(0);
-    [AutoPausedField, Access(typeof(SharedWoolySystem))]
+    [AutoPausedField, Access(typeof(WoolySystem))]
     public TimeSpan NextGrowth = TimeSpan.Zero;
 }
