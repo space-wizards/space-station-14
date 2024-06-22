@@ -1,53 +1,38 @@
 ﻿<tabs:GraphicsTab xmlns="https://spacestation14.io"
-          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-          xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs">
+          xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs"
+          xmlns:ui="clr-namespace:Content.Client.Options.UI">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
-            <CheckBox Name="VSyncCheckBox" Text="{Loc 'ui-options-vsync'}" />
-            <CheckBox Name="FullscreenCheckBox" Text="{Loc 'ui-options-fullscreen'}" />
-            <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'ui-options-lighting-label'}" />
-                <Control MinSize="4 0" />
-                <OptionButton Name="LightingPresetOption" MinSize="100 0" />
-            </BoxContainer>
-            <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'ui-options-scale-label'}" />
-                <Control MinSize="4 0" />
-                <OptionButton Name="UIScaleOption" />
-            </BoxContainer>
-            <BoxContainer Orientation="Horizontal">
+        <ScrollContainer VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" Margin="8 8 8 8">
+                <!-- Display -->
+                <Label Text="{Loc 'ui-options-display-label'}" StyleClasses="LabelKeyText"/>
+                <CheckBox Name="VSyncCheckBox" Text="{Loc 'ui-options-vsync'}" />
+                <CheckBox Name="FullscreenCheckBox" Text="{Loc 'ui-options-fullscreen'}" />
+
+                <!-- Quality -->
+                <Label Text="{Loc 'ui-options-quality-label'}" StyleClasses="LabelKeyText"/>
+                <ui:OptionDropDown Name="DropDownLightingQuality" Title="{Loc 'ui-options-lighting-label'}" />
+                <CheckBox Name="ViewportLowResCheckBox" Text="{Loc 'ui-options-vp-low-res'}" />
+                <CheckBox Name="ParallaxLowQualityCheckBox" Text="{Loc 'ui-options-parallax-low-quality'}" />
+
+                <!-- Interface -->
+                <Label Text="{Loc 'ui-options-interface-label'}" StyleClasses="LabelKeyText"/>
+                <ui:OptionDropDown Name="DropDownUIScale" Title="{Loc 'ui-options-scale-label'}" />
                 <CheckBox Name="ViewportStretchCheckBox" Text="{Loc 'ui-options-vp-stretch'}" />
-                <BoxContainer Name="ViewportScaleBox" Orientation="Horizontal">
-                    <Label Name="ViewportScaleText" Margin="8 0" />
-                    <Slider Name="ViewportScaleSlider"
-                            MinValue="1"
-                            MaxValue="5"
-                            Rounded="True"
-                            MinWidth="200" />
-                </BoxContainer>
+                <ui:OptionSlider Name="ViewportScaleSlider" Title="{Loc ui-options-vp-scale}" />
+                <ui:OptionSlider Name="ViewportWidthSlider" Title="{Loc ui-options-vp-width}" />
+                <CheckBox Name="IntegerScalingCheckBox"
+                          Text="{Loc 'ui-options-vp-integer-scaling'}"
+                          ToolTip="{Loc 'ui-options-vp-integer-scaling-tooltip'}" />
+                <CheckBox Name="ViewportVerticalFitCheckBox"
+                          Text="{Loc 'ui-options-vp-vertical-fit'}"
+                          ToolTip="{Loc 'ui-options-vp-vertical-fit-tooltip'}" />
+
+                <!-- Misc -->
+                <Label Text="{Loc 'ui-options-misc-label'}" StyleClasses="LabelKeyText"/>
+                <CheckBox Name="FpsCounterCheckBox" Text="{Loc 'ui-options-fps-counter'}" />
             </BoxContainer>
-            <BoxContainer Orientation="Horizontal">
-                <Label Name="ViewportWidthSliderDisplay" />
-                <Control MinSize="4 0" />
-                <Slider Name="ViewportWidthSlider"
-                        Rounded="True"
-                        MinWidth="200" />
-            </BoxContainer>
-            <CheckBox Name="IntegerScalingCheckBox"
-                      Text="{Loc 'ui-options-vp-integer-scaling'}"
-                      ToolTip="{Loc 'ui-options-vp-integer-scaling-tooltip'}" />
-            <CheckBox Name="ViewportVerticalFitCheckBox"
-                      Text="{Loc 'ui-options-vp-vertical-fit'}"
-                      ToolTip="{Loc 'ui-options-vp-vertical-fit-tooltip'}" />
-            <CheckBox Name="ViewportLowResCheckBox" Text="{Loc 'ui-options-vp-low-res'}" />
-            <CheckBox Name="ParallaxLowQualityCheckBox" Text="{Loc 'ui-options-parallax-low-quality'}" />
-            <CheckBox Name="FpsCounterCheckBox" Text="{Loc 'ui-options-fps-counter'}" />
-        </BoxContainer>
-        <controls:StripeBack HasBottomEdge="False" HasMargins="False">
-            <Button Name="ApplyButton"
-                    Text="{Loc 'ui-options-apply'}"
-                    TextAlign="Center"
-                    HorizontalAlignment="Right" />
-        </controls:StripeBack>
+        </ScrollContainer>
+        <ui:OptionsTabControlRow Name="Control" Access="Public" />
     </BoxContainer>
 </tabs:GraphicsTab>
