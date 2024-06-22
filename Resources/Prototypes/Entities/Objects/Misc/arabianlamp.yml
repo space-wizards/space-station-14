@@ -16,7 +16,7 @@
     itemCanStoreMobs: false #  just leaving this here explicitly since I know at some point someone will want to use this to hold a mob. This also prevents it from becoming His Grace.
   # - type: StorageFill 
     # contents: 
-      # - id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open.
+      # - id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open. 
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
