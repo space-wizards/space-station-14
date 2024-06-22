@@ -41,7 +41,7 @@ public sealed partial class ObjectsTab : Control
         foreach (var type in Enum.GetValues(typeof(ObjectsTabSelection)))
         {
             _selections.Add((ObjectsTabSelection)type!);
-            ObjectTypeOptions.AddItem(Enum.GetName((ObjectsTabSelection)type)!);
+            ObjectTypeOptions.AddItem(Loc.GetString($"object-tab-object-type-{((Enum.GetName((ObjectsTabSelection)type))!.ToString().ToLower())}"));
         }
 
         ListHeader.OnHeaderClicked += HeaderClicked;
