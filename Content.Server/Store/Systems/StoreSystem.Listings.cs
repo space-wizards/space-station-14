@@ -1,6 +1,5 @@
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
-using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Store.Systems;
