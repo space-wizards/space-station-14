@@ -208,14 +208,14 @@
     - ClothingNeckAutismPin
 
 - type: loadout
-  id: ClothingNeckAutismPin
-  equipment: ClothingNeckAutismPin
+  id: ClothingNeckGoldAutismPin
+  equipment: ClothingNeckGoldAutismPin
 
 - type: startingGear
-  id: ClothingNeckAutismPin
+  id: ClothingNeckGoldAutismPin
   storage:
     back:
-    - ClothingNeckAutismPin
+    - ClothingNeckGoldAutismPin
 
 - type: loadout
   id: ClothingNeckLizardPin
