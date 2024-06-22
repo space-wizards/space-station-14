@@ -559,6 +559,8 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasIndex("ServerId")
                         .HasDatabaseName("IX_connection_log_server_id");
 
+                    b.HasIndex("Time");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("connection_log", null, t =>

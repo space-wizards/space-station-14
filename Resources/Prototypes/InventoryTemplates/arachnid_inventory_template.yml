@@ -70,7 +70,7 @@
       slotGroup: SecondHotbar
       stripTime: 6
       uiWindowPos: 3,1
-      strippingWindowPos: 2,3
+      strippingWindowPos: 1,5
       displayName: Belt
     - name: back
       slotTexture: back
@@ -79,7 +79,7 @@
       slotGroup: SecondHotbar
       stripTime: 6
       uiWindowPos: 3,0
-      strippingWindowPos: 0,3
+      strippingWindowPos: 0,5
       displayName: Back
 
     - name: pocket4
@@ -89,7 +89,7 @@
       slotGroup: MainHotbar
       stripTime: 3
       uiWindowPos: 2,4
-      strippingWindowPos: 1,5
+      strippingWindowPos: 2,3
       displayName: Pocket 4
     - name: pocket3
       slotTexture: web
@@ -98,7 +98,7 @@
       slotGroup: MainHotbar
       stripTime: 3
       uiWindowPos: 0,4
-      strippingWindowPos: 0,5
+      strippingWindowPos: 0,3
       displayName: Pocket 3
     - name: outerClothing
       slotTexture: suit
