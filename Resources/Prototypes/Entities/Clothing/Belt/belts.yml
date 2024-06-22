@@ -586,10 +586,10 @@
     - 0,0,3,1
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase]
   id: ClothingBeltSyndieHolster
   name: syndicate shoulder holster
-  description: A deep shoulder holster capable of holding many types of ballistics.
+  description: A deep shoulder holster capable of holding many types of ballistics. Contains chameleon technology.
   components:
   - type: Sprite
     sprite: Clothing/Belt/syndieholster.rsi
@@ -606,6 +606,17 @@
         - Gun
         - BallisticAmmoProvider
         - CartridgeAmmo
+  - type: ChameleonClothing
+    slot: [belt]
+    default: ClothingBeltSyndieHolster
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.ChameleonUiKey.Key:
+        type: ChameleonBoundUserInterface
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
 
 - type: entity
   parent: ClothingBeltSecurity
