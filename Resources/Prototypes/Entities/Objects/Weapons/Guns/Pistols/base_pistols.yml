@@ -30,6 +30,7 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+  - type: AmmoCounter
 
 # CASELESS PISTOL MAG
 # A gun that feeds ammo to a chamber from a loaded caseless pistol magazine.
@@ -62,6 +63,7 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+  - type: AmmoCounter
 
 # MAGNUM MAG
 # A gun that feeds ammo to a chamber from a loaded magnum magazine.
@@ -94,3 +96,4 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+  - type: AmmoCounter
