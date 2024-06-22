@@ -621,6 +621,9 @@
   id: GasScrubber
 
 - type: Tag
+  id: GasTank
+
+- type: Tag
   id: GasVent
 
 - type: Tag
