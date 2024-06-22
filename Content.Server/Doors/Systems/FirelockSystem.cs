@@ -93,7 +93,7 @@ namespace Content.Server.Doors.Systems
             if (!TryComp<DoorComponent>(uid, out var doorComponent))
                 return;
 
-            if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
+            if (args.AlarmType == AtmosAlarmType.Normal)
             {
                 if (doorComponent.State == DoorState.Closed)
                     _doorSystem.TryOpen(uid);

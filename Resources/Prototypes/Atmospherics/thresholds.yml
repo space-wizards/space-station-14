@@ -41,14 +41,21 @@
 - type: alarmThreshold
   id: stationCO2
   upperBound: !type:AlarmThresholdSetting
-    threshold: 0.0025
+    threshold: 0.006
   upperWarnAround: !type:AlarmThresholdSetting
-    threshold: 0.5
+    threshold: 0.5 # minor gasping and airloss at 0.3%
 
 - type: alarmThreshold
   id: stationPlasma
   upperBound: !type:AlarmThresholdSetting
-    threshold: 0.00125
+    threshold: 0.005 # lightable beyond this concentration
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+
+- type: alarmThreshold
+  id: stationTritium
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.004 # lightable beyond this concentration
   upperWarnAround: !type:AlarmThresholdSetting
     threshold: 0.5
 
