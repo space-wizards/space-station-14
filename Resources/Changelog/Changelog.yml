@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Some devices may have broken wiring at the start of each round.
-    type: Add
-  id: 6299
-  time: '2024-04-04T06:28:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26695
 - author: lzk228
   changes:
   - message: Turning off thrusters and gyroscopes now stop consume power.
@@ -3850,3 +3843,10 @@
   id: 6798
   time: '2024-06-21T10:50:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29293
+- author: Macoron
+  changes:
+  - message: Fixed SSD indicator for dwarfs.
+    type: Fix
+  id: 6799
+  time: '2024-06-22T01:11:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29310
