@@ -59,8 +59,20 @@
       - id: ClothingUniformJumpsuitColorGrey
         prob: 0.06
         orGroup: dressermainloot
-      - id: ClothingUniformJumpskirtColorGrey
+      - id: ClothingUniformJumpskirtBlueDress
         prob: 0.06
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtRedDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtYellowDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtBlackDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtColorGrey
+        prob: 0.05
         orGroup: dressermainloot
       - id: ClothingUniformJumpsuitColorWhite
         prob: 0.05
