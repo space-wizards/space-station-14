@@ -457,6 +457,13 @@
   - MimeWintercoat
 
 - type: loadoutGroup
+  id: MimeBelt
+  name: loadout-group-mime-belt
+  loadouts:
+  - MimeSuspendersRed
+  - MimeSuspendersBlack
+  
+- type: loadoutGroup
   id: MusicianJumpsuit
   name: loadout-group-musician-jumpsuit
   loadouts:
