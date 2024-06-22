@@ -1,5 +1,3 @@
-using Content.Shared.Whitelist;
-
 namespace Content.Shared.Armor;
 
 /// <summary>
@@ -8,14 +6,5 @@ namespace Content.Shared.Armor;
 [RegisterComponent]
 public sealed partial class AllowSuitStorageComponent : Component
 {
-
-    [DataField]
-    public EntityWhitelist Whitelist = new()
-    {
-        Components = new[]
-        {
-            "Item"
-        }
-    };
 
 }
