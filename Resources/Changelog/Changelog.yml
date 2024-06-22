@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: Daemon
   changes:
-  - message: Practice projectiles have been given standardized minimal damage.
-    type: Tweak
-  - message: The practice laser gun now works with shooting targets.
-    type: Tweak
-  id: 6306
-  time: '2024-04-05T03:15:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26731
-- author: Daemon
-  changes:
   - message: Shooting targets can now have their popup type changed with a left click
       to show total damage, damage of a single hit, both, or just a notice that it
       was hit.
@@ -3846,3 +3837,10 @@
   id: 6805
   time: '2024-06-22T15:44:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27771
+- author: lzk228
+  changes:
+  - message: Prying reinforced tile now will give you back metal rod
+    type: Tweak
+  id: 6806
+  time: '2024-06-22T15:47:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29084
