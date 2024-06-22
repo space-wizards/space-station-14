@@ -20,6 +20,20 @@ namespace Content.Shared.Doors.Components
         public float LockedPryTimeModifier = 1.5f;
 
         /// <summary>
+        /// Maximum pressure difference before the firelock will refuse to open, in kPa.
+        /// </summary>
+        [DataField("pressureThreshold"), ViewVariables(VVAccess.ReadWrite)]
+        public float PressureThreshold = 80;
+
+        /// <summary>
+        /// Maximum temperature difference before the firelock will refuse to open, in k.
+        /// </summary>
+        [DataField("temperatureThreshold"), ViewVariables(VVAccess.ReadWrite)]
+        public float TemperatureThreshold = 330;
+        // this used to check for hot-spots, but because accessing that data is a a mess this now just >
+        // temperature. This does mean a cold room will trigger hot-air pop-ups
+
+        /// <summary>
         /// The cooldown duration before a firelock can automatically close due to a hazardous environment after it has
         /// been pried open. Measured in seconds.
         /// </summary>
@@ -37,11 +51,22 @@ namespace Content.Shared.Doors.Components
         public TimeSpan? EmergencyCloseCooldown;
 
         /// <summary>
+        /// Whether or not a pressure difference exceeding the pressure threshold exists around the firelock.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool Pressure;
+
+        /// <summary>
+        /// Whether or not the airlock is commanded by an air alarm to close.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool ExtLocked;
+
+        /// <summary>
         /// Whether the firelock can open, or is locked due to its environment. Note that even when locked,
         /// the firelock can still be pried, so this should be more accurately named "WantsToClose".
         /// </summary>
-        [DataField, AutoNetworkedField]
-        public bool IsLocked;
+        public bool IsLocked => ExtLocked || Pressure;
 
         /// <summary>
         /// Whether the airlock is powered.
