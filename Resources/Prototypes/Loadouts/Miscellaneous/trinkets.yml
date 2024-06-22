@@ -284,7 +284,7 @@
     back:
     - ClothingNeckFrontierPin
 
- - type: loadout
+- type: loadout
   id: ClothingNeckDeltaVPin
   equipment: ClothingNeckDeltaVPin
 
