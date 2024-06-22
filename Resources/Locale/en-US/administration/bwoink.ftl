@@ -14,3 +14,5 @@ bwoink-system-typing-indicator = {$players} {$count ->
 admin-bwoink-play-sound = Bwoink?
 
 bwoink-title-none-selected = None selected
+
+bwoink-system-rate-limited = System: you are sending messages too quickly.

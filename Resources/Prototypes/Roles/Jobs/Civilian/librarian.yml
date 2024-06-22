@@ -20,5 +20,4 @@
     pocket2: HandLabeler # for making named bestsellers
   storage:
     back:
-    - BoxSurvival
     - BookRandom
