@@ -7,9 +7,6 @@ namespace Content.Server.Store.Systems;
 
 public sealed partial class StoreSystem
 {
-
-    [Dependency] private readonly TagSystem _tag = default!;
-
     /// <summary>
     /// Refreshes all listings on a store.
     /// Do not use if you don't know what you're doing.
@@ -74,7 +71,7 @@ public sealed partial class StoreSystem
     /// <returns>The available listings.</returns>
     public IEnumerable<ListingData> GetAvailableListings(EntityUid buyer, EntityUid store, StoreComponent component)
     {
-        return GetAvailableListings(buyer, component.Listings, component.Categories, store);
+        return GetAvailableListings(buyer, component.Listings, component.Categories, store, component.ShowAllListings);
     }
 
     /// <summary>
@@ -89,7 +86,8 @@ public sealed partial class StoreSystem
         EntityUid buyer,
         HashSet<ListingData>? listings,
         HashSet<ProtoId<StoreCategoryPrototype>> categories,
-        EntityUid? storeEntity = null)
+        EntityUid? storeEntity = null,
+        bool ShowAllListings = false)
     {
         listings ??= GetAllListings();
 
@@ -98,7 +96,7 @@ public sealed partial class StoreSystem
             if (!ListingHasCategory(listing, categories))
                 continue;
 
-            if (listing.Conditions != null && !( storeEntity != null && _tag.HasTag(storeEntity.Value, "DebugUplink")))
+            if (listing.Conditions != null && !ShowAllListings)
             {
                 var args = new ListingConditionArgs(buyer, storeEntity, listing, EntityManager);
                 var conditionsMet = true;

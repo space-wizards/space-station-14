@@ -87,6 +87,12 @@ public sealed partial class StoreComponent : Component
     [DataField]
     public EntityUid? StartingMap;
 
+    /// <summary>
+    /// Wheter the store should have access to all listings
+    /// </summary>
+    [DataField]
+    public bool ShowAllListings = false;
+
     #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.
