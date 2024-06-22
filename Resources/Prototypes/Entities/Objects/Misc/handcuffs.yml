@@ -153,7 +153,7 @@
     breakoutTime: 100
     cuffTime: 10
     uncuffTime: 10
-    stunBonus: 4
+    stunBonus: 5
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
     state: icon
