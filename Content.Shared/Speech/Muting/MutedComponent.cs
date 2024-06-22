@@ -7,10 +7,10 @@ namespace Content.Shared.Speech.Muting
     {
 
       /// <summary>
-      /// Whether the entity should be able to be unmuted
+      /// Whether  the entity should be able to be unmuted
       /// </summary>
       [DataField]
-      public bool removable = true;
+      public bool Removable = true;
 
     }
 }
