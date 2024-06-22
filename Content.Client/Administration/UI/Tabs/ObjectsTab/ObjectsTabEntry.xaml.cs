@@ -10,12 +10,16 @@ public sealed partial class ObjectsTabEntry : PanelContainer
 {
     public NetEntity AssocEntity;
 
-    public ObjectsTabEntry(string name, NetEntity nent, StyleBox styleBox)
+    public ObjectsTabEntry(string name, NetEntity nent, StyleBox styleBox, Action<NetEntity>? teleportToObj, Action<NetEntity>? deleteObj)
     {
         RobustXamlLoader.Load(this);
+
         AssocEntity = nent;
         EIDLabel.Text = nent.ToString();
         NameLabel.Text = name;
         BackgroundColorPanel.PanelOverride = styleBox;
+
+        TeleportButton.OnPressed += _ => teleportToObj?.Invoke(nent);
+        DeleteButton.OnPressed += _ => deleteObj?.Invoke(nent);
     }
 }
