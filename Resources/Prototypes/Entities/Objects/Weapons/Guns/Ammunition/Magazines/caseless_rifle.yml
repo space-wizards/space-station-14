@@ -94,7 +94,7 @@
 
 - type: entity
   id: MagazinePistolCaselessRifle
-  name: "pistol magazine (.25 caseless lethal)"
+  name: "cobra magazine (.25 caseless lethal)"
   parent: BaseMagazinePistolCaselessRifle
   components:
   - type: BallisticAmmoProvider
@@ -114,7 +114,7 @@
 
 - type: entity
   id: MagazinePistolCaselessRiflePractice
-  name: "pistol magazine (.25 caseless practice)"
+  name: "cobra magazine (.25 caseless practice)"
   parent: BaseMagazinePistolCaselessRifle
   components:
   - type: BallisticAmmoProvider
@@ -134,7 +134,7 @@
 
 - type: entity
   id: MagazinePistolCaselessRifleEmpty
-  name: pistol magazine (.25 caseless)
+  name: cobra magazine (.25 caseless)
   suffix: Empty
   parent: BaseMagazinePistolCaselessRifle
   components:
