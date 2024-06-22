@@ -64,19 +64,27 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
 
+# Foam Force Astro Ace
 - type: entity
-  name: Foam Force Astro Ace
   parent:
   - BaseGunMedium
   - BaseGunWieldable
   - BaseGun
   id: WeaponRifleFoam
+  name: Foam Force Astro Ace
   description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/foam_rifle.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Rifles/foam_rifle_inhand_64x.rsi
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    clumsyProof: true
   - type: BallisticAmmoProvider    
     whitelist:
       tags:
@@ -85,15 +93,8 @@
     proto: BulletFoam
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-  - type: Gun
-    fireRate: 2
-    soundGunshot:
-      path: /Audio/Effects/thunk.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    clumsyProof: true
-  - type: AmmoCounter
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
         ents: []
+  - type: AmmoCounter
