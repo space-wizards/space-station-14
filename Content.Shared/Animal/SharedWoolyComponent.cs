@@ -1,0 +1,61 @@
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
+namespace Content.Shared.Animals;
+
+/// <summary>
+///     Gives the ability to produce wool fibers;
+///     produces endlessly if the owner does not have a HungerComponent.
+/// </summary>
+[RegisterComponent]
+[Virtual]
+[Access(typeof(SharedWoolyComponent)), AutoGenerateComponentPause]
+public partial class SharedWoolyComponent : Component
+{
+    /// <summary>
+    ///     The reagent to grow.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public ProtoId<ReagentPrototype> ReagentId = "Fiber";
+
+    /// <summary>
+    ///     The name of <see cref="Solution"/>.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public string SolutionName = "wool";
+
+    /// <summary>
+    ///     The solution to add reagent to.
+    /// </summary>
+    [DataField]
+    public Entity<SolutionComponent>? Solution;
+
+    /// <summary>
+    ///     The amount of reagent to be generated on update.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 Quantity = 25;
+
+    /// <summary>
+    ///     The amount of nutrient consumed on update.
+    /// </summary>
+    [DataField]
+    public float HungerUsage = 10f;
+
+    /// <summary>
+    ///     How long to wait before growing wool.
+    /// </summary>
+    [DataField]
+    public TimeSpan GrowthDelay = TimeSpan.FromMinutes(1);
+
+    /// <summary>
+    ///     When to next try growing wool.
+    /// </summary>
+    //[DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), Access(typeof(SharedWoolySystem))]
+    //public TimeSpan NextGrowth = TimeSpan.FromSeconds(0);
+    [AutoPausedField, Access(typeof(SharedWoolySystem))]
+    public TimeSpan NextGrowth = TimeSpan.Zero;
+}

@@ -6,6 +6,6 @@ udder-system-dry = The udder is dry.
 
 udder-system-verb-milk = Milk
 
-udder-system-examine-overfed = This animal looks overfed
-udder-system-examine-hungry = This animal looks hungry
-udder-system-examine-none = This animal seems to not get hungry
+udder-system-examine-overfed = {CAPITALIZE(SUBJECT($entity))} looks overfed
+udder-system-examine-hungry = {CAPITALIZE(SUBJECT($entity))} looks hungry
+udder-system-examine-none = {CAPITALIZE(SUBJECT($entity))} seems not to get hungry

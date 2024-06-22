@@ -66,7 +66,7 @@ public sealed class EggLayerSystem : EntitySystem
     private void OnMapInit(EntityUid uid, EggLayerComponent component, MapInitEvent args)
     {
         _actions.AddAction(uid, ref component.Action, component.EggLayAction);
-        component.NextGrowth = TimeSpan.FromSeconds(_random.NextFloat(component.EggLayCooldownMin, component.EggLayCooldownMax));
+        component.NextGrowth = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.EggLayCooldownMin, component.EggLayCooldownMax));
     }
 
     private void OnEggLayAction(EntityUid uid, EggLayerComponent egglayer, EggLayInstantActionEvent args)
