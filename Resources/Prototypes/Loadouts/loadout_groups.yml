@@ -38,8 +38,8 @@
 - type: loadoutGroup
   id: Survival
   name: loadout-group-survival-basic
-  minLimit: 2
-  maxLimit: 2
+  minLimit: 1
+  maxLimit: 1
   hidden: true
   loadouts:
   - EmergencyNitrogen
@@ -330,6 +330,13 @@
   minLimit: 0
   loadouts:
   - JanitorWintercoat
+
+- type: loadoutGroup
+  id: JanitorPlunger
+  name: loadout-group-janitor-plunger
+  minLimit: 0
+  loadouts:
+  - JanitorGoldenPlunger
 
 - type: loadoutGroup
   id: BotanistHead
