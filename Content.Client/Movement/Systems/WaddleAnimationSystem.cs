@@ -87,6 +87,9 @@ public sealed class WaddleAnimationSystem : SharedWaddleAnimationSystem
         if (!TryComp<InputMoverComponent>(entity.Owner, out var mover))
             return;
 
+        if (!entity.Comp.IsCurrentlyWaddling)
+            return;
+
         PlayWaddleAnimationUsing(
             (entity.Owner, entity.Comp),
             CalculateAnimationLength(entity.Comp, mover),
