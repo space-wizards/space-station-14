@@ -1156,6 +1156,8 @@
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
       board: OreProcessorMachineCircuitboard
+    - type: ApcPowerReceiver
+      powerLoad: 25000
     - type: MaterialStorage
       ignoreColor: true
       whitelist:
