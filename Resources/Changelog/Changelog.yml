@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinoWattz
-  changes:
-  - message: Fixed pocket slots being able to hide character snout markings.
-    type: Fix
-  id: 6302
-  time: '2024-04-04T08:35:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26708
 - author: VasilisThePikachu
   changes:
   - message: Mop buckets and Janitorial Trolleys will not spill their contents as
@@ -3851,3 +3844,10 @@
   id: 6801
   time: '2024-06-22T10:43:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29336
+- author: Donchan, marboww
+  changes:
+  - message: New Nuke Detonation Song "Sound Station 14"
+    type: Add
+  id: 6802
+  time: '2024-06-22T15:09:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29345
