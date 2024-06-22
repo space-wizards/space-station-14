@@ -27,7 +27,7 @@
 - type: entity
   parent: BaseMagazineBoxMagnum
   id: MagazineBoxMagnum
-  name: ammunition box (.45 magnum)
+  name: ammunition box (.45 magnum lethal)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
