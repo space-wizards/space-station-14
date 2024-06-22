@@ -7,72 +7,74 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Storage;
 using Content.Server.StationEvents.Components;
+using System.Linq;
 
 namespace Content.Server.GameTicking.Rules;
 
+
+/// <summary>
+/// Entities spawned with this component will try to add gamerules from the provided EntitySpawnEntry list.
+/// This can be used to subset gamerules for balance, or to do something else like add it to a prototype if you want ninjas to start with meteors etc.
+/// </summary>
 public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
-
-    private string _ruleCompName = default!;
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
 
     protected override void Added(EntityUid uid, RandomRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         var selectedRules = EntitySpawnCollection.GetSpawns(component.SelectableGameRules, _random);
 
-        Random rnd = new Random();
-        int ruleQuant = rnd.Next(component.MinRules, component.MaxRules);
-
-        for (int i = 0; i < ruleQuant; i++)
+        if (component.MinRules > component.MaxRules)
         {
-            var availableEvents = _event.AvailableEvents(); // handles the player counts and individual event restrictions, we need to do it each i incase it changes
-            string? slag = null;
+            Log.Warning("Minimum rules is more than Maximum rules!");
+            return;
+        }
 
-            foreach (var rule in selectedRules)
+        int ruleQuant = _random.Next(component.MinRules, component.MaxRules + 1); // the padding is required for expected result. Dont ask me why Next was implimented this way.
+
+        if (selectedRules == null || selectedRules.Count == 0)
+            return;
+
+        _random.Shuffle(selectedRules);
+        var nRules = selectedRules.Take(ruleQuant); // Does not allow duplicate selection, unless the EntitySpawnCollection had duplicate entries.
+
+        var availableEvents = _event.AvailableEvents(); // handles the player counts and individual event restrictions, we need to do it each i incase it changes
+
+        foreach (var rule in nRules)
+        {
+            var ruleEnt = new EntityUid();
+
+            // If the station is already initialized, just start the rule, otherwise let that happen at the start of round.
+            if (GameTicker.RunLevel <= GameRunLevel.InRound)
             {
-                if (selectedRules == null)
-                    return;
-                // If the station is already initialized, just start the rule, otherwise let that happen at the start of round.
-                if (GameTicker.RunLevel <= GameRunLevel.InRound)
+                ruleEnt = GameTicker.AddGameRule(rule);
+            }
+            else
+            {
+                if (!_prototypeManager.TryIndex(rule, out var ruleProto))
                 {
-                    GameTicker.AddGameRule(rule);
+                    Log.Warning("The selected random rule is missing a prototype!");
+                    continue;
                 }
-                else
+
+                if (ruleProto.TryGetComponent<StationEventComponent>(out _, _compFact))
                 {
-                    _prototypeManager.TryIndex(rule, out var ruleEnt);
-                    if (ruleEnt == null)
+                    if (!availableEvents.ContainsKey(ruleProto))
                     {
-                        Log.Warning("The selected random rule is null!");
+                        Log.Warning("The selected random rule is not available!");
                         continue;
                     }
-
-                    if (ruleEnt.TryGetComponent<StationEventComponent>(out _, _compFact))
-                    {
-                        if (!availableEvents.ContainsKey(ruleEnt))
-                        {
-                            Log.Warning("The selected random rule is not available!");
-                            continue;
-                        }
-                        GameTicker.StartGameRule(rule);
-                    }
+                    GameTicker.StartGameRule(rule, out ruleEnt);
                 }
-                slag = rule;
             }
 
-            // prevents same gamerule twice in one run.
-            if (!string.IsNullOrEmpty(slag))
-            {
-                selectedRules.RemoveAt(selectedRules.IndexOf(slag));
-            }
+            var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEnt)));
+            _chatManager.SendAdminAlert(str);
+            Log.Info(str);
         }
     }
 

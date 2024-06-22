@@ -23,9 +23,8 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly EventManagerSystem _event = default!;
 
-        // someome yell at me if I forget to change this back, I need to test it without dying of old
-        public const float MinEventTime = 60 * 3; // 60 * 3;
-        public const float MaxEventTime = 60 * 10; // 60 * 10;
+        public const float MinEventTime = 60 * 3;
+        public const float MaxEventTime = 60 * 10;
 
         protected override void Ended(EntityUid uid, BasicStationEventSchedulerComponent component, GameRuleComponent gameRule,
             GameRuleEndedEvent args)
@@ -38,7 +37,7 @@ namespace Content.Server.StationEvents
         {
             base.Update(frameTime);
 
-            if (!_event.EventsEnabled)  // comment for testing
+            if (!_event.EventsEnabled)
                 return;
 
             var query = EntityQueryEnumerator<BasicStationEventSchedulerComponent, GameRuleComponent>();
@@ -53,7 +52,7 @@ namespace Content.Server.StationEvents
                     return;
                 }
 
-                _event.RunLimitedEvent(eventScheduler.ScheduledGameRules);
+                _event.RunRandomEvent(eventScheduler.ScheduledGameRules);
                 ResetTimer(eventScheduler);
             }
         }

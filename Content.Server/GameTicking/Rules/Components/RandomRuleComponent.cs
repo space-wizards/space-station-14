@@ -2,6 +2,10 @@ using Content.Shared.Storage;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
+
+/// <summary>
+/// Given a list of EntitySpawnEntries, selects between MinRules & MaxRules gamerules to add to the round without duplicates.
+/// </summary>
 [RegisterComponent, Access(typeof(RandomRuleSystem))]
 public sealed partial class RandomRuleComponent : Component
 {

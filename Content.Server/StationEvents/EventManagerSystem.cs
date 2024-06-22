@@ -54,19 +54,9 @@ public sealed class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Randomly picks a valid event.
-    /// </summary>
-    public string? PickRandomEvent()
-    {
-        var availableEvents = AvailableEvents();
-        Log.Info($"Picking from {availableEvents.Count} total available events");
-        return FindEvent(availableEvents);
-    }
-
-    /// <summary>
     /// Randomly runs an event from provided EntitySpawnCollection.
     /// </summary>
-    public string? RunLimitedEvent(List<EntitySpawnEntry>? limitedEventsList)
+    public string? RunRandomEvent(List<EntitySpawnEntry>? limitedEventsList)
     {
         if (limitedEventsList != null)
         {
@@ -127,6 +117,16 @@ public sealed class EventManagerSystem : EntitySystem
         return null;
     }
 
+
+    /// <summary>
+    /// Randomly picks a valid event.
+    /// </summary>
+    public string? PickRandomEvent()
+    {
+        var availableEvents = AvailableEvents();
+        Log.Info($"Picking from {availableEvents.Count} total available events");
+        return FindEvent(availableEvents);
+    }
 
     /// <summary>
     /// Pick a random event from the available events at this time, also considering their weightings.
