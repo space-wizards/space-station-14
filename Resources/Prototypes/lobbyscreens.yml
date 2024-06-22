@@ -49,3 +49,11 @@
 - type: lobbyBackground
   id: JaniShootout
   background: /Textures/LobbyScreens/janishootout.webp
+
+-  type: lobbyBackground
+  id: ReclaimerIce
+  background: /Textures/LobbyScreens/reclaimer-lobby-ice.webp
+
+-  type: lobbyBackground
+  id: ReclaimerNuke
+  background: /Textures/LobbyScreens/reclaimer-lobby-nuke.webp
