@@ -11088,6 +11088,12 @@ entities:
     - type: Transform
       pos: -20.5,-5.5
       parent: 30
+    - type: Door
+      secondsUntilStateChange: -295.55695
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
   - uid: 6880
     components:
     - type: MetaData
@@ -49450,6 +49456,14 @@ entities:
       - Steel
       - Glass
       - Gold
+- proto: CleanerDispenser
+  entities:
+  - uid: 10299
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -29.5,7.5
+      parent: 30
 - proto: ClosetBombFilled
   entities:
   - uid: 2072
@@ -55393,6 +55407,11 @@ entities:
       parent: 30
 - proto: DisposalJunction
   entities:
+  - uid: 6948
+    components:
+    - type: Transform
+      pos: -19.5,-5.5
+      parent: 30
   - uid: 7412
     components:
     - type: Transform
@@ -55689,11 +55708,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -18.5,-9.5
-      parent: 30
-  - uid: 6948
-    components:
-    - type: Transform
-      pos: -19.5,-5.5
       parent: 30
   - uid: 6949
     components:
@@ -101097,6 +101111,13 @@ entities:
     - type: Transform
       pos: 12.5,58.5
       parent: 30
+- proto: ParticleAcceleratorComputerCircuitboard
+  entities:
+  - uid: 11445
+    components:
+    - type: Transform
+      pos: -21.580353,-68.38637
+      parent: 30
 - proto: PartRodMetal
   entities:
   - uid: 9247
@@ -106915,6 +106936,11 @@ entities:
     components:
     - type: Transform
       pos: 1.5,-15.5
+      parent: 30
+  - uid: 11444
+    components:
+    - type: Transform
+      pos: -21.5,-68.5
       parent: 30
   - uid: 11737
     components:
@@ -122700,6 +122726,11 @@ entities:
       name: tank dispenser
     - type: Transform
       pos: -1.5,21.5
+      parent: 30
+  - uid: 10292
+    components:
+    - type: Transform
+      pos: 25.5,-9.5
       parent: 30
   - uid: 10400
     components:
