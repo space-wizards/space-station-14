@@ -116,3 +116,23 @@
     containers:
       gun_magazine: !type:ContainerSlot
 
+- type: entity
+  id: BaseWeaponBatterySmall
+  parent: BaseWeaponBattery
+  abstract: true
+  components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage
+
