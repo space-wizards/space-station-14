@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Aexxie
-  changes:
-  - message: Added the option to disable your OOC Patron name color.
-    type: Add
-  id: 6301
-  time: '2024-04-04T07:20:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26653
 - author: DinoWattz
   changes:
   - message: Fixed pocket slots being able to hide character snout markings.
@@ -3851,3 +3844,10 @@
   id: 6800
   time: '2024-06-22T04:15:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29317
+- author: Errant
+  changes:
+  - message: Items should no longer be missing from backpacks at spawn.
+    type: Fix
+  id: 6801
+  time: '2024-06-22T10:43:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29336
