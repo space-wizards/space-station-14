@@ -35,6 +35,16 @@
   - GlassesJamjar
   - GlassesJensen
 
+- type: loadoutGroup
+  id: Survival
+  name: loadout-group-survival-basic
+  minLimit: 1
+  maxLimit: 1
+  hidden: true
+  loadouts:
+  - EmergencyNitrogen
+  - EmergencyOxygen
+
 # Command
 - type: loadoutGroup
   id: CaptainHead
@@ -322,6 +332,13 @@
   - JanitorWintercoat
 
 - type: loadoutGroup
+  id: JanitorPlunger
+  name: loadout-group-janitor-plunger
+  minLimit: 0
+  loadouts:
+  - JanitorGoldenPlunger
+
+- type: loadoutGroup
   id: BotanistHead
   name: loadout-group-botanist-head
   minLimit: 0
@@ -389,6 +406,16 @@
   loadouts:
   - ClownShoes
   - JesterShoes
+
+- type: loadoutGroup
+  id: SurvivalClown
+  name: loadout-group-survival-clown
+  minLimit: 2
+  maxLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenClown
+  - EmergencyOxygenClown
 
 - type: loadoutGroup
   id: MimeHead
@@ -703,6 +730,16 @@
   - WhiteShoes
   - EngineeringWinterBoots
 
+- type: loadoutGroup
+  id: SurvivalExtended
+  name: loadout-group-survival-extended
+  minLimit: 2
+  maxLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenExtended
+  - EmergencyOxygenExtended
+
 # Science
 - type: loadoutGroup
   id: ResearchDirectorHead
@@ -973,6 +1010,16 @@
   - RedJumpsuit
   - RedJumpskirt
 
+- type: loadoutGroup
+  id: SurvivalSecurity
+  name: loadout-group-survival-security
+  minLimit: 2
+  maxLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenSecurity
+  - EmergencyOxygenSecurity
+
 # Medical
 - type: loadoutGroup
   id: ChiefMedicalOfficerHead
@@ -1145,6 +1192,16 @@
   - BlueShoes
   - MedicalWinterBoots
 
+- type: loadoutGroup
+  id: SurvivalMedical
+  name: loadout-group-survival-medical
+  minLimit: 2
+  maxLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenMedical
+  - EmergencyOxygenMedical
+
 # Wildcards
 - type: loadoutGroup
   id: ReporterJumpsuit
@@ -1168,3 +1225,14 @@
   - BlueBoxingGloves
   - GreenBoxingGloves
   - YellowBoxingGloves
+
+# Other
+- type: loadoutGroup
+  id: SurvivalSyndicate
+  name: loadout-group-survival-syndicate
+  minLimit: 2
+  maxLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenSyndicate
+  - EmergencyOxygenSyndicate

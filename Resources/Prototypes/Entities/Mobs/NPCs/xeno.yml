@@ -21,15 +21,10 @@
         true
       NavSmash: !type:Bool
         true
-  - type: Tool
-    speedModifier: 1.5
-    qualities:
-      - Prying
   - type: Prying
-    pryPowered: !type:Bool
-        true
-    force: !type:Bool
-      true
+    pryPowered: true
+    force: true
+    speedModifier: 1.5
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: Reactive
