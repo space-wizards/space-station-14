@@ -1,12 +1,11 @@
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Physics;
-using Robust.Shared.Utility;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.DoAfter;
 
-public abstract partial class SharedDoAfterSystem : EntitySystem
+public abstract partial class SharedDoAfterSystem
 {
     [Dependency] private readonly IDynamicTypeFactory _factory = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
@@ -135,11 +134,10 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         RaiseDoAfterEvents(doAfter, component);
 
-        if (doAfter.Args.Event.Repeat)
-        {
-            doAfter.StartTime = GameTiming.CurTime;
-            doAfter.Completed = false;
-        }
+        if (!doAfter.Args.Event.Repeat)
+            return;
+        doAfter.StartTime = GameTiming.CurTime;
+        doAfter.Completed = false;
     }
 
     private bool ShouldCancel(DoAfter doAfter,
@@ -162,16 +160,23 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.Target is { } target && !xformQuery.TryGetComponent(target, out targetXform))
             return true;
 
-        TransformComponent? usedXform = null;
-        if (args.Used is { } @using && !xformQuery.TryGetComponent(@using, out usedXform))
-            return true;
-
         // TODO: Re-use existing xform query for these calculations.
-        if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User, xform: userXform)))
+        if (args.BreakOnMove)
         {
-            // Whether the user has moved too much from their original position.
-            if (!userXform.Coordinates.InRange(EntityManager, _transform, doAfter.UserPosition, args.MovementThreshold))
-                return true;
+            if (!(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User, xform: userXform)))
+            {
+                // Whether the user has moved too much from their original position.
+                if (!_transform.InRange(doAfter.UserPosition, userXform.Coordinates, args.MovementThreshold))
+                    return true;
+            }
+            else
+            {
+                TryComp<PhysicsComponent>(args.User, out var physics);
+
+                // Whether the user has too much velocity speed.
+                if (physics?.LinearVelocity.Length() > args.WeightlessSpeedThreshold)
+                    return true;
+            }
 
             // Whether the distance between the user and target(if any) has changed too much.
             if (targetXform != null &&
@@ -217,22 +222,18 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.AttemptFrequency == AttemptFrequency.EveryTick && !TryAttemptEvent(doAfter))
             return true;
 
-        if (args.NeedHand)
-        {
-            if (!handsQuery.TryGetComponent(args.User, out var hands) || hands.Count == 0)
-                return true;
+        if (!args.NeedHand)
+            return args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target);
 
-            if (args.BreakOnHandChange && (hands.ActiveHand?.Name != doAfter.InitialHand
-                                           || hands.ActiveHandEntity != doAfter.InitialItem))
-            {
-                return true;
-            }
-        }
-
-        if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target))
+        if (!handsQuery.TryGetComponent(args.User, out var hands) || hands.Count == 0)
             return true;
 
+        if (args.BreakOnHandChange &&
+            (hands.ActiveHand?.Name != doAfter.InitialHand || hands.ActiveHandEntity != doAfter.InitialItem))
+        {
+            return true;
+        }
 
-        return false;
+        return args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target);
     }
 }
