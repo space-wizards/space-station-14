@@ -1,4 +1,5 @@
 # BASE
+# Common qualities for all guns. Inherited by the BaseGun<size> entity prototypes
 - type: entity
   abstract: true
   parent: BaseItem
