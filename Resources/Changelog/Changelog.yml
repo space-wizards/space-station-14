@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ZeroDayDaemon
-  changes:
-  - message: Lowered the number of ducks in the duck crate and reduced the price of
-      it.
-    type: Tweak
-  id: 6304
-  time: '2024-04-04T19:30:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26729
 - author: PrPleGoo
   changes:
   - message: The medical HUD's brightness now scales with lighting again.
@@ -3849,3 +3841,10 @@
   id: 6803
   time: '2024-06-22T15:12:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29094
+- author: notafet
+  changes:
+  - message: Reduce air alarm sensitivity to plasma, tritium, and carbon dioxide.
+    type: Tweak
+  id: 6804
+  time: '2024-06-22T15:22:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29331
