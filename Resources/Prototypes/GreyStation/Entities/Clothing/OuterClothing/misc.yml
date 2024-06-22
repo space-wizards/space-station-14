@@ -58,3 +58,14 @@
     sprite: GreyStation/Clothing/OuterClothing/Misc/robcopsuit.rsi
   - type: TypingIndicatorClothing
     proto: robot
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterDreddSuit
+  name: dredd suit
+  description: A uniform with big shoulder pads, its muscles are made of thick padded foam.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Misc/dredd.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Misc/dredd.rsi
