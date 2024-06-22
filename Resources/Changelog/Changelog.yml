@@ -1,47 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Dropped items are no longer rotated to world north.
-    type: Fix
-  id: 6295
-  time: '2024-04-03T05:31:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26662
-- author: deltanedas
-  changes:
-  - message: Disabled scooping foam due to a reagent duplication bug.
-    type: Fix
-  id: 6296
-  time: '2024-04-03T13:41:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26686
-- author: Aserovich
-  changes:
-  - message: New lobby art!
-    type: Add
-  id: 6297
-  time: '2024-04-04T05:28:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26505
-- author: Beck Thompson
-  changes:
-  - message: Items thrown at disposals now have to be insertable to display the miss
-      message.
-    type: Fix
-  id: 6298
-  time: '2024-04-04T06:25:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26716
-- author: Tayrtahn
-  changes:
-  - message: Some devices may have broken wiring at the start of each round.
-    type: Add
-  id: 6299
-  time: '2024-04-04T06:28:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26695
-- author: lzk228
-  changes:
-  - message: Turning off thrusters and gyroscopes now stop consume power.
-    type: Fix
-  id: 6300
-  time: '2024-04-04T06:28:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26690
 - author: Aexxie
   changes:
   - message: Added the option to disable your OOC Patron name color.
@@ -3845,3 +3802,52 @@
   id: 6794
   time: '2024-06-20T14:19:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29210
+- author: MilenVolf
+  changes:
+  - message: Stasis bed can be toggled on or off!
+    type: Tweak
+  id: 6795
+  time: '2024-06-21T03:02:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29268
+- author: slarticodefast
+  changes:
+  - message: Fixed initial infected status icons not showing up.
+    type: Fix
+  - message: Added an antagonist message to the character menu for initial infected
+      and zombies.
+    type: Add
+  id: 6796
+  time: '2024-06-21T05:42:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29259
+- author: Chief_Engineer and TsjipTsjip
+  changes:
+  - message: All ghostroles now have their role type, as defined in the rules, defined
+      in their ghostrole request box.
+    type: Tweak
+  id: 6797
+  time: '2024-06-21T09:41:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29249
+- author: ElectroJr
+  changes:
+  - message: Fixed not being able to pick up folded rollerbeds.
+    type: Fix
+  - message: Fixed not being able to unbuckle entities by clicking on them.
+    type: Fix
+  id: 6798
+  time: '2024-06-21T10:50:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29293
+- author: Macoron
+  changes:
+  - message: Fixed SSD indicator for dwarfs.
+    type: Fix
+  id: 6799
+  time: '2024-06-22T01:11:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29310
+- author: EmoGarbage404
+  changes:
+  - message: Deconstructing a damaged AME core now yields steel instead of a full
+      AME flatpack.
+    type: Tweak
+  id: 6800
+  time: '2024-06-22T04:15:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29317
