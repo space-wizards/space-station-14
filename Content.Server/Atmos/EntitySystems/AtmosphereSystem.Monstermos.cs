@@ -416,7 +416,7 @@ namespace Content.Server.Atmos.EntitySystems
                         // It only makes sense to do monstermos firelock actuation if we have
                         // instant spacing, since that would drain all the air before the firelocks
                         // have a chance to close.
-                        if (SpacingEscapeRatio < 1)
+                        if (SpacingEscapeRatio >= 1)
                             ConsiderFirelocks(ent, otherTile, otherTile2);
 
                         // The firelocks might have closed on us.

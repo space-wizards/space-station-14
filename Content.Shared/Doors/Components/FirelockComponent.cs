@@ -37,7 +37,8 @@ namespace Content.Shared.Doors.Components
         public TimeSpan? EmergencyCloseCooldown;
 
         /// <summary>
-        /// Whether the firelock can open, or is locked due to its environment.
+        /// Whether the firelock can open, or is locked due to its environment. Note that even when locked,
+        /// the firelock can still be pried, so this should be more accurately named "WantsToClose".
         /// </summary>
         [DataField, AutoNetworkedField]
         public bool IsLocked;

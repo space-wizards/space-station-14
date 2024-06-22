@@ -26,7 +26,7 @@ public sealed class FirelockSystem : SharedFirelockSystem
             state = DoorState.Closed;
 
         boltedVisible = _appearanceSystem.TryGetData<bool>(uid, DoorVisuals.BoltLights, out var lights, args.Component) && lights;
-        unlitVisible = comp.Powered && comp.IsLocked;
+        unlitVisible = comp.IsLocked;
 
         args.Sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && !boltedVisible);
         args.Sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, boltedVisible);
