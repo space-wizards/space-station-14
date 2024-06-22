@@ -45,10 +45,7 @@ public abstract class SharedFirelockSystem : EntitySystem
 
     private void OnBeforePry(EntityUid uid, FirelockComponent component, ref BeforePryEvent args)
     {
-        if (args.Cancelled)
-            return;
-
-        if (!component.Powered || args.ToolUsed || args.PryPowered)
+        if (args.Cancelled || !component.Powered || args.StrongPry || args.PryPowered)
             return;
 
         args.Cancelled = true;

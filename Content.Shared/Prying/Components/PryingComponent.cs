@@ -9,32 +9,32 @@ public sealed partial class PryingComponent : Component
     /// <summary>
     /// Whether the entity can pry open powered doors
     /// </summary>
-    [DataField("pryPowered")]
-    public bool PryPowered = false;
+    [DataField]
+    public bool PryPowered;
 
     /// <summary>
     /// Whether the tool can bypass certain restrictions when prying.
     /// For example door bolts.
     /// </summary>
-    [DataField("force")]
-    public bool Force = false;
+    [DataField]
+    public bool Force;
     /// <summary>
     /// Modifier on the prying time.
     /// Lower values result in more time.
     /// </summary>
-    [DataField("speedModifier")]
+    [DataField]
     public float SpeedModifier = 1.0f;
 
     /// <summary>
     /// What sound to play when prying is finished.
     /// </summary>
-    [DataField("useSound")]
+    [DataField]
     public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/crowbar.ogg");
 
     /// <summary>
     /// Whether the entity can currently pry things.
     /// </summary>
-    [DataField("enabled")]
+    [DataField]
     public bool Enabled = true;
 }
 
@@ -43,7 +43,7 @@ public sealed partial class PryingComponent : Component
 /// Cancel to stop the entity from being pried open.
 /// </summary>
 [ByRefEvent]
-public record struct BeforePryEvent(EntityUid User, bool PryPowered, bool Force, bool ToolUsed)
+public record struct BeforePryEvent(EntityUid User, bool PryPowered, bool Force, bool StrongPry)
 {
     public readonly EntityUid User = User;
 
@@ -59,9 +59,9 @@ public record struct BeforePryEvent(EntityUid User, bool PryPowered, bool Force,
     public readonly bool Force = Force;
 
     /// <summary>
-    /// Whether a tool was used to pry the door or not.
+    /// Whether anything other than bare hands were used. This should only be false if prying is being performed without a prying comp.
     /// </summary>
-    public readonly bool ToolUsed = ToolUsed;
+    public readonly bool StrongPry = StrongPry;
 
     public string? Message;
 
