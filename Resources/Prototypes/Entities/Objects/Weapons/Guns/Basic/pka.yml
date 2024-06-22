@@ -3,7 +3,6 @@
   parent:
   - BaseGunMedium
   - BaseGunWieldable
-  - BaseGun
   id: WeaponProtoKineticAccelerator
   name: proto-kinetic accelerator
   description: Fires low-damage kinetic bolts at a short range.

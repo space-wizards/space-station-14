@@ -4,7 +4,6 @@
   - BaseGunSmall
   - BaseGunRevolverCylinder
   - BaseGunMagVisuals
-  - BaseGun
   id: WeaponRevolverDeckard
   name: Deckard
   description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test. Uses .45 magnum ammo.
@@ -36,7 +35,6 @@
   parent:
   - BaseGunSmall
   - BaseGunRevolverCylinder
-  - BaseGun
   id: WeaponRevolverInspector
   name: Inspector
   description: A detective's best friend. Uses .45 magnum ammo.
@@ -54,7 +52,6 @@
   parent:
   - BaseGunSmall
   - BaseGunRevolverCylinder
-  - BaseGun
   id: WeaponRevolverMateba
   name: Mateba
   description: The iconic sidearm of the dreaded death squads. Uses .45 magnum ammo.
@@ -72,7 +69,6 @@
   parent:
   - BaseGunSmall
   - BaseGunRevolverCylinder
-  - BaseGun
   id: WeaponRevolverPython
   name: Python
   description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
@@ -101,7 +97,6 @@
   parent:
   - BaseGunSmall
   - BaseGunRevolverCylinder
-  - BaseGun
   id: WeaponRevolverPirate
   name: pirate revolver
   description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.

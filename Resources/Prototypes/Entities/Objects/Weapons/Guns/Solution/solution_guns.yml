@@ -3,7 +3,6 @@
   parent:
   - BaseGunSmall
   - BaseGunWaterToy
-  - BaseGun
   id: WeaponWaterPistol
   name: water pistol
   description: The dinkiest of water-based weaponry. You swear the trigger doesn't do anything.
@@ -20,7 +19,6 @@
   parent:
   - BaseGunSmall
   - BaseGunWaterToy
-  - BaseGun
   id: WeaponWaterBlaster
   name: water blaster
   description: With this bad boy, you'll be the cooleste kid at the summer barbecue.
@@ -57,7 +55,6 @@
   parent:
   - BaseGunSmall
   - BaseGunWaterToy
-  - BaseGun
   id: WeaponWaterBlasterSuper
   name: super water blaster
   description: No! No! Not in the eyes!
@@ -93,7 +90,6 @@
 - type: entity
   parent:
   - BaseGunMedium
-  - BaseGun
   id: WeaponSprayNozzle
   name: spray nozzle
   description: A high-powered spray nozzle used in conjunction with a backpack-mounted water tank.

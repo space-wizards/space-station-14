@@ -3,7 +3,6 @@
   parent:
   - BaseGunSmall
   - BaseGunPowerCell
-  - BaseGun
   id: WeaponLaserSvalinn
   name: svalinn laser pistol
   description: A cheap and widely used laser pistol.
@@ -33,7 +32,6 @@
   - BaseGunSmall
   - BaseGunBattery
   - BaseGunRedMediumLaser
-  - BaseGun
   id: WeaponLaserGun
   name: retro laser blaster
   description: A weapon using light amplified by the stimulated emission of radiation.
@@ -65,7 +63,6 @@
   - BaseGunSmall
   - BaseGunBattery
   - BaseGunRedLaser
-  - BaseGun
   id: WeaponMakeshiftLaser
   name: makeshift laser pistol
   description: Better pray it won't burn your hands off.
@@ -92,7 +89,6 @@
   parent:
   - BaseGunLarge
   - BaseGunBattery
-  - BaseGun
   id: WeaponTeslaGun
   name: tesla gun
   description: The power of the primordial element of lightning in your hands.
@@ -127,7 +123,6 @@
   - BaseGunWieldable
   - BaseGunBattery
   - BaseGunRedLaser
-  - BaseGun
   id: WeaponLaserCarbine
   name: laser rifle
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
@@ -167,7 +162,6 @@
   - BaseGunSmall
   - BaseGunBattery
   - BaseGunPulse
-  - BaseGun
   id: WeaponPulsePistol
   name: pulse pistol
   description: A state of the art energy pistol favoured as a sidearm by the NT operatives.
@@ -196,7 +190,6 @@
   - BaseGunWieldable
   - BaseGunBattery
   - BaseGunPulse
-  - BaseGun
   id: WeaponPulseCarbine
   name: pulse carbine
   description: A high tech energy carbine favoured by the NT-ERT operatives.
@@ -231,7 +224,6 @@
   - BaseGunWieldable
   - BaseGunBattery
   - BaseGunPulse
-  - BaseGun
   id: WeaponPulseRifle
   name: pulse rifle
   description: A weapon that is almost as infamous as its users.
@@ -266,7 +258,6 @@
   - BaseGunWieldable
   - BaseGunBattery
   - BaseGunRedHeavyLaser
-  - BaseGun
   id: WeaponLaserCannon
   name: laser cannon
   description: A heavy duty, high powered laser weapon.
@@ -292,7 +283,6 @@
   parent:
   - BaseGunHeavy
   - BaseGunBattery
-  - BaseGun
   id: WeaponParticleDecelerator
   name: portable particle decelerator
   description: A portable particle decelerator capable of decomposing a tesla or singularity.
@@ -322,7 +312,6 @@
   - BaseGunWieldable
   - BaseGunBattery
   - BaseGunXrayLaser
-  - BaseGun
   id: WeaponXrayCannon
   name: x-ray cannon
   description: An experimental weapon that uses concentrated x-ray energy against its target.
@@ -346,7 +335,6 @@
   parent:
   - BaseGunSmall
   - BaseGunBattery
-  - BaseGun
   id: WeaponDisabler
   name: disabler
   description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
@@ -404,7 +392,6 @@
   parent:
   - BaseGunMedium
   - BaseGunBattery
-  - BaseGun
   id: WeaponDisablerSMG
   name: disabler SMG
   description: Advanced weapon that exhausts organic targets, weakening them until they collapse.
@@ -445,7 +432,6 @@
   parent:
   - BaseGunSmall
   - BaseGunBattery
-  - BaseGun
   id: WeaponTaser
   name: taser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
@@ -483,7 +469,6 @@
   - BaseGunBattery
   - BaseGunRedMediumLaser
   - BaseGunSelfRecharger
-  - BaseGun
   id: WeaponAntiqueLaser
   name: antique laser pistol
   description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
@@ -518,7 +503,6 @@
   - BaseGunBattery
   - BaseGunRedMediumLaser
   - BaseGunSelfRecharger
-  - BaseGun
   id: WeaponAdvancedLaser
   name: advanced laser pistol
   description: An experimental high-energy laser pistol with a self-charging nuclear battery.
@@ -549,7 +533,6 @@
   parent:
   - BaseGunSmall
   - BaseGunBattery
-  - BaseGun
   id: WeaponPistolCHIMP
   name: C.H.I.M.P. handcannon
   description: Just because it's a little C.H.I.M.P. doesn't mean it can't punch like an A.P.E.
@@ -619,7 +602,6 @@
   - BaseGunBattery
   - BaseGunRedMediumLaser
   - BaseGunSelfRecharger
-  - BaseGun
   id: WeaponBehonkerLaser
   name: eye of a behonker
   description: The eye of a behonker, it fires a laser when squeezed.

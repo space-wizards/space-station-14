@@ -2,7 +2,6 @@
 - type: entity
   parent:
   - BaseGunHeavy
-  - BaseGun
   id: WeaponMinigun
   name: minigun
   description: Vzzzzzt! Rahrahrahrah! Vrrrrr! Uses .10 rifle ammo.

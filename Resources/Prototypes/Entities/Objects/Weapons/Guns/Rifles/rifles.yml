@@ -5,7 +5,6 @@
   - BaseGunLarge
   - BaseGunLightRifleMag
   - BaseGunWieldable
-  - BaseGun
   id: WeaponRifleAk
   name: AKMS
   description: An iconic weapon of war. Uses .30 rifle ammo.
@@ -27,7 +26,6 @@
   - BaseGunRifleMag
   - BaseGunWieldable
   - BaseGunMagVisuals
-  - BaseGun
   id: WeaponRifleM90GrenadeLauncher
   name: M-90gl
   description: An older bullpup carbine model, with an attached underbarrel grenade launcher. Uses .20 rifle ammo.
@@ -49,7 +47,6 @@
   - BaseGunRifleMag
   - BaseGunWieldable
   - BaseGunMagVisuals
-  - BaseGun
   id: WeaponRifleLecter
   name: Lecter
   description: A high end military grade assault rifle. Uses .20 rifle ammo.
@@ -69,7 +66,6 @@
   parent:
   - BaseGunMedium
   - BaseGunWieldable
-  - BaseGun
   id: WeaponRifleFoam
   name: Foam Force Astro Ace
   description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
