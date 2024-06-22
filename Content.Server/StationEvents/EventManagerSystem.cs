@@ -64,7 +64,7 @@ public sealed class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Randomly runs an event from provided list.
+    /// Randomly runs an event from provided EntitySpawnCollection.
     /// </summary>
     public string? RunLimitedEvent(List<EntitySpawnEntry>? limitedEventsList)
     {
