@@ -49,3 +49,7 @@
 - type: lobbyBackground
   id: JaniShootout
   background: /Textures/LobbyScreens/janishootout.webp
+
+- type: lobbyBackground
+  id: Medbay
+  background: /Textures/LobbyScreens/medbay.webp
