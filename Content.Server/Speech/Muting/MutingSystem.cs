@@ -36,7 +36,7 @@ namespace Content.Server.Speech.Muting
             if (args.Handled)
                 return;
 
-            if (HasComp<MimePowersComponent>(uid))
+            if (TryComp<MimePowersComponent>(uid, out var mimePowers) && mimePowers.Enabled)
                 _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);
 
             else
@@ -49,7 +49,7 @@ namespace Content.Server.Speech.Muting
         {
             // TODO something better than this.
 
-            if (HasComp<MimePowersComponent>(uid))
+            if (TryComp<MimePowersComponent>(uid, out var mimePowers) && mimePowers.Enabled)
                 _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);
             else if (HasComp<VentriloquistPuppetComponent>(uid))
                 _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-cant-speak"), uid, uid);

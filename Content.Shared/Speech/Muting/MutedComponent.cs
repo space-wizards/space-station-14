@@ -6,5 +6,11 @@ namespace Content.Shared.Speech.Muting
     public sealed partial class MutedComponent : Component
     {
 
+      /// <summary>
+      /// Whether the entity should be able to be unmuted
+      /// </summary>
+      [DataField]
+      public bool removable = true;
+
     }
 }
