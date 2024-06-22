@@ -429,3 +429,55 @@
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: StaticPrice
     price: 500
+
+- type: entity
+  name: BaseWeaponRifle
+  parent: [BaseItem, BaseGunWieldable]
+  id: BaseWeaponRifle
+  description: A rooty tooty point and shooty.
+  abstract: true
+  components:
+  - type: Sprite
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 5
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLightRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLightRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: StaticPrice
+    price: 500
