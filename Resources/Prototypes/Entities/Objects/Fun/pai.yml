@@ -46,6 +46,7 @@
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
+    - Common
     - Binary
   - type: ActiveRadio
     channels:
