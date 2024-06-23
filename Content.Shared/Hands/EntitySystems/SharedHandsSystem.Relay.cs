@@ -1,5 +1,6 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Movement.Pulling.Components;
 
 namespace Content.Shared.Hands.EntitySystems;
 
@@ -17,5 +18,8 @@ public abstract partial class SharedHandsSystem
         {
             RaiseLocalEvent(held, ref ev);
         }
+
+        if (TryComp<PullerComponent>(entity, out var puller) && puller.Pulling != null)
+            RaiseLocalEvent(puller.Pulling.Value, ref ev);
     }
 }
