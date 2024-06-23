@@ -18,6 +18,7 @@ namespace Content.Server.GameTicking.Commands
         public string Description => Loc.GetString("forcemap-command-description");
         public string Help => Loc.GetString("forcemap-command-help");
 
+
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -28,6 +29,13 @@ namespace Content.Server.GameTicking.Commands
 
             var gameMap = IoCManager.Resolve<IGameMapManager>();
             var name = args[0];
+
+            var maps = gameMap.CurrentlyEligibleMaps().ToList();
+            if (!gameMap.TrySelectMapIfEligible(name))
+            {
+                shell.WriteLine($"No eligible map exists with name {name}.");
+                return;
+            }
 
             _configurationManager.SetCVar(CCVars.GameMap, name);
             shell.WriteLine(Loc.GetString("forcemap-command-success", ("map", name)));
