@@ -16,18 +16,21 @@ public sealed partial class PathfindingSystem
 
         public bool Diagonals = false;
 
+        public Func<Vector2i, float>? TileCost;
+
         public int Limit = 10000;
     }
 
     /// <summary>
     /// Gets a BFS path from start to any end. Can also supply an optional tile-cost for tiles.
     /// </summary>
-    public SimplePathResult GetBreadthPath(BreadthPathArgs args, Func<Vector2i, float>? tileCostFunc = null)
+    public SimplePathResult GetBreadthPath(BreadthPathArgs args)
     {
         var cameFrom = new Dictionary<Vector2i, Vector2i>();
         var costSoFar = new Dictionary<Vector2i, float>();
         var frontier = new PriorityQueue<Vector2i, float>();
 
+        costSoFar[args.Start] = 0f;
         frontier.Enqueue(args.Start, 0f);
         var count = 0;
 
@@ -47,6 +50,8 @@ public sealed partial class PathfindingSystem
                 };
             }
 
+            var gCost = costSoFar[node];
+
             if (args.Diagonals)
             {
                 for (var x = -1; x <= 1; x++)
@@ -54,7 +59,7 @@ public sealed partial class PathfindingSystem
                     for (var y = -1; y <= 1; y++)
                     {
                         var neighbor = node + new Vector2i(x, y);
-                        var neighborCost = OctileDistance(node, neighbor) * tileCostFunc?.Invoke(neighbor) ?? 1f;
+                        var neighborCost = OctileDistance(node, neighbor) * args.TileCost?.Invoke(neighbor) ?? 1f;
 
                         if (neighborCost.Equals(0f))
                         {
@@ -64,7 +69,7 @@ public sealed partial class PathfindingSystem
                         // f = g + h
                         // gScore is distance to the start node
                         // hScore is distance to the end node
-                        var gScore = costSoFar[node] + neighborCost;
+                        var gScore = gCost + neighborCost;
 
                         // Slower to get here so just ignore it.
                         if (costSoFar.TryGetValue(neighbor, out var nextValue) && gScore >= nextValue)
@@ -94,12 +99,12 @@ public sealed partial class PathfindingSystem
                             continue;
 
                         var neighbor = node + new Vector2i(x, y);
-                        var neighborCost = ManhattanDistance(node, neighbor) * tileCostFunc?.Invoke(neighbor) ?? 1f;
+                        var neighborCost = ManhattanDistance(node, neighbor) * args.TileCost?.Invoke(neighbor) ?? 1f;
 
                         if (neighborCost.Equals(0f))
                             continue;
 
-                        var gScore = costSoFar[node] + neighborCost;
+                        var gScore = gCost + neighborCost;
 
                         if (costSoFar.TryGetValue(neighbor, out var nextValue) && gScore >= nextValue)
                             continue;

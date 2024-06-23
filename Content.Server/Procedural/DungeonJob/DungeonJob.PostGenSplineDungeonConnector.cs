@@ -65,7 +65,7 @@ public sealed partial class DungeonJob
             {
                 Distance = gen.DivisionDistance,
                 MaxRatio = gen.VarianceMax,
-                Args = new PathfindingSystem.PathArgs()
+                Args = new PathfindingSystem.SimplePathArgs()
                 {
                     Start = pair.Start,
                     End = pair.End,
@@ -73,7 +73,7 @@ public sealed partial class DungeonJob
                     {
                         // We want these to get prioritised internally and into space if it's a space dungeon.
                         if (_maps.TryGetTile(_grid, node, out var tile) && !tile.IsEmpty)
-                            return 0f;
+                            return 1f;
 
                         return 5f;
                     }

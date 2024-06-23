@@ -24,7 +24,7 @@
     # Ores
     - !type:OreDunGen
       replacement: IronRock
-      entity: IronRockTin
+      entity: IronRockIron
       count: 50
       minGroupSize: 20
       maxGroupSize: 30

@@ -1,13 +1,37 @@
-using Robust.Shared.Utility;
-
 namespace Content.Server.NPC.Pathfinding;
 
 public sealed partial class PathfindingSystem
 {
     /// <summary>
+    /// Pathfinding args for a 1-1 path.
+    /// </summary>
+    public record struct SimplePathArgs()
+    {
+        public Vector2i Start;
+        public Vector2i End;
+
+        public bool Diagonals = false;
+
+        public int Limit = 10000;
+
+        /// <summary>
+        /// Custom tile-costs if applicable.
+        /// </summary>
+        public Func<Vector2i, float>? TileCost;
+    }
+
+    public record struct SimplePathResult
+    {
+        public static SimplePathResult NoPath = new();
+
+        public List<Vector2i> Path;
+        public Dictionary<Vector2i, Vector2i> CameFrom;
+    }
+
+    /// <summary>
     /// Gets simple A* path from start to end. Can also supply an optional tile-cost for tiles.
     /// </summary>
-    public SimplePathResult GetPath(PathArgs args)
+    public SimplePathResult GetPath(SimplePathArgs args)
     {
         var cameFrom = new Dictionary<Vector2i, Vector2i>();
         var costSoFar = new Dictionary<Vector2i, float>();
@@ -42,7 +66,7 @@ public sealed partial class PathfindingSystem
                     for (var y = -1; y <= 1; y++)
                     {
                         var neighbor = node + new Vector2i(x, y);
-                        var neighborCost = OctileDistance(node, neighbor) + args.TileCost?.Invoke(neighbor) ?? 0f;
+                        var neighborCost = OctileDistance(node, neighbor) * args.TileCost?.Invoke(neighbor) ?? 1f;
 
                         if (neighborCost.Equals(0f))
                         {
@@ -84,7 +108,7 @@ public sealed partial class PathfindingSystem
                             continue;
 
                         var neighbor = node + new Vector2i(x, y);
-                        var neighborCost = ManhattanDistance(node, neighbor) + args.TileCost?.Invoke(neighbor) ?? 0f;
+                        var neighborCost = ManhattanDistance(node, neighbor) * args.TileCost?.Invoke(neighbor) ?? 1f;
 
                         if (neighborCost.Equals(0f))
                             continue;
@@ -123,32 +147,8 @@ public sealed partial class PathfindingSystem
             node = source;
         }
 
+        path.Reverse();
+
         return path;
-    }
-
-    /// <summary>
-    /// Pathfinding args for a 1-1 path.
-    /// </summary>
-    public record struct PathArgs()
-    {
-        public Vector2i Start;
-        public Vector2i End;
-
-        public bool Diagonals = false;
-
-        public int Limit = 10000;
-
-        /// <summary>
-        /// Custom tile-costs if applicable.
-        /// </summary>
-        public Func<Vector2i, float>? TileCost;
-    }
-
-    public record struct SimplePathResult
-    {
-        public static SimplePathResult NoPath = new();
-
-        public List<Vector2i> Path;
-        public Dictionary<Vector2i, Vector2i> CameFrom;
     }
 }
