@@ -181,7 +181,12 @@ public sealed class TegSystem : EntitySystem
         // Turn energy (at atmos tick rate) into wattage.
         var power = electricalEnergy / args.dt;
         // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
-        supplier.MaxSupply = power * component.RampFactor;
+        power *= component.RampFactor;
+
+        // Simulate TEG powering itself after being started up. This means that if LV is lost this keeps running.
+        const float load = 1000;
+        supplier.MaxSupply = Math.Max(power - load, 0);
+        powerReceiver.Load = Math.Max(load - power, 0);
 
         var circAComp = Comp<TegCirculatorComponent>(circA);
         var circBComp = Comp<TegCirculatorComponent>(circB);
