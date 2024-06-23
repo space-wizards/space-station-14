@@ -1,9 +1,11 @@
+using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Shared.Cargo.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Procedural;
+using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
@@ -93,7 +95,17 @@ public sealed partial class ShuttleSystem
             return false;
         }
 
+        var spawnCoords = new EntityCoordinates(targetGrid, Vector2.Zero);
+
+        if (group.MinimumDistance > 0f)
+        {
+            spawnCoords = spawnCoords.Offset(_random.NextVector2(group.MinimumDistance, group.MinimumDistance * 1.5f));
+        }
+
+        var spawnMapCoords = _transform.ToMapCoordinates(spawnCoords);
         var spawnedGrid = _mapManager.CreateGridEntity(mapId);
+
+        _transform.SetMapCoordinates(spawnedGrid, spawnMapCoords);
         _dungeon.GenerateDungeon(dungeonProto, spawnedGrid.Owner, spawnedGrid.Comp, Vector2i.Zero, _random.Next());
 
         spawned = spawnedGrid.Owner;
@@ -185,6 +197,11 @@ public sealed partial class ShuttleSystem
                         throw new NotImplementedException();
                 }
 
+                if (_protoManager.TryIndex(group.NameDataset, out var dataset))
+                {
+                    _metadata.SetEntityName(spawned, SharedSalvageSystem.GetFTLName(dataset, _random.Next()));
+                }
+
                 if (group.Hide)
                 {
                     var iffComp = EnsureComp<IFFComponent>(spawned);
@@ -200,10 +217,6 @@ public sealed partial class ShuttleSystem
                 foreach (var compReg in group.AddComponents.Values)
                 {
                     var compType = compReg.Component.GetType();
-
-                    if (HasComp(spawned, compType))
-                        continue;
-
                     var comp = _factory.GetComponent(compType);
                     AddComp(spawned, comp, true);
                 }

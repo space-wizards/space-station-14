@@ -1,4 +1,5 @@
 using Content.Server.Shuttles.Systems;
+using Content.Shared.Dataset;
 using Content.Shared.Procedural;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -20,7 +21,18 @@ public sealed partial class GridSpawnComponent : Component
 
 public interface IGridSpawnGroup
 {
+    /// <summary>
+    /// Minimum distance to spawn away from the station.
+    /// </summary>
+    public float MinimumDistance { get; }
+
+    /// <inheritdoc />
+    public ProtoId<DatasetPrototype>? NameDataset { get; }
+
+    /// <inheritdoc />
     int MinCount { get; set; }
+
+    /// <inheritdoc />
     int MaxCount { get; set; }
 
     /// <summary>
@@ -52,11 +64,28 @@ public sealed class DungeonSpawnGroup : IGridSpawnGroup
     /// </summary>
     public List<ProtoId<DungeonConfigPrototype>> Protos = new();
 
+    /// <inheritdoc />
+    public float MinimumDistance { get; }
+
+    /// <inheritdoc />
+    public ProtoId<DatasetPrototype>? NameDataset { get; }
+
+    /// <inheritdoc />
     public int MinCount { get; set; } = 1;
+
+    /// <inheritdoc />
     public int MaxCount { get; set; } = 1;
+
+    /// <inheritdoc />
     public ComponentRegistry AddComponents { get; set; } = new();
+
+    /// <inheritdoc />
     public bool Hide { get; set; } = false;
+
+    /// <inheritdoc />
     public bool NameGrid { get; set; } = false;
+
+    /// <inheritdoc />
     public bool StationGrid { get; set; } = false;
 }
 
@@ -65,6 +94,8 @@ public sealed class GridSpawnGroup : IGridSpawnGroup
 {
     public List<ResPath> Paths = new();
 
+    public float MinimumDistance { get; }
+    public ProtoId<DatasetPrototype>? NameDataset { get; }
     public int MinCount { get; set; } = 1;
     public int MaxCount { get; set; } = 1;
     public ComponentRegistry AddComponents { get; set; } = new();
