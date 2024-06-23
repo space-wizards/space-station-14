@@ -105,13 +105,6 @@ public sealed partial class DoAfterArgs
     public bool BreakOnWeightlessMove = true;
 
     /// <summary>
-    ///     Threshold for user speed when the user is weightless.
-    ///     This does nothing if <see cref="BreakOnWeightlessMove"/> is true.
-    /// </summary>
-    [DataField]
-    public float WeightlessSpeedThreshold = 2.0f;
-
-    /// <summary>
     ///     Threshold for user and target movement
     /// </summary>
     [DataField]
@@ -253,7 +246,6 @@ public sealed partial class DoAfterArgs
         BreakOnHandChange = other.BreakOnHandChange;
         BreakOnMove = other.BreakOnMove;
         BreakOnWeightlessMove = other.BreakOnWeightlessMove;
-        WeightlessSpeedThreshold = other.WeightlessSpeedThreshold;
         MovementThreshold = other.MovementThreshold;
         DistanceThreshold = other.DistanceThreshold;
         BreakOnDamage = other.BreakOnDamage;

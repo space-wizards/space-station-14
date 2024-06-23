@@ -174,7 +174,7 @@ public abstract partial class SharedDoAfterSystem
                 TryComp<PhysicsComponent>(args.User, out var physics);
 
                 // Whether the user has too much velocity speed.
-                if (physics?.LinearVelocity.Length() > args.WeightlessSpeedThreshold)
+                if (physics?.LinearVelocity.Length() > Math.Max(args.MovementThreshold * 5, 2.5f))
                     return true;
             }
 
