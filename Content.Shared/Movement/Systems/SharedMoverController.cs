@@ -57,6 +57,7 @@ namespace Content.Shared.Movement.Systems
         protected EntityQuery<TransformComponent> XformQuery;
         protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
         protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
+        protected EntityQuery<MapGridComponent> MapGridQuery;
 
         /// <summary>
         /// <see cref="CCVars.StopSpeed"/>
@@ -84,6 +85,7 @@ namespace Content.Shared.Movement.Systems
             XformQuery = GetEntityQuery<TransformComponent>();
             NoRotateQuery = GetEntityQuery<NoRotateOnMoveComponent>();
             CanMoveInAirQuery = GetEntityQuery<CanMoveInAirComponent>();
+            MapGridQuery = GetEntityQuery<MapGridComponent>();
 
             InitializeInput();
             InitializeRelay();
@@ -210,7 +212,7 @@ namespace Content.Shared.Movement.Systems
 
             if (weightless)
             {
-                if (gridComp == null && !HasComp<MapGridComponent>(xform.GridUid))
+                if (gridComp == null && !MapGridQuery.HasComp(xform.GridUid))
                     friction = moveSpeedComponent?.OffGridFriction ?? MovementSpeedModifierComponent.DefaultOffGridFriction;
                 else if (worldTotal != Vector2.Zero && touching)
                     friction = moveSpeedComponent?.WeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
