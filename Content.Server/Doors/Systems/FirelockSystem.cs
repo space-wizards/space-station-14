@@ -34,7 +34,7 @@ namespace Content.Server.Doors.Systems
         private void PowerChanged(EntityUid uid, FirelockComponent component, ref PowerChangedEvent args)
         {
             component.Powered = args.Powered;
-            Dirty(uid, component);
+            UpdateDoorState(uid, component);
         }
 
         public override void Update(float frameTime)
