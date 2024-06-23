@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Golinth
-  changes:
-  - message: Fixed mindshield icons being glow in the dark
-    type: Fix
-  id: 6311
-  time: '2024-04-05T20:35:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26754
 - author: Blackern5000
   changes:
   - message: Added sap
@@ -3842,3 +3835,10 @@
   id: 6810
   time: '2024-06-23T01:46:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29072
+- author: eoineoineoin
+  changes:
+  - message: Hand labelers can now apply labels to buttons, switches, and levers
+    type: Tweak
+  id: 6811
+  time: '2024-06-23T14:52:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29378
