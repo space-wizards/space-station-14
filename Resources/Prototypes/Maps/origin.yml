@@ -34,7 +34,7 @@
             TechnicalAssistant: [ 2, 3 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
-            Chemist: [ 2, 3 ]
+            Chemist: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
             MedicalDoctor: [ 6, 6 ]
             Psychologist: [ 1, 1 ]
