@@ -14,6 +14,7 @@ namespace Content.Shared.Storage.Components
     ///    amount: 6 # Note: this field can be omitted.
     ///    count:
     ///      tags: [Cigarette]
+    ///    openContainerOnly: true
     /// </code>
     [RegisterComponent]
     [Access(typeof(SharedItemCounterSystem))]
@@ -58,7 +59,8 @@ namespace Content.Shared.Storage.Components
         public List<string> LayerStates = new();
 
         /// <summary>
-        /// Whether to show stack visuals only when handling a container. Defaults to true
+        /// If the component has a storage component, show sprite layers for counting on open storage only, 
+        /// Defaults to true
         /// </summary>
         [DataField("openContainerOnly")]
         [ViewVariables(VVAccess.ReadWrite)]
