@@ -30,7 +30,6 @@ namespace Content.Server.GameTicking.Commands
             var gameMap = IoCManager.Resolve<IGameMapManager>();
             var name = args[0];
 
-            var maps = gameMap.CurrentlyEligibleMaps().ToList();
             if (!gameMap.TrySelectMapIfEligible(name))
             {
                 shell.WriteLine($"No eligible map exists with name {name}.");
