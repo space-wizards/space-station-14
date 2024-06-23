@@ -23,62 +23,62 @@
       proto: VGRoidFill
     # Ores
     - !type:OreDunGen
-      replacement: WallRock
-      entity: WallRockTin
+      replacement: IronRock
+      entity: IronRockTin
       count: 50
       minGroupSize: 20
       maxGroupSize: 30
     - !type:OreDunGen
-      replacement: WallRock
-      entity: WallRockCoal
+      replacement: IronRock
+      entity: IronRockCoal
       count: 50
       minGroupSize: 20
       maxGroupSize: 30
     - !type:OreDunGen
-      replacement: WallRock
-      entity: WallRockQuartz
+      replacement: IronRock
+      entity: IronRockQuartz
       count: 50
       minGroupSize: 20
       maxGroupSize: 30
     - !type:OreDunGen
-      replacement: WallRock
-      entity: WallRockSalt
+      replacement: IronRock
+      entity: IronRockSalt
       count: 50
       minGroupSize: 20
       maxGroupSize: 30
     - !type:OreDunGen
-      replacement: WallRock
-      entity: WallRockGold
+      replacement: IronRock
+      entity: IronRockGold
       count: 50
       minGroupSize: 10
       maxGroupSize: 20
     - !type:OreDunGen
-      replacement: WallRock
-      entity: WallRockSilver
+      replacement: IronRock
+      entity: IronRockSilver
       count: 50
       minGroupSize: 10
       maxGroupSize: 20
     - !type:OreDunGen
-      replacement: WallRock
-      entity: WallRockPlasma
+      replacement: IronRock
+      entity: IronRockPlasma
       count: 50
       minGroupSize: 10
       maxGroupSize: 20
     - !type:OreDunGen
-      replacement: WallRock
-      entity: WallRockUranium
+      replacement: IronRock
+      entity: IronRockUranium
       count: 50
       minGroupSize: 10
       maxGroupSize: 20
     - !type:OreDunGen
-      replacement: WallRock
-      entity: WallRockBananium
+      replacement: IronRock
+      entity: IronRockBananium
       count: 50
       minGroupSize: 10
       maxGroupSize: 20
     - !type:OreDunGen
-      replacement: WallRock
-      entity: WallRockArtifactFragment
+      replacement: IronRock
+      entity: IronRockArtifactFragment
       count: 50
       minGroupSize: 2
       maxGroupSize: 4
@@ -186,6 +186,6 @@
   id: VGRoidFill
   data:
     entities:
-      Fill: WallRock
+      Fill: IronRock
   layers:
   - !type:FillGridDunGen
