@@ -24,9 +24,13 @@
     offset: "0.0,0.3"
     sprite: Structures/Furniture/potted_plants.rsi
     noRot: true
-  - type: PottedPlantHide
   - type: SecretStash
-    secretPartName: secret-stash-part-plant
+    isStashOpen: true
+    tryInsertItemSound: /Audio/Effects/plant_rustle.ogg
+    tryRemoveItemSound: /Audio/Effects/plant_rustle.ogg
+    canBeOpenedAndClosed: false
+    hasVerbs: false
+    secretStashName: secret-stash-plant
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}

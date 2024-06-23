@@ -49,7 +49,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if ((food.Utensil & component.Types) == 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", target), ("utensil", component.Owner)), user, user);
-                return (false, true);
+                return (false, false);
             }
 
             if (!_interactionSystem.InRangeUnobstructed(user, target, popup: true))

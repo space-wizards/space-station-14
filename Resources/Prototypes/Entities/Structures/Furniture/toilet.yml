@@ -68,9 +68,9 @@
   - type: PlungerUse
   - type: Appearance
   - type: SecretStash
-    secretPartName: secret-stash-part-toilet
-    examineStash: toilet-component-on-examine-found-hidden-item
-    openableStash: true
+    stashOpenToolQualityNeeded: Prying
+    stashCloseToolQualityNeeded: Prying
+    secretStashName: secret-stash-toilet
   - type: Drain
     autoDrain: false
   - type: StaticPrice
@@ -103,10 +103,10 @@
         SeatVisualState.SeatUp:
           SeatUp: { state: disposal-up }
           SeatDown: { state: disposal-down }
-      enum.StashVisuals.DoorVisualState:
-        DoorVisualState.DoorOpen:
-          DoorOpen: { state: disposal-open }
-          DoorClosed: { state: disposal-closed }
+      enum.StashVisuals.StashVisualState:
+        StashVisualState.StashOpen:
+          StashOpen: { state: disposal-open }
+          StashClosed: { state: disposal-closed }
 
 - type: entity
   id: ToiletDirtyWater
