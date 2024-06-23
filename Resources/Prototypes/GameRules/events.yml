@@ -197,6 +197,18 @@
   - type: KudzuGrowthRule
 
 - type: entity
+  id: SpaceWormsGrowth
+  parent: BaseStationEventLongDelay
+  components:
+  - type: StationEvent
+    earliestStart: 15
+    minimumPlayers: 15
+    weight: 7
+    duration: 240
+  - type: KudzuGrowthRule
+    spawn: SpaceWormsKudzu
+
+- type: entity
   id: MouseMigration
   parent: BaseStationEventShortDelay
   components:
@@ -277,7 +289,7 @@
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
-  
+
 - type: entity
   parent: BaseGameRule
   id: SolarFlare

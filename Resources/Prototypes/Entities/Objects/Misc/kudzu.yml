@@ -304,3 +304,69 @@
   components:
     - type: Kudzu
       spreadChance: 0 #appears during pulsation. It shouldnt spreading.
+
+- type: entity
+  name: space worms
+  description: Disgusting slimy space worms, densely covering the floor. 
+  id: SpaceWormsKudzu
+  parent: BaseKudzu
+  components:
+  - type: Clickable
+  - type: Sprite
+    drawdepth: FloorObjects
+    sprite: Structures/Hydroponics/misc.rsi
+    state: spaceworms
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        hard: false
+        layer:
+        - SlipLayer
+        - MidImpassable
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepSticky
+      params:
+        volume: 6
+  - type: Kudzu
+    growthTickChance: 0.1
+    spreadChance: 0.35
+  - type: Slippery
+    launchForwardsMultiplier: 2.5
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15 
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageContacts
+    damage:
+      types:
+        Poison: 0.75
+  - type: Food # Do you eat worms? You're disgusting.
+    delay: 0.75
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Protein
+          Quantity: 2
+        - ReagentId: InsectBlood
+          Quantity: 2
+  - type: Temperature
+    heatDamage:
+      types:
+        Heat: 25
+  - type: Flammable
+    fireSpread: true
+    damage:
+     types:
+       Heat: 3
