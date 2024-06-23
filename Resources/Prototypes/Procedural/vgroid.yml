@@ -20,9 +20,86 @@
     - !type:PrototypeDunGen
       proto: VGRoidFill
     # Ores
-    - !type:BiomeMarkerLayerPostGen
-      markerTemplate: AsteroidOre
-      count: 30
+    - !type:OreDunGen
+      replacement: WallRock
+      entity: WallRockTin
+      count: 50
+      minGroupSize: 10
+      maxGroupSize: 20
+    - !type:OreDunGen
+      replacement: WallRock
+      entity: WallRockCoal
+      count: 50
+      minGroupSize: 20
+      maxGroupSize: 30
+    - !type:OreDunGen
+      replacement: WallRock
+      entity: WallRockQuartz
+      count: 50
+      minGroupSize: 20
+      maxGroupSize: 30
+    - !type:OreDunGen
+      replacement: WallRock
+      entity: WallRockSalt
+      count: 50
+      minGroupSize: 20
+      maxGroupSize: 30
+    - !type:OreDunGen
+      replacement: WallRock
+      entity: WallRockGold
+      count: 50
+      minGroupSize: 10
+      maxGroupSize: 20
+    - !type:OreDunGen
+      replacement: WallRock
+      entity: WallRockSilver
+      count: 50
+      minGroupSize: 10
+      maxGroupSize: 20
+    - !type:OreDunGen
+      replacement: WallRock
+      entity: WallRockPlasma
+      count: 50
+      minGroupSize: 10
+      maxGroupSize: 20
+    - !type:OreDunGen
+      replacement: WallRock
+      entity: WallRockUranium
+      count: 50
+      minGroupSize: 10
+      maxGroupSize: 20
+    - !type:OreDunGen
+      replacement: WallRock
+      entity: WallRockBananium
+      count: 50
+      minGroupSize: 10
+      maxGroupSize: 20
+    - !type:OreDunGen
+      replacement: WallRock
+      entity: WallRockArtifactFragment
+      count: 50
+      minGroupSize: 2
+      maxGroupSize: 4
+
+    # Mobs
+#          - id: WallRockGold
+#            prob: 0.05
+#            orGroup: rock
+#          - id: WallRockSilver
+#            prob: 0.05
+#            orGroup: rock
+#          - id: WallRockPlasma
+#            prob: 0.05
+#            orGroup: rock
+#          - id: WallRockUranium
+#            prob: 0.02
+#            orGroup: rock
+#          - id: WallRockBananium
+#            prob: 0.02
+#            orGroup: rock
+#          - id: WallRockArtifactFragment
+#            prob: 0.01
+#            orGroup: rock
 
 # Configs
 - type: dungeonConfig
@@ -113,4 +190,4 @@
   id: VGRoidFill
   layers:
   - !type:FillGridDunGen
-    proto: IronRock
+    proto: WallRock

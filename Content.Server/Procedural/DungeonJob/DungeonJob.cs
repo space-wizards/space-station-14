@@ -5,6 +5,7 @@ using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
+using Content.Shared.Procedural.DungeonLayers;
 using Content.Shared.Procedural.PostGeneration;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
@@ -170,7 +171,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 dungeons.AddRange(await GenerateExteriorDungeon(position, data, exterior, reservedTiles, seed));
                 break;
             case FillGridDunGen fill:
-                await GenerateFillDungeon(position, data, fill, reservedTiles, seed);
+                dungeons.Add(await GenerateFillDungeon(position, data, fill, reservedTiles, seed));
                 break;
             case NoiseDistanceDunGen distance:
                 dungeons.Add(await GenerateNoiseDistanceDungeon(position, data, distance, reservedTiles, seed));
@@ -241,6 +242,12 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 break;
             case InternalWindowPostGen internalWindow:
                 await PostGen(internalWindow, data, dungeons[^1], reservedTiles, random);
+                break;
+            case MobsDunGen mob:
+                await PostGen(mob, data, dungeons[^1], random);
+                break;
+            case OreDunGen ore:
+                await PostGen(ore, dungeons[^1], random);
                 break;
             case RoomEntrancePostGen rEntrance:
                 await PostGen(rEntrance, data, dungeons[^1], reservedTiles, random);

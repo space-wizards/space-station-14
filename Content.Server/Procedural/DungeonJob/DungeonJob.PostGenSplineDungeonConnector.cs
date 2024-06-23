@@ -68,7 +68,15 @@ public sealed partial class DungeonJob
                 {
                     Start = pair.Start,
                     End = pair.End,
-                }
+                    TileCost = node =>
+                    {
+                        // We want these to get prioritised internally and into space if it's a space dungeon.
+                        if (_maps.TryGetTile(_grid, node, out var tile) && !tile.IsEmpty)
+                            return 1f;
+
+                        return 30f;
+                    }
+                },
             },
             random);
 

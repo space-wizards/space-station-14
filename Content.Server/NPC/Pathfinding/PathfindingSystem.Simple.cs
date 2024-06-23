@@ -5,7 +5,7 @@ public sealed partial class PathfindingSystem
     /// <summary>
     /// Gets simple A* path from start to end. Can also supply an optional tile-cost for tiles.
     /// </summary>
-    public SimplePathResult GetPath(PathArgs args, Func<Vector2i, float>? tileCostFunc = null)
+    public SimplePathResult GetPath(PathArgs args)
     {
         var cameFrom = new Dictionary<Vector2i, Vector2i>();
         var costSoFar = new Dictionary<Vector2i, float>();
@@ -38,7 +38,7 @@ public sealed partial class PathfindingSystem
                     for (var y = -1; y <= 1; y++)
                     {
                         var neighbor = node + new Vector2i(x, y);
-                        var neighborCost = OctileDistance(node, neighbor) * tileCostFunc?.Invoke(neighbor) ?? 1f;
+                        var neighborCost = OctileDistance(node, neighbor) + args.TileCost?.Invoke(neighbor) ?? 1f;
 
                         if (neighborCost.Equals(0f))
                         {
@@ -80,7 +80,7 @@ public sealed partial class PathfindingSystem
                             continue;
 
                         var neighbor = node + new Vector2i(x, y);
-                        var neighborCost = ManhattanDistance(node, neighbor) * tileCostFunc?.Invoke(neighbor) ?? 1f;
+                        var neighborCost = ManhattanDistance(node, neighbor) + args.TileCost?.Invoke(neighbor) ?? 1f;
 
                         if (neighborCost.Equals(0f))
                             continue;
@@ -132,6 +132,11 @@ public sealed partial class PathfindingSystem
         public bool Diagonals = false;
 
         public int Limit = 10000;
+
+        /// <summary>
+        /// Custom tile-costs if applicable.
+        /// </summary>
+        public Func<Vector2i, float>? TileCost;
     }
 
     public record struct SimplePathResult
