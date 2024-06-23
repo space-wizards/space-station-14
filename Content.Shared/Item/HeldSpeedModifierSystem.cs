@@ -1,7 +1,6 @@
 using Content.Shared.Clothing;
 using Content.Shared.Hands;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Movement.Pulling.Events;
 
 namespace Content.Shared.Item;
 
@@ -17,8 +16,6 @@ public sealed class HeldSpeedModifierSystem : EntitySystem
     {
         SubscribeLocalEvent<HeldSpeedModifierComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<HeldSpeedModifierComponent, GotUnequippedHandEvent>(OnGotUnequippedHand);
-        SubscribeLocalEvent<HeldSpeedModifierComponent, PullStartedMessage>(OnGotStartPull);
-        SubscribeLocalEvent<HeldSpeedModifierComponent, PullStoppedMessage>(OnGotStopPull);
         SubscribeLocalEvent<HeldSpeedModifierComponent, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshMovementSpeedModifiers);
     }
 
@@ -32,17 +29,7 @@ public sealed class HeldSpeedModifierSystem : EntitySystem
         _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
     }
 
-    private void OnGotStartPull(Entity<HeldSpeedModifierComponent> ent, ref PullStartedMessage args)
-    {
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.PullerUid);
-    }
-
-    private void OnGotStopPull(Entity<HeldSpeedModifierComponent> ent, ref PullStoppedMessage args)
-    {
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.PullerUid);
-    }
-
-    private void OnRefreshMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
+    public (float,float) SetMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component)
     {
         var walkMod = component.WalkModifier;
         var sprintMod = component.SprintModifier;
@@ -52,6 +39,12 @@ public sealed class HeldSpeedModifierSystem : EntitySystem
             sprintMod = clothingSpeedModifier.SprintModifier;
         }
 
+        return (walkMod, sprintMod);
+    }
+
+    private void OnRefreshMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
+    {
+        var (walkMod, sprintMod) = SetMovementSpeedModifiers(uid, component);
         args.Args.ModifySpeed(walkMod, sprintMod);
     }
 }
