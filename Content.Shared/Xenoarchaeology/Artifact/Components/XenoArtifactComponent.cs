@@ -11,7 +11,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.Components;
 /// This is used for handling interactions with artifacts as well as
 /// storing data about artifact node graphs.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedXenoArtifactSystem)), AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedXenoArtifactSystem)), AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class XenoArtifactComponent : Component
 {
     public static string NodeContainerId = "node-container";
@@ -22,7 +22,6 @@ public sealed partial class XenoArtifactComponent : Component
     [ViewVariables]
     public Container NodeContainer = default!;
 
-    // todo: instead of networking this what if we just reconstructed on the client... hm...
     /// <summary>
     /// The nodes in this artifact that are currently "active."
     /// This is cached and updated when nodes are removed, added, or unlocked.
@@ -32,6 +31,23 @@ public sealed partial class XenoArtifactComponent : Component
 
     [DataField, AutoNetworkedField]
     public List<List<NetEntity>> CachedSegments = new();
+
+    #region Unlocking
+    /// <summary>
+    /// How long does the unlocking state last.
+    /// </summary>
+    [DataField]
+    public TimeSpan UnlockStateDuration = TimeSpan.FromSeconds(10);
+
+    /// <summary>
+    /// Minimum waiting time between unlock states.
+    /// </summary>
+    [DataField]
+    public TimeSpan UnlockStateRefractory = TimeSpan.FromSeconds(10);
+
+    [DataField, AutoPausedField]
+    public TimeSpan NextUnlockTime;
+    #endregion
 
     // NOTE: you should not be accessing any of these values directly. Use the methods in SharedXenoArtifactSystem.Graph
     #region Graph

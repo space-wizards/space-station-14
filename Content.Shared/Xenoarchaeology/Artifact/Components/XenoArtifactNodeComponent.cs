@@ -22,6 +22,12 @@ public sealed partial class XenoArtifactNodeComponent : Component
     public bool Locked = true;
 
     /// <summary>
+    /// Strings that denote the triggers that this node has.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<LocId> TriggerHints = new();
+
+    /// <summary>
     /// The entity whose graph this node is a part of.
     /// </summary>
     [DataField]

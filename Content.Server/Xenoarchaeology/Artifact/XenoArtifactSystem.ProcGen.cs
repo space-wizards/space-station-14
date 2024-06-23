@@ -1,5 +1,6 @@
 using Content.Shared.Random.Helpers;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
+using Content.Shared.Xenoarchaeology.Artifact.XAT;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -7,6 +8,8 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 
 public sealed partial class XenoArtifactSystem
 {
+    private List<XenoArchTriggerPrototype> _triggerPool = new();
+
     private void GenerateArtifactStructure(Entity<XenoArtifactComponent> ent)
     {
         var nodeCount = ent.Comp.NodeCount.Next(RobustRandom);
@@ -23,6 +26,7 @@ public sealed partial class XenoArtifactSystem
     {
         var segmentSize = GetArtifactSegmentSize(ent, nodeCount);
         nodeCount -= segmentSize;
+        // TODO: generate a pool of triggers here based on segmentsize
         PopulateArtifactSegmentRecursive(ent, ref segmentSize, ensureLayerConnected: true);
     }
 
@@ -121,10 +125,13 @@ public sealed partial class XenoArtifactSystem
         AddNode((ent, ent), proto, out var nodeEnt, dirty: false);
         DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
 
+        var trigger = RobustRandom.PickAndTake(_triggerPool);
+
         nodeEnt.Value.Comp.Depth = depth;
+        nodeEnt.Value.Comp.TriggerHints.Add(trigger.Hint);
+        EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
 
-        // TODO: setup trigger or effect or smth. idk quite how we're gonna do this.
-
+        Dirty(nodeEnt.Value);
         return nodeEnt.Value;
     }
 }
