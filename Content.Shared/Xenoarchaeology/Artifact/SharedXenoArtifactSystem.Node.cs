@@ -115,6 +115,11 @@ public abstract partial class SharedXenoArtifactSystem
         RebuildCachedSegments(ent);
     }
 
+    public bool IsNodeActive(Entity<XenoArtifactComponent> ent, EntityUid node)
+    {
+        return ent.Comp.CachedActiveNodes.Contains(GetNetEntity(node));
+    }
+
     /// <summary>
     /// Clears all cached active nodes and rebuilds the list using the current node state.
     /// Active nodes have the following property:

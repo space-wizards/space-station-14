@@ -1,4 +1,4 @@
-analysis-console-menu-title = analysis console
+analysis-console-menu-title = Broad-Spectrum Mark 3 Analysis Console
 analysis-console-server-list-button = Server List
 analysis-console-scan-button = Scan
 analysis-console-scan-tooltip-info = Scan artifacts to learn information about their structure.
