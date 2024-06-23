@@ -18,16 +18,20 @@
 - type: startingGear
   id: SyndicateOperativeGearExtremelyBasic
   equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackSyndicate
-    shoes: ClothingShoesBootsCombatFilled
-    gloves: ClothingHandsGlovesColorBlack
+    jumpsuit: ClothingUniformJumpsuitChameleon
+    back: ClothingBackpackChameleon
+    shoes: ClothingShoesBootsSyndieFilled
+    gloves: ClothingHandsChameleon
+    id: AgentIDCard
   storage:
     back:
     - BoxSurvivalSyndicate
-    - WeaponPistolViper
+    - WeaponPistolCobra
     - PinpointerSyndicateNuclear
     - DeathAcidifierImplanter
+    - ClothingMaskGasVoiceChameleon
+    - ClothingHeadsetChameleon
+    - ClothingHeadHatChameleon
 
 #Syndicate Operative Outfit - Basic
 - type: startingGear

@@ -18,3 +18,12 @@
       item:
       - KukriKnife
 
+- type: entity
+  id: ClothingShoesBootsSyndieFilled
+  parent: ClothingShoesBootsCombat
+  suffix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - ThrowingKnife

@@ -2,7 +2,7 @@
   parent: BaseItem
   id: ReinforcementRadioSyndicate
   name: syndicate reinforcement radio
-  description: Call in a syndicate agent of questionable quality, instantly! Only basic equipment provided.
+  description: Call in a syndicate agent of questionable quality, instantly! Subterfuge equipment provided by default.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
