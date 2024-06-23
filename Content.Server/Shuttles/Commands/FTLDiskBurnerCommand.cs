@@ -112,4 +112,11 @@ public sealed class FTLDiskBurnerCommand : IConsoleCommand
             }
         }
     }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length >= 1)
+            return CompletionResult.FromHintOptions(CompletionHelper.MapUids(_entManager), "Map Id");
+        return CompletionResult.Empty;
+    }
 }
