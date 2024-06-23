@@ -10,8 +10,8 @@ public sealed partial class AdjustAlert : ReagentEffect
     /// <summary>
     /// The specific Alert that will be adjusted
     /// </summary>
-    [DataField("alertType", required: true)]
-    public AlertType Type;
+    [DataField(required: true)]
+    public ProtoId<AlertPrototype> AlertType;
 
     /// <summary>
     /// If true, the alert is removed after Time seconds. If Time was not specified the alert is removed immediately.
@@ -42,7 +42,7 @@ public sealed partial class AdjustAlert : ReagentEffect
 
         if (Clear && Time <= 0)
         {
-                alertSys.ClearAlert(args.SolutionEntity, Type);
+                alertSys.ClearAlert(args.SolutionEntity, AlertType);
         }
         else
         {
@@ -52,7 +52,7 @@ public sealed partial class AdjustAlert : ReagentEffect
             if ((ShowCooldown || Clear) && Time > 0)
                 cooldown = (timing.CurTime, timing.CurTime + TimeSpan.FromSeconds(Time));
 
-            alertSys.ShowAlert(args.SolutionEntity, Type, cooldown: cooldown, autoRemove: Clear, showCooldown: ShowCooldown);
+            alertSys.ShowAlert(args.SolutionEntity, AlertType, cooldown: cooldown, autoRemove: Clear, showCooldown: ShowCooldown);
         }
 
     }

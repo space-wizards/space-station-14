@@ -32,6 +32,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
 using System.Linq;
 using Robust.Server.GameObjects;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -57,6 +58,7 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public const float MaxFeedDistance = 1.0f;
 
@@ -408,7 +410,7 @@ public sealed class FoodSystem : EntitySystem
             if (comp.SpecialDigestible == null)
                 continue;
             // Check if the food is in the whitelist
-            if (comp.SpecialDigestible.IsValid(food, EntityManager))
+            if (_whitelistSystem.IsWhitelistPass(comp.SpecialDigestible, food))
                 return true;
             // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
             return false;

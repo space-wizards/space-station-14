@@ -32,7 +32,7 @@ public sealed partial class SalvageSystem
 
     private void OnConsoleFTLAttempt(ref ConsoleFTLAttemptEvent ev)
     {
-        if (!TryComp<TransformComponent>(ev.Uid, out var xform) ||
+        if (!TryComp(ev.Uid, out TransformComponent? xform) ||
             !TryComp<SalvageExpeditionComponent>(xform.MapUid, out var salvage))
         {
             return;

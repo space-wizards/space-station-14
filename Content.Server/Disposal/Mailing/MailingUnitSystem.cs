@@ -152,6 +152,9 @@ public sealed class MailingUnitSystem : EntitySystem
 
     private void HandleActivate(EntityUid uid, MailingUnitComponent component, ActivateInWorldEvent args)
     {
+        if (args.Handled || !args.Complex)
+            return;
+
         if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
         {
             return;

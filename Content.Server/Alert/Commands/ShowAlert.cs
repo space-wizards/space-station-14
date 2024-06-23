@@ -41,7 +41,7 @@ namespace Content.Server.Alert.Commands
             var alertType = args[0];
             var severity = args[1];
             var alertsSystem = _e.System<AlertsSystem>();
-            if (!alertsSystem.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
+            if (!alertsSystem.TryGet(alertType, out var alert))
             {
                 shell.WriteLine("unrecognized alertType " + alertType);
                 return;
@@ -53,7 +53,7 @@ namespace Content.Server.Alert.Commands
             }
 
             short? severity1 = sevint == -1 ? null : sevint;
-            alertsSystem.ShowAlert(attachedEntity, alert.AlertType, severity1, null);
+            alertsSystem.ShowAlert(attachedEntity, alert.ID, severity1, null);
         }
     }
 }

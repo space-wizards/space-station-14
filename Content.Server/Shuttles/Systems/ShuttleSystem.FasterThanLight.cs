@@ -24,6 +24,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using FTLMapComponent = Content.Shared.Shuttles.Components.FTLMapComponent;
 
@@ -343,12 +344,8 @@ public sealed partial class ShuttleSystem
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
         var audio = _audio.PlayPvs(_startupSound, uid);
-        audio.Value.Component.Flags |= AudioFlags.GridAudio;
-
-        if (_physicsQuery.TryGetComponent(uid, out var gridPhysics))
-        {
-            _transform.SetLocalPosition(audio.Value.Entity, gridPhysics.LocalCenter);
-        }
+        _audio.SetGridAudio(audio);
+        component.StartupStream = audio?.Entity;
 
         // TODO: Play previs here for docking arrival.
 
@@ -377,6 +374,17 @@ public sealed partial class ShuttleSystem
         var body = _physicsQuery.GetComponent(entity);
         var shuttleCenter = body.LocalCenter;
 
+        // Leave audio at the old spot
+        // Just so we don't clip
+        if (fromMapUid != null && TryComp(comp.StartupStream, out AudioComponent? startupAudio))
+        {
+            var clippedAudio = _audio.PlayStatic(_startupSound, Filter.Broadcast(),
+                new EntityCoordinates(fromMapUid.Value, _maps.GetGridPosition(entity.Owner)), true, startupAudio.Params);
+
+            _audio.SetPlaybackPosition(clippedAudio, entity.Comp1.StartupTime);
+            clippedAudio.Value.Component.Flags |= AudioFlags.NoOcclusion;
+        }
+
         // Offset the start by buffer range just to avoid overlap.
         var ftlStart = new EntityCoordinates(ftlMap, new Vector2(_index + width / 2f, 0f) - shuttleCenter);
 
@@ -402,15 +410,7 @@ public sealed partial class ShuttleSystem
         // Audio
         var wowdio = _audio.PlayPvs(comp.TravelSound, uid);
         comp.TravelStream = wowdio?.Entity;
-        if (wowdio?.Component != null)
-        {
-            wowdio.Value.Component.Flags |= AudioFlags.GridAudio;
-
-            if (_physicsQuery.TryGetComponent(uid, out var gridPhysics))
-            {
-                _transform.SetLocalPosition(wowdio.Value.Entity, gridPhysics.LocalCenter);
-            }
-        }
+        _audio.SetGridAudio(wowdio);
     }
 
     /// <summary>
@@ -509,13 +509,7 @@ public sealed partial class ShuttleSystem
 
         comp.TravelStream = _audio.Stop(comp.TravelStream);
         var audio = _audio.PlayPvs(_arrivalSound, uid);
-        audio.Value.Component.Flags |= AudioFlags.GridAudio;
-        // TODO: Shitcode til engine fix
-
-        if (_physicsQuery.TryGetComponent(uid, out var gridPhysics))
-        {
-            _transform.SetLocalPosition(audio.Value.Entity, gridPhysics.LocalCenter);
-        }
+        _audio.SetGridAudio(audio);
 
         if (TryComp<FTLDestinationComponent>(uid, out var dest))
         {

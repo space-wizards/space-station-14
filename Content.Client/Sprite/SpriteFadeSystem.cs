@@ -45,7 +45,7 @@ public sealed class SpriteFadeSystem : EntitySystem
         var spriteQuery = GetEntityQuery<SpriteComponent>();
         var change = ChangeRate * frameTime;
 
-        if (TryComp<TransformComponent>(player, out var playerXform) &&
+        if (TryComp(player, out TransformComponent? playerXform) &&
             _stateManager.CurrentState is GameplayState state &&
             spriteQuery.TryGetComponent(player, out var playerSprite))
         {

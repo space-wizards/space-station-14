@@ -21,6 +21,7 @@ using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -106,6 +107,7 @@ namespace Content.Server.Zombies
             RemComp<ReproductiveComponent>(target);
             RemComp<ReproductivePartnerComponent>(target);
             RemComp<LegsParalyzedComponent>(target);
+            RemComp<ComplexInteractionComponent>(target);
 
             //funny voice
             var accentType = "zombie";
@@ -220,9 +222,7 @@ namespace Content.Server.Zombies
             _faction.AddFaction(target, "Zombie");
 
             //gives it the funny "Zombie ___" name.
-            var meta = MetaData(target);
-            zombiecomp.BeforeZombifiedEntityName = meta.EntityName;
-            _metaData.SetEntityName(target, Loc.GetString("zombie-name-prefix", ("target", meta.EntityName)), meta);
+            _nameMod.RefreshNameModifiers(target);
 
             _identity.QueueIdentityUpdate(target);
 

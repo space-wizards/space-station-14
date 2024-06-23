@@ -156,4 +156,20 @@ public sealed class GhostTests
         await data.Pair.CleanReturnAsync();
     }
 
+    [Test]
+    public async Task TestGhostGridNotTerminating()
+    {
+        var data = await SetupData();
+
+        Assert.DoesNotThrowAsync(async () =>
+        {
+            // Delete the grid
+            await data.Server.WaitPost(() => data.SEntMan.DeleteEntity(data.MapData.Grid.Owner));
+        });
+
+        await data.Pair.RunTicksSync(5);
+
+        await data.Pair.CleanReturnAsync();
+    }
+
 }

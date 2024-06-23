@@ -44,7 +44,7 @@ public sealed class GhostKickManager
     }
 }
 
-[AdminCommand(AdminFlags.Admin)]
+[AdminCommand(AdminFlags.Moderator)]
 public sealed class GhostKickCommand : IConsoleCommand
 {
     public string Command => "ghostkick";

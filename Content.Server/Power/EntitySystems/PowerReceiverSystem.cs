@@ -6,15 +6,18 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
 {
-    public sealed class PowerReceiverSystem : EntitySystem
+    public sealed class PowerReceiverSystem : SharedPowerReceiverSystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
@@ -37,6 +40,8 @@ namespace Content.Server.Power.EntitySystems
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
             SubscribeLocalEvent<PowerSwitchComponent, GetVerbsEvent<AlternativeVerb>>(AddSwitchPowerVerb);
+
+            SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentGetState>(OnGetState);
 
             _recQuery = GetEntityQuery<ApcPowerReceiverComponent>();
             _provQuery = GetEntityQuery<ApcPowerProviderComponent>();
@@ -140,14 +145,18 @@ namespace Content.Server.Power.EntitySystems
             args.Verbs.Add(verb);
         }
 
+        private void OnGetState(EntityUid uid, ApcPowerReceiverComponent component, ref ComponentGetState args)
+        {
+            args.State = new ApcPowerReceiverComponentState
+            {
+                Powered = component.Powered
+            };
+        }
+
         private void ProviderChanged(Entity<ApcPowerReceiverComponent> receiver)
         {
             var comp = receiver.Comp;
             comp.NetworkLoad.LinkedNetwork = default;
-            var ev = new PowerChangedEvent(comp.Powered, comp.NetworkLoad.ReceivingPower);
-
-            RaiseLocalEvent(receiver, ref ev);
-            _appearance.SetData(receiver, PowerDeviceVisuals.Powered, comp.Powered);
         }
 
         /// <summary>
@@ -155,12 +164,10 @@ namespace Content.Server.Power.EntitySystems
         /// Otherwise, it returns 'true' because if something doesn't take power
         /// it's effectively always powered.
         /// </summary>
+        /// <returns>True when entity has no ApcPowerReceiverComponent or is Powered. False when not.</returns>
         public bool IsPowered(EntityUid uid, ApcPowerReceiverComponent? receiver = null)
         {
-            if (!_recQuery.Resolve(uid, ref receiver, false))
-                return true;
-
-            return receiver.Powered;
+            return !_recQuery.Resolve(uid, ref receiver, false) || receiver.Powered;
         }
 
         /// <summary>
@@ -191,6 +198,11 @@ namespace Content.Server.Power.EntitySystems
             }
 
             return !receiver.PowerDisabled; // i.e. PowerEnabled
+        }
+
+        public void SetLoad(ApcPowerReceiverComponent comp, float load)
+        {
+            comp.Load = load;
         }
     }
 }

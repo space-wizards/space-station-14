@@ -62,7 +62,6 @@
   id: ActionToggleJetpack
   name: Toggle jetpack
   description: Toggles the jetpack, giving you movement outside the station.
-  noSpawn: true
   components:
   - type: InstantAction
     icon:

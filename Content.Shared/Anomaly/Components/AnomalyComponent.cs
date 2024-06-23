@@ -152,25 +152,25 @@ public sealed partial class AnomalyComponent : Component
     /// <summary>
     /// The particle type that increases the severity of the anomaly.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public AnomalousParticleType SeverityParticleType;
 
     /// <summary>
     /// The particle type that destabilizes the anomaly.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public AnomalousParticleType DestabilizingParticleType;
 
     /// <summary>
     /// The particle type that weakens the anomalys health.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public AnomalousParticleType WeakeningParticleType;
 
     /// <summary>
     /// The particle type that change anomaly behaviour.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public AnomalousParticleType TransformationParticleType;
 
     #region Points and Vessels
@@ -317,6 +317,7 @@ public readonly record struct AnomalyHealthChangedEvent(EntityUid Anomaly, float
 
 /// <summary>
 /// Event broadcast when an anomaly's behavior is changed.
+/// This is raised after the relevant components are applied
 /// </summary>
 [ByRefEvent]
 public readonly record struct AnomalyBehaviorChangedEvent(EntityUid Anomaly, ProtoId<AnomalyBehaviorPrototype>? Old, ProtoId<AnomalyBehaviorPrototype>? New);
