@@ -18,7 +18,6 @@ namespace Content.Server.GameTicking.Commands
         public string Description => Loc.GetString("forcemap-command-description");
         public string Help => Loc.GetString("forcemap-command-help");
 
-
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
