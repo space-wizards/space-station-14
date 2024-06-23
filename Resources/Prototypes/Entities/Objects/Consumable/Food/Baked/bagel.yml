@@ -2,19 +2,17 @@
 # Base
 
 - type: entity
-  parent: FoodInjectableBase
   id: FoodBagelBase
+  parent: FoodInjectableBase
   abstract: true
+  description: A delicious bagel.
   components:
   - type: FlavorProfile
     flavors:
       - bread
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bagel.rsi
-  - type: Tag
-    tags:
-    - Bagel
+    state: bagel
   - type: SolutionContainerManager
     solutions:
       food:
@@ -24,26 +22,14 @@
           Quantity: 5
 
 - type: entity
+  id: FoodBagel
   name: bagel
   parent: FoodBagelBase
-  id: FoodBagel
-  description: A delicious bagel.
-  components:
-  - type: FlavorProfile
-    flavors:
-      - bread
-  - type: Food
-  - type: Sprite
-    layers:
-    - state: bagel
-  - type: Tag
-    tags:
-    - Bagel
 
 - type: entity
-  name: poppy seed bagel
-  parent: FoodBagelBase
   id: FoodBagelPoppy
+  parent: FoodBagelBase
+  name: poppy seed bagel
   description: A delicious bagel topped with bicaridine-infused poppy seeds.
   components:
   - type: FlavorProfile
@@ -61,6 +47,3 @@
           Quantity: 5
         - ReagentId: Nutriment
           Quantity: 5
-  - type: Tag
-    tags:
-    - Bagel

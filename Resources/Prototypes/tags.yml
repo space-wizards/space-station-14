@@ -28,9 +28,6 @@
   id: ATVKeys
 
 - type: Tag
-  id: Bagel
-
-- type: Tag
   id: Balloon
 
 - type: Tag
