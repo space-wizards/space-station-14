@@ -56,16 +56,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly SpeedModifierContactsSystem _speedModContacts = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
 
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Blood = "Blood";
-
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Slime = "Slime";
-
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string CopperBlood = "CopperBlood";
-
-    private static string[] _standoutReagents = [Blood, Slime, CopperBlood];
+    private static ProtoId<ReagentPrototype>[] _standoutReagents = ["Blood", "Slime", "CopperBlood"];
 
     public static readonly float PuddleVolume = 1000;
 
