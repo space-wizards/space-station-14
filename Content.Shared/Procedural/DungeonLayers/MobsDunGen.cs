@@ -1,5 +1,4 @@
-using Content.Shared.Random;
-using Robust.Shared.Prototypes;
+using Content.Shared.Storage;
 
 namespace Content.Shared.Procedural.DungeonLayers;
 
@@ -9,21 +8,14 @@ namespace Content.Shared.Procedural.DungeonLayers;
 /// </summary>
 public sealed partial class MobsDunGen : IDunGenLayer
 {
-    [DataField(required: true)]
-    public List<MobGroup> Groups = new();
-}
+    // Counts separate to config to avoid some duplication.
 
-/// <summary>
-/// Mob groups for spawning.
-/// </summary>
-public record struct MobGroup()
-{
     [DataField]
     public int MinCount = 1;
 
     [DataField]
     public int MaxCount = 1;
 
-    [DataField]
-    public ProtoId<WeightedRandomPrototype> Proto;
+    [DataField(required: true)]
+    public List<EntitySpawnEntry> Groups = new();
 }

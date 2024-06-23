@@ -1,6 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Decals;
+using Content.Server.NPC.Components;
+using Content.Server.NPC.HTN;
+using Content.Server.NPC.Systems;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
@@ -147,9 +150,21 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         var dungeons = await GetDungeons(position, _gen, _gen.Data, _gen.Layers, reservedTiles, _seed, random);
         // To make it slightly more deterministic treat this RNG as separate ig.
 
+        // Post-processing after finishing loading.
+
         // Defer splitting so they don't get spammed and so we don't have to worry about tracking the grid along the way.
         _grid.CanSplit = true;
         _entManager.System<GridFixtureSystem>().CheckSplits(_gridUid);
+        var npcSystem = _entManager.System<NPCSystem>();
+        var npcs = new HashSet<Entity<HTNComponent>>();
+
+        _lookup.GetChildEntities(_gridUid, npcs);
+
+        foreach (var npc in npcs)
+        {
+            npcSystem.WakeNPC(npc.Owner, npc.Comp);
+        }
+
         return dungeons;
     }
 
@@ -222,7 +237,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 await PostGen(internalWindow, data, dungeons[^1], reservedTiles, random);
                 break;
             case MobsDunGen mob:
-                await PostGen(mob, data, dungeons[^1], random);
+                await PostGen(mob, dungeons[^1], random);
                 break;
             case NoiseDistanceDunGen distance:
                 dungeons.Add(await GenerateNoiseDistanceDunGen(position, distance, reservedTiles, seed, random));

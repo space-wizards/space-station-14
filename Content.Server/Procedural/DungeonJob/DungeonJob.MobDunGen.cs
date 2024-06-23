@@ -1,8 +1,13 @@
 using System.Threading.Tasks;
+using Content.Server.Ghost.Roles.Components;
+using Content.Server.NPC.Components;
+using Content.Server.NPC.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonLayers;
+using Content.Shared.Storage;
 using Robust.Shared.Collections;
+using Robust.Shared.Random;
 
 namespace Content.Server.Procedural.DungeonJob;
 
@@ -10,7 +15,6 @@ public sealed partial class DungeonJob
 {
     private async Task PostGen(
         MobsDunGen gen,
-        DungeonData data,
         Dungeon dungeon,
         Random random)
     {
@@ -18,7 +22,11 @@ public sealed partial class DungeonJob
         availableRooms.AddRange(dungeon.Rooms);
         var availableTiles = new ValueList<Vector2i>(dungeon.AllTiles);
 
-        foreach (var entry in gen.Groups)
+        var entities = EntitySpawnCollection.GetSpawns(gen.Groups, random);
+        var count = random.Next(gen.MinCount, gen.MaxCount + 1);
+        var npcs = _entManager.System<NPCSystem>();
+
+        for (var i = 0; i < count; i++)
         {
             while (availableTiles.Count > 0)
             {
@@ -30,7 +38,14 @@ public sealed partial class DungeonJob
                     continue;
                 }
 
-                _entManager.SpawnAtPosition(entry.Proto, _maps.GridTileToLocal(_gridUid, _grid, tile));
+                foreach (var ent in entities)
+                {
+                    var uid = _entManager.SpawnAtPosition(ent, _maps.GridTileToLocal(_gridUid, _grid, tile));
+                    _entManager.RemoveComponent<GhostRoleComponent>(uid);
+                    _entManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
+                    npcs.SleepNPC(uid);
+                }
+
                 break;
             }
 
