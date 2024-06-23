@@ -13166,7 +13166,7 @@ entities:
       pos: 46.5,-40.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -424809.1
+      secondsUntilStateChange: -424836.06
       state: Opening
   - uid: 4137
     components:
@@ -13620,7 +13620,7 @@ entities:
       pos: -3.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -540976.5
+      secondsUntilStateChange: -541003.44
       state: Opening
   - uid: 1496
     components:
@@ -77198,13 +77198,6 @@ entities:
     - type: Transform
       pos: 31.5,-41.5
       parent: 2
-- proto: CrateMindShieldImplants
-  entities:
-  - uid: 24219
-    components:
-    - type: Transform
-      pos: 38.5,-19.5
-      parent: 2
 - proto: CrateNPCGoose
   entities:
   - uid: 3950
@@ -77225,6 +77218,13 @@ entities:
     components:
     - type: Transform
       pos: -45.5,-15.5
+      parent: 2
+- proto: CrateSecurityTrackingMindshieldImplants
+  entities:
+  - uid: 2263
+    components:
+    - type: Transform
+      pos: 38.5,-19.5
       parent: 2
 - proto: CrateServicePersonnel
   entities:
@@ -181126,7 +181126,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -319108.34
+      secondsUntilStateChange: -319135.3
       state: Opening
 - proto: WoodenBench
   entities:
