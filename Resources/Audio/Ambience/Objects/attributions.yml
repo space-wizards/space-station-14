@@ -62,3 +62,8 @@
   license: "CC-BY-4.0"
   copyright: "Taken and edited from source"
   source: "https://freesound.org/people/juskiddink/sounds/215658/"
+
+- files: ["base-hallucination-mob.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken and edited from source"
+  source: "https://freesound.org/people/Nihil_Existentia/sounds/703361/"

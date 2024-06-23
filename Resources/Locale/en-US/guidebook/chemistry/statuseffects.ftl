@@ -1,8 +1,8 @@
-﻿reagent-effect-status-effect-Stun = stunning
+reagent-effect-status-effect-Stun = stunning
 reagent-effect-status-effect-KnockedDown = knockdown
 reagent-effect-status-effect-Jitter = jittering
 reagent-effect-status-effect-TemporaryBlindness = blindess
-reagent-effect-status-effect-SeeingRainbows = hallucinations
+reagent-effect-status-effect-SeeingRainbows = seeing rainbows
 reagent-effect-status-effect-Muted = inability to speak
 reagent-effect-status-effect-Stutter = stuttering
 reagent-effect-status-effect-ForcedSleep = unconsciousness
@@ -11,3 +11,4 @@ reagent-effect-status-effect-PressureImmunity = pressure immunity
 reagent-effect-status-effect-Pacified = combat pacification
 reagent-effect-status-effect-RatvarianLanguage = ratvarian language patterns
 reagent-effect-status-effect-StaminaModifier = modified stamina
+reagent-effect-status-effect-Hallucinations = hallucinations
