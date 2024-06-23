@@ -22,6 +22,6 @@ public sealed partial class ContainmentFieldComponent : Component
     /// <summary>
     /// Should field vaporize garbage that collides with it?
     /// </summary>
-    [DataField("destroyGarbage")]
+    [DataField]
     public bool DestroyGarbage = true;
 }
