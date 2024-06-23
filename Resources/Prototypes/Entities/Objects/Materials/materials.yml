@@ -421,6 +421,58 @@
 
 - type: entity
   parent: MaterialBase
+  id: MaterialPyrotton
+  name: pyrotton
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Pyrotton
+    baseLayer: base
+    layerStates:
+    - pyrotton
+    - pyrotton_2
+    - pyrotton_3
+  - type: Sprite
+    state: pyrotton_3
+    layers:
+    - state: pyrotton_3
+      map: ["base"]
+  - type: Appearance
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: Phlogiston
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
+      - ReagentId: Phlogiston
+        Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade
+      - RawMaterial
+
+- type: entity
+  parent: MaterialPyrotton
+  id: MaterialPyrotton1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: pyrotton
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
   id: MaterialBananium
   name: bananium
   suffix: Full

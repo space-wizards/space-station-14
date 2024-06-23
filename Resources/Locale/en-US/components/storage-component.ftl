@@ -8,3 +8,5 @@ comp-storage-cant-drop = You can't let go of { THE($entity) }!
 comp-storage-window-title = Storage Item
 comp-storage-window-weight = { $weight }/{ $maxWeight }, Max Size: {$size}
 comp-storage-window-slots = Slots: { $itemCount }/{ $maxCount }, Max Size: {$size}
+comp-storage-verb-open-storage = Open Storage
+comp-storage-verb-close-storage = Close Storage

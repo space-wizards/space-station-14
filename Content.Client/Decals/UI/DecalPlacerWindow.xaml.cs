@@ -16,6 +16,7 @@ namespace Content.Client.Decals.UI;
 public sealed partial class DecalPlacerWindow : DefaultWindow
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IEntityManager _e = default!;
 
     private readonly DecalPlacementSystem _decalPlacementSystem;
 
@@ -39,7 +40,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _decalPlacementSystem = EntitySystem.Get<DecalPlacementSystem>();
+        _decalPlacementSystem = _e.System<DecalPlacementSystem>();
 
         // This needs to be done in C# so we can have custom stuff passed in the constructor
         // and thus have a proper step size

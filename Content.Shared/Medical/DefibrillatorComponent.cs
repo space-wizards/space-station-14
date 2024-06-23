@@ -60,6 +60,12 @@ public sealed partial class DefibrillatorComponent : Component
     [DataField("doAfterDuration"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(3);
 
+    [DataField]
+    public bool AllowDoAfterMovement = true;
+
+    [DataField]
+    public bool CanDefibCrit = true;
+
     /// <summary>
     /// The sound when someone is zapped.
     /// </summary>

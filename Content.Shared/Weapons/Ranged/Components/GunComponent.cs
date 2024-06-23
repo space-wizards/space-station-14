@@ -1,5 +1,3 @@
-using Content.Shared.Damage;
-using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
@@ -138,6 +136,12 @@ public sealed partial class GunComponent : Component
     /// </summary>
     [ViewVariables]
     public EntityCoordinates? ShootCoordinates = null;
+
+    /// <summary>
+    /// Who the gun is being requested to shoot at directly.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? Target = null;
 
     /// <summary>
     ///     The base value for how many shots to fire per burst.

@@ -22,4 +22,7 @@
     ears: ClothingHeadsetMedical
     belt: ChemBag
     pocket1: HandLabeler
-    # the purple glasses?
+    eyes: ClothingEyesGlassesChemical
+  #storage:
+    #back:
+    #- Stuff

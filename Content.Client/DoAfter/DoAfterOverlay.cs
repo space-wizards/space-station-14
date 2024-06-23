@@ -21,7 +21,7 @@ public sealed class DoAfterOverlay : Overlay
     private readonly ProgressColorSystem _progressColor;
 
     private readonly Texture _barTexture;
-    private readonly ShaderInstance _shader;
+    private readonly ShaderInstance _unshadedShader;
 
     /// <summary>
     ///     Flash time for cancelled DoAfters
@@ -45,7 +45,7 @@ public sealed class DoAfterOverlay : Overlay
         var sprite = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
         _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
 
-        _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
+        _unshadedShader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -56,9 +56,8 @@ public sealed class DoAfterOverlay : Overlay
 
         // If you use the display UI scale then need to set max(1f, displayscale) because 0 is valid.
         const float scale = 1f;
-        var scaleMatrix = Matrix3.CreateScale(new Vector2(scale, scale));
-        var rotationMatrix = Matrix3.CreateRotation(-rotation);
-        handle.UseShader(_shader);
+        var scaleMatrix = Matrix3Helpers.CreateScale(new Vector2(scale, scale));
+        var rotationMatrix = Matrix3Helpers.CreateRotation(-rotation);
 
         var curTime = _timing.CurTime;
 
@@ -79,15 +78,22 @@ public sealed class DoAfterOverlay : Overlay
             if (!bounds.Contains(worldPosition))
                 continue;
 
+            // shades the do-after bar if the do-after bar belongs to other players
+            // does not shade do-afters belonging to the local player
+            if (uid != localEnt)
+                handle.UseShader(null);
+            else
+                handle.UseShader(_unshadedShader);
+
             // If the entity is paused, we will draw the do-after as it was when the entity got paused.
             var meta = metaQuery.GetComponent(uid);
             var time = meta.EntityPaused
                 ? curTime - _meta.GetPauseTime(uid, meta)
                 : curTime;
 
-            var worldMatrix = Matrix3.CreateTranslation(worldPosition);
-            Matrix3.Multiply(scaleMatrix, worldMatrix, out var scaledWorld);
-            Matrix3.Multiply(rotationMatrix, scaledWorld, out var matty);
+            var worldMatrix = Matrix3Helpers.CreateTranslation(worldPosition);
+            var scaledWorld = Matrix3x2.Multiply(scaleMatrix, worldMatrix);
+            var matty = Matrix3x2.Multiply(rotationMatrix, scaledWorld);
             handle.SetTransform(matty);
 
             var offset = 0f;
@@ -145,7 +151,7 @@ public sealed class DoAfterOverlay : Overlay
         }
 
         handle.UseShader(null);
-        handle.SetTransform(Matrix3.Identity);
+        handle.SetTransform(Matrix3x2.Identity);
     }
 
     public Color GetProgressColor(float progress, float alpha = 1f)

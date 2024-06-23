@@ -1,5 +1,4 @@
 using Content.Server.Popups;
-using Content.Server.Speech.Muting;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Events;
 using Content.Shared.Alert;
@@ -54,7 +53,7 @@ namespace Content.Server.Abilities.Mime
         private void OnComponentInit(EntityUid uid, MimePowersComponent component, ComponentInit args)
         {
             EnsureComp<MutedComponent>(uid);
-            _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
+            _alertsSystem.ShowAlert(uid, component.VowAlert);
             _actionsSystem.AddAction(uid, ref component.InvisibleWallActionEntity, component.InvisibleWallAction, uid);
         }
 
@@ -115,8 +114,8 @@ namespace Content.Server.Abilities.Mime
             mimePowers.VowBroken = true;
             mimePowers.VowRepentTime = _timing.CurTime + mimePowers.VowCooldown;
             RemComp<MutedComponent>(uid);
-            _alertsSystem.ClearAlert(uid, AlertType.VowOfSilence);
-            _alertsSystem.ShowAlert(uid, AlertType.VowBroken);
+            _alertsSystem.ClearAlert(uid, mimePowers.VowAlert);
+            _alertsSystem.ShowAlert(uid, mimePowers.VowBrokenAlert);
             _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallActionEntity);
         }
 
@@ -138,8 +137,8 @@ namespace Content.Server.Abilities.Mime
             mimePowers.ReadyToRepent = false;
             mimePowers.VowBroken = false;
             AddComp<MutedComponent>(uid);
-            _alertsSystem.ClearAlert(uid, AlertType.VowBroken);
-            _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
+            _alertsSystem.ClearAlert(uid, mimePowers.VowAlert);
+            _alertsSystem.ShowAlert(uid, mimePowers.VowBrokenAlert);
             _actionsSystem.AddAction(uid, ref mimePowers.InvisibleWallActionEntity, mimePowers.InvisibleWallAction, uid);
         }
     }

@@ -18,8 +18,6 @@
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_core.yml
         - type: StationJobs
-          overflowJobs:
-            - Passenger
           availableJobs:
             #service
             Bartender: [ 2, 2 ]

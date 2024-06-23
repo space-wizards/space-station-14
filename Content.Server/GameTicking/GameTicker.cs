@@ -19,7 +19,6 @@ using Content.Shared.Roles;
 using Robust.Server;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -133,6 +132,7 @@ namespace Content.Server.GameTicking
                 return;
             base.Update(frameTime);
             UpdateRoundFlow(frameTime);
+            UpdateGameRules();
         }
     }
 }

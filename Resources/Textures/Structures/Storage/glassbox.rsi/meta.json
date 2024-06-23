@@ -1,14 +1,35 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/commit/0129a094635aac51e00fdc7aa3b4248affc1f49d Sprite modified and updated by Nimfar11 (Github), Shatter resprite by KREKS",
+  "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/commit/0129a094635aac51e00fdc7aa3b4248affc1f49d Sprite modified and updated by Nimfar11 (Github), Shatter resprite by KREKS and modified by MilenVolf (GitHub)",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
+      "name": "base"
+    },
+    {
       "name": "glass"
+    },
+    {
+      "name": "glass-up"
+    },
+    {
+      "name": "glass-broken"
+    },
+    {
+      "name": "caplaser"
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "unlocked"
+    },
+    {
+      "name": "icon"
     },
     {
       "name": "DamageOverlay_4"
@@ -18,33 +39,6 @@
     },
     {
       "name": "DamageOverlay_12"
-    },
-    {
-      "name": "glass-4"
-    },
-    {
-      "name": "glass-up"
-    },
-    {
-      "name": "locked"
-    },
-    {
-      "name": "caplaser"
-    },
-    {
-      "name": "unlocked"
-    },
-    {
-      "name": "glassbox"
-    },
-    {
-      "name": "glassbox-empty-open"
-    },
-    {
-      "name": "glassbox-filled-closed"
-    },
-    {
-      "name": "glassbox-filled-open"
     }
   ]
 }

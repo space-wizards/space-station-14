@@ -21,7 +21,7 @@
     - type: CollideOnAnchor
 
 - type: entity
-  parent: GasUnaryBase
+  parent: [GasUnaryBase, AirSensorBase]
   id: GasVentPump
   name: air vent
   description: Has a valve and a pump attached to it.
@@ -31,9 +31,6 @@
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
-      deviceNetId: AtmosDevices
-      receiveFrequencyId: AtmosMonitor
-      transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-vent
       sendBroadcastAttemptEvent: true
       examinableAddress: true
@@ -116,7 +113,7 @@
       node: passivevent
 
 - type: entity
-  parent: GasUnaryBase
+  parent: [GasUnaryBase, AirSensorBase]
   id: GasVentScrubber
   name: air scrubber
   description: Has a valve and pump attached to it.
@@ -126,25 +123,7 @@
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
-      deviceNetId: AtmosDevices
-      receiveFrequencyId: AtmosMonitor
-      transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-scrubber
-      examinableAddress: true
-    - type: DeviceNetworkRequiresPower
-    - type: AtmosMonitor
-      temperatureThresholdId: stationTemperature
-      pressureThresholdId: stationPressure
-      gasThresholdPrototypes:
-        Oxygen: stationOxygen
-        Nitrogen: ignore
-        CarbonDioxide: stationCO2
-        Plasma: stationPlasma # everything below is usually bad
-        Tritium: danger
-        WaterVapor: stationWaterVapor
-        Ammonia: stationAmmonia
-        NitrousOxide: stationNO
-        Frezon: danger
     - type: Tag
       tags:
         - GasScrubber
@@ -240,13 +219,14 @@
     - type: AtmosDevice
     - type: UserInterface
       interfaces:
-      - key: enum.ThermomachineUiKey.Key
-        type: GasThermomachineBoundUserInterface
+        enum.ThermomachineUiKey.Key:
+          type: GasThermomachineBoundUserInterface
     - type: ActivatableUI
       inHandsOnly: false
       key: enum.ThermomachineUiKey.Key
     - type: WiresPanel
     - type: WiresVisuals
+    - type: PipeRestrictOverlap
     - type: NodeContainer
       nodes:
         pipe:
@@ -383,7 +363,7 @@
     board: HellfireHeaterMachineCircuitBoard
 
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   id: BaseGasCondenser
   name: condenser
   description: Condenses gases into liquids. Now we just need some plumbing.
@@ -421,6 +401,7 @@
   - type: GasCondenser
   - type: AtmosPipeColor
   - type: AtmosDevice
+  - type: PipeRestrictOverlap
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Machine
@@ -458,7 +439,8 @@
     solutions:
       tank:
         maxVol: 400
-        canMix: true
+  - type: MixableSolution
+    solution: tank
   - type: DrainableSolution
     solution: tank
   - type: ExaminableSolution

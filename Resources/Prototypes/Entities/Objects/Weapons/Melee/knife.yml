@@ -263,7 +263,6 @@
     tags:
     - CombatKnife
     - Knife
-    - CannonRestrict
   - type: Sprite
     sprite: Objects/Weapons/Melee/throwing_knife.rsi
     state: icon

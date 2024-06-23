@@ -23,7 +23,7 @@ public sealed partial class Paralyze : ReagentEffect
         var paralyzeTime = ParalyzeTime;
         paralyzeTime *= args.Scale;
 
-        EntitySystem.Get<StunSystem>().TryParalyze(args.SolutionEntity, TimeSpan.FromSeconds(paralyzeTime), Refresh);
+        args.EntityManager.System<StunSystem>().TryParalyze(args.SolutionEntity, TimeSpan.FromSeconds(paralyzeTime), Refresh);
     }
 }
 

@@ -2,7 +2,7 @@
   id: PirateGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitPirate
-    back: ClothingBackpackPirateFilled
+    back: ClothingBackpackSatchelLeather
     head: ClothingHeadBandBlack
     shoes: ClothingShoesBootsLaceup
     id: PiratePDA
@@ -11,25 +11,15 @@
 
 - type: startingGear
   id: PirateCaptainGear
+  parent: PirateGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitPirate
-    back: ClothingBackpackPirateFilled
     head: ClothingHeadHatPirate
-    shoes: ClothingShoesBootsLaceup
-    id: PiratePDA
-    belt: ClothingBeltUtility
-    pocket1: AppraisalTool
     pocket2: EnergyCutlass
     outerClothing: ClothingOuterCoatPirate
 
 - type: startingGear
   id: PirateFirstmateGear
+  parent: PirateGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitPirate
-    back: ClothingBackpackPirateFilled
     head: ClothingHeadHatPirateTricord
-    shoes: ClothingShoesBootsLaceup
-    id: PiratePDA
-    belt: ClothingBeltUtility
-    pocket1: AppraisalTool
     outerClothing: ClothingOuterCoatGentle

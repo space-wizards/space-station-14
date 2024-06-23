@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
@@ -24,6 +25,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -51,8 +53,8 @@ public sealed class SwapTeleporterSystem : EntitySystem
         if (!TryComp<SwapTeleporterComponent>(target, out var targetComp))
             return;
 
-        if (!comp.TeleporterWhitelist.IsValid(target, EntityManager) ||
-            !targetComp.TeleporterWhitelist.IsValid(uid, EntityManager))
+        if (_whitelistSystem.IsWhitelistFail(comp.TeleporterWhitelist, target) ||
+            _whitelistSystem.IsWhitelistFail(targetComp.TeleporterWhitelist, uid))
         {
             return;
         }
@@ -101,6 +103,9 @@ public sealed class SwapTeleporterSystem : EntitySystem
 
     private void OnActivateInWorld(Entity<SwapTeleporterComponent> ent, ref ActivateInWorldEvent args)
     {
+        if (args.Handled || !args.Complex)
+            return;
+
         var (uid, comp) = ent;
         var user = args.User;
         if (comp.TeleportTime != null)
@@ -130,6 +135,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
         comp.NextTeleportUse = _timing.CurTime + comp.Cooldown;
         comp.TeleportTime = _timing.CurTime + comp.TeleportDelay;
         Dirty(uid, comp);
+        args.Handled = true;
     }
 
     public void DoTeleport(Entity<SwapTeleporterComponent, TransformComponent> ent)
@@ -145,27 +151,14 @@ public sealed class SwapTeleporterSystem : EntitySystem
         }
 
         var teleEnt = GetTeleportingEntity((uid, xform));
-        var teleEntXform = Transform(teleEnt);
         var otherTeleEnt = GetTeleportingEntity((linkedEnt, Transform(linkedEnt)));
-        var otherTeleEntXform = Transform(otherTeleEnt);
 
         _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-other",
             ("entity", Identity.Entity(linkedEnt, EntityManager))),
             otherTeleEnt,
             otherTeleEnt,
             PopupType.MediumCaution);
-        var pos = teleEntXform.Coordinates;
-        var otherPos = otherTeleEntXform.Coordinates;
-
-        if (_transform.ContainsEntity(teleEnt, (otherTeleEnt, otherTeleEntXform)) ||
-            _transform.ContainsEntity(otherTeleEnt, (teleEnt, teleEntXform)))
-        {
-            Log.Error($"Invalid teleport swap attempt between {ToPrettyString(teleEnt)} and {ToPrettyString(otherTeleEnt)}");
-            return;
-        }
-
-        _transform.SetCoordinates(teleEnt, otherPos);
-        _transform.SetCoordinates(otherTeleEnt, pos);
+        _transform.SwapPositions(teleEnt, otherTeleEnt);
     }
 
     /// <remarks>

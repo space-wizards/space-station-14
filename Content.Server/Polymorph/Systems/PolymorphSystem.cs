@@ -199,7 +199,7 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         var targetTransformComp = Transform(uid);
 
-        var child = Spawn(configuration.Entity, targetTransformComp.Coordinates);
+        var child = Spawn(configuration.Entity, _transform.GetMapCoordinates(uid, targetTransformComp), rotation: _transform.GetWorldRotation(uid));
 
         MakeSentientCommand.MakeSentient(child, EntityManager);
 
@@ -248,7 +248,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             }
         }
 
-        if (configuration.TransferName && TryComp<MetaDataComponent>(uid, out var targetMeta))
+        if (configuration.TransferName && TryComp(uid, out MetaDataComponent? targetMeta))
             _metaData.SetEntityName(child, targetMeta.EntityName);
 
         if (configuration.TransferHumanoidAppearance)

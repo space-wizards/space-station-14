@@ -24,7 +24,8 @@ public sealed partial class InjectorDoAfterEvent : SimpleDoAfterEvent
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class InjectorComponent : Component
 {
-    public const string SolutionName = "injector";
+    [DataField]
+    public string SolutionName = "injector";
 
     /// <summary>
     /// Whether or not the injector is able to draw from containers or if it's a single use

@@ -59,3 +59,6 @@
 
 - type: statusEffect
   id: StaminaModifier
+
+- type: statusEffect
+  id: Flashed
