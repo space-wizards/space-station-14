@@ -332,8 +332,8 @@
       params:
         volume: 6
   - type: Kudzu
-    growthTickChance: 0.1
-    spreadChance: 0.35
+    growthTickChance: 0.2
+    spreadChance: 0.45
   - type: Slippery
     launchForwardsMultiplier: 2.5
   - type: StepTrigger
