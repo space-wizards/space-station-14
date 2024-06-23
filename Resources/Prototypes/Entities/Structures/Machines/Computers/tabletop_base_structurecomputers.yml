@@ -1,0 +1,37 @@
+- type: entity
+  parent: [BaseStructureTabletopComputer, BaseComputer]
+  id: BaseTabletopComputer
+  name: tabletop computer
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.35,0.25,0.35"
+        density: 190
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: Construction
+    graph: TabletopComputer
+    node: tabletop computer
+    containers:
+      - board
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Machines/tabletop_computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      sprite: Structures/Machines/computers.rsi
+      state: generic
+    - map: ["computerLayerKeys"]
+      sprite: Structures/Machines/computers.rsi
+      state: generic_keys

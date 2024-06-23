@@ -1,0 +1,48 @@
+- type: entity
+  parent: BaseStructureComputer
+  id: BaseStructureTabletopComputer
+  abstract: true
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.35,0.25,0.35"
+        density: 190
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: Construction
+    graph: TabletopComputer
+    node: frameUnsecured
+  - type: Sprite
+    drawdepth: SmallObjects
+
+- type: entity
+  parent: [BaseStructureTabletopComputer, ComputerFrame]
+  id: TabletopComputerFrame
+  name: tabletop computer frame
+  description: A tabletop computer under construction.
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Machines/tabletop_parts.rsi
+    layers:
+    - state: 0
+      map: [ "enum.ConstructionVisuals.Layer" ]
+
+- type: entity
+  parent: [BaseStructureTabletopComputer, ComputerBroken]
+  id: TabletopComputerBroken
+  name: broken tabletop computer
+  description: This tabletop computer has seen better days.
+  components:
+  - type: Construction
+    graph: TabletopComputer
+    node: monitorBroken
+  - type: Sprite
+    sprite: Structures/Machines/tabletop_computers.rsi
+    drawdepth: SmallObjects
+    state: broken

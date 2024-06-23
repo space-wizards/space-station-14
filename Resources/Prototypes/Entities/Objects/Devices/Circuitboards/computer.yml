@@ -26,6 +26,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerAlert
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerAlert
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -37,6 +39,8 @@
       state: cpu_engineering
     - type: ComputerBoard
       prototype: ComputerPowerMonitoring
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerPowerMonitoring
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -48,6 +52,8 @@
       state: cpu_medical
     - type: ComputerBoard
       prototype: ComputerMedicalRecords
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerMedicalRecords
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -59,6 +65,8 @@
       state: cpu_security
     - type: ComputerBoard
       prototype: ComputerCriminalRecords
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerCriminalRecords
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -70,6 +78,8 @@
       state: cpu_command
     - type: ComputerBoard
       prototype: ComputerStationRecords
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerStationRecords
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -81,6 +91,8 @@
       state: cpu_supply
     - type: ComputerBoard
       prototype: ComputerCargoOrders
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerCargoOrders
     - type: StaticPrice
       price: 750
 
@@ -94,6 +106,8 @@
       state: cpu_supply
     - type: ComputerBoard
       prototype: ComputerPalletConsole
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerPalletConsole
 
 - type: entity
   id: CargoBountyComputerCircuitboard
@@ -101,11 +115,13 @@
   name: cargo bounty computer board
   description: A computer printed circuit board for a cargo bounty computer.
   components:
-  - type: Sprite
-    state: cpu_supply
-  - type: ComputerBoard
-    prototype: ComputerCargoBounty
-  - type: StaticPrice
+    - type: Sprite
+      state: cpu_supply
+    - type: ComputerBoard
+      prototype: ComputerCargoBounty
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerCargoBounty
+    - type: StaticPrice
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -117,6 +133,8 @@
       state: cpu_supply
     - type: ComputerBoard
       prototype: ComputerCargoShuttle
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerCargoShuttle
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -128,6 +146,8 @@
       state: cpu_supply
     - type: ComputerBoard
       prototype: ComputerSalvageExpedition
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerSalvageExpedition
     - type: StealTarget
       stealGroup: SalvageExpeditionsComputerCircuitboard
 
@@ -139,6 +159,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleCargo
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerShuttleCargo
     - type: StealTarget
       stealGroup: CargoShuttleConsoleCircuitboard
 
@@ -150,6 +172,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleSalvage
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerShuttleSalvage
     - type: StealTarget
       stealGroup: SalvageShuttleConsoleCircuitboard
 
@@ -161,6 +185,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerSurveillanceCameraMonitor
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerSurveillanceCameraMonitor
     - type: Tag
       tags:
         - SurveillanceCameraMonitorCircuitboard
@@ -173,6 +199,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerSurveillanceWirelessCameraMonitor
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerSurveillanceWirelessCameraMonitor
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -196,6 +224,8 @@
       state: cpu_science
     - type: ComputerBoard
       prototype: ComputerResearchAndDevelopment
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerResearchAndDevelopment
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -207,6 +237,8 @@
       state: cpu_science
     - type: ComputerBoard
       prototype: ComputerAnalysisConsole
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerAnalysisConsole
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -227,6 +259,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerCrewMonitoring
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerCrewMonitoring
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -238,6 +272,8 @@
       state: cpu_command
     - type: ComputerBoard
       prototype: ComputerId
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerId
     - type: StaticPrice
       price: 750
     - type: Tag
@@ -254,6 +290,8 @@
       state: cpu_medical
     - type: ComputerBoard
       prototype: computerBodyScanner
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerBodyScanner
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -265,6 +303,8 @@
       state: cpu_command
     - type: ComputerBoard
       prototype: ComputerComms
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerComms
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -274,14 +314,18 @@
   components:
     - type: ComputerBoard
       prototype: SyndicateComputerComms
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopSyndicateComputerComms
 
 - type: entity
   parent: BaseComputerCircuitboard
   id: RadarConsoleCircuitboard
   name: radar console computer board
   components:
-  - type: ComputerBoard
-    prototype: ComputerRadar
+    - type: ComputerBoard
+      prototype: ComputerRadar
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerRadar
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -293,6 +337,8 @@
       state: cpu_engineering
     - type: ComputerBoard
       prototype: ComputerSolarControl
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerSolarControl
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -331,6 +377,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerShuttle
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerShuttle
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -340,6 +388,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleSyndie
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerShuttleSyndie
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -351,6 +401,8 @@
       state: cpu_medical
     - type: ComputerBoard
       prototype: ComputerCloningConsole
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerCloningConsole
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -362,6 +414,8 @@
       state: cpu_command
     - type: ComputerBoard
       prototype: ComputerIFF
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerIFF
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -371,6 +425,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerIFFSyndicate
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerIFFSyndicate
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -384,6 +440,8 @@
       price: 150
     - type: ComputerBoard
       prototype: ComputerMassMedia
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerMassMedia
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -395,6 +453,8 @@
       state: cpu_engineering
     - type: ComputerBoard
       prototype: ComputerSensorMonitoring
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerSensorMonitoring
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -406,3 +466,5 @@
       state: cpu_science
     - type: ComputerBoard
       prototype: ComputerRoboticsControl
+    - type: TabletopComputerBoardComponent
+      Prototype: TabletopComputerRoboticsControl

@@ -13,6 +13,20 @@
     state: 4
 
 - type: construction
+  name: tabletop computer
+  id: TabletopComputer
+  graph: TabletopComputer
+  startNode: start
+  targetNode: tabletop computer
+  category: construction-category-machines
+  description: A frame used to construct anything with a computer circuitboard.
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Machines/tabletop_parts.rsi
+    state: 4
+
+- type: construction
   name: machine frame
   description: A machine under construction. Needs more parts.
   id: MachineFrame
