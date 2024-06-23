@@ -59,6 +59,6 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         if (!Resolve(uid, ref appearance, false))
             return;
 
-        _appearance.SetData(uid, TypingIndicatorVisuals.State, state, appearance)
+        _appearance.SetData(uid, TypingIndicatorVisuals.State, state, appearance);
     }
 }

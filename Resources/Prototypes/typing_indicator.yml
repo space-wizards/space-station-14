@@ -45,7 +45,7 @@
 - type: typingIndicator
   id: vox
   typingState: vox0
-#  idleState: vox3 # TODO add idle state sprite
+  idleState: vox0 # TODO add idle state sprite
   offset: -0.125, 0.125
 
 - type: typingIndicator
