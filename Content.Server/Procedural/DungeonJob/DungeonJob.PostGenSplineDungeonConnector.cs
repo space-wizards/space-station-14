@@ -75,7 +75,7 @@ public sealed partial class DungeonJob
                         if (_maps.TryGetTile(_grid, node, out var tile) && !tile.IsEmpty)
                             return 0f;
 
-                        return 20f;
+                        return 5f;
                     }
                 },
             },
@@ -83,7 +83,10 @@ public sealed partial class DungeonJob
 
             // Welp
             if (path.Path.Count == 0)
+            {
+                _sawmill.Error($"Unable to connect spline dungeon path for {_entManager.ToPrettyString(_gridUid)} between {pair.Start} and {pair.End}");
                 continue;
+            }
 
             await SuspendDungeon();
 

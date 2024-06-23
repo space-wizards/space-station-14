@@ -214,12 +214,7 @@ public sealed partial class ShuttleSystem
                     _station.AddGridToStation(uid, spawned);
                 }
 
-                foreach (var compReg in group.AddComponents.Values)
-                {
-                    var compType = compReg.Component.GetType();
-                    var comp = _factory.GetComponent(compType);
-                    AddComp(spawned, comp, true);
-                }
+                EntityManager.AddComponents(spawned, group.AddComponents);
             }
         }
 
