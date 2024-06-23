@@ -12,6 +12,15 @@ namespace Content.Shared.Random.Helpers
             return random.Pick(prototype.Values);
         }
 
+        /// <summary>
+        /// Randomly selects an entry from <paramref name="prototype"/>, attempts to localize it, and returns the result.
+        /// </summary>
+        public static string Pick(this IRobustRandom random, LocalizedDatasetPrototype prototype)
+        {
+            var index = random.Next(prototype.Values.Count);
+            return Loc.GetString(prototype.Values[index]);
+        }
+
         public static string Pick(this IWeightedRandomPrototype prototype, System.Random random)
         {
             var picks = prototype.Weights;

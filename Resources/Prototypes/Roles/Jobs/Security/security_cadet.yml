@@ -35,3 +35,7 @@
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58
     pocket2: BookSecurity
+  storage:
+    back:
+    - Flash
+    - MagazinePistol

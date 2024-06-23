@@ -45,7 +45,7 @@ public sealed class ApcSystem : EntitySystem
         var query = EntityQueryEnumerator<ApcComponent, PowerNetworkBatteryComponent, UserInterfaceComponent>();
         while (query.MoveNext(out var uid, out var apc, out var battery, out var ui))
         {
-            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
+            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime && _ui.IsUiOpen((uid, ui), ApcUiKey.Key))
             {
                 apc.LastUiUpdate = _gameTiming.CurTime;
                 UpdateUIState(uid, apc, battery);

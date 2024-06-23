@@ -1,4 +1,6 @@
+using System.Linq;
 using Content.Server.Database;
+using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
@@ -195,6 +197,15 @@ namespace Content.Server.GameTicking
 
             _playerGameStatuses[session.UserId] = PlayerGameStatus.JoinedGame;
             _db.AddRoundPlayers(RoundId, session.UserId);
+
+            if (_adminManager.HasAdminFlag(session, AdminFlags.Admin))
+            {
+                if (_allPreviousGameRules.Count > 0)
+                {
+                    var rulesMessage = GetGameRulesListMessage(true);
+                    _chatManager.SendAdminAnnouncementMessage(session, Loc.GetString("starting-rule-selected-preset", ("preset", rulesMessage)));
+                }
+            }
 
             RaiseNetworkEvent(new TickerJoinGameEvent(), session.Channel);
         }

@@ -21,6 +21,7 @@ public sealed class SpreaderSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     /// <summary>
     /// Cached maximum number of updates per spreader prototype. This is applied per-grid.
@@ -37,8 +38,7 @@ public sealed class SpreaderSystem : EntitySystem
 
     public const float SpreadCooldownSeconds = 1;
 
-    [ValidatePrototypeId<TagPrototype>]
-    private const string IgnoredTag = "SpreaderIgnore";
+    private static readonly ProtoId<TagPrototype> IgnoredTag = "SpreaderIgnore";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -189,7 +189,6 @@ public sealed class SpreaderSystem : EntitySystem
         var airtightQuery = GetEntityQuery<AirtightComponent>();
         var dockQuery = GetEntityQuery<DockingComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var tagQuery = GetEntityQuery<TagComponent>();
         var blockedAtmosDirs = AtmosDirection.Invalid;
 
         // Due to docking ports they may not necessarily be opposite directions.
@@ -212,7 +211,7 @@ public sealed class SpreaderSystem : EntitySystem
 
             // If we're on a blocked tile work out which directions we can go.
             if (!airtightQuery.TryGetComponent(ent, out var airtight) || !airtight.AirBlocked ||
-                tagQuery.TryGetComponent(ent, out var tags) && tags.Tags.Contains(IgnoredTag))
+                _tag.HasTag(ent.Value, IgnoredTag))
             {
                 continue;
             }
@@ -250,8 +249,7 @@ public sealed class SpreaderSystem : EntitySystem
 
             while (directionEnumerator.MoveNext(out var ent))
             {
-                if (!airtightQuery.TryGetComponent(ent, out var airtight) || !airtight.AirBlocked ||
-                    tagQuery.TryGetComponent(ent, out var tags) && tags.Tags.Contains(IgnoredTag))
+                if (!airtightQuery.TryGetComponent(ent, out var airtight) || !airtight.AirBlocked || _tag.HasTag(ent.Value, IgnoredTag))
                 {
                     continue;
                 }

@@ -1,6 +1,6 @@
-using Content.Server.Body.Components;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Medical.Metabolism.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -24,11 +24,18 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         {
             if (args.OrganEntity == null)
                 return false;
+
+            return Condition(args.OrganEntity.Value, args.EntityManager);
+        }
+
+        public bool Condition(Entity<MetabolizerComponent?> metabolizer, IEntityManager entMan)
+        {
             //TODO Metabolism: Reimplement this
-            // if (args.EntityManager.TryGetComponent<MetabolizerComponent>(args.OrganEntity.Value, out var metabolizer)
-            //     && metabolizer.MetabolizerTypes != null
-            //     && metabolizer.MetabolizerTypes.Contains(Type))
-            //     return ShouldHave;
+//             metabolizer.Comp ??= entMan.GetComponentOrNull<MetabolizerComponent>(metabolizer.Owner);
+//             if (metabolizer.Comp != null
+//                 && metabolizer.Comp.MetabolizerTypes != null
+//                 && metabolizer.Comp.MetabolizerTypes.Contains(Type))
+//                 return ShouldHave;
             return !ShouldHave;
         }
 

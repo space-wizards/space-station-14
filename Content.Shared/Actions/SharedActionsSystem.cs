@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -29,6 +30,7 @@ public abstract class SharedActionsSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -112,7 +114,7 @@ public abstract class SharedActionsSystem : EntitySystem
         bool logError = true)
     {
         result = null;
-        if (!Exists(uid))
+        if (uid == null || TerminatingOrDeleted(uid.Value))
             return false;
 
         var ev = new GetActionDataEvent();
@@ -477,7 +479,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!target.IsValid() || Deleted(target))
             return false;
 
-        if (action.Whitelist != null && !action.Whitelist.IsValid(target, EntityManager))
+        if (_whitelistSystem.IsWhitelistFail(action.Whitelist, target))
             return false;
 
         if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, target))
@@ -502,13 +504,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return distance <= action.Range;
         }
 
-        if (_interactionSystem.InRangeUnobstructed(user, target, range: action.Range)
-            && _containerSystem.IsInSameOrParentContainer(user, target))
-        {
-            return true;
-        }
-
-        return _interactionSystem.CanAccessViaStorage(user, target);
+        return _interactionSystem.InRangeAndAccessible(user, target, range: action.Range);
     }
 
     public bool ValidateWorldTarget(EntityUid user, EntityCoordinates coords, Entity<WorldTargetActionComponent> action)

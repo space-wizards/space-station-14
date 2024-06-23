@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
 using Robust.Client.Graphics;
@@ -75,6 +76,6 @@ public sealed class EmergencyShuttleOverlay : Overlay
 
         args.WorldHandle.SetTransform(xform.WorldMatrix);
         args.WorldHandle.DrawRect(Position.Value, Color.Red.WithAlpha(100));
-        args.WorldHandle.SetTransform(Matrix3.Identity);
+        args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 }

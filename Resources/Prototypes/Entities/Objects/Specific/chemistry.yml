@@ -233,6 +233,8 @@
     sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
     layers:
       - state: beakernoreact
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
   - type: SolutionContainerManager
     solutions:
       beaker:
@@ -251,6 +253,8 @@
     sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
     layers:
       - state: beakerbluespace
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
   - type: SolutionContainerManager
     solutions:
       beaker:

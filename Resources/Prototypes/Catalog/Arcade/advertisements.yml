@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: BlockGameAds
+  values:
+    prefix: advertisement-block-game-
+    count: 13
+
+- type: localizedDataset
+  id: SpaceVillainAds
+  values:
+    prefix: advertisement-space-villain-
+    count: 15

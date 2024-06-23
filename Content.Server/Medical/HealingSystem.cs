@@ -65,7 +65,7 @@ public sealed class HealingSystem : EntitySystem
         }
 
         //TODO: remove bloodloss healing entirely.
-        // // Heal some bloodloss damage.
+        // Heal some bloodloss damage.
         // if (healing.BloodlossModifier != 0)
         // {
         //     if (!TryComp<BloodstreamComponent>(entity, out var bloodstream))
@@ -74,7 +74,6 @@ public sealed class HealingSystem : EntitySystem
         //     _bloodstreamSystem.TryModifyBleedAmount(entity.Owner, healing.BloodlossModifier);
         //     if (isBleeding != bloodstream.BleedAmount > 0)
         //     {
-        //         dontRepeat = true;
         //         _popupSystem.PopupEntity(Loc.GetString("medical-item-stop-bleeding"), entity, args.User);
         //     }
         // }

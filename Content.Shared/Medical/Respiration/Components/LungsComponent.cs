@@ -1,4 +1,5 @@
-﻿using Content.Shared.Atmos;
+﻿using Content.Shared.Alert;
+using Content.Shared.Atmos;
 using Content.Shared.Medical.Metabolism.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -144,6 +145,13 @@ public sealed partial class LungsComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public List<(Gas gas, string reagent, GasMetabolismData)> CachedWasteGasData = new();
+
+    // TODO do alert
+    /// <summary>
+    /// The type of gas this lung needs. Used only for the breathing alerts, not actual metabolism.
+    /// </summary>
+    [DataField]
+    public ProtoId<AlertPrototype> Alert = "LowOxygen";
 }
 
 

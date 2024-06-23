@@ -571,7 +571,7 @@
       amount: 5
 
 - type: entity
-  name: space drugs
+  name: space mirage
   parent: Pill
   id: PillSpaceDrugs
   components:
@@ -958,7 +958,7 @@
           Quantity: 15
 
 - type: entity
-  name: stimulants syringe
+  name: hyperzine syringe
   parent: PrefilledSyringe
   id: SyringeStimulants
   components:

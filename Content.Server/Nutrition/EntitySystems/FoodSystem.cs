@@ -1,4 +1,3 @@
-using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Inventory;
@@ -32,6 +31,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
 using System.Linq;
 using Robust.Server.GameObjects;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -58,6 +58,7 @@ public sealed class FoodSystem : EntitySystem
     //TODO Digestion: Re-Implement this
     //[Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public const float MaxFeedDistance = 1.0f;
 
@@ -257,9 +258,9 @@ public sealed class FoodSystem : EntitySystem
         //TODO Digestion: Re-Implement this
         // if (stomachToUse == null)
         // {
-            _solutionContainer.TryAddSolution(soln.Value, split);
-            _popup.PopupEntity(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other") : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Target.Value, args.User);
-            return;
+        //    _solutionContainer.TryAddSolution(soln.Value, split);
+        //    _popup.PopupEntity(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other") : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Target.Value, args.User);
+        //    return;
         // }
 
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
@@ -404,32 +405,32 @@ public sealed class FoodSystem : EntitySystem
     ///     this <paramref name="food"/> (or if they even have enough stomachs in the first place).
     /// </summary>
     //TODO Digestion: Re-Implement this
-    // private bool IsDigestibleBy(EntityUid food, FoodComponent component, List<(StomachComponent, OrganComponent)> stomachs)
-    // {
-    //     var digestible = true;
+    //    private bool IsDigestibleBy(EntityUid food, FoodComponent component, List<(StomachComponent, OrganComponent)> stomachs)
+    //    {
+    //        var digestible = true;
     //
-    //     // Does the mob have enough stomachs?
-    //     if (stomachs.Count < component.RequiredStomachs)
-    //         return false;
+    //        // Does the mob have enough stomachs?
+    //        if (stomachs.Count < component.RequiredStomachs)
+    //            return false;
     //
-    //     // Run through the mobs' stomachs
-    //     foreach (var (comp, _) in stomachs)
-    //     {
-    //         // Find a stomach with a SpecialDigestible
-    //         if (comp.SpecialDigestible == null)
-    //             continue;
-    //         // Check if the food is in the whitelist
-    //         if (comp.SpecialDigestible.IsValid(food, EntityManager))
-    //             return true;
-    //         // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
-    //         return false;
-    //     }
+    //        // Run through the mobs' stomachs
+    //        foreach (var (comp, _) in stomachs)
+    //        {
+    //            // Find a stomach with a SpecialDigestible
+    //            if (comp.SpecialDigestible == null)
+    //                continue;
+    //            // Check if the food is in the whitelist
+    //            if (_whitelistSystem.IsWhitelistPass(comp.SpecialDigestible, food))
+    //                return true;
+    //            // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
+    //            return false;
+    //        }
     //
-    //     if (component.RequiresSpecialDigestion)
-    //         return false;
+    //        if (component.RequiresSpecialDigestion)
+    //            return false;
     //
-    //     return digestible;
-    // }
+    //        return digestible;
+    //    }
 
     private bool TryGetRequiredUtensils(EntityUid user, FoodComponent component,
         out List<EntityUid> utensils, HandsComponent? hands = null)

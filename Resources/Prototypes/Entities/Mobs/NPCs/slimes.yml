@@ -86,7 +86,7 @@
         scaleByQuantity: true
         damage:
           types:
-            Heat: 3
+            Heat: 0.15
       - !type:PopupMessage
         type: Local
         messages: [ "slime-hurt-by-water-popup" ]
@@ -129,6 +129,7 @@
     makeSentient: true
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
+    rules: ghost-role-information-nonantagonist-rules
     raffle:
       settings: short
   - type: Speech
@@ -202,6 +203,7 @@
         - SimpleHostile
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
+      rules: ghost-role-information-angry-slimes-rules
       raffle:
         settings: short
 
@@ -239,6 +241,7 @@
         - SimpleHostile
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
+      rules: ghost-role-information-angry-slimes-rules
       raffle:
         settings: short
 
@@ -276,5 +279,6 @@
         - SimpleHostile
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
+      rules: ghost-role-information-angry-slimes-rules
       raffle:
         settings: short

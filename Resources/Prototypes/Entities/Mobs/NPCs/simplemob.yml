@@ -26,6 +26,7 @@
     - ForcedSleep
     - TemporaryBlindness
     - Pacified
+    - Flashed
   - type: Buckle
   - type: StandingState
   - type: Tag
@@ -101,6 +102,7 @@
       - TemporaryBlindness
       - Pacified
       - StaminaModifier
+      - Flashed
   - type: MobPrice
     price: 150
   - type: FloatingVisuals

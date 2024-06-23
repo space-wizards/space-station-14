@@ -47,7 +47,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (component.RemovalTime == null)
             return;
 
-        if (args.Handled || !TryComp<PhysicsComponent>(uid, out var physics) || physics.BodyType != BodyType.Static)
+        if (args.Handled || !args.Complex || !TryComp<PhysicsComponent>(uid, out var physics) || physics.BodyType != BodyType.Static)
             return;
 
         args.Handled = true;

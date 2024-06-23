@@ -1,11 +1,12 @@
-﻿using Content.Shared.Chemistry.Reagent;
+﻿using Content.Shared.Alert;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Content.Shared.Medical.Blood.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Medical.Blood.Components;
-
-
 
 /// <summary>
 /// This is a very simplified bleeding system that is intended for non-medically simulated entities.
@@ -93,4 +94,8 @@ public sealed partial class BloodstreamComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? SpillSolutionEnt  = null;
+
+    // TODO do alert
+    [DataField]
+    public ProtoId<AlertPrototype> BleedingAlert = "Bleed";
 }

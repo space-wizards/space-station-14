@@ -57,7 +57,7 @@ namespace Content.Shared.UserInterface
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
-        public bool AllowSpectator = true;
+        public bool BlockSpectators;
 
         /// <summary>
         ///     Whether the item must be in the user's currently selected/active hand.
