@@ -785,6 +785,36 @@
     RedMead: 2
 
 - type: reaction
+  id: RussianRouletteBlank
+  reactants:
+    Tricordrazine:
+      amount: 2
+    BlackRussian:
+      amount: 1
+    WhiteRussian:
+      amount: 1
+  products:
+    RussianRoulette: 2
+    RussianRouletteBlank: 2
+
+- type: reaction
+  id: RussianRouletteLive
+  reactants:
+    Beanbag:
+      amount: 2
+    BlackRussian:
+      amount: 1
+    WhiteRussian:
+      amount: 1
+  products:
+    RussianRoulette: 2
+    RussianRouletteLive: 2
+  sound:
+    path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+    params:
+      volume: 10
+
+- type: reaction
   id: Rewriter
   reactants:
     Coffee:

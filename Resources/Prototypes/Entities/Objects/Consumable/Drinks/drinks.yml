@@ -1364,6 +1364,62 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkRussianRouletteLives
+  suffix: russian roulette (lives)
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: RussianRoulette
+          Quantity: 15
+        - ReagentId: RussianRouletteLive
+          Quantity: 15
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi # update
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkRussianRouletteBlanks
+  suffix: russian roulette (blanks)
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: RussianRoulette
+          Quantity: 15
+        - ReagentId: RussianRouletteBlank
+          Quantity: 15
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi # update
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkRussianRouletteRandom
+  suffix: russian roulette (50%)
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: RussianRoulette
+          Quantity: 10
+        - ReagentId: RussianRouletteLive
+          Quantity: 5
+        - ReagentId: RussianRouletteBlank
+          Quantity: 5
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi # update
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkMilkshake
   suffix: milkshake
   components:

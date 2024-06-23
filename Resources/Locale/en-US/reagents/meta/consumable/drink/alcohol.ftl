@@ -211,6 +211,15 @@ reagent-desc-pina-colada = For getting lost in the rain.
 reagent-name-red-mead = red mead
 reagent-desc-red-mead = The true Viking's drink! Even though it has a strange red color.
 
+reagent-name-russian-roulette-live = russian roulette live rounds
+reagent-desc-russian-roulette-live = Liquid live shotgun rounds. For those who want to pass away with a bang. Can be muffled with Silencer.
+
+reagent-name-russian-roulette-blank = russian roulette blank rounds
+reagent-desc-russian-roulette-blank = Liquid blank shotgun rounds. Boring, does not bang, but maybe can even heal if you manage to survive the roulette.
+
+reagent-name-russian-roulette = russian roulette
+reagent-desc-russian-roulette = Liquid russian roulette that favors the drunk. The best way for someone to test their luck and for the bartender to get rid of an unwanted customer. Must be paired with liability waiver!
+
 reagent-name-rewriter = rewriter
 reagent-desc-rewriter = The secret of the sanctuary of the Librarian...
 

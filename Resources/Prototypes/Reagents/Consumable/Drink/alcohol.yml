@@ -1393,6 +1393,159 @@
   fizziness: 0.4
 
 - type: reagent
+  id: RussianRouletteBlank
+  name: reagent-name-russian-roulette-blank
+  parent: BaseAlcohol
+  desc: reagent-desc-russian-roulette-blank
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
+  color: "#4a786a"
+  metabolisms:
+    Drink:
+      metabolismRate: 0.01
+      effects:
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          min: 42.5
+        reagent: RussianRouletteBlank
+        amount: -5
+
+- type: reagent
+  id: RussianRouletteLive
+  name: reagent-name-russian-roulette-live
+  parent: BaseAlcohol
+  desc: reagent-desc-russian-roulette-live
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: alcohol
+  color: "#3e3e3e"
+  metabolisms:
+    Drink:
+      metabolismRate: 0.01
+      effects:
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          min: 42.5
+        reagent: RussianRouletteLive
+        amount: -5
+
+- type: reagent
+  id: RussianRoulette
+  name: reagent-name-russian-roulette
+  parent: BaseAlcohol
+  desc: reagent-desc-russian-roulette
+  physicalDesc: reagent-physical-desc-blazing
+  flavor: russian-roulette
+  color: "#9f2b15"
+  metabolisms:
+    Drink:
+      metabolismRate: 0.1
+      effects:
+      - !type:Jitter
+      - !type:PopupMessage
+        messages: [ "russian-roulette-effect-game", "russian-roulette-effect-dry" ]
+        visualType: SmallCaution
+        probability: 0.25
+      - !type:SatiateThirst
+        factor: -4
+      - !type:ActivateRandom
+        conditions:
+        - !type:ReagentThreshold
+          min: 9.5
+        cases:
+        - activates:
+          - reagent:
+              ReagentId: RussianRouletteBlank
+            consume: true
+          - reagent:
+              ReagentId: Ethanol # favors the drunk
+            consume: false
+            factor: 0.25
+          effects:
+          - !type:AdjustReagent
+            reagent: RussianRoulette
+            amount: -10
+          - !type:PopupMessage
+            conditions:
+            - !type:ReagentThreshold
+              reagent: RussianRouletteLive
+              min: 4
+            messages: [ "russian-roulette-effect-blank-shot" ]
+          - !type:HealthChange
+            scaleByQuantity: true
+            damage:
+              groups:
+                Burn: -0.75
+                Brute: -0.75
+                Airloss: -0.75
+                Toxin: -0.75
+          - !type:HealthChange # additional reward for actually taking the risk
+            conditions:
+            - !type:ReagentThreshold
+              reagent: RussianRouletteLive
+              min: 4
+            scaleByQuantity: true
+            damage:
+              types:
+                Piercing: -1
+              groups:
+                Burn: -0.75
+                Brute: -0.75
+                Airloss: -0.75
+                Toxin: -0.75
+          - !type:SatiateThirst
+            factor: 30
+          - !type:AdjustReagent
+            reagent: Ethanol
+            amount: 4
+        - activates:
+          - reagent:
+              ReagentId: RussianRouletteLive
+            consume: true
+          effects:
+          - !type:AdjustReagent
+            reagent: RussianRoulette
+            amount: -10
+          - !type:PlaySound
+            conditions:
+            - !type:ReagentThreshold
+              reagent: Silencer
+              max: 0
+            sound:
+              path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+              params:
+                volume: -7.5
+          - !type:GenericStatusEffect
+            key: KnockedDown
+            component: KnockedDown
+            time: 4
+            type: Add
+          - !type:GenericStatusEffect
+            key: Stun
+            component: Stunned
+            time: 4
+            type: Add
+          - !type:GenericStatusEffect
+            key: TemporaryBlindness
+            component: TemporaryBlindness
+            time: 2
+            type: Add
+          - !type:PopupMessage
+            messages: [ "russian-roulette-effect-live-shot" ]
+            visualType: LargeCaution
+          - !type:HealthChange
+            scaleByQuantity: true
+            damage:
+              types:
+                Piercing: 2
+          - !type:SatiateThirst
+            factor: 30
+          - !type:AdjustReagent
+            reagent: Ethanol
+            amount: 2
+
+- type: reagent
   id: PinaColada
   name: reagent-name-pina-colada
   parent: BaseAlcohol
