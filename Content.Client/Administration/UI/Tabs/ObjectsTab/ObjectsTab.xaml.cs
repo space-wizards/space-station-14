@@ -41,7 +41,7 @@ public sealed partial class ObjectsTab : Control
         foreach (var type in Enum.GetValues(typeof(ObjectsTabSelection)))
         {
             _selections.Add((ObjectsTabSelection)type!);
-            ObjectTypeOptions.AddItem(Enum.GetName((ObjectsTabSelection)type)!);
+            ObjectTypeOptions.AddItem(Loc.GetString($"object-tab-object-type-{((Enum.GetName((ObjectsTabSelection)type))!.ToString().ToLower())}"));
         }
 
         ListHeader.OnHeaderClicked += HeaderClicked;
@@ -132,9 +132,7 @@ public sealed partial class ObjectsTab : Control
         var entry = new ObjectsTabEntry(info.Name, info.Entity, new StyleBoxFlat { BackgroundColor = backgroundColor });
         button.ToolTip = $"{info.Name}, {info.Entity}";
 
-        // Add key binding event handler
-        entry.OnKeyBindDown += args => OnEntryKeyBindDown?.Invoke(args, data);
-
+        button.OnKeyBindDown += args => OnEntryKeyBindDown?.Invoke(args, data);
         button.AddChild(entry);
     }
 
