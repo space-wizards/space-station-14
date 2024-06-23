@@ -14,10 +14,6 @@ namespace Content.Shared.Chemistry.Reaction.Prototypes;
 [Prototype]
 public sealed partial class RateReactionPrototype : BaseReactionPrototype, IPrototype
 {
-
-    [DataField]
-    public string Name { get; private set; } = string.Empty;
-
     [DataField("requiredMixerCategories")]
     public List<ProtoId<MixingCategoryPrototype>>? MixingCategories = null;
 

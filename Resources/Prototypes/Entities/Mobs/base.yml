@@ -51,7 +51,7 @@
   id: MobPain
   abstract: true
   components:
-  - type: NervousSystem
+  - type: Nerves
 
 - type: entity
   save: false
