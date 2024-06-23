@@ -348,3 +348,9 @@ DoorRemoteFirefight: null
 
 # 2024-06-03
 AirlockServiceCaptainLocked: AirlockCaptainLocked
+
+# 2024-06-15
+ClothingOuterCoatInspector: ClothingOuterCoatDetectiveLoadout
+
+# 2024-06-23
+FloorTileItemReinforced: PartRodMetal1
