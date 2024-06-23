@@ -8,11 +8,10 @@
     <BoxContainer VerticalExpand="True" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 5 10 10">
         <BoxContainer Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
             <BoxContainer Orientation="Vertical" HorizontalAlignment="Center">
-                <Label Text="{Loc 'barsign-ui-set-label'}" HorizontalAlignment="Center" StyleClasses="LabelSubText" Margin="30 0 30 0"/>
+                <Label Text="{Loc 'barsign-ui-set-label'}" HorizontalAlignment="Center" StyleClasses="LabelSubText" Margin="30 0"/>
                 <customControls:HSeparator Margin="0 0 0 5"/>
             </BoxContainer>
-            <OptionButton Name="SignOptions" HorizontalAlignment="Center" VerticalAlignment="Center" MinSize="175 60"/>
-            <Control MinHeight="20"/>
+            <OptionButton Name="SignOptions" HorizontalAlignment="Center" VerticalAlignment="Center" MinSize="175 60" Margin="0 0 0 20"/>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
