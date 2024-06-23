@@ -1,3 +1,5 @@
+using Robust.Shared.Utility;
+
 namespace Content.Server.NPC.Pathfinding;
 
 public sealed partial class PathfindingSystem
@@ -31,6 +33,8 @@ public sealed partial class PathfindingSystem
                 };
             }
 
+            var gCost = costSoFar[node];
+
             if (args.Diagonals)
             {
                 for (var x = -1; x <= 1; x++)
@@ -38,7 +42,7 @@ public sealed partial class PathfindingSystem
                     for (var y = -1; y <= 1; y++)
                     {
                         var neighbor = node + new Vector2i(x, y);
-                        var neighborCost = OctileDistance(node, neighbor) + args.TileCost?.Invoke(neighbor) ?? 1f;
+                        var neighborCost = OctileDistance(node, neighbor) + args.TileCost?.Invoke(neighbor) ?? 0f;
 
                         if (neighborCost.Equals(0f))
                         {
@@ -48,7 +52,7 @@ public sealed partial class PathfindingSystem
                         // f = g + h
                         // gScore is distance to the start node
                         // hScore is distance to the end node
-                        var gScore = costSoFar[node] + neighborCost;
+                        var gScore = gCost + neighborCost;
 
                         // Slower to get here so just ignore it.
                         if (costSoFar.TryGetValue(neighbor, out var nextValue) && gScore >= nextValue)
@@ -80,12 +84,12 @@ public sealed partial class PathfindingSystem
                             continue;
 
                         var neighbor = node + new Vector2i(x, y);
-                        var neighborCost = ManhattanDistance(node, neighbor) + args.TileCost?.Invoke(neighbor) ?? 1f;
+                        var neighborCost = ManhattanDistance(node, neighbor) + args.TileCost?.Invoke(neighbor) ?? 0f;
 
                         if (neighborCost.Equals(0f))
                             continue;
 
-                        var gScore = costSoFar[node] + neighborCost;
+                        var gScore = gCost + neighborCost;
 
                         if (costSoFar.TryGetValue(neighbor, out var nextValue) && gScore >= nextValue)
                             continue;
@@ -93,7 +97,8 @@ public sealed partial class PathfindingSystem
                         cameFrom[neighbor] = node;
                         costSoFar[neighbor] = gScore;
 
-                        var hScore = ManhattanDistance(args.End, neighbor) * (1.0f + 1.0f / 1000.0f);
+                        // Still use octile even for manhattan distance.
+                        var hScore = OctileDistance(args.End, neighbor) * 1.001f;
                         var fScore = gScore + hScore;
                         frontier.Enqueue(neighbor, fScore);
                     }

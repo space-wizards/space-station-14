@@ -10,9 +10,9 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="CornerClutterPostGen"/>
+    /// <see cref="CornerClutterDunGen"/>
     /// </summary>
-    private async Task PostGen(CornerClutterPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(CornerClutterDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!data.SpawnGroups.TryGetValue(DungeonDataKey.CornerClutter, out var corner))
         {

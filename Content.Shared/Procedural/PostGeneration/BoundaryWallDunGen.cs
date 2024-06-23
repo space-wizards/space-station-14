@@ -9,7 +9,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// - FallbackTile
 /// - Walls
 /// </remarks>
-public sealed partial class BoundaryWallPostGen : IDunGenLayer
+public sealed partial class BoundaryWallDunGen : IDunGenLayer
 {
     [DataField]
     public BoundaryWallFlags Flags = BoundaryWallFlags.Corridors | BoundaryWallFlags.Rooms;

@@ -10,9 +10,9 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="BoundaryWallPostGen"/>
+    /// <see cref="BoundaryWallDunGen"/>
     /// </summary>
-    private async Task PostGen(BoundaryWallPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(BoundaryWallDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var protoTileDef) ||
             !data.Entities.TryGetValue(DungeonDataKey.Walls, out var wall))

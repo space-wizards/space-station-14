@@ -24,8 +24,8 @@
       replacement: WallRock
       entity: WallRockTin
       count: 50
-      minGroupSize: 10
-      maxGroupSize: 20
+      minGroupSize: 20
+      maxGroupSize: 30
     - !type:OreDunGen
       replacement: WallRock
       entity: WallRockCoal
@@ -80,26 +80,25 @@
       count: 50
       minGroupSize: 2
       maxGroupSize: 4
-
     # Mobs
-#          - id: WallRockGold
-#            prob: 0.05
-#            orGroup: rock
-#          - id: WallRockSilver
-#            prob: 0.05
-#            orGroup: rock
-#          - id: WallRockPlasma
-#            prob: 0.05
-#            orGroup: rock
-#          - id: WallRockUranium
-#            prob: 0.02
-#            orGroup: rock
-#          - id: WallRockBananium
-#            prob: 0.02
-#            orGroup: rock
-#          - id: WallRockArtifactFragment
-#            prob: 0.01
-#            orGroup: rock
+    - !type:PrototypeDunGen
+      proto: VGRoidMobs
+
+# Mob config
+
+- type: dungeonConfig
+  id: VGRoidMobs
+  minCount: 20
+  maxCount: 30
+  layers:
+  - !type:MobsDunGen
+    groups:
+    - proto: VGRoidMobsWeighted
+
+- type: weightedRandom
+  id: VGRoidMobsWeighted
+  weights:
+    MobXeno: 1
 
 # Configs
 - type: dungeonConfig
@@ -144,12 +143,12 @@
   reserveTiles: true
   data:
     tiles:
-      FallbackTile: FloorSteel
+      FallbackTile: PlatingAsteroid
       WidenTile: FloorAsteroidSand
   layers:
   - !type:PrototypeDunGen
     proto: VGRoidExteriorDungeons
-  - !type:SplineDungeonConnectorPostGen
+  - !type:SplineDungeonConnectorDunGen
 
 - type: dungeonConfig
   id: VGRoidExteriorDungeons
@@ -188,6 +187,8 @@
 # Fill with rocks.
 - type: dungeonConfig
   id: VGRoidFill
+  data:
+    entities:
+      Fill: WallRock
   layers:
   - !type:FillGridDunGen
-    proto: WallRock

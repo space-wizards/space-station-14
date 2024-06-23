@@ -10,13 +10,13 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="AutoCablingPostGen"/>
+    /// <see cref="AutoCablingDunGen"/>
     /// </summary>
-    private async Task PostGen(AutoCablingPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(AutoCablingDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!data.Entities.TryGetValue(DungeonDataKey.Cabling, out var ent))
         {
-            LogDataError(typeof(AutoCablingPostGen));
+            LogDataError(typeof(AutoCablingDunGen));
             return;
         }
 

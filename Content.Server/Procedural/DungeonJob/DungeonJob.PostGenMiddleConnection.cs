@@ -11,15 +11,15 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="MiddleConnectionPostGen"/>
+    /// <see cref="MiddleConnectionDunGen"/>
     /// </summary>
-    private async Task PostGen(MiddleConnectionPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(MiddleConnectionDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
             !data.SpawnGroups.TryGetValue(DungeonDataKey.Entrance, out var entranceProto) ||
             !_prototype.TryIndex(entranceProto, out var entrance))
         {
-            _sawmill.Error($"Tried to run {nameof(MiddleConnectionPostGen)} without any dungeon data set which is unsupported");
+            _sawmill.Error($"Tried to run {nameof(MiddleConnectionDunGen)} without any dungeon data set which is unsupported");
             return;
         }
 

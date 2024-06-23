@@ -14,9 +14,13 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="NoiseDunGen"/>
     /// </summary>
-    private async Task<Dungeon> GenerateNoiseDungeon(Vector2i position, DungeonData data, NoiseDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
+    private async Task<Dungeon> GenerateNoiseDunGen(
+        Vector2i position,
+        NoiseDunGen dungen,
+        HashSet<Vector2i> reservedTiles,
+        int seed,
+        Random random)
     {
-        var rand = new Random(seed);
         var tiles = new List<(Vector2i, Tile)>();
         var matrix = Matrix3Helpers.CreateTranslation(position);
 
@@ -32,7 +36,7 @@ public sealed partial class DungeonJob
         var frontier = new Queue<Vector2i>();
         var rooms = new List<DungeonRoom>();
         var tileCount = 0;
-        var tileCap = rand.NextGaussian(dungen.TileCap, dungen.CapStd);
+        var tileCap = random.NextGaussian(dungen.TileCap, dungen.CapStd);
         var visited = new HashSet<Vector2i>();
 
         while (iterations > 0 && tileCount < tileCap)
@@ -41,22 +45,22 @@ public sealed partial class DungeonJob
             iterations--;
 
             // Get a random exterior tile to start floodfilling from.
-            var edge = rand.Next(4);
+            var edge = random.Next(4);
             Vector2i seedTile;
 
             switch (edge)
             {
                 case 0:
-                    seedTile = new Vector2i(rand.Next(area.Left - 2, area.Right + 1), area.Bottom - 2);
+                    seedTile = new Vector2i(random.Next(area.Left - 2, area.Right + 1), area.Bottom - 2);
                     break;
                 case 1:
-                    seedTile = new Vector2i(area.Right + 1, rand.Next(area.Bottom - 2, area.Top + 1));
+                    seedTile = new Vector2i(area.Right + 1, random.Next(area.Bottom - 2, area.Top + 1));
                     break;
                 case 2:
-                    seedTile = new Vector2i(rand.Next(area.Left - 2, area.Right + 1), area.Top + 1);
+                    seedTile = new Vector2i(random.Next(area.Left - 2, area.Right + 1), area.Top + 1);
                     break;
                 case 3:
-                    seedTile = new Vector2i(area.Left - 2, rand.Next(area.Bottom - 2, area.Top + 1));
+                    seedTile = new Vector2i(area.Left - 2, random.Next(area.Bottom - 2, area.Top + 1));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -91,7 +95,7 @@ public sealed partial class DungeonJob
 
                     roomArea = roomArea.UnionTile(node);
                     var tileDef = _tileDefManager[layer.Tile];
-                    var variant = _tile.PickVariant((ContentTileDefinition) tileDef, rand);
+                    var variant = _tile.PickVariant((ContentTileDefinition) tileDef, random);
                     var adjusted = Vector2.Transform(node + _grid.TileSizeHalfVector, matrix).Floored();
 
                     tiles.Add((adjusted, new Tile(tileDef.TileId, variant: variant)));

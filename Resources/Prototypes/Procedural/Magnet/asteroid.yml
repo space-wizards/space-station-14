@@ -31,11 +31,11 @@
           lacunarity: 2
 
   # Generate biome
-  - !type:BiomePostGen
+  - !type:BiomeDunGen
     biomeTemplate: Asteroid
 
   # Generate ore veins
-  - !type:BiomeMarkerLayerPostGen
+  - !type:BiomeMarkerLayerDunGen
     markerTemplate: AsteroidOre
 
 # Multiple smaller asteroids
@@ -58,11 +58,11 @@
           lacunarity: 2
 
   # Generate biome
-  - !type:BiomePostGen
+  - !type:BiomeDunGen
     biomeTemplate: Asteroid
 
   # Generate ore veins
-  - !type:BiomeMarkerLayerPostGen
+  - !type:BiomeMarkerLayerDunGen
     markerTemplate: AsteroidOre
 
 # Long and spindly, less smooth than blob
@@ -85,11 +85,11 @@
           cellularDistanceFunction: Euclidean
 
   # Generate biome
-  - !type:BiomePostGen
+  - !type:BiomeDunGen
     biomeTemplate: Asteroid
 
   # Generate ore veins
-  - !type:BiomeMarkerLayerPostGen
+  - !type:BiomeMarkerLayerDunGen
     markerTemplate: AsteroidOre
 
 # Lots of holes in it
@@ -111,9 +111,9 @@
           lacunarity: 2
 
   # Generate biome
-  - !type:BiomePostGen
+  - !type:BiomeDunGen
     biomeTemplate: Asteroid
 
   # Generate ore veins
-  - !type:BiomeMarkerLayerPostGen
+  - !type:BiomeMarkerLayerDunGen
     markerTemplate: AsteroidOre

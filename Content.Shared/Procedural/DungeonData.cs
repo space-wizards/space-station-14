@@ -85,6 +85,7 @@ public enum DungeonDataKey : byte
     // Entities
     Cabling,
     CornerWalls,
+    Fill,
     Junction,
     Walls,
 

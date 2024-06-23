@@ -1,11 +1,11 @@
 namespace Content.Shared.Procedural.PostGeneration;
 
 /// <summary>
-/// Spawns entities on either side of an entrance.
+/// If internal areas are found will try to generate windows.
 /// </summary>
 /// <remarks>
 /// Dungeon data keys are:
 /// - FallbackTile
-/// -
+/// - Window
 /// </remarks>
-public sealed partial class EntranceFlankPostGen : IDunGenLayer;
+public sealed partial class InternalWindowDunGen : IDunGenLayer;

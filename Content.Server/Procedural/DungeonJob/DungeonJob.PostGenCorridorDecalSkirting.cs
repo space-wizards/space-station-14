@@ -11,9 +11,9 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="CorridorDecalSkirtingPostGen"/>
+    /// <see cref="CorridorDecalSkirtingDunGen"/>
     /// </summary>
-    private async Task PostGen(CorridorDecalSkirtingPostGen decks, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(CorridorDecalSkirtingDunGen decks, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!data.Colors.TryGetValue(DungeonDataKey.Decals, out var color))
         {

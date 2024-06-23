@@ -8,7 +8,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// - Entrance
 /// - FallbackTile
 /// </remarks>
-public sealed partial class DungeonEntrancePostGen : IDunGenLayer
+public sealed partial class DungeonEntranceDunGen : IDunGenLayer
 {
     /// <summary>
     /// How many rooms we place doors on.

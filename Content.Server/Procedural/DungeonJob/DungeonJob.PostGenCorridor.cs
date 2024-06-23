@@ -10,13 +10,13 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="CorridorPostGen"/>
+    /// <see cref="CorridorDunGen"/>
     /// </summary>
-    private async Task PostGen(CorridorPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(CorridorDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto))
         {
-            LogDataError(typeof(CorridorPostGen));
+            LogDataError(typeof(CorridorDunGen));
             return;
         }
 

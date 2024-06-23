@@ -2,8 +2,6 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
-using Robust.Shared.Collections;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural.DungeonJob;
 
@@ -12,12 +10,14 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="FillGridDunGen"/>
     /// </summary>
-    private async Task<Dungeon> GenerateFillDungeon(Vector2i position,
-        DungeonData data,
-        FillGridDunGen dungen,
-        HashSet<Vector2i> reservedTiles,
-        int seed)
+    private async Task<Dungeon> GenerateFillDunGen(DungeonData data, HashSet<Vector2i> reservedTiles)
     {
+        if (!data.Entities.TryGetValue(DungeonDataKey.Fill, out var fillEnt))
+        {
+            LogDataError(typeof(FillGridDunGen));
+            return Dungeon.Empty;
+        }
+
         var roomTiles = new HashSet<Vector2i>();
         var tiles = _maps.GetAllTilesEnumerator(_gridUid, _grid);
 
@@ -32,7 +32,7 @@ public sealed partial class DungeonJob
                 continue;
 
             var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile);
-            _entManager.SpawnEntity(dungen.Proto, gridPos);
+            _entManager.SpawnEntity(fillEnt, gridPos);
 
             roomTiles.Add(tile);
 

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Content.Server.NPC.Pathfinding;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
@@ -13,22 +14,22 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="ExteriorDunGen"/>
     /// </summary>
-    private async Task<List<Dungeon>> GenerateExteriorDungeon(Vector2i position, DungeonData data, ExteriorDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
+    private async Task<List<Dungeon>> GenerateExteriorDungen(Vector2i position, ExteriorDunGen dungen, HashSet<Vector2i> reservedTiles, Random random)
     {
         DebugTools.Assert(_grid.ChunkCount > 0);
 
-        var rand = new Random(seed);
         var aabb = new Box2i(_grid.LocalAABB.BottomLeft.Floored(), _grid.LocalAABB.TopRight.Floored());
-        var angle = rand.NextAngle();
+        var angle = random.NextAngle();
 
         var distance = Math.Max(aabb.Width / 2f + 1f, aabb.Height / 2f + 1f);
 
         var startTile = new Vector2i(0, (int) distance).Rotate(angle);
 
         Vector2i? dungeonSpawn = null;
+        var pathfinder = _entManager.System<PathfindingSystem>();
 
         // Gridcast
-        GridCast(startTile, position, tile =>
+        pathfinder.GridCast(startTile, position, tile =>
         {
             if (!_maps.TryGetTileRef(_gridUid, _grid, tile, out var tileRef) ||
                 tileRef.Tile.IsSpace(_tileDefManager))
@@ -49,78 +50,9 @@ public sealed partial class DungeonJob
         }
 
         var config = _prototype.Index(dungen.Proto);
-        var dungeons = await GetDungeons(dungeonSpawn.Value, config, config.Data, config.Layers, reservedTiles, seed);
+        var nextSeed = random.Next();
+        var dungeons = await GetDungeons(dungeonSpawn.Value, config, config.Data, config.Layers, reservedTiles, nextSeed, new Random(nextSeed));
 
         return dungeons;
     }
-
-    public static void GridCast(Vector2i start, Vector2i end, Vector2iCallback callback)
-    {
-        // https://gist.github.com/Pyr3z/46884d67641094d6cf353358566db566
-        // declare all locals at the top so it's obvious how big the footprint is
-        int dx, dy, xinc, yinc, side, i, error;
-
-        // starting cell is always returned
-        if (!callback(start))
-            return;
-
-        xinc  = (end.X < start.X) ? -1 : 1;
-        yinc  = (end.Y < start.Y) ? -1 : 1;
-        dx    = xinc * (end.X - start.X);
-        dy    = yinc * (end.Y - start.Y);
-        var ax = start.X;
-        var ay = start.Y;
-
-        if (dx == dy) // Handle perfect diagonals
-        {
-            // I include this "optimization" for more aesthetic reasons, actually.
-            // While Bresenham's Line can handle perfect diagonals just fine, it adds
-            // additional cells to the line that make it not a perfect diagonal
-            // anymore. So, while this branch is ~twice as fast as the next branch,
-            // the real reason it is here is for style.
-
-            // Also, there *is* the reason of performance. If used for cell-based
-            // raycasts, for example, then perfect diagonals will check half as many
-            // cells.
-
-            while (dx --> 0)
-            {
-                ax += xinc;
-                ay += yinc;
-                if (!callback(new Vector2i(ax, ay)))
-                    return;
-            }
-
-            return;
-        }
-
-        // Handle all other lines
-
-        side = -1 * ((dx == 0 ? yinc : xinc) - 1);
-
-        i     = dx + dy;
-        error = dx - dy;
-
-        dx *= 2;
-        dy *= 2;
-
-        while (i --> 0)
-        {
-            if (error > 0 || error == side)
-            {
-                ax    += xinc;
-                error -= dy;
-            }
-            else
-            {
-                ay    += yinc;
-                error += dx;
-            }
-
-            if (!callback(new Vector2i(ax, ay)))
-                return;
-        }
-    }
-
-    public delegate bool Vector2iCallback(Vector2i index);
 }

@@ -36,10 +36,10 @@ public abstract partial class SharedSalvageSystem
             {
                 switch (layer)
                 {
-                    case BiomePostGen:
+                    case BiomeDunGen:
                         rand.Next();
                         break;
-                    case BiomeMarkerLayerPostGen marker:
+                    case BiomeMarkerLayerDunGen marker:
                         for (var i = 0; i < marker.Count; i++)
                         {
                             var proto = _proto.Index(marker.MarkerTemplate).Pick(rand);

@@ -1,14 +1,10 @@
-using Content.Shared.Maps;
-using Content.Shared.Procedural.DungeonGenerators;
-using Robust.Shared.Prototypes;
-
 namespace Content.Shared.Procedural.PostGeneration;
 
 // Ime a worm
 /// <summary>
 /// Generates worm corridors.
 /// </summary>
-public sealed partial class WormCorridorPostGen : IDunGenLayer
+public sealed partial class WormCorridorDunGen : IDunGenLayer
 {
     [DataField]
     public int PathLimit = 2048;

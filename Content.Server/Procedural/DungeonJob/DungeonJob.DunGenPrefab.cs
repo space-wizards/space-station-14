@@ -14,7 +14,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="PrefabDunGen"/>
     /// </summary>
-    private async Task<Dungeon> GeneratePrefabDungeon(Vector2i position, DungeonData data, PrefabDunGen prefab, HashSet<Vector2i> reservedTiles, int seed)
+    private async Task<Dungeon> GeneratePrefabDunGen(Vector2i position, DungeonData data, PrefabDunGen prefab, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
             !data.Whitelists.TryGetValue(DungeonDataKey.Rooms, out var roomWhitelist))
@@ -23,11 +23,10 @@ public sealed partial class DungeonJob
             return Dungeon.Empty;
         }
 
-        var random = new Random(seed);
         var preset = prefab.Presets[random.Next(prefab.Presets.Count)];
         var gen = _prototype.Index(preset);
 
-        var dungeonRotation = _dungeon.GetDungeonRotation(seed);
+        var dungeonRotation = _dungeon.GetDungeonRotation(random.Next());
         var dungeonTransform = Matrix3Helpers.CreateTransform(position, dungeonRotation);
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
 

@@ -11,10 +11,10 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="SplineDungeonConnectorPostGen"/>
+    /// <see cref="SplineDungeonConnectorDunGen"/>
     /// </summary>
     private async Task<Dungeon> PostGen(
-        SplineDungeonConnectorPostGen gen,
+        SplineDungeonConnectorDunGen gen,
         DungeonData data,
         List<Dungeon> dungeons,
         HashSet<Vector2i> reservedTiles,
@@ -30,7 +30,7 @@ public sealed partial class DungeonJob
         if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var fallback) ||
             !data.Tiles.TryGetValue(DungeonDataKey.WidenTile, out var widen))
         {
-            LogDataError(typeof(SplineDungeonConnectorPostGen));
+            LogDataError(typeof(SplineDungeonConnectorDunGen));
             return Dungeon.Empty;
         }
 
@@ -57,6 +57,7 @@ public sealed partial class DungeonJob
         var tiles = new List<(Vector2i Index, Tile Tile)>();
         var pathfinding = _entManager.System<PathfindingSystem>();
         var allTiles = new HashSet<Vector2i>();
+        var fallbackTile = new Tile(_prototype.Index(fallback).TileId);
 
         foreach (var pair in tree)
         {
@@ -72,13 +73,17 @@ public sealed partial class DungeonJob
                     {
                         // We want these to get prioritised internally and into space if it's a space dungeon.
                         if (_maps.TryGetTile(_grid, node, out var tile) && !tile.IsEmpty)
-                            return 1f;
+                            return 0f;
 
-                        return 30f;
+                        return 20f;
                     }
                 },
             },
             random);
+
+            // Welp
+            if (path.Path.Count == 0)
+                continue;
 
             await SuspendDungeon();
 
@@ -124,7 +129,7 @@ public sealed partial class DungeonJob
                     continue;
 
                 allTiles.Add(node);
-                tiles.Add((node, new Tile(_prototype.Index(fallback).TileId)));
+                tiles.Add((node, fallbackTile));
             }
 
             _maps.SetTiles(_gridUid, _grid, tiles);

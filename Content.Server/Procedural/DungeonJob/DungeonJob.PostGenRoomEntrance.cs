@@ -10,15 +10,15 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="RoomEntrancePostGen"/>
+    /// <see cref="RoomEntranceDunGen"/>
     /// </summary>
-    private async Task PostGen(RoomEntrancePostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(RoomEntranceDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
             !data.SpawnGroups.TryGetValue(DungeonDataKey.Entrance, out var entranceProtos) ||
             !_prototype.TryIndex(entranceProtos, out var entranceIn))
         {
-            LogDataError(typeof(RoomEntrancePostGen));
+            LogDataError(typeof(RoomEntranceDunGen));
             return;
         }
 

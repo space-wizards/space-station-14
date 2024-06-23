@@ -22,9 +22,9 @@ public sealed partial class DungeonJob
     // TODO: Can probably combine these a bit, their differences are in really annoying to pull out spots.
 
     /// <summary>
-    /// <see cref="ExternalWindowPostGen"/>
+    /// <see cref="ExternalWindowDunGen"/>
     /// </summary>
-    private async Task PostGen(ExternalWindowPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(ExternalWindowDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
             !data.SpawnGroups.TryGetValue(DungeonDataKey.Window, out var windowGroup))

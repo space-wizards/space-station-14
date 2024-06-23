@@ -13,9 +13,9 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="BiomeMarkerLayerPostGen"/>
+    /// <see cref="BiomeMarkerLayerDunGen"/>
     /// </summary>
-    private async Task PostGen(BiomeMarkerLayerPostGen postGen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(BiomeMarkerLayerDunGen dunGen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         // If we're adding biome then disable it and just use for markers.
         if (_entManager.EnsureComponent(_gridUid, out BiomeComponent biomeComp))
@@ -24,11 +24,11 @@ public sealed partial class DungeonJob
         }
 
         var biomeSystem = _entManager.System<BiomeSystem>();
-        var weightedRandom = _prototype.Index(postGen.MarkerTemplate);
+        var weightedRandom = _prototype.Index(dunGen.MarkerTemplate);
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
         var templates = new Dictionary<string, int>();
 
-        for (var i = 0; i < postGen.Count; i++)
+        for (var i = 0; i < dunGen.Count; i++)
         {
             var template = weightedRandom.Pick(random);
             var count = templates.GetOrNew(template);

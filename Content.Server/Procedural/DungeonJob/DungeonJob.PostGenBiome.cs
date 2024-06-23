@@ -11,16 +11,16 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="BiomePostGen"/>
+    /// <see cref="BiomeDunGen"/>
     /// </summary>
-    private async Task PostGen(BiomePostGen postGen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(BiomeDunGen dunGen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (_entManager.TryGetComponent(_gridUid, out BiomeComponent? biomeComp))
             return;
 
         biomeComp = _entManager.AddComponent<BiomeComponent>(_gridUid);
         var biomeSystem = _entManager.System<BiomeSystem>();
-        biomeSystem.SetTemplate(_gridUid, biomeComp, _prototype.Index(postGen.BiomeTemplate));
+        biomeSystem.SetTemplate(_gridUid, biomeComp, _prototype.Index(dunGen.BiomeTemplate));
         var seed = random.Next();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 

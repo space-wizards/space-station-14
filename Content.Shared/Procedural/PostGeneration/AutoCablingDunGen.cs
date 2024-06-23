@@ -7,4 +7,4 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// DungeonData keys are:
 /// - Cabling
 /// </remarks>
-public sealed partial class AutoCablingPostGen : IDunGenLayer;
+public sealed partial class AutoCablingDunGen : IDunGenLayer;

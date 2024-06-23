@@ -7,7 +7,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// Dungeon data keys are:
 /// - FallbackTile
 /// </remarks>
-public sealed partial class CorridorPostGen : IDunGenLayer
+public sealed partial class CorridorDunGen : IDunGenLayer
 {
     /// <summary>
     /// How far we're allowed to generate a corridor before calling it.

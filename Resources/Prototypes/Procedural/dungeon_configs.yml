@@ -9,32 +9,32 @@
     - SpaceShip
     - Tall
 
-  - !type:CorridorPostGen
+  - !type:CorridorDunGen
     width: 3
 
-  - !type:DungeonEntrancePostGen
+  - !type:DungeonEntranceDunGen
     count: 2
 
-  - !type:RoomEntrancePostGen
+  - !type:RoomEntranceDunGen
 
-  - !type:EntranceFlankPostGen
+  - !type:EntranceFlankDunGen
 
-  - !type:ExternalWindowPostGen
+  - !type:ExternalWindowDunGen
 
-  - !type:WallMountPostGen
+  - !type:WallMountDunGen
 
-  - !type:BoundaryWallPostGen
+  - !type:BoundaryWallDunGen
 
-  - !type:JunctionPostGen
+  - !type:JunctionDunGen
     width: 1
 
-  - !type:JunctionPostGen
+  - !type:JunctionDunGen
 
-  - !type:AutoCablingPostGen
+  - !type:AutoCablingDunGen
 
-  - !type:CornerClutterPostGen
+  - !type:CornerClutterDunGen
 
-  - !type:CorridorDecalSkirtingPostGen
+  - !type:CorridorDecalSkirtingDunGen
     cardinalDecals:
       South: BrickTileWhiteLineS
       East: BrickTileWhiteLineE
@@ -97,10 +97,10 @@
     - SpaceShip
     - Tall
 
-  - !type:WormCorridorPostGen
+  - !type:WormCorridorDunGen
     width: 3
 
-  - !type:CorridorClutterPostGen
+  - !type:CorridorClutterDunGen
     contents:
     - id: FloraStalagmite1
     - id: FloraStalagmite2
@@ -109,7 +109,7 @@
     - id: FloraStalagmite5
     - id: FloraStalagmite6
 
-  - !type:BoundaryWallPostGen
+  - !type:BoundaryWallDunGen
 
 - type: dungeonConfig
   id: LavaBrig

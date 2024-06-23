@@ -12,13 +12,13 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="WormCorridorPostGen"/>
+    /// <see cref="WormCorridorDunGen"/>
     /// </summary>
-    private async Task PostGen(WormCorridorPostGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(WormCorridorDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) || !_prototype.TryIndex(tileProto, out var tileDef))
         {
-            _sawmill.Error($"Tried to run {nameof(WormCorridorPostGen)} without any dungeon data set which is unsupported");
+            _sawmill.Error($"Tried to run {nameof(WormCorridorDunGen)} without any dungeon data set which is unsupported");
             return;
         }
 

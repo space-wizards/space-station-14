@@ -8,7 +8,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// - Entrance
 /// - FallbackTile
 /// </remarks>
-public sealed partial class JunctionPostGen : IDunGenLayer
+public sealed partial class JunctionDunGen : IDunGenLayer
 {
     /// <summary>
     /// Width to check for junctions.

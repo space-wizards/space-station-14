@@ -20,9 +20,13 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="NoiseDistanceDunGen"/>
     /// </summary>
-    private async Task<Dungeon> GenerateNoiseDistanceDungeon(Vector2i position, DungeonData data, NoiseDistanceDunGen dungen, HashSet<Vector2i> reservedTiles, int seed)
+    private async Task<Dungeon> GenerateNoiseDistanceDunGen(
+        Vector2i position,
+        NoiseDistanceDunGen dungen,
+        HashSet<Vector2i> reservedTiles,
+        int seed,
+        Random random)
     {
-        var rand = new Random(seed);
         var tiles = new List<(Vector2i, Tile)>();
         var matrix = Matrix3Helpers.CreateTranslation(position);
 
@@ -63,7 +67,7 @@ public sealed partial class DungeonJob
                         continue;
 
                     var tileDef = _tileDefManager[layer.Tile];
-                    var variant = _tile.PickVariant((ContentTileDefinition) tileDef, rand);
+                    var variant = _tile.PickVariant((ContentTileDefinition) tileDef, random);
                     var adjusted = Vector2.Transform(node + _grid.TileSizeHalfVector, matrix).Floored();
 
                     // Do this down here because noise has a much higher chance of failing than reserved tiles.

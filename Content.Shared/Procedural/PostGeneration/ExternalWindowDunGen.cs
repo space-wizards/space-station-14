@@ -8,4 +8,4 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// - EntranceFlank
 /// - FallbackTile
 /// </remarks>
-public sealed partial class ExternalWindowPostGen : IDunGenLayer;
+public sealed partial class ExternalWindowDunGen : IDunGenLayer;

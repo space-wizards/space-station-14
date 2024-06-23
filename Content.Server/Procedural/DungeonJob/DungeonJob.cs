@@ -103,19 +103,19 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         DungeonData data,
         List<IDunGenLayer> layers,
         HashSet<Vector2i> reservedTiles,
-        int seed)
+        int seed,
+        Random random)
     {
         var dungeons = new List<Dungeon>();
-        var rand = new Random(seed);
-        var count = rand.Next(config.MinCount, config.MaxCount + 1);
+        var count = random.Next(config.MinCount, config.MaxCount + 1);
 
         for (var i = 0; i < count; i++)
         {
-            position += rand.NextPolarVector2(config.MinOffset, config.MaxOffset).Floored();
+            position += random.NextPolarVector2(config.MinOffset, config.MaxOffset).Floored();
 
             foreach (var layer in layers)
             {
-                await RunLayer(dungeons, data, position, layer, reservedTiles, seed);
+                await RunLayer(dungeons, data, position, layer, reservedTiles, seed, random);
 
                 if (config.ReserveTiles)
                 {
@@ -129,8 +129,6 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 if (!ValidateResume())
                     return new List<Dungeon>();
             }
-
-            seed = rand.Next();
         }
 
         return dungeons;
@@ -146,7 +144,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         // Tiles we can no longer generate on due to being reserved elsewhere.
         var reservedTiles = new HashSet<Vector2i>();
 
-        var dungeons = await GetDungeons(position, _gen, _gen.Data, _gen.Layers, reservedTiles, _seed);
+        var dungeons = await GetDungeons(position, _gen, _gen.Data, _gen.Layers, reservedTiles, _seed, random);
         // To make it slightly more deterministic treat this RNG as separate ig.
 
         // Defer splitting so they don't get spammed and so we don't have to worry about tracking the grid along the way.
@@ -155,29 +153,88 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         return dungeons;
     }
 
-    private async Task RunLayer(List<Dungeon> dungeons, DungeonData data, Vector2i position, IDunGenLayer layer, HashSet<Vector2i> reservedTiles, int seed)
+    private async Task RunLayer(
+        List<Dungeon> dungeons,
+        DungeonData data,
+        Vector2i position,
+        IDunGenLayer layer,
+        HashSet<Vector2i> reservedTiles,
+        int seed,
+        Random random)
     {
         _sawmill.Debug($"Doing postgen {layer.GetType()} for {_gen.ID} with seed {_seed}");
 
         // If there's a way to just call the methods directly for the love of god tell me.
         // Some of these don't care about reservedtiles because they only operate on dungeon tiles (which should
         // never be reserved)
-        var random = new Random(seed);
+
+        // Some may or may not return dungeons.
+        // It's clamplicated but yeah procgen layering moment I'll take constructive feedback.
 
         switch (layer)
         {
-            // Dungeon generators
+            case AutoCablingDunGen cabling:
+                await PostGen(cabling, data, dungeons[^1], reservedTiles, random);
+                break;
+            case BiomeMarkerLayerDunGen markerPost:
+                await PostGen(markerPost, data, dungeons[^1], reservedTiles, random);
+                break;
+            case BiomeDunGen biome:
+                await PostGen(biome, data, dungeons[^1], reservedTiles, random);
+                break;
+            case BoundaryWallDunGen boundary:
+                await PostGen(boundary, data, dungeons[^1], reservedTiles, random);
+                break;
+            case CornerClutterDunGen clutter:
+                await PostGen(clutter, data, dungeons[^1], reservedTiles, random);
+                break;
+            case CorridorClutterDunGen corClutter:
+                await PostGen(corClutter, data, dungeons[^1], reservedTiles, random);
+                break;
+            case CorridorDunGen cordor:
+                await PostGen(cordor, data, dungeons[^1], reservedTiles, random);
+                break;
+            case CorridorDecalSkirtingDunGen decks:
+                await PostGen(decks, data, dungeons[^1], reservedTiles, random);
+                break;
+            case EntranceFlankDunGen flank:
+                await PostGen(flank, data, dungeons[^1], reservedTiles, random);
+                break;
             case ExteriorDunGen exterior:
-                dungeons.AddRange(await GenerateExteriorDungeon(position, data, exterior, reservedTiles, seed));
+                dungeons.AddRange(await GenerateExteriorDungen(position, exterior, reservedTiles, random));
                 break;
             case FillGridDunGen fill:
-                dungeons.Add(await GenerateFillDungeon(position, data, fill, reservedTiles, seed));
+                dungeons.Add(await GenerateFillDunGen(data, reservedTiles));
+                break;
+            case JunctionDunGen junc:
+                await PostGen(junc, data, dungeons[^1], reservedTiles, random);
+                break;
+            case MiddleConnectionDunGen dordor:
+                await PostGen(dordor, data, dungeons[^1], reservedTiles, random);
+                break;
+            case DungeonEntranceDunGen entrance:
+                await PostGen(entrance, data, dungeons[^1], reservedTiles, random);
+                break;
+            case ExternalWindowDunGen externalWindow:
+                await PostGen(externalWindow, data, dungeons[^1], reservedTiles, random);
+                break;
+            case InternalWindowDunGen internalWindow:
+                await PostGen(internalWindow, data, dungeons[^1], reservedTiles, random);
+                break;
+            case MobsDunGen mob:
+                await PostGen(mob, data, dungeons[^1], random);
                 break;
             case NoiseDistanceDunGen distance:
-                dungeons.Add(await GenerateNoiseDistanceDungeon(position, data, distance, reservedTiles, seed));
+                dungeons.Add(await GenerateNoiseDistanceDunGen(position, distance, reservedTiles, seed, random));
                 break;
             case NoiseDunGen noise:
-                dungeons.Add(await GenerateNoiseDungeon(position, data, noise, reservedTiles, seed));
+                dungeons.Add(await GenerateNoiseDunGen(position, noise, reservedTiles, seed, random));
+                break;
+            case OreDunGen ore:
+                await PostGen(ore, dungeons[^1], random);
+                break;
+            case PrefabDunGen prefab:
+                dungeons.Add(await GeneratePrefabDunGen(position, data, prefab, reservedTiles, random));
                 break;
             case PrototypeDunGen prototypo:
                 var groupConfig = _prototype.Index(prototypo.Proto);
@@ -186,76 +243,21 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 var dataCopy = groupConfig.Data.Clone();
                 dataCopy.Apply(data);
 
-                dungeons.AddRange(await GetDungeons(position, groupConfig, dataCopy, groupConfig.Layers, reservedTiles, seed));
+                dungeons.AddRange(await GetDungeons(position, groupConfig, dataCopy, groupConfig.Layers, reservedTiles, seed, random));
                 break;
-            case PrefabDunGen prefab:
-                dungeons.Add(await GeneratePrefabDungeon(position, data, prefab, reservedTiles, seed));
-                break;
-
             case ReplaceTileDunGen replace:
-                dungeons.Add(await GenerateTileReplacementDungeon(replace, data, reservedTiles, random));
+                dungeons.Add(await GenerateTileReplacementDunGen(replace, data, reservedTiles, random));
                 break;
-
-            case SplineDungeonConnectorPostGen spline:
-                dungeons.Add(await PostGen(spline, data, dungeons, reservedTiles, random));
-                break;
-
-            // Postgen
-            case AutoCablingPostGen cabling:
-                await PostGen(cabling, data, dungeons[^1], reservedTiles, random);
-                break;
-            case BiomeMarkerLayerPostGen markerPost:
-                await PostGen(markerPost, data, dungeons[^1], reservedTiles, random);
-                break;
-            case BiomePostGen biome:
-                await PostGen(biome, data, dungeons[^1], reservedTiles, random);
-                break;
-            case BoundaryWallPostGen boundary:
-                await PostGen(boundary, data, dungeons[^1], reservedTiles, random);
-                break;
-            case CornerClutterPostGen clutter:
-                await PostGen(clutter, data, dungeons[^1], reservedTiles, random);
-                break;
-            case CorridorClutterPostGen corClutter:
-                await PostGen(corClutter, data, dungeons[^1], reservedTiles, random);
-                break;
-            case CorridorPostGen cordor:
-                await PostGen(cordor, data, dungeons[^1], reservedTiles, random);
-                break;
-            case CorridorDecalSkirtingPostGen decks:
-                await PostGen(decks, data, dungeons[^1], reservedTiles, random);
-                break;
-            case EntranceFlankPostGen flank:
-                await PostGen(flank, data, dungeons[^1], reservedTiles, random);
-                break;
-            case JunctionPostGen junc:
-                await PostGen(junc, data, dungeons[^1], reservedTiles, random);
-                break;
-            case MiddleConnectionPostGen dordor:
-                await PostGen(dordor, data, dungeons[^1], reservedTiles, random);
-                break;
-            case DungeonEntrancePostGen entrance:
-                await PostGen(entrance, data, dungeons[^1], reservedTiles, random);
-                break;
-            case ExternalWindowPostGen externalWindow:
-                await PostGen(externalWindow, data, dungeons[^1], reservedTiles, random);
-                break;
-            case InternalWindowPostGen internalWindow:
-                await PostGen(internalWindow, data, dungeons[^1], reservedTiles, random);
-                break;
-            case MobsDunGen mob:
-                await PostGen(mob, data, dungeons[^1], random);
-                break;
-            case OreDunGen ore:
-                await PostGen(ore, dungeons[^1], random);
-                break;
-            case RoomEntrancePostGen rEntrance:
+            case RoomEntranceDunGen rEntrance:
                 await PostGen(rEntrance, data, dungeons[^1], reservedTiles, random);
                 break;
-            case WallMountPostGen wall:
+            case SplineDungeonConnectorDunGen spline:
+                dungeons.Add(await PostGen(spline, data, dungeons, reservedTiles, random));
+                break;
+            case WallMountDunGen wall:
                 await PostGen(wall, data, dungeons[^1], reservedTiles, random);
                 break;
-            case WormCorridorPostGen worm:
+            case WormCorridorDunGen worm:
                 await PostGen(worm, data, dungeons[^1], reservedTiles, random);
                 break;
             default:

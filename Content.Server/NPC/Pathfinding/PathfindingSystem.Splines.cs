@@ -15,26 +15,36 @@ public sealed partial class PathfindingSystem
 
         var path = new List<Vector2i>();
 
-        var distance = (end - start).Length;
-        var remaining = distance;
         var pairs = new ValueList<(Vector2i Start, Vector2i End)> { (start, end) };
+        var subdivided = true;
 
         // Sub-divide recursively
-        while (remaining > args.Distance)
+        while (subdivided)
         {
-            remaining /= 2f;
-
+            // Sometimes we might inadvertantly get 2 nodes too close together so better to just check each one as it comes up instead.
             var i = 0;
+            subdivided = false;
 
             while (i < pairs.Count)
             {
                 var pointA = pairs[i].Start;
                 var pointB = pairs[i].End;
                 var vector = pointB - pointA;
+
                 var halfway = vector / 2f;
 
                 // Finding the point
                 var adj = halfway.Length();
+
+                // Should we even subdivide.
+                if (adj <= args.Distance)
+                {
+                    // Just check the next entry no double skip.
+                    i++;
+                    continue;
+                }
+
+                subdivided = true;
                 var opposite = args.MaxRatio * adj;
                 var hypotenuse = MathF.Sqrt(MathF.Pow(adj, 2) + MathF.Pow(opposite, 2));
 
@@ -74,11 +84,13 @@ public sealed partial class PathfindingSystem
         var cameFrom = new Dictionary<Vector2i, Vector2i>();
 
         // TODO: Need to get rid of the branch bullshit.
+        var points = new List<Vector2i>();
 
         for (var i = 0; i < spline.Count - 1; i++)
         {
             var point = spline[i];
             var target = spline[i + 1];
+            points.Add(point);
             var aStarArgs = args.Args with { Start = point, End = target };
 
             var aStarResult = GetPath(aStarArgs);
@@ -94,18 +106,23 @@ public sealed partial class PathfindingSystem
             }
         }
 
+        points.Add(spline[^1]);
+
         return new SplinePathResult()
         {
             Path = path,
             CameFrom = cameFrom,
+            Points = points,
         };
     }
 
-    public record struct SplinePathResult
+    public record struct SplinePathResult()
     {
         public static SplinePathResult NoPath = new();
 
-        public List<Vector2i> Path;
+        public List<Vector2i> Points = new();
+
+        public List<Vector2i> Path = new();
         public Dictionary<Vector2i, Vector2i> CameFrom;
     }
 
@@ -118,6 +135,6 @@ public sealed partial class PathfindingSystem
         /// <summary>
         /// Minimum distance between subdivisions.
         /// </summary>
-        public int Distance = 5;
+        public int Distance = 20;
     }
 }

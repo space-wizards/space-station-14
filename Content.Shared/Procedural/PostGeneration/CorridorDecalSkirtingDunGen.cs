@@ -7,7 +7,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Applies decal skirting to corridors.
 /// </summary>
-public sealed partial class CorridorDecalSkirtingPostGen : IDunGenLayer
+public sealed partial class CorridorDecalSkirtingDunGen : IDunGenLayer
 {
     /// <summary>
     /// Decal where 1 edge is found.

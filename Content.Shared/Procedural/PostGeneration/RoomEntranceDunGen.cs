@@ -8,4 +8,4 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// - Entrance
 /// - FallbackTile
 /// </remarks>
-public sealed partial class RoomEntrancePostGen : IDunGenLayer;
+public sealed partial class RoomEntranceDunGen : IDunGenLayer;
