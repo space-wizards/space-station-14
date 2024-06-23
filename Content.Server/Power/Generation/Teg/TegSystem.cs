@@ -183,7 +183,7 @@ public sealed class TegSystem : EntitySystem
         // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
         power *= component.RampFactor;
 
-        // Direct 1000w to power the TEG, and everything else to the station
+        // Simulate TEG powering itself after being started up. This means that if LV is lost this keeps running.
         const float load = 1000;
         supplier.MaxSupply = Math.Max(power - load, 0);
         powerReceiver.Load = Math.Max(load - power, 0);
