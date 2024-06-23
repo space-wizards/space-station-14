@@ -76,3 +76,11 @@
   id: danger # just any gas you don't want at all
   upperBound: !type:AlarmThresholdSetting
     threshold: 0.0001
+
+- type: alarmThreshold
+  id: stationWater
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 1.5
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by PixeltheAertist",
+  "size": {
+    "x": 96,
+    "y": 96
+  },
+  "states": [
+    
+    {
+      "name": "artifact_1"
+    },
+    {
+      "name": "artifact_2"
+    }
+  ]
+}

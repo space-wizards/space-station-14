@@ -37,6 +37,7 @@
   - 0     # ammonia
   - 0     # n2o
   - 0.01  # frezon
+  - 0     # water
   effects:
   - !type:FrezonCoolantReaction {}
 
@@ -54,6 +55,7 @@
   - 0     # ammonia
   - 0     # n2o
   - 0     # frezon
+  - 0     # water
   effects:
   - !type:FrezonProductionReaction {}
 
@@ -71,6 +73,7 @@
   - 0.01  # ammonia
   - 0     # n2o
   - 0     # frezon
+  - 0     # water
   effects:
   - !type:AmmoniaOxygenReaction {}
 
@@ -88,6 +91,7 @@
   - 0     # ammonia
   - 0.01  # n2o
   - 0     # frezon
+  - 0     # water
   effects:
   - !type:N2ODecompositionReaction {}
 

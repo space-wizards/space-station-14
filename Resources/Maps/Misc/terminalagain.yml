@@ -31,7 +31,7 @@ entities:
       name: Map Entity
     - type: Transform
     - type: Map
-      mapPaused: True
+      mapPaused: False
     - type: PhysicsMap
     - type: GridTree
     - type: MovedGrids
@@ -49,19 +49,19 @@ entities:
       chunks:
         0,0:
           ind: 0,0
-          tiles: BwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAARgAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAYQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAATgAAAAAATgAAAAAATgAAAAAATgAAAAAATgAAAAAATwAAAAAATgAAAAAATgAAAAAATgAAAAAATgAAAAAATgAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAATgAAAAAAGQAAAAAAGQAAAAAAGQAAAAAATgAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAA
+          tiles: TwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAAGQAAAAAAGQAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAAGQAAAAAAGQAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAAGQAAAAAAGQAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAAGQAAAAAAGQAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAYQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAATgAAAAAATgAAAAAATgAAAAAATgAAAAAATgAAAAAATwAAAAAATgAAAAAATgAAAAAATgAAAAAATgAAAAAATgAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAATgAAAAAAGQAAAAAAGQAAAAAAGQAAAAAATgAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAA
           version: 6
         0,-1:
           ind: 0,-1
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAA
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAABwAAAAAABwAAAAAAGQAAAAAAGQAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAABwAAAAAAGQAAAAAAGQAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAAGQAAAAAAGQAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAATwAAAAAAGQAAAAAAGQAAAAAA
           version: 6
         -1,0:
           ind: -1,0
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAA
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAATwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAATwAAAAAATwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAATwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAATwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAATwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAA
           version: 6
         -1,-1:
           ind: -1,-1
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAA
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAATwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAATwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAAGQAAAAAABwAAAAAABwAAAAAATwAAAAAA
           version: 6
         0,1:
           ind: 0,1
@@ -178,7 +178,7 @@ entities:
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
-      updateAccumulator: 0.8686166
+      updateAccumulator: 0.31747907
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
@@ -227,7 +227,7 @@ entities:
             color: '#FFFFFFFF'
             id: Bushh3
           decals:
-            36: 1,-4
+            38: 1,-4
         - node:
             color: '#FFFFFFFF'
             id: Caution
@@ -244,17 +244,18 @@ entities:
             color: '#FFFFFFFF'
             id: Grassa4
           decals:
-            30: 22,24
+            31: 22,24
         - node:
             zIndex: 1
             color: '#FFFFFFFF'
             id: Grassb1
           decals:
-            31: 38,23
-            32: 36,24
-            33: 7,21
-            34: -2,7
-            35: 13,2
+            32: 38,23
+            33: 36,24
+            34: 7,21
+            35: -2,7
+            36: 13,2
+            37: 6,-4
         - node:
             zIndex: 1
             color: '#FFFFFFFF'
@@ -264,16 +265,22 @@ entities:
         - node:
             zIndex: 1
             color: '#FFFFFFFF'
+            id: Grasse3
+          decals:
+            23: 1,0
+        - node:
+            zIndex: 1
+            color: '#FFFFFFFF'
             id: Rock01
           decals:
-            29: -20,25
+            30: -20,25
         - node:
             zIndex: 1
             color: '#FFFFFFFF'
             id: Rock02
           decals:
-            25: 4,18
-            26: 7,25
+            26: 4,18
+            27: 7,25
         - node:
             color: '#FFFFFFFF'
             id: Rock03
@@ -284,8 +291,8 @@ entities:
             color: '#FFFFFFFF'
             id: Rock03
           decals:
-            27: 0,28
-            28: -10,24
+            28: 0,28
+            29: -10,24
         - node:
             color: '#FFFFFFFF'
             id: Rock05
@@ -296,7 +303,7 @@ entities:
             color: '#FFFFFFFF'
             id: Rust
           decals:
-            23: -1,7
+            24: -1,7
         - node:
             color: '#FFFFFFFF'
             id: WarnLineN
@@ -315,28 +322,29 @@ entities:
             color: '#FFFFFFFF'
             id: WarnLineN
           decals:
-            24: 2,5
+            25: 2,5
     - type: GridAtmosphere
       version: 2
       data:
         tiles:
           0,0:
-            0: 4096
+            0: 65535
           0,1:
-            0: 65393
+            0: 65535
           0,2:
             0: 206
+          1,0:
+            0: 65535
           1,1:
-            0: 43552
-            1: 2
+            0: 43695
           1,2:
             0: 30719
           1,3:
             0: 30583
           2,0:
-            0: 51336
+            0: 65535
           2,1:
-            0: 40892
+            0: 40895
           2,2:
             0: 123
           3,0:
@@ -344,13 +352,17 @@ entities:
           3,1:
             0: 17
           0,-2:
-            0: 28672
+            0: 61440
           0,-1:
-            0: 17
+            0: 65535
+          1,-2:
+            0: 61440
+          1,-1:
+            0: 65535
           2,-2:
             0: 61440
           2,-1:
-            0: 35020
+            0: 65535
           3,-1:
             0: 13072
           -1,0:
@@ -515,12 +527,190 @@ entities:
             0: 30583
           -5,13:
             0: 119
+          0,-3:
+            1: 15
+          1,-3:
+            1: 15
+          2,-3:
+            1: 15
+          3,-3:
+            1: 15
+          -4,2:
+            1: 3840
+          -3,2:
+            1: 1860
+          -3,0:
+            1: 17476
+          -3,1:
+            1: 17476
+          -3,-2:
+            1: 18432
+          -3,-1:
+            1: 17476
+          -2,-2:
+            1: 273
+          -2,-3:
+            1: 4382
+          -1,-3:
+            1: 15
+          4,12:
+            1: 15
+          5,12:
+            1: 15
+          6,12:
+            1: 15
+          7,12:
+            1: 15
+          8,12:
+            1: 15
+          9,12:
+            1: 15
+          10,12:
+            1: 15
+          11,12:
+            1: 15
+          -8,4:
+            1: 61440
+          -7,4:
+            1: 12834
+          -12,14:
+            1: 34560
+          -11,14:
+            1: 4096
+          -11,15:
+            1: 4369
+          -11,16:
+            1: 14
+          -10,16:
+            1: 15
+          -9,16:
+            1: 15
+          -8,16:
+            1: 15
+          -7,16:
+            1: 15
+          -6,16:
+            1: 15
+          -5,16:
+            1: 15
+          0,12:
+            1: 34952
+          1,12:
+            1: 15
+          2,12:
+            1: 15
+          3,12:
+            1: 15
+          12,12:
+            1: 15
+          13,12:
+            1: 3
+          13,8:
+            1: 17476
+          13,9:
+            1: 17476
+          13,10:
+            1: 17476
+          13,11:
+            1: 17476
+          13,3:
+            1: 8738
+          13,4:
+            1: 17476
+          13,5:
+            1: 17476
+          13,6:
+            1: 17476
+          13,7:
+            1: 17476
+          -4,16:
+            1: 15
+          -3,16:
+            1: 15
+          -2,16:
+            1: 15
+          -1,16:
+            1: 15
+          0,14:
+            1: 30856
+          0,15:
+            1: 4369
+          -12,7:
+            1: 240
+          -11,7:
+            1: 116
+          -11,4:
+            1: 32768
+          -11,5:
+            1: 17476
+          -11,6:
+            1: 17476
+          -10,4:
+            1: 61440
+          -9,4:
+            1: 61440
+          -7,2:
+            1: 11264
+          -7,3:
+            1: 8738
+          -6,2:
+            1: 3840
+          -5,2:
+            1: 3840
+          4,-3:
+            1: 16929
+          4,-2:
+            1: 17476
+          4,-1:
+            1: 17476
+          4,0:
+            1: 12
+          5,0:
+            1: 15
+          6,0:
+            1: 15
+          7,0:
+            1: 15
+          8,0:
+            1: 8737
+          8,1:
+            1: 226
+          9,1:
+            1: 240
+          10,1:
+            1: 240
+          11,1:
+            1: 240
+          12,1:
+            1: 240
+          13,1:
+            1: 8720
+          13,2:
+            1: 8738
+          -13,12:
+            1: 17476
+          -13,13:
+            1: 17476
+          -13,14:
+            1: 2116
+          -13,7:
+            1: 17536
+          -13,8:
+            1: 17476
+          -13,9:
+            1: 17476
+          -13,10:
+            1: 17476
+          -13,11:
+            1: 17476
+          0,13:
+            1: 34952
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 21.824879
-          - 82.10312
+          - 0
+          - 0
           - 0
           - 0
           - 0
@@ -553,27 +743,6 @@ entities:
     - type: BecomesStation
       id: caves
     - type: ArrivalsSource
-    - type: Parallax
-      parallax: Caves
-    - type: MapAtmosphere
-      space: False
-      mixture:
-        volume: 2500
-        immutable: True
-        temperature: 248.15
-        moles:
-        - 21.824879
-        - 82.10312
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
 - proto: AirlockEngineering
   entities:
   - uid: 690
@@ -685,17 +854,6 @@ entities:
       powered: True
     - type: DoorBolt
       powered: True
-- proto: AirlockHatch
-  entities:
-  - uid: 15
-    components:
-    - type: Transform
-      pos: 5.5,8.5
-      parent: 2
-    - type: Airlock
-      powered: True
-    - type: DoorBolt
-      powered: True
 - proto: AirlockResearchDirectorGlassLocked
   entities:
   - uid: 389
@@ -772,10 +930,9 @@ entities:
       pos: 26.5,19.5
       parent: 2
     - type: PowerNetworkBattery
-      loadingNetworkDemand: 2120
-      currentReceiving: 2119.9302
-      currentSupply: 2120
-      supplyRampPosition: 0.06982422
+      loadingNetworkDemand: 2100
+      currentReceiving: 2100.0083
+      currentSupply: 2100
 - proto: APCHighCapacity
   entities:
   - uid: 711
@@ -2063,131 +2220,6 @@ entities:
     components:
     - type: Transform
       pos: 4.5,7.5
-      parent: 2
-  - uid: 5815
-    components:
-    - type: Transform
-      pos: 6.5,7.5
-      parent: 2
-  - uid: 5816
-    components:
-    - type: Transform
-      pos: 6.5,6.5
-      parent: 2
-  - uid: 5817
-    components:
-    - type: Transform
-      pos: 6.5,5.5
-      parent: 2
-  - uid: 5818
-    components:
-    - type: Transform
-      pos: 7.5,5.5
-      parent: 2
-  - uid: 5819
-    components:
-    - type: Transform
-      pos: 7.5,4.5
-      parent: 2
-  - uid: 5820
-    components:
-    - type: Transform
-      pos: 8.5,4.5
-      parent: 2
-  - uid: 5821
-    components:
-    - type: Transform
-      pos: 9.5,4.5
-      parent: 2
-  - uid: 5822
-    components:
-    - type: Transform
-      pos: 9.5,3.5
-      parent: 2
-  - uid: 5823
-    components:
-    - type: Transform
-      pos: 9.5,2.5
-      parent: 2
-  - uid: 5824
-    components:
-    - type: Transform
-      pos: 10.5,2.5
-      parent: 2
-  - uid: 5825
-    components:
-    - type: Transform
-      pos: 10.5,1.5
-      parent: 2
-  - uid: 5826
-    components:
-    - type: Transform
-      pos: 10.5,0.5
-      parent: 2
-  - uid: 5827
-    components:
-    - type: Transform
-      pos: 7.5,5.5
-      parent: 2
-  - uid: 5828
-    components:
-    - type: Transform
-      pos: 6.5,5.5
-      parent: 2
-  - uid: 5829
-    components:
-    - type: Transform
-      pos: 5.5,5.5
-      parent: 2
-  - uid: 5830
-    components:
-    - type: Transform
-      pos: 4.5,5.5
-      parent: 2
-  - uid: 5831
-    components:
-    - type: Transform
-      pos: 3.5,5.5
-      parent: 2
-  - uid: 5832
-    components:
-    - type: Transform
-      pos: 3.5,4.5
-      parent: 2
-  - uid: 5833
-    components:
-    - type: Transform
-      pos: 2.5,4.5
-      parent: 2
-  - uid: 5834
-    components:
-    - type: Transform
-      pos: 1.5,4.5
-      parent: 2
-  - uid: 5835
-    components:
-    - type: Transform
-      pos: 1.5,3.5
-      parent: 2
-  - uid: 5836
-    components:
-    - type: Transform
-      pos: 1.5,2.5
-      parent: 2
-  - uid: 5837
-    components:
-    - type: Transform
-      pos: 0.5,2.5
-      parent: 2
-  - uid: 5838
-    components:
-    - type: Transform
-      pos: 0.5,1.5
-      parent: 2
-  - uid: 5839
-    components:
-    - type: Transform
-      pos: 0.5,0.5
       parent: 2
 - proto: CableHV
   entities:
@@ -4025,6 +4057,5983 @@ entities:
     - type: Transform
       pos: 33.5,19.5
       parent: 2
+- proto: Lightning
+  entities:
+  - uid: 5090
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5582
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5091
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5092
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5093
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5094
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5095
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5096
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5097
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5098
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5099
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5100
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5101
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5102
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5103
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5104
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5105
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5106
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5107
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5108
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5109
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5110
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5111
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5112
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5113
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5114
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5115
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5116
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5117
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5118
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5119
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5120
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5121
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5122
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5123
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5124
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5125
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5126
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5127
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5128
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5129
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5130
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5131
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5132
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5133
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5134
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5135
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5136
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5137
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5138
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5139
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5140
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5141
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5142
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5143
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5144
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5145
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.142507,-2.4855042
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5146
+    components:
+    - type: Transform
+      pos: -21.214985,51.47101
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5147
+    components:
+    - type: Transform
+      pos: -22.072477,50.956512
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5148
+    components:
+    - type: Transform
+      pos: -22.92997,50.442017
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5149
+    components:
+    - type: Transform
+      pos: -23.787462,49.92752
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5150
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5151
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5152
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5153
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5154
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5155
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5156
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5157
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5158
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5159
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5160
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5161
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5162
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5163
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5164
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5165
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5166
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5167
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5168
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5169
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5170
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5171
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5172
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5173
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5174
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5175
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5176
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5177
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5178
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5179
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5180
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5181
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5182
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5183
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5184
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5185
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5186
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5187
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5188
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5189
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5190
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5191
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5192
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5193
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5194
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5195
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5196
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5197
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5198
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5199
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5200
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5201
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5202
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5203
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5204
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5205
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5206
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5207
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5208
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5209
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5210
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5211
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5212
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5213
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5214
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5215
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5216
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5217
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5218
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5219
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.142507,-2.4855042
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5220
+    components:
+    - type: Transform
+      pos: -21.214985,51.47101
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5221
+    components:
+    - type: Transform
+      pos: -22.072477,50.956512
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5222
+    components:
+    - type: Transform
+      pos: -22.92997,50.442017
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5223
+    components:
+    - type: Transform
+      pos: -23.787462,49.92752
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5224
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5225
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5226
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5227
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5228
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5229
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5230
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5231
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5232
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5233
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5234
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5235
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5236
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5237
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5238
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5239
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5240
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5241
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5242
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5243
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5244
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5245
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5246
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5247
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5248
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5249
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5250
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5251
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5252
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5253
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5254
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5255
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5256
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5257
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5258
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5259
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5260
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5261
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5262
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5263
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5264
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5265
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5266
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5267
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5268
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5269
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5270
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5271
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5272
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5273
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5274
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5275
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5276
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5277
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5278
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5279
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5280
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.142507,-2.4855042
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5281
+    components:
+    - type: Transform
+      pos: -21.214985,51.47101
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5282
+    components:
+    - type: Transform
+      pos: -22.072477,50.956512
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5283
+    components:
+    - type: Transform
+      pos: -22.92997,50.442017
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5284
+    components:
+    - type: Transform
+      pos: -23.787462,49.92752
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5285
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5286
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5287
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5288
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5289
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5290
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5291
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5292
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5293
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5294
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5295
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5296
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5297
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5298
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5299
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5300
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5301
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5302
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5303
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5304
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5305
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5306
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5307
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5308
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5309
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5310
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5311
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5312
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5313
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5314
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5315
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5316
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5317
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5318
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5319
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5320
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5321
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5322
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5323
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5324
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5325
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5326
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5327
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5328
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5329
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5330
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5331
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5332
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5333
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5334
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5335
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5336
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5337
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5338
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5339
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5340
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5341
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5342
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5343
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5344
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5345
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5346
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5347
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5348
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5349
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5350
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5351
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5352
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5353
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5354
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5355
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5356
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5357
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5358
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5359
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5360
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5361
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5362
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5363
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5364
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5365
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5366
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5367
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5368
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5369
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5370
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5371
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5372
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5373
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5374
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5375
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5376
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5377
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5378
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5379
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5380
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5381
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5382
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5383
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5384
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5385
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5386
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5387
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5388
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5389
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5390
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5391
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5392
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5393
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5394
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5395
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5396
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5397
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5398
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5399
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5400
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5401
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5402
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5403
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5404
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5405
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5406
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5407
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5408
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5409
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5410
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5411
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5412
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5413
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5414
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5415
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5416
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5417
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5418
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5419
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5420
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5421
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5422
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5423
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5424
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5425
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5426
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5427
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5428
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5429
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5430
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5431
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5432
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5433
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5434
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5435
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5436
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5437
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5438
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5439
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5440
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5441
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5442
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5443
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5444
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5445
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5446
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5447
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5448
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5449
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5450
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5451
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5452
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5453
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5454
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5455
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5456
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5457
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5458
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5459
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5460
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5461
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5462
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5463
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5464
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5465
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5466
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5467
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5468
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5469
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5470
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5471
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5472
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5473
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5474
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5475
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5476
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5477
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5478
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5479
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5480
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5481
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5482
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5483
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5484
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5485
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5486
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5487
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5488
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5489
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5490
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.142507,-2.4855042
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5491
+    components:
+    - type: Transform
+      pos: -21.214985,51.47101
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5492
+    components:
+    - type: Transform
+      pos: -22.072477,50.956512
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5493
+    components:
+    - type: Transform
+      pos: -22.92997,50.442017
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5494
+    components:
+    - type: Transform
+      pos: -23.787462,49.92752
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5495
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5496
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5497
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5498
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5499
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5500
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5501
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5502
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5503
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5504
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5505
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.142507,-2.4855042
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5506
+    components:
+    - type: Transform
+      pos: -21.214985,51.47101
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5507
+    components:
+    - type: Transform
+      pos: -22.072477,50.956512
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5508
+    components:
+    - type: Transform
+      pos: -22.92997,50.442017
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5509
+    components:
+    - type: Transform
+      pos: -23.787462,49.92752
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5510
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5511
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5512
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5513
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5514
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5515
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5516
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5517
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5518
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5519
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5520
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5521
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5522
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5523
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5524
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5525
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5526
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.142507,-2.4855042
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5527
+    components:
+    - type: Transform
+      pos: -21.214985,51.47101
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5528
+    components:
+    - type: Transform
+      pos: -22.072477,50.956512
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5529
+    components:
+    - type: Transform
+      pos: -22.92997,50.442017
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5530
+    components:
+    - type: Transform
+      pos: -23.787462,49.92752
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5531
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5532
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5533
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5534
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5535
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5536
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5537
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5538
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5539
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5540
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5541
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5542
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5543
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5544
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5545
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5546
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5547
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5548
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5549
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5550
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5551
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5552
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5553
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5554
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5555
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5556
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.142507,-2.4855042
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5557
+    components:
+    - type: Transform
+      pos: -21.214985,51.47101
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5558
+    components:
+    - type: Transform
+      pos: -22.072477,50.956512
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5559
+    components:
+    - type: Transform
+      pos: -22.92997,50.442017
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5560
+    components:
+    - type: Transform
+      pos: -23.787462,49.92752
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5561
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5562
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5563
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5564
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5565
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5566
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5567
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5568
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5569
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5570
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5571
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5572
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.142507,-2.4855042
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5573
+    components:
+    - type: Transform
+      pos: -21.214985,51.47101
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5574
+    components:
+    - type: Transform
+      pos: -22.072477,50.956512
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5575
+    components:
+    - type: Transform
+      pos: -22.92997,50.442017
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5576
+    components:
+    - type: Transform
+      pos: -23.787462,49.92752
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5577
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5578
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5579
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5580
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5581
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5583
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5584
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5585
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5586
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5587
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5588
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5589
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5590
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5591
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5592
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5593
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5594
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5595
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5596
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5667
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5597
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5598
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5599
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5600
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5601
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5602
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5603
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5604
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5605
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5606
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5607
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5608
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5609
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5610
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5611
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5612
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5613
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5614
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5615
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5616
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5617
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5618
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5619
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5620
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5621
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5622
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5623
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5624
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5625
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5626
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5627
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5628
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5629
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5630
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5631
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5632
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5633
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5634
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5635
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5636
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5637
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5638
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5639
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5640
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5641
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5642
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5643
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5644
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5645
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5646
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5647
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5648
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5649
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5650
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5651
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5652
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5653
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5654
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5655
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5656
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5657
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5658
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5659
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5660
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5661
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5662
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5663
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5664
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5665
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5666
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5668
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5669
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5670
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5671
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5672
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5673
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5674
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5675
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5676
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5677
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5678
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5679
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5680
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5681
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.142507,-2.4855042
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5682
+    components:
+    - type: Transform
+      pos: -21.214985,51.47101
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5683
+    components:
+    - type: Transform
+      pos: -22.072477,50.956512
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5684
+    components:
+    - type: Transform
+      pos: -22.92997,50.442017
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5685
+    components:
+    - type: Transform
+      pos: -23.787462,49.92752
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5686
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5687
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5688
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5689
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5690
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5691
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5692
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5693
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5694
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5695
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5696
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5697
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5698
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5699
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5700
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5701
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5702
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5703
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5704
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5705
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5706
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5707
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5708
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5709
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5710
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5711
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.142507,-2.4855042
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5712
+    components:
+    - type: Transform
+      pos: -21.214985,51.47101
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5713
+    components:
+    - type: Transform
+      pos: -22.072477,50.956512
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5714
+    components:
+    - type: Transform
+      pos: -22.92997,50.442017
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5715
+    components:
+    - type: Transform
+      pos: -23.787462,49.92752
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5716
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5717
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5718
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5719
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5720
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5721
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4,0
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5722
+    components:
+    - type: Transform
+      pos: -21.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5723
+    components:
+    - type: Transform
+      pos: -22.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5724
+    components:
+    - type: Transform
+      pos: -23.5,52.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5725
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5726
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: 0,-3
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5727
+    components:
+    - type: Transform
+      pos: -19.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5728
+    components:
+    - type: Transform
+      pos: -19.5,49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5729
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5730
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5731
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5732
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5733
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5734
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5735
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5736
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5737
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5738
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5739
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5740
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5741
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5742
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5743
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5744
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5745
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -2.1679497,-1.4452999
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5746
+    components:
+    - type: Transform
+      pos: -21.1641,51.390602
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5747
+    components:
+    - type: Transform
+      pos: -21.996151,50.835903
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5748
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5749
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.142507,-2.4855042
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5750
+    components:
+    - type: Transform
+      pos: -21.214985,51.47101
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5751
+    components:
+    - type: Transform
+      pos: -22.072477,50.956512
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5752
+    components:
+    - type: Transform
+      pos: -22.92997,50.442017
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5753
+    components:
+    - type: Transform
+      pos: -23.787462,49.92752
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5754
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5755
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -4.019419,-0.80388385
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5756
+    components:
+    - type: Transform
+      pos: -21.461163,52.107765
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5757
+    components:
+    - type: Transform
+      pos: -22.441744,51.911648
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5758
+    components:
+    - type: Transform
+      pos: -23.422325,51.71553
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5759
+    components:
+    - type: Transform
+      pos: -24.402906,51.519413
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5760
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5761
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5762
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5763
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5764
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5765
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
+    - type: Beam
+      virtualBeamController: 5766
+    - type: Fixtures
+      fixtures:
+        BeamBody:
+          shape: !type:EdgeShape
+            vertex1: -0.75746435,-3.0298574
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          hard: False
+    - type: ActivatedElectrified
+  - uid: 5767
+    components:
+    - type: Transform
+      pos: -19.985073,50.559715
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5768
+    components:
+    - type: Transform
+      pos: -20.22761,49.589573
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5769
+    components:
+    - type: Transform
+      pos: -20.470146,48.61943
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: LockerChemistryFilled
   entities:
   - uid: 379
@@ -4214,28 +10223,6 @@ entities:
       enabled: False
     - type: ApcPowerReceiver
       powerLoad: 0
-- proto: PoweredlightRed
-  entities:
-  - uid: 5813
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -0.5,0.5
-      parent: 2
-    - type: PointLight
-      enabled: False
-    - type: ApcPowerReceiver
-      powerLoad: 0
-  - uid: 5814
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 11.5,0.5
-      parent: 2
-    - type: PointLight
-      enabled: False
-    - type: ApcPowerReceiver
-      powerLoad: 0
 - proto: PoweredSmallLight
   entities:
   - uid: 840
@@ -4415,6 +10402,16 @@ entities:
       enabled: False
     - type: ApcPowerReceiver
       powerLoad: 0
+  - uid: 1251
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 5.5,8.5
+      parent: 2
+    - type: PointLight
+      enabled: False
+    - type: ApcPowerReceiver
+      powerLoad: 0
   - uid: 1252
     components:
     - type: Transform
@@ -4460,16 +10457,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,7.5
-      parent: 2
-    - type: PointLight
-      enabled: False
-    - type: ApcPowerReceiver
-      powerLoad: 0
-  - uid: 5840
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 5.5,7.5
       parent: 2
     - type: PointLight
       enabled: False
@@ -4729,20 +10716,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -16.5,31.5
       parent: 2
-- proto: SignSecureSmallRed
-  entities:
-  - uid: 5841
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 1.5,4.5
-      parent: 2
-  - uid: 5842
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 9.5,4.5
-      parent: 2
 - proto: SMESBasic
   entities:
   - uid: 691
@@ -4793,9 +10766,10 @@ entities:
       pos: 41.5,29.5
       parent: 2
     - type: PowerNetworkBattery
-      loadingNetworkDemand: 19569.92
-      currentReceiving: 19575.078
-      currentSupply: 19569.92
+      loadingNetworkDemand: 19549.998
+      currentReceiving: 19545.078
+      currentSupply: 19549.998
+      supplyRampPosition: 4.919922
   - uid: 708
     components:
     - type: Transform
@@ -4923,6 +10897,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: -20.5,48.5
       parent: 2
+    - type: LightningSparking
+      isSparking: True
     - type: Battery
       startingCharge: 1000000
   - uid: 611
@@ -4969,7 +10945,7 @@ entities:
       pos: -19.5,52.5
       parent: 2
     - type: PowerSupplier
-      supplyRampPosition: 20370.082
+      supplyRampPosition: 20340.082
     - type: LightningArcShooter
       nextShootTime: 264.7962657
 - proto: ThermomachineFreezerMachineCircuitBoard
@@ -5017,241 +10993,1223 @@ entities:
       nextAdvertisementTime: 574.0330052
     - type: PointLight
       enabled: True
-- proto: WallPlastitaniumDiagonal
+- proto: VirtualBeamEntityController
   entities:
-  - uid: 5805
+  - uid: 5092
     components:
     - type: Transform
-      pos: 2.5,5.5
+      pos: -19.742537,51.529858
       parent: 2
-  - uid: 5806
+    - type: Beam
+      createdBeams:
+      - 5091
+      originBeam: 5091
+  - uid: 5097
     components:
     - type: Transform
-      pos: 0.5,3.5
+      pos: -20.33205,51.9453
       parent: 2
-  - uid: 5807
+    - type: Beam
+      createdBeams:
+      - 5096
+      originBeam: 5096
+  - uid: 5101
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 0.5,-2.5
+      pos: -19.742537,51.529858
       parent: 2
-  - uid: 5808
+    - type: Beam
+      createdBeams:
+      - 5100
+      originBeam: 5100
+  - uid: 5106
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 2.5,-4.5
+      pos: -20.33205,51.9453
       parent: 2
-  - uid: 5809
+    - type: Beam
+      createdBeams:
+      - 5105
+      originBeam: 5105
+  - uid: 5110
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 8.5,-4.5
+      pos: -20.480581,52.303883
       parent: 2
-  - uid: 5810
+    - type: Beam
+      createdBeams:
+      - 5109
+      originBeam: 5109
+  - uid: 5116
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 10.5,-2.5
+      pos: -19.742537,51.529858
       parent: 2
-  - uid: 5811
+    - type: Beam
+      createdBeams:
+      - 5115
+      originBeam: 5115
+  - uid: 5121
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 10.5,3.5
+      pos: -20.480581,52.303883
       parent: 2
-  - uid: 5812
+    - type: Beam
+      createdBeams:
+      - 5120
+      originBeam: 5120
+  - uid: 5127
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 8.5,5.5
+      pos: -20.33205,51.9453
       parent: 2
-- proto: WallPlastitaniumIndestructible
-  entities:
-  - uid: 16
+    - type: Beam
+      createdBeams:
+      - 5126
+      originBeam: 5126
+  - uid: 5131
     components:
     - type: Transform
-      pos: 3.5,5.5
+      pos: -19.742537,51.529858
       parent: 2
-  - uid: 1251
+    - type: Beam
+      createdBeams:
+      - 5130
+      originBeam: 5130
+  - uid: 5136
     components:
     - type: Transform
-      pos: 3.5,4.5
+      pos: -20.33205,51.9453
       parent: 2
-  - uid: 5770
+    - type: Beam
+      createdBeams:
+      - 5135
+      originBeam: 5135
+  - uid: 5140
     components:
     - type: Transform
-      pos: 7.5,5.5
+      pos: -19.742537,51.529858
       parent: 2
-  - uid: 5771
+    - type: Beam
+      createdBeams:
+      - 5139
+      originBeam: 5139
+  - uid: 5145
     components:
     - type: Transform
-      pos: 7.5,4.5
+      pos: -20.357492,51.985504
       parent: 2
-  - uid: 5772
+    - type: Beam
+      createdBeams:
+      - 5144
+      originBeam: 5144
+  - uid: 5151
     components:
     - type: Transform
-      pos: 8.5,4.5
+      pos: -19.5,51.5
       parent: 2
-  - uid: 5773
+    - type: Beam
+      createdBeams:
+      - 5150
+      originBeam: 5150
+  - uid: 5155
     components:
     - type: Transform
-      pos: 9.5,4.5
+      pos: -20.33205,51.9453
       parent: 2
-  - uid: 5774
+    - type: Beam
+      createdBeams:
+      - 5154
+      originBeam: 5154
+  - uid: 5159
     components:
     - type: Transform
-      pos: 9.5,3.5
+      pos: -19.742537,51.529858
       parent: 2
-  - uid: 5775
+    - type: Beam
+      createdBeams:
+      - 5158
+      originBeam: 5158
+  - uid: 5164
     components:
     - type: Transform
-      pos: 9.5,2.5
+      pos: -19.742537,51.529858
       parent: 2
-  - uid: 5776
+    - type: Beam
+      createdBeams:
+      - 5163
+      originBeam: 5163
+  - uid: 5169
     components:
     - type: Transform
-      pos: 10.5,2.5
+      pos: -20.33205,51.9453
       parent: 2
-  - uid: 5777
+    - type: Beam
+      createdBeams:
+      - 5168
+      originBeam: 5168
+  - uid: 5173
     components:
     - type: Transform
-      pos: 10.5,1.5
+      pos: -19.5,51.5
       parent: 2
-  - uid: 5778
+    - type: Beam
+      createdBeams:
+      - 5172
+      originBeam: 5172
+  - uid: 5177
     components:
     - type: Transform
-      pos: 10.5,0.5
+      pos: -19.742537,51.529858
       parent: 2
-  - uid: 5779
+    - type: Beam
+      createdBeams:
+      - 5176
+      originBeam: 5176
+  - uid: 5182
     components:
     - type: Transform
-      pos: 10.5,-0.5
+      pos: -20.480581,52.303883
       parent: 2
-  - uid: 5780
+    - type: Beam
+      createdBeams:
+      - 5181
+      originBeam: 5181
+  - uid: 5188
     components:
     - type: Transform
-      pos: 9.5,-1.5
+      pos: -20.5,52.5
       parent: 2
-  - uid: 5781
+    - type: Beam
+      createdBeams:
+      - 5187
+      originBeam: 5187
+  - uid: 5193
     components:
     - type: Transform
-      pos: 10.5,-1.5
+      pos: -20.480581,52.303883
       parent: 2
-  - uid: 5782
+    - type: Beam
+      createdBeams:
+      - 5192
+      originBeam: 5192
+  - uid: 5199
     components:
     - type: Transform
-      pos: 9.5,-2.5
+      pos: -20.5,52.5
       parent: 2
-  - uid: 5783
+    - type: Beam
+      createdBeams:
+      - 5198
+      originBeam: 5198
+  - uid: 5204
     components:
     - type: Transform
-      pos: 9.5,-3.5
+      pos: -20.33205,51.9453
       parent: 2
-  - uid: 5784
+    - type: Beam
+      createdBeams:
+      - 5203
+      originBeam: 5203
+  - uid: 5208
     components:
     - type: Transform
-      pos: 8.5,-3.5
+      pos: -19.742537,51.529858
       parent: 2
-  - uid: 5785
+    - type: Beam
+      createdBeams:
+      - 5207
+      originBeam: 5207
+  - uid: 5213
     components:
     - type: Transform
-      pos: 7.5,-3.5
+      pos: -20.480581,52.303883
       parent: 2
-  - uid: 5786
+    - type: Beam
+      createdBeams:
+      - 5212
+      originBeam: 5212
+  - uid: 5219
     components:
     - type: Transform
-      pos: 6.5,-4.5
+      pos: -20.357492,51.985504
       parent: 2
-  - uid: 5787
+    - type: Beam
+      createdBeams:
+      - 5218
+      originBeam: 5218
+  - uid: 5225
     components:
     - type: Transform
-      pos: 5.5,-4.5
+      pos: -20.480581,52.303883
       parent: 2
-  - uid: 5788
+    - type: Beam
+      createdBeams:
+      - 5224
+      originBeam: 5224
+  - uid: 5231
     components:
     - type: Transform
-      pos: 4.5,-4.5
+      pos: -20.33205,51.9453
       parent: 2
-  - uid: 5789
+    - type: Beam
+      createdBeams:
+      - 5230
+      originBeam: 5230
+  - uid: 5235
     components:
     - type: Transform
-      pos: 7.5,-4.5
+      pos: -20.480581,52.303883
       parent: 2
-  - uid: 5790
+    - type: Beam
+      createdBeams:
+      - 5234
+      originBeam: 5234
+  - uid: 5241
     components:
     - type: Transform
-      pos: 3.5,-4.5
+      pos: -19.742537,51.529858
       parent: 2
-  - uid: 5791
+    - type: Beam
+      createdBeams:
+      - 5240
+      originBeam: 5240
+  - uid: 5246
     components:
     - type: Transform
-      pos: 3.5,-3.5
+      pos: -20.480581,52.303883
       parent: 2
-  - uid: 5792
+    - type: Beam
+      createdBeams:
+      - 5245
+      originBeam: 5245
+  - uid: 5252
     components:
     - type: Transform
-      pos: 2.5,-3.5
+      pos: -20.5,52.5
       parent: 2
-  - uid: 5793
+    - type: Beam
+      createdBeams:
+      - 5251
+      originBeam: 5251
+  - uid: 5257
     components:
     - type: Transform
-      pos: 1.5,-3.5
+      pos: -20.480581,52.303883
       parent: 2
-  - uid: 5794
+    - type: Beam
+      createdBeams:
+      - 5256
+      originBeam: 5256
+  - uid: 5263
     components:
     - type: Transform
-      pos: 1.5,-2.5
+      pos: -20.33205,51.9453
       parent: 2
-  - uid: 5795
+    - type: Beam
+      createdBeams:
+      - 5262
+      originBeam: 5262
+  - uid: 5267
     components:
     - type: Transform
-      pos: 1.5,-1.5
+      pos: -20.33205,51.9453
       parent: 2
-  - uid: 5796
+    - type: Beam
+      createdBeams:
+      - 5266
+      originBeam: 5266
+  - uid: 5271
     components:
     - type: Transform
-      pos: 0.5,-1.5
+      pos: -19.742537,51.529858
       parent: 2
-  - uid: 5797
+    - type: Beam
+      createdBeams:
+      - 5270
+      originBeam: 5270
+  - uid: 5276
     components:
     - type: Transform
-      pos: 0.5,-0.5
+      pos: -19.5,51.5
       parent: 2
-  - uid: 5798
+    - type: Beam
+      createdBeams:
+      - 5275
+      originBeam: 5275
+  - uid: 5280
     components:
     - type: Transform
-      pos: 0.5,0.5
+      pos: -20.357492,51.985504
       parent: 2
-  - uid: 5799
+    - type: Beam
+      createdBeams:
+      - 5279
+      originBeam: 5279
+  - uid: 5286
     components:
     - type: Transform
-      pos: 0.5,1.5
+      pos: -19.742537,51.529858
       parent: 2
-  - uid: 5800
+    - type: Beam
+      createdBeams:
+      - 5285
+      originBeam: 5285
+  - uid: 5291
     components:
     - type: Transform
-      pos: 0.5,2.5
+      pos: -20.480581,52.303883
       parent: 2
-  - uid: 5801
+    - type: Beam
+      createdBeams:
+      - 5290
+      originBeam: 5290
+  - uid: 5297
     components:
     - type: Transform
-      pos: 1.5,2.5
+      pos: -20.33205,51.9453
       parent: 2
-  - uid: 5802
+    - type: Beam
+      createdBeams:
+      - 5296
+      originBeam: 5296
+  - uid: 5301
     components:
     - type: Transform
-      pos: 1.5,3.5
+      pos: -20.480581,52.303883
       parent: 2
-  - uid: 5803
+    - type: Beam
+      createdBeams:
+      - 5300
+      originBeam: 5300
+  - uid: 5307
     components:
     - type: Transform
-      pos: 1.5,4.5
+      pos: -20.5,52.5
       parent: 2
-  - uid: 5804
+    - type: Beam
+      createdBeams:
+      - 5306
+      originBeam: 5306
+  - uid: 5312
     components:
     - type: Transform
-      pos: 2.5,4.5
+      pos: -20.33205,51.9453
       parent: 2
+    - type: Beam
+      createdBeams:
+      - 5311
+      originBeam: 5311
+  - uid: 5316
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5315
+      originBeam: 5315
+  - uid: 5320
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5319
+      originBeam: 5319
+  - uid: 5325
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5324
+      originBeam: 5324
+  - uid: 5331
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5330
+      originBeam: 5330
+  - uid: 5336
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5335
+      originBeam: 5335
+  - uid: 5340
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5339
+      originBeam: 5339
+  - uid: 5345
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5344
+      originBeam: 5344
+  - uid: 5350
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5349
+      originBeam: 5349
+  - uid: 5356
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5355
+      originBeam: 5355
+  - uid: 5361
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5360
+      originBeam: 5360
+  - uid: 5366
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5365
+      originBeam: 5365
+  - uid: 5371
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5370
+      originBeam: 5370
+  - uid: 5377
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5376
+      originBeam: 5376
+  - uid: 5382
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5381
+      originBeam: 5381
+  - uid: 5388
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5387
+      originBeam: 5387
+  - uid: 5393
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5392
+      originBeam: 5392
+  - uid: 5398
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5397
+      originBeam: 5397
+  - uid: 5404
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5403
+      originBeam: 5403
+  - uid: 5409
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5408
+      originBeam: 5408
+  - uid: 5414
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5413
+      originBeam: 5413
+  - uid: 5418
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5417
+      originBeam: 5417
+  - uid: 5423
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5422
+      originBeam: 5422
+  - uid: 5429
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5428
+      originBeam: 5428
+  - uid: 5433
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5432
+      originBeam: 5432
+  - uid: 5438
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5437
+      originBeam: 5437
+  - uid: 5442
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5441
+      originBeam: 5441
+  - uid: 5448
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5447
+      originBeam: 5447
+  - uid: 5454
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5453
+      originBeam: 5453
+  - uid: 5459
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5458
+      originBeam: 5458
+  - uid: 5463
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5462
+      originBeam: 5462
+  - uid: 5469
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5468
+      originBeam: 5468
+  - uid: 5474
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5473
+      originBeam: 5473
+  - uid: 5480
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5479
+      originBeam: 5479
+  - uid: 5485
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5484
+      originBeam: 5484
+  - uid: 5490
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5489
+      originBeam: 5489
+  - uid: 5496
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5495
+      originBeam: 5495
+  - uid: 5501
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5500
+      originBeam: 5500
+  - uid: 5505
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5504
+      originBeam: 5504
+  - uid: 5511
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5510
+      originBeam: 5510
+  - uid: 5517
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5516
+      originBeam: 5516
+  - uid: 5522
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5521
+      originBeam: 5521
+  - uid: 5526
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5525
+      originBeam: 5525
+  - uid: 5532
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5531
+      originBeam: 5531
+  - uid: 5537
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5536
+      originBeam: 5536
+  - uid: 5542
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5541
+      originBeam: 5541
+  - uid: 5547
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5546
+      originBeam: 5546
+  - uid: 5551
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5550
+      originBeam: 5550
+  - uid: 5556
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5555
+      originBeam: 5555
+  - uid: 5562
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5561
+      originBeam: 5561
+  - uid: 5566
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5565
+      originBeam: 5565
+  - uid: 5572
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5571
+      originBeam: 5571
+  - uid: 5578
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5577
+      originBeam: 5577
+  - uid: 5582
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5090
+      originBeam: 5090
+  - uid: 5588
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5587
+      originBeam: 5587
+  - uid: 5593
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5592
+      originBeam: 5592
+  - uid: 5598
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5597
+      originBeam: 5597
+  - uid: 5604
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5603
+      originBeam: 5603
+  - uid: 5608
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5607
+      originBeam: 5607
+  - uid: 5614
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5613
+      originBeam: 5613
+  - uid: 5619
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5618
+      originBeam: 5618
+  - uid: 5623
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5622
+      originBeam: 5622
+  - uid: 5628
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5627
+      originBeam: 5627
+  - uid: 5633
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5632
+      originBeam: 5632
+  - uid: 5639
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5638
+      originBeam: 5638
+  - uid: 5644
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5643
+      originBeam: 5643
+  - uid: 5648
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5647
+      originBeam: 5647
+  - uid: 5653
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5652
+      originBeam: 5652
+  - uid: 5657
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5656
+      originBeam: 5656
+  - uid: 5662
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5661
+      originBeam: 5661
+  - uid: 5667
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5596
+      originBeam: 5596
+  - uid: 5672
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5671
+      originBeam: 5671
+  - uid: 5677
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5676
+      originBeam: 5676
+  - uid: 5681
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5680
+      originBeam: 5680
+  - uid: 5687
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5686
+      originBeam: 5686
+  - uid: 5693
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5692
+      originBeam: 5692
+  - uid: 5697
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5696
+      originBeam: 5696
+  - uid: 5702
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5701
+      originBeam: 5701
+  - uid: 5706
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5705
+      originBeam: 5705
+  - uid: 5711
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5710
+      originBeam: 5710
+  - uid: 5717
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5716
+      originBeam: 5716
+  - uid: 5721
+    components:
+    - type: Transform
+      pos: -20.5,52.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5720
+      originBeam: 5720
+  - uid: 5726
+    components:
+    - type: Transform
+      pos: -19.5,51.5
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5725
+      originBeam: 5725
+  - uid: 5730
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5729
+      originBeam: 5729
+  - uid: 5734
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5733
+      originBeam: 5733
+  - uid: 5739
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5738
+      originBeam: 5738
+  - uid: 5745
+    components:
+    - type: Transform
+      pos: -20.33205,51.9453
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5744
+      originBeam: 5744
+  - uid: 5749
+    components:
+    - type: Transform
+      pos: -20.357492,51.985504
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5748
+      originBeam: 5748
+  - uid: 5755
+    components:
+    - type: Transform
+      pos: -20.480581,52.303883
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5754
+      originBeam: 5754
+  - uid: 5761
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5760
+      originBeam: 5760
+  - uid: 5766
+    components:
+    - type: Transform
+      pos: -19.742537,51.529858
+      parent: 2
+    - type: Beam
+      createdBeams:
+      - 5765
+      originBeam: 5765
 - proto: WallReinforced
   entities:
   - uid: 3
@@ -27003,6 +33961,18 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,8.5
+      parent: 2
+  - uid: 15
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 7.5,5.5
+      parent: 2
+  - uid: 16
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 3.5,5.5
       parent: 2
   - uid: 17
     components:

@@ -103,6 +103,9 @@
     - id: WaterVaporCanister
       prob: 0.001
       orGroup: Canister
+    - id: WaterCanister
+      prob: 0.001
+      orGroup: Canister
     #weapons
     - id: WeaponPulseCarbine
       prob: 0.0001

@@ -58,6 +58,7 @@
         Ammonia: stationAmmonia
         NitrousOxide: stationNO
         Frezon: danger
+        Water: stationWater
     - type: Tag
       tags:
         - AirSensor

@@ -1,0 +1,12 @@
+- type: gameMap
+  id: trieste
+  mapName: trieste
+  mapPath: /Maps/trieste.yml
+  minPlayers: 0
+  stations:
+    Trieste:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Trieste"
+

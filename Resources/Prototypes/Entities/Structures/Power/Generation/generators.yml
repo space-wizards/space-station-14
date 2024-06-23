@@ -320,3 +320,49 @@
             max: 5
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  parent: GeneratorRTG
+  id: TheArtifact
+  name: The Artifact
+  description: An ancient power generation device.
+  suffix: Be Careful
+  components:
+  - type: PowerSupplier
+    supplyRate: 1000000
+  - type: Sprite
+    sprite: Structures/Power/Generation/artifact.rsi
+    layers:
+      - state: artifact_1
+      - state: artifact_2
+  - type: PowerMonitoringDevice
+    sprite: Structures/Power/Generation/rtg.rsi
+    state: rtg_damaged
+  - type: RadiationSource
+    intensity: 10
+  - type: LightningArcShooter
+    arcDepth: 3
+    maxLightningArc: 4
+    shootMinInterval: 3
+    shootMaxInterval: 5
+    shootRange: 7
+    lightningPrototype: Lightning
+  - type: GravityWell
+    baseRadialAcceleration: 10
+    maxRange: 6
+  - type: Electrified
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-1.5,1.5,1.5"
+        density: 50
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: PointLight
+    enabled: true
+    radius: 5
+    color: "#4080FF"
