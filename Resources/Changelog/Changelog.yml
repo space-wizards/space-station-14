@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: superjj18
-  changes:
-  - message: Broadcasting works again!
-    type: Fix
-  id: 6310
-  time: '2024-04-05T17:29:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26750
 - author: Golinth
   changes:
   - message: Fixed mindshield icons being glow in the dark
@@ -3842,3 +3835,10 @@
   id: 6809
   time: '2024-06-23T00:28:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28584
+- author: WarMechanic
+  changes:
+  - message: The TEG now powers itself once started.
+    type: Tweak
+  id: 6810
+  time: '2024-06-23T01:46:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29072
