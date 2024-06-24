@@ -176,12 +176,12 @@ public sealed class SpreaderSystem : EntitySystem
     /// </summary>
     public void GetNeighbors(EntityUid uid, TransformComponent comp, ProtoId<EdgeSpreaderPrototype> prototype, out ValueList<(MapGridComponent, TileRef)> freeTiles, out ValueList<Vector2i> occupiedTiles, out ValueList<EntityUid> neighbors)
     {
-        // TODO remove occupiedTiles -- its currently unused and just slows this method down.
-        if (!_prototype.TryIndex(prototype, out var spreaderPrototype))
-            return;
         freeTiles = [];
         occupiedTiles = [];
         neighbors = [];
+        // TODO remove occupiedTiles -- its currently unused and just slows this method down.
+        if (!_prototype.TryIndex(prototype, out var spreaderPrototype))
+            return;
 
         if (!TryComp<MapGridComponent>(comp.GridUid, out var grid))
             return;
