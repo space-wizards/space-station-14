@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -11,6 +12,7 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Enums;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -78,6 +80,8 @@ namespace Content.Server.GameTicking
                         _audioSystem.PlayGlobal(new SoundPathSpecifier("/Audio/Effects/newplayerping.ogg"),
                             Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false,
                             audioParams: new AudioParams { Volume = -5f });
+
+                    AdminAlertIfSharedConnection(args.Session, args.Session.Channel.RemoteEndPoint.Address);
 
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
@@ -183,6 +187,33 @@ namespace Content.Server.GameTicking
                     await _db.AddRoundPlayers(RoundId, id);
                 }
             }
+        }
+
+        private void AdminAlertIfSharedConnection(ICommonSession newSession, IPAddress addr)
+        {
+            var playerThreshold = _cfg.GetCVar(CCVars.AdminAlertMinPlayersSharingConnection);
+            if (playerThreshold < 0)
+                return;
+
+            var sharedConnections = _playerManager.Sessions.Where(session =>
+                    session.Channel.IsHandshakeComplete
+                    && session.Channel.RemoteEndPoint.Address.Equals(addr))
+                .ToList();
+
+            var shareConnectionCount = sharedConnections.Count();
+            if (shareConnectionCount < playerThreshold)
+                return;
+
+            var username = newSession.Name;
+            var otherUsernames = string.Join(", ",
+                sharedConnections.Where(session =>
+                        session.UserId != newSession.UserId)
+                    .Select(session => _playerManager.GetSessionById(session.UserId).Name));
+
+            _chatManager.SendAdminAlert(Loc.GetString("admin-alert-shared-connection",
+                ("player", username),
+                ("otherCount", shareConnectionCount - 1),
+                ("otherList", otherUsernames)));
         }
 
         public HumanoidCharacterProfile GetPlayerProfile(ICommonSession p)
