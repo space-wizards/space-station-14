@@ -24,6 +24,9 @@ public sealed class ReplaceFloorOnSpawnSystem : EntitySystem
         if (xform.GridUid is not { } grid || !TryComp<MapGridComponent>(grid, out var gridComp))
             return;
 
+        if (ent.Comp.ReplaceableTiles != null && ent.Comp.ReplaceableTiles.Count == 0)
+            return;
+
         var tileIndices = _map.LocalToTile(grid, gridComp, xform.Coordinates);
 
         foreach (var offset in ent.Comp.Offsets)
