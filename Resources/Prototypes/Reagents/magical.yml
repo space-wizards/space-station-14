@@ -4,10 +4,9 @@
   parent: BasePyrotechnic
   desc: reagent-desc-space-grease
   slippery: true
-  physicalDesc: reagent-physical-desc-shiny
+  physicalDesc: reagent-physical-desc-space-grease
   flavor: funny
   color: "#77b58e"
-  recognizable: true
   boilingPoint: 290.0 # Glycerin
   meltingPoint: 18.2
   tileReactions:
