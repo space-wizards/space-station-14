@@ -1490,7 +1490,7 @@
   productPrototypes:
     - FoodPumpkin
   mutationPrototypes:
-    - bluePumpkin
+    - BluePumpkin
   lifespan: 55
   maturation: 10
   production: 4
