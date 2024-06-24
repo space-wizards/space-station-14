@@ -1,7 +1,7 @@
 - type: entity
   id: FtlVisualizerEntity
   noSpawn: true
-  desc: Visualizer for shuttles arriving. You shouldn't see this!
+  description: Visualizer for shuttles arriving. You shouldn't see this!
   components:
   - type: FtlVisualizer
     sprite:
