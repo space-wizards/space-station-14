@@ -647,7 +647,7 @@
   components:
     - type: Sprite
       layers:
-        - state: water
+        - state: yellow # You can replace it with water canister sprite if you'll make one
     - type: GasCanister
       gasMixture:
         volume: 1000
