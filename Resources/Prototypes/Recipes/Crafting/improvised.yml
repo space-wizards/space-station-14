@@ -190,6 +190,19 @@
   objectType: Item
 
 - type: construction
+  name: hemp woven cloth
+  id: HempWovenCloth
+  graph: HempObjects
+  startNode: start
+  targetNode: hempcloth
+  category: construction-category-misc
+  description: "A homemade piece of hempen cloth, it feels coarse."
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: cloth_3
+  objectType: Item
+
+- type: construction
   name: straw hat
   id: strawHat
   graph: StrawHat

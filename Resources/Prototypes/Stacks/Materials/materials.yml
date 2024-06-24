@@ -48,6 +48,13 @@
   maxCount: 30
 
 - type: stack
+  id: Hemp
+  name: hemp
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cotton }
+  spawn: MaterialHemp1
+  maxCount: 30
+
+- type: stack
   id: Pyrotton
   name: pyrotton
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: pyrotton }

@@ -421,6 +421,58 @@
 
 - type: entity
   parent: MaterialBase
+  id: MaterialHemp
+  name: hemp
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Hemp
+    baseLayer: base
+    layerStates:
+    - cotton
+    - cotton_2
+    - cotton_3
+  - type: Sprite
+    state: cotton_3
+    layers:
+    - state: cotton_3
+      map: ["base"]
+  - type: Appearance
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 3
+        - ReagentId: THC
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
+      - ReagentId: THC
+        Quantity: 1
+  - type: Tag
+    tags:
+      - ClothMade
+      - RawMaterial
+
+- type: entity
+  parent: MaterialHemp
+  id: MaterialHemp1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: cotton
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
   id: MaterialPyrotton
   name: pyrotton
   suffix: Full

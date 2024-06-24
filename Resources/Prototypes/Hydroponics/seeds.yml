@@ -794,6 +794,7 @@
   packetPrototype: CannabisSeeds
   productPrototypes:
     - LeavesCannabis
+    - MaterialHemp1
   mutationPrototypes:
     - rainbowCannabis
   harvestRepeat: Repeat
