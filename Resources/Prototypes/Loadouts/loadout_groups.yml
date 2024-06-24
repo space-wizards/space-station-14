@@ -35,6 +35,14 @@
   - GlassesJamjar
   - GlassesJensen
 
+- type: loadoutGroup
+  id: Survival
+  name: loadout-group-survival-basic
+  hidden: true
+  loadouts:
+  - EmergencyNitrogen
+  - EmergencyOxygen
+
 # Command
 - type: loadoutGroup
   id: CaptainHead
@@ -322,6 +330,13 @@
   - JanitorWintercoat
 
 - type: loadoutGroup
+  id: JanitorPlunger
+  name: loadout-group-janitor-plunger
+  minLimit: 0
+  loadouts:
+  - JanitorGoldenPlunger
+
+- type: loadoutGroup
   id: BotanistHead
   name: loadout-group-botanist-head
   minLimit: 0
@@ -391,6 +406,14 @@
   - JesterShoes
 
 - type: loadoutGroup
+  id: SurvivalClown
+  name: loadout-group-survival-clown
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenClown
+  - EmergencyOxygenClown
+
+- type: loadoutGroup
   id: MimeHead
   name: loadout-group-mime-head
   minLimit: 0
@@ -428,6 +451,13 @@
   minLimit: 0
   loadouts:
   - MimeWintercoat
+
+- type: loadoutGroup
+  id: MusicianJumpsuit
+  name: loadout-group-musician-jumpsuit
+  loadouts:
+  - MusicianJumpsuit
+  - MusicianJumpskirt
 
 - type: loadoutGroup
   id: MusicianOuterClothing
@@ -695,6 +725,14 @@
   loadouts:
   - WhiteShoes
   - EngineeringWinterBoots
+
+- type: loadoutGroup
+  id: SurvivalExtended
+  name: loadout-group-survival-extended
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenExtended
+  - EmergencyOxygenExtended
 
 # Science
 - type: loadoutGroup
@@ -966,6 +1004,14 @@
   - RedJumpsuit
   - RedJumpskirt
 
+- type: loadoutGroup
+  id: SurvivalSecurity
+  name: loadout-group-survival-security
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenSecurity
+  - EmergencyOxygenSecurity
+
 # Medical
 - type: loadoutGroup
   id: ChiefMedicalOfficerHead
@@ -1138,6 +1184,14 @@
   - BlueShoes
   - MedicalWinterBoots
 
+- type: loadoutGroup
+  id: SurvivalMedical
+  name: loadout-group-survival-medical
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenMedical
+  - EmergencyOxygenMedical
+
 # Wildcards
 - type: loadoutGroup
   id: ReporterJumpsuit
@@ -1161,3 +1215,12 @@
   - BlueBoxingGloves
   - GreenBoxingGloves
   - YellowBoxingGloves
+
+# Other
+- type: loadoutGroup
+  id: SurvivalSyndicate
+  name: loadout-group-survival-syndicate
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenSyndicate
+  - EmergencyOxygenSyndicate

@@ -143,6 +143,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
 
 - type: entity
   abstract: true
@@ -167,8 +169,6 @@
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.1
-  - type: FireProtection
-    reduction: 0.2
   - type: Armor
     modifiers:
       coefficients:
@@ -187,6 +187,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
 
 - type: entity
   abstract: true
@@ -261,3 +263,5 @@
   - type: HideLayerClothing
     slots:
     - Hair
+    - HeadTop
+    - HeadSide
