@@ -16,7 +16,7 @@
     - type: AccessReader
     - type: ActivatableUI
       key: enum.DoorElectronicsConfigurationUiKey.Key
-      allowedItems:
+      requiredItems:
         tags:
         - DoorElectronicsConfigurator
     - type: UserInterface

@@ -77,11 +77,14 @@
     graph: DisposalMachine
     node: disposal_unit
   - type: DisposalUnit
+  - type: ThrowInsertContainer
+    containerId: disposals
   - type: UserInterface
     interfaces:
       enum.DisposalUnitUiKey.Key:
         type: DisposalUnitBoundUserInterface
   - type: RatKingRummageable
+  - type: RequireProjectileTarget
 
 - type: entity
   id: MailingUnit

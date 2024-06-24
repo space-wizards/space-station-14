@@ -2,7 +2,6 @@ using Content.Shared.Decals;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Light.Components;
 
@@ -17,7 +16,7 @@ public sealed partial class UnpoweredFlashlightComponent : Component
     public SoundSpecifier ToggleSound = new SoundPathSpecifier("/Audio/Items/flashlight_pda.ogg");
 
     [DataField, AutoNetworkedField]
-    public bool LightOn = false;
+    public bool LightOn;
 
     [DataField]
     public EntProtoId ToggleAction = "ActionToggleLight";

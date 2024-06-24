@@ -1,5 +1,5 @@
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Storage;
 
 namespace Content.Server.GameTicking.Rules;

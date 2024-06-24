@@ -83,7 +83,7 @@
         type: Remove
       - !type:AdjustReagent
         reagent: Theobromine
-        amount: 0.05
+        amount: 0.1
   fizziness: 0.4
 
 - type: reagent

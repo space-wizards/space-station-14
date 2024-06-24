@@ -61,6 +61,9 @@
   id: StaminaModifier
 
 - type: statusEffect
+  id: Flashed
+
+- type: statusEffect
   id: RadiationProtection
 
 - type: statusEffect

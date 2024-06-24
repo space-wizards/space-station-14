@@ -10,7 +10,8 @@
   - type: MagicMirror
   - type: ActivatableUI
     key: enum.MagicMirrorUiKey.Key
-    closeOnHandDeselect: true
+    inHandsOnly: true
+    requireActiveHand: true
   - type: UserInterface
     interfaces:
       enum.MagicMirrorUiKey.Key:

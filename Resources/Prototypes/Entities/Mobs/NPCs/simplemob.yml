@@ -25,6 +25,7 @@
     - ForcedSleep
     - TemporaryBlindness
     - Pacified
+    - Flashed
     - RadiationProtection
     - Drowsiness
   - type: Buckle
@@ -101,6 +102,7 @@
     - TemporaryBlindness
     - Pacified
     - StaminaModifier
+    - Flashed
     - RadiationProtection
     - Drowsiness
   - type: Bloodstream

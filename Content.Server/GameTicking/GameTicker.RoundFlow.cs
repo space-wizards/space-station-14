@@ -160,6 +160,12 @@ namespace Content.Server.GameTicking
             // whereas the command can also be used on an existing map.
             var loadOpts = loadOptions ?? new MapLoadOptions();
 
+            if (map.MaxRandomOffset != 0f)
+                loadOpts.Offset = _robustRandom.NextVector2(map.MaxRandomOffset);
+
+            if (map.RandomRotation)
+                loadOpts.Rotation = _robustRandom.NextAngle();
+
             var ev = new PreGameMapLoad(targetMapId, map, loadOpts);
             RaiseLocalEvent(ev);
 
@@ -171,6 +177,26 @@ namespace Content.Server.GameTicking
             RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, gridUids, stationName));
 
             return gridUids;
+        }
+
+        public int ReadyPlayerCount()
+        {
+            var total = 0;
+            foreach (var (userId, status) in _playerGameStatuses)
+            {
+                if (LobbyEnabled && status == PlayerGameStatus.NotReadyToPlay)
+                    continue;
+
+                if (!_playerManager.TryGetSessionById(userId, out _))
+                    continue;
+
+                if (_banManager.GetRoleBans(userId) == null)
+                    continue;
+
+                total++;
+            }
+
+            return total;
         }
 
         public void StartRound(bool force = false)
@@ -219,7 +245,7 @@ namespace Content.Server.GameTicking
                 HumanoidCharacterProfile profile;
                 if (_prefsManager.TryGetCachedPreferences(userId, out var preferences))
                 {
-                    profile = (HumanoidCharacterProfile) preferences.GetProfile(preferences.SelectedCharacterIndex);
+                    profile = (HumanoidCharacterProfile) preferences.SelectedCharacter;
                 }
                 else
                 {
@@ -227,6 +253,8 @@ namespace Content.Server.GameTicking
                 }
                 readyPlayerProfiles.Add(userId, profile);
             }
+
+            DebugTools.AssertEqual(readyPlayers.Count, ReadyPlayerCount());
 
             // Just in case it hasn't been loaded previously we'll try loading it.
             LoadMaps();
@@ -336,6 +364,7 @@ namespace Content.Server.GameTicking
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
             // Grab the great big book of all the Minds, we'll need them for this.
             var allMinds = EntityQueryEnumerator<MindComponent>();
+            var pvsOverride = _configurationManager.GetCVar(CCVars.RoundEndPVSOverrides);
             while (allMinds.MoveNext(out var mindId, out var mind))
             {
                 // TODO don't list redundant observer roles?
@@ -366,7 +395,7 @@ namespace Content.Server.GameTicking
                 else if (mind.CurrentEntity != null && TryName(mind.CurrentEntity.Value, out var icName))
                     playerIcName = icName;
 
-                if (TryGetEntity(mind.OriginalOwnedEntity, out var entity))
+                if (TryGetEntity(mind.OriginalOwnedEntity, out var entity) && pvsOverride)
                 {
                     _pvsOverride.AddGlobalOverride(GetNetEntity(entity.Value), recursive: true);
                 }
@@ -773,7 +802,7 @@ namespace Content.Server.GameTicking
     }
 
     /// <summary>
-    ///     Event raised after players were assigned jobs by the GameTicker.
+    ///     Event raised after players were assigned jobs by the GameTicker and have been spawned in.
     ///     You can give on-station people special roles by listening to this event.
     /// </summary>
     public sealed class RulePlayerJobsAssignedEvent

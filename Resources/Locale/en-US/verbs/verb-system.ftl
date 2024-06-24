@@ -1,4 +1,3 @@
-verb-system-waiting-on-server-text = Waiting on Server...
 verb-system-null-server-response = Entity not in view. You should not see this.
 
 

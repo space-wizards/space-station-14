@@ -52,9 +52,8 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
-        Heat: 0.2
+        Heat: 0.8
         Radiation: 0.5
-        Caustic: 0.5
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
@@ -76,8 +75,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.04
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.01
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: Armor
@@ -545,6 +542,8 @@
     coefficient: 0.001
   - type: ExplosionResistance
     damageCoefficient: 0.2
+  - type: FireProtection
+    reduction: 0.8 # perfect protection like atmos firesuit for pyro tf2 ops
   - type: Armor
     modifiers:
       coefficients:

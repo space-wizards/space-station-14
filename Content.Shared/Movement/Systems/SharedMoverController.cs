@@ -58,11 +58,6 @@ namespace Content.Shared.Movement.Systems
         protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
         protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
 
-        private const float StepSoundMoveDistanceRunning = 2;
-        private const float StepSoundMoveDistanceWalking = 1.5f;
-
-        private const float FootstepVariation = 0f;
-
         /// <summary>
         /// <see cref="CCVars.StopSpeed"/>
         /// </summary>
@@ -258,7 +253,7 @@ namespace Content.Shared.Movement.Systems
 
                     var audioParams = sound.Params
                         .WithVolume(sound.Params.Volume + soundModifier)
-                        .WithVariation(sound.Params.Variation ?? FootstepVariation);
+                        .WithVariation(sound.Params.Variation ?? mobMover.FootstepVariation);
 
                     // If we're a relay target then predict the sound for all relays.
                     if (relayTarget != null)
@@ -404,7 +399,9 @@ namespace Content.Shared.Movement.Systems
                 return false;
 
             var coordinates = xform.Coordinates;
-            var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
+            var distanceNeeded = mover.Sprinting
+                ? mobMover.StepSoundMoveDistanceRunning
+                : mobMover.StepSoundMoveDistanceWalking;
 
             // Handle footsteps.
             if (!weightless)

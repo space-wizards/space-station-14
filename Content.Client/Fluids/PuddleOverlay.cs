@@ -1,4 +1,5 @@
-﻿using Content.Shared.FixedPoint;
+using System.Numerics;
+using Content.Shared.FixedPoint;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
@@ -73,7 +74,7 @@ public sealed class PuddleOverlay : Overlay
             }
         }
 
-        drawHandle.SetTransform(Matrix3.Identity);
+        drawHandle.SetTransform(Matrix3x2.Identity);
     }
 
     private void DrawScreen(in OverlayDrawArgs args)
@@ -99,7 +100,7 @@ public sealed class PuddleOverlay : Overlay
                 if (!gridBounds.Contains(centre))
                     continue;
 
-                var screenCenter = _eyeManager.WorldToScreen(matrix.Transform(centre));
+                var screenCenter = _eyeManager.WorldToScreen(Vector2.Transform(centre, matrix));
 
                 drawHandle.DrawString(_font, screenCenter, debugOverlayData.CurrentVolume.ToString(), Color.White);
             }

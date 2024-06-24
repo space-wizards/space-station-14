@@ -182,7 +182,7 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
 
         foreach (var (slotId, (part, connections, organs)) in allConnections)
         {
-            var slot = new BodyPrototypeSlot(part != null ? new EntProtoId(part) : null!, connections ?? new HashSet<string>(), organs ?? new Dictionary<string, string>());
+            var slot = new BodyPrototypeSlot(part, connections ?? new HashSet<string>(), organs ?? new Dictionary<string, string>());
             slots.Add(slotId, slot);
         }
 

@@ -195,7 +195,7 @@ public sealed partial class ReplaySpectatorSystem
         if (uid != _player.LocalEntity)
             return;
 
-        if (args.Transform.MapUid != null || args.OldMapId == MapId.Nullspace)
+        if (args.Transform.MapUid != null || args.OldMapId == null)
             return;
 
         if (_spectatorData != null)

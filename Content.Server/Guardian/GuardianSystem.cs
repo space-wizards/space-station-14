@@ -208,7 +208,7 @@ namespace Content.Server.Guardian
             var hostXform = Transform(args.Args.Target.Value);
             var host = EnsureComp<GuardianHostComponent>(args.Args.Target.Value);
             // Use map position so it's not inadvertantly parented to the host + if it's in a container it spawns outside I guess.
-            var guardian = Spawn(component.GuardianProto, hostXform.MapPosition);
+            var guardian = Spawn(component.GuardianProto, _transform.GetMapCoordinates(args.Args.Target.Value, xform: hostXform));
 
             _container.Insert(guardian, host.GuardianContainer);
             host.HostedGuardian = guardian;

@@ -33,8 +33,8 @@ public sealed class PresetIdCardSystem : EntitySystem
             var station = _stationSystem.GetOwningStation(uid);
 
             // If we're not on an extended access station, the ID is already configured correctly from MapInit.
-            if (station == null || !Comp<StationJobsComponent>(station.Value).ExtendedAccess)
-                return;
+            if (station == null || !TryComp<StationJobsComponent>(station.Value, out var jobsComp) || !jobsComp.ExtendedAccess)
+                continue;
 
             SetupIdAccess(uid, card, true);
             SetupIdName(uid, card);
@@ -82,9 +82,7 @@ public sealed class PresetIdCardSystem : EntitySystem
         _cardSystem.TryChangeJobTitle(uid, job.LocalizedName);
         _cardSystem.TryChangeJobDepartment(uid, job);
 
-        if (_prototypeManager.TryIndex<StatusIconPrototype>(job.Icon, out var jobIcon))
-        {
+        if (_prototypeManager.TryIndex(job.Icon, out var jobIcon))
             _cardSystem.TryChangeJobIcon(uid, jobIcon);
-        }
     }
 }

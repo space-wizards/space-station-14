@@ -38,9 +38,9 @@ namespace Content.Client.Clickable
             renderOrder = sprite.RenderOrder;
             var (spritePos, spriteRot) = transform.GetWorldPositionRotation(xformQuery);
             var spriteBB = sprite.CalculateRotatedBoundingBox(spritePos, spriteRot, eye.Rotation);
-            bottom = Matrix3.CreateRotation(eye.Rotation).TransformBox(spriteBB).Bottom;
+            bottom = Matrix3Helpers.CreateRotation(eye.Rotation).TransformBox(spriteBB).Bottom;
 
-            var invSpriteMatrix = Matrix3.Invert(sprite.GetLocalMatrix());
+            Matrix3x2.Invert(sprite.GetLocalMatrix(), out var invSpriteMatrix);
 
             // This should have been the rotation of the sprite relative to the screen, but this is not the case with no-rot or directional sprites.
             var relativeRotation = (spriteRot + eye.Rotation).Reduced().FlipPositive();
@@ -48,8 +48,8 @@ namespace Content.Client.Clickable
             Angle cardinalSnapping = sprite.SnapCardinals ? relativeRotation.GetCardinalDir().ToAngle() : Angle.Zero;
 
             // First we get `localPos`, the clicked location in the sprite-coordinate frame.
-            var entityXform = Matrix3.CreateInverseTransform(transform.WorldPosition, sprite.NoRotation ? -eye.Rotation : spriteRot - cardinalSnapping);
-            var localPos = invSpriteMatrix.Transform(entityXform.Transform(worldPos));
+            var entityXform = Matrix3Helpers.CreateInverseTransform(transform.WorldPosition, sprite.NoRotation ? -eye.Rotation : spriteRot - cardinalSnapping);
+            var localPos = Vector2.Transform(Vector2.Transform(worldPos, entityXform), invSpriteMatrix);
 
             // Check explicitly defined click-able bounds
             if (CheckDirBound(sprite, relativeRotation, localPos))
@@ -79,8 +79,8 @@ namespace Content.Client.Clickable
 
                 // convert to layer-local coordinates
                 layer.GetLayerDrawMatrix(dir, out var matrix);
-                var inverseMatrix = Matrix3.Invert(matrix);
-                var layerLocal = inverseMatrix.Transform(localPos);
+                Matrix3x2.Invert(matrix, out var inverseMatrix);
+                var layerLocal = Vector2.Transform(localPos, inverseMatrix);
 
                 // Convert to image coordinates
                 var layerImagePos = (Vector2i) (layerLocal * EyeManager.PixelsPerMeter * new Vector2(1, -1) + rsiState.Size / 2f);

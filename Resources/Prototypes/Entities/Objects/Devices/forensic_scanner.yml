@@ -9,6 +9,7 @@
     state: forensicnew
   - type: Item
     size: Small
+    storedRotation: 90
   - type: Clothing
     sprite: Objects/Devices/forensic_scanner.rsi
     quickEquip: false
@@ -17,7 +18,7 @@
   - type: ActivatableUI
     key: enum.ForensicScannerUiKey.Key
     inHandsOnly: true
-    closeOnHandDeselect: false
+    requireActiveHand: false
   - type: UserInterface
     interfaces:
       enum.ForensicScannerUiKey.Key:

@@ -4,6 +4,7 @@
   - BaseMob
   - MobDamageable
   - MobCombat
+  - StripableInventoryBase
   id: BaseMobSpecies
   abstract: true
   components:
@@ -140,6 +141,7 @@
     - TemporaryBlindness
     - Pacified
     - StaminaModifier
+    - Flashed
     - RadiationProtection
     - Drowsiness
   - type: Reflect
@@ -151,9 +153,8 @@
   - type: Identity
   - type: IdExaminable
   - type: Hands
+  - type: ComplexInteraction
   - type: Internals
-  - type: Inventory
-  - type: InventorySlots
   - type: FloatingVisuals
   - type: Climbing
   - type: Cuffable
@@ -191,7 +192,6 @@
     - NanoTrasen
   - type: CreamPied
   - type: Stripping
-  - type: Strippable
   - type: UserInterface
     interfaces:
       enum.VoiceMaskUIKey.Key:
@@ -235,7 +235,6 @@
   id: BaseMobSpeciesOrganic
   abstract: true
   components:
-  - type: Flashable
   - type: Barotrauma
     damage:
       types:
@@ -290,11 +289,11 @@
 - type: entity
   save: false
   id: BaseSpeciesDummy
+  parent: InventoryBase
   abstract: true
   components:
   - type: Hands
-  - type: Inventory
-  - type: InventorySlots
+  - type: ComplexInteraction
   - type: ContainerContainer
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi

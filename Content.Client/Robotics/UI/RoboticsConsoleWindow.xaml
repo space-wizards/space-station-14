@@ -1,0 +1,40 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                     Title="{Loc 'robotics-console-window-title'}"
+                     MinSize="600 450">
+    <BoxContainer Orientation="Vertical">
+         <!-- List of borgs -->
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="10 10 10 10">
+            <Label Name="NoCyborgs" Text="{Loc 'robotics-console-no-cyborgs'}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ScrollContainer Name="CyborgsContainer" VerticalExpand="True" Visible="False">
+                <!-- Populated when loading state -->
+                <ItemList Name="Cyborgs"/>
+            </ScrollContainer>
+        </BoxContainer>
+
+        <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 5"/>
+
+        <!-- Selected borg info -->
+        <Label Name="SelectCyborg" Text="{Loc 'robotics-console-select-cyborg'}" HorizontalAlignment="Center"/>
+        <BoxContainer Name="BorgContainer" Orientation="Vertical" MaxHeight="200" Visible="False">
+            <BoxContainer Margin="5 5 5 5" Orientation="Horizontal">
+                <PanelContainer VerticalExpand="True">
+                    <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextureRect Name="BorgSprite" TextureScale="4 4"/>
+                    </BoxContainer>
+                </PanelContainer>
+                <PanelContainer VerticalExpand="True" HorizontalExpand="True">
+                    <RichTextLabel Name="BorgInfo"/>
+                </PanelContainer>
+                <!-- TODO: button to open camera window for this borg -->
+            </BoxContainer>
+            <controls:StripeBack>
+                <BoxContainer Name="DangerZone" Margin="5" Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Center" Visible="False">
+                    <Button Name="DisableButton" Text="{Loc 'robotics-console-disable'}" StyleClasses="OpenRight"/>
+                    <Button Name="DestroyButton" Text="{Loc 'robotics-console-destroy'}" StyleClasses="OpenLeft"/>
+                </BoxContainer>
+                <Label Name="LockedMessage" Text="{Loc 'robotics-console-locked-message'}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </controls:StripeBack>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

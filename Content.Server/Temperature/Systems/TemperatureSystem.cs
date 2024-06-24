@@ -12,6 +12,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Temperature.Systems;
 
@@ -32,6 +33,9 @@ public sealed class TemperatureSystem : EntitySystem
     public float UpdateInterval = 1.0f;
 
     private float _accumulatedFrametime;
+
+    [ValidatePrototypeId<AlertCategoryPrototype>]
+    public const string TemperatureAlertCategory = "Temperature";
 
     public override void Initialize()
     {
@@ -180,13 +184,13 @@ public sealed class TemperatureSystem : EntitySystem
 
     private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
     {
-        AlertType type;
+        ProtoId<AlertPrototype> type;
         float threshold;
         float idealTemp;
 
         if (!TryComp<TemperatureComponent>(uid, out var temperature))
         {
-            _alerts.ClearAlertCategory(uid, AlertCategory.Temperature);
+            _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
             return;
         }
 
@@ -203,12 +207,12 @@ public sealed class TemperatureSystem : EntitySystem
 
         if (args.CurrentTemperature <= idealTemp)
         {
-            type = AlertType.Cold;
+            type = temperature.ColdAlert;
             threshold = temperature.ColdDamageThreshold;
         }
         else
         {
-            type = AlertType.Hot;
+            type = temperature.HotAlert;
             threshold = temperature.HeatDamageThreshold;
         }
 
@@ -230,7 +234,7 @@ public sealed class TemperatureSystem : EntitySystem
                 break;
 
             case > 0.66f:
-                _alerts.ClearAlertCategory(uid, AlertCategory.Temperature);
+                _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
                 break;
         }
     }
