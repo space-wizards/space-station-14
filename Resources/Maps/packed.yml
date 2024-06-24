@@ -65730,6 +65730,8 @@ entities:
   entities:
   - uid: 543
     components:
+    - type: MetaData
+      name: Bar Shutters
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 40.5,-8.5
