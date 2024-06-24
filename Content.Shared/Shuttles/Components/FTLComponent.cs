@@ -38,7 +38,7 @@ public sealed partial class FTLComponent : Component
     /// <summary>
     /// Coordinates to arrive it: May be relative to another grid (for docking) or map coordinates.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityCoordinates TargetCoordinates;
 
     [DataField, AutoNetworkedField]
