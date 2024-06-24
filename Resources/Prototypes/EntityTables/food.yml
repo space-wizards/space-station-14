@@ -261,6 +261,8 @@
 - type: weightedRandomEntity
   id: FoodSingleEntityTable
   weights:
+    FoodBagel: 80
+    FoodBagelPoppy: 80
     FoodBurgerJelly: 80
     FoodBurgerCarp: 80
     FoodBurgerTofu: 80
