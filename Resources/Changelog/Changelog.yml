@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: BITTERLYNX
-  changes:
-  - message: Rodents are more visually pleasing to burn
-    type: Fix
-  - message: mothroach and hammy also more visually pleasing to burn
-    type: Fix
-  id: 6314
-  time: '2024-04-06T04:41:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26758
 - author: Plykiya
   changes:
   - message: You can now carefully walk over glass shards and D4.
@@ -3838,3 +3829,10 @@
   id: 6813
   time: '2024-06-23T19:33:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24799
+- author: PJB3005
+  changes:
+  - message: Ghosts can now examine details on objects from any range.
+    type: Tweak
+  id: 6814
+  time: '2024-06-24T15:36:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29404
