@@ -29,9 +29,18 @@
   - type: Tag
     tags:
     - Trash
+  - type: Food
+  - type: FlavorProfile
+    flavors:
+      - cigarettes
   - type: SolutionContainerManager
     solutions:
       smokable:
+        maxVol: 20
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+      food:
         maxVol: 20
         reagents:
           - ReagentId: Nicotine
