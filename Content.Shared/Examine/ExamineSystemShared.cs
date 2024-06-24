@@ -45,6 +45,8 @@ namespace Content.Shared.Examine
 
         protected const float ExamineBlurrinessMult = 2.5f;
 
+        private EntityQuery<GhostComponent> _ghostQuery;
+
         /// <summary>
         ///     Creates a new examine tooltip with arbitrary info.
         /// </summary>
@@ -56,7 +58,7 @@ namespace Content.Shared.Examine
                 return true;
 
             // Ghosts can see everything.
-            if (HasComp<GhostComponent>(examiner))
+            if (_ghostQuery.HasComp(examiner))
                 return true;
 
             // check if the mob is in critical or dead
