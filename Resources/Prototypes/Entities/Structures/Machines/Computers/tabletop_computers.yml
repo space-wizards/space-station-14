@@ -32,6 +32,12 @@
   suffix: Tabletop
   description: Used to pilot a shuttle.
   abstract: true
+  components:
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+        ents: []
+      disk_slot: !type:ContainerSlot {}
 
 - type: entity
   parent: [BaseTabletopComputerShuttle, ComputerShuttle]
@@ -286,6 +292,11 @@
     - map: ["computerLayerKeys"]
       sprite: Structures/Machines/computers.rsi
       state: id_key
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      IdCardConsole-privilegedId: !type:ContainerSlot
+      IdCardConsole-targetId: !type:ContainerSlot
 
 - type: entity
   parent: [BaseTabletopComputer, computerBodyScanner]
