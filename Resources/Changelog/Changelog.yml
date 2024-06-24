@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PursuitInAshes
-  changes:
-  - message: Sake Bottles can now be found in the booze-o-mat.
-    type: Tweak
-  id: 6316
-  time: '2024-04-06T20:16:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26776
 - author: osjarw
   changes:
   - message: Removed broken anom behaviour, which causes APE shots to fly through
@@ -3837,3 +3830,13 @@
   id: 6815
   time: '2024-06-24T22:03:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29416
+- author: Bhijn and Myr
+  changes:
+  - message: The colors of the LEDs on the heater and freezer thermomachines has been
+      changed from red/green (respectively) to orange/cyan (respectively). In laymen's
+      terms, this makes thermomachines far more reasonably differentiable for those
+      with colorblindness.
+    type: Tweak
+  id: 6816
+  time: '2024-06-24T22:40:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29397
