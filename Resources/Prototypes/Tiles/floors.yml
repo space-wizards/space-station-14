@@ -201,7 +201,7 @@
     collection: FootstepHull
   itemDrop: FloorTileItemBrassFilled
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorBrassReebe
   name: tiles-brass-floor-reebe
@@ -1389,6 +1389,21 @@
   footstepSounds:
     collection: FootstepTile
   itemDrop: SheetRGlass1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorMetalFoam
+  name: tiles-metal-foam
+  sprite: /Textures/Tiles/foammetal.png
+  variants: 1
+  placementVariants:
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: SheetSteel1
   heatCapacity: 10000
 
 # Circuits

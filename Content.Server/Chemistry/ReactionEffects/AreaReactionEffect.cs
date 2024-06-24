@@ -1,4 +1,5 @@
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Spreader;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
@@ -62,15 +63,18 @@ namespace Content.Server.Chemistry.ReactionEffects
             var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
             var mapManager = IoCManager.Resolve<IMapManager>();
             var mapSys = args.EntityManager.System<MapSystem>();
+            var spreaderSys = args.EntityManager.System<SpreaderSystem>();
             var sys = args.EntityManager.System<TransformSystem>();
             var mapCoords = sys.GetMapCoordinates(args.SolutionEntity, xform: transform);
 
             if (!mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
-                !mapSys.TryGetTileRef(gridUid, grid, transform.Coordinates, out var tileRef) ||
-                tileRef.Tile.IsSpace())
+                !mapSys.TryGetTileRef(gridUid, grid, transform.Coordinates, out var tileRef))
             {
                 return;
             }
+
+            if (spreaderSys.RequiresFloorToSpread(_prototypeId) && tileRef.Tile.IsSpace())
+                return;
 
             var coords = mapSys.MapToGrid(gridUid, mapCoords);
             var ent = args.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
