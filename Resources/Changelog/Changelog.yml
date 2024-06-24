@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can now carefully walk over glass shards and D4.
-    type: Tweak
-  id: 6315
-  time: '2024-04-06T04:49:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26763
 - author: PursuitInAshes
   changes:
   - message: Sake Bottles can now be found in the booze-o-mat.
@@ -3836,3 +3829,11 @@
   id: 6814
   time: '2024-06-24T15:36:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29404
+- author: Emisse
+  changes:
+  - message: atmos, elite syndie, and deathsquad hardsuits are now the only fireproof
+      suits
+    type: Tweak
+  id: 6815
+  time: '2024-06-24T22:03:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29416
