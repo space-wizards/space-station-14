@@ -61,6 +61,17 @@
     - type: Muted
 
 - type: trait
+  id: Muted
+  name: trait-illiterate-name
+  description: trait-illiterate-desc
+  category: Disabilities
+  blacklist:
+    components:
+      - BorgChassis
+  components:
+    - type: Muted
+
+- type: trait
   id: LightweightDrunk
   name: trait-lightweight-name
   description: trait-lightweight-desc

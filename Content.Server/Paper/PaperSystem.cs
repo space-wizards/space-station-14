@@ -155,16 +155,6 @@ namespace Content.Server.Paper
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
                     $"{ToPrettyString(args.Actor):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
 
-                //If the user is a mime make their writings incomprehensible 
-                if(HasComp<MimePowersComponent>(args.Actor))
-                {
-                  paperComp.Content = new string(
-                      args.Text
-                      .OrderBy(c => Guid.NewGuid())
-                      .ToArray()
-                      );
-                }
-
                 _audio.PlayPvs(paperComp.Sound, uid);
             }
 
