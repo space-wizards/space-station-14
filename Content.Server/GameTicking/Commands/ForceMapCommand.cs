@@ -29,9 +29,9 @@ namespace Content.Server.GameTicking.Commands
             var gameMap = IoCManager.Resolve<IGameMapManager>();
             var name = args[0];
 
-            if (!gameMap.TrySelectMapIfEligible(name))
+            if (!gameMap.CheckMapExists(name))
             {
-                shell.WriteLine($"No eligible map exists with name {name}.");
+                shell.WriteLine(Loc.GetString("forcemap-command-map-not-found", ("map", name)));
                 return;
             }
 
