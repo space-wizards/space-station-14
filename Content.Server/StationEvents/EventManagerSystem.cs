@@ -14,7 +14,6 @@ namespace Content.Server.StationEvents;
 
 public sealed class EventManagerSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _compFac = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -85,7 +84,7 @@ public sealed class EventManagerSystem : EntitySystem
                 if (eventproto.Abstract)
                     continue;
 
-                if (!eventproto.TryGetComponent<StationEventComponent>(out var stationEvent, _compFac))
+                if (!eventproto.TryGetComponent<StationEventComponent>(out var stationEvent, EntityManager.ComponentFactory))
                     continue;
 
                 if (!availableEvents.ContainsKey(eventproto))

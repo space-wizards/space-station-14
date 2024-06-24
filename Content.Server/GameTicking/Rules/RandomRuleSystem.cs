@@ -21,7 +21,6 @@ public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
 
     protected override void Added(EntityUid uid, RandomRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -61,7 +60,7 @@ public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
                     continue;
                 }
 
-                if (ruleProto.TryGetComponent<StationEventComponent>(out _, _compFact))
+                if (ruleProto.TryGetComponent<StationEventComponent>(out _, EntityManager.ComponentFactory))
                 {
                     if (!availableEvents.ContainsKey(ruleProto))
                     {
