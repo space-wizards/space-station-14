@@ -4,9 +4,14 @@
     ClothingBackpackCargo: 3
     ClothingBackpackSatchelCargo: 3
     ClothingBackpackDuffelCargo: 3
+    ClothingBackpackSalvage: 3
+    ClothingBackpackSatchelSalvage: 3
+    ClothingBackpackDuffelSalvage: 3
     ClothingUniformJumpsuitCargo: 3
     ClothingUniformJumpskirtCargo: 3
+    ClothingUniformJumpsuitSalvageSpecialist: 3
     ClothingShoesColorBlack: 3
+    ClothingShoesBootsSalvage: 3
     ClothingHandsGlovesFingerless: 3
     ClothingHeadHatCargosoft: 3
     ClothingHeadBandBrown: 3
