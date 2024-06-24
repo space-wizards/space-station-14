@@ -1,29 +1,4 @@
 ﻿Entries:
-- author: Golinth
-  changes:
-  - message: Fixed mindshield icons being glow in the dark
-    type: Fix
-  id: 6311
-  time: '2024-04-05T20:35:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26754
-- author: Blackern5000
-  changes:
-  - message: Added sap
-    type: Add
-  - message: Added syrup, it can be made by boiling sap.
-    type: Add
-  - message: Dionae now bleed sap instead of water
-    type: Tweak
-  id: 6312
-  time: '2024-04-05T21:06:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25748
-- author: osjarw
-  changes:
-  - message: Thin firelocks are now constructable/deconstructable
-    type: Fix
-  id: 6313
-  time: '2024-04-06T01:55:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26745
 - author: BITTERLYNX
   changes:
   - message: Rodents are more visually pleasing to burn
@@ -3842,3 +3817,24 @@
   id: 6810
   time: '2024-06-23T01:46:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29072
+- author: eoineoineoin
+  changes:
+  - message: Hand labelers can now apply labels to buttons, switches, and levers
+    type: Tweak
+  id: 6811
+  time: '2024-06-23T14:52:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29378
+- author: Tayrtahn
+  changes:
+  - message: Jugs in the ChemVend are labeled again.
+    type: Fix
+  id: 6812
+  time: '2024-06-23T17:31:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29178
+- author: DrEnzyme
+  changes:
+  - message: Add bagels and poppy seed bagels.
+    type: Add
+  id: 6813
+  time: '2024-06-23T19:33:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24799
