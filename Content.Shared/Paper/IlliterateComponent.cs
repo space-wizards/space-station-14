@@ -1,4 +1,10 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Paper;
 
-[RegisterComponent]
-public abstract partial class IlliterateComponent : Component;
+/// <summary>
+/// This is used for the illiterate trait.
+/// </summary>
+
+[RegisterComponent, NetworkedComponent]
+public sealed partial class IlliterateComponent : Component;

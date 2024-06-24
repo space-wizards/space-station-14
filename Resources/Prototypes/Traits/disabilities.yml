@@ -69,7 +69,7 @@
     components:
       - BorgChassis
   components:
-    - type: Muted
+    - type: Illiterate
 
 - type: trait
   id: LightweightDrunk
