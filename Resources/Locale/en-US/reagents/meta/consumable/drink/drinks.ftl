@@ -8,7 +8,7 @@ reagent-name-cafe-latte = cafe latte
 reagent-desc-cafe-latte = A nice, strong and tasty beverage while you are reading.
 
 reagent-name-tea-powder = tea powder
-reagent-desc-tea-powder = Finely shredded tea leaves, used for making tea.
+reagent-desc-tea-powder = Finely ground tea leaves, used for making tea.
 
 reagent-name-green-tea = green tea
 reagent-desc-green-tea = Tasty green tea.

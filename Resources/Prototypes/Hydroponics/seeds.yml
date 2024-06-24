@@ -356,7 +356,7 @@
       PotencyDivisor: 5
 
 - type: seed
-  id: teaPlant
+  id: TeaPlant
   name: seeds-teaplant-name
   noun: seeds-noun-seeds
   displayName: seeds-teaplant-display-name
@@ -1509,7 +1509,7 @@
       PotencyDivisor: 20
 
 - type: seed
-  id: bluePumpkin
+  id: BluePumpkin
   name: seeds-blue-pumpkin-name
   noun: seeds-noun-seeds
   displayName: seeds-blue-pumpkin-display-name

@@ -80,7 +80,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tea_plant.rsi
   - type: Produce
-    seedId: teaPlant
+    seedId: TeaPlant
   - type: SolutionContainerManager
     solutions:
       food:
