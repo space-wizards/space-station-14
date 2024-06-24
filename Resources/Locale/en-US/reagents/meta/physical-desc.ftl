@@ -52,6 +52,7 @@ reagent-physical-desc-dark-brown = dark brown
 reagent-physical-desc-crystalline = crystalline
 reagent-physical-desc-viscous = viscous
 reagent-physical-desc-shiny = shiny
+reagent-physical-desc-space-grease = dangerously shiny
 reagent-physical-desc-dark-red = dark-red
 reagent-physical-desc-ionizing = ionizing
 reagent-physical-desc-nondescript = nondescript
