@@ -1452,7 +1452,7 @@
       - !type:ActivateRandom
         conditions:
         - !type:ReagentThreshold
-          min: 9.5
+          min: 9.01
         cases:
         - activates:
           - reagent:
