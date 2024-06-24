@@ -61,7 +61,7 @@
     - type: Muted
 
 - type: trait
-  id: Muted
+  id: Illiterate
   name: trait-illiterate-name
   description: trait-illiterate-desc
   category: Disabilities

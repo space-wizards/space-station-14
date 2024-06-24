@@ -156,6 +156,10 @@ namespace Content.Server.Paper
                     $"{ToPrettyString(args.Actor):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
 
                 _audio.PlayPvs(paperComp.Sound, uid);
+
+                var writtenEvent = new PaperWrittenEvent();
+                RaiseLocalEvent(uid, ref writtenEvent);
+
             }
 
             paperComp.Mode = PaperAction.Read;
@@ -221,4 +225,10 @@ namespace Content.Server.Paper
     /// </summary>
     [ByRefEvent]
     public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
+
+    /// <summary>
+    /// Event fired when a paper has been written to.
+    /// </summary>
+    [ByRefEvent]
+    public record struct PaperWrittenEvent();
 }
