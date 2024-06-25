@@ -2,17 +2,14 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
-using Content.Client.PDA;
 using Content.Client.Resources;
 using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
-using Content.Client.UserInterface.Controls.FancyTree;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Graphics;
 using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
@@ -94,12 +91,6 @@ namespace Content.Client.Stylesheets
         public static readonly Color PointRed = Color.FromHex("#B02E26");
         public static readonly Color PointGreen = Color.FromHex("#38b026");
         public static readonly Color PointMagenta = Color.FromHex("#FF00FF");
-
-        // Examine button colors
-        public static readonly Color ExamineButtonColorContext = Color.Transparent;
-        public static readonly Color ExamineButtonColorContextHover = Color.DarkSlateGray;
-        public static readonly Color ExamineButtonColorContextPressed = Color.LightSlateGray;
-        public static readonly Color ExamineButtonColorContextDisabled = Color.FromHex("#5A5A5A");
 
         // Fancy Tree elements
         public static readonly Color FancyTreeEvenRowColor = Color.FromHex("#25252A");
@@ -640,26 +631,6 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                     }),
-
-                // Examine buttons
-                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
-
-                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
-                    .Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContext),
-
-                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
-                    .Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextHover),
-
-                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
-                    .Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextPressed),
-
-                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
-                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
-                    .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextDisabled),
 
                 // Direction / arrow icon
                 Element<DirectionIcon>().Class(DirectionIcon.StyleClassDirectionIconArrow)
