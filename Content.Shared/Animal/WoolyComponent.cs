@@ -51,6 +51,6 @@ public sealed partial class WoolyComponent : Component
     /// <summary>
     ///     When to next try growing wool.
     /// </summary>
-    [AutoPausedField, Access(typeof(WoolySystem))]
+    [DataField, AutoPausedField, Access(typeof(WoolySystem))]
     public TimeSpan NextGrowth = TimeSpan.Zero;
 }
