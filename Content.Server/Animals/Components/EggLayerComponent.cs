@@ -17,7 +17,7 @@ public sealed partial class EggLayerComponent : Component
     ///     The item that gets laid/spawned, retrieved from animal prototype.
     /// </summary>
     [DataField(required: true)]
-    public List<EntitySpawnEntry> EggSpawn = default!;
+    public List<EntitySpawnEntry> EggSpawn = new();
 
     /// <summary>
     ///     Player action.
@@ -32,19 +32,19 @@ public sealed partial class EggLayerComponent : Component
     ///     Minimum cooldown used for the automatic egg laying.
     /// </summary>
     [DataField]
-    public float EggLayCooldownMin = 45f;
+    public float EggLayCooldownMin = 60f;
 
     /// <summary>
     ///     Maximum cooldown used for the automatic egg laying.
     /// </summary>
     [DataField]
-    public float EggLayCooldownMax = 90f;
+    public float EggLayCooldownMax = 120f;
 
     /// <summary>
     ///     The amount of nutrient consumed on update.
     /// </summary>
     [DataField]
-    public float HungerUsage = 25f;
+    public float HungerUsage = 60f;
 
     [DataField] public EntityUid? Action;
 

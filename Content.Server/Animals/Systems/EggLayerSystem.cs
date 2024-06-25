@@ -51,7 +51,7 @@ public sealed class EggLayerSystem : EntitySystem
                 continue;
 
             // Randomize next growth time for more organic egglaying.
-            eggLayer.NextGrowth = now + TimeSpan.FromSeconds(_random.NextFloat(eggLayer.EggLayCooldownMin, eggLayer.EggLayCooldownMax));
+            eggLayer.NextGrowth += TimeSpan.FromSeconds(_random.NextFloat(eggLayer.EggLayCooldownMin, eggLayer.EggLayCooldownMax));
 
             if (_mobState.IsDead(uid))
                 continue;

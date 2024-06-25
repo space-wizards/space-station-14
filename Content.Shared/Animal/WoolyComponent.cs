@@ -9,8 +9,7 @@ namespace Content.Shared.Animals;
 ///     Gives the ability to produce wool fibers;
 ///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
-[RegisterComponent, Access(typeof(WoolySystem))]
-[AutoGenerateComponentPause]
+[RegisterComponent, Access(typeof(WoolySystem)), AutoGenerateComponentPause]
 public sealed partial class WoolyComponent : Component
 {
     /// <summary>
@@ -52,8 +51,6 @@ public sealed partial class WoolyComponent : Component
     /// <summary>
     ///     When to next try growing wool.
     /// </summary>
-    //[DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), Access(typeof(SharedWoolySystem))]
-    //public TimeSpan NextGrowth = TimeSpan.FromSeconds(0);
     [AutoPausedField, Access(typeof(WoolySystem))]
     public TimeSpan NextGrowth = TimeSpan.Zero;
 }

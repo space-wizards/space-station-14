@@ -23,7 +23,6 @@ public sealed class WoolySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<WoolyComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
-        Logger.Info("Subscribed to SharedBeforeFullyEatenEvent for SharedWoolyComponent");
     }
 
     public override void Update(float frameTime)
@@ -65,7 +64,6 @@ public sealed class WoolySystem : EntitySystem
     private void OnBeforeFullyEaten(Entity<WoolyComponent> ent, ref BeforeFullyEatenEvent args)
     {
         // don't want moths to delete goats after eating them
-        Logger.Info($"OnBeforeFullyEaten called for entity {ent}");
         args.Cancel();
     }
 }

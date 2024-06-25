@@ -9,15 +9,14 @@ namespace Content.Shared.Animals;
 ///     Gives the ability to produce a solution;
 ///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
-[RegisterComponent]
-[AutoGenerateComponentPause]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class UdderComponent : Component
 {
     /// <summary>
     ///     The reagent to produce.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public ProtoId<ReagentPrototype> ReagentId = default!;
+    public ProtoId<ReagentPrototype> ReagentId = new();
 
     /// <summary>
     ///     The name of <see cref="Solution"/>.
@@ -51,8 +50,6 @@ public sealed partial class UdderComponent : Component
     /// <summary>
     ///     When to next try to produce.
     /// </summary>
-    //[DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), Access(typeof(SharedUdderSystem))]
-    //public TimeSpan NextGrowth = TimeSpan.FromSeconds(0);
     [AutoPausedField, Access(typeof(UdderSystem))]
     public TimeSpan NextGrowth = TimeSpan.Zero;
 }
