@@ -267,7 +267,7 @@ public sealed class SecretStashSystem : EntitySystem
         // You can't open or close so skip this verb.
         if (!entity.Comp.CanBeOpenedAndClosed)
             return;
-
+        toggleVerb.IconEntity = GetNetEntity(item);
         // This verb is for opening / closing the stash.
         if (entity.Comp.IsStashOpen)
         {
