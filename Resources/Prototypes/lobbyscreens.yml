@@ -44,5 +44,5 @@
 
 - type: lobbyBackground
   id: ReclaimerNuke
-  background: /Textures/LobbyScreens/reclaimer-lobby-nuke.webp
+  background: /Textures/LobbyScreens/reclaimer-nuke.webp
   
