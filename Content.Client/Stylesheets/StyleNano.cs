@@ -90,10 +90,6 @@ namespace Content.Client.Stylesheets
         public static readonly Color ButtonColorCautionHovered = Color.FromHex("#cf2f2f");
         public static readonly Color ButtonColorCautionPressed = Color.FromHex("#3e6c45");
         public static readonly Color ButtonColorCautionDisabled = Color.FromHex("#602a2a");
-
-        public static readonly Color ButtonColorGoodDefault = Color.FromHex("#3E6C45");
-        public static readonly Color ButtonColorGoodHovered = Color.FromHex("#31843E");
-
         //NavMap
         public static readonly Color PointRed = Color.FromHex("#B02E26");
         public static readonly Color PointGreen = Color.FromHex("#38b026");
@@ -1335,29 +1331,6 @@ namespace Content.Client.Stylesheets
 
                 Element<LineEdit>().Class("PaperLineEdit")
                     .Prop(LineEdit.StylePropertyStyleBox, new StyleBoxEmpty()),
-
-                // Red Button ---
-                Element<Button>().Class("ButtonColorRed")
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefaultRed),
-
-                Element<Button>().Class("ButtonColorRed").Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefaultRed),
-
-                Element<Button>().Class("ButtonColorRed").Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHoveredRed),
-                // ---
-
-                // Green Button ---
-                Element<Button>().Class("ButtonColorGreen")
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodDefault),
-
-                Element<Button>().Class("ButtonColorGreen").Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodDefault),
-
-                Element<Button>().Class("ButtonColorGreen").Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodHovered),
-                // ---
-                // ---
 
                 Element<Label>().Class("StatusFieldTitle")
                     .Prop("font-color", NanoGold),

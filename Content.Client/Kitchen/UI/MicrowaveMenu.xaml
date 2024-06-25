@@ -77,7 +77,7 @@
                                         Name="StartButton"
                                         Access="Public"
                                         Text="{Loc 'microwave-menu-start-button'}"
-                                        StyleClasses="ButtonColorGreen"
+                                        StyleClasses="positive"
                                         TextAlign="Center" />
                                     <Button
                                         Name="EjectButton"
