@@ -37,16 +37,6 @@
     state: cpu_engineering
   - type: ComputerBoard
     prototype: ComputerPowerMonitoring
-  - type: PAIExpansionCard
-    action: ActionPAIOpenPowerMonitor
-    components:
-    - type: AddUserInterface
-      interfaces:
-        enum.PowerMonitoringConsoleUiKey.Key:
-          type: PowerMonitoringConsoleBoundUserInterface
-          requireInputValidation: false
-    - type: PowerMonitoringConsole
-    - type: PowerMonitoringCableNetworks
 
 - type: entity
   noSpawn: true
@@ -276,21 +266,6 @@
   components:
   - type: ComputerBoard
     prototype: ComputerCrewMonitoring
-  - type: PAIExpansionCard
-    action: ActionPAIOpenCrewMonitor
-    components:
-    - type: AddUserInterface
-      interfaces:
-        enum.CrewMonitoringUIKey.Key:
-          type: CrewMonitoringBoundUserInterface
-          requireInputValidation: false
-    - type: CrewMonitoringConsole
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      receiveFrequencyId: CrewMonitor
-    - type: WirelessNetworkConnection
-      range: 500
-    - type: StationLimitedNetwork
 
 - type: entity
   noSpawn: true
