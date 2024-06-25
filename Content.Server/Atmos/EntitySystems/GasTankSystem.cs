@@ -65,7 +65,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGasTankSetPressure(Entity<GasTankComponent> ent, ref GasTankSetPressureMessage args)
         {
-            var pressure = Math.Clamp(args.Pressure, 0f, ent.Comp.MaxOutputPressure);
+            var pressure = Math.Clamp(args.Pressure, ent.Comp.MinOutputPressure, ent.Comp.MaxOutputPressure);
 
             ent.Comp.OutputPressure = pressure;
 

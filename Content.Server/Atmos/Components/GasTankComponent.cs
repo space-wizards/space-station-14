@@ -47,10 +47,16 @@ public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     public float OutputPressure = Atmospherics.OneAtmosphere;
 
     /// <summary>
-    ///     The maximum allowed output pressure.
+    ///     The lowest allowed output pressure.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MaxOutputPressure = 3 * Atmospherics.OneAtmosphere;
+    public float MinOutputPressure = 17.5f;
+
+    /// <summary>
+    ///     The highest allowed output pressure.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float MaxOutputPressure = 1.5f * Atmospherics.OneAtmosphere;
 
     /// <summary>
     ///     Tank is connected to internals.

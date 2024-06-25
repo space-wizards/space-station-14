@@ -142,7 +142,7 @@
         - 0 # water vapor
         - 0 # ammonia
         - 0.014251686 # 5% N2O
-        # 0.285033721       total 
+        # 0.285033721       total
       temperature: 293.15
 
 - type: entity
