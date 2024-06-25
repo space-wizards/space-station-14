@@ -22,6 +22,7 @@
 - [ ] Enum for accessing palette?
 - [ ] Button text colors / change text color when pressed / disabled?
 - [ ] `MenuButton.cs` hardcoded colors
+- [x] `ButtonSmall`
 
 TL;DR port all of `StyleNano` into sheetlets
 
@@ -38,3 +39,4 @@ TL;DR port all of `StyleNano` into sheetlets
 - [ ] Create a syndicate stylesheet for uplink, syndicate consoles
 - [ ] `[X]` button is misaligned on FancyWindow also title text too kinda
 - [ ] Make a consistent `Tooltip` component that can be used for `ActionAlertTooltip`, ``
+- [ ] Character info screen popup button thing stays pressed when you dont use `C` to close the popup window

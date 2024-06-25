@@ -309,12 +309,6 @@ namespace Content.Client.Stylesheets
             chatFilterButton.SetPatchMargin(StyleBox.Margin.All, 5);
             chatFilterButton.SetPadding(StyleBox.Margin.All, 2);
 
-            var smallButtonTex = resCache.GetTexture("/Textures/Interface/Nano/button_small.svg.96dpi.png");
-            var smallButtonBase = new StyleBoxTexture
-            {
-                Texture = smallButtonTex,
-            };
-
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
             var lineEditTex = resCache.GetTexture("/Textures/Interface/Nano/lineedit.png");
@@ -1363,14 +1357,6 @@ namespace Content.Client.Stylesheets
                 Element<Button>().Class("ButtonColorGreen").Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodHovered),
                 // ---
-
-                // Small Button ---
-                Element<Button>().Class("ButtonSmall")
-                    .Prop(ContainerButton.StylePropertyStyleBox, smallButtonBase),
-
-                Child().Parent(Element<Button>().Class("ButtonSmall"))
-                    .Child(Element<Label>())
-                    .Prop(Label.StylePropertyFont, notoSans8),
                 // ---
 
                 Element<Label>().Class("StatusFieldTitle")
@@ -1387,108 +1373,6 @@ namespace Content.Client.Stylesheets
 
                 Element<Label>().Class("Disabled")
                     .Prop("font-color", DisabledFore),
-
-                // Radial menu buttons
-                Element<TextureButton>().Class("RadialMenuButton")
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/button_normal.png")),
-                Element<TextureButton>().Class("RadialMenuButton")
-                    .Pseudo(TextureButton.StylePseudoClassHover)
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/button_hover.png")),
-
-                Element<TextureButton>().Class("RadialMenuCloseButton")
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/close_normal.png")),
-                Element<TextureButton>().Class("RadialMenuCloseButton")
-                    .Pseudo(TextureButton.StylePseudoClassHover)
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/close_hover.png")),
-
-                Element<TextureButton>().Class("RadialMenuBackButton")
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/back_normal.png")),
-                Element<TextureButton>().Class("RadialMenuBackButton")
-                    .Pseudo(TextureButton.StylePseudoClassHover)
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/back_hover.png")),
-
-                //PDA - Backgrounds
-                Element<PanelContainer>().Class("PdaContentBackground")
-                    .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenBoth)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252a")),
-
-                Element<PanelContainer>().Class("PdaBackground")
-                    .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenBoth)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#000000")),
-
-                Element<PanelContainer>().Class("PdaBackgroundRect")
-                    .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#717059")),
-
-                Element<PanelContainer>().Class("PdaBorderRect")
-                    .Prop(PanelContainer.StylePropertyPanel, AngleBorderRect),
-
-                Element<PanelContainer>().Class("BackgroundDark")
-                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat(Color.FromHex("#25252A"))),
-
-                //PDA - Buttons
-                Element<PdaSettingsButton>().Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(PdaSettingsButton.StylePropertyBgColor, Color.FromHex(PdaSettingsButton.NormalBgColor))
-                    .Prop(PdaSettingsButton.StylePropertyFgColor, Color.FromHex(PdaSettingsButton.EnabledFgColor)),
-
-                Element<PdaSettingsButton>().Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(PdaSettingsButton.StylePropertyBgColor, Color.FromHex(PdaSettingsButton.HoverColor))
-                    .Prop(PdaSettingsButton.StylePropertyFgColor, Color.FromHex(PdaSettingsButton.EnabledFgColor)),
-
-                Element<PdaSettingsButton>().Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(PdaSettingsButton.StylePropertyBgColor, Color.FromHex(PdaSettingsButton.PressedColor))
-                    .Prop(PdaSettingsButton.StylePropertyFgColor, Color.FromHex(PdaSettingsButton.EnabledFgColor)),
-
-                Element<PdaSettingsButton>().Pseudo(ContainerButton.StylePseudoClassDisabled)
-                    .Prop(PdaSettingsButton.StylePropertyBgColor, Color.FromHex(PdaSettingsButton.NormalBgColor))
-                    .Prop(PdaSettingsButton.StylePropertyFgColor, Color.FromHex(PdaSettingsButton.DisabledFgColor)),
-
-                Element<PdaProgramItem>().Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(PdaProgramItem.StylePropertyBgColor, Color.FromHex(PdaProgramItem.NormalBgColor)),
-
-                Element<PdaProgramItem>().Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(PdaProgramItem.StylePropertyBgColor, Color.FromHex(PdaProgramItem.HoverColor)),
-
-                Element<PdaProgramItem>().Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(PdaProgramItem.StylePropertyBgColor, Color.FromHex(PdaProgramItem.HoverColor)),
-
-                //PDA - Text
-                Element<Label>().Class("PdaContentFooterText")
-                    .Prop(Label.StylePropertyFont, notoSans10)
-                    .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
-
-                Element<Label>().Class("PdaWindowFooterText")
-                    .Prop(Label.StylePropertyFont, notoSans10)
-                    .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),
-
-                // Fancy Tree
-                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
-                    .Class(TreeItem.StyleClassEvenRow)
-                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
-                    {
-                        BackgroundColor = FancyTreeEvenRowColor,
-                    }),
-
-                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
-                    .Class(TreeItem.StyleClassOddRow)
-                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
-                    {
-                        BackgroundColor = FancyTreeOddRowColor,
-                    }),
-
-                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
-                    .Class(TreeItem.StyleClassSelected)
-                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
-                    {
-                        BackgroundColor = FancyTreeSelectedRowColor,
-                    }),
-
-                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
-                    .Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
-                    {
-                        BackgroundColor = FancyTreeSelectedRowColor,
-                    }),
             }).ToList());
         }
     }

@@ -36,6 +36,7 @@ public static class StyleClasses
     public const string ButtonOpenLeft = "OpenLeft";
     public const string ButtonOpenBoth = "OpenBoth";
     public const string ButtonSquare = "ButtonSquare";
+    public const string ButtonSmall = "ButtonSmall";
 
     public const string StyleClassSliderRed = "Red";
     public const string StyleClassSliderGreen = "Green";

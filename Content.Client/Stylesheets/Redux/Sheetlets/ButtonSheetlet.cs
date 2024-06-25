@@ -33,6 +33,11 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenBothButton(sheet)),
             CButton().Class(StyleClasses.ButtonSquare)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenSquareButton(sheet)),
+            CButton().Class(StyleClasses.ButtonSmall)
+                .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureSmallButton(sheet)),
+            CButton().Class(StyleClasses.ButtonSmall)
+                .ParentOf(Element<Label>())
+                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(8)),
 
             // Ensure labels in buttons are aligned.
             E<Label>().Class(Button.StyleClassButton)
@@ -79,6 +84,7 @@ public interface IButtonConfig : ISheetletConfig
     public ResPath OpenLeftButtonTexturePath { get; }
     public ResPath OpenRightButtonTexturePath { get; }
     public ResPath OpenBothButtonTexturePath { get; }
+    public ResPath SmallButtonTexturePath { get;  }
 
     /// <summary>
     ///     A lightest-to-darkest five color palette, for use by buttons.
@@ -149,6 +155,15 @@ public interface IButtonConfig : ISheetletConfig
     public virtual StyleBox ConfigureOpenSquareButton(IStyleResources sheet)
     {
         return ConfigureOpenBothButton(sheet);
+    }
+
+    public virtual StyleBox ConfigureSmallButton(IStyleResources sheet)
+    {
+        var b = new StyleBoxTexture
+        {
+            Texture =  sheet.GetTexture(SmallButtonTexturePath),
+        };
+        return b;
     }
 }
 
