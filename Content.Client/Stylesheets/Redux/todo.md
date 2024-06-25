@@ -13,7 +13,7 @@
 - [ ] `NavMapControl.cs:133` fix this
 - [x] Create a HUD stylesheet for examine, right click, chat etc. perhaps, distinguish from NT Ui
     - [ ] (remove `ContextMenuSheetlet.cs:16`)
-    - [ ] seperated chat ui
+    - [x] seperated chat ui
     - [ ] Admin / debug menus
     - [ ] I cheat on the "resources are access locked" thing in `ContextMenuSheetlet.cs:36`. This needs to be fixed!
     - [x] Tooltips!
@@ -28,6 +28,7 @@ TL;DR port all of `StyleNano` into sheetlets
 ### Significant Interface Changes
 
 - Tooltips on action menu now is slightly transparent for consistency w/ examine popup
+- HUD and non diagetic UIs (todo) now have a different palette
 
 ### Another PR:
 
