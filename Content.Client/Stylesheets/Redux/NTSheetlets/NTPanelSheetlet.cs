@@ -15,13 +15,13 @@ public sealed class NTPanelSheetlet : Sheetlet<PalettedStylesheet>
 
         var rules = new List<StyleRule>
         {
-            Element().Class(StyleClasses.BackgroundPanel)
+            Element().Class(StyleClass.BackgroundPanel)
                 .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureBaseButton(sheet))
                 .Modulate(sheet.SecondaryPalette[3]),
-            Element().Class(StyleClasses.BackgroundPanelOpenLeft)
+            Element().Class(StyleClass.BackgroundPanelOpenLeft)
                 .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureOpenLeftButton(sheet))
                 .Modulate(sheet.SecondaryPalette[3]),
-            Element().Class(StyleClasses.BackgroundPanelOpenRight)
+            Element().Class(StyleClass.BackgroundPanelOpenRight)
                 .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureOpenRightButton(sheet))
                 .Modulate(sheet.SecondaryPalette[3]),
         };

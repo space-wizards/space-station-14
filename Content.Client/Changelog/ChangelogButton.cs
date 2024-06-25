@@ -1,4 +1,5 @@
 ﻿using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Changelog
@@ -36,12 +37,12 @@ namespace Content.Client.Changelog
             if (_changelogManager.NewChangelogEntries)
             {
                 Text = Loc.GetString("changelog-button-new-entries");
-                StyleClasses.Add(Stylesheets.Redux.StyleClasses.Negative);
+                StyleClasses.Add(StyleClass.Negative);
             }
             else
             {
                 Text = Loc.GetString("changelog-button");
-                StyleClasses.Remove(Stylesheets.Redux.StyleClasses.Negative);
+                StyleClasses.Remove(StyleClass.Negative);
             }
         }
     }

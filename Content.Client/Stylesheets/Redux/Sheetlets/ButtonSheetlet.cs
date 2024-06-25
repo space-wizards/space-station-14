@@ -25,17 +25,17 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
             // Set textures for the kinds of buttons
             CButton()
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureBaseButton(sheet)),
-            CButton().Class(StyleClasses.ButtonOpenLeft)
+            CButton().Class(StyleClass.ButtonOpenLeft)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenLeftButton(sheet)),
-            CButton().Class(StyleClasses.ButtonOpenRight)
+            CButton().Class(StyleClass.ButtonOpenRight)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenRightButton(sheet)),
-            CButton().Class(StyleClasses.ButtonOpenBoth)
+            CButton().Class(StyleClass.ButtonOpenBoth)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenBothButton(sheet)),
-            CButton().Class(StyleClasses.ButtonSquare)
+            CButton().Class(StyleClass.ButtonSquare)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenSquareButton(sheet)),
-            CButton().Class(StyleClasses.ButtonSmall)
+            CButton().Class(StyleClass.ButtonSmall)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureSmallButton(sheet)),
-            CButton().Class(StyleClasses.ButtonSmall)
+            CButton().Class(StyleClass.ButtonSmall)
                 .ParentOf(Element<Label>())
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(8)),
 

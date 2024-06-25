@@ -151,7 +151,7 @@ namespace Content.Client.Stylesheets
 
                 // Default font.
                 new StyleRule(
-                    new SelectorElement(null, new[] {StyleClasses.Italic}, null, null),
+                    new SelectorElement(null, new[] {StyleClass.Italic}, null, null),
                     new[]
                     {
                         new StyleProperty("font", notoSans12Italic),

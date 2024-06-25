@@ -214,7 +214,7 @@ namespace Content.Client.Administration.UI
                 var titleControl = new Label { Text = admin.Title ?? Loc.GetString("permissions-eui-edit-admin-title-control-text").ToLowerInvariant() };
                 if (admin.Title == null) // none
                 {
-                    titleControl.StyleClasses.Add(StyleClasses.Italic);
+                    titleControl.StyleClasses.Add(StyleClass.Italic);
                 }
 
                 al.AddChild(titleControl);
@@ -238,7 +238,7 @@ namespace Content.Client.Administration.UI
                 var rankControl = new Label { Text = rank };
                 if (italic)
                 {
-                    rankControl.StyleClasses.Add(StyleClasses.Italic);
+                    rankControl.StyleClasses.Add(StyleClass.Italic);
                 }
 
                 al.AddChild(rankControl);
@@ -409,21 +409,21 @@ namespace Content.Client.Administration.UI
                     var inherit = new Button
                     {
                         Text = "I",
-                        StyleClasses = { Stylesheets.Redux.StyleClasses.ButtonOpenRight },
+                        StyleClasses = { StyleClass.ButtonOpenRight },
                         Disabled = disable,
                         Group = group,
                     };
                     var sub = new Button
                     {
                         Text = "-",
-                        StyleClasses = { Stylesheets.Redux.StyleClasses.ButtonOpenBoth },
+                        StyleClasses = { StyleClass.ButtonOpenBoth },
                         Disabled = disable,
                         Group = group
                     };
                     var plus = new Button
                     {
                         Text = "+",
-                        StyleClasses = { Stylesheets.Redux.StyleClasses.ButtonOpenLeft },
+                        StyleClasses = { StyleClass.ButtonOpenLeft },
                         Disabled = disable,
                         Group = group
                     };

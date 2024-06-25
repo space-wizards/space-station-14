@@ -17,10 +17,10 @@ public sealed class ChatSheetlet : Sheetlet<PalettedStylesheet>
         return
         [
             E<PanelContainer>()
-                .Class(StyleClasses.ChatPanel)
+                .Class(StyleClass.ChatPanel)
                 .Panel(chatBg),
             E<LineEdit>()
-                .Class(StyleClasses.ChatLineEdit)
+                .Class(StyleClass.ChatLineEdit)
                 .Prop(LineEdit.StylePropertyStyleBox, new StyleBoxEmpty()),
         ];
     }

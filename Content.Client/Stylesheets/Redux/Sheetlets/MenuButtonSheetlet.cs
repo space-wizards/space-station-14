@@ -25,13 +25,13 @@ public sealed class MenuButtonSheetlet : Sheetlet<PalettedStylesheet>
         {
             CButton()
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureBaseButton(sheet)),
-            CButton().Class(StyleClasses.ButtonOpenLeft)
+            CButton().Class(StyleClass.ButtonOpenLeft)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenLeftButton(sheet)),
-            CButton().Class(StyleClasses.ButtonOpenRight)
+            CButton().Class(StyleClass.ButtonOpenRight)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenRightButton(sheet)),
-            CButton().Class(StyleClasses.ButtonOpenBoth)
+            CButton().Class(StyleClass.ButtonOpenBoth)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenBothButton(sheet)),
-            CButton().Class(StyleClasses.ButtonSquare)
+            CButton().Class(StyleClass.ButtonSquare)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenSquareButton(sheet)),
             E<Label>().Class(MenuButton.StyleClassLabelTopButton)
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold))

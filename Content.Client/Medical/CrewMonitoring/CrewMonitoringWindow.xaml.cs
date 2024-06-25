@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Pinpointer.UI;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.StatusIcon;
@@ -108,7 +109,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             deparmentLabel.SetMessage(department);
-            deparmentLabel.StyleClasses.Add(Stylesheets.Redux.StyleClasses.TooltipDesc);
+            deparmentLabel.StyleClasses.Add(StyleClass.TooltipDesc);
 
             SensorsTable.AddChild(deparmentLabel);
 
@@ -134,7 +135,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             deparmentLabel.SetMessage(Loc.GetString("crew-monitoring-user-interface-no-department"));
-            deparmentLabel.StyleClasses.Add(Stylesheets.Redux.StyleClasses.TooltipDesc);
+            deparmentLabel.StyleClasses.Add(StyleClass.TooltipDesc);
 
             SensorsTable.AddChild(deparmentLabel);
 

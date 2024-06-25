@@ -39,11 +39,11 @@ public abstract partial class PalettedStylesheet : BaseStylesheet
 
         var palettes = new List<(string, Color[])>
         {
-            (StyleClasses.PrimaryColor, PrimaryPalette),
-            (StyleClasses.SecondaryColor, SecondaryPalette),
-            (StyleClasses.PositiveColor, PositivePalette),
-            (StyleClasses.NegativeColor, NegativePalette),
-            (StyleClasses.HighlightColor, HighlightPalette),
+            (StyleClass.PrimaryColor, PrimaryPalette),
+            (StyleClass.SecondaryColor, SecondaryPalette),
+            (StyleClass.PositiveColor, PositivePalette),
+            (StyleClass.NegativeColor, NegativePalette),
+            (StyleClass.HighlightColor, HighlightPalette),
         };
 
         foreach (var (styleclass, palette) in palettes)
@@ -51,7 +51,7 @@ public abstract partial class PalettedStylesheet : BaseStylesheet
             for (uint i = 0; i < palette.Length; i++)
             {
                 rules.Add(
-                    Element().Class(StyleClasses.GetColorClass(styleclass, i))
+                    Element().Class(StyleClass.GetColorClass(styleclass, i))
                         .Modulate(palette[i])
                     );
             }

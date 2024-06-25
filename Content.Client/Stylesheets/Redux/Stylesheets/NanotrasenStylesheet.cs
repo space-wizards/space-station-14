@@ -25,8 +25,8 @@ public partial class NanotrasenStylesheet : PalettedStylesheet
     private readonly List<(string?, int)> _commonFontSizes = new()
     {
         (null, PrimaryFontSize),
-        (StyleClasses.SmallLabel, PrimaryFontSize - FontSizeStep),
-        (StyleClasses.LargeLabel, PrimaryFontSize + FontSizeStep),
+        (StyleClass.SmallLabel, PrimaryFontSize - FontSizeStep),
+        (StyleClass.LargeLabel, PrimaryFontSize + FontSizeStep),
     };
 
     public NanotrasenStylesheet(object config) : base(config)

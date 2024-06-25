@@ -21,14 +21,14 @@ public sealed class InterfaceTooltipSheetlet : Sheetlet<PalettedStylesheet>
         return
         [
             E<PanelContainer>()
-                .Class(StyleClasses.TooltipPanel)
+                .Class(StyleClass.TooltipPanel)
                 .Modulate(Color.Gray.WithAlpha(0.9f))
                 .Panel(tooltipBox),
             E<RichTextLabel>()
-                .Class(StyleClasses.TooltipTitle)
+                .Class(StyleClass.TooltipTitle)
                 .Font(sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold)),
             E<RichTextLabel>()
-                .Class(StyleClasses.TooltipDesc)
+                .Class(StyleClass.TooltipDesc)
                 .Font(sheet.BaseFont.GetFont(12)),
         ];
     }

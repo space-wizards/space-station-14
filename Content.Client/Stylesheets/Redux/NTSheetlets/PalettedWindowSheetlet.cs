@@ -52,9 +52,9 @@ public sealed class PalettedWindowSheetlet : Sheetlet<PalettedStylesheet>
                 .Panel(backgroundStylebox),
             Element().Class(DefaultWindow.StyleClassWindowHeader)
                 .Panel(headerStylebox),
-            Element().Class(StyleClasses.AlertWindowHeader)
+            Element().Class(StyleClass.AlertWindowHeader)
                 .Panel(headerAlertStylebox),
-            Element().Class(StyleClasses.BorderedWindowPanel)
+            Element().Class(StyleClass.BorderedWindowPanel)
                 .Panel(borderedBackgroundStylebox),
             E<TextureButton>().Class(DefaultWindow.StyleClassWindowCloseButton)
                 .Prop(TextureButton.StylePropertyTexture, closeButtonTex)

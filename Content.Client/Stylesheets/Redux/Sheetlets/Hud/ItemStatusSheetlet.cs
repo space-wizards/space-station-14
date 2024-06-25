@@ -13,14 +13,14 @@ public sealed class ItemStatusSheetlet : Sheetlet<PalettedStylesheet>
     {
         return new StyleRule[]
         {
-            Element().Class(StyleClasses.StyleClassItemStatus)
+            Element().Class(StyleClass.StyleClassItemStatus)
                 .Prop("font", sheet.BaseFont.GetFont(10)),
 
-            Element().Class(StyleClasses.StyleClassItemStatusNotHeld)
+            Element().Class(StyleClass.StyleClassItemStatusNotHeld)
                 .Prop("font", sheet.BaseFont.GetFont(10, FontStack.FontKind.Italic))
                 .Prop("font-color", Color.Gray),
 
-            Element<RichTextLabel>().Class(StyleClasses.StyleClassItemStatus)
+            Element<RichTextLabel>().Class(StyleClass.StyleClassItemStatus)
                 .Prop(nameof(RichTextLabel.LineHeightScale), 0.7f)
                 .Prop(nameof(Control.Margin), new Thickness(0, 0, 0, -6)),
         };

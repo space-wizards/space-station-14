@@ -1,6 +1,12 @@
 ﻿namespace Content.Client.Stylesheets.Redux;
 
-public static class StyleClasses
+/**
+ * A collection of public reusable style classes. These should be general purpose (Not specific to only one Ui).
+ *
+ * It is named `StyleClass` as opposed to `StyleClasses` because `StyleClasses` is a field on `Control` so it made it
+ * a pain to reference this class from a `Control`.
+ */
+public static class StyleClass
 {
     public const string PrimaryColor = "color-primary";
     public const string SecondaryColor = "color-secondary";

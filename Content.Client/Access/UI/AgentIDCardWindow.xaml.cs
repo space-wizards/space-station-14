@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using Content.Client.Stylesheets.Redux;
 
 namespace Content.Client.Access.UI
 {
@@ -49,12 +50,12 @@ namespace Content.Client.Access.UI
                 if (!_prototypeManager.TryIndex(jobIconId, out var jobIcon))
                     continue;
 
-                String styleBase = Stylesheets.Redux.StyleClasses.ButtonOpenBoth;
+                String styleBase = StyleClass.ButtonOpenBoth;
                 var modulo = i % JobIconColumnCount;
                 if (modulo == 0)
-                    styleBase = Stylesheets.Redux.StyleClasses.ButtonOpenRight;
+                    styleBase = StyleClass.ButtonOpenRight;
                 else if (modulo == JobIconColumnCount - 1)
-                    styleBase = Stylesheets.Redux.StyleClasses.ButtonOpenLeft;
+                    styleBase = StyleClass.ButtonOpenLeft;
 
                 // Generate buttons
                 var jobIconButton = new Button

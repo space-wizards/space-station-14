@@ -26,8 +26,8 @@ public partial class InterfaceStylesheet : PalettedStylesheet
     private readonly List<(string?, int)> _commonFontSizes = new()
     {
         (null, PrimaryFontSize),
-        (StyleClasses.SmallLabel, PrimaryFontSize - FontSizeStep),
-        (StyleClasses.LargeLabel, PrimaryFontSize + FontSizeStep),
+        (StyleClass.SmallLabel, PrimaryFontSize - FontSizeStep),
+        (StyleClass.LargeLabel, PrimaryFontSize + FontSizeStep),
     };
 
     public InterfaceStylesheet(object config) : base(config)

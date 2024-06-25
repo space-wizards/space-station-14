@@ -13,7 +13,7 @@ public sealed class DividersSheetlet : Sheetlet<PalettedStylesheet>
     {
         return new StyleRule[]
         {
-            E<PanelContainer>().Class(StyleClasses.LowDivider)
+            E<PanelContainer>().Class(StyleClass.LowDivider)
                 .Panel(new StyleBoxFlat(sheet.SecondaryPalette[1]))
                 .MinSize(new(2, 2))
         };

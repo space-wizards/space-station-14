@@ -57,13 +57,13 @@ public sealed class SliderSheetlet : Sheetlet<PalettedStylesheet>
                 .Prop(ColorableSlider.StylePropertyFillWhite, sliderFillWhite)
                 .Prop(ColorableSlider.StylePropertyBackgroundWhite, sliderFillWhite),
 
-            E<Slider>().Class(StyleClasses.StyleClassSliderRed)
+            E<Slider>().Class(StyleClass.StyleClassSliderRed)
                 .Prop(Slider.StylePropertyFill, sliderFillRed),
-            E<Slider>().Class(StyleClasses.StyleClassSliderBlue)
+            E<Slider>().Class(StyleClass.StyleClassSliderBlue)
                 .Prop(Slider.StylePropertyFill, sliderFillBlue),
-            E<Slider>().Class(StyleClasses.StyleClassSliderGreen)
+            E<Slider>().Class(StyleClass.StyleClassSliderGreen)
                 .Prop(Slider.StylePropertyFill, sliderFillGreen),
-            E<Slider>().Class(StyleClasses.StyleClassSliderWhite)
+            E<Slider>().Class(StyleClass.StyleClassSliderWhite)
                 .Prop(Slider.StylePropertyFill, sliderFillWhite),
         };
     }

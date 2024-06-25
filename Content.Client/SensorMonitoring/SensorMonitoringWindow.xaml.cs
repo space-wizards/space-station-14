@@ -2,6 +2,7 @@
 using System.Numerics;
 using Content.Client.Computer;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.SensorMonitoring;
 using JetBrains.Annotations;
@@ -109,7 +110,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
 
         foreach (var sensor in _sensorData.Values)
         {
-            var labelName = new Label { Text = sensor.Name, StyleClasses = { Stylesheets.Redux.StyleClasses.LabelHeading } };
+            var labelName = new Label { Text = sensor.Name, StyleClasses = { StyleClass.LabelHeading } };
             var labelAddress = new Label
             {
                 Text = sensor.Address,
@@ -152,7 +153,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
                 });
 
                 Asdf.AddChild(new GraphView(stream.Samples, startTime, curTime, maxValue) { MinHeight = 150 });
-                Asdf.AddChild(new PanelContainer { StyleClasses = { Stylesheets.Redux.StyleClasses.LowDivider } });
+                Asdf.AddChild(new PanelContainer { StyleClasses = { StyleClass.LowDivider } });
             }
         }
     }

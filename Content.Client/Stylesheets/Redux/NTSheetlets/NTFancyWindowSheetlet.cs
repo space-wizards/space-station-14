@@ -28,7 +28,7 @@ public sealed class NTFancyWindowSheetlet : Sheetlet<PalettedStylesheet>
                 .Prop(Control.StylePropertyModulateSelf, sheet.SecondaryPalette[3]),
 
             Element()
-                .Class(StyleClasses.WindowContentsContainer)
+                .Class(StyleClass.WindowContentsContainer)
                 .Margin(new Thickness(0, 2))
         };
     }

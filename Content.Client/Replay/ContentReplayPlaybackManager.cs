@@ -116,7 +116,7 @@ public sealed class ContentReplayPlaybackManager
             var button = new Button
             {
                 Text = Loc.GetString("replay-loading-retry"),
-                StyleClasses = { StyleClasses.Negative }
+                StyleClasses = { StyleClass.Negative }
             };
 
             button.OnPressed += _ =>

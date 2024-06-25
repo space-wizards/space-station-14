@@ -11,8 +11,8 @@ public sealed class NTButtonSheetlet : ButtonSheetlet
         var rules = new List<StyleRule>(base.GetRules(sheet, config));
 
         MakeButtonRules(cfg, rules, cfg.ButtonPalette, null);
-        MakeButtonRules(cfg, rules, cfg.PositiveButtonPalette, StyleClasses.Positive);
-        MakeButtonRules(cfg, rules, cfg.NegativeButtonPalette, StyleClasses.Negative);
+        MakeButtonRules(cfg, rules, cfg.PositiveButtonPalette, StyleClass.Positive);
+        MakeButtonRules(cfg, rules, cfg.NegativeButtonPalette, StyleClass.Negative);
 
         return rules.ToArray();
     }
