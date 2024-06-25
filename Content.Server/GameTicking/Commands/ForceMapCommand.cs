@@ -29,6 +29,12 @@ namespace Content.Server.GameTicking.Commands
             var gameMap = IoCManager.Resolve<IGameMapManager>();
             var name = args[0];
 
+            if (!gameMap.CheckMapExists(name))
+            {
+                shell.WriteLine(Loc.GetString("forcemap-command-map-not-found", ("map", name)));
+                return;
+            }
+
             _configurationManager.SetCVar(CCVars.GameMap, name);
             shell.WriteLine(Loc.GetString("forcemap-command-success", ("map", name)));
         }
