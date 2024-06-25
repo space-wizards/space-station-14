@@ -19,6 +19,9 @@
     - [x] Tooltips!
 - [ ] `BaseSheetlets`
 - [ ] `CrewMonitoringWindow` uses `TooltipDesc` for some reason??
+- [ ] Enum for accessing palette?
+- [ ] Button text colors / change text color when pressed / disabled?
+- [ ] `MenuButton.cs` hardcoded colors
 
 TL;DR port all of `StyleNano` into sheetlets
 

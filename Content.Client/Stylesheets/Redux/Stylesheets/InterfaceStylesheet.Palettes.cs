@@ -5,7 +5,7 @@ namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
 public partial class InterfaceStylesheet : IPanelPalette
 {
-    private static readonly Color PrimaryColor = Color.FromHex("#545f71");
+    private static readonly Color PrimaryColor = Color.FromHex("#4a6173");
     private static readonly Color SecondaryColor = Color.FromHex("#5e5e5e");
     private static readonly Color PositiveColor = Color.FromHex("#3E6C45");
     private static readonly Color NegativeColor = Color.FromHex("#CF2F2F");
