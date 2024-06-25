@@ -215,6 +215,9 @@ namespace Content.Server.Paper
                 return;
 
             _uiSystem.SetUiState(uid, PaperUiKey.Key, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode));
+
+            var updatedEvent = new PaperUpdatedEvent();
+            RaiseLocalEvent(uid, ref updatedEvent);
         }
     }
 
@@ -229,4 +232,10 @@ namespace Content.Server.Paper
     /// </summary>
     [ByRefEvent]
     public record struct PaperWrittenEvent();
+
+    /// <summary>
+    /// Event fired when a paper UI has been updated
+    /// <summary>
+    [ByRefEvent]
+    public record struct PaperUpdatedEvent();
 }
