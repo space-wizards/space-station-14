@@ -330,5 +330,12 @@ Entries:
   id: 40
   time: '2024-06-21T12:06:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29258
+- author: Chief-Engineer
+  changes:
+  - message: grant_connect_bypass now requires moderator permissions instead of admin.
+    type: Tweak
+  id: 41
+  time: '2024-06-24T21:56:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29406
 Name: Admin
 Order: 1

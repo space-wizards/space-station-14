@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: BITTERLYNX
-  changes:
-  - message: Rodents are more visually pleasing to burn
-    type: Fix
-  - message: mothroach and hammy also more visually pleasing to burn
-    type: Fix
-  id: 6314
-  time: '2024-04-06T04:41:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26758
-- author: Plykiya
-  changes:
-  - message: You can now carefully walk over glass shards and D4.
-    type: Tweak
-  id: 6315
-  time: '2024-04-06T04:49:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26763
-- author: PursuitInAshes
-  changes:
-  - message: Sake Bottles can now be found in the booze-o-mat.
-    type: Tweak
-  id: 6316
-  time: '2024-04-06T20:16:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26776
-- author: osjarw
-  changes:
-  - message: Removed broken anom behaviour, which causes APE shots to fly through
-      the anom.
-    type: Remove
-  id: 6317
-  time: '2024-04-06T22:27:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26775
 - author: Vermidia
   changes:
   - message: Water coolers show how full/what they're full of again.
@@ -3838,3 +3807,36 @@
   id: 6813
   time: '2024-06-23T19:33:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24799
+- author: PJB3005
+  changes:
+  - message: Ghosts can now examine details on objects from any range.
+    type: Tweak
+  id: 6814
+  time: '2024-06-24T15:36:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29404
+- author: Emisse
+  changes:
+  - message: atmos, elite syndie, and deathsquad hardsuits are now the only fireproof
+      suits
+    type: Tweak
+  id: 6815
+  time: '2024-06-24T22:03:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29416
+- author: Bhijn and Myr
+  changes:
+  - message: The colors of the LEDs on the heater and freezer thermomachines has been
+      changed from red/green (respectively) to orange/cyan (respectively). In laymen's
+      terms, this makes thermomachines far more reasonably differentiable for those
+      with colorblindness.
+    type: Tweak
+  id: 6816
+  time: '2024-06-24T22:40:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29397
+- author: Elysium206
+  changes:
+  - message: Increased Security Riot shields durability significantly and makes actively
+      blocking better
+    type: Tweak
+  id: 6817
+  time: '2024-06-25T03:56:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29239
