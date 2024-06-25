@@ -5,8 +5,8 @@
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label HorizontalExpand="True" SizeFlagsStretchRatio="0.50"
-                   Text="{Loc Object type:}" />
-            <LineEdit Name="SearchLineEdit" PlaceHolder="{Loc Search...}" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
+                   Text="{Loc object-tab-object-type}" />
+            <LineEdit Name="SearchLineEdit" PlaceHolder="{Loc object-tab-object-search}" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
             <OptionButton Name="ObjectTypeOptions" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
