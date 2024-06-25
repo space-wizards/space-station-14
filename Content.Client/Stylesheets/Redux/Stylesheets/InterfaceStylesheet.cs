@@ -48,6 +48,7 @@ public partial class InterfaceStylesheet : PalettedStylesheet
             GetSheetletRules<InterfaceButtonSheetlet>(),
             // Rules for various HUD elements
             GetSheetletRules<InterfaceTooltipSheetlet>(),
+            GetSheetletRules<ChatGameScreenSheetlet>(),
             // Finally, load all the other sheetlets.
             GetAllSheetletRules<CommonSheetletAttribute>(),
         };

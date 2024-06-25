@@ -1,5 +1,6 @@
 using Content.Client.Stylesheets.Redux;
 using Content.Client.Stylesheets.Redux.Stylesheets;
+using Content.Client.UserInterface.Screens;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
@@ -23,6 +24,15 @@ namespace Content.Client.Stylesheets
             SheetSpace = new StyleSpace(_resourceCache).Stylesheet;
 
             _userInterfaceManager.Stylesheet = SheetNano;
+            _userInterfaceManager.OnScreenChanged += OnScreenChanged;
+        }
+
+        // Required because stylesheet is initialized before .ActiveScreen is set on UiManager and after the
+        // HUD UIs are actually constructed.
+        private void OnScreenChanged((UIScreen? Old, UIScreen? New) ev)
+        {
+            if (ev.New is not null)
+                ev.New.Stylesheet = SheetInterface;
         }
     }
 }
