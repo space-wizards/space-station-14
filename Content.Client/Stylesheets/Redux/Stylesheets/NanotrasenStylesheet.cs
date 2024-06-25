@@ -58,8 +58,6 @@ public partial class NanotrasenStylesheet : PalettedStylesheet
             GetSheetletRules<NTFancyWindowSheetlet>(),
             // PDAs rely on IButtonCfg for bad reasons.
             GetSheetletRules<NTPdaSheetlet>(),
-            // Buttons!
-            GetSheetletRules<MenuButtonSheetlet>(),
             // Finally, load all the other sheetlets.
             GetAllSheetletRules<CommonSheetletAttribute>(),
         };

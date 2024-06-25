@@ -46,7 +46,7 @@ public partial class InterfaceStylesheet : PalettedStylesheet
             ],
             // Rules for common buttons.
             GetSheetletRules<InterfaceButtonSheetlet>(),
-            // Rules for hover-over tooltips
+            // Rules for various HUD elements
             GetSheetletRules<InterfaceTooltipSheetlet>(),
             // Finally, load all the other sheetlets.
             GetAllSheetletRules<CommonSheetletAttribute>(),

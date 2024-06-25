@@ -7,8 +7,9 @@ using Robust.Client.UserInterface.Controls;
 
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
-namespace Content.Client.Stylesheets.Redux.NTSheetlets;
+namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
+[CommonSheetlet]
 public sealed class MenuButtonSheetlet : Sheetlet<PalettedStylesheet>
 {
     private static MutableSelectorElement CButton()
@@ -37,8 +38,8 @@ public sealed class MenuButtonSheetlet : Sheetlet<PalettedStylesheet>
             // new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
         };
 
-        NTButtonSheetlet.MakeButtonRules<MenuButton>(cfg, rules, cfg.ButtonPalette, null);
-        NTButtonSheetlet.MakeButtonRules<MenuButton>(cfg, rules, cfg.NegativeButtonPalette, MenuButton.StyleClassRedTopButton);
+        ButtonSheetlet.MakeButtonRules<MenuButton>(cfg, rules, cfg.ButtonPalette, null);
+        ButtonSheetlet.MakeButtonRules<MenuButton>(cfg, rules, cfg.NegativeButtonPalette, MenuButton.StyleClassRedTopButton);
 
         return rules.ToArray();
     }

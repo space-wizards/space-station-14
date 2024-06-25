@@ -5,14 +5,8 @@ namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
 public partial class InterfaceStylesheet : IPanelPalette
 {
-    /*
-     * NT Colors.
-     * Do NOT copy-paste these. I will find you.
-     * Seriously, use the stylesheet.
-     */
-
-    private static readonly Color PrimaryColor = Color.FromHex("#575B7F");
-    private static readonly Color SecondaryColor = Color.FromHex("#5B5D6E");
+    private static readonly Color PrimaryColor = Color.FromHex("#545f71");
+    private static readonly Color SecondaryColor = Color.FromHex("#5e5e5e");
     private static readonly Color PositiveColor = Color.FromHex("#3E6C45");
     private static readonly Color NegativeColor = Color.FromHex("#CF2F2F");
     private static readonly Color HighlightColor = Color.FromHex("#A88B5E");
