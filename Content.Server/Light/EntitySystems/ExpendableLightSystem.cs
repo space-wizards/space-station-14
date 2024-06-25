@@ -1,3 +1,4 @@
+using Content.Server.IgnitionSource;
 using Content.Server.Light.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -33,6 +34,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<ExpendableLightComponent, ComponentInit>(OnExpLightInit);
             SubscribeLocalEvent<ExpendableLightComponent, UseInHandEvent>(OnExpLightUse);
             SubscribeLocalEvent<ExpendableLightComponent, GetVerbsEvent<ActivationVerb>>(AddIgniteVerb);
+            SubscribeLocalEvent<ExpendableLightComponent, IsHotEvent>(IsHotEvent);
         }
 
         public override void Update(float frameTime)
@@ -199,6 +201,12 @@ namespace Content.Server.Light.EntitySystems
                 Act = () => TryActivate(ent)
             };
             args.Verbs.Add(verb);
+        }
+
+        private void IsHotEvent(Entity<ExpendableLightComponent> ent, ref IsHotEvent args)
+        {
+            if (HasComp<IgnitionSourceComponent>(ent))
+                args.IsHot = ent.Comp.Activated;
         }
     }
 }
