@@ -23,7 +23,5 @@ namespace Content.Server.Paper
 
             _paper.SetContent(ent, newContent);
         }
-
     }
-
 }

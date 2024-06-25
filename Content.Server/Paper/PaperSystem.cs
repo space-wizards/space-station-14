@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Abilities.Mime;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
 using Content.Shared.UserInterface;
@@ -159,7 +158,6 @@ namespace Content.Server.Paper
 
                 var writtenEvent = new PaperWrittenEvent();
                 RaiseLocalEvent(uid, ref writtenEvent);
-
             }
 
             paperComp.Mode = PaperAction.Read;
