@@ -88,7 +88,7 @@ public sealed partial class StoreComponent : Component
     public EntityUid? StartingMap;
 
     /// <summary>
-    /// Wheter the store should have access to all listings
+    /// Whether the store should have access to all listings
     /// </summary>
     [DataField]
     public bool ShowAllListings = false;
