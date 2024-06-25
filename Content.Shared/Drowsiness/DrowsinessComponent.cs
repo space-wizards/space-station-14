@@ -19,7 +19,7 @@ public sealed partial class DrowsinessComponent : Component
     /// The duration of sleeping incidents, (min, max).
     /// </summary>
     [DataField("durationOfIncident", required: true)]
-    public Vector2 DurationOfIncident = new Vector2(10f, 30f);
+    public Vector2 DurationOfIncident = new Vector2(2, 5);
 
     public float NextIncidentTime;
 }

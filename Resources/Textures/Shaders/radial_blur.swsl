@@ -1,7 +1,7 @@
 ﻿uniform sampler2D SCREEN_TEXTURE;
 uniform highp float VisualScale; // between 0 and 1
 const highp float Intensity = 0.2;
-const highp int SampleCount = 8; // multiple of 2
+const highp int SampleCount = 16; // multiple of 2
 
 // a simple radial blur
 void fragment() {

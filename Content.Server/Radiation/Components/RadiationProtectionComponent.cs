@@ -4,7 +4,8 @@ using Content.Shared.Damage.Prototypes;
 namespace Content.Server.Radiation.Components;
 
 /// <summary>
-///     Exists for use as a status effect. Applies the specified DamageModifierSet when the entity takes damage.
+///     Exists for use as a status effect.
+///     Adds the DamageProtectionBuffComponent to the entity and adds the specified DamageModifierSet to its list of modifiers.
 /// </summary>
 [RegisterComponent]
 public sealed partial class RadiationProtectionComponent : Component
