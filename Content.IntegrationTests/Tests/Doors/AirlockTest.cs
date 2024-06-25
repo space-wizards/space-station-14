@@ -171,7 +171,7 @@ namespace Content.IntegrationTests.Tests.Doors
             // Sloth: Okay I'm sorry but I hate having to rewrite tests for every refactor
             // If you see this yell at me in discord so I can continue to pretend this didn't happen.
             // REMINDER THAT I STILL HAVE TO FIX THIS TEST EVERY OTHER PHYSICS PR
-            // Assert.That(AirlockPhysicsDummy.Transform.MapPosition.X, Is.GreaterThan(AirlockPhysicsDummyStartingX));
+            // _transform.GetMapCoordinates(UID HERE, xform: Assert.That(AirlockPhysicsDummy.Transform).X, Is.GreaterThan(AirlockPhysicsDummyStartingX));
 
             // Blocked by the airlock
             await server.WaitAssertion(() =>

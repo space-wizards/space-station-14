@@ -175,7 +175,7 @@ public sealed class TippyUIController : UIController
                     sprite.LayerSetVisible("hiding", false);
                 }
                 sprite.Rotation = 0;
-                tippy.Label.SetMarkup(_currentMessage.Msg);
+                tippy.Label.SetMarkupPermissive(_currentMessage.Msg);
                 tippy.Label.Visible = false;
                 tippy.LabelPanel.Visible = false;
                 tippy.Visible = true;

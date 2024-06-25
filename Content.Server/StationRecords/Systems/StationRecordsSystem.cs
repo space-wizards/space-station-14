@@ -224,6 +224,17 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
     }
 
     /// <summary>
+    /// Get the name for a record, or an empty string if it has no record.
+    /// </summary>
+    public string RecordName(StationRecordKey key)
+    {
+        if (!TryGetRecord<GeneralStationRecord>(key, out var record))
+           return string.Empty;
+
+        return record.Name;
+    }
+
+    /// <summary>
     ///     Gets all records of a specific type from a station.
     /// </summary>
     /// <param name="station">The station to get the records from.</param>

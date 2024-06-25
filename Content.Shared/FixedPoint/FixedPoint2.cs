@@ -237,7 +237,7 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 Abs(FixedPoint2 a)
         {
-            return FixedPoint2.New(Math.Abs(a.Value));
+            return FromCents(Math.Abs(a.Value));
         }
 
         public static FixedPoint2 Dist(FixedPoint2 a, FixedPoint2 b)

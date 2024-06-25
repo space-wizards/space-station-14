@@ -1,8 +1,8 @@
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ninja.Systems;
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.GameTicking.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 

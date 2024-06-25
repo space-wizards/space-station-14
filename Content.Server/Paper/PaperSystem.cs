@@ -148,7 +148,7 @@ namespace Content.Server.Paper
                 if (TryComp<AppearanceComponent>(uid, out var appearance))
                     _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Written, appearance);
 
-                if (TryComp<MetaDataComponent>(uid, out var meta))
+                if (TryComp(uid, out MetaDataComponent? meta))
                     _metaSystem.SetEntityDescription(uid, "", meta);
 
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,

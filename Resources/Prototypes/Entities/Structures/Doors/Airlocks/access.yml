@@ -74,15 +74,6 @@
       board: [ DoorElectronicsHydroponics ]
 
 - type: entity
-  parent: AirlockCommandLocked
-  id: AirlockServiceCaptainLocked
-  suffix: Captain, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsCaptain ]
-
-- type: entity
   parent: AirlockExternal
   id: AirlockExternalLocked
   suffix: External, Locked

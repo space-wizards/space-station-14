@@ -33,8 +33,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnActivate(EntityUid uid, GasOutletInjectorComponent component, ActivateInWorldEvent args)
         {
+            if (args.Handled || !args.Complex)
+                return;
+
             component.Enabled = !component.Enabled;
             UpdateAppearance(uid, component);
+            args.Handled = true;
         }
 
         public void UpdateAppearance(EntityUid uid, GasOutletInjectorComponent component, AppearanceComponent? appearance = null)

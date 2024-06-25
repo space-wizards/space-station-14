@@ -1,31 +1,31 @@
 ﻿<DefaultWindow
-    xmlns="https://spacestation14.io" Title="{Loc Add Gas}">
+    xmlns="https://spacestation14.io" Title="{Loc admin-ui-atmos-add-gas}">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc Grid}" MinSize="100 0" />
+            <Label Text="{Loc admin-ui-atmos-grid}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <OptionButton Name="GridOptions" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc TileX}" MinSize="100 0" />
+            <Label Text="{Loc admin-ui-atmos-tile-x}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <SpinBox Name="TileXSpin" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc TileY}" MinSize="100 0" />
+            <Label Text="{Loc admin-ui-atmos-tile-y}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <SpinBox Name="TileYSpin" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc Gas}" MinSize="100 0" />
+            <Label Text="{Loc admin-ui-atmos-gas}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <OptionButton Name="GasOptions" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc Amount}" MinSize="100 0" />
+            <Label Text="{Loc admin-ui-atmos-gas-amount}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <SpinBox Name="AmountSpin" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
-        <Button Name="SubmitButton" Text="{Loc Add Gas}" />
+        <Button Name="SubmitButton" Text="{Loc admin-ui-atmos-add-gas}" />
     </BoxContainer>
 </DefaultWindow>

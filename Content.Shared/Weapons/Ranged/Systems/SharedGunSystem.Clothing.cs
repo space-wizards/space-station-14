@@ -42,7 +42,7 @@ public partial class SharedGunSystem
 
         while (enumerator.NextItem(out var item))
         {
-            if (component.ProviderWhitelist == null || !component.ProviderWhitelist.IsValid(item, EntityManager))
+            if (_whitelistSystem.IsWhitelistFailOrNull(component.ProviderWhitelist, item))
                 continue;
 
             slotEntity = item;

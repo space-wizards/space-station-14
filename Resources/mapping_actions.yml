@@ -1,6 +1,47 @@
 - action: !type:InstantActionComponent
+    icon: /Textures/Tiles/cropped_parallax.png
+    keywords: []
+    checkCanInteract: False
+    checkConsciousness: False
+    clientExclusive: True
+    autoPopulate: False
+    temporary: True
+    event: !type:StartPlacementActionEvent
+      placementOption: AlignTileAny
+      tileId: Space
+  assignments:
+  - 0: 8
+  name: space
+- action: !type:InstantActionComponent
+    icon: Interface/VerbIcons/delete.svg.192dpi.png
+    keywords: []
+    checkCanInteract: False
+    checkConsciousness: False
+    clientExclusive: True
+    autoPopulate: False
+    temporary: True
+    event: !type:StartPlacementActionEvent
+      eraser: True
+  assignments:
+  - 0: 9
+  name: action-name-mapping-erase
+- action: !type:InstantActionComponent
+    icon: /Textures/Tiles/plating.png
+    keywords: []
+    checkCanInteract: False
+    checkConsciousness: False
+    clientExclusive: True
+    autoPopulate: False
+    temporary: True
+    event: !type:StartPlacementActionEvent
+      placementOption: AlignTileAny
+      tileId: Plating
+  assignments:
+  - 0: 7
+  name: plating
+- action: !type:InstantActionComponent
     icon:
-      entity: ReinforcedWindow
+      entity: Grille
     keywords: []
     checkCanInteract: False
     checkConsciousness: False
@@ -9,10 +50,10 @@
     temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
-      entityType: ReinforcedWindow
+      entityType: Grille
   assignments:
-  - 0: 3
-  name: ReinforcedWindow
+  - 0: 4
+  name: Grille
 - action: !type:InstantActionComponent
     icon:
       entity: WallSolid
@@ -30,21 +71,6 @@
   name: WallSolid
 - action: !type:InstantActionComponent
     icon:
-      entity: WallReinforced
-    keywords: []
-    checkCanInteract: False
-    checkConsciousness: False
-    clientExclusive: True
-    autoPopulate: False
-    temporary: True
-    event: !type:StartPlacementActionEvent
-      placementOption: SnapgridCenter
-      entityType: WallReinforced
-  assignments:
-  - 0: 1
-  name: WallReinforced
-- action: !type:InstantActionComponent
-    icon:
       entity: Window
     keywords: []
     checkCanInteract: False
@@ -60,6 +86,36 @@
   name: Window
 - action: !type:InstantActionComponent
     icon:
+      entity: WallReinforced
+    keywords: []
+    checkCanInteract: False
+    checkConsciousness: False
+    clientExclusive: True
+    autoPopulate: False
+    temporary: True
+    event: !type:StartPlacementActionEvent
+      placementOption: SnapgridCenter
+      entityType: WallReinforced
+  assignments:
+  - 0: 1
+  name: WallReinforced
+- action: !type:InstantActionComponent
+    icon:
+      entity: ReinforcedWindow
+    keywords: []
+    checkCanInteract: False
+    checkConsciousness: False
+    clientExclusive: True
+    autoPopulate: False
+    temporary: True
+    event: !type:StartPlacementActionEvent
+      placementOption: SnapgridCenter
+      entityType: ReinforcedWindow
+  assignments:
+  - 0: 3
+  name: ReinforcedWindow
+- action: !type:InstantActionComponent
+    icon:
       entity: Firelock
     keywords: []
     checkCanInteract: False
@@ -73,39 +129,6 @@
   assignments:
   - 0: 5
   name: Firelock
-- action: !type:InstantActionComponent
-    icon:
-      entity: Grille
-    keywords: []
-    checkCanInteract: False
-    checkConsciousness: False
-    clientExclusive: True
-    autoPopulate: False
-    temporary: True
-    event: !type:StartPlacementActionEvent
-      placementOption: SnapgridCenter
-      entityType: Grille
-  assignments:
-  - 0: 4
-  name: Grille
-- action: !type:InstantActionComponent
-    icon: Interface/VerbIcons/delete.svg.192dpi.png
-    keywords: []
-    checkCanInteract: False
-    checkConsciousness: False
-    clientExclusive: True
-    autoPopulate: False
-    temporary: True
-    event: !type:StartPlacementActionEvent
-      eraser: True
-  assignments:
-  - 0: 9
-  - 1: 9
-  - 2: 9
-  - 4: 9
-  - 5: 9
-  - 6: 9
-  name: action-name-mapping-erase
 - action: !type:InstantActionComponent
     icon:
       entity: GasPipeStraight
@@ -1110,34 +1133,4 @@
   assignments:
   - 0: 6
   name: steel floor
-- action: !type:InstantActionComponent
-    icon: /Textures/Tiles/plating.png
-    keywords: []
-    checkCanInteract: False
-    checkConsciousness: False
-    clientExclusive: True
-    autoPopulate: False
-    temporary: True
-    event: !type:StartPlacementActionEvent
-      placementOption: AlignTileAny
-      tileId: Plating
-  assignments:
-  - 0: 7
-  - 1: 8
-  - 2: 8
-  name: plating
-- action: !type:InstantActionComponent
-    icon: /Textures/Tiles/cropped_parallax.png
-    keywords: []
-    checkCanInteract: False
-    checkConsciousness: False
-    clientExclusive: True
-    autoPopulate: False
-    temporary: True
-    event: !type:StartPlacementActionEvent
-      placementOption: AlignTileAny
-      tileId: Space
-  assignments:
-  - 0: 8
-  name: space
 ...

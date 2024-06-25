@@ -165,7 +165,7 @@ public sealed partial class AtmosphereSystem
         foreach (var grid in _mapManager.GetAllGrids(playerMap.Value).OrderBy(o => o.Owner))
         {
             var uid = grid.Owner;
-            if (!TryComp<TransformComponent>(uid, out var gridXform))
+            if (!TryComp(uid, out TransformComponent? gridXform))
                 continue;
 
             options.Add(new CompletionOption(uid.ToString(), $"{MetaData(uid).EntityName} - Map {gridXform.MapID}"));

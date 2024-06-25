@@ -313,7 +313,7 @@ namespace Content.Shared.Movement.Systems
             // For stuff like "Moving out of locker" or the likes
             // We'll relay a movement input to the parent.
             if (_container.IsEntityInContainer(entity) &&
-                TryComp<TransformComponent>(entity, out var xform) &&
+                TryComp(entity, out TransformComponent? xform) &&
                 xform.ParentUid.IsValid() &&
                 _mobState.IsAlive(entity))
             {

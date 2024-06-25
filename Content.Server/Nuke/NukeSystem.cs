@@ -450,7 +450,7 @@ public sealed class NukeSystem : EntitySystem
         if (stationUid != null)
             _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
 
-        var pos = nukeXform.MapPosition;
+        var pos = _transform.GetMapCoordinates(uid, xform: nukeXform);
         var x = (int) pos.X;
         var y = (int) pos.Y;
         var posText = $"({x}, {y})";

@@ -22,6 +22,7 @@ namespace Content.Client.Verbs
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -122,7 +123,6 @@ namespace Content.Client.Verbs
             if ((visibility & MenuVisibility.Invisible) == 0)
             {
                 var spriteQuery = GetEntityQuery<SpriteComponent>();
-                var tagQuery = GetEntityQuery<TagComponent>();
 
                 for (var i = entities.Count - 1; i >= 0; i--)
                 {
@@ -130,7 +130,7 @@ namespace Content.Client.Verbs
 
                     if (!spriteQuery.TryGetComponent(entity, out var spriteComponent) ||
                         !spriteComponent.Visible ||
-                        _tagSystem.HasTag(entity, "HideContextMenu", tagQuery))
+                        _tagSystem.HasTag(entity, "HideContextMenu"))
                     {
                         entities.RemoveSwap(i);
                     }
@@ -141,7 +141,7 @@ namespace Content.Client.Verbs
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
                 var xformQuery = GetEntityQuery<TransformComponent>();
-                var playerPos = xformQuery.GetComponent(player.Value).MapPosition;
+                var playerPos = _transform.GetMapCoordinates(player.Value, xform: xformQuery.GetComponent(player.Value));
 
                 for (var i = entities.Count - 1; i >= 0; i--)
                 {
@@ -149,7 +149,7 @@ namespace Content.Client.Verbs
 
                     if (!_examine.InRangeUnOccluded(
                         playerPos,
-                        xformQuery.GetComponent(entity).MapPosition,
+                        _transform.GetMapCoordinates(entity, xform: xformQuery.GetComponent(entity)),
                         ExamineSystemShared.ExamineRange,
                         null))
                     {
