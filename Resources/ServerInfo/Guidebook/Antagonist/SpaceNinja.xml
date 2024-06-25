@@ -25,7 +25,7 @@
   Your suit requires power to function. Its [color=#a4885c]internal battery[/color] can be replaced by clicking on it with another one, and [color=#a4885c]higher capacity batteries[/color] mean a [color=#a4885c]highly effective ninja[/color].
   You can see the current charge by examining the suit or in a sweet battery alert at the top right of your screen.
 
-  If you run out of power and need to recharge your battery, just use your gloves to drain an APC, substation, or SMES.
+  If you run out of power and need to recharge your battery, just use your gloves to drain an APC, transformer, or SMES.
 
   ## Ninja Gloves
 
@@ -39,7 +39,7 @@
 
   Your glove abilities include:
   - Emagging an unlimited number of doors.
-  - Draining power from transformers such as APCs, substations, or SMESes. The higher the voltage, the more efficient the draining is.
+  - Draining power from transformers such as APCs, transformers, or SMESes. The higher the voltage, the more efficient the draining is.
   - You can shock any mob, stunning and slightly damaging them.
   - You can download technologies from an R&D server for one of your objectives.
   - You can hack a communications console to call in a [textlink="threat" link="MinorAntagonists"].

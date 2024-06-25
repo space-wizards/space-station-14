@@ -1314,7 +1314,7 @@ entities:
       parent: 2
     - type: PowerSupplier
       supplyRampTolerance: 500000
-- proto: DebugSubstation
+- proto: DebugTransformer
   entities:
   - uid: 34
     components:

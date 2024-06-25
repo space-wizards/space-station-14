@@ -6275,7 +6275,7 @@ entities:
       parent: 249
     - type: Physics
       canCollide: False
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 287
     components:
@@ -6302,7 +6302,7 @@ entities:
           - 291
           - 289
           - 288
-- proto: SubstationMachineCircuitboard
+- proto: TransformerMachineCircuitboard
   entities:
   - uid: 292
     components:

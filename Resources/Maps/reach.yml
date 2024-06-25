@@ -11972,47 +11972,47 @@ entities:
     - type: Transform
       pos: 16.581064,-4.4972477
       parent: 407
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 115
     components:
     - type: MetaData
-      name: Starboard Quarter Substation
+      name: Starboard Quarter Transformer
     - type: Transform
       pos: -19.5,-3.5
       parent: 407
   - uid: 366
     components:
     - type: MetaData
-      name: Port Bow Substation
+      name: Port Bow Transformer
     - type: Transform
       pos: 11.5,7.5
       parent: 407
   - uid: 367
     components:
     - type: MetaData
-      name: Bow Substation
+      name: Bow Transformer
     - type: Transform
       pos: 21.5,4.5
       parent: 407
   - uid: 368
     components:
     - type: MetaData
-      name: Starboard Bow Substation
+      name: Starboard Bow Transformer
     - type: Transform
       pos: 2.5,-9.5
       parent: 407
   - uid: 369
     components:
     - type: MetaData
-      name: Port Stern Substation
+      name: Port Stern Transformer
     - type: Transform
       pos: -6.5,7.5
       parent: 407
   - uid: 370
     components:
     - type: MetaData
-      name: Aft Substation
+      name: Aft Transformer
     - type: Transform
       pos: -21.5,3.5
       parent: 407

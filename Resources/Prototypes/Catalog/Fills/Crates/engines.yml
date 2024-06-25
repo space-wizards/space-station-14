@@ -135,7 +135,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: WallmountSubstationElectronics
+      - id: WallmountTransformerElectronics
       - id: WallmountGeneratorAPUElectronics
       - id: HandheldGPSBasic
       - id: InflatableDoorStack1

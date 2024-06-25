@@ -5220,7 +5220,7 @@ entities:
     - type: Transform
       pos: -3.1734612,-2.6066077
       parent: 179
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 1018
     components:

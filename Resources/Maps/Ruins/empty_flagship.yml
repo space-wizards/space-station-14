@@ -7340,7 +7340,7 @@ entities:
     - type: Transform
       pos: 1.5,2.5
       parent: 1
-- proto: SubstationBasicEmpty
+- proto: TransformerBasicEmpty
   entities:
   - uid: 216
     components:

@@ -91,7 +91,7 @@ namespace Content.IntegrationTests.Tests.Power
     node: input
 
 - type: entity
-  id: SubstationDummy
+  id: TransformerDummy
   components:
   - type: NodeContainer
     nodes:
@@ -1224,7 +1224,7 @@ namespace Content.IntegrationTests.Tests.Power
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
-            PowerNetworkBatteryComponent substationNetBattery = default!;
+            PowerNetworkBatteryComponent transformerNetBattery = default!;
             BatteryComponent apcBattery = default!;
 
             await server.WaitAssertion(() =>
@@ -1245,11 +1245,11 @@ namespace Content.IntegrationTests.Tests.Power
                 entityManager.SpawnEntity("CableMV", gridOwner.ToCoordinates(0, 2));
 
                 var generatorEnt = entityManager.SpawnEntity("GeneratorDummy", gridOwner.ToCoordinates(0, 0));
-                var substationEnt = entityManager.SpawnEntity("SubstationDummy", gridOwner.ToCoordinates(0, 1));
+                var transformerEnt = entityManager.SpawnEntity("TransformerDummy", gridOwner.ToCoordinates(0, 1));
                 var apcEnt = entityManager.SpawnEntity("ApcDummy", gridOwner.ToCoordinates(0, 2));
 
                 var generatorSupplier = entityManager.GetComponent<PowerSupplierComponent>(generatorEnt);
-                substationNetBattery = entityManager.GetComponent<PowerNetworkBatteryComponent>(substationEnt);
+                transformerNetBattery = entityManager.GetComponent<PowerNetworkBatteryComponent>(transformerEnt);
                 apcBattery = entityManager.GetComponent<BatteryComponent>(apcEnt);
 
                 generatorSupplier.MaxSupply = 1000;
@@ -1264,7 +1264,7 @@ namespace Content.IntegrationTests.Tests.Power
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(substationNetBattery.CurrentSupply, Is.GreaterThan(0)); //substation should be providing power
+                    Assert.That(transformerNetBattery.CurrentSupply, Is.GreaterThan(0)); //transformer should be providing power
                     Assert.That(apcBattery.CurrentCharge, Is.GreaterThan(0)); //apc battery should have gained charge
                 });
             });

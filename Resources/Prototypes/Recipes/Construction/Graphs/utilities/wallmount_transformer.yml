@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: WallmountSubstation
+  id: WallmountTransformer
   start: start
   graph:
     - node: start
@@ -11,7 +11,7 @@
           doAfter: 2
 
     - node: frame
-      entity: BaseSubstationWallFrame
+      entity: BaseTransformerWallFrame
       edges:
       - to: start
         steps:
@@ -37,13 +37,13 @@
           doAfter: 2
 
     - node: parts
-      entity: BaseSubstationWallFrame
+      entity: BaseTransformerWallFrame
       edges:
       - to: electronics
         steps:
-        - tag: WallmountSubstationElectronics
+        - tag: WallmountTransformerElectronics
           store: board
-          name: "wallmount substation circuit board"
+          name: "wallmount transformer circuit board"
           icon:
             sprite: "Objects/Misc/module.rsi"
             state: "charger_APC"
@@ -82,13 +82,13 @@
 
     - node: electronics
       edges:
-      - to: substation
+      - to: transformer
         steps:
         - tool: Screwing
           doAfter: 2
 
-    - node: substation
-      entity: BaseSubstationWall
+    - node: transformer
+      entity: BaseTransformerWall
       edges:
       - to: parts
         conditions:

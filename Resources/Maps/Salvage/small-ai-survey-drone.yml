@@ -1131,7 +1131,7 @@ entities:
     - type: Transform
       pos: -10.5,-3.5
       parent: 72
-- proto: SubstationWallBasic
+- proto: TransformerWallBasic
   entities:
   - uid: 65
     components:

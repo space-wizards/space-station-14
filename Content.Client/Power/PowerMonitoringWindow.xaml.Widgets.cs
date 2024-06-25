@@ -337,7 +337,7 @@ public sealed partial class PowerMonitoringWindow
                 MasterTabContainer.CurrentTab = 0; break;
             case PowerMonitoringConsoleGroup.SMES:
                 MasterTabContainer.CurrentTab = 1; break;
-            case PowerMonitoringConsoleGroup.Substation:
+            case PowerMonitoringConsoleGroup.Transformer:
                 MasterTabContainer.CurrentTab = 2; break;
             case PowerMonitoringConsoleGroup.APC:
                 MasterTabContainer.CurrentTab = 3; break;

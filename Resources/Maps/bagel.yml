@@ -11233,7 +11233,7 @@ entities:
   - uid: 9685
     components:
     - type: MetaData
-      name: Sci Substations
+      name: Sci Transformers
     - type: Transform
       pos: -59.5,10.5
       parent: 60
@@ -128979,19 +128979,19 @@ entities:
     - type: Transform
       pos: -34.412434,3.3669972
       parent: 60
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 287
     components:
     - type: MetaData
-      name: South Cargo Substation
+      name: South Cargo Transformer
     - type: Transform
       pos: 54.5,-3.5
       parent: 60
   - uid: 656
     components:
     - type: MetaData
-      name: North Bar Substation
+      name: North Bar Transformer
     - type: Transform
       pos: 13.5,-19.5
       parent: 60
@@ -129012,7 +129012,7 @@ entities:
   - uid: 3755
     components:
     - type: MetaData
-      name: Spare Substation
+      name: Spare Transformer
     - type: Transform
       pos: 60.5,-25.5
       parent: 60
@@ -129040,7 +129040,7 @@ entities:
   - uid: 8062
     components:
     - type: MetaData
-      name: Syndicate Substation
+      name: Syndicate Transformer
     - type: Transform
       pos: -5.5,-1.5
       parent: 7536
@@ -129061,35 +129061,35 @@ entities:
   - uid: 9684
     components:
     - type: MetaData
-      name: Sci Substation 2
+      name: Sci Transformer 2
     - type: Transform
       pos: -58.5,7.5
       parent: 60
   - uid: 11056
     components:
     - type: MetaData
-      name: East Arrivals Substation
+      name: East Arrivals Transformer
     - type: Transform
       pos: 14.5,-49.5
       parent: 60
   - uid: 11489
     components:
     - type: MetaData
-      name: West Arrivals Substation
+      name: West Arrivals Transformer
     - type: Transform
       pos: -3.5,-50.5
       parent: 60
   - uid: 12717
     components:
     - type: MetaData
-      name: Starboard Bow Substation
+      name: Starboard Bow Transformer
     - type: Transform
       pos: 26.5,14.5
       parent: 60
   - uid: 13531
     components:
     - type: MetaData
-      name: Sci Substation 1
+      name: Sci Transformer 1
     - type: Transform
       pos: -58.5,9.5
       parent: 60
@@ -129115,7 +129115,7 @@ entities:
   - uid: 17935
     components:
     - type: MetaData
-      name: Bridge Substation
+      name: Bridge Transformer
     - type: Transform
       pos: 3.5,-2.5
       parent: 60
@@ -129136,7 +129136,7 @@ entities:
   - uid: 20085
     components:
     - type: MetaData
-      name: South East Solar Substation
+      name: South East Solar Transformer
     - type: Transform
       pos: 61.5,-37.5
       parent: 60
@@ -129150,11 +129150,11 @@ entities:
   - uid: 22477
     components:
     - type: MetaData
-      name: AI Substation
+      name: AI Transformer
     - type: Transform
       pos: -116.5,19.5
       parent: 60
-- proto: SubstationWallBasic
+- proto: TransformerWallBasic
   entities:
   - uid: 23916
     components:

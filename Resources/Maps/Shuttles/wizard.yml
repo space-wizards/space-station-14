@@ -4013,7 +4013,7 @@ entities:
       enabled: False
     - type: EntityStorage
       open: True
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 361
     components:

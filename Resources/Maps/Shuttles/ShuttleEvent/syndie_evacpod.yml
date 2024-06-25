@@ -796,7 +796,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: SubstationWallBasic
+- proto: TransformerWallBasic
   entities:
   - uid: 88
     components:

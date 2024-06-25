@@ -137700,166 +137700,166 @@ entities:
     - type: Transform
       pos: 26.5,-52.5
       parent: 5350
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 23
     components:
     - type: MetaData
-      name: West Bridge Substation
+      name: West Bridge Transformer
     - type: Transform
       pos: -14.5,1.5
       parent: 5350
   - uid: 27
     components:
     - type: MetaData
-      name: East Bridge Substation
+      name: East Bridge Transformer
     - type: Transform
       pos: 13.5,0.5
       parent: 5350
   - uid: 1686
     components:
     - type: MetaData
-      name: South Center Substation
+      name: South Center Transformer
     - type: Transform
       pos: -10.5,-11.5
       parent: 5350
   - uid: 2790
     components:
     - type: MetaData
-      name: Bar Substation
+      name: Bar Transformer
     - type: Transform
       pos: 34.5,-0.5
       parent: 5350
   - uid: 3453
     components:
     - type: MetaData
-      name: North Cargo Substation
+      name: North Cargo Transformer
     - type: Transform
       pos: -33.5,25.5
       parent: 5350
   - uid: 5880
     components:
     - type: MetaData
-      name: North Arrivals Substation
+      name: North Arrivals Transformer
     - type: Transform
       pos: -52.5,5.5
       parent: 5350
   - uid: 7349
     components:
     - type: MetaData
-      name: East Sec Substation
+      name: East Sec Transformer
     - type: Transform
       pos: 20.5,40.5
       parent: 5350
   - uid: 7946
     components:
     - type: MetaData
-      name: West Dorms Substation
+      name: West Dorms Transformer
     - type: Transform
       pos: 22.5,40.5
       parent: 5350
   - uid: 9519
     components:
     - type: MetaData
-      name: North West Solars Substation
+      name: North West Solars Transformer
     - type: Transform
       pos: -33.5,42.5
       parent: 5350
   - uid: 9627
     components:
     - type: MetaData
-      name: West Sec Substation
+      name: West Sec Transformer
     - type: Transform
       pos: -14.5,40.5
       parent: 5350
   - uid: 11872
     components:
     - type: MetaData
-      name: Atmos Substation
+      name: Atmos Transformer
     - type: Transform
       pos: 37.5,-21.5
       parent: 5350
   - uid: 13981
     components:
     - type: MetaData
-      name: Grav Gen Substation
+      name: Grav Gen Transformer
     - type: Transform
       pos: 58.5,34.5
       parent: 5350
   - uid: 13982
     components:
     - type: MetaData
-      name: North East Solars Substation
+      name: North East Solars Transformer
     - type: Transform
       pos: 64.5,35.5
       parent: 5350
   - uid: 15000
     components:
     - type: MetaData
-      name: East Med Substation
+      name: East Med Transformer
     - type: Transform
       pos: -11.5,-44.5
       parent: 5350
   - uid: 15705
     components:
     - type: MetaData
-      name: West Med Substation
+      name: West Med Transformer
     - type: Transform
       pos: -36.5,-43.5
       parent: 5350
   - uid: 15910
     components:
     - type: MetaData
-      name: North Med Substation
+      name: North Med Transformer
     - type: Transform
       pos: -31.5,-27.5
       parent: 5350
   - uid: 17170
     components:
     - type: MetaData
-      name: South West Solars Substation
+      name: South West Solars Transformer
     - type: Transform
       pos: -36.5,-64.5
       parent: 5350
   - uid: 20032
     components:
     - type: MetaData
-      name: South East Solars Substation
+      name: South East Solars Transformer
     - type: Transform
       pos: 39.5,-58.5
       parent: 5350
   - uid: 20049
     components:
     - type: MetaData
-      name: South Sci Substation
+      name: South Sci Transformer
     - type: Transform
       pos: 11.5,-61.5
       parent: 5350
   - uid: 20178
     components:
     - type: MetaData
-      name: East Sci Substation
+      name: East Sci Transformer
     - type: Transform
       pos: 27.5,-32.5
       parent: 5350
   - uid: 23398
     components:
     - type: MetaData
-      name: Engineering Substation
+      name: Engineering Transformer
     - type: Transform
       pos: 53.5,7.5
       parent: 5350
   - uid: 23685
     components:
     - type: MetaData
-      name: Singulo Substation
+      name: Singulo Transformer
     - type: Transform
       pos: 56.5,30.5
       parent: 5350
   - uid: 25952
     components:
     - type: MetaData
-      name: AI Sat/Telecomms Substation
+      name: AI Sat/Telecomms Transformer
     - type: Transform
       pos: 108.5,2.5
       parent: 5350

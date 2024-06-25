@@ -33218,7 +33218,7 @@ entities:
     - type: Transform
       pos: 4.4667654,19.499214
       parent: 1668
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 1130
     components:
@@ -33487,7 +33487,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: North Substation
+      id: North Transformer
   - uid: 6823
     components:
     - type: Transform
@@ -33497,7 +33497,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Command Substation
+      id: Command Transformer
   - uid: 6824
     components:
     - type: Transform
@@ -33508,7 +33508,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: West Substation
+      id: West Transformer
   - uid: 6828
     components:
     - type: Transform
@@ -33519,7 +33519,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Medbay Substation
+      id: Medbay Transformer
   - uid: 6829
     components:
     - type: Transform
@@ -33530,7 +33530,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Eng Substation
+      id: Eng Transformer
 - proto: SurveillanceCameraGeneral
   entities:
   - uid: 6830

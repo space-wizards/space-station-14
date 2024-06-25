@@ -19,7 +19,7 @@
     - SignalTimerElectronics
     - APECircuitboard
     - SMESMachineCircuitboard
-    - SubstationMachineCircuitboard
+    - TransformerMachineCircuitboard
     - TelecomServerCircuitboard
     chance: 0.95
     rarePrototypes:

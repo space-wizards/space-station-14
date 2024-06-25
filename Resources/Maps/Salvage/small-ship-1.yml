@@ -185,7 +185,7 @@ entities:
     - type: Transform
       pos: 0.5,0.5
       parent: 13
-- proto: SubstationMachineCircuitboard
+- proto: TransformerMachineCircuitboard
   entities:
   - uid: 4
     components:

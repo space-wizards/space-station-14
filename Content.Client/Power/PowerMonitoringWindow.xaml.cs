@@ -30,7 +30,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
     {
         { PowerMonitoringConsoleGroup.Generator, (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")), Color.Purple) },
         { PowerMonitoringConsoleGroup.SMES, (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_hexagon.png")), Color.OrangeRed) },
-        { PowerMonitoringConsoleGroup.Substation, (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_square.png")), Color.Yellow) },
+        { PowerMonitoringConsoleGroup.Transformer, (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_square.png")), Color.Yellow) },
         { PowerMonitoringConsoleGroup.APC, (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_triangle.png")), Color.LimeGreen) },
     };
 
@@ -78,7 +78,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         // Set UI tab titles
         MasterTabContainer.SetTabTitle(0, Loc.GetString("power-monitoring-window-label-sources"));
         MasterTabContainer.SetTabTitle(1, Loc.GetString("power-monitoring-window-label-smes"));
-        MasterTabContainer.SetTabTitle(2, Loc.GetString("power-monitoring-window-label-substation"));
+        MasterTabContainer.SetTabTitle(2, Loc.GetString("power-monitoring-window-label-transformer"));
         MasterTabContainer.SetTabTitle(3, Loc.GetString("power-monitoring-window-label-apc"));
 
         // Track when the MasterTabContainer changes its tab
@@ -185,8 +185,8 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         {
             case PowerMonitoringConsoleGroup.SMES:
                 currentContainer = SMESList; break;
-            case PowerMonitoringConsoleGroup.Substation:
-                currentContainer = SubstationList; break;
+            case PowerMonitoringConsoleGroup.Transformer:
+                currentContainer = TransformerList; break;
             case PowerMonitoringConsoleGroup.APC:
                 currentContainer = ApcList; break;
         }

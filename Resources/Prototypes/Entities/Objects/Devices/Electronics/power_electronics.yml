@@ -17,12 +17,12 @@
     - type: StaticPrice
       price: 34
 
-# Wallmount Substation
+# Wallmount Transformer
 - type: entity
-  id: WallmountSubstationElectronics
+  id: WallmountTransformerElectronics
   parent: BaseElectronics
-  name: wallmount substation electronics
-  description: Circuit used to construct a wallmount substation.
+  name: wallmount transformer electronics
+  description: Circuit used to construct a wallmount transformer.
   components:
     - type: Sprite
       sprite: Objects/Misc/module.rsi
@@ -31,7 +31,7 @@
       price: 40
     - type: Tag
       tags:
-        - WallmountSubstationElectronics
+        - WallmountTransformerElectronics
 
 # Wallmount Generator
 - type: entity

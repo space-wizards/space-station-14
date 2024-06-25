@@ -189,8 +189,8 @@
       - SignalTimerElectronics
       - APCElectronics
       - SMESMachineCircuitboard
-      - SubstationMachineCircuitboard
-      - WallmountSubstationElectronics
+      - TransformerMachineCircuitboard
+      - WallmountTransformerElectronics
       - CellRechargerCircuitboard
       - BorgChargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
@@ -479,7 +479,7 @@
       - PortableGeneratorJrPacmanMachineCircuitboard
       - WallmountGeneratorElectronics
       - WallmountGeneratorAPUElectronics
-      - WallmountSubstationElectronics
+      - WallmountTransformerElectronics
       - PowerCageRechargerCircuitboard
       - EmitterCircuitboard
       - ThrusterMachineCircuitboard

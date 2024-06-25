@@ -3993,7 +3993,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,13.5
       parent: 2
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 554
     components:

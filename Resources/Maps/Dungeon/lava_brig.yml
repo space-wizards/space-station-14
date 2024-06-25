@@ -11162,7 +11162,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 6.5,13.5
       parent: 588
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 467
     components:
@@ -11174,7 +11174,7 @@ entities:
     - type: Transform
       pos: 19.5,46.5
       parent: 588
-- proto: SubstationWallBasic
+- proto: TransformerWallBasic
   entities:
   - uid: 774
     components:

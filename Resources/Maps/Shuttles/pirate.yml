@@ -3799,7 +3799,7 @@ entities:
       parent: 1
     - type: AtmosDevice
       joinedGrid: 1
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 564
     components:

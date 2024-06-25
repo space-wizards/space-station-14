@@ -1789,7 +1789,7 @@ entities:
       enabled: False
     - type: EntityStorage
       open: True
-- proto: SubstationWallBasic
+- proto: TransformerWallBasic
   entities:
   - uid: 103
     components:

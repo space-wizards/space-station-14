@@ -8,13 +8,13 @@
   },
   "states": [
     {
-      "name": "substation"
+      "name": "transformer"
     },
 	{
-	  "name": "substation_static"
+	  "name": "transformer_static"
 	},
     {
-      "name": "substation_wall",
+      "name": "transformer_wall",
       "directions": 4
     },
     {
@@ -48,7 +48,7 @@
       ]
     },
 	{
-	  "name": "substation_wall_static"
+	  "name": "transformer_wall_static"
 	},
     {
       "name": "full"

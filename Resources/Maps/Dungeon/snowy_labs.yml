@@ -12458,7 +12458,7 @@ entities:
     - type: Transform
       pos: 40.5,16.5
       parent: 1653
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 559
     components:
@@ -12470,7 +12470,7 @@ entities:
     - type: Transform
       pos: 28.5,18.5
       parent: 1653
-- proto: SubstationWallBasic
+- proto: TransformerWallBasic
   entities:
   - uid: 354
     components:

@@ -45,7 +45,7 @@
                                  SetSize="16 16"
                                  Modulate="#ffff00"
                                  Margin="20 0 5 0"/>
-                    <Label Text="{Loc 'power-monitoring-window-label-substation'}"/>
+                    <Label Text="{Loc 'power-monitoring-window-label-transformer'}"/>
                     <TextureRect Stretch="KeepAspectCentered"
                                  TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
                                  SetSize="16 16"
@@ -84,7 +84,7 @@
                         <BoxContainer Name="SMESList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 10 0"/>
                     </ScrollContainer>
                     <ScrollContainer HorizontalExpand="True" Margin="8, 8, 8, 8">
-                        <BoxContainer Name="SubstationList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 10 0"/>
+                        <BoxContainer Name="TransformerList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 10 0"/>
                     </ScrollContainer>
                     <ScrollContainer HorizontalExpand="True" Margin="8, 8, 8, 8">
                         <BoxContainer Name="ApcList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 10 0"/>

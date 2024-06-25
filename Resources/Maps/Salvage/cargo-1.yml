@@ -799,7 +799,7 @@ entities:
     - type: Transform
       pos: -7.5,1.5
       parent: 20
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 74
     components:

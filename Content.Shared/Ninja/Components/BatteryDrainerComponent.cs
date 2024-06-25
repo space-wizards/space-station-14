@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Shared.Ninja.Components;
 
 /// <summary>
-/// Component for draining power from APCs/substations/SMESes, when ProviderUid is set to a battery cell.
+/// Component for draining power from APCs/transformers/SMESes, when ProviderUid is set to a battery cell.
 /// Does not rely on relay, simply being on the user and having BatteryUid set is enough.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedBatteryDrainerSystem))]

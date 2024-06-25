@@ -5049,7 +5049,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -10.5,1.5
       parent: 818
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 807
     components:

@@ -14222,7 +14222,7 @@ entities:
   - uid: 38
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 40.5,-15.5
@@ -14230,7 +14230,7 @@ entities:
   - uid: 39
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,14.5
@@ -14238,7 +14238,7 @@ entities:
   - uid: 40
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,14.5
@@ -14246,7 +14246,7 @@ entities:
   - uid: 64
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 38.5,8.5
@@ -14254,14 +14254,14 @@ entities:
   - uid: 3491
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       pos: 62.5,-29.5
       parent: 2
   - uid: 3565
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -53.5,8.5
@@ -14269,7 +14269,7 @@ entities:
   - uid: 4905
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -60.5,-21.5
@@ -14277,7 +14277,7 @@ entities:
   - uid: 6773
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 51.5,-30.5
@@ -14285,7 +14285,7 @@ entities:
   - uid: 6976
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -38.5,-52.5
@@ -14293,7 +14293,7 @@ entities:
   - uid: 7751
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 62.5,9.5
@@ -14322,7 +14322,7 @@ entities:
   - uid: 9158
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -21.5,33.5
@@ -14330,14 +14330,14 @@ entities:
   - uid: 9200
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       pos: 15.5,-37.5
       parent: 2
   - uid: 9219
     components:
     - type: MetaData
-      name: Substation airlock
+      name: Transformer airlock
     - type: Transform
       pos: -38.5,-36.5
       parent: 2
@@ -103101,7 +103101,7 @@ entities:
   - uid: 21421
     components:
     - type: MetaData
-      name: Central substation note
+      name: Central transformer note
     - type: Transform
       pos: -2.5038486,15.512904
       parent: 2
@@ -103117,12 +103117,12 @@ entities:
 
         ──────────────────────────────────────────
 
-        During the production of this station we have overlooked this substation, and as a result does not power any APCs.
+        During the production of this station we have overlooked this transformer, and as a result does not power any APCs.
 
         [italic]Please pretend that this was not an oversight, but instead an intended decision.[/italic]
 
 
-        It is now a spare substation for any case where a substation or APC becomes damaged or wears out over time.
+        It is now a spare transformer for any case where a transformer or APC becomes damaged or wears out over time.
 
 
         [italic]Best wishes, [bold]NanoTrasen Technical Build Team.[/bold][/italic]
@@ -119081,135 +119081,135 @@ entities:
     - type: Transform
       pos: 5.5262756,27.397335
       parent: 2
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 2165
     components:
     - type: MetaData
-      name: Singularity substation
+      name: Singularity transformer
     - type: Transform
       pos: 2.5,-17.5
       parent: 2
   - uid: 2166
     components:
     - type: MetaData
-      name: Central Substation
+      name: Central Transformer
     - type: Transform
       pos: -3.5,15.5
       parent: 2
   - uid: 2167
     components:
     - type: MetaData
-      name: East Substation
+      name: East Transformer
     - type: Transform
       pos: 37.5,-14.5
       parent: 2
   - uid: 3700
     components:
     - type: MetaData
-      name: Evacuation Substation
+      name: Evacuation Transformer
     - type: Transform
       pos: -52.5,10.5
       parent: 2
   - uid: 5971
     components:
     - type: MetaData
-      name: Cargo Substation
+      name: Cargo Transformer
     - type: Transform
       pos: 38.5,6.5
       parent: 2
   - uid: 6135
     components:
     - type: MetaData
-      name: Command Substation
+      name: Command Transformer
     - type: Transform
       pos: 51.5,-28.5
       parent: 2
   - uid: 6983
     components:
     - type: MetaData
-      name: South-West Substation
+      name: South-West Transformer
     - type: Transform
       pos: -37.5,-37.5
       parent: 2
   - uid: 7877
     components:
     - type: MetaData
-      name: AI Substation
+      name: AI Transformer
     - type: Transform
       pos: 19.5,-60.5
       parent: 2
   - uid: 8524
     components:
     - type: MetaData
-      name: Arrivals Substation
+      name: Arrivals Transformer
     - type: Transform
       pos: -36.5,-53.5
       parent: 2
   - uid: 9108
     components:
     - type: MetaData
-      name: Science Substation
+      name: Science Transformer
     - type: Transform
       pos: 61.5,-32.5
       parent: 2
   - uid: 9117
     components:
     - type: MetaData
-      name: Medical Substation
+      name: Medical Transformer
     - type: Transform
       pos: 65.5,10.5
       parent: 2
   - uid: 9196
     components:
     - type: MetaData
-      name: Security Substation
+      name: Security Transformer
     - type: Transform
       pos: -22.5,35.5
       parent: 2
   - uid: 9203
     components:
     - type: MetaData
-      name: South Substation
+      name: South Transformer
     - type: Transform
       pos: 14.5,-38.5
       parent: 2
   - uid: 9212
     components:
     - type: MetaData
-      name: West Substation
+      name: West Transformer
     - type: Transform
       pos: -61.5,-20.5
       parent: 2
   - uid: 9275
     components:
     - type: MetaData
-      name: Engineering substation
+      name: Engineering transformer
     - type: Transform
       pos: -0.5,-17.5
       parent: 2
   - uid: 10576
     components:
     - type: MetaData
-      name: Secure Command Substation
+      name: Secure Command Transformer
     - type: Transform
       pos: 54.5,-41.5
       parent: 2
   - uid: 17231
     components:
     - type: MetaData
-      name: Outpost Substation
+      name: Outpost Transformer
     - type: Transform
       pos: 66.5,-49.5
       parent: 2
   - uid: 20937
     components:
     - type: MetaData
-      name: Rage Cage Substation
+      name: Rage Cage Transformer
     - type: Transform
       pos: 89.5,-22.5
       parent: 2
-- proto: SubstationMachineCircuitboard
+- proto: TransformerMachineCircuitboard
   entities:
   - uid: 5879
     components:
@@ -119626,7 +119626,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Command substation
+      id: Command transformer
   - uid: 8945
     components:
     - type: Transform
@@ -119810,7 +119810,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: East substation
+      id: East transformer
   - uid: 8995
     components:
     - type: Transform
@@ -119821,7 +119821,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Cargo substation
+      id: Cargo transformer
   - uid: 8996
     components:
     - type: Transform
@@ -119831,7 +119831,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Central substation
+      id: Central transformer
   - uid: 8997
     components:
     - type: Transform
@@ -119842,7 +119842,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Evacuation substation
+      id: Evacuation transformer
   - uid: 9036
     components:
     - type: Transform
@@ -119958,7 +119958,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: South substation
+      id: South transformer
   - uid: 20205
     components:
     - type: Transform
@@ -119968,7 +119968,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: South west substation
+      id: South west transformer
   - uid: 20206
     components:
     - type: Transform
@@ -119979,7 +119979,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Arrivals Substation
+      id: Arrivals Transformer
   - uid: 20207
     components:
     - type: Transform
@@ -119990,7 +119990,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Science substation
+      id: Science transformer
   - uid: 20208
     components:
     - type: Transform
@@ -120001,7 +120001,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Medical substation
+      id: Medical transformer
   - uid: 20209
     components:
     - type: Transform
@@ -120012,7 +120012,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Security substation
+      id: Security transformer
   - uid: 20210
     components:
     - type: Transform
@@ -120033,7 +120033,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: West substation
+      id: West transformer
 - proto: SurveillanceCameraGeneral
   entities:
   - uid: 7289

@@ -5452,14 +5452,14 @@ entities:
     - type: Transform
       pos: 2.4408178,-14.358064
       parent: 1
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 437
     components:
     - type: Transform
       pos: 2.5,-19.5
       parent: 1
-- proto: SubstationWallBasic
+- proto: TransformerWallBasic
   entities:
   - uid: 948
     components:

@@ -4013,7 +4013,7 @@ entities:
     - type: Transform
       pos: -10.5,-10.5
       parent: 1
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 577
     components:

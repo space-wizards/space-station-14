@@ -1,18 +1,18 @@
-# Base substation
+# Base transformer
 - type: entity
   abstract: true
-  id: BaseSubstation
+  id: BaseTransformer
   parent: [ BaseMachine, ConstructibleMachine ]
-  name: substation
+  name: transformer
   description: Reduces the voltage of electricity put into it.
   placement:
     mode: SnapgridCenter
   components:
   - type: Sprite # TODO: add sprite for maintenance panel open
-    sprite: Structures/Power/substation.rsi
+    sprite: Structures/Power/transformer.rsi
     snapCardinals: true
     layers:
-    - state: substation
+    - state: transformer
     - state: screen
       shader: unshaded
     - state: full
@@ -36,12 +36,12 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: PowerMonitoringDevice
-    group: Substation
+    group: Transformer
     sourceNode: input
     loadNode: output
-    collectionName: substation
-    sprite: Structures/Power/substation.rsi
-    state: substation_static
+    collectionName: transformer
+    sprite: Structures/Power/transformer.rsi
+    state: transformer_static
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger
@@ -93,7 +93,7 @@
     totalIntensity: 200
   - type: WiresPanel
   - type: Machine
-    board: SubstationMachineCircuitboard
+    board: TransformerMachineCircuitboard
   - type: StationInfiniteBatteryTarget
   - type: AmbientOnPowered
   - type: AmbientSound
@@ -109,12 +109,12 @@
     highVoltageNode: input
     mediumVoltageNode: output
 
-# Compact Wall Substation Base
+# Compact Wall Transformer Base
 - type: entity
-  id: BaseSubstationWall
+  id: BaseTransformerWall
   noSpawn: true
-  name: wallmount substation
-  description: A substation designed for compact shuttles and spaces.
+  name: wallmount transformer
+  description: A transformer designed for compact shuttles and spaces.
   placement:
     mode: SnapgridCenter
   components:
@@ -136,7 +136,7 @@
     access: [["Engineering"]]
   - type: ContainerFill
     containers:
-      board: [ WallmountSubstationElectronics ]
+      board: [ WallmountTransformerElectronics ]
   - type: ContainerContainer
     containers:
       board: !type:Container
@@ -149,9 +149,9 @@
     anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
-    sprite: Structures/Power/substation.rsi
+    sprite: Structures/Power/transformer.rsi
     layers:
-    - state: substation_wall
+    - state: transformer_wall
     - state: screen_wall
       shader: unshaded
   - type: Battery
@@ -168,11 +168,11 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: PowerMonitoringDevice
-    group: Substation
+    group: Transformer
     sourceNode: input
     loadNode: output
-    sprite: Structures/Power/substation.rsi
-    state: substation_wall_static
+    sprite: Structures/Power/transformer.rsi
+    state: transformer_wall_static
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger
@@ -205,8 +205,8 @@
         sound:
           collection: MetalGlassBreak
   - type: Construction
-    graph: WallmountSubstation
-    node: substation
+    graph: WallmountTransformer
+    node: transformer
   - type: Explosive
     explosionType: Default
     maxIntensity: 50
@@ -215,11 +215,11 @@
   - type: StationInfiniteBatteryTarget
   - type: WallMount
 
-# Substations in use
+# Transformers in use
 
 - type: entity
-  parent: BaseSubstation
-  id: SubstationBasic
+  parent: BaseTransformer
+  id: TransformerBasic
   suffix: Basic, 2.5MJ
   components:
   - type: Battery
@@ -227,16 +227,16 @@
     startingCharge: 2500000
 
 - type: entity
-  parent: SubstationBasic
-  id: SubstationBasicEmpty
+  parent: TransformerBasic
+  id: TransformerBasicEmpty
   suffix: Empty
   components:
   - type: Battery
     startingCharge: 0
 
 - type: entity
-  parent: BaseSubstationWall
-  id: SubstationWallBasic
+  parent: BaseTransformerWall
+  id: TransformerWallBasic
   suffix: Basic, 2MJ
   components:
   - type: Battery
@@ -244,7 +244,7 @@
     startingCharge: 2000000
   - type: ContainerFill
     containers:
-      board: [ WallmountSubstationElectronics ]
+      board: [ WallmountTransformerElectronics ]
       capacitor: [ CapacitorStockPart ]
       powercell: [ PowerCellSmall ]
   - type: ContainerContainer
@@ -255,10 +255,10 @@
 
 # Construction Frame
 - type: entity
-  id: BaseSubstationWallFrame
+  id: BaseTransformerWallFrame
   noSpawn: true
-  name: wallmount substation frame
-  description: A substation frame for construction
+  name: wallmount transformer frame
+  description: A transformer frame for construction
   placement:
     mode: SnapgridCenter
   components:
@@ -272,10 +272,10 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Power/substation.rsi
+    sprite: Structures/Power/transformer.rsi
     layers:
-    - state: substation_wall
+    - state: transformer_wall
   - type: Construction
-    graph: WallmountSubstation
+    graph: WallmountTransformer
     node: frame
   - type: WallMount

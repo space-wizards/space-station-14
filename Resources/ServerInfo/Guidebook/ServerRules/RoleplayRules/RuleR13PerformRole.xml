@@ -12,7 +12,7 @@
   - As an engineer, helping the bartender remodel the bar.
   - As a bartender, remodeling the bar.
   - As a passenger, building a maintenance bar.
-  - As an engineer, reinforcing substations.
+  - As an engineer, reinforcing transformers.
   - As an engineer, increasing the security of airlocks.
   - As an atmospherics technician, improving atmospheric systems.
   - As a passenger, fighting nuclear operatives.
@@ -20,7 +20,7 @@
   - As a crewmember on a station with no engineering department, you complete engineering tasks.
 
   Prohibited:
-  - As a passenger, reinforcing substations.
+  - As a passenger, reinforcing transformers.
   - As a passenger, hunting for antagonists or lawbreakers.
   - As a passenger, fighting or preparing to defend someone else from someone who has been trying to kill a random crewmember.
 </Document>

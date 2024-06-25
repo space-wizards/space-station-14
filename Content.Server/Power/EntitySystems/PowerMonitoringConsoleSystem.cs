@@ -452,7 +452,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         }
 
         else if (device.Group == PowerMonitoringConsoleGroup.SMES ||
-            device.Group == PowerMonitoringConsoleGroup.Substation ||
+            device.Group == PowerMonitoringConsoleGroup.Transformer ||
             device.Group == PowerMonitoringConsoleGroup.APC)
         {
 

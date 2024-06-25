@@ -311,7 +311,7 @@
   name: CableHV
 - action: !type:InstantActionComponent
     icon:
-      entity: SubstationBasic
+      entity: TransformerBasic
     keywords: []
     checkCanInteract: False
     checkConsciousness: False
@@ -320,10 +320,10 @@
     temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
-      entityType: SubstationBasic
+      entityType: TransformerBasic
   assignments:
   - 2: 4
-  name: SubstationBasic
+  name: TransformerBasic
 - action: !type:InstantActionComponent
     icon:
       entity: Poweredlight

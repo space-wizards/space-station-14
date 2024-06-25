@@ -96,16 +96,16 @@
   canBuildInImpassable: false
 
 - type: construction
-  name: wallmount substation
-  id: WallmountSubstation
-  graph: WallmountSubstation
+  name: wallmount transformer
+  id: WallmountTransformer
+  graph: WallmountTransformer
   startNode: start
-  targetNode: substation
+  targetNode: transformer
   category: construction-category-utilities
-  description: "A wallmount substation for compact spaces. Make sure to place cable underneath before building the wall."
+  description: "A wallmount transformer for compact spaces. Make sure to place cable underneath before building the wall."
   icon:
-    sprite: Structures/Power/substation.rsi
-    state: substation_wall
+    sprite: Structures/Power/transformer.rsi
+    state: transformer_wall
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true

@@ -2019,7 +2019,7 @@ entities:
     - type: Transform
       pos: -1.5,7.5
       parent: 410
-- proto: SubstationWallBasic
+- proto: TransformerWallBasic
   entities:
   - uid: 1
     components:

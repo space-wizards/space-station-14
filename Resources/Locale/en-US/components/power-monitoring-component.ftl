@@ -2,7 +2,7 @@ power-monitoring-window-title = Power Monitoring Console
 
 power-monitoring-window-label-sources = Sources
 power-monitoring-window-label-smes = SMES
-power-monitoring-window-label-substation = Substation
+power-monitoring-window-label-transformer = Transformer
 power-monitoring-window-label-apc = APC
 power-monitoring-window-label-misc = Misc
 

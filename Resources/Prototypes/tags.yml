@@ -1285,7 +1285,7 @@
   id: WallmountGeneratorElectronics
 
 - type: Tag
-  id: WallmountSubstationElectronics
+  id: WallmountTransformerElectronics
 
 - type: Tag
   id: WeaponAntiqueLaser

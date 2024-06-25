@@ -628,7 +628,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         This is mostly used for deadly bombings or sabotage of major station systems such as power production,
-        chemistry, substations, or atmos.
+        chemistry, transformers, or atmos.
       </Box>
     </ColorBox>
     <ColorBox>

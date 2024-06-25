@@ -47110,19 +47110,19 @@ entities:
     - type: Transform
       pos: -44.5,-5.5
       parent: 30
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 1695
     components:
     - type: MetaData
-      name: arrivals substation
+      name: arrivals transformer
     - type: Transform
       pos: 25.5,18.5
       parent: 30
   - uid: 3022
     components:
     - type: MetaData
-      name: medical substation
+      name: medical transformer
     - type: Transform
       pos: 10.5,-17.5
       parent: 30
@@ -47134,35 +47134,35 @@ entities:
   - uid: 5465
     components:
     - type: MetaData
-      name: telecomms substation
+      name: telecomms transformer
     - type: Transform
       pos: -48.5,9.5
       parent: 30
   - uid: 5473
     components:
     - type: MetaData
-      name: cargo substation
+      name: cargo transformer
     - type: Transform
       pos: -14.5,22.5
       parent: 30
   - uid: 5922
     components:
     - type: MetaData
-      name: engineering substation
+      name: engineering transformer
     - type: Transform
       pos: -32.5,11.5
       parent: 30
   - uid: 6202
     components:
     - type: MetaData
-      name: bridge substation
+      name: bridge transformer
     - type: Transform
       pos: 36.5,-1.5
       parent: 30
   - uid: 7249
     components:
     - type: MetaData
-      name: science substation
+      name: science transformer
     - type: Transform
       pos: -31.5,-20.5
       parent: 30

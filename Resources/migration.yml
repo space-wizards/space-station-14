@@ -354,3 +354,14 @@ ClothingOuterCoatInspector: ClothingOuterCoatDetectiveLoadout
 
 # 2024-06-23
 FloorTileItemReinforced: PartRodMetal1
+
+# 2024-06-25
+SubstationMachineCircuitboard: TransformerMachineCircuitboard
+WallmountSubstationElectronics: WallmountTransformerElectronics
+DebugSubstation: DebugTransformer
+
+BaseSubstationWall: BaseTransformerWall
+SubstationBasic: TransformerBasic
+SubstationBasicEmpty: TransformerBasicEmpty
+SubstationWallBasic: TransformerWallBasic
+BaseSubstationWallFrame: BaseTransformerWallFrame

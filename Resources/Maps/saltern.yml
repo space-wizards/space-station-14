@@ -58235,96 +58235,96 @@ entities:
     - type: Transform
       pos: 44.5,23.5
       parent: 31
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 2361
     components:
     - type: MetaData
-      name: bar substation
+      name: bar transformer
     - type: Transform
       pos: 0.5,-8.5
       parent: 31
   - uid: 3587
     components:
     - type: MetaData
-      name: engineering substation
+      name: engineering transformer
     - type: Transform
       pos: 42.5,1.5
       parent: 31
   - uid: 3588
     components:
     - type: MetaData
-      name: cargo substation
+      name: cargo transformer
     - type: Transform
       pos: 27.5,13.5
       parent: 31
   - uid: 3856
     components:
     - type: MetaData
-      name: bridge substation
+      name: bridge transformer
     - type: Transform
       pos: 12.5,21.5
       parent: 31
   - uid: 4427
     components:
     - type: MetaData
-      name: singulo substation
+      name: singulo transformer
     - type: Transform
       pos: 55.5,5.5
       parent: 31
   - uid: 7689
     components:
     - type: MetaData
-      name: security substation
+      name: security transformer
     - type: Transform
       pos: -16.5,16.5
       parent: 31
   - uid: 8667
     components:
     - type: MetaData
-      name: southwest solars substation
+      name: southwest solars transformer
     - type: Transform
       pos: -31.5,-31.5
       parent: 31
   - uid: 9004
     components:
     - type: MetaData
-      name: science substation
+      name: science transformer
     - type: Transform
       pos: -11.5,-33.5
       parent: 31
   - uid: 10025
     components:
     - type: MetaData
-      name: medical substation
+      name: medical transformer
     - type: Transform
       pos: 21.5,-13.5
       parent: 31
   - uid: 10237
     components:
     - type: MetaData
-      name: telecomms substation
+      name: telecomms transformer
     - type: Transform
       pos: 53.5,-0.5
       parent: 31
   - uid: 10358
     components:
     - type: MetaData
-      name: dorms substation
+      name: dorms transformer
     - type: Transform
       pos: -26.5,-11.5
       parent: 31
   - uid: 11206
     components:
     - type: MetaData
-      name: library substation
+      name: library transformer
     - type: Transform
       pos: 16.5,-27.5
       parent: 31
   - uid: 11246
     components:
     - type: MetaData
-      name: evac substation
+      name: evac transformer
     - type: Transform
       pos: -31.5,7.5
       parent: 31

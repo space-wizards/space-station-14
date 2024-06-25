@@ -590,8 +590,8 @@
      Glass: 250
 
 - type: latheRecipe
-  id: SubstationMachineCircuitboard
-  result: SubstationMachineCircuitboard
+  id: TransformerMachineCircuitboard
+  result: TransformerMachineCircuitboard
   category: Circuitry
   completetime: 4
   materials:
@@ -599,8 +599,8 @@
      Glass: 450
 
 - type: latheRecipe
-  id: WallmountSubstationElectronics
-  result: WallmountSubstationElectronics
+  id: WallmountTransformerElectronics
+  result: WallmountTransformerElectronics
   category: Circuitry
   completetime: 4
   materials:

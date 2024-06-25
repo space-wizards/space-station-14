@@ -144220,12 +144220,12 @@ entities:
     - type: Transform
       pos: 62.5,-33.5
       parent: 8364
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 1666
     components:
     - type: MetaData
-      name: Cargo Substation
+      name: Cargo Transformer
     - type: Transform
       pos: -21.5,-35.5
       parent: 8364
@@ -144236,7 +144236,7 @@ entities:
   - uid: 2894
     components:
     - type: MetaData
-      name: Science Substation
+      name: Science Transformer
     - type: Transform
       pos: 85.5,-44.5
       parent: 8364
@@ -144247,35 +144247,35 @@ entities:
   - uid: 5893
     components:
     - type: MetaData
-      name: Command Substation
+      name: Command Transformer
     - type: Transform
       pos: -10.5,-19.5
       parent: 8364
   - uid: 6246
     components:
     - type: MetaData
-      name: Gravity Substation
+      name: Gravity Transformer
     - type: Transform
       pos: 1.5,-24.5
       parent: 8364
   - uid: 6715
     components:
     - type: MetaData
-      name: Starboard Bow Service Substation
+      name: Starboard Bow Service Transformer
     - type: Transform
       pos: 43.5,7.5
       parent: 8364
   - uid: 7184
     components:
     - type: MetaData
-      name: Port Quarter Maintenance Substation
+      name: Port Quarter Maintenance Transformer
     - type: Transform
       pos: -28.5,-64.5
       parent: 8364
   - uid: 7373
     components:
     - type: MetaData
-      name: Security Substation
+      name: Security Transformer
     - type: Transform
       pos: 24.5,22.5
       parent: 8364
@@ -144286,7 +144286,7 @@ entities:
   - uid: 9676
     components:
     - type: MetaData
-      name: Port Bow Service Substation
+      name: Port Bow Service Transformer
     - type: Transform
       pos: -44.5,9.5
       parent: 8364
@@ -144297,21 +144297,21 @@ entities:
   - uid: 16137
     components:
     - type: MetaData
-      name: Engineering Substation
+      name: Engineering Transformer
     - type: Transform
       pos: -20.5,-66.5
       parent: 8364
   - uid: 16500
     components:
     - type: MetaData
-      name: Telecomms Substation
+      name: Telecomms Transformer
     - type: Transform
       pos: -7.5,-49.5
       parent: 8364
   - uid: 18108
     components:
     - type: MetaData
-      name: Medbay Substation
+      name: Medbay Transformer
     - type: Transform
       pos: 46.5,-38.5
       parent: 8364
@@ -144324,14 +144324,14 @@ entities:
   - uid: 25700
     components:
     - type: MetaData
-      name: Perma Substation
+      name: Perma Transformer
     - type: Transform
       pos: -20.5,51.5
       parent: 8364
   - uid: 26741
     components:
     - type: MetaData
-      name: Engineering Substation Storage Room
+      name: Engineering Transformer Storage Room
     - type: Transform
       pos: -11.5,-61.5
       parent: 8364
@@ -144345,7 +144345,7 @@ entities:
     - type: Transform
       pos: 34.5,-89.5
       parent: 8364
-- proto: SubstationMachineCircuitboard
+- proto: TransformerMachineCircuitboard
   entities:
   - uid: 12456
     components:

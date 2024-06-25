@@ -2123,7 +2123,7 @@ entities:
     - type: Transform
       pos: -7.4934726,-7.426895
       parent: 407
-- proto: SubstationWallBasic
+- proto: TransformerWallBasic
   entities:
   - uid: 227
     components:

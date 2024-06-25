@@ -134,8 +134,8 @@
       - Debug
 
 - type: entity
-  id: DebugSubstation
-  parent: BaseSubstation
+  id: DebugTransformer
+  parent: BaseTransformer
   suffix: DEBUG
   components:
   - type: Tag

@@ -67800,96 +67800,96 @@ entities:
     - type: Transform
       pos: -36.5,26.5
       parent: 4812
-- proto: SubstationBasic
+- proto: TransformerBasic
   entities:
   - uid: 897
     components:
     - type: MetaData
-      name: Dorm Substation
+      name: Dorm Transformer
     - type: Transform
       pos: -14.5,7.5
       parent: 4812
   - uid: 1360
     components:
     - type: MetaData
-      name: Bar Substation
+      name: Bar Transformer
     - type: Transform
       pos: 5.5,4.5
       parent: 4812
   - uid: 2076
     components:
     - type: MetaData
-      name: Bridge Substation
+      name: Bridge Transformer
     - type: Transform
       pos: 6.5,31.5
       parent: 4812
   - uid: 2821
     components:
     - type: MetaData
-      name: Cargo Substation
+      name: Cargo Transformer
     - type: Transform
       pos: 13.5,32.5
       parent: 4812
   - uid: 3787
     components:
     - type: MetaData
-      name: AI satellite Substation
+      name: AI satellite Transformer
     - type: Transform
       pos: 13.5,47.5
       parent: 4812
   - uid: 4234
     components:
     - type: MetaData
-      name: Evac Substation
+      name: Evac Transformer
     - type: Transform
       pos: 17.5,2.5
       parent: 4812
   - uid: 5913
     components:
     - type: MetaData
-      name: South Science Substation
+      name: South Science Transformer
     - type: Transform
       pos: 16.5,-30.5
       parent: 4812
   - uid: 6899
     components:
     - type: MetaData
-      name: Arrivals Substation
+      name: Arrivals Transformer
     - type: Transform
       pos: -8.5,-30.5
       parent: 4812
   - uid: 7957
     components:
     - type: MetaData
-      name: Atmos Substation
+      name: Atmos Transformer
     - type: Transform
       pos: -37.5,8.5
       parent: 4812
   - uid: 9959
     components:
     - type: MetaData
-      name: Engi Substation
+      name: Engi Transformer
     - type: Transform
       pos: -48.5,-19.5
       parent: 4812
   - uid: 10182
     components:
     - type: MetaData
-      name: South West Solar Substation
+      name: South West Solar Transformer
     - type: Transform
       pos: -50.5,-25.5
       parent: 4812
   - uid: 10649
     components:
     - type: MetaData
-      name: Grav Substation
+      name: Grav Transformer
     - type: Transform
       pos: -53.5,-13.5
       parent: 4812
   - uid: 11435
     components:
     - type: MetaData
-      name: South East Solar Substation
+      name: South East Solar Transformer
     - type: Transform
       pos: 30.5,-39.5
       parent: 4812
@@ -71390,7 +71390,7 @@ entities:
     - type: Transform
       pos: -37.468086,26.400969
       parent: 4812
-- proto: WallmountSubstationElectronics
+- proto: WallmountTransformerElectronics
   entities:
   - uid: 10978
     components:

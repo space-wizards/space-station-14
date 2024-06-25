@@ -4867,7 +4867,7 @@ entities:
     - type: Transform
       pos: 16.5,-1.5
       parent: 10
-- proto: DebugSubstation
+- proto: DebugTransformer
   entities:
   - uid: 368
     components:

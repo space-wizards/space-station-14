@@ -136,7 +136,7 @@ public enum PowerMonitoringConsoleGroup : byte
 {
     Generator,
     SMES,
-    Substation,
+    Transformer,
     APC,
     Consumer,
 }
