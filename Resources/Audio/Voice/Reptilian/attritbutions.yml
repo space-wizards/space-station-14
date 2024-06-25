@@ -2,3 +2,27 @@
   copyright: '"scream_lizard.ogg" by Skyrat-SS13'
   license:
   source: https://github.com/Skyrat-SS13/Skyrat-tg/pull/892
+
+- files: ["reptilian_hiss1.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/ss220-space/Paradise/commit/6572a5f522e32cb5e0af7fb3ca3e45a725e2e992. Downmixed to 1 channel, volume edited"
+  source: "https://github.com/ss220-space/Paradise/blob/4bbfb9eb00771b3fae7108fca1a1ba5879926e3e/sound/effects/unathihiss.ogg"
+
+- files: ["reptilian_snort1.ogg, reptilian_snort2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/ss220-space/Paradise/commit/2af46e9b078e7b1bf7c3dd041f065eb83dd5ab34. Downmixed to 1 channel, volume edited"
+  source: "https://github.com/ss220-space/Paradise/tree/121faba78109f700397c24d1c64e884378e04502/sound/creatures"
+
+- files:
+    - reptilian_growl1.ogg
+    - reptilian_growl2.ogg
+    - reptilian_growl3.ogg
+    - reptilian_growl4.ogg
+    - reptilian_purr1.ogg
+    - reptilian_scream2.ogg
+    - reptilian_sneeze_male.ogg
+    - reptilian_sneeze_female.ogg
+    - reptilian_whine.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/ss220-space/Paradise/commit/4bbfb9eb00771b3fae7108fca1a1ba5879926e3e. Downmixed to 1 channel, volume edited"
+  source: "https://github.com/ss220-space/Paradise/tree/4bbfb9eb00771b3fae7108fca1a1ba5879926e3e/sound/voice/unathi"

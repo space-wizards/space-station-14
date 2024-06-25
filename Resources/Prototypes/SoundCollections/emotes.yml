@@ -78,4 +78,49 @@
 - type: soundCollection
   id: Weh
   files:
-  - /Audio/Items/Toys/weh.ogg
+    - /Audio/Items/Toys/weh.ogg
+
+- type: soundCollection
+  id: ReptilianWhipTail
+  files:
+    - /Audio/Effects/Emotes/tail_slam.ogg
+    - /Audio/Effects/Emotes/tail_slam_long.ogg
+
+- type: soundCollection
+  id: ReptilianHiss
+  files:
+    - /Audio/Voice/Reptilian/reptilian_hiss1.ogg
+
+- type: soundCollection
+  id: ReptilianPurr
+  files:
+    - /Audio/Voice/Reptilian/reptilian_purr1.ogg
+
+- type: soundCollection
+  id: ReptilianGrowl
+  files:
+    - /Audio/Voice/Reptilian/reptilian_growl1.ogg
+    - /Audio/Voice/Reptilian/reptilian_growl2.ogg
+    - /Audio/Voice/Reptilian/reptilian_growl3.ogg
+    - /Audio/Voice/Reptilian/reptilian_growl4.ogg
+
+- type: soundCollection
+  id: ReptilianWhine
+  files:
+    - /Audio/Voice/Reptilian/reptilian_whine.ogg
+
+- type: soundCollection
+  id: ReptilianSnort
+  files:
+    - /Audio/Voice/Reptilian/reptilian_snort1.ogg
+    - /Audio/Voice/Reptilian/reptilian_snort2.ogg
+
+- type: soundCollection
+  id: Sniff
+  files:
+    - /Audio/Effects/Emotes/sniff.ogg
+
+- type: soundCollection
+  id: CracksKnuckles
+  files:
+    - /Audio/Effects/Emotes/knuckles.ogg

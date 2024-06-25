@@ -270,7 +270,222 @@
    - clicks.
    - clicks!
 
+- type: emote
+  id: Hiss
+  name: chat-emote-name-hiss
+  category: Vocal
+  available: false
+  # temp icon
+  icon: Interface/Emotes/weh.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-hiss"]
+  chatTriggers:
+    - hiss
+    - hiss.
+    - hiss!
+    - hisses
+    - hisses.
+    - hisses!
+
+- type: emote
+  id: Purr
+  name: chat-emote-name-purr
+  category: Vocal
+  available: false
+  # temp icon
+  icon: Interface/Emotes/weh.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-purr"]
+  chatTriggers:
+    - purr
+    - purr.
+    - purr!
+    - purrs
+    - purrs.
+    - purrs!
+
+- type: emote
+  id: Growl
+  name: chat-emote-name-growl
+  category: Vocal
+  available: false
+  # temp icon
+  icon: Interface/Emotes/weh.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-growl"]
+  chatTriggers:
+    - snarl
+    - snarl.
+    - snarl!
+    - snarls
+    - snarls.
+    - snarls!
+    - roar
+    - roar.
+    - roar!
+    - roars
+    - roars.
+    - roars!
+    - growl
+    - growl.
+    - growl!
+    - growls
+    - growls.
+    - growls!
+    - angrily snarl
+    - angrily snarl.
+    - angrily snarl!
+    - angrily snarls
+    - angrily snarls.
+    - angrily snarls!
+    - angrily roar
+    - angrily roar.
+    - angrily roar!
+    - angrily roars
+    - angrily roars.
+    - angrily roars!
+    - angrily growl
+    - angrily growl.
+    - angrily growl!
+    - angrily growls
+    - angrily growls.
+    - angrily growls!
+
+- type: emote
+  id: Whine
+  name: chat-emote-name-whine
+  category: Vocal
+  available: false
+  # temp icon
+  icon: Interface/Emotes/weh.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-whine"]
+  chatTriggers:
+    - whine
+    - whine.
+    - whine!
+    - whines
+    - whines.
+    - whines!
+
+- type: emote
+  id: Snort
+  name: chat-emote-name-snort
+  category: Vocal
+  available: false
+  # temp icon
+  icon: Interface/Emotes/weh.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-snort"]
+  chatTriggers:
+    - snort
+    - snort.
+    - snort!
+    - snorts
+    - snorts.
+    - snorts!
+
+- type: emote
+  id: WhipTail
+  name: chat-emote-name-whiptail
+  category: Hands
+  available: false
+  icon: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-whiptail"]
+  chatTriggers:
+    - whip tail
+    - whip tail.
+    - whip tail!
+    - whips tail
+    - whips tail.
+    - whips tail!
+    - flick tail
+    - flick tail.
+    - flick tail!
+    - flicks tail
+    - flicks tail.
+    - flicks tail!
+    - tail slam
+    - tail slam.
+    - tail slam!
+    - slams tail
+    - slams tail.
+    - slams tail!
+
+- type: emote
+  id: Sniff
+  name: chat-emote-name-sniff
+  category: Vocal
+  icon: Interface/Emotes/sniff.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-sniff"]
+  chatTriggers:
+    - sniff
+    - sniff.
+    - sniff!
+    - sniffs
+    - sniffs.
+    - sniffs!
+
+
 # hand emotes
+- type: emote
+  id: CracksKnuckles
+  name: chat-emote-name-cracksknuckles
+  category: Hands
+  # temp icon
+  icon: /Textures/Clothing/Hands/Gloves/latex.rsi/icon.png
+  whitelist:
+    components:
+    - Hands
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-cracksknuckles"]
+  chatTriggers:
+    - crack knuckles
+    - crack knuckles.
+    - crack knuckles!
+    - cracks knuckles
+    - cracks knuckles.
+    - cracks knuckles!
+    - knuckle cracking
+    - knuckle cracking.
+    - knuckle cracking!
+
 - type: emote
   id: Clap
   name: chat-emote-name-clap
@@ -420,7 +635,7 @@
     - chirp!
     - chirp.
     - chirps
-    - churps.
+    - chirps.
     - chirps!
     - chirped
     - chirped.

@@ -9,6 +9,16 @@
     - /Audio/Voice/Human/female_sneeze_1.ogg
 
 - type: soundCollection
+  id: MaleReptilianSneeze
+  files:
+  - /Audio/Voice/Reptilian/reptilian_sneeze_male.ogg
+
+- type: soundCollection
+  id: FemaleReptilianSneeze
+  files:
+  - /Audio/Voice/Reptilian/reptilian_sneeze_female.ogg
+
+- type: soundCollection
   id: MaleCoughs
   files:
   - /Audio/Voice/Human/male_cough_1.ogg

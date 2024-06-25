@@ -23,3 +23,13 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from https://github.com/infinitystation/Baystation12/commit/e639451bef42230a3838c085a6c782376e693499. No changes were made"
   source: "https://github.com/infinitystation/Baystation12"
+
+- files: ["tail_slam.ogg, tail_slam_long.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/ss220-space/Paradise/commit/4bbfb9eb00771b3fae7108fca1a1ba5879926e3e. Downmixed to 1 channel, volume edited"
+  source: "https://github.com/ss220-space/Paradise/tree/4bbfb9eb00771b3fae7108fca1a1ba5879926e3e/sound/voice/unathi"
+
+- files: ["knuckles.ogg, sniff.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/ss220-space/Paradise/commit/e44b660ebd8d7b996297273e86c729662a4b7f6a. Downmixed to 1 channel, volume edited"
+  source: "https://github.com/ss220-space/Paradise/tree/121faba78109f700397c24d1c64e884378e04502/sound/voice"

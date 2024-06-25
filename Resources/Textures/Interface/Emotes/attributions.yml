@@ -86,6 +86,11 @@
   copyright: "Created by TyAshley (AllenTheGreat) at commit 7f6c7cd82943dbc9a1fe8a79d6a924ac600b3fdb"
   source: "https://github.com/TyAshley"
 
+- files: ["sniff.png"]
+  license: "CC0-1.0"
+  copyright: "Created by SabatonShip"
+  source: "https://github.com/SabatonShip"
+
 - files: ["squeak.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from mouse-0.png by TyAshley (AllenTheGreat)"
