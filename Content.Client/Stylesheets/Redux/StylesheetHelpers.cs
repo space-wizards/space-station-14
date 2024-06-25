@@ -134,6 +134,11 @@ public static class StylesheetHelpers
         return selector.Prop(Label.StylePropertyFont, font);
     }
 
+    public static MutableSelector FontColor(this MutableSelector selector, Color fontColor)
+    {
+        return selector.Prop(Label.StylePropertyFontColor, fontColor);
+    }
+
     public static StyleBoxTexture IntoPatch(this Texture texture, StyleBox.Margin patchMargin, float amount)
     {
         var stylebox = new StyleBoxTexture

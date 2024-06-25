@@ -380,13 +380,6 @@ namespace Content.Client.Stylesheets
             whisperBox.SetPatchMargin(StyleBox.Margin.All, 2);
             whisperBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
-            // Placeholder
-            var placeholderTexture = resCache.GetTexture("/Textures/Interface/Nano/placeholder.png");
-            var placeholder = new StyleBoxTexture { Texture = placeholderTexture };
-            placeholder.SetPatchMargin(StyleBox.Margin.All, 19);
-            placeholder.SetExpandMargin(StyleBox.Margin.All, -5);
-            placeholder.Mode = StyleBoxTexture.StretchMode.Tile;
-
             var itemListBackgroundSelected = new StyleBoxFlat { BackgroundColor = new Color(75, 75, 86) };
             itemListBackgroundSelected.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListBackgroundSelected.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
@@ -938,19 +931,6 @@ namespace Content.Client.Stylesheets
                         ContentMarginLeftOverride = 4
                     })
                 }),
-
-                // Placeholder
-                new StyleRule(new SelectorElement(typeof(Placeholder), null, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, placeholder),
-                }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(Label), new[] {Placeholder.StyleClassPlaceholderText}, null, null), new[]
-                    {
-                        new StyleProperty(Label.StylePropertyFont, notoSans16),
-                        new StyleProperty(Label.StylePropertyFontColor, new Color(103, 103, 103, 128)),
-                    }),
 
                 // Big Label
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClass.LabelHeading}, null, null), new[]
