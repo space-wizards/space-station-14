@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: osjarw
-  changes:
-  - message: Removed broken anom behaviour, which causes APE shots to fly through
-      the anom.
-    type: Remove
-  id: 6317
-  time: '2024-04-06T22:27:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26775
 - author: Vermidia
   changes:
   - message: Water coolers show how full/what they're full of again.
@@ -3840,3 +3832,11 @@
   id: 6816
   time: '2024-06-24T22:40:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29397
+- author: Elysium206
+  changes:
+  - message: Increased Security Riot shields durability significantly and makes actively
+      blocking better
+    type: Tweak
+  id: 6817
+  time: '2024-06-25T03:56:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29239
