@@ -7,6 +7,7 @@ namespace Content.Client.Doors;
 public sealed class FirelockSystem : SharedFirelockSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
 
     public override void Initialize()
     {
@@ -30,5 +31,7 @@ public sealed class FirelockSystem : SharedFirelockSystem
 
         args.Sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && !boltedVisible);
         args.Sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, boltedVisible);
+
+        _pointLight.SetEnabled(uid, unlitVisible);
     }
 }
