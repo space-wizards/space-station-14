@@ -59,6 +59,48 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("underPressureLockoutLeaking")]
         public float UnderPressureLockoutLeaking = 0.0001f;
 
+        #region some averaging stuff
+        [ViewVariables(VVAccess.ReadOnly)]
+        public int samples { get; set; } = 0;
+
+        /// <summary>
+        ///     Calculate average pressure over X atmos updates.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public int maxSamples { get; set; } = 5;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float[] measurements { get; set; } = new float[5];
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float[] pressurizationRate { get; set; } = new float[5];
+
+        /// <summary>
+        ///     The vent will be shut down if the average pressure drop is less than this value.
+        /// </summary>
+        /// <remarks>
+        ///     In my testing, in a underPressureLockout failure the average pressure
+        ///     drop over 5 ticks may drop to -0.04, triggering this check and causing a lockout, solving the
+        ///     underPressureLockout failure.
+        ///
+        ///     This could be set to 0, but then the vents will stay locked for annoyingly long time whenever air flows
+        ///     from this vent to the surroundings. This may cause pressure drops in the order of E-5, causing lockouts
+        ///     while refilling rooms.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float pressurizationLockout { get; set; } = -0.02f;
+
+        /// <summary>
+        ///     Used to hold pressure from last tick. doesn't really matter what
+        ///     it's initialized to.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float averagePressure { get; set; } = 101.325f;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public int windowidx { get; set; } = 0;
+        #endregion
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("externalPressureBound")]
         public float ExternalPressureBound

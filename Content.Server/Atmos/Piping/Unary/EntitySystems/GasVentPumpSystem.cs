@@ -104,9 +104,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 if (pressureDelta <= 0)
                     return;
 
-                // how many moles to transfer to change external pressure by pressureDelta
-                // (ignoring temperature differences because I am lazy)
-                var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
+                float transferMoles = 0;
+
+                // Don't transfer air if pressure is actively dropping
+                if (pressurizationLockout(vent, environment))
+                    // how many moles to transfer to change external pressure by pressureDelta
+                    // (ignoring temperature differences because I am lazy)
+                    transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
 
                 // Only run if the device is under lockout and not being overriden
                 if (vent.UnderPressureLockout & !vent.PressureLockoutOverride)
@@ -162,6 +166,48 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
                 _atmosphereSystem.Merge(pipe.Air, environment.Remove(transferMoles));
             }
+        }
+
+        /// <summary>
+        ///     Keeps track of the average rate of change in pressure, and returns `false` if
+        ///     the rate is less than <see cref=GasVentPumpComponent.pressurizationLockout>.
+        ///
+        ///     Because this was written by someone lazy, multiple calls in an atmos tick aren't properly supported.
+        /// </summary>
+        /// <remarks>
+        ///     This method is intended to stop vents from pumping air into rooms which are rapidly losing pressure.
+        /// </remarks>
+        private bool pressurizationLockout(GasVentPumpComponent vent, GasMixture environment)
+        {
+            if (vent.UnderPressureLockout)
+            {
+                vent.windowidx = -1;
+                vent.samples = 0;
+                return false;
+            }
+            vent.windowidx = (vent.windowidx + 1) % vent.maxSamples;
+
+            var oldAverage = vent.averagePressure;
+            if (vent.samples < vent.maxSamples)
+                vent.samples += 1;
+
+            // Calculate average pressure
+            float pressure = 0;
+            vent.measurements[vent.windowidx] = environment.Pressure;
+            for (int i = 0; i < vent.samples; i++)
+                pressure += vent.measurements[i];
+            vent.averagePressure = pressure / vent.samples;
+
+            // Calculate average rate of pressurization
+            float refill = 0;
+            vent.pressurizationRate[vent.windowidx] = vent.averagePressure - oldAverage;
+            for (int i = 0; i < vent.samples; i++)
+                refill += vent.pressurizationRate[i];
+            var averagePressurizationRate = refill / vent.samples;
+
+            if (averagePressurizationRate < vent.pressurizationLockout)
+                return false;
+            return true;
         }
 
         private void OnGasVentPumpLeaveAtmosphere(EntityUid uid, GasVentPumpComponent component, ref AtmosDeviceDisabledEvent args)
