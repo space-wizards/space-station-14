@@ -35,7 +35,7 @@ public sealed partial class ObjectsTab : Control
         foreach (var type in Enum.GetValues(typeof(ObjectsTabSelection)))
         {
             _selections.Add((ObjectsTabSelection) type!);
-            ObjectTypeOptions.AddItem(Loc.GetString($"object-tab-object-type-{((Enum.GetName((ObjectsTabSelection)type))!.ToString().ToLower())}"));
+            ObjectTypeOptions.AddItem(GetLocalizedEnumValue((ObjectsTabSelection) type));
         }
 
         ListHeader.OnHeaderClicked += HeaderClicked;
@@ -112,12 +112,12 @@ public sealed partial class ObjectsTab : Control
 
     private void GenerateButton(ListData data, ListContainerButton button)
     {
-        if (data is not ObjectsListData { Info: var info, BackgroundColor: var backgroundColor, })
+        if (data is not ObjectsListData { Info: var info, BackgroundColor: var backgroundColor })
             return;
 
         var entry = new ObjectsTabEntry(info.Name,
             info.Entity,
-            new StyleBoxFlat { BackgroundColor = backgroundColor, });
+            new StyleBoxFlat { BackgroundColor = backgroundColor });
         button.ToolTip = $"{info.Name}, {info.Entity}";
 
         button.AddChild(entry);
@@ -125,7 +125,7 @@ public sealed partial class ObjectsTab : Control
 
     private bool DataFilterCondition(string filter, ListData listData)
     {
-        if (listData is not ObjectsListData { FilteringString: var filteringString, })
+        if (listData is not ObjectsListData { FilteringString: var filteringString })
             return false;
 
         // If the filter is empty, do not filter out any entries
@@ -162,6 +162,17 @@ public sealed partial class ObjectsTab : Control
     private void RefreshButtonPressed(BaseButton.ButtonEventArgs args)
     {
         RefreshObjectList();
+    }
+
+    private string GetLocalizedEnumValue(ObjectsTabSelection selection)
+    {
+        return selection switch
+        {
+            ObjectsTabSelection.Grids => Loc.GetString("object-tab-object-type-grids"),
+            ObjectsTabSelection.Maps => Loc.GetString("object-tab-object-type-maps"),
+            ObjectsTabSelection.Stations => Loc.GetString("object-tab-object-type-stations"),
+            _ => throw new ArgumentOutOfRangeException(nameof(selection), selection, null),
+        };
     }
 
     private enum ObjectsTabSelection
