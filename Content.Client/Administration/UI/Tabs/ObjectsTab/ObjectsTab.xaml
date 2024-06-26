@@ -4,7 +4,7 @@
          xmlns:co="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc Object type:}" />
+            <Label Text="{Loc object-tab-object-type}" />
             <OptionButton Name="ObjectTypeOptions" HorizontalAlignment="Left" />
             <LineEdit Name="SearchLineEdit" PlaceHolder="{Loc object-tab-object-search}" HorizontalExpand="True"
                       SizeFlagsStretchRatio="1" />
