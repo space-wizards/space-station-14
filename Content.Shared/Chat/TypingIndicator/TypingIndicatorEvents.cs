@@ -29,7 +29,7 @@ public sealed class BeforeShowTypingIndicatorEvent : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
 
-    private string? _overrideIndicator = null;
+    private ProtoId<TypingIndicatorPrototype>? _overrideIndicator = null;
     private TimeSpan? _latestEquipTime = null;
     public BeforeShowTypingIndicatorEvent()
     {

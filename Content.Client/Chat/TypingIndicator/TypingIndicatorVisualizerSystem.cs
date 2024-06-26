@@ -18,6 +18,7 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
             return;
 
         var currentTypingIndicator = component.TypingIndicatorPrototype;
+
         var evt = new BeforeShowTypingIndicatorEvent();
 
         if (TryComp<InventoryComponent>(uid, out var inventoryComp))
@@ -26,9 +27,9 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
         var overrideIndicator = evt.GetMostRecentIndicator();
 
         if (overrideIndicator != null)
-            currentTypingIndicator = overrideIndicator;
+            currentTypingIndicator = overrideIndicator.Value;
 
-        if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(currentTypingIndicator, out var proto))
+        if (!_prototypeManager.TryIndex(currentTypingIndicator, out var proto))
         {
             Log.Error($"Unknown typing indicator id: {component.TypingIndicatorPrototype}");
             return;
