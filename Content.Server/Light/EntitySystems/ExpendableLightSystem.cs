@@ -205,8 +205,9 @@ namespace Content.Server.Light.EntitySystems
 
         private void IsHotEvent(Entity<ExpendableLightComponent> ent, ref IsHotEvent args)
         {
-            if (HasComp<IgnitionSourceComponent>(ent))
-                args.IsHot = ent.Comp.Activated;
+            if (!args.IsHot)
+                if (HasComp<IgnitionSourceComponent>(ent))
+                    args.IsHot = ent.Comp.Activated;
         }
     }
 }
