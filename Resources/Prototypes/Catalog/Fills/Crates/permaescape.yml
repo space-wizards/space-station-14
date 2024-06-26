@@ -271,13 +271,13 @@
         prob: 0.20
         orGroup: cube
       - id: MindShieldImplanter
-        prob: 0.30
+        prob: 0.20
       - id: ClothingHandsGlovesConducting # funny
         prob: 0.30
       - id: CigPackSyndicate
-        prob: 0.70
+        prob: 0.80
       - id: StimpackMini
-        prob: 0.10
+        prob: 0.20
       - id: StimpackMini
         prob: 0.10
       - id: CombatMedipen
