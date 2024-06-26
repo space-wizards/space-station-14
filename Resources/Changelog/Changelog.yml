@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Crotalus
-  changes:
-  - message: Show missing materials in lathe tooltip
-    type: Add
-  id: 6319
-  time: '2024-04-08T03:16:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26795
 - author: chromiumboy
   changes:
   - message: Fixed the RCD not being able to build on top of puddles
@@ -3840,3 +3833,12 @@
   id: 6818
   time: '2024-06-25T06:28:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29213
+- author: PJB3005
+  changes:
+  - message: Low pressure damage now does only 1/4th as much damage. This is a band-aid
+      until better mechanics exists for the crew to deal with breaches of various
+      kinds.
+    type: Remove
+  id: 6819
+  time: '2024-06-26T00:48:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29478
