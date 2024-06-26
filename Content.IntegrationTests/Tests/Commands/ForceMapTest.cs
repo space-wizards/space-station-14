@@ -1,3 +1,4 @@
+using Content.Server.Maps;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -49,27 +50,34 @@ public sealed class ForceMapTest
         var entMan = server.EntMan;
         var configManager = server.ResolveDependency<IConfigurationManager>();
         var consoleHost = server.ResolveDependency<IConsoleHost>();
+        var gameMapMan = server.ResolveDependency<IGameMapManager>();
 
         await server.WaitAssertion(() =>
         {
             // Make sure we're set to the default map
-            Assert.That(configManager.GetCVar(CCVars.GameMap), Is.EqualTo(DefaultMapName),
+            Assert.That(gameMapMan.GetSelectedMap()?.ID, Is.EqualTo(DefaultMapName),
                 $"Test didn't start on expected map ({DefaultMapName})!");
 
             // Try changing to a map that doesn't exist
             consoleHost.ExecuteCommand($"forcemap {BadMapName}");
-            Assert.That(configManager.GetCVar(CCVars.GameMap), Is.EqualTo(DefaultMapName),
+            Assert.That(gameMapMan.GetSelectedMap()?.ID, Is.EqualTo(DefaultMapName),
                 $"Forcemap succeeded with a map that does not exist ({BadMapName})!");
 
             // Try changing to a valid map
             consoleHost.ExecuteCommand($"forcemap {TestMapEligibleName}");
-            Assert.That(configManager.GetCVar(CCVars.GameMap), Is.EqualTo(TestMapEligibleName),
+            Assert.That(gameMapMan.GetSelectedMap()?.ID, Is.EqualTo(TestMapEligibleName),
                 $"Forcemap failed with a valid map ({TestMapEligibleName})");
 
             // Try changing to a map that exists but is ineligible
             consoleHost.ExecuteCommand($"forcemap {TestMapIneligibleName}");
-            Assert.That(configManager.GetCVar(CCVars.GameMap), Is.EqualTo(TestMapIneligibleName),
+            Assert.That(gameMapMan.GetSelectedMap()?.ID, Is.EqualTo(TestMapIneligibleName),
                 $"Forcemap failed with valid but ineligible map ({TestMapIneligibleName})!");
+
+            // Try clearing the force-selected map
+            consoleHost.ExecuteCommand("forcemap \"\"");
+            Assert.That(gameMapMan.GetSelectedMap(), Is.Null,
+                $"Running 'forcemap \"\"' did not clear the forced map!");
+
         });
 
         // Cleanup
