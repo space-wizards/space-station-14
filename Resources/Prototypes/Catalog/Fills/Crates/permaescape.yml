@@ -26,6 +26,7 @@
 - type: entity
   id: CratePermaEscapeDigging
   parent: CrateGenericSteel
+  components:
   - type: StorageFill
     contents:
       - id: Shovel
@@ -47,6 +48,7 @@
 - type: entity
   id: CratePermaEscapeEVA
   parent: CrateGenericSteel
+  components:
   - type: StorageFill
     contents:
       - id: ClothingHeadHelmetEVALarge
@@ -73,6 +75,7 @@
 - type: entity
   id: CratePermaEscapeGun
   parent: CrateGenericSteel
+  components:
   - type: StorageFill
     contents:
     - id: WeaponPistolMk58
@@ -106,6 +109,7 @@
 - type: entity
   id: CratePermaEscapeBureaucracy
   parent: CrateGenericSteel
+  components:
   - type: StorageFill
     contents:
       - id: RubberStampApproved
@@ -155,6 +159,7 @@
 - type: entity
   id: CratePermaEscapeLights
   parent: CrateGenericSteel
+  components:
   - type: StorageFill
     contents:
       - id: GlowstickBlue
@@ -191,6 +196,7 @@
 - type: entity
   id: CratePermaEscapeMats
   parent: CrateGenericSteel
+  components:
   - type: StorageFill
     contents:
       - id: SheetSteel
@@ -205,6 +211,7 @@
 - type: entity
   id: CratePermaEscapeGiftsFromSyndicate
   parent: CrateGenericSteel
+  components:
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesOutlawGlasses
@@ -246,6 +253,7 @@
 - type: entity
   id: CratePermaEscapeMerc
   parent: CrateGenericSteel
+  components:
   - type: StorageFill
     contents:
       - id: ClothingUniformJumpsuitMercenary
@@ -275,6 +283,7 @@
 - type: entity
   id: CratePermaEscapeComs
   parent: CrateGenericSteel
+  components:
   - type: StorageFill
     contents:
       - id: ClothingHeadsetMining
@@ -309,6 +318,7 @@
 - type: entity
   id: CratePermaEscapeTowercap
   parent: CrateGenericSteel
+  components:
   - type: StorageFill
     contents:
       - id: TowercapSeeds
