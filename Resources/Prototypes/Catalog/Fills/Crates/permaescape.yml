@@ -20,8 +20,28 @@
       - CratePermaEscapeTowercap
       - CrateServiceCustomSmokable
       - ClosetMaintenanceFilledRandom
-      - CratePermaEscapeMobTrap
-      - CratePermaEscapeMobTrap
+    rarePrototypes:
+      - MobTick # These need to be killable by one dude with a shovel.
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobCarp
+      - MobCarp
+      - MobCarpMagic
+      - MobKangarooSpace
+      - MobBearSpace
+    rareChance: .18
     chance: 1
     offset: 0.0
 
@@ -353,51 +373,3 @@
       - id: SteelLog
       - id: HydroponicsToolHatchet
         prob: 0.30
-
-- type: entity
-  id: CratePermaEscapeMobTrap
-  parent: CrateGenericSteel
-  components:
-  - type: StorageFill
-    contents:
-    # These need to be killable by one dude with a shovel.
-      - id: SpaceTickSpawner # the spawner means the mob wont be inside the crate, I would rather they were inside, but the AI just starts attacking crates so its not good.
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpaceTickSpawner
-        orGroup: mob
-      - id: SpawnMobCarp
-        orGroup: mob
-      - id: SpawnMobCarp
-        orGroup: mob
-      - id: SpawnMobCarpMagic
-        orGroup: mob
-      - id: SpawnMobBear
-        orGroup: mob
-      - id: SpawnMobKangaroo
-        orGroup: mob
