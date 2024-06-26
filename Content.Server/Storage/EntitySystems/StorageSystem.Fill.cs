@@ -65,12 +65,23 @@ public sealed partial class StorageSystem
         var sortedItems = items
             .OrderByDescending(x => ItemSystem.GetItemShape(x.Comp).GetArea());
 
+        ClearCantFillReasons();
         foreach (var ent in sortedItems)
         {
             if (Insert(uid, ent, out _, out var reason, storageComp: storage, playSound: false))
                 continue;
 
+            if (CantFillReasons.Count > 0)
+            {
+                var reasons = string.Join(", ", CantFillReasons.Select(s => Loc.GetString(s)));
+                if (reason == null)
+                    reason = reasons;
+                else
+                    reason += $", {reasons}";
+            }
+
             Log.Error($"Tried to StorageFill {ToPrettyString(ent)} inside {ToPrettyString(uid)} but can't. reason: {reason}");
+            ClearCantFillReasons();
             Del(ent);
         }
     }

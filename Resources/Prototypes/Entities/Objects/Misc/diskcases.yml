@@ -1,0 +1,21 @@
+- type: entity
+  name: diskcase
+  parent: BaseStorageItem
+  id: DiskCase
+  description: Case for storing a coordinates disk.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/diskcases.rsi
+    state: icon_base
+  - type: Storage
+    grid:
+    - 0,0,0,1
+    maxItemSize: Normal
+    whitelist:
+      tags:
+        - Document
+        - CoordinatesDisk
+    storageOpenSound: /Audio/Machines/screwdriveropen.ogg
+    storageCloseSound: /Audio/Machines/screwdriverclose.ogg
+    storageInsertSound: /Audio/Items/crowbar.ogg
+    storageRemoveSound: /Audio/Items/crowbar.ogg

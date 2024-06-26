@@ -66,10 +66,15 @@ public sealed class TegNodeGroup : BaseNodeGroup
 
     public override void LoadNodes(List<Node> groupNodes)
     {
-        DebugTools.Assert(groupNodes.Count <= 3, "The TEG has at most 3 parts");
         DebugTools.Assert(_entityManager != null);
 
         base.LoadNodes(groupNodes);
+
+        if (groupNodes.Count > 3)
+        {
+            // Somehow got more TEG parts. Probably shenanigans. Bail.
+            return;
+        }
 
         Generator = groupNodes.OfType<TegNodeGenerator>().SingleOrDefault();
         if (Generator != null)

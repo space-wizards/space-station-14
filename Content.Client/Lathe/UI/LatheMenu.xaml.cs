@@ -10,6 +10,8 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Client.ResourceManagement;
+using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Lathe.UI;
@@ -19,6 +21,8 @@ public sealed partial class LatheMenu : DefaultWindow
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IResourceCache _resources = default!;
+
     private EntityUid _owner;
     private readonly SpriteSystem _spriteSystem;
     private readonly LatheSystem _lathe;
@@ -74,9 +78,6 @@ public sealed partial class LatheMenu : DefaultWindow
     /// </summary>
     public void PopulateRecipes()
     {
-        if (!_entityManager.TryGetComponent<LatheComponent>(_owner, out var component))
-            return;
-
         var recipesToShow = new List<LatheRecipePrototype>();
         foreach (var recipe in Recipes)
         {
@@ -104,41 +105,13 @@ public sealed partial class LatheMenu : DefaultWindow
         RecipeList.Children.Clear();
         foreach (var prototype in sortedRecipesToShow)
         {
-            StringBuilder sb = new();
-            var first = true;
-            foreach (var (id, amount) in prototype.RequiredMaterials)
-            {
-                if (!_prototypeManager.TryIndex<MaterialPrototype>(id, out var proto))
-                    continue;
+            EntityPrototype? recipeProto = null;
+            if (_prototypeManager.TryIndex(prototype.Result, out EntityPrototype? entityProto) && entityProto != null)
+                recipeProto = entityProto;
 
-                if (first)
-                    first = false;
-                else
-                    sb.Append('\n');
-
-                var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, component.MaterialUseMultiplier);
-                var sheetVolume = _materialStorage.GetSheetVolume(proto);
-
-                var unit = Loc.GetString(proto.Unit);
-                // rounded in locale not here
-                var sheets = adjustedAmount / (float) sheetVolume;
-                var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", sheets), ("unit", unit));
-                var name = Loc.GetString(proto.Name);
-                sb.Append(Loc.GetString("lathe-menu-tooltip-display", ("material", name), ("amount", amountText)));
-            }
-
-            if (!string.IsNullOrWhiteSpace(prototype.Description))
-            {
-                sb.Append('\n');
-                sb.Append(Loc.GetString("lathe-menu-description-display", ("description", prototype.Description)));
-            }
-
-            var icon = prototype.Icon == null
-                ? _spriteSystem.GetPrototypeIcon(prototype.Result).Default
-                : _spriteSystem.Frame0(prototype.Icon);
             var canProduce = _lathe.CanProduce(_owner, prototype, quantity);
 
-            var control = new RecipeControl(prototype, sb.ToString(), canProduce, icon);
+            var control = new RecipeControl(prototype, () => GenerateTooltipText(prototype), canProduce, recipeProto);
             control.OnButtonPressed += s =>
             {
                 if (!int.TryParse(AmountLineEdit.Text, out var amount) || amount <= 0)
@@ -147,6 +120,51 @@ public sealed partial class LatheMenu : DefaultWindow
             };
             RecipeList.AddChild(control);
         }
+    }
+
+    private string GenerateTooltipText(LatheRecipePrototype prototype)
+    {
+        StringBuilder sb = new();
+
+        foreach (var (id, amount) in prototype.RequiredMaterials)
+        {
+            if (!_prototypeManager.TryIndex<MaterialPrototype>(id, out var proto))
+                continue;
+
+            var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, _entityManager.GetComponent<LatheComponent>(_owner).MaterialUseMultiplier);
+            var sheetVolume = _materialStorage.GetSheetVolume(proto);
+
+            var unit = Loc.GetString(proto.Unit);
+            var sheets = adjustedAmount / (float) sheetVolume;
+
+            var availableAmount = _materialStorage.GetMaterialAmount(_owner, id);
+            var missingAmount = Math.Max(0, adjustedAmount - availableAmount);
+            var missingSheets = missingAmount / (float) sheetVolume;
+
+            var name = Loc.GetString(proto.Name);
+
+            string tooltipText;
+            if (missingSheets > 0)
+            {
+                tooltipText = Loc.GetString("lathe-menu-material-amount-missing", ("amount", sheets), ("missingAmount", missingSheets), ("unit", unit), ("material", name));
+            }
+            else
+            {
+                var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", sheets), ("unit", unit));
+                tooltipText = Loc.GetString("lathe-menu-tooltip-display", ("material", name), ("amount", amountText));
+            }
+
+            sb.AppendLine(tooltipText);
+        }
+
+        if (!string.IsNullOrWhiteSpace(prototype.Description))
+            sb.AppendLine(Loc.GetString("lathe-menu-description-display", ("description", prototype.Description)));
+
+        // Remove last newline
+        if (sb.Length > 0)
+            sb.Remove(sb.Length - 1, 1);
+
+        return sb.ToString();
     }
 
     public void UpdateCategories()
@@ -190,14 +208,23 @@ public sealed partial class LatheMenu : DefaultWindow
     /// <param name="queue"></param>
     public void PopulateQueueList(List<LatheRecipePrototype> queue)
     {
-        QueueList.Clear();
+        QueueList.DisposeAllChildren();
+
         var idx = 1;
         foreach (var recipe in queue)
         {
-            var icon = recipe.Icon == null
-                ? _spriteSystem.GetPrototypeIcon(recipe.Result).Default
-                : _spriteSystem.Frame0(recipe.Icon);
-            QueueList.AddItem($"{idx}. {recipe.Name}", icon);
+            var queuedRecipeBox = new BoxContainer();
+            queuedRecipeBox.Orientation = BoxContainer.LayoutOrientation.Horizontal;
+
+            var queuedRecipeProto = new EntityPrototypeView();
+            if (_prototypeManager.TryIndex(recipe.Result, out EntityPrototype? entityProto) && entityProto != null)
+                queuedRecipeProto.SetPrototype(entityProto);
+
+            var queuedRecipeLabel = new Label();
+            queuedRecipeLabel.Text = $"{idx}. {recipe.Name}";
+            queuedRecipeBox.AddChild(queuedRecipeProto);
+            queuedRecipeBox.AddChild(queuedRecipeLabel);
+            QueueList.AddChild(queuedRecipeBox);
             idx++;
         }
     }
@@ -207,9 +234,10 @@ public sealed partial class LatheMenu : DefaultWindow
         FabricatingContainer.Visible = recipe != null;
         if (recipe == null)
             return;
-        Icon.Texture = recipe.Icon == null
-            ? _spriteSystem.GetPrototypeIcon(recipe.Result).Default
-            : _spriteSystem.Frame0(recipe.Icon);
+
+        if (_prototypeManager.TryIndex(recipe.Result, out EntityPrototype? entityProto) && entityProto != null)
+            FabricatingEntityProto.SetPrototype(entityProto);
+
         NameLabel.Text = $"{recipe.Name}";
     }
 

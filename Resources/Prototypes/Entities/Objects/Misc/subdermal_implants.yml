@@ -126,7 +126,7 @@
           ents: [ ]
     - type: UserInterface
       interfaces:
-        - key: enum.StorageUiKey.Key
+        enum.StorageUiKey.Key:
           type: StorageBoundUserInterface
 
 - type: entity
@@ -143,7 +143,7 @@
         - Cuffable # useless if you cant be cuffed
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: [ BaseSubdermalImplant, StorePresetUplink ]
   id: UplinkImplant
   name: uplink implant
   description: This implant lets the user access a hidden Syndicate uplink at will.
@@ -155,13 +155,12 @@
       components:
       - Hands # prevent mouse buying grenade penguin since its not telepathic
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 0
   - type: UserInterface
     interfaces:
-    - key: enum.StoreUiKey.Key
-      type: StoreBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -189,7 +188,6 @@
       implantAction: ActionActivateScramImplant
     - type: TriggerImplantAction
     - type: ScramImplant
-      teleportAttempts: 10 # small amount of risk of being teleported into space and lets you teleport off shuttles
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -318,7 +316,7 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: MindShieldImplant
-  name: mind-shield implant
+  name: mindshield implant
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
   noSpawn: true
   components:

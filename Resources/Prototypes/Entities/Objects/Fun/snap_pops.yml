@@ -33,15 +33,12 @@
     maxIntensity: 0.01
     intensitySlope: 1
     totalIntensity: 0.01
-  - type: Tag
-    tags:
-      - SnapPop
 
 - type: entity
   parent: BaseStorageItem
   id: SnapPopBox
   name: snap pop box
-  description: Contains twenty snap pops for a few minutes of popping fun!
+  description: Contains snap pops for a few minutes of popping fun!
   components:
   - type: Item
     size: Normal
@@ -56,6 +53,6 @@
   - type: StorageFill
     contents:
       - id: SnapPop
-        amount: 20
+        amount: 5
   - type: Dumpable
 

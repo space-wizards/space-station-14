@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Construction.Components
@@ -9,7 +9,7 @@ namespace Content.Shared.Construction.Components
     [RegisterComponent]
     public sealed partial class ComputerBoardComponent : Component
     {
-        [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? Prototype { get; private set; }
     }
 }

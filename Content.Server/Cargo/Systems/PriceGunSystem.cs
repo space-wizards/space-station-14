@@ -57,7 +57,7 @@ public sealed class PriceGunSystem : EntitySystem
             return;
 
         // Check if we're scanning a bounty crate
-        if (_bountySystem.IsBountyComplete(args.Target.Value, (EntityUid?) null, out _))
+        if (_bountySystem.IsBountyComplete(args.Target.Value, out _))
         {
             _popupSystem.PopupEntity(Loc.GetString("price-gun-bounty-complete"), args.User, args.User);
         }

@@ -6,14 +6,13 @@ using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Engineering.EntitySystems
 {
     [UsedImplicitly]
     public sealed class SpawnAfterInteractSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
 
@@ -30,7 +29,7 @@ namespace Content.Server.Engineering.EntitySystems
                 return;
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
-            if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridUid(EntityManager), out var grid))
+            if (!TryComp<MapGridComponent>(args.ClickLocation.GetGridUid(EntityManager), out var grid))
                 return;
             if (!grid.TryGetTileRef(args.ClickLocation, out var tileRef))
                 return;
@@ -47,7 +46,7 @@ namespace Content.Server.Engineering.EntitySystems
             {
                 var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
                 {
-                    BreakOnUserMove = true,
+                    BreakOnMove = true,
                 };
                 var result = await _doAfterSystem.WaitDoAfter(doAfterArgs);
 

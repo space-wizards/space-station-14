@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Whitelist;
@@ -9,13 +10,15 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Revenant.Components;
 
 [RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
 public sealed partial class RevenantComponent : Component
 {
     /// <summary>
     /// The total amount of Essence the revenant has. Functions
     /// as health and is regenerated.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public FixedPoint2 Essence = 75;
 
     [DataField("stolenEssenceCurrencyPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<CurrencyPrototype>))]
@@ -197,6 +200,9 @@ public sealed partial class RevenantComponent : Component
     [DataField]
     public EntityWhitelist? MalfunctionBlacklist;
     #endregion
+
+    [DataField]
+    public ProtoId<AlertPrototype> EssenceAlert = "Essence";
 
     #region Visualizer
     [DataField("state")]

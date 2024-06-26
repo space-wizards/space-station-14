@@ -149,7 +149,8 @@ namespace Content.Server.Atmos.EntitySystems
                 return Atmospherics.OneAtmosphere;
             }
 
-            return (environmentPressure + barotrauma.LowPressureModifier) * (barotrauma.LowPressureMultiplier);
+            var modified = (environmentPressure + barotrauma.LowPressureModifier) * (barotrauma.LowPressureMultiplier);
+            return Math.Min(modified, Atmospherics.OneAtmosphere);
         }
 
         /// <summary>
@@ -162,7 +163,8 @@ namespace Content.Server.Atmos.EntitySystems
                 return Atmospherics.OneAtmosphere;
             }
 
-            return (environmentPressure + barotrauma.HighPressureModifier) * (barotrauma.HighPressureMultiplier);
+            var modified = (environmentPressure + barotrauma.HighPressureModifier) * (barotrauma.HighPressureMultiplier);
+            return Math.Max(modified, Atmospherics.OneAtmosphere);
         }
 
         public bool TryGetPressureProtectionValues(
@@ -243,7 +245,7 @@ namespace Content.Server.Atmos.EntitySystems
                         _adminLogger.Add(LogType.Barotrauma, $"{ToPrettyString(uid):entity} started taking low pressure damage");
                     }
 
-                    _alertsSystem.ShowAlert(uid, AlertType.LowPressure, 2);
+                    _alertsSystem.ShowAlert(uid, barotrauma.LowPressureAlert, 2);
                 }
                 else if (pressure >= Atmospherics.HazardHighPressure)
                 {
@@ -258,7 +260,7 @@ namespace Content.Server.Atmos.EntitySystems
                         _adminLogger.Add(LogType.Barotrauma, $"{ToPrettyString(uid):entity} started taking high pressure damage");
                     }
 
-                    _alertsSystem.ShowAlert(uid, AlertType.HighPressure, 2);
+                    _alertsSystem.ShowAlert(uid, barotrauma.HighPressureAlert, 2);
                 }
                 else
                 {
@@ -273,13 +275,13 @@ namespace Content.Server.Atmos.EntitySystems
                     switch (pressure)
                     {
                         case <= Atmospherics.WarningLowPressure:
-                            _alertsSystem.ShowAlert(uid, AlertType.LowPressure, 1);
+                            _alertsSystem.ShowAlert(uid, barotrauma.LowPressureAlert, 1);
                             break;
                         case >= Atmospherics.WarningHighPressure:
-                            _alertsSystem.ShowAlert(uid, AlertType.HighPressure, 1);
+                            _alertsSystem.ShowAlert(uid, barotrauma.HighPressureAlert, 1);
                             break;
                         default:
-                            _alertsSystem.ClearAlertCategory(uid, AlertCategory.Pressure);
+                            _alertsSystem.ClearAlertCategory(uid, barotrauma.PressureAlertCategory);
                             break;
                     }
                 }

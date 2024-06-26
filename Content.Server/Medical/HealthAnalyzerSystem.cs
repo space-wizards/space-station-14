@@ -49,6 +49,12 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             if (component.ScannedEntity is not {} patient)
                 continue;
 
+            if (Deleted(patient))
+            {
+                StopAnalyzingEntity((uid, component), patient);
+                continue;
+            }
+
             component.NextUpdate = _timing.CurTime + component.UpdateInterval;
 
             //Get distance between health analyzer and the scanned entity
@@ -76,9 +82,8 @@ public sealed class HealthAnalyzerSystem : EntitySystem
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, uid.Comp.ScanDelay, new HealthAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
-            NeedHand = true
+            NeedHand = true,
+            BreakOnMove = true
         });
     }
 
@@ -123,10 +128,10 @@ public sealed class HealthAnalyzerSystem : EntitySystem
 
     private void OpenUserInterface(EntityUid user, EntityUid analyzer)
     {
-        if (!TryComp<ActorComponent>(user, out var actor) || !_uiSystem.TryGetUi(analyzer, HealthAnalyzerUiKey.Key, out var ui))
+        if (!_uiSystem.HasUi(analyzer, HealthAnalyzerUiKey.Key))
             return;
 
-        _uiSystem.OpenUi(ui, actor.PlayerSession);
+        _uiSystem.OpenUi(analyzer, HealthAnalyzerUiKey.Key, user);
     }
 
     /// <summary>
@@ -167,7 +172,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     /// <param name="scanMode">True makes the UI show ACTIVE, False makes the UI show INACTIVE</param>
     public void UpdateScannedUser(EntityUid healthAnalyzer, EntityUid target, bool scanMode)
     {
-        if (!_uiSystem.TryGetUi(healthAnalyzer, HealthAnalyzerUiKey.Key, out var ui))
+        if (!_uiSystem.HasUi(healthAnalyzer, HealthAnalyzerUiKey.Key))
             return;
 
         if (!HasComp<DamageableComponent>(target))
@@ -189,9 +194,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             bleeding = bloodstream.BleedAmount > 0;
         }
 
-
-
-        _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(
+        _uiSystem.ServerSendUiMessage(healthAnalyzer, HealthAnalyzerUiKey.Key, new HealthAnalyzerScannedUserMessage(
             GetNetEntity(target),
             bodyTemperature,
             bloodAmount,

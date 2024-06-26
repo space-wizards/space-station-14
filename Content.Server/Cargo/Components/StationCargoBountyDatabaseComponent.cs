@@ -1,4 +1,5 @@
 using Content.Shared.Cargo;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Cargo.Components;
 
@@ -32,4 +33,16 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     /// </summary>
     [DataField]
     public HashSet<string> CheckedBounties = new();
+
+    /// <summary>
+    /// The time at which players will be able to skip the next bounty.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextSkipTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The time between skipping bounties.
+    /// </summary>
+    [DataField]
+    public TimeSpan SkipDelay = TimeSpan.FromMinutes(15);
 }

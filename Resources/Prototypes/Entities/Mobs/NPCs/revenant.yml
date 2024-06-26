@@ -55,7 +55,9 @@
     makeSentient: true
     name: ghost-role-information-revenant-name
     description: ghost-role-information-revenant-description
-    rules: ghost-role-information-revenant-rules
+    rules: ghost-role-information-antagonist-rules
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: Revenant
     malfunctionWhitelist:
@@ -75,8 +77,8 @@
     softness: 1
   - type: UserInterface
     interfaces:
-    - key: enum.StoreUiKey.Key
-      type: StoreBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
   - type: Visibility
     layer: 2 #ghost vis layer
   - type: Store

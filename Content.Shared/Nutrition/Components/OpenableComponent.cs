@@ -9,7 +9,7 @@ namespace Content.Shared.Nutrition.Components;
 /// Starts closed, open it with Z or E.
 /// </summary>
 [NetworkedComponent, AutoGenerateComponentState]
-[RegisterComponent, Access(typeof(SharedOpenableSystem))]
+[RegisterComponent, Access(typeof(OpenableSystem))]
 public sealed partial class OpenableComponent : Component
 {
     /// <summary>
@@ -25,6 +25,12 @@ public sealed partial class OpenableComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool OpenableByHand = true;
+
+    /// <summary>
+    /// If true, tries to open when activated in world.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool OpenOnActivate;
 
     /// <summary>
     /// Text shown when examining and its open.
@@ -58,7 +64,7 @@ public sealed partial class OpenableComponent : Component
     /// Sound played when opening.
     /// </summary>
     [DataField]
-    public SoundSpecifier Sound = new SoundCollectionSpecifier("canOpenSounds");
+    public SoundSpecifier? Sound = new SoundCollectionSpecifier("canOpenSounds");
 
     /// <summary>
     /// Can this item be closed again after opening?

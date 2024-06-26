@@ -12,10 +12,10 @@ public abstract class SharedInstrumentSystem : EntitySystem
     {
     }
 
-    public void SetInstrumentProgram(SharedInstrumentComponent component, byte program, byte bank)
+    public void SetInstrumentProgram(EntityUid uid, SharedInstrumentComponent component, byte program, byte bank)
     {
         component.InstrumentBank = bank;
         component.InstrumentProgram = program;
-        Dirty(component);
+        Dirty(uid, component);
     }
 }

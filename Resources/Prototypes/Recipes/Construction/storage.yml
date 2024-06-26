@@ -49,3 +49,21 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+# ItemCabinets
+- type: construction
+  id: ShowCase
+  name: showcase
+  description: A sturdy showcase for an expensive exhibit.
+  graph: GlassBox
+  startNode: start
+  targetNode: glassBox
+  category: construction-category-storage
+  icon:
+    sprite: Structures/Storage/glassbox.rsi
+    state: icon
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

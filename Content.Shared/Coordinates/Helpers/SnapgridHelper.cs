@@ -22,7 +22,7 @@ namespace Content.Shared.Coordinates.Helpers
                 return EntityCoordinates.FromMap(coordinates.EntityId, mapPos, xformSys);
             }
 
-            var grid = mapManager.GetGrid(gridId.Value);
+            var grid = entMan.GetComponent<MapGridComponent>(gridId.Value);
             var tileSize = grid.TileSize;
             var localPos = coordinates.WithEntityId(gridId.Value).Position;
             var x = (int)Math.Floor(localPos.X / tileSize) + tileSize / 2f;

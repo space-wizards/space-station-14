@@ -2,7 +2,6 @@
   id: ActionForceWall
   name: Forcewall
   description: Creates a magical barrier.
-  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 10

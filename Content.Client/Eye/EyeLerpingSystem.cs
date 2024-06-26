@@ -86,7 +86,7 @@ public sealed class EyeLerpingSystem : EntitySystem
     private void HandleMapChange(EntityUid uid, LerpingEyeComponent component, ref EntParentChangedMessage args)
     {
         // Is this actually a map change? If yes, stop any lerps
-        if (args.OldMapId != args.Transform.MapID)
+        if (args.OldMapId != args.Transform.MapUid)
             component.LastRotation = GetRotation(uid, args.Transform);
     }
 

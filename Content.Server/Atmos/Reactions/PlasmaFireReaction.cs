@@ -1,5 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Reactions
@@ -75,7 +76,7 @@ namespace Content.Server.Atmos.Reactions
                 var mixTemperature = mixture.Temperature;
                 if (mixTemperature > Atmospherics.FireMinimumTemperatureToExist)
                 {
-                    atmosphereSystem.HotspotExpose(location.GridIndex, location.GridIndices, mixTemperature, mixture.Volume);
+                    atmosphereSystem.HotspotExpose(location, mixTemperature, mixture.Volume);
                 }
             }
 

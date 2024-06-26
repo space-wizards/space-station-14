@@ -22,17 +22,6 @@
       - BaseballBat
 
 - type: cargoBounty
-  id: BountyBoxHug
-  reward: 3000
-  description: bounty-description-box-hugs
-  entries:
-  - name: bounty-item-box-hugs
-    amount: 1
-    whitelist:
-      tags:
-      - BoxHug
-
-- type: cargoBounty
   id: BountyBrain
   reward: 12500
   description: bounty-description-brain
@@ -53,6 +42,9 @@
     whitelist:
       tags:
       - Bread
+    blacklist:
+      tags:
+      - Slice
 
 - type: cargoBounty
   id: BountyCarrot
@@ -138,18 +130,6 @@
     whitelist:
       tags:
       - CubanCarp
-
-- type: cargoBounty
-  id: BountyDonkPocket
-  reward: 6000
-  description: bounty-description-donk-pocket
-  idPrefix: CC
-  entries:
-  - name: bounty-item-donk-pocket
-    amount: 12
-    whitelist:
-      tags:
-      - DonkPocket
 
 - type: cargoBounty
   id: BountyDonut
@@ -332,6 +312,9 @@
     whitelist:
       tags:
       - Pie
+    blacklist:
+      tags:
+      - Slice
 
 - type: cargoBounty
   id: BountyPrisonUniform
@@ -553,6 +536,9 @@
     whitelist:
       tags:
       - Meat
+    blacklist:
+      components:
+      - SliceableFood
 
 - type: cargoBounty
   id: BountyFruit
@@ -564,6 +550,12 @@
     whitelist:
       tags:
       - Fruit
+    blacklist:
+      tags:
+      - Slice
+      - Cake
+      - Pie
+      - Bread
 
 - type: cargoBounty
   id: BountyVegetable
@@ -575,6 +567,12 @@
     whitelist:
       tags:
       - Vegetable
+    blacklist:
+      tags:
+      - Slice
+      - Cake
+      - Pie
+      - Bread
 
 - type: cargoBounty
   id: BountyChili

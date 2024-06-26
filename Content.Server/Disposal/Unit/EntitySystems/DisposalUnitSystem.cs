@@ -17,6 +17,7 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Explosion;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -42,7 +43,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems;
 public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
@@ -73,12 +73,11 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         SubscribeLocalEvent<DisposalUnitComponent, PowerChangedEvent>(OnPowerChange);
         SubscribeLocalEvent<DisposalUnitComponent, ComponentInit>(OnDisposalInit);
 
-        SubscribeLocalEvent<DisposalUnitComponent, ThrowHitByEvent>(OnThrowCollide);
-
         SubscribeLocalEvent<DisposalUnitComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<DisposalUnitComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<DisposalUnitComponent, DragDropTargetEvent>(OnDragDropOn);
         SubscribeLocalEvent<DisposalUnitComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<DisposalUnitComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<InteractionVerb>>(AddInsertVerb);
         SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<AlternativeVerb>>(AddDisposalAltVerbs);
@@ -135,14 +134,16 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         // This is not an interaction, activation, or alternative verb type because unfortunately most users are
         // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
-        if (!component.MobsCanEnter ||
-            !args.CanAccess ||
+        if (!args.CanAccess ||
             !args.CanInteract ||
             component.Container.ContainedEntities.Contains(args.User) ||
             !_actionBlockerSystem.CanMove(args.User))
         {
             return;
         }
+
+        if (!CanInsert(uid, component, args.User))
+            return;
 
         // Add verb to climb inside of the unit,
         Verb verb = new()
@@ -210,17 +211,18 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DisposalUnitComponent, MetaDataComponent>();
+        var query = AllEntityQuery<DisposalUnitComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var unit, out var metadata))
         {
-            Update(uid, unit, metadata, frameTime);
+            if (!metadata.EntityPaused)
+                Update(uid, unit, metadata, frameTime);
         }
     }
 
     #region UI Handlers
     private void OnUiButtonPressed(EntityUid uid, SharedDisposalUnitComponent component, SharedDisposalUnitComponent.UiButtonPressedMessage args)
     {
-        if (args.Session.AttachedEntity is not { Valid: true } player)
+        if (args.Actor is not { Valid: true } player)
         {
             return;
         }
@@ -236,7 +238,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} hit flush button on {ToPrettyString(uid)}, it's now {(component.Engaged ? "on" : "off")}");
                 break;
             case SharedDisposalUnitComponent.UiButton.Power:
-                _power.TogglePower(uid, user: args.Session.AttachedEntity);
+                _power.TogglePower(uid, user: args.Actor);
                 break;
             default:
                 throw new ArgumentOutOfRangeException($"{ToPrettyString(player):player} attempted to hit a nonexistant button on {ToPrettyString(uid)}");
@@ -263,13 +265,16 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     private void OnActivate(EntityUid uid, SharedDisposalUnitComponent component, ActivateInWorldEvent args)
     {
+        if (args.Handled || !args.Complex)
+            return;
+
         if (!TryComp(args.User, out ActorComponent? actor))
         {
             return;
         }
 
         args.Handled = true;
-        _ui.TryOpen(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, actor.PlayerSession);
+        _ui.OpenUi(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, actor.PlayerSession);
     }
 
     private void OnAfterInteractUsing(EntityUid uid, SharedDisposalUnitComponent component, AfterInteractUsingEvent args)
@@ -292,35 +297,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         args.Handled = true;
     }
 
-    /// <summary>
-    /// Thrown items have a chance of bouncing off the unit and not going in.
-    /// </summary>
-    private void OnThrowCollide(EntityUid uid, SharedDisposalUnitComponent component, ThrowHitByEvent args)
-    {
-        var canInsert = CanInsert(uid, component, args.Thrown);
-        var randDouble = _robustRandom.NextDouble();
-
-        if (!canInsert || randDouble > 0.75)
-        {
-            _audioSystem.PlayPvs(component.MissSound, uid);
-
-            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-thrown-missed"), uid);
-            return;
-        }
-
-        var inserted = _containerSystem.Insert(args.Thrown, component.Container);
-
-        if (!inserted)
-        {
-            throw new InvalidOperationException("Container insertion failed but CanInsert returned true");
-        }
-
-        if (args.Component.Thrower != null)
-            _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(args.Thrown)} thrown by {ToPrettyString(args.Component.Thrower.Value):player} landed in {ToPrettyString(uid)}");
-
-        AfterInsert(uid, component, args.Thrown);
-    }
-
     private void OnDisposalInit(EntityUid uid, SharedDisposalUnitComponent component, ComponentInit args)
     {
         component.Container = _containerSystem.EnsureContainer<Container>(uid, SharedDisposalUnitComponent.ContainerId);
@@ -340,7 +316,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (!args.Powered)
         {
             component.NextFlush = null;
-            Dirty(component);
+            Dirty(uid, component);
             return;
         }
 
@@ -396,7 +372,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         component.State = state;
         UpdateVisualState(uid, component);
         UpdateInterface(uid, component, component.Powered);
-        Dirty(component, metadata);
+        Dirty(uid, component, metadata);
 
         if (state == DisposalsPressureState.Ready)
         {
@@ -477,7 +453,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         }
 
         if (count != component.RecentlyEjected.Count)
-            Dirty(component, metadata);
+            Dirty(uid, component, metadata);
     }
 
     public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid? userId, DisposalUnitComponent? unit = null)
@@ -512,8 +488,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         var doAfterArgs = new DoAfterArgs(EntityManager, userId.Value, delay, new DisposalDoAfterEvent(), unitId, target: toInsertId, used: unitId)
         {
             BreakOnDamage = true,
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             NeedHand = false
         };
 
@@ -594,7 +569,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         var compState = GetState(uid, component);
         var stateString = Loc.GetString($"disposal-unit-state-{compState}");
         var state = new SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState(Name(uid), stateString, EstimatedFullPressure(uid, component), powered, component.Engaged);
-        _ui.TrySetUiState(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, state);
+        _ui.SetUiState(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, state);
 
         var stateUpdatedEvent = new DisposalUnitUIStateUpdatedEvent(state);
         RaiseLocalEvent(uid, stateUpdatedEvent);
@@ -631,10 +606,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         switch (state)
         {
             case DisposalsPressureState.Flushed:
-                _appearance.SetData(uid, SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.Flushing, appearance);
+                _appearance.SetData(uid, SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.OverlayFlushing, appearance);
                 break;
             case DisposalsPressureState.Pressurizing:
-                _appearance.SetData(uid, SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.Charging, appearance);
+                _appearance.SetData(uid, SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.OverlayCharging, appearance);
                 break;
             case DisposalsPressureState.Ready:
                 _appearance.SetData(uid, SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.Anchored, appearance);
@@ -784,7 +759,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         var flushTime = TimeSpan.FromSeconds(Math.Min((component.NextFlush ?? TimeSpan.MaxValue).TotalSeconds, automaticTime.TotalSeconds));
 
         component.NextFlush = flushTime;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public void AfterInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid inserted, EntityUid? user = null, bool doInsert = false)
@@ -799,15 +774,18 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         QueueAutomaticEngage(uid, component);
 
-        if (TryComp(inserted, out ActorComponent? actor))
-        {
-            _ui.TryClose(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, actor.PlayerSession);
-        }
+        _ui.CloseUi(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, inserted);
 
         // Maybe do pullable instead? Eh still fine.
         Joints.RecursiveClearJoints(inserted);
         UpdateVisualState(uid, component);
     }
+
+    private void OnExploded(Entity<DisposalUnitComponent> ent, ref BeforeExplodeEvent args)
+    {
+        args.Contents.AddRange(ent.Comp.Container.ContainedEntities);
+    }
+
 }
 
 /// <summary>

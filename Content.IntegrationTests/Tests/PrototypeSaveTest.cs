@@ -38,31 +38,15 @@ public sealed class PrototypeSaveTest
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityMan = server.ResolveDependency<IEntityManager>();
         var prototypeMan = server.ResolveDependency<IPrototypeManager>();
-        var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
         var seriMan = server.ResolveDependency<ISerializationManager>();
         var compFact = server.ResolveDependency<IComponentFactory>();
 
         var prototypes = new List<EntityPrototype>();
-        MapGridComponent grid = default!;
         EntityUid uid;
-        MapId mapId = default;
 
-        //Build up test environment
-        await server.WaitPost(() =>
-        {
-            // Create a one tile grid to stave off the grid 0 monsters
-            mapId = mapManager.CreateMap();
-
-            mapManager.AddUninitializedMap(mapId);
-
-            grid = mapManager.CreateGrid(mapId);
-
-            var tileDefinition = tileDefinitionManager["FloorSteel"]; // Wires n such disable ambiance while under the floor
-            var tile = new Tile(tileDefinition.TileId);
-            var coordinates = grid.ToCoordinates();
-
-            grid.SetTile(coordinates, tile);
-        });
+        await pair.CreateTestMap(false, "FloorSteel"); // Wires n such disable ambiance while under the floor
+        var mapId = pair.TestMap.MapId;
+        var grid = pair.TestMap.Grid;
 
         await server.WaitRunTicks(5);
 
@@ -94,7 +78,7 @@ public sealed class PrototypeSaveTest
         await server.WaitAssertion(() =>
         {
             Assert.That(!mapManager.IsMapInitialized(mapId));
-            var testLocation = grid.ToCoordinates();
+            var testLocation = grid.Owner.ToCoordinates();
 
             Assert.Multiple(() =>
             {
