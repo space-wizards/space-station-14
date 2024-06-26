@@ -10,12 +10,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Content.Shared.Throwing;
-using Robust.Shared.Random;
-using SQLitePCL;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using System.Numerics;
+using Robust.Shared.Random;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
