@@ -249,6 +249,8 @@
       - id: SyndicateSponge
         prob: 0.40
         orGroup: cube
+      - id: MindShieldImplanter
+        prob: 0.30
 
 - type: entity
   id: CratePermaEscapeMerc
