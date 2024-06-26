@@ -6,6 +6,7 @@
   - type: RandomSpawner
     prototypes:
       - CratePermaEscapeDigging
+      - CratePermaEscapeDigging
       - CratePermaEscapeEVA
       - CratePermaEscapeGun
       - CrateEngineeringMiniJetpack
@@ -88,9 +89,6 @@
     - id: WeaponRifleFoam
       prob: 0.05
       orGroup: gun
-    - id: WeaponPistolCobra
-      prob: 0.01
-      orGroup: gun
     - id: WeaponPistolFlintlock
       prob: 0.20
       orGroup: gun
@@ -156,6 +154,7 @@
         prob: 0.10
       - id: ClearPDA # change to visitor one day.
         prob: 0.10
+      - id: PersonalAI
 
 - type: entity
   id: CratePermaEscapeLights
@@ -217,41 +216,59 @@
     contents:
       - id: ClothingEyesGlassesOutlawGlasses
       - id: ClothingHeadHatOutlawHat
-      - id: BaseUplinkRadio
-        prob: 0.50
-      - id: Telecrystal
-        prob: 0.80
-      - id: Telecrystal
-        prob: 0.80
-      - id: Telecrystal
-        prob: 0.70
-      - id: Telecrystal
-        prob: 0.50
-      - id: Telecrystal
-        prob: 0.20
-      - id: Telecrystal
-        prob: 0.10
-      - id: Telecrystal
-        prob: 0.05
-      - id: Telecrystal
-        prob: 0.01
-      - id: Telecrystal5
-        prob: 0.01
+      - id: HappyHonkNukieSnacks
+      # - id: BaseUplinkRadio # too spicy I think.
+        # prob: 0.50
+      # - id: Telecrystal
+        # prob: 0.80
+      # - id: Telecrystal
+        # prob: 0.80
+      # - id: Telecrystal
+        # prob: 0.70
+      # - id: Telecrystal
+        # prob: 0.50
+      # - id: Telecrystal
+        # prob: 0.20
+      # - id: Telecrystal
+        # prob: 0.10
+      # - id: Telecrystal
+        # prob: 0.05
+      # - id: Telecrystal
+        # prob: 0.01
+      # - id: Telecrystal5
+        # prob: 0.01
       - id: CyberPen
         prob: 0.10
       - id: CockroachCube
         orGroup: cube
       - id: AbominationCube
-        prob: 0.40
+        prob: 0.20
         orGroup: cube
       - id: SpaceCarpCube
-        prob: 0.40
+        prob: 0.20
         orGroup: cube
       - id: SyndicateSponge
-        prob: 0.40
+        prob: 0.20
         orGroup: cube
       - id: MindShieldImplanter
         prob: 0.30
+      - id: ClothingHandsGlovesConducting # funny
+        prob: 0.30
+      - id: CigPackSyndicate
+        prob: 0.70
+      - id: StimpackMini
+        prob: 0.10
+      - id: StimpackMini
+        prob: 0.10
+      - id: CombatMedipen
+        prob: 0.05
+      - id: MedkitCombatFilled
+        prob: 0.01
+      - id: SoapSyndie
+        prob: 0.15
+      - id: DnaScramblerImplanter
+        prob: 0.005
+
 
 - type: entity
   id: CratePermaEscapeMerc
