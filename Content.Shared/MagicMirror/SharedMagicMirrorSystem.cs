@@ -18,6 +18,7 @@ public abstract class SharedMagicMirrorSystem : EntitySystem
         SubscribeLocalEvent<MagicMirrorComponent, AfterInteractEvent>(OnMagicMirrorInteract);
         SubscribeLocalEvent<MagicMirrorComponent, BeforeActivatableUIOpenEvent>(OnBeforeUIOpen);
         SubscribeLocalEvent<MagicMirrorComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenUI);
+        SubscribeLocalEvent<MagicMirrorComponent, BoundUserInterfaceCheckRangeEvent>(OnMirrorRangeCheck);
     }
 
     private void OnMagicMirrorInteract(Entity<MagicMirrorComponent> mirror, ref AfterInteractEvent args)
@@ -27,6 +28,22 @@ public abstract class SharedMagicMirrorSystem : EntitySystem
 
         UpdateInterface(mirror, args.Target.Value, mirror);
         UISystem.TryOpenUi(mirror.Owner, MagicMirrorUiKey.Key, args.User);
+    }
+
+    private void OnMirrorRangeCheck(EntityUid uid, MagicMirrorComponent component, ref BoundUserInterfaceCheckRangeEvent args)
+    {
+        if (args.Result == BoundUserInterfaceRangeResult.Fail)
+            return;
+
+        if (component.Target == null || !Exists(component.Target))
+        {
+            component.Target = null;
+            args.Result = BoundUserInterfaceRangeResult.Fail;
+            return;
+        }
+
+        if (!_interaction.InRangeUnobstructed(uid, component.Target.Value, SharedInteractionSystem.InteractionRange, Physics.CollisionGroup.None))
+            args.Result = BoundUserInterfaceRangeResult.Fail;
     }
 
     private void OnAttemptOpenUI(EntityUid uid, MagicMirrorComponent component, ref ActivatableUIOpenAttemptEvent args)
