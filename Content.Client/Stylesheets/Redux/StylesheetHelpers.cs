@@ -129,6 +129,11 @@ public static class StylesheetHelpers
         return selector.Prop(PanelContainer.StylePropertyPanel, panel);
     }
 
+    public static MutableSelector Box(this MutableSelector selector, StyleBox box)
+    {
+        return selector.Prop(ContainerButton.StylePropertyStyleBox, box);
+    }
+
     public static MutableSelector Font(this MutableSelector selector, Font font)
     {
         return selector.Prop(Label.StylePropertyFont, font);

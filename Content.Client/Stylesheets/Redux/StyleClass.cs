@@ -52,6 +52,8 @@ public static class StyleClass
     public const string StyleClassItemStatusNotHeld = "ItemStatusNotHeld";
     public const string ChatPanel = "ChatPanel";
     public const string ChatLineEdit = "chatLineEdit";
+    public const string ChatChannelSelectorButton = "chatSelectorOptionButton";
+    public const string ChatFilterOptionButton = "chatFilterOptionButton";
     public const string StyleClassLabelKeyText = "LabelKeyText";
 
     public const string TooltipPanel = "tooltipPanel";

@@ -1,10 +1,11 @@
-﻿using Content.Client.Stylesheets.Redux.Fonts;
+﻿using System.Numerics;
+using Content.Client.Stylesheets.Redux.Fonts;
 using Content.Client.Stylesheets.Redux.NTSheetlets;
 using Content.Client.Stylesheets.Redux.Sheetlets;
 using Content.Client.UserInterface.Controls;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
@@ -21,25 +22,59 @@ public sealed class MenuButtonSheetlet : Sheetlet<PalettedStylesheet>
     {
         var cfg = (IButtonConfig) sheet;
 
+        var buttonTex = sheet.GetTexture(cfg.BaseButtonTexturePath);
+        var topButtonBase = new StyleBoxTexture
+        {
+            Texture = buttonTex,
+        };
+        topButtonBase.SetPatchMargin(StyleBox.Margin.All, 10);
+        topButtonBase.SetPadding(StyleBox.Margin.All, 0);
+        topButtonBase.SetContentMarginOverride(StyleBox.Margin.All, 0);
+
+        var topButtonOpenRight = new StyleBoxTexture(topButtonBase)
+        {
+            Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions(new Vector2(0, 0), new Vector2(14, 24))),
+        };
+        topButtonOpenRight.SetPatchMargin(StyleBox.Margin.Right, 0);
+
+        var topButtonOpenLeft = new StyleBoxTexture(topButtonBase)
+        {
+            Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(14, 24))),
+        };
+        topButtonOpenLeft.SetPatchMargin(StyleBox.Margin.Left, 0);
+
+        var topButtonSquare = new StyleBoxTexture(topButtonBase)
+        {
+            Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(3, 24))),
+        };
+        topButtonSquare.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
+
         var rules = new List<StyleRule>
         {
+            CButton().Class(StyleClass.ButtonSquare).Box(topButtonSquare),
+            CButton().Class(StyleClass.ButtonOpenLeft).Box(topButtonOpenLeft),
+            CButton().Class(StyleClass.ButtonOpenRight).Box(topButtonOpenRight),
             CButton()
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureBaseButton(sheet)),
-            CButton().Class(StyleClass.ButtonOpenLeft)
+            CButton()
+                .Class(StyleClass.ButtonOpenLeft)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenLeftButton(sheet)),
-            CButton().Class(StyleClass.ButtonOpenRight)
+            CButton()
+                .Class(StyleClass.ButtonOpenRight)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenRightButton(sheet)),
-            CButton().Class(StyleClass.ButtonOpenBoth)
+            CButton()
+                .Class(StyleClass.ButtonOpenBoth)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenBothButton(sheet)),
-            CButton().Class(StyleClass.ButtonSquare)
+            CButton()
+                .Class(StyleClass.ButtonSquare)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenSquareButton(sheet)),
-            E<Label>().Class(MenuButton.StyleClassLabelTopButton)
+            E<Label>()
+                .Class(MenuButton.StyleClassLabelTopButton)
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold))
             // new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
         };
 
         ButtonSheetlet.MakeButtonRules<MenuButton>(cfg, rules, cfg.ButtonPalette, null);
-        ButtonSheetlet.MakeButtonRules<MenuButton>(cfg, rules, cfg.NegativeButtonPalette, MenuButton.StyleClassRedTopButton);
 
         return rules.ToArray();
     }

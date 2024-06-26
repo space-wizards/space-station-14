@@ -23,7 +23,8 @@
 - [ ] Button text colors / change text color when pressed / disabled?
 - [ ] `MenuButton.cs` hardcoded colors
 - [x] `ButtonSmall`
-- [x] ``
+- [ ] Whatever the hell `StyleClassSliderWhite` and friends are being used for
+- [ ] Move `Chat` style classes from `StyleClass.cs`
 
 TL;DR port all of `StyleNano` into sheetlets
 

@@ -19,23 +19,28 @@ public sealed class TooltipSheetlet : Sheetlet<PalettedStylesheet>
         var whisperBox = sheet.GetTexture("whisper.png").IntoPatch(StyleBox.Margin.All, 2);
         whisperBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
-        return new StyleRule[]
-        {
+        return
+        [
             E<Tooltip>()
                 .Prop(Tooltip.StylePropertyPanel, tooltipBox),
-            E<PanelContainer>().Class(ExamineSystem.StyleClassEntityTooltip)
+            E<PanelContainer>()
+                .Class(ExamineSystem.StyleClassEntityTooltip)
                 .Panel(tooltipBox),
-            E<PanelContainer>().Class("speechBox", "sayBox")
+            E<PanelContainer>()
+                .Class("speechBox", "sayBox")
                 .Panel(tooltipBox),
-            E<PanelContainer>().Class("speechBox", "whisperBox")
+            E<PanelContainer>()
+                .Class("speechBox", "whisperBox")
                 .Panel(whisperBox),
 
-            E<PanelContainer>().Class("speechBox", "whisperBox")
+            E<PanelContainer>()
+                .Class("speechBox", "whisperBox")
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontStack.FontKind.Italic)),
-            E<PanelContainer>().Class("speechBox", "emoteBox")
+            E<PanelContainer>()
+                .Class("speechBox", "emoteBox")
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontStack.FontKind.Italic))
-        };
+                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontStack.FontKind.Italic)),
+        ];
     }
 }

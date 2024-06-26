@@ -10,14 +10,18 @@ public sealed class CheckboxSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        return new StyleRule[]
-        {
-            E<TextureRect>().Class(CheckBox.StyleClassCheckBox)
+        return
+        [
+            E<TextureRect>()
+                .Class(CheckBox.StyleClassCheckBox)
                 .Prop(TextureRect.StylePropertyTexture, sheet.GetTexture("checkbox_unchecked.svg.96dpi.png")),
-            E<TextureRect>().Class(CheckBox.StyleClassCheckBox).Class(CheckBox.StyleClassCheckBoxChecked)
+            E<TextureRect>()
+                .Class(CheckBox.StyleClassCheckBox)
+                .Class(CheckBox.StyleClassCheckBoxChecked)
                 .Prop(TextureRect.StylePropertyTexture, sheet.GetTexture("checkbox_checked.svg.96dpi.png")),
-            E<BoxContainer>().Class(CheckBox.StyleClassCheckBox)
+            E<BoxContainer>()
+                .Class(CheckBox.StyleClassCheckBox)
                 .Prop(BoxContainer.StylePropertySeparation, 10),
-        };
+        ];
     }
 }
