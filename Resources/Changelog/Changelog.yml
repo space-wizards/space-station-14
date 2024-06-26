@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Clothing restock crate was splitted to clothing and autodrobe restock
-      crates.
-    type: Tweak
-  - message: Clothing is cheaper.
-    type: Tweak
-  id: 6322
-  time: '2024-04-08T15:10:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26805
-- author: Hanzdegloker
-  changes:
-  - message: Spears can now be quipped to your suit slot and cost slightly more to
-      make.
-    type: Tweak
-  id: 6323
-  time: '2024-04-08T15:34:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26724
 - author: KittenColony
   changes:
   - message: Added 13 new gauze wraps for moth that fit their twig bodies
@@ -3838,3 +3820,17 @@
   id: 6821
   time: '2024-06-26T03:26:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29380
+- author: Plykiya
+  changes:
+  - message: You can now interact with magic mirrors.
+    type: Fix
+  id: 6822
+  time: '2024-06-26T14:25:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29491
+- author: Doomsdrayk
+  changes:
+  - message: Disposal units no longer protect their contents from nuclear explosions.
+    type: Fix
+  id: 6823
+  time: '2024-06-26T14:25:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29438
