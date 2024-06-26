@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Chat.TypingIndicator;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedTypingIndicatorSystem))]
 public sealed partial class TypingIndicatorClothingComponent : Component
 {
@@ -11,6 +11,6 @@ public sealed partial class TypingIndicatorClothingComponent : Component
     [DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<TypingIndicatorPrototype>))]
     public string TypingIndicatorPrototype = default!;
 
-    [DataField, AutoPausedField]
+    [DataField]
     public TimeSpan? GotEquippedTime = null;
 }
