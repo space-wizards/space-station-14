@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: lzk228
   changes:
-  - message: Bombsuit and jani bombsuit are similar now.
-    type: Tweak
-  id: 6321
-  time: '2024-04-08T15:05:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26806
-- author: lzk228
-  changes:
   - message: Clothing restock crate was splitted to clothing and autodrobe restock
       crates.
     type: Tweak
@@ -3838,3 +3831,10 @@
   id: 6820
   time: '2024-06-26T02:27:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29433
+- author: Veritable-Calamity
+  changes:
+  - message: Moldy food can now be collected in the Janitors' trash bags.
+    type: Fix
+  id: 6821
+  time: '2024-06-26T03:26:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29380
