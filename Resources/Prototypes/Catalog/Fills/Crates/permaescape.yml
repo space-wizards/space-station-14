@@ -19,6 +19,7 @@
       - CratePermaEscapeComs
       - CratePermaEscapeTowercap
       - CrateServiceCustomSmokable
+      - ClosetMaintenanceFilledRandom
     chance: 1
     offset: 0.0
 
