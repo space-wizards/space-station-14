@@ -20866,7 +20866,7 @@ entities:
     - type: Transform
       pos: -16.472399,3.4014592
       parent: 2
-- proto: BookChefGaming
+- proto: BookHowToCookForFortySpaceman
   entities:
   - uid: 164
     components:

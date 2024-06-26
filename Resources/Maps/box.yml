@@ -16433,7 +16433,7 @@ entities:
     - type: Transform
       pos: 60.576424,0.7512084
       parent: 8364
-- proto: BookChefGaming
+- proto: BookHowToCookForFortySpaceman
   entities:
   - uid: 11336
     components:
