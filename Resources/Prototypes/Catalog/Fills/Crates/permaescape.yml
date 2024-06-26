@@ -5,7 +5,6 @@
   components:
   - type: RandomSpawner
     prototypes:
-      - CrateGenericSteel
       - CratePermaEscapeDigging
       - CratePermaEscapeEVA
       - CratePermaEscapeGun
@@ -20,6 +19,8 @@
       - CratePermaEscapeTowercap
       - CrateServiceCustomSmokable
       - ClosetMaintenanceFilledRandom
+      - CratePermaEscapeMobTrap
+      - CratePermaEscapeMobTrap
     chance: 1
     offset: 0.0
 
@@ -330,8 +331,55 @@
         prob: 0.50
       - id: TowercapSeeds
         prob: 0.20
-      - id: SteelcapSeeds
+      - id: SteelcapSeedskangar
         prob: 0.10
       - id: SteelLog
       - id: HydroponicsToolHatchet
         prob: 0.30
+
+- type: entity
+  id: CratePermaEscapeMobTrap
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SpaceTickSpawner # the spawner means the mob wont be inside the crate, I would rather they were inside, but the AI just starts attacking crates so its not good.
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpaceTickSpawner
+        orGroup: mob
+      - id: SpawnMobCarp
+        orGroup: mob
+      - id: SpawnMobCarp
+        orGroup: mob
+      - id: SpawnMobCarpMagic
+        orGroup: mob
+      - id: SpawnMobBear
+        orGroup: mob
+      - id: SpawnMobKangaroo
+        orGroup: mob
