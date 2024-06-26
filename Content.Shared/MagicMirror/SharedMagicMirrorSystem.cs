@@ -42,7 +42,7 @@ public abstract class SharedMagicMirrorSystem : EntitySystem
             return;
         }
 
-        if (!_interaction.InRangeUnobstructed(uid, component.Target.Value, SharedInteractionSystem.InteractionRange, Physics.CollisionGroup.None))
+        if (!_interaction.InRangeUnobstructed(component.Target.Value, uid))
             args.Result = BoundUserInterfaceRangeResult.Fail;
     }
 
