@@ -337,5 +337,12 @@ Entries:
   id: 41
   time: '2024-06-24T21:56:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29406
+- author: Chief-Engineer
+  changes:
+  - message: Added the ability to alert for shared connections.
+    type: Add
+  id: 42
+  time: '2024-06-26T13:43:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29405
 Name: Admin
 Order: 1
