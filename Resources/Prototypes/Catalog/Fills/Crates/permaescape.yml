@@ -46,7 +46,7 @@
       - MobCarpMagic
       - MobKangarooSpace
       - MobBearSpace
-    rareChance: .22
+    rareChance: .26
     chance: 1
     offset: 0.0
 
