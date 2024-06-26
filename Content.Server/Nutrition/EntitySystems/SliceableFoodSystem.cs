@@ -10,6 +10,12 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Content.Shared.Throwing;
+using Robust.Shared.Random;
+using SQLitePCL;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
+using System.Numerics;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -19,6 +25,8 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly TransformSystem _xformSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         public override void Initialize()
         {
@@ -65,6 +73,12 @@ namespace Content.Server.Nutrition.EntitySystems
             FillSlice(sliceUid, lostSolution);
 
             _audio.PlayPvs(component.Sound, transform.Coordinates, AudioParams.Default.WithVolume(-2));
+
+            // This isn't an inpluse because cuts have very different densities making some get thrown super far..
+            var randVect = _random.NextVector2(2.0f, 2.5f);
+            if (TryComp<PhysicsComponent>(sliceUid, out var physics))
+                _physics.SetLinearVelocity(sliceUid, randVect, body: physics);
+
             var ev = new SliceFoodEvent();
             RaiseLocalEvent(uid, ref ev);
 
@@ -88,6 +102,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (component.Count > 1)
                 return true;
 
+            // Last slice will not get moved.
             sliceUid = Slice(uid, user, component, transform);
 
             // Fill last slice with the rest of the solution
