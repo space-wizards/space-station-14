@@ -393,4 +393,4 @@
         prob: 0.10
       - id: SteelLog
       - id: HydroponicsToolHatchet
-        prob: 0.30
+        prob: 0.75
