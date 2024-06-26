@@ -117,7 +117,7 @@
       - id: Pen
       - id: Pen
       - id: Pen
-      - id: BoxFolder
+      - id: BoxFolderBase
         orGroup: folderA
       - id: BoxFolderBlack
         orGroup: folderA
@@ -133,7 +133,7 @@
         orGroup: folderA
       - id: BoxFolderYellow
         orGroup: folderA
-      - id: BoxFolder
+      - id: BoxFolderBase
         orGroup: folderB
       - id: BoxFolderBlack
         orGroup: folderB
