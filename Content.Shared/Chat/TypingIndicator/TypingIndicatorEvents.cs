@@ -21,7 +21,8 @@ public sealed class TypingChangedEvent : EntityEventArgs
 }
 
 /// <summary>
-///     
+///     This event will be broadcast right before displaying an entities typing indicator.
+///     If _overrideIndicator is not null after the event is finished it will be used.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class BeforeShowTypingIndicatorEvent : IInventoryRelayEvent
