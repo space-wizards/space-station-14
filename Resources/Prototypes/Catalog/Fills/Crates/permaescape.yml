@@ -331,7 +331,7 @@
         prob: 0.50
       - id: TowercapSeeds
         prob: 0.20
-      - id: SteelcapSeedskangar
+      - id: SteelcapSeeds
         prob: 0.10
       - id: SteelLog
       - id: HydroponicsToolHatchet
@@ -343,6 +343,7 @@
   components:
   - type: StorageFill
     contents:
+    # These need to be killable by one dude with a shovel.
       - id: SpaceTickSpawner # the spawner means the mob wont be inside the crate, I would rather they were inside, but the AI just starts attacking crates so its not good.
         orGroup: mob
       - id: SpaceTickSpawner
