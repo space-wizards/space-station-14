@@ -14,11 +14,16 @@
       - CratePermaEscapeLights
       - CrateTrashCartFilled
       - CratePermaEscapeMats
+      - CratePermaEscapeMats
       - CratePermaEscapeGiftsFromSyndicate
       - CratePermaEscapeMerc
       - CratePermaEscapeComs
+      - CratePermaEscapeComs
+      - CratePermaEscapeTowercap
       - CratePermaEscapeTowercap
       - CrateServiceCustomSmokable
+      - ClosetMaintenanceFilledRandom
+      - ClosetMaintenanceFilledRandom
       - ClosetMaintenanceFilledRandom
     rarePrototypes:
       - MobTick # These need to be killable by one dude with a shovel.
@@ -48,12 +53,13 @@
 - type: entity
   id: CratePermaEscapeDigging
   parent: CrateGenericSteel
+  suffix: Digging
   components:
   - type: StorageFill
     contents:
       - id: Shovel
       - id: Pickaxe
-        prob: 0.50
+        prob: 0.90
       - id: Pickaxe
         prob: 0.40
       - id: Pickaxe
@@ -70,6 +76,7 @@
 - type: entity
   id: CratePermaEscapeEVA
   parent: CrateGenericSteel
+  suffix: EVAs
   components:
   - type: StorageFill
     contents:
@@ -97,6 +104,7 @@
 - type: entity
   id: CratePermaEscapeGun
   parent: CrateGenericSteel
+  suffix: Gun
   components:
   - type: StorageFill
     contents:
@@ -128,6 +136,7 @@
 - type: entity
   id: CratePermaEscapeBureaucracy
   parent: CrateGenericSteel
+  suffix: Writing
   components:
   - type: StorageFill
     contents:
@@ -179,6 +188,7 @@
 - type: entity
   id: CratePermaEscapeLights
   parent: CrateGenericSteel
+  suffix: Glowsticks
   components:
   - type: StorageFill
     contents:
@@ -216,6 +226,7 @@
 - type: entity
   id: CratePermaEscapeMats
   parent: CrateGenericSteel
+  suffix: Mats
   components:
   - type: StorageFill
     contents:
@@ -231,6 +242,7 @@
 - type: entity
   id: CratePermaEscapeGiftsFromSyndicate
   parent: CrateGenericSteel
+  suffix: Syndi Gifts
   components:
   - type: StorageFill
     contents:
@@ -293,6 +305,7 @@
 - type: entity
   id: CratePermaEscapeMerc
   parent: CrateGenericSteel
+  suffix: Merc
   components:
   - type: StorageFill
     contents:
@@ -323,6 +336,7 @@
 - type: entity
   id: CratePermaEscapeComs
   parent: CrateGenericSteel
+  suffix: Coms
   components:
   - type: StorageFill
     contents:
@@ -358,6 +372,7 @@
 - type: entity
   id: CratePermaEscapeTowercap
   parent: CrateGenericSteel
+  suffix: Towercap
   components:
   - type: StorageFill
     contents:
