@@ -608,16 +608,40 @@
         - CartridgeAmmo
 
 - type: entity
-  parent: ClothingBeltSecurity
+  parent: ClothingBeltStorageBase
   id: ClothingBeltSecurityWebbing
-  name: security webbing
+  name: security rig
   description: Unique and versatile chest rig, can hold security gear.
   components:
   - type: Sprite
     sprite: Clothing/Belt/securitywebbing.rsi
   - type: Clothing
     sprite: Clothing/Belt/securitywebbing.rsi
-
+  - type: Storage
+    whitelist:
+      tags:
+        - CigPack
+        - Taser
+        - SecBeltEquip
+        - Radio
+        - Sidearm
+        - MagazinePistol
+        - MagazineMagnum
+        - CombatKnife
+        - Truncheon
+      components:
+        - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - CartridgeAmmo
+        - DoorRemote
+        - Whistle
+        - HolosignProjector
+        - BalloonPopper
+        
 - type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltMercWebbing
