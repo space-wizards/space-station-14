@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: Fixed the RCD not being able to build on top of puddles
-    type: Fix
-  - message: RCD constructions can no longer be rotated while in progress
-    type: Tweak
-  - message: The RCD now reports construction mode changes to its user
-    type: Add
-  id: 6320
-  time: '2024-04-08T03:17:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26792
 - author: lzk228
   changes:
   - message: Bombsuit and jani bombsuit are similar now.
@@ -3842,3 +3831,10 @@
   id: 6819
   time: '2024-06-26T00:48:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29478
+- author: lzk228
+  changes:
+  - message: Blood now has less satiation.
+    type: Tweak
+  id: 6820
+  time: '2024-06-26T02:27:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29433
