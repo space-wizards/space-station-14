@@ -101,11 +101,13 @@ public sealed class DoAfterOverlay : Overlay
 
             var offset = 0f;
 
+            var isInContainer = _container.IsEntityOrParentInContainer(uid, meta, xform);
+
             foreach (var doAfter in comp.DoAfters.Values)
             {
                 // Hide some DoAfters from other players for stealthy actions (ie: thieving gloves)
                 var alpha = 1f;
-                if (doAfter.Args.Hidden || _container.IsEntityInContainer(uid))
+                if (doAfter.Args.Hidden || isInContainer)
                 {
                     if (uid != localEnt)
                         continue;
