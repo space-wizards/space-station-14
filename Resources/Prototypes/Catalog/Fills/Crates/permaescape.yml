@@ -115,7 +115,7 @@
   - type: StorageFill
     contents:
     - id: WeaponPistolMk58
-      prob: 0.60
+      prob: 0.15
       orGroup: gun
     - id: FoamCrossbow
       prob: 0.10
