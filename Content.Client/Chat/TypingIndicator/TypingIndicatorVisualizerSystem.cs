@@ -23,8 +23,10 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
         if (TryComp<InventoryComponent>(uid, out var inventoryComp))
             _inventory.RelayEvent((uid, inventoryComp), ref evt);
 
-        if (evt.OverrideIndicator != null)
-            currentTypingIndicator = evt.OverrideIndicator;
+        var overrideIndicator = evt.GetMostRecentIndicator();
+
+        if (overrideIndicator != null)
+            currentTypingIndicator = overrideIndicator;
 
         if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(currentTypingIndicator, out var proto))
         {

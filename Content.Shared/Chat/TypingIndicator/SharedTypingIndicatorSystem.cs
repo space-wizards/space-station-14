@@ -31,12 +31,6 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
 
     private void BeforeShow(Entity<TypingIndicatorClothingComponent> entity, ref InventoryRelayedEvent<BeforeShowTypingIndicatorEvent> args)
     {
-        var thisEntTime = entity.Comp.GotEquippedTime;
-        var latestEquipTime = args.Args.LatestEquipTime;
-        if (thisEntTime != null && (latestEquipTime == null || latestEquipTime < thisEntTime))
-        {
-            args.Args.OverrideIndicator = entity.Comp.TypingIndicatorPrototype;
-            args.Args.LatestEquipTime = thisEntTime;
-        }
+        args.Args.TryUpdateTimeAndIndicator(entity.Comp.TypingIndicatorPrototype, entity.Comp.GotEquippedTime);
     }
 }

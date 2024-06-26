@@ -1,5 +1,7 @@
 using Robust.Shared.Serialization;
 using Content.Shared.Inventory;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Exceptions;
 
 namespace Content.Shared.Chat.TypingIndicator;
 
@@ -18,16 +20,40 @@ public sealed class TypingChangedEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+///     
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class BeforeShowTypingIndicatorEvent : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
-    public string? OverrideIndicator = null;
-    public TimeSpan? LatestEquipTime = null;
 
+    private string? _overrideIndicator = null;
+    private TimeSpan? _latestEquipTime = null;
     public BeforeShowTypingIndicatorEvent()
     {
-        OverrideIndicator = null;
-        LatestEquipTime = null;
+        _overrideIndicator = null;
+        _latestEquipTime = null;
+    }
+    /// <summary>
+    ///     Will only update the time and indicator if the given time is more recent than
+    ///     the stored time or if the stored time is null.
+    /// </summary>
+    ///  <returns>
+    ///     True if the given time is more recent than the stored time, and false otherwise.
+    ///  </returns>
+    public bool TryUpdateTimeAndIndicator(ProtoId<TypingIndicatorPrototype>? indicator, TimeSpan? equipTime)
+    {
+        if (equipTime != null && (_latestEquipTime == null || _latestEquipTime < equipTime))
+        {
+            _latestEquipTime = equipTime;
+            _overrideIndicator = indicator;
+            return true;
+        }
+        return false;
+    }
+    public ProtoId<TypingIndicatorPrototype>? GetMostRecentIndicator()
+    {
+        return _overrideIndicator;
     }
 }
