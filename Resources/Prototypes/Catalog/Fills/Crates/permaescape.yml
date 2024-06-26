@@ -41,12 +41,18 @@
       - MobTick
       - MobTick
       - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobTick
+      - MobCarp
       - MobCarp
       - MobCarp
       - MobCarpMagic
       - MobKangarooSpace
       - MobBearSpace
-    rareChance: .26
+    rareChance: .30
     chance: 1
     offset: 0.0
 
