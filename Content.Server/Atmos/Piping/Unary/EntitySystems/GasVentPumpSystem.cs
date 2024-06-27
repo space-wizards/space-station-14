@@ -170,7 +170,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         /// <summary>
         ///     Keeps track of the average rate of change in pressure, and returns `false` if
-        ///     the rate is less than <see cref=GasVentPumpComponent.pressurizationLockout>.
+        ///     the rate is less than <see cref=GasVentPumpComponent.PressurizationLockout>.
         ///
         ///     Because this was written by someone lazy, multiple calls in an atmos tick aren't properly supported.
         /// </summary>
@@ -181,31 +181,31 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             if (vent.UnderPressureLockout)
             {
-                vent.windowidx = -1;
-                vent.samples = 0;
+                vent.WindowIdx = -1;
+                vent.Samples = 0;
                 return false;
             }
-            vent.windowidx = (vent.windowidx + 1) % vent.maxSamples;
+            vent.WindowIdx = (vent.WindowIdx + 1) % vent.MaxSamples;
 
-            var oldAverage = vent.averagePressure;
-            if (vent.samples < vent.maxSamples)
-                vent.samples += 1;
+            var oldAverage = vent.AveragePressure;
+            if (vent.Samples < vent.MaxSamples)
+                vent.Samples += 1;
 
             // Calculate average pressure
             float pressure = 0;
-            vent.measurements[vent.windowidx] = environment.Pressure;
-            for (int i = 0; i < vent.samples; i++)
-                pressure += vent.measurements[i];
-            vent.averagePressure = pressure / vent.samples;
+            vent.Measurements[vent.WindowIdx] = environment.Pressure;
+            for (int i = 0; i < vent.Samples; i++)
+                pressure += vent.Measurements[i];
+            vent.AveragePressure = pressure / vent.Samples;
 
             // Calculate average rate of pressurization
             float refill = 0;
-            vent.pressurizationRate[vent.windowidx] = vent.averagePressure - oldAverage;
-            for (int i = 0; i < vent.samples; i++)
-                refill += vent.pressurizationRate[i];
-            var averagePressurizationRate = refill / vent.samples;
+            vent.PressurizationRate[vent.WindowIdx] = vent.AveragePressure - oldAverage;
+            for (int i = 0; i < vent.Samples; i++)
+                refill += vent.PressurizationRate[i];
+            var averagePressurizationRate = refill / vent.Samples;
 
-            if (averagePressurizationRate < vent.pressurizationLockout)
+            if (averagePressurizationRate < vent.PressurizationLockout)
                 return false;
             return true;
         }

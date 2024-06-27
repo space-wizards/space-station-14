@@ -59,46 +59,68 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("underPressureLockoutLeaking")]
         public float UnderPressureLockoutLeaking = 0.0001f;
 
-        #region some averaging stuff
+        #region fields used by GasVentPumpSystem.pressurizationLockout
         [ViewVariables(VVAccess.ReadOnly)]
-        public int samples { get; set; } = 0;
+        public int Samples { get; set; } = 0;
 
         /// <summary>
         ///     Calculate average pressure over X atmos updates.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        public int maxSamples { get; set; } = 5;
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public float[] measurements { get; set; } = new float[5];
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public float[] pressurizationRate { get; set; } = new float[5];
-
-        /// <summary>
-        ///     The vent will be shut down if the average pressure drop is less than this value.
+        ///     Can't exceed compile-time setting <see cref=AveragingBufferSize>
         /// </summary>
         /// <remarks>
+        ///     Too low values increase the likelyhood of the vent starting to cycle between pressurizing and locking out in a very slow spacing
+        ///     scenario.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int MaxSamples
+        {
+            get => _maxSamples;
+            set => _maxSamples = Math.Clamp(value, 1, AveragingBufferSize);
+        }
+        private int _maxSamples = AveragingBufferSize;
+
+        /// <Summary>
+        ///     Maximum size for ring buffers used by GasVentPumpSystem.pressurizationLockout.
+        ///     <see cref=MaxSamples> can't be set to higher than this value.
+        /// </Summary>
+        static readonly public int AveragingBufferSize = 5;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float[] Measurements { get; set; } = new float[AveragingBufferSize];
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float[] PressurizationRate { get; set; } = new float[AveragingBufferSize];
+
+        /// <summary>
+        ///     The vent will be shut down if the average pressure drop over the samplesize is below X kPa/s.
+        /// </summary>
+        /// <remarks>
+        ///     The samplesize is set via <see cref=GasVentPumpComponent.MaxSamples>
+        ///
+        ///     With X<0, drops in pressure cause lockout,
+        ///     with X>0, vents only turn on when pressure is already rising.
+        ///
         ///     In my testing, in a underPressureLockout failure the average pressure
         ///     drop over 5 ticks may drop to -0.04, triggering this check and causing a lockout, solving the
         ///     underPressureLockout failure.
         ///
         ///     This could be set to 0, but then the vents will stay locked for annoyingly long time whenever air flows
-        ///     from this vent to the surroundings. This may cause pressure drops in the order of E-5, causing lockouts
+        ///     from this vent to the surroundings. This may cause pressure drops in the order of E-5 kPa/s, causing lockouts
         ///     while refilling rooms.
+        ///     I'm not entirely sure if I got the math right, so the value -1 may not be exactly -1 kPa/s
         /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float pressurizationLockout { get; set; } = -0.02f;
+        public float PressurizationLockout { get; set; } = -0.02f;
 
         /// <summary>
         ///     Used to hold pressure from last tick. doesn't really matter what
         ///     it's initialized to.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float averagePressure { get; set; } = 101.325f;
+        public float AveragePressure { get; set; } = 101.325f;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public int windowidx { get; set; } = 0;
+        public int WindowIdx { get; set; } = 0;
         #endregion
 
         [ViewVariables(VVAccess.ReadWrite)]
