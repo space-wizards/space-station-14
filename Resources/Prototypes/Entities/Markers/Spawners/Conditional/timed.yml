@@ -53,9 +53,9 @@
     - type: Timer
     - type: TimedSpawner
       prototypes:
-        - MobMouse
-        - MobMouse1
-        - MobMouse2
+        - MobMouseGhostRole
+        - MobMouseGhostRole1
+        - MobMouseGhostRole2
       # round ~90m
       # one spawner should only spawn ~5 mice for sanity reasons
       # therefore 18m

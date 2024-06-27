@@ -13,9 +13,9 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobMouse
-      - MobMouse1
-      - MobMouse2
+      - MobMouseGhostRole
+      - MobMouseGhostRole1
+      - MobMouseGhostRole2
 
 - type: entity
   name: Cockroach Spawner
@@ -277,7 +277,7 @@
       sprite: Mobs/Animals/bear.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobBearSpace
+    - MobBearSpaceGhostRole
 
 - type: entity
   name: Space Carp Spawner
@@ -431,7 +431,7 @@
       sprite: Mobs/Animals/spacespider.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobSpiderSpace
+    - MobSpiderSpaceGhostRole
 
 - type: entity
   name: Space Cobra Spawner
@@ -445,7 +445,7 @@
       sprite: Mobs/Animals/spacecobra.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobCobraSpace
+    - MobCobraSpaceGhostRole
 
 - type: entity
   name: Slimes Spawner Blue
