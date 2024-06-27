@@ -11,7 +11,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Administration.UI.Tabs.ObjectsTab;
 
 [GenerateTypedNameReferences]
-public sealed class ObjectsTab : Control
+public sealed partial class ObjectsTab : Control
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
