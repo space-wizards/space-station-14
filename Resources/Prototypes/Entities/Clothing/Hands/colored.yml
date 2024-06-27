@@ -283,8 +283,6 @@
         color: "#535353"
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/black.rsi
-  - type: GloveHeatResistance
-    heatResistance: 1400
   - type: Butcherable
     butcheringType: Knife
     spawned:
@@ -305,8 +303,6 @@
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
-  - type: GloveHeatResistance
-    heatResistance: 1400
   - type: Butcherable
     butcheringType: Knife
     spawned:
@@ -323,9 +319,6 @@
   name: budget insulated gloves
   description: These gloves are cheap knockoffs of the coveted ones - no way this can end badly.
   components:
-  - type: GloveHeatResistance
-    # can't take out lights using budgets
-    heatResistance: 0
   - type: RandomInsulation
     # Why repeated numbers? So some numbers are more common, of course!
     list:

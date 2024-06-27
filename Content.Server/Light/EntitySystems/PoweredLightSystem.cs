@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Clothing.Components;
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
@@ -106,40 +105,7 @@ namespace Content.Server.Light.EntitySystems
             if (bulbUid == null)
                 return;
 
-            // check if it's possible to apply burn damage to user
             var userUid = args.User;
-            if (EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
-            {
-                // get users heat resistance
-                var res = int.MinValue;
-                if (_inventory.TryGetSlotEntity(userUid, "gloves", out var slotEntity) &&
-                    TryComp<GloveHeatResistanceComponent>(slotEntity, out var gloves))
-                {
-                    res = gloves.HeatResistance;
-                }
-
-                // check heat resistance against user
-                var burnedHand = light.CurrentLit && res < lightBulb.BurningTemperature;
-                if (burnedHand)
-                {
-                    var damage = _damageableSystem.TryChangeDamage(userUid, light.Damage, origin: userUid);
-
-                    // If damage is null then the entity could not take heat damage so they did not get burned.
-                    if (damage != null)
-                    {
-
-                        var burnMsg = Loc.GetString("powered-light-component-burn-hand");
-                        _popupSystem.PopupEntity(burnMsg, uid, userUid);
-                        _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.GetTotal():damage} damage");
-                        _audio.PlayEntity(light.BurnHandSound, Filter.Pvs(uid), uid, true);
-
-                        args.Handled = true;
-                        return;
-                    }
-                }
-            }
-
-
             //removing a broken/burned bulb, so allow instant removal
             if(TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
             {
