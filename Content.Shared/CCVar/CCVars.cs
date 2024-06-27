@@ -440,6 +440,16 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> RoundEndPVSOverrides =
             CVarDef.Create("game.round_end_pvs_overrides", true, CVar.SERVERONLY);
 
+        /// <summary>
+        /// If true, players can place objects onto tabletop games like chess boards.
+        /// </summary>
+        /// <remarks>
+        /// This feature is currently highly abusable and can easily be used to crash the server,
+        /// so it's off by default.
+        /// </remarks>
+        public static readonly CVarDef<bool> GameTabletopPlace =
+            CVarDef.Create("game.tabletop_place", false, CVar.SERVERONLY);
+
         /*
          * Discord
          */
@@ -831,6 +841,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ServerBanErasePlayer =
             CVarDef.Create("admin.server_ban_erase_player", false, CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        ///     Minimum players sharing a connection required to create an alert. -1 to disable the alert.
+        /// </summary>
+        /// <remarks>
+        ///     If you set this to 0 or 1 then it will alert on every connection, so probably don't do that.
+        /// </remarks>
+        public static readonly CVarDef<int> AdminAlertMinPlayersSharingConnection =
+            CVarDef.Create("admin.alert.min_players_sharing_connection", -1, CVar.SERVERONLY);
 
         /// <summary>
         ///     Minimum explosion intensity to create an admin alert message. -1 to disable the alert.
