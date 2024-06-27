@@ -1,86 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can now carefully walk over glass shards and D4.
-    type: Tweak
-  id: 6315
-  time: '2024-04-06T04:49:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26763
-- author: PursuitInAshes
-  changes:
-  - message: Sake Bottles can now be found in the booze-o-mat.
-    type: Tweak
-  id: 6316
-  time: '2024-04-06T20:16:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26776
-- author: osjarw
-  changes:
-  - message: Removed broken anom behaviour, which causes APE shots to fly through
-      the anom.
-    type: Remove
-  id: 6317
-  time: '2024-04-06T22:27:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26775
-- author: Vermidia
-  changes:
-  - message: Water coolers show how full/what they're full of again.
-    type: Fix
-  id: 6318
-  time: '2024-04-06T23:58:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26784
-- author: Crotalus
-  changes:
-  - message: Show missing materials in lathe tooltip
-    type: Add
-  id: 6319
-  time: '2024-04-08T03:16:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26795
-- author: chromiumboy
-  changes:
-  - message: Fixed the RCD not being able to build on top of puddles
-    type: Fix
-  - message: RCD constructions can no longer be rotated while in progress
-    type: Tweak
-  - message: The RCD now reports construction mode changes to its user
-    type: Add
-  id: 6320
-  time: '2024-04-08T03:17:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26792
-- author: lzk228
-  changes:
-  - message: Bombsuit and jani bombsuit are similar now.
-    type: Tweak
-  id: 6321
-  time: '2024-04-08T15:05:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26806
-- author: lzk228
-  changes:
-  - message: Clothing restock crate was splitted to clothing and autodrobe restock
-      crates.
-    type: Tweak
-  - message: Clothing is cheaper.
-    type: Tweak
-  id: 6322
-  time: '2024-04-08T15:10:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26805
-- author: Hanzdegloker
-  changes:
-  - message: Spears can now be quipped to your suit slot and cost slightly more to
-      make.
-    type: Tweak
-  id: 6323
-  time: '2024-04-08T15:34:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26724
-- author: KittenColony
-  changes:
-  - message: Added 13 new gauze wraps for moth that fit their twig bodies
-    type: Add
-  - message: Gauze markings have been moved to the Overlay category, allowing gauze
-      to not take up marking points
-    type: Tweak
-  id: 6324
-  time: '2024-04-09T08:04:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25481
 - author: Killerqu00
   changes:
   - message: Quartermasters can now skip a single bounty in the list once every 15
@@ -3836,3 +3754,80 @@
   id: 6814
   time: '2024-06-24T15:36:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29404
+- author: Emisse
+  changes:
+  - message: atmos, elite syndie, and deathsquad hardsuits are now the only fireproof
+      suits
+    type: Tweak
+  id: 6815
+  time: '2024-06-24T22:03:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29416
+- author: Bhijn and Myr
+  changes:
+  - message: The colors of the LEDs on the heater and freezer thermomachines has been
+      changed from red/green (respectively) to orange/cyan (respectively). In laymen's
+      terms, this makes thermomachines far more reasonably differentiable for those
+      with colorblindness.
+    type: Tweak
+  id: 6816
+  time: '2024-06-24T22:40:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29397
+- author: Elysium206
+  changes:
+  - message: Increased Security Riot shields durability significantly and makes actively
+      blocking better
+    type: Tweak
+  id: 6817
+  time: '2024-06-25T03:56:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29239
+- author: Tayrtahn
+  changes:
+  - message: Fixed space ninja's starting with their internals disabled.
+    type: Fix
+  id: 6818
+  time: '2024-06-25T06:28:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29213
+- author: PJB3005
+  changes:
+  - message: Low pressure damage now does only 1/4th as much damage. This is a band-aid
+      until better mechanics exists for the crew to deal with breaches of various
+      kinds.
+    type: Remove
+  id: 6819
+  time: '2024-06-26T00:48:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29478
+- author: lzk228
+  changes:
+  - message: Blood now has less satiation.
+    type: Tweak
+  id: 6820
+  time: '2024-06-26T02:27:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29433
+- author: Veritable-Calamity
+  changes:
+  - message: Moldy food can now be collected in the Janitors' trash bags.
+    type: Fix
+  id: 6821
+  time: '2024-06-26T03:26:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29380
+- author: Plykiya
+  changes:
+  - message: You can now interact with magic mirrors.
+    type: Fix
+  id: 6822
+  time: '2024-06-26T14:25:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29491
+- author: Doomsdrayk
+  changes:
+  - message: Disposal units no longer protect their contents from nuclear explosions.
+    type: Fix
+  id: 6823
+  time: '2024-06-26T14:25:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29438
+- author: Tayrtahn
+  changes:
+  - message: Pills and pill canisters no longer have two labels.
+    type: Fix
+  id: 6824
+  time: '2024-06-27T02:08:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29499
