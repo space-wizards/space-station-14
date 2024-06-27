@@ -1609,3 +1609,29 @@
       Min: 4
       Max: 8
       PotencyDivisor: 30
+
+- type: seed
+  id: lemo
+  name: seeds-lemo-name
+  noun: seeds-noun-seeds
+  displayName: seeds-lemo-display-name
+  plantRsi: Objects/Specific/Hydroponics/lemo.rsi
+  packetPrototype: LemoSeeds
+  productPrototypes:
+    - FoodLemo
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25

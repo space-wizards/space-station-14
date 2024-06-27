@@ -1918,3 +1918,34 @@
     - CottonBoll
   - type: Extractable
     grindableSolutionName: food
+
+- type: entity
+  name: lemo fruit
+  parent: FoodProduceBase
+  id: FoodLemo
+  description: The recently-discovered delicacy from the remote planet Teo.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - lemo
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 14
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lemo.rsi
+  - type: Produce
+    seedId: lemo
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceApple
+        Quantity: 10
+  - type: Tag
+    tags:
+    - Fruit

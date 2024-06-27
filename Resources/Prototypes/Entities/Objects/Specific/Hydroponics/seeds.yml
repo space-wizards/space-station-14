@@ -605,10 +605,11 @@
 
 - type: entity
   parent: SeedBase
-  name: packet of limo seeds
-  id: LimoSeeds
+  name: packet of lemo seeds
+  description: "Imported all the way from the distant planet Teo."
+  id: LemoSeeds
   components:
     - type: Seed
-      seedId: limo
+      seedId: lemo
     - type: Sprite
-      sprite: Objects/Specific/Hydroponics/limo.rsi
+      sprite: Objects/Specific/Hydroponics/lemo.rsi
