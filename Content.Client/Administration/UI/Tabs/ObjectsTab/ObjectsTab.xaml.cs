@@ -11,15 +11,18 @@ using Robust.Shared.Timing;
 namespace Content.Client.Administration.UI.Tabs.ObjectsTab;
 
 [GenerateTypedNameReferences]
-public sealed partial class ObjectsTab : Control
+public sealed class ObjectsTab : Control
 {
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
     private readonly Color _altColor = Color.FromHex("#292B38");
     private readonly Color _defaultColor = Color.FromHex("#2F2F3B");
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    private readonly List<ObjectsTabSelection> _selections = [];
-    [Dependency] private readonly IGameTiming _timing = default!;
+
     private bool _ascending;
     private ObjectsTabHeader.Header _headerClicked = ObjectsTabHeader.Header.ObjectName;
+
+    private readonly List<ObjectsTabSelection> _selections = [];
 
     public ObjectsTab()
     {
