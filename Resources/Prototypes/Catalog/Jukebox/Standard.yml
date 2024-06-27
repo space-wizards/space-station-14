@@ -39,3 +39,9 @@
   name: PigeonBeans - Sunset
   path:
     path: /Audio/Jukebox/sunset.ogg
+
+- type: jukebox
+  id: goodbye
+  name: PigeonBeans - goodbye
+  path:
+    path: /Audio/Jukebox/goodbye.ogg
