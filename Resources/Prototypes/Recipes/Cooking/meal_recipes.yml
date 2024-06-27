@@ -937,6 +937,16 @@
     FoodPlateTin: 1
 
 - type: microwaveMealRecipe
+  id: RecipeLemoPie
+  name: lemo pie recipe
+  result: FoodPieLemo
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodLemo: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
   id: RecipeBaklava
   name: baklava recipe
   result: FoodPieBaklava
@@ -1240,6 +1250,17 @@
     Sugar: 5
   solids:
     FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMuffinLemo
+  name: lemuffin recipe
+  result: FoodBakedMuffinLemo
+  time: 5
+  reagents:
+    Flour: 5
+    Sugar: 5
+  solids:
+    FoodLemo: 3
 
 - type: microwaveMealRecipe
   id: RecipeChocolateChipPancake

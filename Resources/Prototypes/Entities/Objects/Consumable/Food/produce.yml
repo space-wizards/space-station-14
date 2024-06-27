@@ -1923,7 +1923,7 @@
   name: lemo fruit
   parent: FoodProduceBase
   id: FoodLemo
-  description: The recently-discovered delicacy from the remote planet Teo.
+  description: A recently-discovered delicacy from the remote planet Teo.
   components:
   - type: FlavorProfile
     flavors:
