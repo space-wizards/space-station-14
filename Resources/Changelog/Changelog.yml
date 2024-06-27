@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: KittenColony
-  changes:
-  - message: Added 13 new gauze wraps for moth that fit their twig bodies
-    type: Add
-  - message: Gauze markings have been moved to the Overlay category, allowing gauze
-      to not take up marking points
-    type: Tweak
-  id: 6324
-  time: '2024-04-09T08:04:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25481
 - author: Killerqu00
   changes:
   - message: Quartermasters can now skip a single bounty in the list once every 15
@@ -3834,3 +3824,10 @@
   id: 6823
   time: '2024-06-26T14:25:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29438
+- author: Tayrtahn
+  changes:
+  - message: Pills and pill canisters no longer have two labels.
+    type: Fix
+  id: 6824
+  time: '2024-06-27T02:08:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29499
