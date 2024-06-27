@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SkaldetSkaeg
-  changes:
-  - message: The Flippo lighter is now quieter and has a delay on use.
-    type: Tweak
-  id: 6326
-  time: '2024-04-09T22:20:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26846
 - author: notquitehadouken
   changes:
   - message: Gave botanists droppers for easier chemical moving.
@@ -3831,3 +3824,10 @@
   id: 6825
   time: '2024-06-27T14:57:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29513
+- author: KonstantinAngelov
+  changes:
+  - message: Chef's Cookbook has a more IC name.
+    type: Tweak
+  id: 6826
+  time: '2024-06-27T15:11:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29467
