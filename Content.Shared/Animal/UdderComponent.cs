@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Animals;
@@ -9,7 +10,7 @@ namespace Content.Shared.Animals;
 ///     Gives the ability to produce a solution;
 ///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentPause]
+[RegisterComponent, AutoGenerateComponentPause, NetworkedComponent]
 public sealed partial class UdderComponent : Component
 {
     /// <summary>
