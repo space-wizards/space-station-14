@@ -8,7 +8,6 @@ namespace Content.Client.Administration.UI;
 [GenerateTypedNameReferences]
 public sealed partial class AdminMenuWindow : DefaultWindow
 {
-
     public event Action? OnDisposed;
 
     public AdminMenuWindow()

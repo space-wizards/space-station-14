@@ -47,7 +47,7 @@ public sealed partial class ObjectsTab : Control
         SearchList.GenerateItem += GenerateButton;
         SearchList.DataFilterCondition += DataFilterCondition;
         SearchList.ItemKeyBindDown += (args, data) => OnEntryKeyBindDown?.Invoke(args, data);
-        RefreshListButton.OnPressed += (BaseButton.ButtonEventArgs args) => RefreshObjectList();
+        RefreshListButton.OnPressed += _ => RefreshObjectList();
 
         var defaultSelection = ObjectsTabSelection.Grids;
         ObjectTypeOptions.SelectId((int) defaultSelection);
@@ -150,7 +150,9 @@ public sealed partial class ObjectsTab : Control
     private void HeaderClicked(ObjectsTabHeader.Header header)
     {
         if (_headerClicked == header)
+        {
             _ascending = !_ascending;
+        }
         else
         {
             _headerClicked = header;
