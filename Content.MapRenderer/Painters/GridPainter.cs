@@ -138,8 +138,8 @@ namespace Content.MapRenderer.Painters
             var yOffset = (int) -grid.LocalAABB.Bottom;
             var tileSize = grid.TileSize;
 
-            var x = ((float) Math.Floor(position.X) + xOffset) * tileSize * TilePainter.TileImageSize;
-            var y = ((float) Math.Floor(position.Y) + yOffset) * tileSize * TilePainter.TileImageSize;
+            var x = ((float) (position.X) + xOffset) * tileSize * TilePainter.TileImageSize;
+            var y = ((float) (position.Y) + yOffset) * tileSize * TilePainter.TileImageSize;
 
             return (x, y);
         }
