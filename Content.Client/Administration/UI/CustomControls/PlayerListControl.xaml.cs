@@ -20,14 +20,14 @@ public sealed partial class PlayerListControl : BoxContainer
     private readonly AdminSystem _adminSystem;
 
     private readonly IEntityManager _entManager;
-    private readonly List<PlayerInfo> _sortedPlayerList = new();
     private readonly IUserInterfaceManager _uiManager;
+    
+    private PlayerInfo? _selectedPlayer;
 
     private List<PlayerInfo> _playerList = new();
+    private readonly List<PlayerInfo> _sortedPlayerList = new();
 
-    private PlayerInfo? _selectedPlayer;
     public Comparison<PlayerInfo>? Comparison;
-
     public Func<PlayerInfo, string, string>? OverrideText;
 
     public PlayerListControl()
