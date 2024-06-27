@@ -58,6 +58,7 @@ namespace Content.Shared.Containers.ItemSlots
         }
 
         #region ComponentManagement
+
         /// <summary>
         ///     Spawn in starting items for any item slots that should have one.
         /// </summary>
@@ -68,7 +69,8 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.HasItem || string.IsNullOrEmpty(slot.StartingItem))
                     continue;
 
-                var item = EntityManager.SpawnEntity(slot.StartingItem, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
+                var item = EntityManager.SpawnEntity(slot.StartingItem,
+                    EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
                 if (slot.ContainerSlot != null)
                     _containers.Insert(item, slot.ContainerSlot);
             }
@@ -97,7 +99,8 @@ namespace Content.Shared.Containers.ItemSlots
             if (itemSlots.Slots.TryGetValue(id, out var existing))
             {
                 if (existing.Local)
-                    Log.Error($"Duplicate item slot key. Entity: {EntityManager.GetComponent<MetaDataComponent>(uid).EntityName} ({uid}), key: {id}");
+                    Log.Error(
+                        $"Duplicate item slot key. Entity: {EntityManager.GetComponent<MetaDataComponent>(uid).EntityName} ({uid}), key: {id}");
                 else
                     // server state takes priority
                     slot.CopyFrom(existing);
@@ -132,7 +135,10 @@ namespace Content.Shared.Containers.ItemSlots
                 Dirty(uid, itemSlots);
         }
 
-        public bool TryGetSlot(EntityUid uid, string slotId, [NotNullWhen(true)] out ItemSlot? itemSlot, ItemSlotsComponent? component = null)
+        public bool TryGetSlot(EntityUid uid,
+            string slotId,
+            [NotNullWhen(true)] out ItemSlot? itemSlot,
+            ItemSlotsComponent? component = null)
         {
             itemSlot = null;
 
@@ -141,9 +147,11 @@ namespace Content.Shared.Containers.ItemSlots
 
             return component.Slots.TryGetValue(slotId, out itemSlot);
         }
+
         #endregion
 
         #region Interactions
+
         /// <summary>
         ///     Attempt to take an item from a slot, if any are set to EjectOnInteract.
         /// </summary>
@@ -208,9 +216,9 @@ namespace Content.Shared.Containers.ItemSlots
                 if (!slot.InsertOnInteract)
                     continue;
 
-                if (!CanInsert(uid, args.Used, out var reason, args.User, slot, slot.Swap))
+                if (!CanInsert(uid, args.Used, args.User, slot, slot.Swap))
                 {
-                    if (reason != CannotInsertReason.SlotLocked)
+                    if (!slot.Locked)
                         allLocked = false;
                     lastFailedSlot = slot;
                     continue;
@@ -256,57 +264,33 @@ namespace Content.Shared.Containers.ItemSlots
                 return;
             }
         }
+
         #endregion
 
         #region Insert
+
         /// <summary>
         ///     Insert an item into a slot. This does not perform checks, so make sure to also use <see
         ///     cref="CanInsert"/> or just use <see cref="TryInsert"/> instead.
         /// </summary>
         /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
         /// Useful for predicted interactions</param>
-        private void Insert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
+        private void Insert(EntityUid uid,
+            ItemSlot slot,
+            EntityUid item,
+            EntityUid? user,
+            bool excludeUserAudio = false)
         {
             bool? inserted = slot.ContainerSlot != null ? _containers.Insert(item, slot.ContainerSlot) : null;
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
             // Logging
             if (inserted != null && inserted.Value && user != null)
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
+                _adminLogger.Add(LogType.Action,
+                    LogImpact.Low,
+                    $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
             _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
-        }
-
-        public enum CannotInsertReason
-        {
-            ContainerSlotNull,
-            SlotFullNoSwap,
-            ItemNotWhitelisted,
-            ItemBlacklisted,
-            SlotLocked,
-            EventCanceled,
-
-            /**
-             * calling _containers.CanInsert returned false, i dunno why you figure it out
-             */
-            CanInsertFalse
-        }
-
-        /// <summary>
-        ///     Check whether a given item can be inserted into a slot. Unless otherwise specified, this will return
-        ///     false if the slot is already filled.
-        /// </summary>
-        /// <remarks>
-        ///     Overloaded method, so you don't have to use reason
-        /// </remarks>
-        public bool CanInsert(
-            EntityUid uid,
-            EntityUid usedUid,
-            EntityUid? user,
-            ItemSlot slot,
-            bool swap = false)
-        {
-            return CanInsert(uid, usedUid, out var reason, user, slot, swap);
         }
 
         /// <summary>
@@ -315,51 +299,31 @@ namespace Content.Shared.Containers.ItemSlots
         /// </summary>
         public bool CanInsert(EntityUid uid,
             EntityUid usedUid,
-            out CannotInsertReason reason,
             EntityUid? user,
             ItemSlot slot,
             bool swap = false)
         {
             if (slot.ContainerSlot == null)
-            {
-                reason = CannotInsertReason.ContainerSlotNull;
                 return false;
-            }
 
             if (slot.HasItem && (!swap || swap && !CanEject(uid, user, slot)))
-            {
-                reason = CannotInsertReason.SlotFullNoSwap;
                 return false;
-            }
 
-            if (_whitelistSystem.IsWhitelistFail(slot.Whitelist, usedUid))
-            {
-                reason = CannotInsertReason.ItemNotWhitelisted;
+            if (_whitelistSystem.IsWhitelistFail(slot.Whitelist, usedUid) ||
+                _whitelistSystem.IsBlacklistPass(slot.Blacklist, usedUid))
                 return false;
-            }
-
-            if (_whitelistSystem.IsBlacklistPass(slot.Blacklist, usedUid))
-            {
-                reason = CannotInsertReason.ItemBlacklisted;
-                return false;
-            }
 
             if (slot.Locked)
-            {
-                reason = CannotInsertReason.SlotLocked;
                 return false;
-            }
 
             var ev = new ItemSlotInsertAttemptEvent(uid, usedUid, user, slot);
             RaiseLocalEvent(uid, ref ev);
             RaiseLocalEvent(usedUid, ref ev);
             if (ev.Cancelled)
             {
-                reason = CannotInsertReason.EventCanceled;
                 return false;
             }
 
-            reason = CannotInsertReason.CanInsertFalse;
             return _containers.CanInsert(usedUid, slot.ContainerSlot, assumeEmpty: swap);
         }
 
@@ -367,7 +331,12 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Tries to insert item into a specific slot.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsert(EntityUid uid, string id, EntityUid item, EntityUid? user, ItemSlotsComponent? itemSlots = null, bool excludeUserAudio = false)
+        public bool TryInsert(EntityUid uid,
+            string id,
+            EntityUid item,
+            EntityUid? user,
+            ItemSlotsComponent? itemSlots = null,
+            bool excludeUserAudio = false)
         {
             if (!Resolve(uid, ref itemSlots))
                 return false;
@@ -382,7 +351,11 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Tries to insert item into a specific slot.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
+        public bool TryInsert(EntityUid uid,
+            ItemSlot slot,
+            EntityUid item,
+            EntityUid? user,
+            bool excludeUserAudio = false)
         {
             if (!CanInsert(uid, item, user, slot))
                 return false;
@@ -396,7 +369,11 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Does not check action blockers.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsertFromHand(EntityUid uid, ItemSlot slot, EntityUid user, HandsComponent? hands = null, bool excludeUserAudio = false)
+        public bool TryInsertFromHand(EntityUid uid,
+            ItemSlot slot,
+            EntityUid user,
+            HandsComponent? hands = null,
+            bool excludeUserAudio = false)
         {
             if (!Resolve(user, ref hands, false))
                 return false;
@@ -426,7 +403,10 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Useful for predicted interactions
         /// </param>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsertEmpty(Entity<ItemSlotsComponent?> ent, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
+        public bool TryInsertEmpty(Entity<ItemSlotsComponent?> ent,
+            EntityUid item,
+            EntityUid? user,
+            bool excludeUserAudio = false)
         {
             if (!Resolve(ent, ref ent.Comp, false))
                 return false;
@@ -473,6 +453,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             return 1;
         }
+
         #endregion
 
         #region Eject
@@ -492,7 +473,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
             }
 
-            if (slot.ContainerSlot?.ContainedEntity is not {} item)
+            if (slot.ContainerSlot?.ContainedEntity is not { } item)
                 return false;
 
             var ev = new ItemSlotEjectAttemptEvent(uid, item, user, slot);
@@ -517,7 +498,9 @@ namespace Content.Shared.Containers.ItemSlots
 
             // Logging
             if (ejected != null && ejected.Value && user != null)
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value)} ejected {ToPrettyString(item)} from {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
+                _adminLogger.Add(LogType.Action,
+                    LogImpact.Low,
+                    $"{ToPrettyString(user.Value)} ejected {ToPrettyString(item)} from {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
             _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null);
         }
@@ -526,7 +509,11 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Try to eject an item from a slot.
         /// </summary>
         /// <returns>False if item slot is locked or has no item inserted</returns>
-        public bool TryEject(EntityUid uid, ItemSlot slot, EntityUid? user, [NotNullWhen(true)] out EntityUid? item, bool excludeUserAudio = false)
+        public bool TryEject(EntityUid uid,
+            ItemSlot slot,
+            EntityUid? user,
+            [NotNullWhen(true)] out EntityUid? item,
+            bool excludeUserAudio = false)
         {
             item = null;
 
@@ -548,8 +535,12 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Try to eject item from a slot.
         /// </summary>
         /// <returns>False if the id is not valid, the item slot is locked, or it has no item inserted</returns>
-        public bool TryEject(EntityUid uid, string id, EntityUid? user,
-            [NotNullWhen(true)] out EntityUid? item, ItemSlotsComponent? itemSlots = null, bool excludeUserAudio = false)
+        public bool TryEject(EntityUid uid,
+            string id,
+            EntityUid? user,
+            [NotNullWhen(true)] out EntityUid? item,
+            ItemSlotsComponent? itemSlots = null,
+            bool excludeUserAudio = false)
         {
             item = null;
 
@@ -580,12 +571,16 @@ namespace Content.Shared.Containers.ItemSlots
 
             return true;
         }
+
         #endregion
 
         #region Verbs
-        private void AddAlternativeVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetVerbsEvent<AlternativeVerb> args)
+
+        private void AddAlternativeVerbs(EntityUid uid,
+            ItemSlotsComponent itemSlots,
+            GetVerbsEvent<AlternativeVerb> args)
         {
-            if (args.Hands == null || !args.CanAccess ||!args.CanInteract)
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
             {
                 return;
             }
@@ -679,7 +674,9 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
 
-        private void AddInteractionVerbsVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetVerbsEvent<InteractionVerb> args)
+        private void AddInteractionVerbsVerbs(EntityUid uid,
+            ItemSlotsComponent itemSlots,
+            GetVerbsEvent<InteractionVerb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
@@ -738,7 +735,7 @@ namespace Content.Shared.Containers.ItemSlots
                         new SpriteSpecifier.Texture(
                             new ResPath("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
                 }
-                else if(slot.EjectOnInteract)
+                else if (slot.EjectOnInteract)
                 {
                     // Inserting/ejecting is a primary interaction for this entity. Instead of using the insert
                     // category, we will use a single "Place <item>" verb.
@@ -757,9 +754,11 @@ namespace Content.Shared.Containers.ItemSlots
                 args.Verbs.Add(insertVerb);
             }
         }
+
         #endregion
 
         #region BUIs
+
         private void HandleButtonPressed(EntityUid uid, ItemSlotsComponent component, ItemSlotButtonPressedEvent args)
         {
             if (!component.Slots.TryGetValue(args.SlotId, out var slot))
@@ -770,6 +769,7 @@ namespace Content.Shared.Containers.ItemSlots
             else if (args.TryInsert && !slot.HasItem)
                 TryInsertFromHand(uid, slot, args.Actor);
         }
+
         #endregion
 
         /// <summary>
