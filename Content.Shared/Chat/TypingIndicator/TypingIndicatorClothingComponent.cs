@@ -1,5 +1,6 @@
 ﻿using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Chat.TypingIndicator;
 
@@ -22,6 +23,6 @@ public sealed partial class TypingIndicatorClothingComponent : Component
     /// <summary>
     ///     This stores the time the item was equipped in someones inventory. If null, item is currently not equipped.
     /// </summary>
-    [DataField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? GotEquippedTime = null;
 }
