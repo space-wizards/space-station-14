@@ -152,6 +152,16 @@
   - type: Construction
     graph: HonkBot
     node: bot
+  - type: InteractionPopup
+    interactSuccessString: petting-success-honkbot
+    interactFailureString: petting-failure-honkbot
+    interactSuccessSound:
+      path: /Audio/Items/bikehorn.ogg
+
+- type: entity
+  parent: MobHonkBot
+  id: MobHonkBotGhostRole
+  components:
   - type: GhostRole
     makeSentient: true
     name: ghost-role-information-honkbot-name
@@ -160,11 +170,6 @@
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
-  - type: InteractionPopup
-    interactSuccessString: petting-success-honkbot
-    interactFailureString: petting-failure-honkbot
-    interactSuccessSound:
-      path: /Audio/Items/bikehorn.ogg
 
 - type: entity
   parent: MobHonkBot
@@ -180,13 +185,6 @@
   - type: Construction
     graph: JonkBot
     node: bot
-  - type: GhostRole
-    makeSentient: true
-    name: ghost-role-information-jonkbot-name
-    description: ghost-role-information-jonkbot-description
-    rules: ghost-role-information-freeagent-rules
-    raffle:
-      settings: default
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Items/brokenbikehorn.ogg
@@ -200,6 +198,19 @@
     totalIntensity: 10
     intensitySlope: 5
     canCreateVacuum: false
+
+- type: entity
+  parent: MobJonkBot
+  id: MobJonkBotGhostRole
+  suffix: "Ghost Role"
+  components:
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-jonkbot-name
+    description: ghost-role-information-jonkbot-description
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: default
 
 - type: entity
   parent: MobSiliconBase
@@ -314,6 +325,17 @@
   - type: Construction
     graph: MimeBot
     node: bot
+  - type: InteractionPopup
+    interactSuccessString: petting-success-mimebot
+    interactFailureString: petting-failure-mimebot
+  - type: Inventory
+    templateId: head
+
+- type: entity
+  parent: MobMimeBot
+  id: MobMimeBotGhostRole
+  suffix: "Ghost Role"
+  components:
   - type: GhostRole
     makeSentient: true
     name: ghost-role-information-mimebot-name
@@ -322,11 +344,6 @@
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
-  - type: InteractionPopup
-    interactSuccessString: petting-success-mimebot
-    interactFailureString: petting-failure-mimebot
-  - type: Inventory
-    templateId: head
 
 - type: entity
   parent: MobSiliconBase
@@ -338,14 +355,6 @@
     sprite: Mobs/Silicon/Bots/supplybot.rsi
     layers:
     - state: supplybot
-  - type: GhostRole
-    makeSentient: true
-    name: ghost-role-information-supplybot-name
-    description: ghost-role-information-supplybot-description
-    rules: ghost-role-information-nonantagonist-rules
-    raffle:
-      settings: default
-  - type: GhostTakeoverAvailable
   - type: Construction
     graph: SupplyBot
     node: bot
@@ -386,3 +395,17 @@
     - Binary
     - Common
     - Supply
+
+- type: entity
+  parent: MobSupplyBot
+  id: MobSupplyBotGhostRole
+  suffix: "Ghost Role"
+  components:
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-supplybot-name
+    description: ghost-role-information-supplybot-description
+    rules: ghost-role-information-nonantagonist-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable

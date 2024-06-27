@@ -85,14 +85,6 @@
         Base: critical
       Dead:
         Base: dead
-  - type: GhostRole
-    makeSentient: true
-    name: ghost-role-information-rat-king-name
-    description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-freeagent-rules
-    raffle:
-      settings: default
-  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
       - CannotSuicide
@@ -120,6 +112,19 @@
   - type: Grammar
     attributes:
       gender: male
+
+- type: entity
+  id: MobRatKingGhostRole
+  suffix: "Ghost Role"
+  components:
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-rat-king-name
+    description: ghost-role-information-rat-king-description
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
 
 - type: entity
   id: MobRatKingBuff
@@ -156,6 +161,20 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
+
+- type: entity
+  id: MobRatKingBuffGhostRole
+  parent: MobRatKingBuff
+  suffix: "Ghost Role, Buff"
+  components:
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-rat-king-name
+    description: ghost-role-information-rat-king-description
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
 
 - type: entity
   name: Rat Servant
