@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Killerqu00
-  changes:
-  - message: Quartermasters can now skip a single bounty in the list once every 15
-      minutes.
-    type: Add
-  id: 6325
-  time: '2024-04-09T22:18:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26537
 - author: SkaldetSkaeg
   changes:
   - message: The Flippo lighter is now quieter and has a delay on use.
@@ -3831,3 +3823,11 @@
   id: 6824
   time: '2024-06-27T02:08:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29499
+- author: PJB3005
+  changes:
+  - message: You can no longer place items onto tabletop games. The feature could
+      be easily abused to crash the server.
+    type: Remove
+  id: 6825
+  time: '2024-06-27T14:57:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29513
