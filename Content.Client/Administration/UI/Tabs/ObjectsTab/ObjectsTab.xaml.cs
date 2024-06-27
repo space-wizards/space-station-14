@@ -23,6 +23,7 @@ public sealed partial class ObjectsTab : Control
     private ObjectsTabHeader.Header _headerClicked = ObjectsTabHeader.Header.ObjectName;
 
     private readonly List<ObjectsTabSelection> _selections = [];
+    public event Action<GUIBoundKeyEventArgs, ListData>? OnEntryKeyBindDown;
 
     public ObjectsTab()
     {
@@ -35,10 +36,10 @@ public sealed partial class ObjectsTab : Control
             RefreshObjectList(_selections[ev.Id]);
         };
 
-        foreach (var type in Enum.GetValues(typeof(ObjectsTabSelection)))
+        foreach (var type in Enum.GetValues<ObjectsTabSelection>())
         {
-            _selections.Add((ObjectsTabSelection) type!);
-            ObjectTypeOptions.AddItem(GetLocalizedEnumValue((ObjectsTabSelection) type));
+            _selections.Add(type);
+            ObjectTypeOptions.AddItem(GetLocalizedEnumValue(type));
         }
 
         ListHeader.OnHeaderClicked += HeaderClicked;
@@ -46,14 +47,12 @@ public sealed partial class ObjectsTab : Control
         SearchList.GenerateItem += GenerateButton;
         SearchList.DataFilterCondition += DataFilterCondition;
         SearchList.ItemKeyBindDown += (args, data) => OnEntryKeyBindDown?.Invoke(args, data);
-        RefreshListButton.OnPressed += RefreshButtonPressed;
+        RefreshListButton.OnPressed += (BaseButton.ButtonEventArgs args) => RefreshObjectList();
 
         var defaultSelection = ObjectsTabSelection.Grids;
         ObjectTypeOptions.SelectId((int) defaultSelection);
         RefreshObjectList(defaultSelection);
     }
-
-    public event Action<GUIBoundKeyEventArgs, ListData>? OnEntryKeyBindDown;
 
     public void RefreshObjectList()
     {
@@ -159,11 +158,6 @@ public sealed partial class ObjectsTab : Control
         }
 
         ListHeader.UpdateHeaderSymbols(_headerClicked, _ascending);
-        RefreshObjectList();
-    }
-
-    private void RefreshButtonPressed(BaseButton.ButtonEventArgs args)
-    {
         RefreshObjectList();
     }
 
