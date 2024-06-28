@@ -354,7 +354,7 @@
   id: EstrogenPlus
   name: reagent-name-estrogen-plus
   desc: reagent-desc-estrogen-plus
-  physicalDesc: reagent-physical-desc-enigmatic
+  physicalDesc: reagent-physical-desc-soothing
   flavor: medicine
   color: "#ffffff"
   metabolisms:
