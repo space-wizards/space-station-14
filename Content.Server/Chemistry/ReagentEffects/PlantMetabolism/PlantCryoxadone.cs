@@ -28,6 +28,6 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             plantHolderComp.ForceUpdate = true;
         }
 
-        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString("reagent-effect-guidebook-missing", ("chance", Probability));
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString("reagent-effect-guidebook-plant-cryoxadone", ("chance", Probability));
     }
 }

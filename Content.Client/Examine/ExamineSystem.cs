@@ -46,6 +46,8 @@ namespace Content.Client.Examine
 
         public override void Initialize()
         {
+            base.Initialize();
+
             UpdatesOutsidePrediction = true;
 
             SubscribeLocalEvent<GetVerbsEvent<ExamineVerb>>(AddExamineVerb);
@@ -239,8 +241,8 @@ namespace Content.Client.Examine
 
             if (knowTarget)
             {
-                var itemName = FormattedMessage.RemoveMarkup(Identity.Name(target, EntityManager, player));
-                var labelMessage = FormattedMessage.FromMarkup($"[bold]{itemName}[/bold]");
+                var itemName = FormattedMessage.EscapeText(Identity.Name(target, EntityManager, player));
+                var labelMessage = FormattedMessage.FromMarkupPermissive($"[bold]{itemName}[/bold]");
                 var label = new RichTextLabel();
                 label.SetMessage(labelMessage);
                 hBox.AddChild(label);
@@ -248,7 +250,7 @@ namespace Content.Client.Examine
             else
             {
                 var label = new RichTextLabel();
-                label.SetMessage(FormattedMessage.FromMarkup("[bold]???[/bold]"));
+                label.SetMessage(FormattedMessage.FromMarkupOrThrow("[bold]???[/bold]"));
                 hBox.AddChild(label);
             }
 

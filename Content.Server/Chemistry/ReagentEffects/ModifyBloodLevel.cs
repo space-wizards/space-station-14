@@ -22,7 +22,7 @@ public sealed partial class ModifyBloodLevel : ReagentEffect
     {
         if (args.EntityManager.TryGetComponent<BloodstreamComponent>(args.SolutionEntity, out var blood))
         {
-            var sys = EntitySystem.Get<BloodstreamSystem>();
+            var sys = args.EntityManager.System<BloodstreamSystem>();
             var amt = Scaled ? Amount * args.Quantity : Amount;
             amt *= args.Scale;
 

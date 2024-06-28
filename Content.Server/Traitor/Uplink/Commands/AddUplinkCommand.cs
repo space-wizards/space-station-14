@@ -12,7 +12,6 @@ namespace Content.Server.Traitor.Uplink.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class AddUplinkCommand : IConsoleCommand
     {
-        [Dependency] private readonly IConfigurationManager _cfgManager = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 

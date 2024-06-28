@@ -5,7 +5,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -227,6 +226,9 @@ namespace Content.Shared.Storage
             EntityAngles = entityAngles;
         }
     }
+
+    [ByRefEvent]
+    public record struct StorageInteractAttemptEvent(bool Silent, bool Cancelled = false);
 
     [NetSerializable]
     [Serializable]

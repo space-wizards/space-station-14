@@ -1,11 +1,9 @@
 using Content.Server.Antag;
 using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Humanoid;
 using Content.Server.Nuke;
 using Content.Server.NukeOps;
 using Content.Server.Popups;
-using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Events;
@@ -13,33 +11,27 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
-using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nuke;
 using Content.Shared.NukeOps;
-using Content.Shared.Preferences;
 using Content.Shared.Store;
 using Content.Shared.Tag;
 using Content.Shared.Zombies;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Server.GameTicking.Components;
+using Content.Shared.Store.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -71,7 +63,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         SubscribeLocalEvent<WarDeclaredEvent>(OnWarDeclared);
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
 
-        SubscribeLocalEvent<NukeopsRuleComponent, AntagSelectEntityEvent>(OnAntagSelectEntity);
         SubscribeLocalEvent<NukeopsRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntSelected);
     }
 
@@ -269,10 +260,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     {
         var map = Transform(ent).MapID;
 
-        var rules = EntityQueryEnumerator<NukeopsRuleComponent, LoadMapRuleComponent>();
-        while (rules.MoveNext(out var uid, out _, out var mapRule))
+        var rules = EntityQueryEnumerator<NukeopsRuleComponent, RuleGridsComponent>();
+        while (rules.MoveNext(out var uid, out _, out var grids))
         {
-            if (map != mapRule.Map)
+            if (map != grids.Map)
                 continue;
             ent.Comp.AssociatedRule = uid;
             break;
@@ -333,7 +324,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (nukeops.WarDeclaredTime != null)
                 continue;
 
-            if (TryComp<LoadMapRuleComponent>(uid, out var mapComp) && Transform(ev.DeclaratorEntity).MapID != mapComp.Map)
+            if (TryComp<RuleGridsComponent>(uid, out var grids) && Transform(ev.DeclaratorEntity).MapID != grids.Map)
                 continue;
 
             var newStatus = GetWarCondition(nukeops, ev.Status);
@@ -454,7 +445,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         // Check that there are spawns available and that they can access the shuttle.
         var spawnsAvailable = EntityQuery<NukeOperativeSpawnerComponent>(true).Any();
-        if (spawnsAvailable && CompOrNull<LoadMapRuleComponent>(ent)?.Map == shuttleMapId)
+        if (spawnsAvailable && CompOrNull<RuleGridsComponent>(ent)?.Map == shuttleMapId)
             return; // Ghost spawns can still access the shuttle. Continue the round.
 
         // The shuttle is inaccessible to both living nuke operatives and yet to spawn nuke operatives,
@@ -469,24 +460,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         // prevent it called multiple times
         nukeops.RoundEndBehavior = RoundEndBehavior.Nothing;
-    }
-
-    // this should really go anywhere else but im tired.
-    private void OnAntagSelectEntity(Entity<NukeopsRuleComponent> ent, ref AntagSelectEntityEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        var profile = args.Session != null
-            ? _prefs.GetPreferences(args.Session.UserId).SelectedCharacter as HumanoidCharacterProfile
-            : HumanoidCharacterProfile.RandomWithSpecies();
-        if (!_prototypeManager.TryIndex(profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies, out SpeciesPrototype? species))
-        {
-            species = _prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies);
-        }
-
-        args.Entity = Spawn(species.Prototype);
-        _humanoid.LoadProfile(args.Entity.Value, profile);
     }
 
     private void OnAfterAntagEntSelected(Entity<NukeopsRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
@@ -505,7 +478,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     /// Is this method the shitty glue holding together the last of my sanity? yes.
     /// Do i have a better solution? not presently.
     /// </remarks>
-    private EntityUid? GetOutpost(Entity<LoadMapRuleComponent?> ent)
+    private EntityUid? GetOutpost(Entity<RuleGridsComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return null;

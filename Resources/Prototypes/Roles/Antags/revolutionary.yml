@@ -4,6 +4,7 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-rev-head-objective
+  guides: [ Revolutionaries ]
 
 - type: antag
   id: Rev
@@ -11,3 +12,11 @@
   antagonist: true
   setPreference: false
   objective: roles-antag-rev-objective
+  guides: [ Revolutionaries ]
+
+- type: startingGear
+  id: HeadRevGear
+  storage:
+    back:
+    - Flash
+    - ClothingEyesGlassesSunglasses

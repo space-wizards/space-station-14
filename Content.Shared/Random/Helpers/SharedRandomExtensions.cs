@@ -12,6 +12,15 @@ namespace Content.Shared.Random.Helpers
             return random.Pick(prototype.Values);
         }
 
+        /// <summary>
+        /// Randomly selects an entry from <paramref name="prototype"/>, attempts to localize it, and returns the result.
+        /// </summary>
+        public static string Pick(this IRobustRandom random, LocalizedDatasetPrototype prototype)
+        {
+            var index = random.Next(prototype.Values.Count);
+            return Loc.GetString(prototype.Values[index]);
+        }
+
         public static string Pick(this IWeightedRandomPrototype prototype, System.Random random)
         {
             var picks = prototype.Weights;
@@ -57,7 +66,8 @@ namespace Content.Shared.Random.Helpers
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
         }
 
-        public static string Pick(this IRobustRandom random, Dictionary<string, float> weights)
+        public static T Pick<T>(this IRobustRandom random, Dictionary<T, float> weights)
+            where T: notnull
         {
             var sum = weights.Values.Sum();
             var accumulated = 0f;
@@ -74,7 +84,7 @@ namespace Content.Shared.Random.Helpers
                 }
             }
 
-            throw new InvalidOperationException($"Invalid weighted pick");
+            throw new InvalidOperationException("Invalid weighted pick");
         }
 
         public static (string reagent, FixedPoint2 quantity) Pick(this WeightedRandomFillSolutionPrototype prototype, IRobustRandom? random = null)

@@ -14,23 +14,6 @@
       - id: Scalpel
 
 - type: entity
-  id: ClothingBackpackDuffelCBURNFilled
-  parent: ClothingBackpackDuffelCBURN
-  suffix: Filled
-  components:
-  - type: StorageFill
-    contents:
-    - id: BoxSurvivalEngineering
-    - id: WeaponShotgunDoubleBarreled
-    - id: BoxShotgunIncendiary
-      amount: 2
-    - id: GrenadeFlashBang
-      amount: 2
-    - id: PillAmbuzolPlus
-    - id: PillAmbuzol
-      amount: 4
-
-- type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
   id: ClothingBackpackDuffelSyndicateFilledMedical
   name: syndicate surgical duffel bag
@@ -319,38 +302,6 @@
       - id: PillAmbuzolPlus
       - id: PillAmbuzol
         amount: 3
-
-- type: entity
-  parent: ClothingBackpackDuffelSyndicateBundle
-  id: ClothingBackpackDuffelSyndicateOperative
-  name: operative duffelbag
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvivalSyndicate
-      - id: WeaponPistolViper
-      - id: PinpointerSyndicateNuclear
-      - id: DeathAcidifierImplanter
-
-
-- type: entity
-  parent: ClothingBackpackDuffelSyndicateMedicalBundle
-  id: ClothingBackpackDuffelSyndicateOperativeMedic
-  name: operative medic duffelbag
-  description: A large duffel bag for holding extra medical supplies.
-  components:
-  - type: StorageFill
-    contents:
-      - id: SyndiHypo
-      - id: BoxSurvivalSyndicate
-      - id: SawAdvanced
-      - id: Cautery
-      - id: CombatKnife
-      - id: WeaponPistolViper
-      - id: PinpointerSyndicateNuclear
-      - id: HandheldHealthAnalyzer
-      - id: CombatMedipen
-      - id: DeathAcidifierImplanter
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle

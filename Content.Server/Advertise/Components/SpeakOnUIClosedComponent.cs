@@ -1,4 +1,4 @@
-using Content.Shared.Advertise;
+using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Advertise.Components;
@@ -11,10 +11,10 @@ namespace Content.Server.Advertise.Components;
 public sealed partial class SpeakOnUIClosedComponent : Component
 {
     /// <summary>
-    /// The identifier for the message pack prototype containing messages to be spoken by this entity.
+    /// The identifier for the dataset prototype containing messages to be spoken by this entity.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<MessagePackPrototype> Pack { get; private set; }
+    public ProtoId<LocalizedDatasetPrototype> Pack { get; private set; }
 
     /// <summary>
     /// Is this component active? If false, no messages will be spoken.

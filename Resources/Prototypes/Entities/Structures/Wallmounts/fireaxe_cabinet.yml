@@ -1,29 +1,33 @@
+# TODO: same as fire extinguisher make it use a base structure theres lots of copy paste
 - type: entity
+  parent: BaseItemCabinetGlass
   id: FireAxeCabinet
   name: fire axe cabinet
   description: There is a small label that reads "For Emergency use only" along with details for safe use of the axe. As if.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 300
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 200 #20ish crowbar hits
-        behaviors:
-        - !type:EmptyAllContainersBehaviour
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalGlassBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200 #20ish crowbar hits
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -36,68 +40,42 @@
     layers:
     - state: cabinet
     - state: fireaxe
-      map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
+      map: ["enum.ItemCabinetVisuals.Layer"]
       visible: true
     - state: glass
-      map: ["enum.ItemCabinetVisualLayers.Door"]
-  - type: ItemCabinet
-    cabinetSlot:
-      ejectOnInteract: true
-      whitelist:
-        tags:
-        - FireAxe
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass
-  - type: Appearance
+      map: ["enum.OpenableVisuals.Layer"]
+  - type: ItemSlots
+    slots:
+      ItemCabinet:
+        ejectOnInteract: true
+        whitelist:
+          tags:
+          - FireAxe
   - type: Lock
   - type: AccessReader
     access: [["Atmospherics"], ["Command"]]
-  - type: ItemSlots
-  - type: ContainerContainer
-    containers:
-      ItemCabinet: !type:ContainerSlot
-  placement:
-    mode: SnapgridCenter
 
 - type: entity
-  id: FireAxeCabinetOpen
   parent: FireAxeCabinet
+  id: FireAxeCabinetOpen
   suffix: Open
   components:
-  - type: ItemCabinet
+  - type: Openable
     opened: true
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass
+  - type: Lock
+    locked: false
 
 - type: entity
-  id: FireAxeCabinetFilled
   parent: FireAxeCabinet
+  id: FireAxeCabinetFilled
   suffix: Filled
   components:
-  - type: ItemCabinet
-    cabinetSlot:
-      startingItem: FireAxe
-      ejectOnInteract: true
-      whitelist:
-        tags:
-        - FireAxe
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - FireAxe
 
 - type: entity
+  parent: [FireAxeCabinetFilled, FireAxeCabinetOpen]
   id: FireAxeCabinetFilledOpen
-  parent: FireAxeCabinetFilled
   suffix: Filled, Open
-  components:
-  - type: ItemCabinet
-    opened: true
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass

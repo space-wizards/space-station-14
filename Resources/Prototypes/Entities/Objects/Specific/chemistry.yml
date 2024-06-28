@@ -137,6 +137,8 @@
     solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: beaker
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
@@ -233,6 +235,8 @@
     sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
     layers:
       - state: beakernoreact
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
   - type: SolutionContainerManager
     solutions:
       beaker:
@@ -251,6 +255,8 @@
     sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
     layers:
       - state: beakerbluespace
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
   - type: SolutionContainerManager
     solutions:
       beaker:

@@ -304,7 +304,7 @@
   - type: Tool
     qualities:
       - Screwing
-    speed: 1.5
+    speedModifier: 1.5
     useSound: /Audio/Items/drill_use.ogg
   - type: MultipleTool
     statusShowBehavior: true
@@ -479,7 +479,7 @@
   - type: Tool
     qualities:
       - Screwing
-    speed: 1.2 # Kept for future adjustments. Currently 1.2x for balance
+    speedModifier: 1.2 # Kept for future adjustments. Currently 1.2x for balance
     useSound: /Audio/Items/drill_use.ogg
   - type: ToolTileCompatible
   - type: MultipleTool

@@ -24,9 +24,6 @@ namespace Content.Server.Speech.EntitySystems
 
         private void OnAccent(EntityUid uid, ReplacementAccentComponent component, AccentGetEvent args)
         {
-            if (!_random.Prob(component.ReplacementChance))
-                return;
-
             args.Message = ApplyReplacements(args.Message, component.Accent);
         }
 
@@ -37,6 +34,9 @@ namespace Content.Server.Speech.EntitySystems
         public string ApplyReplacements(string message, string accent)
         {
             if (!_proto.TryIndex<ReplacementAccentPrototype>(accent, out var prototype))
+                return message;
+
+            if (!_random.Prob(prototype.ReplacementChance))
                 return message;
 
             // Prioritize fully replacing if that exists--
@@ -89,8 +89,8 @@ namespace Content.Server.Speech.EntitySystems
 
                     // In-place replace the match with the transformed capitalization replacement
                     message = message.Remove(match.Index, match.Length).Insert(match.Index, replacement);
-                    string mask = new string('_', match.Length);
-                    maskMessage = message.Remove(match.Index, match.Length).Insert(match.Index, mask);
+                    var mask = new string('_', replacement.Length);
+                    maskMessage = maskMessage.Remove(match.Index, match.Length).Insert(match.Index, mask);
                 }
             }
 

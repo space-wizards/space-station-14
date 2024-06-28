@@ -6,6 +6,10 @@ namespace Content.Shared.Chemistry.Reaction
 {
     public interface ITileReaction
     {
-        FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume, List<ReagentData>? data = null);
+        FixedPoint2 TileReact(TileRef tile,
+            ReagentPrototype reagent,
+            FixedPoint2 reactVolume,
+            IEntityManager entityManager,
+            List<ReagentData>? data = null);
     }
 }

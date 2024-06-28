@@ -49,7 +49,6 @@
 
 # actions
 - type: entity
-  noSpawn: true
   id: ActionDisguiseNoRot
   name: Toggle Rotation
   description: Use this to prevent your disguise from rotating, making it easier to hide in some scenarios.
@@ -59,7 +58,6 @@
     event: !type:DisguiseToggleNoRotEvent
 
 - type: entity
-  noSpawn: true
   id: ActionDisguiseAnchor
   name: Toggle Anchored
   description: For many objects you will want to be anchored to not be completely obvious.

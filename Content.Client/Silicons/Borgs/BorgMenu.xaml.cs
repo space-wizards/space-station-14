@@ -25,6 +25,7 @@ public sealed partial class BorgMenu : FancyWindow
     public readonly EntityUid Entity;
     public float AccumulatedTime;
     private string _lastValidName;
+    private List<EntityUid> _modules = new();
 
     public BorgMenu(EntityUid entity)
     {
@@ -114,7 +115,23 @@ public sealed partial class BorgMenu : FancyWindow
             ("actual", _chassis.ModuleCount),
             ("max", _chassis.MaxModules));
 
+        if (_chassis.ModuleContainer.Count == _modules.Count)
+        {
+            var isSame = true;
+            foreach (var module in _chassis.ModuleContainer.ContainedEntities)
+            {
+                if (_modules.Contains(module))
+                    continue;
+                isSame = false;
+                break;
+            }
+
+            if (isSame)
+                return;
+        }
+
         ModuleContainer.Children.Clear();
+        _modules.Clear();
         foreach (var module in _chassis.ModuleContainer.ContainedEntities)
         {
             var control = new BorgModuleControl(module, _entity);
@@ -123,6 +140,7 @@ public sealed partial class BorgMenu : FancyWindow
                 RemoveModuleButtonPressed?.Invoke(module);
             };
             ModuleContainer.AddChild(control);
+            _modules.Add(module);
         }
     }
 
@@ -162,4 +180,3 @@ public sealed partial class BorgMenu : FancyWindow
         NameChanged?.Invoke(_lastValidName);
     }
 }
-

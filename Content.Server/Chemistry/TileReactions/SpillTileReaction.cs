@@ -26,12 +26,14 @@ namespace Content.Server.Chemistry.TileReactions
         /// </summary>
         [DataField("superSlippery")] private bool _superSlippery;
 
-        public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume, List<ReagentData>? data)
+        public FixedPoint2 TileReact(TileRef tile,
+            ReagentPrototype reagent,
+            FixedPoint2 reactVolume,
+            IEntityManager entityManager,
+            List<ReagentData>? data)
         {
             if (reactVolume < 5)
                 return FixedPoint2.Zero;
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
 
             if (entityManager.EntitySysManager.GetEntitySystem<PuddleSystem>()
                 .TrySpillAt(tile, new Solution(reagent.ID, reactVolume, data), out var puddleUid, false, false))

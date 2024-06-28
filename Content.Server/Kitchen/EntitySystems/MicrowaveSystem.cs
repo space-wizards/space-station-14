@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Construction;
@@ -15,6 +16,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -35,6 +37,8 @@ using Robust.Shared.Player;
 using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared.Stacks;
+using Content.Server.Construction.Components;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -58,6 +62,9 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
         [Dependency] private readonly HandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
+        [Dependency] private readonly SharedStackSystem _stack = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         private const string MalfunctionSpark = "Spark";
@@ -199,16 +206,41 @@ namespace Content.Server.Kitchen.EntitySystems
                 {
                     foreach (var item in component.Storage.ContainedEntities)
                     {
-                        var metaData = MetaData(item);
-                        if (metaData.EntityPrototype == null)
+                        string? itemID = null;
+
+                        // If an entity has a stack component, use the stacktype instead of prototype id
+                        if (TryComp<StackComponent>(item, out var stackComp))
+                        {
+                            itemID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
+                        }
+                        else
+                        {
+                            var metaData = MetaData(item);
+                            if (metaData.EntityPrototype == null)
+                            {
+                                continue;
+                            }
+                            itemID = metaData.EntityPrototype.ID;
+                        }
+
+                        if (itemID != recipeSolid.Key)
                         {
                             continue;
                         }
 
-                        if (metaData.EntityPrototype.ID == recipeSolid.Key)
+                        if (stackComp is not null)
+                        {
+                            if (stackComp.Count == 1)
+                            {
+                                _container.Remove(item, component.Storage);
+                            }
+                            _stack.Use(item, 1, stackComp);
+                            break;
+                        }
+                        else
                         {
                             _container.Remove(item, component.Storage);
-                            EntityManager.DeleteEntity(item);
+                            Del(item);
                             break;
                         }
                     }
@@ -381,6 +413,23 @@ namespace Content.Server.Kitchen.EntitySystems
         }
 
         /// <summary>
+        /// Explodes the microwave internally, turning it into a broken state, destroying its board, and spitting out its machine parts
+        /// </summary>
+        /// <param name="ent"></param>
+        public void Explode(Entity<MicrowaveComponent> ent)
+        {
+            ent.Comp.Broken = true; // Make broken so we stop processing stuff
+            _explosion.TriggerExplosive(ent);
+            if (TryComp<MachineComponent>(ent, out var machine))
+            {
+                _container.CleanContainer(machine.BoardContainer);
+                _container.EmptyContainer(machine.PartContainer);
+            }
+
+            _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                $"{ToPrettyString(ent)} exploded from unsafe cooking!");
+        }
+        /// <summary>
         /// Handles the attempted cooking of unsafe objects
         /// </summary>
         /// <remarks>
@@ -397,7 +446,7 @@ namespace Content.Server.Kitchen.EntitySystems
             ent.Comp1.MalfunctionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp2.MalfunctionInterval);
             if (_random.Prob(ent.Comp2.ExplosionChance))
             {
-                _explosion.TriggerExplosive(ent);
+                Explode((ent, ent.Comp2));
                 return;  // microwave is fucked, stop the cooking.
             }
 
@@ -448,17 +497,35 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 AddComp<ActivelyMicrowavedComponent>(item);
 
-                var metaData = MetaData(item); //this simply begs for cooking refactor
-                if (metaData.EntityPrototype == null)
-                    continue;
+                string? solidID = null;
+                int amountToAdd = 1;
 
-                if (solidsDict.ContainsKey(metaData.EntityPrototype.ID))
+                // If a microwave recipe uses a stacked item, use the default stack prototype id instead of prototype id
+                if (TryComp<StackComponent>(item, out var stackComp))
                 {
-                    solidsDict[metaData.EntityPrototype.ID]++;
+                    solidID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
+                    amountToAdd = stackComp.Count;
                 }
                 else
                 {
-                    solidsDict.Add(metaData.EntityPrototype.ID, 1);
+                    var metaData = MetaData(item); //this simply begs for cooking refactor
+                    if (metaData.EntityPrototype is not null)
+                        solidID = metaData.EntityPrototype.ID;
+                }
+
+                if (solidID is null)
+                {
+                    continue;
+                }
+
+
+                if (solidsDict.ContainsKey(solidID))
+                {
+                    solidsDict[solidID] += amountToAdd;
+                }
+                else
+                {
+                    solidsDict.Add(solidID, amountToAdd);
                 }
 
                 if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
@@ -486,7 +553,8 @@ namespace Content.Server.Kitchen.EntitySystems
             activeComp.CookTimeRemaining = component.CurrentCookTimerTime * component.CookTimeMultiplier;
             activeComp.TotalTime = component.CurrentCookTimerTime; //this doesn't scale so that we can have the "actual" time
             activeComp.PortionedRecipe = portionedRecipe;
-            component.CurrentCookTimeEnd = _gameTiming.CurTime + TimeSpan.FromSeconds(component.CurrentCookTimerTime);
+            //Scale tiems with cook times
+            component.CurrentCookTimeEnd = _gameTiming.CurTime + TimeSpan.FromSeconds(component.CurrentCookTimerTime * component.CookTimeMultiplier);
             if (malfunctioning)
                 activeComp.MalfunctionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.MalfunctionInterval);
             UpdateUserInterfaceState(uid, component);
