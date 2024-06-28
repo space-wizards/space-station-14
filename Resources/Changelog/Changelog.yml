@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Added emergency nitrogen lockers. You can scarcely find them in public
-      areas, or scattered around in maintenance tunnels.
-    type: Add
-  id: 6330
-  time: '2024-04-10T21:20:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26752
 - author: Jark255
   changes:
   - message: Door electronics now require network configurators to change their access
@@ -3832,3 +3824,10 @@
   id: 6829
   time: '2024-06-28T03:34:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29487
+- author: slarticodefast
+  changes:
+  - message: Passive vents now have the correct sprite.
+    type: Fix
+  id: 6830
+  time: '2024-06-28T12:33:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29536
