@@ -114,7 +114,7 @@ namespace Content.Server.Abilities.Mime
             mimePowers.VowBroken = true;
             mimePowers.VowRepentTime = _timing.CurTime + mimePowers.VowCooldown;
 
-            if(!TryComp<MutedComponent>(uid, out var muted) || muted.Removable)
+            if(!TryComp<MutedComponent>(uid, out var muted) || muted.removable)
             {
               RemComp<MutedComponent>(uid);
             }
