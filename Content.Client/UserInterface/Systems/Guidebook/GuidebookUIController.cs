@@ -61,7 +61,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         // setup keybinding
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenGuidebook,
-                InputCmdHandler.FromDelegate(_ => ToggleGuidebook()))
+                InputCmdHandler.FromDelegate(_ => OpenGuidebook()))
             .Register<GuidebookUIController>();
     }
 
@@ -117,23 +117,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
     private void GuidebookButtonOnPressed(ButtonEventArgs obj)
     {
-        ToggleGuidebook();
-    }
-
-    public void ToggleGuidebook()
-    {
-        if (_guideWindow == null)
-            return;
-
-        if (_guideWindow.IsOpen)
-        {
-            UIManager.ClickSound();
-            _guideWindow.Close();
-        }
-        else
-        {
-            OpenGuidebook();
-        }
+        OpenGuidebook();
     }
 
     private void OnWindowClosed()
@@ -163,15 +147,23 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
     /// <param name="includeChildren">Whether or not to automatically include child entries. If false, this will ONLY
     /// show the specified entries</param>
     /// <param name="selected">The guide whose contents should be displayed when the guidebook is opened</param>
+    /// <param name="closeIfShown">Whether or not to close the guidbook window if it's already opened</param>
     public void OpenGuidebook(
         Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry>? guides = null,
         List<ProtoId<GuideEntryPrototype>>? rootEntries = null,
         ProtoId<GuideEntryPrototype>? forceRoot = null,
         bool includeChildren = true,
-        ProtoId<GuideEntryPrototype>? selected = null)
+        ProtoId<GuideEntryPrototype>? selected = null,
+        bool closeIfShown = true)
     {
         if (_guideWindow == null)
             return;
+
+        if (closeIfShown && _guideWindow.IsOpen) {
+            UIManager.ClickSound();
+            _guideWindow.Close();
+            return;
+        }
 
         if (GuidebookButton != null)
             GuidebookButton.SetClickPressed(!_guideWindow.IsOpen);

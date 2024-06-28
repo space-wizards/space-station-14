@@ -100,7 +100,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
         _escapeWindow.GuidebookButton.OnPressed += _ =>
         {
-            _guidebook.ToggleGuidebook();
+            _guidebook.OpenGuidebook();
         };
 
         // Hide wiki button if we don't have a link for it.
