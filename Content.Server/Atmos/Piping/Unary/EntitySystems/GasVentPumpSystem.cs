@@ -107,7 +107,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 float transferMoles = 0;
 
                 // Don't transfer air if pressure is actively dropping
-                if (pressurizationLockout(vent, environment, args.dt))
+                if (pressurizationLockout(vent, environment, args.dt) | vent.PressureLockoutOverride)
                     // how many moles to transfer to change external pressure by pressureDelta
                     // (ignoring temperature differences because I am lazy)
                     transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
@@ -185,6 +185,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return false;
             }
 
+            if (vent.OverheatCooldownTimer > 0f && vent.OverheatTimerEnabled)
+            {
+                vent.OverheatCooldownTimer -= dt;
+                vent.LastPressure = environment.Pressure;
+                return false;
+            }
+
             var difference = environment.Pressure - vent.LastPressure;
             vent.LastPressure = environment.Pressure;
 
@@ -203,7 +210,17 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             vent.PressureDelta = a * difference + (1 - a) * vent.PressureDelta;
 
             if (vent.PressureDelta < vent.PressurizationLockout * dt)
+            {
+                vent.OverheatTimer = 0;
                 return false;
+            }
+
+            vent.OverheatTimer += dt;
+            if (vent.OverheatTimer > vent.OverheatMaxTime)
+            {
+                vent.OverheatTimer -= vent.OverheatMaxTime;
+                vent.OverheatCooldownTimer += vent.OverheatCooldownMaxTime;
+            }
             return true;
         }
 

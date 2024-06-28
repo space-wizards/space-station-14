@@ -95,13 +95,40 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     I'm not 100% sure if I implemented correctly, so I advise leaving it at 1.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float AveragingTime = 1.0f;
+        public float AveragingTime { get; set; } = 1.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float PressureDelta = 0f;
+        public float PressureDelta { get; set; } = 0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float LastPressure { get; set; } = 101.325f;
+
+        /// <summary>
+        ///     Timer based check for spacing
+        /// </summary>
+        /// <remarks>
+        ///     This check is intended to catch the failures not handled by UnderPressureLockout or
+        ///     PressurizationLockout.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool OverheatTimerEnabled { get; set; } = true;
+
+        /// <summary>
+        ///     Defines for how many seconds the vent can move air uninterrupted.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverheatMaxTime { get; set; } = 5f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverheatCounter { get; set; } = 0f;
+
+        /// <summary>
+        ///     Defines how many seconds the vent will stay closed after moving air for <see cref=OverheatMaxTime>
+        ///     seconds.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverheatCooldownMaxTime { get; set; } = 1f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverheatCooldownCounter { get; set; } = 0f;
 
         #endregion
 
@@ -185,7 +212,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         // When true, ignore under-pressure lockout. Used to re-fill rooms in air alarm "Fill" mode.
         [DataField]
         public bool PressureLockoutOverride = false;
-
         #endregion
 
         public GasVentPumpData ToAirAlarmData()
