@@ -130,17 +130,20 @@ public sealed partial class SalvageSystem
             }
 
             // Uhh yeah don't delete mobs or whatever
-            var mobQuery = AllEntityQuery<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
+            var mobQuery = AllEntityQuery<MobStateComponent, TransformComponent>();
             _detachEnts.Clear();
 
-            while (mobQuery.MoveNext(out var mobUid, out _, out _, out var xform))
+            while (mobQuery.MoveNext(out var mobUid, out _, out var xform))
             {
                 if (xform.GridUid == null || !data.Comp.ActiveEntities.Contains(xform.GridUid.Value) || xform.MapUid == null)
                     continue;
 
+                if (_salvMobQuery.HasComp(mobUid))
+                    continue;
+
                 // Can't parent directly to map as it runs grid traversal.
                 _detachEnts.Add(((mobUid, xform), xform.MapUid.Value, _transform.GetWorldPosition(xform)));
-                _transform.DetachParentToNull(mobUid, xform);
+                _transform.DetachEntity(mobUid, xform);
             }
 
             // Go and cleanup the active ents.

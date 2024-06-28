@@ -9,7 +9,7 @@ namespace Content.Shared.Movement.Pulling.Components;
 /// <summary>
 /// Specifies an entity as being able to pull another entity with <see cref="PullableComponent"/>
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(PullingSystem))]
 public sealed partial class PullerComponent : Component
 {
@@ -18,7 +18,7 @@ public sealed partial class PullerComponent : Component
     /// Next time the puller can throw what is being pulled.
     /// Used to avoid spamming it for infinite spin + velocity.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, Access(Other = AccessPermissions.ReadWriteExecute)]
     public TimeSpan NextThrow;
 
     [DataField]

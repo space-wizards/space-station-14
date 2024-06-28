@@ -18,8 +18,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager;
-using System.Linq;
 
 namespace Content.Server.Anomaly;
 
@@ -69,20 +67,21 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         ChangeAnomalyStability(anomaly, Random.NextFloat(anomaly.Comp.InitialStabilityRange.Item1 , anomaly.Comp.InitialStabilityRange.Item2), anomaly.Comp);
         ChangeAnomalySeverity(anomaly, Random.NextFloat(anomaly.Comp.InitialSeverityRange.Item1, anomaly.Comp.InitialSeverityRange.Item2), anomaly.Comp);
 
-        ShuffleParticlesEffect(anomaly.Comp);
+        ShuffleParticlesEffect(anomaly);
         anomaly.Comp.Continuity = _random.NextFloat(anomaly.Comp.MinContituty, anomaly.Comp.MaxContituty);
         SetBehavior(anomaly, GetRandomBehavior());
     }
 
-    public void ShuffleParticlesEffect(AnomalyComponent anomaly)
+    public void ShuffleParticlesEffect(Entity<AnomalyComponent> anomaly)
     {
         var particles = new List<AnomalousParticleType>
             { AnomalousParticleType.Delta, AnomalousParticleType.Epsilon, AnomalousParticleType.Zeta, AnomalousParticleType.Sigma };
 
-        anomaly.SeverityParticleType = Random.PickAndTake(particles);
-        anomaly.DestabilizingParticleType = Random.PickAndTake(particles);
-        anomaly.WeakeningParticleType = Random.PickAndTake(particles);
-        anomaly.TransformationParticleType = Random.PickAndTake(particles);
+        anomaly.Comp.SeverityParticleType = Random.PickAndTake(particles);
+        anomaly.Comp.DestabilizingParticleType = Random.PickAndTake(particles);
+        anomaly.Comp.WeakeningParticleType = Random.PickAndTake(particles);
+        anomaly.Comp.TransformationParticleType = Random.PickAndTake(particles);
+        Dirty(anomaly);
     }
 
     private void OnShutdown(Entity<AnomalyComponent> anomaly, ref ComponentShutdown args)
@@ -198,14 +197,12 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         if (anomaly.Comp.CurrentBehavior != null)
             RemoveBehavior(anomaly, anomaly.Comp.CurrentBehavior.Value);
 
-        //event broadcast
-        var ev = new AnomalyBehaviorChangedEvent(anomaly, anomaly.Comp.CurrentBehavior, behaviorProto);
         anomaly.Comp.CurrentBehavior = behaviorProto;
-        RaiseLocalEvent(anomaly, ref ev, true);
-
         var behavior = _prototype.Index(behaviorProto);
-
         EntityManager.AddComponents(anomaly, behavior.Components);
+
+        var ev = new AnomalyBehaviorChangedEvent(anomaly, anomaly.Comp.CurrentBehavior, behaviorProto);
+        RaiseLocalEvent(anomaly, ref ev, true);
     }
 
     private void RemoveBehavior(Entity<AnomalyComponent> anomaly, ProtoId<AnomalyBehaviorPrototype> behaviorProto)
@@ -213,7 +210,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         if (anomaly.Comp.CurrentBehavior == null)
             return;
 
-        var behavior = _prototype.Index(anomaly.Comp.CurrentBehavior.Value);
+        var behavior = _prototype.Index(behaviorProto);
 
         EntityManager.RemoveComponents(anomaly, behavior.Components);
     }

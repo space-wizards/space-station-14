@@ -33,6 +33,6 @@ namespace Content.Server.EntityEffects.Effects
         }
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
-            Loc.GetString("reagent-effect-guidebook-missing", ("chance", Probability));
+            Loc.GetString("reagent-effect-guidebook-add-to-solution-reaction", ("chance", Probability));
     }
 }

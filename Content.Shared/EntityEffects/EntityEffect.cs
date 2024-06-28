@@ -30,7 +30,7 @@ public abstract partial class EntityEffect
 
     public virtual string ReagentEffectFormat => "guidebook-reagent-effect-description";
 
-    protected abstract string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys); // => Loc.GetString("reagent-effect-guidebook-missing", ("chance", Probability));
+    protected abstract string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys);
 
     /// <summary>
     ///     What's the chance, from 0 to 1, that this effect will occur?

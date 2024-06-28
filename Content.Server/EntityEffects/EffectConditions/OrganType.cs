@@ -27,16 +27,21 @@ public sealed partial class OrganType : EntityEffectCondition
             if (reagentArgs.OrganEntity == null)
                 return false;
 
-            if (reagentArgs.EntityManager.TryGetComponent<MetabolizerComponent>(reagentArgs.OrganEntity.Value, out var metabolizer)
-                && metabolizer.MetabolizerTypes != null
-                && metabolizer.MetabolizerTypes.Contains(Type))
-                return ShouldHave;
-
-            return !ShouldHave;
+            return Condition(reagentArgs.OrganEntity.Value, reagentArgs.EntityManager);
         }
 
         // TODO: Someone needs to figure out how to do this for non-reagent effects.
         throw new NotImplementedException();
+    }
+
+    public bool Condition(Entity<MetabolizerComponent?> metabolizer, IEntityManager entMan)
+    {
+        metabolizer.Comp ??= entMan.GetComponentOrNull<MetabolizerComponent>(metabolizer.Owner);
+        if (metabolizer.Comp != null
+            && metabolizer.Comp.MetabolizerTypes != null
+            && metabolizer.Comp.MetabolizerTypes.Contains(Type))
+            return ShouldHave;
+        return !ShouldHave;
     }
 
     public override string GuidebookExplanation(IPrototypeManager prototype)

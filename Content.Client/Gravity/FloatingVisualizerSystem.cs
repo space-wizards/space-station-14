@@ -57,6 +57,6 @@ public sealed class FloatingVisualizerSystem : SharedFloatingVisualizerSystem
         if (args.Key != component.AnimationKey)
             return;
 
-        FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime, !component.CanFloat);
+        FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime, stop: !component.CanFloat);
     }
 }
