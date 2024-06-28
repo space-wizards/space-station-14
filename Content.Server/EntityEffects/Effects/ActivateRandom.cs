@@ -29,7 +29,7 @@ namespace Content.Server.Chemistry.ReagentEffects
                     "- "
                     + string.Join(", ", case_.Activates.ToList()
                         .Select(activate =>
-                            prototype.TryIndex<ReagentPrototype>(activate.Reagent.Prototype, out ReagentPrototype? reagentProto)
+                            prototype.TryIndex(activate.Reagent.Prototype, out ReagentPrototype? reagentProto)
                                 ? Loc.GetString("reagent-effect-guidebook-activate-random-activate",
                                     ("factor", activate.Factor),
                                     ("catalyst", !activate.Consume),
@@ -107,7 +107,6 @@ namespace Content.Server.Chemistry.ReagentEffects
 
                 if (effect.ShouldLog)
                 {
-                    // TODO: CHECK THIS
                     var _adminLogger = IoCManager.Resolve<ISharedAdminLogManager>();
                     _adminLogger.Add(
                         LogType.ReagentEffect,
