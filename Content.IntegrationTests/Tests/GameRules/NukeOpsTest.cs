@@ -63,11 +63,11 @@ public sealed class NukeOpsTest
 
         // Opt into the nukies role.
         await pair.SetAntagPreference("NukeopsCommander", true);
-        await pair.SetAntagPreference( "NukeopsMedic", true, dummies[1].UserId);
+        await pair.SetAntagPreference("NukeopsMedic", true, dummies[1].UserId);
 
         // Initially, the players have no attached entities
         Assert.That(pair.Player?.AttachedEntity, Is.Null);
-        Assert.That(dummies.All(x => x.AttachedEntity  == null));
+        Assert.That(dummies.All(x => x.AttachedEntity == null));
 
         // There are no grids or maps
         Assert.That(entMan.Count<MapComponent>(), Is.Zero);
@@ -225,7 +225,7 @@ public sealed class NukeOpsTest
         // Finally lets check the nukie commander passed basic training and figured out how to breathe.
         var totalSeconds = 30;
         var totalTicks = (int) Math.Ceiling(totalSeconds / server.Timing.TickPeriod.TotalSeconds);
-        int increment = 5;
+        var increment = 5;
         var resp = entMan.GetComponent<RespiratorComponent>(player);
         var damage = entMan.GetComponent<DamageableComponent>(player);
         for (var tick = 0; tick < totalTicks; tick += increment)
@@ -235,7 +235,7 @@ public sealed class NukeOpsTest
             Assert.That(damage.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
         }
 
-        ticker.SetGamePreset((GamePresetPrototype?)null);
+        ticker.SetGamePreset((GamePresetPrototype?) null);
         await pair.CleanReturnAsync();
     }
 }

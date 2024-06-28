@@ -1,15 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using Content.Server.Humanoid.Components;
-using Content.Shared.Coordinates;
-using Content.Shared.Prototypes;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
