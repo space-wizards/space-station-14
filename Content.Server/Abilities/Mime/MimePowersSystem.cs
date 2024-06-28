@@ -113,12 +113,7 @@ namespace Content.Server.Abilities.Mime
             mimePowers.Enabled = false;
             mimePowers.VowBroken = true;
             mimePowers.VowRepentTime = _timing.CurTime + mimePowers.VowCooldown;
-
-            if(!TryComp<MutedComponent>(uid, out var muted) || muted.removable)
-            {
-              RemComp<MutedComponent>(uid);
-            }
-
+            RemComp<MutedComponent>(uid);
             _alertsSystem.ClearAlert(uid, mimePowers.VowAlert);
             _alertsSystem.ShowAlert(uid, mimePowers.VowBrokenAlert);
             _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallActionEntity);

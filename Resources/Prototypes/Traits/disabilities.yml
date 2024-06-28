@@ -59,7 +59,6 @@
       - BorgChassis
   components:
     - type: Muted
-      removable: false
 
 - type: trait
   id: LightweightDrunk
