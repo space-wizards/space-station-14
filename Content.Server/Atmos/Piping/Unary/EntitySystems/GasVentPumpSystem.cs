@@ -83,17 +83,17 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var timeDelta = args.dt;
             var pressureDelta = timeDelta * vent.TargetPressureChange;
 
+            var lockout = (environment.Pressure < vent.UnderPressureLockoutThreshold);
+            if (vent.UnderPressureLockout != lockout) // update visuals only if this changes
+            {
+                vent.UnderPressureLockout = lockout;
+                UpdateState(uid, vent);
+            }
+
             if (vent.PumpDirection == VentPumpDirection.Releasing && pipe.Air.Pressure > 0)
             {
                 if (environment.Pressure > vent.MaxPressure)
                     return;
-
-                var lockout = (environment.Pressure < vent.UnderPressureLockoutThreshold);
-                if (vent.UnderPressureLockout != lockout) // update visuals only if this changes
-                {
-                    vent.UnderPressureLockout = lockout;
-                    UpdateState(uid, vent);
-                }
 
                 if ((vent.PressureChecks & VentPressureBound.ExternalBound) != 0)
                 {
@@ -289,7 +289,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             if (args.IsInDetailsRange)
             {
-                if (pumpComponent.UnderPressureLockout & !pumpComponent.PressureLockoutOverride)
+                if (pumpComponent.PumpDirection == VentPumpDirection.Releasing & pumpComponent.UnderPressureLockout & !pumpComponent.PressureLockoutOverride)
                 {
                     args.PushMarkup(Loc.GetString("gas-vent-pump-uvlo"));
                 }
