@@ -55,6 +55,7 @@
             In: { state: vent_in }
             Out: { state: vent_out }
             Welded: { state: vent_welded }
+            Lockout: { state: vent_lockout }
     - type: GasVentPump
     - type: Construction
       graph: GasUnary
