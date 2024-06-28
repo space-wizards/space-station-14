@@ -107,7 +107,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 float transferMoles = 0;
 
                 // Don't transfer air if pressure is actively dropping
-                if (pressurizationLockout(vent, environment))
+                if (pressurizationLockout(vent, environment, args.dt))
                     // how many moles to transfer to change external pressure by pressureDelta
                     // (ignoring temperature differences because I am lazy)
                     transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
@@ -177,35 +177,32 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         /// <remarks>
         ///     This method is intended to stop vents from pumping air into rooms which are rapidly losing pressure.
         /// </remarks>
-        private bool pressurizationLockout(GasVentPumpComponent vent, GasMixture environment)
+        private bool pressurizationLockout(GasVentPumpComponent vent, GasMixture environment, float dt)
         {
             if (vent.UnderPressureLockout)
             {
-                vent.WindowIdx = -1;
-                vent.Samples = 0;
+                vent.LastPressure = environment.Pressure;
                 return false;
             }
-            vent.WindowIdx = (vent.WindowIdx + 1) % vent.MaxSamples;
 
-            var oldAverage = vent.AveragePressure;
-            if (vent.Samples < vent.MaxSamples)
-                vent.Samples += 1;
+            var difference = environment.Pressure - vent.LastPressure;
+            vent.LastPressure = environment.Pressure;
 
-            // Calculate average pressure
-            float pressure = 0;
-            vent.Measurements[vent.WindowIdx] = environment.Pressure;
-            for (int i = 0; i < vent.Samples; i++)
-                pressure += vent.Measurements[i];
-            vent.AveragePressure = pressure / vent.Samples;
+            // Sudden increase in pressure is most likely caused by atmos equalization,
+            // If this happens, reset average calculation and don't move air this frame.
+            // This may be triggered by the vents themselves, but they'll continue moving air, but just a tiny bit
+            // slower than usual.
+            if (difference > dt * vent.SuddenPressureSpike)
+            {
+                vent.PressureDelta = 0f;
+                return false;
+            }
 
-            // Calculate average rate of pressurization
-            float refill = 0;
-            vent.PressurizationRate[vent.WindowIdx] = vent.AveragePressure - oldAverage;
-            for (int i = 0; i < vent.Samples; i++)
-                refill += vent.PressurizationRate[i];
-            var averagePressurizationRate = refill / vent.Samples;
+            var tau = vent.AveragingTime;    // Time constant (averaging time) in seconds
+            float a = Math.Clamp(dt / tau, 0, 1);
+            vent.PressureDelta = a * difference + (1 - a) * vent.PressureDelta;
 
-            if (averagePressurizationRate < vent.PressurizationLockout)
+            if (vent.PressureDelta < vent.PressurizationLockout * dt)
                 return false;
             return true;
         }

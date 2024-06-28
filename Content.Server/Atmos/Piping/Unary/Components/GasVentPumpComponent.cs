@@ -60,49 +60,14 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public float UnderPressureLockoutLeaking = 0.0001f;
 
         #region fields used by GasVentPumpSystem.pressurizationLockout
-        [ViewVariables(VVAccess.ReadOnly)]
-        public int Samples { get; set; } = 0;
-
         /// <summary>
-        ///     Calculate average pressure over X atmos updates.
-        ///     Can't exceed compile-time setting <see cref=AveragingBufferSize>
+        ///     The vent will be shut down if the increase in pressure is lower than X kPa/s.
+        ///     This value is supposed to be given as a negative, so it's actually pressure dropping which triggers this
+        ///     check.
         /// </summary>
         /// <remarks>
-        ///     Too low values increase the likelyhood of the vent starting to cycle between pressurizing and locking out in a very slow spacing
-        ///     scenario.
-        /// </remarks>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int MaxSamples
-        {
-            get => _maxSamples;
-            set => _maxSamples = Math.Clamp(value, 1, AveragingBufferSize);
-        }
-        private int _maxSamples = AveragingBufferSize;
-
-        /// <Summary>
-        ///     Maximum size for ring buffers used by GasVentPumpSystem.pressurizationLockout.
-        ///     <see cref=MaxSamples> can't be set to higher than this value.
-        /// </Summary>
-        static readonly public int AveragingBufferSize = 5;
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public float[] Measurements { get; set; } = new float[AveragingBufferSize];
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public float[] PressurizationRate { get; set; } = new float[AveragingBufferSize];
-
-        /// <summary>
-        ///     The vent will be shut down if the average pressure drop over the samplesize is below X kPa/s.
-        /// </summary>
-        /// <remarks>
-        ///     The samplesize is set via <see cref=GasVentPumpComponent.MaxSamples>
-        ///
         ///     With X<0, drops in pressure cause lockout,
         ///     with X>0, vents only turn on when pressure is already rising.
-        ///
-        ///     In my testing, in a underPressureLockout failure the average pressure
-        ///     drop over 5 ticks may drop to -0.04, triggering this check and causing a lockout, solving the
-        ///     underPressureLockout failure.
         ///
         ///     This could be set to 0, but then the vents will stay locked for annoyingly long time whenever air flows
         ///     from this vent to the surroundings. This may cause pressure drops in the order of E-5 kPa/s, causing lockouts
@@ -110,17 +75,34 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     I'm not entirely sure if I got the math right, so the value -1 may not be exactly -1 kPa/s
         /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float PressurizationLockout { get; set; } = -0.02f;
+        public float PressurizationLockout { get; set; } = -0.05f;
 
         /// <summary>
-        ///     Used to hold pressure from last tick. doesn't really matter what
-        ///     it's initialized to.
+        ///     There's some atmos equalization mechanic that equalizes the pressure of the entire room in one tick, and
+        ///     it often causes this lockout to fail even while the pressure is dropping.
+        ///     If the pressure increases faster than this rate (kPa/s), the averaging calculation is reset, and the
+        ///     unnatural pressure reading is discarded.
+        /// <summary>
+        /// <remarks>
+        ///     Surprisingly, this seems to have almost no effect on the refilling rate of rooms, in situations where
+        ///     the vents themselves trigger this check.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float SuddenPressureSpike { get; set; } = 10f;
+
+        /// <summary>
+        ///     Calculate the pressure change over X seconds.
+        ///     I'm not 100% sure if I implemented correctly, so I advise leaving it at 1.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float AveragePressure { get; set; } = 101.325f;
+        public float AveragingTime = 1.0f;
 
-        [ViewVariables(VVAccess.ReadOnly)]
-        public int WindowIdx { get; set; } = 0;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float PressureDelta = 0f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float LastPressure { get; set; } = 101.325f;
+
         #endregion
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -203,6 +185,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         // When true, ignore under-pressure lockout. Used to re-fill rooms in air alarm "Fill" mode.
         [DataField]
         public bool PressureLockoutOverride = false;
+
         #endregion
 
         public GasVentPumpData ToAirAlarmData()
