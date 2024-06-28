@@ -6147,7 +6147,8 @@ entities:
           maxVol: 50
           name: null
           reagents:
-          - ReagentId: Leporazine
+          - data: null
+            ReagentId: Leporazine
             Quantity: 40
   - uid: 10800
     components:

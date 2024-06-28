@@ -5025,7 +5025,8 @@ entities:
           maxVol: 50
           name: null
           reagents:
-          - ReagentId: Leporazine
+          - data: null
+            ReagentId: Leporazine
             Quantity: 50
 - proto: Bed
   entities:
@@ -23712,7 +23713,8 @@ entities:
           maxVol: 30
           name: null
           reagents:
-          - ReagentId: Whiskey
+          - data: null
+            ReagentId: Whiskey
             Quantity: 30
     - type: Physics
       canCollide: False
