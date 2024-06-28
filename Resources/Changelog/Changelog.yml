@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: notquitehadouken
-  changes:
-  - message: Gave botanists droppers for easier chemical moving.
-    type: Add
-  id: 6327
-  time: '2024-04-10T17:28:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26839
 - author: botanySupremist
   changes:
   - message: Clipping harvestable plants now yields undamaged seeds.
@@ -3831,3 +3824,10 @@
   id: 6826
   time: '2024-06-27T15:11:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29467
+- author: metalgearsloth
+  changes:
+  - message: Ushanka no longer applies an accent to your name.
+    type: Tweak
+  id: 6827
+  time: '2024-06-28T00:08:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29524
