@@ -161,6 +161,20 @@
     event: !type:UseDnaScramblerImplantEvent
 
 - type: entity
+  id: ActionActivateGenderSwapImplant
+  name: Swap Gender
+  description:  Swaps your gender between male/female.
+  components:
+  - type: InstantAction
+    charges: 1
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
+      state: icon
+    event: !type:UseGenderSwapImplantEvent
+
+- type: entity
   id: ActionMorphGeras
   name: Morph into Geras
   description:  Morphs you into a Geras - a miniature version of you which allows you to move fast, at the cost of your inventory.

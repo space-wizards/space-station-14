@@ -73,6 +73,16 @@
       tags:
       - BikeHorn
 
+- type: entity
+  parent: BaseSubdermalImplant
+  id: GenderSwapImplant
+  name: Gender Swap Implant
+  description: This swaps the users gender on activation.
+  noSpawn: true
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionActivateGenderSwapImplant
+
 #Security implants
 
 - type: entity
