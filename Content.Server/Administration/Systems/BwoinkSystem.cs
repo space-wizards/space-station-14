@@ -12,6 +12,7 @@ using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -48,7 +49,11 @@ namespace Content.Server.Administration.Systems
         private string _footerIconUrl = string.Empty;
         private string _avatarUrl = string.Empty;
         private string _serverName = string.Empty;
-        private readonly Dictionary<NetUserId, (string? id, string username, string description, string? characterName, GameRunLevel lastRunLevel)> _relayMessages = new();
+
+        private readonly
+            Dictionary<NetUserId, (string? id, string username, string description, string? characterName, GameRunLevel
+                lastRunLevel)> _relayMessages = new();
+
         private Dictionary<NetUserId, string> _oldMessageIds = new();
         private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
         private readonly HashSet<NetUserId> _processingChannels = new();
@@ -91,18 +96,17 @@ namespace Content.Server.Administration.Systems
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
             SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _activeConversations.Clear());
+        }
+
+        private void OnRoundRestart(RoundRestartCleanupEvent ev)
+        {
+            _activeConversations.Clear();
         }
 
         private void OnOverrideChanged(string obj)
         {
             _overrideClientName = obj;
-        }
-
-        public enum PlayerStatusType
-        {
-            Connected,
-            Disconnected,
-            Banned
         }
 
         private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -140,7 +144,9 @@ namespace Content.Server.Administration.Systems
 
             if (message != null)
             {
-                var statusType = e.NewStatus == SessionStatus.Connected ? PlayerStatusType.Connected : PlayerStatusType.Disconnected;
+                var statusType = e.NewStatus == SessionStatus.Connected
+                    ? PlayerStatusType.Connected
+                    : PlayerStatusType.Disconnected;
                 NotifyAdmins(e.Session, message, statusType);
             }
 
@@ -185,10 +191,10 @@ namespace Content.Server.Administration.Systems
             // Create the message for in-game with username
             var color = statusType switch
             {
-                PlayerStatusType.Connected => "green",
-                PlayerStatusType.Disconnected => "yellow",
-                PlayerStatusType.Banned => "orange",
-                _ => "gray"
+                PlayerStatusType.Connected => Color.Green.ToHex(),
+                PlayerStatusType.Disconnected => Color.Yellow.ToHex(),
+                PlayerStatusType.Banned => Color.Orange.ToHex(),
+                _ => Color.Gray.ToHex(),
             };
             var inGameMessage = $"[color={color}]{session.Name} {message}[/color]";
 
@@ -209,14 +215,20 @@ namespace Content.Server.Administration.Systems
             // Enqueue the message for Discord relay
             if (_webhookUrl != string.Empty)
             {
-                if (!_messageQueues.ContainsKey(session.UserId))
-                    _messageQueues[session.UserId] = new Queue<string>();
+                // if (!_messageQueues.ContainsKey(session.UserId))
+                //     _messageQueues[session.UserId] = new Queue<string>();
+                //
+                // var escapedText = FormattedMessage.EscapeText(message);
+                // messageParams.Message = escapedText;
+                //
+                // var discordMessage = GenerateAHelpMessage(messageParams);
+                // _messageQueues[session.UserId].Enqueue(discordMessage);
 
+                var queue = _messageQueues.GetOrNew(session.UserId);
                 var escapedText = FormattedMessage.EscapeText(message);
                 messageParams.Message = escapedText;
-
                 var discordMessage = GenerateAHelpMessage(messageParams);
-                _messageQueues[session.UserId].Enqueue(discordMessage);
+                queue.Enqueue(discordMessage);
             }
         }
 
@@ -314,7 +326,8 @@ namespace Content.Server.Administration.Systems
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {
-                _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when trying to get webhook data (perhaps the webhook URL is invalid?): {response.StatusCode}\nResponse: {content}");
+                _sawmill.Log(LogLevel.Error,
+                    $"Discord returned bad status code when trying to get webhook data (perhaps the webhook URL is invalid?): {response.StatusCode}\nResponse: {content}");
                 return;
             }
 
@@ -338,7 +351,7 @@ namespace Content.Server.Administration.Systems
 
             // Whether the message will become too long after adding these new messages
             var tooLong = exists && messages.Sum(msg => Math.Min(msg.Length, MessageLengthCap) + "\n".Length)
-                    + existingEmbed.description.Length > DescriptionMax;
+                + existingEmbed.description.Length > DescriptionMax;
 
             // If there is no existing embed, or it is getting too long, we create a new embed
             if (!exists || tooLong)
@@ -347,7 +360,8 @@ namespace Content.Server.Administration.Systems
 
                 if (lookup == null)
                 {
-                    _sawmill.Log(LogLevel.Error, $"Unable to find player for NetUserId {userId} when sending discord webhook.");
+                    _sawmill.Log(LogLevel.Error,
+                        $"Unable to find player for NetUserId {userId} when sending discord webhook.");
                     _relayMessages.Remove(userId);
                     return;
                 }
@@ -359,11 +373,13 @@ namespace Content.Server.Administration.Systems
                 {
                     if (tooLong && existingEmbed.id != null)
                     {
-                        linkToPrevious = $"**[Go to previous embed of this round](https://discord.com/channels/{guildId}/{channelId}/{existingEmbed.id})**\n";
+                        linkToPrevious =
+                            $"**[Go to previous embed of this round](https://discord.com/channels/{guildId}/{channelId}/{existingEmbed.id})**\n";
                     }
                     else if (_oldMessageIds.TryGetValue(userId, out var id) && !string.IsNullOrEmpty(id))
                     {
-                        linkToPrevious = $"**[Go to last round's conversation with this player](https://discord.com/channels/{guildId}/{channelId}/{id})**\n";
+                        linkToPrevious =
+                            $"**[Go to last round's conversation with this player](https://discord.com/channels/{guildId}/{channelId}/{id})**\n";
                     }
                 }
 
@@ -379,7 +395,8 @@ namespace Content.Server.Administration.Systems
                     GameRunLevel.PreRoundLobby => "\n\n:arrow_forward: _**Pre-round lobby started**_\n",
                     GameRunLevel.InRound => "\n\n:arrow_forward: _**Round started**_\n",
                     GameRunLevel.PostRound => "\n\n:stop_button: _**Post-round started**_\n",
-                    _ => throw new ArgumentOutOfRangeException(nameof(_gameTicker.RunLevel), $"{_gameTicker.RunLevel} was not matched."),
+                    _ => throw new ArgumentOutOfRangeException(nameof(_gameTicker.RunLevel),
+                        $"{_gameTicker.RunLevel} was not matched."),
                 };
 
                 existingEmbed.lastRunLevel = _gameTicker.RunLevel;
@@ -395,7 +412,9 @@ namespace Content.Server.Administration.Systems
                 existingEmbed.description += $"\n{message}";
             }
 
-            var payload = GeneratePayload(existingEmbed.description, existingEmbed.username, existingEmbed.characterName);
+            var payload = GeneratePayload(existingEmbed.description,
+                existingEmbed.username,
+                existingEmbed.characterName);
 
             // If there is no existing embed, create a new one
             // Otherwise patch (edit) it
@@ -407,7 +426,8 @@ namespace Content.Server.Administration.Systems
                 var content = await request.Content.ReadAsStringAsync();
                 if (!request.IsSuccessStatusCode)
                 {
-                    _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when posting message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}");
+                    _sawmill.Log(LogLevel.Error,
+                        $"Discord returned bad status code when posting message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}");
                     _relayMessages.Remove(userId);
                     return;
                 }
@@ -415,7 +435,8 @@ namespace Content.Server.Administration.Systems
                 var id = JsonNode.Parse(content)?["id"];
                 if (id == null)
                 {
-                    _sawmill.Log(LogLevel.Error, $"Could not find id in json-content returned from discord webhook: {content}");
+                    _sawmill.Log(LogLevel.Error,
+                        $"Could not find id in json-content returned from discord webhook: {content}");
                     _relayMessages.Remove(userId);
                     return;
                 }
@@ -430,7 +451,8 @@ namespace Content.Server.Administration.Systems
                 if (!request.IsSuccessStatusCode)
                 {
                     var content = await request.Content.ReadAsStringAsync();
-                    _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when patching message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}");
+                    _sawmill.Log(LogLevel.Error,
+                        $"Discord returned bad status code when patching message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}");
                     _relayMessages.Remove(userId);
                     return;
                 }
@@ -460,7 +482,8 @@ namespace Content.Server.Administration.Systems
                     : $"pre-round lobby for round {_gameTicker.RoundId + 1}",
                 GameRunLevel.InRound => $"round {_gameTicker.RoundId}",
                 GameRunLevel.PostRound => $"post-round {_gameTicker.RoundId}",
-                _ => throw new ArgumentOutOfRangeException(nameof(_gameTicker.RunLevel), $"{_gameTicker.RunLevel} was not matched."),
+                _ => throw new ArgumentOutOfRangeException(nameof(_gameTicker.RunLevel),
+                    $"{_gameTicker.RunLevel} was not matched."),
             };
 
             return new WebhookPayload
@@ -525,7 +548,9 @@ namespace Content.Server.Administration.Systems
 
             string bwoinkText;
 
-            if (senderAdmin is not null && senderAdmin.Flags == AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
+            if (senderAdmin is not null &&
+                senderAdmin.Flags ==
+                AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
             {
                 bwoinkText = $"[color=purple]{senderSession.Name}[/color]";
             }
@@ -564,7 +589,9 @@ namespace Content.Server.Administration.Systems
                     {
                         string overrideMsgText;
                         // Doing the same thing as above, but with the override name. Theres probably a better way to do this.
-                        if (senderAdmin is not null && senderAdmin.Flags == AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
+                        if (senderAdmin is not null &&
+                            senderAdmin.Flags ==
+                            AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
                         {
                             overrideMsgText = $"[color=purple]{_overrideClientName}[/color]";
                         }
@@ -579,7 +606,11 @@ namespace Content.Server.Administration.Systems
 
                         overrideMsgText = $"{(message.PlaySound ? "" : "(S) ")}{overrideMsgText}: {escapedText}";
 
-                        RaiseNetworkEvent(new BwoinkTextMessage(message.UserId, senderSession.UserId, overrideMsgText, playSound: playSound), session.Channel);
+                        RaiseNetworkEvent(new BwoinkTextMessage(message.UserId,
+                                senderSession.UserId,
+                                overrideMsgText,
+                                playSound: playSound),
+                            session.Channel);
                     }
                     else
                         RaiseNetworkEvent(msg, session.Channel);
@@ -599,6 +630,7 @@ namespace Content.Server.Administration.Systems
                 {
                     str = str[..(DescriptionMax - _maxAdditionalChars - unameLength)];
                 }
+
                 var nonAfkAdmins = GetNonAfkAdmins();
                 var messageParams = new AHelpMessageParams(
                     senderSession.Name,
@@ -624,7 +656,8 @@ namespace Content.Server.Administration.Systems
         private IList<INetChannel> GetNonAfkAdmins()
         {
             return _adminManager.ActiveAdmins
-                .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false) && !_afkManager.IsAfk(p))
+                .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false) &&
+                            !_afkManager.IsAfk(p))
                 .Select(p => p.Channel)
                 .ToList();
         }
@@ -663,36 +696,43 @@ namespace Content.Server.Administration.Systems
             return stringbuilder.ToString();
         }
     }
-}
 
-public class AHelpMessageParams
-{
-    public string Username { get; set; }
-    public string Message { get; set; }
-    public bool IsAdmin { get; set; }
-    public string RoundTime { get; set; }
-    public GameRunLevel RoundState { get; set; }
-    public bool PlayedSound { get; set; }
-    public bool NoReceivers { get; set; }
-    public string? Icon { get; set; }
-
-    public AHelpMessageParams(
-        string username,
-        string message,
-        bool isAdmin,
-        string roundTime,
-        GameRunLevel roundState,
-        bool playedSound,
-        bool noReceivers = false,
-        string? icon = null)
+    public class AHelpMessageParams
     {
-        Username = username;
-        Message = message;
-        IsAdmin = isAdmin;
-        RoundTime = roundTime;
-        RoundState = roundState;
-        PlayedSound = playedSound;
-        NoReceivers = noReceivers;
-        Icon = icon;
+        public string Username { get; set; }
+        public string Message { get; set; }
+        public bool IsAdmin { get; set; }
+        public string RoundTime { get; set; }
+        public GameRunLevel RoundState { get; set; }
+        public bool PlayedSound { get; set; }
+        public bool NoReceivers { get; set; }
+        public string? Icon { get; set; }
+
+        public AHelpMessageParams(
+            string username,
+            string message,
+            bool isAdmin,
+            string roundTime,
+            GameRunLevel roundState,
+            bool playedSound,
+            bool noReceivers = false,
+            string? icon = null)
+        {
+            Username = username;
+            Message = message;
+            IsAdmin = isAdmin;
+            RoundTime = roundTime;
+            RoundState = roundState;
+            PlayedSound = playedSound;
+            NoReceivers = noReceivers;
+            Icon = icon;
+        }
+    }
+
+    public enum PlayerStatusType
+    {
+        Connected,
+        Disconnected,
+        Banned,
     }
 }
