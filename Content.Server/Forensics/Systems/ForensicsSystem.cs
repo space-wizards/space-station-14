@@ -150,7 +150,7 @@ namespace Content.Server.Forensics
             List<string> list = new();
             foreach (var reagent in soln.Contents)
             {
-                foreach (var data in reagent.Reagent.Data)
+                foreach (var data in reagent.Reagent.EnsureReagentData())
                 {
                     if (data is DnaData)
                     {

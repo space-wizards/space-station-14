@@ -214,8 +214,8 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             {
                 dna.DNA = _forensicsSystem.GenerateDNA();
 
-                var ev = new GenerateDnaEvent { Owner = uid, DNA = dna.DNA };
-                RaiseLocalEvent(uid, ref ev);
+                var ev = new GenerateDnaEvent { Owner = ent, DNA = dna.DNA };
+                RaiseLocalEvent(ent, ref ev);
             }
             if (TryComp<FingerprintComponent>(ent, out var fingerprint))
             {

@@ -4355,8 +4355,9 @@ entities:
           maxVol: 50
           name: null
           reagents:
-          - ReagentId: Water
-            Quantity: 25
+          - data: null
+            ReagentId: Blood
+            Quantity: 300
 - proto: Multitool
   entities:
   - uid: 307
