@@ -788,27 +788,27 @@
   id: RussianRouletteBlank
   reactants:
     Tricordrazine:
-      amount: 2
+      amount: 4
     BlackRussian:
-      amount: 1
+      amount: 3
     WhiteRussian:
-      amount: 1
+      amount: 3
   products:
-    RussianRoulette: 2
-    RussianRouletteBlank: 2
+    RussianRoulette: 6
+    RussianRouletteBlank: 4
 
 - type: reaction
   id: RussianRouletteLive
   reactants:
     Beanbag:
-      amount: 2
+      amount: 4
     BlackRussian:
-      amount: 1
+      amount: 3
     WhiteRussian:
-      amount: 1
+      amount: 3
   products:
-    RussianRoulette: 2
-    RussianRouletteLive: 2
+    RussianRoulette: 6
+    RussianRouletteLive: 4
   sound:
     path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
     params:

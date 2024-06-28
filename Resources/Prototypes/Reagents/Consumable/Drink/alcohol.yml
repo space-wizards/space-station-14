@@ -1438,9 +1438,15 @@
   physicalDesc: reagent-physical-desc-blazing
   flavor: russian-roulette
   color: "#9f2b15"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/russianroulette.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 2
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
-      metabolismRate: 0.1
+      metabolismRate: 0.2
       effects:
       - !type:Jitter
       - !type:PopupMessage
@@ -1452,7 +1458,7 @@
       - !type:ActivateRandom
         conditions:
         - !type:ReagentThreshold
-          min: 9.01
+          min: 12.5
         cases:
         - activates:
           - reagent:
@@ -1465,7 +1471,7 @@
           effects:
           - !type:AdjustReagent
             reagent: RussianRoulette
-            amount: -10
+            amount: -15
           - !type:PopupMessage
             conditions:
             - !type:ReagentThreshold
