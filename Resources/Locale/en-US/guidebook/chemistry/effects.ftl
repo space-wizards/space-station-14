@@ -357,6 +357,18 @@ reagent-effect-guidebook-add-to-solution-reaction =
         *[other] cause
     } chemicals applied to an object to be added to its internal solution container
 
+reagent-effect-guidebook-sex-change =
+    { $chance ->
+        [1] Makes
+        *[other] make
+    } the metabolizer changes sex
+
+reagent-effect-guidebook-gender-change =
+    { $chance ->
+        [1] Makes
+        *[other] make
+    } the metabolizer changes gender
+
 reagent-effect-guidebook-plant-attribute =
     { $chance ->
         [1] Adjusts

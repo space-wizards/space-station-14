@@ -27,3 +27,12 @@ reagent-desc-laughter = Some say that this is the best medicine, but recent stud
 
 reagent-name-weh = juice that makes you Weh
 reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
+
+reagent-name-estrogen-plus = Estrogen Plus
+reagent-desc-estrogen-plus = Estrogen... plus Testosterone... how does this work...
+
+reagent-name-estrogen = Estrogen
+reagent-desc-estrogen = A chemical to express your feminine side.
+
+reagent-name-testosterone = Testosterone
+reagent-desc-testosterone = A chemical to express your masculine side.

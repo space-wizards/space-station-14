@@ -348,4 +348,104 @@
         amount: -20
         conditions:
         - !type:ReagentThreshold
-          min: 50
+          min: 50S
+
+- type: reagent
+  id: EstrogenPlus
+  name: reagent-name-estrogen-plus
+  desc: reagent-desc-estrogen-plus
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: medicine
+  color: "#ffffff"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:SexChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:GenderChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:AdjustReagent
+        reagent: EstrogenPlus
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:PopupMessage
+        type: Local
+        messages: [ "generic-reagent-effect-changed" ]
+        conditions:
+        - !type:ReagentThreshold
+          reagent: EstrogenPlus
+          min: 20
+
+- type: reagent
+  id: Estrogen
+  name: reagent-name-estrogen
+  desc: reagent-desc-estrogen
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: medicine
+  color: "#f5aab9"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:SexChange
+        sex: Female
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:GenderChange
+        gender: Female
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:AdjustReagent
+        reagent: Estrogen
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:PopupMessage
+        type: Local
+        messages: [ "generic-reagent-effect-changed" ]
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Estrogen
+          min: 20
+
+- type: reagent
+  id: Testosterone
+  name: reagent-name-testosterone
+  desc: reagent-desc-testosterone
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: medicine
+  color: "#5bcffa"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:SexChange
+        sex: Male
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:GenderChange
+        gender: Male
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:AdjustReagent
+        reagent: Testosterone
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:PopupMessage
+        type: Local
+        messages: [ "generic-reagent-effect-changed" ]
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Testosterone
+          min: 20

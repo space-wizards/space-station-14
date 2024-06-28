@@ -303,6 +303,21 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         }
     }
 
+    public void SwapSex(EntityUid uid, HumanoidAppearanceComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid) || humanoid.Sex == Sex.Unsexed)
+            return;
+
+        // Not set up for future possible alien sexes
+        if (humanoid.Sex == Sex.Male)
+        {
+            SetSex(uid,Sex.Female);
+            return;
+        }
+        SetSex(uid,Sex.Male);
+
+    }
+
     /// <summary>
     ///     Loads a humanoid character profile directly onto this humanoid mob.
     /// </summary>
