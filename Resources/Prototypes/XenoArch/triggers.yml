@@ -1,0 +1,119 @@
+- type: xenoArchTrigger
+  id: TriggerMusic
+  tip: xenoarch-trigger-tip-music
+  components:
+  - type: XATCompNearby
+    component: ActiveInstrumentComponent
+
+- type: xenoArchTrigger
+  id: TriggerHeat
+  tip: xenoarch-trigger-tip-heat
+  components:
+  - type: XATTemperature
+    targetTemperature: 373
+    triggerOnHigherTemp: true
+  # TODO: add interaction for welders, etc.
+  - type: XATDamage
+    typesNeeded:
+      Heat: 50
+
+- type: xenoArchTrigger
+  id: TriggerCold
+  tip: xenoarch-trigger-tip-cold
+  components:
+  - type: XATTemperature
+    targetTemperature: 255
+    triggerOnHigherTemp: false
+  - type: XATDamage
+    typesNeeded:
+      Cold: 50
+
+- type: xenoArchTrigger
+  id: TriggerNoOxygen
+  tip: xenoarch-trigger-tip-no-oxygen
+  components:
+  - type: XATGas
+    targetGas: Oxygen
+    moles: 10
+    shouldBePresent: false
+
+# TODO: all the gas triggers need to support liquid versions as well
+- type: xenoArchTrigger
+  id: TriggerWater
+  tip: xenoarch-trigger-tip-water
+  components:
+  - type: XATGas
+    targetGas: WaterVapor
+
+- type: xenoArchTrigger
+  id: TriggerCO2
+  tip: xenoarch-trigger-tip-co2
+  components:
+  - type: XATGas
+    targetGas: CarbonDioxide
+
+- type: xenoArchTrigger
+  id: TriggerPlasma
+  tip: xenoarch-trigger-tip-plasma
+  components:
+  - type: XATGas
+    targetGas: Plasma
+
+- type: xenoArchTrigger
+  id: TriggerTritium
+  tip: xenoarch-trigger-tip-tritium
+  components:
+  - type: XATGas
+    targetGas: Tritium
+
+- type: xenoArchTrigger
+  id: TriggerAmmonia
+  tip: xenoarch-trigger-tip-ammonia
+  components:
+  - type: XATGas
+    targetGas: Ammonia
+
+- type: xenoArchTrigger
+  id: TriggerN2O
+  tip: xenoarch-trigger-tip-n2o
+  components:
+  - type: XATGas
+    targetGas: NitrousOxide
+
+- type: xenoArchTrigger
+  id: TriggerFrezon
+  tip: xenoarch-trigger-tip-frezon
+  components:
+  - type: XATGas
+    targetGas: Frezon
+# END GAS TRIGGERS
+
+- type: xenoArchTrigger
+  id: TriggerRadiation
+  tip: xenoarch-trigger-tip-radiation
+  components:
+  - type: XATDamage
+    typesNeeded:
+      Radiation: 100
+  # TODO: legendary microwave trigger
+  # TODO: add rad receiver to artifact
+
+- type: xenoArchTrigger
+  id: TriggerPressureHigh
+  tip: xenoarch-trigger-tip-pressure-high
+  components:
+  - type: XATPressure
+    maxPressureThreshold: 385
+
+- type: xenoArchTrigger
+  id: TriggerPressureLow
+  tip: xenoarch-trigger-tip-pressure-low
+  components:
+  - type: XATPressure
+    minPressureThreshold: 50
+
+- type: xenoArchTrigger
+  id: TriggerExamine
+  tip: xenoarch-trigger-tip-examine
+  components:
+  - type: XATExamine

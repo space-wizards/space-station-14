@@ -19,21 +19,8 @@ public abstract partial class SharedXenoArtifactSystem
         {
             if (_timing.CurTime < unlock.EndTime)
                 continue;
+            //todo: trigger unlock
         }
-    }
-
-    public void TriggerXenoArtifact(Entity<XenoArtifactComponent> ent, Entity<XenoArtifactNodeComponent> node)
-    {
-        if (_timing.CurTime < ent.Comp.NextUnlockTime)
-            return;
-
-        if (!_unlockingQuery.TryGetComponent(ent, out var unlockingComp))
-        {
-            unlockingComp = EnsureComp<XenoArtifactUnlockingComponent>(ent);
-            unlockingComp.EndTime = _timing.CurTime + ent.Comp.UnlockStateDuration;
-        }
-        var index = GetIndex(ent, node);
-        unlockingComp.TriggeredNodeIndexes.Add(index);
     }
 
     public bool CanUnlockNode(Entity<XenoArtifactNodeComponent?> ent)

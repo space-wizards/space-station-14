@@ -10,7 +10,7 @@ public sealed partial class XenoArchTriggerPrototype : IPrototype
     public string ID { get; } = default!;
 
     [DataField]
-    public LocId Hint;
+    public LocId Tip;
 
     [DataField]
     public ComponentRegistry Components = new();

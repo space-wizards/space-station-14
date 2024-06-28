@@ -41,3 +41,5 @@
   - type: GuideHelp
     guides:
     - Xenoarchaeology
+  # These components are needed for certain triggers to work.
+  - type: RadiationReceiver

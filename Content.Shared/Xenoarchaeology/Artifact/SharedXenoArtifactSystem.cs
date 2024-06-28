@@ -23,6 +23,7 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
 
         InitializeNode();
         InitializeUnlock();
+        InitializeXAT();
     }
 
     public override void Update(float frameTime)

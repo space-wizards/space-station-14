@@ -25,7 +25,7 @@ public sealed partial class XenoArtifactNodeComponent : Component
     /// Strings that denote the triggers that this node has.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<LocId> TriggerHints = new();
+    public List<LocId> TriggerTips = new();
 
     /// <summary>
     /// The entity whose graph this node is a part of.
