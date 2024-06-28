@@ -216,6 +216,7 @@
     - VentCrud
     - WeldingFuel
     - JuiceThatMakesYouWeh
+    - EstrogenPlus
 
 - type: artifactEffect
   id: EffectInstrumentSpawn
