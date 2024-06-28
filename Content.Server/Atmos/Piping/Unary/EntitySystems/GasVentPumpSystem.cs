@@ -185,9 +185,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return false;
             }
 
-            if (vent.OverheatCooldownTimer > 0f && vent.OverheatTimerEnabled)
+            if (vent.OverheatCooldownCounter > 0f && vent.OverheatTimerEnabled)
             {
-                vent.OverheatCooldownTimer -= dt;
+                vent.OverheatCooldownCounter -= dt;
                 vent.LastPressure = environment.Pressure;
                 return false;
             }
@@ -211,15 +211,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             if (vent.PressureDelta < vent.PressurizationLockout * dt)
             {
-                vent.OverheatTimer = 0;
+                vent.OverheatCounter = 0;
                 return false;
             }
 
-            vent.OverheatTimer += dt;
-            if (vent.OverheatTimer > vent.OverheatMaxTime)
+            vent.OverheatCounter += dt;
+            if (vent.OverheatCounter > vent.OverheatMaxTime)
             {
-                vent.OverheatTimer -= vent.OverheatMaxTime;
-                vent.OverheatCooldownTimer += vent.OverheatCooldownMaxTime;
+                vent.OverheatCounter -= vent.OverheatMaxTime;
+                vent.OverheatCooldownCounter += vent.OverheatCooldownMaxTime;
             }
             return true;
         }
