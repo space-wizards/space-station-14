@@ -10994,7 +10994,7 @@ entities:
     - type: Transform
       pos: 18.918644,6.663283
       parent: 104
-- proto: KitchenMicrowave
+- proto: SyndicateMicrowave
   entities:
   - uid: 10
     components:

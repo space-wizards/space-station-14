@@ -6,7 +6,9 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.NameIdentifier;
 using Content.Shared.PDA;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.StationRecords;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -393,6 +395,9 @@ public sealed class AccessReaderSystem : EntitySystem
             ent.Comp.AccessLog.Dequeue();
 
         string? name = null;
+        if (TryComp<NameIdentifierComponent>(accessor, out var nameIdentifier))
+            name = nameIdentifier.FullIdentifier;
+
         // TODO pass the ID card on IsAllowed() instead of using this expensive method
         // Set name if the accessor has a card and that card has a name and allows itself to be recorded
         if (_idCardSystem.TryFindIdCard(accessor, out var idCard)

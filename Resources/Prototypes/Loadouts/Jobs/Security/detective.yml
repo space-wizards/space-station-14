@@ -64,34 +64,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtDetectiveGrey
 
-# Back
-- type: loadout
-  id: DetectiveBackpack
-  equipment: DetectiveBackpack
-
-- type: startingGear
-  id: DetectiveBackpack
-  equipment:
-    back: ClothingBackpackSecurityFilledDetective
-
-- type: loadout
-  id: DetectiveSatchel
-  equipment: DetectiveSatchel
-
-- type: startingGear
-  id: DetectiveSatchel
-  equipment:
-    back: ClothingBackpackSatchelSecurityFilledDetective
-
-- type: loadout
-  id: DetectiveDuffel
-  equipment: DetectiveDuffel
-
-- type: startingGear
-  id: DetectiveDuffel
-  equipment:
-    back: ClothingBackpackDuffelSecurityFilledDetective
-
 # OuterClothing
 - type: loadout
   id: DetectiveArmorVest

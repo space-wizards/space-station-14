@@ -59,7 +59,7 @@ public sealed class LungSystem : EntitySystem
     {
         if (args.IsToggled || args.IsEquip)
         {
-            _atmos.DisconnectInternals(ent.Comp);
+            _atmos.DisconnectInternals(ent);
         }
         else
         {

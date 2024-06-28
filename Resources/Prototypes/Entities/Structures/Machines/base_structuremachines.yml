@@ -70,3 +70,10 @@
     - machine_board
   - type: LightningTarget
     priority: 1
+
+- type: entity
+  abstract: true
+  parent: ConstructibleMachine
+  id: SmallConstructibleMachine
+  components:
+    - type: RequireProjectileTarget

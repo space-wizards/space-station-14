@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -16,6 +17,7 @@ using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Wieldable;
@@ -31,6 +33,7 @@ public sealed class WieldableSystem : EntitySystem
     [Dependency] private readonly UseDelaySystem _delay = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
 
     public override void Initialize()
     {
@@ -94,7 +97,8 @@ public sealed class WieldableSystem : EntitySystem
 
     private void OnDeselectWieldable(EntityUid uid, WieldableComponent component, HandDeselectedEvent args)
     {
-        if (!component.Wielded)
+        if (!component.Wielded ||
+            _handsSystem.EnumerateHands(args.User).Count() > 2)
             return;
 
         TryUnwield(uid, component, args.User);
@@ -211,21 +215,27 @@ public sealed class WieldableSystem : EntitySystem
         if (component.WieldSound != null)
             _audioSystem.PlayPredicted(component.WieldSound, used, user);
 
-        var virtuals = new List<EntityUid>();
-        for (var i = 0; i < component.FreeHandsRequired; i++)
+        //This section handles spawning the virtual item(s) to occupy the required additional hand(s).
+        //Since the client can't currently predict entity spawning, only do this if this is running serverside.
+        //Remove this check if TrySpawnVirtualItem in SharedVirtualItemSystem is allowed to complete clientside.
+        if (_netManager.IsServer)
         {
-            if (_virtualItemSystem.TrySpawnVirtualItemInHand(used, user, out var virtualItem, true))
+            var virtuals = new List<EntityUid>();
+            for (var i = 0; i < component.FreeHandsRequired; i++)
             {
-                virtuals.Add(virtualItem.Value);
-                continue;
-            }
+                if (_virtualItemSystem.TrySpawnVirtualItemInHand(used, user, out var virtualItem, true))
+                {
+                    virtuals.Add(virtualItem.Value);
+                    continue;
+                }
 
-            foreach (var existingVirtual in virtuals)
-            {
-                QueueDel(existingVirtual);
-            }
+                foreach (var existingVirtual in virtuals)
+                {
+                    QueueDel(existingVirtual);
+                }
 
-            return false;
+                return false;
+            }
         }
 
         if (TryComp(used, out UseDelayComponent? useDelay)

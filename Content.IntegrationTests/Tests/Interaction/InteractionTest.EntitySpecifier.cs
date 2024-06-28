@@ -33,7 +33,7 @@ public abstract partial class InteractionTest
         public int Quantity;
 
         /// <summary>
-        /// If true, a check has been performed to see if the prototype ia an entity prototype with a stack component,
+        /// If true, a check has been performed to see if the prototype is an entity prototype with a stack component,
         /// in which case the specifier was converted into a stack-specifier
         /// </summary>
         public bool Converted;
@@ -100,7 +100,7 @@ public abstract partial class InteractionTest
 
         if (!ProtoMan.TryIndex<EntityPrototype>(spec.Prototype, out var entProto))
         {
-            Assert.Fail($"Unkown prototype: {spec.Prototype}");
+            Assert.Fail($"Unknown prototype: {spec.Prototype}");
             return default;
         }
 
@@ -120,7 +120,7 @@ public abstract partial class InteractionTest
 
     /// <summary>
     /// Convert an entity-uid to a matching entity specifier. Useful when doing entity lookups & checking that the
-    /// right quantity of entities/materials werre produced. Returns null if passed an entity with a null prototype.
+    /// right quantity of entities/materials were produced. Returns null if passed an entity with a null prototype.
     /// </summary>
     protected EntitySpecifier? ToEntitySpecifier(EntityUid uid)
     {

@@ -118,6 +118,10 @@
       collection: FemaleCry
     Weh:
       collection: Weh
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
 
 - type: emoteSounds
   id: MaleSlime
@@ -354,7 +358,7 @@
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
-      collection: DeathGasp
+      collection: MothDeathGasp
 
 - type: emoteSounds
   id: UnisexSilicon

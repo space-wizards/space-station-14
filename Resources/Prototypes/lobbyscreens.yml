@@ -45,3 +45,7 @@
 - type: lobbyBackground
   id: JustAWeekAway
   background: /Textures/LobbyScreens/justaweekaway.webp
+
+- type: lobbyBackground
+  id: JaniShootout
+  background: /Textures/LobbyScreens/janishootout.webp

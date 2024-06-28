@@ -593,6 +593,7 @@
     - CannotSuicide
     - Hamster
     - VimPilot
+    - ChefPilot
 
 - type: entity
   name: Shiva

@@ -6354,7 +6354,9 @@ entities:
     - type: Transform
       pos: -19.5,-19.5
       parent: 4812
-  - uid: 7416
+- proto: AirlockMedicalMorgueLocked
+  entities:
+  - uid: 6282
     components:
     - type: Transform
       pos: -19.5,-13.5
@@ -31656,6 +31658,13 @@ entities:
     - type: Transform
       pos: 26.5,-17.5
       parent: 4812
+- proto: ComputerRoboticsControl
+  entities:
+  - uid: 1482
+    components:
+    - type: Transform
+      pos: 25.5,-17.5
+      parent: 4812
 - proto: ComputerSalvageExpedition
   entities:
   - uid: 7830
@@ -56224,6 +56233,12 @@ entities:
       parent: 4812
 - proto: Lamp
   entities:
+  - uid: 1481
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 26.696417,-19.020947
+      parent: 4812
   - uid: 1520
     components:
     - type: Transform
@@ -56309,21 +56324,6 @@ entities:
     components:
     - type: Transform
       pos: 18.64816,-16.251589
-      parent: 4812
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 6291
-    components:
-    - type: Transform
-      pos: 25.537617,-17.441427
       parent: 4812
     - type: ContainerContainer
       containers:
@@ -58827,7 +58827,7 @@ entities:
   - uid: 6307
     components:
     - type: Transform
-      pos: 26.432638,-19.383717
+      pos: 26.003157,-19.425182
       parent: 4812
   - uid: 7142
     components:
@@ -70309,11 +70309,6 @@ entities:
     components:
     - type: Transform
       pos: 19.5,-18.5
-      parent: 4812
-  - uid: 6282
-    components:
-    - type: Transform
-      pos: 25.5,-17.5
       parent: 4812
   - uid: 6283
     components:

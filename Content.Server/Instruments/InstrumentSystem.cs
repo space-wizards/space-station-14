@@ -3,6 +3,7 @@ using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Administration;
+using Content.Shared.Examine;
 using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
 using Content.Shared.Physics;
@@ -30,6 +31,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly InteractionSystem _interactions = default!;
+    [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
     private const float MaxInstrumentBandRange = 10f;
 
@@ -250,9 +252,8 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 continue;
 
             // Maybe a bit expensive but oh well GetBands is queued and has a timer anyway.
-            // Make sure the instrument is visible, uses the Opaque collision group so this works across windows etc.
-            if (!_interactions.InRangeUnobstructed(uid, entity, MaxInstrumentBandRange,
-                    CollisionGroup.Opaque, e => e == playerUid || e == originPlayer))
+            // Make sure the instrument is visible
+            if (!_examineSystem.InRangeUnOccluded(uid, entity, MaxInstrumentBandRange, e => e == playerUid || e == originPlayer))
                 continue;
 
             if (!metadataQuery.TryGetComponent(playerUid, out var playerMetadata)
