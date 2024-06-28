@@ -48,7 +48,7 @@ public abstract class BaseXATSystem<T> : EntitySystem where T : Component
             if (node.Attached == null)
                 continue;
 
-            var artifact = _xenoArtifactQuery.Get(node.Attached.Value);
+            var artifact = _xenoArtifactQuery.Get(GetEntity(node.Attached.Value));
 
             if (!CanTrigger(artifact, (uid, node)))
                 continue;

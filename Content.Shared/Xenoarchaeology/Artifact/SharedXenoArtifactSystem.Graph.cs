@@ -190,7 +190,7 @@ public abstract partial class SharedXenoArtifactSystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
         node.Comp ??= XenoArtifactNode(node);
-        node.Comp.Attached = ent;
+        node.Comp.Attached = GetNetEntity(ent);
 
         var nodeIdx = GetFreeNodeIndex((ent, ent.Comp));
         _container.Insert(node.Owner, ent.Comp.NodeContainer);

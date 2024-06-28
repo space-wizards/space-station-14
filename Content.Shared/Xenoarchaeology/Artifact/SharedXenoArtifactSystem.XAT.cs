@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 
@@ -9,6 +10,7 @@ public abstract partial class SharedXenoArtifactSystem
     private void InitializeXAT()
     {
         XATRelayLocalEvent<DamageChangedEvent>();
+        XATRelayLocalEvent<ExaminedEvent>();
         XATRelayLocalEvent<InteractUsingEvent>();
     }
 

@@ -1,5 +1,6 @@
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Random;
+using Content.Shared.Xenoarchaeology.Artifact.XAT;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -71,11 +72,12 @@ public sealed partial class XenoArtifactComponent : Component
     #endregion
 
     #region GenerationInfo
+
     /// <summary>
     /// The total number of nodes that make up this artifact.
     /// </summary>
     [DataField]
-    public MinMax NodeCount = new(10, 24);
+    public MinMax NodeCount = new(10, 12);// TODO: add back in. 24);
 
     /// <summary>
     /// The amount of nodes that go in each segment.
@@ -95,5 +97,8 @@ public sealed partial class XenoArtifactComponent : Component
 
     [DataField]
     public ProtoId<WeightedRandomEntityPrototype> EffectWeights = "XenoArtifactEffectsDefault";
+
+    [DataField]
+    public ProtoId<WeightedRandomXenoArchTriggerPrototype> TriggerWeights = "DefaultTriggers";
     #endregion
 }

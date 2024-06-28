@@ -16,7 +16,7 @@ public sealed class XATCompNearbySystem : BaseXATSystem<XATCompNearbyComponent>
         float frameTime)
     {
         var pos = _transform.GetMapCoordinates(artifact);
-        var comp = EntityManager.ComponentFactory.GetRegistration(node.Comp1.Component);
+        var comp = EntityManager.ComponentFactory.GetRegistration(node.Comp1.Comp);
         _entities.Clear();
         _entityLookup.GetEntitiesInRange(comp.Type, pos, node.Comp1.Radius, _entities);
 

@@ -1,4 +1,6 @@
+using Content.Shared.Random;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 
@@ -14,4 +16,14 @@ public sealed partial class XenoArchTriggerPrototype : IPrototype
 
     [DataField]
     public ComponentRegistry Components = new();
+}
+
+[Prototype]
+public sealed partial class WeightedRandomXenoArchTriggerPrototype : IWeightedRandomPrototype
+{
+    [IdDataField]
+    public string ID { get; private set; } = default!;
+
+    [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, XenoArchTriggerPrototype>))]
+    public Dictionary<string, float> Weights { get; private set; } = new();
 }

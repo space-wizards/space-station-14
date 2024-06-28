@@ -15,9 +15,9 @@ public sealed partial class XATDamageComponent : Component
     [DataField, AutoNetworkedField]
     public DamageSpecifier AccumulatedDamage = new();
 
-    [DataField]
-    public Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> TypesNeeded;
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> TypesNeeded = new();
 
-    [DataField]
-    public Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> GroupsNeeded;
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> GroupsNeeded = new();
 }

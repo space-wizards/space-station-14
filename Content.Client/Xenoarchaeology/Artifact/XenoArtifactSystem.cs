@@ -9,6 +9,5 @@ public sealed class XenoArtifactSystem : SharedXenoArtifactSystem
     public override void Initialize()
     {
         base.Initialize();
-
     }
 }

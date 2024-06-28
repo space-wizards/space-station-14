@@ -28,10 +28,14 @@ public abstract partial class SharedXenoArtifactSystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        if (!TryComp<XenoArtifactComponent>(ent.Comp.Attached, out var artiComp))
+        var artifact = GetEntity(ent.Comp.Attached);
+        if (!TryComp<XenoArtifactComponent>(artifact, out var artiComp))
             return false;
 
-        var predecessors = GetDirectPredecessorNodes((ent.Comp.Attached.Value, artiComp), ent);
-        return predecessors.Any(p => !p.Comp.Locked);
+        var predecessors = GetDirectPredecessorNodes((artifact.Value, artiComp), ent);
+        if (predecessors.Count != 0 && predecessors.All(p => p.Comp.Locked))
+            return false;
+
+        return true;
     }
 }

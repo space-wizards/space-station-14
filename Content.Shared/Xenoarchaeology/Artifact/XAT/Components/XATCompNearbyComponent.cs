@@ -6,15 +6,15 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 /// <summary>
 /// This is used a XAT that activates when an entity fulfilling the given whitelist is nearby the artifact.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(XATCompNearbyComponent))]
+[RegisterComponent, NetworkedComponent, Access(typeof(XATCompNearbyComponent)), AutoGenerateComponentState]
 public sealed partial class XATCompNearbyComponent : Component
 {
-    [DataField(customTypeSerializer: typeof(ComponentNameSerializer))]
-    public string Component;
+    [DataField(customTypeSerializer: typeof(ComponentNameSerializer)), AutoNetworkedField]
+    public string Comp = "Item";
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float Radius = 5;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public int Count = 1;
 }

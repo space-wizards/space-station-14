@@ -35,7 +35,7 @@ public abstract partial class SharedXenoArtifactSystem
 
         ent.Comp.Locked = false;
         if (ent.Comp.Attached is { } artifact)
-            RebuildCachedActiveNodes(artifact);
+            RebuildCachedActiveNodes(GetEntity(artifact));
         Dirty(ent);
     }
 

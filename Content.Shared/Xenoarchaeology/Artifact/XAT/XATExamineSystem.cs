@@ -10,6 +10,8 @@ public sealed class XATExamineSystem : BaseXATSystem<XATExamineComponent>
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
+
         XATSubscribeLocalEvent<ExaminedEvent>(OnExamine);
     }
 
@@ -22,6 +24,6 @@ public sealed class XATExamineSystem : BaseXATSystem<XATExamineComponent>
             return;
 
         Trigger(artifact, node);
-        args.AddMarkup(Loc.GetString("artifact-examine-trigger-desc"));
+        args.PushMarkup(Loc.GetString("artifact-examine-trigger-desc"));
     }
 }

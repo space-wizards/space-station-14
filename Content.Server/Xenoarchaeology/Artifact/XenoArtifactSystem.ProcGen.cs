@@ -8,18 +8,36 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 
 public sealed partial class XenoArtifactSystem
 {
-    private List<XenoArchTriggerPrototype> _triggerPool = new();
+    private readonly List<XenoArchTriggerPrototype> _triggerPool = new();
 
     private void GenerateArtifactStructure(Entity<XenoArtifactComponent> ent)
     {
         var nodeCount = ent.Comp.NodeCount.Next(RobustRandom);
         ResizeNodeGraph(ent, nodeCount);
+        CreateTriggerPool(ent, nodeCount);
         while (nodeCount > 0)
         {
             GenerateArtifactSegment(ent, ref nodeCount);
         }
 
         RebuildNodeData((ent, ent));
+    }
+
+    private void CreateTriggerPool(Entity<XenoArtifactComponent> ent, int size)
+    {
+        _triggerPool.Clear();
+        var weightsProto = PrototypeManager.Index(ent.Comp.TriggerWeights);
+        var weights = new Dictionary<string, float>(weightsProto.Weights);
+
+        while (_triggerPool.Count < size)
+        {
+            var triggerId = RobustRandom.Pick(weights);
+
+            var trigger = PrototypeManager.Index<XenoArchTriggerPrototype>(triggerId);
+
+            _triggerPool.Add(trigger);
+            weights.Remove(triggerId);
+        }
     }
 
     private void GenerateArtifactSegment(Entity<XenoArtifactComponent> ent, ref int nodeCount)
@@ -118,6 +136,7 @@ public sealed partial class XenoArtifactSystem
         return segmentSize;
     }
 
+    //todo: move this into system.node or something.
     private Entity<XenoArtifactNodeComponent> CreateRandomNode(Entity<XenoArtifactComponent> ent, int depth = 0)
     {
         var proto = PrototypeManager.Index(ent.Comp.EffectWeights).Pick(RobustRandom);

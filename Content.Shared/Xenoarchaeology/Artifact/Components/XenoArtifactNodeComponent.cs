@@ -30,8 +30,8 @@ public sealed partial class XenoArtifactNodeComponent : Component
     /// <summary>
     /// The entity whose graph this node is a part of.
     /// </summary>
-    [DataField]
-    public EntityUid? Attached;
+    [DataField, AutoNetworkedField]
+    public NetEntity? Attached;
 
     #region Durability
     public bool Degraded => Durability <= 0;

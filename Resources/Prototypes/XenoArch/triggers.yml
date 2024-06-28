@@ -1,9 +1,28 @@
+- type: weightedRandomXenoArchTrigger
+  id: DefaultTriggers
+  weights:
+    TriggerMusic: 1
+    TriggerHeat: 0.5
+    TriggerCold: 0.5
+    TriggerNoOxygen: 1
+    TriggerWater: 1
+    TriggerCO2: 0.16
+    TriggerPlasma: 0.16
+    TriggerTritium: 0.16
+    TriggerAmmonia: 0.16
+    TriggerN2O: 0.16
+    TriggerFrezon: 0.16
+    TriggerRadiation: 1
+    TriggerPressureHigh: 0.5
+    TriggerPressureLow: 0.5
+    TriggerExamine: 1
+
 - type: xenoArchTrigger
   id: TriggerMusic
   tip: xenoarch-trigger-tip-music
   components:
   - type: XATCompNearby
-    component: ActiveInstrumentComponent
+    comp: ActiveInstrument
 
 - type: xenoArchTrigger
   id: TriggerHeat
