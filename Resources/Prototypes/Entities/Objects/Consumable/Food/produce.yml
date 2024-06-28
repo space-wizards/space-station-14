@@ -1941,11 +1941,6 @@
     sprite: Objects/Specific/Hydroponics/lemo.rsi
   - type: Produce
     seedId: lemo
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: JuiceApple
-        Quantity: 10
   - type: Tag
     tags:
     - Fruit

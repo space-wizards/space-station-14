@@ -43,6 +43,17 @@
         amount: 2
 
 - type: entity
+  id: CrateFunFinfinPlushie
+  parent: CrateGenericSteel
+  name: one single fin fin plushie
+  description: A single ultra-rare plushie of the dolphin-bird Fin Fin. You aren't... actually going to buy this one, are you?
+  components:
+  - type: StorageFill
+    contents:
+      - id: PlushieFinfin
+        amount: 1
+
+- type: entity
   id: CrateFunInstrumentsVariety
   parent: CrateGenericSteel
   name: variety instrument collection
