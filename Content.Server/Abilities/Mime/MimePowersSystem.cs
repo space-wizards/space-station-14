@@ -109,6 +109,12 @@ namespace Content.Server.Abilities.Mime
 
             if (mimePowers.VowBroken)
                 return;
+            
+            if (TryComp<MutedComponent>(uid, out var muted) && !muted.Removable)
+            {
+              _popupSystem.PopupEntity(Loc.GetString("mime-vow-break-fail"), uid, uid);
+              return;
+            }
 
             mimePowers.Enabled = false;
             mimePowers.VowBroken = true;
