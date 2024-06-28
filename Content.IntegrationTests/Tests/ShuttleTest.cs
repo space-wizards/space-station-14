@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -26,23 +25,24 @@ namespace Content.IntegrationTests.Tests
             EntityUid gridEnt = default;
             PhysicsComponent gridPhys = null;
 
+            var map = await pair.CreateTestMap();
+
             await server.WaitAssertion(() =>
             {
-                var mapId = mapMan.CreateMap();
-                var grid = mapMan.CreateGridEntity(mapId);
-                gridEnt = grid.Owner;
+                var mapId = map.MapId;
+                var grid = map.Grid;
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(entManager.HasComponent<ShuttleComponent>(gridEnt));
-                    Assert.That(entManager.TryGetComponent(gridEnt, out gridPhys));
+                    Assert.That(entManager.HasComponent<ShuttleComponent>(grid));
+                    Assert.That(entManager.TryGetComponent(grid, out gridPhys));
                 });
                 Assert.Multiple(() =>
                 {
                     Assert.That(gridPhys.BodyType, Is.EqualTo(BodyType.Dynamic));
-                    Assert.That(entManager.GetComponent<TransformComponent>(gridEnt).LocalPosition, Is.EqualTo(Vector2.Zero));
+                    Assert.That(entManager.GetComponent<TransformComponent>(grid).LocalPosition, Is.EqualTo(Vector2.Zero));
                 });
-                physicsSystem.ApplyLinearImpulse(gridEnt, Vector2.One, body: gridPhys);
+                physicsSystem.ApplyLinearImpulse(grid, Vector2.One, body: gridPhys);
             });
 
             await server.WaitRunTicks(1);
