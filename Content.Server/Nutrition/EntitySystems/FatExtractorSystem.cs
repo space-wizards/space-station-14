@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Nutrition.Components;
 using Content.Server.Power.Components;
@@ -99,6 +99,9 @@ public sealed class FatExtractorSystem : EntitySystem
         if (!TryComp<HungerComponent>(occupant, out var hunger))
             return false;
 
+        if (!HasComp<ButcherableComponent>(occupant))
+            return false;
+
         if (hunger.CurrentHunger < component.NutritionPerSecond)
             return false;
 
@@ -137,8 +140,11 @@ public sealed class FatExtractorSystem : EntitySystem
             fat.NutrientAccumulator += fat.NutritionPerSecond;
             if (fat.NutrientAccumulator >= fat.NutrientPerMeat)
             {
+                if (!TryComp<ButcherableComponent>(occupant, out var meat))
+                    return;
+
                 fat.NutrientAccumulator -= fat.NutrientPerMeat;
-                Spawn(fat.MeatPrototype, Transform(uid).Coordinates);
+                Spawn(meat.SpawnedEntities.First().PrototypeId, Transform(uid).Coordinates);
             }
         }
     }
