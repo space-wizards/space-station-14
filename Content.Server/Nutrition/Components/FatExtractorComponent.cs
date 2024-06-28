@@ -1,4 +1,4 @@
-﻿using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -37,12 +37,6 @@ public sealed partial class FatExtractorComponent : Component
     /// </summary>
     [DataField("nutrientPerMeat"), ViewVariables(VVAccess.ReadWrite)]
     public int NutrientPerMeat = 30;
-
-    /// <summary>
-    /// Meat spawned by the extractor.
-    /// </summary>
-    [DataField("meatPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string MeatPrototype = "FoodMeat";
 
     /// <summary>
     /// When the next update will occur
