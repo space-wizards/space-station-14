@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: botanySupremist
-  changes:
-  - message: Clipping harvestable plants now yields undamaged seeds.
-    type: Add
-  id: 6328
-  time: '2024-04-10T17:51:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25541
 - author: deltanedas
   changes:
   - message: Fixed some doors having no access when they should.
@@ -3831,3 +3824,11 @@
   id: 6827
   time: '2024-06-28T00:08:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29524
+- author: JIPDawg
+  changes:
+  - message: Changed the sound of pulling back the foam crossbow from the sound of
+      a Flash to just pulling back a bow.
+    type: Tweak
+  id: 6828
+  time: '2024-06-28T00:23:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29508
