@@ -192,6 +192,17 @@
 
 - type: entity
   parent: ClothingOuterBase
+  id: ClothingOuterSuitWitchRobes
+  name: witch robes
+  description: Magic is all about the spell power, ZE!
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
+
+- type: entity
+  parent: ClothingOuterBase
   id: ClothingOuterSuitMonkey
   name: monkey suit
   description: A suit that looks like a primate.
@@ -246,3 +257,16 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+
+- type: entity
+  parent: ClothingOuterSuitCarp
+  id: ClothingOuterHardsuitCarp
+  suffix: Hardsuit, DO NOT MAP
+  components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.01
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCarp

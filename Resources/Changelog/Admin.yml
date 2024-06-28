@@ -281,5 +281,68 @@ Entries:
   id: 34
   time: '2024-06-01T08:14:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28451
+- author: Repo
+  changes:
+  - message: Sorting and search to objects tab.
+    type: Add
+  - message: Disconnected people showing player tab
+    type: Fix
+  id: 35
+  time: '2024-06-06T06:41:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28609
+- author: nikthechampiongr
+  changes:
+  - message: Freeze, freeze & mute, and unfreeze verbs now work on any entity. Not
+      just connected players.
+    type: Tweak
+  id: 36
+  time: '2024-06-08T10:40:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28664
+- author: ShadowCommander
+  changes:
+  - message: Player tab playtime no longer changes to Unknown when a player reconnects.
+    type: Fix
+  id: 37
+  time: '2024-06-13T06:38:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28876
+- author: nikthechampiongr
+  changes:
+  - message: The ahelp panel properly deselects a player when they are no longer on
+      the player list.
+    type: Fix
+  id: 38
+  time: '2024-06-15T11:25:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28899
+- author: slarticodefast
+  changes:
+  - message: Added the "Make Inititial Infected" verb to the antag control.
+    type: Add
+  id: 39
+  time: '2024-06-21T05:42:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29259
+- author: nikthechampiongr
+  changes:
+  - message: It is now possible to issue BlacklistedRanges bans(This requires you
+      to edit the database manually at the moment.) Bans marked as BlacklistedRange
+      will lead to players joining for the first time who match an ip range to be
+      denied. Players that have joined the server before will be unaffected.
+    type: Add
+  id: 40
+  time: '2024-06-21T12:06:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29258
+- author: Chief-Engineer
+  changes:
+  - message: grant_connect_bypass now requires moderator permissions instead of admin.
+    type: Tweak
+  id: 41
+  time: '2024-06-24T21:56:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29406
+- author: Chief-Engineer
+  changes:
+  - message: Added the ability to alert for shared connections.
+    type: Add
+  id: 42
+  time: '2024-06-26T13:43:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29405
 Name: Admin
 Order: 1

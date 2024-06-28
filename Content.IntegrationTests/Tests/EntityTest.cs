@@ -340,6 +340,7 @@ namespace Content.IntegrationTests.Tests
                 "MapGrid",
                 "Broadphase",
                 "StationData", // errors when removed mid-round
+                "StationJobs",
                 "Actor", // We aren't testing actor components, those need their player session set.
                 "BlobFloorPlanBuilder", // Implodes if unconfigured.
                 "DebrisFeaturePlacerController", // Above.
