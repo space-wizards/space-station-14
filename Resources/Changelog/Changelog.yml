@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Jark255
-  changes:
-  - message: Door electronics now require network configurators to change their access
-      settings, rather than doing so by hand.
-    type: Fix
-  id: 6331
-  time: '2024-04-11T12:21:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26888
 - author: lunarcomets
   changes:
   - message: Cryogenic sleep units now remove crew members from the manifest, and
@@ -3831,3 +3823,10 @@
   id: 6830
   time: '2024-06-28T12:33:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29536
+- author: Plykiya
+  changes:
+  - message: Icons in the chameleon menu now appear correctly.
+    type: Fix
+  id: 6831
+  time: '2024-06-28T21:21:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29539
