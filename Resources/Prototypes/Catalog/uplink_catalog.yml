@@ -839,9 +839,14 @@
   description: uplink-flatpack-bundle-desc
   productEntity: CrateSyndicateFlatpackBundle
   cost:
-    Telecrystal: 10
+    Telecrystal: 12
   categories:
   - UplinkDisruption
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkSurplusBundle
