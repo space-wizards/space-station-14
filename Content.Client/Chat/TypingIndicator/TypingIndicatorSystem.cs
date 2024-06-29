@@ -87,7 +87,7 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
             state = _isClientTyping ? TypingIndicatorState.Typing : TypingIndicatorState.Idle;
 
         // send a networked event to server
-        RaiseNetworkEvent(new TypingChangedEvent(state));
+        RaisePredictiveEvent(new TypingChangedEvent(state));
     }
 
     private void OnShowTypingChanged(bool showTyping)
