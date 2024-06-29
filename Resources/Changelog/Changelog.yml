@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: osjarw
-  changes:
-  - message: Magboots no longer activate artifacts from salvage magnet ranges.
-    type: Fix
-  id: 6338
-  time: '2024-04-13T01:46:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26912
 - author: Vasilis
   changes:
   - message: Blood (or anything containing uncooked animal proteins) can only be consumed
@@ -3833,3 +3826,10 @@
   id: 6837
   time: '2024-06-29T05:02:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29527
+- author: metalgearsloth
+  changes:
+  - message: Fix character traits not being validated.
+    type: Fix
+  id: 6838
+  time: '2024-06-29T05:39:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28730
