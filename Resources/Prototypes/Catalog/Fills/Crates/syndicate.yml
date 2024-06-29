@@ -23,6 +23,24 @@
       - id: DoubleEmergencyNitrogenTankFilled
 
 - type: entity
+  parent: CrateSyndicate
+  id: CrateSyndicateFlatpackBundle
+  name: syndicate flatpack bundle
+  components:
+  - type: StorageFill
+    contents:
+    - id: Multitool
+    - id: EmaggedAutolatheFlatpack
+    - id: EmaggedProtolatheFlatpack
+    - id: EmaggedCircuitImprinterFlatpack
+    - id: SheetSteel
+      amount: 2
+    - id: SheetGlass
+      amount: 2
+    - id: SheetPlastic
+      amount: 2
+
+- type: entity
   id: CrateSyndicateSuperSurplusBundle
   parent: [ CrateSyndicate, StorePresetUplink ]
   name: Syndicate super surplus crate

@@ -834,6 +834,16 @@
           - SurplusBundle
 
 - type: listing
+  id: UplinkFlatpackBundle
+  name: uplink-flatpack-bundle-name
+  description: uplink-flatpack-bundle-desc
+  productEntity: CrateSyndicateFlatpackBundle
+  cost:
+    Telecrystal: 10
+  categories:
+  - UplinkDisruption
+
+- type: listing
   id: UplinkSurplusBundle
   name: uplink-surplus-bundle-name
   description: uplink-surplus-bundle-desc

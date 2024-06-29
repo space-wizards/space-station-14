@@ -237,6 +237,13 @@
     board: AutolatheHyperConvectionMachineCircuitboard
 
 - type: entity
+  id: EmaggedAutolathe
+  parent: [Autolathe]
+  suffix: Emagged
+  components:
+  - type: Emagged
+
+- type: entity
   id: Protolathe
   parent: BaseLatheLube
   name: protolathe
@@ -387,6 +394,13 @@
     board: ProtolatheHyperConvectionMachineCircuitboard
 
 - type: entity
+  id: EmaggedProtolathe
+  parent: [Protolathe]
+  suffix: Emagged
+  components:
+  - type: Emagged
+
+- type: entity
   id: CircuitImprinter
   parent: BaseLatheLube
   name: circuit imprinter
@@ -524,6 +538,13 @@
     sprite: Structures/Machines/circuit_imprinter_hypercon.rsi
   - type: Machine
     board: CircuitImprinterHyperConvectionMachineCircuitboard
+
+- type: entity
+  id: EmaggedCircuitImprinter
+  parent: [CircuitImprinter]
+  suffix: Emagged
+  components:
+  - type: Emagged
 
 - type: entity
   id: ExosuitFabricator

@@ -216,3 +216,54 @@
     - state: fax-machine
   - type: Flatpack
     entity: FaxMachineBase
+
+- type: entity
+  parent: BaseFlatpack
+  id: AutolatheFlatpack
+  name: autolathe flatpack
+  description: A flatpack used for constructing an autolathe.
+  components:
+  - type: Flatpack
+    entity: Autolathe
+
+- type: entity
+  parent: AutolatheFlatpack
+  id: EmaggedAutolatheFlatpack
+  suffix: Emagged
+  components:
+  - type: Flatpack
+    entity: EmaggedAutolathe
+
+- type: entity
+  parent: BaseFlatpack
+  id: ProtolatheFlatpack
+  name: protolathe flatpack
+  description: A flatpack used for constructing a protolathe.
+  components:
+  - type: Flatpack
+    entity: Protolathe
+
+- type: entity
+  parent: ProtolatheFlatpack
+  id: EmaggedProtolatheFlatpack
+  suffix: Emagged
+  components:
+  - type: Flatpack
+    entity: EmaggedProtolathe
+
+- type: entity
+  parent: BaseFlatpack
+  id: CircuitImprinterFlatpack
+  name: circuit imprinter flatpack
+  description: A flatpack used for constructing a circuit imprinter.
+  components:
+  - type: Flatpack
+    entity: CircuitImprinter
+
+- type: entity
+  parent: CircuitImprinterFlatpack
+  id: EmaggedCircuitImprinterFlatpack
+  suffix: Emagged
+  components:
+  - type: Flatpack
+    entity: EmaggedCircuitImprinter
