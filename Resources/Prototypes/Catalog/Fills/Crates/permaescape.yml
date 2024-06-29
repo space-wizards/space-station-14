@@ -5,53 +5,29 @@
   components:
   - type: RandomSpawner
     prototypes:
-      - CratePermaEscapeDigging
-      - CratePermaEscapeDigging
-      - CratePermaEscapeEVA
-      - CratePermaEscapeGun
+    # Please note any duplicates & alphabetize <3
       - CrateEngineeringMiniJetpack
       - CratePermaEscapeBureaucracy
-      - CratePermaEscapeLights
-      - CrateTrashCartFilled
-      - CratePermaEscapeMats
-      - CratePermaEscapeMats
+      - CratePermaEscapeEVA
       - CratePermaEscapeGiftsFromSyndicate
+      - CratePermaEscapeGun
+      - CratePermaEscapeLights
       - CratePermaEscapeMerc
-      - CratePermaEscapeComs
-      - CratePermaEscapeComs
-      - CratePermaEscapeTowercap
-      - CratePermaEscapeTowercap
       - CrateServiceCustomSmokable
-      - ClosetMaintenanceFilledRandom
+      - CrateTrashCartFilled
+      - CratePermaEscapeComs # x2
+      - CratePermaEscapeComs
+      - CratePermaEscapeDigging # x2
+      - CratePermaEscapeDigging
+      - CratePermaEscapeMats #x2
+      - CratePermaEscapeMats
+      - CratePermaEscapeTowercap # x2
+      - CratePermaEscapeTowercap
+      - ClosetMaintenanceFilledRandom # x3
       - ClosetMaintenanceFilledRandom
       - ClosetMaintenanceFilledRandom
     rarePrototypes:
       - MobTick # These need to be killable by one dude with a shovel.
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobTick
-      - MobCarp
-      - MobCarp
-      - MobCarp
-      - MobCarpMagic
-      - MobKangarooSpace
-      - MobBearSpace
     rareChance: .30
     chance: 1
     offset: 0.0
