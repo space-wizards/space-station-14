@@ -1,36 +1,55 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/9c7d509354ee030300f63c701da63c17928c3b3b and modified by Swept",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/9c7d509354ee030300f63c701da63c17928c3b3b and modified by ps3moira (github)",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "base"
+      "name": "base",
+      "directions": 4
     },
 	{
       "name": "static"
     },
     {
-      "name": "broken"
+      "name": "broken",
+      "directions": 4
     },
     {
-      "name": "frame"
+      "name": "frame",
+      "directions": 4
     },
     {
-      "name": "panel"
+      "name": "panel",
+      "directions": 4
     },
     {
-      "name": "lock0-locked"
+      "name": "lock0-locked",
+      "directions": 4
     },
     {
-      "name": "lock1-locked"
+      "name": "lock1-locked",
+      "directions": 4
     },
     {
       "name": "display-lack",
+      "directions": 4,
       "delays": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
         [
           1,
           2
@@ -39,7 +58,32 @@
     },
     {
       "name": "display-charging",
+      "directions": 4,
       "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2
+        ],
         [
           0.1,
           0.1,
@@ -52,7 +96,20 @@
     },
     {
       "name": "display-full",
+      "directions": 4,
       "delays": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
         [
           1,
           1
@@ -61,7 +118,29 @@
     },
     {
       "name": "display-remote",
+      "directions": 4,
       "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
         [
           0.1,
           0.1,
@@ -73,7 +152,20 @@
     },
     {
       "name": "emag-unlit",
+      "directions": 4,
       "delays": [
+        [
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5
+        ],
         [
           0.5,
           0.5
