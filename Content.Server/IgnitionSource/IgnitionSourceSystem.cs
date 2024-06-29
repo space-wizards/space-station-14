@@ -33,8 +33,7 @@ public sealed class IgnitionSourceSystem : EntitySystem
     }
     private void OnIgnitionEvent(Entity<IgnitionSourceComponent> ent, ref IgnitionEvent args)
     {
-        if (TryComp<IgnitionSourceComponent>(ent, out var comp))
-            SetIgnited((ent.Owner, comp), args.Ignite);
+        SetIgnited((ent.Owner, ent.Comp), args.Ignite);
     }
 
     /// <summary>

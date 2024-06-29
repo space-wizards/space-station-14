@@ -135,7 +135,7 @@ namespace Content.Server.Light.EntitySystems
 
                 case ExpendableLightState.Dead:
                     _appearance.SetData(ent, ExpendableLightVisuals.Behavior, string.Empty, appearance);
-                    var ignite = new IgnitionEvent() {Ignite = true};
+                    var ignite = new IgnitionEvent() {Ignite = false};
                     RaiseLocalEvent(ent, ignite);
                     break;
             }

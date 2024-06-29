@@ -5,6 +5,6 @@ namespace Content.Server.IgnitionSource;
     /// </summary>
     public sealed class IgnitionEvent : EntityEventArgs
     {
-        public bool Ignite { get; set; } = false;
+        public bool Ignite { get; set; }
     }
 
