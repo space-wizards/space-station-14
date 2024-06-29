@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Sterile Swabs now come in dispensers making them easier to use.
-    type: Tweak
-  id: 6336
-  time: '2024-04-12T07:15:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24986
 - author: Ko4erga
   changes:
   - message: Strobes added WEE-OOO-WEE-OOO!
@@ -3829,3 +3822,14 @@
   id: 6835
   time: '2024-06-29T04:10:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26347
+- author: deltanedas
+  changes:
+  - message: Traitors can now be assigned to deconstruct the station's nuke for its
+      precious plutonium core.
+    type: Add
+  - message: Added the Objectives category in the uplink with a Core Extraction Toolbox
+      for deconstructing said nuke.
+    type: Add
+  id: 6836
+  time: '2024-06-29T04:11:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26786
