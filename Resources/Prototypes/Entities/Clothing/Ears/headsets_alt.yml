@@ -3,12 +3,14 @@
   parent: ClothingHeadset
   id: ClothingHeadsetAlt
   name: headset
-  description: An updated, modular intercom that fits over the head. Takes encryption keys.
+  description: An updated, modular intercom that fits over the head. Takes 5 encryption keys instead of 4.
   components:
   - type: Sprite
     state: icon_alt
   - type: Clothing
     equippedPrefix: alt
+  - type: EncryptionKeyHolder
+    keySlots: 5
 
 - type: entity
   parent: ClothingHeadsetAlt
