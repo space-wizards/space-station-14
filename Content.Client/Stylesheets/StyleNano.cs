@@ -1242,7 +1242,6 @@ namespace Content.Client.Stylesheets
                     .Class(StyleClassItemStatusNotHeld)
                     .Prop("font", notoSansItalic10)
                     .Prop("font-color", ItemStatusNotHeldColor)
-                    .Prop(nameof(Control.Margin), new Thickness(4, 0, 0, 2)),
 
                 Element<RichTextLabel>()
                     .Class(StyleClassItemStatus)
