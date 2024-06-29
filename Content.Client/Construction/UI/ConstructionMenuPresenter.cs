@@ -221,20 +221,25 @@ namespace Content.Client.Construction.UI
                     uniqueCategories.Add(category);
             }
 
-            var sortedProtoCategories = uniqueCategories.OrderBy(x => Loc.GetString(x)).ToArray();
-
             var isFavorites = _favoritedRecipes.Count > 0;
-
-            var categoriesArray = new string[sortedProtoCategories.Length + (isFavorites ? 2 : 1)];
+            var categoriesArray = new string[isFavorites ? uniqueCategories.Count + 2 : uniqueCategories.Count + 1];
 
             // hard-coded to show all recipes
-            categoriesArray[0] = _forAllCategoryName;
+            var idx = 0;
+            categoriesArray[idx++] = _forAllCategoryName;
 
             // hard-coded to show favorites if it need
             if (isFavorites)
-                categoriesArray[1] = _favoriteCatName;
+            {
+                categoriesArray[idx++] = _favoriteCatName;
+            }
 
-            Array.Copy(sortedProtoCategories, 0, categoriesArray, (isFavorites ? 2 : 1), sortedProtoCategories.Length);
+            var sortedProtoCategories = uniqueCategories.OrderBy(Loc.GetString);
+
+            foreach (var cat in sortedProtoCategories)
+            {
+                categoriesArray[idx++] = cat;
+            }
 
             _constructionView.OptionCategories.Clear();
 
