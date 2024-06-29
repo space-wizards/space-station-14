@@ -28,7 +28,12 @@ public sealed partial class SetSolutionTemperatureEffect : EntityEffect
                 return;
 
             solution.Temperature = _temperature;
+
+            return;
         }
+
+        // TODO: Someone needs to figure out how to do this for non-reagent effects.
+        throw new NotImplementedException();
     }
 }
 
@@ -72,7 +77,12 @@ public sealed partial class AdjustSolutionTemperatureEffect : EntityEffect
 
             var deltaT = _scaled ? _delta * (float) reagentArgs.Quantity : _delta;
             solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);
+
+            return;
         }
+
+        // TODO: Someone needs to figure out how to do this for non-reagent effects.
+        throw new NotImplementedException();
     }
 }
 
@@ -120,7 +130,12 @@ public sealed partial class AdjustSolutionThermalEnergyEffect : EntityEffect
                 : _delta / heatCap;
 
             solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);
+
+            return;
         }
+
+        // TODO: Someone needs to figure out how to do this for non-reagent effects.
+        throw new NotImplementedException();
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

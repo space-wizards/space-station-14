@@ -14,7 +14,7 @@ public sealed partial class SatiateThirst : EntityEffect
 {
     private const float DefaultHydrationFactor = 3.0f;
 
-    /// How much thirst is satiated each metabolism tick. Not currently tied to
+    /// How much thirst is satiated each tick. Not currently tied to
     /// rate or anything.
     [DataField("factor")]
     public float HydrationFactor { get; set; } = DefaultHydrationFactor;

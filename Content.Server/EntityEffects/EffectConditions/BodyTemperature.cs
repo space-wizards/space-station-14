@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.EntityEffects.EffectConditions;
 
 /// <summary>
-///     Requires the solution entity to be above or below a certain temperature.
+///     Requires the target entity to be above or below a certain temperature.
 ///     Used for things like cryoxadone and pyroxadone.
 /// </summary>
 public sealed partial class Temperature : EntityEffectCondition

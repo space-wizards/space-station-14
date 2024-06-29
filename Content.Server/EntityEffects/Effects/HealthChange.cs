@@ -11,13 +11,13 @@ using System.Text.Json.Serialization;
 namespace Content.Server.EntityEffects.Effects
 {
     /// <summary>
-    /// Default metabolism for medicine reagents.
+    /// Default metabolism used for medicine reagents.
     /// </summary>
     [UsedImplicitly]
     public sealed partial class HealthChange : EntityEffect
     {
         /// <summary>
-        /// Damage to apply every metabolism cycle. Damage Ignores resistances.
+        /// Damage to apply every cycle. Damage Ignores resistances.
         /// </summary>
         [DataField(required: true)]
         [JsonPropertyName("damage")]
@@ -26,6 +26,7 @@ namespace Content.Server.EntityEffects.Effects
         /// <summary>
         ///     Should this effect scale the damage by the amount of chemical in the solution?
         ///     Useful for touch reactions, like styptic powder or acid.
+        ///     Only usable if the EntityEffectBaseArgs is an EntityEffectReagentArgs.
         /// </summary>
         [DataField]
         [JsonPropertyName("scaleByQuantity")]

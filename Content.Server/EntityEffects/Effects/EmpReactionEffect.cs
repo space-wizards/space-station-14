@@ -11,7 +11,7 @@ namespace Content.Server.EntityEffects.Effects;
 public sealed partial class EmpReactionEffect : EntityEffect
 {
     /// <summary>
-    ///     Impulse range per unit of reagent
+    ///     Impulse range per unit of quantity
     /// </summary>
     [DataField("rangePerUnit")]
     public float EmpRangePerUnit = 0.5f;

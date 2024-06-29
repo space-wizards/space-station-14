@@ -16,7 +16,8 @@ namespace Content.Server.EntityEffects.Effects
         private const float DefaultNutritionFactor = 3.0f;
 
         /// <summary>
-        ///     How much hunger is satiated when 1u of the reagent is metabolized
+        ///     How much hunger is satiated.
+        ///     Is multiplied by quantity if used with EntityEffectReagentArgs.
         /// </summary>
         [DataField("factor")] public float NutritionFactor { get; set; } = DefaultNutritionFactor;
 

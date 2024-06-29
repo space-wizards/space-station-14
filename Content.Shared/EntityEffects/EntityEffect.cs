@@ -14,7 +14,7 @@ using Robust.Shared.Toolshed.TypeParsers;
 namespace Content.Shared.EntityEffects;
 
 /// <summary>
-///     Reagent effects describe behavior that occurs when a reagent is ingested and metabolized by some
+///     Entity effects describe behavior that occurs on different kinds of triggers, e.g. when a reagent is ingested and metabolized by some
 ///     organ. They only trigger when all of <see cref="Conditions"/> are satisfied.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
@@ -41,7 +41,7 @@ public abstract partial class EntityEffect
     public virtual LogImpact LogImpact { get; private set; } = LogImpact.Low;
 
     /// <summary>
-    ///     Should this reagent effect log at all?
+    ///     Should this entity effect log at all?
     /// </summary>
     public virtual bool ShouldLog { get; private set; } = false;
 
@@ -89,17 +89,10 @@ public static class EntityEffectExt
     }
 }
 
-public readonly record struct EntityEffectArgs(
-    EntityUid TargetEntity,
-    EntityUid? OrganEntity,
-    Solution? Source,
-    ReagentPrototype? Reagent,
-    FixedPoint2 Quantity,
-    IEntityManager EntityManager,
-    ReactionMethod? Method,
-    float Scale
-);
-
+/// <summary>
+///     EntityEffectBaseArgs only contains the target of an effect.
+///     If a trigger wants to include more info (e.g. the quantity of the chemical triggering the effect), it can be extended (see EntityEffectReagentArgs).
+/// </summary>
 public record class EntityEffectBaseArgs
 {
     public EntityUid TargetEntity;

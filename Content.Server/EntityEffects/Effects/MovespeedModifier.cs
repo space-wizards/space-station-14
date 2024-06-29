@@ -25,7 +25,8 @@ public sealed partial class MovespeedModifier : EntityEffect
     public float SprintSpeedModifier { get; set; } = 1;
 
     /// <summary>
-    /// How long the modifier applies (in seconds) when metabolized.
+    /// How long the modifier applies (in seconds).
+    /// Is scaled by reagent amount if used with an EntityEffectReagentArgs.
     /// </summary>
     [DataField]
     public float StatusLifetime = 2f;

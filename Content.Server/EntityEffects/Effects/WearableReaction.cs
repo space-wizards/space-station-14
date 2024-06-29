@@ -6,13 +6,14 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.EntityEffects.Effects.Effects;
 
 /// <summary>
-/// A reaction effect that consumes the required amount of reagent and spawns PrototypeID in the
-/// entity's Slot. Used to implement the water droplet effect for arachnids.
+/// A reaction effect that spawns a PrototypeID in the entity's Slot, and attempts to consume the reagent if EntityEffectReagentArgs.
+/// Used to implement the water droplet effect for arachnids.
 /// </summary>
 public sealed partial class WearableReaction : EntityEffect
 {
     /// <summary>
     /// Minimum quantity of reagent required to trigger this effect.
+    /// Only used with EntityEffectReagentArgs.
     /// </summary>
     [DataField]
     public float AmountThreshold = 1f;
@@ -33,8 +34,6 @@ public sealed partial class WearableReaction : EntityEffect
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-
-
         // SpawnItemInSlot returns false if slot is already occupied
         if (args.EntityManager.System<InventorySystem>().SpawnItemInSlot(args.TargetEntity, Slot, PrototypeID))
         {
