@@ -184,8 +184,15 @@ public sealed partial class EncryptionKeySystem : EntitySystem
 
         if (component.Channels.Count > 0)
         {
-            args.PushMarkup(Loc.GetString("examine-encryption-channels-prefix"));
-            AddChannelsExamine(component.Channels, component.DefaultChannel, args, _protoManager, "examine-encryption-channel");
+            using (args.PushGroup(nameof(EncryptionKeyComponent)))
+            {
+                args.PushMarkup(Loc.GetString("examine-encryption-channels-prefix"));
+                AddChannelsExamine(component.Channels,
+                    component.DefaultChannel,
+                    args,
+                    _protoManager,
+                    "examine-encryption-channel");
+            }
         }
     }
 

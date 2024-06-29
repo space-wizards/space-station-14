@@ -18,6 +18,10 @@
       - material: Cable
         amount: 2
         doAfter: 1
+      completed:
+      - !type:VisualizerDataInt
+        key: "enum.ConstructionVisuals.Layer"
+        data: 1
     - to: start
       completed:
       - !type:GivePrototype
@@ -45,6 +49,9 @@
       - !type:GivePrototype
         prototype: CableApcStack1
         amount: 2
+      - !type:VisualizerDataInt
+        key: "enum.ConstructionVisuals.Layer"
+        data: 0
       steps:
       - tool: Cutting
         doAfter: 1
@@ -57,7 +64,7 @@
         doAfter: 2
 
   - node: intercom
-    entity: IntercomCommon #TODO: make this work with encryption keys
+    entity: IntercomConstructed
     edges:
     - to: wired
       conditions:
