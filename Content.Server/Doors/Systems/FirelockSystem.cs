@@ -35,6 +35,7 @@ namespace Content.Server.Doors.Systems
         {
             component.Powered = args.Powered;
             UpdateDoorState(uid, component);
+            Dirty(uid, component);
         }
 
         public override void Update(float frameTime)
@@ -58,7 +59,11 @@ namespace Content.Server.Doors.Systems
                     && xformQuery.TryGetComponent(uid, out var xform))
                 {
                     var pressure = CheckDiffPressure(uid, firelock, xform, airtight, airtightQuery);
-                    firelock.Pressure = pressure;
+                    if (pressure != firelock.Pressure)
+                    {
+                        firelock.Pressure = pressure;
+                        Dirty(uid, firelock);
+                    }
                 }
 
                 // Always run this to re-close firelocks after they've been pried open.
@@ -73,11 +78,11 @@ namespace Content.Server.Doors.Systems
             else if (args.AlarmType == AtmosAlarmType.Danger)
                 component.ExtLocked = true;
             UpdateDoorState(uid, component);
+            Dirty(uid, component);
         }
 
         private void UpdateDoorState(EntityUid uid, FirelockComponent component)
         {
-            Dirty(uid, component);
             if (!this.IsPowered(uid, EntityManager) || !TryComp<DoorComponent>(uid, out var door))
                 return;
 
