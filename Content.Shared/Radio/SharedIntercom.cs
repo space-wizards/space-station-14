@@ -10,23 +10,6 @@ public enum IntercomUiKey
 }
 
 [Serializable, NetSerializable]
-public sealed class IntercomBoundUIState : BoundUserInterfaceState
-{
-    public bool MicEnabled;
-    public bool SpeakerEnabled;
-    public List<ProtoId<RadioChannelPrototype>> AvailableChannels;
-    public string SelectedChannel;
-
-    public IntercomBoundUIState(bool micEnabled, bool speakerEnabled, List<ProtoId<RadioChannelPrototype>> availableChannels, string selectedChannel)
-    {
-        MicEnabled = micEnabled;
-        SpeakerEnabled = speakerEnabled;
-        AvailableChannels = availableChannels;
-        SelectedChannel = selectedChannel;
-    }
-}
-
-[Serializable, NetSerializable]
 public sealed class ToggleIntercomMicMessage : BoundUserInterfaceMessage
 {
     public bool Enabled;
