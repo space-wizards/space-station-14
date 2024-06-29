@@ -938,7 +938,7 @@
   productEntity: ReinforcementRadioSyndicateCyborgAssault
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-borg-assault }
   cost:
-    Telecrystal: 40
+    Telecrystal: 65
   categories:
     - UplinkAllies
   conditions:
