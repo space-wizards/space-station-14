@@ -54,8 +54,8 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 10
-        Piercing: 7
+        Slash: 4
+        Piercing: 2
   - type: Body
     prototype: Rat
     requiredLegs: 1 # TODO: More than 1 leg
@@ -148,7 +148,7 @@
     animation: WeaponArcFist
     damage:
       types:
-        Blunt: 54 #oof ouch owie my bones (reduced)
+        Blunt: 12 #no more oof ouch owie my bones (use the servants)
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7
