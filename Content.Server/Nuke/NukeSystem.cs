@@ -169,7 +169,11 @@ public sealed class NukeSystem : EntitySystem
 
         // Nuke has to have the disk in it to be moved
         if (!component.DiskSlot.HasItem)
+        {
+            var msg = Loc.GetString("nuke-component-cant-anchor-toggle");
+            _popups.PopupEntity(msg, uid, args.Actor, PopupType.MediumCaution);
             return;
+        }
 
         // manually set transform anchor (bypassing anchorable)
         // todo: it will break pullable system
