@@ -142,6 +142,8 @@
         - id: PlushieRainbowCarp
           prob: 0.03
           orGroup: carp
+        - id: PlushieFinfin
+          prob: 0.03
         - id: PlushieSlime
           prob: 0.2
         - id: PlushieSnake
@@ -254,6 +256,8 @@
         - id: PlushieRainbowCarp
           prob: 0.03
           orGroup: carp
+        - id: PlushieFinfin
+          prob: 0.03
         - id: PlushieSlime
           prob: 0.2
         - id: PlushieSnake

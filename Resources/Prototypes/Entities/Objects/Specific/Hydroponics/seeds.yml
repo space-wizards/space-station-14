@@ -602,3 +602,14 @@
       seedId: pyrotton
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/pyrotton.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of lemo seeds
+  description: "Imported all the way from the distant planet Teo."
+  id: LemoSeeds
+  components:
+    - type: Seed
+      seedId: lemo
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/lemo.rsi
