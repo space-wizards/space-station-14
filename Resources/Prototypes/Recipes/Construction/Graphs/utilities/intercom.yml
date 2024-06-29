@@ -11,7 +11,7 @@
         doAfter: 2.0
 
   - node: assembly
-    entity: IntercomAssesmbly
+    entity: IntercomAssembly
     edges:
     - to: wired
       steps:
@@ -33,7 +33,7 @@
         doAfter: 2
 
   - node: wired
-    entity: IntercomAssesmbly
+    entity: IntercomAssembly
     edges:
     - to: electronics
       steps:
@@ -65,6 +65,10 @@
 
   - node: intercom
     entity: IntercomConstructed
+    doNotReplaceInheritingEntities: true
+    actions:
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
     edges:
     - to: wired
       conditions:
@@ -79,3 +83,27 @@
       steps:
       - tool: Prying
         doAfter: 1
+    - to: intercomReinforced
+      conditions:
+      - !type:WirePanel
+      steps:
+      - material: Steel
+        amount: 1
+      - tool: Welding
+        doAfter: 1
+
+  - node: intercomReinforced
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level2
+      wiresAccessible: false
+    edges:
+    - to: intercom
+      conditions:
+      - !type:WirePanel
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+      steps:
+      - tool: Welding
+        doAfter: 5

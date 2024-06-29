@@ -31,6 +31,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedWiresSystem _wires = default!;
 
     public override void Initialize()
     {
@@ -150,7 +151,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
             return;
         }
 
-        if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
+        if (!_wires.IsPanelOpen(uid))
         {
             _popup.PopupClient(Loc.GetString("encryption-keys-panel-locked"), uid, args.User);
             return;
