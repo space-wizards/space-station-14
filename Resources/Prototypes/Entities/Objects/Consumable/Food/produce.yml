@@ -1927,7 +1927,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - lemo
+      - sweet
   - type: SolutionContainerManager
     solutions:
       food:
