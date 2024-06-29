@@ -31,14 +31,14 @@ public sealed class SlipperySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SlipperyComponent, StepTriggerAttemptEvent>(HandleAttemptCollide);
-        SubscribeLocalEvent<SlipperyComponent, StepTriggeredEvent>(HandleStepTrigger);
+        SubscribeLocalEvent<SlipperyComponent, StepTriggeredOffEvent>(HandleStepTrigger);
         SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
         SubscribeLocalEvent<ThrownItemComponent, SlipCausingAttemptEvent>(OnThrownSlipAttempt);
         // as long as slip-resistant mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
         SubscribeLocalEvent<NoSlipComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnNoSlipAttempt(e, c, ev.Args));
     }
 
-    private void HandleStepTrigger(EntityUid uid, SlipperyComponent component, ref StepTriggeredEvent args)
+    private void HandleStepTrigger(EntityUid uid, SlipperyComponent component, ref StepTriggeredOffEvent args)
     {
         TrySlip(uid, component, args.Tripper);
     }
@@ -67,7 +67,7 @@ public sealed class SlipperySystem : EntitySystem
                 && _statusEffects.CanApplyEffect(toSlip, "Stun"); //Should be KnockedDown instead?
     }
 
-    private void TrySlip(EntityUid uid, SlipperyComponent component, EntityUid other)
+    public void TrySlip(EntityUid uid, SlipperyComponent component, EntityUid other, bool requiresContact = true)
     {
         if (HasComp<KnockedDownComponent>(other) && !component.SuperSlippery)
             return;
@@ -89,7 +89,7 @@ public sealed class SlipperySystem : EntitySystem
         {
             _physics.SetLinearVelocity(other, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);
 
-            if (component.SuperSlippery)
+            if (component.SuperSlippery && requiresContact)
             {
                 var sliding = EnsureComp<SlidingComponent>(other);
                 sliding.CollidingEntities.Add(uid);

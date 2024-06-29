@@ -43,6 +43,10 @@
     lowVoltageNode: power
   - type: CableVis
     node: power
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 0
+    fx: EffectRCDConstruct0  
 
 - type: entity
   parent: CableBase

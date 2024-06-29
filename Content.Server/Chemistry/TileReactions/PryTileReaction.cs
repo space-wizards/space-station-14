@@ -12,9 +12,12 @@ namespace Content.Server.Chemistry.TileReactions;
 [DataDefinition]
 public sealed partial class PryTileReaction : ITileReaction
 {
-    public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
+    public FixedPoint2 TileReact(TileRef tile,
+        ReagentPrototype reagent,
+        FixedPoint2 reactVolume,
+        IEntityManager entityManager)
     {
-        var sys = IoCManager.Resolve<IEntityManager>().System<TileSystem>();
+        var sys = entityManager.System<TileSystem>();
         sys.PryTile(tile);
         return reactVolume;
     }

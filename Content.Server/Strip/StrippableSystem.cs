@@ -1,6 +1,6 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Ensnaring;
-using Content.Shared.CombatMode;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
@@ -9,7 +9,6 @@ using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
@@ -17,10 +16,8 @@ using Content.Shared.Popups;
 using Content.Shared.Strip;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Server.Strip
 {
@@ -28,7 +25,6 @@ namespace Content.Server.Strip
     {
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly EnsnareableSystem _ensnaringSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
         [Dependency] private readonly SharedCuffableSystem _cuffableSystem = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -45,7 +41,6 @@ namespace Content.Server.Strip
 
             SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<Verb>>(AddStripVerb);
             SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<ExamineVerb>>(AddStripExamineVerb);
-            SubscribeLocalEvent<StrippableComponent, ActivateInWorldEvent>(OnActivateInWorld);
 
             // BUI
             SubscribeLocalEvent<StrippableComponent, StrippingSlotButtonPressed>(OnStripButtonPressed);
@@ -68,7 +63,7 @@ namespace Content.Server.Strip
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
-                Act = () => StartOpeningStripper(args.User, (uid, component), true),
+                Act = () => TryOpenStrippingUi(args.User, (uid, component), true),
             };
 
             args.Verbs.Add(verb);
@@ -86,42 +81,16 @@ namespace Content.Server.Strip
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
-                Act = () => StartOpeningStripper(args.User, (uid, component), true),
+                Act = () => TryOpenStrippingUi(args.User, (uid, component), true),
                 Category = VerbCategory.Examine,
             };
 
             args.Verbs.Add(verb);
         }
 
-        private void OnActivateInWorld(EntityUid uid, StrippableComponent component, ActivateInWorldEvent args)
-        {
-            if (args.Target == args.User)
-                return;
-
-            if (!HasComp<ActorComponent>(args.User))
-                return;
-
-            StartOpeningStripper(args.User, (uid, component));
-        }
-
-        public override void StartOpeningStripper(EntityUid user, Entity<StrippableComponent> strippable, bool openInCombat = false)
-        {
-            base.StartOpeningStripper(user, strippable, openInCombat);
-
-            if (TryComp<CombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
-                return;
-
-            if (TryComp<ActorComponent>(user, out var actor))
-            {
-                if (_userInterfaceSystem.SessionHasOpenUi(strippable, StrippingUiKey.Key, actor.PlayerSession))
-                    return;
-                _userInterfaceSystem.TryOpen(strippable, StrippingUiKey.Key, actor.PlayerSession);
-            }
-        }
-
         private void OnStripButtonPressed(Entity<StrippableComponent> strippable, ref StrippingSlotButtonPressed args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } user ||
+            if (args.Actor is not { Valid: true } user ||
                 !TryComp<HandsComponent>(user, out var userHands))
                 return;
 
@@ -173,7 +142,7 @@ namespace Content.Server.Strip
 
         private void OnStripEnsnareMessage(EntityUid uid, EnsnareableComponent component, StrippingEnsnareButtonPressed args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } user)
+            if (args.Actor is not { Valid: true } user)
                 return;
 
             foreach (var entity in component.Container.ContainedEntities)
@@ -444,6 +413,9 @@ namespace Content.Server.Strip
 
             var (time, stealth) = GetStripTimeModifiers(user, target, targetStrippable.HandStripDelay);
 
+            if (!stealth)
+                _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert-hand", ("user", Identity.Entity(user, EntityManager)), ("item", user.Comp.ActiveHandEntity!.Value)), target, target, PopupType.Large);
+
             var prefix = stealth ? "stealthily " : "";
             _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s hands");
 
@@ -498,7 +470,7 @@ namespace Content.Server.Strip
 
             if (!_handsSystem.TryGetHand(target, handName, out var handSlot, target.Comp))
             {
-                _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", target)), user);
+                _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", Identity.Name(target, EntityManager, user))), user);
                 return false;
             }
 
@@ -513,7 +485,7 @@ namespace Content.Server.Strip
 
             if (!_handsSystem.CanDropHeld(target, handSlot, false))
             {
-                _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop-message", ("owner", target)), user);
+                _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop-message", ("owner", Identity.Name(target, EntityManager, user))), user);
                 return false;
             }
 

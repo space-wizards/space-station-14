@@ -14,9 +14,9 @@
     successChance: 1
     interactSuccessSound:
       collection: DeskBell
-    params:
-      variation: 0.03
-      volume: 3
+      params:
+        variation: 0.03
+        volume: 3
     onActivate: true
   - type: EmitSoundOnUse
     sound:

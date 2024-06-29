@@ -20,7 +20,7 @@ namespace Content.Client.Administration.UI.CustomControls
         private List<PlayerInfo> _playerList = new();
         private readonly List<PlayerInfo> _sortedPlayerList = new();
 
-        public event Action<PlayerInfo>? OnSelectionChanged;
+        public event Action<PlayerInfo?>? OnSelectionChanged;
         public IReadOnlyList<PlayerInfo> PlayerInfo => _playerList;
 
         public Func<PlayerInfo, string, string>? OverrideText;
@@ -41,10 +41,17 @@ namespace Content.Client.Administration.UI.CustomControls
             PlayerListContainer.ItemPressed += PlayerListItemPressed;
             PlayerListContainer.ItemKeyBindDown += PlayerListItemKeyBindDown;
             PlayerListContainer.GenerateItem += GenerateButton;
+            PlayerListContainer.NoItemSelected += PlayerListNoItemSelected;
             PopulateList(_adminSystem.PlayerList);
             FilterLineEdit.OnTextChanged += _ => FilterList();
             _adminSystem.PlayerListChanged += PopulateList;
             BackgroundPanel.PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)};
+        }
+
+        private void PlayerListNoItemSelected()
+        {
+            _selectedPlayer = null;
+            OnSelectionChanged?.Invoke(null);
         }
 
         private void PlayerListItemPressed(BaseButton.ButtonEventArgs? args, ListData? data)

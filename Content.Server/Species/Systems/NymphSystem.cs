@@ -19,10 +19,10 @@ public sealed partial class NymphSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NymphComponent, RemovedFromPartInBodyEvent>(OnRemovedFromPart);
+        SubscribeLocalEvent<NymphComponent, OrganRemovedFromBodyEvent>(OnRemovedFromPart);
     }
 
-    private void OnRemovedFromPart(EntityUid uid, NymphComponent comp, RemovedFromPartInBodyEvent args)
+    private void OnRemovedFromPart(EntityUid uid, NymphComponent comp, ref OrganRemovedFromBodyEvent args)
     {
         if (!_timing.IsFirstTimePredicted)
             return;

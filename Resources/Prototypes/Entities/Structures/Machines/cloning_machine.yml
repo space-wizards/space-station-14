@@ -52,9 +52,6 @@
     materialWhiteList:
     - Biomass
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-cloningpod
-    layoutId: CloningPod
   - type: ApcPowerReceiver
     powerLoad: 200 #Receives most of its power from the console
   - type: Appearance

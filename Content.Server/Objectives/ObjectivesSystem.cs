@@ -1,10 +1,8 @@
 using Content.Server.GameTicking;
-﻿using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Mind;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Random;
@@ -13,6 +11,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
+using Robust.Server.Player;
 
 namespace Content.Server.Objectives;
 
@@ -20,8 +19,8 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 {
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
 
     public override void Initialize()
@@ -37,14 +36,14 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
         // go through each gamerule getting data for the roundend summary.
-        var summaries = new Dictionary<string, Dictionary<string, List<EntityUid>>>();
+        var summaries = new Dictionary<string, Dictionary<string, List<(EntityUid, string)>>>();
         var query = EntityQueryEnumerator<GameRuleComponent>();
         while (query.MoveNext(out var uid, out var gameRule))
         {
             if (!_gameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
 
-            var info = new ObjectivesTextGetInfoEvent(new List<EntityUid>(), string.Empty);
+            var info = new ObjectivesTextGetInfoEvent(new List<(EntityUid, string)>(), string.Empty);
             RaiseLocalEvent(uid, ref info);
             if (info.Minds.Count == 0)
                 continue;
@@ -52,7 +51,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             // first group the gamerules by their agents, for example 2 different dragons
             var agent = info.AgentName;
             if (!summaries.ContainsKey(agent))
-                summaries[agent] = new Dictionary<string, List<EntityUid>>();
+                summaries[agent] = new Dictionary<string, List<(EntityUid, string)>>();
 
             var prepend = new ObjectivesTextPrependEvent("");
             RaiseLocalEvent(uid, ref prepend);
@@ -80,7 +79,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             foreach (var (_, minds) in summary)
             {
                 total += minds.Count;
-                totalInCustody += minds.Where(m => IsInCustody(m)).Count();
+                totalInCustody += minds.Where(pair => IsInCustody(pair.Item1)).Count();
             }
 
             var result = new StringBuilder();
@@ -105,19 +104,16 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
         }
     }
 
-    private void AddSummary(StringBuilder result, string agent, List<EntityUid> minds)
+    private void AddSummary(StringBuilder result, string agent, List<(EntityUid, string)> minds)
     {
         var agentSummaries = new List<(string summary, float successRate, int completedObjectives)>();
 
-        foreach (var mindId in minds)
+        foreach (var (mindId, name) in minds)
         {
-            if (!TryComp(mindId, out MindComponent? mind))
+            if (!TryComp<MindComponent>(mindId, out var mind))
                 continue;
 
-            var title = GetTitle(mindId, mind);
-            if (title == null)
-                continue;
-
+            var title = GetTitle((mindId, mind), name);
             var custody = IsInCustody(mindId, mind) ? Loc.GetString("objectives-in-custody") : string.Empty;
 
             var objectives = mind.Objectives;
@@ -179,7 +175,9 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                                        .ThenByDescending(x => x.completedObjectives);
 
         foreach (var (summary, _, _) in sortedAgents)
+        {
             result.AppendLine(summary);
+        }
     }
 
     public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
@@ -237,27 +235,17 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
     /// <summary>
     /// Get the title for a player's mind used in round end.
+    /// Pass in the original entity name which is shown alongside username.
     /// </summary>
-    public string? GetTitle(EntityUid mindId, MindComponent? mind = null)
+    public string GetTitle(Entity<MindComponent?> mind, string name)
     {
-        if (!Resolve(mindId, ref mind))
-            return null;
-
-        var name = mind.CharacterName;
-        _mind.TryGetSession(mindId, out var session);
-        var username = session?.Name;
-
-        if (username != null)
+        if (Resolve(mind, ref mind.Comp) &&
+            mind.Comp.OriginalOwnerUserId != null &&
+            _player.TryGetPlayerData(mind.Comp.OriginalOwnerUserId.Value, out var sessionData))
         {
-            if (name != null)
-                return Loc.GetString("objectives-player-user-named", ("user", username), ("name", name));
-
-            return Loc.GetString("objectives-player-user", ("user", username));
+            var username = sessionData.UserName;
+            return Loc.GetString("objectives-player-user-named", ("user", username), ("name", name));
         }
-
-        // nothing to identify the player by, just give up
-        if (name == null)
-            return null;
 
         return Loc.GetString("objectives-player-named", ("name", name));
     }
@@ -272,7 +260,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 /// The objectives system already checks if the game rule is added so you don't need to check that in this event's handler.
 /// </remarks>
 [ByRefEvent]
-public record struct ObjectivesTextGetInfoEvent(List<EntityUid> Minds, string AgentName);
+public record struct ObjectivesTextGetInfoEvent(List<(EntityUid, string)> Minds, string AgentName);
 
 /// <summary>
 /// Raised on the game rule before text for each agent's objectives is added, letting you prepend something.

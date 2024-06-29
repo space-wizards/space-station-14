@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Shared.Atmos;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -79,7 +80,7 @@ namespace Content.Client.HealthAnalyzer.UI
             );
 
             Temperature.Text = Loc.GetString("health-analyzer-window-entity-temperature-text",
-                ("temperature", float.IsNaN(msg.Temperature) ? "N/A" : $"{msg.Temperature - 273f:F1} °C ({msg.Temperature:F1} °K)")
+                ("temperature", float.IsNaN(msg.Temperature) ? "N/A" : $"{msg.Temperature - Atmospherics.T0C:F1} °C ({msg.Temperature:F1} K)")
             );
 
             BloodLevel.Text = Loc.GetString("health-analyzer-window-entity-blood-level-text",
@@ -138,7 +139,7 @@ namespace Content.Client.HealthAnalyzer.UI
 
                 var groupTitleText = $"{Loc.GetString(
                     "health-analyzer-window-damage-group-text",
-                    ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)),
+                    ("damageGroup", _prototypes.Index<DamageGroupPrototype>(damageGroupId).LocalizedName),
                     ("amount", damageAmount)
                 )}";
 
@@ -169,7 +170,7 @@ namespace Content.Client.HealthAnalyzer.UI
 
                         var damageString = Loc.GetString(
                             "health-analyzer-window-damage-type-text",
-                            ("damageType", Loc.GetString("health-analyzer-window-damage-type-" + type)),
+                            ("damageType", _prototypes.Index<DamageTypePrototype>(type).LocalizedName),
                             ("amount", typeAmount)
                         );
 

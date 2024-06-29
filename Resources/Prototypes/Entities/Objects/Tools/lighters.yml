@@ -142,8 +142,12 @@
     predictable: false
     soundActivate:
       path: /Audio/Items/Lighters/zippo_open.ogg
+      params:
+        volume: -5
     soundDeactivate:
       path: /Audio/Items/Lighters/zippo_close.ogg
+      params:
+        volume: -5
   - type: ItemToggleMeleeWeapon
     activatedDamage:
         types:
@@ -201,6 +205,9 @@
     netsync: false
     radius: 1.2 #slightly stronger than the other lighters
     color: orange
+  - type: UseDelay
+  - type: IgnitionSource
+    ignited: false
 
 - type: entity
   name: flippo engraved lighter

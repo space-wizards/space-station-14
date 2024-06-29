@@ -16,3 +16,4 @@ general-station-record-prints-filter = Fingerprints
 general-station-record-dna-filter = DNA
 general-station-record-console-search-records = Search
 general-station-record-console-reset-filters = Reset
+general-station-record-console-delete = Delete

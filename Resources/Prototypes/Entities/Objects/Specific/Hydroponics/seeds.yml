@@ -215,6 +215,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of killer tomato seeds
+  id: KillerTomatoSeeds
+  components:
+    - type: Seed
+      seedId: killerTomato
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tomatokiller.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of eggplant seeds
   id: EggplantSeeds
   components:
@@ -284,6 +294,17 @@
       seedId: cannabis
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/cannabis.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of rainbow cannabis seeds
+  description: "These seeds grow into rainbow weed. Groovy... and also highly addictive."
+  id: RainbowCannabisSeeds
+  components:
+    - type: Seed
+      seedId: rainbowCannabis
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
 
 - type: entity
   parent: SeedBase
@@ -571,3 +592,13 @@
       seedId: cotton
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/cotton.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of pyrotton seeds
+  id: PyrottonSeeds
+  components:
+    - type: Seed
+      seedId: pyrotton
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pyrotton.rsi

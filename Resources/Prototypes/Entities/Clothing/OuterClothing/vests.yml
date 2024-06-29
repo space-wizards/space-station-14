@@ -1,6 +1,6 @@
 #Web vest
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
   id: ClothingOuterVestWeb
   name: web vest
   description: A synthetic armor vest. This one has added webbing and ballistic plates.
@@ -21,7 +21,7 @@
 
 #Mercenary web vest
 - type: entity
-  parent: ClothingOuterStorageBase #web vest so it should have some pockets for ammo
+  parent: ClothingOuterVestWeb #web vest so it should have some pockets for ammo
   id: ClothingOuterVestWebMerc
   name: merc web vest
   description: A high-quality armored vest made from a hard synthetic material. It's surprisingly flexible and light, despite formidable armor plating.

@@ -35,11 +35,6 @@ public sealed partial class SalvageSystem
 
     private void OnMagnetClaim(EntityUid uid, SalvageMagnetComponent component, ref MagnetClaimOfferEvent args)
     {
-        var player = args.Session.AttachedEntity;
-
-        if (player is null)
-            return;
-
         var station = _station.GetOwningStation(uid);
 
         if (!TryComp(station, out SalvageMagnetDataComponent? dataComp) ||
@@ -135,17 +130,20 @@ public sealed partial class SalvageSystem
             }
 
             // Uhh yeah don't delete mobs or whatever
-            var mobQuery = AllEntityQuery<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
+            var mobQuery = AllEntityQuery<MobStateComponent, TransformComponent>();
             _detachEnts.Clear();
 
-            while (mobQuery.MoveNext(out var mobUid, out _, out _, out var xform))
+            while (mobQuery.MoveNext(out var mobUid, out _, out var xform))
             {
                 if (xform.GridUid == null || !data.Comp.ActiveEntities.Contains(xform.GridUid.Value) || xform.MapUid == null)
                     continue;
 
+                if (_salvMobQuery.HasComp(mobUid))
+                    continue;
+
                 // Can't parent directly to map as it runs grid traversal.
                 _detachEnts.Add(((mobUid, xform), xform.MapUid.Value, _transform.GetWorldPosition(xform)));
-                _transform.DetachParentToNull(mobUid, xform);
+                _transform.DetachEntity(mobUid, xform);
             }
 
             // Go and cleanup the active ents.
@@ -177,12 +175,12 @@ public sealed partial class SalvageSystem
             // Fuck with the seed to mix wrecks and asteroids.
             seed = (int) (seed / 10f) * 10;
 
-            
+
             if (i >= data.Comp.OfferCount / 2)
             {
                 seed++;
             }
-            
+
 
             data.Comp.Offered.Add(seed);
         }
@@ -216,7 +214,7 @@ public sealed partial class SalvageSystem
         if (!TryComp(station, out SalvageMagnetDataComponent? dataComp))
             return;
 
-        _ui.TrySetUiState(entity, SalvageMagnetUiKey.Key,
+        _ui.SetUiState(entity.Owner, SalvageMagnetUiKey.Key,
             new SalvageMagnetBoundUserInterfaceState(dataComp.Offered)
             {
                 Cooldown = dataComp.OfferCooldown,
@@ -238,7 +236,7 @@ public sealed partial class SalvageSystem
             if (station != data.Owner)
                 continue;
 
-            _ui.TrySetUiState(magnetUid, SalvageMagnetUiKey.Key,
+            _ui.SetUiState(magnetUid, SalvageMagnetUiKey.Key,
                 new SalvageMagnetBoundUserInterfaceState(data.Comp.Offered)
                 {
                     Cooldown = data.Comp.OfferCooldown,

@@ -92,7 +92,7 @@ namespace Content.Shared.Throwing
         {
             if (TryComp<PhysicsComponent>(uid, out var physics))
             {
-                _physics.SetBodyStatus(physics, BodyStatus.OnGround);
+                _physics.SetBodyStatus(uid, physics, BodyStatus.OnGround);
 
                 if (physics.Awake)
                     _broadphase.RegenerateContacts(uid, physics);

@@ -1,8 +1,13 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Preferences.Managers;
+using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
 
@@ -14,36 +19,37 @@ public sealed partial class TestPair
     /// <summary>
     /// Creates a map, a grid, and a tile, and gives back references to them.
     /// </summary>
-    public async Task<TestMapData> CreateTestMap()
+    [MemberNotNull(nameof(TestMap))]
+    public async Task<TestMapData> CreateTestMap(bool initialized = true, string tile = "Plating")
     {
+        var mapData = new TestMapData();
+        TestMap = mapData;
         await Server.WaitIdleAsync();
         var tileDefinitionManager = Server.ResolveDependency<ITileDefinitionManager>();
 
-        var mapData = new TestMapData();
         TestMap = mapData;
         await Server.WaitPost(() =>
         {
-            mapData.MapId = Server.MapMan.CreateMap();
-            mapData.MapUid = Server.MapMan.GetMapEntityId(mapData.MapId);
-            var mapGrid = Server.MapMan.CreateGridEntity(mapData.MapId);
-            mapData.MapGrid = mapGrid;
-            mapData.GridUid = mapGrid.Owner; // Fixing this requires an engine PR.
-            mapData.GridCoords = new EntityCoordinates(mapData.GridUid, 0, 0);
-            var plating = tileDefinitionManager["Plating"];
+            mapData.MapUid = Server.System<SharedMapSystem>().CreateMap(out mapData.MapId, runMapInit: initialized);
+            mapData.Grid = Server.MapMan.CreateGridEntity(mapData.MapId);
+            mapData.GridCoords = new EntityCoordinates(mapData.Grid, 0, 0);
+            var plating = tileDefinitionManager[tile];
             var platingTile = new Tile(plating.TileId);
-            mapData.MapGrid.SetTile(mapData.GridCoords, platingTile);
+            mapData.Grid.Comp.SetTile(mapData.GridCoords, platingTile);
             mapData.MapCoords = new MapCoordinates(0, 0, mapData.MapId);
-            mapData.Tile = mapData.MapGrid.GetAllTiles().First();
+            mapData.Tile = mapData.Grid.Comp.GetAllTiles().First();
         });
 
+        TestMap = mapData;
         if (!Settings.Connected)
             return mapData;
 
         await RunTicksSync(10);
         mapData.CMapUid = ToClientUid(mapData.MapUid);
-        mapData.CGridUid = ToClientUid(mapData.GridUid);
+        mapData.CGridUid = ToClientUid(mapData.Grid);
         mapData.CGridCoords = new EntityCoordinates(mapData.CGridUid, 0, 0);
 
+        TestMap = mapData;
         return mapData;
     }
 
@@ -125,5 +131,76 @@ public sealed partial class TestPair
         }
 
         return list;
+    }
+
+    /// <summary>
+    /// Set a user's antag preferences. Modified preferences are automatically reset at the end of the test.
+    /// </summary>
+    public async Task SetAntagPreference(ProtoId<AntagPrototype> id, bool value, NetUserId? user = null)
+    {
+        user ??= Client.User!.Value;
+        if (user is not {} userId)
+            return;
+
+        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
+        var prefs = prefMan.GetPreferences(userId);
+
+        // Automatic preference resetting only resets slot 0.
+        Assert.That(prefs.SelectedCharacterIndex, Is.EqualTo(0));
+
+        var profile = (HumanoidCharacterProfile) prefs.Characters[0];
+        var newProfile = profile.WithAntagPreference(id, value);
+        _modifiedProfiles.Add(userId);
+        await Server.WaitPost(() => prefMan.SetProfile(userId, 0, newProfile).Wait());
+    }
+
+    /// <summary>
+    /// Set a user's job preferences.  Modified preferences are automatically reset at the end of the test.
+    /// </summary>
+    public async Task SetJobPriority(ProtoId<JobPrototype> id, JobPriority value, NetUserId? user = null)
+    {
+        user ??= Client.User!.Value;
+        if (user is { } userId)
+            await SetJobPriorities(userId, (id, value));
+    }
+
+    /// <inheritdoc cref="SetJobPriority"/>
+    public async Task SetJobPriorities(params (ProtoId<JobPrototype>, JobPriority)[] priorities)
+        => await SetJobPriorities(Client.User!.Value, priorities);
+
+    /// <inheritdoc cref="SetJobPriority"/>
+    public async Task SetJobPriorities(NetUserId user, params (ProtoId<JobPrototype>, JobPriority)[] priorities)
+    {
+        var highCount = priorities.Count(x => x.Item2 == JobPriority.High);
+        Assert.That(highCount, Is.LessThanOrEqualTo(1), "Cannot have more than one high priority job");
+
+        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
+        var prefs = prefMan.GetPreferences(user);
+        var profile = (HumanoidCharacterProfile) prefs.Characters[0];
+        var dictionary = new Dictionary<ProtoId<JobPrototype>, JobPriority>(profile.JobPriorities);
+
+        // Automatic preference resetting only resets slot 0.
+        Assert.That(prefs.SelectedCharacterIndex, Is.EqualTo(0));
+
+        if (highCount != 0)
+        {
+            foreach (var (key, priority) in dictionary)
+            {
+                if (priority == JobPriority.High)
+                    dictionary[key] = JobPriority.Medium;
+            }
+        }
+
+        foreach (var (job, priority) in priorities)
+        {
+            if (priority == JobPriority.Never)
+                dictionary.Remove(job);
+            else
+                dictionary[job] = priority;
+        }
+
+        var newProfile = profile.WithJobPriorities(dictionary);
+        _modifiedProfiles.Add(user);
+        await Server.WaitPost(() => prefMan.SetProfile(user, 0, newProfile).Wait());
     }
 }

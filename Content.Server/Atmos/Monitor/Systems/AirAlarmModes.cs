@@ -90,8 +90,8 @@ public abstract class AirAlarmModeExecutor : IAirAlarmMode
     {
         IoCManager.InjectDependencies(this);
 
-        DeviceNetworkSystem = EntitySystem.Get<DeviceNetworkSystem>();
-        AirAlarmSystem = EntitySystem.Get<AirAlarmSystem>();
+        DeviceNetworkSystem = EntityManager.System<DeviceNetworkSystem>();
+        AirAlarmSystem = EntityManager.System<AirAlarmSystem>();
     }
 }
 

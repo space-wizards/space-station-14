@@ -163,6 +163,26 @@ namespace Content.Client.Atmos.UI
             parent.AddChild(panel);
             panel.AddChild(dataContainer);
 
+            // Volume label
+            var volBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
+
+            volBox.AddChild(new Label
+            {
+                Text = Loc.GetString("gas-analyzer-window-volume-text")
+            });
+            volBox.AddChild(new Control
+            {
+                MinSize = new Vector2(10, 0),
+                HorizontalExpand = true
+            });
+            volBox.AddChild(new Label
+            {
+                Text = Loc.GetString("gas-analyzer-window-volume-val-text", ("volume", $"{gasMix.Volume:0.##}")),
+                Align = Label.AlignMode.Right,
+                HorizontalExpand = true
+            });
+            dataContainer.AddChild(volBox);
+
             // Pressure label
             var presBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
 

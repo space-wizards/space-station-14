@@ -64,8 +64,8 @@ namespace Content.Server.Chemistry.EntitySystems
             // Set Move
             if (EntityManager.TryGetComponent(vapor, out PhysicsComponent? physics))
             {
-                _physics.SetLinearDamping(physics, 0f);
-                _physics.SetAngularDamping(physics, 0f);
+                _physics.SetLinearDamping(vapor, physics, 0f);
+                _physics.SetAngularDamping(vapor, physics, 0f);
 
                 _throwing.TryThrow(vapor, dir, speed, user: user);
 
@@ -122,7 +122,7 @@ namespace Content.Server.Chemistry.EntitySystems
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
 
                     var reaction =
-                        reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f);
+                        reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f, EntityManager);
 
                     if (reaction > reagentQuantity.Quantity)
                     {

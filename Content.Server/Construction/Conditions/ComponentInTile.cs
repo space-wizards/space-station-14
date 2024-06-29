@@ -3,6 +3,7 @@ using Content.Shared.Examine;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
@@ -49,7 +50,15 @@ namespace Content.Server.Construction.Conditions
             var transformSys = entityManager.System<SharedTransformSystem>();
             var indices = transform.Coordinates.ToVector2i(entityManager, IoCManager.Resolve<IMapManager>(), transformSys);
             var lookup = entityManager.EntitySysManager.GetEntitySystem<EntityLookupSystem>();
-            var entities = indices.GetEntitiesInTile(transform.GridUid.Value, LookupFlags.Approximate | LookupFlags.Static, lookup);
+
+
+            if (!entityManager.TryGetComponent<MapGridComponent>(transform.GridUid.Value, out var grid))
+                return !HasEntity;
+
+            if (!entityManager.System<SharedMapSystem>().TryGetTileRef(transform.GridUid.Value, grid, indices, out var tile))
+                return !HasEntity;
+
+            var entities = tile.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static, lookup);
 
             foreach (var ent in entities)
             {

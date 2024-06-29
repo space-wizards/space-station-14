@@ -61,9 +61,6 @@
   - type: Machine
     board: MaterialReclaimerMachineCircuitboard
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-reclaimer
-    layoutId: Reclaimer
   - type: MaterialReclaimer
     whitelist:
       components:

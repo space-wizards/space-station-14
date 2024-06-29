@@ -14,5 +14,11 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [DataField("zoom")]
         public Vector2 Zoom = new(1.5f, 1.5f);
+
+        /// <summary>
+        /// Should this console have access to restricted FTL destinations?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("whitelistSpecific")]
+        public List<EntityUid> FTLWhitelist = new List<EntityUid>();
     }
 }
