@@ -1927,7 +1927,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - lemo
+      - sweet
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1939,6 +1939,7 @@
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemo.rsi
+    state: fruit_pink
   - type: Produce
     seedId: lemo
   - type: Tag
