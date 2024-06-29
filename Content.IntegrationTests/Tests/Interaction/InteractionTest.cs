@@ -192,7 +192,7 @@ public abstract partial class InteractionTest
 
         PlayerCoords = SEntMan.GetNetCoordinates(Transform.WithEntityId(MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)), MapData.MapUid));
         TargetCoords = SEntMan.GetNetCoordinates(Transform.WithEntityId(MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)), MapData.MapUid));
-        await SetTile(Plating, grid: MapData.Grid.Comp);
+        await SetTile(Plating, grid: MapData.Grid);
 
         // Get player data
         var sPlayerMan = Server.ResolveDependency<Robust.Server.Player.IPlayerManager>();
