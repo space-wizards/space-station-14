@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: liltenhead
-  changes:
-  - message: Reagent slimes are no longer ghost roles.
-    type: Remove
-  id: 6334
-  time: '2024-04-12T06:50:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26840
 - author: TokenStyle
   changes:
   - message: Notice board can be crafted
@@ -3829,3 +3822,10 @@
   id: 6833
   time: '2024-06-29T03:28:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29338
+- author: metalgearsloth
+  changes:
+  - message: Typing indicators are now predicted.
+    type: Fix
+  id: 6834
+  time: '2024-06-29T03:33:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29551
