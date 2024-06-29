@@ -622,11 +622,6 @@ namespace Content.Server.GameTicking
             }
         }
 
-        public TimeSpan RoundDuration()
-        {
-            return _gameTiming.CurTime.Subtract(RoundStartTimeSpan);
-        }
-
         private void AnnounceRound()
         {
             if (CurrentPreset == null) return;
