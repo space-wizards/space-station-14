@@ -246,7 +246,10 @@
   id: IntercomSecurity
   parent: Intercom
   suffix: Security
+  description: An intercom. It's been reinforced with metal from security helmets, making it a bitch-and-a-half to open.
   components:
+  - type: WiresPanel #this should use a security panel but the code is horrendous
+    openDelay: 10
   - type: ContainerFill
     containers:
       board:
