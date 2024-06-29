@@ -72,6 +72,14 @@ public abstract partial class SharedXenoArtifactSystem
         Dirty(ent);
     }
 
+    public bool HasUnlockedPredecessor(Entity<XenoArtifactComponent> ent, EntityUid node)
+    {
+        var predecessors = GetDirectPredecessorNodes((ent, ent), node);
+        if (predecessors.Count != 0 && predecessors.All(p => p.Comp.Locked))
+            return false;
+        return true;
+    }
+
     public List<List<Entity<XenoArtifactNodeComponent>>> GetSegments(Entity<XenoArtifactComponent> ent)
     {
         var output = new List<List<Entity<XenoArtifactNodeComponent>>>();

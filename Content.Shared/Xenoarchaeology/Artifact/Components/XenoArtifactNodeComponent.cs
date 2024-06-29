@@ -25,7 +25,7 @@ public sealed partial class XenoArtifactNodeComponent : Component
     /// Strings that denote the triggers that this node has.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<LocId> TriggerTips = new();
+    public LocId TriggerTip;
 
     /// <summary>
     /// The entity whose graph this node is a part of.
@@ -46,6 +46,6 @@ public sealed partial class XenoArtifactNodeComponent : Component
     /// The maximum amount of times a node can be generically activated before becoming useless
     /// </summary>
     [DataField]
-    public int MaxDurability;
+    public int MaxDurability = 5;
     #endregion
 }

@@ -32,8 +32,7 @@ public abstract partial class SharedXenoArtifactSystem
         if (!TryComp<XenoArtifactComponent>(artifact, out var artiComp))
             return false;
 
-        var predecessors = GetDirectPredecessorNodes((artifact.Value, artiComp), ent);
-        if (predecessors.Count != 0 && predecessors.All(p => p.Comp.Locked))
+        if (!HasUnlockedPredecessor((artifact.Value, artiComp), ent))
             return false;
 
         return true;

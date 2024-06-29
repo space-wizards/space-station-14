@@ -147,7 +147,7 @@ public sealed partial class XenoArtifactSystem
         var trigger = RobustRandom.PickAndTake(_triggerPool);
 
         nodeEnt.Value.Comp.Depth = depth;
-        nodeEnt.Value.Comp.TriggerTips.Add(trigger.Tip);
+        nodeEnt.Value.Comp.TriggerTip = trigger.Tip;
         EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
 
         Dirty(nodeEnt.Value);

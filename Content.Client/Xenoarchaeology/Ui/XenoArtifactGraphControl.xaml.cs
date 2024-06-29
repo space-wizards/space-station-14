@@ -26,6 +26,8 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
 
     public event Action<Entity<XenoArtifactNodeComponent>>? OnNodeSelected;
 
+    private static Color _lockedNodeColor = Color.FromHex("#777777");
+
     private float NodeRadius => 25 * UIScale;
     private float NodeDiameter => NodeRadius * 2;
     private float MinYSpacing => NodeDiameter * 0.75f;
@@ -58,6 +60,7 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
         if (_hoveredNode == null)
             return;
         OnNodeSelected?.Invoke(_hoveredNode.Value);
+        UserInterfaceManager.ClickSound();
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -105,10 +108,10 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
                     var pos =  GetNodePos(node);
                     var hovered = (cursor - pos).LengthSquared() <= NodeRadius * NodeRadius;
 
-                    var color = Color.FromHex("#888888");
+                    var color = _lockedNodeColor;
                     if (artiSys.IsNodeActive(_artifact.Value, node))
                     {
-                        color = Color.Red;
+                        color = Color.Orange;
                     }
                     else if (!node.Comp.Locked)
                     {
@@ -135,8 +138,8 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
                 var successors = artiSys.GetDirectSuccessorNodes((_artifact.Value, _artifact.Value.Comp), node);
                 foreach (var s in successors)
                 {
-                    var color = Color.FromHex("#888888");
-                    if (!node.Comp.Locked && !s.Comp.Locked)
+                    var color = _lockedNodeColor;
+                    if (!node.Comp.Locked)
                         color = Color.White;
 
                     var to = GetNodePos(s) + new Vector2(0, NodeRadius);
