@@ -26,7 +26,7 @@ public sealed class ContainmentFieldSystem : EntitySystem
     {
         var otherBody = args.OtherEntity;
 
-        if (HasComp<SpaceGarbageComponent>(otherBody))
+        if (component.DestroyGarbage && HasComp<SpaceGarbageComponent>(otherBody))
         {
             _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), uid, PopupType.LargeCaution);
             QueueDel(otherBody);

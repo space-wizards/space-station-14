@@ -31,7 +31,7 @@
     - !type:PlantAdjustHealth
       amount: -0.5
     - !type:PlantAdjustMutationMod
-      prob: 0.3
+      probability: 0.3
       amount: 0.4
   metabolisms:
     Medicine:
@@ -115,10 +115,10 @@
     - !type:PlantAdjustNutrition
       amount: 0.05
     - !type:PlantAdjustWeeds
-      prob: 0.025
+      probability: 0.025
       amount: 1
     - !type:PlantAdjustPests
-      prob: 0.025
+      probability: 0.025
       amount: 1
     - !type:RobustHarvest {}
   metabolisms:
@@ -273,12 +273,12 @@
   - !type:PlantAdjustNutrition
     amount: 0.1
   - !type:PlantAdjustPests
-    prob: 0.1
+    probability: 0.1
     amount: -1
   - !type:PlantAdjustHealth
     amount: 0.1
   - !type:PlantAffectGrowth
-    prob: 0.2
+    probability: 0.2
     amount: 1
   - !type:PlantDiethylamine {}
   metabolisms:

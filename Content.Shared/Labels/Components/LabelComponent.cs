@@ -14,11 +14,4 @@ public sealed partial class LabelComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? CurrentLabel { get; set; }
-
-    /// <summary>
-    ///  The original name of the entity
-    ///  Used for reverting the modified entity name when the label is removed
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public string? OriginalName { get; set; }
 }
