@@ -531,6 +531,9 @@
   - type: Sprite
     layers:
     - state: moldy-slice
+  - type: Tag
+    tags:
+    - Trash
   - type: SolutionContainerManager
     solutions:
       food:
