@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Vasilis
-  changes:
-  - message: Blood (or anything containing uncooked animal proteins) can only be consumed
-      by animal stomach's instead of all but human. Attempting to due so will poison
-      you as intended.
-    type: Fix
-  id: 6339
-  time: '2024-04-13T02:36:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26906
 - author: DrSmugleaf
   changes:
   - message: Fixed incorrect "Cycled" and "Bolted" popups when wielding and unwielding
@@ -3833,3 +3824,10 @@
   id: 6838
   time: '2024-06-29T05:39:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28730
+- author: PJB3005
+  changes:
+  - message: '"Steal plutonium core" traitor objective has been reverted.'
+    type: Remove
+  id: 6839
+  time: '2024-06-29T15:23:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29578
