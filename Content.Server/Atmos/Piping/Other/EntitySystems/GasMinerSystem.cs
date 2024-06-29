@@ -26,9 +26,9 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
             var miner = ent.Comp;
 
             // SpawnAmount is declared in mol/s so to get the amount of gas we hope to mine, we have to multiply this by
-            // how long we have been waiting to spawn it.
-            var toSpawn = miner.SpawnAmount * args.dt;
-            if (!CheckMinerOperation(ent, toSpawn, out var environment) || !miner.Enabled || !miner.SpawnGas.HasValue || toSpawn <= 0f)
+            // how long we have been waiting to spawn it and further cap the number according to the miner's state.
+            var toSpawn = CapSpawnAmount(ent, miner.SpawnAmount * args.dt, out var environment);
+            if (toSpawn <= 0f || environment == null || !miner.Enabled || !miner.SpawnGas.HasValue)
                 return;
 
             // Time to mine some gas.
@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
             _atmosphereSystem.Merge(environment, merger);
         }
 
-        private bool CheckMinerOperation(Entity<GasMinerComponent> ent, float toSpawn, [NotNullWhen(true)] out GasMixture? environment)
+        private float CapSpawnAmount(Entity<GasMinerComponent> ent, float toSpawnTarget, [NotNullWhen(true)] out GasMixture? environment)
         {
             var (uid, miner) = ent;
             var transform = Transform(uid);
@@ -51,33 +51,30 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
             if (_atmosphereSystem.IsTileSpace(transform.GridUid, transform.MapUid, position))
             {
                 miner.Broken = true;
-                return false;
+                return 0f;
             }
 
             // Air-blocked location.
             if (environment == null)
             {
                 miner.Broken = true;
-                return false;
+                return 0f;
             }
 
-            // External pressure above threshold.
-            if (!float.IsInfinity(miner.MaxExternalPressure) &&
-                environment.Pressure > miner.MaxExternalPressure - toSpawn * miner.SpawnTemperature * Atmospherics.R / environment.Volume)
-            {
-                miner.Broken = true;
-                return false;
-            }
+            // How many moles could we theoretically spawn. Cap by pressure and amount.
+            var allowableMoles = Math.Min(
+                (miner.MaxExternalPressure - environment.Pressure) * environment.Volume / (miner.SpawnTemperature * Atmospherics.R),
+                miner.MaxExternalAmount - environment.TotalMoles);
 
-            // External gas amount above threshold.
-            if (!float.IsInfinity(miner.MaxExternalAmount) && environment.TotalMoles > miner.MaxExternalAmount)
-            {
+            var toSpawnReal = Math.Clamp(allowableMoles, 0f, toSpawnTarget);
+
+            if (toSpawnReal < Atmospherics.GasMinMoles) {
                 miner.Broken = true;
-                return false;
+                return 0f;
             }
 
             miner.Broken = false;
-            return true;
+            return toSpawnReal;
         }
     }
 }
