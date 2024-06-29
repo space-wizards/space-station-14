@@ -136,7 +136,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
         // In other words, yes, those are supposed to be CoreCount, not safeFuelLimit.
         var overloadVsSizeResult = fuel - CoreCount;
 
-        var instability = (int) Math.Pow(2, (float) overloadVsSizeResult / CoreCount) / 4;
+        var instability = overloadVsSizeResult / CoreCount;
         var fuzz = _random.Next(-1, 1);
         instability += fuzz; // fuzz the values a tiny bit.
 
