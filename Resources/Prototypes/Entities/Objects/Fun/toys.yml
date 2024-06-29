@@ -322,10 +322,13 @@
     inhandVisuals:
       left:
         - state: plushie_finfin-inhand-left
-          shader: unshaded
       right:
         - state: plushie_finfin-inhand-right
-          shader: unshaded
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+      - finfin
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
