@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ko4erga
-  changes:
-  - message: Strobes added WEE-OOO-WEE-OOO!
-    type: Add
-  id: 6337
-  time: '2024-04-12T08:02:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26083
 - author: osjarw
   changes:
   - message: Magboots no longer activate artifacts from salvage magnet ranges.
@@ -3833,3 +3826,10 @@
   id: 6836
   time: '2024-06-29T04:11:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26786
+- author: slarticodefast
+  changes:
+  - message: Air vents now have yellow lights if they are in under-pressure lockout.
+    type: Add
+  id: 6837
+  time: '2024-06-29T05:02:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29527
