@@ -21,3 +21,20 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHatJudge
+  name: judge helmet
+  description: An improved security helmet. Perfect for being the face of space law.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Helmets/judgehelm.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Helmets/judgehelm.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+  - type: Tag
+    tags:
+    - HamsterWearable
