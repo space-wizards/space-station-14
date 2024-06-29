@@ -1,10 +1,6 @@
 namespace Content.Server.IgnitionSource;
 
-    /// <summary>
-    ///     Raised in order to trigger the ignitionSourceComponent on an entity
-    /// </summary>
-    public sealed class IgnitionEvent : EntityEventArgs
-    {
-        public bool Ignite { get; set; }
-    }
-
+/// <summary>
+///     Raised in order to toggle the ignitionSourceComponent on an entity on or off
+/// </summary>
+[ByRefEvent] public record struct IgnitionEvent(bool Ignite = false);
