@@ -890,7 +890,7 @@
   icon: { sprite: /Textures/Objects/Misc/guardian_info.rsi, state: icon }
   productEntity: BoxHoloparasite
   cost:
-    Telecrystal: 35
+    Telecrystal: 14
   categories:
   - UplinkAllies
   conditions:
