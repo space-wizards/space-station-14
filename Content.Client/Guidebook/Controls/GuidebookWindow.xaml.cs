@@ -21,7 +21,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
     [Dependency] private readonly IResourceManager _resourceManager = default!;
     [Dependency] private readonly DocumentParsingManager _parsingMan = default!;
 
-    private Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry> _entries = new();
+    public Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry> Entries = new();
 
     public GuidebookWindow()
     {
@@ -82,7 +82,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         ProtoId<GuideEntryPrototype>? forceRoot = null,
         ProtoId<GuideEntryPrototype>? selected = null)
     {
-        _entries = entries;
+        Entries = entries;
         RepopulateTree(rootEntries, forceRoot);
         ClearSelectedGuide();
 
@@ -110,13 +110,13 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
     {
         if (rootEntries == null)
         {
-            HashSet<ProtoId<GuideEntryPrototype>> entries = new(_entries.Keys);
-            foreach (var entry in _entries.Values)
+            HashSet<ProtoId<GuideEntryPrototype>> entries = new(Entries.Keys);
+            foreach (var entry in Entries.Values)
             {
                 if (entry.Children.Count > 0)
                 {
                     var sortedChildren = entry.Children
-                        .Select(childId => _entries[childId])
+                        .Select(childId => Entries[childId])
                         .OrderBy(childEntry => childEntry.Priority)
                         .ThenBy(childEntry => Loc.GetString(childEntry.Name))
                         .Select(childEntry => new ProtoId<GuideEntryPrototype>(childEntry.Id))
@@ -130,7 +130,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         }
 
         return rootEntries
-            .Select(rootEntryId => _entries[rootEntryId])
+            .Select(rootEntryId => Entries[rootEntryId])
             .OrderBy(rootEntry => rootEntry.Priority)
             .ThenBy(rootEntry => Loc.GetString(rootEntry.Name));
     }
@@ -151,7 +151,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
 
     private TreeItem? AddEntry(ProtoId<GuideEntryPrototype> id, TreeItem? parent, HashSet<ProtoId<GuideEntryPrototype>> addedEntries)
     {
-        if (!_entries.TryGetValue(id, out var entry))
+        if (!Entries.TryGetValue(id, out var entry))
             return null;
 
         if (!addedEntries.Add(id))
@@ -181,7 +181,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
 
     public void HandleClick(string link)
     {
-        if (!_entries.TryGetValue(link, out var entry))
+        if (!Entries.TryGetValue(link, out var entry))
             return;
 
         if (Tree.TryGetIndexFromMetadata(entry, out var index))

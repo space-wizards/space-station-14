@@ -159,12 +159,6 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         if (_guideWindow == null)
             return;
 
-        if (closeIfShown && _guideWindow.IsOpen) {
-            UIManager.ClickSound();
-            _guideWindow.Close();
-            return;
-        }
-
         if (GuidebookButton != null)
             GuidebookButton.SetClickPressed(!_guideWindow.IsOpen);
 
@@ -183,6 +177,14 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
             {
                 RecursivelyAddChildren(guide, guides);
             }
+        }
+
+        if (closeIfShown && _guideWindow.IsOpen &&
+            _guideWindow.Entries.SequenceEqual(guides)) 
+        {
+            UIManager.ClickSound();
+            _guideWindow.Close();
+            return;
         }
 
         _guideWindow.UpdateGuides(guides, rootEntries, forceRoot, selected);
