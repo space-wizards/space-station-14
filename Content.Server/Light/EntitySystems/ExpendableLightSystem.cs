@@ -34,7 +34,6 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<ExpendableLightComponent, ComponentInit>(OnExpLightInit);
             SubscribeLocalEvent<ExpendableLightComponent, UseInHandEvent>(OnExpLightUse);
             SubscribeLocalEvent<ExpendableLightComponent, GetVerbsEvent<ActivationVerb>>(AddIgniteVerb);
-            SubscribeLocalEvent<ExpendableLightComponent, IsHotEvent>(IsHotEvent);
         }
 
         public override void Update(float frameTime)
@@ -101,8 +100,8 @@ namespace Content.Server.Light.EntitySystems
                     _item.SetHeldPrefix(ent, "lit", component: item);
                 }
 
-                var isHotEvent = new IsHotEvent() {IsHot = true};
-                RaiseLocalEvent(ent, isHotEvent);
+                var ignite = new IgnitionEvent() {Ignite = true};
+                RaiseLocalEvent(ent, ignite);
 
                 component.CurrentState = ExpendableLightState.Lit;
                 component.StateExpiryTime = component.GlowDuration;
@@ -136,8 +135,8 @@ namespace Content.Server.Light.EntitySystems
 
                 case ExpendableLightState.Dead:
                     _appearance.SetData(ent, ExpendableLightVisuals.Behavior, string.Empty, appearance);
-                    var isHotEvent = new IsHotEvent() {IsHot = true};
-                    RaiseLocalEvent(ent, isHotEvent);
+                    var ignite = new IgnitionEvent() {Ignite = true};
+                    RaiseLocalEvent(ent, ignite);
                     break;
             }
         }
@@ -201,15 +200,6 @@ namespace Content.Server.Light.EntitySystems
                 Act = () => TryActivate(ent)
             };
             args.Verbs.Add(verb);
-        }
-
-        private void IsHotEvent(Entity<ExpendableLightComponent> ent, ref IsHotEvent args)
-        {
-            if (args.IsHot)
-                return;
-
-            if (HasComp<IgnitionSourceComponent>(ent))
-                args.IsHot = ent.Comp.Activated;
         }
     }
 }
