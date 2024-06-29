@@ -1,8 +1,8 @@
 - type: entity
+  abstract: true
   parent: [BaseStructure, StructureWheeled]
-  id: NuclearBomb
+  id: BaseNuclearBomb
   name: nuclear fission explosive
-  description: You probably shouldn't stick around to see if this is armed.
   components:
   - type: Transform
     anchored: true
@@ -61,6 +61,23 @@
         - MachineMask
         layer:
         - HalfWallLayer
+  - type: InteractionOutline
+  - type: CargoSellBlacklist
+  - type: ArrivalsBlacklist
+  - type: WarpPoint
+    follow: true
+    location: nuclear bomb
+  - type: StealTarget
+    stealGroup: NuclearBomb
+  - type: Construction
+    graph: NuclearBomb
+    deconstructionTarget: disarmed
+
+- type: entity
+  parent: BaseNuclearBomb
+  id: NuclearBomb
+  description: You probably shouldn't stick around to see if this is armed.
+  components:
   - type: PointLight
     enabled: false
     radius: 4
@@ -90,7 +107,6 @@
         - NukeDisk
     alertLevelOnActivate: delta
     alertLevelOnDeactivate: green
-  - type: InteractionOutline
   - type: ActivatableUI
     key: enum.NukeUiKey.Key
   - type: UserInterface
@@ -99,17 +115,12 @@
         type: NukeBoundUserInterface
   - type: StaticPrice
     price: 50000 # YOU STOLE A NUCLEAR FISSION EXPLOSIVE?!
-  - type: CargoSellBlacklist
-  - type: ArrivalsBlacklist
   - type: ItemSlots
   - type: ContainerContainer
     containers:
       Nuke: !type:ContainerSlot
-  - type: StealTarget
-    stealGroup: NuclearBomb
-  - type: WarpPoint
-    follow: true
-    location: nuclear bomb
+  - type: Construction
+    node: nuke
 
 - type: entity
   parent: NuclearBomb
@@ -120,6 +131,17 @@
     anchored: false
   - type: Physics
     bodyType: Dynamic
+
+- type: entity
+  parent: BaseNuclearBomb
+  id: NuclearBombDisarmed
+  suffix: Disarmed
+  description: "You can clearly see that this can't be armed, given its lack of nuclear material."
+  components:
+  - type: StaticPrice
+    price: 1000 # fancy paperweight
+  - type: Construction
+    node: disarmed
 
 - type: entity
   parent: StorageTank

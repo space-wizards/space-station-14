@@ -1,0 +1,63 @@
+- type: entity
+  parent: BaseItem
+  id: PlutoniumCore
+  name: plutonium core
+  description: Extremely radioactive, even looking at this with the naked eye is dangerous.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/plutonium_core.rsi
+    state: icon
+  - type: StealTarget
+    stealGroup: PlutoniumCore
+  - type: RadiationSource
+    intensity: 4
+    slope: 1
+  - type: StaticPrice
+    price: 49000
+  - type: Tag
+    tags:
+    - PlutoniumCore
+
+- type: entity
+  parent: [BaseItem, BaseItemCabinet]
+  id: NukeCoreContainer
+  name: nuke core container
+  description: Solid container for radioactive objects.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/nuke_core_container.rsi
+    layers:
+    - state: closed
+      map: [ "enum.OpenableVisuals.Layer" ]
+    - state: core_closed
+      map: [ "enum.ItemCabinetVisuals.Layer" ]
+      visible: false
+      shader: unshaded
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+  - type: RadiationBlockingContainer
+    resistance: 4
+  - type: SealingCabinet
+    sealedPopup: nuke-core-container-sealed-popup
+  - type: ItemSlots
+    slots:
+      ItemCabinet:
+        whitelist:
+          tags:
+          - PlutoniumCore
+        whitelistFailPopup: nuke-core-container-whitelist-fail-popup
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: { state: open }
+          False: { state: closed }
+        enum.ItemCabinetVisuals.Layer:
+          True: { state: core_open }
+          False: { state: core_closed }
+      enum.ItemCabinetVisuals.ContainsItem:
+        enum.ItemCabinetVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
