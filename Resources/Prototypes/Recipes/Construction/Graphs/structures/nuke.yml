@@ -1,0 +1,79 @@
+- type: constructionGraph
+  id: NuclearBomb
+  start: disarmed
+  graph:
+  - node: disarmed
+    entity: NuclearBombDisarmed
+    edges:
+    - to: core_exposed
+      steps:
+      - tag: PlutoniumCore
+        name: "a plutonium core"
+        icon:
+          sprite: Objects/Misc/plutonium_core.rsi
+          state: icon
+        doAfter: 1
+
+  - node: core_exposed
+    edges:
+    - to: disarmed
+      completed:
+      - !type:GivePrototype
+        prototype: PlutoniumCore
+      steps:
+      - tool: Prying
+        doAfter: 2
+    - to: panel_removed
+      steps:
+      - material: Plasteel
+        amount: 8
+        doAfter: 2
+      - tool: Welding
+        doAfter: 4
+
+  - node: panel_removed
+    edges:
+    - to: core_exposed
+      completed:
+      - !type:GivePrototype
+        prototype: SheetPlasteel1
+        amount: 8
+      steps:
+      - tool: Welding
+        doAfter: 6
+      - tool: Anchoring
+        doAfter: 2
+      - tool: Welding
+        doAfter: 8
+    - to: panel_exposed
+      steps:
+      - material: Plasteel
+        amount: 4
+        doAfter: 2
+      - tool: Welding
+        doAfter: 2
+
+  - node: panel_exposed
+    edges:
+    - to: panel_removed
+      completed:
+      - !type:GivePrototype
+        prototype: SheetPlasteel1
+        amount: 4
+      steps:
+      - tool: Welding
+        doAfter: 2
+      - tool: Prying
+        doAfter: 2
+    - to: nuke
+      steps:
+      - tool: FineScrewing
+        doAfter: 2
+
+  - node: nuke
+    entity: NuclearBomb
+    edges:
+    - to: panel_exposed
+      steps:
+      - tool: FineScrewing
+        doAfter: 2

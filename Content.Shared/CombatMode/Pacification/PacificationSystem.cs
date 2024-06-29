@@ -54,7 +54,8 @@ public sealed class PacificationSystem : EntitySystem
             && !(_timing.CurTime > user.Comp.NextPopupTime))
             return;
 
-        _popup.PopupClient(Loc.GetString(reason, ("entity", target)), user, user);
+        var targetName = Identity.Entity(target, EntityManager);
+        _popup.PopupClient(Loc.GetString(reason, ("entity", targetName)), user, user);
         user.Comp.NextPopupTime = _timing.CurTime + user.Comp.PopupCooldown;
         user.Comp.LastAttackedEntity = target;
     }
