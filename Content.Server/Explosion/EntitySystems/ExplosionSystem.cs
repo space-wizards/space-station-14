@@ -427,6 +427,6 @@ public sealed partial class ExplosionSystem : EntitySystem
             return;
 
         args.Msg.PushNewline();
-        args.Msg.AddMarkup(Loc.GetString(component.Examine, ("value", value)));
+        args.Msg.AddMarkupOrThrow(Loc.GetString(component.Examine, ("value", value)));
     }
 }
