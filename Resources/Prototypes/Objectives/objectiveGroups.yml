@@ -14,7 +14,6 @@
     CMOHyposprayStealObjective: 1
     CMOCrewMonitorStealObjective: 1
     RDHardsuitStealObjective: 1
-    NukeDiskStealObjective: 1
     MagbootsStealObjective: 1
     CorgiMeatStealObjective: 1
     ClipboardStealObjective: 1
@@ -23,6 +22,8 @@
     HandTeleporterStealObjective: 0.5
     SecretDocumentsStealObjective: 0.5
     HoSGunStealObjective: 0.5 # Delta-V - HoS Gun
+    PlutoniumCoreStealObjective: 0.5
+    NukeDiskStealObjective: 0.25
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
