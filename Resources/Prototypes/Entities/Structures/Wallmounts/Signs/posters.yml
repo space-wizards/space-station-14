@@ -3,21 +3,40 @@
   id: PosterBase
   abstract: true
   components:
+  - type: Appearance
   - type: WallMount
     arc: 360
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Wallmounts/posters.rsi
     snapCardinals: true
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Flammable
+    fireSpread: false
+    canResistFire: false
+    alwaysCombustible: true
+    canExtinguish: false
+    requireAtmosphere: false
+    damage:
+      types:
+        Heat: 0.65  
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Effects/poster_broken.ogg
+        params:
+          variation: 0.05
   - type: Destructible
     thresholds:
     - trigger:
-        !type:DamageTrigger
-        damage: 5
+        !type:DamageGroupTrigger
+        damageGroup: Brute
+        damage: 25
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/poster_broken.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
@@ -26,6 +45,18 @@
             min: 1
             max: 1
         offset: 0
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PosterBurned:
+            min: 1
+            max: 1
+        offset: 0
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: BaseSign
@@ -37,6 +68,15 @@
     drawdepth: WallTops
     sprite: Structures/Wallmounts/posters.rsi
     state: poster_broken
+    noRot: true
+  - type: Damageable
+    damageModifierSet: Web
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Effects/poster_broken.ogg
+        params:
+          variation: 0.05
   - type: Destructible
     thresholds:
     - trigger:
@@ -46,6 +86,25 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: PosterBroken
+  id: PosterBurned
+  name: burned poster
+  description: "You can't make out anything from the poster's original print. Only ashes left."
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Wallmounts/posters.rsi
+    state: poster_burned
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -58,6 +117,8 @@
   components:
   - type: Sprite
     state: poster1_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandFreeTonto
 
 - type: entity
   parent: PosterBase
@@ -67,6 +128,8 @@
   components:
   - type: Sprite
     state: poster2_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandAtmosiaDeclarationIndependence
 
 - type: entity
   parent: PosterBase
@@ -76,6 +139,8 @@
   components:
   - type: Sprite
     state: poster3_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandFunPolice
 
 - type: entity
   parent: PosterBase
@@ -85,6 +150,8 @@
   components:
   - type: Sprite
     state: poster4_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandLustyExomorph
 
 - type: entity
   parent: PosterBase
@@ -94,6 +161,8 @@
   components:
   - type: Sprite
     state: poster5_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandSyndicateRecruitment
 
 - type: entity
   parent: PosterBase
@@ -103,6 +172,8 @@
   components:
   - type: Sprite
     state: poster6_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandClown
 
 - type: entity
   parent: PosterBase
@@ -112,6 +183,8 @@
   components:
   - type: Sprite
     state: poster7_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandSmoke
 
 - type: entity
   parent: PosterBase
@@ -121,6 +194,8 @@
   components:
   - type: Sprite
     state: poster8_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandGreyTide
 
 - type: entity
   parent: PosterBase
@@ -130,6 +205,8 @@
   components:
   - type: Sprite
     state: poster9_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandMissingGloves
 
 - type: entity
   parent: PosterBase
@@ -139,6 +216,8 @@
   components:
   - type: Sprite
     state: poster10_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandHackingGuide
 
 - type: entity
   parent: PosterBase
@@ -148,6 +227,8 @@
   components:
   - type: Sprite
     state: poster11_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandRIPBadger
 
 - type: entity
   parent: PosterBase
@@ -157,6 +238,8 @@
   components:
   - type: Sprite
     state: poster12_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandAmbrosiaVulgaris
 
 - type: entity
   parent: PosterBase
@@ -166,6 +249,8 @@
   components:
   - type: Sprite
     state: poster13_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandDonutCorp
 
 - type: entity
   parent: PosterBase
@@ -175,6 +260,8 @@
   components:
   - type: Sprite
     state: poster14_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandEAT
 
 - type: entity
   parent: PosterBase
@@ -184,6 +271,8 @@
   components:
   - type: Sprite
     state: poster15_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandTools
 
 - type: entity
   parent: PosterBase
@@ -193,6 +282,8 @@
   components:
   - type: Sprite
     state: poster16_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandPower
 
 - type: entity
   parent: PosterBase
@@ -202,6 +293,8 @@
   components:
   - type: Sprite
     state: poster17_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandSpaceCube
 
 - type: entity
   parent: PosterBase
@@ -211,6 +304,8 @@
   components:
   - type: Sprite
     state: poster18_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandCommunistState
 
 - type: entity
   parent: PosterBase
@@ -220,6 +315,8 @@
   components:
   - type: Sprite
     state: poster19_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandLamarr
 
 - type: entity
   parent: PosterBase
@@ -229,6 +326,8 @@
   components:
   - type: Sprite
     state: poster20_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandBorgFancy
 
 - type: entity
   parent: PosterBase
@@ -238,6 +337,8 @@
   components:
   - type: Sprite
     state: poster21_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandBorgFancyv2
 
 - type: entity
   parent: PosterBase
@@ -247,6 +348,8 @@
   components:
   - type: Sprite
     state: poster22_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandKosmicheskayaStantsiya
 
 - type: entity
   parent: PosterBase
@@ -256,6 +359,8 @@
   components:
   - type: Sprite
     state: poster23_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandRebelsUnite
 
 - type: entity
   parent: PosterBase
@@ -265,6 +370,8 @@
   components:
   - type: Sprite
     state: poster24_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandC20r
 
 - type: entity
   parent: PosterBase
@@ -274,6 +381,8 @@
   components:
   - type: Sprite
     state: poster25_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandHaveaPuff
 
 - type: entity
   parent: PosterBase
@@ -283,6 +392,8 @@
   components:
   - type: Sprite
     state: poster26_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandRevolver
 
 - type: entity
   parent: PosterBase
@@ -292,6 +403,8 @@
   components:
   - type: Sprite
     state: poster27_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandDDayPromo
 
 - type: entity
   parent: PosterBase
@@ -301,6 +414,8 @@
   components:
   - type: Sprite
     state: poster28_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandSyndicatePistol
 
 - type: entity
   parent: PosterBase
@@ -310,6 +425,8 @@
   components:
   - type: Sprite
     state: poster29_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandEnergySwords
 
 - type: entity
   parent: PosterBase
@@ -319,6 +436,8 @@
   components:
   - type: Sprite
     state: poster30_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandRedRum
 
 - type: entity
   parent: PosterBase
@@ -328,6 +447,8 @@
   components:
   - type: Sprite
     state: poster31_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandCC64KAd
 
 - type: entity
   parent: PosterBase
@@ -337,6 +458,8 @@
   components:
   - type: Sprite
     state: poster32_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandPunchShit
 
 - type: entity
   parent: PosterBase
@@ -346,6 +469,8 @@
   components:
   - type: Sprite
     state: poster33_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandTheGriffin
 
 - type: entity
   parent: PosterBase
@@ -355,6 +480,8 @@
   components:
   - type: Sprite
     state: poster35_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandFreeDrone
 
 - type: entity
   parent: PosterBase
@@ -364,6 +491,8 @@
   components:
   - type: Sprite
     state: poster36_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandBustyBackdoorExoBabes6
 
 - type: entity
   parent: PosterBase
@@ -373,6 +502,8 @@
   components:
   - type: Sprite
     state: poster37_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandRobustSoftdrinks
 
 - type: entity
   parent: PosterBase
@@ -382,6 +513,8 @@
   components:
   - type: Sprite
     state: poster38_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandShamblersJuice
 
 - type: entity
   parent: PosterBase
@@ -391,6 +524,8 @@
   components:
   - type: Sprite
     state: poster39_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandPwrGame
 
 - type: entity
   parent: PosterBase
@@ -400,6 +535,9 @@
   components:
   - type: Sprite
     state: poster40_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandSunkist
+
 
 - type: entity
   parent: PosterBase
@@ -409,6 +547,8 @@
   components:
   - type: Sprite
     state: poster41_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandSpaceCola
 
 - type: entity
   parent: PosterBase
@@ -418,6 +558,8 @@
   components:
   - type: Sprite
     state: poster42_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandSpaceUp
 
 - type: entity
   parent: PosterBase
@@ -427,6 +569,8 @@
   components:
   - type: Sprite
     state: poster43_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandKudzu
 
 - type: entity
   parent: PosterBase
@@ -436,6 +580,8 @@
   components:
   - type: Sprite
     state: poster44_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandMaskedMen
 
 - type: entity
   parent: PosterBase
@@ -445,6 +591,8 @@
   components:
   - type: Sprite
     state: poster45_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandUnreadableAnnouncement
 
 - type: entity
   parent: PosterBase
@@ -454,6 +602,8 @@
   components:
   - type: Sprite
     state: poster46_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandFreeSyndicateEncryptionKey
 
 - type: entity
   parent: PosterBase
@@ -463,6 +613,8 @@
   components:
   - type: Sprite
     state: poster47_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandBountyHunters
 
 - type: entity
   parent: PosterBase
@@ -472,6 +624,8 @@
   components:
   - type: Sprite
     state: poster48_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandTheBigGasTruth
 
 - type: entity
   parent: PosterBase
@@ -481,6 +635,8 @@
   components:
   - type: Sprite
     state: poster50_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandWehWatches
 
 - type: entity
   parent: PosterBase
@@ -490,6 +646,8 @@
   components:
   - type: Sprite
     state: poster51_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandVoteWeh
 
 # These 3 originally from VEEGEE
 - type: entity
@@ -500,6 +658,8 @@
   components:
   - type: Sprite
     state: poster52_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandBeachStarYamamoto
 
 - type: entity
   parent: PosterBase
@@ -509,6 +669,8 @@
   components:
   - type: Sprite
     state: poster53_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandHighEffectEngineering
 
 - type: entity
   parent: PosterBase
@@ -518,6 +680,8 @@
   components:
   - type: Sprite
     state: poster54_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandNuclearDeviceInformational
 
 - type: entity
   parent: PosterBase
@@ -527,6 +691,8 @@
   components:
   - type: Sprite
     state: poster55_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandRise
 
 - type: entity
   parent: PosterBase
@@ -536,6 +702,8 @@
   components:
   - type: Sprite
     state: poster56_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandRevolt
 
 - type: entity
   parent: PosterBase
@@ -543,8 +711,10 @@
   name: "Syndie Moth - Nuclear Operation"
   description: "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
   components:
-    - type: Sprite
-      state: poster57_contraband
+  - type: Sprite
+    state: poster57_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandMoth
 
 - type: entity
   parent: PosterBase
@@ -552,8 +722,10 @@
   name: "Cybersun: 600 Years Commemorative Poster"
   description: "An artistic poster commemorating 600 years of continual business for Cybersun Industries."
   components:
-    - type: Sprite
-      state: poster58_contraband
+  - type: Sprite
+    state: poster58_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandCybersun600
 
 - type: entity
   parent: PosterBase
@@ -561,8 +733,10 @@
   name: "DONK CO. BRAND MICROWAVEABLE FOOD"
   description: "DONK CO. BRAND MICROWAVABLE FOOD: MADE BY STARVING COLLEGE STUDENTS, FOR STARVING COLLEGE STUDENTS."
   components:
-    - type: Sprite
-      state: poster59_contraband
+  - type: Sprite
+    state: poster59_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandDonk
 
 - type: entity
   parent: PosterBase
@@ -570,8 +744,10 @@
   name: "Enlist"
   description: "Enlist with the Gorlex Marauders today! See the galaxy, kill corpos, get paid!"
   components:
-    - type: Sprite
-      state: poster60_contraband
+  - type: Sprite
+    state: poster60_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandEnlistGorle
 
 - type: entity
   parent: PosterBase
@@ -579,8 +755,10 @@
   name: "Interdyne Pharmaceutics: For the Health of Humankind"
   description: "An advertisement for Interdyne Pharmaceutics' GeneClean clinics. 'Become the master of your own body!'"
   components:
-    - type: Sprite
-      state: poster61_contraband
+  - type: Sprite
+    state: poster61_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandInterdyne
 
 - type: entity
   parent: PosterBase
@@ -588,17 +766,21 @@
   name: "Make Mine a Waffle Corp: Fine Rifles, Economic Prices"
   description: "An old advertisement for Waffle Corp rifles. 'Better weapons, lower prices!'"
   components:
-    - type: Sprite
-      state: poster62_contraband
-      
+  - type: Sprite
+    tate: poster62_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandWaffleCorp
+
 - type: entity
   parent: PosterBase
   id: PosterContrabandMissingSpacepen
   name: "Missing Spacepen"
   description: "This poster depicts something you will never find."
   components:
-    - type: Sprite
-      state: poster63_contraband
+  - type: Sprite
+    state: poster63_contraband
+  - type: Poster
+    foldedPrototype: FoldedPosterContrabandMissingSpacepen
 
 # Legit
 - type: entity
@@ -609,6 +791,8 @@
   components:
   - type: Sprite
     state: poster1_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitHereForYourSafety
 
 - type: entity
   parent: PosterBase
@@ -618,6 +802,8 @@
   components:
   - type: Sprite
     state: poster2_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitNanotrasenLogo
 
 - type: entity
   parent: PosterBase
@@ -627,6 +813,8 @@
   components:
   - type: Sprite
     state: poster3_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitCleanliness
 
 - type: entity
   parent: PosterBase
@@ -636,6 +824,8 @@
   components:
   - type: Sprite
     state: poster4_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitHelpOthers
 
 - type: entity
   parent: PosterBase
@@ -645,6 +835,8 @@
   components:
   - type: Sprite
     state: poster5_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitBuild
 
 - type: entity
   parent: PosterBase
@@ -654,6 +846,8 @@
   components:
   - type: Sprite
     state: poster6_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitBlessThisSpess
 
 - type: entity
   parent: PosterBase
@@ -663,6 +857,8 @@
   components:
   - type: Sprite
     state: poster7_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitScience
 
 - type: entity
   parent: PosterBase
@@ -672,6 +868,8 @@
   components:
   - type: Sprite
     state: poster8_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitIan
 
 - type: entity
   parent: PosterBase
@@ -681,6 +879,8 @@
   components:
   - type: Sprite
     state: poster9_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitObey
 
 - type: entity
   parent: PosterBase
@@ -690,6 +890,8 @@
   components:
   - type: Sprite
     state: poster10_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitWalk
 
 - type: entity
   parent: PosterBase
@@ -699,6 +901,8 @@
   components:
   - type: Sprite
     state: poster11_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitStateLaws
 
 - type: entity
   parent: PosterBase
@@ -708,6 +912,8 @@
   components:
   - type: Sprite
     state: poster12_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitLoveIan
 
 - type: entity
   parent: PosterBase
@@ -717,6 +923,8 @@
   components:
   - type: Sprite
     state: poster13_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitSpaceCops
 
 - type: entity
   parent: PosterBase
@@ -726,6 +934,8 @@
   components:
   - type: Sprite
     state: poster14_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitUeNo
 
 - type: entity
   parent: PosterBase
@@ -735,6 +945,8 @@
   components:
   - type: Sprite
     state: poster15_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitGetYourLEGS
 
 - type: entity
   parent: PosterBase
@@ -744,6 +956,8 @@
   components:
   - type: Sprite
     state: poster16_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitDoNotQuestion
 
 - type: entity
   parent: PosterBase
@@ -753,6 +967,8 @@
   components:
   - type: Sprite
     state: poster17_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitWorkForAFuture
 
 - type: entity
   parent: PosterBase
@@ -762,6 +978,8 @@
   components:
   - type: Sprite
     state: poster18_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitSoftCapPopArt
 
 - type: entity
   parent: PosterBase
@@ -771,6 +989,8 @@
   components:
   - type: Sprite
     state: poster19_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitSafetyInternals
 
 - type: entity
   parent: PosterBase
@@ -780,6 +1000,8 @@
   components:
   - type: Sprite
     state: poster20_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitSafetyEyeProtection
 
 - type: entity
   parent: PosterBase
@@ -789,6 +1011,8 @@
   components:
   - type: Sprite
     state: poster21_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitSafetyReport
 
 - type: entity
   parent: PosterBase
@@ -798,6 +1022,8 @@
   components:
   - type: Sprite
     state: poster22_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitReportCrimes
 
 - type: entity
   parent: PosterBase
@@ -807,6 +1033,8 @@
   components:
   - type: Sprite
     state: poster23_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitIonRifle
 
 - type: entity
   parent: PosterBase
@@ -816,6 +1044,8 @@
   components:
   - type: Sprite
     state: poster24_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitFoamForceAd
 
 - type: entity
   parent: PosterBase
@@ -825,6 +1055,8 @@
   components:
   - type: Sprite
     state: poster25_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitCohibaRobustoAd
 
 - type: entity
   parent: PosterBase
@@ -834,6 +1066,8 @@
   components:
   - type: Sprite
     state: poster26_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegit50thAnniversaryVintageReprint
 
 - type: entity
   parent: PosterBase
@@ -843,6 +1077,8 @@
   components:
   - type: Sprite
     state: poster27_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitFruitBowl
 
 - type: entity
   parent: PosterBase
@@ -852,6 +1088,8 @@
   components:
   - type: Sprite
     state: poster28_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitPDAAd
 
 - type: entity
   parent: PosterBase
@@ -861,6 +1099,8 @@
   components:
   - type: Sprite
     state: poster29_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitEnlist
 
 - type: entity
   parent: PosterBase
@@ -870,6 +1110,8 @@
   components:
   - type: Sprite
     state: poster30_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitNanomichiAd
 
 - type: entity
   parent: PosterBase
@@ -879,6 +1121,8 @@
   components:
   - type: Sprite
     state: poster31_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegit12Gauge
 
 - type: entity
   parent: PosterBase
@@ -888,6 +1132,8 @@
   components:
   - type: Sprite
     state: poster32_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitHighClassMartini
 
 - type: entity
   parent: PosterBase
@@ -897,6 +1143,8 @@
   components:
   - type: Sprite
     state: poster33_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitTheOwl
 
 - type: entity
   parent: PosterBase
@@ -906,6 +1154,8 @@
   components:
   - type: Sprite
     state: poster34_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitNoERP
 
 - type: entity
   parent: PosterBase
@@ -915,6 +1165,8 @@
   components:
   - type: Sprite
     state: poster35_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitCarbonDioxide
 
 - type: entity
   parent: PosterBase
@@ -924,6 +1176,8 @@
   components:
   - type: Sprite
     state: poster36_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitDickGumshue
 
 - type: entity
   parent: PosterBase
@@ -933,6 +1187,8 @@
   components:
   - type: Sprite
     state: poster37_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitThereIsNoGasGiant
 
 - type: entity
   parent: PosterBase
@@ -942,6 +1198,8 @@
   components:
   - type: Sprite
     state: poster38_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitJustAWeekAway
 
 - type: entity
   parent: PosterBase
@@ -951,6 +1209,8 @@
   components:
   - type: Sprite
     state: poster39_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitSecWatch
 
 - type: entity
   parent: PosterBase
@@ -960,6 +1220,8 @@
   components:
   - type: Sprite
     state: poster40_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitAnatomyPoster
 
 - type: entity
   parent: PosterBase
@@ -969,7 +1231,9 @@
   components:
   - type: Sprite
     state: poster41_legit
-
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitMime
+    
 - type: entity
   parent: PosterBase
   id: PosterLegitCarpMount
@@ -978,6 +1242,8 @@
   components:
   - type: Sprite
     state: poster42_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitCarpMount
 
 - type: entity
   parent: PosterBase
@@ -985,8 +1251,10 @@
   name: "Safety Moth - Delamination Safety Precautions"
   description: "This informational poster uses Safety Moth™ to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated, to prevent hallucinations. Evacuating might be a better strategy."
   components:
-    - type: Sprite
-      state: poster43_legit
+  - type: Sprite
+    state: poster43_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitSafetyMothDelam
 
 - type: entity
   parent: PosterBase
@@ -994,8 +1262,10 @@
   name: "Safety Moth - Epinephrine"
   description: "This informational poster uses Safety Moth™ to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. \"Prevent organ rot with this one simple trick!\""
   components:
-    - type: Sprite
-      state: poster44_legit
+  - type: Sprite
+    state: poster44_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitSafetyMothEpi
 
 - type: entity
   parent: PosterBase
@@ -1003,8 +1273,10 @@
   name: "Safety Moth - Hardhats"
   description: "This informational poster uses Safety Moth™ to tell the viewer to wear hardhats in cautious areas. \"It's like a lamp for your head!\""
   components:
-    - type: Sprite
-      state: poster45_legit
+  - type: Sprite
+    state: poster45_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitSafetyMothHardhat
 
 - type: entity
   parent: PosterBase
@@ -1012,8 +1284,10 @@
   name: "Safety Moth - Methamphetamine"
   description: "This informational poster uses Safety Moth™ to tell the viewer to seek CMO approval before cooking methamphetamine. \"Stay close to the target temperature, and never go over!\" ...You shouldn't ever be making this."
   components:
-    - type: Sprite
-      state: poster46_legit
+  - type: Sprite
+    state: poster46_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitSafetyMothMeth
 
 - type: entity
   parent: PosterBase
@@ -1021,8 +1295,10 @@
   name: "Safety Moth - Piping"
   description: "This informational poster uses Safety Moth™ to tell atmospheric technicians correct types of piping to be used. \"Pipes, not Pumps! Proper pipe placement prevents poor performance!\""
   components:
-    - type: Sprite
-      state: poster47_legit
+  - type: Sprite
+    state: poster47_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitSafetyMothPiping
 
 - type: entity
   parent: PosterBase
@@ -1030,8 +1306,10 @@
   name: "Nanotrasen Corporate Perks: Vacation"
   description: "This informational poster provides information on some of the prizes available via the NT Corporate Perks program, including a two-week vacation for two on the resort world Idyllus."
   components:
-    - type: Sprite
-      state: poster48_legit
+  - type: Sprite
+    state: poster48_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitVacation
 
 - type: entity
   parent: PosterBase
@@ -1039,8 +1317,10 @@
   name: "Periodic Table of the Elements"
   description: "A periodic table of the elements, from Hydrogen to Oganesson, and everything inbetween."
   components:
-    - type: Sprite
-      state: poster49_legit
+  - type: Sprite  
+    state: poster49_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitPeriodicTable
 
 - type: entity
   parent: PosterBase
@@ -1048,8 +1328,10 @@
   name: "Renault Poster"
   description: "Yap."
   components:
-    - type: Sprite
-      state: poster50_legit
+  - type: Sprite
+    state: poster50_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitRenault
 
 - type: entity
   parent: PosterBase
@@ -1057,8 +1339,10 @@
   name: "Nanotrasen Tactical Game Cards"
   description: "An advertisement for Nanotrasen's TCG cards: BUY MORE CARDS."
   components:
-    - type: Sprite
-      state: poster51_legit
+  - type: Sprite
+    state: poster51_legit
+  - type: Poster
+    foldedPrototype: FoldedPosterLegitNTTGC
 
 #maps
 

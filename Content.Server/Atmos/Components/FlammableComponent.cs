@@ -75,6 +75,13 @@ namespace Content.Server.Atmos.Components
         public float FirestacksOnIgnite = 2.0f;
 
         /// <summary>
+        ///     Will fire work without oxygen?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public bool RequireAtmosphere = true;
+
+        /// <summary>
         /// Determines how quickly the object will fade out. With positive values, the object will flare up instead of going out.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]

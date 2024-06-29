@@ -1021,6 +1021,9 @@
   id: PlushieSharkPink
 
 - type: Tag
+  id: Poster
+
+- type: Tag
   id: Potato
 
 - type: Tag

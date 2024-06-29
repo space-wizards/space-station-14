@@ -1,0 +1,16 @@
+- type: entity
+  id: EffectPosterPlacing
+  noSpawn: true
+  components:
+  - type: Transform
+    anchored: True
+  - type: Sprite
+    snapCardinals: true
+    noRot: true
+    drawdepth: Effects
+    sprite: /Textures/Structures/Wallmounts/posters.rsi
+    state: poster_being_set
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: AnimationPlayer
