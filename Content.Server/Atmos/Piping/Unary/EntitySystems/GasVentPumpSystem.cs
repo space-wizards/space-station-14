@@ -182,6 +182,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (vent.UnderPressureLockout)
             {
                 vent.LastPressure = environment.Pressure;
+                vent.PressureDelta = 0f;
                 return false;
             }
 
@@ -189,13 +190,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             {
                 vent.OverheatCooldownCounter -= dt;
                 vent.LastPressure = environment.Pressure;
+                vent.PressureDelta = 0f;
                 return false;
             }
 
             var difference = environment.Pressure - vent.LastPressure;
             vent.LastPressure = environment.Pressure;
 
-            // Sudden increase in pressure is most likely caused by atmos equalization,
+            // Sudden change in pressure is most likely caused by atmos equalization,
             // If this happens, reset average calculation and don't move air this frame.
             // This may be triggered by the vents themselves, but they'll continue moving air, but just a tiny bit
             // slower than usual.

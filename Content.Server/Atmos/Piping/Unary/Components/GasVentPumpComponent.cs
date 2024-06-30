@@ -75,7 +75,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     I'm not entirely sure if I got the math right, so the value -1 may not be exactly -1 kPa/s
         /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float PressurizationLockout { get; set; } = -0.05f;
+        public float PressurizationLockout { get; set; } = -0.1f;
 
         /// <summary>
         ///     There's some atmos equalization mechanic that equalizes the pressure of the entire room in one tick, and
@@ -92,10 +92,9 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         /// <summary>
         ///     Calculate the pressure change over X seconds.
-        ///     I'm not 100% sure if I implemented correctly, so I advise leaving it at 1.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float AveragingTime { get; set; } = 1.0f;
+        public float AveragingTime { get; set; } = 2.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float PressureDelta { get; set; } = 0f;
@@ -116,8 +115,12 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// <summary>
         ///     Defines for how many seconds the vent can move air uninterrupted.
         /// </summary>
+        /// <remarks>
+        ///     If I made my testing correctly, a vent on a space tile wastes ~100 moles a second, so a total of 1000
+        ///     moles may be lost, and if I understood correctly, that's 2.5 seconds of miner output.
+        /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float OverheatMaxTime { get; set; } = 5f;
+        public float OverheatMaxTime { get; set; } = 10f;
         [ViewVariables(VVAccess.ReadWrite)]
         public float OverheatCounter { get; set; } = 0f;
 
