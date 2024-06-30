@@ -77,8 +77,6 @@
       - state: inhand-right-blade
         shader: unshaded
   - type: Reflect
-    reflectProb: 0.5
-    minReflectProb: 0.25
   - type: IgnitionSource
     temperature: 700
 
@@ -218,7 +216,7 @@
   name: double-bladed energy sword
   parent: EnergySword
   id: EnergySwordDouble
-  description: Syndicate Command's intern thought that having only one blade on energy swords was not cool enough. This can be stored in pockets.
+  description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
   components:
   - type: ItemToggle
     onUse: false # wielding events control it instead
@@ -273,8 +271,7 @@
     size: Small
     sprite: Objects/Weapons/Melee/e_sword_double-inhands.rsi
   - type: Reflect
-    reflectProb: .80
-    minReflectProb: .65
+    reflectProb: .75
     spread: 75
   - type: UseDelay
     delay: 1
