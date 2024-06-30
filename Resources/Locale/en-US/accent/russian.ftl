@@ -71,10 +71,10 @@ accent-russian-words-23-2 = grandma
 accent-russian-words-replace-23 = бабушка
 
 accent-russian-words-24 = mother
-accent-russian-words-24-2 = mama
+accent-russian-words-24-2 = mummy
 accent-russian-words-replace-24 = матушка
 
-accent-russian-words-25 = futher
+accent-russian-words-25 = father
 accent-russian-words-25-2 = daddy
 accent-russian-words-replace-25 = отец
 
