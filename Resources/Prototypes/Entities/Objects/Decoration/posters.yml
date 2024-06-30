@@ -809,6 +809,16 @@
 
 - type: entity
   parent: FoldedPosterContrabandBase
+  id: FoldedPosterContrabandSyndicateRecruitment
+  suffix: Syndicate Pistol
+  components:
+  - type: FoldedPoster
+    posterPrototype: PosterContrabandSyndicateRecruitment
+  - type: Label
+    currentLabel: poster-name-syndicate-recruitment
+
+- type: entity
+  parent: FoldedPosterContrabandBase
   id: FoldedPosterContrabandEnergySwords
   suffix: Energy Swords
   components:

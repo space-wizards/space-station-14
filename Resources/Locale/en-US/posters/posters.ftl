@@ -136,6 +136,7 @@ poster-name-have-a-puff = Have a Puff
 poster-name-revolver = Revolver
 poster-name-d-day-promo = D-Day Promo
 poster-name-syndicate-pistol = Syndicate Pistol
+poster-name-syndicate-recruitment = Syndicate Recruitment
 poster-name-energy-swords = Energy Swords
 poster-name-red-rum = Red Rum
 poster-name-cc-64k-ad = CC 64K Ad
