@@ -133,13 +133,13 @@
     bodyType: Dynamic
 
 - type: entity
-  parent: BaseNuclearBomb
+  parent: NuclearBomb
   id: NuclearBombDisarmed
-  suffix: Disarmed
-  description: "You can clearly see that this can't be armed, given its lack of nuclear material."
+  suffix: DO NOT MAP, short delay
+  description: "You proably shouldn't stick around to see if this is armed. Its timer is much lower than usual."
   components:
-  - type: StaticPrice
-    price: 1000 # fancy paperweight
+  - type: Nuke
+    timer: 240
   - type: Construction
     node: disarmed
 
