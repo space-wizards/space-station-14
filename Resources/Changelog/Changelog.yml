@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed incorrect "Cycled" and "Bolted" popups when wielding and unwielding
-      some guns.
-    type: Fix
-  id: 6340
-  time: '2024-04-13T15:25:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26924
-- author: FungiFellow
-  changes:
-  - message: Removed Crusher Dagger from Grapple Module
-    type: Remove
-  id: 6341
-  time: '2024-04-13T15:35:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26865
-- author: ShadowCommander
-  changes:
-  - message: Fixed the pull hotkey not pulling the new entity when you are already
-      pulling an entity.
-    type: Fix
-  id: 6342
-  time: '2024-04-13T15:36:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26499
 - author: Boaz1111
   changes:
   - message: The doors on the ice expedition map can now be accessed by anyone instead
@@ -3831,3 +3808,25 @@
   id: 6839
   time: '2024-06-29T15:23:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29578
+- author: MureixloL
+  changes:
+  - message: Changed some vending machine point lights to match the vendors better.
+    type: Tweak
+  id: 6840
+  time: '2024-06-30T03:46:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29590
+- author: metalgearsloth
+  changes:
+  - message: Fix trait categories not respecting unlimited points.
+    type: Fix
+  id: 6841
+  time: '2024-06-30T04:28:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29600
+- author: ShadowCommander
+  changes:
+  - message: Fixed sprite layers disappearing when inserting or removing an item on
+      entities such as belts, janitor trolley, clipboard, etc.
+    type: Fix
+  id: 6842
+  time: '2024-06-30T04:34:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29461
