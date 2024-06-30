@@ -1512,7 +1512,7 @@
           effects:
           - !type:AdjustReagent
             reagent: RussianRoulette
-            amount: -10
+            amount: -15
           - !type:PlaySound
             conditions:
             - !type:ReagentThreshold
