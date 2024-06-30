@@ -40,6 +40,9 @@ public abstract partial class SharedXenoArtifactSystem
             unlockingComp = EnsureComp<XenoArtifactUnlockingComponent>(ent);
             unlockingComp.EndTime = _timing.CurTime + ent.Comp.UnlockStateDuration;
             Log.Debug($"{ToPrettyString(ent)} entered unlocking state");
+
+            if (_net.IsServer)
+                _popup.PopupEntity(Loc.GetString("artifact-unlock-state-begin"), ent);
         }
         var index = GetIndex(ent, node);
 

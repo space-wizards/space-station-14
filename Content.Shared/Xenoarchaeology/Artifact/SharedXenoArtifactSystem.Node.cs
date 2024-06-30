@@ -30,13 +30,24 @@ public abstract partial class SharedXenoArtifactSystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (!ent.Comp.Locked)
+        if (ent.Comp.Attached is not { } netArtifact)
+            return;
+        var artifact = GetEntity(netArtifact);
+
+        if (!TryComp<XenoArtifactComponent>(artifact, out var artifactComponent))
             return;
 
-        ent.Comp.Locked = false;
-        if (ent.Comp.Attached is { } artifact)
-            RebuildCachedActiveNodes(GetEntity(artifact));
-        Dirty(ent);
+        SetNodeUnlocked((artifact, artifactComponent), (ent, ent.Comp));
+    }
+
+    public void SetNodeUnlocked(Entity<XenoArtifactComponent> artifact, Entity<XenoArtifactNodeComponent> node)
+    {
+        if (!node.Comp.Locked)
+            return;
+
+        node.Comp.Locked = false;
+        RebuildCachedActiveNodes((artifact, artifact));
+        Dirty(node);
     }
 
     /// <summary>
