@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed rocket launchers and laser guns looking like they have nothing
-      loaded.
-    type: Fix
-  id: 6347
-  time: '2024-04-14T03:17:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26933
 - author: Vermidia
   changes:
   - message: You can now see paper attached on crates. Color differs depending on
@@ -3831,3 +3823,10 @@
   id: 6846
   time: '2024-06-30T13:47:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29603
+- author: deltanedas
+  changes:
+  - message: Fixed sleeper agents not showing up in the round end summary.
+    type: Fix
+  id: 6847
+  time: '2024-06-30T13:51:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29468
