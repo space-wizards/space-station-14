@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Fixed the pull hotkey not pulling the new entity when you are already
-      pulling an entity.
-    type: Fix
-  id: 6342
-  time: '2024-04-13T15:36:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26499
 - author: Boaz1111
   changes:
   - message: The doors on the ice expedition map can now be accessed by anyone instead
@@ -3830,3 +3822,11 @@
   id: 6841
   time: '2024-06-30T04:28:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29600
+- author: ShadowCommander
+  changes:
+  - message: Fixed sprite layers disappearing when inserting or removing an item on
+      entities such as belts, janitor trolley, clipboard, etc.
+    type: Fix
+  id: 6842
+  time: '2024-06-30T04:34:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29461
