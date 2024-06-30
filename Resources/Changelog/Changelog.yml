@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed incorrect "Cycled" and "Bolted" popups when wielding and unwielding
-      some guns.
-    type: Fix
-  id: 6340
-  time: '2024-04-13T15:25:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26924
 - author: FungiFellow
   changes:
   - message: Removed Crusher Dagger from Grapple Module
@@ -3831,3 +3823,10 @@
   id: 6839
   time: '2024-06-29T15:23:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29578
+- author: MureixloL
+  changes:
+  - message: Changed some vending machine point lights to match the vendors better.
+    type: Tweak
+  id: 6840
+  time: '2024-06-30T03:46:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29590
