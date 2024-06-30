@@ -49,6 +49,8 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, ThrowPushbackAttemptEvent>(OnBuckleThrowPushbackAttempt);
         SubscribeLocalEvent<BuckleComponent, UpdateCanMoveEvent>(OnBuckleUpdateCanMove);
 
+        SubscribeLocalEvent<BuckleComponent, BuckleDoAfterEvent>(OnBuckleDoafter);
+
         SubscribeLocalEvent<BuckleComponent, ComponentGetState>(OnGetState);
     }
 
@@ -506,5 +508,13 @@ public abstract partial class SharedBuckleSystem
         var unstrapAttempt = new UnstrapAttemptEvent(strap, buckle!, user, popup);
         RaiseLocalEvent(strap, ref unstrapAttempt);
         return !unstrapAttempt.Cancelled;
+    }
+
+    private void OnBuckleDoafter(Entity<BuckleComponent> entity, ref BuckleDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
+            return;
+
+        args.Handled = TryBuckle(args.Target.Value, args.User, args.Used.Value, popup: false);
     }
 }
