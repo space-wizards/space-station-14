@@ -99,6 +99,12 @@ public sealed class StepTriggerSystem : EntitySystem
             if (component.CurrentlySteppedOn.Remove(otherUid))
             {
                 Dirty(uid, component);
+
+                if (otherPhysics.LinearVelocity.Length() < component.RequiredStepOffTriggeredSpeed)
+                    return;
+
+                var evStepOff = new StepTriggeredOffEvent(uid, otherUid);
+                RaiseLocalEvent(uid, ref evStepOff);
             }
             return;
         }
@@ -107,27 +113,36 @@ public sealed class StepTriggerSystem : EntitySystem
         // this is hard to explain
         var intersect = Box2.Area(otherAabb.Intersect(ourAabb));
         var ratio = Math.Max(intersect / Box2.Area(otherAabb), intersect / Box2.Area(ourAabb));
-        if (otherPhysics.LinearVelocity.Length() < component.RequiredTriggeredSpeed
-            || component.CurrentlySteppedOn.Contains(otherUid)
-            || ratio < component.IntersectRatio
-            || !CanTrigger(uid, otherUid, component))
+
+        if (ratio < component.IntersectRatio || !CanTrigger(uid, otherUid, component))
         {
             return;
         }
 
-        if (component.StepOn)
+        // check to see if user speed exceeds required speed to throw events
+        // behavior split between whether component has StepOnOrOffTriggers or not
+        if (component.HasStepOnOffTriggers)
         {
-            var evStep = new StepTriggeredOnEvent(uid, otherUid);
-            RaiseLocalEvent(uid, ref evStep);
+            if (component.CurrentlySteppedOn.Contains(otherUid))
+                return;
+
+            // if not already being stepped on, check if speed exceeds step on trigger speed threshold
+            if (otherPhysics.LinearVelocity.Length() < component.RequiredStepOnTriggeredSpeed)
+                return;
+
+            var evStepOn = new StepTriggeredOnEvent(uid, otherUid);
+            RaiseLocalEvent(uid, ref evStepOn);
+            component.CurrentlySteppedOn.Add(otherUid);
+            Dirty(uid, component);
         }
         else
         {
-            var evStep = new StepTriggeredOffEvent(uid, otherUid);
+            if (otherPhysics.LinearVelocity.Length() < component.RequiredTriggeredSpeed)
+                return;
+
+            var evStep = new StepTriggeredIntersectEvent(uid, otherUid);
             RaiseLocalEvent(uid, ref evStep);
         }
-
-        component.CurrentlySteppedOn.Add(otherUid);
-        Dirty(uid, component);
     }
 
     private bool CanTrigger(EntityUid uid, EntityUid otherUid, StepTriggerComponent component)
@@ -173,15 +188,6 @@ public sealed class StepTriggerSystem : EntitySystem
 
         if (!component.Colliding.Remove(otherUid))
             return;
-
-        component.CurrentlySteppedOn.Remove(otherUid);
-        Dirty(uid, component);
-
-        if (component.StepOn)
-        {
-            var evStepOff = new StepTriggeredOffEvent(uid, otherUid);
-            RaiseLocalEvent(uid, ref evStepOff);
-        }
 
         if (component.Colliding.Count == 0)
         {
@@ -251,13 +257,22 @@ public struct StepTriggerAttemptEvent
 }
 
 /// <summary>
-/// Raised when an entity stands on a steptrigger initially (assuming it has both on and off states).
+/// Raised when an entity stands on a steptrigger initially ((assuming stepOn is true and is intended to have on and off states).
+/// and exceeds <see cref="StepTriggerComponent.RequiredStepOnTriggeredSpeed"/>
 /// </summary>
 [ByRefEvent]
 public readonly record struct StepTriggeredOnEvent(EntityUid Source, EntityUid Tripper);
 
 /// <summary>
-/// Raised when an entity leaves a steptrigger if it has on and off states OR when an entity intersects a steptrigger.
+/// Raised when an entity leaves a steptrigger (assuming stepOn is true and is intended to have on and off states)
+/// and exceeds <see cref="StepTriggerComponent.RequiredStepOffTriggeredSpeed"
 /// </summary>
 [ByRefEvent]
 public readonly record struct StepTriggeredOffEvent(EntityUid Source, EntityUid Tripper);
+
+/// <summary>
+/// Raised when an entity intersects a step trigger
+/// and exceeds <see cref="StepTriggerComponent.RequiredTriggeredSpeed"
+/// </summary>
+[ByRefEvent]
+public readonly record struct StepTriggeredIntersectEvent(EntityUid Source, EntityUid Tripper);

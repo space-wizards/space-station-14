@@ -97,6 +97,9 @@
   - type: IgniteOnHeatDamage
     fireStacks: 1
     threshold: 12
+    preventedByHydration: true
+    dehydrationMultiplier: 4
+  - type: PuddleAbsorption
   - type: GibAction
     actionPrototype: DionaGibAction
     allowedStates:

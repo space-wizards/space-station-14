@@ -152,6 +152,7 @@
   - type: EdgeSpreader
     id: Puddle
   - type: StepTrigger
+    hasStepOnOffTriggers: true
   - type: Drink
     delay: 3
     transferAmount: 1

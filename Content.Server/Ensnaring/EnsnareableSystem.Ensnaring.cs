@@ -25,7 +25,7 @@ public sealed partial class EnsnareableSystem
     {
         SubscribeLocalEvent<EnsnaringComponent, ComponentRemove>(OnComponentRemove);
         SubscribeLocalEvent<EnsnaringComponent, StepTriggerAttemptEvent>(AttemptStepTrigger);
-        SubscribeLocalEvent<EnsnaringComponent, StepTriggeredOffEvent>(OnStepTrigger);
+        SubscribeLocalEvent<EnsnaringComponent, StepTriggeredIntersectEvent>(OnStepTrigger);
         SubscribeLocalEvent<EnsnaringComponent, ThrowDoHitEvent>(OnThrowHit);
         SubscribeLocalEvent<EnsnaringComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
     }
@@ -49,7 +49,7 @@ public sealed partial class EnsnareableSystem
         args.Continue = true;
     }
 
-    private void OnStepTrigger(EntityUid uid, EnsnaringComponent component, ref StepTriggeredOffEvent args)
+    private void OnStepTrigger(EntityUid uid, EnsnaringComponent component, ref StepTriggeredIntersectEvent args)
     {
         TryEnsnare(args.Tripper, uid, component);
     }

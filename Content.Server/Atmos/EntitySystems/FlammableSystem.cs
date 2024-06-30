@@ -28,6 +28,8 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -342,18 +344,29 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             // Check if its' taken any heat damage, and give the value
-            if (args.DamageDelta.DamageDict.TryGetValue("Heat", out FixedPoint2 value))
+            if (args.DamageDelta.DamageDict.TryGetValue("Heat", out FixedPoint2 heatDamage))
             {
+                // if prevented by hydration, check for thirst component
+                // and reduce thirst by damage * multiplier
+                if (component.PreventedByHydration)
+                {
+                    if (TryComp<ThirstComponent>(uid, out var thirst))
+                    {
+                        EntityManager.System<ThirstSystem>().ModifyThirst(uid, thirst, heatDamage.Float() * -component.DehydrationMultiplier);
+
+                        if (thirst.CurrentThirst > thirst.ThirstThresholds[ThirstThreshold.Dead])
+                            return;
+                    }
+                }
+
                 // Make sure the value is greater than the threshold
-                if(value <= component.Threshold)
+                if (heatDamage <= component.Threshold)
                     return;
 
                 // Ignite that sucker
                 flammable.FireStacks += component.FireStacks;
                 Ignite(uid, uid, flammable);
             }
-
-
         }
 
         public void Resist(EntityUid uid,
