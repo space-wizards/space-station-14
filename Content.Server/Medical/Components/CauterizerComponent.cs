@@ -9,24 +9,24 @@ public sealed partial class CauterizerComponent : Component
     /// <summary>
     /// How long will cauterize take.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float DoAfterDuration = 5.0f;
 
     /// <summary>
     /// By how much will bleed amount change. You probably want that to be negative.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float BleedReduce = -6.0f;
 
     /// <summary>
     /// How much heat damage will be dealed.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float Damage = 12.0f;
 
     /// <summary>
     /// From how far away can you cauterize wounds.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float Distance = 1.5f;
 }
