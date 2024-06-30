@@ -23,7 +23,6 @@
     HandTeleporterStealObjective: 0.5
     SecretDocumentsStealObjective: 0.5
     HoSGunStealObjective: 0.5 # Delta-V - HoS Gun
-    NukeDiskStealObjective: 0.25
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
