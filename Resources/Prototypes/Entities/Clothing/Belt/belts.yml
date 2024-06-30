@@ -610,7 +610,7 @@
 - type: entity
   parent: ClothingBeltSecurity
   id: ClothingBeltSecurityWebbing
-  name: security webbing
+  name: security rig
   description: Unique and versatile chest rig, can hold security gear.
   components:
   - type: Sprite
