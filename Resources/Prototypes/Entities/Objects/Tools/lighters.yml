@@ -209,6 +209,7 @@
   - type: UseDelay
   - type: IgnitionSource
     ignited: false
+  - type: Cauterizer
 
 - type: entity
   name: flippo engraved lighter
