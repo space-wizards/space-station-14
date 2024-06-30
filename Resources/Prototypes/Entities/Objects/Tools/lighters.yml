@@ -87,6 +87,7 @@
     netsync: false
     radius: 1.1 #smallest possible
     color: orange
+  - type: Cauterizer
 
 - type: entity
   name: cheap lighter
