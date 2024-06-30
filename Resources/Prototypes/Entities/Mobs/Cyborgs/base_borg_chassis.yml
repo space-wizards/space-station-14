@@ -144,6 +144,7 @@
     - cell_slot
   - type: Lock
     locked: true
+    breakOnEmag: false
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel
   - type: Damageable

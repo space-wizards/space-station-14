@@ -455,6 +455,7 @@
     startAnnouncement: station-event-communication-interception
     startAudio:
       path: /Audio/Announcements/intercept.ogg
+    duration: null # the rule has to last the whole round not 1 second
   - type: AlertLevelInterceptionRule
   - type: AntagSelection
     definitions:
