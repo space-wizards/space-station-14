@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Placing a player with no entry in the manifest into cryostorage no longer
-      removes the captain from the crew manifest.
-    type: Fix
-  id: 6344
-  time: '2024-04-14T02:19:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26927
 - author: superjj18
   changes:
   - message: Honkbot's basic AI has been restored and honks have returned to being
@@ -3832,3 +3824,10 @@
   id: 6843
   time: '2024-06-30T12:28:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29557
+- author: Plykiya
+  changes:
+  - message: Skeletons are now immune to flashes.
+    type: Add
+  id: 6844
+  time: '2024-06-30T13:42:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29604
