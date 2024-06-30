@@ -68,7 +68,7 @@ accent-russian-words-replace-22 = мощь
 
 accent-russian-words-23 = grandmother
 accent-russian-words-23-2 = grandma
-accent-russian-words-replace-18 = бабушка
+accent-russian-words-replace-23 = бабушка
 
 accent-russian-words-24 = mother
 accent-russian-words-24-2 = mama
@@ -82,7 +82,7 @@ accent-russian-words-26 = thousand
 accent-russian-words-replace-26 = тыща
 
 accent-russian-words-27 = thousands
-accent-russian-words-replace-26 = тыщи
+accent-russian-words-replace-27 = тыщи
 
 accent-russian-words-28 = a lot of
 accent-russian-words-replace-28 = тьма
