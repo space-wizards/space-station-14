@@ -32,7 +32,7 @@
         Heat: 5
     soundHit:
       path: /Audio/Effects/lightburn.ogg
-  - type: Cauterizer # since it is the best tool for the job, it has baller stats
+  - type: Cauterizer
     doAfterDuration: 2
     bleedReduce: -20
     damage: 5
