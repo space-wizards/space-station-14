@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Removed Crusher Dagger from Grapple Module
-    type: Remove
-  id: 6341
-  time: '2024-04-13T15:35:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26865
 - author: ShadowCommander
   changes:
   - message: Fixed the pull hotkey not pulling the new entity when you are already
@@ -3830,3 +3823,10 @@
   id: 6840
   time: '2024-06-30T03:46:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29590
+- author: metalgearsloth
+  changes:
+  - message: Fix trait categories not respecting unlimited points.
+    type: Fix
+  id: 6841
+  time: '2024-06-30T04:28:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29600
