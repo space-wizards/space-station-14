@@ -14,6 +14,7 @@ accent-russian-words-5 = union
 accent-russian-words-replace-5 = Союз
 
 accent-russian-words-6 = comrade
+accent-russian-words-6-2 = friend
 accent-russian-words-replace-6 = товарищ
 
 accent-russian-words-7 = vodka
@@ -91,3 +92,6 @@ accent-russian-words-replace-29 = батюшка
 
 accent-russian-words-30 = CentComm
 accent-russian-words-replace-30 = Цитадель
+
+accent-russian-words-31 = you
+accent-russian-words-replace-31 = ты
