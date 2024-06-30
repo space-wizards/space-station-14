@@ -114,7 +114,7 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_finfin
   product: CrateFunFinfinPlushie
-  cost: 500000
+  cost: 50000
   category: cargoproduct-category-name-fun
   group: market
 

@@ -180,6 +180,8 @@
           prob: 0.01
         - id: MobPipi
           prob: 0.005
+        - id: MobFinfin
+          prob: 0.005
         # Syndicate loot
         - id: null
           prob: 0.95
@@ -283,6 +285,8 @@
         - id: TomatoGrenade
           prob: 0.01
         - id: MobPipi
+          prob: 0.005
+        - id: MobFinfin
           prob: 0.005
         # Syndicate loot
         - id: null
