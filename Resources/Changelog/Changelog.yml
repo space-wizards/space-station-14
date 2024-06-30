@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: The doors on the ice expedition map can now be accessed by anyone instead
-      of... botanists.
-    type: Fix
-  id: 6343
-  time: '2024-04-13T20:49:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26928
 - author: Tayrtahn
   changes:
   - message: Placing a player with no entry in the manifest into cryostorage no longer
@@ -3830,3 +3822,13 @@
   id: 6842
   time: '2024-06-30T04:34:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29461
+- author: Plykiya
+  changes:
+  - message: Syndicate traitor reinforcements price has been changed from 16 TC to
+      14 TC.
+    type: Tweak
+  - message: Nuclear ops reinforcements price has been changed from 16 TC to 35 TC.
+    type: Tweak
+  id: 6843
+  time: '2024-06-30T12:28:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29557
