@@ -206,7 +206,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
                 continue;
 
             var scaling = (1f / distance2) * physics.Mass; // TODO: Variable falloff gradiants.
-            _physics.ApplyLinearImpulse(entity, Vector2.Transform(displacement, baseMatrixDeltaV) * scaling, body: physics);
+            _physics.ApplyLinearImpulse(entity, displacement * scaling, body: physics);
         }
     }
 
