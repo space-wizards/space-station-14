@@ -1,7 +1,7 @@
-using System.Linq;
 using System.Numerics;
 using Content.Server.Radiation.Components;
 using Content.Server.Radiation.Events;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Content.Shared.Stacks;
@@ -18,6 +18,7 @@ public partial class RadiationSystem
 {
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
 
     private EntityQuery<RadiationBlockingContainerComponent> _radiationBlockingContainers;
 
@@ -240,9 +241,13 @@ public partial class RadiationSystem
     private float GetAdjustedRadiationIntensity(EntityUid uid, float rads)
     {
         var radblockingComps = new List<RadiationBlockingContainerComponent>();
-        if (_container.TryFindComponentsOnEntityContainerOrParent(uid, _radiationBlockingContainers, radblockingComps))
+        if (!_container.TryFindComponentsOnEntityContainerOrParent(uid, _radiationBlockingContainers, radblockingComps))
+            return rads;
+
+        foreach (var blocker in radblockingComps)
         {
-            rads -= radblockingComps.Sum(x => x.RadResistance);
+            if (_openable.IsClosed(blocker.Owner))
+                rads -= blocker.RadResistance;
         }
 
         return float.Max(rads, 0);
