@@ -302,7 +302,7 @@
   parent: BasePlushie
   id: PlushieFinfin
   name: fin fin plushie
-  description: Come and see him.
+  description: A highly marketable plushie of the adorable dolphin-bird recently discovered on the distant planet Teo. Made artificially rare on purpose.
   components:
   - type: Sprite
     state: plushie_finfin
@@ -322,10 +322,13 @@
     inhandVisuals:
       left:
         - state: plushie_finfin-inhand-left
-          shader: unshaded
       right:
         - state: plushie_finfin-inhand-right
-          shader: unshaded
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+      - finfin
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:

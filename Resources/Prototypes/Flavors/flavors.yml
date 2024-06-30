@@ -1108,3 +1108,8 @@
   id: cigarettes
   flavorType: Complex
   description: flavor-complex-cigarettes
+  
+- type: flavor
+  id: finfin
+  flavorType: Complex
+  description: flavor-complex-finfin
