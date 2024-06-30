@@ -249,7 +249,10 @@
       path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
-  parent: [MobSiliconBase, ShowMedicalIcons]
+  parent:
+  - MobSiliconBase
+  - ShowMedicalIcons
+  - StripableInventoryBase
   id: MobMedibot
   name: medibot
   description: No substitute for a doctor, but better than nothing.
@@ -291,19 +294,17 @@
       path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: Advertise
     pack: MedibotAds
+  - type: Inventory
+    templateId: medibot
 
 - type: entity
-  parent: MobSiliconBase
+  parent:
+  - MobSiliconBase
+  - StripableInventoryBase
   id: MobMimeBot
   name: mimebot
   description: Why not give mimebot a friendly wave.
   components:
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
