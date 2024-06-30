@@ -494,7 +494,8 @@
     sprite: Clothing/Head/Hats/ushanka.rsi
   - type: Appearance
   - type: AddAccentClothing
-    accent: RussianAccent
+    accent: ReplacementAccent
+    replacement: russian
   - type: Foldable
     canFoldInsideContainer: true
   - type: FoldableClothing

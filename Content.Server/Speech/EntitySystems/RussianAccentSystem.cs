@@ -5,6 +5,33 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class RussianAccentSystem : EntitySystem
 {
+    private Dictionary<string, string> _replacement = new()
+    {
+        // base
+        { "hello", "привэт" },
+        { "hi", "здаров" },
+        { "english", "инглиш" },
+        { "yes", "да" },
+        // Slang
+        { "union", "Союз" },
+        { "comrade", "товарищ" },
+        { "vodka", "водка" },
+        { "water", "водка" },
+        { "i", "я" },
+        { "nanotrasen", "капиталисты" },
+        { "lizard", "ящер" },
+        { "bear", "медвежонок" },
+        { "beer", "пивко" },
+        { "too far", "на Камчатке" },
+        // SOME terrible words
+        { "shit", "дэрьмо" },
+        { "fuck", "blyat" },
+        // Pronunciation
+        { "r", "р" },
+        { "p", "п" },
+        { "e", "э" }
+    };
+
     public override void Initialize()
     {
         SubscribeLocalEvent<RussianAccentComponent, AccentGetEvent>(OnAccent);
