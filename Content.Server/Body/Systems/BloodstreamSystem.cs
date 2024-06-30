@@ -220,19 +220,6 @@ public sealed class BloodstreamSystem : EntitySystem
             TryModifyBloodLevel(ent, (-total) / 5, ent);
             _audio.PlayPvs(ent.Comp.InstantBloodSound, ent);
         }
-
-        // legacy cauterize code
-
-        // else if (totalFloat < 0 && oldBleedAmount > 0)
-        // {
-        //     // Magically, this damage has healed some bleeding, likely
-        //     // because it's burn damage that cauterized their wounds.
-        //
-        //     // We'll play a special sound and popup for feedback.
-        //     _audio.PlayPvs(ent.Comp.BloodHealedSound, ent);
-        //     _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), ent,
-        //         ent, PopupType.Medium);
-        // }
     }
     /// <summary>
     ///     Shows text on health examine, based on bleed rate and blood level.
