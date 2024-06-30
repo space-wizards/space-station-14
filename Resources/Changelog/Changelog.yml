@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: You can now see paper attached on crates. Color differs depending on
-      the paper used.
-    type: Add
-  - message: The labels on bodybags also have different colors depending on the paper
-      used.
-    type: Tweak
-  - message: Cargo Invoices are now blueish (to differentiate them from Cargo Bounties)
-    type: Tweak
-  id: 6348
-  time: '2024-04-14T03:39:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26834
 - author: Terraspark4941
   changes:
   - message: Autism pins have been added to maintenance loot!
@@ -3830,3 +3817,10 @@
   id: 6847
   time: '2024-06-30T13:51:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29468
+- author: EmoGarbage404
+  changes:
+  - message: The design on the bar sign can now be changed via a menu.
+    type: Add
+  id: 6848
+  time: '2024-06-30T16:20:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29068
