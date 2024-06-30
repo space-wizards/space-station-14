@@ -612,6 +612,8 @@
   - type: Tag
     tags:
     - Meat
+  - type: StealTarget
+    stealGroup: McGuffin
 
 - type: entity
   name: BBQ Rib Sandwich
@@ -919,4 +921,3 @@
   - type: Tag
     tags:
     - Meat
-    

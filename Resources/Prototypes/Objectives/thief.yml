@@ -295,6 +295,17 @@
   - type: Objective
     difficulty: 0.4
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: McGuffinObjective
+  components:
+  - type: NotJobRequirement
+    job: Chef
+  - type: StealCondition
+    stealGroup: McGuffin
+  - type: Objective
+    difficulty: 0.2
+
 - type: entity                                      #Other subgroup
   parent: BaseThiefStealObjective
   id: ClothingNeckGoldmedalStealObjective
