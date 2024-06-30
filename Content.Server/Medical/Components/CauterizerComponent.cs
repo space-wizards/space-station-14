@@ -16,13 +16,13 @@ public sealed partial class CauterizerComponent : Component
     /// By how much will bleed amount change. You probably want that to be negative.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float BleedReduce = -2.0f;
+    public float BleedReduce = -6.0f;
 
     /// <summary>
     /// How much heat damage will be dealed.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float Damage = 4.0f;
+    public float Damage = 12.0f;
 
     /// <summary>
     /// From how far away can you cauterize wounds.

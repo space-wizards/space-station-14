@@ -6,6 +6,7 @@ using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.DoAfter;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Medical;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -44,6 +45,16 @@ public sealed class CauterizerSystem : EntitySystem
 
         if (!TryComp<BloodstreamComponent>(target, out _))
             return;
+
+        // check that a heating item is activated. Otherwise a turned off welder would be usable, which is bad
+        if (TryComp<ItemToggleHotComponent>(entity, out var toggleHotComponent))
+        {
+            // if item is hot when toggled, it should probably be toggleable, but can never be too sure
+            if (!TryComp<ItemToggleComponent>(entity, out var toggleComponent))
+                return;
+            if (!toggleComponent.Activated)
+                return;
+        }
 
         var verb = new UtilityVerb()
         {
