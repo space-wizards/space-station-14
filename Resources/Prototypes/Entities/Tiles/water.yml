@@ -54,3 +54,4 @@
       collection: FootstepWater
       params:
         volume: 8
+  - type: Vapor
