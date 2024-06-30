@@ -283,7 +283,7 @@
   id: McGuffin
   name: mcguffin
   sprite:
-    sprite: Objects\Consumable\Food\burger.rsi
+    sprite: Objects/Consumable/Food/burger.rsi
     state: mcguffin
 
 #Thief structures
