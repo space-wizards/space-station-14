@@ -1236,12 +1236,22 @@
   - UplinkWearables
 
 - type: listing
-  id: UplinkgClothingThievingGloves
+  id: UplinkClothingThievingGloves
   name: uplink-clothing-thieving-gloves-name
   description: uplink-clothing-thieving-gloves-desc
   productEntity: ThievingGloves
   cost:
     Telecrystal: 4
+  categories:
+  - UplinkWearables
+
+- type: listing
+  id: UplinkClothingChameleonThievingGloves
+  name: uplink-clothing-chameleon-thieving-gloves-name
+  description: uplink-clothing-chameleon-thieving-gloves-desc
+  productEntity: ClothingHandsChameleonThief
+  cost:
+    Telecrystal: 6
   categories:
   - UplinkWearables
 
