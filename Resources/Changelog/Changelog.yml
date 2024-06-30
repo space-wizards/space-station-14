@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Terraspark4941
-  changes:
-  - message: Autism pins have been added to maintenance loot!
-    type: Add
-  id: 6349
-  time: '2024-04-14T05:35:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25597
 - author: Flareguy
   changes:
   - message: Colored jumpsuits, shoes, and (most) colored gloves are now colorized
@@ -3824,3 +3817,10 @@
   id: 6848
   time: '2024-06-30T16:20:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29068
+- author: Hmeister
+  changes:
+  - message: The CE hardsuit is now fireproof again.
+    type: Tweak
+  id: 6849
+  time: '2024-06-30T17:56:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29516
