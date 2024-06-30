@@ -46,7 +46,8 @@
             max: 1
         offset: 0
     - trigger:
-        !type:DamageTrigger
+        !type:DamageGroupTrigger
+        damageGroup: Burn
         damage: 25
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -88,6 +89,8 @@
           path: /Audio/Effects/poster_broken.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   parent: PosterBroken
