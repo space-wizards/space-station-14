@@ -127,10 +127,6 @@ public sealed class PullController : VirtualController
         if (_container.IsEntityInContainer(player))
             return false;
 
-        // Cooldown buddy
-        if (_timing.CurTime < pullerComp.NextThrow)
-            return false;
-
         pullerComp.NextThrow = _timing.CurTime + pullerComp.ThrowCooldown;
 
         // Cap the distance
