@@ -25,6 +25,9 @@ namespace Content.Server.Atmos.Piping.Other.Components
         [DataField("spawnTemperature")]
         public float SpawnTemperature { get; set; } = Atmospherics.T20C;
 
+        /// <summary>
+        ///     Number of moles created per second when the miner is working.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("spawnAmount")]
         public float SpawnAmount { get; set; } = Atmospherics.MolesCellStandard * 20f;

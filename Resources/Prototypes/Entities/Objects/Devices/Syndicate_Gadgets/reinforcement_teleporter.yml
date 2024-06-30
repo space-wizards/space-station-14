@@ -79,9 +79,9 @@
   suffix: NukeOps
   components:
     - type: GhostRole
-      name: Syndicate Assault Cyborg
-      description: Nuclear operatives needs reinforcements. You, a cold silicon killing machine, will help them.
-      rules: Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+      name: ghost-role-information-syndie-assaultborg-name
+      description: ghost-role-information-syndie-assaultborg-description
+      rules: ghost-role-information-silicon-rules
       raffle:
         settings: default
     - type: GhostRoleMobSpawner

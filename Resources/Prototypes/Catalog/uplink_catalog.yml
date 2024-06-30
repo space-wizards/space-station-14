@@ -906,7 +906,7 @@
   productEntity: ReinforcementRadioSyndicate
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-urist }
   cost:
-    Telecrystal: 16
+    Telecrystal: 14
   categories:
   - UplinkAllies
   conditions:
@@ -922,7 +922,7 @@
   productEntity: ReinforcementRadioSyndicateNukeops
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-urist }
   cost:
-    Telecrystal: 16
+    Telecrystal: 35
   categories:
   - UplinkAllies
   conditions:
@@ -1273,6 +1273,17 @@
   productEntity: ClothingBackpackDuffelSyndicateEVABundle
   cost:
     Telecrystal: 2
+  categories:
+  - UplinkWearables
+
+- type: listing
+  id: UplinkHardsuitCarp
+  name: uplink-hardsuit-carp-name
+  description: uplink-hardsuit-carp-desc
+  icon: { sprite: /Textures/Clothing/OuterClothing/Suits/carpsuit.rsi, state: icon }
+  productEntity: ClothingOuterHardsuitCarp
+  cost:
+    Telecrystal: 4
   categories:
   - UplinkWearables
 

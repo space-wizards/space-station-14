@@ -493,8 +493,6 @@
     layerStates:
       - bananium
       - bananium_1
-  - type: RadiationSource
-    intensity: 0.1
   - type: FlavorProfile
     flavors:
       - banana
