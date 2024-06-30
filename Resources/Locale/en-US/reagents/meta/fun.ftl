@@ -25,5 +25,5 @@ reagent-desc-fresium = A mysterious compound that slows the vibration of atoms a
 reagent-name-laughter = laughter
 reagent-desc-laughter = Some say that this is the best medicine, but recent studies have proven that to be untrue.
 
-reagent-name-weh = juice that makes you Weh
+reagent-name-weh = wehstrogen
 reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
