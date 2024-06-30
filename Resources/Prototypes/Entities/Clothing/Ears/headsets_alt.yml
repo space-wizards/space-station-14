@@ -141,7 +141,7 @@
   components:
   - type: Headset
   - type: EncryptionKeyHolder
-    keySlots: 5
+    keySlots: 6
   - type: ContainerFill
     containers:
       key_slots:
@@ -158,7 +158,7 @@
   components:
     - type: Headset
     - type: EncryptionKeyHolder
-      keySlots: 5
+      keySlots: 6
     - type: ContainerFill
       containers:
         key_slots:
