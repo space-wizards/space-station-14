@@ -5,6 +5,7 @@ using Content.Shared.Shuttles.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 
 
@@ -16,18 +17,16 @@ namespace Content.Server.Shuttles.Commands;
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
 
-public sealed class FTLDiskBurnerCommand : IConsoleCommand
+public sealed class FTLDiskBurnerCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IEntitySystemManager _entSystemManager = default!;
 
-    public string Command => "FTLdiskburner";
-    public string Description => Loc.GetString("ftl-disk-burner-desc");
-    public string Help => Loc.GetString("cmd-ftl-disk-burner-help");
+    public override string Command => "FTLdiskburner";
 
     [ValidatePrototypeId<EntityPrototype>]
     public const string CoordinatesDisk = "CoordinatesDisk";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0)
         {
@@ -56,9 +55,13 @@ public sealed class FTLDiskBurnerCommand : IConsoleCommand
         foreach (var destinations in args)
         {
             if (destinations == null)
+            {
+                shell.WriteLine("Destinations returned as null!");
+                DebugTools.AssertNotNull(destinations);
                 return;
+            }
 
-            /// make sure destination is an id.
+            // make sure destination is an id.
             EntityUid dest;
             if (_entManager.TryParseNetEntity(destinations, out var nullableDest))
             {
@@ -67,7 +70,7 @@ public sealed class FTLDiskBurnerCommand : IConsoleCommand
 
                 dest = (EntityUid) nullableDest;
 
-                /// we need to go to a map, so check if the EntID is something else then try for its map
+                // we need to go to a map, so check if the EntID is something else then try for its map
                 if (!_entManager.HasComponent<MapComponent>(dest))
                 {
                     if (!_entManager.TryGetComponent<TransformComponent>(dest, out var entTransform))
@@ -87,14 +90,14 @@ public sealed class FTLDiskBurnerCommand : IConsoleCommand
                     dest = (EntityUid) mapDest;
                 }
 
-                /// check if our destination works already, if not, make it.
+                // check if our destination works already, if not, make it.
                 if (!_entManager.HasComponent<FTLDestinationComponent>(dest))
                 {
                     FTLDestinationComponent ftlDest = _entManager.AddComponent<FTLDestinationComponent>(dest);
                     ftlDest.RequireCoordinateDisk = true;
                 }
 
-                /// create the FTL disk
+                // create the FTL disk
                 EntityUid cdUid = _entManager.SpawnEntity(CoordinatesDisk, coords);
                 var cd = _entManager.EnsureComponent<ShuttleDestinationCoordinatesComponent>(cdUid);
                 cd.Destination = dest;
@@ -113,7 +116,7 @@ public sealed class FTLDiskBurnerCommand : IConsoleCommand
         }
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length >= 1)
             return CompletionResult.FromHintOptions(CompletionHelper.MapUids(_entManager), "Map netId");

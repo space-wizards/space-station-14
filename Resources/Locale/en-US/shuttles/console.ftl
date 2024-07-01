@@ -50,7 +50,3 @@ shuttle-console-docks-label = Docks
 
 shuttle-console-undock-fail = Undocking failed
 shuttle-console-dock-fail = Docking failed
-
-# CoordDisk
-ftl-disk-burner-desc = Creates an FTL coodrinates disk to sail to the map the given EntityID is/on
-cmd-ftl-disk-burner-help = FTLdiskburner [EntityID]
