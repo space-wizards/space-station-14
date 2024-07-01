@@ -1,83 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Placing a player with no entry in the manifest into cryostorage no longer
-      removes the captain from the crew manifest.
-    type: Fix
-  id: 6344
-  time: '2024-04-14T02:19:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26927
-- author: superjj18
-  changes:
-  - message: Honkbot's basic AI has been restored and honks have returned to being
-      at random intervals!
-    type: Fix
-  id: 6345
-  time: '2024-04-14T02:51:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26939
-- author: GreaseMonk
-  changes:
-  - message: Added StopsWhenEntityDead property to audio components
-    type: Add
-  id: 6346
-  time: '2024-04-14T03:12:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26905
-- author: DrSmugleaf
-  changes:
-  - message: Fixed rocket launchers and laser guns looking like they have nothing
-      loaded.
-    type: Fix
-  id: 6347
-  time: '2024-04-14T03:17:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26933
-- author: Vermidia
-  changes:
-  - message: You can now see paper attached on crates. Color differs depending on
-      the paper used.
-    type: Add
-  - message: The labels on bodybags also have different colors depending on the paper
-      used.
-    type: Tweak
-  - message: Cargo Invoices are now blueish (to differentiate them from Cargo Bounties)
-    type: Tweak
-  id: 6348
-  time: '2024-04-14T03:39:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26834
-- author: Terraspark4941
-  changes:
-  - message: Autism pins have been added to maintenance loot!
-    type: Add
-  id: 6349
-  time: '2024-04-14T05:35:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25597
-- author: Flareguy
-  changes:
-  - message: Colored jumpsuits, shoes, and (most) colored gloves are now colorized
-      off of one set of greyscale sprites. They should now be more consistent & significantly
-      less ugly.
-    type: Tweak
-  id: 6350
-  time: '2024-04-14T08:41:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26943
-- author: BramvanZijp
-  changes:
-  - message: Nanotrasen's Small Arms Division has slightly improved the firerate and
-      drastically improved the accuracy on its WT550 SMGs.
-    type: Tweak
-  - message: The WT550 and C-20R SMGs can now fire in a 5 round burst-fire mode, making
-      it easier for their users to control the recoil on these weapons.
-    type: Add
-  id: 6351
-  time: '2024-04-14T08:51:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26886
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Holoparasites and holoclowns will now phase through projectiles such
-      as bullets, like a holocarp.
-    type: Tweak
-  id: 6352
-  time: '2024-04-14T08:52:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26862
 - author: Tyzemol
   changes:
   - message: Board game crate now comes with character sheets
@@ -3832,3 +3753,68 @@
   id: 6843
   time: '2024-06-30T12:28:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29557
+- author: Plykiya
+  changes:
+  - message: Skeletons are now immune to flashes.
+    type: Add
+  id: 6844
+  time: '2024-06-30T13:42:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29604
+- author: Plykiya
+  changes:
+  - message: The lock on emagged borgs no longer breaks, preventing unauthorized access
+      and emag checking.
+    type: Tweak
+  id: 6845
+  time: '2024-06-30T13:46:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29605
+- author: metalgearsloth
+  changes:
+  - message: Accentless speech now costs 2 trait points.
+    type: Tweak
+  id: 6846
+  time: '2024-06-30T13:47:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29603
+- author: deltanedas
+  changes:
+  - message: Fixed sleeper agents not showing up in the round end summary.
+    type: Fix
+  id: 6847
+  time: '2024-06-30T13:51:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29468
+- author: EmoGarbage404
+  changes:
+  - message: The design on the bar sign can now be changed via a menu.
+    type: Add
+  id: 6848
+  time: '2024-06-30T16:20:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29068
+- author: Hmeister
+  changes:
+  - message: The CE hardsuit is now fireproof again.
+    type: Tweak
+  id: 6849
+  time: '2024-06-30T17:56:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29516
+- author: EmoGarbage404
+  changes:
+  - message: Blurry vision no longer causes names to momentarily appear as "???" when
+      examining.
+    type: Remove
+  id: 6850
+  time: '2024-07-01T03:06:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29633
+- author: Cojoke-dot
+  changes:
+  - message: Items that slow down a person when held now slow down when dragged too.
+    type: Tweak
+  id: 6851
+  time: '2024-07-01T05:33:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29364
+- author: metalgearsloth
+  changes:
+  - message: Add effects for when shuttles are arriving.
+    type: Add
+  id: 6852
+  time: '2024-07-01T06:11:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29402
