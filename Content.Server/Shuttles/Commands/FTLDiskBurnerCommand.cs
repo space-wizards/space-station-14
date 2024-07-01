@@ -81,7 +81,7 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                     }
 
                     DebugTools.AssertNotNull(mapDest);
-                    dest = (EntityUid) mapDest; // explicit cast here should be fine since the previous if should catch it.
+                    dest = mapDest!.Value; // explicit cast here should be fine since the previous if should catch it.
                 }
 
                 // find and verify the map is not somehow unusable.
