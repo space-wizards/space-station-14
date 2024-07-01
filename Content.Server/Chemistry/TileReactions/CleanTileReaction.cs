@@ -4,12 +4,8 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
-using Content.Shared.Slippery;
-using JetBrains.Annotations;
-using Microsoft.CodeAnalysis.Editing;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Toolshed.Commands.Generic.Variables;
 using System.Linq;
 
 namespace Content.Server.Chemistry.TileReactions;
@@ -59,7 +55,6 @@ public sealed partial class CleanTileReaction : ITileReaction
             purgeAmount -= purgeable.Volume;
 
             solutionContainerSystem.TryAddSolution(puddleSolution.Value, new Solution(ReplacementReagent, purgeable.Volume));
-            //experiment
 
             if (purgeable.Volume <= FixedPoint2.Zero)
                 break;
