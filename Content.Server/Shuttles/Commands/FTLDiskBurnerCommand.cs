@@ -9,7 +9,6 @@ using Robust.Shared.Utility;
 
 
 
-
 namespace Content.Server.Shuttles.Commands;
 
 /// <summary>
@@ -54,19 +53,14 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
 
         foreach (var destinations in args)
         {
-            if (destinations == null)
-            {
-                shell.WriteLine("Destinations returned as null!");
-                DebugTools.AssertNotNull(destinations);
-                return;
-            }
+            DebugTools.AssertNotNull(destinations);
 
             // make sure destination is an id.
             EntityUid dest;
+
             if (_entManager.TryParseNetEntity(destinations, out var nullableDest))
             {
-                if (nullableDest == null)
-                    continue;
+                DebugTools.AssertNotNull(nullableDest);
 
                 dest = (EntityUid) nullableDest;
 
@@ -80,13 +74,13 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                     }
 
                     var mapSystem = _entSystemManager.GetEntitySystem<SharedMapSystem>();
-                    mapSystem.TryGetMap(entTransform.MapID, out var mapDest);
-                    if (mapDest == null)
+                    if (!mapSystem.TryGetMap(entTransform.MapID, out var mapDest))
                     {
                         shell.WriteLine(destinations + " has no map to FTL to!");
                         continue;
                     }
 
+                    DebugTools.AssertNotNull(mapDest);
                     dest = (EntityUid) mapDest;
                 }
 
@@ -112,7 +106,7 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                         destinations +
                         " is on map " +
                         dest +
-                        " which is paused! Are you certain you should be sending players here?"
+                        " which is paused! Please unpause the map first or the players will be stuck in place."
                         );
                     continue;
                 }
