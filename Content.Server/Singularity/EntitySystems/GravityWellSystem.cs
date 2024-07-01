@@ -206,7 +206,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
                 continue;
 
             var scaling = (1f / distance2) * physics.Mass; // TODO: Variable falloff gradiants.
-            _physics.ApplyLinearImpulse(entity, displacement * scaling, body: physics);
+            _physics.ApplyLinearImpulse(entity, Vector2.Transform(displacement, baseMatrixDeltaV) * scaling, body: physics);
         }
     }
 
@@ -219,10 +219,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <param name="baseRadialDeltaV">The base amount of velocity that will be added to entities in range towards the epicenter of the pulse.</param>
     /// <param name="baseTangentialDeltaV">The base amount of velocity that will be added to entities in range counterclockwise relative to the epicenter of the pulse.</param>
     public void GravPulse(MapCoordinates mapPos, float maxRange, float minRange = 0.0f, float baseRadialDeltaV = 0.0f, float baseTangentialDeltaV = 0.0f)
-        => GravPulse(mapPos, maxRange, minRange, new Matrix3x2(
-            baseRadialDeltaV, -baseTangentialDeltaV, 0.0f,
-            +baseTangentialDeltaV, baseRadialDeltaV, 0.0f
-        ));
+        => GravPulse(mapPos, maxRange, minRange, new Matrix3x2(baseRadialDeltaV, -baseTangentialDeltaV, baseTangentialDeltaV, baseRadialDeltaV, 0.0f, 0.0f));
 
     #endregion GravPulse
 
