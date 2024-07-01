@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Holoparasites and holoclowns will now phase through projectiles such
-      as bullets, like a holocarp.
-    type: Tweak
-  id: 6352
-  time: '2024-04-14T08:52:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26862
 - author: Tyzemol
   changes:
   - message: Board game crate now comes with character sheets
@@ -3819,3 +3811,10 @@
   id: 6851
   time: '2024-07-01T05:33:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29364
+- author: metalgearsloth
+  changes:
+  - message: Add effects for when shuttles are arriving.
+    type: Add
+  id: 6852
+  time: '2024-07-01T06:11:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29402
