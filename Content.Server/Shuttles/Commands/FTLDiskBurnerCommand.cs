@@ -1,9 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Labels;
-using Content.Server.Shuttles.Components;
 using Content.Shared.Administration;
 using Content.Shared.Shuttles.Components;
-using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -129,7 +127,12 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                     {
                         ftlDest.BeaconsOnly = true;
 
-                        shell.WriteLine(destinations + " is a planet map " + dest + " and will require an FTL point. It may already exist.");
+                        shell.WriteLine(
+                            destinations +
+                            " is a planet map " +
+                            dest +
+                            " and will require an FTL point. It may already exist."
+                            );
                     }
                 }
                 else
