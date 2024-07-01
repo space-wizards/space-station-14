@@ -156,7 +156,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <param name="minRange">The minimum distance at which entities can be affected by the gravity pulse.</param>
     /// <param name="baseMatrixDeltaV">The base velocity added to any entities within affected by the gravity pulse scaled by the displacement of those entities from the epicenter.</param>
     public void GravPulse(EntityCoordinates entityPos, float maxRange, float minRange, in Matrix3x2 baseMatrixDeltaV)
-        => GravPulse(entityPos.ToMap(EntityManager, _transform), maxRange, minRange, in baseMatrixDeltaV);
+        => GravPulse(_transform.ToMapCoordinates(entityPos), maxRange, minRange, in baseMatrixDeltaV);
 
     /// <summary>
     /// Greates a gravitational pulse, shoving around all entities within some distance of an epicenter.
@@ -167,7 +167,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <param name="baseRadialDeltaV">The base radial velocity that will be added to entities within range towards the center of the gravitational pulse.</param>
     /// <param name="baseTangentialDeltaV">The base tangential velocity that will be added to entities within countrclockwise around the center of the gravitational pulse.</param>
     public void GravPulse(EntityCoordinates entityPos, float maxRange, float minRange, float baseRadialDeltaV = 0.0f, float baseTangentialDeltaV = 0.0f)
-        => GravPulse(entityPos.ToMap(EntityManager, _transform), maxRange, minRange, baseRadialDeltaV, baseTangentialDeltaV);
+        => GravPulse(_transform.ToMapCoordinates(entityPos), maxRange, minRange, baseRadialDeltaV, baseTangentialDeltaV);
 
     /// <summary>
     /// Causes a gravitational pulse, shoving around all entities within some distance of an epicenter.
@@ -206,7 +206,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
                 continue;
 
             var scaling = (1f / distance2) * physics.Mass; // TODO: Variable falloff gradiants.
-            _physics.ApplyLinearImpulse(entity, Vector2.Transform(displacement, baseMatrixDeltaV) * scaling, body: physics);
+            _physics.ApplyLinearImpulse(entity, Vector2.TransformNormal(displacement, baseMatrixDeltaV) * scaling, body: physics);
         }
     }
 
