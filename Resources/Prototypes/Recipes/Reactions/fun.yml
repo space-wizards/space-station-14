@@ -93,7 +93,7 @@
     Licoxide: 1
 
 - type: reaction
-  id: PlasticSheet # It's here because "haha look you can get smooth beautiful sheets of plastic from small cylindric beaker" (jokes aside: i dont know where should i put it)
+  id: PlasticSheet # plastic steel and glass should have their own .yml file named "materials.yml". also note how all material reactions total to 10 reactants to follow balance
   impact: Low
   quantized: true
   minTemp: 374
@@ -107,6 +107,37 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: SheetPlastic1
+
+- type: reaction
+  id: SteelSheet
+  impact: Low
+  quantized: true
+  minTemp: 374  # real life value is around 1700K
+  reactants:
+    Iron:
+      amount: 9
+    Carbon:
+      amount: 1
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SheetSteel1
+
+- type: reaction
+  id: GlassSheet
+  impact: Low
+  quantized: true
+  minTemp: 374
+  reactants:  # glass is made from sand, which is made from silicon dioxide (added water to make it more balanced)
+    Silicon:
+      amount: 3
+    Oxygen:
+      amount: 6
+    Water:
+      amount: 1
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SheetGlass1
+
 
 - type: reaction
   id: FlashFreezeIce
