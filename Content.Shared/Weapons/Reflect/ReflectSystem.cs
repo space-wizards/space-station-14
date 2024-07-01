@@ -164,7 +164,7 @@ public sealed class ReflectSystem : EntitySystem
         [NotNullWhen(true)] out Vector2? newDirection)
     {
         if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
-            !_toggled.IsActivated(reflector) ||
+            !_toggle.IsActivated(reflector) ||
             !_random.Prob(reflect.ReflectProb))
         {
             newDirection = null;
@@ -194,9 +194,6 @@ public sealed class ReflectSystem : EntitySystem
             return;
 
         EnsureComp<ReflectUserComponent>(args.Equipee);
-
-        if (_toggle.IsActivated(uid))
-            EnableAlert(args.Equipee);
     }
 
     private void OnReflectUnequipped(EntityUid uid, ReflectComponent comp, GotUnequippedEvent args)
@@ -210,9 +207,6 @@ public sealed class ReflectSystem : EntitySystem
             return;
 
         EnsureComp<ReflectUserComponent>(args.User);
-
-        if (_toggle.IsActivated(uid))
-            EnableAlert(args.User);
     }
 
     private void OnReflectHandUnequipped(EntityUid uid, ReflectComponent component, GotUnequippedHandEvent args)
