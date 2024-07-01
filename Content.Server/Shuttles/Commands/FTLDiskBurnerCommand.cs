@@ -2,6 +2,7 @@ using Content.Server.Administration;
 using Content.Server.Labels;
 using Content.Shared.Administration;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -90,11 +91,38 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                     dest = (EntityUid) mapDest;
                 }
 
+                // find and verify the map is not somehow unusable.
+                if (!_entManager.TryGetComponent<MapComponent>(dest, out var mapComp))
+                {
+                    shell.WriteLine(destinations + " is somehow on a map with no map component. What the fuck.");
+                    continue;
+                }
+                if (mapComp.MapPaused == true)
+                {
+                    shell.WriteLine(destinations + " is on a map that is paused! Are you certain you should be sending players here?");
+                    continue;
+                }
+                if (mapComp.MapInitialized == false)
+                {
+                    shell.WriteLine(destinations + " is on a map that is not initialized! Check it's safe to initialize, then initialize it first or the players will be stuck in place!");
+                    continue;
+                }
+
                 // check if our destination works already, if not, make it.
-                if (!_entManager.HasComponent<FTLDestinationComponent>(dest))
+                if (!_entManager.TryGetComponent<FTLDestinationComponent>(dest, out var ftlDestComp))
                 {
                     FTLDestinationComponent ftlDest = _entManager.AddComponent<FTLDestinationComponent>(dest);
                     ftlDest.RequireCoordinateDisk = true;
+                }
+                else
+                {
+                    if (ftlDestComp.Enabled == false)
+                        shell.WriteLine(destinations + " is on a map that already has an FTLDestinationComponent, but it is not Enabled! Set this manually for safety.");
+
+                    if (ftlDestComp.BeaconsOnly == true)
+                    {
+                        shell.WriteLine(destinations + " is on a map that requires a beacon to travel to! It may already exist.");
+                    }
                 }
 
                 // create the FTL disk
