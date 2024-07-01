@@ -1,0 +1,54 @@
+- type: emote
+  id: LayDown
+  name: chat-emote-name-lay-down
+  chatMessages: [lays down]
+  chatTriggers:
+    - lay
+    - lay.
+    - lays
+    - lays.
+    - laying
+    - laying.
+    - laid
+    - laid.
+    - lay down
+    - lay down.
+    - lays down
+    - lays down.
+    - laid down
+    - laid down.
+    - lies down
+    - lies down.
+    - falls over
+    - falls over.
+    - falls down
+    - falls down.
+    - trips
+    - trips.
+    - slips
+    - slips.
+    - goes prone
+    - goes prone.
+    - collapses
+    - collapses.
+    
+- type: emote
+  id: StandUp
+  name: chat-emote-name-stand-up
+  chatMessages: [stands up]
+  chatTriggers:
+    - stand
+    - stand.
+    - stands
+    - stands.
+    - standing
+    - standing.
+    - stand up
+    - stand up.
+    - stands up
+    - stands up.
+    - stood up
+    - stood up.
+    - gets up
+    - gets up.
+    
