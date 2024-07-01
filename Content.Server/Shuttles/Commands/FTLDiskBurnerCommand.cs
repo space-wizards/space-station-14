@@ -24,8 +24,6 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IEntitySystemManager _entSystemManager = default!;
 
-    //private EntityQuery<FTLBeaconComponent> _beaconQuery;
-
     public override string Command => "FTLdiskburner";
 
     [ValidatePrototypeId<EntityPrototype>]
@@ -55,8 +53,6 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
 
         EntityUid entity = player.AttachedEntity.Value;
         var coords = _entManager.GetComponent<TransformComponent>(entity).Coordinates;
-
-        //_beaconQuery = GetEntityQuery<FTLBeaconComponent>();
 
         foreach (var destinations in args)
         {
@@ -123,10 +119,6 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                     {
                         ftlDest.BeaconsOnly = true;
 
-                        //_entManager.AddComponent<FTLBeaconComponent>(dest);
-
-                       // EntityQuery<>();
-                       // GetEntitiesInrange
                         shell.WriteLine(destinations + " is on a planet map and will require an FTL point if one does not exist.");
                         continue;
                     }
