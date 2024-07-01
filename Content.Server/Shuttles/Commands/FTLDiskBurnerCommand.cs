@@ -116,13 +116,12 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                 }
                 else
                 {
+                    // we don't do these automatically, since it isn't clear what the correct resolution is. Instead we provide feedback to the user.
                     if (ftlDestComp.Enabled == false)
                         shell.WriteLine(destinations + " is on a map that already has an FTLDestinationComponent, but it is not Enabled! Set this manually for safety.");
 
                     if (ftlDestComp.BeaconsOnly == true)
-                    {
                         shell.WriteLine(destinations + " is on a map that requires a beacon to travel to! It may already exist.");
-                    }
                 }
 
                 // create the FTL disk
