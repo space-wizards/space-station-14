@@ -1,4 +1,5 @@
 using Content.Shared.Buckle.Components;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.IdentityManagement;
@@ -46,6 +47,7 @@ public abstract partial class SharedBuckleSystem
             {
                 BreakOnMove = true,
                 BreakOnDamage = true,
+                AttemptFrequency = AttemptFrequency.EveryTick
             };
 
             _doAfter.TryStartDoAfter(doAfterArgs);

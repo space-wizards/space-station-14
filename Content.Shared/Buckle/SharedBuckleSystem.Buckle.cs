@@ -2,7 +2,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Movement.Events;
@@ -50,6 +52,10 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, UpdateCanMoveEvent>(OnBuckleUpdateCanMove);
 
         SubscribeLocalEvent<BuckleComponent, BuckleDoAfterEvent>(OnBuckleDoafter);
+        SubscribeLocalEvent<BuckleComponent, DoAfterAttemptEvent<BuckleDoAfterEvent>>((uid, comp, ev) =>
+        {
+            BuckleDoafterEarly((uid, comp), ev.Event, ev);
+        });
 
         SubscribeLocalEvent<BuckleComponent, ComponentGetState>(OnGetState);
     }
@@ -516,5 +522,22 @@ public abstract partial class SharedBuckleSystem
             return;
 
         args.Handled = TryBuckle(args.Target.Value, args.User, args.Used.Value, popup: false);
+    }
+
+    private void BuckleDoafterEarly(Entity<BuckleComponent> entity, BuckleDoAfterEvent args, CancellableEntityEventArgs ev)
+    {
+        if (args.Target == null || args.Used == null)
+            return;
+
+        bool cuffedOrCrit = false;
+
+        if (TryComp<CuffableComponent>(args.Target, out var targetCuffedComp) && targetCuffedComp.CuffedHandCount > 0 || _mobState.IsIncapacitated(args.Target.Value))
+            cuffedOrCrit = true;
+
+        if (cuffedOrCrit)
+        {
+            ev.Cancel();
+            TryBuckle(args.Target.Value, args.User, args.Used.Value, popup: false);
+        }
     }
 }
