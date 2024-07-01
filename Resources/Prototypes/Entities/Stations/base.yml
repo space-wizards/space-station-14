@@ -47,7 +47,7 @@
     - type: GridSpawn
       groups:
         vgroid: !type:DungeonSpawnGroup
-          minimumDistance: 2000
+          minimumDistance: 1000
           nameDataset: names_borer
           addComponents:
           - type: Gravity
