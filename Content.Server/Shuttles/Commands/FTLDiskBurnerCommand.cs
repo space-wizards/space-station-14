@@ -119,8 +119,7 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                     {
                         ftlDest.BeaconsOnly = true;
 
-                        shell.WriteLine(destinations + " is on a planet map and will require an FTL point if one does not exist.");
-                        continue;
+                        shell.WriteLine(destinations + " is on a planet map and will require an FTL point. It may already exist.");
                     }
                 }
                 else
