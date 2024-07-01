@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: Nanotrasen's Small Arms Division has slightly improved the firerate and
-      drastically improved the accuracy on its WT550 SMGs.
-    type: Tweak
-  - message: The WT550 and C-20R SMGs can now fire in a 5 round burst-fire mode, making
-      it easier for their users to control the recoil on these weapons.
-    type: Add
-  id: 6351
-  time: '2024-04-14T08:51:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26886
 - author: Dutch-VanDerLinde
   changes:
   - message: Holoparasites and holoclowns will now phase through projectiles such
@@ -3823,3 +3812,10 @@
   id: 6850
   time: '2024-07-01T03:06:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29633
+- author: Cojoke-dot
+  changes:
+  - message: Items that slow down a person when held now slow down when dragged too.
+    type: Tweak
+  id: 6851
+  time: '2024-07-01T05:33:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29364
