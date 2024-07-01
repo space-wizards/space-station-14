@@ -28,7 +28,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
             Assert.That(netMan.IsConnected);
 
-            Assert.That(sPlayerManager.Sessions.Count(), Is.EqualTo(1));
+            Assert.That(sPlayerManager.Sessions, Has.Length.EqualTo(1));
             // No bans on record
             Assert.Multiple(async () =>
             {
@@ -50,7 +50,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
             var banReason = "test";
 
-            Assert.That(sPlayerManager.Sessions.Count(), Is.EqualTo(1));
+            Assert.That(sPlayerManager.Sessions, Has.Length.EqualTo(1));
             // Ban the client for 24 hours
             await server.WaitPost(() => sConsole.ExecuteCommand($"ban {clientSession.Name} {banReason} 1440"));
 
@@ -63,7 +63,7 @@ namespace Content.IntegrationTests.Tests.Commands
             });
 
             await pair.RunTicksSync(5);
-            Assert.That(sPlayerManager.Sessions.Count(), Is.EqualTo(0));
+            Assert.That(sPlayerManager.Sessions, Has.Length.EqualTo(0));
             Assert.That(!netMan.IsConnected);
 
             // Try to pardon a ban that does not exist
@@ -143,11 +143,11 @@ namespace Content.IntegrationTests.Tests.Commands
             });
 
             // Reconnect client. Slightly faster than dirtying the pair.
-            Assert.That(sPlayerManager.Sessions.Count(), Is.EqualTo(0));
+            Assert.That(sPlayerManager.Sessions, Is.Empty);
             client.SetConnectTarget(server);
             await client.WaitPost(() => netMan.ClientConnect(null!, 0, null!));
             await pair.RunTicksSync(5);
-            Assert.That(sPlayerManager.Sessions.Count(), Is.EqualTo(1));
+            Assert.That(sPlayerManager.Sessions, Has.Length.EqualTo(1));
 
             await pair.CleanReturnAsync();
         }

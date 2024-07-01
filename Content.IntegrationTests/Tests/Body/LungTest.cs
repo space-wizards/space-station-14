@@ -60,8 +60,8 @@ namespace Content.IntegrationTests.Tests.Body
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var mapLoader = entityManager.System<MapLoaderSystem>();
+            var mapSys = entityManager.System<SharedMapSystem>();
 
-            MapId mapId;
             EntityUid? grid = null;
             BodyComponent body = default;
             RespiratorComponent resp = default;
@@ -73,7 +73,7 @@ namespace Content.IntegrationTests.Tests.Body
 
             await server.WaitPost(() =>
             {
-                mapId = mapManager.CreateMap();
+                mapSys.CreateMap(out var mapId);
                 Assert.That(mapLoader.TryLoad(mapId, testMapName, out var roots));
 
                 var query = entityManager.GetEntityQuery<MapGridComponent>();
@@ -142,8 +142,8 @@ namespace Content.IntegrationTests.Tests.Body
             var entityManager = server.ResolveDependency<IEntityManager>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
             var mapLoader = entityManager.System<MapLoaderSystem>();
+            var mapSys = entityManager.System<SharedMapSystem>();
 
-            MapId mapId;
             EntityUid? grid = null;
             RespiratorComponent respirator = null;
             EntityUid human = default;
@@ -152,7 +152,7 @@ namespace Content.IntegrationTests.Tests.Body
 
             await server.WaitPost(() =>
             {
-                mapId = mapManager.CreateMap();
+                mapSys.CreateMap(out var mapId);
 
                 Assert.That(mapLoader.TryLoad(mapId, testMapName, out var ents), Is.True);
                 var query = entityManager.GetEntityQuery<MapGridComponent>();
