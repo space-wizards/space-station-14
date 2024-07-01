@@ -66,6 +66,17 @@
     sprite: Clothing/Neck/Misc/lawyerbadge.rsi
   - type: TypingIndicatorClothing
     proto: lawyer
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckDetectiveBadge
+  name: detective badge
+  description: A badge for the station's detectives and investigators. Showing it to people when investigating makes you feel like a movie star.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/detectivebadge.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/detectivebadge.rsi
 
 - type: entity
   id: ActionStethoscope

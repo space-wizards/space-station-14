@@ -412,7 +412,7 @@
       effects:
       - !type:SatiateThirst
         factor: 4
-
+      
 - type: reagent
   id: Ice
   name: reagent-name-ice

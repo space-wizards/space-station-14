@@ -316,9 +316,25 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatHoshat
+  id: ClothingHeadHatHoscap
   name: head of security cap
   description: The robust standard-issue cap of the Head of Security. For showing the officers who's in charge.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/hoscap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/hoscap.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoshat
+  name: head of security hat
+  description: "There's a new sheriff in station."
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/hoshat.rsi

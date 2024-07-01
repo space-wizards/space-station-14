@@ -1016,6 +1016,14 @@
   materials:
     Cloth: 100
     Durathread: 50
+    
+- type: latheRecipe
+  id: ClothingHeadHatHoscap
+  result: ClothingHeadHatHoscap
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
 
 - type: latheRecipe
   id: ClothingHeadHatWarden

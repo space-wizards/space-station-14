@@ -61,6 +61,15 @@
 - type: startingGear
   id: HeadofSecurityHead
   equipment:
+    head: ClothingHeadHatHoscap
+    
+- type: loadout
+  id: HeadofSecurityHat
+  equipment: HeadofSecurityHat
+    
+- type: startingGear
+  id: HeadofSecurityHat
+  equipment:
     head: ClothingHeadHatHoshat
 
 - type: loadout
