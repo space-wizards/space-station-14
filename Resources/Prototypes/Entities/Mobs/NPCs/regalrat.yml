@@ -289,6 +289,7 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: MakeItemOnDead
 
 - type: weightedRandomEntity
   id: RatKingLoot
