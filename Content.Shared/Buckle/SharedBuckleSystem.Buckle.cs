@@ -516,6 +516,13 @@ public abstract partial class SharedBuckleSystem
         return !unstrapAttempt.Cancelled;
     }
 
+    /// <summary>
+    /// Once the do-after is complete, try to buckle target to chair/bed
+    /// </summary>
+    /// <param name="args.Target"> The person being put in the chair/bed</param>
+    /// <param name="args.User"> The person putting a person in a chair/bed</param>
+    /// <param name="args.Used"> The chair/bed </param>
+
     private void OnBuckleDoafter(Entity<BuckleComponent> entity, ref BuckleDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
@@ -524,17 +531,20 @@ public abstract partial class SharedBuckleSystem
         args.Handled = TryBuckle(args.Target.Value, args.User, args.Used.Value, popup: false);
     }
 
+    /// <summary>
+    /// If the target being buckled to a chair/bed goes crit or is cuffed
+    /// Cancel the do-after time and try to buckle the target immediately
+    /// </summary>
+    /// <param name="args.Target"> The person being put in the chair/bed</param>
+    /// <param name="args.User"> The person putting a person in a chair/bed</param>
+    /// <param name="args.Used"> The chair/bed </param>
     private void BuckleDoafterEarly(Entity<BuckleComponent> entity, BuckleDoAfterEvent args, CancellableEntityEventArgs ev)
     {
         if (args.Target == null || args.Used == null)
             return;
 
-        bool cuffedOrCrit = false;
-
-        if (TryComp<CuffableComponent>(args.Target, out var targetCuffedComp) && targetCuffedComp.CuffedHandCount > 0 || _mobState.IsIncapacitated(args.Target.Value))
-            cuffedOrCrit = true;
-
-        if (cuffedOrCrit)
+        if (TryComp<CuffableComponent>(args.Target, out var targetCuffableComp) && targetCuffableComp.CuffedHandCount > 0
+            || _mobState.IsIncapacitated(args.Target.Value))
         {
             ev.Cancel();
             TryBuckle(args.Target.Value, args.User, args.Used.Value, popup: false);
