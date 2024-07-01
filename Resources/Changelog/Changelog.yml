@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TokenStyle
-  changes:
-  - message: Lockers cannot be deconstructed with a screwdriver when locked now.
-    type: Fix
-  id: 6356
-  time: '2024-04-14T22:26:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26961
 - author: pissdemon
   changes:
   - message: Catwalks over lava are slightly less likely to catch you on fire again.
@@ -3820,3 +3813,11 @@
   id: 6855
   time: '2024-07-01T21:14:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29476
+- author: Tayrtahn
+  changes:
+  - message: Fixed NukeOps ending prematurely in some situations where operatives
+      were still alive.
+    type: Fix
+  id: 6856
+  time: '2024-07-01T22:23:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29642
