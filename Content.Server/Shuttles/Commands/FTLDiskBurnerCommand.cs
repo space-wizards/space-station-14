@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.Labels;
+using Content.Server.Shuttles.Components;
 using Content.Shared.Administration;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -22,6 +23,8 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IEntitySystemManager _entSystemManager = default!;
+
+    //private EntityQuery<FTLBeaconComponent> _beaconQuery;
 
     public override string Command => "FTLdiskburner";
 
@@ -52,6 +55,8 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
 
         EntityUid entity = player.AttachedEntity.Value;
         var coords = _entManager.GetComponent<TransformComponent>(entity).Coordinates;
+
+        //_beaconQuery = GetEntityQuery<FTLBeaconComponent>();
 
         foreach (var destinations in args)
         {
@@ -113,15 +118,27 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                 {
                     FTLDestinationComponent ftlDest = _entManager.AddComponent<FTLDestinationComponent>(dest);
                     ftlDest.RequireCoordinateDisk = true;
+
+                    if (_entManager.HasComponent<MapGridComponent>(dest))
+                    {
+                        ftlDest.BeaconsOnly = true;
+
+                        //_entManager.AddComponent<FTLBeaconComponent>(dest);
+
+                       // EntityQuery<>();
+                       // GetEntitiesInrange
+                        shell.WriteLine(destinations + " is on a planet map and will require an FTL point if one does not exist.");
+                        continue;
+                    }
                 }
                 else
                 {
-                    // we don't do these automatically, since it isn't clear what the correct resolution is. Instead we provide feedback to the user.
+                    // we don't do these automatically, since it isn't clear what the correct resolution is. Instead we provide feedback to the user and carry on like they know what theyre doing.
                     if (ftlDestComp.Enabled == false)
                         shell.WriteLine(destinations + " is on a map that already has an FTLDestinationComponent, but it is not Enabled! Set this manually for safety.");
 
                     if (ftlDestComp.BeaconsOnly == true)
-                        shell.WriteLine(destinations + " is on a map that requires a beacon to travel to! It may already exist.");
+                        shell.WriteLine(destinations + " is on a map that requires a FTL point to travel to! It may already exist.");
                 }
 
                 // create the FTL disk
