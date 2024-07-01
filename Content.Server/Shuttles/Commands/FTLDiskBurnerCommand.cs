@@ -95,17 +95,17 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                 // find and verify the map is not somehow unusable.
                 if (!_entManager.TryGetComponent<MapComponent>(dest, out var mapComp))
                 {
-                    shell.WriteLine(destinations + " is somehow on a map with no map component. What the fuck.");
+                    shell.WriteLine(destinations + " is somehow on map " + dest + " with no map component. What the fuck.");
                     continue;
                 }
                 if (mapComp.MapPaused == true)
                 {
-                    shell.WriteLine(destinations + " is on a map that is paused! Are you certain you should be sending players here?");
+                    shell.WriteLine(destinations + " is on map " + dest + " which is paused! Are you certain you should be sending players here?");
                     continue;
                 }
                 if (mapComp.MapInitialized == false)
                 {
-                    shell.WriteLine(destinations + " is on a map that is not initialized! Check it's safe to initialize, then initialize it first or the players will be stuck in place!");
+                    shell.WriteLine(destinations + " is on map " + dest + " which is not initialized! Check it's safe to initialize, then initialize it first or the players will be stuck in place!");
                     continue;
                 }
 
@@ -119,17 +119,17 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                     {
                         ftlDest.BeaconsOnly = true;
 
-                        shell.WriteLine(destinations + " is on a planet map and will require an FTL point. It may already exist.");
+                        shell.WriteLine(destinations + " is a planet map " + dest + " and will require an FTL point. It may already exist.");
                     }
                 }
                 else
                 {
                     // we don't do these automatically, since it isn't clear what the correct resolution is. Instead we provide feedback to the user and carry on like they know what theyre doing.
                     if (ftlDestComp.Enabled == false)
-                        shell.WriteLine(destinations + " is on a map that already has an FTLDestinationComponent, but it is not Enabled! Set this manually for safety.");
+                        shell.WriteLine(destinations + " is on map " + dest + " that already has an FTLDestinationComponent, but it is not Enabled! Set this manually for safety.");
 
                     if (ftlDestComp.BeaconsOnly == true)
-                        shell.WriteLine(destinations + " is on a map that requires a FTL point to travel to! It may already exist.");
+                        shell.WriteLine(destinations + " is on map " + dest + " that requires a FTL point to travel to! It may already exist.");
                 }
 
                 // create the FTL disk
