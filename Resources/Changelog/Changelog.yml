@@ -1,137 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: Salt and Pepper shakers look like shakers.
-    type: Fix
-  id: 6333
-  time: '2024-04-12T06:44:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26899
-- author: liltenhead
-  changes:
-  - message: Reagent slimes are no longer ghost roles.
-    type: Remove
-  id: 6334
-  time: '2024-04-12T06:50:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26840
-- author: TokenStyle
-  changes:
-  - message: Notice board can be crafted
-    type: Add
-  id: 6335
-  time: '2024-04-12T06:58:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26847
-- author: deltanedas
-  changes:
-  - message: Sterile Swabs now come in dispensers making them easier to use.
-    type: Tweak
-  id: 6336
-  time: '2024-04-12T07:15:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24986
-- author: Ko4erga
-  changes:
-  - message: Strobes added WEE-OOO-WEE-OOO!
-    type: Add
-  id: 6337
-  time: '2024-04-12T08:02:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26083
-- author: osjarw
-  changes:
-  - message: Magboots no longer activate artifacts from salvage magnet ranges.
-    type: Fix
-  id: 6338
-  time: '2024-04-13T01:46:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26912
-- author: Vasilis
-  changes:
-  - message: Blood (or anything containing uncooked animal proteins) can only be consumed
-      by animal stomach's instead of all but human. Attempting to due so will poison
-      you as intended.
-    type: Fix
-  id: 6339
-  time: '2024-04-13T02:36:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26906
-- author: DrSmugleaf
-  changes:
-  - message: Fixed incorrect "Cycled" and "Bolted" popups when wielding and unwielding
-      some guns.
-    type: Fix
-  id: 6340
-  time: '2024-04-13T15:25:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26924
-- author: FungiFellow
-  changes:
-  - message: Removed Crusher Dagger from Grapple Module
-    type: Remove
-  id: 6341
-  time: '2024-04-13T15:35:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26865
-- author: ShadowCommander
-  changes:
-  - message: Fixed the pull hotkey not pulling the new entity when you are already
-      pulling an entity.
-    type: Fix
-  id: 6342
-  time: '2024-04-13T15:36:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26499
-- author: Boaz1111
-  changes:
-  - message: The doors on the ice expedition map can now be accessed by anyone instead
-      of... botanists.
-    type: Fix
-  id: 6343
-  time: '2024-04-13T20:49:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26928
-- author: Tayrtahn
-  changes:
-  - message: Placing a player with no entry in the manifest into cryostorage no longer
-      removes the captain from the crew manifest.
-    type: Fix
-  id: 6344
-  time: '2024-04-14T02:19:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26927
-- author: superjj18
-  changes:
-  - message: Honkbot's basic AI has been restored and honks have returned to being
-      at random intervals!
-    type: Fix
-  id: 6345
-  time: '2024-04-14T02:51:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26939
-- author: GreaseMonk
-  changes:
-  - message: Added StopsWhenEntityDead property to audio components
-    type: Add
-  id: 6346
-  time: '2024-04-14T03:12:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26905
-- author: DrSmugleaf
-  changes:
-  - message: Fixed rocket launchers and laser guns looking like they have nothing
-      loaded.
-    type: Fix
-  id: 6347
-  time: '2024-04-14T03:17:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26933
-- author: Vermidia
-  changes:
-  - message: You can now see paper attached on crates. Color differs depending on
-      the paper used.
-    type: Add
-  - message: The labels on bodybags also have different colors depending on the paper
-      used.
-    type: Tweak
-  - message: Cargo Invoices are now blueish (to differentiate them from Cargo Bounties)
-    type: Tweak
-  id: 6348
-  time: '2024-04-14T03:39:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26834
-- author: Terraspark4941
-  changes:
-  - message: Autism pins have been added to maintenance loot!
-    type: Add
-  id: 6349
-  time: '2024-04-14T05:35:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25597
 - author: Flareguy
   changes:
   - message: Colored jumpsuits, shoes, and (most) colored gloves are now colorized
@@ -3829,3 +3696,131 @@
   id: 6832
   time: '2024-06-28T23:28:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29545
+- author: TokenStyle
+  changes:
+  - message: Mechs can now be destroyed!
+    type: Tweak
+  id: 6833
+  time: '2024-06-29T03:28:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29338
+- author: metalgearsloth
+  changes:
+  - message: Typing indicators are now predicted.
+    type: Fix
+  id: 6834
+  time: '2024-06-29T03:33:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29551
+- author: Arteben
+  changes:
+  - message: Added favorite tab for construction!
+    type: Add
+  id: 6835
+  time: '2024-06-29T04:10:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26347
+- author: deltanedas
+  changes:
+  - message: Traitors can now be assigned to deconstruct the station's nuke for its
+      precious plutonium core.
+    type: Add
+  - message: Added the Objectives category in the uplink with a Core Extraction Toolbox
+      for deconstructing said nuke.
+    type: Add
+  id: 6836
+  time: '2024-06-29T04:11:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26786
+- author: slarticodefast
+  changes:
+  - message: Air vents now have yellow lights if they are in under-pressure lockout.
+    type: Add
+  id: 6837
+  time: '2024-06-29T05:02:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29527
+- author: metalgearsloth
+  changes:
+  - message: Fix character traits not being validated.
+    type: Fix
+  id: 6838
+  time: '2024-06-29T05:39:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28730
+- author: PJB3005
+  changes:
+  - message: '"Steal plutonium core" traitor objective has been reverted.'
+    type: Remove
+  id: 6839
+  time: '2024-06-29T15:23:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29578
+- author: MureixloL
+  changes:
+  - message: Changed some vending machine point lights to match the vendors better.
+    type: Tweak
+  id: 6840
+  time: '2024-06-30T03:46:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29590
+- author: metalgearsloth
+  changes:
+  - message: Fix trait categories not respecting unlimited points.
+    type: Fix
+  id: 6841
+  time: '2024-06-30T04:28:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29600
+- author: ShadowCommander
+  changes:
+  - message: Fixed sprite layers disappearing when inserting or removing an item on
+      entities such as belts, janitor trolley, clipboard, etc.
+    type: Fix
+  id: 6842
+  time: '2024-06-30T04:34:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29461
+- author: Plykiya
+  changes:
+  - message: Syndicate traitor reinforcements price has been changed from 16 TC to
+      14 TC.
+    type: Tweak
+  - message: Nuclear ops reinforcements price has been changed from 16 TC to 35 TC.
+    type: Tweak
+  id: 6843
+  time: '2024-06-30T12:28:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29557
+- author: Plykiya
+  changes:
+  - message: Skeletons are now immune to flashes.
+    type: Add
+  id: 6844
+  time: '2024-06-30T13:42:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29604
+- author: Plykiya
+  changes:
+  - message: The lock on emagged borgs no longer breaks, preventing unauthorized access
+      and emag checking.
+    type: Tweak
+  id: 6845
+  time: '2024-06-30T13:46:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29605
+- author: metalgearsloth
+  changes:
+  - message: Accentless speech now costs 2 trait points.
+    type: Tweak
+  id: 6846
+  time: '2024-06-30T13:47:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29603
+- author: deltanedas
+  changes:
+  - message: Fixed sleeper agents not showing up in the round end summary.
+    type: Fix
+  id: 6847
+  time: '2024-06-30T13:51:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29468
+- author: EmoGarbage404
+  changes:
+  - message: The design on the bar sign can now be changed via a menu.
+    type: Add
+  id: 6848
+  time: '2024-06-30T16:20:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29068
+- author: Hmeister
+  changes:
+  - message: The CE hardsuit is now fireproof again.
+    type: Tweak
+  id: 6849
+  time: '2024-06-30T17:56:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29516
