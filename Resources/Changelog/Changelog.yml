@@ -1,46 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Colored jumpsuits, shoes, and (most) colored gloves are now colorized
-      off of one set of greyscale sprites. They should now be more consistent & significantly
-      less ugly.
-    type: Tweak
-  id: 6350
-  time: '2024-04-14T08:41:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26943
-- author: BramvanZijp
-  changes:
-  - message: Nanotrasen's Small Arms Division has slightly improved the firerate and
-      drastically improved the accuracy on its WT550 SMGs.
-    type: Tweak
-  - message: The WT550 and C-20R SMGs can now fire in a 5 round burst-fire mode, making
-      it easier for their users to control the recoil on these weapons.
-    type: Add
-  id: 6351
-  time: '2024-04-14T08:51:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26886
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Holoparasites and holoclowns will now phase through projectiles such
-      as bullets, like a holocarp.
-    type: Tweak
-  id: 6352
-  time: '2024-04-14T08:52:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26862
-- author: Tyzemol
-  changes:
-  - message: Board game crate now comes with character sheets
-    type: Add
-  id: 6353
-  time: '2024-04-14T08:54:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26926
-- author: FairlySadPanda
-  changes:
-  - message: Clown shoes make you waddle, as God intended.
-    type: Add
-  id: 6354
-  time: '2024-04-14T12:12:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26338
 - author: beck-thompson
   changes:
   - message: Cybersun pen now makes a slashing noise when doing damage.
@@ -3824,3 +3782,39 @@
   id: 6849
   time: '2024-06-30T17:56:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29516
+- author: EmoGarbage404
+  changes:
+  - message: Blurry vision no longer causes names to momentarily appear as "???" when
+      examining.
+    type: Remove
+  id: 6850
+  time: '2024-07-01T03:06:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29633
+- author: Cojoke-dot
+  changes:
+  - message: Items that slow down a person when held now slow down when dragged too.
+    type: Tweak
+  id: 6851
+  time: '2024-07-01T05:33:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29364
+- author: metalgearsloth
+  changes:
+  - message: Add effects for when shuttles are arriving.
+    type: Add
+  id: 6852
+  time: '2024-07-01T06:11:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29402
+- author: Plykiya
+  changes:
+  - message: Gravity wells, like the supermatter grenade, now function properly again.
+    type: Fix
+  id: 6853
+  time: '2024-07-01T15:39:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29617
+- author: joelsgp
+  changes:
+  - message: Fixed login tips
+    type: Fix
+  id: 6854
+  time: '2024-07-01T16:27:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29640
