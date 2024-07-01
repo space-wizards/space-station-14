@@ -18,11 +18,11 @@ public sealed partial class NpcFactionMemberComponent : Component
     /// Cached friendly factions.
     /// </summary>
     [DataField, ViewVariables]
-    public readonly HashSet<ProtoId<NpcFactionPrototype>> FriendlyFactions = new();
+    public HashSet<ProtoId<NpcFactionPrototype>> FriendlyFactions = new();
 
     /// <summary>
     /// Cached hostile factions.
     /// </summary>
     [DataField, ViewVariables]
-    public readonly HashSet<ProtoId<NpcFactionPrototype>> HostileFactions = new();
+    public HashSet<ProtoId<NpcFactionPrototype>> HostileFactions = new();
 }
