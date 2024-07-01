@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Clown shoes make you waddle, as God intended.
-    type: Add
-  id: 6354
-  time: '2024-04-14T12:12:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26338
 - author: beck-thompson
   changes:
   - message: Cybersun pen now makes a slashing noise when doing damage.
@@ -3818,3 +3811,10 @@
   id: 6853
   time: '2024-07-01T15:39:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29617
+- author: joelsgp
+  changes:
+  - message: Fixed login tips
+    type: Fix
+  id: 6854
+  time: '2024-07-01T16:27:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29640
