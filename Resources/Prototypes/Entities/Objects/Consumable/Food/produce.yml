@@ -1944,4 +1944,5 @@
     seedId: lemo
   - type: Tag
     tags:
+    - Lemo
     - Fruit
