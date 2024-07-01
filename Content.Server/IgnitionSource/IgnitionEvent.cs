@@ -4,4 +4,4 @@ namespace Content.Server.IgnitionSource;
 ///     Raised in order to toggle the ignitionSourceComponent on an entity on or off
 /// </summary>
 [ByRefEvent]
-public record struct IgnitionEvent(bool Ignite = false);
+public readonly record struct IgnitionEvent(bool Ignite = false);
