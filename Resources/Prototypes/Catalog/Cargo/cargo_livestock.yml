@@ -54,7 +54,7 @@
     sprite: Mobs/Animals/duck.rsi
     state: icon-0
   product: CrateNPCDuck
-  cost: 6000
+  cost: 4000
   category: cargoproduct-category-name-livestock
   group: market
 

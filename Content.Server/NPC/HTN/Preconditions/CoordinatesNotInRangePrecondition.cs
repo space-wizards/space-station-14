@@ -22,7 +22,7 @@ public sealed partial class CoordinatesNotInRangePrecondition : HTNPrecondition
         if (!blackboard.TryGetValue<EntityCoordinates>(TargetKey, out var target, _entManager))
             return false;
 
-        return !coordinates.InRange(_entManager, target, blackboard.GetValueOrDefault<float>(RangeKey, _entManager));
+        return !coordinates.InRange(_entManager, _entManager.System<SharedTransformSystem>(), target, blackboard.GetValueOrDefault<float>(RangeKey, _entManager));
     }
 }
 

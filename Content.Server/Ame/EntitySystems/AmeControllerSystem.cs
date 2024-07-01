@@ -129,11 +129,11 @@ public sealed class AmeControllerSystem : EntitySystem
         if (!Resolve(uid, ref controller))
             return;
 
-        if (!_userInterfaceSystem.TryGetUi(uid, AmeControllerUiKey.Key, out var bui))
+        if (!_userInterfaceSystem.HasUi(uid, AmeControllerUiKey.Key))
             return;
 
         var state = GetUiState(uid, controller);
-        _userInterfaceSystem.SetUiState(bui, state);
+        _userInterfaceSystem.SetUiState(uid, AmeControllerUiKey.Key, state);
 
         controller.NextUIUpdate = _gameTiming.CurTime + controller.UpdateUIPeriod;
     }
@@ -270,6 +270,9 @@ public sealed class AmeControllerSystem : EntitySystem
         var humanReadableState = controller.Injecting ? "Inject" : "Not inject";
         _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{EntityManager.ToPrettyString(user.Value):player} has set the AME to inject {controller.InjectionAmount} while set to {humanReadableState}");
 
+        /* This needs to be information which an admin is very likely to want to be informed about in order to be an admin alert or have a sound notification.
+        At the time of editing, players regularly "overclock" the AME and those cases require no admin attention.
+
         // Admin alert
         var safeLimit = 0;
         if (TryGetAMENodeGroup(uid, out var group))
@@ -285,6 +288,7 @@ public sealed class AmeControllerSystem : EntitySystem
                 controller.EffectCooldown = _gameTiming.CurTime + controller.CooldownDuration;
             }
         }
+        */
     }
 
     public void AdjustInjectionAmount(EntityUid uid, int delta, int min = 0, int max = int.MaxValue, EntityUid? user = null, AmeControllerComponent? controller = null)
@@ -324,7 +328,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
     private void OnUiButtonPressed(EntityUid uid, AmeControllerComponent comp, UiButtonPressedMessage msg)
     {
-        var user = msg.Session.AttachedEntity;
+        var user = msg.Actor;
         if (!Exists(user))
             return;
 
@@ -334,7 +338,7 @@ public sealed class AmeControllerSystem : EntitySystem
             _ => true,
         };
 
-        if (!PlayerCanUseController(uid, user!.Value, needsPower, comp))
+        if (!PlayerCanUseController(uid, user, needsPower, comp))
             return;
 
         _audioSystem.PlayPvs(comp.ClickSound, uid, AudioParams.Default.WithVolume(-2f));

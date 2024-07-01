@@ -129,7 +129,7 @@
         - type: MeleeWeapon
           damage:
             types:
-              Brute: 0
+              Blunt: 0
         - type: Item
   considerations:
     - !type:TargetMeleeCon

@@ -17,13 +17,13 @@ public abstract class SharedRgbLightControllerSystem : EntitySystem
         args.State = new RgbLightControllerState(component.CycleRate, component.Layers);
     }
 
-    public void SetLayers(EntityUid uid, List<int>? layers,  RgbLightControllerComponent? rgb = null)
+    public void SetLayers(EntityUid uid, List<int>? layers, RgbLightControllerComponent? rgb = null)
     {
         if (!Resolve(uid, ref rgb))
             return;
 
         rgb.Layers = layers;
-        Dirty(rgb);
+        Dirty(uid, rgb);
     }
 
     public void SetCycleRate(EntityUid uid, float rate, RgbLightControllerComponent? rgb = null)
@@ -32,6 +32,6 @@ public abstract class SharedRgbLightControllerSystem : EntitySystem
             return;
 
         rgb.CycleRate = Math.Clamp(0.01f, rate, 1); // lets not give people seizures
-        Dirty(rgb);
+        Dirty(uid, rgb);
     }
 }

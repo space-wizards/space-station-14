@@ -101,6 +101,7 @@
           probability: 0.5
   - type: FireVisuals
     alternateState: Standing
+  - type: FlashImmunity
 
 - type: entity
   parent: BaseSpeciesDummy

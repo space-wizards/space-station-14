@@ -1,16 +1,19 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
+using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Stacks;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
@@ -27,6 +30,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     [Dependency] protected readonly SharedAmbientSoundSystem AmbientSound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
 
@@ -89,10 +93,8 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (HasComp<MobStateComponent>(item) && !CanGib(uid, item, component)) // whitelist? We be gibbing, boy!
             return false;
 
-        if (component.Whitelist is {} whitelist && !whitelist.IsValid(item))
-            return false;
-
-        if (component.Blacklist is {} blacklist && blacklist.IsValid(item))
+        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, item) ||
+            _whitelistSystem.IsBlacklistPass(component.Blacklist, item))
             return false;
 
         if (Container.TryGetContainingContainer(item, out _) && !Container.TryRemoveFromContainer(item))
@@ -109,6 +111,9 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
             component.Stream = _audio.PlayPredicted(component.Sound, uid, user)?.Entity;
             component.NextSound = Timing.CurTime + component.SoundCooldown;
         }
+
+        var reclaimedEvent = new GotReclaimedEvent(Transform(uid).Coordinates);
+        RaiseLocalEvent(item, ref reclaimedEvent);
 
         var duration = GetReclaimingDuration(uid, item, component);
         // if it's instant, don't bother with all the active comp stuff.
@@ -237,3 +242,6 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         }
     }
 }
+
+[ByRefEvent]
+public record struct GotReclaimedEvent(EntityCoordinates ReclaimerCoordinates);

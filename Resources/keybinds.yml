@@ -167,9 +167,13 @@ binds:
   type: State
   key: MouseLeft
   canFocus: true
+  priority: 10
 - function: RotateStoredItem
   type: State
   key: MouseRight
+- function: SaveItemLocation
+  type: State
+  key: MouseMiddle
 - function: Drop
   type: State
   key: Q
@@ -183,6 +187,9 @@ binds:
 - function: OpenCharacterMenu
   type: State
   key: C
+- function: OpenEmotesMenu
+  type: State
+  key: Y
 - function: TextCursorSelect
   # TextCursorSelect HAS to be above ExamineEntity
   # So that LineEdit receives it correctly.
@@ -448,6 +455,9 @@ binds:
 - function: OpenDecalSpawnWindow
   type: State
   key: F8
+- function: OpenScoreboardWindow
+  type: State
+  key: F9
 - function: OpenSandboxWindow
   type: State
   key: B

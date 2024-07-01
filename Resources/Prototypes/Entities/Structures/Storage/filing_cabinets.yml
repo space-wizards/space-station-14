@@ -24,8 +24,8 @@
       map: ["openLayer"]
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: Transform
     noRot: true
   - type: Fixtures
@@ -113,8 +113,8 @@
   - type: Appearance
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: Transform
     noRot: true
   - type: Fixtures
@@ -156,6 +156,7 @@
     node: chestDrawer
   - type: StaticPrice
     price: 15
+  - type: RequireProjectileTarget
 
 - type: entity
   abstract: true

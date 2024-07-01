@@ -50,7 +50,7 @@ public sealed partial class StampLabel : Label
         base.Draw(handle);
 
         // Restore a sane transform+shader
-        handle.SetTransform(Matrix3.Identity);
+        handle.SetTransform(Matrix3x2.Identity);
         handle.UseShader(null);
     }
 }

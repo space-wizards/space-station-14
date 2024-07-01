@@ -7,10 +7,13 @@
 #Syndie
 - type: entity
   parent: MobHuman
-  id: MobHumanSyndicateAgent
+  id: MobHumanSyndicateAgentBase
   name: syndicate agent
-  suffix: Human
+  suffix: Human, Base
   components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
+      hair: HairBald
     - type: Loadout
       prototypes: [SyndicateOperativeGearExtremelyBasic]
     - type: RandomMetadata
@@ -20,9 +23,20 @@
       - Syndicate
 
 - type: entity
-  parent: MobHumanSyndicateAgent
+  parent: MobHumanSyndicateAgentBase
+  id: MobHumanSyndicateAgent
+  name: syndicate agent
+  suffix: Human, Traitor
+  components:
+    # make the player a traitor once its taken
+    - type: AutoTraitor
+      giveUplink: false
+      giveObjectives: false
+
+- type: entity
+  parent: MobHumanSyndicateAgentBase
   id: MobHumanSyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
-  suffix: NukeOps
+  suffix: Human, NukeOps
   components:
     - type: NukeOperative
 
@@ -46,7 +60,7 @@
       randomizeName: false
     - type: NukeOperative
     - type: Loadout
-      prototypes: [SyndicateOperativeGearFull]
+      prototypes: [SyndicateLoneOperativeGearFull]
     - type: RandomMetadata
       nameSegments:
       - SyndicateNamesPrefix

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseItem
   id: GasTankBase
@@ -19,8 +19,8 @@
     key: enum.SharedGasTankUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.SharedGasTankUiKey.Key
-      type: GasTankBoundUserInterface
+      enum.SharedGasTankUiKey.Key:
+        type: GasTankBoundUserInterface
   - type: GasTank
     outputPressure: 21.3
     air:
@@ -51,7 +51,7 @@
   - type: Tool
     qualities:
     - Rolling
-    speed: 0.6 # fairly unwieldly but nice round surface
+    speedModifier: 0.6 # fairly unwieldly but nice round surface
 
 - type: entity
   parent: GasTankRoundBase
@@ -238,3 +238,6 @@
     outputPressure: 101.3
   - type: Clothing
     sprite: Objects/Tanks/plasma.rsi
+    slots:
+    - Belt
+    - suitStorage

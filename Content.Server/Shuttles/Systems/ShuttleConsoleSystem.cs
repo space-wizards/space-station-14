@@ -13,6 +13,7 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.UI.MapObjects;
+using Content.Shared.Timing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
@@ -135,13 +136,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// </summary>
     private void OnConsoleUIClose(EntityUid uid, ShuttleConsoleComponent component, BoundUIClosedEvent args)
     {
-        if ((ShuttleConsoleUiKey) args.UiKey != ShuttleConsoleUiKey.Key ||
-            args.Session.AttachedEntity is not { } user)
+        if ((ShuttleConsoleUiKey) args.UiKey != ShuttleConsoleUiKey.Key)
         {
             return;
         }
 
-        RemovePilot(user);
+        RemovePilot(args.Actor);
     }
 
     private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component,
@@ -242,7 +242,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         RaiseLocalEvent(entity.Value, ref getShuttleEv);
         entity = getShuttleEv.Console;
 
-        TryComp<TransformComponent>(entity, out var consoleXform);
+        TryComp(entity, out TransformComponent? consoleXform);
         var shuttleGridUid = consoleXform?.GridUid;
 
         NavInterfaceState navState;
@@ -257,12 +257,16 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         else
         {
             navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>());
-            mapState = new ShuttleMapInterfaceState(FTLState.Invalid, 0f, new List<ShuttleBeaconObject>(), new List<ShuttleExclusionObject>());
+            mapState = new ShuttleMapInterfaceState(
+                FTLState.Invalid,
+                default,
+                new List<ShuttleBeaconObject>(),
+                new List<ShuttleExclusionObject>());
         }
 
-        if (_ui.TryGetUi(consoleUid, ShuttleConsoleUiKey.Key, out var bui))
+        if (_ui.HasUi(consoleUid, ShuttleConsoleUiKey.Key))
         {
-            _ui.SetUiState(bui, new ShuttleBoundUserInterfaceState(navState, mapState, dockState));
+            _ui.SetUiState(consoleUid, ShuttleConsoleUiKey.Key, new ShuttleBoundUserInterfaceState(navState, mapState, dockState));
         }
     }
 
@@ -313,12 +317,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         component.SubscribedPilots.Add(entity);
 
-        _alertsSystem.ShowAlert(entity, AlertType.PilotingShuttle);
+        _alertsSystem.ShowAlert(entity, pilotComponent.PilotingAlert);
 
         pilotComponent.Console = uid;
         ActionBlockerSystem.UpdateCanMove(entity);
         pilotComponent.Position = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-        Dirty(pilotComponent);
+        Dirty(entity, pilotComponent);
     }
 
     public void RemovePilot(EntityUid pilotUid, PilotComponent pilotComponent)
@@ -335,7 +339,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         if (!helm.SubscribedPilots.Remove(pilotUid))
             return;
 
-        _alertsSystem.ClearAlert(pilotUid, AlertType.PilotingShuttle);
+        _alertsSystem.ClearAlert(pilotUid, pilotComponent.PilotingAlert);
 
         _popup.PopupEntity(Loc.GetString("shuttle-pilot-end"), pilotUid, pilotUid);
 
@@ -408,12 +412,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     public ShuttleMapInterfaceState GetMapState(Entity<FTLComponent?> shuttle)
     {
         FTLState ftlState = FTLState.Available;
-        float stateDuration = 0f;
+        StartEndTime stateDuration = default;
 
         if (Resolve(shuttle, ref shuttle.Comp, false) && shuttle.Comp.LifeStage < ComponentLifeStage.Stopped)
         {
             ftlState = shuttle.Comp.State;
-            stateDuration = _shuttle.GetStateDuration(shuttle.Comp);
+            stateDuration = _shuttle.GetStateTime(shuttle.Comp);
         }
 
         List<ShuttleBeaconObject>? beacons = null;
@@ -422,7 +426,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         GetExclusions(ref exclusions);
 
         return new ShuttleMapInterfaceState(
-            ftlState, stateDuration,
+            ftlState,
+            stateDuration,
             beacons ?? new List<ShuttleBeaconObject>(),
             exclusions ?? new List<ShuttleExclusionObject>());
     }

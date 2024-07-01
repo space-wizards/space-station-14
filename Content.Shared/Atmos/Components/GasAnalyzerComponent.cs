@@ -56,13 +56,15 @@ public sealed partial class GasAnalyzerComponent : Component
         /// Name of the tab in the UI
         /// </summary>
         public readonly string Name;
+        public readonly float Volume;
         public readonly float Pressure;
         public readonly float Temperature;
         public readonly GasEntry[]? Gases;
 
-        public GasMixEntry(string name, float pressure, float temperature, GasEntry[]? gases = null)
+        public GasMixEntry(string name, float volume, float pressure, float temperature, GasEntry[]? gases = null)
         {
             Name = name;
+            Volume = volume;
             Pressure = pressure;
             Temperature = temperature;
             Gases = gases;

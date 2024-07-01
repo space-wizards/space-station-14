@@ -23,6 +23,6 @@ public sealed partial class TargetInRangePrecondition : HTNPrecondition
             !_entManager.TryGetComponent<TransformComponent>(target, out var targetXform))
             return false;
 
-        return coordinates.InRange(_entManager, targetXform.Coordinates, blackboard.GetValueOrDefault<float>(RangeKey, _entManager));
+        return coordinates.InRange(_entManager, _entManager.System<SharedTransformSystem>(), targetXform.Coordinates, blackboard.GetValueOrDefault<float>(RangeKey, _entManager));
     }
 }

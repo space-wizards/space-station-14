@@ -8,7 +8,7 @@
     sprite: Clothing/Neck/Cloaks/centcomcloakformal.rsi
   - type: StealTarget
     stealGroup: HeadCloak # leaving this here because I suppose it might be interesting?
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakCap
@@ -118,7 +118,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakAdmin
-  name: admin cloak
+  name: weh cloak
   description: Weh!
   components:
   - type: Sprite

@@ -1,11 +1,13 @@
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.EntityEffects;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
+
+namespace Content.Server.EntityEffects.Effects.PlantMetabolism
 {
     [UsedImplicitly]
     [DataDefinition]
@@ -58,4 +60,4 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString("reagent-effect-guidebook-missing", ("chance", Probability));
     }
-}
+

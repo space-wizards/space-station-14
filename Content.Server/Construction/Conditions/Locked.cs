@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Conditions
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
             if (!entityManager.TryGetComponent(uid, out LockComponent? lockcomp))
-                return false;
+                return true;
 
             return lockcomp.Locked == IsLocked;
         }
@@ -25,7 +25,8 @@ namespace Content.Server.Construction.Conditions
             var entMan = IoCManager.Resolve<IEntityManager>();
             var entity = args.Examined;
 
-            if (!entMan.TryGetComponent(entity, out LockComponent? lockcomp)) return false;
+            if (!entMan.TryGetComponent(entity, out LockComponent? lockcomp))
+                return true;
 
             switch (IsLocked)
             {

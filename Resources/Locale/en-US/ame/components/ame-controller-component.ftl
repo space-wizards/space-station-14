@@ -16,7 +16,6 @@ ame-window-refresh-parts-button = Refresh Parts
 ame-window-core-count-label = Core count:
 ame-window-power-currentsupply-label = Current power supply:
 ame-window-power-targetsupply-label = Targeted power supply:
-ame-window-toggle-injection-button = Toggle Injection
 ame-window-eject-button = Eject
 ame-window-increase-fuel-button = Increase
 ame-window-decrease-fuel-button = Decrease
