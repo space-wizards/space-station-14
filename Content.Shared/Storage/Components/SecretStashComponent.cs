@@ -27,38 +27,6 @@ namespace Content.Shared.Storage.Components
         public ProtoId<ItemSizePrototype> MaxItemSize = "Small";
 
         /// <summary>
-        ///     If stash has way to open then this will switch between open and closed.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public bool IsStashOpen = false;
-
-        /// <summary>
-        ///     If a tool is needed to open the stash, this time will be used.
-        /// </summary>
-        [DataField]
-        public float OpenStashTime = 1f;
-
-        /// <summary>
-        ///     If a tool is needed to close the stash, this time will be used.
-        /// </summary>
-        [DataField]
-        public float CloseStashTime = 1f;
-
-        /// <summary>
-        ///     What type of tool quality is needed to open the stash.
-        ///     If null, the stash will only be openable by a verb.
-        /// </summary>
-        [DataField]
-        public ProtoId<ToolQualityPrototype>? StashOpenToolQualityNeeded;
-
-        /// <summary>
-        ///     What type of tool quality is needed to close the stash.
-        ///     If null, the stash will only be closable by a verb.
-        /// </summary>
-        [DataField]
-        public ProtoId<ToolQualityPrototype>? StashCloseToolQualityNeeded;
-
-        /// <summary>
         ///     This sound will be played when you try to insert an item in the stash.
         ///     The sound will be played whether or not the item is actually inserted.
         /// </summary>
@@ -71,12 +39,6 @@ namespace Content.Shared.Storage.Components
         /// </summary>
         [DataField]
         public SoundSpecifier? TryRemoveItemSound;
-
-        /// <summary>
-        ///     If true the stash can be opened and closed, if false the stash cannot be opened or closed.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public bool CanBeOpenedAndClosed = true;
 
         /// <summary>
         ///     If true, verbs will appear to help interact with the stash.
@@ -96,30 +58,5 @@ namespace Content.Shared.Storage.Components
         /// </summary>
         [ViewVariables]
         public ContainerSlot ItemContainer = default!;
-
-    }
-
-    /// <summary>
-    ///     Simple pry event for prying open a stash door.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed partial class SecretStashPryDoAfterEventToggleIsOpen : SimpleDoAfterEvent
-    {
-    }
-
-    /// <summary>
-    ///     Visualizers for handling stash open closed state if stash has door.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public enum StashVisuals : byte
-    {
-        StashVisualState,
-    }
-
-    [Serializable, NetSerializable]
-    public enum StashVisualState : byte
-    {
-        StashOpen,
-        StashClosed
     }
 }

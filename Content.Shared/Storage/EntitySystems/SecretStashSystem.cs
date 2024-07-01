@@ -12,6 +12,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Tools.EntitySystems;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -24,27 +25,23 @@ public sealed class SecretStashSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly SharedToolSystem _tool = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ToolOpenableSystem _toolOpenableSystem = default!;
+
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<SecretStashComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SecretStashComponent, DestructionEventArgs>(OnDestroyed);
-        SubscribeLocalEvent<SecretStashComponent, SecretStashPryDoAfterEventToggleIsOpen>(OnSecretStashOpenStateToggled);
-        SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem) });
         SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<SecretStashComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerb);
     }
 
     private void OnInit(Entity<SecretStashComponent> entity, ref ComponentInit args)
     {
-        UpdateAppearance(entity);
         entity.Comp.ItemContainer = _containerSystem.EnsureContainer<ContainerSlot>(entity, "stash", out _);
-        Dirty(entity);
     }
 
     private void OnDestroyed(Entity<SecretStashComponent> entity, ref DestructionEventArgs args)
@@ -59,61 +56,18 @@ public sealed class SecretStashSystem : EntitySystem
 
     private void OnInteractUsing(Entity<SecretStashComponent> entity, ref InteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !IsStashOpen(entity))
             return;
 
-        if (entity.Comp.IsStashOpen)
-        {
-            if (!entity.Comp.CanBeOpenedAndClosed || !TryOpenOrCloseStash(entity, args.Used, args.User))
-                TryStashItem(entity, args.User, args.Used);
-
-            args.Handled = true;
-        }
-        else if (entity.Comp.CanBeOpenedAndClosed)
-            args.Handled = TryOpenOrCloseStash(entity, args.Used, args.User);
+        args.Handled = TryStashItem(entity, args.User, args.Used);
     }
 
     private void OnInteractHand(Entity<SecretStashComponent> entity, ref InteractHandEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !IsStashOpen(entity))
             return;
 
-        if (entity.Comp.IsStashOpen)
-            args.Handled = TryGetItem(entity, args.User);
-    }
-
-    /// <summary>
-    ///     Try to open or close the given stash.
-    /// </summary>
-    /// <returns>Returns false if you can't interact with the stash with the given item.</returns>
-    private bool TryOpenOrCloseStash(Entity<SecretStashComponent> entity, EntityUid? toolToToggle, EntityUid user)
-    {
-        var neededToolQuantity = entity.Comp.IsStashOpen ? entity.Comp.StashCloseToolQualityNeeded : entity.Comp.StashOpenToolQualityNeeded;
-        var time = entity.Comp.IsStashOpen ? entity.Comp.CloseStashTime : entity.Comp.OpenStashTime;
-        var evt = new SecretStashPryDoAfterEventToggleIsOpen();
-
-        // If neededToolQuantity is null it can only be open be opened with the verbs.
-        if (toolToToggle == null || neededToolQuantity == null)
-            return false;
-
-        return _tool.UseTool(toolToToggle.Value, user, entity, time, neededToolQuantity, evt);
-    }
-
-    private void OnSecretStashOpenStateToggled(Entity<SecretStashComponent> entity, ref SecretStashPryDoAfterEventToggleIsOpen args)
-    {
-        if (args.Cancelled)
-            return;
-
-        ToggleSecretStashState(entity);
-    }
-    /// <summary>
-    ///     Toggle the state of the stash and update appearance.
-    /// </summary>
-    private void ToggleSecretStashState(Entity<SecretStashComponent> entity)
-    {
-        entity.Comp.IsStashOpen = !entity.Comp.IsStashOpen;
-        UpdateAppearance(entity);
-        Dirty(entity);
+        args.Handled = TryGetItem(entity, args.User);
     }
 
     /// <summary>
@@ -183,41 +137,6 @@ public sealed class SecretStashSystem : EntitySystem
         return true;
     }
 
-    #region Helper functions
-
-    private string GetStashName(Entity<SecretStashComponent> entity)
-    {
-        if (entity.Comp.SecretStashName == null)
-            return Identity.Name(entity, EntityManager);
-        return Loc.GetString(entity.Comp.SecretStashName);
-    }
-
-    private void UpdateAppearance(Entity<SecretStashComponent> entity)
-    {
-        _appearance.SetData(entity, StashVisuals.StashVisualState, entity.Comp.IsStashOpen ? StashVisualState.StashOpen : StashVisualState.StashClosed);
-    }
-
-    private bool HasItemInside(Entity<SecretStashComponent> entity)
-    {
-        return entity.Comp.ItemContainer.ContainedEntity != null;
-    }
-
-    #endregion
-
-    #region User interface functions
-
-    private void OnExamine(Entity<SecretStashComponent> entity, ref ExaminedEvent args)
-    {
-        if (args.IsInDetailsRange && entity.Comp.IsStashOpen)
-        {
-            if (HasItemInside(entity))
-            {
-                var msg = Loc.GetString("comp-secret-stash-on-examine-found-hidden-item", ("stashname", GetStashName(entity)));
-                args.PushMarkup(msg);
-            }
-        }
-    }
-
     private void OnGetVerb(Entity<SecretStashComponent> entity, ref GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || !entity.Comp.HasVerbs)
@@ -228,10 +147,9 @@ public sealed class SecretStashSystem : EntitySystem
         var stashName = GetStashName(entity);
 
         var itemVerb = new InteractionVerb();
-        var toggleVerb = new InteractionVerb();
 
         // This will add the verb relating to inserting / grabbing items.
-        if (entity.Comp.IsStashOpen)
+        if (IsStashOpen(entity))
         {
             if (item != null)
             {
@@ -263,50 +181,32 @@ public sealed class SecretStashSystem : EntitySystem
 
             args.Verbs.Add(itemVerb);
         }
+    }
 
-        // You can't open or close so skip this verb.
-        if (!entity.Comp.CanBeOpenedAndClosed)
-            return;
-        toggleVerb.IconEntity = GetNetEntity(item);
-        // This verb is for opening / closing the stash.
-        if (entity.Comp.IsStashOpen)
-        {
-            toggleVerb.Text = toggleVerb.Message = Loc.GetString("comp-secret-stash-verb-close");
-            var neededQual = entity.Comp.StashCloseToolQualityNeeded;
+    #region Helper functions
 
-            // If neededQual is null you don't need a tool to open / close.
-            if (neededQual != null &&
-                (item == null || !_tool.HasQuality(item.Value, neededQual)))
-            {
-                toggleVerb.Disabled = true;
-                toggleVerb.Message = Loc.GetString("comp-secret-stash-verb-cant-close", ("stashname", stashName));
-            }
+    /// <returns>
+    ///     The stash name if it exists, or the entity name if it doesn't.
+    ///  </returns>
+    private string GetStashName(Entity<SecretStashComponent> entity)
+    {
+        if (entity.Comp.SecretStashName == null)
+            return Identity.Name(entity, EntityManager);
+        return Loc.GetString(entity.Comp.SecretStashName);
+    }
 
-            if (neededQual == null)
-                toggleVerb.Act = () => ToggleSecretStashState(entity);
-            else
-                toggleVerb.Act = () => TryOpenOrCloseStash(entity, item, user);
+    /// <returns>
+    ///     True if the stash is open OR the there is no toolOpenableComponent attacheded to the entity
+    ///     and false otherwise.
+    ///  </returns>
+    private bool IsStashOpen(Entity<SecretStashComponent> stash)
+    {
+        return _toolOpenableSystem.IsOpen(stash);
+    }
 
-            args.Verbs.Add(toggleVerb);
-        }
-        else
-        {
-            // The open verb should only appear when holding the correct tool or if no tool is needed.
-
-            toggleVerb.Text = toggleVerb.Message = Loc.GetString("comp-secret-stash-verb-open");
-            var neededQual = entity.Comp.StashOpenToolQualityNeeded;
-
-            if (neededQual == null)
-            {
-                toggleVerb.Act = () => ToggleSecretStashState(entity);
-                args.Verbs.Add(toggleVerb);
-            }
-            else if (item != null && _tool.HasQuality(item.Value, neededQual))
-            {
-                toggleVerb.Act = () => TryOpenOrCloseStash(entity, item, user);
-                args.Verbs.Add(toggleVerb);
-            }
-        }
+    private bool HasItemInside(Entity<SecretStashComponent> entity)
+    {
+        return entity.Comp.ItemContainer.ContainedEntity != null;
     }
 
     #endregion

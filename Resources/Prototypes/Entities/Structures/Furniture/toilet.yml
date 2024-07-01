@@ -68,9 +68,11 @@
   - type: PlungerUse
   - type: Appearance
   - type: SecretStash
-    stashOpenToolQualityNeeded: Prying
-    stashCloseToolQualityNeeded: Prying
     secretStashName: secret-stash-toilet
+  - type: ToolOpenable
+    openToolQualityNeeded: Prying
+    closeToolQualityNeeded: Prying
+    name: secret-stash-toilet
   - type: Drain
     autoDrain: false
   - type: StaticPrice
@@ -103,10 +105,10 @@
         SeatVisualState.SeatUp:
           SeatUp: { state: disposal-up }
           SeatDown: { state: disposal-down }
-      enum.StashVisuals.StashVisualState:
-        StashVisualState.StashOpen:
-          StashOpen: { state: disposal-open }
-          StashClosed: { state: disposal-closed }
+      enum.ToolOpenableVisuals.ToolOpenableVisualState:
+        ToolOpenableVisualState.StashOpen:
+          Open: { state: disposal-open }
+          Closed: { state: disposal-closed }
 
 - type: entity
   id: ToiletDirtyWater
