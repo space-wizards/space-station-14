@@ -36,6 +36,7 @@ limit = 10.0
 see_own_notes = true
 deadmin_on_join = true
 new_player_threshold = 600
+alert.min_players_sharing_connection = 2
 
 [worldgen]
 enabled = true
