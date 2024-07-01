@@ -81,11 +81,11 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                     }
 
                     DebugTools.AssertNotNull(mapDest);
-                    dest = (EntityUid) mapDest;
+                    dest = (EntityUid) mapDest; // explicit cast here should be fine since the previous if should catch it.
                 }
 
                 // find and verify the map is not somehow unusable.
-                if (!_entManager.TryGetComponent<MapComponent>(dest, out var mapComp))
+                if (!_entManager.TryGetComponent<MapComponent>(dest, out var mapComp)) // We have to check for a MapComponent here and above since we could have changed our dest entity.
                 {
                     shell.WriteLine(destinations + " is somehow on map " + dest + " with no map component. What the fuck.");
                     continue;
