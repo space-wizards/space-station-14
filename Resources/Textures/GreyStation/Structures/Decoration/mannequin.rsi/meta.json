@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/pull/72830.",
+  "size": {
+    "x": 32,
+    "y": 32
+	@@ -10,6 +10,10 @@
+    {
+      "name": "mannequin",
+	  "directions": 4
+    },
+    {
+      "name": "woman_mannequin",
+	  "directions": 4
+    }
+  ]
+}
