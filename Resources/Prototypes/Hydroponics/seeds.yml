@@ -796,6 +796,34 @@
     - LeavesCannabis
   mutationPrototypes:
     - rainbowCannabis
+    - greenMarijuana
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 8
+  production: 12
+  yield: 2
+  potency: 20
+  growthStages: 3
+  waterConsumption: 0.40
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    THC:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: greenMarijuana
+  name: seeds-greenMarijuana-name
+  noun: seeds-noun-seeds
+  displayName: seeds-greenMarijuana-display-name
+  plantRsi: Objects/Specific/Hydroponics/greenMarijuana.rsi
+  packetPrototype: GreenMarijuanaSeeds
+  productPrototypes:
+    - LeavesGreenMarijuana
+  mutationPrototypes:
+    - rainbowCannabis
   harvestRepeat: Repeat
   lifespan: 75
   maturation: 8

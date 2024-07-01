@@ -1743,6 +1743,14 @@
     LeavesCannabis: 1
 
 - type: microwaveMealRecipe
+  id: RecipeDriedGreenMarijuana
+  name: dried green marijuana leaves recipe
+  result: LeavesCannabisDried
+  time: 10
+  solids:
+    LeavesGreenMarijuana: 1
+
+- type: microwaveMealRecipe
   id: RecipeDriedCannabisRainbow
   name: dried rainbow cannabis leaves recipe
   result: LeavesCannabisRainbowDried
