@@ -26,11 +26,13 @@ public sealed class IgnitionSourceSystem : EntitySystem
     {
         args.IsHot = ent.Comp.Ignited;
     }
+
     private void OnItemToggle(Entity<ItemToggleHotComponent> ent, ref ItemToggledEvent args)
     {
         if (TryComp<IgnitionSourceComponent>(ent, out var comp))
             SetIgnited((ent.Owner, comp), args.Activated);
     }
+
     private void OnIgnitionEvent(Entity<IgnitionSourceComponent> ent, ref IgnitionEvent args)
     {
         SetIgnited((ent.Owner, ent.Comp), args.Ignite);
