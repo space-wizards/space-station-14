@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: Cybersun pen now makes a slashing noise when doing damage.
-    type: Fix
-  id: 6355
-  time: '2024-04-14T20:04:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26951
 - author: TokenStyle
   changes:
   - message: Lockers cannot be deconstructed with a screwdriver when locked now.
@@ -3818,3 +3811,12 @@
   id: 6854
   time: '2024-07-01T16:27:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29640
+- author: Cojoke-dot
+  changes:
+  - message: Flares can now light Cigarettes and other similar things
+    type: Tweak
+  - message: Flares now are no longer hot after burning out
+    type: Tweak
+  id: 6855
+  time: '2024-07-01T21:14:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29476
