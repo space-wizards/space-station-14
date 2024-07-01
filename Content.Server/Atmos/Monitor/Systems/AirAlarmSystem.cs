@@ -386,11 +386,11 @@ public sealed class AirAlarmSystem : EntitySystem
 
         if (component.AutoMode)
         {
-            if (args.AlarmType == AtmosAlarmType.Danger)
+            if (args.AlarmType == AtmosAlarmType.Danger || args.AlarmType == AtmosAlarmType.Warning)
             {
                 SetMode(uid, addr, AirAlarmMode.WideFiltering, false);
             }
-            else if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
+            else if (args.AlarmType == AtmosAlarmType.Normal)
             {
                 SetMode(uid, addr, AirAlarmMode.Filtering, false);
             }
