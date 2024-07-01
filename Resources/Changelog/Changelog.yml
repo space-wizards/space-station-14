@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Colored jumpsuits, shoes, and (most) colored gloves are now colorized
-      off of one set of greyscale sprites. They should now be more consistent & significantly
-      less ugly.
-    type: Tweak
-  id: 6350
-  time: '2024-04-14T08:41:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26943
 - author: BramvanZijp
   changes:
   - message: Nanotrasen's Small Arms Division has slightly improved the firerate and
@@ -3824,3 +3815,11 @@
   id: 6849
   time: '2024-06-30T17:56:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29516
+- author: EmoGarbage404
+  changes:
+  - message: Blurry vision no longer causes names to momentarily appear as "???" when
+      examining.
+    type: Remove
+  id: 6850
+  time: '2024-07-01T03:06:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29633
