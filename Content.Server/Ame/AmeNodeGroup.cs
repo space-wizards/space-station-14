@@ -137,7 +137,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
         var overloadVsSizeResult = fuel - CoreCount;
 
         var instability = overloadVsSizeResult / CoreCount;
-        var fuzz = _random.Next(-1, 1);
+        var fuzz = _random.Next(-1, 2); // -1 to 1
         instability += fuzz; // fuzz the values a tiny bit.
 
         overloading = true;
