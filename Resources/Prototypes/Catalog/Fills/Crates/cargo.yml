@@ -268,6 +268,9 @@
     - id: ClothingBeltChampion
       prob: 0.01
       orGroup: Swag
+    - id: ClothingHeadHatFancyCrown
+      prob: 0.01
+      orGroup: Swag
     #plushies
     - id: PlushieRGBee
       prob: 0.01

@@ -104,10 +104,6 @@
   - type: MobsterAccent
   - type: Speech
     speechVerb: SmallMob
-  - type: Butcherable
-    spawned:
-    - id: ClothingHeadHatFancyCrown #how did that get there?
-      amount: 1
   - type: MobPrice
     price: 2500 # rat wealth
   - type: RandomMetadata
