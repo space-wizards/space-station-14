@@ -97,14 +97,6 @@
     - /Audio/Voice/Reptilian/reptilian_purr1.ogg
 
 - type: soundCollection
-  id: ReptilianGrowl
-  files:
-    - /Audio/Voice/Reptilian/reptilian_growl1.ogg
-    - /Audio/Voice/Reptilian/reptilian_growl2.ogg
-    - /Audio/Voice/Reptilian/reptilian_growl3.ogg
-    - /Audio/Voice/Reptilian/reptilian_growl4.ogg
-
-- type: soundCollection
   id: ReptilianWhine
   files:
     - /Audio/Voice/Reptilian/reptilian_whine.ogg

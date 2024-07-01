@@ -111,8 +111,6 @@
       collection: ReptilianHiss
     Purr:
       collection: ReptilianPurr
-    Growl:
-      collection: ReptilianGrowl
     Sniff:
       collection: Sniff
     Whine:
@@ -148,8 +146,6 @@
       collection: ReptilianHiss
     Purr:
       collection: ReptilianPurr
-    Growl:
-      collection: ReptilianGrowl
     Sniff:
       collection: Sniff
     Whine:

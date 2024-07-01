@@ -14,10 +14,6 @@
   source: "https://github.com/ss220-space/Paradise/tree/121faba78109f700397c24d1c64e884378e04502/sound/creatures"
 
 - files:
-    - reptilian_growl1.ogg
-    - reptilian_growl2.ogg
-    - reptilian_growl3.ogg
-    - reptilian_growl4.ogg
     - reptilian_purr1.ogg
     - reptilian_scream2.ogg
     - reptilian_sneeze_male.ogg
