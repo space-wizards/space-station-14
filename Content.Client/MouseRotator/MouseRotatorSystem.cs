@@ -32,9 +32,10 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
         var xform = Transform(player.Value);
 
         // Get mouse loc and convert to angle based on player location
-        var coords = _input.MouseScreenPosition;
-        var mapPos = _eye.PixelToMap(coords);
+        var coords = _input.MouseScreenPosition; // F3: Mouse Pos Screen
+        var mapPos = _eye.PixelToMap(coords); // F3: Mouse Pos Map
 
+        //Log.Debug($"{coords.X}, {coords.Y}, {mapPos.X}, {mapPos.Y}");
         if (mapPos.MapId == MapId.Nullspace)
             return;
 
@@ -42,17 +43,21 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
 
         var curRot = _transform.GetWorldRotation(xform);
 
+        var eyeRot = _eye.CurrentEye.Rotation;
+
+        //Log.Debug($"{angle.Degrees}, {curRot.Degrees}, {eyeRot.Degrees}");
+
         // 4-dir handling is separate --
         // only raise event if the cardinal direction has changed
         if (rotator.Simple4DirMode)
         {
-            var angleDir = angle.GetCardinalDir();
-            if (angleDir == curRot.GetCardinalDir())
+            var angleDir = (angle + eyeRot).GetCardinalDir(); // apply GetCardinalDir in the camera frame, not in the world frame
+            if (angleDir == (curRot + eyeRot).GetCardinalDir())
                 return;
 
-            RaisePredictiveEvent(new RequestMouseRotatorRotationSimpleEvent()
+            RaisePredictiveEvent(new RequestMouseRotatorRotationEvent
             {
-                Direction = angleDir,
+                Rotation = angleDir.ToAngle() - eyeRot
             });
 
             return;
