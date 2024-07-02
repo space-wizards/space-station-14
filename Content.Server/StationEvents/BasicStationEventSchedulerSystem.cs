@@ -52,7 +52,7 @@ namespace Content.Server.StationEvents
                     return;
                 }
 
-                _event.RunRandomEvent();
+                _event.RunRandomEvent(eventScheduler.ScheduledGameRules);
                 ResetTimer(eventScheduler);
             }
         }
