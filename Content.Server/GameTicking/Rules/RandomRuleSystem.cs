@@ -21,7 +21,7 @@ public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
 
-    protected override void Added(EntityUid uid, RandomRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    protected override void Started(EntityUid uid, RandomRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         var selectedRules = EntitySpawnCollection.GetSpawns(component.SelectableGameRules, _random);
 
@@ -39,26 +39,18 @@ public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
         {
             var ruleEnt = new EntityUid();
 
-            // If the station is already initialized, just start the rule, otherwise let that happen at the start of round.
-            if (GameTicker.RunLevel <= GameRunLevel.InRound)
+            if (!_prototypeManager.TryIndex(rule, out var ruleProto))
             {
-                ruleEnt = GameTicker.AddGameRule(rule);
+                Log.Warning("The selected random rule is missing a prototype!");
+                continue;
             }
-            else
-            {
-                if (!_prototypeManager.TryIndex(rule, out var ruleProto))
-                {
-                    Log.Warning("The selected random rule is missing a prototype!");
-                    continue;
-                }
 
-                if (!availableEvents.ContainsKey(ruleProto))
-                {
-                    Log.Warning("The selected random rule is not available!");
-                    continue;
-                }
-                GameTicker.StartGameRule(rule, out ruleEnt);
+            if (!availableEvents.ContainsKey(ruleProto))
+            {
+                Log.Warning("The selected random rule is not available!");
+                continue;
             }
+            GameTicker.StartGameRule(rule, out ruleEnt);
 
             var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEnt)));
             _chatManager.SendAdminAlert(str);
