@@ -109,9 +109,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 if (pressureDelta <= 0)
                     return;
 
-                // how many moles to transfer to change external pressure by pressureDelta
-                // (ignoring temperature differences because I am lazy)
-                var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
+                float transferMoles = 0;
+
+                // Don't transfer air if pressure is actively dropping
+                if (pressurizationLockout(vent, environment, args.dt) | vent.PressureLockoutOverride)
+                    // how many moles to transfer to change external pressure by pressureDelta
+                    // (ignoring temperature differences because I am lazy)
+                    transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
 
                 // Only run if the device is under lockout and not being overriden
                 if (vent.UnderPressureLockout & !vent.PressureLockoutOverride)
@@ -167,6 +171,62 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
                 _atmosphereSystem.Merge(pipe.Air, environment.Remove(transferMoles));
             }
+        }
+
+        /// <summary>
+        ///     Keeps track of the average rate of change in pressure, and returns `false` if
+        ///     the rate is less than <see cref=GasVentPumpComponent.PressurizationLockout>.
+        ///
+        ///     Because this was written by someone lazy, multiple calls in an atmos tick aren't properly supported.
+        /// </summary>
+        /// <remarks>
+        ///     This method is intended to stop vents from pumping air into rooms which are rapidly losing pressure.
+        /// </remarks>
+        private bool pressurizationLockout(GasVentPumpComponent vent, GasMixture environment, float dt)
+        {
+            if (vent.UnderPressureLockout)
+            {
+                vent.LastPressure = environment.Pressure;
+                return false;
+            }
+
+            if (vent.OverheatCooldownCounter > 0f && vent.OverheatTimerEnabled)
+            {
+                vent.OverheatCooldownCounter -= dt;
+                vent.LastPressure = environment.Pressure;
+                return false;
+            }
+
+            var difference = environment.Pressure - vent.LastPressure;
+            vent.LastPressure = environment.Pressure;
+
+            // Sudden increase in pressure is most likely caused by atmos equalization,
+            // If this happens, reset average calculation and don't move air this frame.
+            // This may be triggered by the vents themselves, but they'll continue moving air, but just a tiny bit
+            // slower than usual.
+            if (difference > dt * vent.SuddenPressureSpike)
+            {
+                vent.PressureDelta = 0f;
+                return false;
+            }
+
+            var tau = vent.AveragingTime;    // Time constant (averaging time) in seconds
+            float a = Math.Clamp(dt / tau, 0, 1);
+            vent.PressureDelta = a * difference + (1 - a) * vent.PressureDelta;
+
+            if (vent.PressureDelta < vent.PressurizationLockout * dt)
+            {
+                vent.OverheatCounter = 0;
+                return false;
+            }
+
+            vent.OverheatCounter += dt;
+            if (vent.OverheatCounter > vent.OverheatMaxTime)
+            {
+                vent.OverheatCounter -= vent.OverheatMaxTime;
+                vent.OverheatCooldownCounter += vent.OverheatCooldownMaxTime;
+            }
+            return true;
         }
 
         private void OnGasVentPumpLeaveAtmosphere(EntityUid uid, GasVentPumpComponent component, ref AtmosDeviceDisabledEvent args)

@@ -59,6 +59,79 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("underPressureLockoutLeaking")]
         public float UnderPressureLockoutLeaking = 0.0001f;
 
+        #region fields used by GasVentPumpSystem.pressurizationLockout
+        /// <summary>
+        ///     The vent will be shut down if the increase in pressure is lower than X kPa/s.
+        ///     This value is supposed to be given as a negative, so it's actually pressure dropping which triggers this
+        ///     check.
+        /// </summary>
+        /// <remarks>
+        ///     With X<0, drops in pressure cause lockout,
+        ///     with X>0, vents only turn on when pressure is already rising.
+        ///
+        ///     This could be set to 0, but then the vents will stay locked for annoyingly long time whenever air flows
+        ///     from this vent to the surroundings. This may cause pressure drops in the order of E-5 kPa/s, causing lockouts
+        ///     while refilling rooms.
+        ///     I'm not entirely sure if I got the math right, so the value -1 may not be exactly -1 kPa/s
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float PressurizationLockout { get; set; } = -0.05f;
+
+        /// <summary>
+        ///     There's some atmos equalization mechanic that equalizes the pressure of the entire room in one tick, and
+        ///     it often causes this lockout to fail even while the pressure is dropping.
+        ///     If the pressure increases faster than this rate (kPa/s), the averaging calculation is reset, and the
+        ///     unnatural pressure reading is discarded.
+        /// <summary>
+        /// <remarks>
+        ///     Surprisingly, this seems to have almost no effect on the refilling rate of rooms, in situations where
+        ///     the vents themselves trigger this check.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float SuddenPressureSpike { get; set; } = 10f;
+
+        /// <summary>
+        ///     Calculate the pressure change over X seconds.
+        ///     I'm not 100% sure if I implemented correctly, so I advise leaving it at 1.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float AveragingTime { get; set; } = 1.0f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float PressureDelta { get; set; } = 0f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float LastPressure { get; set; } = 101.325f;
+
+        /// <summary>
+        ///     Timer based check for spacing
+        /// </summary>
+        /// <remarks>
+        ///     This check is intended to catch the failures not handled by UnderPressureLockout or
+        ///     PressurizationLockout.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool OverheatTimerEnabled { get; set; } = true;
+
+        /// <summary>
+        ///     Defines for how many seconds the vent can move air uninterrupted.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverheatMaxTime { get; set; } = 5f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverheatCounter { get; set; } = 0f;
+
+        /// <summary>
+        ///     Defines how many seconds the vent will stay closed after moving air for <see cref=OverheatMaxTime>
+        ///     seconds.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverheatCooldownMaxTime { get; set; } = 1f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverheatCooldownCounter { get; set; } = 0f;
+
+        #endregion
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("externalPressureBound")]
         public float ExternalPressureBound
