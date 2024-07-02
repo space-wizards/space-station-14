@@ -276,6 +276,14 @@ public sealed partial class GunSystem : SharedGunSystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
+        // EntityUid check added to stop throwing exceptions due to https://github.com/space-wizards/space-station-14/issues/28252
+        // TODO: Check to see why invalid entities are firing effects.
+        if (gunUid == EntityUid.Invalid)
+        {
+            Log.Debug($"Invalid Entity sent MuzzleFlashEvent (proto: {message.Prototype}, user: {user})");
+            return;
+        }
+
         var gunXform = Transform(gunUid);
         var gridUid = gunXform.GridUid;
         EntityCoordinates coordinates;
