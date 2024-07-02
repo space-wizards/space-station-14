@@ -148,6 +148,14 @@
     - type: Implanter
       implant: BikeHornImplant
 
+- type: entity
+  id: GenderSwapImplanter
+  name: gender swap implanter
+  parent: BaseImplantOnlyImplanter
+  components:
+  - type: Implanter
+    implant: GenderSwapImplant
+
 #Security implanters
 
 - type: entity
