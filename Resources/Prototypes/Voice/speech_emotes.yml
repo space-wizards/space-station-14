@@ -14,26 +14,18 @@
   chatTriggers:
     - scream
     - screams
-    - screams.
-    - screams!
     - screaming
     - screamed
     - shriek
     - shrieks
-    - shrieks.
-    - shrieks!
     - shrieking
     - shrieked
     - screech
     - screeches
-    - screeches.
-    - screeches!
     - screeching
     - screeched
     - yell
     - yells
-    - yells.
-    - yells!
     - yelled
     - yelling
 
@@ -52,31 +44,19 @@
   chatTriggers:
     - laugh
     - laughs
-    - laughs.
-    - laughs!
     - laughing
     - laughed
     - chuckle
     - chuckles
-    - chuckles.
-    - chuckles!
     - chuckled
     - chuckling
     - giggle
     - giggles
-    - giggles.
-    - giggles!
     - giggling
     - giggled
     - chortle
-    - chortle.
-    - chortle!
     - chortles
-    - chortles.
-    - chortles!
     - chortling
-    - chortling.
-    - chortling!
 
 - type: emote
   id: Honk
@@ -91,17 +71,9 @@
   chatMessages: ["chat-emote-msg-honk"]
   chatTriggers:
     - honk
-    - honk.
-    - honk!
     - honks
-    - honks.
-    - honks!
     - honked
-    - honked.
-    - honked!
     - honking
-    - honking.
-    - honking!
 
 - type: emote
   id: Sigh
@@ -119,9 +91,6 @@
     - sigh
     - sighs
     - sighed
-    - sigh.
-    - sighs.
-    - sighed.
 
 - type: emote
   id: Whistle
@@ -137,14 +106,8 @@
   chatMessages: ["chat-emote-msg-whistle"]
   chatTriggers:
     - whistle
-    - whistle.
-    - whistle!
     - whistles
-    - whistles.
-    - whistles!
     - whistleblowing
-    - whistleblowing.
-    - whistleblowing!
 
 - type: emote
   id: Crying
@@ -160,22 +123,11 @@
   chatMessages: ["chat-emote-msg-crying"]
   chatTriggers:
     - cry
-    - cry.
-    - cry!
     - crying
-    - crying.
-    - crying!
     - cries
-    - cries.
-    - cries!
     - sob
-    - sob.
     - sobs
-    - sobs.
-    - sobs!
     - sobbing
-    - sobbing.
-    - sobbing!
 
 - type: emote
   id: Squish
@@ -192,14 +144,8 @@
   chatMessages: ["chat-emote-msg-squish"]
   chatTriggers:
     - squish
-    - squish.
-    - squish!
     - squishing
-    - squishing.
-    - squishing!
     - squishes
-    - squishes.
-    - squishes!
 
 - type: emote
   id: Chitter
@@ -216,14 +162,8 @@
   chatMessages: ["chat-emote-msg-chitter"]
   chatTriggers:
    - chitter
-   - chitter.
-   - chitter!
    - chitters
-   - chitters.
-   - chitters!
    - chittered
-   - chittered.
-   - chittered!
 
 - type: emote
   id: Squeak
@@ -240,14 +180,8 @@
   chatMessages: ["chat-emote-msg-squeak"]
   chatTriggers:
    - squeak
-   - squeak.
-   - squeak!
    - squeaks
-   - squeaks.
-   - squeaks!
    - squeaked
-   - squeaked.
-   - squeaked!
 
 - type: emote
   id: Click
@@ -264,11 +198,7 @@
   chatMessages: ["chat-emote-msg-click"]
   chatTriggers:
    - click
-   - click.
-   - click!
    - clicks
-   - clicks.
-   - clicks!
 
 # hand emotes
 - type: emote
@@ -286,8 +216,6 @@
   chatTriggers:
     - clap
     - claps
-    - claps.
-    - claps!
     - clapping
     - clapped
 
@@ -310,11 +238,7 @@
     - snapped
     - snap fingers
     - snaps fingers
-    - snaps fingers.
-    - snaps fingers!
     - snaps their fingers
-    - snaps their fingers.
-    - snaps their fingers!
     - snapping fingers
     - snapped fingers
 
@@ -332,11 +256,7 @@
   chatMessages: ["chat-emote-msg-salute"]
   chatTriggers:
     - salute
-    - salute.
-    - salute!
     - salutes
-    - salutes.
-    - salutes!
 
 - type: emote
   id: Gasp
@@ -347,14 +267,8 @@
   chatMessages: ["chat-emote-msg-gasp"]
   chatTriggers:
    - gasp
-   - gasp.
-   - gasp!
    - gasps
-   - gasps.
-   - gasps!
    - gasped
-   - gasped.
-   - gasped!
 
 - type: emote
   id: DefaultDeathgasp
@@ -386,17 +300,9 @@
   chatMessages: ["chat-emote-msg-buzz"]
   chatTriggers:
     - buzzing
-    - buzzing!
-    - buzzing.
     - buzz
-    - buzz.
-    - buzz!
     - buzzed
-    - buzzed.
-    - buzzed!
     - buzzes
-    - buzzes.
-    - buzzes!
 
 - type: emote
   id: Weh
@@ -417,17 +323,9 @@
   chatMessages: ["chat-emote-msg-chirp"]
   chatTriggers:
     - chirp
-    - chirp!
-    - chirp.
     - chirps
-    - churps.
-    - chirps!
     - chirped
-    - chirped.
-    - chirped!
     - chirping
-    - chirping.
-    - chirping!
 
 # Machine Emotes
 - type: emote
@@ -443,17 +341,9 @@
   chatMessages: ["chat-emote-msg-beep"]
   chatTriggers:
     - beep
-    - beep!
-    - beep.
     - beeps
-    - beeps.
-    - beeps!
     - beeped
-    - beeped.
-    - beeped!
     - beeping
-    - beeping.
-    - beeping!
 
 - type: emote
   id: Chime
@@ -468,17 +358,9 @@
   chatMessages: ["chat-emote-msg-chime"]
   chatTriggers:
     - chime
-    - chime.
-    - chime!
     - chimes
-    - chimes.
-    - chimes!
     - chimed
-    - chimed.
-    - chimed!
     - chiming
-    - chiming,
-    - chiming!
 
 - type: emote
   id: Buzz-Two
@@ -493,35 +375,15 @@
   chatMessages: ["chat-emote-msg-buzzestwo"]
   chatTriggers:
     - buzztwice
-    - buzztwice.
-    - buzztwice!
     - buzzstwice
-    - buzzstwice.
-    - buzzstwice!
     - buzzestwice
-    - buzzestwice.
-    - buzzestwice!
     - buzzingtwice
-    - buzzingtwice.
-    - buzzingtwice!
     - buzzedtwice
-    - buzzedtwice.
-    - buzzedtwice!
     - buzz twice
-    - buzz twice.
-    - buzz twice!
     - buzzs twice
-    - buzzs twice.
-    - buzzs twice!
     - buzzes twice
-    - buzzes twice.
-    - buzzes twice!
     - buzzing twice
-    - buzzing twice.
-    - buzzing twice!
     - buzzed twice
-    - buzzed twice.
-    - buzzed twice!
 
 - type: emote
   id: Ping
@@ -536,14 +398,6 @@
   chatMessages: ["chat-emote-msg-ping"]
   chatTriggers:
     - ping
-    - ping.
-    - ping!
     - pings
-    - pings.
-    - pings!
     - pinged
-    - pinged.
-    - pinged!
     - pinging
-    - pinging.
-    - pinging!
