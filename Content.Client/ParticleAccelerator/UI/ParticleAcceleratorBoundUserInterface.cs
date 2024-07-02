@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Singularity.Components;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.ParticleAccelerator.UI
 {

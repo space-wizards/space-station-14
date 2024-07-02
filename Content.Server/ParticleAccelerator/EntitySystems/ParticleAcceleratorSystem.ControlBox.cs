@@ -101,6 +101,7 @@ public sealed partial class ParticleAcceleratorSystem
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} off");
 
         comp.Enabled = false;
+        SetStrength(uid, ParticleAcceleratorPowerState.Standby, user, comp);
         UpdatePowerDraw(uid, comp);
         PowerOff(uid, comp);
         UpdateUI(uid, comp);
@@ -174,12 +175,14 @@ public sealed partial class ParticleAcceleratorSystem
                 var pos = Transform(uid);
                 if (_timing.CurTime > comp.EffectCooldown)
                 {
-                    _chat.SendAdminAlert(player, Loc.GetString("particle-accelerator-admin-power-strength-warning",
+                    _chat.SendAdminAlert(player,
+                        Loc.GetString("particle-accelerator-admin-power-strength-warning",
                         ("machine", ToPrettyString(uid)),
-                        ("powerState", strength),
+                        ("powerState", GetPANumericalLevel(strength)),
                         ("coordinates", pos.Coordinates)));
                     _audio.PlayGlobal("/Audio/Misc/adminlarm.ogg",
-                        Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false,
+                        Filter.Empty().AddPlayers(_adminManager.ActiveAdmins),
+                        false,
                         AudioParams.Default.WithVolume(-8f));
                     comp.EffectCooldown = _timing.CurTime + comp.CooldownDuration;
                 }
@@ -230,7 +233,7 @@ public sealed partial class ParticleAcceleratorSystem
         powerConsumer.DrawRate = powerDraw;
     }
 
-    private void UpdateUI(EntityUid uid, ParticleAcceleratorControlBoxComponent? comp = null)
+    public void UpdateUI(EntityUid uid, ParticleAcceleratorControlBoxComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -247,7 +250,9 @@ public sealed partial class ParticleAcceleratorSystem
             receive = powerConsumer.ReceivedPower;
         }
 
-        _uiSystem.SetUiState(uid, ParticleAcceleratorControlBoxUiKey.Key, new ParticleAcceleratorUIState(
+        _uiSystem.SetUiState(uid,
+            ParticleAcceleratorControlBoxUiKey.Key,
+            new ParticleAcceleratorUIState(
             comp.Assembled,
             comp.Enabled,
             comp.SelectedStrength,
@@ -395,5 +400,17 @@ public sealed partial class ParticleAcceleratorSystem
         RescanParts(uid, msg.Actor, comp);
 
         UpdateUI(uid, comp);
+    }
+
+    public static int GetPANumericalLevel(ParticleAcceleratorPowerState state)
+    {
+        return state switch
+        {
+            ParticleAcceleratorPowerState.Level0 => 1,
+            ParticleAcceleratorPowerState.Level1 => 2,
+            ParticleAcceleratorPowerState.Level2 => 3,
+            ParticleAcceleratorPowerState.Level3 => 4,
+            _ => 0
+        };
     }
 }
