@@ -92,30 +92,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
                 return;
         }
 
-        // when arresting someone add it to history automatically
-        // fallback exists if the player was not set to wanted beforehand
-        if (msg.Status == SecurityStatus.Detained)
-        {
-            var oldReason = record.Reason ?? Loc.GetString("criminal-records-console-unspecified-reason");
-            var history = Loc.GetString("criminal-records-console-auto-history", ("reason", oldReason));
-            _criminalRecords.TryAddHistory(key.Value, history);
-        }
-
         var oldStatus = record.Status;
-
-        // will probably never fail given the checks above
-        _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason);
-
-        var name = _records.RecordName(key.Value);
-        var officer = Loc.GetString("criminal-records-console-unknown-officer");
-        if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is { } fullName)
-            officer = fullName;
-
-        (string, object)[] args;
-        if (reason != null)
-            args = new (string, object)[] { ("name", name), ("officer", officer), ("reason", reason) };
-        else
-            args = new (string, object)[] { ("name", name), ("officer", officer) };
 
         // figure out which radio message to send depending on transition
         var statusString = (oldStatus, msg.Status) switch
@@ -141,6 +118,28 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             // this is impossible
             _ => "not-wanted"
         };
+
+        // when chaning the status add it to history automatically
+        // fallback exists if the player was not set to wanted beforehand
+        var statusReason = msg.Reason ?? ( record.Reason ?? Loc.GetString("criminal-records-console-unspecified-reason") );
+        var history = Loc.GetString($"criminal-records-console-auto-history-{statusString}", ("reason", statusReason));
+        _criminalRecords.TryAddHistory(key.Value, history);
+
+
+        // will probably never fail given the checks above
+        _criminalRecords.TryChangeStatus(key.Value, msg.Status, statusReason);
+
+        var name = _records.RecordName(key.Value);
+        var officer = Loc.GetString("criminal-records-console-unknown-officer");
+        if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is { } fullName)
+            officer = fullName;
+
+        (string, object)[] args;
+        if (reason != null)
+            args = new (string, object)[] { ("name", name), ("officer", officer), ("reason", reason) };
+        else
+            args = new (string, object)[] { ("name", name), ("officer", officer) };
+
         _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args),
             ent.Comp.SecurityChannel, ent);
 
