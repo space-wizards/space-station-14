@@ -713,3 +713,31 @@
   - type: Appearance
   - type: StaticPrice
     price: 750
+
+- type: entity
+  name: ion rifle
+  parent: BaseWeaponBattery
+  id: WeaponIonRifle
+  description: An ion-electronic disruptor rifle specifically designed to fight cyborgs and mechs.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/ion_rifle.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Gun
+    fireRate: 1.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletIonRifle
+    fireCost: 100
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/ion_rifle.rsi
