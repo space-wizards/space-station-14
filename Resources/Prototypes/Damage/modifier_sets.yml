@@ -185,10 +185,10 @@
     Shock: 1.2
 
 - type: damageModifierSet
-  id: Moth # Slightly worse at everything but cold
+  id: Moth # Slightly worse at shock but better against cold
   coefficients:
     Cold: 0.7
-    Heat: 1.3
+    Heat: 1.15
 
 - type: damageModifierSet
   id: Vox
