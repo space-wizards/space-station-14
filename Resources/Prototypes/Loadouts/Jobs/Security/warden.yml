@@ -45,6 +45,15 @@
   id: WardenCoat
   equipment:
     outerClothing: ClothingOuterCoatWarden
+    
+- type: loadout
+  id: WardenWinterUnarmoredCoat
+  equipment: WardenWinterUnarmoredCoat
+
+- type: startingGear
+  id: WardenWinterUnarmoredCoat
+  equipment:
+    outerClothing: ClothingOuterWinterWardenUnarmored
 
 - type: loadout
   id: WardenArmoredWinterCoat

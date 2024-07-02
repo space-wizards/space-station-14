@@ -36,6 +36,33 @@
     jumpsuit: ClothingUniformJumpskirtHoSAlt
 
 - type: loadout
+  id: HeadofSecurityJumpsuitGrey
+  equipment: HeadofSecurityJumpsuitGrey
+
+- type: startingGear
+  id: HeadofSecurityJumpsuitGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSGrey
+
+- type: loadout
+  id: HeadofSecurityJumpsuitParade
+  equipment: HeadofSecurityJumpsuitParade
+
+- type: startingGear
+  id: HeadofSecurityJumpsuitParade
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitHoSParadeMale
+
+- type: loadout
+  id: HeadofSecurityJumpskirtParade
+  equipment: HeadofSecurityJumpskirtParade
+
+- type: startingGear
+  id: HeadofSecurityJumpskirtParade
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtHoSParadeMale
+
+- type: loadout
   id: HeadofSecurityFormalSuit
   equipment: HeadofSecurityFormalSuit
 
