@@ -84,6 +84,13 @@
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
 
+- type: stealTargetGroup
+  id: PlutoniumCore
+  name: plutonium core
+  sprite:
+    sprite: Objects/Misc/plutonium_core.rsi
+    state: icon
+
 # Thief Collection
 
 - type: stealTargetGroup
