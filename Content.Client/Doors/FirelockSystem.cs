@@ -7,6 +7,7 @@ namespace Content.Client.Doors;
 public sealed class FirelockSystem : SharedFirelockSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
 
     public override void Initialize()
     {
@@ -26,13 +27,11 @@ public sealed class FirelockSystem : SharedFirelockSystem
             state = DoorState.Closed;
 
         boltedVisible = _appearanceSystem.TryGetData<bool>(uid, DoorVisuals.BoltLights, out var lights, args.Component) && lights;
-        unlitVisible =
-            state == DoorState.Closing
-            ||  state == DoorState.Opening
-            ||  state == DoorState.Denying
-            || (_appearanceSystem.TryGetData<bool>(uid, DoorVisuals.ClosedLights, out var closedLights, args.Component) && closedLights);
+        unlitVisible = comp.IsLocked;
 
         args.Sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && !boltedVisible);
         args.Sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, boltedVisible);
+
+        _pointLight.SetEnabled(uid, unlitVisible);
     }
 }
