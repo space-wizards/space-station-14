@@ -2,7 +2,6 @@ using Content.Server.Actions;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
-using Content.Server.Nutrition;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Buckle;
@@ -13,6 +12,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition;
 using Content.Shared.Polymorph;
 using Content.Shared.Popups;
 using Robust.Server.Audio;
@@ -57,7 +57,6 @@ public sealed partial class PolymorphSystem : EntitySystem
         SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
 
         SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
-        SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
         SubscribeLocalEvent<PolymorphedEntityComponent, DestructionEventArgs>(OnDestruction);
 
         InitializeCollide();
@@ -133,16 +132,6 @@ public sealed partial class PolymorphSystem : EntitySystem
     }
 
     private void OnBeforeFullyEaten(Entity<PolymorphedEntityComponent> ent, ref BeforeFullyEatenEvent args)
-    {
-        var (_, comp) = ent;
-        if (comp.Configuration.RevertOnEat)
-        {
-            args.Cancel();
-            Revert((ent, ent));
-        }
-    }
-
-    private void OnBeforeFullySliced(Entity<PolymorphedEntityComponent> ent, ref BeforeFullySlicedEvent args)
     {
         var (_, comp) = ent;
         if (comp.Configuration.RevertOnEat)

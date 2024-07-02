@@ -10,6 +10,7 @@ using Content.Shared.Forensics;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
+using Content.Shared.Nutrition;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Content.Shared.Verbs;
@@ -32,6 +33,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<DnaComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
+            SubscribeLocalEvent<ForensicsComponent, FoodSpawnedTrashEvent>(OnFoodSpawnedTrash);
             SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
@@ -81,6 +83,12 @@ namespace Content.Server.Forensics
         private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
         {
             CopyForensicsFrom(ent.Comp, args.Target);
+        }
+
+        private void OnFoodSpawnedTrash(Entity<ForensicsComponent> ent, ref FoodSpawnedTrashEvent args)
+        {
+            // the wrapper has your prints from the bar, tin has your prints from the pie, etc
+            CopyForensicsFrom(ent.Comp, args.Trash);
         }
 
         /// <summary>
