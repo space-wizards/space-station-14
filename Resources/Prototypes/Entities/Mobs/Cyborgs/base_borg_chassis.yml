@@ -99,6 +99,11 @@
     doAfterDelay: 10
     allowSelfRepair: false
   - type: BorgChassis
+  - type: LockingWhitelist
+    blacklist:
+      components:
+      - BorgChassis
+      - RoboticsConsole
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
   - type: NameIdentifier
