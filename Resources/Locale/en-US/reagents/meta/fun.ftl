@@ -27,3 +27,6 @@ reagent-desc-laughter = Some say that this is the best medicine, but recent stud
 
 reagent-name-weh = juice that makes you Weh
 reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
+
+reagent-name-sand = sand
+reagent-desc-sand = A grainy mix of minerals created by erosion. Useful for making glass.
