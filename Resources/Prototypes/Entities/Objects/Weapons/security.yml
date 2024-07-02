@@ -180,7 +180,7 @@
 
 - type: entity
   name: portable flasher
-  parent: BaseStructure
+  parent: BaseMachine
   id: PortableFlasher
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
@@ -196,14 +196,11 @@
         !type:PhysShapeCircle
           radius: 2
       repeating: true
-    - type: Anchorable
     - type: Sprite
       sprite: Objects/Weapons/pflash.rsi
       layers:
         - state: "off"
           map: ["enum.ProximityTriggerVisualLayers.Base"]
-    - type: InteractionOutline
-    - type: Physics
     - type: Fixtures
       fixtures:
         fix1:
