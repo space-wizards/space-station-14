@@ -22,48 +22,7 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GasMinerComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<GasMinerComponent, AtmosDeviceUpdateEvent>(OnMinerUpdated);
-        }
-
-        private void OnExamine(EntityUid uid, GasMinerComponent component, ExaminedEvent args)
-        {
-            using (args.PushGroup(nameof(GasMinerComponent)))
-            {
-                args.PushText(Loc.GetString("gas-miner-examine-header-text"));
-
-                args.PushText(Loc.GetString("gas-miner-amount-text",
-                    ("moles", $"{component.SpawnAmount:0.#}")));
-
-                args.PushText(Loc.GetString("gas-miner-temperature-text",
-                    ("tempK", $"{component.SpawnTemperature:0.#}"),
-                    ("tempC", $"{TemperatureHelpers.KelvinToCelsius(component.SpawnTemperature):0.#}")));
-
-                if (component.MaxExternalAmount < float.PositiveInfinity)
-                {
-                    args.PushText(Loc.GetString("gas-miner-moles-cutoff-text",
-                        ("moles", $"{component.MaxExternalAmount:0.#}")));
-                }
-
-                if (component.MaxExternalPressure < float.PositiveInfinity)
-                {
-                    args.PushText(Loc.GetString("gas-miner-pressure-cutoff-text",
-                        ("pressure", $"{component.MaxExternalPressure:0.#}")));
-                }
-
-                if (!component.Enabled || !GetValidEnvironment((uid, component), out var environment))
-                {
-                    args.PushMarkup(Loc.GetString("gas-miner-state-disabled-text"));
-                }
-                else if (component.Idle)
-                {
-                    args.PushMarkup(Loc.GetString("gas-miner-state-idle-text"));
-                }
-                else
-                {
-                    args.PushMarkup(Loc.GetString("gas-miner-state-working-text"));
-                }
-            }
         }
 
         private void OnMinerUpdated(Entity<GasMinerComponent> ent, ref AtmosDeviceUpdateEvent args)
