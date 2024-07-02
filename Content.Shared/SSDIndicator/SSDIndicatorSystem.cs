@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Player;
+﻿using Content.Shared.Bed.Sleep;
+using Robust.Shared.Player;
 
 namespace Content.Shared.SSDIndicator;
 
@@ -16,12 +17,15 @@ public sealed class SSDIndicatorSystem : EntitySystem
     private void OnPlayerAttached(EntityUid uid, SSDIndicatorComponent component, PlayerAttachedEvent args)
     {
         component.IsSSD = false;
+        EntityManager.RemoveComponent<ForcedSleepingComponent>(uid);
         Dirty(uid, component);
     }
 
     private void OnPlayerDetached(EntityUid uid, SSDIndicatorComponent component, PlayerDetachedEvent args)
     {
         component.IsSSD = true;
+        if (!TerminatingOrDeleted(uid))
+            EnsureComp<ForcedSleepingComponent>(uid);
         Dirty(uid, component);
     }
 }
