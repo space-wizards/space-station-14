@@ -112,28 +112,43 @@
   id: SteelSheet
   impact: Low
   quantized: true
-  minTemp: 374  # real life value is around 1700K
+  minTemp: 678  # real life value is around 1700K
   reactants:
     Iron:
-      amount: 9
-    Carbon:
-      amount: 1
+      amount: 5
+    Fersilicite:
+      amount: 3
+    SodiumCarbonate:
+      amount: 2
   effects:
     - !type:CreateEntityReactionEffect
       entity: SheetSteel1
+
+- type: reaction  # glass is made from sand, which is made from silicon dioxide
+  id: Sand
+  reactants:
+    Silicon:
+      amount: 1
+    Oxygen:
+      amount: 2
+    TableSalt:
+      amount: 1
+  products:
+    Sand: 4
+
 
 - type: reaction
   id: GlassSheet
   impact: Low
   quantized: true
-  minTemp: 374
-  reactants:  # glass is made from sand, which is made from silicon dioxide (added water to make it more balanced)
-    Silicon:
-      amount: 3
+  minTemp: 583
+  reactants:  # glass is made from sand, which is made from silicon dioxide
+    Sand:
+      amount: 5
     Oxygen:
-      amount: 6
-    Water:
-      amount: 1
+      amount: 3
+    Potassium:
+      amount: 2
   effects:
     - !type:CreateEntityReactionEffect
       entity: SheetGlass1
