@@ -98,6 +98,15 @@
   metamorphicChangeColor: false
 
 - type: reagent
+  id: TeaPowder
+  name: reagent-name-tea-powder
+  parent: BaseDrink
+  desc: reagent-desc-tea-powder
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: tea
+  color: "#7F8400"
+
+- type: reagent
   id: GreenTea
   name: reagent-name-green-tea
   parent: BaseDrink
