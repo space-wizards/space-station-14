@@ -23,7 +23,7 @@
     <ui:RadialContainer Name="General"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
 
     <!-- Vocal -->
-    <ui:RadialContainer Name="Vocal"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="Vocal"  VerticalExpand="True" HorizontalExpand="True" Radius="128"/>
 
     <!-- Hands -->
     <ui:RadialContainer Name="Hands"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>

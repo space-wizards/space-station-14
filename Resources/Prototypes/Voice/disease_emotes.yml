@@ -1,8 +1,23 @@
 - type: emote
   id: Sneeze
   name: chat-emote-name-sneeze
+  # temp icon
+  icon: Interface/Emotes/vocal.png
   category: Vocal
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
   chatMessages: ["chat-emote-msg-sneeze"]
+  chatTriggers:
+    - sneeze
+    - sneeze.
+    - sneeze!
+    - sneezes
+    - sneezes.
+    - sneezes!
 
 - type: emote
   id: Cough
@@ -18,7 +33,11 @@
   chatMessages: ["chat-emote-msg-cough"]
   chatTriggers:
     - cough
+    - cough.
+    - cough!
     - coughs
+    - coughs.
+    - coughs!
 
 - type: emote
   id: CatMeow
@@ -58,7 +77,11 @@
   chatMessages: ["chat-emote-msg-yawn"]
   chatTriggers:
     - yawn
+    - yawn.
+    - yawn!
     - yawns
+    - yawns.
+    - yawns!
 
 - type: emote
   id: Snore

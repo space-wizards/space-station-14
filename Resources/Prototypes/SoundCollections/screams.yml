@@ -30,3 +30,9 @@
     - /Audio/Voice/Cluwne/cluwnelaugh1.ogg
     - /Audio/Voice/Cluwne/cluwnelaugh2.ogg
     - /Audio/Voice/Cluwne/cluwnelaugh3.ogg
+
+- type: soundCollection
+  id: ReptilianScreams
+  files:
+    - /Audio/Voice/Reptilian/reptilian_scream.ogg
+    - /Audio/Voice/Reptilian/reptilian_scream2.ogg
