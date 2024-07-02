@@ -440,6 +440,7 @@
     count:
       tags: [Cola]
     composite: true
+    openContainerOnly: false
     layerStates:
     - 6pack1
     - 6pack2
