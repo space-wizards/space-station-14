@@ -25,7 +25,7 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
         {
             var miner = ent.Comp;
 
-            if(!GetValidEnvironment(ent, out var environment))
+            if (!GetValidEnvironment(ent, out var environment))
             {
                 miner.Idle = false;
                 return;
