@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by TheShuEd (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "mine1"
+    },
+    {
+      "name": "mine2"
+    },
+    {
+      "name": "mine3"
+    },
+    {
+      "name": "mine4"
+    }
+  ]
+}
