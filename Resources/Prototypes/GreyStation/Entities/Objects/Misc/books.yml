@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: BookSpaceLaw
-  name: "Security Handbook"
-  description: The standard guidebook for security officers.
+  name: space law
+  description: A set of Nanotrasen guidelines for keeping law and order on their space stations.
   components:
     - type: Sprite
       sprite: Nyanotrasen/Objects/Misc/books.rsi
@@ -13,13 +13,15 @@
       - Book
     - type: MeleeWeapon
       wideAnimationRotation: 180
+      soundHit:
+        collection: Punch
       damage:
         types:
           Blunt: 6
     - type: GuideHelp
       openOnActivation: true
       guides:
-      - Security
+      - SpaceLaw
     - type: EmitSoundOnPickup # GreyStation - Sound PR
       sound: /Audio/SimpleStation14/Items/Handling/book_pickup.ogg
     - type: EmitSoundOnDrop
