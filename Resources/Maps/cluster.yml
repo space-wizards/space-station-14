@@ -56131,7 +56131,6 @@ entities:
   - uid: 6124
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -20.5,-13.5
       parent: 1
     - type: DeviceLinkSink

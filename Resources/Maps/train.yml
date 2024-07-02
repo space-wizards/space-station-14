@@ -75820,7 +75820,6 @@ entities:
   - uid: 10029
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -8.5,-314.5
       parent: 2
 - proto: MachineCentrifuge

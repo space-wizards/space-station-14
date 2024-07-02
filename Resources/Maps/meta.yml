@@ -117638,7 +117638,6 @@ entities:
   - uid: 19357
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 24.5,-30.5
       parent: 5350
   - uid: 19358
