@@ -1,0 +1,36 @@
+﻿- type: PlayerConnectionWhitelist
+  id: salamanderMrpWhitelist
+  conditions:
+  - !type:ConditionManualBlacklist # Blacklisted people are banned from playing MRP but can still play LRP
+    action: Deny # Deny if matched
+  - !type:ConditionNotesPlaytimeRange
+    includeExpired: false
+    minimumSeverity: 3 # High
+    minimumNotes: 1
+    range: 30 # 30 days
+    action: Deny # Deny if matched
+    includeSecret: false
+  - !type:ConditionNotesPlaytimeRange
+    includeExpired: false
+    minimumSeverity: 2 # Medium
+    minimumNotes: 1
+    range: 14 # 14 Days
+    action: Deny # Deny if matched
+    includeSecret: false
+  - !type:ConditionNotesPlaytimeRange
+    includeExpired: false
+    minimumSeverity: 1 # Low
+    minimumNotes: 3
+    range: 14 # 14 Days
+    action: Deny # Deny if matched
+    includeSecret: false
+  - !type:ConditionManualWhitelist
+    action: Allow # Allow if matched
+  - !type:ConditionPlayerCount # Playtime requirement is only checked if there are more than 15 players on the server
+    minimumPlayers: 0
+    maximumPlayers: 15
+    action: Allow # Allow if matched
+  - !type:ConditionPlaytime
+    minimumPlaytime: 1200 # 20 hours to be whitelisted
+    action: Deny
+  # All checks passed, allow the player to play.
