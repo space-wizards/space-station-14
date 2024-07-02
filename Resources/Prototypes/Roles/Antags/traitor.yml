@@ -1,9 +1,9 @@
 - type: antag
   id: Traitor
-  name: roles-antag-syndicate-agent-name
+  name: roles-antag-traitor-name
   antagonist: true
   setPreference: true
-  objective: roles-antag-syndicate-agent-objective
+  objective: roles-antag-traitor-objective
   guides: [ Traitors ]
 
 - type: antag

@@ -23,19 +23,30 @@ traitor-death-match-end-round-description-entry = {$originalName}'s PDA, with {$
 ## TraitorRole
 
 # TraitorRole
-traitor-role-greeting =
-    You are an agent sent by {$corporation} on behalf of The Syndicate.
-    Your objectives and codewords are listed in the character menu.
-    Use the uplink loaded into your PDA to buy the tools you'll need for this mission.
-    Death to Nanotrasen!
 traitor-role-codewords =
     The codewords are:
     {$codewords}.
     Codewords can be used in regular conversation to identify yourself discretely to other syndicate agents.
     Listen for them, and keep them secret.
+
 traitor-role-uplink-code =
     Set your ringtone to the notes {$code} to lock or unlock your uplink.
     Remember to lock it after, or the stations crew will easily open it too!
+
+traitor-role-moreinfo =
+    Find more information about your role in the character menu.
+
+traitor-role-nouplink =
+    You do not have a syndicate uplink. Make it count.
+
+traitor-role-allegiances =
+    Your allegiances:
+
+traitor-role-notes =
+    Notes from your employer:
+
+traitor-role-clarity =
+    Allegiances and additional notes are recommendations. You do not have to strictly follow them.
 
 # don't need all the flavour text for character menu
 traitor-role-codewords-short =
