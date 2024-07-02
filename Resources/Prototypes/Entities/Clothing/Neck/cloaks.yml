@@ -272,3 +272,11 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/pan.rsi
 
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakSynd
+  name: Syndicate cloak
+  description: dark like a crushed station. Nicely!
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/Synd.rsi
