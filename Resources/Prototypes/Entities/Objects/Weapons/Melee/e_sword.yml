@@ -80,6 +80,7 @@
     enabled: false
   - type: IgnitionSource
     temperature: 700
+  - type: Cauterizer
 
 - type: entity
   name: pen
@@ -158,6 +159,7 @@
     - Write
   - type: DisarmMalus
     malus: 0
+  - type: Cauterizer
 
 - type: entity
   parent: BaseItem
