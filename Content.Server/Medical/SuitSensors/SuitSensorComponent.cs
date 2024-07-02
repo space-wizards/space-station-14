@@ -24,6 +24,12 @@ public sealed partial class SuitSensorComponent : Component
     public bool ControlsLocked = false;
 
     /// <summary>
+    ///  How many time you need to change sensors on other player
+    /// </summary>
+    [DataField("sensorsTime")]
+    public float SensorsTime = 1.75f;
+
+    /// <summary>
     ///     Current sensor mode. Can be switched by user verbs.
     /// </summary>
     [DataField("mode")]
