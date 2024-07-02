@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
             _atmosphereSystem.Merge(environment, merger);
         }
 
-        private float CapSpawnAmount(Entity<GasMinerComponent> ent, float toSpawnTarget, [NotNullWhen(true)] out GasMixture? environment)
+        private float CapSpawnAmount(Entity<GasMinerComponent> ent, float toSpawnTarget, out GasMixture? environment)
         {
             var (uid, miner) = ent;
             var transform = Transform(uid);
