@@ -129,3 +129,9 @@ chatsan-replacement-46 = thank you very much
 
 chatsan-word-47 = cya
 chatsan-replacement-47 = see ya
+
+chatsan-word-48 = rn
+chatsan-replacement-48 = right now
+
+chatsan-word-49 = atm
+chatsan-replacement-49 = at the moment

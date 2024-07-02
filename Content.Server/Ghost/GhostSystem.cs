@@ -154,8 +154,8 @@ namespace Content.Server.Ghost
 
             if (_ticker.RunLevel != GameRunLevel.PostRound)
             {
-                _visibilitySystem.AddLayer(uid, visibility, (int) VisibilityFlags.Ghost, false);
-                _visibilitySystem.RemoveLayer(uid, visibility, (int) VisibilityFlags.Normal, false);
+                _visibilitySystem.AddLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
+                _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
                 _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
             }
 
@@ -174,8 +174,8 @@ namespace Content.Server.Ghost
             // Entity can't be seen by ghosts anymore.
             if (TryComp(uid, out VisibilityComponent? visibility))
             {
-                _visibilitySystem.RemoveLayer(uid, visibility, (int) VisibilityFlags.Ghost, false);
-                _visibilitySystem.AddLayer(uid, visibility, (int) VisibilityFlags.Normal, false);
+                _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
+                _visibilitySystem.AddLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
                 _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
             }
 
@@ -382,13 +382,13 @@ namespace Content.Server.Ghost
             {
                 if (visible)
                 {
-                    _visibilitySystem.AddLayer(uid, vis, (int) VisibilityFlags.Normal, false);
-                    _visibilitySystem.RemoveLayer(uid, vis, (int) VisibilityFlags.Ghost, false);
+                    _visibilitySystem.AddLayer((uid, vis), (int) VisibilityFlags.Normal, false);
+                    _visibilitySystem.RemoveLayer((uid, vis), (int) VisibilityFlags.Ghost, false);
                 }
                 else
                 {
-                    _visibilitySystem.AddLayer(uid, vis, (int) VisibilityFlags.Ghost, false);
-                    _visibilitySystem.RemoveLayer(uid, vis, (int) VisibilityFlags.Normal, false);
+                    _visibilitySystem.AddLayer((uid, vis), (int) VisibilityFlags.Ghost, false);
+                    _visibilitySystem.RemoveLayer((uid, vis), (int) VisibilityFlags.Normal, false);
                 }
                 _visibilitySystem.RefreshVisibility(uid, visibilityComponent: vis);
             }

@@ -13,7 +13,7 @@
   time: 10
   solids:
     FoodPoppy: 1
-    Brutepack: 10
+    Brutepack: 1
     MaterialCloth1: 1
   reagents:
     TranexamicAcid: 20
@@ -26,7 +26,7 @@
   time: 10
   solids:
     FoodAloe: 1
-    Ointment: 10
+    Ointment: 1
     MaterialCloth1: 1
   reagents:
     Sigynate: 20

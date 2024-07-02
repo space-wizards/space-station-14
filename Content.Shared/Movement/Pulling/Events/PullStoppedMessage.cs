@@ -1,13 +1,6 @@
-﻿using Robust.Shared.Physics.Components;
-
-namespace Content.Shared.Movement.Pulling.Events;
+﻿namespace Content.Shared.Movement.Pulling.Events;
 
 /// <summary>
-/// Raised directed on both puller and pullable.
+/// Event raised directed BOTH at the puller and pulled entity when a pull starts.
 /// </summary>
-public sealed class PullStoppedMessage : PullMessage
-{
-    public PullStoppedMessage(EntityUid pullerUid, EntityUid pulledUid) : base(pullerUid, pulledUid)
-    {
-    }
-}
+public sealed class PullStoppedMessage(EntityUid pullerUid, EntityUid pulledUid) : PullMessage(pullerUid, pulledUid);

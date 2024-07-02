@@ -1,18 +1,5 @@
 - type: entity
   parent: ClothingEyesBase
-  id: ClothingEyesEyepatch
-  name: eyepatch
-  description: Yarr.
-  components:
-  - type: Sprite
-    sprite: Clothing/Eyes/Misc/eyepatch.rsi
-  - type: Clothing
-    sprite: Clothing/Eyes/Misc/eyepatch.rsi
-  - type: EyeProtection
-    protectionTime: 5
-
-- type: entity
-  parent: ClothingEyesBase
   id: ClothingEyesBlindfold
   name: blindfold
   description: The bind leading the blind.
@@ -26,3 +13,21 @@
     graph: Blindfold
     node: blindfold
   - type: FlashImmunity
+
+- type: entity
+  parent: ClothingHeadEyeBaseFlippable
+  id: ClothingEyesEyepatch
+  name: eyepatch
+  description: Yarr.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Misc/eyepatch.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Misc/eyepatch.rsi
+  - type: EyeProtection
+    protectionTime: 5
+
+- type: entity
+  parent: [ClothingEyesEyepatch, ClothingHeadEyeBaseFlipped]
+  id: ClothingEyesEyepatchFlipped
+  suffix: flipped
