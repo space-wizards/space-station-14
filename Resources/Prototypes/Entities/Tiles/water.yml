@@ -54,3 +54,12 @@
       collection: FootstepWater
       params:
         volume: 8
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+        - Catwalk
+  - type: TileEntityEffect
+    effects:
+    - !type:ExtinguishReaction
