@@ -1,4 +1,3 @@
-using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents;
@@ -6,7 +5,6 @@ using Content.Shared.GameTicking.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Storage;
-using Content.Server.StationEvents.Components;
 using System.Linq;
 
 namespace Content.Server.GameTicking.Rules;
@@ -27,13 +25,7 @@ public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
     {
         var selectedRules = EntitySpawnCollection.GetSpawns(component.SelectableGameRules, _random);
 
-        if (component.MinRules > component.MaxRules)
-        {
-            Log.Warning("Minimum rules is more than Maximum rules!");
-            return;
-        }
-
-        int ruleQuant = _random.Next(component.MinRules, component.MaxRules + 1); // the padding is required for expected result. Dont ask me why Next was implimented this way.
+        int ruleQuant = component.MinMaxRules.Next(_random);
 
         if (selectedRules == null || selectedRules.Count == 0)
             return;
@@ -60,15 +52,12 @@ public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
                     continue;
                 }
 
-                if (ruleProto.TryGetComponent<StationEventComponent>(out _, EntityManager.ComponentFactory))
+                if (!availableEvents.ContainsKey(ruleProto))
                 {
-                    if (!availableEvents.ContainsKey(ruleProto))
-                    {
-                        Log.Warning("The selected random rule is not available!");
-                        continue;
-                    }
-                    GameTicker.StartGameRule(rule, out ruleEnt);
+                    Log.Warning("The selected random rule is not available!");
+                    continue;
                 }
+                GameTicker.StartGameRule(rule, out ruleEnt);
             }
 
             var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEnt)));

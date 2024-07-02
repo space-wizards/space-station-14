@@ -5,7 +5,7 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent, Access(typeof(BasicStationEventSchedulerSystem))]
 public sealed partial class BasicStationEventSchedulerComponent : Component
 {
-    public const float MinimumTimeUntilFirstEvent = 300; // Someone yell at me if I dont change this back to 300, I need to test it without dying of old
+    public const float MinimumTimeUntilFirstEvent = 300;
 
     /// <summary>
     /// How long until the next check for an event runs

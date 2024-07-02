@@ -19,7 +19,6 @@
       prob: 0.2
       orGroup: Shuttles
 
-
 - type: entity
   abstract: true
   parent: BaseGameRule

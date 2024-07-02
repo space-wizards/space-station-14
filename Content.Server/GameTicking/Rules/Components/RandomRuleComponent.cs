@@ -1,3 +1,4 @@
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Storage;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -16,14 +17,8 @@ public sealed partial class RandomRuleComponent : Component
     public List<EntitySpawnEntry> SelectableGameRules = new();
 
     /// <summary>
-    /// The maximum gamerules that get added at a time.
+    /// The minimum and maximum gamerules that get added at a time.
     /// </summary>
     [DataField]
-    public int MaxRules = 1;
-
-    /// <summary>
-    /// The minimum gamerules that get added at a time.
-    /// </summary>
-    [DataField]
-    public int MinRules = 1;
+    public MinMax MinMaxRules = new(1, 1);
 }

@@ -277,7 +277,7 @@
     - id: MimicVendorRule
     - id: LoneOpsSpawn
     - id: RevenantSpawn
-#    - id: MassHallucination    # What the fuck is this? Is it its own whoosiwhatsit and not an event?
+    - id: MassHallucinations
     - id: SleeperAgents
     - id: AnomalySpawn
     - id: SolarFlare
@@ -314,12 +314,13 @@
     - id: MimicVendorRule
     - id: LoneOpsSpawn
     - id: RevenantSpawn
+    - id: MassHallucinations
     - id: SleeperAgents
     - id: AnomalySpawn
     - id: SolarFlare
     - id: KudzuGrowth
     - id: ZombieOutbreak
-#    - id: CargoGiftMasterRule
+#    - id: RandomCargoGiftsRule
     - id: RandomUnknownShuttleRule
 
 # variation passes
