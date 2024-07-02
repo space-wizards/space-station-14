@@ -179,6 +179,17 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
 
 - type: entity
+  id: CigPackNewport
+  parent: CigPackBase
+  name: Newports
+  description: todo
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/newport.rsi
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/newport.rsi
+
+- type: entity
   id: CigPackSyndicate
   parent: CigPackBase
   name: Interdyne herbals packet
