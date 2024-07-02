@@ -11,7 +11,9 @@ using Content.Server.Station.Systems;
 using Content.Shared.Clothing;
 using Content.Shared.Damage;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -35,6 +37,8 @@ public sealed class SuitSensorSystem : EntitySystem
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly SingletonDeviceNetServerSystem _singletonServerSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {
@@ -49,6 +53,7 @@ public sealed class SuitSensorSystem : EntitySystem
         SubscribeLocalEvent<SuitSensorComponent, EntGotRemovedFromContainerMessage>(OnRemove);
         SubscribeLocalEvent<SuitSensorComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SuitSensorComponent, EmpDisabledRemoved>(OnEmpFinished);
+        SubscribeLocalEvent<SuitSensorComponent, SuitSensorChangeDoAfterEvent>(OnSuitSensorDoAfter);
     }
 
     public override void Update(float frameTime)
@@ -205,7 +210,13 @@ public sealed class SuitSensorSystem : EntitySystem
             return;
 
         // standard interaction checks
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+        if (!args.CanInteract || args.Hands == null)
+            return;
+
+        if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
+            return;
+
+        if (component.User != null && args.User != component.User && _mobStateSystem.IsAlive(component.User.Value))
             return;
 
         args.Verbs.UnionWith(new[]
@@ -259,7 +270,7 @@ public sealed class SuitSensorSystem : EntitySystem
             Disabled = component.Mode == mode,
             Priority = -(int) mode, // sort them in descending order
             Category = VerbCategory.SetSensor,
-            Act = () => SetSensor(uid, mode, userUid, component)
+            Act = () => TrySetSensor(uid, mode, userUid, component)
         };
     }
 
@@ -285,6 +296,35 @@ public sealed class SuitSensorSystem : EntitySystem
         }
 
         return Loc.GetString(name);
+    }
+
+    public void TrySetSensor(EntityUid uid, SuitSensorMode mode, EntityUid userUid,
+        SuitSensorComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.User == null || userUid == component.User)
+            SetSensor(uid, mode, userUid, component);
+        else
+        {
+            var doAfterEvent = new SuitSensorChangeDoAfterEvent(mode);
+            var doAfterArgs = new DoAfterArgs(EntityManager, userUid, 3.0f, doAfterEvent, uid)
+            {
+                BreakOnMove = true,
+                BreakOnDamage = true
+            };
+
+            _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        }
+    }
+
+    private void OnSuitSensorDoAfter(EntityUid uid, SuitSensorComponent component, SuitSensorChangeDoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled)
+            return;
+
+        SetSensor(uid, args.Mode, args.User, component);
     }
 
     public void SetSensor(EntityUid uid, SuitSensorMode mode, EntityUid? userUid = null,
