@@ -2,7 +2,6 @@
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
-using Robust.Client.Replays.Loading;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -32,10 +31,9 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
         var xform = Transform(player.Value);
 
         // Get mouse loc and convert to angle based on player location
-        var coords = _input.MouseScreenPosition; // F3: Mouse Pos Screen
-        var mapPos = _eye.PixelToMap(coords); // F3: Mouse Pos Map
+        var coords = _input.MouseScreenPosition;
+        var mapPos = _eye.PixelToMap(coords);
 
-        //Log.Debug($"{coords.X}, {coords.Y}, {mapPos.X}, {mapPos.Y}");
         if (mapPos.MapId == MapId.Nullspace)
             return;
 
@@ -43,21 +41,18 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
 
         var curRot = _transform.GetWorldRotation(xform);
 
-        var eyeRot = _eye.CurrentEye.Rotation;
-
-        //Log.Debug($"{angle.Degrees}, {curRot.Degrees}, {eyeRot.Degrees}");
-
         // 4-dir handling is separate --
         // only raise event if the cardinal direction has changed
         if (rotator.Simple4DirMode)
         {
+            var eyeRot = _eye.CurrentEye.Rotation; // camera rotation
             var angleDir = (angle + eyeRot).GetCardinalDir(); // apply GetCardinalDir in the camera frame, not in the world frame
             if (angleDir == (curRot + eyeRot).GetCardinalDir())
                 return;
 
             RaisePredictiveEvent(new RequestMouseRotatorRotationEvent
             {
-                Rotation = angleDir.ToAngle() - eyeRot
+                Rotation = angleDir.ToAngle() - eyeRot // convert back to world frame
             });
 
             return;
