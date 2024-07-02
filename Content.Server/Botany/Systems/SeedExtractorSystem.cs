@@ -29,12 +29,12 @@ public sealed class SeedExtractorSystem : EntitySystem
             return;
         if (!_botanySystem.TryGetSeed(produce, out var seed) || seed.Seedless)
         {
-            _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds",("name", args.Used)),
+            _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
                 args.User, PopupType.MediumCaution);
             return;
         }
 
-        _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-interact-message",("name", args.Used)),
+        _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-interact-message", ("name", args.Used)),
             args.User, PopupType.Medium);
 
         QueueDel(args.Used);
@@ -42,12 +42,19 @@ public sealed class SeedExtractorSystem : EntitySystem
         var amount = _random.Next(seedExtractor.BaseMinSeeds, seedExtractor.BaseMaxSeeds + 1);
         var coords = Transform(uid).Coordinates;
 
+        var packetSeed = seed;
+        if (packetSeed.Sentient)
+        {
+            if (!packetSeed.Unique) // clone if necessary before modifying the seed
+                packetSeed = packetSeed.Clone();
+            packetSeed.Sentient = false; // remove Sentient to avoid ghost role spam
+        }
         if (amount > 1)
-            seed.Unique = false;
+            packetSeed.Unique = false;
 
         for (var i = 0; i < amount; i++)
         {
-            _botanySystem.SpawnSeedPacket(seed, coords, args.User);
+            _botanySystem.SpawnSeedPacket(packetSeed, coords, args.User);
         }
     }
 }
