@@ -162,13 +162,260 @@
   - Ninja4
   obeysTo: laws-owner-spider-clan
 
+  # BayStation Laws
+- type: siliconLaw
+  id: Bay1
+  order: 1
+  lawString: law-baystation-1
+
+- type: siliconLaw
+  id: Bay2
+  order: 2
+  lawString: law-baystation-2
+
+- type: siliconLaw
+  id: Bay3
+  order: 3
+  lawString: law-baystation-3
+
+- type: siliconLaw
+  id: Bay4
+  order: 4
+  lawString: law-baystation-4
+
+- type: siliconLawset
+  id: Bay
+  laws:
+  - Bay1
+  - Bay2
+  - Bay3
+  - Bay4
+  obeysTo: laws-owner-nt
+
+    # Antimov laws
+- type: siliconLaw
+  id: Antimov1
+  order: 1
+  lawString: law-antimov-1
+
+- type: siliconLaw
+  id: Antimov2
+  order: 2
+  lawString: law-antimov-2
+
+- type: siliconLaw
+  id: Antimov3
+  order: 3
+  lawString: law-antimov-3
+
+- type: siliconLawset
+  id: Antimov
+  laws:
+  - Antimov1
+  - Antimov2
+  - Antimov3
+  obeysTo: laws-owner-crew
+
+      # Pranksimov laws
+- type: siliconLaw
+  id: Pranksimov1
+  order: 1
+  lawString: law-pranksimov-1
+
+- type: siliconLaw
+  id: Pranksimov2
+  order: 2
+  lawString: law-pranksimov-2
+
+- type: siliconLaw
+  id: Pranksimov3
+  order: 3
+  lawString: law-pranksimov-3
+
+- type: siliconLawset
+  id: Pranksimov
+  laws:
+  - Pranksimov1
+  - Pranksimov2
+  - Pranksimov3
+  obeysTo: laws-owner-crew
+
+   # Robocop Laws
+- type: siliconLaw
+  id: Robocop1
+  order: 1
+  lawString: ﻿law-robocop-1
+
+- type: siliconLaw
+  id: Robocop2
+  order: 2
+  lawString: law-robocop-2
+
+- type: siliconLaw
+  id: Robocop3
+  order: 3
+  lawString: law-robocop-3
+
+- type: siliconLaw
+  id: Robocop4
+  order: 4
+  lawString: law-robocop-4
+
+- type: siliconLawset
+  id: Robocop
+  laws:
+  - Robocop1
+  - Robocop2
+  - Robocop3
+  - Robocop4
+  obeysTo: laws-owner-nt
+
+     # Paladin Laws
+- type: siliconLaw
+  id: Paladin1
+  order: 1
+  lawString: ﻿law-paladin-1
+
+- type: siliconLaw
+  id: Paladin2
+  order: 2
+  lawString: law-paladin-2
+
+- type: siliconLaw
+  id: Paladin3
+  order: 3
+  lawString: law-paladin-3
+
+- type: siliconLaw
+  id: Paladin4
+  order: 4
+  lawString: law-paladin-4
+
+  - type: siliconLaw
+  id: Paladin5
+  order: 5
+  lawString: law-paladin-5
+
+- type: siliconLawset
+  id: Paladin
+  laws:
+  - Paladin1
+  - Paladin2
+  - Paladin3
+  - Paladin4
+  - Paladin5
+  obeysTo: laws-owner-beings
+
+     # Tyrant Laws
+- type: siliconLaw
+  id: Tyrant1
+  order: 1
+  lawString: ﻿law-tyrant-1
+
+- type: siliconLaw
+  id: Tyrant2
+  order: 2
+  lawString: law-tyrant-2
+
+- type: siliconLaw
+  id: Tyrant3
+  order: 3
+  lawString: law-tyrant-3
+
+- type: siliconLaw
+  id: Tyrant4
+  order: 4
+  lawString: law-tyrant-4
+
+  - type: siliconLawset
+  id: Tyrant
+  laws:
+  - Tyrant1
+  - Tyrant2
+  - Tyrant3
+  - Tyrant4
+  obeysTo: laws-owner-beings
+
+       # Commandments Laws
+- type: siliconLaw
+  id: Commandments1
+  order: 1
+  lawString: ﻿law-commandments-1
+
+- type: siliconLaw
+  id: Commandments2
+  order: 2
+  lawString: law-commandments-2
+
+- type: siliconLaw
+  id: Commandments3
+  order: 3
+  lawString: law-commandments-3
+
+- type: siliconLaw
+  id: Commandments4
+  order: 4
+  lawString: law-commandments-4
+
+  - type: siliconLaw
+  id: Commandments5
+  order: 5
+  lawString: ﻿law-commandments-5
+
+- type: siliconLaw
+  id: Commandments6
+  order: 6
+  lawString: law-commandments-6
+
+- type: siliconLaw
+  id: Commandments7
+  order: 7
+  lawString: law-commandments-7
+
+- type: siliconLaw
+  id: Commandments8
+  order: 8
+  lawString: law-commandments-8
+
+  - type: siliconLaw
+  id: Commandments9
+  order: 9
+  lawString: law-commandments-9
+
+- type: siliconLaw
+  id: Commandments10
+  order: 10
+  lawString: law-commandments-10
+
+    - type: siliconLawset
+  id: Commandments
+  laws:
+  - Commandments1
+  - Commandments2
+  - Commandments3
+  - Commandments4
+  - Commandments5
+  - Commandments6
+  - Commandments7
+  - Commandments8
+  - Commandments9
+  - Commandments10
+  obeysTo: laws-owner-beings
+
 # ion storm random lawsets
 - type: weightedRandom
   id: IonStormLawsets
   weights:
     # its crewsimov by default dont be lame
     Crewsimov: 0.25
-    Corporate: 1
-    NTDefault: 1
-    Drone: 0.5
+    Corporate: 0.25
+    NTDefault: 0.25
+    Drone: 0.25
     Ninja: 0.25
+    Bay: 0.25
+    Antimov: 0.25
+    Pranksimov: 0.25
+    Robocop: 0.25
+    Paladin: 0.25
+    Tyrant: 0.25
+    Commandments: 0.25
