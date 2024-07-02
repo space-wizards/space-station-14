@@ -39,7 +39,7 @@ namespace Content.Client.Info
             var guidebookButton = new Button() { Text = Loc.GetString("server-info-guidebook-button") };
             guidebookButton.OnPressed += _ =>
             {
-                guidebookController.ToggleGuidebook();
+                guidebookController.OpenGuidebook();
             };
             buttons.AddChild(guidebookButton);
 
