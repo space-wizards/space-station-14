@@ -18,7 +18,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
-    public const float FTLRange = 512f;
+    public const float FTLRange = 256f;
     public const float FTLBufferRange = 8f;
 
     private EntityQuery<MapGridComponent> _gridQuery;

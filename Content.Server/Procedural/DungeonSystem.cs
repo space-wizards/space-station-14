@@ -12,6 +12,7 @@ using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -49,7 +50,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     public const int CollisionLayer = (int) CollisionGroup.Impassable;
 
     private readonly JobQueue _dungeonJobQueue = new(DungeonJobTime);
-    private readonly Dictionary<DungeonJob, CancellationTokenSource> _dungeonJobs = new();
+    private readonly Dictionary<DungeonJob.DungeonJob, CancellationTokenSource> _dungeonJobs = new();
 
     [ValidatePrototypeId<ContentTileDefinition>]
     public const string FallbackTileId = "FloorSteel";
@@ -190,18 +191,16 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         int seed)
     {
         var cancelToken = new CancellationTokenSource();
-        var job = new DungeonJob(
+        var job = new DungeonJob.DungeonJob(
             Log,
             DungeonJobTime,
             EntityManager,
-            _mapManager,
             _prototype,
             _tileDefManager,
             _anchorable,
             _decals,
             this,
             _lookup,
-            _tag,
             _tile,
             _transform,
             gen,
@@ -215,7 +214,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         _dungeonJobQueue.EnqueueJob(job);
     }
 
-    public async Task<Dungeon> GenerateDungeonAsync(
+    public async Task<List<Dungeon>> GenerateDungeonAsync(
         DungeonConfigPrototype gen,
         EntityUid gridUid,
         MapGridComponent grid,
@@ -223,18 +222,16 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         int seed)
     {
         var cancelToken = new CancellationTokenSource();
-        var job = new DungeonJob(
+        var job = new DungeonJob.DungeonJob(
             Log,
             DungeonJobTime,
             EntityManager,
-            _mapManager,
             _prototype,
             _tileDefManager,
             _anchorable,
             _decals,
             this,
             _lookup,
-            _tag,
             _tile,
             _transform,
             gen,

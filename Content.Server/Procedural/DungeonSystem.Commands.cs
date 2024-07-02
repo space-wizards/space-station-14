@@ -51,6 +51,8 @@ public sealed partial class DungeonSystem
             dungeonUid = EntityManager.CreateEntityUninitialized(null, new EntityCoordinates(dungeonUid, position));
             dungeonGrid = EntityManager.AddComponent<MapGridComponent>(dungeonUid);
             EntityManager.InitializeAndStartEntity(dungeonUid, mapId);
+            // If we created a grid (e.g. space dungen) then offset it so we don't double-apply positions
+            position = Vector2i.Zero;
         }
 
         int seed;
