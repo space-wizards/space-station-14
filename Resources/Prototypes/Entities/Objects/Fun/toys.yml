@@ -1518,6 +1518,16 @@
       collection: RubberChicken
       params:
         variation: 0.125
+  - type: EmitSoundOnCollide
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -1529,18 +1539,6 @@
       collection: RubberChicken
       params:
         variation: 0.125
-  - type: EmitSoundOnTrigger
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
   - type: PhysicalComposition
     materialComposition:
       Plastic: 75
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Plastic
-          Quantity: 10
