@@ -1,4 +1,3 @@
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -63,19 +62,6 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticAfterInteract(EntityUid uid, BallisticAmmoProviderComponent component, AfterInteractEvent args)
     {
-
-        // Wrong magazine
-        if (HasComp<GunComponent>(args.Target) && HasComp<ItemSlotsComponent>(args.Target))
-        {
-            Popup(
-                    Loc.GetString("gun-ballistic-transfer-invalid",
-                        ("ammoEntity", uid),
-                        ("targetEntity", args.Target.Value)),
-                    uid,
-                    args.User);
-            return;
-        }
-
         if (args.Handled ||
             !component.MayTransfer ||
             !Timing.IsFirstTimePredicted ||
