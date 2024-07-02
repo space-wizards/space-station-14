@@ -1,0 +1,21 @@
+- type: weightedRandomEntity
+  id: TrashEntityTable
+  weights:
+    FoodPacketBoritosTrash: 50
+    FoodPacketCheesieTrash: 50
+    FoodPacketChipsTrash: 50
+    FoodPacketChocolateTrash: 50
+    FoodPacketChowMeinTrash: 50
+    FoodPacketCnDsTrash: 50
+    FoodPacketDanDanTrash: 50
+    FoodPacketEnergyTrash: 50
+    FoodPacketPistachioTrash: 50
+    FoodPacketPopcornTrash: 50
+    FoodPacketRaisinsTrash: 50
+    FoodPacketSemkiTrash: 50
+    FoodPacketSusTrash: 50
+    FoodPacketSyndiTrash: 50
+    BrokenBottle: 50
+    PuddleVomit: 3
+    FoodPlateSmallTrash: 3
+    FoodBowlBigTrash: 3

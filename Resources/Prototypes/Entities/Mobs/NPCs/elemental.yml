@@ -308,22 +308,8 @@
         - state: red
         - sprite: Mobs/Aliens/elemental.rsi
           state: alive
-    - type: RandomSpawner
-      prototypes:
-        - ReagentSlime
-        - ReagentSlimeBeer
-        - ReagentSlimePax
-        - ReagentSlimeNocturine
-        - ReagentSlimeTHC
-        - ReagentSlimeBicaridine
-        - ReagentSlimeToxin
-        - ReagentSlimeNapalm
-        - ReagentSlimeOmnizine
-        - ReagentSlimeMuteToxin
-        - ReagentSlimeNorepinephricAcid
-        - ReagentSlimeEphedrine
-        - ReagentSlimeRobustHarvest
-      chance: 1
+    - type: GenericSpawner
+      entityTable: ReagentSlimeEntityTable
 
 - type: entity
   id: ReagentSlimeBeer

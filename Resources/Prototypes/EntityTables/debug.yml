@@ -1,0 +1,4 @@
+- type: weightedRandomEntity
+  id: UristEntityTable
+  weights:
+    MobHuman: 1

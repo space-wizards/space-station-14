@@ -1,0 +1,71 @@
+- type: weightedRandomEntity
+  id: BasicLootSecurityEntityTable
+  weights:
+    Flash: 9
+    Handcuffs: 9
+    Zipties: 9
+    FlashlightSeclite: 9
+    Tourniquet: 9
+    ClothingEyesGlassesSunglasses: 1
+    BoxHandcuff: 1
+
+- type: weightedRandomEntity
+  id: LootSecurityEntityTable
+  weights:
+    Flash: 9
+    Handcuffs: 9
+    Zipties: 9
+    FlashlightSeclite: 9
+    GrenadeFlashBang: 9
+    SecurityWhistle: 9
+    Tourniquet: 9
+    ClothingEyesGlassesSunglasses: 1
+    BoxHandcuff: 1
+    BoxFlashbang: 1
+    TearGasGrenade: 1
+    WeaponDisabler: 1
+    Stunbaton: 1
+
+- type: weightedRandomEntity
+  id: LootArmoryEntityTable
+  weights:
+    RiotShield: 95
+    RiotBulletShield: 95
+    RiotLaserShield: 95
+    ClothingHeadHelmetBasic: 95
+    ClothingHeadHelmetRiot: 95
+    ClothingOuterArmorBasic: 95
+    ClothingOuterArmorRiot: 95
+    ClothingOuterArmorBulletproof: 95
+    WeaponDisabler: 95
+    WeaponPistolMk58: 95
+    WeaponRifleLecter: 95
+    WeaponSubMachineGunDrozd: 95
+    WeaponLaserCarbine: 95
+    WeaponShotgunKammerer: 95
+    ClothingHeadHelmetSwat: 5
+    WeaponShotgunEnforcer: 5
+
+- type: weightedRandomEntity
+  id: LootArmoryGunsEntityTable
+  weights:
+    WeaponDisabler: 95
+    WeaponPistolMk58: 95
+    WeaponRifleLecter: 95
+    WeaponSubMachineGunDrozd: 95
+    WeaponLaserCarbine: 95
+    WeaponShotgunKammerer: 95
+    WeaponShotgunEnforcer: 5
+
+- type: weightedRandomEntity
+  id: LootArmoryArmorEntityTable
+  weights:
+    RiotShield: 95
+    RiotBulletShield: 95
+    RiotLaserShield: 95
+    ClothingHeadHelmetBasic: 95
+    ClothingHeadHelmetRiot: 95
+    ClothingOuterArmorBasic: 95
+    ClothingOuterArmorRiot: 95
+    ClothingOuterArmorBulletproof: 95
+    ClothingHeadHelmetSwat: 5

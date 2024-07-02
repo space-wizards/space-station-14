@@ -1,0 +1,23 @@
+- type: weightedRandomEntity
+  id: CurtainsEntityTable
+  weights:
+    HospitalCurtains: 1
+    CurtainsBlack: 1
+    CurtainsBlue: 1
+    CurtainsCyan: 1
+    CurtainsGreen: 1
+    CurtainsOrange: 1
+    CurtainsPink: 1
+    CurtainsPurple: 1
+    CurtainsRed: 1
+    CurtainsWhite: 1
+    CurtainsWhiteOpen: 1
+    CurtainsRedOpen: 1
+    CurtainsPurpleOpen: 1
+    CurtainsPinkOpen: 1
+    CurtainsOrangeOpen: 1
+    CurtainsGreenOpen: 1
+    CurtainsCyanOpen: 1
+    CurtainsBlueOpen: 1
+    CurtainsBlackOpen: 1
+    HospitalCurtainsOpen: 1

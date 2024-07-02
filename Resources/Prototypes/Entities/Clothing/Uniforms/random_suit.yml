@@ -38,14 +38,9 @@
   id: ClothingRandomSpawner
   name: random colorful costume
   components:
-  - type: RandomSpawner
+  - type: GenericSpawner
     offset: 0
-    prototypes:
-    - ClothingUniformRandomArmless
-    - ClothingUniformRandomStandard
-    - ClothingUniformRandomBra
-    - ClothingUniformRandomShorts
-    - ClothingUniformRandomShirt
+    entityTable: ClothingEntityTable
 
 - type: entity
   parent: ClothingUniformRandom

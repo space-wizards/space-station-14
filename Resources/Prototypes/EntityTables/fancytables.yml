@@ -1,0 +1,12 @@
+- type: weightedRandomEntity
+  id: FancyTablesEntityTable
+  weights:
+    TableFancyBlue: 1
+    TableFancyCyan: 1
+    TableFancyBlack: 1
+    TableFancyRed: 1
+    TableFancyPurple: 1
+    TableFancyPink: 1
+    TableFancyGreen: 1
+    TableFancyOrange: 1
+    TableFancyWhite: 1

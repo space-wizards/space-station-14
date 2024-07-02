@@ -1,0 +1,79 @@
+- type: weightedRandomEntity
+  id: SalvageMaterialCrateEntityTable
+  weights:
+    CrateSalvageAssortedGoodies: 9
+    SalvageHumanCorpse: 4
+    CrateMaterialPlasteel: 4
+    CrateMaterialWood: 4
+    CrateMaterialPlastic: 4
+    CrateSalvageEquipment: 4
+    CrateMaterialSteel: 4
+    CrateMaterialGlass: 4
+    CrateServiceJanitorialSupplies: 4
+    CrateHydroponicsSeedsMedicinal: 4
+    CrateEmergencyInternals: 4
+    CrateFoodMRE: 4
+    CrateMaterialTextiles: 4
+    CrateMedicalSupplies: 4
+    CrateEngineeringCableBulk: 4
+    CrateMaterialCardboard: 4
+    CrateServiceBooks: 4
+    CrateServiceSmokeables: 4
+    CrateTrashCartFilled: 4
+    ClosetMaintenanceFilledRandom: 4
+    ClosetEmergencyFilledRandom: 4
+
+- type: weightedRandomEntity
+  id: SalvageCanisterEntityTable
+  weights:
+    AirCanister: 90
+    NitrogenCanister: 90
+    OxygenCanister: 90
+    CarbonDioxideCanister: 90
+    WaterVaporCanister: 90
+    PlasmaCanister: 3
+
+- type: weightedRandomEntity
+  id: SalvageLootEntityTable
+  weights:
+    WeaponCrusher: 1
+    WeaponCrusherDagger: 1
+    WeaponCrusherGlaive: 1
+    MiningDrill: 1
+
+- type: weightedRandomEntity
+  id: SalvageMobEntityTable
+  weights:
+    MobCarpSalvage: 5
+    MobTickSalvage: 3
+    PlushieCarp: 1
+    DehydratedSpaceCarp: 1
+    MobSharkSalvage: 1
+
+- type: weightedRandomEntity
+  id: SpaceTickEntityTable
+  weights:
+    MobTickSalvage: 1
+
+- type: weightedRandomEntity
+  id: SalvageBearEntityTable
+  weights:
+    MobBearSpaceSalvage: 1
+
+- type: weightedRandomEntity
+  id: SpaceKangarooEntityTable
+  weights:
+    MobKangarooSpaceSalvage: 1
+
+- type: weightedRandomEntity
+  id: SpaceSpiderEntityTable
+  weights:
+    MobSpiderSpaceSalvage: 1
+
+- type: weightedRandomEntity
+  id: SalvageFleshEntityTable
+  weights:
+    MobFleshJaredSalvage: 1
+    MobFleshGolemSalvage: 2
+    MobFleshClampSalvage: 2
+    MobFleshLoverSalvage: 2

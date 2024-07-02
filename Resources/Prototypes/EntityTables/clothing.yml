@@ -1,0 +1,8 @@
+- type: weightedRandomEntity
+  id: ClothingEntityTable
+  weights:
+    ClothingUniformRandomArmless: 1
+    ClothingUniformRandomStandard: 1
+    ClothingUniformRandomBra: 1
+    ClothingUniformRandomShorts: 1
+    ClothingUniformRandomShirt: 1

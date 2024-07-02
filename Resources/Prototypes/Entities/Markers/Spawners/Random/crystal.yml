@@ -9,12 +9,6 @@
         - state: red
         - sprite: Structures/Decoration/crystal.rsi
           state: crystal_grey
-    - type: RandomSpawner
-      prototypes:
-        - CrystalGreen
-        - CrystalPink
-        - CrystalOrange
-        - CrystalBlue
-        - CrystalCyan
-        - CrystalGrey
+    - type: GenericSpawner
+      entityTable: CrystalEntityTable
       chance: 0.7

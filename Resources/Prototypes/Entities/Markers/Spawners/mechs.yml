@@ -8,9 +8,8 @@
       - state: green
       - sprite: Objects/Specific/Mech/mecha.rsi
         state: ripley
-  - type: ConditionalSpawner
-    prototypes:
-      - MechRipleyBattery
+  - type: GenericSpawner
+    entityTable: MechRipleyEntityTable
 
 - type: entity
   name: H.O.N.K. Spawner
@@ -22,6 +21,5 @@
       - state: green
       - sprite: Objects/Specific/Mech/mecha.rsi
         state: honker
-  - type: ConditionalSpawner
-    prototypes:
-      - MechHonkerBattery
+  - type: GenericSpawner
+    entityTable: HonkEntityTable

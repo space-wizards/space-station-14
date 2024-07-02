@@ -8,26 +8,6 @@
         - state: red
         - sprite: Structures/Decoration/Curtains/hospital.rsi
           state: closed
-    - type: RandomSpawner
-      prototypes:
-        - HospitalCurtains
-        - CurtainsBlack
-        - CurtainsBlue
-        - CurtainsCyan
-        - CurtainsGreen
-        - CurtainsOrange
-        - CurtainsPink
-        - CurtainsPurple
-        - CurtainsRed
-        - CurtainsWhite
-        - CurtainsWhiteOpen
-        - CurtainsRedOpen
-        - CurtainsPurpleOpen
-        - CurtainsPinkOpen
-        - CurtainsOrangeOpen
-        - CurtainsGreenOpen
-        - CurtainsCyanOpen
-        - CurtainsBlueOpen
-        - CurtainsBlackOpen
-        - HospitalCurtainsOpen
+    - type: GenericSpawner
+      entityTable: CurtainsEntityTable
       offset: 0.0

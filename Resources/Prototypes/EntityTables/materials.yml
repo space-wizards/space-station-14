@@ -1,0 +1,62 @@
+- type: weightedRandomEntity
+  id: MaterialsEntityTable
+  weights:
+    SheetSteel: 8
+    SheetGlass: 8
+    SheetPlastic: 8
+    CableApcStack: 8
+    CableMVStack: 8
+    CableHVStack: 8
+    SheetPlasteel10: 2
+
+
+- type: weightedRandomEntity
+  id: SupplementaryMaterialsEntityTable
+  weights:
+    MaterialWoodPlank10: 1
+    MaterialCardboard10: 1
+    PartRodMetal10: 1
+
+- type: weightedRandomEntity
+  id: HighValueMaterialsEntityTable
+  weights:
+    SheetPlasteel: 8
+    SheetRGlass: 8
+    SheetRPGlass: 2
+
+- type: weightedRandomEntity
+  id: HigherValueMaterialsEntityTable
+  weights:
+    SheetPlasma: 8
+    IngotGold: 8
+    IngotSilver: 8
+    SheetUranium: 2
+
+- type: weightedRandomEntity
+  id: SurplusMaterialsEntityTable
+  weights:
+    SheetPlasteel10: 9
+    SheetPlasma1: 9
+    MaterialWoodPlank10: 9
+    PartRodMetal10: 9
+    SheetSteel10: 9
+    SheetGlass10: 9
+    MaterialCloth10: 9
+    MaterialCardboard10: 9
+    SheetPlastic10: 9
+    CableApcStack10: 9
+    CableMVStack10: 9
+    CableHVStack10: 9
+    SheetUranium1: 1
+    IngotGold1: 1
+    IngotSilver1: 1
+
+- type: weightedRandomEntity
+  id: CableCoilEntityTable
+  weights:
+    CableApcStack: 9
+    CableMVStack: 9
+    CableHVStack: 9
+    CableApcStack10: 1
+    CableMVStack10: 1
+    CableHVStack10: 1

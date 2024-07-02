@@ -9,30 +9,8 @@
         - state: red
         - sprite: Objects/Consumable/Food/snacks.rsi
           state: pistachio-trash
-    - type: RandomSpawner
-      rarePrototypes:
-        - PuddleVomit
-        - FoodPlateSmallTrash
-        - FoodBowlBigTrash
-      rareChance: 0.03
-      prototypes:
-#        - TrashCandy
-        - FoodPacketBoritosTrash
-        - FoodPacketCheesieTrash
-        - FoodPacketChipsTrash
-        - FoodPacketChocolateTrash
-        - FoodPacketChowMeinTrash
-        - FoodPacketCnDsTrash
-        - FoodPacketDanDanTrash
-        - FoodPacketEnergyTrash
-        - FoodPacketPistachioTrash
-#        - TrashPlasticBag
-        - FoodPacketPopcornTrash
-        - FoodPacketRaisinsTrash
-        - FoodPacketSemkiTrash
-        - FoodPacketSusTrash
-        - FoodPacketSyndiTrash
-        - BrokenBottle
+    - type: GenericSpawner
+      entityTable: TrashEntityTable
       chance: 0.5
       offset: 0.2
   placement:
@@ -45,5 +23,5 @@
   placement:
     mode: AlignTileAny
   components:
-  - type: RandomSpawner
+  - type: GenericSpawner
     chance: 1

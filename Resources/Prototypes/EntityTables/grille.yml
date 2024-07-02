@@ -1,0 +1,5 @@
+- type: weightedRandomEntity
+  id: GrilleEntityTable
+  weights:
+    Grille: 1
+    GrilleBroken: 1

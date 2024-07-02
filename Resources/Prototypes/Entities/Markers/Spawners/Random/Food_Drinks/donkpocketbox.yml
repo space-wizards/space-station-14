@@ -8,15 +8,7 @@
         - state: red
         - sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
           state: box
-    - type: RandomSpawner
-      prototypes:
-        - FoodBoxDonkpocket
-        - FoodBoxDonkpocketSpicy
-        - FoodBoxDonkpocketTeriyaki
-        - FoodBoxDonkpocketPizza
-        - FoodBoxDonkpocketStonk
-        - FoodBoxDonkpocketBerry
-        - FoodBoxDonkpocketHonk
-        - FoodBoxDonkpocketDink
+    - type: GenericSpawner
+      entityTable: DonkPocketBoxEntityTable
       chance: 0.5
       offset: 0.0

@@ -7,10 +7,7 @@
       layers:
         - sprite: Structures/Walls/random.rsi
           state: randomgrille
-    - type: RandomSpawner
-      prototypes:
-        - Grille
-        - GrilleBroken
-      chance: 1.0
+    - type: GenericSpawner
+      entityTable: GrilleEntityTable
   placement:
     mode: AlignTileAny

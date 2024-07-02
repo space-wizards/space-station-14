@@ -1,0 +1,22 @@
+- type: weightedRandomEntity
+  id: PaintingsEntityTable
+  weights:
+    PaintingPersistenceOfMemory: 100
+    PaintingTheSonOfMan: 100
+    PaintingTheKiss: 100
+    PaintingTheScream: 100
+    PaintingTheGreatWave: 100
+    PaintingCafeTerraceAtNight: 100
+    PaintingNightHawks: 100
+    PaintingSkeletonCigarette: 100
+    PaintingPrayerHands: 100
+    PaintingOldGuitarist: 100
+    PaintingOlympia: 100
+    PaintingSaturn: 100
+    PaintingSleepingGypsy: 100
+    PaintingRedBlueYellow: 100
+    PaintingHelloWorld: 100
+    PaintingSkeletonBoof: 1
+    PaintingEmpty: 1
+    PaintingMoony: 1
+    PaintingAmogusTriptych: 1

@@ -128,21 +128,11 @@
       ignoreWhitelist:
         components:
         - IgnoreKudzu
-    - type: RandomSpawner
+    - type: GenericSpawner
       deleteSpawnerAfterSpawn: false
-      rareChance: 0.15
       offset: 0.2
       chance: 0.05
-      prototypes:
-      - LightTree01
-      - LightTree02
-      - LightTree03
-      - LightTree04
-      - LightTree05
-      - LightTree06
-      - CrystalCyan
-      rarePrototypes:
-      - AnomalyFloraBulb
+      entityTable: FriendlyKudzuFlowerEntityTable
 
 - type: entity
   id: KudzuFlowerAngry
@@ -151,14 +141,9 @@
   components:
     - type: Kudzu
       spreadChance: 0.2
-    - type: RandomSpawner
+    - type: GenericSpawner
       chance: 0.05
-      rarePrototypes:
-      - AnomalyFloraBulb
-      - AnomalyFloraBulb
-      - MobLuminousEntity
-      - MobLuminousObject
-      - MobLuminousPerson
+      entityTable: AngryKudzuFlowerEntityTable
 
 - type: entity
   id: FleshKudzu
@@ -275,16 +260,11 @@
     - type: Kudzu
       growthTickChance: 0.2
       spreadChance: 0.99
-    - type: RandomSpawner
+    - type: GenericSpawner
       deleteSpawnerAfterSpawn: false
-      rareChance: 0.05
       offset: 0.2
       chance: 0.45
-      prototypes:
-      - ShadowBasaltRandom
-      rarePrototypes:
-      - ShadowPortal
-      - ShadowKudzuLootSpawner
+      entityTable: ShadowKudzuFlowerEntityTable
     - type: Tag
       tags:
         - HideContextMenu

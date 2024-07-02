@@ -1,0 +1,87 @@
+- type: weightedRandomEntity
+  id: EmptyCrateEntityTable
+  weights:
+    CrateGenericSteel: 1
+    CratePlastic: 1
+    CrateFreezer: 1
+    CrateHydroponics: 1
+    CrateMedical: 1
+    CrateRadiation: 1
+    CrateInternals: 1
+    CrateElectrical: 1
+    CrateEngineering: 1
+    CrateScience: 1
+    CrateSurgery: 1
+
+- type: weightedRandomEntity
+  id: FilledCrateEntityTable
+  weights:
+    CrateServiceReplacementLights: 8
+    CrateServiceBureaucracy: 8
+    CrateChemistrySupplies: 8
+    CrateMaterialGlass: 8
+    CrateMaterialSteel: 8
+    CrateMaterialPlastic: 8
+    CrateMaterialWood: 8
+    CrateMaterialPlasteel: 8
+    CrateFunArtSupplies: 8
+    CrateEngineeringCableLV: 8
+    CrateEngineeringCableMV: 8
+    CrateEngineeringCableHV: 8
+    CrateEngineeringCableBulk: 8
+    CrateEmergencyFire: 8
+    CrateEmergencyInternals: 8
+    CrateEmergencyInflatablewall: 8
+    CrateHydroponicsTools: 8
+    CrateHydroponicsSeeds: 8
+    CrateMaterialPlasma: 1
+    CrateHydroponicsSeedsExotic: 1
+
+- type: weightedRandomEntity
+  id: EngineeringCrateEntityTable
+  weights:
+    CrateEngineering: 9
+    CrateElectrical: 9
+    CrateEngineeringElectricalSupplies: 9
+    CrateRCDAmmo: 9
+    CrateEngineeringCableLV: 9
+    CrateEngineeringCableMV: 9
+    CrateEngineeringCableHV: 9
+    CrateEngineeringCableBulk: 9
+    CrateEngineeringSingularityContainment: 9
+    CrateEngineeringSingularityCollector: 9
+    CrateEngineeringTeslaCoil: 9
+    CrateEngineeringSingularityEmitter: 9
+    CrateEngineeringGyroscope: 9
+    CrateEngineeringThruster: 9
+    CrateEngineeringToolbox: 9
+    CrateEngineeringShuttle: 9
+    CrateEngineeringSolar: 9
+    CrateEngineeringJetpack: 9
+    CrateEmergencyRadiation: 9
+    CrateRadiation: 9
+    CrateEngineeringSingularityGenerator: 2
+    CrateEngineeringTeslaGenerator: 2
+    CrateEngineeringTeslaGroundingRod: 2
+    CrateEngineeringParticleAccelerator: 2
+    CrateRCD: 2
+    CrateEngineeringGear: 2
+
+- type: weightedRandomEntity
+  id: SecurityCrateEntityTable
+  weights:
+    CrateArmoryShotgun: 1
+    CrateArmorySMG: 1
+    CrateSecurityRiot: 1
+    CrateSecurityNonlethal: 1
+    CrateWeaponSecure: 9
+    CrateArmoryLaser: 9
+    CrateArmoryPistols: 9
+    CrateTrainingBombs: 9
+    CrateTrackingImplants: 9
+    CrateSecurityTrackingMindshieldImplants: 9
+    CrateSecurityHelmet: 9
+    CrateSecurityArmor: 9
+    CrateRestraints: 9
+    CrateEmergencyExplosive: 9
+    CrateSecurityBiosuit: 9

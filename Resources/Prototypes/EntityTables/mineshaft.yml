@@ -1,0 +1,38 @@
+- type: weightedRandomEntity
+  id: WoodenSupportEntityTable
+  weights:
+    WoodenSupport: 1
+    WoodenSupportBeam: 3
+
+- type: weightedRandomEntity
+  id: WoodenWallEntityTable
+  weights:
+    WoodenSupportWall: 1
+    WoodenSupportWallBroken: 1
+
+- type: weightedRandomEntity
+  id: RockFormationEntityTable
+  weights:
+    RandomBrownStalagmite: 1
+    RandomGreyStalagmite: 1
+    CrystalSpawner: 1
+
+- type: weightedRandomEntity
+  id: BrownStalagmiteEntityTable
+  weights:
+    FloraStalagmite1: 1
+    FloraStalagmite2: 1
+    FloraStalagmite3: 1
+    FloraStalagmite4: 1
+    FloraStalagmite5: 1
+    FloraStalagmite6: 1
+
+- type: weightedRandomEntity
+  id: GreyStalagmiteEntityTable
+  weights:
+    FloraGreyStalagmite1: 1
+    FloraGreyStalagmite2: 1
+    FloraGreyStalagmite3: 1
+    FloraGreyStalagmite4: 1
+    FloraGreyStalagmite5: 1
+    FloraGreyStalagmite6: 1

@@ -1,0 +1,16 @@
+- type: weightedRandomEntity
+  id: ReagentSlimeEntityTable
+  weights:
+    ReagentSlime: 1
+    ReagentSlimeBeer: 1
+    ReagentSlimePax: 1
+    ReagentSlimeNocturine: 1
+    ReagentSlimeTHC: 1
+    ReagentSlimeBicaridine: 1
+    ReagentSlimeToxin: 1
+    ReagentSlimeNapalm: 1
+    ReagentSlimeOmnizine: 1
+    ReagentSlimeMuteToxin: 1
+    ReagentSlimeNorepinephricAcid: 1
+    ReagentSlimeEphedrine: 1
+    ReagentSlimeRobustHarvest: 1

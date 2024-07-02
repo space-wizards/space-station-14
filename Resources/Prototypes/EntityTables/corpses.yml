@@ -1,0 +1,39 @@
+- type: weightedRandomEntity
+  id: SalvageHumanCorpseEntityTable
+  weights:
+    SalvageHumanCorpse: 1
+
+- type: weightedRandomEntity
+  id: ServiceHumanCorpseEntityTable
+  weights:
+    MobRandomServiceCorpse: 1
+
+- type: weightedRandomEntity
+  id: EngiHumanCorpseEntityTable
+  weights:
+    MobRandomEngineerCorpse: 1
+
+- type: weightedRandomEntity
+  id: CargoHumanCorpseEntityTable
+  weights:
+    MobRandomCargoCorpse: 1
+
+- type: weightedRandomEntity
+  id: MedicHumanCorpseEntityTable
+  weights:
+    MobRandomMedicCorpse: 1
+
+- type: weightedRandomEntity
+  id: ScienceHumanCorpseEntityTable
+  weights:
+    MobRandomScienceCorpse: 1
+
+- type: weightedRandomEntity
+  id: SecurityHumanCorpseEntityTable
+  weights:
+    MobRandomSecurityCorpse: 1
+
+- type: weightedRandomEntity
+  id: CommandHumanCorpseEntityTable
+  weights:
+    MobRandomCommandCorpse: 1

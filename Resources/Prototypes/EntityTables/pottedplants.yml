@@ -1,0 +1,36 @@
+- type: weightedRandomEntity
+  id: PottedPlantEntityTable
+  weights:
+    PottedPlant0: 1
+    PottedPlant1: 1
+    PottedPlant2: 1
+    PottedPlant3: 1
+    PottedPlant4: 1
+    PottedPlant5: 1
+    PottedPlant6: 1
+    PottedPlant7: 1
+    PottedPlant8: 1
+    PottedPlant10: 1
+    PottedPlant11: 1
+    PottedPlant12: 1
+    PottedPlant13: 1
+    PottedPlant14: 1
+    PottedPlant15: 1
+    PottedPlant16: 1
+    PottedPlant17: 1
+    PottedPlant18: 1
+    PottedPlant19: 1
+    PottedPlant20: 1
+    PottedPlant21: 1
+    PottedPlant22: 1
+    PottedPlant23: 1
+    PottedPlant24: 1
+    PottedPlant26: 1
+
+- type: weightedRandomEntity
+  id: PottedPlantPlasticEntityTable
+  weights:
+    PottedPlant27: 1
+    PottedPlant28: 1
+    PottedPlant29: 1
+    PottedPlant30: 1

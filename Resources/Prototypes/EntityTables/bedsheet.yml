@@ -1,0 +1,18 @@
+- type: weightedRandomEntity
+  id: BedsheetEntityTable
+  weights:
+    BedsheetBlue: 97
+    BedsheetYellow: 97
+    BedsheetOrange: 97
+    BedsheetGreen: 97
+    BedsheetNT: 97
+    BedsheetRed: 97
+    BedsheetUSA: 97
+    BedsheetBrown: 97
+    BedsheetBlack: 97
+    BedsheetPurple: 97
+    BedsheetGrey: 97
+    BedsheetWhite: 97
+    BedsheetRainbow: 97
+    BedsheetIan: 3
+    BedsheetCosmos: 3

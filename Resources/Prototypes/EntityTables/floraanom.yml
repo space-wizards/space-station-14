@@ -1,0 +1,18 @@
+- type: weightedRandomEntity
+  id: FloraAnomEntityTable
+  weights:
+    FoodAmbrosiaVulgaris: 20
+    FoodAloe: 20
+    FoodCabbage: 20
+    FoodCarrot: 20
+    FoodGalaxythistle: 20
+    FoodLemon: 20
+    FoodLime: 20
+    FoodPeaPod: 20
+    FoodPineapple: 20
+    FoodOnionRed: 20
+    FoodWatermelon: 20
+    FoodGatfruit: 10
+    MobTomatoKiller: 10
+    MobLuminousEntity: 1
+    MobLuminousObject: 1

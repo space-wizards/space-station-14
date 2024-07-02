@@ -1,0 +1,13 @@
+- type: weightedRandomEntity
+  id: ShadowKudzuLootEntityTable
+  weights:
+    CrystalPink: 140
+    ShadowPortal: 70
+    ShadowTree01: 70
+    ShadowTree02: 70
+    ShadowTree03: 70
+    ShadowTree04: 70
+    ShadowTree05: 70
+    ShadowTree06: 70
+    MobCatShadow: 5
+    ArtifactFragment: 5
