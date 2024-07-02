@@ -668,8 +668,10 @@ namespace Content.Server.Ghost.Roles
             if (string.IsNullOrEmpty(component.Prototype))
                 throw new NullReferenceException("Prototype string cannot be null or empty!");
 
-            var mob = Spawn(component.Prototype, Transform(uid).Coordinates);
-            _transform.AttachToGridOrMap(mob);
+            if (!_transform.TryGetGridOrMapCoordinates(uid, out var spawnCoordinates))
+                return;
+
+            var mob = Spawn(component.Prototype, spawnCoordinates.Value);
 
             var spawnedEvent = new GhostRoleSpawnerUsedEvent(uid, mob);
             RaiseLocalEvent(mob, spawnedEvent);
