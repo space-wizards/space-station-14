@@ -2,6 +2,7 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
 using Content.Server.Traits.Assorted;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
 using Content.Shared.Traits.Assorted;
 
@@ -17,7 +18,7 @@ public sealed class MassHallucinationsRule : StationEventSystem<MassHallucinatio
         var query = EntityQueryEnumerator<MindContainerComponent>();
         while (query.MoveNext(out var ent, out _))
         {
-            if (!HasComp<ParacusiaComponent>(ent))
+            if (!HasComp<ParacusiaComponent>(ent) && HasComp<HumanoidAppearanceComponent>(ent))
             {
                 EnsureComp<MassHallucinationsComponent>(ent);
                 var paracusia = EnsureComp<ParacusiaComponent>(ent);
@@ -35,6 +36,7 @@ public sealed class MassHallucinationsRule : StationEventSystem<MassHallucinatio
         while (query.MoveNext(out var ent, out _))
         {
             RemComp<ParacusiaComponent>(ent);
+            RemComp<MassHallucinationsComponent>(ent);
         }
     }
 }
