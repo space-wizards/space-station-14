@@ -215,7 +215,7 @@
   - type: GuideHelp
     guides:
       - Cyborgs
-  - type: StepTriggerImmune
+  - type: ProtectedFromStepTriggers
 
 - type: entity
   abstract: true

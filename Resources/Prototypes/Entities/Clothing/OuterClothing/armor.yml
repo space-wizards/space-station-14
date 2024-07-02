@@ -138,7 +138,7 @@
         Radiation: 0
         Caustic: 0.75
   - type: GroupExamine
-  - type: ClothingRequiredStepTriggerImmune
+  - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
 - type: entity
@@ -236,7 +236,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: GroupExamine
-  - type: ClothingRequiredStepTriggerImmune
+  - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
 - type: entity
@@ -264,7 +264,7 @@
   - type: Construction
     graph: BoneArmor
     node: armor
-  - type: ClothingRequiredStepTriggerImmune
+  - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
 - type: entity
@@ -285,6 +285,6 @@
         Piercing: 0.6
         Heat: 0.5
   - type: GroupExamine
-  - type: ClothingRequiredStepTriggerImmune
+  - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
