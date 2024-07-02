@@ -296,3 +296,15 @@
     Cellular: 0.0
     Heat: 2.5
     Caustic: 0.0
+
+# Borg damage modifier sets
+- type: damageModifierSet
+  id: Borg
+  coefficients:
+    Blunt: 0.8
+    Slash: 0.8
+    Piercing: 0.8
+    Heat: 1.0
+    Shock: 2.5
+  flatReductions:
+    Blunt: 5

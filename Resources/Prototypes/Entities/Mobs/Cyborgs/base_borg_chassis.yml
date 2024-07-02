@@ -149,6 +149,7 @@
   - type: LockedWiresPanel
   - type: Damageable
     damageContainer: Silicon
+    damageModifierSet: Borg
   - type: Destructible
     thresholds:
     - trigger:
