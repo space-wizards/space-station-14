@@ -1,16 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Shared.Chat.V2;
-using Content.Shared.Chat.V2.Repository;
+using Content.Shared.Chat.V2.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Replays;
 
-namespace Content.Server.Chat.V2.Repository;
+namespace Content.Server.Chat.V2.Systems;
 
 /// <summary>
-/// Stores <see cref="IChatEvent"/>, gives them UIDs, and issues <see cref="MessageCreatedEvent"/>.
+/// Stores ChatEvents, gives them UIDs, and issues MessageCreatedEvents.
 /// Allows for deletion of messages.
 /// </summary>
 public sealed class ChatRepositorySystem : EntitySystem
@@ -32,16 +31,23 @@ public sealed class ChatRepositorySystem : EntitySystem
             // TODO: resolve https://github.com/space-wizards/space-station-14/issues/25485 so we can dump the chat to disc.
             Refresh();
         };
+
+        SubscribeNetworkEvent<ChatCreatedEvent<AnnouncementCreatedEvent>>(ev => Add(ev.Event));
+        SubscribeNetworkEvent<ChatCreatedEvent<VerbalChatCreatedEvent>>(ev => Add(ev.Event));
+        SubscribeNetworkEvent<ChatCreatedEvent<VisualChatCreatedEvent>>(ev => Add(ev.Event));
+        SubscribeNetworkEvent<ChatCreatedEvent<OutOfCharacterChatCreatedEvent>>(ev => Add(ev.Event));
     }
 
     /// <summary>
-    /// Adds an <see cref="IChatEvent"/> to the repo and raises it with a UID for consumption elsewhere.
+    /// Adds a <see cref="CreatedChatEvent"/> to the repo and raises it with a UID for consumption elsewhere.
     /// </summary>
     /// <param name="ev">The event to store and raise</param>
     /// <returns>If storing and raising succeeded.</returns>
-    public bool Add(IChatEvent ev)
+    public bool Add<T>(T ev) where T : CreatedChatEvent
     {
-        if (!_player.TryGetSessionByEntity(ev.Sender, out var session))
+        var entityUid = GetEntity(ev.Sender);
+
+        if (!_player.TryGetSessionByEntity(entityUid, out var session))
         {
             return false;
         }
@@ -56,7 +62,7 @@ public sealed class ChatRepositorySystem : EntitySystem
         {
             UserName = session.Name,
             UserId = session.UserId,
-            EntityName = Name(ev.Sender),
+            EntityName = Name(entityUid),
             StoredEvent = ev
         };
 
@@ -64,7 +70,8 @@ public sealed class ChatRepositorySystem : EntitySystem
 
         CollectionsMarshal.GetValueRefOrAddDefault(_playerMessages, storedEv.UserId, out _)?.Add(messageId);
 
-        RaiseLocalEvent(ev.Sender, new MessageCreatedEvent(ev), true);
+        var outEv = new MessageCreatedEvent<T>(ev);
+        RaiseLocalEvent(entityUid, outEv, true);
 
         return true;
     }
@@ -74,7 +81,7 @@ public sealed class ChatRepositorySystem : EntitySystem
     /// </summary>
     /// <param name="id">The UID of a event.</param>
     /// <returns>The event, if it exists.</returns>
-    public IChatEvent? GetEventFor(uint id)
+    public ICreatedChatEvent? GetEventFor(uint id)
     {
         return _messages.TryGetValue(id, out var record) ? record.StoredEvent : null;
     }
@@ -135,18 +142,16 @@ public sealed class ChatRepositorySystem : EntitySystem
     /// <param name="reason">Why nuking failed, if it did.</param>
     /// <returns>If nuking did anything.</returns>
     /// <remarks>Note that this could be a <b>very large</b> event, as we send every single event ID over the wire.
-    /// By necessity we can't leak the player-source of chat messages (or if they even have the same origin) because of
-    /// client modders who could use that information to cheat/metagrudge/etc >:(</remarks>
+    /// By necessity, we can't leak the player-source of chat messages (or if they even have the same origin) because of
+    /// client modders who could use that information to cheat/metagrudge/etc. >:(</remarks>
     public bool NukeForUsername(string userName, [NotNullWhen(false)] out string? reason)
     {
-        if (!_player.TryGetUserId(userName, out var userId))
-        {
-            reason = Loc.GetString("command-error-nukechatmessages-usernames-usernamenotexist", ("username", userName));
+        if (_player.TryGetUserId(userName, out var userId))
+            return NukeForUserId(userId, out reason);
 
-            return false;
-        }
+        reason = Loc.GetString("command-error-nukechatmessages-usernames-usernamenotexist", ("username", userName));
 
-        return NukeForUserId(userId, out reason);
+        return false;
     }
 
     /// <summary>
@@ -157,8 +162,8 @@ public sealed class ChatRepositorySystem : EntitySystem
     /// <param name="reason">Why nuking failed, if it did.</param>
     /// <returns>If nuking did anything.</returns>
     /// <remarks>Note that this could be a <b>very large</b> event, as we send every single event ID over the wire.
-    /// By necessity we can't leak the player-source of chat messages (or if they even have the same origin) because of
-    /// client modders who could use that information to cheat/metagrudge/etc >:(</remarks>
+    /// By necessity, we can't leak the player-source of chat messages (or if they even have the same origin) because of
+    /// client modders who could use that information to cheat/metagrudge/etc. >:(</remarks>
     public bool NukeForUserId(NetUserId userId, [NotNullWhen(false)] out string? reason)
     {
         if (!_playerMessages.TryGetValue(userId, out var dict))

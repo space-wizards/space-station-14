@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Content.Server.Administration;
-using Content.Server.Chat.V2.Repository;
+using Content.Server.Chat.V2.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;

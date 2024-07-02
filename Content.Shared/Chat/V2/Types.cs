@@ -1,67 +1,22 @@
+using Content.Shared.Chat.V2.Systems;
+using Robust.Shared.Player;
+
 namespace Content.Shared.Chat.V2;
 
 /// <summary>
-/// The types of messages that can be sent, validated and processed via user input that are covered by Chat V2.
+/// Defines a chat event being passed around inside the chat process.
 /// </summary>
-public enum MessageType : byte
+public interface ICreatedChatEvent
 {
-    #region Player-sendable types
+    public ChatContext Context
+    {
+        get;
+    }
 
-    /// <summary>
-    /// Chat for announcements like CentCom telling you to stop sending them memes.
-    /// </summary>
-    Announcement,
-    /// <summary>
-    /// Chat that ghosts use to complain about being gibbed.
-    /// </summary>
-    DeadChat,
-    /// <summary>
-    /// Chat that mimes use to evade their vow.
-    /// </summary>
-    Emote,
-    /// <summary>
-    /// Chat that players use to make lame jokes to people nearby.
-    /// </summary>
-    Local,
-    /// <summary>
-    /// Chat that players use to complain about shitsec/admins/antags/balance/etc.
-    /// </summary>
-    Looc,
-    /// <summary>
-    /// Chat that players use to say "HELP MAINT", or plead to call the shuttle because a beaker spilled.
-    /// </summary>
-    /// <remarks>This does not tell you what radio channel has been chatted on!</remarks>
-    Radio,
-    /// <summary>
-    /// Chat that is used exclusively by syndie tots to collaborate on whatever tots do.
-    /// </summary>
-    Whisper,
-
-    #endregion
-
-    #region Non-player-sendable types
-
-    /// <summary>
-    /// Chat that is sent to exactly one player; almost exclusively used for admemes and prayer responses.
-    /// </summary>
-    Subtle,
-    /// <summary>
-    /// Chat that is sent by automata, like when a vending machine thanks you for your unwise purchases.
-    /// </summary>
-    Background,
-
-    #endregion
-}
-
-/// <summary>
-/// Defines a chat event that can be stored in a chat repository.
-/// </summary>
-public interface IChatEvent
-{
     /// <summary>
     /// The sender of the chat message.
     /// </summary>
-    public EntityUid Sender
+    public NetEntity Sender
     {
         get;
     }
@@ -84,11 +39,22 @@ public interface IChatEvent
         set;
     }
 
-    /// <summary>
-    /// The type of sent message.
-    /// </summary>
-    public MessageType Type
+    public void SetId(uint id)
+    {
+        if (Id != 0)
+        {
+            return;
+        }
+
+        Id = id;
+    }
+
+    public ICommonSession SenderSession
     {
         get;
     }
+
+    public ChatReceivedEvent ToReceivedEvent();
+
+    public ICreatedChatEvent Clone();
 }
