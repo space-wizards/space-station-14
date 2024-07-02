@@ -337,5 +337,27 @@ Entries:
   id: 41
   time: '2024-06-24T21:56:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29406
+- author: Chief-Engineer
+  changes:
+  - message: Added the ability to alert for shared connections.
+    type: Add
+  id: 42
+  time: '2024-06-26T13:43:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29405
+- author: Repo
+  changes:
+  - message: Changed admin object tab from auto to manual refresh on tab change or
+      button press so that entries don't shift around when selecting an object.
+    type: Tweak
+  id: 43
+  time: '2024-06-28T03:32:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28681
+- author: Chief-Engineer
+  changes:
+  - message: Admin alert for unsafe AME injection rate was disabled.
+    type: Remove
+  id: 44
+  time: '2024-06-30T12:26:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29582
 Name: Admin
 Order: 1
