@@ -47,7 +47,6 @@
         hard: False
   - type: Transform
     anchored: true
-    noRot: true
   - type: ApcPowerReceiver
     powerLoad: 12000
     needsPower: false #only turns on when scanning
