@@ -6,6 +6,9 @@ namespace Content.Server.Medical.Components;
 /// <summary>
 /// After scanning, retrieves the target Uid to use with its related UI.
 /// </summary>
+/// <remarks>
+/// Requires <c>ItemToggleComponent</c>.
+/// </remarks>
 [RegisterComponent, AutoGenerateComponentPause]
 [Access(typeof(HealthAnalyzerSystem), typeof(CryoPodSystem))]
 public sealed partial class HealthAnalyzerComponent : Component

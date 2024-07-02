@@ -17,7 +17,6 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Reflect
-    enabled: true
     reflectProb: .1
     spread: 90
   - type: Item
@@ -184,7 +183,6 @@
       soundHit:
         path: /Audio/Effects/explosion_small1.ogg
     - type: Reflect
-      enabled: true
       reflectProb: .25
       spread: 90
     - type: Item
