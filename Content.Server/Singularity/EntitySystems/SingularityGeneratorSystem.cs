@@ -15,8 +15,6 @@ public sealed class SingularityGeneratorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
-
         var vvHandle = _vvm.GetTypeHandler<SingularityGeneratorComponent>();
         vvHandle.AddPath(nameof(SingularityGeneratorComponent.Power), (_, comp) => comp.Power, SetPower);
         vvHandle.AddPath(nameof(SingularityGeneratorComponent.Threshold), (_, comp) => comp.Threshold, SetThreshold);
@@ -45,6 +43,7 @@ public sealed class SingularityGeneratorSystem : EntitySystem
 
         SetPower(uid, 0, comp);
         EntityManager.SpawnEntity(comp.SpawnPrototype, Transform(uid).Coordinates);
+        Del(uid); // deletes the generator after spawning to prevent summoning multiple of whatever
     }
 
     #region Getters/Setters
@@ -88,35 +87,4 @@ public sealed class SingularityGeneratorSystem : EntitySystem
             OnPassThreshold(uid, comp);
     }
     #endregion Getters/Setters
-
-    #region Event Handlers
-    /// <summary>
-    /// Handles PA Particles colliding with a singularity generator.
-    /// Adds the power from the particles to the generator.
-    /// TODO: Desnowflake this.
-    /// </summary>
-    /// <param name="uid">The uid of the PA particles have collided with.</param>
-    /// <param name="component">The state of the PA particles.</param>
-    /// <param name="args">The state of the beginning of the collision.</param>
-    private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, ref StartCollideEvent args)
-    {
-        if (EntityManager.TryGetComponent<SingularityGeneratorComponent>(args.OtherEntity, out var singularityGeneratorComponent))
-        {
-            SetPower(
-                args.OtherEntity,
-                singularityGeneratorComponent.Power + component.State switch
-                {
-                    ParticleAcceleratorPowerState.Standby => 0,
-                    ParticleAcceleratorPowerState.Level0 => 1,
-                    ParticleAcceleratorPowerState.Level1 => 2,
-                    ParticleAcceleratorPowerState.Level2 => 4,
-                    ParticleAcceleratorPowerState.Level3 => 8,
-                    _ => 0
-                },
-                singularityGeneratorComponent
-            );
-            EntityManager.QueueDeleteEntity(uid);
-        }
-    }
-    #endregion Event Handlers
 }

@@ -11,42 +11,38 @@ public abstract partial class SharedLightningComponent : Component
     /// <summary>
     /// Can this lightning arc?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("canArc")]
+    [DataField]
     public bool CanArc;
 
     /// <summary>
     /// How much should lightning arc in total?
     /// Controls the amount of bolts that will spawn.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("maxTotalArc")]
+    [DataField]
     public int MaxTotalArcs = 50;
 
     /// <summary>
     /// The prototype ID used for arcing bolts. Usually will be the same name as the main proto but it could be flexible.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("lightningPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string LightningPrototype = "Lightning";
 
     /// <summary>
     /// The target that the lightning will Arc to.
     /// </summary>
-    [DataField("arcTarget")]
+    [DataField]
     public EntityUid? ArcTarget;
 
     /// <summary>
     /// How far should this lightning go?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("maxLength")]
+    [DataField]
     public float MaxLength = 5f;
 
     /// <summary>
     /// List of targets that this collided with already
     /// </summary>
-    [DataField("arcTargets")]
+    [DataField]
     public HashSet<EntityUid> ArcTargets = new();
 
     /// <summary>

@@ -59,13 +59,6 @@
         - Opaque
         layer:
         - GlassLayer
-  - type: EventHorizon
-    radius: 0.5
-    canBreachContainment: false
-    colliderFixtureId: EventHorizonCollider
-    consumerFixtureId: EventHorizonConsumer
-    consumeTiles: false
-    consumeEntities: false
   - type: TeslaEnergyBall
     spawnProto: TeslaMiniEnergyBall
     soundCollapse:
@@ -78,7 +71,7 @@
     shootMinInterval: 3
     shootMaxInterval: 5
     shootRange: 7
-    lightningPrototype: Lightning #To do: change to HyperchargedLightning, after fix beam system
+    lightningPrototype: HyperchargedLightning
   - type: ChasingWalk
     minSpeed: 1
     maxSpeed: 3
@@ -104,6 +97,9 @@
     interactSuccessString: petting-success-tesla
     interactFailureString: petting-failure-tesla
     interactSuccessSpawn: EffectHearts
+  - type: Electrified
+    requirePower: false
+    shockDamage: 60
 
 - type: entity
   id: TeslaMiniEnergyBall

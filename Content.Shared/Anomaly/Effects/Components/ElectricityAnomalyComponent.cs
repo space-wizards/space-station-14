@@ -62,4 +62,16 @@ public sealed partial class ElectricityAnomalyComponent : Component
     /// <summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float EmpDisabledDuration = 60f;
+
+    /// <summary>
+    /// The lightning proto that is used when the anomaly pulses
+    /// </summary>
+    [DataField]
+    public string PulseLightningProto = "Lightning";
+
+    /// <summary>
+    /// The lightning proto that is used when the anomaly goes super critical
+    /// </summary>
+    [DataField]
+    public string SupercriticalLightningProto = "SuperChargedLightning";
 }

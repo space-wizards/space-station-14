@@ -1,14 +1,10 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Singularity.Components;
+using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Tesla.Components;
-using Content.Shared.Database;
 using Content.Shared.Singularity.Components;
-using Content.Shared.Mind.Components;
-using Content.Shared.Tag;
-using Robust.Shared.Physics.Events;
-using Content.Server.Lightning.Components;
 using Robust.Server.Audio;
-using Content.Server.Singularity.Events;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
+
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -23,19 +19,20 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TeslaEnergyBallComponent, EntityConsumedByEventHorizonEvent>(OnConsumed);
+        SubscribeLocalEvent<TeslaEnergyBallComponent, PreventCollideEvent>(OnPreventCollide);
     }
 
-    private void OnConsumed(Entity<TeslaEnergyBallComponent> tesla, ref EntityConsumedByEventHorizonEvent args)
+    /// <summary>
+    /// only collides with the containment fields, containment field generators, or particle projectile components from the PA
+    /// </summary>
+    public void OnPreventCollide(Entity<TeslaEnergyBallComponent> entity, ref PreventCollideEvent args)
     {
-        Spawn(tesla.Comp.ConsumeEffectProto, Transform(args.Entity).Coordinates);
-        if (TryComp<SinguloFoodComponent>(args.Entity, out var singuloFood))
-        {
-            AdjustEnergy(tesla, tesla.Comp, singuloFood.Energy);
-        } else
-        {
-            AdjustEnergy(tesla, tesla.Comp, tesla.Comp.ConsumeStuffEnergy);
-        }
+        if (HasComp<ContainmentFieldComponent>(args.OtherEntity) 
+            || HasComp<ContainmentFieldGeneratorComponent>(args.OtherEntity)
+            || HasComp<ParticleProjectileComponent>(args.OtherEntity))
+            return;
+
+        args.Cancelled = true;
     }
 
     public void AdjustEnergy(EntityUid uid, TeslaEnergyBallComponent component, float delta)

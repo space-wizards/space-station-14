@@ -11,12 +11,6 @@ namespace Content.Server.Tesla.Components;
 public sealed partial class TeslaEnergyBallComponent : Component
 {
     /// <summary>
-    /// how much energy will Tesla get by eating various things. Walls, people, anything.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ConsumeStuffEnergy = 2f;
-
-    /// <summary>
     /// The amount of energy this entity contains. Once the limit is reached, the energy will be spent to spawn mini-energy balls
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
