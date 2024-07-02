@@ -8,6 +8,7 @@ using Content.Server.GameTicking;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing;
 using Content.Shared.Damage;
 using Content.Shared.DeviceNetwork;
@@ -39,6 +40,7 @@ public sealed class SuitSensorSystem : EntitySystem
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
@@ -216,7 +218,7 @@ public sealed class SuitSensorSystem : EntitySystem
         if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
             return;
 
-        if (component.User != null && args.User != component.User && _mobStateSystem.IsAlive(component.User.Value))
+        if (component.User != null && args.User != component.User && _actionBlocker.CanInteract(component.User.Value, null))
             return;
 
         args.Verbs.UnionWith(new[]
@@ -309,7 +311,7 @@ public sealed class SuitSensorSystem : EntitySystem
         else
         {
             var doAfterEvent = new SuitSensorChangeDoAfterEvent(mode);
-            var doAfterArgs = new DoAfterArgs(EntityManager, userUid, 3.0f, doAfterEvent, uid)
+            var doAfterArgs = new DoAfterArgs(EntityManager, userUid, component.SensorsTime, doAfterEvent, uid)
             {
                 BreakOnMove = true,
                 BreakOnDamage = true
