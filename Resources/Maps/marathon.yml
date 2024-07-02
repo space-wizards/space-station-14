@@ -11089,7 +11089,7 @@ entities:
       pos: -20.5,-5.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -295.55695
+      secondsUntilStateChange: -537.51984
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -54789,12 +54789,6 @@ entities:
       parent: 30
 - proto: DisposalBend
   entities:
-  - uid: 6965
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -12.5,-9.5
-      parent: 30
   - uid: 7196
     components:
     - type: Transform
@@ -55856,6 +55850,12 @@ entities:
     - type: Transform
       pos: -21.5,-18.5
       parent: 30
+  - uid: 8689
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -11.5,-9.5
+      parent: 30
   - uid: 11018
     components:
     - type: Transform
@@ -55875,6 +55875,12 @@ entities:
     components:
     - type: Transform
       pos: 4.5,-3.5
+      parent: 30
+  - uid: 11447
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -10.5,-9.5
       parent: 30
   - uid: 12678
     components:
@@ -58721,12 +58727,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -9.5,-9.5
       parent: 30
-  - uid: 14440
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -10.5,-9.5
-      parent: 30
   - uid: 14442
     components:
     - type: Transform
@@ -60147,6 +60147,12 @@ entities:
       parent: 30
 - proto: DisposalYJunction
   entities:
+  - uid: 6965
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -12.5,-9.5
+      parent: 30
   - uid: 14077
     components:
     - type: Transform
@@ -64472,14 +64478,14 @@ entities:
     - type: Transform
       pos: 26.5,-26.5
       parent: 30
-- proto: GasMinerNitrogen
+- proto: GasMinerNitrogenStationLarge
   entities:
-  - uid: 8689
+  - uid: 11446
     components:
     - type: Transform
       pos: 26.5,-22.5
       parent: 30
-- proto: GasMinerOxygen
+- proto: GasMinerOxygenStationLarge
   entities:
   - uid: 8690
     components:
