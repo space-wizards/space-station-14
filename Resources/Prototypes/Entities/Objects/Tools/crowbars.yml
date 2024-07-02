@@ -1,0 +1,128 @@
+- type: entity
+  name: crowbar
+  parent: BaseItem
+  id: BaseCrowbar
+  abstract: true
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg
+  - type: Tag
+    tags:
+    - Crowbar
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 8
+    soundHit:
+      collection: MetalThud
+  - type: Tool
+    qualities:
+      - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: ToolTileCompatible
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+  - type: StaticPrice
+    price: 22
+  - type: Prying
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+  
+- type: entity
+  parent: BaseCrowbar
+  id: Crowbar
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Crowbars/crowbar.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,1
+    sprite: Objects/Tools/Crowbars/crowbar.rsi
+    storedSprite:
+      sprite: Objects/Tools/Crowbars/crowbar.rsi
+      state: storage
+
+- type: entity
+  name: emergency crowbar
+  parent: BaseCrowbar
+  id: CrowbarRed
+  description: A pocket crowbar designed to pry open doors and firelocks during power outages.
+  components:
+  - type: Tag
+    tags:
+    - Crowbar
+    - CrowbarRed
+  - type: Sprite
+    sprite: Objects/Tools/Crowbars/red_crowbar.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,1
+    sprite: Objects/Tools/Crowbars/red_crowbar.rsi
+    storedSprite:
+      sprite: Objects/Tools/Crowbars/red_crowbar.rsi
+      state: storage
+
+- type: entity
+  name: crowbar
+  parent: BaseCrowbar
+  id: CrowbarGreen
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders, printed from an autolathe.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Crowbars/green_crowbar.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,1
+    sprite: Objects/Tools/Crowbars/green_crowbar.rsi
+    storedSprite:
+      sprite: Objects/Tools/Crowbars/green_crowbar.rsi
+      state: storage
+
+- type: entity
+  name: crowbar
+  parent: BaseCrowbar
+  id: CrowbarOrange
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders, found in toolboxes.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Crowbars/orange_crowbar.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,1
+    sprite: Objects/Tools/Crowbars/orange_crowbar.rsi
+    storedSprite:
+      sprite: Objects/Tools/Crowbars/orange_crowbar.rsi
+      state: storage
+
+- type: entity
+  name: crowbar
+  parent: BaseCrowbar
+  id: CrowbarYellow
+  description: A pocket crowbar designed to pry open doors and firelocks during power outages, dispensed from Engineering.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Crowbars/yellow_crowbar.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,1
+    sprite: Objects/Tools/Crowbars/yellow_crowbar.rsi
+    storedSprite:
+      sprite: Objects/Tools/Crowbars/yellow_crowbar.rsi
+      state: storage

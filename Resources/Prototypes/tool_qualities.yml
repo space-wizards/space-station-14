@@ -10,7 +10,7 @@
   name: tool-quality-prying-name
   toolName: tool-quality-prying-tool-name
   spawn: Crowbar
-  icon: { sprite: Objects/Tools/crowbar.rsi, state: icon }
+  icon: { sprite: Objects/Tools/Crowbars/crowbar.rsi, state: icon }
 
 - type: tool
   id: Screwing
