@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-NC-SA-3.0",
-  "copyright": "silver, plasma taken from https://github.com/vgstation-coders/vgstation13 at commit f2ef221849675915a78fd92fe622c32ab740e085, spacequartz taken from https://github.com/goonstation/goonstation at commit b51daf824df46a3a1426475f982c09479818e522 and reshaded by Alekshhh, bananium; uranium; iron; gold; coal by Alekshhh",
+  "copyright": "silver, plasma taken from https://github.com/vgstation-coders/vgstation13 at commit f2ef221849675915a78fd92fe622c32ab740e085, spacequartz taken from https://github.com/goonstation/goonstation at commit b51daf824df46a3a1426475f982c09479818e522 and reshaded by Alekshhh, bananium; uranium; iron; gold; coal by Alekshhh, diamond at commit https://github.com/tgstation/tgstation/pull/78524, edited by TheShuEd",
   "size": {
     "x": 32,
     "y": 32
@@ -33,6 +33,9 @@
     },
     {
       "name": "salt"
+    },
+    {
+      "name": "diamond"
     }
   ]
 }

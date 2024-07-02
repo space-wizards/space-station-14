@@ -32,6 +32,9 @@
           - id: WallRockGold
             prob: 0.05
             orGroup: rock
+          - id: WallRockDiamond
+            prob: 0.005
+            orGroup: rock
           - id: WallRockSilver
             prob: 0.05
             orGroup: rock
