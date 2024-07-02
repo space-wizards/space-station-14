@@ -8,3 +8,25 @@
     sprite: GreyStation/Clothing/Eyes/Glasses/welding_goggles.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Eyes/Glasses/welding_goggles.rsi
+
+- type: entity
+  parent: ClothingEyesGlassesSunglasses
+  id: ClothingEyesGlassesNoir
+  name: noir glasses
+  description: This city ain't what it used to be...
+  components:
+  - type: ShaderClothing
+    shader: GreyscaleFullscreen
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesTequila
+  name: tequila glasses
+  description: 'Do shots of tequila and say "Bravo, vince" with these tinted shades.'
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Eyes/Glasses/tequila_glasses.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Eyes/Glasses/tequila_glasses.rsi
+  - type: ShaderClothing
+    shader: MexicoFullscreen
