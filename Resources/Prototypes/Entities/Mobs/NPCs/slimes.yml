@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: basic slime
   id: BaseMobAdultSlimes
   parent: [ SimpleMobBase, MobCombat ]
@@ -162,9 +162,14 @@
     factions:
     - NanoTrasen
   - type: MultiHandedItem
+  - type: Geras
+    noAction: true
   - type: Item
     size: Huge
   - type: Sprite
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: white_adult_slime
     color: "#FFFFFF55"
   - type: MeleeWeapon
     attackRate: 2
@@ -174,9 +179,9 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: blue_adult_slime
+        Base: white_adult_slime
       Dead:
-        Base: blue_adult_slime_dead
+        Base: white_adult_slime_dead
 
 - type: entity
   name: blue slime
