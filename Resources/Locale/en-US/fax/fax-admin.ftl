@@ -12,3 +12,5 @@ admin-fax-message-placeholder = Your message here...
 admin-fax-stamp = Stamp icon:
 admin-fax-stamp-color = Stamp color:
 admin-fax-send = Send
+admin-fax-lock-page = Lock Page
+admin-fax-lock-page-tooltip = Lock the paper such that it cannot be edited even by things such as cybersun pens.
