@@ -1,6 +1,6 @@
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Server.Chemistry.ReactionEffects;
+using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
 using Content.Server.Popups;
@@ -268,6 +268,9 @@ public sealed class BloodstreamSystem : EntitySystem
         Entity<BloodstreamComponent> ent,
         ref ApplyMetabolicMultiplierEvent args)
     {
+        // TODO REFACTOR THIS
+        // This will slowly drift over time due to floating point errors.
+        // Instead, raise an event with the base rates and allow modifiers to get applied to it.
         if (args.Apply)
         {
             ent.Comp.UpdateInterval *= args.Multiplier;
