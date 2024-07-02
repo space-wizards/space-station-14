@@ -89,11 +89,6 @@
   name: store-category-pointless
   priority: 10
 
-- type: storeCategory
-  id: UplinkObjectives
-  name: store-category-objectives
-  priority: 11
-
 #revenant
 - type: storeCategory
   id: RevenantAbilities
