@@ -488,6 +488,14 @@ public abstract partial class SharedBuckleSystem
         if (buckle.Comp.BuckledTo is not { } strapUid)
             return false;
 
+        if (user.HasValue && !HasComp<HandsComponent>(user))
+        {
+            // PopupPredicted when
+            if (_netManager.IsServer)
+                _popup.PopupEntity(Loc.GetString("buckle-component-no-hands-message"), user.Value, user.Value);
+            return false;
+        }
+
         if (!TryComp(strapUid, out StrapComponent? strapComp))
         {
             Log.Error($"Encountered buckle {ToPrettyString(buckle.Owner)} with invalid strap entity {ToPrettyString(strap)}");
