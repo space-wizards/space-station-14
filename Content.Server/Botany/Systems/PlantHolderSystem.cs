@@ -19,6 +19,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Tag;
+using Content.Shared.Fluids.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -26,6 +27,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Botany.Systems;
 
@@ -55,6 +57,7 @@ public sealed class PlantHolderSystem : EntitySystem
         SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<PlantHolderComponent, SolutionTransferSuccessEvent>(OnSolutionAdded);
     }
 
     public override void Update(float frameTime)
@@ -261,6 +264,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
+
         if (_tagSystem.HasTag(args.Used, "PlantSampleTaker"))
         {
             if (component.Seed == null)
@@ -356,6 +360,16 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
+    private void OnSolutionAdded(Entity<PlantHolderComponent> entity, ref SolutionTransferSuccessEvent args)
+    {
+        var (uid, component) = entity;
+
+        //Only play splosh sound when using containers that would be dumped into the basin (as opposed to ie. sprayed on)
+        if (TryComp(args.From, out SpillableComponent? spill))
+        {
+            _audio.PlayPvs(component.WateringSound, uid);
+        }
+    }
     private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
     {
         DoHarvest(entity, args.User, entity.Comp);
