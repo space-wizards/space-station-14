@@ -67,6 +67,13 @@
   - type: GuideHelp
     guides: [ Singularity, Power ]
 
+- type: entity
+  parent: ContainmentFieldGenerator
+  id: ContainmentFieldGeneratorAlarm
+  suffix: Alarm
+  components:
+    - type: ContainmentAlarm
+
 
 - type: entity
   id: ContainmentField

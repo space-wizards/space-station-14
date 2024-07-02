@@ -137,3 +137,13 @@
   cost: 300
   category: cargoproduct-category-name-engineering
   group: market
+
+- type: cargoProduct
+  id: EngineeringContainmenFieldGenAlarms
+  icon:
+    sprite: Objects/Misc/containment_field_alarm.rsi
+    state: icon
+  product: CrateContainmentAlarms
+  cost: 2000
+  category: cargoproduct-category-name-engineering
+  group: market

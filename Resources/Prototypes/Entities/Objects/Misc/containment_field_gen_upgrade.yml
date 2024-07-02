@@ -1,0 +1,15 @@
+- type: entity
+  name: containment field generator upgrade
+  parent: BaseItem
+  id: ContainmentFieldGenUpgrade
+  description: Installing this into a containment field generator makes it send alarms over radio according to its power level.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/containment_field_alarm.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/containment_field_alarm.rsi
+    size: Tiny
+  - type: Tag
+    tags:
+    - ContainmentFieldAlarmUpgrade

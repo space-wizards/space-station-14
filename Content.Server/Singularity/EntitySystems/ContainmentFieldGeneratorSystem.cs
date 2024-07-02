@@ -23,6 +23,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly ContainmentAlarmSystem _alarm = default!;
+    
 
     public override void Initialize()
     {
@@ -31,6 +33,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ReAnchorEvent>(OnReanchorEvent);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
@@ -80,6 +83,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         else
             args.PushMarkup(Loc.GetString("comp-containment-off"));
+
+        if (HasComp<ContainmentAlarmComponent>(uid))
+            args.PushMarkup(Loc.GetString("comp-containment-alert-field-alarm"));
     }
 
     private void OnInteract(Entity<ContainmentFieldGeneratorComponent> generator, ref InteractHandEvent args)
@@ -99,6 +105,25 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             else
                 TurnOff(generator);
         }
+        args.Handled = true;
+    }
+
+    private void OnInteractUsing(Entity<ContainmentFieldGeneratorComponent> generator, ref InteractUsingEvent args)
+    {
+        if(args.Handled)
+            return;
+
+        if (!_tags.HasTag(args.Used, "ContainmentFieldAlarmUpgrade"))
+            return;
+
+        if(!HasComp<ContainmentAlarmComponent>(generator))
+        {
+            AddComp<ContainmentAlarmComponent>(generator);
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-alarm-upgrade-success"), args.User, args.User);
+            QueueDel(args.Used);
+        }
+        else
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-alarm-upgrade-fail"), args.User, args.User);
         args.Handled = true;
     }
 
@@ -200,7 +225,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TryGenerateFieldConnection(dir, generator, genXForm);
             }
         }
-
+        if (TryComp<ContainmentAlarmComponent>(generator.Owner, out var alarm))
+            _alarm.ResetAlarm(generator.Owner, alarm);
         ChangePowerVisualizer(power, generator);
     }
 
@@ -209,9 +235,22 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         var component = generator.Comp;
         component.PowerBuffer -= power;
 
-        if (component.PowerBuffer < component.PowerMinimum && component.Connections.Count != 0)
+        if(component.Connections.Count != 0)
         {
-            RemoveConnections(generator);
+            bool brokenLink = false;
+            if (component.PowerBuffer < component.PowerMinimum)
+            {
+                RemoveConnections(generator);
+                brokenLink = true;
+            }
+
+            if (TryComp<ContainmentAlarmComponent>(generator.Owner, out var alarm))
+            {
+                if (brokenLink)
+                    _alarm.BroadcastContainmentBreak((generator, alarm));
+                else
+                    _alarm.UpdateAlertLevel((generator, alarm), component.PowerBuffer);
+            }
         }
 
         ChangePowerVisualizer(power, generator);
