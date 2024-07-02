@@ -127,24 +127,27 @@ public sealed partial class GunSystem : SharedGunSystem
                 case CartridgeAmmoComponent cartridge:
                     if (!cartridge.Spent)
                     {
-                        if (cartridge.Count > 1)
+                        var uid = Spawn(cartridge.Prototype, fromEnt);
+                        if (TryComp<ProjectileSpreadComponent>(uid, out var cartridgeSpreadComp))
                         {
-                            var ev = new GunGetAmmoSpreadEvent(cartridge.Spread);
-                            RaiseLocalEvent(gunUid, ref ev);
+                            var spreadEvent = new GunGetAmmoSpreadEvent(cartridgeSpreadComp.Spread);
+                            RaiseLocalEvent(gunUid, ref spreadEvent);
 
-                            var angles = LinearSpread(mapAngle - ev.Spread / 2,
-                                mapAngle + ev.Spread / 2, cartridge.Count);
+                            var angles = LinearSpread(mapAngle - spreadEvent.Spread / 2,
+                                         mapAngle + spreadEvent.Spread / 2, cartridgeSpreadComp.Count);
 
-                            for (var i = 0; i < cartridge.Count; i++)
+                            ShootOrThrow(uid, angles[0].ToVec(), gunVelocity, gun, gunUid, user);
+                            shotProjectiles.Add(uid);
+
+                            for (var i = 1; i < cartridgeSpreadComp.Count; i++)
                             {
-                                var uid = Spawn(cartridge.Prototype, fromEnt);
-                                ShootOrThrow(uid, angles[i].ToVec(), gunVelocity, gun, gunUid, user);
+                                var newuid = Spawn(cartridgeSpreadComp.Prototype, fromEnt);
+                                ShootOrThrow(newuid, angles[i].ToVec(), gunVelocity, gun, gunUid, user);
                                 shotProjectiles.Add(uid);
                             }
                         }
                         else
                         {
-                            var uid = Spawn(cartridge.Prototype, fromEnt);
                             ShootOrThrow(uid, mapDirection, gunVelocity, gun, gunUid, user);
                             shotProjectiles.Add(uid);
                         }
@@ -175,10 +178,36 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 // Ammo shoots itself
                 case AmmoComponent newAmmo:
-                    shotProjectiles.Add(ent!.Value);
+                    if (ent == null)
+                        break;
+
+                    if (TryComp<ProjectileSpreadComponent>(ent.Value, out var ammoSpreadComp))
+                    {
+                        var spreadEvent = new GunGetAmmoSpreadEvent(ammoSpreadComp.Spread);
+                        RaiseLocalEvent(gunUid, ref spreadEvent);
+
+                        var angles = LinearSpread(mapAngle - spreadEvent.Spread / 2,
+                                     mapAngle + spreadEvent.Spread / 2, ammoSpreadComp.Count);
+
+                        ShootOrThrow(ent.Value, angles[0].ToVec(), gunVelocity, gun, gunUid, user);
+                        shotProjectiles.Add(ent!.Value);
+
+                        for (var i = 1; i < ammoSpreadComp.Count; i++)
+                        {
+                            var newuid = Spawn(ammoSpreadComp.Prototype, fromEnt);
+                            ShootOrThrow(newuid, angles[i].ToVec(), gunVelocity, gun, gunUid, user);
+                            shotProjectiles.Add(ent!.Value);
+                        }
+                    }
+                    else
+                    {
+                        ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, gunUid, user);
+                        shotProjectiles.Add(ent!.Value);
+                    }
+
                     MuzzleFlash(gunUid, newAmmo, mapDirection.ToAngle(), user);
                     Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
-                    ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, gunUid, user);
+
                     break;
                 case HitscanPrototype hitscan:
 
