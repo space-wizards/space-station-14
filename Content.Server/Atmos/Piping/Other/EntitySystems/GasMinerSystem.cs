@@ -3,18 +3,15 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Other.Components;
 using Content.Server.Examine;
-using Content.Shared.Examine;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Content.Shared.Temperature;
 
 namespace Content.Server.Atmos.Piping.Other.EntitySystems
 {
     [UsedImplicitly]
     public sealed class GasMinerSystem : EntitySystem
     {
-        [Dependency] private readonly ExamineSystem _examineSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
 
