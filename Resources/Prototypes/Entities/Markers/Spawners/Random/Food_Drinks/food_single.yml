@@ -13,6 +13,8 @@
         state: plain
   - type: RandomSpawner
     prototypes:
+      - FoodBagel
+      - FoodBagelPoppy
       - FoodBurgerJelly
       - FoodBurgerCarp
       - FoodBurgerTofu

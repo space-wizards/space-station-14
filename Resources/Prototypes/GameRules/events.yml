@@ -277,7 +277,7 @@
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
-  
+
 - type: entity
   parent: BaseGameRule
   id: SolarFlare
@@ -404,6 +404,7 @@
         maxInitialInfectedGrace: 450
       - type: ZombifyOnDeath
       - type: IncurableZombie
+      - type: InitialInfected
       mindComponents:
       - type: InitialInfectedRole
         prototype: InitialInfected
@@ -454,6 +455,7 @@
     startAnnouncement: station-event-communication-interception
     startAudio:
       path: /Audio/Announcements/intercept.ogg
+    duration: null # the rule has to last the whole round not 1 second
   - type: AlertLevelInterceptionRule
   - type: AntagSelection
     definitions:

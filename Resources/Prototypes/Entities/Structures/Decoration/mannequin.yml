@@ -1,6 +1,6 @@
 - type: entity
   id: Mannequin
-  parent: BaseStructureDynamic
+  parent: [BaseStructureDynamic, StripableInventoryBase]
   name: mannequin
   description: It can wear any clothing with style.
   components:
@@ -19,7 +19,7 @@
     - map: [ "neck" ]
     - map: [ "back" ]
     - map: [ "mask" ]
-    - map: [ "head" ] 
+    - map: [ "head" ]
   - type: Rotatable
   - type: Fixtures
     fixtures:
@@ -87,9 +87,3 @@
         ent: null
   - type: Inventory
     templateId: mannequin
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface

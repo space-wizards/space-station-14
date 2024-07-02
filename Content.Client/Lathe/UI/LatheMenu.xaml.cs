@@ -217,12 +217,12 @@ public sealed partial class LatheMenu : DefaultWindow
             queuedRecipeBox.Orientation = BoxContainer.LayoutOrientation.Horizontal;
 
             var queuedRecipeProto = new EntityPrototypeView();
+            queuedRecipeBox.AddChild(queuedRecipeProto);
             if (_prototypeManager.TryIndex(recipe.Result, out EntityPrototype? entityProto) && entityProto != null)
                 queuedRecipeProto.SetPrototype(entityProto);
 
             var queuedRecipeLabel = new Label();
             queuedRecipeLabel.Text = $"{idx}. {recipe.Name}";
-            queuedRecipeBox.AddChild(queuedRecipeProto);
             queuedRecipeBox.AddChild(queuedRecipeLabel);
             QueueList.AddChild(queuedRecipeBox);
             idx++;

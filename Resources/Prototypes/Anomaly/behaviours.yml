@@ -84,7 +84,6 @@
   description: anomaly-behavior-reflect
   components:
   - type: Reflect
-    innate: true
     reflectProb: 0.5
     reflects:
       - Energy
