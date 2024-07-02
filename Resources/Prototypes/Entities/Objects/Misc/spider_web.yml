@@ -55,6 +55,7 @@
               min: 0
               max: 1
     - type: Temperature
+    - type: TemperatureDamageThresholds
       heatDamage:
         types:
           Heat: 5
@@ -140,6 +141,7 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Temperature
+    - type: TemperatureDamageThresholds
       heatDamage:
         types:
           Heat: 5
