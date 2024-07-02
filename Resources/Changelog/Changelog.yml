@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Velcroboy
-  changes:
-  - message: Fixed sec/lawyer and vault airlocks
-    type: Fix
-  id: 6358
-  time: '2024-04-15T22:22:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26980
-- author: tosatur
-  changes:
-  - message: Made clown snoring quieter
-    type: Tweak
-  id: 6359
-  time: '2024-04-16T18:48:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27012
 - author: DEATHB4DEFEAT, Dutch-VanDerLinde, metalgearsloth and musicmanvr
   changes:
   - message: Added loadouts
@@ -3821,3 +3807,17 @@
   id: 6857
   time: '2024-07-02T03:30:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29653
+- author: slarticodefast
+  changes:
+  - message: Fixed sprite rotation in harm mode on rotated grids.
+    type: Fix
+  id: 6858
+  time: '2024-07-02T13:04:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29663
+- author: lzk228
+  changes:
+  - message: Space Law book added to the game.
+    type: Add
+  id: 6859
+  time: '2024-07-02T13:33:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29392

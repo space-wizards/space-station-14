@@ -269,8 +269,6 @@
       - id: ClothingHeadsetAltSecurity
       - id: ClothingEyesGlassesSecurity
       - id: ClothingShoesBootsJack
-      - id: FlippoZeppelinLighter
-      - id: CigarGoldCase
       - id: DoorRemoteSecurity
       - id: RubberStampHos
       - id: SecurityTechFabCircuitboard
@@ -279,6 +277,7 @@
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
       - id: WeaponEnergyGunMultiphase # DeltaV - HoS Energy Gun
+      - id: BookSpaceLaw
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -294,8 +293,6 @@
       - id: ClothingHeadsetAltSecurity
       - id: ClothingEyesGlassesSecurity
       - id: ClothingShoesBootsJack
-      - id: FlippoZeppelinLighter
-      - id: CigarGoldCase
       - id: DoorRemoteSecurity
       - id: RubberStampHos
       - id: SecurityTechFabCircuitboard
@@ -303,6 +300,7 @@
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
       - id: WeaponEnergyGunMultiphase # DeltaV - HoS Energy Gun
+      - id: BookSpaceLaw
 
 - type: entity
   id: LockerFreezerVaultFilled
