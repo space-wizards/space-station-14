@@ -80,6 +80,9 @@
   - type: GuideHelp
     guides:
     - Security
+  - type: Tag
+    tags:
+      - GrenadeFlashBang
 
 - type: entity
   id: GrenadeFlashEffect
