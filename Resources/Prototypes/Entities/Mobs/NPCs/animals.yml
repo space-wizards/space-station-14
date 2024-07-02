@@ -415,13 +415,6 @@
   id: MobMothroach
   description: This is the adorable by-product of multiple attempts at genetically mixing mothpeople with cockroaches.
   components:
-  - type: GhostRole
-    makeSentient: true
-    allowSpeech: true
-    allowMovement: true
-    name: ghost-role-information-mothroach-name
-    description: ghost-role-information-mothroach-description
-    rules: ghost-role-information-freeagent-rules
   - type: Fixtures
     fixtures:
       fix1:
@@ -433,7 +426,6 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
-  - type: GhostTakeoverAvailable
   - type: Speech
     speechVerb: Moth
     speechSounds: Squeak
@@ -536,6 +528,21 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+
+- type: entity
+  parent: MobMothroach
+  id: MobMothroachGhostRole
+  suffix: "Ghost Role"
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-mothroach-name
+    description: ghost-role-information-mothroach-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+
 
 
 # Note that the mallard duck is actually a male drake mallard, with the brown duck being the female variant of the same species, however ss14 lacks sex specific textures
@@ -1506,14 +1513,6 @@
   components:
   - type: Body
     prototype: Mouse
-  - type: GhostRole
-    makeSentient: true
-    allowSpeech: true
-    allowMovement: true
-    name: ghost-role-information-mouse-name
-    description: ghost-role-information-mouse-description
-    rules: ghost-role-information-freeagent-rules
-  - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
     speechVerb: SmallMob
@@ -1656,6 +1655,22 @@
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
 
+
+- type: entity
+  suffix: "Ghost Role"
+  name: mouse
+  parent: MobMouse
+  id: MobMouseGhostRole
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-mouse-name
+    description: ghost-role-information-mouse-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+
 - type: entity
   parent: MobMouse
   suffix: Dead
@@ -1713,6 +1728,21 @@
     heldPrefix: 1
 
 - type: entity
+  suffix: "Ghost Role"
+  name: mouse
+  parent: MobMouse1
+  id: MobMouseGhostRole1
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-mouse-name
+    description: ghost-role-information-mouse-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+
+- type: entity
   parent: MobMouse
   id: MobMouse2
   components:
@@ -1740,6 +1770,21 @@
   - type: Item
     size: Tiny
     heldPrefix: 2
+
+- type: entity
+  suffix: "Ghost Role"
+  name: mouse
+  parent: MobMouse2
+  id: MobMouseGhostRole2
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-mouse-name
+    description: ghost-role-information-mouse-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
 
 - type: entity
   name: cancer mouse
@@ -2283,7 +2328,7 @@
   name: tarantula
   parent: MobGiantSpider
   id: MobGiantSpiderAngry
-  suffix: Angry
+  suffix: "Angry"
   components:
     - type: NpcFactionMember
       factions:
@@ -2293,14 +2338,20 @@
     - type: HTN
       rootTask:
         task: SimpleHostileCompound
-    - type: GhostRole
-      makeSentient: true
-      name: ghost-role-information-giant-spider-name
-      description: ghost-role-information-giant-spider-description
-      rules: ghost-role-information-giant-spider-rules
-      raffle:
-        settings: short
-    - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobGiantSpiderAngry
+  id: MobGiantSpiderGhostRole
+  suffix: "Angry, Ghost Role"
+  components:
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-giant-spider-name
+    description: ghost-role-information-giant-spider-description
+    rules: ghost-role-information-giant-spider-rules
+    raffle:
+      settings: short
+  - type: GhostTakeoverAvailable
 
 - type: entity
   name: clown spider

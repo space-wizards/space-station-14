@@ -4,14 +4,6 @@
   id: MobBatRemilia
   description: The chaplain's familiar. Likes fruit.
   components:
-  - type: GhostRole
-    makeSentient: true
-    allowMovement: true
-    allowSpeech: true
-    name: ghost-role-information-remilia-name
-    description: ghost-role-information-remilia-description
-    rules: ghost-role-information-familiar-rules
-  - type: GhostTakeoverAvailable
   - type: Grammar
     attributes:
       gender: female
@@ -32,21 +24,25 @@
   - type: Familiar
 
 - type: entity
-  name: Cerberus
-  parent: MobCorgiNarsi
-  id: MobCorgiCerberus
-  description: This pupper is not wholesome.
+  parent: MobBatRemilia
+  id: MobBatRemiliaGhostRole
+  suffix: "Ghost Role"
   components:
   - type: GhostRole
     makeSentient: true
     allowMovement: true
     allowSpeech: true
-    name: ghost-role-information-cerberus-name
-    description: ghost-role-information-cerberus-description
+    name: ghost-role-information-remilia-name
+    description: ghost-role-information-remilia-description
     rules: ghost-role-information-familiar-rules
-    raffle:
-      settings: default
   - type: GhostTakeoverAvailable
+
+- type: entity
+  name: Cerberus
+  parent: MobCorgiNarsi
+  id: MobCorgiCerberus
+  description: This pupper is not wholesome.
+  components:
   - type: MeleeWeapon
     altDisarm: false
     animation: WeaponArcBite
@@ -90,3 +86,19 @@
       Male: Cerberus
       Female: Cerberus
       Unsexed: Cerberus
+
+- type: entity
+  parent: MobCorgiCerberus
+  id: MobCorgiCerberusGhostRole
+  suffix: "Ghost Role"
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowMovement: true
+    allowSpeech: true
+    name: ghost-role-information-cerberus-name
+    description: ghost-role-information-cerberus-description
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable

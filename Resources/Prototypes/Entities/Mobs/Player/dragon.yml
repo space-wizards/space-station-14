@@ -8,16 +8,6 @@
   components:
   - type: Bloodstream
     bloodMaxVolume: 650
-  - type: GhostRole
-    allowMovement: true
-    allowSpeech: true
-    makeSentient: true
-    name: ghost-role-information-space-dragon-name
-    description: ghost-role-information-space-dragon-description
-    rules: ghost-role-information-space-dragon-rules
-    raffle:
-      settings: default
-  - type: GhostTakeoverAvailable
   - type: HTN
     rootTask:
       task: XenoCompound
@@ -152,6 +142,21 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
+
+- type: entity
+  parent: MobDragon
+  id: MobDragonGhostRole
+  components:
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-space-dragon-name
+    description: ghost-role-information-space-dragon-description
+    rules: ghost-role-information-space-dragon-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
 
 - type: entity
   noSpawn: true

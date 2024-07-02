@@ -64,7 +64,6 @@
     radius: 1.2
     energy: 2
     color: "#4faffb"
-  - type: GhostTakeoverAvailable
   - type: Speech
     speechVerb: LargeMob
 
@@ -112,11 +111,31 @@
       path: /Audio/Animals/sloth_squeak.ogg
 
 - type: entity
+  id: MobBearSpaceGhostRole
+  parent: MobBearSpace
+  suffix: "Ghost Role"
+  components:
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-space-bear-name
+    description: ghost-role-information-space-bear-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+    prob: 0.05
+
+- type: entity
   id: MobBearSpaceSalvage
   parent: MobBearSpace
-  suffix: "Salvage Ruleset"
+  suffix: "Ghost Role, Salvage Ruleset"
   components:
   - type: SalvageMobRestrictions
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-space-bear-name
+    description: ghost-role-information-space-bear-description
+    rules: ghost-role-information-space-bear-salvage-rules
+  - type: GhostTakeoverAvailable
+    prob: 0.05
 
 - type: entity
   name: space kangaroo
@@ -169,11 +188,31 @@
     accent: kangaroo
 
 - type: entity
+  id: MobKangarooSpaceGhostRole
+  parent: MobKangarooSpace
+  suffix: "Ghost Role"
+  components:
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-space-kangaroo-name
+    description: ghost-role-information-space-kangaroo-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+    prob: 0.05
+
+- type: entity
   id: MobKangarooSpaceSalvage
   parent: MobKangarooSpace
-  suffix: "Salvage Ruleset"
+  suffix: "Ghost Role, Salvage Ruleset"
   components:
   - type: SalvageMobRestrictions
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-space-kangaroo-name
+    description: ghost-role-information-space-kangaroo-description
+    rules: ghost-role-information-salvage-rules
+  - type: GhostTakeoverAvailable
+    prob: 0.05
 
 - type: entity
   name: space spider
@@ -267,10 +306,30 @@
     proto: spider
 
 - type: entity
+  id: MobSpiderSpaceGhostRole
+  parent: MobSpiderSpace
+  suffix: "Ghost Role"
+  components:
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-space-spider-name
+    description: ghost-role-information-space-spider-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+    prob: 0.05
+
+- type: entity
   id: MobSpiderSpaceSalvage
   parent: MobSpiderSpace
-  suffix: "Salvage Ruleset"
+  suffix: "Ghost Role, Salvage Ruleset"
   components:
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-space-spider-name
+    description: ghost-role-information-space-spider-description
+    rules: ghost-role-information-salvage-rules
+  - type: GhostTakeoverAvailable
+    prob: 0.05
   - type: SalvageMobRestrictions
 
 - type: entity
@@ -364,8 +423,28 @@
       movementVisibilityRate: 0.25
 
 - type: entity
+  id: MobCobraSpaceGhostRole
+  parent: MobCobraSpace
+  suffix: "Ghost Role"
+  components:
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-space-cobra-name
+    description: ghost-role-information-space-cobra-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+    prob: 0.05
+
+- type: entity
   id: MobCobraSpaceSalvage
   parent: MobCobraSpace
-  suffix: "Salvage Ruleset"
+  suffix: "Ghost Role, Salvage Ruleset"
   components:
-    - type: SalvageMobRestrictions
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-space-cobra-name
+    description: ghost-role-information-space-cobra-description
+    rules: ghost-role-information-salvage-rules
+  - type: GhostTakeoverAvailable
+    prob: 0.05
+  - type: SalvageMobRestrictions

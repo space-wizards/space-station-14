@@ -51,14 +51,6 @@
   - type: Alerts
   - type: NameIdentifier
     group: GenericNumber
-  - type: GhostRole
-    makeSentient: true
-    name: ghost-role-information-revenant-name
-    description: ghost-role-information-revenant-description
-    rules: ghost-role-information-antagonist-rules
-    raffle:
-      settings: default
-  - type: GhostTakeoverAvailable
   - type: Revenant
     malfunctionWhitelist:
       components:
@@ -95,3 +87,17 @@
     - RevenantTheme
   - type: Speech
     speechVerb: Ghost
+
+  - type: entity
+    id: MobRevenantGhostRole
+    parent: MobRevenant
+    suffix: "Ghost Role"
+    components:
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-revenant-name
+      description: ghost-role-information-revenant-description
+      rules: ghost-role-information-antagonist-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
