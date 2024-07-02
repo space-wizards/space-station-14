@@ -1,0 +1,9 @@
+voice-recorder-message-text = [{$time}] {$source}: {$message}
+voice-recorder-cleaning-verb-text = Clean record
+voice-recorder-cleaning-verb-message = Clean all recorded speech
+voice-recorder-print-verb-text = Print record
+voice-recorder-print-verb-message = Print the recorded speech copy
+voice-recorder-message-record-start-text = [{$time}] [bold]Record started[/bold]
+voice-recorder-message-record-stop-text = [{$time}] [bold]Record stopped[/bold]
+voice-recorder-cleaning-warning = You started cleaning the record...
+voice-recorder-paper-title = Record transcript

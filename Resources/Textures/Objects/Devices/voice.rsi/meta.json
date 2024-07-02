@@ -12,6 +12,21 @@
         {
             "name": "voice",
             "directions": 1
-        }
+        },
+		{
+			"name": "voice_recorder"
+		},
+		{
+			"name": "voice_recorder_working",
+			"delays": [
+				[
+				  0.2,
+				  0.2,
+				  0.2,
+				  0.2
+				]
+			]
+		}
+		
     ]
 }

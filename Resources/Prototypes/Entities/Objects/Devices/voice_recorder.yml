@@ -1,0 +1,27 @@
+- type: entity
+  parent: BaseItem
+  id: VoiceRecorder
+  name: voice recorder
+  description: The best way to dig up dirt on someone!
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/voice.rsi
+    layers:
+    - state: voice_recorder
+      map: ["RecorderLayer.Base"]
+    - state: voice_recorder_working
+      map: ["RecorderLayer.Working"]
+      visible: false
+  - type: VoiceRecorder
+  - type: UseDelay
+    delay: 5.0
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.VoiceRecorderVisuals.IsRecording:
+        RecorderLayer.Working:
+          True: { visible: True }
+          False: { visible: False }
+        RecorderLayer.Base:
+          True: { visible: False  }
+          False: { visible: True }
