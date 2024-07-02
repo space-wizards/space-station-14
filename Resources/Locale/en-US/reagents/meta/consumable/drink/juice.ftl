@@ -36,3 +36,6 @@ reagent-desc-juice-tomato = Tomatoes made into juice. What a waste of good tomat
 
 reagent-name-juice-watermelon = water melon juice
 reagent-desc-juice-watermelon = The delicious juice of a watermelon.
+
+reagent-name-juice-cherry = cherry juice
+reagent-desc-juice-cherry = Tasty cherry juice, sweet and tangy.
