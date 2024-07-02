@@ -34,7 +34,8 @@ public sealed class PlayerPanelCommand : LocalizedCommands
             return;
         }
 
-        var ui = new PlayerPanelEui();
+        var ui = new PlayerPanelEui(queriedPlayer);
         _euis.OpenEui(ui, admin);
+        ui.SetPlayerState();
     }
 }

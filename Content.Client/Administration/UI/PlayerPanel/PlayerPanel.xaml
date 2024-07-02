@@ -4,32 +4,23 @@
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc ban-panel-title}" MinSize="350 500">
     <BoxContainer Orientation="Vertical">
-        <Collapsible>
-            <CollapsibleHeading Title="Basic Info"/>
-            <CollapsibleBody Margin="20 0 0 0">
-                   <Label Name="PlayerName"/>
-                   <BoxContainer Orientation="Horizontal">
-                       <Label Name="Whitelisted"/>
-                       <Button Name="WhitelistToggle" Text="Toggle"></Button>
-                   </BoxContainer>
-                   <Label Name="Playtime"/>
-            </CollapsibleBody>
-        </Collapsible>
-
-        <Collapsible>
-            <CollapsibleHeading Title="Actions"/>
-            <CollapsibleBody Margin="20 0 0 0">
-                <GridContainer Rows="3">
-                <Button Name="Notes" Text="ShowNotes"/>
-                <Button Name="ShowBans" Text="ShowBans"/>
-                <Button Name="Ahelp" Text="Ahelp"/>
-                <Button Name="FreezeToggle" Text="Freeze And Mute"/>
-                <controls:ConfirmButton Name="Kick" Text="Ahelp"/>
-                <Button Name="Ban" Text="Ban"/>
-                </GridContainer>
-
-            </CollapsibleBody>
-        </Collapsible>
+       <Label Name="PlayerName"/>
+       <BoxContainer Orientation="Horizontal">
+           <Label Name="Whitelisted"/>
+           <Button Name="WhitelistToggle" Text="False" Visible="False"></Button>
+       </BoxContainer>
+       <Label Name="Playtime"/>
+       <Label Name="Notes"/>
+       <Label Name="Bans"/>
+       <Label Name="RoleBans"/>
+       <GridContainer Rows="3">
+        <Button Name="NotesButton" Text="ShowNotes" Disabled="True"/>
+        <Button Name="ShowBansButton" Text="ShowBans" Disabled="True"/>
+        <Button Name="AhelpButton" Text="Ahelp" Disabled="True"/>
+        <Button Name="FreezeToggleButton" Text="Freeze And Mute" Disabled="True"/>
+        <controls:ConfirmButton Name="KickButton" Text="Kick" Disabled="True"/>
+        <Button Name="BanButton" Text="Ban" Disabled="True"/>
+       </GridContainer>
     </BoxContainer>
 
 </DefaultWindow>

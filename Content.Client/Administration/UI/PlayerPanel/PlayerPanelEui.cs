@@ -1,4 +1,3 @@
-using Content.Client.Administration.UI.Notes;
 using Content.Client.Eui;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
@@ -19,33 +18,29 @@ public sealed class PlayerPanelEui : BaseEui
     {
         PlayerPanel = new PlayerPanel();
         PlayerPanel.OnClose += () => SendMessage(new CloseEuiMessage());
+    }
 
-        PlayerPanel.OnOpenNotes += player =>
-        { };
+    public override void Opened()
+    {
+        PlayerPanel.OpenCentered();
+    }
 
-        PlayerPanel.OnOpenBans += player =>
-        { };
-
-        PlayerPanel.OnOpenAhelp += player =>
-        { };
-
-        PlayerPanel.OnFreezeAndMute += player =>
-        { };
-
-        PlayerPanel.OnUnfreeze += player =>
-        { };
-
-        PlayerPanel.OnKick+= player =>
-        { };
-
-        PlayerPanel.OnOpenBanPanel += player =>
-        { };
+    public override void Closed()
+    {
+        PlayerPanel.Close();
     }
 
     public override void HandleState(EuiStateBase state)
     {
         if (state is not PlayerPanelEuiState s)
             return;
+
+        PlayerPanel.Name = s.Username;
+        PlayerPanel.SetTitle(s.Username);
+        PlayerPanel.SetPlaytime(s.Playtime);
+        PlayerPanel.SetBans(s.TotalBans, s.TotalRoleBans);
+        PlayerPanel.SetNotes(s.TotalNotes);
+        PlayerPanel.SetWhitelisted(s.Whitelisted);
     }
 
 }
