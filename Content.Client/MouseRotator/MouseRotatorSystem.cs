@@ -50,9 +50,14 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
             if (angleDir == (curRot + eyeRot).GetCardinalDir())
                 return;
 
+            var rotation = angleDir.ToAngle() - eyeRot; // convert back to world frame
+            if (rotation >= Math.PI) // convert to [-PI, +PI)
+                rotation -= 2 * Math.PI;
+            else if (rotation < -Math.PI)
+                rotation += 2 * Math.PI;
             RaisePredictiveEvent(new RequestMouseRotatorRotationEvent
             {
-                Rotation = angleDir.ToAngle() - eyeRot // convert back to world frame
+                Rotation = rotation
             });
 
             return;
