@@ -1009,17 +1009,36 @@
   parent: BaseMachineCircuitboard
   name: microwave machine board
   components:
-    - type: Sprite
-      state: service
-    - type: MachineBoard
-      prototype: KitchenMicrowave
-      stackRequirements:
-        Capacitor: 1
-        Glass: 2
-        Cable: 2
-    - type: Tag
-      tags:
-      - MicrowaveMachineBoard
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: KitchenMicrowave
+    stackRequirements:
+      Capacitor: 1
+      Glass: 2
+      Cable: 2
+  - type: PAIExpansionCard
+    action: ActionPAIMicrowaveBeep
+    components:
+    - type: TriggerOnAction
+    - type: EmitSoundOnTrigger
+      sound: /Audio/Machines/microwave_done_beep.ogg
+  - type: Tag
+    tags:
+    - MicrowaveMachineBoard
+
+- type: entity
+  parent: ActionPAIBase
+  id: ActionPAIMicrowaveBeep
+  name: mmmmmmmmmmmmmmmmm
+  description: BEEP BEEP BEEP
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Structures/Machines/microwave.rsi
+      state: mw
+    useDelay: 5
+    event: !type:TriggerActionEvent
 
 - type: entity
   id: SyndicateMicrowaveMachineCircuitboard
