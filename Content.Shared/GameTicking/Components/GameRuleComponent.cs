@@ -18,6 +18,12 @@ public sealed partial class GameRuleComponent : Component
     public TimeSpan ActivatedAt;
 
     /// <summary>
+    /// bool on whether the event can be falsely triggered
+    /// </summary>
+    [DataField]
+    public bool CanFalseActivate = false;
+
+    /// <summary>
     /// The minimum amount of players needed for this game rule.
     /// </summary>
     [DataField]

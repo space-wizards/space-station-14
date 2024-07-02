@@ -1,6 +1,8 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Components;
+using Content.Server.AlertLevel;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
@@ -21,6 +23,7 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
     [Dependency] protected readonly ChatSystem ChatSystem = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly StationSystem StationSystem = default!;
+    [Dependency] protected readonly AlertLevelSystem _alertLevelSystem = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -79,6 +82,16 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
 
         if (stationEvent.EndAnnouncement != null)
             ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.EndAnnouncement), playSound: false, colorOverride: stationEvent.EndAnnouncementColor);
+
+        if (stationEvent.AlertLevel != null)
+        {
+            if (!TryGetRandomStation(out var chosenStation))
+                return;
+            if (_alertLevelSystem.GetLevel(chosenStation.Value) != stationEvent.NotIgnoredAlarmLevel)
+                return;
+
+            _alertLevelSystem.SetLevel(chosenStation.Value, stationEvent.AlertLevel, true, true, true);
+        }
 
         Audio.PlayGlobal(stationEvent.EndAudio, Filter.Broadcast(), true);
     }
