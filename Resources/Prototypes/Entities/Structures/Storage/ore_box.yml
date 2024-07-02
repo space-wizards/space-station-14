@@ -58,6 +58,11 @@
     whitelist:
       tags:
       - Ore
+      - ArtifactFragment
+  - type: MagnetPickup
+    slotFlags: NONE
+    range: 1.5
+    enabled: false
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
