@@ -277,8 +277,30 @@
     sprite: Clothing/Eyes/Hud/diagpatch.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/diagpatch.rsi
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon
 
 - type: entity
   parent: [ClothingEyesEyepatchHudDiag, ClothingHeadEyeBaseFlipped]
   id: ClothingEyesEyepatchHudDiagFlipped
   name: diagnostic hud eyepatch
+  
+- type: entity
+  parent: [ClothingEyesBase, ShowMedicalIcons]
+  id: ClothingEyesHudMedChem
+  name: medchem hud
+  description: A heads-up display that scans nearby humanoids' health status and chemical composition of solutions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/chemmed.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/chemmed.rsi
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
+  - type: SolutionScanner
