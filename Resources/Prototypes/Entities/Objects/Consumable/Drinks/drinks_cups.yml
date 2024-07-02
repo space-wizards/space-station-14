@@ -38,6 +38,7 @@
     damage:
       types:
         Blunt: 0
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: DrinkBaseCup

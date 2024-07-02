@@ -82,6 +82,7 @@
     - type: Tag
       tags:
       - ChemDispensable
+    - type: DnaSubstanceTrace
 
 - type: entity
   parent: Jug

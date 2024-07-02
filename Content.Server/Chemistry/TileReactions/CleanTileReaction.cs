@@ -34,7 +34,8 @@ public sealed partial class CleanTileReaction : ITileReaction
     FixedPoint2 ITileReaction.TileReact(TileRef tile,
         ReagentPrototype reagent,
         FixedPoint2 reactVolume,
-        IEntityManager entityManager)
+        IEntityManager entityManager
+        , List<ReagentData>? data)
     {
         var entities = entityManager.System<EntityLookupSystem>().GetLocalEntitiesIntersecting(tile, 0f).ToArray();
         var puddleQuery = entityManager.GetEntityQuery<PuddleComponent>();
