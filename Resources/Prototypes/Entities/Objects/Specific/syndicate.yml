@@ -122,3 +122,4 @@
   - type: Store
     balance:
       Telecrystal: 99999
+    showAllListings: true
