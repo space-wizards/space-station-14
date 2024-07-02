@@ -1,6 +1,7 @@
 using Content.Server.GameTicking;
 using Content.Server.Popups;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Robust.Shared.Console;
 
@@ -18,6 +19,8 @@ namespace Content.Server.Ghost
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
+            var ticker = _entities.System<GameTicker>();
+
             if (player == null)
             {
                 shell.WriteLine(Loc.GetString("ghost-command-no-session"));
@@ -31,6 +34,13 @@ namespace Content.Server.Ghost
                 shell.WriteLine(deniedMessage);
                 _entities.System<PopupSystem>()
                     .PopupEntity(deniedMessage, frozen, frozen);
+                return;
+            }
+
+            if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) &&
+                status != PlayerGameStatus.JoinedGame)
+            {
+                shell.WriteLine(Loc.GetString("ghost-command-lobby"));
                 return;
             }
 
