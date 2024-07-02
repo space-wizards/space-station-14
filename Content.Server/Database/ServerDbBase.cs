@@ -28,6 +28,8 @@ namespace Content.Server.Database
     {
         private readonly ISawmill _opsLog;
 
+        public event Action<(string channel, string? payload)>? OnNotificationReceived;
+
         /// <param name="opsLog">Sawmill to trace log database operations to.</param>
         public ServerDbBase(ISawmill opsLog)
         {
@@ -1671,11 +1673,26 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             _opsLog.Verbose($"Running DB operation: {name ?? "unknown"}");
         }
 
+        protected void LogDbError(string error)
+        {
+            _opsLog.Error(error);
+        }
+
         protected abstract class DbGuard : IAsyncDisposable
         {
             public abstract ServerDbContext DbContext { get; }
 
             public abstract ValueTask DisposeAsync();
+        }
+
+        protected void NotificationReceived(string channel, string? payload)
+        {
+            OnNotificationReceived?.Invoke((channel, payload));
+        }
+
+        public virtual void Shutdown()
+        {
+
         }
     }
 }
