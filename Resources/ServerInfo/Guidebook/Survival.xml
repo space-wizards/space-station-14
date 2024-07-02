@@ -1,38 +1,34 @@
 <Document>   
-# Survival 
-It is generally wise to avoid situations that will cause you harm, because medical can only heal you so much with limited chemicals and medical items and especially when there's nuclear operatives on your doorstep. 
+# Survival
+The life of a single person may make or break a situation if [color=#5b97bc]Medical[/color] is already swamped and under pressure.
 
-## Identifying your situation 
-Your PDA contains both a vessel name and list of crew currently active in your vessel, a reminder for your name if needed, and your assigned job for the shift, allowing you to quickly assess the situation. 
+Your [color=cyan]longevity[/color] is vital to the station when [textlink="evil-doers" link="Antagonists"] rise up against the crew.
+
+## Being Prepared
+The PDA you start with can tell you the [bold]station you are on[/bold], [bold]every member of the crew[/bold] and the [textlink="alert level." link="AlertLevels"]
+
+Beyond that, one of the best things you can do is turn on your [color=cyan]suit sensors[/color], done by opening up your suit's context menu (done by pressing [color=yellow][bold][keybind="UIRightClick"/][/bold][/color]) and navigating to "Sensor" then "Coordinates".
+This gives [color=#5b97bc]Medical[/color] a huge advantage towards finding you should you be mortally wounded.
+
+You should also take a look inside your [color=cyan]survival box[/color], which starts inside of your bag. It contains:
+- An [bold]emergency oxygen tank[/bold] as well as a [bold]breath mask[/bold]
+- Emergency [bold]food and water[/bold]
+- An [bold]emergency flare[/bold]
+- An [bold]emergency medipen[/bold], which contains a live-saving dose of epinephrine
+
+<Box> 
+  <GuideEntityEmbed Entity="ClothingMaskBreath" Caption=""/> 
+  <GuideEntityEmbed Entity="EmergencyOxygenTankFilled" Caption=""/>
+  <GuideEntityEmbed Entity="Flare" Caption=""/>
+  <GuideEntityEmbed Entity="EmergencyMedipen" Caption=""/>
+</Box>
 
 ## Emergency Treatment 
-In the event of a serious emergency, there're a few things you can do to help ensure your long-term survival, including: 
-- If entering critical condition, use the emergency medipen from your emergency box, it'll make sure you don't end up unable to do anything. Emergency medipens can also be used to revive people currently in crit on the floor, and to prolong the amount of time you have to deal with poisons/etc. 
-
-<Box> 
-  <GuideEntityEmbed Entity="EmergencyMedipen"/> 
-</Box>
-
-- Your emergency box contains a breath mask and oxygen tank, which can help you survive longer in a spacing situation. If you're one of the slimepeople, be aware that nitrogen replaces oxygen for you and that your emergency box will start with a red tank of nitrogen replacing the standard blue/yellow oxygen tank. 
-
-<Box> 
-  <GuideEntityEmbed Entity="ClothingMaskBreath"/> 
-  <GuideEntityEmbed Entity="EmergencyOxygenTankFilled"/> 
-</Box>
-
-- If actively bleeding out, or simply wishing to prepare, it's possible to slice up cloth items with a knife or other sharp object and use the resulting cloth to create gauze in the crafting menu to stem bleeding with, however cloth alone can be used to less of a degree in emergencys. 
-
-<Box>
-  <GuideEntityEmbed Entity="Gauze"/>
-  <GuideEntityEmbed Entity="MaterialCloth"/>
-</Box>
-
-## Other Various Tips
-- In lieu of an actual health analyzer, simply examining yourself and using the detailed examine is a good way to figure out what wounds you have. 
-- If going blind, carrots are another way to treat the issue (as they contain Oculine, the chemistry drug used to treat blindness) should they be available. 
-- Well-made meals (cooked food not from a vending machine) is generally much better for your overall health and can help heal smaller wounds more quickly. 
-- Simple bed rest can allow some wounds to close up on their own. Medical beds are best for this, providing a sterile surface and support for all damaged body parts, but any bed works. 
-- Actually sleeping on a bed boosts your healing rate even farther. 
-- Meals that contain proteins, such as meat, - will tremendously help your body's condition after severe bloodloss. It's still advised to visit a doctor and get treated though. 
-  
+In the event of a medical emergency, there are a few things you can do to help ensure your long-term survival, including:
+- Using [bold]detailed examine[/bold] to see obvious wounds on yourself or others.
+- Using [bold]emergency medipens[/bold] on people who are in or are about to enter critical condition.
+- Applying [bold]gauze or cloth[/bold] to open wounds to stop bloodloss.
+- [bold]Bed rest or sleep[/bold] if possible, as it can allow wounds to heal on their own.
+- Eating [bold]carrots[/bold], if available, to heal blindness.
+- Eating [bold]nutritious handmade meals[/bold] to help with minor wounds and overall health.
 </Document> 

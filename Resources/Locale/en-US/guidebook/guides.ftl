@@ -48,6 +48,8 @@ guide-entry-defusal = Large Bomb Defusal
 guide-entry-criminal-records = Criminal Records
 guide-entry-command = Command
 guide-entry-service = Service
+guide-entry-headofpersonnel = Head Of Personnel
+guide-entry-alertlevels = Alert Levels
 
 guide-entry-newplayer = New? Start here!
 guide-entry-charactercreation = Creating Characters

@@ -1,0 +1,69 @@
+<Document>
+    # Alert Levels
+    Alert levels can be set at communications computers.
+
+    ## Code Green
+    [italic]Attention! Station alert level is now green! It is now safe to return to your workplaces.[/italic]
+
+    [color=green]Code Green[/color] indicates that there is [bold]no danger[/bold] to the station or its crew. Personnel should:
+    - Work as usual
+    - Partake in recreational activities
+    - Enjoy it while it lasts
+
+    ## Code Blue
+    [italic]Attention! Station alert level is now Blue! There is a confirmed threat to the station. Security should perform random checks. Crewmembers are advised to be vigilant and report suspicious activity to security.[/italic]
+    
+    [color=dodgerblue]Code Blue[/color] indicates that there is [bold]a threat[/bold] that [color=#cb0000]Security[/color] should move to investigate and handle. Personnel should:
+    - Work as usual
+    - Comply with orders from [color=#cb0000]Security[/color]
+    - Be vigilant for threats on board the station
+
+
+    ## Code Yellow
+    [italic]Attention! Station alert level is now Yellow! There is a structural or atmospheric threat within the station. Engineering staff are advised to immediately respond and perform safety measures. Crewmembers are advised to stay away from the threat, and stay in their workplaces if necessary.[/italic]
+
+    [color=yellow]Code Yellow[/color] indicates that areas on the station have become [bold]dangerous and uninhabitable[/bold]. Personnel should:
+    - Work as usual, if not in dangerous areas
+    - Have emergency internals ready, if need be
+    - Listen to [color=#f39f27]Engineering[/color]
+
+    ## Code Red
+    [italic]Attention! Station alert level is now Red! There is an immediate threat to the station. Security should prepare to use lethal force if necessary. Crewmembers should find a safe place to shelter in, and are advised to follow any present authorities.[/italic]
+
+    [color=red]Code Red[/color] indicates that there is an [bold]active danger[/bold] to the crew or the vessel. Personnel should:
+    - Assess the situation and choose between sheltering in place or evacuating dangerous areas
+    - Work as usual if sheltering in place
+    - Comply with [color=#cb0000]Security[/color] and [color=#1b67a5]Command[/color]
+
+    ## Code Violet
+    [italic]Attention! Station alert level is now Violet! There is a viral threat on the station. Medical staff are advised to isolate crewmembers with any symptoms. Crewmembers are advised to distance themselves from others and perform safety measures to prevent further spread.[/italic]
+    
+    [color=violet]Code Violet[/color] indicates that a [bold]Romerol outbreak[/bold] has begun on the station. Personnel should:
+    - Isolate yourself if infected and report to the medical bay
+    - Shelter in place and barricade departments
+    - Listen to [color=#5b97bc]Medical[/color], [color=#cb0000]Security[/color] and [color=#1b67a5]Command[/color]
+
+    ## Code Delta
+    [italic]Attention! Station alert level is now Delta! The station is currently under threat of imminent destruction. Crewmembers are advised to listen to heads of staff for more information.[/italic]
+
+    [color=darkred]Code Delta[/color] indicates that the station's [bold]self-destruct procedure[/bold] has been activated. Personnel should:
+    - Initate evacuation procedures immediately
+    - Carry weaponry and armor openly
+    - Attempt to secure sensitive materials
+
+    ## Code Gamma
+    [italic]Attention! Station alert level is now Gamma! Central Command has ordered the Gamma security level on the station. Security is to have weapons equipped at all times, and all civilians are to immediately seek their nearest head for transportation to a secure location.[/italic]
+
+    [color=palevioletred]Code Gamma[/color] can only be set by Central Command to signify an [bold]extreme threat[/bold] to the station. Personnel should:
+    - Evacuate workplaces
+    - Move in groups
+    - Listen to [color=#cb0000]Security[/color] and [color=#009100]CC officals[/color]
+
+    ## Code Epsilon
+    [italic]Attention! Station alert level is now Epsilon! Central Command has ordered the Epsilon security level on the station. Consider all contracts terminated.[/italic]
+
+    [color=darkviolet]Code Epsilon[/color] can only be set by Central Command to designate a station as [bold]completely lost[/bold]. Personnel should:
+    - Drop all equipment onto the floor
+    - Make hands visible and in the air
+    - Surrender
+</Document>

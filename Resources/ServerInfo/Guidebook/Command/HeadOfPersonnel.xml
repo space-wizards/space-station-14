@@ -1,0 +1,95 @@
+<Document>
+  # Head of Personnel
+  Well, well, well. If it isn't the one, the only, Head of Paperwork. Get your gloves on, rookie. The request forms won't write themselves.
+
+  The Head of Personnel is the head of the Service department as well as the manager of all the IDs on the station.
+  Your duties include overseeing your chefs, bartenders and botanists as well as coordinating between the other departments and having them get along.
+
+  But most importantly-- [color=cyan]you change IDs[/color].
+
+  ## Changing IDs
+  To get started, you need your own ID, someone else's ID and an [color=cyan]ID card computer[/color].
+  <Box>
+    <GuideEntityEmbed Entity="HoPIDCard" Caption="your ID card"/>
+    <GuideEntityEmbed Entity="PassengerIDCard" Caption="someone else's ID card"/>
+    <GuideEntityEmbed Entity="ComputerId"/>
+  </Box>
+
+  Now, follow these steps.
+  - Insert the [bold]Privileged ID[/bold]. This is the card that has the ability to modify other cards.
+  - Then insert the [bold]Target ID[/bold]. This is the card you're modifying.
+  - Choose a [bold]preset[/bold]. This will change the person's [bold]job icon[/bold] that will show up on secHUDs and the crew manifest.
+  - If necessary, add or take away additional accesses.
+  - Take out the IDs and make sure you don't accidentally hand someone else your own ID!
+
+  ## Allowing Access
+  You [italic]could[/italic] give away acceesses willy-nilly, but your fellow department heads may not appreciate fresh faces walking into their departments without their permission.
+
+  Before assigning a job, at the bare minimum [color=cyan]notify[/color] the department head so that everyone is on the same page.
+  Ideally, you should ask them over [bold]radio[/bold] if they approve or send them a letter for them to [bold]stamp[/bold].
+
+  How stringent your policy is up to you, but remember that some accesses could be [color=cyan]detrimental[/color] to the station should they fall into the wrong hands! This is why HoPs will often make job request forms for record-keeping.
+
+  [italic]Tips for formatting your document can be found [textlink="here" link="Writing"].[/italic]
+
+  Also check the wiki for additional tips and [color=cyan]templates[/color] that you can use.
+
+  ## Replacing Lost Equipment
+  Some poor shmuck came to your office without a PDA or a headset. Would hate to be that guy!
+
+  Thankfully, you can replace his lost devices using the [color=cyan]PTech[/color] in your office.
+  <Box>
+    <GuideEntityEmbed Entity="VendingMachineCart"/>
+    <GuideEntityEmbed Entity="PassengerIDCard" Caption="ID card"/>
+    <GuideEntityEmbed Entity="ClothingHeadsetGrey" Caption="headset"/>
+  </Box>
+
+  If you're replacing their radio, you may need to give them spare encryption keys. These are also found in your PTech.
+  <Box>
+    <GuideEntityEmbed Entity="EncryptionKeyMedical" Caption=""/>
+    <GuideEntityEmbed Entity="EncryptionKeyEngineering" Caption=""/>
+    <GuideEntityEmbed Entity="EncryptionKeySecurity" Caption=""/>
+  </Box>
+
+  [italic]An explanation on the radio and encryption keys can be found [textlink="here" link="Radio"].[/italic]
+ 
+  ## Access Types
+  <Box>
+    <GuideEntityEmbed Entity="AirlockCommand" Caption=""/>
+    <GuideEntityEmbed Entity="HighSecDoor" Caption=""/>
+    [bold]Command[/bold] gives access to the bridge and the vault, but not department head rooms.
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AirlockSecurity" Caption=""/>
+    [bold]Brig[/bold] gives access to security's lobby. [bold]Security[/bold] gives access to security's equipment, excluding the [bold]Armory[/bold].
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AirlockServiceLocked" Caption=""/>
+    [bold]Service[/bold] allows access into general service areas, but not specific service rooms as they have their own accesses, like the [bold]Bar[/bold].
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AirlockScience" Caption=""/>
+    [bold]Research[/bold] allows into science and robotics. The R&D server is usually locked behind a [bold]Research Director[/bold] airlock.
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AirlockMedical" Caption=""/>
+    [bold]Medical[/bold] does not allow access into [bold]Cryogenics[/bold] or [bold]Chemistry[/bold], as they have their own accesses.
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AirlockEngineering" Caption=""/>
+    <GuideEntityEmbed Entity="AirlockAtmospherics" Caption=""/>
+    [bold]Engineering[/bold] does not allow access into [bold]Atmospherics[/bold] or outside the station, as they have their own accesses.
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AirlockCargo" Caption=""/>
+    [bold]Cargo[/bold] does not allow access into Salvage, as it has its own access.
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AirlockMaint" Caption=""/>
+    [bold]Maintenance[/bold] allows access into the maintenance shafts but not the substation rooms.
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AirlockExternal" Caption=""/>
+    [bold]External[/bold] access allows people to leave the station, either for a spacewalk or a one-way trip.
+  </Box>
+</Document>
