@@ -1,96 +1,69 @@
+# Kardashev-Mosin
 - type: entity
-  name: BaseWeaponSniper
-  parent: BaseItem
-  id: BaseWeaponSniper
-  description: A rooty tooty point and shooty.
-  abstract: true
-  components:
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-  - type: Item
-    size: Huge
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
-    quickEquip: false
-    slots:
-    - Back
-    - suitStorage
-  - type: AmmoCounter
-  - type: Gun
-    fireRate: 0.75
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
-  - type: BallisticAmmoProvider
-    capacity: 10
-    proto: CartridgeLightRifle
-    whitelist:
-      tags:
-      - CartridgeLightRifle
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
-  - type: StaticPrice
-    price: 500
-
-- type: entity
-  name: Kardashev-Mosin
-  parent: [BaseWeaponSniper, BaseGunWieldable]
+  parent:
+  - BaseGunLarge
+  - BaseGunWieldable
+  - BaseGunLightRifleBallistic
   id: WeaponSniperMosin
+  name: Kardashev-Mosin
   description: A weapon for hunting, or endless trench warfare. Uses .30 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Gun
+    fireRate: 0.75
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  - type: BallisticAmmoProvider
+    capacity: 10
 
+# Hristov
 - type: entity
-  name: Hristov
-  parent: [BaseWeaponSniper, BaseGunWieldable]
+  parent:
+  - BaseGunLarge
+  - BaseGunWieldable
+  - BaseGunAntiMaterielBallistic
   id: WeaponSniperHristov
+  name: Hristov
   description: A portable anti-materiel rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-materiel ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Gun
+    fireRate: 0.75
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-      - CartridgeAntiMateriel
     capacity: 5
-    proto: CartridgeAntiMateriel
 
+# musket
 - type: entity
-  name: musket
-  parent: BaseWeaponSniper
+  parent:
+  - BaseGunLarge
+  - BaseGunAntiMaterielBallistic
   id: Musket
+  name: musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
-  - type: Sharp
-  - type: Item
-    size: Large
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
     state: base
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/musket.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
   - type: Gun
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
+    fireRate: 0.75
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 8 #it's a musket
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-      - CartridgeAntiMateriel
-    capacity: 1
-    proto: CartridgeAntiMateriel
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -101,32 +74,30 @@
     animation: WeaponArcThrust
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+  - type: Sharp
 
+# flintlock pistol
 - type: entity
-  name: flintlock pistol
-  parent: BaseWeaponSniper
+  parent:
+  - BaseGunSmall
+  - BaseGunAntiMaterielBallistic
   id: WeaponPistolFlintlock
+  name: flintlock pistol
   description: A pirate's companion. Yarrr! Uses .60 anti-materiel ammo.
   components:
-  - type: Gun
-    minAngle: 0
-    maxAngle: 30 #miss him entirely because the barrel is smoothbore
-  - type: Item
-    size: Small
-    storedRotation: 90
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Gun
+    fireRate: 0.75
+    minAngle: 0
+    maxAngle: 30 #miss him entirely because the barrel is smoothbore
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 8 #it's a flintlock
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeAntiMateriel
-    capacity: 1
-    proto: CartridgeAntiMateriel
   - type: StaticPrice
     price: 0
-

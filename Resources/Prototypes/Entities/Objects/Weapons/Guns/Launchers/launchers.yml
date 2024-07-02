@@ -1,377 +1,225 @@
+# china lake
 - type: entity
-  name: BaseWeaponLauncher
-  parent: BaseItem
-  id: BaseWeaponLauncher
-  description: A rooty tooty point and shooty.
-  abstract: true
-  components:
-  - type: Sprite
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
-    quickEquip: false
-    slots:
-    - Back
-  - type: Item
-    size: Huge
-  - type: StaticPrice
-    price: 500
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
-
-- type: entity
-  name: china lake
-  parent: [BaseWeaponLauncher, BaseGunWieldable]
+  parent:
+  - BaseGunWieldable
+  - BaseGunLarge
+  - BaseGunGrenadeBallistic
   id: WeaponLauncherChinaLake
+  name: china lake
   description: PLOOP
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
-    layers:
-      - state: icon
-        map: ["enum.GunVisualLayers.Base"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
-    slots:
-    - Back
-    - suitStorage
   - type: AmmoCounter
   - type: Gun
     fireRate: 1
-    selectedMode: SemiAuto
-    availableModes:
-      - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
   - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - Grenade
     capacity: 3
-    proto: GrenadeFrag
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
 
+# RPG-7
 - type: entity
-  name: RPG-7
-  parent: BaseWeaponLauncher
+  parent:
+  - BaseGunMagVisuals
+  - BaseGunLarge
+  - BaseGunRocketBallistic
   id: WeaponLauncherRocket
+  name: RPG-7
   description: A modified ancient rocket-propelled grenade launcher.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
-    layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 0.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeRocket
-    proto: CartridgeRocket
-    capacity: 1
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: MagazineVisuals
-    magState: mag
     steps: 2
     zeroVisible: false
-  - type: Appearance
 
+# pirate cannon
 - type: entity
-  name: multiple rocket launcher
-  parent: BaseWeaponLauncher
-  id: WeaponLauncherMultipleRocket
-  description: A modified ancient rocket-propelled grenade launcher.
+  parent:
+  - BaseGunLarge
+  - BaseGunCannonBallBallistic
+  id: WeaponLauncherPirateCannon
+  name: pirate cannon
+  description: Kaboom!
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
+  - type: Gun
+    fireRate: 1
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
+
+# tether gun
+- type: entity
+  parent:
+  - BaseItem
+  - PowerCellSlotMediumItem
+  - BasePhysicsGunVisuals
+  id: WeaponTetherGun
+  name: tether gun
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+  - type: Item
+    storedRotation: -90
+  - type: TetherGun
+    frequency: 5
+    dampingRatio: 4
+  - type: PowerCellDraw
+
+# force gun
+- type: entity
+  parent:
+  - BaseItem
+  - PowerCellSlotMediumItem
+  - BasePhysicsGunVisuals
+  id: WeaponForceGun
+  name: force gun
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
+  - type: Item
+    storedRotation: -90
+  - type: ForceGun
+    frequency: 15
+    dampingRatio: 4
+    massLimit: 50
+    lineColor: "#18a2d5"
+    soundLaunch:
+      path: /Audio/Weapons/soup.ogg
+      params:
+        volume: 2
+  - type: PowerCellDraw
+
+# grappling gun
+- type: entity
+  parent:
+  - BaseGunSmall
+  id: WeaponGrapplingGun
+  name: grappling gun
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
     layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    - state: base
+    - state: base-unshaded
+      map: [ "unshaded" ]
+      shader: unshaded
+      visible: true
+  - type: AmmoCounter
+  - type: GrapplingGun
+  - type: Gun
+    fireRate: 0.5
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
+  - type: BasicEntityAmmoProvider
+    proto: GrapplingHook
+    capacity: 1
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TetherVisualsStatus.Key:
+        unshaded:
+          True: { state: base-unshaded }
+          False: { state: base-unshaded-off }
+  - type: UseDelay
+    delay: 1.5
+
+# Admeme
+# tether gun [admeme]
+- type: entity
+  parent:
+  - BaseItem
+  - BasePhysicsGunVisuals
+  id: WeaponTetherGunAdmin
+  name: tether gun
+  suffix: Admeme
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+  - type: TetherGun
+    canTetherAlive: true
+    canUnanchor: true
+    maxForce: 10000
+    massLimit: 10000
+    dampingRatio: 4
+    frequency: 20
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+  - type: Item
+    storedRotation: -90
+
+# force gun [admeme]
+- type: entity
+  parent:
+  - BaseItem
+  - BasePhysicsGunVisuals
+  id: WeaponForceGunAdmin
+  name: force gun
+  suffix: Admeme
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+  - type: ForceGun
+    canTetherAlive: true
+    canUnanchor: true
+    maxForce: 10000
+    massLimit: 10000
+    frequency: 15
+    dampingRatio: 4
+    throwForce: 50
+    throwDistance: 100
+    lineColor: "#18a2d5"
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
+  - type: Item
+    storedRotation: -90
+
+# multiple rocket launcher [admeme]
+- type: entity
+  parent: WeaponLauncherRocket
+  id: WeaponLauncherMultipleRocket
+  name: multiple rocket launcher
+  suffix: Admeme
+  description: A modified ancient rocket-propelled grenade launcher.
+  components:
   - type: Gun
     fireRate: 6
     selectedMode: FullAuto
     availableModes:
-      - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+    - FullAuto
   - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeRocket
     proto: CartridgeRocketSlow
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
+    capacity: 30
 
+# meteor launcher [admeme]
 - type: entity
-  name: pirate cannon
-  parent: BaseWeaponLauncher
-  id: WeaponLauncherPirateCannon
-  description: Kaboom!
-  components:
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
-      layers:
-        - state: icon
-          map: ["enum.GunVisualLayers.Base"]
-    - containers:
-        balistic-ammo: !type:Container
-          ents: []
-        ballistic-ammo: !type:Container
-          ents: []
-      type: ContainerContainer
-    - type: Clothing
-      sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
-    - type: Gun
-      fireRate: 1
-      soundGunshot:
-        path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
-    - type: BallisticAmmoProvider
-      whitelist:
-        tags:
-          - CannonBall
-      capacity: 1
-      proto: CannonBall
-      soundInsert:
-        path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
-
-- type: entity
-  name: tether gun
-  parent:
-  - BaseItem
-  - PowerCellSlotMediumItem
-  id: WeaponTetherGun
-  description: Manipulates gravity around objects to fling them at high velocities.
-  components:
-    - type: Item
-      storedRotation: -90
-    - type: TetherGun
-      frequency: 5
-      dampingRatio: 4
-    - type: PowerCellDraw
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
-      layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
-          shader: unshaded
-          visible: false
-    - type: ToggleableLightVisuals
-      spriteLayer: unshaded
-      inhandVisuals:
-        left:
-          - state: inhand-left-unshaded
-            shader: unshaded
-        right:
-          - state: inhand-right-unshaded
-            shader: unshaded
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.TetherVisualsStatus.Key:
-          unshaded:
-            True: { visible: true }
-            False: { visible: false }
-
-- type: entity
-  name: force gun
-  parent:
-    - BaseItem
-    - PowerCellSlotMediumItem
-  id: WeaponForceGun
-  description: Manipulates gravity around objects to fling them at high velocities.
-  components:
-    - type: Item
-      storedRotation: -90
-    - type: ForceGun
-      frequency: 15
-      dampingRatio: 4
-      massLimit: 50
-      lineColor: "#18a2d5"
-      soundLaunch:
-        path: /Audio/Weapons/soup.ogg
-        params:
-          volume: 2
-    - type: PowerCellDraw
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
-      layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
-          shader: unshaded
-          visible: false
-        - type: ToggleableLightVisuals
-          spriteLayer: unshaded
-          inhandVisuals:
-            left:
-              - state: inhand-left-unshaded
-                shader: unshaded
-            right:
-              - state: inhand-right-unshaded
-                shader: unshaded
-        - type: Appearance
-        - type: GenericVisualizer
-          visuals:
-            enum.TetherVisualsStatus.Key:
-              unshaded:
-                True: { visible: true }
-                False: { visible: false }
-
-- type: entity
-  name: grappling gun
-  parent: BaseItem
-  id: WeaponGrapplingGun
-  components:
-    - type: AmmoCounter
-    - type: GrapplingGun
-    - type: Gun
-      soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
-      fireRate: 0.5
-    - type: BasicEntityAmmoProvider
-      proto: GrapplingHook
-      capacity: 1
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
-      layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
-          shader: unshaded
-          visible: true
-    - type: UseDelay
-      delay: 1.5
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.TetherVisualsStatus.Key:
-          unshaded:
-            True: { state: base-unshaded }
-            False: { state: base-unshaded-off }
-
-# Admeme
-- type: entity
-  name: tether gun
-  parent: BaseItem
-  id: WeaponTetherGunAdmin
-  suffix: Admeme
-  description: Manipulates gravity around objects to fling them at high velocities.
-  components:
-    - type: TetherGun
-      canTetherAlive: true
-      canUnanchor: true
-      maxForce: 10000
-      massLimit: 10000
-      dampingRatio: 4
-      frequency: 20
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
-      layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
-          shader: unshaded
-          visible: false
-    - type: ToggleableLightVisuals
-      spriteLayer: unshaded
-      inhandVisuals:
-        left:
-          - state: inhand-left-unshaded
-            shader: unshaded
-        right:
-          - state: inhand-right-unshaded
-            shader: unshaded
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.TetherVisualsStatus.Key:
-          unshaded:
-            True: { visible: true }
-            False: { visible: false }
-
-- type: entity
-  name: force gun
-  parent: BaseItem
-  id: WeaponForceGunAdmin
-  suffix: Admeme
-  description: Manipulates gravity around objects to fling them at high velocities.
-  components:
-    - type: ForceGun
-      canTetherAlive: true
-      canUnanchor: true
-      maxForce: 10000
-      massLimit: 10000
-      frequency: 15
-      dampingRatio: 4
-      throwForce: 50
-      throwDistance: 100
-      lineColor: "#18a2d5"
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
-      layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
-          shader: unshaded
-          visible: false
-    - type: ToggleableLightVisuals
-      spriteLayer: unshaded
-      inhandVisuals:
-        left:
-          - state: inhand-left-unshaded
-            shader: unshaded
-        right:
-          - state: inhand-right-unshaded
-            shader: unshaded
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.TetherVisualsStatus.Key:
-          unshaded:
-            True: { visible: true }
-            False: { visible: false }
-
-- type: entity
-  name: meteor launcher
   parent: WeaponLauncherMultipleRocket
   id: WeaponLauncherAdmemeMeteorLarge
+  name: meteor launcher
   suffix: Admeme
   description: It fires large meteors
   components:
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeRocket
+      - CartridgeRocket
     proto: MeteorMedium
 
+# immovable rod launcher [admeme]
 - type: entity
-  name: immovable rod launcher
-  parent: WeaponLauncherAdmemeMeteorLarge
+  parent: WeaponLauncherMultipleRocket
   id: WeaponLauncherAdmemeImmovableRodSlow
+  name: immovable rod launcher
   suffix: Admeme
   description: It fires slow immovable rods.
   components:
   - type: BallisticAmmoProvider
+    proto: ImmovableRodSlow
     whitelist:
       tags:
-        - CartridgeRocket
-    proto: ImmovableRodSlow
+      - CartridgeRocket

@@ -1,6 +1,8 @@
 - type: entity
   name: bang, ded
-  parent: BaseWeaponPistol
+  parent:
+  - BaseGunSmall
+  - BaseGunPistolMag
   id: WeaponPistolDebug
   description: ded
   suffix: DEBUG
@@ -8,9 +10,15 @@
   - type: Tag
     tags:
       - Debug
+      - Sidearm
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
     state: icon
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
   - type: Gun
@@ -19,6 +27,8 @@
     availableModes:
       - SemiAuto
       - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   - type: AmmoCounter
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
@@ -40,6 +50,11 @@
         whitelist:
           tags:
             - CartridgePistol
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
 
 - type: entity
   id: MagazinePistolDebug

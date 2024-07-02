@@ -1,0 +1,108 @@
+# BATTERY
+# A gun that is powered by an internal battery and can be recharged at recharger.
+- type: entity
+  abstract: true
+  id: BaseGunBattery
+  components:
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: AmmoCounter
+
+# POWER CELL
+# A gun that is powered by an insertable power cell.
+- type: entity
+  abstract: true
+  id: BaseGunPowerCell
+  components:
+  - type: MagazineAmmoProvider
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: PowerCellSmall
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+          - PowerCell
+          - PowerCellSmall
+  - type: AmmoCounter
+
+# RED LASER
+# A gun that fires the RedLaser hitscan.
+- type: entity
+  abstract: true
+  id: BaseGunRedLaser
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 62.5
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+
+# RED MEDIUM LASER
+# A gun that fires the RedMediumLaser hitscan.
+- type: entity
+  abstract: true
+  id: BaseGunRedMediumLaser
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 100
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+
+# RED HEAVY LASER
+# A gun that fires the RedHeavyLaser hitscan.
+- type: entity
+  abstract: true
+  id: BaseGunRedHeavyLaser
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: RedHeavyLaser
+    fireCost: 100
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+
+# XRAY LASER
+# A gun that fires the XrayLaser hitscan.
+- type: entity
+  abstract: true
+  id: BaseGunXrayLaser
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: XrayLaser
+    fireCost: 100
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+
+# PULSE
+# A gun that fires the Pulse hitscan.
+- type: entity
+  abstract: true
+  id: BaseGunPulse
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: Pulse
+    fireCost: 200
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+
+# SELF RECHARGING
+# A gun that recharges its own internal battery over time.
+- type: entity
+  abstract: true
+  id: BaseGunSelfRecharger
+  components:
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40

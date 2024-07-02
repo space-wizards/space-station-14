@@ -1,0 +1,56 @@
+# BALLISTIC SHOTGUN
+# A gun that uses the BallisticAmmoProvider component to load and fire shotgun shells.
+- type: entity
+  abstract: true
+  id: BaseGunShotgunBallistic
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - ShellShotgun
+    capacity: 7
+    proto: ShellShotgun
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: AmmoCounter
+
+# SHOTGUN MAG
+# A gun that fires shotgun shells from a loaded shotgun magazine.
+- type: entity
+  abstract: true
+  id: BaseGunShotgunMag
+  components:
+  - type: MagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineShotgun
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineShotgun
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: AmmoCounter
+
+# BASE DOUBLE-BARRELED SHOTGUN
+# The base qualities for the double-barreled shotgun.
+- type: entity
+  abstract: true
+  id: BaseWeaponDoubleBarreled
+  components:
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg

@@ -1,0 +1,113 @@
+# water pistol
+- type: entity
+  parent:
+  - BaseGunWaterToy
+  - BaseGunSmall
+  id: WeaponWaterPistol
+  name: water pistol
+  description: The dinkiest of water-based weaponry. You swear the trigger doesn't do anything.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
+    layers:
+    - state: detail
+    - state: icon
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+
+# water blaster
+- type: entity
+  parent:
+  - BaseGunWaterToy
+  - BaseGunSmall
+  id: WeaponWaterBlaster
+  name: water blaster
+  description: With this bad boy, you'll be the cooleste kid at the summer barbecue.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
+    layers:
+    - state: detail1
+    - state: detail2
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: icon
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
+  - type: Gun
+    fireRate: 3
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+  - type: SolutionContainerManager
+    solutions:
+      chamber:
+        maxVol: 100 #20 shots
+  - type: RandomSprite
+    getAllGroups: true
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        icon: Rainbow
+    - enum.PowerDeviceVisualLayers.Powered:
+        detail2: Sixteen
+
+# super water blaster
+- type: entity
+  parent:
+  - BaseGunWaterToy
+  - BaseGunSmall
+  id: WeaponWaterBlasterSuper
+  name: super water blaster
+  description: No! No! Not in the eyes!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
+    layers:
+    - state: detail1
+    - state: detail2
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: icon
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
+  - type: Gun
+    fireRate: 8
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+  - type: SolutionContainerManager
+    solutions:
+      chamber:
+        maxVol: 500 #100 shots
+  - type: RandomSprite
+    getAllGroups: true
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        icon: Rainbow
+    - enum.PowerDeviceVisualLayers.Powered:
+        detail2: Sixteen
+
+# spray nozzle
+- type: entity
+  parent:
+  - BaseGunMedium
+  id: WeaponSprayNozzle
+  name: spray nozzle
+  description: A high-powered spray nozzle used in conjunction with a backpack-mounted water tank.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/spraynozzle.rsi
+    state: icon
+  - type: Gun
+    cameraRecoilScalar: 0 #no recoil
+    fireRate: 4
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
+  - type: Appearance
+  - type: ClothingSlotAmmoProvider
+    targetSlot: BACK
+    providerWhitelist:
+      tags:
+      - NozzleBackTank

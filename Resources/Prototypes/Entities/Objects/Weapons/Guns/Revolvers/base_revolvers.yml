@@ -1,0 +1,25 @@
+# REVOLVER CYLINDER
+# A gun that loads cartridges into and fires from a rotating cylinder.
+- type: entity
+  abstract: true
+  id: BaseGunRevolverCylinder
+  components:
+  - type: ContainerContainer
+    containers:
+      revolver-ammo: !type:Container
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
+        - SpeedLoaderMagnum
+    proto: CartridgeMagnum
+    capacity: 6
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: AmmoCounter
+  - type: UseDelay
+    delay: 0.66

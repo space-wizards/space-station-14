@@ -1,0 +1,35 @@
+# LIGHT RIFLE BALLISTIC
+# A gun that uses the BallisticAmmoProvider component to load and fire light rifle ammo.
+- type: entity
+  abstract: true
+  id: BaseGunLightRifleBallistic
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 1
+    proto: CartridgeLightRifle
+    whitelist:
+      tags:
+      - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: AmmoCounter
+
+# ANTI-MATERIEL BALLISTIC
+# A gun that uses the BallisticAmmoProvider component to load and fire anti-materiel ammo.
+- type: entity
+  abstract: true
+  id: BaseGunAntiMaterielBallistic
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 1
+    proto: CartridgeAntiMateriel
+    whitelist:
+      tags:
+      - CartridgeAntiMateriel
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: AmmoCounter

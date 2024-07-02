@@ -1,0 +1,53 @@
+# SOLUTION CONTAINER
+# A gun that shoots chemical solutions from a container.
+- type: entity
+  abstract: true
+  id: BaseGunSolutionContainer
+  components:
+  - type: Gun
+    cameraRecoilScalar: 0 #no recoil
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
+  - type: SolutionContainerManager
+    solutions:
+      chamber:
+        maxVol: 50 #10 shots
+  - type: SolutionAmmoProvider
+    solutionId: chamber
+    proto: BulletWaterShot
+  - type: SolutionTransfer
+    transferAmount: 5
+    maxTransferAmount: 50
+    minTransferAmount: 5
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: DrawableSolution
+    solution: chamber
+  - type: RefillableSolution
+    solution: chamber
+  - type: DrainableSolution
+    solution: chamber
+  - type: ExaminableSolution
+    solution: chamber
+
+# WATER TOY
+# Template for the toy water guns. Includes its randomly colorful visuals and common properties.
+- type: entity
+  abstract: true
+  parent: BaseGunSolutionContainer
+  id: BaseGunWaterToy
+  components:
+  - type: Gun
+    clumsyProof: true
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          icon: Rainbow
+  - type: StaticPrice
+    price: 100
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 150

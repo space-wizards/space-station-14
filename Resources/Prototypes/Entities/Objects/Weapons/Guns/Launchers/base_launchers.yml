@@ -1,0 +1,86 @@
+# ROCKET LAUNCHER
+# A gun that uses the BallisticAmmoProvider component to load and fire rockets.
+- type: entity
+  abstract: true
+  id: BaseGunRocketBallistic
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRocket
+    capacity: 1
+    whitelist:
+      tags:
+      - CartridgeRocket
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+
+# GRENADE LAUNCHER
+# A gun that uses the BallisticAmmoProvider component to load and fire grenades.
+- type: entity
+  abstract: true
+  id: BaseGunGrenadeBallistic
+  components:
+  - type: BallisticAmmoProvider
+    proto: GrenadeFrag
+    capacity: 1
+    whitelist:
+      tags:
+      - Grenade
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+
+# CANNONBALL LAUNCHER
+# A gun that uses the BallisticAmmoProvider component to load and fire cannonballs.
+- type: entity
+  abstract: true
+  id: BaseGunCannonBallBallistic
+  components:
+  - type: BallisticAmmoProvider
+    proto: CannonBall
+    capacity: 1
+    whitelist:
+      tags:
+      - CannonBall
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+
+# PHYSICS GUN
+# A physics manipulating gun. Groups together the visual qualities of all physics guns.
+- type: entity
+  abstract: true
+  id: BasePhysicsGunVisuals
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: base-unshaded
+      map: [ "unshaded" ]
+      shader: unshaded
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TetherVisualsStatus.Key:
+        unshaded:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ToggleableLightVisuals
+    spriteLayer: unshaded
+    inhandVisuals:
+      left:
+      - state: inhand-left-unshaded
+        shader: unshaded
+      right:
+      - state: inhand-right-unshaded
+        shader: unshaded

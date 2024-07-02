@@ -1,71 +1,16 @@
+# Bulldog
 - type: entity
-  name: BaseWeaponShotgun
-  parent: BaseItem
-  id: BaseWeaponShotgun
-  description: A rooty tooty point and shooty.
-  abstract: true
-  components:
-  - type: Sprite
-    layers:
-    - state: icon
-      map: [ "enum.GunVisualLayers.Base" ]
-  - type: Item
-    # If you update this also update the bulldog's size.
-    size: Large
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
-    quickEquip: false
-    slots:
-    - Back
-    - suitStorage
-  - type: AmmoCounter
-  - type: Gun
-    fireRate: 2
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-      - ShellShotgun
-    capacity: 7
-    proto: ShellShotgun
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
-  - type: StaticPrice
-    price: 500
-
-- type: entity
-  name: Bulldog
-  # Don't parent to BaseWeaponShotgun because it differs significantly
-  parent: [BaseItem, BaseGunWieldable]
+  parent:
+  - BaseGunMedium
+  - BaseGunWieldable
+  - BaseGunShotgunMag
+  - BaseGunMagVisuals
   id: WeaponShotgunBulldog
+  name: Bulldog
   description: It's a magazine-fed shotgun designed for close quarters combat. Uses .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    size: Large
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
-    quickEquip: false
-    slots:
-    - Back
-    - suitStorage
-  - type: AmmoCounter
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 2
@@ -76,46 +21,23 @@
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineShotgun
-        priority: 2
-        whitelist:
-          tags:
-          - MagazineShotgun
-        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
-  - type: MagazineAmmoProvider
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
-  - type: StaticPrice
-    price: 500
 
+# double-barreled shotgun
 - type: entity
-  name: double-barreled shotgun
-  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  parent:
+  - BaseGunLarge
+  - BaseGunWieldable
+  - BaseGunShotgunBallistic
+  - BaseWeaponDoubleBarreled
   id: WeaponShotgunDoubleBarreled
+  name: double-barreled shotgun
   description: An immortal classic. Uses .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
   - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
-  - type: Gun
-    fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
@@ -123,31 +45,37 @@
     node: start
     deconstructionTarget: null
 
+# double-barreled shotgun [Non-Lethal]
 - type: entity
-  name: double-barreled shotgun
   parent: WeaponShotgunDoubleBarreled
   id: WeaponShotgunDoubleBarreledRubber
-  description: An immortal classic. Uses .50 shotgun shells.
   suffix: Non-Lethal
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
 
+# Enforcer
 - type: entity
-  name: Enforcer
-  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  parent:
+  - BaseGunLarge
+  - BaseGunWieldable
+  - BaseGunShotgunBallistic
   id: WeaponShotgunEnforcer
+  name: Enforcer
   description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
-  - type: BallisticAmmoProvider
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
 
+# Enforcer [Non-Lethal]
 - type: entity
   parent: WeaponShotgunEnforcer
   id: WeaponShotgunEnforcerRubber
@@ -156,43 +84,46 @@
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
 
+# Kammerer
 - type: entity
-  name: Kammerer
-  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  parent:
+  - BaseGunLarge
+  - BaseGunWieldable
+  - BaseGunShotgunBallistic
   id: WeaponShotgunKammerer
+  name: Kammerer
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
   components:
-  - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
-    sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     capacity: 4
   - type: Tag
     tags:
     - WeaponShotgunKammerer
 
+# sawn-off shotgun
 - type: entity
-  name: sawn-off shotgun
-  parent: BaseWeaponShotgun
+  parent:
+  - BaseGunSmall
+  - BaseGunShotgunBallistic
+  - BaseWeaponDoubleBarreled
   id: WeaponShotgunSawn
+  name: sawn-off shotgun
   description: Groovy! Uses .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Item
-    size: Small
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
-  - type: Gun
-    fireRate: 4
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
@@ -200,11 +131,11 @@
     node: shotgunsawn
     deconstructionTarget: null
 
+# sawn-off shotgun [Empty]
 - type: entity
-  name: sawn-off shotgun
+  name: sawn-off shogun
   parent: WeaponShotgunSawn
   id: WeaponShotgunSawnEmpty
-  description: Groovy! Uses .50 shotgun shells.
   suffix: Empty
   components:
   - type: BallisticAmmoProvider
@@ -214,21 +145,23 @@
     node: shotgunsawn
     deconstructionTarget: null
 
+# handmade pistol
 - type: entity
-  name: handmade pistol
-  parent: BaseWeaponShotgun
+  parent:
+  - BaseGunSmall
+  - BaseGunShotgunBallistic
   id: WeaponShotgunHandmade
+  name: handmade pistol
   description: Looks unreliable. Uses .50 shotgun shells.
   components:
-  - type: Item
-    size: Small
-    storedRotation: 90
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
-  - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Gun
     fireRate: 4
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     capacity: 1
   - type: Construction
@@ -238,45 +171,52 @@
   - type: StaticPrice
     price: 0
 
+# blunderbuss [Pirate]
 - type: entity
-  name: blunderbuss
-  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  parent:
+  - BaseGunLarge
+  - BaseGunWieldable
+  - BaseGunShotgunBallistic
   id: WeaponShotgunBlunderbuss
+  name: blunderbuss
   suffix: Pirate
   description: Deadly at close range.
   components:
-  - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/blunderbuss.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     capacity: 1
   - type: StaticPrice
     price: 0
 
+# improvised shotgun
 - type: entity
-  name: improvised shotgun
-  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  parent:
+  - BaseGunLarge
+  - BaseGunWieldable
+  - BaseGunShotgunBallistic
   id: WeaponShotgunImprovised
+  name: improvised shotgun
   description: A shitty, hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
-    fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
+    fireRate: 4
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     capacity: 1
     proto: null
@@ -286,11 +226,30 @@
   - type: StaticPrice
     price: 20
 
+# improvised shotgun [Loaded]
 - type: entity
-  name: improvised shotgun
   parent: WeaponShotgunImprovised
-  suffix: Loaded
   id: WeaponShotgunImprovisedLoaded
+  suffix: Loaded
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunImprovised
+
+# flare gun
+- type: entity
+  parent:
+  - BaseGunSmall
+  - BaseGunShotgunBallistic
+  id: WeaponFlareGun
+  name: flare gun
+  description: A compact, single-shot pistol that fires shotgun shells.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
+  - type: Gun
+    fireRate: 8
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunFlare
+    capacity: 1
