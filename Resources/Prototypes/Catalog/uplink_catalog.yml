@@ -784,7 +784,7 @@
   description: uplink-slipocalypse-clustersoap-desc
   productEntity: SlipocalypseClusterSoap
   cost:
-    Telecrystal: 3
+    Telecrystal: 2
   categories:
   - UplinkDisruption
 
