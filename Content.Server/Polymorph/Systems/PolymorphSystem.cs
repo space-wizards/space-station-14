@@ -1,20 +1,31 @@
 using Content.Server.Actions;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Components;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
+using Content.Server.CriminalRecords.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Nutrition;
 using Content.Server.Polymorph.Components;
+using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
+using Content.Server.Zombies;
 using Content.Shared.Actions;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Buckle;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 using Content.Shared.Popups;
+using Content.Shared.Zombies;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -22,6 +33,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Follower;
 
 namespace Content.Server.Polymorph.Systems;
 
@@ -45,6 +57,12 @@ public sealed partial class PolymorphSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly ZombieSystem _zombie = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly FlammableSystem _flammable = default!;
+    [Dependency] private readonly TemperatureSystem _temperature = default!;
+    [Dependency] private readonly CriminalRecordsConsoleSystem _criminalRecords = default!;
 
     private const string RevertPolymorphId = "ActionRevertPolymorph";
 
@@ -211,7 +229,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         var childXform = Transform(child);
         _transform.SetLocalRotation(child, targetTransformComp.LocalRotation, childXform);
 
-        if (_container.TryGetContainingContainer(uid, out var cont))
+        if (_container.TryGetContainingContainer((uid, null, null), out var cont))
             _container.Insert(child, cont);
 
         //Transfers all damage from the original to the new one
@@ -222,6 +240,31 @@ public sealed partial class PolymorphSystem : EntitySystem
         {
             _damageable.SetDamage(child, damageParent, damage);
         }
+
+        //If there is firestacks transfer them
+        if (TryComp<FlammableComponent>(uid, out var fire))
+            _flammable.SetFireStacks(child, fire.FireStacks, ignite: fire.OnFire);
+
+        if (configuration.TransferBloodstream && TryComp<BloodstreamComponent>(child, out var bloodstream) && TryComp<BloodstreamComponent>(uid, out var parentBloodstream))
+        {
+            // First set the blood level percentage to be the same
+            float bloodLevel = _bloodstream.GetBloodLevelPercentage(uid);
+            if (_solutionContainerSystem.TryGetSolution(child, bloodstream.BloodSolutionName, out _, out var blood))
+            {
+                blood.RemoveAllSolution();
+                _bloodstream.TryModifyBloodLevel(child, bloodLevel * bloodstream.BloodMaxVolume);
+                _bloodstream.TryModifyBleedAmount(child, -1000); //Arbitiary value since it can't be set
+                _bloodstream.TryModifyBleedAmount(child, parentBloodstream.BleedAmount);
+            }
+            // Then transfer chemicals over
+            if (_solutionContainerSystem.TryGetSolution(uid, parentBloodstream.ChemicalSolutionName, out _, out var parentSolution))
+            {
+                _bloodstream.TryAddToChemicals(child, parentSolution);
+            }
+        }
+
+        if (TryComp<TemperatureComponent>(uid, out var temperature))
+            _temperature.ForceChangeTemperature(child, temperature.CurrentTemperature);
 
         if (configuration.Inventory == PolymorphInventoryChange.Transfer)
         {
@@ -248,8 +291,20 @@ public sealed partial class PolymorphSystem : EntitySystem
             }
         }
 
+        if (HasComp<ZombieComponent>(uid)) // Zombify polymorph if we're a zombie
+            _zombie.ZombifyEntity(child);
+
         if (configuration.TransferName && TryComp(uid, out MetaDataComponent? targetMeta))
+        {
             _metaData.SetEntityName(child, targetMeta.EntityName);
+            if (TryComp<IdentityComponent>(uid, out var identity))
+            {
+                var childIdentity = EnsureComp<IdentityComponent>(child);
+                childIdentity.IdentityEntitySlot = identity.IdentityEntitySlot;
+            }
+
+            _criminalRecords.CheckNewIdentity(child);
+        }
 
         if (configuration.TransferHumanoidAppearance)
         {
@@ -263,6 +318,9 @@ public sealed partial class PolymorphSystem : EntitySystem
         EnsurePausedMap();
         if (PausedMap != null)
             _transform.SetParent(uid, targetTransformComp, PausedMap.Value);
+
+        var ev = new PolymorphedEvent(child);
+        RaiseLocalEvent(uid, ev);
 
         return child;
     }
@@ -299,6 +357,33 @@ public sealed partial class PolymorphSystem : EntitySystem
             _damageable.SetDamage(parent, damageParent, damage);
         }
 
+        //If there is firestacks transfer them
+        if (TryComp<FlammableComponent>(uid, out var fire))
+            _flammable.SetFireStacks(parent, fire.FireStacks, ignite: fire.OnFire);
+
+        if (component.Configuration.TransferBloodstream && TryComp<BloodstreamComponent>(parent, out var bloodstream) && TryComp<BloodstreamComponent>(uid, out var childBloodstream))
+        {
+            // First set the blood level percentage to be the same
+            float bloodLevel = _bloodstream.GetBloodLevelPercentage(uid);
+            if (_solutionContainerSystem.TryGetSolution(parent, bloodstream.BloodSolutionName, out _, out var blood))
+            {
+                blood.RemoveAllSolution();
+                _bloodstream.TryModifyBloodLevel(parent, bloodLevel * bloodstream.BloodMaxVolume);
+                _bloodstream.TryModifyBleedAmount(parent, -1000); //Arbitiary value since it can't be set
+                _bloodstream.TryModifyBleedAmount(parent, childBloodstream.BleedAmount);
+            }
+            // Then flush transfer chemicals over
+            if (_solutionContainerSystem.TryGetSolution(parent, bloodstream.ChemicalSolutionName, out _, out var chemicals)
+                && _solutionContainerSystem.TryGetSolution(uid, childBloodstream.ChemicalSolutionName, out _, out var childSolution))
+            {
+                chemicals.RemoveAllSolution();
+                _bloodstream.TryAddToChemicals(parent, childSolution);
+            }
+        }
+
+        if (TryComp<TemperatureComponent>(uid, out var temperature))
+            _temperature.ForceChangeTemperature(parent, temperature.CurrentTemperature);
+
         if (component.Configuration.Inventory == PolymorphInventoryChange.Transfer)
         {
             _inventory.TransferEntityInventories(uid, parent);
@@ -324,6 +409,11 @@ public sealed partial class PolymorphSystem : EntitySystem
             }
         }
 
+        _criminalRecords.CheckNewIdentity(parent);
+
+        if (HasComp<ZombieComponent>(uid) && !HasComp<ZombieComponent>(parent)) // Zombify original if we're a zombie
+            _zombie.ZombifyEntity(parent);
+
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
             _mindSystem.TransferTo(mindId, parent, mind: mind);
 
@@ -332,6 +422,9 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         // if an item polymorph was picked up, put it back down after reverting
         _transform.AttachToGridOrMap(parent, parentXform);
+
+        var ev = new PolymorphedEvent(parent, true);
+        RaiseLocalEvent(uid, ev);
 
         _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",
                 ("parent", Identity.Entity(uid, EntityManager)),

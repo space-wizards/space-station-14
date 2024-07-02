@@ -53,6 +53,15 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    angle: 30
+    animation: WeaponArcFist
+    attackRate: 0.625
+    damage:
+      types:
+        Blunt: 8
   - type: Geras
   - type: PassiveDamage # Around 8 damage a minute healed
     allowedStates:
@@ -70,6 +79,7 @@
         color: "#2cf274"
   - type: Bloodstream
     bloodReagent: Slime # TODO Color slime blood based on their slime color or smth
+    bleedReductionAmount: 0.5 # A little more than normal
   - type: Barotrauma
     damage:
       types:
@@ -110,6 +120,7 @@
       types:
         Asphyxiation: -1.0
     maxSaturation: 15
+  - type: PersistantSlimeStorage
 
 - type: entity
   parent: MobHumanDummy

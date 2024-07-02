@@ -1,4 +1,4 @@
-﻿- type: body
+- type: body
   id: Slimes
   name: "slimes"
   root: torso
@@ -11,7 +11,26 @@
         core: SentientSlimesCore
         lungs: OrganSlimesLungs
     legs:
-      part: LegsAnimal
+      part: LegsSlime
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal
+
+- type: body
+  id: Geras
+  name: "slimes"
+  root: torso
+  slots:
+    torso:
+      part: TorsoSlime
+      connections:
+      - legs
+      organs:
+        core: SentientSlimesCore
+        lungs: OrganSlimesLungs
+    legs:
+      part: LegsGeras
       connections:
       - feet
     feet:

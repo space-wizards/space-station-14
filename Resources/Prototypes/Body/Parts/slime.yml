@@ -94,3 +94,25 @@
     - type: Sprite
       sprite: Mobs/Species/Slime/parts.rsi
       state: "r_foot"
+
+#The following are geras/slime slime parts
+#Because it turns out body effects movement speed
+- type: entity
+  id: LegsSlime
+  name: slime legs
+  parent: LegsAnimal
+  noSpawn: true
+  components:
+  - type: MovementBodyPart
+    walkSpeed: 2
+    sprintSpeed: 4
+
+- type: entity
+  id: LegsGeras
+  name: slime legs
+  parent: LegsAnimal
+  noSpawn: true
+  components:
+  - type: MovementBodyPart
+    walkSpeed: 3
+    sprintSpeed: 5 # +.5 from normal movement speed

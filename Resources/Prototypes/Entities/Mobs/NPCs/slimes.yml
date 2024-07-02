@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: basic slime
   id: BaseMobAdultSlimes
   parent: [ SimpleMobBase, MobCombat ]
@@ -26,9 +26,6 @@
     thresholds:
       0: Alive
       120: Dead
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 2
-    baseSprintSpeed: 4
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Effects/Footsteps/slime1.ogg
@@ -151,13 +148,11 @@
   noSpawn: true
   components:
   # they portable...
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 3
-    baseSprintSpeed: 5 # +.5 from normal movement speed
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Dead # weak af tho
+      80: Critical
+      100: Dead # weak af tho
   - type: NpcFactionMember
     factions:
     - NanoTrasen
@@ -166,8 +161,8 @@
     size: Huge
   - type: Sprite
     color: "#FFFFFF55"
-  - type: MeleeWeapon
-    attackRate: 2
+  - type: MeleeWeapon # Twice as fast as a slime, half as deadly
+    attackRate: 1.25
     damage:
       types:
         Blunt: 4
@@ -175,8 +170,45 @@
     states:
       Alive:
         Base: blue_adult_slime
+      Critical:
+        Base: blue_adult_slime_dead
       Dead:
         Base: blue_adult_slime_dead
+  - type: Body
+    prototype: Geras
+    requiredLegs: 1
+  - type: PassiveDamage # copied from slime person scaled
+    allowedStates:
+    - Alive
+    damageCap: 32
+    damage:
+      types:
+        Heat: -0.07
+      groups:
+        Brute: -0.07
+  - type: Bloodstream
+    bloodReagent: Slime
+    bleedReductionAmount: 0.5
+    bloodlossHealDamage: # Match with slime people but scaled
+      types:
+        Bloodloss:
+          -0.25
+  - type: Storage # from slimes
+    clickInsert: false
+    grid:
+    - 0,0,1,2
+    maxItemSize: Large
+    storageInsertSound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: PersistantSlimeStorage
 
 - type: entity
   name: blue slime
