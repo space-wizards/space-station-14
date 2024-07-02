@@ -99,7 +99,7 @@ namespace Content.Shared.Roles
         public string? JobEntity = null;
 
         [DataField]
-        public ProtoId<StatusIconPrototype> Icon { get; private set; } = "JobIconUnknown";
+        public ProtoId<JobIconPrototype> Icon { get; private set; } = "JobIconUnknown";
 
         [DataField("special", serverOnly: true)]
         public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();

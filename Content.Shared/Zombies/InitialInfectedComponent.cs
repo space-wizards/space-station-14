@@ -8,5 +8,5 @@ namespace Content.Shared.Zombies;
 public sealed partial class InitialInfectedComponent : Component
 {
     [DataField]
-    public ProtoId<StatusIconPrototype> StatusIcon = "InitialInfectedFaction";
+    public ProtoId<FactionIconPrototype> StatusIcon = "InitialInfectedFaction";
 }
