@@ -5,14 +5,22 @@ namespace Content.Server.Atmos.Piping.Other.Components
     [RegisterComponent]
     public sealed partial class GasMinerComponent : Component
     {
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
 
-        public bool Broken { get; set; } = false;
+        [ViewVariables(VVAccess.ReadOnly)]
+        public bool Idle { get; set; } = false;
 
+        /// <summary>
+        ///      If the number of moles in the external environment exceeds this number, no gas will be mined.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxExternalAmount")]
         public float MaxExternalAmount { get; set; } = float.PositiveInfinity;
 
+        /// <summary>
+        ///      If the pressure (in kPA) of the external environment exceeds this number, no gas will be mined.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxExternalPressure")]
         public float MaxExternalPressure { get; set; } = Atmospherics.GasMinerDefaultMaxExternalPressure;
