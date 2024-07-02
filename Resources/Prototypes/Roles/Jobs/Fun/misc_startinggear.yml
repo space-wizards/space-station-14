@@ -348,3 +348,11 @@
     back: ClothingBackpackSatchelScience
     ears: ClothingHeadsetRD
     outerClothing: ClothingOuterCoatRD
+
+# Turf Tagger Gear
+- type: startingGear
+  id: TurfTaggerGear
+  storage:
+    back:
+    - SprayPainter
+    - ClothingHeadBandSkull

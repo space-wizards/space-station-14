@@ -36,7 +36,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
         // go through each gamerule getting data for the roundend summary.
-        var summaries = new Dictionary<string, Dictionary<string, List<(EntityUid, string)>>>();
+        var summaries = new Dictionary<string, Summary>();
         var query = EntityQueryEnumerator<GameRuleComponent>();
         while (query.MoveNext(out var uid, out var gameRule))
         {
@@ -51,7 +51,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             // first group the gamerules by their agents, for example 2 different dragons
             var agent = info.AgentName;
             if (!summaries.ContainsKey(agent))
-                summaries[agent] = new Dictionary<string, List<(EntityUid, string)>>();
+                summaries[agent] = new Summary(info.HideObjectives);
 
             var prepend = new ObjectivesTextPrependEvent("");
             RaiseLocalEvent(uid, ref prepend);
@@ -59,14 +59,14 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             // next group them by their prepended texts
             // for example with traitor rule, group them by the codewords they share
             var summary = summaries[agent];
-            if (summary.ContainsKey(prepend.Text))
+            if (summary.Minds.TryGetValue(prepend.Text, out var list))
             {
                 // same prepended text (usually empty) so combine them
-                summary[prepend.Text].AddRange(info.Minds);
+                list.AddRange(info.Minds);
             }
             else
             {
-                summary[prepend.Text] = info.Minds;
+                summary.Minds[prepend.Text] = info.Minds;
             }
         }
 
@@ -76,7 +76,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             // first get the total number of players that were in these game rules combined
             var total = 0;
             var totalInCustody = 0;
-            foreach (var (_, minds) in summary)
+            foreach (var (_, minds) in summary.Minds)
             {
                 total += minds.Count;
                 totalInCustody += minds.Where(pair => IsInCustody(pair.Item1)).Count();
@@ -84,12 +84,13 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
             var result = new StringBuilder();
             result.AppendLine(Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agent)));
+            // TODO: change to event or something this is bad
             if (agent == Loc.GetString("traitor-round-end-agent-name"))
             {
                 result.AppendLine(Loc.GetString("objectives-round-end-result-in-custody", ("count", total), ("custody", totalInCustody), ("agent", agent)));
             }
             // next add all the players with its own prepended text
-            foreach (var (prepend, minds) in summary)
+            foreach (var (prepend, minds) in summary.Minds)
             {
                 if (prepend != string.Empty)
                     result.Append(prepend);
@@ -97,14 +98,14 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                 // add space between the start text and player list
                 result.AppendLine();
 
-                AddSummary(result, agent, minds);
+                AddSummary(result, agent, minds, summary.HideObjectives);
             }
 
             ev.AddLine(result.AppendLine().ToString());
         }
     }
 
-    private void AddSummary(StringBuilder result, string agent, List<(EntityUid, string)> minds)
+    private void AddSummary(StringBuilder result, string agent, List<(EntityUid, string)> minds, bool hideObjectives)
     {
         var agentSummaries = new List<(string summary, float successRate, int completedObjectives)>();
 
@@ -117,7 +118,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             var custody = IsInCustody(mindId, mind) ? Loc.GetString("objectives-in-custody") : string.Empty;
 
             var objectives = mind.Objectives;
-            if (objectives.Count == 0)
+            if (objectives.Count == 0 || hideObjectives)
             {
                 agentSummaries.Add((Loc.GetString("objectives-no-objectives", ("custody", custody), ("title", title), ("agent", agent)), 0f, 0));
                 continue;
@@ -251,16 +252,28 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     }
 }
 
+public sealed class Summary
+{
+    public Dictionary<string, List<(EntityUid, string)>> Minds = new();
+    public bool HideObjectives;
+
+    public Summary(bool hideObjectives)
+    {
+        HideObjectives = hideObjectives;
+    }
+}
+
 /// <summary>
 /// Raised on the game rule to get info for any objectives.
 /// If its minds list is set then the players will have their objectives shown in the round end text.
+/// <c>HideObjectives</c> can be used to hide objectives anyway, only listing player names.
 /// AgentName is the generic name for a player in the list.
 /// </summary>
 /// <remarks>
 /// The objectives system already checks if the game rule is added so you don't need to check that in this event's handler.
 /// </remarks>
 [ByRefEvent]
-public record struct ObjectivesTextGetInfoEvent(List<(EntityUid, string)> Minds, string AgentName);
+public record struct ObjectivesTextGetInfoEvent(List<(EntityUid, string)> Minds, string AgentName, bool HideObjectives = false);
 
 /// <summary>
 /// Raised on the game rule before text for each agent's objectives is added, letting you prepend something.

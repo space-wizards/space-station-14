@@ -4,6 +4,19 @@
   components:
   - type: GameRule
 
+# a rule that has common subgamemode rules, roundstart is fairly normal so there is time for them to play out
+- type: entity
+  abstract: true
+  parent: BaseGameRule
+  id: BaseSubGamemodesRule
+  components:
+  - type: SubGamemodes
+    rules:
+    - id: Thief
+      prob: 0.5
+    - id: TurfWar
+      prob: 0.25
+
 - type: entity
   parent: BaseGameRule
   id: RespawnDeadRule
@@ -83,7 +96,7 @@
   - type: AntagLoadProfileRule
 
 - type: entity
-  parent: BaseNukeopsRule
+  parent: [BaseNukeopsRule, BaseSubGamemodesRule]
   id: Nukeops
   components:
   - type: GameRule
@@ -160,7 +173,7 @@
     agentName: traitor-round-end-agent-name
 
 - type: entity
-  parent: BaseTraitorRule
+  parent: [BaseTraitorRule, BaseSubGamemodesRule]
   id: Traitor
   components:
   - type: GameRule
@@ -183,7 +196,7 @@
 
 - type: entity
   id: Revolutionary
-  parent: BaseGameRule
+  parent: BaseSubGamemodesRule
   components:
   - type: GameRule
     minPlayers: 15
@@ -248,6 +261,33 @@
       mindComponents:
       - type: InitialInfectedRole
         prototype: InitialInfected
+  # thieves would not get far as zombies, but doors will stay painted after taggers get infected
+  # funny people in zombie apocalypse vandalising instead of trying to survive
+  - type: SubGamemodes
+    rules:
+    - id: TurfWar
+      prob: 0.25
+
+- type: entity
+  parent: BaseGameRule
+  id: TurfWar
+  components:
+  - type: GameRule
+    minPlayers: 10
+  - type: TurfWarRule
+  - type: AntagSelection
+    agentName: turf-war-round-end-agent-name
+    hideObjectives: true
+    definitions:
+    - prefRoles: [ TurfTagger ]
+      min: 2
+      max: 6
+      playerRatio: 5
+      startingGear: TurfTaggerGear
+      briefing:
+        text: turf-tagger-role-greeting
+      grouping: Departments
+      # turf tagger role has department so gets added by system
 
 # event schedulers
 - type: entity

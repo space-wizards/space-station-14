@@ -222,6 +222,12 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             picking = false;
         }
 
+        playerPool = def.Grouping switch
+        {
+            AntagPoolGrouping.Departments => GroupByDepartment(playerPool),
+            AntagPoolGrouping.Ungrouped => playerPool
+        };
+
         for (var i = 0; i < count; i++)
         {
             var session = (ICommonSession?) null;
@@ -371,6 +377,43 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     }
 
     /// <summary>
+    /// Create a new selection pool where each list is a single department.
+    /// Picking a player removes the entire department from the pool.
+    /// The input pool is consumed and cannot be reused.
+    /// </summary>
+    public AntagSelectionPlayerPool GroupByDepartment(AntagSelectionPlayerPool pool)
+    {
+        // sort the player pool into departments, ignoring preferred/fallback status
+        var departments = new Dictionary<string, List<ICommonSession>>();
+        while (pool.MoveNext(out var session))
+        {
+            if (!_mind.TryGetMind(session, out var mindId, out var mind))
+                continue;
+
+            if (!_jobs.MindTryGetJob(mindId, out _, out var job)
+                || !_jobs.TryGetPrimaryDepartment(job.ID, out var department))
+                continue;
+
+            if (departments.TryGetValue(department.ID, out var list))
+                list.Add(session);
+            else
+                departments[department.ID] = new() { session };
+        }
+
+        // get the sessions of each department
+        var lists = new List<List<ICommonSession>>();
+        foreach (var (_, list) in departments)
+        {
+            lists.Add(list);
+        }
+
+        // department order is random instead of depending on dictionary iteration order
+        RobustRandom.Shuffle(lists);
+
+        return new AntagSelectionPlayerPool(lists, onePerPool: true);
+    }
+
+    /// <summary>
     /// Checks if a given session is valid for an antagonist.
     /// </summary>
     public bool IsSessionValid(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, EntityUid? mind = null)
@@ -455,6 +498,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         args.Minds = ent.Comp.SelectedMinds;
         args.AgentName = Loc.GetString(name);
+        args.HideObjectives = ent.Comp.HideObjectives;
     }
 }
 
