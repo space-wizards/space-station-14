@@ -320,7 +320,7 @@
     - id: SolarFlare
     - id: KudzuGrowth
     - id: ZombieOutbreak
-#    - id: RandomCargoGiftsRule
+    - id: RandomCargoGiftsRule
     - id: RandomUnknownShuttleRule
 
 # variation passes
