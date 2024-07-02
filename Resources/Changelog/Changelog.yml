@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DEATHB4DEFEAT, Dutch-VanDerLinde, metalgearsloth and musicmanvr
-  changes:
-  - message: Added loadouts
-    type: Add
-  id: 6360
-  time: '2024-04-16T19:57:41.736477+00:00'
-  url: null
 - author: Dutch-VanDerLinde
   changes:
   - message: Senior role ID cards now function properly.
@@ -3821,3 +3814,12 @@
   id: 6859
   time: '2024-07-02T13:33:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29392
+- author: Ko4erga
+  changes:
+  - message: Dropper can be placed in med belt, plant belt and chemistry bag.
+    type: Tweak
+  - message: Dropper size changed.
+    type: Tweak
+  id: 6860
+  time: '2024-07-02T15:28:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29667
