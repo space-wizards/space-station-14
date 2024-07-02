@@ -478,3 +478,27 @@
     liar-word-40: liar-word-replacement-40
     liar-word-41: liar-word-replacement-41
     liar-word-42: liar-word-replacement-42
+
+- type: accent
+  id: caveman
+  wordReplacements:
+    accent-caveman-replaced-0: accent-caveman-replacement-0
+    accent-caveman-replaced-1: accent-caveman-replacement-1
+    accent-caveman-replaced-2: accent-caveman-replacement-2
+    accent-caveman-replaced-3: accent-caveman-replacement-3
+    accent-caveman-replaced-4: accent-caveman-replacement-4
+    accent-caveman-replaced-5: accent-caveman-replacement-5
+    accent-caveman-replaced-6: accent-caveman-replacement-6
+    accent-caveman-replaced-7: accent-caveman-replacement-7
+    accent-caveman-replaced-8: accent-caveman-replacement-8
+    accent-caveman-replaced-9: accent-caveman-replacement-9
+    accent-caveman-replaced-10: accent-caveman-replacement-10
+    accent-caveman-replaced-11: accent-caveman-replacement-11
+    accent-caveman-replaced-12: accent-caveman-replacement-12
+    accent-caveman-replaced-13: accent-caveman-replacement-13
+    accent-caveman-replaced-14: accent-caveman-replacement-14
+    accent-caveman-replaced-15: accent-caveman-replacement-15
+    accent-caveman-replaced-16: accent-caveman-replacement-16
+    accent-caveman-replaced-17: accent-caveman-replacement-17
+    accent-caveman-replaced-18: accent-caveman-replacement-18
+    accent-caveman-replaced-19: accent-caveman-replacement-19
