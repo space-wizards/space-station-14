@@ -16,11 +16,11 @@
   copyright: "Modified by github user @Flareguy from plating.png, using damaged plating sprites from /tg/station at commit https://github.com/tgstation/tgstation/blob/6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae/icons/turf/floors.dmi"
   source: "https://github.com/space-wizards/space-station-14/pull/21711"
 
-- files: [ "asteroid_red.png", "asteroid_tile.png", "elevator_shaft.png", "freezer.png", "green_circuit.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
+- files: [ "asteroid_red.png", "asteroid_tile.png", "elevator_shaft.png", "freezer.png", "foammetal.png", "green_circuit.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
   license: "CC-BY-SA-3.0"
   copyright: "vgstation13 at roughly commit e4d3ea7f69d21c3667be12b114fa935c4640cb05, asteroid_red and asteroid_tile taken from commit /vg/station at commit 02b9f6894af4419c9f7e699a22c402b086d8067e."
   source: "https://github.com/vgstation-coders/vgstation13"
-  
+
 - files: [ "asteroid.png", "asteroid_dug.png", "asteroid0.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae."
@@ -40,7 +40,7 @@
   license: "CC-BY-SA-3.0"
   copyright: "Modified from plating.png by github user @Flareguy"
   source: "https://github.com/space-wizards/space-station-14/"
-  
+
 - files: ["rglass.png"]
   license: "CC-BY-SA-3.0"
   copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, rglass modified by github user @notquitehadouken."
@@ -90,7 +90,7 @@
   license: "CC-BY-SA-3.0"
   copyright: "Fortuna commit 2a9408a47e2f83d945335e4feeeeafb552173e6f, grasslight and dirt by Peptide based on grassdark.png and dirt."
   source: "https://github.com/FortunaSS13/Fortuna"
-  
+
 - files: ["steel_maint.png", "grating_maint.png", "wood_tile.png"]
   license: "CC-BY-SA-3.0"
   copyright: "by brainfood for space-station-14, ."
@@ -105,7 +105,7 @@
   license: "CC-BY-SA-3.0"
   copyright: "taken at https://github.com/ParadiseSS13/Paradise/blob/8b7f4c8b69c74c6de5a755272eb8d3520f3d87c7/icons/turf/floors.dmi"
   source: "https://github.com/ParadiseSS13/Paradise"
-  
+
 - files: ["chromite.png"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "taken at commit 0587dd16e28108bdf0b0a28e2caae4319845e861, and recolored by TheShuEd"
