@@ -27,7 +27,10 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
             var miner = ent.Comp;
 
             if(!GetValidEnvironment(ent, out var environment))
+            {
+                miner.Idle = false;
                 return;
+            }
 
             // SpawnAmount is declared in mol/s so to get the amount of gas we hope to mine, we have to multiply this by
             // how long we have been waiting to spawn it and further cap the number according to the miner's state.
