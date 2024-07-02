@@ -102,6 +102,7 @@
     sprite: Clothing/Shoes/Boots/speedboots.rsi
   - type: ToggleClothingSpeed
     toggleAction: ActionToggleSpeedBoots
+    toggleableSprite: true
   - type: ClothingSpeedModifier
     walkModifier: 1.5
     sprintModifier: 1.5

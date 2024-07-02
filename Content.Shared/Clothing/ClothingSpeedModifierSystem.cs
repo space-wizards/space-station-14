@@ -1,8 +1,10 @@
 using Content.Shared.Actions;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Movement.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.Toggleable;
@@ -18,10 +20,12 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly ClothingSpeedModifierSystem _clothingSpeedModifier = default!;
+    [Dependency] private readonly ClothingSystem _clothing = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedPowerCellSystem _powerCell = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
 
     public override void Initialize()
     {
@@ -166,6 +170,12 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
             return;
 
         uid.Comp.Enabled = value;
+
+        if (uid.Comp.ToggleableSprite && TryComp<ItemComponent>(uid, out var item))
+        {
+            _item.SetHeldPrefix(uid, uid.Comp.Enabled ? "on" : null, component: item);
+            _clothing.SetEquippedPrefix(uid, uid.Comp.Enabled ? "on" : null);
+        }
 
         _appearance.SetData(uid, ToggleVisuals.Toggled, uid.Comp.Enabled);
         _actions.SetToggled(uid.Comp.ToggleActionEntity, uid.Comp.Enabled);

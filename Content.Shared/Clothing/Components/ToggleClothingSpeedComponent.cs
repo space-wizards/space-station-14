@@ -17,6 +17,12 @@ public sealed partial class ToggleClothingSpeedComponent : Component
     public EntProtoId ToggleAction = "ActionToggleSpeedBoots";
 
     /// <summary>
+    ///     Does this clothing item have a sprite that should update when it is activated?
+    ///     e.g. speedboots have a red region that changes to green when they are active
+    /// </summary>
+    [DataField] public bool ToggleableSprite = false;
+
+    /// <summary>
     /// The action entity
     /// </summary>
     [DataField, AutoNetworkedField]

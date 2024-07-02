@@ -97,6 +97,13 @@
     walkModifier: 0.95
     sprintModifier: 0.9
     enabled: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: icon-on}
+          False: {state: icon}
   - type: GasTank
     outputPressure: 42.6
     air:
