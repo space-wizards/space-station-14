@@ -11,13 +11,17 @@
         doAfter: 2.0
 
   - node: assembly
-    entity: IntercomAssesmbly
+    entity: IntercomAssembly
     edges:
     - to: wired
       steps:
       - material: Cable
         amount: 2
         doAfter: 1
+      completed:
+      - !type:VisualizerDataInt
+        key: "enum.ConstructionVisuals.Layer"
+        data: 1
     - to: start
       completed:
       - !type:GivePrototype
@@ -29,7 +33,7 @@
         doAfter: 2
 
   - node: wired
-    entity: IntercomAssesmbly
+    entity: IntercomAssembly
     edges:
     - to: electronics
       steps:
@@ -45,6 +49,9 @@
       - !type:GivePrototype
         prototype: CableApcStack1
         amount: 2
+      - !type:VisualizerDataInt
+        key: "enum.ConstructionVisuals.Layer"
+        data: 0
       steps:
       - tool: Cutting
         doAfter: 1
@@ -57,7 +64,11 @@
         doAfter: 2
 
   - node: intercom
-    entity: IntercomCommon #TODO: make this work with encryption keys
+    entity: IntercomConstructed
+    doNotReplaceInheritingEntities: true
+    actions:
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
     edges:
     - to: wired
       conditions:
@@ -72,3 +83,27 @@
       steps:
       - tool: Prying
         doAfter: 1
+    - to: intercomReinforced
+      conditions:
+      - !type:WirePanel
+      steps:
+      - material: Steel
+        amount: 1
+      - tool: Welding
+        doAfter: 1
+
+  - node: intercomReinforced
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level2
+      wiresAccessible: false
+    edges:
+    - to: intercom
+      conditions:
+      - !type:WirePanel
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+      steps:
+      - tool: Welding
+        doAfter: 5
