@@ -210,24 +210,31 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 8.5
-        Caustic: 8.5
+        Heat: 7.5
+        Caustic: 7.5
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: SulfuricAcid
-          Quantity: 3
+          Quantity: 15
         - ReagentId: FluorosulfuricAcid
-          Quantity: 3
+          Quantity: 15
   - type: Produce
     seedId: deathNettle
   - type: MeleeChemicalInjector
-    transferAmount: 2
+    transferAmount: 6
     solution: food
-    pierceArmor: false
+    pierceArmor: true
   - type: Extractable
     grindableSolutionName: food
+  - type: Thorny
+    sound: /Audio/Effects/lightburn.ogg
+    damage:
+      types:
+        Heat: 4
+        Caustic: 4
+
 
 - type: entity
   name: banana

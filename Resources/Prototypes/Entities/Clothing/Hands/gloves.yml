@@ -175,6 +175,7 @@
     fiberMaterial: fibers-leather
     fiberColor: fibers-brown
   - type: FingerprintMask
+  - type: ThornyImmune
 
 - type: entity
   parent: ClothingHandsBase
