@@ -1,3 +1,21 @@
+- type: loadoutEffectGroup
+  id: SousChef
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChef
+      time: 36000 #10 hrs
+
+- type: loadoutEffectGroup
+  id: HeadChef
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChef
+      time: 108000 #30 hrs
+
 # Head
 - type: loadout
   id: ChefHead
@@ -7,6 +25,30 @@
   id: ChefHead
   equipment:
     head: ClothingHeadHatChef
+
+- type: loadout
+  id: ChefSousHat
+  equipment: ChefSousHat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SousChef
+
+- type: startingGear
+  id: ChefSousHat
+  equipment:
+    head: ClothingHeadHatSousChef
+
+- type: loadout
+  id: ChefHeadHat
+  equipment: ChefHeadHat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HeadChef
+
+- type: startingGear
+  id: ChefHeadHat
+  equipment:
+    head: ClothingHeadHatHeadChef 
 
 # Mask
 - type: loadout
