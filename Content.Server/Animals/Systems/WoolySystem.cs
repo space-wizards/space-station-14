@@ -9,7 +9,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-///     Gives ability to produce fiber reagents, produces endless if the 
+///     Gives ability to produce fiber reagents, produces endless if the
 ///     owner has no HungerComponent
 /// </summary>
 public sealed class WoolySystem : EntitySystem
@@ -52,10 +52,10 @@ public sealed class WoolySystem : EntitySystem
                 _hunger.ModifyHunger(uid, -wooly.HungerUsage, hunger);
             }
 
-            if (!_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution))
+            if (!_solutionContainer.TryGetSolution(uid, wooly.SolutionName, out var solutionEnt))
                 continue;
 
-            _solutionContainer.TryAddReagent(wooly.Solution.Value, wooly.ReagentId, wooly.Quantity, out _);
+            _solutionContainer.TryAddReagent(solutionEnt.Value, wooly.ReagentId, wooly.Quantity, out _);
         }
     }
 

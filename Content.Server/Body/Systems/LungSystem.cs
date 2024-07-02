@@ -75,11 +75,11 @@ public sealed class LungSystem : EntitySystem
 
     public void GasToReagent(EntityUid uid, LungComponent lung)
     {
-        if (!_solutionContainerSystem.ResolveSolution(uid, lung.SolutionName, ref lung.Solution, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(uid, lung.SolutionName, out var solutionEnt, out var solution))
             return;
 
         GasToReagent(lung.Air, solution);
-        _solutionContainerSystem.UpdateChemicals(lung.Solution.Value);
+        _solutionContainerSystem.UpdateChemicals(solutionEnt.Value);
     }
 
     private void GasToReagent(GasMixture gas, Solution solution)

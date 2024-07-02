@@ -174,7 +174,7 @@ public sealed class HealingSystem : EntitySystem
             HasDamage(targetDamage, component) ||
             component.ModifyBloodLevel > 0 // Special case if healing item can restore lost blood...
                 && TryComp<BloodstreamComponent>(target, out var bloodstream)
-                && _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution)
+                && _solutionContainerSystem.TryGetSolution(target, bloodstream.BloodSolutionName, out var _, out var bloodSolution)
                 && bloodSolution.Volume < bloodSolution.MaxVolume; // ...and there is lost blood to restore.
 
         if (!anythingToDo)

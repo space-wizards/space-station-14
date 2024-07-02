@@ -1,7 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Alert;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -135,37 +134,25 @@ namespace Content.Server.Body.Components
         [DataField]
         public ProtoId<ReagentPrototype> BloodReagent = "Blood";
 
-        /// <summary>Name/Key that <see cref="BloodSolution"/> is indexed by.</summary>
+        /// <summary>
+        /// Internal solution for blood storage
+        /// </summary>
         [DataField]
         public string BloodSolutionName = DefaultBloodSolutionName;
 
-        /// <summary>Name/Key that <see cref="ChemicalSolution"/> is indexed by.</summary>
+        /// <summary>
+        /// Internal solution for reagent storage
+        /// </summary>
         [DataField]
         public string ChemicalSolutionName = DefaultChemicalsSolutionName;
 
-        /// <summary>Name/Key that <see cref="TemporarySolution"/> is indexed by.</summary>
+        /// <summary>
+        /// Temporary blood solution.
+        /// When blood is lost, it goes to this solution, and when this
+        /// solution hits a certain cap, the blood is actually spilled as a puddle.
+        /// </summary>
         [DataField]
         public string BloodTemporarySolutionName = DefaultBloodTemporarySolutionName;
-
-        /// <summary>
-        ///     Internal solution for blood storage
-        /// </summary>
-        [DataField]
-        public Entity<SolutionComponent>? BloodSolution = null;
-
-        /// <summary>
-        ///     Internal solution for reagent storage
-        /// </summary>
-        [DataField]
-        public Entity<SolutionComponent>? ChemicalSolution = null;
-
-        /// <summary>
-        ///     Temporary blood solution.
-        ///     When blood is lost, it goes to this solution, and when this
-        ///     solution hits a certain cap, the blood is actually spilled as a puddle.
-        /// </summary>
-        [DataField]
-        public Entity<SolutionComponent>? TemporarySolution = null;
 
         /// <summary>
         /// Variable that stores the amount of status time added by having a low blood level.

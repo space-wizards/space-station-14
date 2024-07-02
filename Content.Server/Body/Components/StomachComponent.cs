@@ -23,12 +23,6 @@ namespace Content.Server.Body.Components
         public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
         /// <summary>
-        ///     The solution inside of this stomach this transfers reagents to the body.
-        /// </summary>
-        [DataField]
-        public Entity<SolutionComponent>? Solution = null;
-
-        /// <summary>
         ///     What solution should this stomach push reagents into, on the body?
         /// </summary>
         [DataField]

@@ -32,7 +32,7 @@ public sealed class GasCondenserSystem : EntitySystem
     {
         if (!(TryComp<ApcPowerReceiverComponent>(entity, out var receiver) && _power.IsPowered(entity, receiver))
             || !_nodeContainer.TryGetNode(entity.Owner, entity.Comp.Inlet, out PipeNode? inlet)
-            || !_solution.ResolveSolution(entity.Owner, entity.Comp.SolutionId, ref entity.Comp.Solution, out var solution))
+            || !_solution.TryGetSolution(entity.Owner, entity.Comp.SolutionId, out var solutionEnt, out var solution))
         {
             return;
         }
@@ -62,7 +62,7 @@ public sealed class GasCondenserSystem : EntitySystem
             inlet.Air.AdjustMoles(i, moles - (amount.Float() / moleToReagentMultiplier));
         }
 
-        _solution.UpdateChemicals(entity.Comp.Solution.Value);
+        _solution.UpdateChemicals(solutionEnt.Value);
     }
 
     public float NumberOfMolesToConvert(ApcPowerReceiverComponent comp, GasMixture mix, float dt)

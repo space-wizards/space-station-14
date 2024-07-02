@@ -1,4 +1,3 @@
-﻿using System.Linq;
 using Content.Server.Audio;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
@@ -65,16 +64,16 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
     private void ChemicalEmpty(Entity<ChemicalFuelGeneratorAdapterComponent> entity, ref GeneratorEmpty args)
     {
-        if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var solutionEnt, out var solution))
             return;
 
-        var spillSolution = _solutionContainer.SplitSolution(entity.Comp.Solution.Value, solution.Volume);
+        var spillSolution = _solutionContainer.SplitSolution(solutionEnt.Value, solution.Volume);
         _puddle.TrySpillAt(entity.Owner, spillSolution, out _);
     }
 
     private void ChemicalGetClogged(Entity<ChemicalFuelGeneratorAdapterComponent> entity, ref GeneratorGetCloggedEvent args)
     {
-        if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var solutionEnt, out var solution))
             return;
 
         foreach (var reagentQuantity in solution)
@@ -89,7 +88,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
     private void ChemicalUseFuel(Entity<ChemicalFuelGeneratorAdapterComponent> entity, ref GeneratorUseFuel args)
     {
-        if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var solutionEnt, out var solution))
             return;
 
         var totalReagent = 0f;
@@ -116,13 +115,13 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
                 availableReagent.Value);
 
             entity.Comp.FractionalReagents[reagentId] = fractionalReagent;
-            _solutionContainer.RemoveReagent(entity.Comp.Solution.Value, reagentId, FixedPoint2.FromCents(toRemove));
+            _solutionContainer.RemoveReagent(solutionEnt.Value, reagentId, FixedPoint2.FromCents(toRemove));
         }
     }
 
     private void ChemicalGetFuel(Entity<ChemicalFuelGeneratorAdapterComponent> entity, ref GeneratorGetFuelEvent args)
     {
-        if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var solutionEnt, out var solution))
             return;
 
         var fuel = 0f;

@@ -187,8 +187,8 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         var bleeding = false;
 
         if (TryComp<BloodstreamComponent>(target, out var bloodstream) &&
-            _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName,
-                ref bloodstream.BloodSolution, out var bloodSolution))
+            _solutionContainerSystem.TryGetSolution(target, bloodstream.BloodSolutionName,
+                out _, out var bloodSolution))
         {
             bloodAmount = bloodSolution.FillFraction;
             bleeding = bloodstream.BleedAmount > 0;

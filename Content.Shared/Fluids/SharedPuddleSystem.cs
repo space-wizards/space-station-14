@@ -73,7 +73,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
     private void OnGetFootstepSound(Entity<PuddleComponent> entity, ref GetFootstepSoundEvent args)
     {
-        if (!_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution,
+        if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out _,
                 out var solution))
             return;
 
@@ -95,8 +95,8 @@ public abstract partial class SharedPuddleSystem : EntitySystem
             }
 
             if (HasComp<EvaporationComponent>(entity) &&
-                _solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName,
-                    ref entity.Comp.Solution, out var solution))
+                _solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName,
+                    out _, out var solution))
             {
                 if (CanFullyEvaporate(solution))
                     args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));

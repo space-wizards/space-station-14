@@ -61,11 +61,11 @@ internal sealed class UdderSystem : EntitySystem
                 _hunger.ModifyHunger(uid, -udder.HungerUsage, hunger);
             }
 
-            if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution))
+            if (!_solutionContainerSystem.TryGetSolution(uid, udder.SolutionName, out var solutionEnt))
                 continue;
 
             //TODO: toxins from bloodstream !?
-            _solutionContainerSystem.TryAddReagent(udder.Solution.Value, udder.ReagentId, udder.QuantityPerUpdate, out _);
+            _solutionContainerSystem.TryAddReagent(solutionEnt.Value, udder.ReagentId, udder.QuantityPerUpdate, out _);
         }
     }
 
@@ -89,7 +89,7 @@ internal sealed class UdderSystem : EntitySystem
         if (args.Cancelled || args.Handled || args.Args.Used == null)
             return;
 
-        if (!_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var solutionEnt, out var solution))
             return;
 
         if (!_solutionContainerSystem.TryGetRefillableSolution(args.Args.Used.Value, out var targetSoln, out var targetSolution))
@@ -106,7 +106,7 @@ internal sealed class UdderSystem : EntitySystem
         if (quantity > targetSolution.AvailableVolume)
             quantity = targetSolution.AvailableVolume;
 
-        var split = _solutionContainerSystem.SplitSolution(entity.Comp.Solution.Value, quantity);
+        var split = _solutionContainerSystem.SplitSolution(solutionEnt.Value, quantity);
         _solutionContainerSystem.TryAddSolution(targetSoln.Value, split);
 
         _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(args.Args.Used.Value, EntityManager))), entity.Owner,
