@@ -1,9 +1,12 @@
 <Document>
-# Medical
-This is the department where people go to when they're hurt, it's up to the folks working here to fix them.
+  # Medical
 
-## Personnel
-[color=#5b97bc]Medical[/color]'s staff is made up of Medical Interns, Medical Doctors, Paramedics and Chemists. [color=#5b97bc]Medical[/color] is run by the Chief Medical Officer.
+  [color=cyan]Medical[/color] is the department that heals people and revives the dead. They are central to a functioning space station, as everyone would die without them.
+
+  Medical achieves this through a variety of means, such as [color=cyan]Topicals[/color], [color=cyan]Chemicals[/color], [color=cyan]Cloning[/color], [color=cyan]Cryogenics[/color], and more.
+
+  ## Personnel
+  [color=cyan]Medical[/color] is staffed by [color=cyan]Medical Interns[/color], [color=cyan]Medical Doctors[/color], [color=cyan]Paramedics[/color], and [color=cyan]Chemists[/color]. They all report directly to the [color=cyan]Chief Medical Officer[/color].
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineMedicalDoctor" Caption="Doctor"/>
@@ -11,22 +14,225 @@ This is the department where people go to when they're hurt, it's up to the folk
     <GuideEntityEmbed Entity="ToyFigurineChemist" Caption="Chemist"/>
     <GuideEntityEmbed Entity="ToyFigurineChiefMedicalOfficer" Caption="CMO"/>
   </Box>
-  
-Right now, medbay is divided into two different sets of care:
 
-## Medical Treatment
+  ## Essential Equipment
+
+  <Box>
+    <GuideEntityEmbed Entity="MedicalPDA"/>
+    <GuideEntityEmbed Entity="HandheldHealthAnalyzer"/>
+    <GuideEntityEmbed Entity="ClothingEyesHudMedical"/>
+  </Box>
+
+  Before healing anyone, ensure you have the necessary equipment.
+
+  - [color=cyan]Medical Hud[/color]: This displays the health of other personnel above their heads. This lets you visually assess the condition of other crew members without needing to analyze them.
+  - [color=cyan]Medical PDA[/color] and [color=cyan]Health Analyzer[/color]: These let you analyze the condition of a patient, listing all the kinds of and amounts of damage they have.
+
+  ## Patient Status and Triaging
+
+  Whenever a patient is hurt, it is your job to find out how to manage them and what approach to take when healing them. It always starts with accessing their needs and statuses so you can heal them properly.
+
+  To do this, you use the [color=cyan]Medical Hud[/color] and the [color=cyan]Health Analyzer[/color].
+
+  There are essentially six states that any person can be in:
+
+  - [color=cyan]Alive[/color]: They are fully conscious and can move and talk. These are the lowest priority of patients unless they are bleeding, as they will survive if ignored. The [color=cyan]Medical Hud[/color] displays a colored bar above their head with a blue cross icon. A living person has under 100 total damage.
+  - [color=cyan]Critical[/color]: These people are lying down and are usually gasping. They have the highest priority as they can be saved with minimal effort. The [color=cyan]Medical Hud[/color] displays a red bar over their head with an exclamation point icon. A critical person has over 100 and less than 200 total damage.
+  - [color=cyan]Dead[/color]: These people are clearly dead, but still have a soul. They have a medium priority, as you can still save them, but there is a timer until they start rotting. The [color=cyan]Medical Hud[/color] displays a black bar with a heart-rate icon. A dead person has over 200 total damage.
+  - [color=cyan]Rotting[/color]: When inspected, it says their body is rotting. If you have [color=cyan]Cloning[/color] or [color=cyan]Cryogenics[/color], you still might be able to save them. If not, you should put them in the [color=cyan]Morgue[/color].
+  - [color=cyan]Soulless[/color]: This person lacks a soul. When inspected, if it says that their soul has departed or has gone catatonic, they are soulless. If you have [color=cyan]Cognizine[/color], you can give them a soul again. If they are alive, put them in [color=cyan]Cryosleep[/color], and if they are dead, put them in the [color=cyan]Morgue[/color].
+  - [color=cyan]SSD[/color]: Patients may have a soul but still be unresponsive, meaning they have contracted [color=cyan]Space Sleep Disorder[/color]. The only thing you can do for this patient is to put them in a chair and hope they return or put them in [color=cyan]Cryosleep[/color].
+
+  ## Triaging Locations
+
+  <Box>
+    <GuideEntityEmbed Entity="MedicalBed"/>
+    <GuideEntityEmbed Entity="StasisBed"/>
+    <GuideEntityEmbed Entity="EmergencyRollerBed"/>
+    <GuideEntityEmbed Entity="CryogenicSleepUnit"/>
+    <GuideEntityEmbed Entity="Morgue"/>
+  </Box>
+
+  Once you have accessed their needs, it is time to sort and place the patient where they belong.
+
+  - [color=cyan]Medical Bed[/color]: This is the default bed for treating patients. There are no special effects except passive healing.
+  - [color=cyan]Stasis Bed[/color]: The Stasis Bed is for dead or rapidly dying patients to stop their rotting or death. The Stasis Bed slows down metabolism, letting you focus on other critical patients and giving you time to plan and prepare for reviving them.
+  - [color=cyan]Roller Bed[/color]: When out in the field, it is necessary for healing people close to the action or quickly transporting them back to medical.
+  - [color=cyan]Cryogenic Sleep Unit[/color]: This stores SSD and soulless people. Once placed in it, they will automatically disappear, freeing their soul and role.
+  - [color=cyan]Morgue[/color]: This is for dead people without souls or rotting corpses. If you leave corpses around, they will eventually explode and release poison gas, so they must be disposed of.
+  - [textlink="Cryopod" link="Cryogenics" /]: These require setup but can do miraculous work for very hurt patients.
+
+  ## Types of Medicine
+
+  Before treating any patients, it is important to understand what medicines you have at your disposal.
+
+  <Box>
+    <GuideEntityEmbed Entity="Jug"/>
+    <GuideEntityEmbed Entity="Defibrillator"/>
+  </Box>
+
+  - [color=cyan]Topicals[/color]: Topicals are the basic medicine that every Medical department starts with. These are applied directly to the patient, and heal a specific amount of damage per use. These should generally be reserved for dead patients, as this can get you to the point of being able to use the [color=cyan]Defibrillator[/color].
+  - [color=cyan]Chemicals[/color]: When applied through the [color=cyan]Syringe[/color] or [color=cyan]Pills[/color], these Chemicals are metabolized and heal the patient. As such, the patient must be alive or critical for it to be effective. Many kinds of afflictions can only be healed with Chemicals, and Chemicals are much more efficient when compared to topicals.
+  - [textlink="Cryogenics" link="Cryogenics" /]: This can let you heal critical and dead patients very quickly and efficiently. It usually requires some setup and specific Chemicals before use.
+
+  ## Topicals
+
+  The most basic medicines that the Medical Department has are the [color=cyan]Topicals[/color]. Even though the department starts with an excess of them, they are limited in quantity and not very efficient.
+
+  Once Chemistry has created the [color=cyan]Chemicals[/color], these should be reserved for dead patients and emergencies.
+
   <Box>
     <GuideEntityEmbed Entity="Brutepack"/>
-    <GuideEntityEmbed Entity="Bloodpack"/>
     <GuideEntityEmbed Entity="Ointment"/>
     <GuideEntityEmbed Entity="Gauze"/>
-    <GuideEntityEmbed Entity="HandheldHealthAnalyzer"/>
+    <GuideEntityEmbed Entity="Bloodpack"/>
   </Box>
-## Chemical Production
+
+  The main Topicals that the department starts with are:
+
+  - [color=cyan]Bruise Packs[/color]: This heals all types of brute damage.
+  - [color=cyan]Ointment[/color]: This heals all types of burn damage.
+  - [color=cyan]Gauze[/color]: This stops bleeding and heals slash and piercing damage.
+  - [color=cyan]Blood Packs[/color]: This increases the blood level and decreases bloodloss damage.
+
+  ## Advanced Topicals
+
   <Box>
-    <GuideEntityEmbed Entity="ChemDispenser"/>
-    <GuideEntityEmbed Entity="LargeBeaker"/>
-    <GuideEntityEmbed Entity="PillCanister"/>
-    <GuideEntityEmbed Entity="ChemMaster"/>
+    <GuideEntityEmbed Entity="MedicatedSuture"/>
+    <GuideEntityEmbed Entity="RegenerativeMesh"/>
   </Box>
+
+  Later, many departments can collaborate with Chemistry to create [color=cyan]Advanced Topicals[/color]. These [color=cyan]Advanced Topicals[/color] are more effective than regular ones.
+
+  - [color=cyan]Medicated Sutures[/color]: This heals more brute damage and stops bleeding faster.
+  - [color=cyan]Regenerative Mesh[/color]: This heals more burn damage.
+
+  ## Defibrillation
+
+  <Box>
+    <GuideEntityEmbed Entity="Defibrillator"/>
+  </Box>
+
+  Death is not permanent as long as you have enough [color=cyan]Topicals[/color] or [color=cyan]Cryogenics[/color].
+
+  If you heal the dead patient to under 200 total damage, you can [color=cyan]Defibrillate[/color] them back to life!
+
+  - Find or heal a dead patient to under [color=yellow]200 total damage[/color].
+  - [color=yellow]Hold[/color] the [color=cyan]Defibrillator[/color]
+  - Make sure that it is [color=yellow]charged[/color].
+  - [color=yellow]Turn it on[/color] by pressing [color=yellow][keybind="ActivateItemInHand" /][/color].
+  - [color=yellow]Use it[/color] on the dead patient by pressing [color=yellow][keybind="Use" /][/color].
+  - When they come back to life, inject [color=cyan]Chemicals[/color] and use [color=cyan]Topicals[/color] to stabilize them.
+
+  ## Chemicals
+
+  [color=cyan]Chemicals[/color] are the most effective and versatile treatment type.
+
+  There are many [color=cyan]Chemicals[/color], but doctors don't need to know them all. Generally, Chemists will label them, and there is always a [textlink="Medicine Reference" link="Medical" /].
+
+  <Box>
+    <GuideEntityEmbed Entity="MedkitFilled"/>
+    <GuideEntityEmbed Entity="MedkitAdvancedFilled"/>
+    <GuideEntityEmbed Entity="MedkitCombatFilled"/>
+  </Box>
+
+  First, at the start of every shift, there is a limited amount of [color=cyan]Medical Kits[/color] for dealing with severe and bizarre injuries. This limited nature means you should not waste it on trivial injuries because this is all you have until Chemistry is up and running.
+
+  These are the only ways to deal with [color=cyan]Genetic[/color], [color=cyan]Toxin[/color], and [color=cyan]Asphyxiation[/color] damage at the start of a shift.
+
+  Chemistry delivers [color=cyan]Chemicals[/color] in two ways, [color=cyan]Jugs[/color] and [color=cyan]Pills[/color].
+
+  ## Jugs and Syringes
+
+  <Box>
+    <GuideEntityEmbed Entity="Syringe"/>
+    <GuideEntityEmbed Entity="Jug"/>
+  </Box>
+
+  The most common way is through the [color=cyan]Jugs[/color], which requires a [color=cyan]Syringe[/color].
+
+  - Make sure the patient is [color=cyan]Alive[/color] or [color=cyan]Critical[/color] and secure the appropriate [color=cyan]Chemicals[/color]. They cannot be on a [color=cyan]Stasis Bed[/color].
+  - Hold an empty [color=cyan]Syringe[/color].
+  - Ensure the [color=cyan]Syringe[/color]'s mode is on [color=yellow]Draw[/color]. [italic]You can toggle between injecting and drawing by pressing [color=yellow][keybind="ActivateItemInHand" /][/color][/italic].
+  - Next, [color=yellow]Set Transfer Amount[/color], by pressing [color=yellow][keybind="UIRightClick" /][/color] on the [color=cyan]Syringe[/color]. This helps you avoid overdosing patients.
+  - Now, draw the [color=cyan]Chemicals[/color] from the container ([color=cyan]Jug[/color], [color=cyan]Beaker[/color], etc) by pressing [color=yellow][keybind="Use" /][/color].
+  - After that, switch to [color=yellow]Inject[/color].
+  - Now, inject the [color=cyan]Chemicals[/color] into the patient by pressing [color=yellow][keybind="Use" /][/color].
+
+  ## Pills
+
+  <Box>
+    <GuideEntityEmbed Entity="Pill"/>
+    <GuideEntityEmbed Entity="PillCanister"/>
+  </Box>
+
+  The less common but still seen method of delivering [color=cyan]Chemicals[/color] is through [color=cyan]Pills[/color].
+
+  - Make sure the patient is [color=cyan]Alive[/color] or [color=cyan]Critical[/color] and secure the appropriate [color=cyan]Pill Canisters[/color]. They cannot be on a [color=cyan]Stasis Bed[/color].
+
+  - [color=yellow]Open[/color] the [color=cyan]Pill Canister[/color].
+  - [color=yellow]Take out[/color] the [color=cyan]Pill[/color].
+  - [color=yellow]Feed[/color] the [color=cyan]Pill[/color] to the patient by pressing [color=yellow][keybind="Use" /][/color] on them. Make sure you administer the correct dosage.
+
+  ## Cryogenics
+
+  See the [textlink="Cryogenics" link="Cryogenics" /] guidebook entry for [color=cyan]Cryogenics[/color] information.
+
+  ## Medical Treatment
+
+  Once a patient is triaged, it is time to begin medical treatment.
+
+  The way that you tell what specifically is wrong with a patient is by using the [color=cyan]Medical PDA[/color] or [color=cyan]Health Analyzer[/color]. These list the kinds and amounts of damage that a patient has.
+
+  This guidebook entry will only talk about [color=cyan]Bloodloss[/color] and [color=cyan]Overdosing[/color], as those are two things that every doctor will need to know how to deal with. The rest of the ailments and drugs required to cure them can be found in the [textlink="Medicine Reference" link="Medicine" /].
+
+  ## Bloodloss
+
+  This is the most dangerous status for any patient. If this is left unattended, they will die very quickly.
+
+  The first step you should always do is [color=yellow]stop the bleeding[/color] before it gets any worse.
+
+  <Box>
+    <GuideEntityEmbed Entity="MedicatedSuture"/>
+    <GuideEntityEmbed Entity="Gauze"/>
+    <GuideEntityEmbed Entity="Tourniquet"/>
+  </Box>
+
+  <GuideReagentEmbed Reagent="TranexamicAcid"/>
+
+  There are many methods of closing wounds and stopping bleeding.
+
+  - [color=cyan]Gauze[/color]: This is the default [color=cyan]Topical[/color].
+  - [color=cyan]Tourniquet[/color]: This is an alternative [color=cyan]Topical[/color] that stops bleeding at the cost of brute and asphyxiation damage.
+  - [color=cyan]Medicated Suture[/color]: This is the [color=cyan]Advanced Topical[/color].
+  - [color=cyan]Tranexamic Acid[/color]: This is the main [color=cyan]Chemical[/color].
+
+  After that, you need to get their [color=yellow]blood level back up[/color]; otherwise, they will die of asphyxiation.
+
+  <Box>
+    <GuideEntityEmbed Entity="Bloodpack"/>
+  </Box>
+  <GuideReagentEmbed Reagent="Saline"/>
+
+  These are the main two ways of restoring blood. While some elements can also restore blood, they are both less effective and species-dependent.
+
+  - [color=cyan]Blood Packs[/color]: This is the [color=cyan]Topical[/color].
+  - [color=cyan]Saline[/color]: This is the best [color=cyan]Chemical[/color].
+
+  After all of that, the patient should recover on their own. If you need to, you can give them some airloss medicine to make it faster, but they will heal naturally with blood.
+
+  ## Overdose
+
+  If the patient begins [color=cyan]Overdosing[/color], it is imperative to deal with it as soon as possible.
+
+  It doesn't have to be a medically-induced overdose, as things like spills can cause the accidental ingestion of chemicals.
+
+  <GuideReagentEmbed Reagent="Charcoal"/>
+
+  The first thing you need to do is to [color=yellow]purge all the Chemicals[/color] from their system.
+
+  - [color=cyan]Charcoal[/color]: This is the main chemical.
+
+  Once you have stopped any further damage, now you need to assess and treat any injuries that they got from the overdose.
+
 </Document>

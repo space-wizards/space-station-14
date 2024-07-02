@@ -1,51 +1,308 @@
 <Document>
-# Chemist
-Now you've done it. You picked the one job where -math- is mandatory. Grab your beaker, pull up a chair, and get cracking, it's time to cook up some chems.
+  # Chemist
 
-While chemists primarily make medications, there's a very wide variety of chemicals that can be made, all of which are showcased in the Chemicals entry of the Guidebook.
+  [color=cyan]Chemistry[/color] is the most important but also most thankless job in [color=cyan]Medical[/color]. Instead of being thanked like the other doctors, they are just asked for more and more stuff.
 
-[textlink="Click here to see a complete list of chemicals." link="Chemicals"]
+  But this is because they are also the most powerful department. They provide Medical medicine, make Mutagen for Botany, and produce space drugs for all the adventurous crew members.
 
-## Equipment:
+  ## Equipment
+
+  Every Chemist needs some equipment to be productive.
 
   <Box>
-    <GuideEntityEmbed Entity="ChemDispenser"/>
-    <GuideEntityEmbed Entity="ChemBag"/>
-    <GuideEntityEmbed Entity="KitchenReagentGrinder"/>
-    <GuideEntityEmbed Entity="ChemMaster"/>
-  </Box>
-  <Box>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesChemical"/>
     <GuideEntityEmbed Entity="LargeBeaker"/>
-    <GuideEntityEmbed Entity="ChemistryEmptyBottle01"/>
-    <GuideEntityEmbed Entity="HandLabeler"/>
-    <GuideEntityEmbed Entity="Syringe"/>
+    <GuideEntityEmbed Entity="Jug"/>
     <GuideEntityEmbed Entity="PillCanister"/>
   </Box>
 
-## The Basics:
-Chemistry is fairly straightforward once you know what to expect. Here's a simple, step-by-step process on how to begin.
+  - [color=cyan]Chemical Analysis Goggles[/color]: These let you see the chemical makeup of any container by using the examine verb.
+  - [color=cyan]Large Beaker[/color]: This is used for mixing and transferring chemicals.
 
-- Grab a beaker, Pill Canister, and if desired, some Bottles.
-- Place the beaker in the Chemical Dispenser, and Pill Canister (or bottle) in the Chem Master.
-- Open the Chemical Dispenser UI, and make your mix. Recipies are in other sections of the guidebook.
-- Alt-click the dispenser to remove your beaker, and place it in the Chem Master.
-- Open the Chem Master UI. On the Input tab, move your mix into the buffer.
-- Move to the Output tab, customise your pill, and press the Create button.
-- Alt-click the Chem Master to get the pill bottle out. You may have to remove the beaker first.
-- Click on a table, crate, or another surface to empty the pill bottle if desired. Alternatively, store or empty it into another storage container.
+  These may be required depending on your method of delivery:
 
-That's it, you've made your first set of pills! Consider checking with Medical Doctors and other crew to see what else may be requested, refilling the medical kits in medbay storage, or just experimenting!
+  - [color=cyan]Jug[/color]
+  - [color=cyan]Pill Canister[/color]
 
-You can also use the hand labeler to organize individual bottles or bags without using the Chem Master labeling system.
-
-## Extra Content:
-
-Speaking of experimentation, there are a few more toy you can use when it comes to chemistry. This job requires a lot of trial and error, but it was worth mentioning that these things exist! It's up to you to figure out what to make with them.
+  ## Producing Chemicals
 
   <Box>
-    <GuideEntityEmbed Entity="ModularGrenade"/>
-    <GuideEntityEmbed Entity="CableApcStack"/>
-    <GuideEntityEmbed Entity="ChemicalPayload"/>
-    <GuideEntityEmbed Entity="TimerTrigger"/>
+    <GuideEntityEmbed Entity="LargeBeaker"/>
+    <GuideEntityEmbed Entity="ChemDispenser"/>
   </Box>
+
+  Chemistry isn't that complicated, as it is just following the same few steps. For recipes, you just need to follow the [textlink="Chemicals Guide" link="Chemicals" /].
+
+  - Get a [color=cyan]Large Beaker[/color].
+  - Put it into the [color=cyan]Chemicals Dispenser[/color].
+  - Select the [color=yellow]amount to dispense[/color] and [color=yellow]pick[/color] all the reagents you need according to the recipe.
+  - They should [color=yellow]automatically mix[/color] when they come into contact.
+  - Finally, choose a method of delivery, either [color=cyan]Jugs[/color] or [color=cyan]Pills[/color].
+
+  Of course, some additional steps may be required, such as using the [color=cyan]Hotplate[/color]. Skip to later and it'll explain how to deal with that stuff.
+
+  ## Methods of Delivery
+
+  <Box>
+    <GuideEntityEmbed Entity="Jug"/>
+    <GuideEntityEmbed Entity="PillCanister"/>
+  </Box>
+
+  There are two main methods of delivery for Chemistry:
+
+  - [color=cyan]Jugs[/color]: These are 200u containers which are perfect for doctors using syringes. The Chemist must apply a label so that others know what is inside of it, and it is up to the doctors to set the dosages.
+  - [color=cyan]Pill Canisters[/color]: These contain multiple pills of your specified dosage. This lets Chemistry have more control to stop accidental overdoses. Additionally, the [color=cyan]Hand Labeler[/color] is unnecessary as it is labeled in the [color=cyan]Chem Master 4000[/color].
+
+  ## Jugs
+
+  <Box>
+    <GuideEntityEmbed Entity="Jug"/>
+    <GuideEntityEmbed Entity="HandLabeler"/>
+  </Box>
+
+  Jugs are the most common form that drugs are delivered through. They require minimal work on the part of the Chemist and allows the doctor to manage the dosage and the like.
+
+  - [color=yellow]Acquire[/color] an empty [color=cyan]Jug[/color]. (The most common way is to get a Jug from the [color=cyan]ChemVend[/color] and drag it into the [color=cyan]Chem Master 4000[/color] by holding and dragging [color=yellow][keybind="Use" /][/color].)
+  - Transfer the chemicals by clicking [color=yellow][keybind="Use" /][/color] on the [color=cyan]Jug[/color] with your [color=cyan]Beaker[/color]. (It is recommended to set your beaker transfer amount to the maximum so it is quick.)
+  - Next, [color=yellow]write and apply[/color] the proper label via the [color=cyan]Hand Labeler[/color].
+  - Finally, click [color=yellow][keybind="Use" /][/color] and apply it to the Jug.
+
+  Now, you can deliver the Jug to wherever Medical needs it.
+
+  ## Pills
+
+  <Box>
+    <GuideEntityEmbed Entity="ChemMaster"/>
+    <GuideEntityEmbed Entity="PillCanister"/>
+    <GuideEntityEmbed Entity="Pill"/>
+  </Box>
+
+  Pills are the opposite of Jugs, as they provide more control to the Chemist and don't rely on doctors to not overdose patients.
+
+  This will assume that you have already deposited the medicine you want in the buffer, and removed all other chemicals from it. [bold]If you use your buffer as extra storage space, you will need to clear it out as it uses all the chemicals in the buffer when making pills[/bold].
+
+  - [color=yellow]Acquire[/color] a [color=cyan]Pill Canister[/color].
+  - Click [color=yellow][keybind="Use" /][/color] on the [color=cyan]Chem Master 4000[/color] to insert the [color=cyan]Pill Canister[/color] inside.
+  - Press [color=yellow][keybind="ActivateItemInWorld" /][/color] to open the Chem Master UI.
+  - Switch to the [color=yellow]Output[/color] tab.
+  - Provide a [color=yellow]Label[/color] and [color=yellow]Pill Type[/color] so doctors can quickly recognize it.
+  - Decide on a [color=yellow]Pill Count[/color] and a [color=yellow]Dosage[/color].
+  - Finally, click [color=yellow]Create[/color].
+
+  Now you can deliver the [color=cyan]Pills[/color] to wherever Medical needs them.
+
+  ## Hand Labeling
+
+  <Box>
+    <GuideEntityEmbed Entity="HandLabeler"/>
+  </Box>
+
+  Unlike Chemists, others cannot inspect and view the contents of a [color=cyan]Jug[/color] or [color=cyan]Beakers[/color].
+
+  To allow anyone to know what is inside a beaker and other helpful information, Chemists have the [color=cyan]Hand Labeler[/color] at their disposal.
+
+  There is no suggested format because it is up to the individual Chemist. Just include whatever you believe is necessary for the average doctor.
+
+  To create a label:
+  - [color=yellow]Hold[/color] the [color=cyan]Hand Labeler[/color]
+  - Press [color=yellow][keybind="ActivateItemInHand" /][/color] to open the label UI.
+  - Press [color=yellow][keybind="UIClick" /][/color] on the text box and [color=yellow]write[/color] your label.
+  - Once done, press [color=yellow][keybind="TextSubmit" /][/color] to save it.
+  - Finally, click [color=yellow][keybind="Use" /][/color] on the desired object to apply the label.
+
+  ## Chemistry Machines
+
+  Now that you know the basics of making drugs, it is time to go into the individual machines so that you are experienced with their use.
+
+  ## Chemical Dispenser
+
+  <Box>
+    <GuideEntityEmbed Entity="ChemDispenser"/>
+    <GuideEntityEmbed Entity="VendingMachineChemicals"/>
+  </Box>
+
+  The [color=cyan]Chemical Dispenser[/color] is the most common machine used in Chemistry. It lets you very quickly dispense the chemicals you need in the amount you need.
+
+  You should already know how to dispense liquids from it as that's necessary for making any drugs.
+
+  But, many people don't know how to refill it once it goes empty!
+
+  - Open the [color=cyan]Chemical Dispenser[/color] UI.
+  - To the right of the Chemical you want to eject should be an [color=yellow]ejection button[/color].
+  - Press [color=yellow][keybind="UIClick" /][/color] and the [color=cyan]Jug[/color] should go into your hands. Do whatever you want with the empty [color=cyan]Jug[/color].
+  - Now, get a new chemical [color=cyan]Jug[/color] from the [color=cyan]ChemVend[/color].
+  - Finally, press [color=yellow][keybind="Use" /][/color] to insert the new Jug into the [color=cyan]Chemical Dispenser[/color].
+
+  And now the [color=cyan]Chemicals[/color] should be refilled! Additionally, you now have an extra empty Jug.
+
+  ## Chem Master 4000
+
+  <Box>
+    <GuideEntityEmbed Entity="ChemMaster"/>
+  </Box>
+
+  The [color=cyan]Chem Master 4000[/color], in contrast, is one of the most confusing machines in Chemistry.
+
+  Essentially, the [color=cyan]Chem Master 4000[/color] works by having an infinite storage container called the [color=cyan]Buffer[/color] that automatically sorts chemicals dispensed into it.
+
+  This can let you separate chemicals from spills, clean out byproducts when grinding/juicing, and more.
+
+  The main use is for making [color=cyan]Pills[/color], which was described in the pill-making section.
+
+  Additionally, it can be used to clear [color=cyan]Jugs[/color] by dumping their contents into the buffer.
+
+  ## Hotplate
+
+  <Box>
+    <GuideEntityEmbed Entity="ChemistryHotplate"/>
+  </Box>
+
+  [color=cyan]Hotplates[/color] are used to heat up reagents so that they react. The amount of time it takes to heat up the reagents is proportional to the volume of the reagents inside it.
+
+  Before attempting to heat anything up, you should first be able to tell what temperature something is at.
+
+  - Wear the [color=cyan]Chemical Analysis Goggles[/color].
+  - Press [color=yellow][keybind="ExamineEntity" /][/color] to inspect the container.
+  - Press [color=yellow][keybind="UIClick" /][/color] on the chemical examine verb.
+
+  To actually use the [color=cyan]Hotplate[/color]:
+
+  - Hold a [color=cyan]Beaker[/color] in your hand.
+  - Press [color=yellow][keybind="Use" /][/color] to place the [color=cyan]Beaker[/color] on [color=cyan]Hotplate[/color].
+  - It should automatically start heating.
+
+  [bold]It is important to remember that some unintended reactions may occur at higher temperatures[/bold].
+
+  ## Reagent Grinder
+
+  <Box>
+    <GuideEntityEmbed Entity="LargeBeaker"/>
+    <GuideEntityEmbed Entity="KitchenReagentGrinder"/>
+  </Box>
+
+  The use of the [color=cyan]Reagent Grinder[/color] is very dependent on the activities of [color=cyan]Salvage[/color] and [color=cyan]Botany[/color].
+
+  The [color=cyan]Reagent Grinder[/color] essentially turns things into reagents for chemical reactions. The main two that most chemists will see are [color=cyan]Ambrosia Deus[/color] which is ground to become [color=cyan]Omnizine[/color], and [color=cyan]Carp Fillet[/color] which is juiced to become [color=cyan]Carpotoxin[/color].
+
+  To find all the reagents that can be juiced or ground, search "[color=yellow]Juice[/color]" or "[color=yellow]Grind[/color]" and check their sources for the reagents.
+
+  Now to use the Reagent Grinder:
+
+  - Press [color=yellow][keybind="Use" /][/color] on the [color=cyan]Reagent Grinder[/color] with your [color=cyan]Beaker[/color].
+  - Insert the items that you wish to grind/juice by pressing [color=yellow][keybind="Use" /][/color].
+  - Now, press [color=yellow][keybind="UIClick" /][/color] to grind/juice. [italic]If you want it to automatically start grinding or juicing when everything, set the Auto Mode to that respective mode[/italic].
+
+  Now, you have a beaker full of the reagents. If you want to separate everything, put it into the Chem Master 4000 and remove the byproducts.
+
+  ## Centrifuge and Electrolysis Machine
+
+  <Box>
+    <GuideEntityEmbed Entity="MachineCentrifuge"/>
+    <GuideEntityEmbed Entity="MachineElectrolysisUnit"/>
+  </Box>
+
+  The [color=cyan]Centrifuge[/color] and [color=cyan]Electrolysis Unit[/color] are two additional tools for breaking down certain reagents.
+
+  To find all the reagents that can be centrifuged or electrolyzed, just search "[color=yellow]Centrifugation[/color]" or "[color=yellow]Electrolyze[/color]" and check their sources for the reagents.
+
+  To [color=cyan]Centrifugate[/color] a reagent:
+
+  - [color=yellow]Transfer[/color] the reagent into a [color=cyan]Vial[/color].
+  - Press [color=yellow][keybind="Use" /][/color] on the [color=cyan]Centrifuge[/color] while holding the [color=cyan]Vial[/color] to insert it.
+  - Press [color=yellow][keybind="ActivateItemInWorld" /][/color] on the [color=cyan]Centrifuge[/color] to [color=yellow]start[/color] it.
+  - Finally, press [color=yellow][keybind="AltActivateItemInWorld" /][/color] to eject the [color=cyan]vial[/color] into your hand.
+
+  Very similarly, to [color=cyan]Electrolyze[/color] a reagent:
+
+  - [color=yellow]Transfer[/color] the reagent into a [color=cyan]Beaker[/color].
+  - Press [color=yellow][keybind="Use" /][/color] on the [color=cyan]Electrolysis Unit[/color] while holding the [color=cyan]Beaker[/color] to insert it.
+  - Press [color=yellow][keybind="ActivateItemInWorld" /][/color] on the [color=cyan]Electrolysis Unit[/color] to [color=yellow]start[/color] it.
+  - Finally, press [color=yellow][keybind="AltActivateItemInWorld" /][/color] to eject the [color=cyan]Beaker[/color] into your hand.
+
+  ## Topicals
+
+  <Box>
+    <GuideEntityEmbed Entity="MedicalTechFab"/>
+    <GuideEntityEmbed Entity="SheetSteel"/>
+    <GuideEntityEmbed Entity="SheetPlastic"/>
+    <GuideEntityEmbed Entity="MaterialCloth"/>
+  </Box>
+
+  While Medical starts with [color=cyan]Topicals[/color], this will run out if not properly managed.
+
+  The main problem that stops [color=cyan]Topicals[/color] from being mass-produced is their requirement for a [color=cyan]Medical Techfab[/color].
+
+  The required materials for each topical is:
+  - [color=cyan]Gauze[/color]: 2 rolls of cloth.
+  - [color=cyan]Bruise Pack[/color]: 0.25 sheets of steel and 0.25 sheets of plastic.
+  - [color=cyan]Ointment[/color]: 0.25 sheets of glass and 0.25 sheets of plastic.
+
+  The only topical that does not require a [color=cyan]Medical Techfab[/color] is [color=cyan]Gauze[/color]. Just press [color=yellow][keybind="OpenCraftingMenu" /][/color] and search "[color=yellow]Gauze[/color]".
+
+  For the remaining [color=cyan]Topicals[/color], insert the required materials into the [color=cyan]Medical Techfab[/color].
+
+  - [color=yellow]Insert[/color] your required materials into the [color=cyan]Medical Techfab[/color] by pressing [color=yellow][keybind="Use" /][/color].
+  - With all the resources inserted, [color=yellow]open[/color] it by pressing [color=yellow][keybind="ActivateItemInWorld" /][/color].
+  - [color=yellow]Search[/color] for the [color=cyan]Topical[/color]
+  - Press [color=yellow][keybind="UIClick" /][/color] on the name of the [color=cyan]Topical[/color] to create it.
+
+  ## Advanced Topicals
+
+  <Box>
+    <GuideEntityEmbed Entity="RegenerativeMesh"/>
+    <GuideEntityEmbed Entity="KitchenMicrowave"/>
+    <GuideEntityEmbed Entity="MedicatedSuture"/>
+  </Box>
+
+  After the [color=cyan]Topicals[/color] are the [color=cyan]Advanced Topicals[/color], which are more effective versions of their non-advanced versions.
+
+  It is annoying that even after you get the [color=cyan]Medical Techfab[/color] to create the regular topicals, you now need a [color=cyan]Microwave[/color] and plants from [color=cyan]Botany[/color]!
+
+  The steps are the same for both of the [color=cyan]Advanced Topicals[/color].
+
+  - [color=yellow]Insert[/color] all of the materials into the [color=cyan]Microwave[/color] by pressing [color=yellow][keybind="Use" /][/color].
+  - [color=yellow]Set[/color] the timer to [color=yellow]10 seconds[/color] by pressing [color=yellow][keybind="UIClick" /][/color] on that button.
+  - Press [color=yellow][keybind="UIClick" /][/color] on [color=yellow]Start[/color].
+
+  ## Regenerative Mesh
+
+  <Box>
+    <GuideEntityEmbed Entity="RegenerativeMesh"/>
+    <GuideEntityEmbed Entity="MaterialCloth"/>
+    <GuideEntityEmbed Entity="FoodAloe"/>
+    <GuideEntityEmbed Entity="Ointment"/>
+    <GuideEntityEmbed Entity="LargeBeaker"/>
+  </Box>
+
+
+  <GuideReagentEmbed Reagent="Sigynate"/>
+  <GuideReagentEmbed Reagent="Dermaline"/>
+
+  To make 10 [color=cyan]Regenerative Meshes[/color] you will need:
+  - 1 [color=cyan]Cloth[/color]
+  - 1 [color=cyan]Aloe[/color]
+  - 1 [color=cyan]Ointment[/color]
+  - 20u [color=cyan]Sigynate[/color]
+  - 20u [color=cyan]Dermaline[/color]
+
+  ## Medicated Sutures
+
+  <Box>
+    <GuideEntityEmbed Entity="MedicatedSuture"/>
+    <GuideEntityEmbed Entity="MaterialCloth"/>
+    <GuideEntityEmbed Entity="FoodPoppy"/>
+    <GuideEntityEmbed Entity="Brutepack"/>
+    <GuideEntityEmbed Entity="LargeBeaker"/>
+  </Box>
+
+  <GuideReagentEmbed Reagent="TranexamicAcid"/>
+  <GuideReagentEmbed Reagent="Cryptobiolin"/>
+
+  To make 10 [color=cyan]Medicated Sutures[/color] you will need:
+  - 1 [color=cyan]Cloth[/color]
+  - 1 [color=cyan]Poppy[/color]
+  - 1 [color=cyan]Bruise Pack[/color]
+  - 20u [color=cyan]Tranexamic Acid[/color]
+  - 20u [color=cyan]Cryptobiolin[/color]
+
 </Document>
