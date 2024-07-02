@@ -15,7 +15,7 @@ namespace Content.Shared.Mind.Components
         /// </summary>
         [DataField, AutoNetworkedField]
         [Access(typeof(SharedMindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
-        public EntityUid? Mind { get; set; }
+        public EntityUid? Mind;
 
         /// <summary>
         ///     True if we have a mind, false otherwise.
@@ -26,17 +26,15 @@ namespace Content.Shared.Mind.Components
         /// <summary>
         ///     Whether examining should show information about the mind or not.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("showExamineInfo"), AutoNetworkedField]
-        public bool ShowExamineInfo { get; set; }
+        [DataField, AutoNetworkedField]
+        public bool ShowExamineInfo;
 
         /// <summary>
         ///     Whether the mind will be put on a ghost after this component is shutdown.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("ghostOnShutdown")]
+        [DataField]
         [Access(typeof(SharedMindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
-        public bool GhostOnShutdown { get; set; } = true;
+        public bool GhostOnShutdown = true;
     }
 
     public abstract class MindEvent : EntityEventArgs
