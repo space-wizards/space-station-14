@@ -246,6 +246,7 @@
   name: carp suit
   description: A special suit that makes you look just like a space carp, if your eyesight is bad.
   components:
+  - type: AllowSuitStorage
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: Item
