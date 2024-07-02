@@ -40,3 +40,6 @@
         volume: -1
   - type: StaticPrice
     price: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Gunpowder: 50
