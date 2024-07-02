@@ -4,6 +4,16 @@
     sprite: Clothing/OuterClothing/Armor/security.rsi
     state: icon
   product: CrateSecurityArmor
+  cost: 800
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityArmorBulletproof
+  icon:
+    sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
+    state: icon
+  product: CrateSecurityArmorBulletproof
   cost: 700
   category: cargoproduct-category-name-security
   group: market
@@ -24,7 +34,7 @@
     sprite: Objects/Weapons/Guns/Battery/disabler.rsi
     state: base
   product: CrateSecurityNonlethal
-  cost: 4000
+  cost: 2200
   category: cargoproduct-category-name-security
   group: market
 
@@ -41,10 +51,20 @@
 - type: cargoProduct
   id: SecuritySupplies
   icon:
-    sprite: Objects/Storage/boxes.rsi
-    state: box_security
+    sprite: Clothing/Shoes/Boots/combatboots.rsi
+    state: icon
   product: CrateSecuritySupplies
-  cost: 500
+  cost: 800
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityForensics
+  icon:
+    sprite: Clothing/Head/Hats/brownfedora.rsi
+    state: icon
+  product: CrateSecurityForensics
+  cost: 1500
   category: cargoproduct-category-name-security
   group: market
 
@@ -59,11 +79,21 @@
   group: market
 
 - type: cargoProduct
-  id: SecurityBiosuit
+  id: SecurityNonlethalThrowables
   icon:
-    sprite: Clothing/Head/Hoods/Bio/security.rsi
+    sprite: Objects/Weapons/Grenades/stingergrenade.rsi
     state: icon
-  product: CrateSecurityBiosuit
+  product: CrateSecNonlethalThrowables
+  cost: 800
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityShield
+  icon:
+    sprite: Objects/Weapons/Melee/shields.rsi
+    state: riot_bullet-icon
+  product: CrateSecurityShield
   cost: 800
   category: cargoproduct-category-name-security
   group: market
@@ -74,6 +104,6 @@
     sprite: Objects/Specific/Security/barrier.rsi
     state: idle
   product: DeployableBarrier
-  cost: 1000
+  cost: 350
   category: cargoproduct-category-name-security
   group: market
