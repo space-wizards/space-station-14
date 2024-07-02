@@ -117,6 +117,7 @@
       - id: ClothingOuterCoatDetective
       - id: FlashlightSeclite
       - id: ForensicScanner
+      - id: VoiceRecorder
       - id: LogProbeCartridge
       - id: BoxForensicPad
       - id: DrinkDetFlask
