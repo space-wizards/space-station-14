@@ -4,6 +4,7 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
+using Content.Shared.Revenant.Components;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -46,8 +47,8 @@ public abstract class SharedPortalSystem : EntitySystem
 
     private void OnGetVerbs(EntityUid uid, PortalComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        // Traversal altverb for ghosts to use that bypasses normal functionality
-        if (!args.CanAccess || !HasComp<GhostComponent>(args.User))
+        // Traversal altverb for ghosts and revenants to use that bypasses normal functionality
+        if (!args.CanAccess || !(HasComp<GhostComponent>(args.User) || HasComp<RevenantComponent>(args.User)))
             return;
 
         // Don't use the verb with unlinked or with multi-output portals
