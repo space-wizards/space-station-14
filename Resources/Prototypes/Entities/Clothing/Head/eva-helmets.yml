@@ -74,7 +74,7 @@
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetAncient
   name: NTSRA void helmet
-  description: An ancient space helmet, designed by the NTSRA branch of CentCom.
+  description: An ancient space helmet, designed by the NTSRA branch of CentComm.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi

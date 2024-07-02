@@ -580,7 +580,7 @@
   - type: Item
     heldPrefix: blue
   - type: IdCard
-    jobTitle: Centcom Agent
+    jobTitle: Centcomm Agent
 
 - type: entity
   name: passenger ID card
@@ -785,7 +785,7 @@
   - type: Item
     heldPrefix: blue
   - type: IdCard
-    jobTitle: Centcom Quarantine Officer
+    jobTitle: Centcomm Quarantine Officer
 
 - type: entity
   parent: IDCardStandard

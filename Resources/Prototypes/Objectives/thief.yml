@@ -509,7 +509,7 @@
 - type: entity
   parent: [BaseThiefObjective, BaseLivingObjective]
   id: EscapeThiefShuttleObjective
-  name: Escape to centcom alive and unrestrained.
+  name: Escape to centcomm alive and unrestrained.
   description: You don't want your illegal activities to be discovered by anyone, do you?
   components:
   - type: Objective
