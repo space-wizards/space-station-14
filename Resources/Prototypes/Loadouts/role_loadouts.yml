@@ -380,6 +380,7 @@
 - type: roleLoadout
   id: JobChemist
   groups:
+  - ChemistHead
   - MedicalMask
   - ChemistJumpsuit
   - MedicalGloves

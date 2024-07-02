@@ -176,6 +176,7 @@ loadout-group-medical-doctor-id = Medical Doctor ID
 
 loadout-group-medical-intern-jumpsuit = Medical intern jumpsuit
 
+loadout-group-Chemist-head = Chemist head
 loadout-group-chemist-jumpsuit = Chemist jumpsuit
 loadout-group-chemist-outerclothing = Chemist outer clothing
 loadout-group-chemist-backpack = Chemist backpack
