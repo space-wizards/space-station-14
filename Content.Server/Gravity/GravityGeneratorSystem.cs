@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Audio;
 using Content.Server.Power.Components;
+using Content.Server.Emp;
 using Content.Shared.Database;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction;
@@ -28,6 +29,8 @@ namespace Content.Server.Gravity
             SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<GravityGeneratorComponent, SharedGravityGeneratorComponent.SwitchGeneratorMessage>(
                 OnSwitchGenerator);
+
+            SubscribeLocalEvent<GravityGeneratorComponent, EmpPulseEvent>(OnEmpPulse);
         }
 
         private void OnParentChanged(EntityUid uid, GravityGeneratorComponent component, ref EntParentChangedMessage args)
@@ -285,6 +288,29 @@ namespace Content.Server.Gravity
             SharedGravityGeneratorComponent.SwitchGeneratorMessage args)
         {
             SetSwitchedOn(uid, component, args.On, user: args.Actor);
+        }
+
+        private void OnEmpPulse(EntityUid uid, GravityGeneratorComponent component, EmpPulseEvent args)
+        {
+            /// i really don't think that the gravity generator should use normalised 0-1 charge
+            /// as opposed to watts charge that every other battery uses
+
+            ApcPowerReceiverComponent? powerReceiver = null;
+            if (!Resolve(uid, ref powerReceiver, false))
+                return;
+
+            var ent = (uid, component, powerReceiver);
+
+            // convert from normalised energy to watts and subtract
+            float maxEnergy = component.ActivePowerUse / component.ChargeRate;
+            float currentEnergy = maxEnergy * component.Charge;
+            currentEnergy = Math.Max(0, currentEnergy - args.EnergyConsumption);
+
+            // apply renormalised energy to charge variable
+            component.Charge = currentEnergy / maxEnergy;
+
+            // update power state
+            UpdateState(ent);
         }
     }
 }
