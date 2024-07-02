@@ -28,7 +28,7 @@ namespace Content.Server.Gravity
 
             foreach (var (comp, xform) in EntityQuery<GravityGeneratorComponent, TransformComponent>(true))
             {
-                if (!comp.GravityActive || xform.ParentUid != uid)
+                if (!comp.GravityActive || xform.ParentUid != uid || !xform.Anchored)
                     continue;
 
                 enabled = true;
