@@ -1,0 +1,120 @@
+# Base
+- type: entity
+  parent: BaseMob
+  id: BaseEntityHallucination
+  name: "???"
+  description: "???"
+  suffix: DO NOT MAP
+  abstract: true
+  components:
+  #- type: Hallucination
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 15
+        mask:
+          - MobMask
+        layer:
+          - None
+  - type: TimedDespawn
+    lifetime: 15.0
+
+
+- type: entity
+  parent: BaseEntityHallucination
+  id: HallucinationMobMedical
+  name: medical
+  description: That one looks friendly!
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Hallucinations/base_hallucinations.rsi
+    state: medical
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.0
+    baseSprintSpeed: 3.7
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: AmbientSound
+    volume: -2
+    range: 15
+    sound:
+      path: /Audio/Ambience/Objects/base-hallucination-mob.ogg
+  - type: TimedDespawn
+    lifetime: 45.0
+
+- type: entity
+  parent: BaseEntityHallucination
+  id: HallucinationMobNukeop
+  name: nukie
+  description: Boom.
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Hallucinations/base_hallucinations.rsi
+    state: nukeop
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.0
+    baseSprintSpeed: 4.7
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: AmbientSound
+    volume: -2
+    range: 15
+    sound:
+      path: /Audio/Ambience/Objects/base-hallucination-mob.ogg
+  - type: TimedDespawn
+    lifetime: 25.0
+
+- type: entity
+  parent: BaseEntityHallucination
+  id: HallucinationMobMusician
+  name: musician
+  description: He is definetly playing something...
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Hallucinations/base_hallucinations.rsi
+    state: musician
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.0
+    baseSprintSpeed: 1.7
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: AmbientSound
+    volume: -2
+    range: 15
+    sound:
+      path: /Audio/Ambience/Objects/base-hallucination-mob.ogg
+  - type: TimedDespawn
+    lifetime: 35.0
+
+- type: entity
+  parent: BaseEntityHallucination
+  id: HallucinationMobYeti
+  name: yeti
+  description: I want to believe
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Hallucinations/base_hallucinations.rsi
+    state: yeti
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.0
+    baseSprintSpeed: 3.0
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: AmbientSound
+    volume: -2
+    range: 15
+    sound:
+      path: /Audio/Ambience/Objects/base-hallucination-mob.ogg
+  - type: TimedDespawn
+    lifetime: 30.0
