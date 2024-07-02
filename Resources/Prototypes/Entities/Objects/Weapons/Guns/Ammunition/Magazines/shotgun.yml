@@ -35,8 +35,8 @@
 
 - type: entity
   id: MagazineShotgunEmpty
-  name: ammo drum (.50 shells any)
-  suffix: empty
+  name: bulldog ammo drum (.50 shells)
+  suffix: Empty
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
@@ -44,7 +44,7 @@
 
 - type: entity
   id: MagazineShotgun
-  name: ammo drum (.50 pellet)
+  name: bulldog ammo drum (.50 pellet)
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
@@ -58,7 +58,7 @@
 
 - type: entity
   id: MagazineShotgunBeanbag
-  name: ammo drum (.50 beanbags)
+  name: bulldog ammo drum (.50 beanbags)
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
@@ -72,7 +72,7 @@
 
 - type: entity
   id: MagazineShotgunSlug
-  name: ammo drum (.50 slug)
+  name: bulldog ammo drum (.50 slug)
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
@@ -86,14 +86,42 @@
 
 - type: entity
   id: MagazineShotgunIncendiary
-  name: ammo drum (.50 incendiary)
+  name: bulldog ammo drum (.50 incendiary)
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunIncendiary
   - type: Sprite
     layers:
-    - state: slug
+    - state: incendiary
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineShotgunPractice
+  name: bulldog ammo drum (.50 practice)
+  parent: BaseMagazineShotgun
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunPractice
+  - type: Sprite
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineShotgunUranium
+  name: bulldog ammo drum (.50 uranium)
+  parent: BaseMagazineShotgun
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunUranium
+  - type: Sprite
+    layers:
+    - state: uranium
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

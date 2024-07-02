@@ -20,6 +20,15 @@
             "name": "slug"
         },
         {
+            "name": "practice"
+        },
+        {
+            "name": "incendiary"
+        },
+        {
+            "name": "uranium"
+        },
+        {
             "name": "mag-1"
         }
     ]

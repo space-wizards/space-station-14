@@ -28,7 +28,7 @@
 - type: entity
   parent: BaseMagazineBoxPistol
   id: MagazineBoxPistol
-  name: ammunition box (.35 auto)
+  name: ammunition box (.35 auto lethal)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol

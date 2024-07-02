@@ -1,7 +1,7 @@
 # Empty mags
 - type: entity
   id: BaseMagazineRifle
-  name: "magazine (.20 rifle)"
+  name: "lecter magazine (.20 rifle)"
   parent: BaseItem
   abstract: true
   components:
@@ -35,7 +35,7 @@
 # Magazines
 - type: entity
   id: MagazineRifle
-  name: "magazine (.20 rifle)"
+  name: "lecter magazine (.20 rifle lethal)"
   parent: BaseMagazineRifle
   components:
   - type: BallisticAmmoProvider
@@ -49,8 +49,8 @@
 
 - type: entity
   id: MagazineRifleEmpty
-  name: "magazine (.20 rifle any)"
-  suffix: empty
+  name: "lecter magazine (.20 rifle)"
+  suffix: Empty
   parent: MagazineRifle
   components:
   - type: BallisticAmmoProvider
@@ -59,18 +59,26 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineRifleIncendiary
-  name: "magazine (.20 rifle incendiary)"
+  name: "lecter magazine (.20 rifle incendiary)"
   parent: MagazineRifle
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleIncendiary
+  - type: Sprite
+    layers:
+    - state: incendiary
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineRiflePractice
-  name: "magazine (.20 rifle practice)"
+  name: "lecter magazine (.20 rifle practice)"
   parent: BaseMagazineRifle
   components:
   - type: BallisticAmmoProvider
@@ -84,7 +92,7 @@
 
 - type: entity
   id: MagazineRifleUranium
-  name: "magazine (.20 rifle uranium)"
+  name: "lecter magazine (.20 rifle uranium)"
   parent: BaseMagazineRifle
   components:
   - type: BallisticAmmoProvider

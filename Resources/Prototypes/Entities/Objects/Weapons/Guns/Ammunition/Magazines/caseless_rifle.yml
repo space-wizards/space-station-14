@@ -94,14 +94,14 @@
 
 - type: entity
   id: MagazinePistolCaselessRifle
-  name: "pistol magazine (.25 caseless)"
+  name: "cobra magazine (.25 caseless lethal)"
   parent: BaseMagazinePistolCaselessRifle
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
     capacity: 10
   - type: Sprite
-    slayers:
+    layers:
     - state: red
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
@@ -114,7 +114,7 @@
 
 - type: entity
   id: MagazinePistolCaselessRiflePractice
-  name: "pistol magazine (.25 caseless practice)"
+  name: "cobra magazine (.25 caseless practice)"
   parent: BaseMagazinePistolCaselessRifle
   components:
   - type: BallisticAmmoProvider
@@ -123,6 +123,26 @@
   - type: Sprite
     layers:
     - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazinePistolCaselessRifleEmpty
+  name: cobra magazine (.25 caseless)
+  suffix: Empty
+  parent: BaseMagazinePistolCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

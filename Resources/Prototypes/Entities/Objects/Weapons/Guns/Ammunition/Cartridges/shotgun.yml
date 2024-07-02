@@ -23,7 +23,7 @@
 
 - type: entity
   id: ShellShotgunBeanbag
-  name: shell (.50 beanbag)
+  name: shotgun shell (.50 beanbag)
   parent: BaseShellShotgun
   components:
   - type: Sprite
@@ -38,7 +38,7 @@
 
 - type: entity
   id: ShellShotgunSlug
-  name: shell (.50 slug)
+  name: shotgun shell (.50 slug)
   parent: BaseShellShotgun
   components:
   - type: Sprite
@@ -54,7 +54,7 @@
 
 - type: entity
   id: ShellShotgunFlare
-  name: shell (.50 flare)
+  name: shotgun shell (.50 flare)
   parent: BaseShellShotgun
   components:
   - type: Sprite
@@ -69,7 +69,7 @@
 
 - type: entity
   id: ShellShotgun
-  name: shell (.50)
+  name: shotgun shell (.50 pellet)
   parent: BaseShellShotgun
   components:
   - type: Sprite
@@ -81,7 +81,7 @@
 
 - type: entity
   id: ShellShotgunIncendiary
-  name: shell (.50 incendiary)
+  name: shotgun shell (.50 incendiary)
   parent: BaseShellShotgun
   components:
   - type: Sprite
@@ -95,7 +95,7 @@
 
 - type: entity
   id: ShellShotgunPractice
-  name: shell (.50 practice)
+  name: shotgun shell (.50 practice)
   parent: BaseShellShotgun
   components:
   - type: Sprite
@@ -109,7 +109,7 @@
 
 - type: entity
   id: ShellTranquilizer
-  name: shell (.50 tranquilizer)
+  name: shotgun shell (.50 tranquilizer)
   parent: BaseShellShotgun
   components:
   - type: Sprite
@@ -153,7 +153,7 @@
 
 - type: entity
   id: ShellShotgunUranium
-  name: uranium shotgun shell
+  name: shotgun shell (.50 uranium)
   parent: BaseShellShotgun
   components:
     - type: Sprite

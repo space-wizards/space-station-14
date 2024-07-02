@@ -47,7 +47,7 @@
 - type: entity
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRifle
-  name: ammunition box (.20 rifle)
+  name: ammunition box (.20 rifle lethal)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifle

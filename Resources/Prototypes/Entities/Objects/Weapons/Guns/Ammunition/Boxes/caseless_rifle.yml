@@ -68,7 +68,7 @@
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRifle
-  name: ammunition box (.25 caseless)
+  name: ammunition box (.25 caseless lethal)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle

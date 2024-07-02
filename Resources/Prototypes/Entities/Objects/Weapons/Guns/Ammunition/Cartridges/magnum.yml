@@ -20,7 +20,7 @@
 
 - type: entity
   id: CartridgeMagnum
-  name: cartridge (.45 magnum)
+  name: cartridge (.45 magnum lethal)
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo
