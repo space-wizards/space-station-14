@@ -7,6 +7,7 @@
     - PetsNT
     - Zombie
     - Revolutionary
+    - BloodBrother
 
 - type: npcFaction
   id: NanoTrasen
@@ -16,6 +17,7 @@
   - Xeno
   - Zombie
   - Revolutionary
+  - BloodBrother
 
 - type: npcFaction
   id: Mouse
@@ -42,6 +44,7 @@
   - PetsNT
   - Zombie
   - Revolutionary
+  - BloodBrother
 
 - type: npcFaction
   id: SimpleNeutral
@@ -64,6 +67,7 @@
   - PetsNT
   - Zombie
   - Revolutionary
+  - BloodBrother
 
 - type: npcFaction
   id: Zombie
@@ -75,6 +79,7 @@
   - Passive
   - PetsNT
   - Revolutionary
+  - BloodBrother
 
 - type: npcFaction
   id: Revolutionary

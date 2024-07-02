@@ -36,6 +36,9 @@ public sealed partial class AdminVerbSystem
     [ValidatePrototypeId<StartingGearPrototype>]
     private const string PirateGearId = "PirateGear";
 
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string DefaultBloodBrotherRule = "BloodBrother";
+
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
     {
@@ -66,6 +69,20 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(traitor);
 
+        Verb bloodBrother = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-bloodbrother"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "BloodBrother"),
+            Act = () =>
+            {
+                _antag.ForceMakeAntag<BloodBrotherRuleComponent>(targetPlayer, DefaultBloodBrotherRule);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-bloodbrother"),
+        };
+        args.Verbs.Add(bloodBrother);
+      
         Verb initialInfected = new()
         {
             Text = Loc.GetString("admin-verb-text-make-initial-infected"),

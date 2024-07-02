@@ -1,0 +1,42 @@
+- type: entity
+  name: flash
+  parent: BaseItem
+  id: FlashBloodBrother
+  description: "A special flash with a trigger, which causes the victim to be brainwashed into becoming your brother. WARNING: SINGLE USE ONLY!"
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/flash.rsi
+      layers:
+      - state: flash-bloodbrother
+        map: [ "enum.FlashVisuals.BaseLayer" ]
+      - state: flashing-bloodbrother
+        map: [ "enum.FlashVisuals.LightLayer" ]
+        visible: false
+        shader: unshaded
+    - type: Flash
+    - type: BloodBrotherConverter
+    - type: LimitedCharges
+      maxCharges: 1
+      charges: 1
+    - type: MeleeWeapon
+      wideAnimationRotation: 180
+      damage:
+        types:
+          Blunt: 0 # melee weapon to allow flashing individual targets
+      angle: 10
+    - type: Item
+      size: Small
+      sprite: Objects/Weapons/Melee/flash.rsi
+    - type: UseDelay
+    - type: StaticPrice
+      price: 40
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.FlashVisuals.Burnt:
+          enum.FlashVisuals.BaseLayer:
+            True: {state: burnt-bloodbrother}
+        enum.FlashVisuals.Flashing:
+          enum.FlashVisuals.LightLayer:
+            True: {visible: true}
+            False: {visible: false}

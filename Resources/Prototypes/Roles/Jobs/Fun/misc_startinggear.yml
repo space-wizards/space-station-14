@@ -182,6 +182,13 @@
     - trayScanner
     - AccessConfiguratorUniversal
 
+#Bloodbrother Gear
+- type: startingGear
+  id: BloodBrotherGear
+  storage:
+    back:
+    - FlashBloodBrother
+
 #Gladiator with spear
 - type: startingGear
   id: GladiatorGear

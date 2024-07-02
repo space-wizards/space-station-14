@@ -1,5 +1,8 @@
-﻿roles-antag-syndicate-agent-name = Syndicate agent
+roles-antag-syndicate-agent-name = Syndicate agent
 roles-antag-syndicate-agent-objective = Complete your objectives without being caught.
+
+roles-antag-bloodbrother-name = Blood brother
+roles-antag-bloodbrother-objective = Work with a random person to complete your objectives.
 
 roles-antag-syndicate-agent-sleeper-name = Syndicate sleeper agent
 roles-antag-syndicate-agent-sleeper-objective = A form of syndicate agent that can activate at any point in the middle of the shift.

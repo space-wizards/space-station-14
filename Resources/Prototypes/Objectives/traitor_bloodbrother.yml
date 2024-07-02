@@ -1,0 +1,33 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseBloodBrotherObjective
+  components:
+  - type: Objective
+    issuer: bloodbrother
+
+#- type: entity
+#  noSpawn: true
+#  parent: [BaseBloodBrotherObjective, BaseLivingObjective]
+#  id: BloodBrotherHijackShuttleObjective
+#  name: Hijack the emergency shuttle
+#  description: Leave on the shuttle free and clear of whatever crew on board. The entire team must remain alive on the shuttle.
+#  components:
+#    - type: Objective
+#      icon:
+#        sprite: Objects/Tools/emag.rsi
+#        state: icon
+#    - type: HijackShuttleCondition
+
+- type: entity
+  noSpawn: true
+  parent: BaseBloodBrotherObjective
+  id: BloodbrotherAliveObjective
+  name: The entire team must escape on the evacuation shuttle alive and unrestrained, or else everything will be in vain!
+  components:
+  - type: Objective
+    difficulty: 0
+    icon:
+      sprite: Objects/Specific/Medical/defib.rsi
+      state: icon
+  - type: EscapeShuttleTeamCondition
