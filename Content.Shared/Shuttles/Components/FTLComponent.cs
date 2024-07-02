@@ -2,16 +2,16 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Shuttles.Components;
+namespace Content.Shared.Shuttles.Components;
 
 /// <summary>
 /// Added to a component when it is queued or is travelling via FTL.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class FTLComponent : Component
 {
     // TODO Full game save / add datafields
@@ -29,13 +29,19 @@ public sealed partial class FTLComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float TravelTime = 0f;
 
+    [DataField]
+    public EntProtoId? VisualizerProto = "FtlVisualizerEntity";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? VisualizerEntity;
+
     /// <summary>
     /// Coordinates to arrive it: May be relative to another grid (for docking) or map coordinates.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField, AutoNetworkedField]
     public EntityCoordinates TargetCoordinates;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Angle TargetAngle;
 
     /// <summary>
