@@ -183,22 +183,18 @@ public sealed partial class GunSystem : SharedGunSystem
                 case HitscanPrototype hitscan:
 
                     EntityUid? lastHit = null;
-
-                    var from = fromMap;
-                    // can't use map coords above because funny FireEffects
                     var fromEffect = fromCoordinates;
                     var dir = mapDirection.Normalized();
 
                     //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
                     var lastUser = user ?? gunUid;
-
                     if (hitscan.Reflective != ReflectType.None)
                     {
                         for (var reflectAttempt = 0; reflectAttempt < 3; reflectAttempt++)
                         {
-                            var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
+                            var ray = new CollisionRay(fromMap.Position, dir, hitscan.CollisionMask);
                             var rayCastResults =
-                                Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
+                                Physics.IntersectRay(fromMap.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
                             if (!rayCastResults.Any())
                                 break;
 
@@ -229,7 +225,7 @@ public sealed partial class GunSystem : SharedGunSystem
                                 break;
 
                             fromEffect = Transform(hit).Coordinates;
-                            from = fromEffect.ToMap(EntityManager, _transform);
+                            fromMap = TransformSystem.ToMapCoordinates(fromEffect);
                             dir = ev.Direction;
                             lastUser = hit;
                         }
@@ -275,7 +271,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                     else
                     {
-                        FireEffects(fromEffect, hitscan.MaxLength, dir.ToAngle(), hitscan);
+                        FireEffects(fromCoordinates, hitscan.MaxLength, dir.Normalized().ToAngle(), hitscan);
                     }
 
                     Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
@@ -399,49 +395,31 @@ public sealed partial class GunSystem : SharedGunSystem
         // Forgive me for the shitcode I am about to do
         // Effects tempt me not
         var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
-        var gridUid = fromCoordinates.GetGridUid(EntityManager);
-        var angle = mapDirection;
+        var effectDirection = mapDirection.ToVec().Normalized();
 
-        // We'll get the effects relative to the grid / map of the firer
-        // Look you could probably optimise this a bit with redundant transforms at this point.
-        var xformQuery = GetEntityQuery<TransformComponent>();
-
-        if (xformQuery.TryGetComponent(gridUid, out var gridXform))
-        {
-            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform, xformQuery);
-
-            fromCoordinates = new EntityCoordinates(gridUid.Value,
-                Vector2.Transform(fromCoordinates.ToMapPos(EntityManager, TransformSystem), gridInvMatrix));
-
-            // Use the fallback angle I guess?
-            angle -= gridRot;
+        // we need to subtract any grid rotation to properly offset the effect parts
+        if (MapManager.TryFindGridAt(TransformSystem.ToMapCoordinates(fromCoordinates), out var gridUid, out _)) {
+            var gridRotation = TransformSystem.GetWorldRotation(gridUid);
+            effectDirection = (effectDirection.ToAngle() - gridRotation).ToVec().Normalized();
         }
+
 
         if (distance >= 1f)
         {
             if (hitscan.MuzzleFlash != null)
             {
-                var coords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
-                var netCoords = GetNetCoordinates(coords);
-
-                sprites.Add((netCoords, angle, hitscan.MuzzleFlash, 1f));
+                sprites.Add((GetNetCoordinates(fromCoordinates.Offset(effectDirection / 2)), mapDirection, hitscan.MuzzleFlash, 1f));
             }
 
             if (hitscan.TravelFlash != null)
             {
-                var coords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
-                var netCoords = GetNetCoordinates(coords);
-
-                sprites.Add((netCoords, angle, hitscan.TravelFlash, distance - 1.5f));
+                sprites.Add((GetNetCoordinates(fromCoordinates.Offset(effectDirection * (distance + 0.5f) / 2)), mapDirection, hitscan.TravelFlash, distance - 1.5f));
             }
         }
 
         if (hitscan.ImpactFlash != null)
         {
-            var coords = fromCoordinates.Offset(angle.ToVec() * distance);
-            var netCoords = GetNetCoordinates(coords);
-
-            sprites.Add((netCoords, angle.FlipPositive(), hitscan.ImpactFlash, 1f));
+            sprites.Add((GetNetCoordinates(fromCoordinates.Offset(effectDirection * distance)), mapDirection.FlipPositive(), hitscan.ImpactFlash, 1f));
         }
 
         if (sprites.Count > 0)
@@ -449,7 +427,7 @@ public sealed partial class GunSystem : SharedGunSystem
             RaiseNetworkEvent(new HitscanEvent
             {
                 Sprites = sprites,
-            }, Filter.Pvs(fromCoordinates, entityMan: EntityManager));
+            }, Filter.Pvs(fromCoordinates));
         }
     }
 

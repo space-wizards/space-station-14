@@ -99,15 +99,11 @@ public sealed partial class GunSystem : SharedGunSystem
             if (a.Sprite is not SpriteSpecifier.Rsi rsi)
                 continue;
 
-            var coords = GetCoordinates(a.coordinates);
-
-            if (Deleted(coords.EntityId))
-                continue;
-
-            var ent = Spawn(HitscanProto, coords);
+            // we intentonally use this specific `Spawn` overload since it deals with grid
+            // rotation for us. we have to make sure grid rotation is accounted for for each
+            // *indivisual* sprite segment of the laser effect, 
+            var ent = Spawn(HitscanProto, TransformSystem.ToMapCoordinates(GetCoordinates(a.coordinates)), rotation: a.angle);
             var sprite = Comp<SpriteComponent>(ent);
-            var xform = Transform(ent);
-            xform.LocalRotation = a.angle;
             sprite[EffectLayers.Unshaded].AutoAnimated = false;
             sprite.LayerSetSprite(EffectLayers.Unshaded, rsi);
             sprite.LayerSetState(EffectLayers.Unshaded, rsi.RsiState);
