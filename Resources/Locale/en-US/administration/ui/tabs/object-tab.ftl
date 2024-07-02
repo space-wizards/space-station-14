@@ -7,3 +7,4 @@ object-tab-object-search = Search...
 object-tab-object-type-grids = Grids
 object-tab-object-type-maps = Maps
 object-tab-object-type-stations = Stations
+object-tab-refresh-button = Refresh

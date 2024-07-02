@@ -270,6 +270,9 @@ public sealed class AmeControllerSystem : EntitySystem
         var humanReadableState = controller.Injecting ? "Inject" : "Not inject";
         _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{EntityManager.ToPrettyString(user.Value):player} has set the AME to inject {controller.InjectionAmount} while set to {humanReadableState}");
 
+        /* This needs to be information which an admin is very likely to want to be informed about in order to be an admin alert or have a sound notification.
+        At the time of editing, players regularly "overclock" the AME and those cases require no admin attention.
+
         // Admin alert
         var safeLimit = 0;
         if (TryGetAMENodeGroup(uid, out var group))
@@ -285,6 +288,7 @@ public sealed class AmeControllerSystem : EntitySystem
                 controller.EffectCooldown = _gameTiming.CurTime + controller.CooldownDuration;
             }
         }
+        */
     }
 
     public void AdjustInjectionAmount(EntityUid uid, int delta, int min = 0, int max = int.MaxValue, EntityUid? user = null, AmeControllerComponent? controller = null)
