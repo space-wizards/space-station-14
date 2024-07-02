@@ -379,6 +379,34 @@
       startingCharge: 10000
 
 - type: entity
+  name: portable particle decelerator x2
+  suffix: DEBUG
+  parent: WeaponParticleDecelerator
+  id: WeaponParticleDeceleratorX2
+  description: A particle decelerator that simulates 2 people firing them at once.
+  components:
+    - type: Gun
+      fireRate: 1
+      fireCost: 500
+    - type: Battery
+      maxCharge: 20000
+      startingCharge: 20000
+
+- type: entity
+  name: portable particle decelerator x3
+  suffix: DEBUG
+  parent: BaseWeaponBattery
+  id: WeaponParticleDeceleratorX3
+  description: A particle decelerator that simulates 3 people firing them at once.
+  components:
+    - type: Gun
+      fireRate: 1.5
+      fireCost: 500
+    - type: Battery
+      maxCharge: 30000
+      startingCharge: 30000
+
+- type: entity
   name: x-ray cannon
   parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponXrayCannon
