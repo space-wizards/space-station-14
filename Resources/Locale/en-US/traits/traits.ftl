@@ -18,6 +18,9 @@ trait-lightweight-desc = Alcohol has a stronger effect on you
 trait-muted-name = Muted
 trait-muted-desc = You can't speak
 
+trait-illiterate-name = Illiterate
+trait-illiterate-desc = You can't understand written language
+
 trait-paracusia-name = Paracusia
 trait-paracusia-desc = You hear sounds that aren't really there
 
