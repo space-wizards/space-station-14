@@ -1,12 +1,12 @@
 - type: entity
-  name: DropPod Lighthouse
-  id: DropPodLighthouse
+  name: DropPod Beacon
+  id: DropPodBeacon
   parent:  MarkerBase
   components:
   - type: Sprite
     sprite: Markers/droppod.rsi
     state: drop_pod_lighthouse
-  - type: DropPodLighthouse
+  - type: DropPodBeacon
 
 - type: entity
   name: Landing point
