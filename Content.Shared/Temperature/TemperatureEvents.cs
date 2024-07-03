@@ -13,3 +13,18 @@ public sealed class ModifyChangedTemperatureEvent : EntityEventArgs, IInventoryR
         TemperatureDelta = temperature;
     }
 }
+
+public sealed class OnTemperatureChangeEvent : EntityEventArgs
+{
+    public float CurrentTemperature { get; }
+    public float LastTemperature { get; }
+    public float TemperatureDelta { get; }
+
+    public OnTemperatureChangeEvent(float current, float last, float delta)
+    {
+        CurrentTemperature = current;
+        LastTemperature = last;
+        TemperatureDelta = delta;
+    }
+}
+

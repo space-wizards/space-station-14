@@ -2,17 +2,16 @@ using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Temperature.Components;
+namespace Content.Server.Temperature.Components;
 
 /// <summary>
 /// Handles changing temperature,
 /// informing others of the current temperature,
 /// and taking fire damage from high temperature.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class TemperatureComponent : Component
 {
     /// <summary>
@@ -77,24 +76,4 @@ public sealed partial class TemperatureComponent : Component
 
     [DataField]
     public ProtoId<AlertPrototype> ColdAlert = "Cold";
-
-    /// <summary>
-    /// The slowdown from being at <see cref="ColdDamageThreshold"/>
-    /// </summary>
-    [DataField]
-    public float ColdSlowdown = 0.66f;
-}
-
-public sealed class OnTemperatureChangeEvent : EntityEventArgs
-{
-    public float CurrentTemperature { get; }
-    public float LastTemperature { get; }
-    public float TemperatureDelta { get; }
-
-    public OnTemperatureChangeEvent(float current, float last, float delta)
-    {
-        CurrentTemperature = current;
-        LastTemperature = last;
-        TemperatureDelta = delta;
-    }
 }
