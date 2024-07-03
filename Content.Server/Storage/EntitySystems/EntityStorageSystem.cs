@@ -49,7 +49,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         SubscribeLocalEvent<EntityStorageComponent, FoldAttemptEvent>(OnFoldAttempt);
         SubscribeLocalEvent<EntityStorageComponent, BeforePryEvent>(OnBeforePry);
         SubscribeLocalEvent<EntityStorageComponent, PriedEvent>(OnPried);
-        SubscribeLocalEvent<EntityStorageComponent, GetPryTimeModifierEvent>(OnGetPryMod);
+        SubscribeLocalEvent<EntityStorageComponent, GetPryTimeModifierEvent>(OnGetPryTime);
 
         SubscribeLocalEvent<EntityStorageComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<EntityStorageComponent, ComponentHandleState>(OnHandleState);
@@ -201,7 +201,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
     #endregion
 
     #region Pry event handlers
-    private void OnGetPryMod(EntityUid uid, EntityStorageComponent component, ref GetPryTimeModifierEvent args)
+    private void OnGetPryTime(EntityUid uid, EntityStorageComponent component, ref GetPryTimeModifierEvent args)
     {
         args.BaseTime = component.PryTime;
     }
@@ -209,7 +209,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
     private void OnBeforePry(EntityUid uid, EntityStorageComponent component, ref BeforePryEvent args)
     {
-        // A simple crowbar won't be enough. You need a proper prying tool.
+        // A simple crowbar won't be enough.
         if (!args.PryPowered)
             args.Cancelled = true;
 
@@ -222,6 +222,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         if (component.Open)
             return;
 
+        // Bust the lock open if there is one.
         if (TryComp(uid, out LockComponent? _))
             _lockSystem.TryUnlock(uid, args.User);
 
