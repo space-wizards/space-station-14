@@ -123,7 +123,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         var serverComp = (EntityStorageComponent) component;
         var tile = GetOffsetTileRef(uid, serverComp);
 
-        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is { } environment)
+        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
         {
             _atmos.Merge(serverComp.Air, environment.RemoveVolume(serverComp.Air.Volume));
         }
@@ -138,7 +138,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
         var tile = GetOffsetTileRef(uid, serverComp);
 
-        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is { } environment)
+        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
         {
             _atmos.Merge(environment, serverComp.Air);
             serverComp.Air.Clear();

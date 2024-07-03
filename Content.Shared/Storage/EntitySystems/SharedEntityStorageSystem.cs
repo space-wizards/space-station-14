@@ -11,23 +11,19 @@ using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
-using Content.Shared.Prying.Components;
 using Content.Shared.Prying.Systems;
 using Content.Shared.Storage.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using Content.Shared.Whitelist;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -35,21 +31,21 @@ namespace Content.Shared.Storage.EntitySystems;
 
 public abstract class SharedEntityStorageSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedJointSystem _joints = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedPryingSystem _pryingSystem = default!;
+    [Dependency] private   readonly IGameTiming _timing = default!;
+    [Dependency] private   readonly INetManager _net = default!;
+    [Dependency] private   readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private   readonly PlaceableSurfaceSystem _placeableSurface = default!;
+    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private   readonly SharedAudioSystem _audio = default!;
+    [Dependency] private   readonly SharedContainerSystem _container = default!;
+    [Dependency] private   readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private   readonly SharedJointSystem _joints = default!;
+    [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private   readonly SharedPryingSystem _pryingSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
-    [Dependency] private readonly WeldableSystem _weldable = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private   readonly WeldableSystem _weldable = default!;
+    [Dependency] private   readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public const string ContainerName = "entity_storage";
 
@@ -186,6 +182,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         verb.Act = () => ToggleOpen(args.User, args.Target, component);
         args.Verbs.Add(verb);
     }
+
 
     public void ToggleOpen(EntityUid user, EntityUid target, SharedEntityStorageComponent? component = null)
     {

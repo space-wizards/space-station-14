@@ -152,7 +152,7 @@ public abstract class SharedPryingSystem : EntitySystem
         return _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }
 
-    private void OnDoAfter(EntityUid uid, DoorComponent _, DoorPryDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, DoorComponent door, DoorPryDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
