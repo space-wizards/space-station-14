@@ -1,3 +1,4 @@
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Traits.Assorted;
@@ -20,6 +21,24 @@ public abstract class SharedDrunkSystem : EntitySystem
 
         if (TryComp<LightweightDrunkComponent>(uid, out var trait))
             boozePower *= trait.BoozeStrengthMultiplier;
+
+        if (TryComp<HungerComponent>(uid, out var hunger))
+        {
+            // Define multipliers for each hunger threshold
+            var hungerMultipliers = new Dictionary<HungerThreshold, float>
+            {
+                { HungerThreshold.Overfed, 1.0f },
+                { HungerThreshold.Okay, 1.0f },
+                { HungerThreshold.Peckish, 1.2f },
+                { HungerThreshold.Starving, 1.2f },
+                { HungerThreshold.Dead, 1.5f }
+
+            // Get the current hunger threshold multiplier
+            if (hungerMultipliers.TryGetValue(hunger.CurrentThreshold, out var multiplier))
+            {
+                boozePower *= multiplier;
+            }
+        }
 
         if (applySlur)
         {
