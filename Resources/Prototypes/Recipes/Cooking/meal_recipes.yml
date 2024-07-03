@@ -1882,6 +1882,28 @@
     FoodEgg: 3
 
 - type: microwaveMealRecipe
+  id: RecipeRainbowCannabisButter
+  name: cannabis butter recipe
+  result: FoodRainbowCannabisButter
+  time: 15
+  solids:
+    FoodButter: 1
+    LeavesCannabisRainbow: 6
+
+- type: microwaveMealRecipe
+  id: RecipeForeverWeedBrownies
+  name: cannabis brownie recipe
+  result: FoodBakedForeverWeedBrownieBatch
+  time: 25
+  reagents:
+    Flour: 15
+    Sugar: 30
+  solids:
+    FoodRainbowCannabisButter: 2
+    FoodSnackChocolateBar: 2
+    FoodEgg: 3
+
+- type: microwaveMealRecipe
   id: RecipeCornInButter
   name: corn in butter recipe
   result: FoodMealCornInButter
