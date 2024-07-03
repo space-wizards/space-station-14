@@ -436,7 +436,7 @@ namespace Content.Server.Atmos.EntitySystems
                     _ignitionSourceSystem.SetIgnited((uid, source));
 
                     if (TryComp(uid, out TemperatureComponent? temp))
-                        _temperatureSystem.ChangeHeat(uid, 12500 * flammable.FireStacks, false, temp);
+                        _temperatureSystem.AdjustThermalEnergy((uid, temp), 12500 * flammable.FireStacks, ignoreHeatResistance: false);
 
                     var ev = new GetFireProtectionEvent();
                     // let the thing on fire handle it

@@ -1,23 +1,23 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
-using Content.Shared.Atmos;
 using Content.Shared.Inventory;
-using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
-using Robust.Shared.Physics.Components;
+using Content.Shared.Temperature.Systems;
 
 namespace Content.Server.Temperature.Systems;
 
-public sealed class TemperatureSystem : EntitySystem
+/// <inheritdoc/>
+public sealed class TemperatureSystem : SharedTemperatureSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
-        SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(OnTemperatureChangeAttempt);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
@@ -41,46 +41,14 @@ public sealed class TemperatureSystem : EntitySystem
 
             // convert to J then K
             var joules = q * comp.Area * frameTime;
-            var degrees = joules / GetHeatCapacity(uid, temp);
+            var degrees = joules / GetHeatCapacity((uid, temp));
             if (temp.CurrentTemperature < comp.Temperature)
                 degrees *= -1;
 
             // exchange heat between inside and surface
             comp.Temperature += degrees;
-            ForceChangeTemperature(uid, temp.CurrentTemperature - degrees, temp);
+            SetTemperature((uid, temp), temp.CurrentTemperature - degrees);
         }
-    }
-
-    public void ForceChangeTemperature(EntityUid uid, float temp, TemperatureComponent? temperature = null)
-    {
-        if (!Resolve(uid, ref temperature))
-            return;
-
-        float lastTemp = temperature.CurrentTemperature;
-        temperature.CurrentTemperature = temp;
-
-        var ev = new OnTemperatureChangeEvent(temp, lastTemp, (uid, temperature));
-        RaiseLocalEvent(uid, ref ev);
-    }
-
-    public void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance = false,
-        TemperatureComponent? temperature = null)
-    {
-        if (!Resolve(uid, ref temperature))
-            return;
-
-        if (!ignoreHeatResistance)
-        {
-            var modEv = new ModifyChangedTemperatureEvent(heatAmount);
-            RaiseLocalEvent(uid, modEv);
-            heatAmount = modEv.TemperatureDelta;
-        }
-
-        float lastTemp = temperature.CurrentTemperature;
-        temperature.CurrentTemperature += heatAmount / GetHeatCapacity(uid, temperature);
-
-        var ev = new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, (uid, temperature));
-        RaiseLocalEvent(uid, ref ev);
     }
 
     private void OnAtmosExposedUpdate(EntityUid uid, TemperatureComponent temperature,
@@ -93,20 +61,10 @@ public sealed class TemperatureSystem : EntitySystem
 
         var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
         var airHeatCapacity = _atmosphere.GetHeatCapacity(args.GasMixture, false);
-        var heatCapacity = GetHeatCapacity(uid, temperature);
+        var heatCapacity = GetHeatCapacity((uid, temperature));
         var heat = temperatureDelta * (airHeatCapacity * heatCapacity /
                                        (airHeatCapacity + heatCapacity));
-        ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
-    }
-
-    public float GetHeatCapacity(EntityUid uid, TemperatureComponent? comp = null, PhysicsComponent? physics = null)
-    {
-        if (!Resolve(uid, ref comp) || !Resolve(uid, ref physics, false) || physics.FixturesMass <= 0)
-        {
-            return Atmospherics.MinimumHeatCapacity;
-        }
-
-        return comp.SpecificHeat * physics.FixturesMass;
+        AdjustThermalEnergy((uid, temperature), heat * temperature.AtmosTemperatureTransferEfficiency);
     }
 
     private void OnInit(EntityUid uid, InternalTemperatureComponent comp, MapInitEvent args)
@@ -117,12 +75,6 @@ public sealed class TemperatureSystem : EntitySystem
         comp.Temperature = temp.CurrentTemperature;
     }
 
-    private void OnRejuvenate(EntityUid uid, TemperatureComponent comp, RejuvenateEvent args)
-    {
-        ForceChangeTemperature(uid, Atmospherics.T20C, comp);
-    }
-
-
     private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component,
         InventoryRelayedEvent<ModifyChangedTemperatureEvent> args)
     {
@@ -131,10 +83,4 @@ public sealed class TemperatureSystem : EntitySystem
 
         args.Args.TemperatureDelta *= ev.Coefficient;
     }
-}
-
-[ByRefEvent]
-public readonly record struct OnTemperatureChangeEvent(float CurrentTemperature, float LastTemperature, Entity<TemperatureComponent> Entity)
-{
-    public readonly float TemperatureDelta = CurrentTemperature - LastTemperature;
 }

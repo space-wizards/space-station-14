@@ -42,7 +42,7 @@ public sealed class EntityHeaterSystem : EntitySystem
             var energy = power.PowerReceived * deltaTime;
             foreach (var ent in placer.PlacedEntities)
             {
-                _temperature.ChangeHeat(ent, energy);
+                _temperature.AdjustThermalEnergy(ent, energy);
             }
         }
     }

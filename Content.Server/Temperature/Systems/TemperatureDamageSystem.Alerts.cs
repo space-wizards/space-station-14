@@ -1,6 +1,7 @@
 using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
+using Content.Shared.Temperature.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Temperature.Systems;

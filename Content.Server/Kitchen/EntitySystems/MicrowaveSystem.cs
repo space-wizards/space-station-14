@@ -146,7 +146,7 @@ namespace Content.Server.Kitchen.EntitySystems
             foreach (var entity in component.Storage.ContainedEntities)
             {
                 if (TryComp<TemperatureComponent>(entity, out var tempComp))
-                    _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
+                    _temperature.AdjustThermalEnergy((entity, tempComp), heatToAdd * component.ObjectHeatMultiplier, ignoreHeatResistance: false);
 
                 if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
                     continue;

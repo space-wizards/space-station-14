@@ -28,7 +28,7 @@ namespace Content.Server.EntityEffects.Effects
                     amount *= reagentArgs.Scale.Float();
                 }
 
-                sys.ChangeHeat(args.TargetEntity, amount, true, temp);
+                sys.AdjustThermalEnergy((args.TargetEntity, temp), amount, ignoreHeatResistance: true);
             }
         }
     }

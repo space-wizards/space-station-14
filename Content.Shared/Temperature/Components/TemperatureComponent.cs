@@ -1,9 +1,10 @@
 using Content.Shared.Atmos;
+using Content.Shared.Temperature.Systems;
 
 namespace Content.Shared.Temperature.Components;
 
 /// <summary>
-/// Handles tracking the temperature of an entity.
+/// Handles tracking the temperature and heat capacity of an entity.
 /// </summary>
 [RegisterComponent]
 public sealed partial class TemperatureComponent : Component
