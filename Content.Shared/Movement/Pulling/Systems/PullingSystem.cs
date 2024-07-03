@@ -458,9 +458,8 @@ public sealed class PullingSystem : EntitySystem
             // if the entity has a FixedRotation, and the pulling comp says don't keep it on pull,
             // set FixedRotation to false while the object is being pulled.
             // because we stored the setting in PrevFixedRotation, it gets restored when pulling stops.
-            if (pullablePhysics.FixedRotation)
-                if (!pullableComp.FixedRotationOnPull)
-                    _physics.SetFixedRotation(pullableUid, false, body: pullablePhysics);
+            if (pullablePhysics.FixedRotation && !pullableComp.FixedRotationOnPull)
+                _physics.SetFixedRotation(pullableUid, false, body: pullablePhysics);
         }
 
         // Messaging
