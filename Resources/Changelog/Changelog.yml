@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: MACMAN2003
-  changes:
-  - message: Nuclear operatives now only need 20 players to be readied up again instead
-      of 35.
-    type: Tweak
-  id: 6364
-  time: '2024-04-17T03:19:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27036
 - author: Bellwether
   changes:
   - message: The nun hood now appears in the Chaplain's loadout.
@@ -3826,3 +3818,10 @@
   id: 6863
   time: '2024-07-03T05:27:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28117
+- author: TheShuEd
+  changes:
+  - message: anomalies have the ability to gain invisibility behavior
+    type: Add
+  id: 6864
+  time: '2024-07-03T15:14:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29120
