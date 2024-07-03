@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.DropPod
 {
     [RegisterComponent]
-    public sealed partial class DropPodLighthouseComponent : Component
+    public sealed partial class DropPodBeaconComponent : Component
     {
 
     }

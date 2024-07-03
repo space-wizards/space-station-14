@@ -122,7 +122,7 @@ namespace Content.Server.DropPod
                 }
             }
 
-            var query_lighthouse = AllEntityQuery<DropPodLighthouseComponent>();
+            var query_lighthouse = AllEntityQuery<DropPodBeaconComponent>();
             while (query_lighthouse.MoveNext(out var item_uid, out var item_comp))
             {
                 x_form = Transform(item_uid);
