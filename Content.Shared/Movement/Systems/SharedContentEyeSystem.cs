@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
+using Content.Shared.Camera;
 using Content.Shared.Ghost;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
@@ -137,6 +138,13 @@ public abstract class SharedContentEyeSystem : EntitySystem
         component.MaxZoom = value;
         component.TargetZoom = Clamp(component.TargetZoom, component);
         Dirty(uid, component);
+    }
+
+    public void UpdateEyeOffset(Entity<EyeComponent?> eye)
+    {
+        var ev = new GetEyeOffsetEvent();
+        RaiseLocalEvent(eye, ref ev);
+        _eye.SetOffset(eye, ev.Offset, eye);
     }
 
     /// <summary>
